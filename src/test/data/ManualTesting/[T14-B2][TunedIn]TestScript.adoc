@@ -1,0 +1,217 @@
+= Test Script
+:relfileprefix: team/
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: images
+:stylesDir: stylesheets
+
+Welcome to the test script for TunedIn. We have provided below, a comprehensive list of test commands for you to try on
+the TunedIn application, along with their expected output.
+
+Feel free to report any bugs to our official reporting channel: bugs@tunedinapp.com
+
+== Getting Started
+
+To commence testing for TunedIn, we have prepared for you sample data for you to load into the application to get going
+right away!
+
+Here's how to load the files into the application for testing.
+
+* In your new copy of TunedIn app, copy the file SampleData.xml (included in this folder) into the data folder in your
+TunedIn application.
+** If there is no data folder, create one.
+** If there is a addressbook.xml or eventbook.xml file created, delete them.
+* Duplicate the copied SampleData.xml file
+* In the first copy, delete the lines 205 to 261. Rename the file addressbook.xml
+* In the second copy, delete the lines 2 to 204. Rename the file eventbook.xml
+
+Congratulations! You have the sample data loaded and ready to go!
+
+To generate the encrypted file, do the following steps.
+
+* Run the command `add n/test p/999 a/temp`
+* Run the command `delete 21`
+
+== Testing
+
+=== Lock Functionality
+
+* `Command:` lock u/userName p/password +
+`Expected:` it creates an entry in the account.xml file, encrypts the addressbook.xml into a .encrypted file. If
+the userName exists, it will throw a DuplicateUserExceptionError
+
+* `Command:` logout +
+`Expected:` it logs the user out. If the user has not logged in, it will throw an error.
+
+* `Command:` currentuser +
+`Expected:` it returns the username of the current user. If the user is public, the username is PUBLIC.
+
+* `Command:` remove u/username p/password r/[Y or N] +
+`Expected:` it removes the user entry in the account.xml file. If r/Y, the encrypted file of that user will be
+deleted. If r/N, the file will still be deleted but the contacts will be released to the PUBLIC account.
+
+=== Add Functionality
+
+* `Command:` add n/Bervyn Chuan p/87763224 a/East View Str 32 #09-20 +
+`Expected:` person should be added
+
+* `Command:` add n/Linda Lim p/64543322 a/Blk 19 Toh Guan Road #08-11 b/10-10-1997 +
+`Expected:` person should be added
+
+* `Command:` add n/Linda Ng p/64543442 b/10-10-1997 +
+`Expected:` person should not be added, mandatory field address is missing
+
+* `Command:` add n/Linda Lim p/64543322 a/Blk 19 Toh Guan Road #08-11 +
+`Expected:` person should not be added, duplicate contact (same name, phone and address)
+
+* `Command:` add n/Darren Chia p/64543322 a/Blk 19 Toh Guan Road #08-11 +
+`Expected:` person should be added, same phone number and address as one of existing contact but has different name.
+
+=== Order Functionality
+
+* `Command:` order group +
+`Expected:` list sorted based alphabetical order of group name, contacts without group sorted to last.
+
+* `Command:` order birthday name +
+`Expected:` list sorted based on birthdate from oldest person to youngest, then sort by name in alphabetical order.
+
+* `Command:` order name group +
+`Expected:` invalid command, cannot sort by name then group, group must be the first
+parameter
+
+* `Command:` order Email +
+`Expected:` not sorted, invalid command
+
+=== Group Functionality
+
+* `Command:` group showALL +
+`Expected:` show the names of existing groups in the feedback box
+
+* `Command:` group 1 2 3 g/TEST +
+`Expected:` persons with index 1 2 3 will be grouped to TEST
+
+* `Command:` group g/TEST +
+`Expected:` invalid command no person should be grouped
+
+* `Command:` group 1 2 3 TEST +
+`Expected:` invalid command no person should be grouped
+
+* `Command:` group g +
+`Expected:` invalid command feedback to user wrong parameter
+
+=== List Functionality
+
+* `Command:` list +
+`Expected:` show the list of all contacts
+
+* `Command:` list g/TEST +
+`Expected:` show a list of persons in TEST group if TEST exist OR feedback to user TEST group does not exist.
+
+* `Command:` list TEST +
+`Expected:` invalid command
+
+=== Alias Functionality
+
+* `Command:` setalias c/add al/a +
+`Expected:` sets the alias for 'add' command to 'a'
+
+* `Command:` setalias c/help al/h +
+`Expected:` sets the alias for 'help' command to 'h'
+
+* `Command:` setalias c/help al/a +
+`Expected:` unable to set the alias for 'help' command to 'a', since 'a' is set as the alias for 'add' command
+
+* `Command:` setalias c/list al/help +
+`Expected:` unable to set the alias for 'help' command to 'help', since 'help' is a protected alias
+
+* `Command:` setalias c/nonsense al/help +
+`Expected:` unable to set the alias for 'nonsense' command to 'help', since 'nonsense' command does not exist
+
+* `Command:` viewalias +
+`Expected:` a window will show up showing all the currently set aliases
+
+=== Theme Functionality
+
+* `Command:` settheme summer  +
+`Expected:` sets the theme for the GUI to a summer background, background will change instantly
+
+* `Command:` settheme nonsense  +
+`Expected:` the theme will not change as there is no theme named 'nonsense'
+
+* `Command:` settheme   +
+`Expected:` the theme will not change as there is no theme specified
+
+=== Transfer Functionality
+
+* `Command:` transfer  +
+`Expected:` exports a ZIP file with a ReadMe, preferences.json, config.json and the data folder and its corresponding
+contents
+
+=== Remark Functionality
+
+* `Command:` remark 1 r/I love CS2103 +
+`Expected:` Added/Edited a new remark "I love CS2103" to 1st person on the addressbook
+
+* `Command:` remark 1 r/ +
+`Expected:` Removed an existing remark from the 1st person on the addressbook
+
+=== Event Functionality
+
+* `Command:` addevent et/CS2103 ed/Submission Deadline el/SoC edt/14-11-2017 2359 +
+`Expected:` it will add a new event to the eventbook
+
+* `Command:` addevent et/Orbital ed/Milestone 2 el/SoC edt/26-11-2017 2359 +
+`Expected:` it will add a new event to the eventbook
+
+* `Command:` editevent 2 ed/Milestone 3 +
+`Expected:` it will edit the 2nd event's description on the eventbook
+
+* `Command:` orderevent datetime +
+`Expected:` it will sort the events starting from the latest datetime
+
+* `Command:` orderevent title +
+`Expected:` it will sort the events in alphabetical order
+
+* `Command:` findevent et/tal +
+`Expected:` it will return all the events with the sequence tal in the title
+
+* `Command:` listevent +
+`Expected:` return a list of all events in the eventbook
+
+* `Command:` deleteevent 2 +
+`Expected:` it will remove the 2nd event in the eventbook
+
+=== Export Functionality
+
+* `Command:` export addressbook +
+`Expected:` it will export the addressbook.xml file to a new csv file
+
+* `Command:` export eventbook +
+`Expected:` it will export the eventbook.xml file to a new csv file
+
+* `Command:` switch +
+`Expected:` the current viewing tab panel will switch from contacts to events
+
+=== Help Functionality
+
+* `Command:` help +
+`Expected:` a help window will show up
+
+=== Undo/Redo Functionality
+
+* `Command:` delete 1 +
+`Command:` list +
+`Command:` undo +
+`Expected:` This reverses the `delete 1` command
+
+* `Command:` select 1 +
+`Command:` list +
+`Command:` undo +
+`Expected:` The `undo` command fails as there are no undoable commands executed previously.
+
+== Thank You
+
+Thank you for testing the TunedIn application! If you have any suggestions, feel free to drop us an email at
+hello@tunedinapp.com
+
+
+

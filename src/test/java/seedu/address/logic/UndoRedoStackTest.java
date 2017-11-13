@@ -167,7 +167,7 @@ public class UndoRedoStackTest {
         // different redoStack -> returns false
         UndoRedoStack differentRedoStack =
                 prepareStack(Arrays.asList(dummyUndoableCommandTwo, dummyUndoableCommandOne),
-                Collections.singletonList(dummyUndoableCommandTwo));
+                        Collections.singletonList(dummyUndoableCommandTwo));
         assertFalse(undoRedoStack.equals(differentRedoStack));
     }
 
@@ -236,6 +236,7 @@ public class UndoRedoStackTest {
         public CommandResult execute() {
             return new CommandResult("");
         }
+
     }
 
     class DummyUndoableCommand extends UndoableCommand {
@@ -243,5 +244,6 @@ public class UndoRedoStackTest {
         public CommandResult executeUndoableCommand() {
             return new CommandResult("");
         }
+
     }
 }

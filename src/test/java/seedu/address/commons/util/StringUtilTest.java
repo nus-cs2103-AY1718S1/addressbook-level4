@@ -67,7 +67,7 @@ public class StringUtilTest {
     }
 
     private void assertExceptionThrown(Class<? extends Throwable> exceptionClass, String sentence, String word,
-            Optional<String> errorMessage) {
+                                       Optional<String> errorMessage) {
         thrown.expect(exceptionClass);
         errorMessage.ifPresent(message -> thrown.expectMessage(message));
         StringUtil.containsWordIgnoreCase(sentence, word);
@@ -123,10 +123,19 @@ public class StringUtilTest {
         assertFalse(StringUtil.containsWordIgnoreCase("    ", "123"));
 
         // Matches a partial word only
-        assertFalse(StringUtil.containsWordIgnoreCase("aaa bbb ccc", "bb")); // Sentence word bigger than query word
         assertFalse(StringUtil.containsWordIgnoreCase("aaa bbb ccc", "bbbb")); // Query word bigger than sentence word
 
-        // Matches word in the sentence, different upper/lower case letters
+        // No Matching sequences in the sentence
+        // Query does not match any sequence in the sentence
+        assertFalse(StringUtil.containsWordIgnoreCase("aaa bbb ccc", "aba"));
+
+        // Matches word sequences in the sentence, different upper/lower case letters
+        //Matches the sequence in the sentence (first)
+        assertTrue(StringUtil.containsWordIgnoreCase("aaa bbb ccc", "a"));
+        //Matches the sequence in the sentence (middle)
+        assertTrue(StringUtil.containsWordIgnoreCase("aaa bbb ccc", "bb"));
+        //Matches the sequence in the sentence (last)
+        assertTrue(StringUtil.containsWordIgnoreCase("aaa bbb ccc", "ccc"));
         assertTrue(StringUtil.containsWordIgnoreCase("aaa bBb ccc", "Bbb")); // First word (boundary case)
         assertTrue(StringUtil.containsWordIgnoreCase("aaa bBb ccc@1", "CCc@1")); // Last word (boundary case)
         assertTrue(StringUtil.containsWordIgnoreCase("  AAA   bBb   ccc  ", "aaa")); // Sentence has extra spaces
@@ -146,7 +155,7 @@ public class StringUtilTest {
     @Test
     public void getDetails_exceptionGiven() {
         assertThat(StringUtil.getDetails(new FileNotFoundException("file not found")),
-                   containsString("java.io.FileNotFoundException: file not found"));
+                containsString("java.io.FileNotFoundException: file not found"));
     }
 
     @Test

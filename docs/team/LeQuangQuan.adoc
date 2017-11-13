@@ -1,0 +1,86 @@
+= Le Quang Quan - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: TunedIn
+TunedIn is a free-to-use application that brings to you the power of a full-fledged command line personal organizer,
+bundled together with a user-friendly interface that keeps all of your information easily accessible and at your fingertips.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T14-B2/main/blob/master/collated/main/quanle1994.md[Functional
+code]]
+
+=== Enhancement Added: Find All Text Fields
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[tag=find]
+
+---
+
+==== Justification
+
+The find command is enhanced to search for all text fields and gives user the control over which text field to search
+for, including but not limited to the contact's name. This ensures that the user can search for contacts even though
+he/she cannot remember the contact's name. This is useful when remarks are attached to each contact, which can make
+the search more flexible.
+
+==== Implementation
+
+---
+
+include::../DeveloperGuide.adoc[tag=find]
+
+---
+
+=== Enhancement Added: Ordering of Contacts
+=== External behavior
+
+---
+
+include::../UserGuide.adoc[tag=order]
+
+---
+
+==== Justification
+
+Ordering is essential to TunedIn. It provides the fundamental and a must-to-have functionality of an organizer.
+With the ordering mechanism, user will be able to order the list of contacts in 14 different ways. This
+is inline with our goal in making TunedIn as customizable as possible
+and, most importantly to allow the user to organize the contacts to their most preferred way.
+
+==== Implementation
+
+---
+
+include::../DeveloperGuide.adoc[tag=order]
+
+---
+
+=== Enhancement Added: Lock Mechanism
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[tag=lock]
+
+---
+
+==== Justification
+
+The Lock mechanism allows users to create user accounts that allow the programme to encrypt their contacts, enhancing
+the confidentiality of the data. This is important when the computer is shared among different people, or when a user
+wants to manage different lists of contacts.
+
+==== Implementation
+
+---
+
+include::../DeveloperGuide.adoc[tag=lock]
+
+---
+
+=== Other contributions
+
+* Added differing colour codes for different tags

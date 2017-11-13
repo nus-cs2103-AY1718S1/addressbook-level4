@@ -16,6 +16,18 @@ public class SystemTestSetupHelper {
     private MainWindowHandle mainWindowHandle;
 
     /**
+     * Initializes the stage to be used by the tests.
+     */
+    public static void initializeStage() {
+        try {
+            FxToolkit.registerPrimaryStage();
+            FxToolkit.hideStage();
+        } catch (TimeoutException e) {
+            throw new AssertionError(e);
+        }
+    }
+
+    /**
      * Sets up the {@code TestApp} and returns it.
      */
     public TestApp setupApplication() {
@@ -27,18 +39,6 @@ public class SystemTestSetupHelper {
         }
 
         return testApp;
-    }
-
-    /**
-     * Initializes the stage to be used by the tests.
-     */
-    public static void initializeStage() {
-        try {
-            FxToolkit.registerPrimaryStage();
-            FxToolkit.hideStage();
-        } catch (TimeoutException e) {
-            throw new AssertionError(e);
-        }
     }
 
     /**

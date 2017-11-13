@@ -14,9 +14,10 @@ public class ConfigTest {
 
     @Test
     public void toString_defaultObject_stringReturned() {
-        String defaultConfigAsString = "App title : Address App\n"
+        String defaultConfigAsString = "App title : TunedIn Desktop Application\n"
                 + "Current log level : INFO\n"
-                + "Preference file Location : preferences.json";
+                + "Preference File Location : preferences.json\n"
+                + "Theme : summer";
 
         assertEquals(defaultConfigAsString, new Config().toString());
     }

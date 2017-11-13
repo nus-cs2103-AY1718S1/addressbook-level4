@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.3">
+<title>Xiang TingTing - Project Portfolio</title>
+<link rel="stylesheet" href="../stylesheets/gh-pages.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="../stylesheets/coderay-asciidoctor.css">
+</head>
+<body class="article">
+<div id="header">
+<h1>Xiang TingTing - Project Portfolio</h1>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="project-tunedin"><a class="link" href="#project-tunedin">Project: TunedIn</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>TunedIn is a free-to-use desktop application that brings to users the power of a
+full-fledged command line personal organizer, bundled together with a user-friendly interface
+and competence functions. It gives the user freedom to personalize the information in their most preferred way.
+The fundamental units of this organiser are Order, Group and List mechanisms.
+These primary units are the indispensable elements to build up the usability and
+improving the performance of an organiser. With numerous contacts in TunedIn,
+it is essential to categorise and present the wide range of information in an organised way,
+at the same time, not neglecting the intuitiveness of commands for users.</p>
+</div>
+<div class="paragraph">
+<p><strong>Code contributed</strong>: [<a href="https://github.com/CS2103AUG2017-T14-B2/main/blob/master/collated/main/tingtx.md">Functional code</a>]
+ [<a href="https://github.com/CS2103AUG2017-T14-B2/main/blob/master/collated/test/tingtx.md">Test code</a>]</p>
+</div>
+<div class="sect2">
+<h3 id="enhancement-added-order"><a class="link" href="#enhancement-added-order">Enhancement Added: Order</a></h3>
+<div class="paragraph">
+<p>Enhanced Order command to sort with Birthday, Tag and Group, and with multiple(2) person fields.
+(enhanced on the original Order command done by quanle1994)</p>
+</div>
+<div class="sect3">
+<h4 id="external-behavior"><a class="link" href="#external-behavior">External behavior</a></h4>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="order-contacts-in-address-book-by-parameter-s-code-order-code-since-v1-0"><a class="link" href="#order-contacts-in-address-book-by-parameter-s-code-order-code-since-v1-0">Order contacts in Address Book by parameter(s): <code>order</code> - Since V1.0</a></h3>
+<div class="paragraph">
+<p>Order the list of persons according to a specified parameter. Parameters are case insensitive.<br>
+Format: <code>order PARAMETER [MORE_PARAMETER]</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>The allowable parameters are <code>NAME</code>, <code>ADDRESS</code>, <code>BIRTHDAY</code>, <code>TAG</code> and <code>GROUP</code>.</p>
+</li>
+<li>
+<p>The parameter is case insensitive. e.g 'NaMe' will match 'NAME'</p>
+</li>
+<li>
+<p>Only full word will be matched. e.g. 'addr' will not match 'Address'</p>
+</li>
+<li>
+<p>To order by multiple parameters, each parameter should be separated by a single space.</p>
+</li>
+<li>
+<p>The order of the parameter is important. e.g <code>tag address</code> will order the list by tag
+then by address.</p>
+</li>
+<li>
+<p>The command can only take in a maximum of <code>two</code> parameters.</p>
+</li>
+<li>
+<p>For order based on multiple prarameters with GROUP, GROUP must be the first paramter.</p>
+</li>
+<li>
+<p>The command changes the index of the person in the Address Book,
+which will affect other commands that use this attribute such as
+<code>delete</code> or <code>select</code>.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>order NAME</code><br>
+Returns address list sorted by name in alphabetical order.</p>
+</li>
+<li>
+<p>'order BIRTHDAY name`<br>
+Returns address list sorted by birthday then by name.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Invalid command Example :
+* <code>order NAME GROUP</code><br></p>
+</div>
+<hr>
+<div class="sect3">
+<h4 id="justification"><a class="link" href="#justification">Justification</a></h4>
+<div class="paragraph">
+<p>Ordering is essential to TunedIn. It provides the fundamental and a must-to-have functionality of an organizer.
+With the ordering mechanism, user will be able to order the list of contacts in 19 different ways with more than one ordering
+field.This is inline with our goal in making TunedIn as customizable as possible
+and, most importantly to allow the user to organize the contacts to their most preferred way.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="implementation"><a class="link" href="#implementation">Implementation</a></h4>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="order-sort-mechanism"><a class="link" href="#order-sort-mechanism">Order(Sort) mechanism</a></h3>
+<div class="paragraph">
+<p>The order mechanism is implemented by 'OrderCommand' and <code>OrderCommandParser</code> in the Logic component.
+It is facilitated by the <code>UniquePersonList</code> which resides in  <code>Addressbook &lt; ModelManager</code>.
+It allows re-ordering of the person list that modifies the initial order of the list.
+This mechanism inherits from the <code>UndoableCommands</code>.</p>
+</div>
+<div class="paragraph">
+<p>The implementation of the <code>OrderCommand</code> constructor is as shown :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"> <span class="directive">public</span> OrderCommand(<span class="predefined-type">String</span> orderParameter)
+    {
+        <span class="local-variable">this</span>.orderParameter = orderParameter;
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As you can see from the implementation, the command requires user inputs in the form of <code>String</code> as the parameter/s
+to order. The inputs are restricted by the fields of <code>Person</code> that only includes <code>Name</code>, <code>Address</code>,
+<code>Tag</code> and <code>Birthday</code>. Before a new instance of <code>OrderCommand</code> is being created, the <code>OrderCommandParser</code> will ensure that the input from the user
+is not empty string.</p>
+</div>
+<div class="paragraph">
+<p>The execution of the command is done in the following method :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"> <span class="directive">public</span> CommandResult executeUndoableCommand() <span class="directive">throws</span> CommandException {
+        <span class="keyword">try</span> {
+            model.orderList(orderParameter);
+        } <span class="keyword">catch</span> (UnrecognisedParameterException upe) {
+            <span class="keyword">throw</span> <span class="keyword">new</span> CommandException(MESSAGE_ORDER_WRONG_PARAMETER);
+        }
+        <span class="keyword">return</span> <span class="keyword">new</span> CommandResult(MESSAGE_ORDER_SUCCESS + orderParameter);
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>After a series of function calls, the <strong>model.orderList()</strong> method will eventually call <strong>orderBy()</strong> method
+in the <code>UniquePersonList</code>.</p>
+</div>
+<div class="paragraph">
+<p><code>UniquePersonList</code> deals with the list of persons that enforces uniqueness between its elements
+and supports a set of list operations. The following diagram shows the UML diagram of the class.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/UniquePersonList_UML.png" alt="UniquePersonList UML" width="300">
+</div>
+</div>
+<div class="paragraph">
+<p><strong>orderBy()</strong> method is able to order the existing person list by a maximum of two parameters.
+It will order the list by the first parameter follow by the second parameter.
+The implementation of the <strong>orderBy()</strong> is shown below:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">    <span class="directive">public</span> <span class="type">void</span> orderBy(<span class="predefined-type">String</span> parameter) <span class="directive">throws</span> UnrecognisedParameterException {
+
+        <span class="keyword">switch</span> (parameter) {
+        <span class="keyword">case</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">NAME</span><span class="delimiter">&quot;</span></span>:
+            internalList.sort(Person.getPersonNameComparator());
+            <span class="keyword">break</span>;
+        ...
+
+        case <span class="string"><span class="delimiter">&quot;</span><span class="content">NAME ADDRESS</span><span class="delimiter">&quot;</span></span>:
+            internalList.sort(Person.getPersonNameComparator().thenComparing(Person.getPersonAddressComparator()));
+            <span class="keyword">break</span>;
+
+        <span class="keyword">case</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">ADDRESS NAME</span><span class="delimiter">&quot;</span></span>:
+            internalList.sort(Person.getPersonAddressComparator().thenComparing(Person.getPersonNameComparator()));
+            <span class="keyword">break</span>;
+
+         ...
+
+        default:
+            <span class="keyword">throw</span> <span class="keyword">new</span> UnrecognisedParameterException();
+        }
+
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The comparators are implemented in the <code>Person</code> as shown:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">    <span class="directive">public</span> <span class="directive">static</span> <span class="directive">final</span> <span class="predefined-type">Comparator</span>&lt;Person&gt; getPersonNameComparator() {
+        <span class="keyword">return</span> (Person a, Person b) -&gt; a.getName().toString()
+                .compareToIgnoreCase(b.getName().toString());
+    }
+
+    <span class="directive">public</span> <span class="directive">static</span> <span class="directive">final</span> <span class="predefined-type">Comparator</span>&lt;Person&gt; getPersonAddressComparator() {
+        <span class="keyword">return</span> (Person a, Person b) -&gt; a.getAddress().toString()
+                .compareToIgnoreCase(b.getAddress().toString());
+    }
+
+    <span class="directive">public</span> <span class="directive">static</span> <span class="directive">final</span> <span class="predefined-type">Comparator</span>&lt;Person&gt; getPersonBirthdayComparator() {
+        <span class="keyword">return</span> comparing(a -&gt; a.getBirthday().getReformatDate(),
+                nullsLast(naturalOrder()));
+    }
+
+    <span class="directive">public</span> <span class="directive">static</span> <span class="directive">final</span> <span class="predefined-type">Comparator</span>&lt;Person&gt; getPersonTagComparator() {
+        <span class="keyword">return</span> (Person a, Person b) -&gt; a.getTags().toString()
+                .compareToIgnoreCase(b.getTags().toString());
+    }
+
+    <span class="directive">public</span> <span class="directive">static</span> <span class="directive">final</span> <span class="predefined-type">Comparator</span>&lt;Person&gt; getPersonGroupComparator() {
+        <span class="keyword">return</span> (a, b) -&gt; {
+            <span class="keyword">if</span> (a.getGroup().toString().isEmpty()) {
+                <span class="keyword">return</span> <span class="integer">1</span>;
+            } <span class="keyword">else</span> <span class="keyword">if</span> (b.getGroup().toString().isEmpty()) {
+                <span class="keyword">return</span> -<span class="integer">1</span>;
+            } <span class="keyword">else</span> {
+                <span class="keyword">return</span> a.getGroup().toString().compareToIgnoreCase(b.getGroup().toString());
+            }
+        };
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As you can see,
+5 <code>Comparator</code> objects are constructed for each valid parameter to compare the list of contacts
+and order according to natural order and null last.+</p>
+</div>
+<div class="paragraph">
+<p><em>Birthday</em> is ordered by yyyy-mm-dd instead of the dd-mm-yyyy format.<br>
+This is achieved by reformatting the
+<em>Birthday</em> string as shown:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">     <span class="directive">public</span> <span class="predefined-type">String</span> getReformatDate() {
+         <span class="keyword">if</span> (value.isEmpty()) {
+             <span class="keyword">return</span> <span class="predefined-constant">null</span>;
+         }
+         <span class="keyword">return</span> <span class="keyword">new</span> <span class="predefined-type">StringBuilder</span>().append(value.substring(<span class="integer">6</span>, <span class="integer">10</span>)).append(value.substring(<span class="integer">3</span>, <span class="integer">5</span>))
+                 .append(value.substring(<span class="integer">0</span>, <span class="integer">2</span>)).toString();
+     }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Person(s) with empty <em>Birthday</em> field will be sorted to the last.</p>
+</div>
+<div class="paragraph">
+<p>Suppose that the user has just launched the application and no previous <code>orderCommand</code> has been called. The persons will
+be listed according to the default ordering, in order of last added (Last contact added will appear as the last in the list).</p>
+</div>
+<div class="paragraph">
+<p>The user executes another <code>orderCommand</code> by typing <code>order name</code>, to view the list of contacts ordered in alphabetical order
+based on the <code>Name</code> field of a person. With valid input the list of contacts will be ordered accordingly and
+the ordered list will be shown.</p>
+</div>
+<div class="paragraph">
+<p>The user executes another command by typing <code>order tag name</code> to order the list by <code>Tag</code> first then <code>Name</code> of the person.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+If the order command fails its execution due to invalid order parameter, the list of contact will
+not be ordered.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The following sequence diagram shows how the order operation works:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/OrderCommand_SequenceDiagram.png" alt="OrderCommand SequenceDiagram" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>The following activity diagram models what happened when <code>OrderCommand</code> is executed.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/OrderCommand_ActivityDiagram.png" alt="OrderCommand ActivityDiagram" width="400">
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations"><a class="link" href="#design-considerations">Design Considerations</a></h4>
+<div class="paragraph">
+<p><strong>Aspect:</strong> Implementation of sorting algorithm<br>
+<strong>Alternative 1 (current choice):</strong> Sort method inherited from List Interface with specified comparator<br>
+<strong>Pros:</strong> Easy to implement and has the advantage of mergesort.<br>
+<strong>Alternative 2:</strong> Implement the sorting with quicksort algorithm<br>
+<strong>Pros:</strong> Able to perform sorting faster than mergesort.<br>
+<strong>Cons:</strong> Not stable and tedious to implement.</p>
+</div>
+<hr>
+<hr>
+</div>
+<div class="sect3">
+<h4 id="enhancement-added-group"><a class="link" href="#enhancement-added-group">Enhancement Added: Group</a></h4>
+<div class="paragraph">
+<p>Added Group command to group one or multiple persons in a specified group and to show the
+name of existing groups.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="external-behavior-2"><a class="link" href="#external-behavior-2">External behavior</a></h4>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="group-person-s-code-group-code-since-v1-4"><a class="link" href="#group-person-s-code-group-code-since-v1-4">Group person(s) : <code>group</code> - Since V1.4</a></h3>
+<div class="paragraph">
+<p>Grouping the person(s) in address book or view the existing groups.<br>
+Format: <code>group INDEX [MORE_INDEX] g/GROUP_NAME</code><br>
+<code>group showall</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Group the person(s) at the specified <code>INDEX(ES)</code>. The index refers to the index number shown in the last contact listing.
+The index <strong>must be a positive integer</strong> 1, 2, 3, &#8230;&#8203;</p>
+</li>
+<li>
+<p>Group name can take anyform and must not be more than 30 characters.</p>
+</li>
+<li>
+<p>Each contact can only be grouped into <em>one</em> group.</p>
+</li>
+<li>
+<p>Existing group will be updated to the input group.</p>
+</li>
+<li>
+<p>You can remove the person(s)' group by typing <code>g/</code> without specifying any group after it.</p>
+</li>
+<li>
+<p>To group a number of persons, each index should be separated by a single space.</p>
+</li>
+<li>
+<p>The parameter <code>showall</code> is case insensitive.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>group 2 g/Family</code><br>
+Group the 2nd person in the current list of address book to group <code>Family</code>.<br></p>
+</li>
+<li>
+<p><code>group 1 3 4 5 g/NUS</code><br>
+Group the 1st, 3rd, 4th and 5th persons to group <code>NUS</code>.</p>
+</li>
+<li>
+<p><code>group showall</code><br>
+Show the name of existing groups in the command feedback box, on top of the calender.</p>
+</li>
+</ul>
+</div>
+<hr>
+<div class="sect3">
+<h4 id="justification-2"><a class="link" href="#justification-2">Justification</a></h4>
+<div class="paragraph">
+<p>Grouping is another fundamental unit in any organiser application.
+The function of grouping is imperative in TunedIn and allows user to
+classify the contacts into different category and thus more organised.
+The users are also able to specified the group name with no restriction on special characters.
+Additionally, it also consists of a command “showall” which displays all the group names in the feedback box, to allow
+users to check on the existing group easily and readily.
+These improves the user’s experience and achieve our goal in making TunedIn easy to use.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="implementation-2"><a class="link" href="#implementation-2">Implementation</a></h4>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="group-mechanism"><a class="link" href="#group-mechanism">Group mechanism</a></h3>
+<div class="paragraph">
+<p>The group mechanism is implemented by the <code>GroupCommand</code> and <code>GroupCommandParser</code> in the Logic component.
+The group mechanism is facilitated by the <code>UniquePersonList</code> and <code>UniqueGroupList</code>, which resides inside the <code>Addressbook</code>.
+It supports adding a custom group to a number of contacts by utilizing the CLI commands in the TunedIn application.
+The group mechanism also inherit from the <code>UndoableCommands</code>.</p>
+</div>
+<div class="paragraph">
+<p>In order to group persons, a new class <code>Group</code> is implemented and has a composition association with <code>Person</code>.
+A <code>Person</code> consist of the <code>Group</code> object.
+Group is optional, person is allow to have empty group. The following diagram shows the relationship between
+<code>Person</code> and <code>Group</code>.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/GroupAndPerson.png" alt="GroupAndPerson" width="400">
+</div>
+</div>
+<div class="paragraph">
+<p>A <code>UniqueGroupList</code> is also implemented to keep track of the existing groups.
+It is a list of <code>Group</code> that enforces no nulls and uniqueness between its elements and
+supports a set of list operations.</p>
+</div>
+<div class="paragraph">
+<p>The implementation of the <code>Group</code> command constructor is shown below :<br></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">    <span class="directive">public</span> GroupCommand(<span class="predefined-type">List</span>&lt;Index&gt; indexes, <span class="predefined-type">String</span> group) {
+        requireNonNull(indexes);
+        requireNonNull(group);
+        <span class="local-variable">this</span>.indexes = indexes;
+        <span class="local-variable">this</span>.group = group;
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As you can see from the implementation, Group command requires two type of no null parameters
+which are a list of <em>Index</em> and  The first parameter provide the indexes of person(s) to be grouped. The
+second input in the type of <code>Group</code> stores the group name specified by the user or a <em>showall</em> <code>String</code> to view
+the existing group names. Before a new instance of <code>GroupCommand</code> is being created,
+the <code>GroupCommandParser</code> will ensure that the input from the user is valid and is parsed to <code>GroupCommand</code> in
+correct data type.</p>
+</div>
+<div class="paragraph">
+<p>The execution of the command is done in the following method :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">    <span class="directive">public</span> CommandResult executeUndoableCommand() <span class="directive">throws</span> CommandException {
+        CommandResult commandResult;
+        <span class="keyword">if</span> (group.equalsIgnoreCase(SHOW_ALL_GROUP)) {
+            commandResult = showAllGroupName();
+        } <span class="keyword">else</span> <span class="keyword">if</span> (indexes.size() &gt; <span class="integer">0</span>) {
+            commandResult = setGroupToPerson();
+        } <span class="keyword">else</span> {
+            <span class="keyword">throw</span> <span class="keyword">new</span> CommandException(MESSAGE__WRONG_SHOW_ALL_PARAMETER);
+        }
+        <span class="keyword">return</span> commandResult;
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As you can see from the implementation, the method will either call the <strong>showAllGroupName()</strong> or the
+<strong>setGroupToPerson</strong> to show the existing group names or to set the specified person(s) to a group.</p>
+</div>
+<div class="paragraph">
+<p><strong>showAllGroupName()</strong> is as shown :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">    <span class="directive">private</span> CommandResult showAllGroupName() {
+        <span class="keyword">return</span> <span class="keyword">new</span> CommandResult(<span class="string"><span class="delimiter">&quot;</span><span class="content">Groups:  </span><span class="delimiter">&quot;</span></span> + model.getGroupList().toString()
+                .replaceAll(<span class="string"><span class="delimiter">&quot;</span><span class="char">\\</span><span class="content">[</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span>).replaceAll(<span class="string"><span class="delimiter">&quot;</span><span class="char">\\</span><span class="content">]</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span>));
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <strong>mode.getGroupList()</strong> will eventually call the <strong>asObservableList()</strong> in the <code>UniqueGroupList</code> which
+returns back a list of group names.</p>
+</div>
+<div class="paragraph">
+<p>Setting the group to person is as shown. It replaces the target person with a replicate of the same person that has an additional group field.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">    <span class="directive">private</span> CommandResult setGroupToPerson() <span class="directive">throws</span> CommandException {
+        <span class="predefined-type">List</span>&lt;ReadOnlyPerson&gt; lastShownList = model.getFilteredPersonList();
+        <span class="keyword">for</span> (Index index : indexes) {
+            <span class="keyword">if</span> (index.getZeroBased() &gt;= lastShownList.size()) {
+                <span class="keyword">throw</span> <span class="keyword">new</span> CommandException(<span class="string"><span class="delimiter">&quot;</span><span class="content">Index </span><span class="delimiter">&quot;</span></span> + index.toString() + <span class="string"><span class="delimiter">&quot;</span><span class="content"> is invalid!</span><span class="delimiter">&quot;</span></span>);
+            }
+            ReadOnlyPerson personToGroup = lastShownList.get(index.getZeroBased());
+            <span class="keyword">try</span> {
+                Person editedPerson = <span class="keyword">new</span> Person(personToGroup.getName(), personToGroup.getPhone(),
+                        personToGroup.getEmail(), personToGroup.getAddress(), personToGroup.getBirthday(),
+                        <span class="keyword">new</span> <span class="predefined-type">Group</span>(group), personToGroup.getRemark(), personToGroup.getTags());
+                model.updatePerson(personToGroup, editedPerson);
+            } <span class="keyword">catch</span> (DuplicatePersonException dpe) {
+                <span class="keyword">throw</span> <span class="keyword">new</span> CommandException(MESSAGE_DUPLICATE_PERSON);
+            } <span class="keyword">catch</span> (IllegalValueException ive) {
+                <span class="keyword">throw</span> <span class="keyword">new</span> CommandException(ive.getMessage());
+            } <span class="keyword">catch</span> (PersonNotFoundException pnfe) {
+                <span class="keyword">throw</span> <span class="keyword">new</span> CommandException(<span class="string"><span class="delimiter">&quot;</span><span class="content">The target person cannot be missing</span><span class="delimiter">&quot;</span></span>);
+            }
+        }
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        <span class="keyword">return</span> <span class="keyword">new</span> CommandResult(generateSuccessMessage());
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>After a series of function calls, the <strong>model.updatePerson()</strong> method will call the <strong>updateMasterGroupList()</strong> in the <code>AddressBook</code>
+, and call <strong>setPerson()</strong> method in the <code>UniquePersonList</code>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<code>UniquePersonList</code> deals with the list of persons that enforces uniqueness between its elements
+and supports a set of list operations. The following diagram shows the UML diagram of the class.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The <strong>updateMasterGroupList()</strong> method will update the list of <code>Group</code> if the a new group is added or an old
+group with no person.</p>
+</div>
+<div class="paragraph">
+<p>It is implemented in the following way :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">    <span class="directive">private</span> <span class="type">void</span> updateMasterGroupList(<span class="predefined-type">Group</span> prevGroup) {
+        <span class="type">boolean</span> isGroupPresent = <span class="predefined-constant">false</span>;
+        <span class="keyword">for</span> (Person p : persons) {
+            <span class="keyword">if</span> (p.getGroup().value.equals(prevGroup)) {
+                isGroupPresent = <span class="predefined-constant">true</span>;
+            }
+        }
+        <span class="keyword">if</span> (!isGroupPresent) {
+            groups.delete(prevGroup);
+        }
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <strong>setPerson()</strong> method will check the validity of the target person and replicated person. It will
+only replace the target person if the target person exist and the replicated person is not a duplicate
+of another existing person.</p>
+</div>
+<div class="paragraph">
+<p><strong>setPerson()</strong> is implemented as shown :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">    <span class="directive">public</span> <span class="type">void</span> setPerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
+            <span class="directive">throws</span> DuplicatePersonException, PersonNotFoundException {
+        requireNonNull(editedPerson);
+        <span class="type">int</span> index = internalList.indexOf(target);
+        <span class="keyword">if</span> (index == -<span class="integer">1</span>) {
+            <span class="keyword">throw</span> <span class="keyword">new</span> PersonNotFoundException();
+        }
+        <span class="keyword">if</span> (!target.equals(editedPerson) &amp;&amp; internalList.contains(editedPerson)) {
+            <span class="keyword">throw</span> <span class="keyword">new</span> DuplicatePersonException();
+        }
+        internalList.set(index, <span class="keyword">new</span> Person(editedPerson));
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Suppose that the user has just launched the application.
+Assuming a valid addressbook xml file exists (with numerous person data in it),
+the <code>UniquePersonList</code> and <code>UniqueGroupList</code> will start storing a list of Person object with correspondence to the xml file.
+Each person will either have a <code>Group</code> or an empty <code>Group</code>.</p>
+</div>
+<div class="paragraph">
+<p>To view existing groups :<br>
+The user executes a <code>GroupCommand</code> by calling <code>group showall</code>, to view the existing groups. The name of the
+groups will be displayed in the command feedback box.</p>
+</div>
+<div class="paragraph">
+<p>To set group to person(s) :<br>
+The user executes a <code>GroupCommand</code> by calling <code>group 1 2 g/TEST1</code>, to set the 1st and 2nd person’s group to "TEST1" in the address book.
+The existing <code>group</code> will be replaced by the user input "TEST1" and the Persons’ object will be updated.</p>
+</div>
+<div class="paragraph">
+<p>The user then executes another <code>GroupCommand</code> by calling `group 2 3 4 5 g/ to ungroup the 2nd to 5th person.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+If the group command fails its execution due to invalid index(es), the list of person(s) will not be grouped.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The following sequence diagram shows how the group operation works to show the names of all existing
+groups.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/GroupCommand_SequenceDiagramSA.png" alt="GroupCommand SequenceDiagramSA" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>The following sequence diagram shows how the group operation works to group person(s):</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/GroupCommand_SequenceDiagram.png" alt="GroupCommand SequenceDiagram" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>The following activity diagram shows models what happened when <code>GroupCommand</code> is executed.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/GroupCommand_ActivityDiagram.png" alt="GroupCommand ActivityDiagram" width="400">
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-2"><a class="link" href="#design-considerations-2">Design Considerations</a></h4>
+<div class="paragraph">
+<p><strong>Aspect:</strong> Implementation of setting group to person<br>
+<strong>Alternative 1 (current choice):</strong> Replace and replicate the same <code>Person</code> object with new <code>Group</code> attribute<br>
+<strong>Pros:</strong> Make use of the existing method to update the person, no new method is needed to be
+implement.<br>
+<strong>Cons:</strong> Replacing and replicate the person is unnecessary as group can be set to person directly.<br>
+<strong>Alternative 2:</strong> Set <code>Group</code> to <code>Person</code> with setter method in <code>Person</code> class<br>
+<strong>Pros:</strong> Easy to implement.+
+<strong>Cons:</strong> Implemented code is highly similar to existing method to update a person, since it is supposed
+to check for exceptions and update associated group list.</p>
+</div>
+<div class="paragraph">
+<p><strong>Aspect:</strong> Update the list of existing groups<br>
+<strong>Alternative 1 (current choice):</strong> Update the list whenever a person&#8217;s group is being changed. Check then
+delete the person&#8217;s previous group if it has no member.+
+<strong>Pros:</strong> The list of groups id always readily updated<br>
+<strong>Cons:</strong> Has to iterate through the entire list of person to determine if the previous group is empty.<br>
+<strong>Alternative 2:</strong> Use Map to store the existing group and the number of associated persons<br>
+<strong>Pros:</strong> Easy to determine if the group is empty and easy to update the map of groups.<br>
+<strong>Cons:</strong> Maybe more tedious to implement.</p>
+</div>
+<hr>
+</div>
+<div class="sect3">
+<h4 id="enhancement-added-list-group"><a class="link" href="#enhancement-added-list-group">Enhancement Added: List(group)</a></h4>
+<div class="paragraph">
+<p>Enhanced List command to view a list of persons by specified group name.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="external-behavior-3"><a class="link" href="#external-behavior-3">External behavior</a></h4>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="listing-all-persons-code-list-code-since-v1-0"><a class="link" href="#listing-all-persons-code-list-code-since-v1-0">Listing all persons : <code>list</code> - Since V1.0</a></h3>
+<div class="paragraph">
+<p>Shows a list of all persons or a specified group of persons in the address book.<br>
+Format: <code>list [g/GROUP_NAME]</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>The parameter <code>g/GROUP_NAME</code> is optional.</p>
+</li>
+<li>
+<p>The <code>GROUP_NAME</code> is case sensitive.</p>
+</li>
+<li>
+<p>If no parameter is specified, a list of all persons will be shown.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+This command is a view only command and ordering of persons in the listing of group is not reflected.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>list</code></p>
+</li>
+<li>
+<p><code>list g/Friends</code></p>
+</li>
+</ul>
+</div>
+<hr>
+<div class="sect3">
+<h4 id="justification-3"><a class="link" href="#justification-3">Justification</a></h4>
+<div class="paragraph">
+<p>List can be used to display the entire list of contacts.
+It is further enhanced to complement the function of <code>Group</code> by allowing user to
+view a list of contacts by group. Instead of implementing the viewing of a group of contacts,
+it is more intuitive for user to type <code>list</code> command followed by the group name. Hence, making the command
+intuitive for users.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="implementation-3"><a class="link" href="#implementation-3">Implementation</a></h4>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="list-group-mechanism"><a class="link" href="#list-group-mechanism">List(group) mechanism</a></h3>
+<div class="paragraph">
+<p>The list group mechanism is an enhanced feature of the original <code>ListCommand</code> and <code>ListCommandParser</code>.
+It is facilitated by the <code>ContainsKeywordsPredicate</code> in the <code>Person &gt; Model</code> package and
+a <code>FilteredList</code> of <code>ReadOnlyPerson</code>, which resides inside the <code>ModelManager</code>.
+It allows the user to view a list of person in a user specified group.</p>
+</div>
+<div class="paragraph">
+<p>The constructor of the enhanced <code>ListCommand</code> requires a <code>String</code> parameter <em>predicate</em> as shown :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">    <span class="directive">public</span> ListCommand(<span class="predefined-type">String</span> predicate) {
+        <span class="local-variable">this</span>.listParameter = predicate;
+        predicate = predicate.isEmpty() ? predicate : predicate.substring(<span class="integer">2</span>).trim();
+        <span class="local-variable">this</span>.predicate = <span class="keyword">new</span> ContainsKeywordsPredicate(<span class="predefined-type">Arrays</span>.asList(predicate));
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As you can see a new <code>ContainsKeywordsPredicate()</code> object is instantiated to facilitate the filtering of the list of
+persons.</p>
+</div>
+<div class="paragraph">
+<p><code>ContainsKeywordsPredicate</code> implements the <code>Predicate</code> interface and test if a person&#8217;s group or other fields
+matches any of the keywords passed in. The code snippets follows show how the group keyword is being matched.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">          <span class="keyword">if</span> (predicateType == <span class="string"><span class="delimiter">'</span><span class="content">g</span><span class="delimiter">'</span></span>) {
+              <span class="keyword">assert</span> keywords.size() == <span class="integer">1</span>;
+              <span class="keyword">return</span> (person.getGroup().value.equals(keywords.get(<span class="integer">0</span>).toString()));
+          }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The execution of command is implemented as shown :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">    <span class="directive">public</span> CommandResult execute() {
+        <span class="keyword">if</span> (listParameter.isEmpty()) {
+            model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+            <span class="keyword">return</span> <span class="keyword">new</span> CommandResult(MESSAGE_LIST_ALL_SUCCESS);
+        }
+        model.updateFilteredPersonList(predicate);
+        <span class="keyword">if</span> (model.getFilteredPersonList().size() == <span class="integer">0</span>) {
+            <span class="keyword">return</span> <span class="keyword">new</span> CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size())
+                    + <span class="string"><span class="delimiter">&quot;</span><span class="content"> </span><span class="delimiter">&quot;</span></span> + MESSAGE_LIST_WRONG_PARAMETER);
+        }
+        <span class="keyword">return</span> <span class="keyword">new</span> CommandResult(MESSAGE_LIST_GROUP_SUCCESS + listParameter.substring(<span class="integer">2</span>).trim());
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As seen from the implementation, the <code>ListCommand</code> will serve its original function to show a list of all persons if
+the <em>listParameter</em> is empty, and get a list of filtered person if otherwise.</p>
+</div>
+<div class="paragraph">
+<p>The <strong>mode.updateFilteredPersonList()</strong> will call the <em>setPredicate</em> method of the <code>FilteredList</code> and update the list
+persons displayed to user.</p>
+</div>
+<div class="paragraph">
+<p>Suppose that the user has just launched the application. A list of all persons will be shown.</p>
+</div>
+<div class="paragraph">
+<p>The user executes a <code>ListCommand</code> by calling <code>list g/groupname</code> to view a group of persons. The persons grouped in the specified will
+be displayed in the contact tab.</p>
+</div>
+<div class="paragraph">
+<p>The user executes another <code>ListCommand</code> by calling <code>list</code>, to view all persons stored in TunedIn.
+The list of all persons will be displayed in the contact tab.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+If the list command fails its execution due to non-existence group, the current list view will remained unchanged.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The following sequence diagram shows how the list operation works:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/ListCommand_SequenceDiagram.png" alt="ListCommand SequenceDiagram" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>The following activity diagram models what happened when <code>ListCommand</code> is executed.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/ListCommand_ActivityDiagram.png" alt="ListCommand ActivityDiagram" width="400">
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-3"><a class="link" href="#design-considerations-3">Design Considerations</a></h4>
+<div class="paragraph">
+<p><strong>Aspect:</strong> Getting a list of persons in a particular group<br>
+<strong>Alternative 1 (current choice):</strong> Using FilteredList and Predicate<br>
+<strong>Pros:</strong> Make use of the existing logic and methods <br>
+<strong>Cons:</strong> Order Command dose not work directly on this filtered list<br>
+<strong>Alternative 2:</strong> Store a separate list of persons per group in xml format<br>
+<strong>Pros:</strong> Less complex logic, commands performed on this list will be saved and reflected<br>
+<strong>Cons:</strong> Implementation can be more tedious and duplicated records of persons will take up extra memory.</p>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="enhancement-proposed"><a class="link" href="#enhancement-proposed">Enhancement Proposed:</a></h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Enhance Group command to show the list the existing group together with the name of group members
+and the respective number of members.<br></p>
+</li>
+<li>
+<p>Add auto complete function to enhance the experience of CLI application.<br></p>
+</li>
+<li>
+<p>Add relationship field to Person and Relationship command to show a relationship map between the contacts.<br>
+include::../UserGuide.adoc[tag=relationship]<br></p>
+</li>
+<li>
+<p>Set reminders to notify users about birthdays and events.<br>
+=== Reminder Map : <code>remind</code> - Coming in V2.0</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Allows the user to set reminders to be notified on important dates and events.
+Format: <code>remind d/DATE t/TIME e/EVENT</code></p>
+</div>
+<div class="paragraph">
+<p>Examples:
+* <code>remind d/13-11-2017 t/2359 e/Party</code></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="issue-reported"><a class="link" href="#issue-reported">Issue Reported:</a></h3>
+<div class="paragraph">
+<p><strong>Bug</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>[<a href="https://github.com/CS2103AUG2017-W15-B2/main/issues/58">CS2103AUG2017-W15-B2-#58</a>]</p>
+</li>
+<li>
+<p>[<a href="https://github.com/CS2103AUG2017-W15-B2/main/issues/62">CS2103AUG2017-W15-B2-#62</a>]</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>User guide</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>[<a href="https://github.com/CS2103AUG2017-W15-B2/main/issues/64">CS2103AUG2017-W15-B2-#64</a>]</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="other-contributions"><a class="link" href="#other-contributions">Other contributions</a></h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Set Email, Birthday to be optional fields.
+(Pull requests: [<a href="https://github.com/CS2103AUG2017-T14-B2/main/pull/71">#71</a>] )</p>
+</li>
+<li>
+<p>Updated the person card with birthday (Pull requests: [<a href="https://github.com/CS2103AUG2017-T14-B2/main/pull/15">#15</a>])</p>
+</li>
+<li>
+<p>Updated the person card with group ( Pull requests: [<a href="https://github.com/CS2103AUG2017-T14-B2/main/pull/143">#143</a>])</p>
+</li>
+<li>
+<p>Updated the architecture diagram of the Model and Storage component (Pull requests:
+[<a href="https://github.com/CS2103AUG2017-T14-B2/main/pull/155/commits/1bd859b9a1cedb17641f6fa0fe1d6e6520d529e8">#155</a>])</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2017-11-12 22:41:08 +08:00
+</div>
+</div>
+</body>
+</html>

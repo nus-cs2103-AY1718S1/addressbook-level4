@@ -1,0 +1,178 @@
+= Keloysius Mak - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: TunedIn
+TunedIn is a free-to-use application that brings to you the power of a full-fledged command line personal
+organizer, bundled together with a user-friendly interface that keeps all of your information easily accessible and
+at your fingertips.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T14-B2/main/blob/master/collated/main/keloysiusmak.md]
+[https://github.com/CS2103AUG2017-T14-B2/main/blob/master/collated/test/keloysiusmak.md]
+
+=== Enhancement Added: Aliases
+
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[tag=alias]
+
+---
+
+==== Justification
+
+Themes make application more visually appealing, enhancing the user experience and user satisfaction when using the
+TunedIn application.
+
+==== Implementation
+
+---
+include::../DeveloperGuide.adoc[tag=alias]
+---
+
+=== Enhancement Added: Theme
+
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[tag=theme]
+
+---
+
+==== Justification
+
+Aliases make operating the application easier and quicker, as users can set their own custom defined
+aliases which they can easily remember, and execute commands using our CLI.
+
+==== Implementation
+
+---
+include::../DeveloperGuide.adoc[tag=theme]
+---
+
+=== Enhancement Added: Transfer
+
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[tag=transfer]
+
+---
+
+==== Justification
+
+Transfer allows users to transfer data from device to device seamlessly, without having to worry about the loss
+of data.
+
+==== Implementation
+
+---
+include::../DeveloperGuide.adoc[tag=theme]
+---
+
+=== Enhancement Proposed: Custom Theme
+
+Allowing users to set their own custom themes will allow them to further personalize TunedIn, which fits in with our
+target users, allowing them to add their own dimension for user customizability. On top of that, users are also able to
+ upload and share their themes on TunedInLive, for other users to download and use.
+
+==== External behavior
+
+---
+include::../UserGuide.adoc[tag=customtheme]
+---
+
+==== Justification
+
+The ability for users to set their own theme confers upon them the level of customizability that we hope to achieve
+with TunedIn. Furthermore, by allowing them to download themes from other users, we aim to create a vibrant community
+using TunedIn, extending it to fit their everyday lives.
+
+=== Enhancement Proposed: Facebook Connect
+
+With so many online address books with a plethora of information, it is much easier if we are able to pull data which
+is readily accessible into the address book.
+
+==== External behavior
+
+---
+include::../UserGuide.adoc[tag=connect]
+---
+
+==== Justification
+
+This reduces the need for users to manually enter data sequentially, from existing data that they already have access
+to, such as on Facebook.
+
+=== Enhancement Proposed: Online Backup
+
+Storing data in the cloud is no abstract concept for even the least technologically inclined users, and we intend to
+bring this level of security for users too
+
+==== External behavior
+
+---
+include::../UserGuide.adoc[tag=sync]
+---
+
+==== Justification
+
+With users possibly using TunedIn across multiple devices, the ability to ensure that TunedIn is synchronized across
+multiple devices is of paramount importance to us. Keeping this data backed up in the Cloud, and subsequently pushing
+it across multiple devices, ensures that users have access to their information, accurate anywhere.
+
+=== Enhancement Proposed: Online Backup
+
+Storing data in the cloud is no abstract concept for even the least technologically inclined users, and we intend to
+bring this level of security for users too
+
+==== External behavior
+
+---
+include::../UserGuide.adoc[tag=sync]
+---
+
+==== Justification
+
+With users possibly using TunedIn across multiple devices, the ability to ensure that TunedIn is synchronized across
+multiple devices is of paramount importance to us. Keeping this data backed up in the Cloud, and subsequently pushing
+it across multiple devices, ensures that users have access to their information, accurate anywhere.
+
+=== Issue Reports
+
+==== Design / Functionality Suggestions
+* https://github.com/CS2103AUG2017-F09-B1/main/issues/111[CS2103AUG2017-F09-B1 - #111]
+* https://github.com/CS2103AUG2017-T14-B3/main/issues/81[CS2103AUG2017-T14-B3 - #81]
+* https://github.com/CS2103AUG2017-F09-B1/main/issues/112[CS2103AUG2017-F09-B1 - #112]
+* https://github.com/CS2103AUG2017-T14-B3/main/issues/104[CS2103AUG2017-T14-B3 - #104]
+* https://github.com/CS2103AUG2017-T14-B3/main/issues/105[CS2103AUG2017-T14-B3 - #105]
+
+==== Bugs
+* https://github.com/CS2103AUG2017-F09-B1/main/issues/113[CS2103AUG2017-F09-B1 - Issue #113]
+
+==== Documentation Suggestions
+* https://github.com/CS2103AUG2017-F09-B1/main/issues/114[CS2103AUG2017-F09-B1 - Issue #114]
+
+==== Closing Issues
+* https://github.com/CS2103AUG2017-T14-B2/main/issues/116[CS2103AUG2017-T14-B2 - Issue #116]
+* https://github.com/CS2103AUG2017-T14-B2/main/issues/109[CS2103AUG2017-T14-B2 - Issue #109]
+* https://github.com/CS2103AUG2017-T14-B2/main/issues/107[CS2103AUG2017-T14-B2 - Issue #107]
+* https://github.com/CS2103AUG2017-T14-B2/main/issues/106[CS2103AUG2017-T14-B2 - Issue #106]
+
+=== Other contributions
+
+* Project and Team Lead
+* Design Lead
+* Came up with the design of the application
+* Curated and edited the backgrounds for the application (Pull requests
+https://github.com/CS2103AUG2017-T14-B2/main/pull/61[#61], https://github.com/CS2103AUG2017-T14-B2/main/pull/84[#84])
+* Focus on a unified experience for the users, maintained a cohesive UI
+* Edited teammates work to ensure that the design of the application remains cohesive
+https://github.com/CS2103AUG2017-T14-B2/main/pull/129[#129]
+* Extensively reorganized the ReadMe, User Guide and Developer Guide to reflect our design pedagogy.
+* In charge of issue management on the team repo
+* Collated and organized the Sample Data and Test Script

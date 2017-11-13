@@ -15,6 +15,8 @@ import org.junit.rules.TemporaryFolder;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.alias.exceptions.DuplicateAliasException;
+import seedu.address.model.alias.exceptions.UnknownCommandException;
 
 public class JsonUserPrefsStorageTest {
 
@@ -84,6 +86,10 @@ public class JsonUserPrefsStorageTest {
         userPrefs.setGuiSettings(1000, 500, 300, 100);
         userPrefs.setAddressBookFilePath("addressbook.xml");
         userPrefs.setAddressBookName("TypicalAddressBookName");
+        userPrefs.setEventBookFilePath("eventbook.xml");
+        userPrefs.setEventBookName("TypicalEventBookName");
+        userPrefs.setAliasSettings();
+
         return userPrefs;
     }
 
@@ -125,11 +131,24 @@ public class JsonUserPrefsStorageTest {
         UserPrefs readBack = jsonUserPrefsStorage.readUserPrefs().get();
         assertEquals(original, readBack);
 
-        //Try saving when the file exists
+        //Try saving when the file exists - GUI Settings
         original.setGuiSettings(5, 5, 5, 5);
         jsonUserPrefsStorage.saveUserPrefs(original);
         readBack = jsonUserPrefsStorage.readUserPrefs().get();
         assertEquals(original, readBack);
+
+        try {
+            //Try saving when the file exists - Alias Settings
+            original.setAlias("add", "randomString");
+            jsonUserPrefsStorage.saveUserPrefs(original);
+            readBack = jsonUserPrefsStorage.readUserPrefs().get();
+            assertEquals(original, readBack);
+        } catch (UnknownCommandException e) {
+            throw new AssertionError("Command is unknown", e);
+        } catch (DuplicateAliasException e) {
+            throw new AssertionError("Alias has been set for another command", e);
+        }
+
     }
 
 }

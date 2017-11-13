@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<StackPane xmlns:fx="http://javafx.com/fxml/1" fx:id="ViewAliasWindowRoot" xmlns="http://javafx.com/javafx/8">
+    <stylesheets>
+        <URL value="@DarkTheme.css"/>
+        <URL value="@Extensions.css"/>
+    </stylesheets>
+    <StackPane fx:id="viewAliasListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+</StackPane>

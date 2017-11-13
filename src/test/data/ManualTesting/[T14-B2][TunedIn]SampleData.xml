@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addressbook>
+<persons>
+    <name>Alex Yeoh</name>
+    <phone>87438807</phone>
+    <address>Blk 30 Geylang Street 29, #06-40</address>
+    <birthday>11-10-1996</birthday>
+    <email>alexyeoh@example.com</email>
+    <group></group>
+    <remark></remark>
+    <tagged>friends</tagged>
+</persons>
+<persons>
+    <name>Bernice Yu</name>
+    <phone>99272758</phone>
+    <address>Blk 30 Lorong 3 Serangoon Gardens, #07-18</address>
+    <birthday>11-10-1996</birthday>
+    <email>berniceyu@example.com</email>
+    <group>NUS</group>
+    <remark>Likes to swim.</remark>
+    <tagged>colleagues</tagged>
+    <tagged>friends</tagged>
+</persons>
+<persons>
+    <name>Charlotte Oliveiro</name>
+    <phone>93210283</phone>
+    <address>Blk 11 Ang Mo Kio Street 74, #11-04</address>
+    <birthday>11-10-1996</birthday>
+    <email>charlotte@example.com</email>
+    <group>NUS</group>
+    <remark>As quick as a leopard.</remark>
+    <tagged>neighbours</tagged>
+</persons>
+<persons>
+    <name>David Li</name>
+    <phone>91031282</phone>
+    <address>Blk 436 Serangoon Gardens Street 26, #16-43</address>
+    <birthday>20-10-1998</birthday>
+    <email>lidavid@example.com</email>
+    <group>CCA</group>
+    <remark></remark>
+    <tagged>family</tagged>
+</persons>
+<persons>
+    <name>Irfan Ibrahim</name>
+    <phone>92492021</phone>
+    <address>Blk 47 Tampines Street 20, #17-35</address>
+    <birthday>20-10-1997</birthday>
+    <email>irfan@example.com</email>
+    <group></group>
+    <remark></remark>
+    <tagged>classmates</tagged>
+</persons>
+<persons>
+    <name>Roy Balakrishnan</name>
+    <phone>92624417</phone>
+    <address>Blk 45 Aljunied Street 85, #11-31</address>
+    <birthday>20-10-1998</birthday>
+    <email>royb@example.com</email>
+    <group>CCA</group>
+    <remark></remark>
+    <tagged>colleagues</tagged>
+</persons>
+<persons>
+    <name>Alfian Saat</name>
+    <phone>93300192</phone>
+    <address>Blk 73 Tampines Street 85, #10-221</address>
+    <birthday>03-10-1993</birthday>
+    <email>alfian@example.com</email>
+    <group>CCA</group>
+    <remark></remark>
+    <tagged>colleagues</tagged>
+</persons>
+<persons>
+    <name>Roger Liew</name>
+    <phone>68220011</phone>
+    <address>18 College Avenue East, #04-107A</address>
+    <birthday>05-10-1997</birthday>
+    <email>rogerliew@u.nus.edu</email>
+    <group>Suite</group>
+    <remark></remark>
+</persons>
+<persons>
+    <name>Darren Leong</name>
+    <phone>68220015</phone>
+    <address>18 College Avenue East, #04-107E</address>
+    <birthday>10-11-1995</birthday>
+    <email>darrenleong@u.nus.edu</email>
+    <group>Suite</group>
+    <remark></remark>
+</persons>
+<persons>
+    <name>Atharv Joshi</name>
+    <phone>68220012</phone>
+    <address>18 College Avenue East, #04-107B</address>
+    <birthday>07-05-1997</birthday>
+    <email>atharvjoshi@u.nus.edu</email>
+    <group>Suite</group>
+    <remark></remark>
+</persons>
+<persons>
+    <name>Auyok Sean</name>
+    <phone>68220016</phone>
+    <address>18 College Avenue East, #04-107F</address>
+    <birthday>15-03-1995</birthday>
+    <email>seanauyok@u.nus.edu</email>
+    <group>Suite</group>
+    <remark></remark>
+</persons>
+<persons>
+    <name>Darshini Revichandren</name>
+    <phone>68220001</phone>
+    <address>18 College Avenue East, #04-100A</address>
+    <birthday>25-02-1998</birthday>
+    <email>darshthebest@u.nus.edu</email>
+    <group>Girl Suite</group>
+    <remark></remark>
+</persons>
+<persons>
+    <name>Samantha Yip</name>
+    <phone>68220002</phone>
+    <address>18 College Avenue East, #04-100B</address>
+    <birthday>12-03-1999</birthday>
+    <email>samhamjamyip@u.nus.edu</email>
+    <group>Girl Suite</group>
+    <remark></remark>
+</persons>
+<persons>
+    <name>Carina Lim</name>
+    <phone>68220003</phone>
+    <address>18 College Avenue East, #04-100C</address>
+    <birthday>14-07-1999</birthday>
+    <email>limcarina@u.nus.edu</email>
+    <group>Girl Suite</group>
+    <remark></remark>
+</persons>
+<persons>
+    <name>Sarah Kow</name>
+    <phone>68220004</phone>
+    <address>18 College Avenue East, #04-100D</address>
+    <birthday>30-03-1994</birthday>
+    <email>sarahkow@u.nus.edu</email>
+    <group>Girl Suite</group>
+    <remark></remark>
+</persons>
+<persons>
+    <name>Joyce Foo</name>
+    <phone>68220005</phone>
+    <address>18 College Avenue East, #04-100E</address>
+    <birthday>28-02-1994</birthday>
+    <email>foojoyce@u.nus.edu</email>
+    <group>Girl Suite</group>
+    <remark></remark>
+</persons>
+<persons>
+    <name>Li Xingyi</name>
+    <phone>68220006</phone>
+    <address>18 College Avenue East, #04-100F</address>
+    <birthday>01-07-1998</birthday>
+    <email>xingsli@u.nus.edu</email>
+    <group>Girl Suite</group>
+    <remark></remark>
+</persons>
+<persons>
+    <name>Belinda Chua</name>
+    <phone>98768897</phone>
+    <address>Westwood Ave 3 #03-112</address>
+    <birthday>11-02-1997</birthday>
+    <email>belinda@example.com</email>
+    <group></group>
+    <remark></remark>
+    <tagged>gangoftwo</tagged>
+</persons>
+<persons>
+    <name>Belinda Chua</name>
+    <phone>96654321</phone>
+    <address>Blk 87 Toh Yi Drive #03-99</address>
+    <birthday>30-11-1998</birthday>
+    <email></email>
+    <group></group>
+    <remark></remark>
+</persons>
+<persons>
+    <name>Belinda Chua</name>
+    <phone>87653242</phone>
+    <address>Blk 32 Bukit Batok Ave 4 #09-118</address>
+    <birthday>30-11-1998</birthday>
+    <email>gohhh@example.com</email>
+    <group></group>
+    <remark></remark>
+    <tagged>owesmoney</tagged>
+</persons>
+<tags>colleagues</tags>
+<tags>classmates</tags>
+<tags>neighbours</tags>
+<tags>family</tags>
+<tags>friends</tags>
+<tags>gangoftwo</tags>
+<tags>owesmoney</tags>
+<groups>CCA</groups>
+<groups>NUS</groups>
+<groups>Girl Suite</groups>
+<groups>Suite</groups>
+</addressbook>
+<eventbook>
+<events>
+    <title>Halloween Horror Night 7</title>
+    <description>Night out with friends</description>
+    <location>Univsersal Studio</location>
+    <datetime>13-10-2017 1900</datetime>
+</events>
+<events>
+    <title>NBA Basketball Finals</title>
+    <description>Cavs vs 76ers</description>
+    <location>UTSH</location>
+    <datetime>26-10-2017 0800</datetime>
+</events>
+<events>
+    <title>USProductions</title>
+    <description>Drama Performance</description>
+    <location>YNC Blackbox</location>
+    <datetime>17-10-2017 1200</datetime>
+</events>
+<events>
+    <title>Arsenal vs Chelsea</title>
+    <description>KTBFFH</description>
+    <location>National Stadium</location>
+    <datetime>24-12-2018 1900</datetime>
+</events>
+<events>
+    <title>Wedding of Amber and Deepah</title>
+    <description>Bring Angpao</description>
+    <location>Gardens by the Bay</location>
+    <datetime>01-12-2017 1830</datetime>
+</events>
+<events>
+    <title>Final Exam</title>
+    <description>CS1101S</description>
+    <location>MPSH1</location>
+    <datetime>04-12-2017 1300</datetime>
+</events>
+<events>
+    <title>Final Exam</title>
+    <description>CS1231</description>
+    <location>MPSH2</location>
+    <datetime>04-12-2017 1530</datetime>
+</events>
+<events>
+    <title>Final Exam</title>
+    <description>MA1521</description>
+    <location>MPSH6</location>
+    <datetime>04-12-2017 0800</datetime>
+</events>
+<events>
+    <title>Final Exam</title>
+    <description>LSM1303</description>
+    <location>MPSH4</location>
+    <datetime>04-12-2017 1030</datetime>
+</events>
+</eventbook>

@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.3">
+<title>Keloysius Mak - Project Portfolio</title>
+<link rel="stylesheet" href="../stylesheets/gh-pages.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="../stylesheets/coderay-asciidoctor.css">
+</head>
+<body class="article">
+<div id="header">
+<h1>Keloysius Mak - Project Portfolio</h1>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="project-tunedin"><a class="link" href="#project-tunedin">Project: TunedIn</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>TunedIn is a free-to-use application that brings to you the power of a full-fledged command line personal
+organizer, bundled together with a user-friendly interface that keeps all of your information easily accessible and
+at your fingertips.</p>
+</div>
+<div class="paragraph">
+<p><strong>Code contributed</strong>: [<a href="https://github.com/CS2103AUG2017-T14-B2/main/blob/master/collated/main/keloysiusmak.md" class="bare">https://github.com/CS2103AUG2017-T14-B2/main/blob/master/collated/main/keloysiusmak.md</a>]</p>
+</div>
+<div class="sect2 com/CS2103AUG2017-T14-B2/main/blob/master/collated/test/keloysiusmak md">
+<h3 id="enhancement-added-aliases"><a class="link" href="#enhancement-added-aliases">Enhancement Added: Aliases</a></h3>
+<div class="sect3">
+<h4 id="external-behavior"><a class="link" href="#external-behavior">External behavior</a></h4>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="set-aliases-code-setalias-code-since-v1-2"><a class="link" href="#set-aliases-code-setalias-code-since-v1-2">Set aliases : <code>setalias</code> - Since V1.2</a></h3>
+<div class="paragraph">
+<p>Set alias for a particular command.<br>
+Format: <code>setalias c/COMMAND al/NEW_ALIAS</code></p>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>setalias c/help al/h</code></p>
+</li>
+</ul>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Note that protected aliases cannot be set as aliases. Refer to the Alias Window (F10) to see the list of protected
+aliases</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="viewing-aliases-code-viewalias-code-since-v1-1"><a class="link" href="#viewing-aliases-code-viewalias-code-since-v1-1">Viewing aliases : <code>viewalias</code> - Since V1.1</a></h3>
+<div class="paragraph">
+<p>Shows the list of aliases used, as well as protected aliases.<br>
+Format: <code>viewalias</code></p>
+</div>
+<hr>
+<div class="sect3">
+<h4 id="justification"><a class="link" href="#justification">Justification</a></h4>
+<div class="paragraph">
+<p>Themes make application more visually appealing, enhancing the user experience and user satisfaction when using the
+TunedIn application.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="implementation"><a class="link" href="#implementation">Implementation</a></h4>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="alias-mechanism"><a class="link" href="#alias-mechanism">Alias mechanism</a></h3>
+<div class="paragraph">
+<p>The alias mechanism is facilitated by <code>AliasSettings</code>, which resides inside <code>Commons &gt; Core</code>. It supports the setting of custom aliases for the CLI commands in the TunedIn application, and the utilization of these custom set aliases to execute the command calls.</p>
+</div>
+<div class="paragraph">
+<p><code>AliasSettings</code> only deals with <code>Alias</code> and <code>HashSet</code>.</p>
+</div>
+<div class="paragraph">
+<p>The following diagram shows the inheritance diagram for <code>AliasSettings</code>:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/AliasClassDiagram.png" alt="AliasClassDiagram" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>As you can see from the diagram, <code>AliasSettings</code> stores the custom set aliases for the various commands, and for efficiency, we also store the list of all protected aliases in a HashSet. This <code>AliasSettings</code> is then loaded into the TunedIn application, which is then passed into the AddressBookParser, when determining which commands to execute.</p>
+</div>
+<div class="paragraph">
+<p>The implementation of the constructor for the Alias class is shown below in greater detail. <code>AliasSettings</code> stores individually the <code>Alias</code> object for every programmed function. As you can see, Alias requires the two inputs to be a <code>String</code>. The first input, <code>aliasCommand</code>, stores the default alias for the commands, while the second input stores the custom set alias for the particular command. It is precisely because of this reason that all the default aliases for the commands are set henceforth as protected aliases and cannot be set as an alias for a particular command.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> Alias(<span class="predefined-type">String</span> aliasCommand, <span class="predefined-type">String</span> aliasString) {
+    <span class="keyword">try</span> {
+        requireAllNonNull(aliasCommand, aliasString);
+        <span class="keyword">if</span> (!(aliasCommand <span class="keyword">instanceof</span> <span class="predefined-type">String</span> &amp;&amp; aliasString <span class="keyword">instanceof</span> <span class="predefined-type">String</span>)) {
+            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalValueException(MESSAGE_ALIAS_CONSTRAINTS);
+        }
+        <span class="local-variable">this</span>.aliasCommand = aliasCommand;
+        <span class="local-variable">this</span>.aliasString = aliasString;
+    } <span class="keyword">catch</span> (IllegalValueException e) {
+        ;
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>When AliasSettings are loaded into the AddressBookParser, it is easy to control whether custom aliases are allowed for a particular function. The first shows how a custom alias can be allowed for a particular command, while the second showing the same function, with the alias capabilities removed, allowing only the default alias :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">if</span> (commandWord.equals(AddCommand.COMMAND_WORD)
+        || commandWord.equals(aliasSettings.getAddCommand().getAlias())) {
+    <span class="keyword">return</span> <span class="keyword">new</span> AddCommandParser().parse(arguments);
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">if</span> (commandWord.equals(AddCommand.COMMAND_WORD)) {
+    <span class="keyword">return</span> <span class="keyword">new</span> AddCommandParser().parse(arguments);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Suppose that the user has just launched the application. The <code>AliasSettings</code> will initialize with the default aliases.</p>
+</div>
+<div class="paragraph">
+<p>The user executes a new <code>setalias</code> command by calling <code>setalias c\help al\h</code>, to set the alias for <code>help</code> to 'h'. The private <code>Alias</code> helpCommand variable will be replaced with a new <code>Alias</code> object, initialized with the values of 'help' and 'h'. Because help is a protected alias, it will not be removed from the HashSet, which is then used later to detect for duplicate aliases.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/ReplacingHelpDiagram.png" alt="ReplacingHelpDiagram" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>The user executes another <code>setalias</code> command by calling <code>setalias c\help al\z</code>, to set the alias for <code>help</code> to 'z'. The private <code>Alias</code> helpCommand variable will be replaced again with a new <code>Alias</code> object, initialized with the values of 'help' and 'z'. Because the previously set alias, h, is not a protected alias in the HashSet, it will be replaced with h</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/ReplacingHelpDiagram2.png" alt="ReplacingHelpDiagram2" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>When setting a new alias by calling <code>setalias c\help al\x</code> for example, the proposed new alias is checked within the HashSet for any conflicts. If it exists within the HashSet, no new Alias object will be created.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/FailedReplacingDiagram.png" alt="FailedReplacingDiagram" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>The following sequence diagram shows how the setalias operation works:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/SetAliasSequenceDiagram.png" alt="SetAliasSequenceDiagram" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>The following activity diagram summarize what happens inside the <code>AliasSettings</code> when a user executes a new command:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/SetAliasActivityDiagram.png" alt="SetAliasActivityDiagram" width="200">
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations"><a class="link" href="#design-considerations">Design Considerations</a></h4>
+<div class="paragraph">
+<p><strong>Aspect:</strong> Looking for duplicates of Aliases<br>
+<strong>Alternative 1 (current choice):</strong> Store the list of all used aliases in a HashSet<br>
+<strong>Pros:</strong> Checking whether an alias exists in a HashSet is fast.<br>
+<strong>Cons:</strong> The list stores the same data as the Alias objects, so it takes up marginally more space<br>
+<strong>Alternative 2:</strong> Iterate individually through all the Aliases<br>
+<strong>Pros:</strong> Does not require the creation of additional data structures to store the aliases<br>
+<strong>Cons:</strong> Manually iterating through the list of <code>Alias</code> objects will take a long time.</p>
+</div>
+<hr>
+<div class="paragraph">
+<p><strong>Aspect:</strong> Viewing of currently set aliases<br>
+<strong>Alternative 1 (current choice):</strong> Opens the list of currently set alias in a new window<br>
+<strong>Pros:</strong> Much clearer to see which alias belongs to which command.<br>
+<strong>Cons:</strong> Requires a couple more clicks to view the alias data, and subsequently a couple more clicks to resume regular TunedIn application usage.<br>
+<strong>Alternative 2:</strong> Shows the list of currently set aliases in the current display window.<br>
+<strong>Pros:</strong> Data is obtained instantly.<br>
+<strong>Cons:</strong> It is hard to display in a presentable way the list of currently set aliases in textual format.</p>
+</div>
+<hr>
+<div class="paragraph">
+<p><strong>Aspect:</strong> Data structure to support the AliasSettings<br>
+<strong>Alternative 1 (current choice):</strong> Use the same preferences.json file used to store GuiSettings<br>
+<strong>Pros:</strong> Easy to port settings to another computer. Reduces the risk of file corruption or accidental file deletion.<br>
+<strong>Cons:</strong> Potential to corrupt GuiSettings if AliasSettings are improperly stored.<br>
+<strong>Alternative 2:</strong> Create a separate json file to store <code>AliasSettings</code><br>
+<strong>Pros:</strong> It is a lot clearer to see whether the AliasSettings are stored, and also any corruption of it will not affect the rest of the preferences.<br>
+<strong>Cons:</strong> Creates a separate file for alias settings which could be grouped under the umbrella of preferences.<br>
+---</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="enhancement-added-theme"><a class="link" href="#enhancement-added-theme">Enhancement Added: Theme</a></h3>
+<div class="sect3">
+<h4 id="external-behavior-2"><a class="link" href="#external-behavior-2">External behavior</a></h4>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="set-theme-code-settheme-code-since-v1-4"><a class="link" href="#set-theme-code-settheme-code-since-v1-4">Set theme : <code>settheme</code> - Since V1.4</a></h3>
+<div class="paragraph">
+<p>Set theme for the TunedIn Application.<br>
+Format: <code>settheme THEME_NAME</code></p>
+</div>
+<div class="paragraph">
+<p>Examples:
+* <code>settheme AUTUMN</code></p>
+</div>
+<hr>
+<div class="sect3">
+<h4 id="justification-2"><a class="link" href="#justification-2">Justification</a></h4>
+<div class="paragraph">
+<p>Aliases make operating the application easier and quicker, as users can set their own custom defined
+aliases which they can easily remember, and execute commands using our CLI.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="implementation-2"><a class="link" href="#implementation-2">Implementation</a></h4>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="theme-mechanism"><a class="link" href="#theme-mechanism">Theme mechanism</a></h3>
+<div class="paragraph">
+<p>Themes are an additional layer of configurability for users to make the application personal, which echoes our design
+principles. The TunedIn application comes with four installed curated themes modelled after the four seasons, 'Summer',
+'Winter', 'Spring' and 'Autumn'.</p>
+</div>
+<div class="paragraph">
+<p>Adding new themes are as simple as adding the new image to src &gt; main &gt; resources &gt; images. Images are recommended to
+be at least 1600 by 1200 pixels, 72dpi. Save the image as THEME_NAME.jpg, and similarly update SetThemeCommand.java&#8217;s
+executeUndoableCommand() function with the new THEME_NAME.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">  <span class="keyword">if</span> (!((<span class="local-variable">this</span>.theme.equals(<span class="string"><span class="delimiter">&quot;</span><span class="content">summer</span><span class="delimiter">&quot;</span></span>))
+                  || (<span class="local-variable">this</span>.theme.equals(<span class="string"><span class="delimiter">&quot;</span><span class="content">spring</span><span class="delimiter">&quot;</span></span>))
+                  || (<span class="local-variable">this</span>.theme.equals(<span class="string"><span class="delimiter">&quot;</span><span class="content">winter</span><span class="delimiter">&quot;</span></span>))
+                  || (<span class="local-variable">this</span>.theme.equals(<span class="string"><span class="delimiter">&quot;</span><span class="content">autumn</span><span class="delimiter">&quot;</span></span>)))) {
+        <span class="keyword">return</span> <span class="keyword">new</span> CommandResult(<span class="predefined-type">String</span>.format(Messages.MESSAGE_WRONG_THEME, <span class="local-variable">this</span>.theme));
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The theme mechanism will facilitated by <code>ThemeSettings</code>, which resides inside <code>Commons &gt; Core</code>. It supports the setting
+of custom preset themes for the TunedIn application.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Themes will persist even after closing the app, allowing the user to use the application the way he desires.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-2"><a class="link" href="#design-considerations-2">Design Considerations</a></h4>
+<div class="paragraph">
+<p><strong>Aspect:</strong> Implementation of Theme<br>
+<strong>Alternative 1 (current choice):</strong> Setting predefined themes for the users.<br>
+<strong>Pros:</strong> Users have well-designed themes to begin choosing from, and can enjoy the application without having to worry
+about themes.<br>
+<strong>Cons:</strong> The level of customizability is lowered for the user.<br>
+<strong>Alternative 2:</strong> Let the user upload their own themes<br>
+<strong>Pros:</strong> An increased level of customizability is conferred upon the user.<br>
+<strong>Cons:</strong> Users will have to either resort to clicking to upload the files they require, or manually drag and drop the
+file within a predefined folder in the TunedIn application to upload the file, which goes against our CLI specification.</p>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="enhancement-added-transfer"><a class="link" href="#enhancement-added-transfer">Enhancement Added: Transfer</a></h3>
+<div class="sect3">
+<h4 id="external-behavior-3"><a class="link" href="#external-behavior-3">External behavior</a></h4>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="transfer-code-transfer-code"><a class="link" href="#transfer-code-transfer-code">Transfer : <code>transfer</code></a></h3>
+<div class="paragraph">
+<p>Exports your settings, data and configurations into a ZIP file, along with the installation instructions.<br>
+Format: <code>transfer</code></p>
+</div>
+<hr>
+<div class="sect3">
+<h4 id="justification-3"><a class="link" href="#justification-3">Justification</a></h4>
+<div class="paragraph">
+<p>Transfer allows users to transfer data from device to device seamlessly, without having to worry about the loss
+of data.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="implementation-3"><a class="link" href="#implementation-3">Implementation</a></h4>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="theme-mechanism-2"><a class="link" href="#theme-mechanism-2">Theme mechanism</a></h3>
+<div class="paragraph">
+<p>Themes are an additional layer of configurability for users to make the application personal, which echoes our design
+principles. The TunedIn application comes with four installed curated themes modelled after the four seasons, 'Summer',
+'Winter', 'Spring' and 'Autumn'.</p>
+</div>
+<div class="paragraph">
+<p>Adding new themes are as simple as adding the new image to src &gt; main &gt; resources &gt; images. Images are recommended to
+be at least 1600 by 1200 pixels, 72dpi. Save the image as THEME_NAME.jpg, and similarly update SetThemeCommand.java&#8217;s
+executeUndoableCommand() function with the new THEME_NAME.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">  <span class="keyword">if</span> (!((<span class="local-variable">this</span>.theme.equals(<span class="string"><span class="delimiter">&quot;</span><span class="content">summer</span><span class="delimiter">&quot;</span></span>))
+                  || (<span class="local-variable">this</span>.theme.equals(<span class="string"><span class="delimiter">&quot;</span><span class="content">spring</span><span class="delimiter">&quot;</span></span>))
+                  || (<span class="local-variable">this</span>.theme.equals(<span class="string"><span class="delimiter">&quot;</span><span class="content">winter</span><span class="delimiter">&quot;</span></span>))
+                  || (<span class="local-variable">this</span>.theme.equals(<span class="string"><span class="delimiter">&quot;</span><span class="content">autumn</span><span class="delimiter">&quot;</span></span>)))) {
+        <span class="keyword">return</span> <span class="keyword">new</span> CommandResult(<span class="predefined-type">String</span>.format(Messages.MESSAGE_WRONG_THEME, <span class="local-variable">this</span>.theme));
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The theme mechanism will facilitated by <code>ThemeSettings</code>, which resides inside <code>Commons &gt; Core</code>. It supports the setting
+of custom preset themes for the TunedIn application.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Themes will persist even after closing the app, allowing the user to use the application the way he desires.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-3"><a class="link" href="#design-considerations-3">Design Considerations</a></h4>
+<div class="paragraph">
+<p><strong>Aspect:</strong> Implementation of Theme<br>
+<strong>Alternative 1 (current choice):</strong> Setting predefined themes for the users.<br>
+<strong>Pros:</strong> Users have well-designed themes to begin choosing from, and can enjoy the application without having to worry
+about themes.<br>
+<strong>Cons:</strong> The level of customizability is lowered for the user.<br>
+<strong>Alternative 2:</strong> Let the user upload their own themes<br>
+<strong>Pros:</strong> An increased level of customizability is conferred upon the user.<br>
+<strong>Cons:</strong> Users will have to either resort to clicking to upload the files they require, or manually drag and drop the
+file within a predefined folder in the TunedIn application to upload the file, which goes against our CLI specification.</p>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="enhancement-proposed-custom-theme"><a class="link" href="#enhancement-proposed-custom-theme">Enhancement Proposed: Custom Theme</a></h3>
+<div class="paragraph">
+<p>Allowing users to set their own custom themes will allow them to further personalize TunedIn, which fits in with our
+target users, allowing them to add their own dimension for user customizability. On top of that, users are also able to
+ upload and share their themes on TunedInLive, for other users to download and use.</p>
+</div>
+<div class="sect3">
+<h4 id="external-behavior-4"><a class="link" href="#external-behavior-4">External behavior</a></h4>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="create-theme-code-createtheme-code-coming-in-v2-0"><a class="link" href="#create-theme-code-createtheme-code-coming-in-v2-0">Create Theme : <code>createtheme</code> - Coming in V2.0</a></h3>
+<div class="paragraph">
+<p>Creates a new theme using a URL.<br>
+Format: <code>createtheme t/THEME_NAME u/PIC_URL</code></p>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>create t/favourite u/http://zhkphoto.com/assets/photos/ky-nat_24.jpg</code></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="download-theme-code-downloadtheme-code-coming-in-v2-0"><a class="link" href="#download-theme-code-downloadtheme-code-coming-in-v2-0">Download Theme : <code>downloadtheme</code> - Coming in V2.0</a></h3>
+<div class="paragraph">
+<p>Downloadss a theme to TunedIn Themes repository.<br>
+Format: <code>downloadtheme t/TUNEDIN_THEME_NAME</code></p>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>downloadtheme t/keloy_favourite</code></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="export-theme-code-exporttheme-code-coming-in-v2-0"><a class="link" href="#export-theme-code-exporttheme-code-coming-in-v2-0">Export Theme : <code>exporttheme</code> - Coming in V2.0</a></h3>
+<div class="paragraph">
+<p>Exports a theme to TunedIn Themes repository for other users to download and use.<br>
+Format: <code>exporttheme t/THEME_NAME</code></p>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>exporttheme t/favourite</code>
+---</p>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="justification-4"><a class="link" href="#justification-4">Justification</a></h4>
+<div class="paragraph">
+<p>The ability for users to set their own theme confers upon them the level of customizability that we hope to achieve
+with TunedIn. Furthermore, by allowing them to download themes from other users, we aim to create a vibrant community
+using TunedIn, extending it to fit their everyday lives.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="enhancement-proposed-facebook-connect"><a class="link" href="#enhancement-proposed-facebook-connect">Enhancement Proposed: Facebook Connect</a></h3>
+<div class="paragraph">
+<p>With so many online address books with a plethora of information, it is much easier if we are able to pull data which
+is readily accessible into the address book.</p>
+</div>
+<div class="sect3">
+<h4 id="external-behavior-5"><a class="link" href="#external-behavior-5">External behavior</a></h4>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="connect-with-social-media-code-connect-code-coming-in-v2-0"><a class="link" href="#connect-with-social-media-code-connect-code-coming-in-v2-0">Connect with social media : <code>connect</code> - Coming in V2.0</a></h3>
+<div class="paragraph">
+<p>Connect with Facebook to sync Facebook contacts into the address book.<br>
+Format: <code>connect u/FACEBOOK_EMAIL p/FACEBOOK_PASSWORD</code></p>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>connect u/keloysius@mak.com p/MYFBp4ss</code>
+---</p>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="justification-5"><a class="link" href="#justification-5">Justification</a></h4>
+<div class="paragraph">
+<p>This reduces the need for users to manually enter data sequentially, from existing data that they already have access
+to, such as on Facebook.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="enhancement-proposed-online-backup"><a class="link" href="#enhancement-proposed-online-backup">Enhancement Proposed: Online Backup</a></h3>
+<div class="paragraph">
+<p>Storing data in the cloud is no abstract concept for even the least technologically inclined users, and we intend to
+bring this level of security for users too</p>
+</div>
+<div class="sect3">
+<h4 id="external-behavior-6"><a class="link" href="#external-behavior-6">External behavior</a></h4>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="sync-code-sync-code-coming-in-v2-0"><a class="link" href="#sync-code-sync-code-coming-in-v2-0">Sync : <code>sync</code> - Coming in V2.0</a></h3>
+<div class="paragraph">
+<p>Sync the TunedIn application to your cloud TunedInLive account.<br>
+Format: <code>sync</code>
+---</p>
+</div>
+<div class="sect3">
+<h4 id="justification-6"><a class="link" href="#justification-6">Justification</a></h4>
+<div class="paragraph">
+<p>With users possibly using TunedIn across multiple devices, the ability to ensure that TunedIn is synchronized across
+multiple devices is of paramount importance to us. Keeping this data backed up in the Cloud, and subsequently pushing
+it across multiple devices, ensures that users have access to their information, accurate anywhere.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="enhancement-proposed-online-backup-2"><a class="link" href="#enhancement-proposed-online-backup-2">Enhancement Proposed: Online Backup</a></h3>
+<div class="paragraph">
+<p>Storing data in the cloud is no abstract concept for even the least technologically inclined users, and we intend to
+bring this level of security for users too</p>
+</div>
+<div class="sect3">
+<h4 id="external-behavior-7"><a class="link" href="#external-behavior-7">External behavior</a></h4>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="sync-code-sync-code-coming-in-v2-0-2"><a class="link" href="#sync-code-sync-code-coming-in-v2-0-2">Sync : <code>sync</code> - Coming in V2.0</a></h3>
+<div class="paragraph">
+<p>Sync the TunedIn application to your cloud TunedInLive account.<br>
+Format: <code>sync</code>
+---</p>
+</div>
+<div class="sect3">
+<h4 id="justification-7"><a class="link" href="#justification-7">Justification</a></h4>
+<div class="paragraph">
+<p>With users possibly using TunedIn across multiple devices, the ability to ensure that TunedIn is synchronized across
+multiple devices is of paramount importance to us. Keeping this data backed up in the Cloud, and subsequently pushing
+it across multiple devices, ensures that users have access to their information, accurate anywhere.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="issue-reports"><a class="link" href="#issue-reports">Issue Reports</a></h3>
+<div class="sect3">
+<h4 id="design-functionality-suggestions"><a class="link" href="#design-functionality-suggestions">Design / Functionality Suggestions</a></h4>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://github.com/CS2103AUG2017-F09-B1/main/issues/111">CS2103AUG2017-F09-B1 - #111</a></p>
+</li>
+<li>
+<p><a href="https://github.com/CS2103AUG2017-T14-B3/main/issues/81">CS2103AUG2017-T14-B3 - #81</a></p>
+</li>
+<li>
+<p><a href="https://github.com/CS2103AUG2017-F09-B1/main/issues/112">CS2103AUG2017-F09-B1 - #112</a></p>
+</li>
+<li>
+<p><a href="https://github.com/CS2103AUG2017-T14-B3/main/issues/104">CS2103AUG2017-T14-B3 - #104</a></p>
+</li>
+<li>
+<p><a href="https://github.com/CS2103AUG2017-T14-B3/main/issues/105">CS2103AUG2017-T14-B3 - #105</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="bugs"><a class="link" href="#bugs">Bugs</a></h4>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://github.com/CS2103AUG2017-F09-B1/main/issues/113">CS2103AUG2017-F09-B1 - Issue #113</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="documentation-suggestions"><a class="link" href="#documentation-suggestions">Documentation Suggestions</a></h4>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://github.com/CS2103AUG2017-F09-B1/main/issues/114">CS2103AUG2017-F09-B1 - Issue #114</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="closing-issues"><a class="link" href="#closing-issues">Closing Issues</a></h4>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://github.com/CS2103AUG2017-T14-B2/main/issues/116">CS2103AUG2017-T14-B2 - Issue #116</a></p>
+</li>
+<li>
+<p><a href="https://github.com/CS2103AUG2017-T14-B2/main/issues/109">CS2103AUG2017-T14-B2 - Issue #109</a></p>
+</li>
+<li>
+<p><a href="https://github.com/CS2103AUG2017-T14-B2/main/issues/107">CS2103AUG2017-T14-B2 - Issue #107</a></p>
+</li>
+<li>
+<p><a href="https://github.com/CS2103AUG2017-T14-B2/main/issues/106">CS2103AUG2017-T14-B2 - Issue #106</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="other-contributions"><a class="link" href="#other-contributions">Other contributions</a></h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Project and Team Lead</p>
+</li>
+<li>
+<p>Design Lead</p>
+</li>
+<li>
+<p>Came up with the design of the application</p>
+</li>
+<li>
+<p>Curated and edited the backgrounds for the application (Pull requests
+<a href="https://github.com/CS2103AUG2017-T14-B2/main/pull/61">#61</a>, <a href="https://github.com/CS2103AUG2017-T14-B2/main/pull/84">#84</a>)</p>
+</li>
+<li>
+<p>Focus on a unified experience for the users, maintained a cohesive UI</p>
+</li>
+<li>
+<p>Edited teammates work to ensure that the design of the application remains cohesive
+<a href="https://github.com/CS2103AUG2017-T14-B2/main/pull/129">#129</a></p>
+</li>
+<li>
+<p>Extensively reorganized the ReadMe, User Guide and Developer Guide to reflect our design pedagogy.</p>
+</li>
+<li>
+<p>In charge of issue management on the team repo</p>
+</li>
+<li>
+<p>Collated and organized the Sample Data and Test Script</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2017-11-13 01:14:41 +08:00
+</div>
+</div>
+</body>
+</html>

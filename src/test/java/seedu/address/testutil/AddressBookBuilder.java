@@ -2,6 +2,7 @@ package seedu.address.testutil;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
+import seedu.address.model.group.Group;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.tag.Tag;
@@ -9,7 +10,7 @@ import seedu.address.model.tag.Tag;
 /**
  * A utility class to help with building Addressbook objects.
  * Example usage: <br>
- *     {@code AddressBook ab = new AddressBookBuilder().withPerson("John", "Doe").withTag("Friend").build();}
+ * {@code AddressBook ab = new AddressBookBuilder().withPerson("John", "Doe").withTag("Friend").build();}
  */
 public class AddressBookBuilder {
 
@@ -46,6 +47,20 @@ public class AddressBookBuilder {
         }
         return this;
     }
+
+    /**
+     * Parses {@code groupName} into a {@code Group} and adds it to the {@code AddressBook} that we are building.
+     */
+    public AddressBookBuilder withGroup(String groupName) {
+        try {
+            addressBook.addGroup(new Group(groupName));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("groupName is expected to be valid.");
+        }
+        return this;
+    }
+
+
 
     public AddressBook build() {
         return addressBook;

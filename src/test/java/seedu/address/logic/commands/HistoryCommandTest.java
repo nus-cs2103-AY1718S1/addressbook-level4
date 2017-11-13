@@ -5,10 +5,14 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
+import seedu.address.commons.core.Config;
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.Logic;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
+import seedu.address.ui.UiManager;
 
 public class HistoryCommandTest {
     private HistoryCommand historyCommand;
@@ -19,7 +23,11 @@ public class HistoryCommandTest {
         Model model = new ModelManager();
         history = new CommandHistory();
         historyCommand = new HistoryCommand();
-        historyCommand.setData(model, history, new UndoRedoStack());
+        Logic logic = null;
+        Config config = new Config();
+        UserPrefs userPrefs = new UserPrefs();
+        historyCommand.setData(model, history, new UndoRedoStack(), new Config(), new UiManager(logic, config,
+                userPrefs));
     }
 
     @Test

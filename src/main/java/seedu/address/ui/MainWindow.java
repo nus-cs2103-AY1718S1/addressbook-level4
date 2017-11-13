@@ -6,8 +6,12 @@ import com.google.common.eventbus.Subscribe;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.SingleSelectionModel;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
@@ -18,7 +22,9 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.commons.events.ui.ViewAliasRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
@@ -40,10 +46,12 @@ public class MainWindow extends UiPart<Region> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private BrowserPanel browserPanel;
+    private BrowserWindow browserWindow;
     private PersonListPanel personListPanel;
+    private EventListPanel eventListPanel;
     private Config config;
     private UserPrefs prefs;
+    private CalendarViewPane calendarviewPane;
 
     @FXML
     private StackPane browserPlaceholder;
@@ -55,13 +63,26 @@ public class MainWindow extends UiPart<Region> {
     private MenuItem helpMenuItem;
 
     @FXML
+    private MenuItem viewAliasMenuItem;
+
+    @FXML
     private StackPane personListPanelPlaceholder;
+
+    @FXML
+    private StackPane eventListPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
 
     @FXML
+    private StackPane calendarDisplayPlaceholder;
+
+    @FXML
     private StackPane statusbarPlaceholder;
+
+    @FXML
+    private TabPane tabPane;
+
 
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
@@ -72,16 +93,21 @@ public class MainWindow extends UiPart<Region> {
         this.config = config;
         this.prefs = prefs;
 
+        this.logic.setTabPane(tabPane);
+
         // Configure the UI
         setTitle(config.getAppTitle());
         setIcon(ICON);
         setWindowMinSize();
         setWindowDefaultSize(prefs);
+        String image = MainWindow.class.getResource("/images/" + config.getTheme() + ".jpg").toExternalForm();
+        getRoot().setStyle("-fx-background-image: url('" + image + "'); ");
         Scene scene = new Scene(getRoot());
         primaryStage.setScene(scene);
 
         setAccelerators();
         registerAsAnEventHandler(this);
+
     }
 
     public Stage getPrimaryStage() {
@@ -90,10 +116,17 @@ public class MainWindow extends UiPart<Region> {
 
     private void setAccelerators() {
         setAccelerator(helpMenuItem, KeyCombination.valueOf("F1"));
+        setAccelerator(viewAliasMenuItem, KeyCombination.valueOf("F10"));
+    }
+
+    public void setTabPaneSelection(int index) {
+        SingleSelectionModel<Tab> selectionModel = tabPane.getSelectionModel();
+        selectionModel.select(index);
     }
 
     /**
      * Sets the accelerator of a MenuItem.
+     *
      * @param keyCombination the KeyCombination value of the accelerator
      */
     private void setAccelerator(MenuItem menuItem, KeyCombination keyCombination) {
@@ -126,14 +159,22 @@ public class MainWindow extends UiPart<Region> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+        browserWindow = new BrowserWindow();
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
+        eventListPanel = new EventListPanel(logic.getFilteredEventList());
+        eventListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
+
         ResultDisplay resultDisplay = new ResultDisplay();
+        calendarviewPane = new CalendarViewPane(logic);
+        logic.setCalendarView(calendarviewPane.getCalendarPane());
+
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
+        calendarDisplayPlaceholder.getChildren().add(calendarviewPane.getRoot());
+
+        StackPane.setMargin(calendarDisplayPlaceholder.getChildren().get(0), new Insets(5, 0, 0, 0));
 
         StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
@@ -152,6 +193,7 @@ public class MainWindow extends UiPart<Region> {
 
     /**
      * Sets the given image as the icon of the main window.
+     *
      * @param iconSource e.g. {@code "/images/help_icon.png"}
      */
     private void setIcon(String iconSource) {
@@ -192,6 +234,26 @@ public class MainWindow extends UiPart<Region> {
         helpWindow.show();
     }
 
+    /**
+     * Opens the viewalias window.
+     */
+    @FXML
+    public void handleViewAlias() {
+        ViewAliasWindow viewAliasWindow = new ViewAliasWindow(logic.getCommands(), logic, config);
+        viewAliasWindow.show();
+    }
+
+    /**
+     * Opens a browser window showing a google search for the person.
+     */
+    @FXML
+    public void handleWeb(PersonPanelSelectionChangedEvent event) {
+        BrowserWindow browserWindow = new BrowserWindow();
+        browserWindow.loadPersonPage(event.getNewSelection().person);
+        browserWindow.show();
+    }
+
+
     void show() {
         primaryStage.show();
     }
@@ -209,12 +271,24 @@ public class MainWindow extends UiPart<Region> {
     }
 
     void releaseResources() {
-        browserPanel.freeResources();
+        browserWindow.freeResources();
     }
 
     @Subscribe
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
+    }
+
+    @Subscribe
+    private void handleShowViewAliasEvent(ViewAliasRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleViewAlias();
+    }
+
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleWeb(event);
     }
 }

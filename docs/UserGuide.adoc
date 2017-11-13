@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= TunedIn - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,11 +10,34 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-T14-B2/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `The TunedIn Team`      Since: `Sep 2017`      Licence: `MIT`
 
-== Quick Start
+== Introduction
+
+Welcome to TunedIn, a free-to-use application that brings to you the power of a full-fledged command line personal
+organizer, bundled together with a user-friendly interface that keeps all of your information easily accessible and
+at your fingertips.
+
+With TunedIn, we keep things simple yet efficient for you, so you can focus on the things you love.
+
+TunedIn is a free-to-use application. If you paid for this software, contact the seller immediately and request for a
+refund.
+
+== The TunedIn Way
+
+We believe in the freedom of information, and the value of aesthetics. TunedIn is a reflection of what we believe
+strongly in, echoed strongly by our firm intention to keep the application free-to-use. In our development, we put a
+heavy emphasis on our design pedagogy, and we recognize that aesthetics are just as important as functionality. No
+cohesive application functions well without an unified design structure, which is why we allowed for maximum
+customizability in our application as much as possible.
+
+We continue to strive and innovate to bring TunedIn to the next level, in a harmonious and non-invasive way to
+complement our daily lives. Feedback is always welcome at hello@tunedinapp.com, we'd be happy to hear how we can
+improve TunedIn.
+
+== Getting Started
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
 +
@@ -22,8 +45,8 @@ By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
+.  Download the latest `TunedIn.jar` link:{repoURL}/releases[here].
+.  Copy the file to the folder you want to use as the home folder for your TunedIn app.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
 image::Ui.png[width="790"]
@@ -37,9 +60,16 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
-.  Refer to the link:#features[Features] section below for details of each command.
+.  Refer to the link:#commands[Commands] section below for details of each command.
+.  Having troubles? Drop us an email at help@tunedinapp.com and we'll get back to you as soon as possible.
 
-== Features
+== Commands
+
+TunedIn is a Command Line Application (CLI), and we have no plans to do otherwise. Operations are carried out on
+TunedIn using Commands, which can be keyed in in the command field. We have a variety of commands on TunedIn to interact
+with Contact List, Event List and the app Theme. All the commands together with their usage are listed below.
+We are constantly striving to expand this list of commands, feel free
+to contact us if you have any suggestions for commands.
 
 ====
 *Command Format*
@@ -50,69 +80,47 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
-=== Viewing help : `help`
-
-Format: `help`
-
-=== Adding a person: `add`
+=== Adding a person: `add` - Since V1.0
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Format: `add n/NAME p/PHONE_NUMBER [e/EMAIL] a/ADDRESS [b/BIRTHDAY] [t/TAG]...`
 
-[TIP]
-A person can have any number of tags (including 0)
+****
+* A person can be added with or without email and birthday.
+* A person can have any number of tags (including 0)
+* A person with same name, phone number and address as any of the existing contacts
+  will be  as duplicate and will not be added.
+****
 
 Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/Betsy Crowe t/friend a/Newgate Prison p/1234567 b/01-10-1995 t/criminal`
 
-=== Listing all persons : `list`
+// tag::event[]
+=== Adding an event: `addevent` - Since V1.2
 
-Shows a list of all persons in the address book. +
-Format: `list`
-
-=== Editing a person : `edit`
-
-Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
-
-****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
-****
+Adds an event to the event book +
+Format: `addevent et/TITLE ed/DESCRIPTION el/LOCATION edt/DATETIME`
 
 Examples:
 
-* `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+* `addevent et/Halloween ed/Horror Night el/Universal Studio edt/13-10-17 2359`
+* `addevent et/Basketball Competition ed/Tournament el/UTSH edt/26-10-2017 0800`
+// end::event[]
 
-=== Locating persons by name: `find`
+=== Clearing all entries : `clear` - Since V1.0
 
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Clears all entries from the address book and event book. +
+Format: `clear`
+// tag::lock[]
+=== Current User Display: `currentuser` - Since V1.5
 
-****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-****
-
-Examples:
-
-* `find John` +
-Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
-
-=== Deleting a person : `delete`
+Displays the current user name. The default user name is `PUBLIC` +
+Format: `currentuser`
+// end::lock[]
+// tag::undoredo[]
+=== Deleting a person : `delete` - Since V1.0
 
 Deletes the specified person from the address book. +
 Format: `delete INDEX`
@@ -128,13 +136,373 @@ Examples:
 * `list` +
 `delete 2` +
 Deletes the 2nd person in the address book.
-* `find Betsy` +
+* `find n/Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
-=== Selecting a person : `select`
+// tag::event[]
+=== Deleting an event : `deleteevent` - Since V1.2
 
-Selects the person identified by the index number used in the last person listing. +
+Deletes the specified event from the event book. +
+Format: `deleteevent INDEX`
+
+****
+* Deletes the event at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `deleteevent 2` +
+Deletes the 2nd event in the event book.
+* `deleteevent 1` +
+Deletes the 1st event in the event book.
+// end::event[]
+
+=== Editing a person : `edit` - Since V1.0
+
+Edits an existing person in the address book. +
+Format: `edit INDEX [n/NAME] [p/PHONE] [a/ADDRESS] [b/BIRTHDAY] [e/EMAIL] [t/TAG]...`
+
+****
+* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* At least one of the optional fields must be provided.
+* Existing values will be updated to the input values.
+* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
+* You can remove all the person's tags by typing `t/` without specifying any tags after it.
+****
+
+Examples:
+
+* `edit 1 p/91234567 e/johndoe@example.com` +
+Edits the phone number and email address of the 1st person in current list of address book to be `91234567` and `johndoe@example.com` respectively.
+* `edit 2 n/Betsy Crower t/` +
+Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+
+// tag::event[]
+=== Editing an event : `editevent` - Since V1.2
+
+Edits an existing event in the event book. +
+Format: `editevent INDEX [et/TITLE] [ed/DESCRIPTION] [el/LOCATION] [edt/DATETIME]...`
+
+****
+* Edits the event at the specified `INDEX`. The index refers to the index number shown in the last event listing. The index *must be a positive integer* 1, 2, 3, ...
+* At least one of the optional fields must be provided.
+* Existing values will be updated to the input values.
+****
+
+Examples:
+
+* `editevent 1 ed/Buy one get one free edt/13-10-2017 0900` +
+Edits the description and datetime of the 1st event to be `Buy one get one free` and `13-10-2017 0900` respectively.
+* `editevent 2 et/2018 iPhone 11 Release` +
+Edits the title of the 2nd event to be `2018 iPhone 11 Release`.
+// end::event[]
+
+=== Exiting the program : `exit` - Since V1.0
+
+Exits the program. +
+Format: `exit`
+
+// tag::export[]
+=== Export : `export` - Since V1.5
+
+Exports the TunedIn application data (either event book or address book) into csv format. +
+Format: `export BOOK`
+
+****
+* export the data of the specified `BOOK`. The book refers to either address book or event book.
+* `BOOK` is case-insensitive.
+* Existing CSV will be overwrited.
+****
+
+Examples:
+
+* `export addressbook` +
+Exports the addressbook into csv format
+// end::export[]
+
+// tag::find[]
+=== Locating persons by name: `find` - Since V1.0
+
+Finds persons whose names contain any of the given keywords. +
+Format: `find <attribute>/KEYWORD`
+
+****
+* `<attribute>` refers to either `n`, standing for name, `a`, standing for address, or `m`, standing for mixed fields,
+or finding in any text field. This is case-sensitive.
+* The search is case insensitive. e.g `hans` will match `Hans`
+* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* Only the name is searched.
+* The keyword doesn't have to be an exact word. e.g. `kai` will match similar names like `kai yu`, `kaiser`
+* Only full words will be matched e.g. `Han` will not match `Hans`
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+****
+
+Examples:
+
+* `find n/John` +
+Returns  any person having names with `john` in the sequence
+* `find n/Jo` +
+Returns any person having names with `jo` in the sequence
+// end::find[]
+
+// tag::event[]
+=== Finding Event : `findevent` - Since V1.3
+
+Finds events whose titles contain any of the given keywords. +
+Format: `find <attribute>/KEYWORD`
+
+****
+* `<attribute>` refers to either `et`, standing for title, `ed`, standing for description, `edt`, standing for Datetime, or `em`, standing for mixed fields,
+or finding in any text field. This is case-sensitive.
+* The search is case insensitive. e.g `sentosa` will match `Sentosa`
+* The keyword doesn't have to be an exact word. e.g. `bask` will match similar words like `Basketball Competition`, `Basket Promotion`
+* The order of the keywords does not matter. e.g. `Universal Sentosa` will match `Sentosa Universal`
+* Events matching at least one keyword will be returned (i.e. `OR` search). e.g. `Sentosa Fun` will return `Sentosa Universal`
+****
+
+Examples:
+
+* `findevent et/Basketball` +
+Returns  any event having title with `Basketball` in the sequence
+
+* `findevent et/ball` +
+Returns  any event having title with `ball` in the sequence
+// end::event[]
+
+//tag::group[]
+=== Group person(s) : `group` - Since V1.4
+
+Grouping the person(s) in address book or view the existing groups. +
+Format: `group INDEX [MORE_INDEX] g/GROUP_NAME` +
+`group showall`
+
+****
+* Group the person(s) at the specified `INDEX(ES)`. The index refers to the index number shown in the last contact listing.
+The index *must be a positive integer* 1, 2, 3, ...
+* Group name can take anyform and must not be more than 30 characters.
+* Each contact can only be grouped into _one_ group.
+* Existing group will be updated to the input group.
+* You can remove the person(s)' group by typing `g/` without specifying any group after it.
+* To group a number of persons, each index should be separated by a single space.
+* The parameter `showall` is case insensitive.
+****
+
+Examples:
+
+* `group 2 g/Family` +
+Group the 2nd person in the current list of address book to group `Family`. +
+* `group 1 3 4 5 g/NUS` +
+Group the 1st, 3rd, 4th and 5th persons to group `NUS`.
+* `group showall` +
+Show the name of existing groups in the command feedback box, on top of the calender.
+//end::group[]
+
+=== Viewing help : `help` - Since V1.0
+
+Format: `help`
+
+=== Listing entered commands : `history` - Since V1.0
+
+Lists all the commands that you have entered in reverse chronological order. +
+Format: `history`
+
+[NOTE]
+====
+Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
+====
+
+// tag::list[]
+=== Listing all persons : `list` - Since V1.0
+
+Shows a list of all persons or a specified group of persons in the address book. +
+Format: `list [g/GROUP_NAME]`
+
+****
+* The parameter `g/GROUP_NAME` is optional.
+* The `GROUP_NAME` is case sensitive.
+* If no parameter is specified, a list of all persons will be shown.
+****
+
+[NOTE]
+This command is a view only command and ordering of persons in the listing of group is not reflected.
+
+Examples:
+
+* `list`
+* `list g/Friends`
+// end::list[]
+
+=== Listing all events : `listevent` - Since V1.3
+
+Shows a list of all events in the event book. +
+Format: `listevent`
+
+// tag::lock[]
+=== Lock contacts by user : `lock` - Since V1.5
+
+Create a user account from the specified username and password. +
+Format: `lock u/USER_NAME p/PASSWORD`
+
+****
+* The `USER_NAME` is case sensitive.
+* If the `USER_NAME` has been registered before, an error message saying `User Exists` will be displayed.
+* Different users can use the same password
+* `USER_NAME` is case sensitive and cannot be the same as an exsiting user. If the user already exists, an error mesage
+will be thrown.
+* Even if the `PASSWORDs` are different, if a `USERID` to be registered is the same as an exsiting one, this user will not
+be accepted
+* The user credentials will be hashed and stored on disk to preserve confidentiality.
+****
+
+Examples:
+
+* `lock u/KELOYSIUS p/SPECIAL1PASS`
+
+=== Login : `login` - Since V1.5
+
+Logs in to the TunedIn Application. Once you log in with the correct account credentials, your encrypted contacts
+will be displayed. +
+Format: `login u/USER_NAME p/PASSWORD`
+
+Examples:
+
+* `login u/KELOYSIUS p/SPECIALPASS`
+
+=== Logout : `logout` - Since V1.5
+
+Logs out of the address book. This will encrypt the current list of contacts and clear them. To retrieve them, log in
+ using your account credentials +
+Format: `logout`
+// end::lock
+
+// tag::order[]
+=== Order contacts in Address Book by parameter(s): `order` - Since V1.0
+
+Order the list of persons according to a specified parameter. Parameters are case insensitive. +
+Format: `order PARAMETER [MORE_PARAMETER]`
+
+****
+* The allowable parameters are `NAME`, `ADDRESS`, `BIRTHDAY`, `TAG` and `GROUP`.
+* The parameter is case insensitive. e.g 'NaMe' will match 'NAME'
+* Only full word will be matched. e.g. 'addr' will not match 'Address'
+* To order by multiple parameters, each parameter should be separated by a single space.
+* The order of the parameter is important. e.g `tag address` will order the list by tag
+then by address.
+* The command can only take in a maximum of `two` parameters.
+* For order based on multiple prarameters with GROUP, GROUP must be the first paramter.
+* The command changes the index of the person in the Address Book,
+which will affect other commands that use this attribute such as
+`delete` or `select`.
+****
+
+Examples:
+
+* `order NAME` +
+Returns address list sorted by name in alphabetical order.
+* 'order BIRTHDAY name` +
+Returns address list sorted by birthday then by name.
+
+Invalid command Example :
+* `order NAME GROUP` +
+// end::order[]
+
+// tag::event[]
+=== Order events in Event Book by a parameter: `orderevent` - Since V1.3
+
+Order the list of events according to a specified parameter. Parameters are case insensitive. +
+Format: `orderevent PARAMETER [MORE_PARAMETER]`
+
+****
+* The allowable parameters are `TITLE`, `LOCATION` and 'DATETIME'.
+* The parameter is case insensitive. e.g 'tiTle' will match 'TITLE'
+* Only full word will be matched. e.g. 'locat' will not match 'LOCATION'
+* To order by multiple parameters, each parameter should be separated by a single space.
+* The command change the index of the event in the Event Book,
+which will affect other commands that use this attribute such as
+`deleteevent` or `selectevent`.
+****
+
+Examples:
+
+* `orderevent TITLE` +
+Returns event list sorted by title
+* `orderevent LOCATION` +
+Returns event list sorted by location
+// end::event[]
+
+=== Redoing the previously undone command : `redo` - Since V1.0
+
+Reverses the most recent `undo` command. +
+Format: `redo`
+
+Examples:
+
+* `delete 1` +
+`undo` (reverses the `delete 1` command) +
+`redo` (reapplies the `delete 1` command) +
+
+* `delete 1` +
+`redo` +
+The `redo` command fails as there are no `undo` commands executed previously.
+
+* `delete 1` +
+`clear` +
+`undo` (reverses the `clear` command) +
+`undo` (reverses the `delete 1` command) +
+`redo` (reapplies the `delete 1` command) +
+`redo` (reapplies the `clear` command) +
+// end::undoredo[]
+
+// tag::remark[]
+=== Remarking a person : `remark` - Since V1.1
+
+Remarks an existing person in the address book. +
+Format: `remark INDEX r/REMARK`
+
+****
+* Remarks the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* Existing values will be updated to the input values.
+* You can remove the person's remark by typing `r/` without specifying any remarks after it.
+****
+
+Examples:
+
+* `remark 1 r/Likes to swim.` +
+Edits the remark of the 1st person to be `Likes to swim`.
+* `remark 1 r/` +
+Remove the remark of the 1st person.
+// end::remark[]
+
+// tag::lock[]
+=== Remove User : `remove` - Since V1.5
+
+Remove an existing user from the account repository. +
+Format: `remove u/USER_NAME p/PASSWORD r/<Y or N>`
+
+****
+* The `USER_NAME` and `PASSWORD` must match with one of the accounts saved.
+* The `USER_NAME` and `PASSWORD` are case-sensitive.
+* `r/<Y or N>` indicates if the user wants to delete the contacts associated with the user to be removed. Y means the
+contacts will be cleared and N means the contacts will be released to the public.
+* If the user is still logged in before removing an account, regardless of whether the account to be removed is his
+own account or someone else's, the user MUST log out first using the `logout` command.
+****
+
+Examples:
+
+* `remove u/LEQUANGQUAN p/PASSWORD r/N`
+This command will remove the account `LEQUANGQUAN` and release his contacts to the public.
+* `remove u/LEQUANGQUAN p/PASSWORD r/Y`
+This command will remove the account `LEQUANGQUAN` and delete his contacts.
+// end::lock[]
+
+=== Selecting a person : `select` - Since V1.0
+
+Selects the person identified by the index number used in the last person listing, and opens in a separate window a
+google search for the person. +
 Format: `select INDEX`
 
 ****
@@ -152,18 +520,75 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
-=== Listing entered commands : `history`
+// tag::event[]
+=== Selecting an event : `selectevent` - Since V1.4
 
-Lists all the commands that you have entered in reverse chronological order. +
-Format: `history`
+Selects the event identified by the index number used in the last event listing. +
+Format: `selectevent INDEX`
 
-[NOTE]
-====
-Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
-====
+****
+* Selects the event at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
 
-// tag::undoredo[]
-=== Undoing previous command : `undo`
+Examples:
+
+* `listevent` +
+`selectevent 2` +
+Selects the 2nd event in the event book.
+* `findevent basketball` +
+`selectevent 1` +
+Selects the 1st event in the results of the `findevent` command.
+// end::event[]
+
+// tag::alias[]
+=== Set aliases : `setalias` - Since V1.2
+
+Set alias for a particular command. +
+Format: `setalias c/COMMAND al/NEW_ALIAS`
+
+Examples:
+
+* `setalias c/help al/h`
+
+****
+* Note that protected aliases cannot be set as aliases. Refer to the Alias Window (F10) to see the list of protected
+aliases
+****
+// end::alias[]
+// tag::theme[]
+=== Set theme : `settheme` - Since V1.4
+
+Set theme for the TunedIn Application. +
+Format: `settheme THEME_NAME`
+
+Examples:
+* `settheme AUTUMN`
+// end::theme[]
+
+// tag::switch[]
+=== Switch Tab : `switch` - Since V1.4
+
+Switch to either `contacts` or `events` tab panel. +
+Format: `switch`
+// end::switch[]
+
+// tag::transfer[]
+=== Transfer : `transfer`
+
+Exports your settings, data and configurations into a ZIP file, along with the installation instructions. +
+Format: `transfer`
+// end::transfer[]
+
+// tag::alias[]
+=== Viewing aliases : `viewalias` - Since V1.1
+
+Shows the list of aliases used, as well as protected aliases. +
+Format: `viewalias`
+// end::alias[]
+
+=== Undoing previous command : `undo` - Since V1.0
 
 Restores the address book to the state before the previous _undoable_ command was executed. +
 Format: `undo`
@@ -189,64 +614,153 @@ The `undo` command fails as there are no undoable commands executed previously.
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
 
-=== Redoing the previously undone command : `redo`
+===
 
-Reverses the most recent `undo` command. +
-Format: `redo`
+== Upcoming Features
+
+=== Change Password : `changepassword` - Coming in V2.0
+
+Changes the account password. +
+Format: `changepassword pw/OLD_PASSWORD pwn/NEW_PASSWORD`
 
 Examples:
 
-* `delete 1` +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
+* `changepassword pw/SPECIAL1PASS pw/SPECIAL2PASS`
 
-* `delete 1` +
-`redo` +
-The `redo` command fails as there are no `undo` commands executed previously.
+// tag::connect[]
+=== Connect with social media : `connect` - Coming in V2.0
 
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
-`redo` (reapplies the `clear` command) +
-// end::undoredo[]
+Connect with Facebook to sync Facebook contacts into the address book. +
+Format: `connect u/FACEBOOK_EMAIL p/FACEBOOK_PASSWORD`
 
-=== Clearing all entries : `clear`
+Examples:
 
-Clears all entries from the address book. +
-Format: `clear`
+* `connect u/keloysius@mak.com p/MYFBp4ss`
+// end::connect[]
+// tag::customtheme[]
+=== Create Theme : `createtheme` - Coming in V2.0
 
-=== Exiting the program : `exit`
+Creates a new theme using a URL. +
+Format: `createtheme t/THEME_NAME u/PIC_URL`
 
-Exits the program. +
-Format: `exit`
+Examples:
 
-=== Saving the data
+* `create t/favourite u/http://zhkphoto.com/assets/photos/ky-nat_24.jpg`
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
-There is no need to save manually.
+=== Download Theme : `downloadtheme` - Coming in V2.0
+
+Downloadss a theme to TunedIn Themes repository. +
+Format: `downloadtheme t/TUNEDIN_THEME_NAME`
+
+Examples:
+
+* `downloadtheme t/keloy_favourite`
+
+=== Export Theme : `exporttheme` - Coming in V2.0
+
+Exports a theme to TunedIn Themes repository for other users to download and use. +
+Format: `exporttheme t/THEME_NAME`
+
+Examples:
+
+* `exporttheme t/favourite`
+// end::customtheme[]
+
+//tag::relationship[]
+=== Relationship Map : `relationship` - Coming in V2.0
+
+Allows the user to add relationship among contacts and shows a map of relationships.
+Format: `rela INDEX [MORE_INDEX] r/RELATIONSHIP` +
+        `rela MAP`
+
+Examples:
+
+* `rela 1 2 3 r/friends`
+//end::relationship[]
+
+//tag::reminder[]
+=== Reminder Map : `remind` - Coming in V2.0
+
+Allows the user to set reminders to be notified on important dates and events.
+Format: `remind d/DATE t/TIME e/EVENT`
+
+Examples:
+* `remind d/13-11-2017 t/2359 e/Party`
+//end::reminder[]
+
+// tag::sync[]
+=== Sync : `sync` - Coming in V2.0
+
+Sync the TunedIn application to your cloud TunedInLive account. +
+Format: `sync`
+// end::sync[]
 
 == FAQ
-
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+*A*: Install the app in the other computer and overwrite the empty data file with the ZIP file. More details are
+provided in the help document in the zip folder.
+
+*Q*: How do I see the protected aliases for the commands? +
+*A*: You can type `viewalias` or you can access it from the Menu Bar.
+
+*Q*: Can I set my own background? +
+*A*: No, but you can choose from a wide range of backgrounds that we offer.
+
+*Q*: Will the application move away from a CLI interface?? +
+*A*: No, we have no plans to do so. This is a design principle which we've decided on at the start of the development,
+and we have no plans to change it away.
+
+*Q*: How do I save the data? +
+*A*: Address book data are saved in the hard disk automatically after any command that changes the data. There is no
+need to save manually.
+
+*Q*: Is this application free to use? +
+*A*: Yes, the application is free to use, and will remain this way.
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *Add* : `add n/NAME p/PHONE_NUMBERx a/ADDRESS [b/BIRTHDAY] [e/EMAIL] [t/TAG]...` +
+e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 b/10-10-1996 t/friend t/colleague`
+* *Add Event* : `addevent et/TITLE ed/DESCRIPTION el/LOCATION edt/DATETIME` +
+e.g. `addevent et/Halloween ed/Horror Night el/Universal Studio edt/13/10/17 2359`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+* *Delete Event* : `deleteevent INDEX` +
+e.g. `deleteevent 3`
+* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
+* *Edit Event* : `editevent INDEX [et/TITLE] [ed/DESCRIPTION] [el/LOCATION] [edt/DATETIME]...` +
+e.g. `editevent 1 ed/Buy one get one free edt/13-10-2017 0900`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
-* *List* : `list`
+* *Find Event* : `find KEYWORD [MORE_KEYWORDS]` +
+e.g. `findevent et/Basketball`
+* *Group* : `group INDEX [MORE_INDEX] g/GROUP_NAME / showall` +
+e.g. `group 1 2 g/SOC` +
+e.g. `group showall`
 * *Help* : `help`
+* *History* : `history`
+* *List* : `list [g/GROUP_NAME]` +
+e.g `list` +
+e.g `list g/Friends`
+* *Lock* : `lock` +
+e.g `lock u/KELOYSIUS p/SPECIAL1PASS`
+* *Order* : `order PARAMETER [MORE PARAMETERS]` +
+e.g `order address nAme`
+* *Redo* : `redo`
+* *Remark* : `remark INDEX r/REMARK` +
+e.g. `remark 2 r/Likes to play.`
 * *Select* : `select INDEX` +
 e.g.`select 2`
-* *History* : `history`
+* *Select Event* : `selectevent INDEX` +
+e.g.`selectevent 2`
+* *Set Alias* : `setalias` +
+e.g.`setalias c\help al\h`
+* *Set Theme* : `settheme` +
+e.g.`settheme autumn`
+* *Switch* : `switch` +
+e.g.`switch`
+* *Transfer* : `transfer`
 * *Undo* : `undo`
-* *Redo* : `redo`
+* *View Alias* : `viewalias`

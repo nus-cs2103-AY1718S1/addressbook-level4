@@ -1,0 +1,133 @@
+= Xiang TingTing - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: TunedIn
+TunedIn is a free-to-use desktop application that brings to users the power of a
+full-fledged command line personal organizer, bundled together with a user-friendly interface
+and competence functions. It gives the user freedom to personalize the information in their most preferred way.
+The fundamental units of this organiser are Order, Group and List mechanisms.
+These primary units are the indispensable elements to build up the usability and
+improving the performance of an organiser. With numerous contacts in TunedIn,
+it is essential to categorise and present the wide range of information in an organised way,
+at the same time, not neglecting the intuitiveness of commands for users.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T14-B2/main/blob/master/collated/main/tingtx.md[Functional code]]
+ [https://github.com/CS2103AUG2017-T14-B2/main/blob/master/collated/test/tingtx.md[Test code]]
+
+=== Enhancement Added: Order
+Enhanced Order command to sort with Birthday, Tag and Group, and with multiple(2) person fields.
+(enhanced on the original Order command done by quanle1994)
+
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[tag=order]
+
+---
+
+==== Justification
+
+Ordering is essential to TunedIn. It provides the fundamental and a must-to-have functionality of an organizer.
+With the ordering mechanism, user will be able to order the list of contacts in 19 different ways with more than one ordering
+field.This is inline with our goal in making TunedIn as customizable as possible
+and, most importantly to allow the user to organize the contacts to their most preferred way.
+
+==== Implementation
+
+---
+
+include::../DeveloperGuide.adoc[tag=order]
+
+---
+
+==== Enhancement Added: Group
+Added Group command to group one or multiple persons in a specified group and to show the
+name of existing groups.
+
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[tag=group]
+
+---
+
+==== Justification
+
+Grouping is another fundamental unit in any organiser application.
+The function of grouping is imperative in TunedIn and allows user to
+classify the contacts into different category and thus more organised.
+The users are also able to specified the group name with no restriction on special characters.
+Additionally, it also consists of a command “showall” which displays all the group names in the feedback box, to allow
+users to check on the existing group easily and readily.
+These improves the user’s experience and achieve our goal in making TunedIn easy to use.
+
+==== Implementation
+
+---
+
+include::../DeveloperGuide.adoc[tag=group]
+
+---
+
+==== Enhancement Added: List(group)
+Enhanced List command to view a list of persons by specified group name.
+
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[tag=list]
+
+---
+
+==== Justification
+
+List can be used to display the entire list of contacts.
+It is further enhanced to complement the function of `Group` by allowing user to
+view a list of contacts by group. Instead of implementing the viewing of a group of contacts,
+it is more intuitive for user to type `list` command followed by the group name. Hence, making the command
+intuitive for users.
+
+==== Implementation
+
+---
+
+include::../DeveloperGuide.adoc[tag=list]
+
+---
+
+
+=== Enhancement Proposed:
+* Enhance Group command to show the list the existing group together with the name of group members
+and the respective number of members. +
+
+* Add auto complete function to enhance the experience of CLI application. +
+
+* Add relationship field to Person and Relationship command to show a relationship map between the contacts. +
+include::../UserGuide.adoc[tag=relationship] +
+
+* Set reminders to notify users about birthdays and events. +
+include::../UserGuide.adoc[tag=reminder]
+
+=== Issue Reported:
+*Bug*
+
+* [https://github.com/CS2103AUG2017-W15-B2/main/issues/58[CS2103AUG2017-W15-B2-#58]]
+* [https://github.com/CS2103AUG2017-W15-B2/main/issues/62[CS2103AUG2017-W15-B2-#62]]
+
+*User guide*
+
+* [https://github.com/CS2103AUG2017-W15-B2/main/issues/64[CS2103AUG2017-W15-B2-#64]]
+
+=== Other contributions
+
+* Set Email, Birthday to be optional fields.
+(Pull requests: [https://github.com/CS2103AUG2017-T14-B2/main/pull/71[#71]] )
+* Updated the person card with birthday (Pull requests: [https://github.com/CS2103AUG2017-T14-B2/main/pull/15[#15]])
+* Updated the person card with group ( Pull requests: [https://github.com/CS2103AUG2017-T14-B2/main/pull/143[#143]])
+* Updated the architecture diagram of the Model and Storage component (Pull requests:
+[https://github.com/CS2103AUG2017-T14-B2/main/pull/155/commits/1bd859b9a1cedb17641f6fa0fe1d6e6520d529e8[#155]])

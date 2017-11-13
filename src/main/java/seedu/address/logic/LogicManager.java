@@ -1,17 +1,26 @@
 package seedu.address.logic;
 
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
+import javafx.scene.control.TabPane;
 import seedu.address.commons.core.ComponentManager;
+import seedu.address.commons.core.Config;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.parser.AddressBookParser;
+import seedu.address.logic.parser.CalendarViewStateParser;
+import seedu.address.logic.parser.GeneralBookParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
+import seedu.address.model.UserPrefs;
+import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.user.exceptions.DuplicateUserException;
+import seedu.address.ui.CalendarView;
+import seedu.address.ui.Ui;
 
 /**
  * The main LogicManager of the app.
@@ -20,25 +29,59 @@ public class LogicManager extends ComponentManager implements Logic {
     private final Logger logger = LogsCenter.getLogger(LogicManager.class);
 
     private final Model model;
+    private final UserPrefs userPrefs;
     private final CommandHistory history;
-    private final AddressBookParser addressBookParser;
+    private final GeneralBookParser generalBookParser;
     private final UndoRedoStack undoRedoStack;
+    private final Config config;
+    private Ui ui;
 
-    public LogicManager(Model model) {
+    private CalendarViewStateParser calendarViewStateParser;
+
+    public LogicManager(Model model, UserPrefs userprefs, Config config, Ui ui) {
         this.model = model;
+        this.userPrefs = userprefs;
+        this.config = config;
+        this.ui = ui;
         this.history = new CommandHistory();
-        this.addressBookParser = new AddressBookParser();
+        this.generalBookParser = new GeneralBookParser(userprefs);
         this.undoRedoStack = new UndoRedoStack();
     }
 
+    //@@author keloysiusmak
     @Override
-    public CommandResult execute(String commandText) throws CommandException, ParseException {
+    public void setUi(Ui ui) {
+        this.ui = ui;
+    }
+    //@@author
+
+    //@@author kaiyu92
+    @Override
+    public void setTabPane(TabPane tabPane) {
+        generalBookParser.setTabPane(tabPane);
+    }
+
+    //@@author kaiyu92
+    @Override
+    public void setCalendarView(CalendarView calendarView) {
+        this.calendarViewStateParser = new CalendarViewStateParser(this.userPrefs, this.model, calendarView);
+    }
+
+    @Override
+    public CommandResult execute(String commandText) throws CommandException, ParseException, DuplicateUserException {
         logger.info("----------------[USER COMMAND][" + commandText + "]");
         try {
-            Command command = addressBookParser.parseCommand(commandText);
-            command.setData(model, history, undoRedoStack);
+            Command command = generalBookParser.parseCommand(commandText);
+            command.setData(model, history, undoRedoStack, config, ui);
             CommandResult result = command.execute();
             undoRedoStack.push(command);
+
+            //If calendarViewStateParser is not null
+            //Update the View state of the Calendar
+            if (calendarViewStateParser != null) {
+                calendarViewStateParser.updateViewState(commandText);
+            }
+
             return result;
         } finally {
             history.add(commandText);
@@ -48,6 +91,21 @@ public class LogicManager extends ComponentManager implements Logic {
     @Override
     public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
         return model.getFilteredPersonList();
+    }
+
+    @Override
+    public ObservableList<ReadOnlyEvent> getFilteredEventList() {
+        return model.getFilteredEventList();
+    }
+
+    @Override
+    public ArrayList<ArrayList<String>> getCommands() {
+        return model.getCommands();
+    }
+
+    @Override
+    public String getAliasForCommand(String commandName) {
+        return model.getAliasForCommand(commandName);
     }
 
     @Override

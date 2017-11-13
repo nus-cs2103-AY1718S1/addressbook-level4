@@ -1,0 +1,7 @@
+Welcome to your TunedIn Application Transfer Process.
+
+This guide serves as an aid for the transfer of your application data. Should you encounter any problems, please feel free to email us at help@tunedinapp.com
+
+1. Install your new working copy of TunedIn on your new computer.
+2. Copy the files preferences.json and config.json, and replace them in the TunedIn folder.
+3. Delete the folder 'data', and replace it with the 'data' folder found in the ZIP file.

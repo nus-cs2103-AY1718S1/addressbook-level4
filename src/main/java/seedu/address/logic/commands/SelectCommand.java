@@ -29,6 +29,10 @@ public class SelectCommand extends Command {
         this.targetIndex = targetIndex;
     }
 
+    public static String getCommandWord() {
+        return COMMAND_WORD;
+    }
+
     @Override
     public CommandResult execute() throws CommandException {
 

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<eventbook>
+    <events>
+        <id>1</id>
+        <title>Halloween Horror Night</title>
+        <description>Horrifying night</description>
+        <location>Univsersal Studio</location>
+        <datetime>13/10/17 2359</datetime>
+    </events>
+</eventbook>

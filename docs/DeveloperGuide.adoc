@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= TunedIn - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,9 +10,9 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-T14-B2/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `The TunedIn Team`      Since: `Jun 2016`      Licence: `MIT`
 
 == Setting up
 
@@ -122,7 +122,7 @@ Each of the four components
 
 For example, the `Logic` component (see the class diagram given below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
 
-image::LogicClassDiagram.png[width="800"]
+image::LogicClassDiagramV1-4.png[width="800"]
 _Figure 2.1.2 : Class Diagram of the Logic Component_
 
 [discrete]
@@ -148,12 +148,12 @@ The sections below give more details of each component.
 
 === UI component
 
-image::UiClassDiagram.png[width="800"]
+image::UiClassDiagramV1-4.png[width="800"]
 _Figure 2.2.1 : Structure of the UI Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `CalendarView` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
@@ -165,7 +165,7 @@ The `UI` component,
 
 === Logic component
 
-image::LogicClassDiagram.png[width="800"]
+image::LogicClassDiagramV1-4.png[width="800"]
 _Figure 2.3.1 : Structure of the Logic Component_
 
 image::LogicCommandClassDiagram.png[width="800"]
@@ -174,7 +174,7 @@ _Figure 2.3.2 : Structure of Commands in the Logic Component. This diagram shows
 *API* :
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 
-.  `Logic` uses the `AddressBookParser` class to parse the user command.
+.  `Logic` uses the `GeneralBookParser` class to parse the user command.
 .  This results in a `Command` object which is executed by the `LogicManager`.
 .  The command execution can affect the `Model` (e.g. adding a person) and/or raise events.
 .  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
@@ -186,7 +186,7 @@ _Figure 2.3.1 : Interactions Inside the Logic Component for the `delete 1` Comma
 
 === Model component
 
-image::ModelClassDiagram.png[width="800"]
+image::ModelClassDiagramV1-5.png[width="800"]
 _Figure 2.4.1 : Structure of the Model Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
@@ -195,12 +195,13 @@ The `Model`,
 
 * stores a `UserPref` object that represents the user's preferences.
 * stores the Address Book data.
-* exposes an unmodifiable `ObservableList<ReadOnlyPerson>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* stores the Event Book data.
+* exposes an unmodifiable `ObservableList<ReadOnlyPerson>` and `ObservableList<ReadOnlyEvent>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
 === Storage component
 
-image::StorageClassDiagram.png[width="800"]
+image::StorageClassDiagramV1-5.png[width="800"]
 _Figure 2.5.1 : Structure of the Storage Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
@@ -209,6 +210,7 @@ The `Storage` component,
 
 * can save `UserPref` objects in json format and read it back.
 * can save the Address Book data in xml format and read it back.
+* can save the Event data in xml format and read it back.
 
 === Common classes
 
@@ -217,6 +219,1390 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 == Implementation
 
 This section describes some noteworthy details on how certain features are implemented.
+
+// tag::alias[]
+=== Alias mechanism
+
+The alias mechanism is facilitated by `AliasSettings`, which resides inside `Commons > Core`. It supports the setting of custom aliases for the CLI commands in the TunedIn application, and the utilization of these custom set aliases to execute the command calls.
+
+`AliasSettings` only deals with `Alias` and `HashSet`.
+
+The following diagram shows the inheritance diagram for `AliasSettings`:
+
+image::AliasClassDiagram.png[width="800"]
+
+As you can see from the diagram, `AliasSettings` stores the custom set aliases for the various commands, and for efficiency, we also store the list of all protected aliases in a HashSet. This `AliasSettings` is then loaded into the TunedIn application, which is then passed into the AddressBookParser, when determining which commands to execute.
+
+The implementation of the constructor for the Alias class is shown below in greater detail. `AliasSettings` stores individually the `Alias` object for every programmed function. As you can see, Alias requires the two inputs to be a `String`. The first input, `aliasCommand`, stores the default alias for the commands, while the second input stores the custom set alias for the particular command. It is precisely because of this reason that all the default aliases for the commands are set henceforth as protected aliases and cannot be set as an alias for a particular command.
+
+[source,java]
+----
+public Alias(String aliasCommand, String aliasString) {
+    try {
+        requireAllNonNull(aliasCommand, aliasString);
+        if (!(aliasCommand instanceof String && aliasString instanceof String)) {
+            throw new IllegalValueException(MESSAGE_ALIAS_CONSTRAINTS);
+        }
+        this.aliasCommand = aliasCommand;
+        this.aliasString = aliasString;
+    } catch (IllegalValueException e) {
+        ;
+    }
+}
+----
+
+When AliasSettings are loaded into the AddressBookParser, it is easy to control whether custom aliases are allowed for a particular function. The first shows how a custom alias can be allowed for a particular command, while the second showing the same function, with the alias capabilities removed, allowing only the default alias :
+[source,java]
+----
+if (commandWord.equals(AddCommand.COMMAND_WORD)
+        || commandWord.equals(aliasSettings.getAddCommand().getAlias())) {
+    return new AddCommandParser().parse(arguments);
+}
+----
+
+[source,java]
+----
+if (commandWord.equals(AddCommand.COMMAND_WORD)) {
+    return new AddCommandParser().parse(arguments);
+}
+----
+
+Suppose that the user has just launched the application. The `AliasSettings` will initialize with the default aliases.
+
+The user executes a new `setalias` command by calling `setalias c\help al\h`, to set the alias for `help` to 'h'. The private `Alias` helpCommand variable will be replaced with a new `Alias` object, initialized with the values of 'help' and 'h'. Because help is a protected alias, it will not be removed from the HashSet, which is then used later to detect for duplicate aliases.
+
+image::ReplacingHelpDiagram.png[width="800"]
+
+The user executes another `setalias` command by calling `setalias c\help al\z`, to set the alias for `help` to 'z'. The private `Alias` helpCommand variable will be replaced again with a new `Alias` object, initialized with the values of 'help' and 'z'. Because the previously set alias, h, is not a protected alias in the HashSet, it will be replaced with h
+
+image::ReplacingHelpDiagram2.png[width="800"]
+
+When setting a new alias by calling `setalias c\help al\x` for example, the proposed new alias is checked within the HashSet for any conflicts. If it exists within the HashSet, no new Alias object will be created.
+
+image::FailedReplacingDiagram.png[width="800"]
+
+The following sequence diagram shows how the setalias operation works:
+
+image::SetAliasSequenceDiagram.png[width="800"]
+
+The following activity diagram summarize what happens inside the `AliasSettings` when a user executes a new command:
+
+image::SetAliasActivityDiagram.png[width="200"]
+
+==== Design Considerations
+
+**Aspect:** Looking for duplicates of Aliases +
+**Alternative 1 (current choice):** Store the list of all used aliases in a HashSet +
+**Pros:** Checking whether an alias exists in a HashSet is fast. +
+**Cons:** The list stores the same data as the Alias objects, so it takes up marginally more space +
+**Alternative 2:** Iterate individually through all the Aliases +
+**Pros:** Does not require the creation of additional data structures to store the aliases +
+**Cons:** Manually iterating through the list of `Alias` objects will take a long time.
+
+---
+
+**Aspect:** Viewing of currently set aliases +
+**Alternative 1 (current choice):** Opens the list of currently set alias in a new window +
+**Pros:** Much clearer to see which alias belongs to which command. +
+**Cons:** Requires a couple more clicks to view the alias data, and subsequently a couple more clicks to resume regular TunedIn application usage. +
+**Alternative 2:** Shows the list of currently set aliases in the current display window. +
+**Pros:** Data is obtained instantly. +
+**Cons:** It is hard to display in a presentable way the list of currently set aliases in textual format.
+
+---
+
+**Aspect:** Data structure to support the AliasSettings +
+**Alternative 1 (current choice):** Use the same preferences.json file used to store GuiSettings +
+**Pros:** Easy to port settings to another computer. Reduces the risk of file corruption or accidental file deletion. +
+**Cons:** Potential to corrupt GuiSettings if AliasSettings are improperly stored. +
+**Alternative 2:** Create a separate json file to store `AliasSettings` +
+**Pros:** It is a lot clearer to see whether the AliasSettings are stored, and also any corruption of it will not affect the rest of the preferences. +
+**Cons:** Creates a separate file for alias settings which could be grouped under the umbrella of preferences. +
+// end::alias[]
+
+// tag::event[]
+=== Event mechanism
+
+The event mechanism is facilitated by all four major components (UI, Logic, Model, and Storage) of the Architecture.
+It supports the additional features of event management, which allows the user to add, edit, delete, find, or select event by utilizing the CLI
+commands in the TunedIn application. It also interacts with the newly added calendar graphical interface (refer to the image below).
+
+image::CalendarUI.png[width="500"]
+
+Firstly, for Event mechanism to incorporate TunedIn, the UI component will remain the same as how it deals with the
+previous `Addressbook` application. For the Logic component, it will also remain the same, but with a new naming for the parser
+(`AddressbookParser` -> `GeneralbookParser`) Reason being is because it will indicate a much clearer meaning that it can process
+command for both `Addressbook` and `Eventbook`.
+
+For the Model component, event mechanism will deals with `EventBook`, and faciliated by `ModelManager`.
+
+The following diagram shows the inheritance diagram for `EventBook`:
+
+image::EventModelClassDiagram.png[width="800"]
+
+As you can see from the diagram, `Event` stores `Title`, `Description`, `Location`, and `Datetime as an attribute. `EventBook` consists of a `UniqueEventList`, which stores multiple `Event` objects. ModelManager will facilitate the behaviour of `EventBook`.
+
+The implementation of the faciliation between ModelManager and EventBook is shown below in greater detail. As you can see from the implementation, it shows how the CRUD (Create, Read, Update, Delete) process work for the Model Component of the event mechanism.
+
+[source,java]
+----
+    @Override
+    public void addEvent(ReadOnlyEvent event) throws DuplicateEventException {
+        eventBook.addEvent(event);
+        updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
+        indicateEventBookChanged();
+    }
+
+    @Override
+    public void updateEvent(ReadOnlyEvent target, ReadOnlyEvent editedEvent)
+            throws DuplicateEventException, EventNotFoundException {
+        requireAllNonNull(target, editedEvent);
+
+        eventBook.updateEvent(target, editedEvent);
+        indicateEventBookChanged();
+    }
+
+    @Override
+    public ObservableList<ReadOnlyEvent> getFilteredEventList() {
+        return FXCollections.unmodifiableObservableList(filteredEvents);
+    }
+
+    @Override
+    public void deleteEvent(ReadOnlyEvent target) throws EventNotFoundException {
+        eventBook.removeEvent(target);
+        indicateEventBookChanged();
+    }
+----
+For the Storage component, event mechanism will deals with `EventBookStorage`, and
+faciliated by `StorageManager`.
+
+The following diagram shows the inheritance diagram for `EventBookStorage`:
+
+image::EventStorageClassDiagram.png[width="800"]
+
+As you can see from the diagram `EventBookStorage` will do the reading and writing to XML Eventbook file, where all the data is located at.
+
+The implementation of the class `EventBookStorage` is shown below in greater detail. As you can see from the implementation, it shows how the reading and writing process.
+
+[source,java]
+----
+    @Override
+    public Optional<ReadOnlyEventBook> readEventBook() throws DataConversionException, IOException {
+        return readEventBook(filePath);
+    }
+
+    @Override
+    public Optional<ReadOnlyEventBook> readEventBook(String filePath) throws DataConversionException,
+            FileNotFoundException {
+        requireNonNull(filePath);
+
+        File eventBookFile = new File(filePath);
+
+        if (!eventBookFile.exists()) {
+            logger.info("EventBook file " + eventBookFile + " not found");
+            return Optional.empty();
+        }
+
+        ReadOnlyEventBook eventBookOptional = XmlFileStorage.loadEventDataFromSaveFile(new File(filePath));
+
+        return Optional.of(eventBookOptional);
+    }
+
+    @Override
+    public void saveEventBook(ReadOnlyEventBook eventBook) throws IOException {
+        saveEventBook(eventBook, filePath);
+    }
+
+    @Override
+    public void saveEventBook(ReadOnlyEventBook eventBook, String filePath) throws IOException {
+        requireNonNull(eventBook);
+        requireNonNull(filePath);
+
+        File file = new File(filePath);
+        FileUtil.createIfMissing(file);
+        XmlFileStorage.saveDataToFile(file, new XmlSerializableEventBook(eventBook));
+    }
+----
+
+The following sequence diagram shows how the add event operation works:
+
+image::AddEventSequenceDiagram.png[width="800"]
+
+The following sequence diagram shows how the update event operation works:
+
+image::UpdateEventSequenceDiagram.png[width="800"]
+
+The following sequence diagram shows how the delete event operation works:
+
+image::DeleteEventSequenceDiagram.png[width="800"]
+
+The following activity diagram summarize what happens inside the `EventBook` when a user executes a new `addevent` command:
+
+image::AddEventActivityDiagram.png[width="300"]
+
+The following activity diagram summarize what happens inside the `EventBook` when a user executes a new `editevent` command:
+
+image::UpdateEventActivityDiagram.png[width="300"]
+
+The following activity diagram summarize what happens inside the `EventBook` when a user executes a new `deleteevent` command:
+
+image::DeleteEventActivityDiagram.png[width="300"]
+
+==== Design Considerations
+
+**Aspect:** Implementation of Event mechanism +
+**Alternative 1 (current choice):** Creates another different set of similar classess and methods to Addressbook +
+**Pros:** Clear distinction between Eventbook and Addressbook, neater architecture. +
+**Cons:** Tedious, as the implementation needs to copy and edit from the previous Addressbook application, and easily prone to error due to human carelessness. +
+**Alternative 2:** Fuse everything with the Addressbook application without creating separate set of classess and methods +
+**Pros:** Easier to implement +
+**Cons:** Architecture will be messy as there is no clear distinct line between Eventbook and Addressbook.
+
+---
+// end::event[]
+
+// tag::export[]
+=== Export mechanism
+
+The export mechanism is facilitated by `XmlFileStorage`, which resides inside `StorageManager`. It allows the user
+to export either addressbook or eventbook in a excel format.
+
+Since addressbook format is slightly different from eventbook format, it can't be done through a general exportation as a single person in addressbook can have multiple tagged.
+
+The implementation of exporting addressbook into a csv file is shown below:
+
+[source,java]
+----
+    public static void exportAddressbook(String source, String destination, String header)
+            throws ParserConfigurationException, IOException, SAXException {
+
+        File addressbookXmlFile = new File(source);
+
+        if (!addressbookXmlFile.exists()) {
+            assert false : "Addressbook Xml file should have exist";
+            throw new FileNotFoundException("File not found : " + addressbookXmlFile.getAbsolutePath());
+        }
+
+        //Get the nodelist of the persons tag
+        NodeList personList = XmlUtil.getNodeListFromFile(addressbookXmlFile, "persons");
+
+        StringBuilder sb = new StringBuilder();
+
+        //Append the header to the CSV file
+        XmlUtil.appendHeader(sb, header);
+
+        //Append individual person data to the CSV file
+        for (int i = 0; i < personList.getLength(); i++) {
+            Node personNode = personList.item(i);
+
+            if (personNode.getNodeType() == Node.ELEMENT_NODE) {
+
+                Element elemPerson = (Element) personNode;
+
+                XmlUtil.appendContent(sb, elemPerson, "name", "phone", "address", "birthday",
+                    "email", "group", "remark");
+
+                //Append tagged list into the StringBuilder
+                NodeList tagList = elemPerson.getElementsByTagName("tagged");
+
+                for (int j = 0; j < tagList.getLength(); j++) {
+                    Node tagNode = tagList.item(j);
+                    if (tagNode.getNodeType() == Node.ELEMENT_NODE) {
+                        Element elemTag = (Element) tagNode;
+
+                        sb.append("\"" + elemTag.getTextContent() + "\"");
+                        sb.append(XmlUtil.COMMA_DELIMITER);
+                    }
+                }
+                //Enter a new line in the CSV file
+                sb.append(XmlUtil.NEW_LINE_SEPARATOR);
+            }
+        }
+        XmlUtil.exportDataToFile(destination, sb);
+    }
+----
+
+The implementation of exporting eventbook into a csv file is shown below:
+
+[source,java]
+----
+    public static void exportEventbook(String source, String destination, String header)
+            throws ParserConfigurationException, IOException, SAXException {
+
+        File eventbookXmlFile = new File(source);
+
+        if (!eventbookXmlFile.exists()) {
+            assert false : "Eventbook Xml file should have exist";
+            throw new FileNotFoundException("File not found : " + eventbookXmlFile.getAbsolutePath());
+        }
+
+        //Get the nodelist of the events tag
+        NodeList eventList = XmlUtil.getNodeListFromFile(eventbookXmlFile, "events");
+
+        StringBuilder sb = new StringBuilder();
+
+        //Append the header to the CSV file
+        XmlUtil.appendHeader(sb, header);
+
+        //Append individual event data to the CSV file
+        for (int i = 0; i < eventList.getLength(); i++) {
+            Node eventNode = eventList.item(i);
+
+            if (eventNode.getNodeType() == Node.ELEMENT_NODE) {
+
+                Element elemEvent = (Element) eventNode;
+                XmlUtil.appendContent(sb, elemEvent, "title", "description", "location", "datetime");
+
+                //Enter a new line in the CSV file
+                sb.append(XmlUtil.NEW_LINE_SEPARATOR);
+            }
+        }
+        XmlUtil.exportDataToFile(destination, sb);
+    }
+----
+
+The following activity diagram summarize what happens inside the `XmlFileStorage` when a user executes a new command:
+
+image::ExportActivityDiagram.png[width="300"]
+
+==== Design Considerations
+
+**Aspect:** Implementation of Export mechanism +
+**Alternative 1 (current choice):** Read the xml file and write into a csv file +
+**Pros:** Easy and flexible to implement. +
+**Cons:** Not standardised, therefore need to implement different method for different xml file format  +
+**Alternative 2:** Create a XML Schema to standardised how the csv file will be like +
+**Pros:** Since XML Schema has strict rules attached to it, we can just write a general export method for all kind of xml file format +
+**Cons:** Difficult to implement.
+
+---
+//end::export[]
+
+// tag::find[]
+=== Find From All Text Fields Mechanism
+
+The existing find command is enhanced to allow the user to search for text in multiple fields. Previously, users can
+only search for the contact by the name. However, with this mechanism, a user can find texts in the contact's name,
+address, or mixed fields which principally mean all the text fields such as name, address, birthday, phone number and
+remarks *EXCEPT* for tag names.
+
+This leads to the change in the command's syntax. Here is the new syntax: `find <ATTRIBUTE>/KEYWORD [MORE KEYWORDS]`.
+Here, `<ATTRIBUTE>` can either be `n`, `a` or `m`.
+
+The change the format of the command leads to the changes in the FindCommandParser.parse() method:
+
+[source, java]
+----
+    public FindCommand parse(String args) throws ParseException {
+        String trimmedArgs = args.trim();
+        if (trimmedArgs.isEmpty()) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        }
+        if (trimmedArgs.charAt(0) == 'n') {
+            NameContainsKeywordsPredicate.setPredicateType('n');
+        } else if (trimmedArgs.charAt(0) == 'a') {
+            NameContainsKeywordsPredicate.setPredicateType('a');
+        } else if (trimmedArgs.charAt(0) == 'm') {
+            NameContainsKeywordsPredicate.setPredicateType('m');
+        } else {
+            throw new ParseException (
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        }
+
+        trimmedArgs = trimmedArgs.substring(2).trim();
+        String[] nameKeywords = trimmedArgs.split("\\s+");
+
+        return new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
+    }
+----
+
+The code shows how the command is being processed based on the attribute character. Namely, if the attribute is n, the
+find will look for keywords in the name. If the attribute is a, the command will find in the address. Lastly, if the
+attribute is m, the command will find in all text fields.
+
+In the future, this feature can be developed into a best-matched search based on different fields whereby the contact
+that matches the most fields will appear first followed by the one matching second most fields. Users are allowed to
+set the number of results to appear.
+//end::find[]
+
+// tag::group[]
+=== Group mechanism
+
+The group mechanism is implemented by the `GroupCommand` and `GroupCommandParser` in the Logic component.
+The group mechanism is facilitated by the `UniquePersonList` and `UniqueGroupList`, which resides inside the `Addressbook`.
+It supports adding a custom group to a number of contacts by utilizing the CLI commands in the TunedIn application.
+The group mechanism also inherit from the `UndoableCommands`.
+
+In order to group persons, a new class `Group` is implemented and has a composition association with `Person`.
+A `Person` consist of the `Group` object.
+Group is optional, person is allow to have empty group. The following diagram shows the relationship between
+`Person` and `Group`.
+
+image::GroupAndPerson.png[width="400"]
+
+A `UniqueGroupList` is also implemented to keep track of the existing groups.
+It is a list of `Group` that enforces no nulls and uniqueness between its elements and
+supports a set of list operations.
+
+The implementation of the `Group` command constructor is shown below : +
+
+[source,java]
+    public GroupCommand(List<Index> indexes, String group) {
+        requireNonNull(indexes);
+        requireNonNull(group);
+        this.indexes = indexes;
+        this.group = group;
+    }
+
+As you can see from the implementation, Group command requires two type of no null parameters
+which are a list of _Index_ and  The first parameter provide the indexes of person(s) to be grouped. The
+second input in the type of `Group` stores the group name specified by the user or a _showall_ `String` to view
+the existing group names. Before a new instance of `GroupCommand` is being created,
+the `GroupCommandParser` will ensure that the input from the user is valid and is parsed to `GroupCommand` in
+correct data type.
+
+The execution of the command is done in the following method :
+
+[source, java]
+    public CommandResult executeUndoableCommand() throws CommandException {
+        CommandResult commandResult;
+        if (group.equalsIgnoreCase(SHOW_ALL_GROUP)) {
+            commandResult = showAllGroupName();
+        } else if (indexes.size() > 0) {
+            commandResult = setGroupToPerson();
+        } else {
+            throw new CommandException(MESSAGE__WRONG_SHOW_ALL_PARAMETER);
+        }
+        return commandResult;
+    }
+
+As you can see from the implementation, the method will either call the *showAllGroupName()* or the
+*setGroupToPerson* to show the existing group names or to set the specified person(s) to a group.
+
+*showAllGroupName()* is as shown :
+
+[source, java]
+    private CommandResult showAllGroupName() {
+        return new CommandResult("Groups:  " + model.getGroupList().toString()
+                .replaceAll("\\[", "").replaceAll("\\]", ""));
+    }
+
+The *mode.getGroupList()* will eventually call the *asObservableList()* in the `UniqueGroupList` which
+returns back a list of group names.
+
+
+Setting the group to person is as shown. It replaces the target person with a replicate of the same person that has an additional group field.
+
+[source, java]
+    private CommandResult setGroupToPerson() throws CommandException {
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+        for (Index index : indexes) {
+            if (index.getZeroBased() >= lastShownList.size()) {
+                throw new CommandException("Index " + index.toString() + " is invalid!");
+            }
+            ReadOnlyPerson personToGroup = lastShownList.get(index.getZeroBased());
+            try {
+                Person editedPerson = new Person(personToGroup.getName(), personToGroup.getPhone(),
+                        personToGroup.getEmail(), personToGroup.getAddress(), personToGroup.getBirthday(),
+                        new Group(group), personToGroup.getRemark(), personToGroup.getTags());
+                model.updatePerson(personToGroup, editedPerson);
+            } catch (DuplicatePersonException dpe) {
+                throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            } catch (IllegalValueException ive) {
+                throw new CommandException(ive.getMessage());
+            } catch (PersonNotFoundException pnfe) {
+                throw new CommandException("The target person cannot be missing");
+            }
+        }
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        return new CommandResult(generateSuccessMessage());
+    }
+
+After a series of function calls, the *model.updatePerson()* method will call the *updateMasterGroupList()* in the `AddressBook`
+, and call *setPerson()* method in the `UniquePersonList`.
+
+[NOTE]
+`UniquePersonList` deals with the list of persons that enforces uniqueness between its elements
+and supports a set of list operations. The following diagram shows the UML diagram of the class.
+
+The *updateMasterGroupList()* method will update the list of `Group` if the a new group is added or an old
+group with no person.
+
+It is implemented in the following way :
+
+[source, java]
+    private void updateMasterGroupList(Group prevGroup) {
+        boolean isGroupPresent = false;
+        for (Person p : persons) {
+            if (p.getGroup().value.equals(prevGroup)) {
+                isGroupPresent = true;
+            }
+        }
+        if (!isGroupPresent) {
+            groups.delete(prevGroup);
+        }
+    }
+
+The *setPerson()* method will check the validity of the target person and replicated person. It will
+only replace the target person if the target person exist and the replicated person is not a duplicate
+of another existing person.
+
+*setPerson()* is implemented as shown :
+
+[source, java]
+    public void setPerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
+            throws DuplicatePersonException, PersonNotFoundException {
+        requireNonNull(editedPerson);
+        int index = internalList.indexOf(target);
+        if (index == -1) {
+            throw new PersonNotFoundException();
+        }
+        if (!target.equals(editedPerson) && internalList.contains(editedPerson)) {
+            throw new DuplicatePersonException();
+        }
+        internalList.set(index, new Person(editedPerson));
+    }
+
+Suppose that the user has just launched the application.
+Assuming a valid addressbook xml file exists (with numerous person data in it),
+the `UniquePersonList` and `UniqueGroupList` will start storing a list of Person object with correspondence to the xml file.
+Each person will either have a `Group` or an empty `Group`.
+
+To view existing groups : +
+The user executes a `GroupCommand` by calling `group showall`, to view the existing groups. The name of the
+groups will be displayed in the command feedback box.
+
+To set group to person(s) : +
+The user executes a `GroupCommand` by calling `group 1 2 g/TEST1`, to set the 1st and 2nd person’s group to "TEST1" in the address book.
+The existing `group` will be replaced by the user input "TEST1" and the Persons’ object will be updated.
+
+The user then executes another `GroupCommand` by calling `group 2 3 4 5 g/ to ungroup the 2nd to 5th person.
+
+[NOTE]
+If the group command fails its execution due to invalid index(es), the list of person(s) will not be grouped.
+
+The following sequence diagram shows how the group operation works to show the names of all existing
+groups.
+
+image::GroupCommand_SequenceDiagramSA.png[width="800"]
+
+The following sequence diagram shows how the group operation works to group person(s):
+
+image::GroupCommand_SequenceDiagram.png[width="800"]
+
+The following activity diagram shows models what happened when `GroupCommand` is executed.
+
+image::GroupCommand_ActivityDiagram.png[width = "400"]
+
+==== Design Considerations
+
+**Aspect:** Implementation of setting group to person +
+**Alternative 1 (current choice):** Replace and replicate the same `Person` object with new `Group` attribute +
+**Pros:** Make use of the existing method to update the person, no new method is needed to be
+implement. +
+**Cons:** Replacing and replicate the person is unnecessary as group can be set to person directly. +
+**Alternative 2:** Set `Group` to `Person` with setter method in `Person` class +
+**Pros:** Easy to implement.+
+**Cons:** Implemented code is highly similar to existing method to update a person, since it is supposed
+to check for exceptions and update associated group list.
+
+**Aspect:** Update the list of existing groups +
+**Alternative 1 (current choice):** Update the list whenever a person's group is being changed. Check then
+delete the person's previous group if it has no member.+
+**Pros:** The list of groups id always readily updated +
+**Cons:** Has to iterate through the entire list of person to determine if the previous group is empty. +
+**Alternative 2:** Use Map to store the existing group and the number of associated persons +
+**Pros:** Easy to determine if the group is empty and easy to update the map of groups. +
+**Cons:** Maybe more tedious to implement.
+// end::group[]
+
+
+//tag::list[]
+=== List(group) mechanism
+The list group mechanism is an enhanced feature of the original `ListCommand` and `ListCommandParser`.
+It is facilitated by the `ContainsKeywordsPredicate` in the `Person > Model` package and
+a `FilteredList` of `ReadOnlyPerson`, which resides inside the `ModelManager`.
+It allows the user to view a list of person in a user specified group.
+
+The constructor of the enhanced `ListCommand` requires a `String` parameter _predicate_ as shown :
+
+[source, java]
+    public ListCommand(String predicate) {
+        this.listParameter = predicate;
+        predicate = predicate.isEmpty() ? predicate : predicate.substring(2).trim();
+        this.predicate = new ContainsKeywordsPredicate(Arrays.asList(predicate));
+    }
+
+As you can see a new `ContainsKeywordsPredicate()` object is instantiated to facilitate the filtering of the list of
+persons.
+
+`ContainsKeywordsPredicate` implements the `Predicate` interface and test if a person's group or other fields
+matches any of the keywords passed in. The code snippets follows show how the group keyword is being matched.
+
+[source, java]
+          if (predicateType == 'g') {
+              assert keywords.size() == 1;
+              return (person.getGroup().value.equals(keywords.get(0).toString()));
+          }
+
+The execution of command is implemented as shown :
+
+[source, java]
+    public CommandResult execute() {
+        if (listParameter.isEmpty()) {
+            model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+            return new CommandResult(MESSAGE_LIST_ALL_SUCCESS);
+        }
+        model.updateFilteredPersonList(predicate);
+        if (model.getFilteredPersonList().size() == 0) {
+            return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size())
+                    + " " + MESSAGE_LIST_WRONG_PARAMETER);
+        }
+        return new CommandResult(MESSAGE_LIST_GROUP_SUCCESS + listParameter.substring(2).trim());
+    }
+
+As seen from the implementation, the `ListCommand` will serve its original function to show a list of all persons if
+the _listParameter_ is empty, and get a list of filtered person if otherwise.
+
+The *mode.updateFilteredPersonList()* will call the _setPredicate_ method of the `FilteredList` and update the list
+persons displayed to user.
+
+Suppose that the user has just launched the application. A list of all persons will be shown.
+
+The user executes a `ListCommand` by calling `list g/groupname` to view a group of persons. The persons grouped in the specified will
+be displayed in the contact tab.
+
+The user executes another `ListCommand` by calling `list`, to view all persons stored in TunedIn.
+The list of all persons will be displayed in the contact tab.
+
+[NOTE]
+If the list command fails its execution due to non-existence group, the current list view will remained unchanged.
+
+The following sequence diagram shows how the list operation works:
+
+image::ListCommand_SequenceDiagram.png[width="800"]
+
+The following activity diagram models what happened when `ListCommand` is executed.
+
+image::ListCommand_ActivityDiagram.png[width = "400"]
+
+==== Design Considerations
+
+**Aspect:** Getting a list of persons in a particular group +
+**Alternative 1 (current choice):** Using FilteredList and Predicate +
+**Pros:** Make use of the existing logic and methods  +
+**Cons:** Order Command dose not work directly on this filtered list +
+**Alternative 2:** Store a separate list of persons per group in xml format +
+**Pros:** Less complex logic, commands performed on this list will be saved and reflected +
+**Cons:** Implementation can be more tedious and duplicated records of persons will take up extra memory.
+//end::list[]
+
+// tag::order[]
+=== Order(Sort) mechanism
+The order mechanism is implemented by 'OrderCommand' and `OrderCommandParser` in the Logic component.
+It is facilitated by the `UniquePersonList` which resides in  `Addressbook < ModelManager`.
+It allows re-ordering of the person list that modifies the initial order of the list.
+This mechanism inherits from the `UndoableCommands`.
+
+The implementation of the `OrderCommand` constructor is as shown :
+
+[source, java]
+----
+ public OrderCommand(String orderParameter)
+    {
+        this.orderParameter = orderParameter;
+    }
+----
+
+As you can see from the implementation, the command requires user inputs in the form of `String` as the parameter/s
+to order. The inputs are restricted by the fields of `Person` that only includes `Name`, `Address`,
+`Tag` and `Birthday`. Before a new instance of `OrderCommand` is being created, the `OrderCommandParser` will ensure that the input from the user
+is not empty string.
+
+The execution of the command is done in the following method :
+
+[source, java]
+----
+ public CommandResult executeUndoableCommand() throws CommandException {
+        try {
+            model.orderList(orderParameter);
+        } catch (UnrecognisedParameterException upe) {
+            throw new CommandException(MESSAGE_ORDER_WRONG_PARAMETER);
+        }
+        return new CommandResult(MESSAGE_ORDER_SUCCESS + orderParameter);
+    }
+----
+
+After a series of function calls, the *model.orderList()* method will eventually call *orderPersonList()* method
+in the `UniquePersonList`.
+
+`UniquePersonList` deals with the list of persons that enforces uniqueness between its elements
+and supports a set of list operations. The following diagram shows the UML diagram of the class.
+
+image::UniquePersonList_UML.png[width="300"]
+
+*orderPersonList()* method is able to order the existing person list by a maximum of two parameters.
+It will order the list by the first parameter follow by the second parameter.
+The implementation of the *orderPersonList()* is shown below:
+
+[source, java]
+----
+    public void orderPersonList(String parameter) throws UnrecognisedParameterException {
+
+        switch (parameter) {
+        case "NAME":
+            internalList.sort(Person.getPersonNameComparator());
+            break;
+        ...
+
+        case "NAME ADDRESS":
+            internalList.sort(Person.getPersonNameComparator().thenComparing(Person.getPersonAddressComparator()));
+            break;
+
+        case "ADDRESS NAME":
+            internalList.sort(Person.getPersonAddressComparator().thenComparing(Person.getPersonNameComparator()));
+            break;
+
+         ...
+
+        default:
+            throw new UnrecognisedParameterException();
+        }
+
+    }
+----
+
+The comparators are implemented in the `Person` as shown:
+
+[source, java]
+----
+
+    public static final Comparator<Person> getPersonNameComparator() {
+        return (Person a, Person b) -> a.getName().toString()
+                .compareToIgnoreCase(b.getName().toString());
+    }
+
+    public static final Comparator<Person> getPersonAddressComparator() {
+        return (Person a, Person b) -> a.getAddress().toString()
+                .compareToIgnoreCase(b.getAddress().toString());
+    }
+
+    public static final Comparator<Person> getPersonBirthdayComparator() {
+        return comparing(a -> a.getBirthday().getReformatDate(),
+                nullsLast(naturalOrder()));
+    }
+
+    public static final Comparator<Person> getPersonTagComparator() {
+        return (Person a, Person b) -> a.getTags().toString()
+                .compareToIgnoreCase(b.getTags().toString());
+    }
+
+    public static final Comparator<Person> getPersonGroupComparator() {
+        return (a, b) -> {
+            if (a.getGroup().toString().isEmpty()) {
+                return 1;
+            } else if (b.getGroup().toString().isEmpty()) {
+                return -1;
+            } else {
+                return a.getGroup().toString().compareToIgnoreCase(b.getGroup().toString());
+            }
+        };
+    }
+
+----
+
+As you can see,
+5 `Comparator` objects are constructed for each valid parameter to compare the list of contacts
+and order according to natural order and null last.+
+
+_Birthday_ is ordered by yyyy-mm-dd instead of the dd-mm-yyyy format. +
+This is achieved by reformatting the
+_Birthday_ string as shown:
+
+[source, java]
+----
+     public String getReformatDate() {
+         if (value.isEmpty()) {
+             return null;
+         }
+         return new StringBuilder().append(value.substring(6, 10)).append(value.substring(3, 5))
+                 .append(value.substring(0, 2)).toString();
+     }
+----
+
+Person(s) with empty _Birthday_ field will be sorted to the last.
+
+
+Suppose that the user has just launched the application and no previous `orderCommand` has been called. The persons will
+be listed according to the default ordering, in order of last added (Last contact added will appear as the last in the list).
+
+
+The user executes another `orderCommand` by typing `order name`, to view the list of contacts ordered in alphabetical order
+based on the `Name` field of a person. With valid input the list of contacts will be ordered accordingly and
+the ordered list will be shown.
+
+The user executes another command by typing `order tag name` to order the list by `Tag` first then `Name` of the person.
+
+[NOTE]
+If the order command fails its execution due to invalid order parameter, the list of contact will
+not be ordered.
+
+The following sequence diagram shows how the order operation works:
+
+image::OrderCommand_SequenceDiagram.png[width="800"]
+
+The following activity diagram models what happened when `OrderCommand` is executed.
+
+image::OrderCommand_ActivityDiagram.png[width = "400"]
+
+==== Design Considerations
+
+**Aspect:** Implementation of sorting algorithm +
+**Alternative 1 (current choice):** Sort method inherited from List Interface with specified comparator +
+**Pros:** Easy to implement and has the advantage of mergesort. +
+**Alternative 2:** Implement the sorting with quicksort algorithm +
+**Pros:** Able to perform sorting faster than mergesort. +
+**Cons:** Not stable and tedious to implement.
+
+// end::remark[]
+---
+
+// end::order[]
+
+// tag::remark[]
+=== Remark mechanism
+
+The remark mechanism is facilitated by `Person`, which resides inside `Addressbook`. It supports adding a custom remark to individual contact
+by utilizing the CLI commands in the Tunedln application.
+
+`Person` only deals with `Name`, `Phone`, `Email`, `Address`, `Birthday`, `Remark`, and `Tags`.
+
+The following diagram shows the inheritance diagram for `Person`:
+
+image::RemarkClassDiagram.png[width="800"]
+
+As you can see from the diagram, Person stores the remark as an attribute. This Person object is then stored in the
+UniquePersonList, which resides in the AddressBook.
+
+The implementation of the constructor Remark class is shown below in greater detail. Each person in the UnqiuePersonList will have
+either an empty or textual remark. As you can see from the implementation, Remark require one String input. This input
+will be provided by the user (which is also owner of the Addressbook), and it will override the existing Remark value (*Note: Empty String is also allowed).
+Note that this technique of abstraction allows us to further expand Remark into different smaller class to display
+out a more detailed Remark (E.g. let's take Address class for instance, it could consists of Block, Street, UnitNo, Postal).
+
+[source, java]
+----
+  public Remark(String remark) {
+        requireNonNull(remark);
+        this.value = remark;
+    }
+----
+
+The implementation of storing Remark into a Person object is shown below:
+
+[source, java]
+----
+    public Person(Name name, Phone phone, Email email, Address address, Birthday birthday, Remark remark,
+                  Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, birthday, tags);
+        this.name = new SimpleObjectProperty<>(name);
+        this.phone = new SimpleObjectProperty<>(phone);
+        this.email = new SimpleObjectProperty<>(email);
+        this.address = new SimpleObjectProperty<>(address);
+        this.birthday = new SimpleObjectProperty<>(birthday);
+        this.remark = new SimpleObjectProperty<>(remark);
+
+        // protect internal tags from changes in the arg list
+        this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+    }
+----
+
+Suppose that the user has just launched the application. Assuming a valid addressbook xml file exists (with numerous person data in it),
+the UniquePersonList will start storing a list of Person object with correspondence to the xml file. Each person will either have a textual or empty remark.
+
+The user executes an `edit` Command by calling `edit 1 r/1st try`, to set the 1st person's
+remark to "1st try" in the address book. The existing Remark value will be replaced by the user input "1st try" and
+the 1st Person's object will be updated, since the Remark object is referencing to the 1st Person's remark attribute.
+
+image::ReplacingRemarkDiagram.png[width="800"]
+
+The user executes another edit command by calling `edit 1 r/2nd try`, to replace the remark initial value which is
+"1st try" to "2nd try".
+
+image::ReplacingRemarkDiagram2.png[width="800"]
+
+[NOTE]
+If the edit command fails its execution due to unacceptable syntax, the person's remark will not be replaced.
+
+
+The following sequence diagram shows how the edit remark operation works:
+
+image::ReplacingRemarkSequence.png[width="800"]
+
+
+The following activity diagram summarize what happens inside the `Person` when a user executes a new command:
+
+image::ReplacingRemarkActivityDiagram.png[width="200"]
+
+==== Design Considerations
+
+**Aspect:** Implementation of Remark +
+**Alternative 1 (current choice):** Replace the existing Person object with an edited
+Person object. +
+**Pros:** Neat and Clearer abstractions to be displayed in class diagram. +
+**Cons:** Tedious, as the implementation could have be simpler by assigning String as Remark attribute. +
+**Alternative 2:** Let String be the attribute for Remark +
+**Pros:** Easy to implement. +
+**Cons:** Harder to understand the flow of the implementation.
+
+---
+
+**Aspect:** Viewing of Remark
+**Alternative 1 (current choice):** Only one remark is able to store for one contact. +
+**Pros:** Easy to implement. +
+**Cons:** User is unable to keep more than 1 remark. +
+**Alternative 2:** Data structure to support multiple remark. +
+**Pros:** User is given the choice to overwrite or save a new remark. +
+**Cons:** Harder to implement.
+
+// end::remark[]
+---
+
+
+// tag::theme[]
+=== Theme mechanism
+
+Themes are an additional layer of configurability for users to make the application personal, which echoes our design
+principles. The TunedIn application comes with four installed curated themes modelled after the four seasons, 'Summer',
+'Winter', 'Spring' and 'Autumn'.
+
+Adding new themes are as simple as adding the new image to src > main > resources > images. Images are recommended to
+be at least 1600 by 1200 pixels, 72dpi. Save the image as THEME_NAME.jpg, and similarly update SetThemeCommand.java's
+executeUndoableCommand() function with the new THEME_NAME.
+
+[source, java]
+----
+  if (!((this.theme.equals("summer"))
+                  || (this.theme.equals("spring"))
+                  || (this.theme.equals("winter"))
+                  || (this.theme.equals("autumn")))) {
+        return new CommandResult(String.format(Messages.MESSAGE_WRONG_THEME, this.theme));
+    }
+----
+
+The theme mechanism will facilitated by `ThemeSettings`, which resides inside `Commons > Core`. It supports the setting
+of custom preset themes for the TunedIn application.
+
+[NOTE]
+Themes will persist even after closing the app, allowing the user to use the application the way he desires.
+
+==== Design Considerations
+
+**Aspect:** Implementation of Theme +
+**Alternative 1 (current choice):** Setting predefined themes for the users. +
+**Pros:** Users have well-designed themes to begin choosing from, and can enjoy the application without having to worry
+about themes. +
+**Cons:** The level of customizability is lowered for the user. +
+**Alternative 2:** Let the user upload their own themes +
+**Pros:** An increased level of customizability is conferred upon the user. +
+**Cons:** Users will have to either resort to clicking to upload the files they require, or manually drag and drop the
+file within a predefined folder in the TunedIn application to upload the file, which goes against our CLI specification.
+
+// end::theme[]
+
+// tag::transfer[]
+=== Transfer mechanism
+
+The `transfer` command aids users in transferring data from one computer to another, while at the same time doubling up
+as a physical backup of all configurations, saved passwords and data in a ZIP folder.
+
+[source, java]
+----
+public void transferData() throws ConfigMissingException {
+        ArrayList<String> fileList = new ArrayList<String>();
+        fileList.add(userPref.getDataFilePath());
+        fileList.add(config.getUserPrefsFilePath());
+        fileList.add(config.DEFAULT_CONFIG_FILE);
+        fileList.add("help.txt");
+
+        try {
+            FileOutputStream fos = new FileOutputStream("TunedIn.zip");
+            ZipOutputStream zos = new ZipOutputStream(fos);
+
+            addFileIntoZip(zos, fileList);
+
+            zos.closeEntry();
+            zos.close();
+
+        } catch (IOException e) {
+            throw new ConfigMissingException("Missing file");
+        }
+    }
+----
+
+addFileIntoZip adds specified files into ZIP, as well as recursively looks through the data folder, and add everything
+into the ZIP as well.
+
+[source,java]
+----
+private void addFileIntoZip(ZipOutputStream zos, ArrayList<String> fileList) throws IOException {
+
+        byte[] buffer = new byte[1024];
+
+        for (String file : fileList) {
+
+            System.out.println("File Added Into Zip (With Defaults) : " + file);
+            ZipEntry ze = new ZipEntry(file);
+            zos.putNextEntry(ze);
+
+            File thisFile = new File(file);
+
+            if (thisFile.isFile()) {
+                FileInputStream in = new FileInputStream(file);
+
+                int len;
+                while ((len = in.read(buffer)) > 0) {
+                    zos.write(buffer, 0, len);
+                }
+                in.close();
+            } else if (thisFile.isDirectory()) {
+                String[] newFileList = thisFile.list();
+                ArrayList<String> dirFiles = new ArrayList<String>();
+                for (String filename: newFileList) {
+                    dirFiles.add("data/" + filename);
+                }
+                addFileIntoZip(zos, dirFiles);
+            }
+        }
+    }
+----
+
+[NOTE]
+Installation instructions are also provided within the ZIP file, to aid in the seamless installation of data on a new
+instance of TunedIn
+
+==== Design Considerations
+
+**Aspect:** Implementation of Transfer +
+**Alternative 1 (current choice):** ZIP the files in a ZIP file. +
+**Pros:** Lightweight file transfer between devices, while at the same time users can store the data in a ZIP folder
+to replace the default data in a new release of TunedIn. +
+**Cons:** Users have to manually install the data. +
+**Alternative 2:** ZIP the entire folder +
+**Pros:** Users will require minimal work (i.e. no file replacement) on the new device to get going. +
+**Cons:** Users will find it complicated for themselves to upgrade to a newer version of TunedIn.
+
+// end::transfer[]
+
+// tag::lock[]
+=== Lock Mechanism
+
+The addressbook.xml file will be encrypted to protect the confidentiality of the data. Contacts are encrypted in
+separate files named by the user's `USERNAME` and encrypted by the user's `PASSWORD`. If the contacts are open to the
+public, it will be in the `PUBLIC.encrypted` file, which is encrypted with the password `PUBLIC`. Every time TunedIn
+runs, it will decrypt the `PUBLIC.encrypted` file with the `PUBLIC` password and write the data into the
+addressbook.xml file for the rest of the program to load up. Once a mutating operation is done to the addressbook.xml
+file, the `save` command must be executed afterwards for the changes to be saved to the encrypted files. Till date,
+most of the mutating commands are incorporated with the `save` command, but users are advised to save manually in
+case of bugs or unincorporated commands.
+
+The `lock` command will enable a user to lock the current list of contacts using a user account comprising a user
+name and a password. The user credentials will then be persisted into the account.xml file as SHA-256 hash digests .
+In particular, User name will be hashed and stored directly into the account.xml file. Each user will be given a
+randomised salt value, which will be hex-coded and stored in the account.xml file. The password will first be
+prepended with the salt value from that user, after which the combined string will be hashed and stored. In this way,
+users with the same passwords will have different hash digests, upholding the confidentiality of the information.
+
+When the user uses the lock command, he/she needs to supply the `USERNAME` and `PASSWORD` to create an account. The
+program will then hash the `USERNAME` and compare with the existing user name hash digests from the file. If the hash
+values are the same, a `DuplicateUserException` exception will be thrown.
+
+Once an account is registered under the lock command, the current list of contacts will be to encrypt with the user's
+password. When a user uses the lock command, he/she will be logged in as that newly-created user. To change to
+another account, the user has to log out first. Once user has locked the contact and logged out, the list of contacts
+will be emptied, the addressbook.xml file will be encrypted with the user's password and named with the first 10
+characters of that user's username hex digest and a new empty addressbook.xml file will be created. Once logged
+out, the current user is set to public. To log in with a registered user, use the log in command `login u/USERNAME
+p/PASSWORD` which requires the user to supply the `USERNAME` and `PASSWORD` for verification. The programme then
+verifies if the credentials are correct with the account.xml file. Finally, it will decrypt the contacts of that user
+using the plaintext of the supplied password.
+
+image::LockMechanism.jpg[width="800"]
+
+The HashDigest.java in the digestutil package will apply the SHA-256 hash algorithm on a plaintext and return the
+message digest as a String
+
+[source,java]
+----
+/**
+ * Converts a string to a SHA-256 Hash Digest.
+ */
+public class HashDigest {
+    /**
+     * Return the hash digest of {@code text}. Used for creating accounts and validating log-ins.
+     */
+    public byte[] getHashDigest(String text) {
+        MessageDigest digest = null;
+        try {
+            digest = MessageDigest.getInstance("SHA-256");
+            return digest.digest(text.getBytes(StandardCharsets.UTF_8));
+        } catch (NoSuchAlgorithmException e) {
+            return null;
+        }
+    }
+}
+----
+
+The generation of salt and how the password digest is done are implemented in the LockCommand.java file as follows
+
+[source,java]
+----
+@Override
+    public CommandResult execute() throws CommandException, DuplicateUserException {
+        requireNonNull(model);
+        byte[] uIdDigest = new HashDigest().getHashDigest(userId);
+        byte[] salt = new byte[32];
+        final Random r = new SecureRandom();
+        r.nextBytes(salt);
+        String saltText = new String(salt);
+        byte[] pwDigest = new seedu.address.logic.commands.digestutil.HashDigest()
+                .getHashDigest(saltText + passwordText);
+        String hexUidDigest = getHexFormat(uIdDigest);
+        String hexSalt = getHexFormat(salt);
+        String hexPassword = getHexFormat(pwDigest);
+        try {
+            model.persistUserAccount(new User(hexUidDigest, hexSalt, hexPassword));
+        } catch (DuplicateUserException due) {
+            throw new CommandException(MESSAGE_EXISTING_USER);
+        }
+        return new CommandResult(MESSAGE_SUCCESS);
+    }
+----
+
+The conversion of the salts and digests into hexadecimal strings is handled by the HexCode.java file
+[source,java]
+----
+/**
+ * Provide the utilities to obtain hex strings from texts and texts from hex strings
+ */
+public class HexCode {
+
+    /**
+     * Return hex string of text
+     */
+    public String getHexFormat(String text) {
+        char[] chars = text.toCharArray();
+
+        StringBuffer hex = new StringBuffer();
+        for (int i = 0; i < chars.length; i++) {
+            hex.append(Integer.toHexString((int) chars[i]));
+        }
+
+        return hex.toString();
+    }
+
+    /**
+     * Return text of hex string
+     */
+    public String hexStringToByteArray(String hexString) {
+        StringBuilder sb = new StringBuilder();
+        StringBuilder temp = new StringBuilder();
+
+        for (int i = 0; i < hexString.length() - 1; i += 2) {
+
+            //grab the hex in pairs
+            String output = hexString.substring(i, (i + 2));
+            //convert hex to decimal
+            int decimal = Integer.parseInt(output, 16);
+            //convert the decimal to character
+            sb.append((char) decimal);
+
+            temp.append(decimal);
+        }
+        System.out.println("Decimal : " + temp.toString());
+
+        return sb.toString();
+    }
+}
+----
+The encryption and decryption of the files are done in the FileEncryptor.java file of the logic.command.encryption
+
+[source,java]
+----
+/**
+ * This provides encryption and decryption utilities
+ */
+public class FileEncryptor {
+    private static final byte[] salt = {
+        (byte) 0x43, (byte) 0x76, (byte) 0x95, (byte) 0xc7,
+        (byte) 0x5b, (byte) 0xd7, (byte) 0x45, (byte) 0x17
+    };
+
+    private static final String addressBookFilePath = "data/addressbook.xml";
+
+    /**
+     * Create a cipher
+     *
+     * @param pass        passphrase
+     * @param encryptMode true for encryption, false for decryption
+     * @return a cipher object
+     * @throws GeneralSecurityException
+     */
+    private static Cipher makeCipher(String pass, Boolean encryptMode) throws GeneralSecurityException {
+
+        //Use a KeyFactory to derive the corresponding key from the passphrase:
+        PBEKeySpec keySpec = new PBEKeySpec(pass.toCharArray());
+        SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("PBEWithMD5AndDES");
+        SecretKey key = keyFactory.generateSecret(keySpec);
+
+        //Create parameters from the salt and an arbitrary number of iterations:
+        PBEParameterSpec pbeParamSpec = new PBEParameterSpec(salt, 42);
+
+        //Set up the cipher:
+        Cipher cipher = Cipher.getInstance("PBEWithMD5AndDES");
+
+        //Set the cipher mode to decryption or encryption:
+        if (encryptMode) {
+            cipher.init(Cipher.ENCRYPT_MODE, key, pbeParamSpec);
+        } else {
+            cipher.init(Cipher.DECRYPT_MODE, key, pbeParamSpec);
+        }
+
+        return cipher;
+    }
+
+    /**
+     * Encrypts one file to a second file using a key derived from a passphrase:
+     */
+    public static void encryptFile(String userId, String pass, boolean emptyFile)
+            throws IOException, GeneralSecurityException {
+        byte[] decData;
+        byte[] encData;
+        File inFile = new File(addressBookFilePath);
+        //Generate the cipher using pass:
+        Cipher cipher = FileEncryptor.makeCipher(pass, true);
+
+        //Read in the file:
+        FileInputStream inStream = new FileInputStream(inFile);
+
+        int blockSize = 8;
+        //Figure out how many bytes are padded
+        int paddedCount = blockSize - ((int) inFile.length() % blockSize);
+
+        //Figure out full size including padding
+        int padded = (int) inFile.length() + paddedCount;
+
+        decData = new byte[padded];
+
+
+        inStream.read(decData);
+
+        inStream.close();
+
+        //Write out padding bytes as per PKCS5 algorithm
+        for (int i = (int) inFile.length(); i < padded; ++i) {
+            decData[i] = (byte) paddedCount;
+        }
+
+        //Encrypt the file data:
+        encData = cipher.doFinal(decData);
+
+
+        //Write the encrypted data to a new file:
+        FileOutputStream outStream = new FileOutputStream(new File("data/" + userId + ".encrypted"));
+        outStream.write(encData);
+        outStream.close();
+
+        if (emptyFile) {
+            outStream = new FileOutputStream(new File("data/addressbook.xml"));
+            String emptyContent = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n"
+                    + "<addressbook/>\n";
+            outStream.write(emptyContent.getBytes());
+            outStream.close();
+        }
+    }
+
+    /**
+     * Decrypts one file to a second file using a key derived from a passphrase:
+     */
+    public static void decryptFile(String fileName, String pass)
+            throws GeneralSecurityException, IOException {
+        byte[] encData;
+        byte[] decData;
+        File inFile = new File("data/" + fileName + ".encrypted");
+
+        //Generate the cipher using pass:
+        Cipher cipher = FileEncryptor.makeCipher(pass, false);
+
+        //Read in the file:
+        FileInputStream inStream = new FileInputStream(inFile);
+        encData = new byte[(int) inFile.length()];
+        inStream.read(encData);
+        inStream.close();
+        //Decrypt the file data:
+        decData = cipher.doFinal(encData);
+
+        //Figure out how much padding to remove
+
+        int padCount = (int) decData[decData.length - 1];
+
+        //Naive check, will fail if plaintext file actually contained
+        //this at the end
+        //For robust check, check that padCount bytes at the end have same value
+        if (padCount >= 1 && padCount <= 8) {
+            decData = Arrays.copyOfRange(decData, 0, decData.length - padCount);
+        }
+        //Write the decrypted data to a new file:
+
+        FileOutputStream target = new FileOutputStream(new File("data/addressbook.xml"));
+        target.write(decData);
+        target.close();
+    }
+}
+----
+
+Further more, users can check out who the current user is. The default user is `PUBLIC` which means no user has
+logged in and the address book is open to the public. The command is `currentuser` and the result is a display saying
+`Current user is: <USERNAME>`. The CurrentUserDetails class describes the `UserNameText`, the `UserNameHexDigest`,
+the `SaltHex` and the `PasswordHexDigest` of the current user. It is stored int the logic.command.currentuser package
+
+[source,java]
+----
+/**
+ * Describe the current user
+ */
+public class CurrentUserDetails {
+    private static String userId = "PUBLIC";
+    private static String userIdHex = "";
+    private static String saltText = "";
+    private static String passwordText = "";
+
+    public static void setCurrentUser(String userId, String userIdHex, String saltText, String passwordText) {
+        CurrentUserDetails.userId = userId;
+        CurrentUserDetails.userIdHex = userIdHex;
+        CurrentUserDetails.saltText = saltText;
+        CurrentUserDetails.passwordText = passwordText;
+    }
+
+    public static void setPublicUser() {
+            userId = "PUBLIC";
+            userIdHex = "PUBLIC";
+            saltText = "";
+            passwordText = "PUBLIC";
+        }
+}
+----
+
+**Design Considerations:** +
+**Aspect:** Separation of addressbook.xml file into usercontact files +
+**Description:** Save the contacts that belong to a user in a separate file designated for that user only +
+**Pros:** Ease of encryption, decryption and navigation. +
+**Cons:** Greater overheads to manage multiple xml files which can interfere with other existing or incoming increments
+to the program +
+
+---
+// end::lock[]
 
 // tag::undoredo[]
 === Undo/Redo mechanism
@@ -360,6 +1746,7 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 * `INFO` : Information showing the noteworthy actions by the App
 * `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
 
+
 === Configuration
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
@@ -469,251 +1856,6 @@ a. Include those libraries in the repo (this bloats the repo size) +
 b. Require developers to download those libraries manually (this creates extra work for developers)
 
 [appendix]
-== Suggested Programming Tasks to Get Started
-
-Suggested path for new programmers:
-
-1. First, add small local-impact (i.e. the impact of the change does not go beyond the component) enhancements to one component at a time. Some suggestions are given in this section link:#improving-each-component[Improving a Component].
-
-2. Next, add a feature that touches multiple components to learn how to implement an end-to-end feature across all components. The section link:#creating-a-new-command-code-remark-code[Creating a new command: `remark`] explains how to go about adding such a feature.
-
-=== Improving each component
-
-Each individual exercise in this section is component-based (i.e. you would not need to modify the other components to get it to work).
-
-[discrete]
-==== `Logic` component
-
-[TIP]
-Do take a look at the link:#logic-component[Design: Logic Component] section before attempting to modify the `Logic` component.
-
-. Add a shorthand equivalent alias for each of the individual commands. For example, besides typing `clear`, the user can also type `c` to remove all persons in the list.
-+
-****
-* Hints
-** Just like we store each individual command word constant `COMMAND_WORD` inside `*Command.java` (e.g.  link:{repoURL}/src/main/java/seedu/address/logic/commands/FindCommand.java[`FindCommand#COMMAND_WORD`], link:{repoURL}/src/main/java/seedu/address/logic/commands/DeleteCommand.java[`DeleteCommand#COMMAND_WORD`]), you need a new constant for aliases as well (e.g. `FindCommand#COMMAND_ALIAS`).
-** link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] is responsible for analyzing command words.
-* Solution
-** Modify the switch statement in link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser#parseCommand(String)`] such that both the proper command word and alias can be used to execute the same intended command.
-** See this https://github.com/se-edu/addressbook-level4/pull/590/files[PR] for the full solution.
-****
-
-[discrete]
-==== `Model` component
-
-[TIP]
-Do take a look at the link:#model-component[Design: Model Component] section before attempting to modify the `Model` component.
-
-. Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in the address book.
-+
-****
-* Hints
-** The link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model`] API needs to be updated.
-**  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] classes can be used to implement the tag removal logic. link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] allows you to update a person, and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] allows you to update the tags.
-* Solution
-** Add the implementation of `deleteTag(Tag)` method in link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`]. Loop through each person, and remove the `tag` from each person.
-** See this https://github.com/se-edu/addressbook-level4/pull/591/files[PR] for the full solution.
-****
-
-[discrete]
-==== `Ui` component
-
-[TIP]
-Do take a look at the link:#ui-component[Design: UI Component] section before attempting to modify the `UI` component.
-
-. Use different colors for different tags inside person cards. For example, `friends` tags can be all in grey, and `colleagues` tags can be all in red.
-+
-**Before**
-+
-image::getting-started-ui-tag-before.png[width="300"]
-+
-**After**
-+
-image::getting-started-ui-tag-after.png[width="300"]
-+
-****
-* Hints
-** The tag labels are created inside link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard#initTags(ReadOnlyPerson)`] (`new Label(tag.tagName)`). https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html[JavaFX's `Label` class] allows you to modify the style of each Label, such as changing its color.
-** Use the .css attribute `-fx-background-color` to add a color.
-* Solution
-** See this https://github.com/se-edu/addressbook-level4/pull/592/files[PR] for the full solution.
-****
-
-. Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] such that link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] can show a different style on error (currently it shows the same regardless of errors).
-+
-**Before**
-+
-image::getting-started-ui-result-before.png[width="200"]
-+
-**After**
-+
-image::getting-started-ui-result-after.png[width="200"]
-+
-****
-* Hints
-** link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] is raised by link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] which also knows whether the result is a success or failure, and is caught by link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] which is where we want to change the style to.
-** Refer to link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] for an example on how to display an error.
-* Solution
-** Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] 's constructor so that users of the event can indicate whether an error has occurred.
-** Modify link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay#handleNewResultAvailableEvent(event)`] to react to this event appropriately.
-** See this https://github.com/se-edu/addressbook-level4/pull/593/files[PR] for the full solution.
-****
-
-. Modify the link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to show the total number of people in the address book.
-+
-**Before**
-+
-image::getting-started-ui-status-before.png[width="500"]
-+
-**After**
-+
-image::getting-started-ui-status-after.png[width="500"]
-+
-****
-* Hints
-** link:{repoURL}/src/main/resources/view/StatusBarFooter.fxml[`StatusBarFooter.fxml`] will need a new `StatusBar`. Be sure to set the `GridPane.columnIndex` properly for each `StatusBar` to avoid misalignment!
-** link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] needs to initialize the status bar on application start, and to update it accordingly whenever the address book is updated.
-* Solution
-** Modify the constructor of link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to take in the number of persons when the application just started.
-** Use link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter#handleAddressBookChangedEvent(AddressBookChangedEvent)`] to update the number of persons whenever there are new changes to the addressbook.
-** See this https://github.com/se-edu/addressbook-level4/pull/596/files[PR] for the full solution.
-****
-
-[discrete]
-==== `Storage` component
-
-[TIP]
-Do take a look at the link:#storage-component[Design: Storage Component] section before attempting to modify the `Storage` component.
-
-. Add a new method `backupAddressBook(ReadOnlyAddressBook)`, so that the address book can be saved in a fixed temporary location.
-+
-****
-* Hint
-** Add the API method in link:{repoURL}/src/main/java/seedu/address/storage/AddressBookStorage.java[`AddressBookStorage`] interface.
-** Implement the logic in link:{repoURL}/src/main/java/seedu/address/storage/StorageManager.java[`StorageManager`] class.
-* Solution
-** See this https://github.com/se-edu/addressbook-level4/pull/594/files[PR] for the full solution.
-****
-
-=== Creating a new command: `remark`
-
-By creating this command, you will get a chance to learn how to implement a feature end-to-end, touching all major components of the app.
-
-==== Description
-Edits the remark for a person specified in the `INDEX`. +
-Format: `remark INDEX r/[REMARK]`
-
-Examples:
-
-* `remark 1 r/Likes to drink coffee.` +
-Edits the remark for the first person to `Likes to drink coffee.`
-* `remark 1 r/` +
-Removes the remark for the first person.
-
-==== Step-by-step Instructions
-
-===== [Step 1] Logic: Teach the app to accept 'remark' which does nothing
-Let's start by teaching the application how to parse a `remark` command. We will add the logic of `remark` later.
-
-**Main:**
-
-. Add a `RemarkCommand` that extends link:{repoURL}/src/main/java/seedu/address/logic/commands/UndoableCommand.java[`UndoableCommand`]. Upon execution, it should just throw an `Exception`.
-. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to accept a `RemarkCommand`.
-
-**Tests:**
-
-. Add `RemarkCommandTest` that tests that `executeUndoableCommand()` throws an Exception.
-. Add new test method to link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`], which tests that typing "remark" returns an instance of `RemarkCommand`.
-
-===== [Step 2] Logic: Teach the app to accept 'remark' arguments
-Let's teach the application to parse arguments that our `remark` command will accept. E.g. `1 r/Likes to drink coffee.`
-
-**Main:**
-
-. Modify `RemarkCommand` to take in an `Index` and `String` and print those two parameters as the error message.
-. Add `RemarkCommandParser` that knows how to parse two arguments, one index and one with prefix 'r/'.
-. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to use the newly implemented `RemarkCommandParser`.
-
-**Tests:**
-
-. Modify `RemarkCommandTest` to test the `RemarkCommand#equals()` method.
-. Add `RemarkCommandParserTest` that tests different boundary values
-for `RemarkCommandParser`.
-. Modify link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`] to test that the correct command is generated according to the user input.
-
-===== [Step 3] Ui: Add a placeholder for remark in `PersonCard`
-Let's add a placeholder on all our link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] s to display a remark for each person later.
-
-**Main:**
-
-. Add a `Label` with any random text inside link:{repoURL}/src/main/resources/view/PersonListCard.fxml[`PersonListCard.fxml`].
-. Add FXML annotation in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] to tie the variable to the actual label.
-
-**Tests:**
-
-. Modify link:{repoURL}/src/test/java/guitests/guihandles/PersonCardHandle.java[`PersonCardHandle`] so that future tests can read the contents of the remark label.
-
-===== [Step 4] Model: Add `Remark` class
-We have to properly encapsulate the remark in our link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`] class. Instead of just using a `String`, let's follow the conventional class structure that the codebase already uses by adding a `Remark` class.
-
-**Main:**
-
-. Add `Remark` to model component (you can copy from link:{repoURL}/src/main/java/seedu/address/model/person/Address.java[`Address`], remove the regex and change the names accordingly).
-. Modify `RemarkCommand` to now take in a `Remark` instead of a `String`.
-
-**Tests:**
-
-. Add test for `Remark`, to test the `Remark#equals()` method.
-
-===== [Step 5] Model: Modify `ReadOnlyPerson` to support a `Remark` field
-Now we have the `Remark` class, we need to actually use it inside link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`].
-
-**Main:**
-
-. Add three methods `setRemark(Remark)`, `getRemark()` and `remarkProperty()`. Be sure to implement these newly created methods in link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`Person`], which implements the link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`] interface.
-. You may assume that the user will not be able to use the `add` and `edit` commands to modify the remarks field (i.e. the person will be created without a remark).
-. Modify link:{repoURL}/src/main/java/seedu/address/model/util/SampleDataUtil.java/[`SampleDataUtil`] to add remarks for the sample data (delete your `addressBook.xml` so that the application will load the sample data when you launch it.)
-
-===== [Step 6] Storage: Add `Remark` field to `XmlAdaptedPerson` class
-We now have `Remark` s for `Person` s, but they will be gone when we exit the application. Let's modify link:{repoURL}/src/main/java/seedu/address/storage/XmlAdaptedPerson.java[`XmlAdaptedPerson`] to include a `Remark` field so that it will be saved.
-
-**Main:**
-
-. Add a new Xml field for `Remark`.
-. Be sure to modify the logic of the constructor and `toModelType()`, which handles the conversion to/from  link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`].
-
-**Tests:**
-
-. Fix `validAddressBook.xml` such that the XML tests will not fail due to a missing `<remark>` element.
-
-===== [Step 7] Ui: Connect `Remark` field to `PersonCard`
-Our remark label in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] is still a placeholder. Let's bring it to life by binding it with the actual `remark` field.
-
-**Main:**
-
-. Modify link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard#bindListeners()`] to add the binding for `remark`.
-
-**Tests:**
-
-. Modify link:{repoURL}/src/test/java/seedu/address/ui/testutil/GuiTestAssert.java[`GuiTestAssert#assertCardDisplaysPerson(...)`] so that it will compare the remark label.
-. In link:{repoURL}/src/test/java/seedu/address/ui/PersonCardTest.java[`PersonCardTest`], call `personWithTags.setRemark(ALICE.getRemark())` to test that changes in the link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`Person`] 's remark correctly updates the corresponding link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`].
-
-===== [Step 8] Logic: Implement `RemarkCommand#execute()` logic
-We now have everything set up... but we still can't modify the remarks. Let's finish it up by adding in actual logic for our `remark` command.
-
-**Main:**
-
-. Replace the logic in `RemarkCommand#execute()` (that currently just throws an `Exception`), with the actual logic to modify the remarks of a person.
-
-**Tests:**
-
-. Update `RemarkCommandTest` to test that the `execute()` logic works.
-
-==== Full Solution
-
-See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-by-step solution.
-
-[appendix]
 == User Stories
 
 Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
@@ -725,26 +1867,110 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |add a new person |
 
+|`* * *` |user |add remarks for a person |make notes for contacts
+
+|`* * *` |user |set my own alias for commands |remember the commands easily
+
 |`* * *` |user |delete a person |remove entries that I no longer need
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
-|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+|`* * *` |user |set certain contacts as favourites |access their information easily
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* * *` |user |select multiple contacts to delete |clean up address book efficiently
+
+|`* * *` |user |save more than one contact number per contact in my address book |account for multiple phone numbers
+
+|`* * *` |organised user |group contacts manually or automatically |access the information I want easily
+
+|`* * *` |user |save my contacts' birthdays |refer to it easily
+
+|`* * *` |organized user |save events |refer to my events easily
+
+|`* * *` |user with busy schedules |see my important events on a calendar view |have an overview of my schedule for the month
+
+|`* * *` |organized user |share my contact details with my friends |save the contacts without manually keying in the details
+
+|`* * *` |forgetful user |apply search keywords on all text fields of a contact |find my contacts from all text fields
+and not just their names.
+
+|`* * *` |impatient user |sort the information on the application |view the information in a ordered manner
+
+|`* * *` |user |add information to the application in a intuitive way |feel less frustrating
+
+|`* * *` |user |sync my account with other platforms |save the trouble of entering my personal details
+
+|`* * *` |user |access my data over multiple authorized devices |avoid keying my data repeatedly across different platforms
+
+|`* * *` |forgetful user |have my account logged in every time I open the app |do not have to remember one additional username and password
+
+|`* * *` |forgetful user |set reminders |do not forget what I need to do
+
+|`* * *` |user |export the list of people in my address book |store it on the computer
+
+|`* * *` |user |set events and send the event invites to any person in my contact list |sync my calendars with others' on our common events
+
+|`* * *` |user |attach personal notes to people in my contact list |take notes about the person for my own reference
+
+|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else
+seeing them by accident
+
+|`* *` |user |send mass messages to a group of contacts |plan for meetings, conferences or gatherings with ease
+
+|`* *` |user |manage contacts in different groups |maintain control over my groups
+
+|`* *` |user |view groups of contacts in a more visual display |see who are also in the group
+
+|`* *` |user |commands to be in the button form |avoid memorising the commands and select them more easily
+
+|`* *` |user |have meta-data for my contact list |sort them according to different criteria
+
+|`* *` |user |the application not to take up too much space on my device |have space for other applications
+
+|`* *` |user |the application should suggest certain fields for autocomplete |do not have to type them
+
+|`* *` |user |easily send emails to my contacts |conveniently contact my friends
+
+|`* *` |user |update my location |let my contacts know my current location
+
+|`* *` |user |update my status |contacts will know whether I’m busy
+
+|`* *` |user |view live stories of my friends |stay updated on what is going on with my friends
+
+|`* *` |user |start a live chat with my friends |get an instant response from them
+
+|`* *` |user |add a profile picture |let others know how I look like
+
+|`* *` |user |change the colour scheme |make it personalized
+
+|`* *` |user |choose not to cache the password after every login |ensure that the application is secure
+
+|`* *` |user |access the applications quickly |be efficient with  what I do
+
+|`* *` |user |avoid switching between applications for different functionality |avoid troublesome operations for me
+
+|`* *` |user |add profiles for my friends |store their photos as well
+
+|`*` |user |have a collage of a person's profile from various social media platforms |snapshot of the person's information
+from various accounts.
+
+|`*` |user |subscribe to different channels |get more information on the outside world
+
+|`*` |user |play music in the background |feel relaxed while using the application
+
+|`*` | elderly user |application to read the contacts out loud |avoid straining my eyes reading the words
 |=======================================================================
 
-{More to be added}
 
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is the `TunedIn AddressBook` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
 === Use case: Delete person
 
-*MSS*
+*Main Success Scenario*
 
 1.  User requests to list persons
 2.  AddressBook shows a list of persons
@@ -767,7 +1993,78 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-{More to be added}
+=== Use case: Sync Account
+
+*MSS*
+
+1.  User requests to sync account
+2.  TunedIn asks for Facebook ID
+3.  User confirms that the account is of the user's
+4.  TunedIn displays the data pulled from Facebook
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The Facebook ID does not exist
++
+Use case ends.
+
+* 3a. The given Facebook ID is inaccurate
++
+[none]
+** 3a1. TunedIn shows an error message.
++
+Use case resumes at step 2.
+
+=== Use case: Logging in
+
+*MSS*
+
+1.  User types in password
+2.  TunedIn checks password accuracy
+3.  User is brought to the home page
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The user has not logged in
++
+[none]
+** 1a1. TunedIn shows an error message.
+** 1a2. TunedIn requests for user to log in.
++
+Use case ends.
+
+* 2a. The password is inaccurate
++
+[none]
+** 2a1. TunedIn shows an error message.
++
+Use case resumes at step 2.
+
+=== Use case: Setting a contact as favourite
+
+*MSS*
+
+1.  User selects a contact as favourite
+2.  TunedIn sets the selected contact as favourite for original user
+3.  Contact is set to the top of the contact list.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The selected user does not exist
++
+[none]
+** 1a1. TunedIn shows an error message.
++
+Use case resumes at step 1.
 
 [appendix]
 == Non Functional Requirements
@@ -775,8 +2072,8 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-{More to be added}
+.  Should be lightweight and not take up too much storage space
+.  Should be easy to use and be designed for cross platform use
 
 [appendix]
 == Glossary
@@ -786,6 +2083,32 @@ Mainstream OS
 
 ....
 Windows, Linux, Unix, OS-X
+....
+[[Alias]]
+
+....
+A shorthand for users to execute Command Line Instructions
+....
+
+[[app]]
+App
+
+....
+Refers to the TunedIn application
+....
+
+[[user]]
+User
+
+....
+Users of all ages and gender
+....
+
+[[mobile-devices]]
+Mobile Devices
+
+....
+iPhone, Samsung, Huawei, Oppo and other major phone manufacturers.
 ....
 
 [[private-contact-detail]]
@@ -798,16 +2121,17 @@ A contact detail that is not meant to be shared with others
 [appendix]
 == Product Survey
 
-*Product Name*
+*Wunderlist*
 
-Author: ...
+Author: 6 Wunderkinder
 
 Pros:
 
-* ...
-* ...
+* Easy to create reminders
+* Works seamlessly across all major devices
+* Easy to collaborate with others
+* Nice and clean design
 
 Cons:
 
-* ...
-* ...
+* Easy to be overwhelmed by the huge number of features

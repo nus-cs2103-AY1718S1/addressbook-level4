@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.3">
+<title>Le Quang Quan - Project Portfolio</title>
+<link rel="stylesheet" href="../stylesheets/gh-pages.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="../stylesheets/coderay-asciidoctor.css">
+</head>
+<body class="article">
+<div id="header">
+<h1>Le Quang Quan - Project Portfolio</h1>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="project-tunedin"><a class="link" href="#project-tunedin">Project: TunedIn</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>TunedIn is a free-to-use application that brings to you the power of a full-fledged command line personal organizer,
+bundled together with a user-friendly interface that keeps all of your information easily accessible and at your fingertips.</p>
+</div>
+<div class="paragraph">
+<p><strong>Code contributed</strong>: [<a href="https://github.com/CS2103AUG2017-T14-B2/main/blob/master/collated/main/quanle1994.md">Functional
+code</a>]</p>
+</div>
+<div class="sect2">
+<h3 id="enhancement-added-find-all-text-fields"><a class="link" href="#enhancement-added-find-all-text-fields">Enhancement Added: Find All Text Fields</a></h3>
+<div class="sect3">
+<h4 id="external-behavior"><a class="link" href="#external-behavior">External behavior</a></h4>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="locating-persons-by-name-code-find-code-since-v1-0"><a class="link" href="#locating-persons-by-name-code-find-code-since-v1-0">Locating persons by name: <code>find</code> - Since V1.0</a></h3>
+<div class="paragraph">
+<p>Finds persons whose names contain any of the given keywords.<br>
+Format: <code>find &lt;attribute&gt;/KEYWORD</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p><code>&lt;attribute&gt;</code> refers to either <code>n</code>, standing for name, <code>a</code>, standing for address, or <code>m</code>, standing for mixed fields,
+or finding in any text field. This is case-sensitive.</p>
+</li>
+<li>
+<p>The search is case insensitive. e.g <code>hans</code> will match <code>Hans</code></p>
+</li>
+<li>
+<p>The order of the keywords does not matter. e.g. <code>Hans Bo</code> will match <code>Bo Hans</code></p>
+</li>
+<li>
+<p>Only the name is searched.</p>
+</li>
+<li>
+<p>The keyword doesn&#8217;t have to be an exact word. e.g. <code>kai</code> will match similar names like <code>kai yu</code>, <code>kaiser</code></p>
+</li>
+<li>
+<p>Only full words will be matched e.g. <code>Han</code> will not match <code>Hans</code></p>
+</li>
+<li>
+<p>Persons matching at least one keyword will be returned (i.e. <code>OR</code> search). e.g. <code>Hans Bo</code> will return <code>Hans Gruber</code>, <code>Bo Yang</code></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>find n/John</code><br>
+Returns  any person having names with <code>john</code> in the sequence</p>
+</li>
+<li>
+<p><code>find n/Jo</code><br>
+Returns any person having names with <code>jo</code> in the sequence</p>
+</li>
+</ul>
+</div>
+<hr>
+<div class="sect3">
+<h4 id="justification"><a class="link" href="#justification">Justification</a></h4>
+<div class="paragraph">
+<p>The find command is enhanced to search for all text fields and gives user the control over which text field to search
+for, including but not limited to the contact&#8217;s name. This ensures that the user can search for contacts even though
+he/she cannot remember the contact&#8217;s name. This is useful when remarks are attached to each contact, which can make
+the search more flexible.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="implementation"><a class="link" href="#implementation">Implementation</a></h4>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="find-from-all-text-fields-mechanism"><a class="link" href="#find-from-all-text-fields-mechanism">Find From All Text Fields Mechanism</a></h3>
+<div class="paragraph">
+<p>The existing find command is enhanced to allow the user to search for text in multiple fields. Previously, users can
+only search for the contact by the name. However, with this mechanism, a user can find texts in the contact&#8217;s name,
+address, or mixed fields which principally mean all the text fields such as name, address, birthday, phone number and
+remarks <strong>EXCEPT</strong> for tag names.</p>
+</div>
+<div class="paragraph">
+<p>This leads to the change in the command&#8217;s syntax. Here is the new syntax: <code>find &lt;ATTRIBUTE&gt;/KEYWORD [MORE KEYWORDS]</code>.
+Here, <code>&lt;ATTRIBUTE&gt;</code> can either be <code>n</code>, <code>a</code> or <code>m</code>.</p>
+</div>
+<div class="paragraph">
+<p>The change the format of the command leads to the changes in the FindCommandParser.parse() method:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">    <span class="directive">public</span> FindCommand parse(<span class="predefined-type">String</span> args) <span class="directive">throws</span> <span class="exception">ParseException</span> {
+        <span class="predefined-type">String</span> trimmedArgs = args.trim();
+        <span class="keyword">if</span> (trimmedArgs.isEmpty()) {
+            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="exception">ParseException</span>(
+                    <span class="predefined-type">String</span>.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        }
+        <span class="keyword">if</span> (trimmedArgs.charAt(<span class="integer">0</span>) == <span class="string"><span class="delimiter">'</span><span class="content">n</span><span class="delimiter">'</span></span>) {
+            NameContainsKeywordsPredicate.setPredicateType(<span class="string"><span class="delimiter">'</span><span class="content">n</span><span class="delimiter">'</span></span>);
+        } <span class="keyword">else</span> <span class="keyword">if</span> (trimmedArgs.charAt(<span class="integer">0</span>) == <span class="string"><span class="delimiter">'</span><span class="content">a</span><span class="delimiter">'</span></span>) {
+            NameContainsKeywordsPredicate.setPredicateType(<span class="string"><span class="delimiter">'</span><span class="content">a</span><span class="delimiter">'</span></span>);
+        } <span class="keyword">else</span> <span class="keyword">if</span> (trimmedArgs.charAt(<span class="integer">0</span>) == <span class="string"><span class="delimiter">'</span><span class="content">m</span><span class="delimiter">'</span></span>) {
+            NameContainsKeywordsPredicate.setPredicateType(<span class="string"><span class="delimiter">'</span><span class="content">m</span><span class="delimiter">'</span></span>);
+        } <span class="keyword">else</span> {
+            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="exception">ParseException</span> (
+                    <span class="predefined-type">String</span>.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        }
+
+        trimmedArgs = trimmedArgs.substring(<span class="integer">2</span>).trim();
+        <span class="predefined-type">String</span><span class="type">[]</span> nameKeywords = trimmedArgs.split(<span class="string"><span class="delimiter">&quot;</span><span class="char">\\</span><span class="content">s+</span><span class="delimiter">&quot;</span></span>);
+
+        <span class="keyword">return</span> <span class="keyword">new</span> FindCommand(<span class="keyword">new</span> NameContainsKeywordsPredicate(<span class="predefined-type">Arrays</span>.asList(nameKeywords)));
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The code shows how the command is being processed based on the attribute character. Namely, if the attribute is n, the
+find will look for keywords in the name. If the attribute is a, the command will find in the address. Lastly, if the
+attribute is m, the command will find in all text fields.</p>
+</div>
+<div class="paragraph">
+<p>In the future, this feature can be developed into a best-matched search based on different fields whereby the contact
+that matches the most fields will appear first followed by the one matching second most fields. Users are allowed to
+set the number of results to appear.</p>
+</div>
+<hr>
+</div>
+<div class="sect2">
+<h3 id="enhancement-added-ordering-of-contacts"><a class="link" href="#enhancement-added-ordering-of-contacts">Enhancement Added: Ordering of Contacts</a></h3>
+
+</div>
+<div class="sect2">
+<h3 id="external-behavior-2"><a class="link" href="#external-behavior-2">External behavior</a></h3>
+<hr>
+</div>
+<div class="sect2">
+<h3 id="order-contacts-in-address-book-by-parameter-s-code-order-code-since-v1-0"><a class="link" href="#order-contacts-in-address-book-by-parameter-s-code-order-code-since-v1-0">Order contacts in Address Book by parameter(s): <code>order</code> - Since V1.0</a></h3>
+<div class="paragraph">
+<p>Order the list of persons according to a specified parameter. Parameters are case insensitive.<br>
+Format: <code>order PARAMETER [MORE_PARAMETER]</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>The allowable parameters are <code>NAME</code>, <code>ADDRESS</code>, <code>BIRTHDAY</code>, <code>TAG</code> and <code>GROUP</code>.</p>
+</li>
+<li>
+<p>The parameter is case insensitive. e.g 'NaMe' will match 'NAME'</p>
+</li>
+<li>
+<p>Only full word will be matched. e.g. 'addr' will not match 'Address'</p>
+</li>
+<li>
+<p>To order by multiple parameters, each parameter should be separated by a single space.</p>
+</li>
+<li>
+<p>The order of the parameter is important. e.g <code>tag address</code> will order the list by tag
+then by address.</p>
+</li>
+<li>
+<p>The command can only take in a maximum of <code>two</code> parameters.</p>
+</li>
+<li>
+<p>For order based on multiple prarameters with GROUP, GROUP must be the first paramter.</p>
+</li>
+<li>
+<p>The command changes the index of the person in the Address Book,
+which will affect other commands that use this attribute such as
+<code>delete</code> or <code>select</code>.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>order NAME</code><br>
+Returns address list sorted by name in alphabetical order.</p>
+</li>
+<li>
+<p>'order BIRTHDAY name`<br>
+Returns address list sorted by birthday then by name.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Invalid command Example :
+* <code>order NAME GROUP</code><br></p>
+</div>
+<hr>
+<div class="sect3">
+<h4 id="justification-2"><a class="link" href="#justification-2">Justification</a></h4>
+<div class="paragraph">
+<p>Ordering is essential to TunedIn. It provides the fundamental and a must-to-have functionality of an organizer.
+With the ordering mechanism, user will be able to order the list of contacts in 14 different ways. This
+is inline with our goal in making TunedIn as customizable as possible
+and, most importantly to allow the user to organize the contacts to their most preferred way.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="implementation-2"><a class="link" href="#implementation-2">Implementation</a></h4>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="order-sort-mechanism"><a class="link" href="#order-sort-mechanism">Order(Sort) mechanism</a></h3>
+<div class="paragraph">
+<p>The order mechanism is implemented by 'OrderCommand' and <code>OrderCommandParser</code> in the Logic component.
+It is facilitated by the <code>UniquePersonList</code> which resides in  <code>Addressbook &lt; ModelManager</code>.
+It allows re-ordering of the person list that modifies the initial order of the list.
+This mechanism inherits from the <code>UndoableCommands</code>.</p>
+</div>
+<div class="paragraph">
+<p>The implementation of the <code>OrderCommand</code> constructor is as shown :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"> <span class="directive">public</span> OrderCommand(<span class="predefined-type">String</span> orderParameter)
+    {
+        <span class="local-variable">this</span>.orderParameter = orderParameter;
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As you can see from the implementation, the command requires user inputs in the form of <code>String</code> as the parameter/s
+to order. The inputs are restricted by the fields of <code>Person</code> that only includes <code>Name</code>, <code>Address</code>,
+<code>Tag</code> and <code>Birthday</code>. Before a new instance of <code>OrderCommand</code> is being created, the <code>OrderCommandParser</code> will ensure that the input from the user
+is not empty string.</p>
+</div>
+<div class="paragraph">
+<p>The execution of the command is done in the following method :</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"> <span class="directive">public</span> CommandResult executeUndoableCommand() <span class="directive">throws</span> CommandException {
+        <span class="keyword">try</span> {
+            model.orderList(orderParameter);
+        } <span class="keyword">catch</span> (UnrecognisedParameterException upe) {
+            <span class="keyword">throw</span> <span class="keyword">new</span> CommandException(MESSAGE_ORDER_WRONG_PARAMETER);
+        }
+        <span class="keyword">return</span> <span class="keyword">new</span> CommandResult(MESSAGE_ORDER_SUCCESS + orderParameter);
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>After a series of function calls, the <strong>model.orderList()</strong> method will eventually call <strong>orderBy()</strong> method
+in the <code>UniquePersonList</code>.</p>
+</div>
+<div class="paragraph">
+<p><code>UniquePersonList</code> deals with the list of persons that enforces uniqueness between its elements
+and supports a set of list operations. The following diagram shows the UML diagram of the class.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/UniquePersonList_UML.png" alt="UniquePersonList UML" width="300">
+</div>
+</div>
+<div class="paragraph">
+<p><strong>orderBy()</strong> method is able to order the existing person list by a maximum of two parameters.
+It will order the list by the first parameter follow by the second parameter.
+The implementation of the <strong>orderBy()</strong> is shown below:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">    <span class="directive">public</span> <span class="type">void</span> orderBy(<span class="predefined-type">String</span> parameter) <span class="directive">throws</span> UnrecognisedParameterException {
+
+        <span class="keyword">switch</span> (parameter) {
+        <span class="keyword">case</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">NAME</span><span class="delimiter">&quot;</span></span>:
+            internalList.sort(Person.getPersonNameComparator());
+            <span class="keyword">break</span>;
+        ...
+
+        case <span class="string"><span class="delimiter">&quot;</span><span class="content">NAME ADDRESS</span><span class="delimiter">&quot;</span></span>:
+            internalList.sort(Person.getPersonNameComparator().thenComparing(Person.getPersonAddressComparator()));
+            <span class="keyword">break</span>;
+
+        <span class="keyword">case</span> <span class="string"><span class="delimiter">&quot;</span><span class="content">ADDRESS NAME</span><span class="delimiter">&quot;</span></span>:
+            internalList.sort(Person.getPersonAddressComparator().thenComparing(Person.getPersonNameComparator()));
+            <span class="keyword">break</span>;
+
+         ...
+
+        default:
+            <span class="keyword">throw</span> <span class="keyword">new</span> UnrecognisedParameterException();
+        }
+
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The comparators are implemented in the <code>Person</code> as shown:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">    <span class="directive">public</span> <span class="directive">static</span> <span class="directive">final</span> <span class="predefined-type">Comparator</span>&lt;Person&gt; getPersonNameComparator() {
+        <span class="keyword">return</span> (Person a, Person b) -&gt; a.getName().toString()
+                .compareToIgnoreCase(b.getName().toString());
+    }
+
+    <span class="directive">public</span> <span class="directive">static</span> <span class="directive">final</span> <span class="predefined-type">Comparator</span>&lt;Person&gt; getPersonAddressComparator() {
+        <span class="keyword">return</span> (Person a, Person b) -&gt; a.getAddress().toString()
+                .compareToIgnoreCase(b.getAddress().toString());
+    }
+
+    <span class="directive">public</span> <span class="directive">static</span> <span class="directive">final</span> <span class="predefined-type">Comparator</span>&lt;Person&gt; getPersonBirthdayComparator() {
+        <span class="keyword">return</span> comparing(a -&gt; a.getBirthday().getReformatDate(),
+                nullsLast(naturalOrder()));
+    }
+
+    <span class="directive">public</span> <span class="directive">static</span> <span class="directive">final</span> <span class="predefined-type">Comparator</span>&lt;Person&gt; getPersonTagComparator() {
+        <span class="keyword">return</span> (Person a, Person b) -&gt; a.getTags().toString()
+                .compareToIgnoreCase(b.getTags().toString());
+    }
+
+    <span class="directive">public</span> <span class="directive">static</span> <span class="directive">final</span> <span class="predefined-type">Comparator</span>&lt;Person&gt; getPersonGroupComparator() {
+        <span class="keyword">return</span> (a, b) -&gt; {
+            <span class="keyword">if</span> (a.getGroup().toString().isEmpty()) {
+                <span class="keyword">return</span> <span class="integer">1</span>;
+            } <span class="keyword">else</span> <span class="keyword">if</span> (b.getGroup().toString().isEmpty()) {
+                <span class="keyword">return</span> -<span class="integer">1</span>;
+            } <span class="keyword">else</span> {
+                <span class="keyword">return</span> a.getGroup().toString().compareToIgnoreCase(b.getGroup().toString());
+            }
+        };
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As you can see,
+5 <code>Comparator</code> objects are constructed for each valid parameter to compare the list of contacts
+and order according to natural order and null last.+</p>
+</div>
+<div class="paragraph">
+<p><em>Birthday</em> is ordered by yyyy-mm-dd instead of the dd-mm-yyyy format.<br>
+This is achieved by reformatting the
+<em>Birthday</em> string as shown:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">     <span class="directive">public</span> <span class="predefined-type">String</span> getReformatDate() {
+         <span class="keyword">if</span> (value.isEmpty()) {
+             <span class="keyword">return</span> <span class="predefined-constant">null</span>;
+         }
+         <span class="keyword">return</span> <span class="keyword">new</span> <span class="predefined-type">StringBuilder</span>().append(value.substring(<span class="integer">6</span>, <span class="integer">10</span>)).append(value.substring(<span class="integer">3</span>, <span class="integer">5</span>))
+                 .append(value.substring(<span class="integer">0</span>, <span class="integer">2</span>)).toString();
+     }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Person(s) with empty <em>Birthday</em> field will be sorted to the last.</p>
+</div>
+<div class="paragraph">
+<p>Suppose that the user has just launched the application and no previous <code>orderCommand</code> has been called. The persons will
+be listed according to the default ordering, in order of last added (Last contact added will appear as the last in the list).</p>
+</div>
+<div class="paragraph">
+<p>The user executes another <code>orderCommand</code> by typing <code>order name</code>, to view the list of contacts ordered in alphabetical order
+based on the <code>Name</code> field of a person. With valid input the list of contacts will be ordered accordingly and
+the ordered list will be shown.</p>
+</div>
+<div class="paragraph">
+<p>The user executes another command by typing <code>order tag name</code> to order the list by <code>Tag</code> first then <code>Name</code> of the person.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+If the order command fails its execution due to invalid order parameter, the list of contact will
+not be ordered.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The following sequence diagram shows how the order operation works:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/OrderCommand_SequenceDiagram.png" alt="OrderCommand SequenceDiagram" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>The following activity diagram models what happened when <code>OrderCommand</code> is executed.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/OrderCommand_ActivityDiagram.png" alt="OrderCommand ActivityDiagram" width="400">
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations"><a class="link" href="#design-considerations">Design Considerations</a></h4>
+<div class="paragraph">
+<p><strong>Aspect:</strong> Implementation of sorting algorithm<br>
+<strong>Alternative 1 (current choice):</strong> Sort method inherited from List Interface with specified comparator<br>
+<strong>Pros:</strong> Easy to implement and has the advantage of mergesort.<br>
+<strong>Alternative 2:</strong> Implement the sorting with quicksort algorithm<br>
+<strong>Pros:</strong> Able to perform sorting faster than mergesort.<br>
+<strong>Cons:</strong> Not stable and tedious to implement.</p>
+</div>
+<hr>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="enhancement-added-lock-mechanism"><a class="link" href="#enhancement-added-lock-mechanism">Enhancement Added: Lock Mechanism</a></h3>
+<div class="sect3">
+<h4 id="external-behavior-3"><a class="link" href="#external-behavior-3">External behavior</a></h4>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="current-user-display-code-currentuser-code-since-v1-5"><a class="link" href="#current-user-display-code-currentuser-code-since-v1-5">Current User Display: <code>currentuser</code> - Since V1.5</a></h3>
+<div class="paragraph">
+<p>Displays the current user name. The default user name is <code>PUBLIC</code><br>
+Format: <code>currentuser</code>
+=== Lock contacts by user : <code>lock</code> - Since V1.5</p>
+</div>
+<div class="paragraph">
+<p>Create a user account from the specified username and password.<br>
+Format: <code>lock u/USER_NAME p/PASSWORD</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>The <code>USER_NAME</code> is case sensitive.</p>
+</li>
+<li>
+<p>If the <code>USER_NAME</code> has been registered before, an error message saying <code>User Exists</code> will be displayed.</p>
+</li>
+<li>
+<p>Different users can use the same password</p>
+</li>
+<li>
+<p><code>USER_NAME</code> is case sensitive and cannot be the same as an exsiting user. If the user already exists, an error mesage
+will be thrown.</p>
+</li>
+<li>
+<p>Even if the <code>PASSWORDs</code> are different, if a <code>USERID</code> to be registered is the same as an exsiting one, this user will not
+be accepted</p>
+</li>
+<li>
+<p>The user credentials will be hashed and stored on disk to preserve confidentiality.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>lock u/KELOYSIUS p/SPECIAL1PASS</code></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="login-code-login-code-since-v1-5"><a class="link" href="#login-code-login-code-since-v1-5">Login : <code>login</code> - Since V1.5</a></h3>
+<div class="paragraph">
+<p>Logs in to the TunedIn Application. Once you log in with the correct account credentials, your encrypted contacts
+will be displayed.<br>
+Format: <code>login u/USER_NAME p/PASSWORD</code></p>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>login u/KELOYSIUS p/SPECIALPASS</code></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="logout-code-logout-code-since-v1-5"><a class="link" href="#logout-code-logout-code-since-v1-5">Logout : <code>logout</code> - Since V1.5</a></h3>
+<div class="paragraph">
+<p>Logs out of the address book. This will encrypt the current list of contacts and clear them. To retrieve them, log in
+ using your account credentials<br>
+Format: <code>logout</code></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="order-contacts-in-address-book-by-parameter-s-code-order-code-since-v1-0-2"><a class="link" href="#order-contacts-in-address-book-by-parameter-s-code-order-code-since-v1-0-2">Order contacts in Address Book by parameter(s): <code>order</code> - Since V1.0</a></h3>
+<div class="paragraph">
+<p>Order the list of persons according to a specified parameter. Parameters are case insensitive.<br>
+Format: <code>order PARAMETER [MORE_PARAMETER]</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>The allowable parameters are <code>NAME</code>, <code>ADDRESS</code>, <code>BIRTHDAY</code>, <code>TAG</code> and <code>GROUP</code>.</p>
+</li>
+<li>
+<p>The parameter is case insensitive. e.g 'NaMe' will match 'NAME'</p>
+</li>
+<li>
+<p>Only full word will be matched. e.g. 'addr' will not match 'Address'</p>
+</li>
+<li>
+<p>To order by multiple parameters, each parameter should be separated by a single space.</p>
+</li>
+<li>
+<p>The order of the parameter is important. e.g <code>tag address</code> will order the list by tag
+then by address.</p>
+</li>
+<li>
+<p>The command can only take in a maximum of <code>two</code> parameters.</p>
+</li>
+<li>
+<p>For order based on multiple prarameters with GROUP, GROUP must be the first paramter.</p>
+</li>
+<li>
+<p>The command changes the index of the person in the Address Book,
+which will affect other commands that use this attribute such as
+<code>delete</code> or <code>select</code>.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>order NAME</code><br>
+Returns address list sorted by name in alphabetical order.</p>
+</li>
+<li>
+<p>'order BIRTHDAY name`<br>
+Returns address list sorted by birthday then by name.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Invalid command Example :
+* <code>order NAME GROUP</code><br></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="order-events-in-event-book-by-a-parameter-code-orderevent-code-since-v1-3"><a class="link" href="#order-events-in-event-book-by-a-parameter-code-orderevent-code-since-v1-3">Order events in Event Book by a parameter: <code>orderevent</code> - Since V1.3</a></h3>
+<div class="paragraph">
+<p>Order the list of events according to a specified parameter. Parameters are case insensitive.<br>
+Format: <code>orderevent PARAMETER [MORE_PARAMETER]</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>The allowable parameters are <code>TITLE</code>, <code>LOCATION</code> and 'DATETIME'.</p>
+</li>
+<li>
+<p>The parameter is case insensitive. e.g 'tiTle' will match 'TITLE'</p>
+</li>
+<li>
+<p>Only full word will be matched. e.g. 'locat' will not match 'LOCATION'</p>
+</li>
+<li>
+<p>To order by multiple parameters, each parameter should be separated by a single space.</p>
+</li>
+<li>
+<p>The command change the index of the event in the Event Book,
+which will affect other commands that use this attribute such as
+<code>deleteevent</code> or <code>selectevent</code>.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>orderevent TITLE</code><br>
+Returns event list sorted by title</p>
+</li>
+<li>
+<p><code>orderevent LOCATION</code><br>
+Returns event list sorted by location</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="redoing-the-previously-undone-command-code-redo-code-since-v1-0"><a class="link" href="#redoing-the-previously-undone-command-code-redo-code-since-v1-0">Redoing the previously undone command : <code>redo</code> - Since V1.0</a></h3>
+<div class="paragraph">
+<p>Reverses the most recent <code>undo</code> command.<br>
+Format: <code>redo</code></p>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>delete 1</code><br>
+<code>undo</code> (reverses the <code>delete 1</code> command)<br>
+<code>redo</code> (reapplies the <code>delete 1</code> command)<br></p>
+</li>
+<li>
+<p><code>delete 1</code><br>
+<code>redo</code><br>
+The <code>redo</code> command fails as there are no <code>undo</code> commands executed previously.</p>
+</li>
+<li>
+<p><code>delete 1</code><br>
+<code>clear</code><br>
+<code>undo</code> (reverses the <code>clear</code> command)<br>
+<code>undo</code> (reverses the <code>delete 1</code> command)<br>
+<code>redo</code> (reapplies the <code>delete 1</code> command)<br>
+<code>redo</code> (reapplies the <code>clear</code> command)<br></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="remarking-a-person-code-remark-code-since-v1-1"><a class="link" href="#remarking-a-person-code-remark-code-since-v1-1">Remarking a person : <code>remark</code> - Since V1.1</a></h3>
+<div class="paragraph">
+<p>Remarks an existing person in the address book.<br>
+Format: <code>remark INDEX r/REMARK</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Remarks the person at the specified <code>INDEX</code>. The index refers to the index number shown in the last person listing. The index <strong>must be a positive integer</strong> 1, 2, 3, &#8230;&#8203;</p>
+</li>
+<li>
+<p>Existing values will be updated to the input values.</p>
+</li>
+<li>
+<p>You can remove the person&#8217;s remark by typing <code>r/</code> without specifying any remarks after it.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>remark 1 r/Likes to swim.</code><br>
+Edits the remark of the 1st person to be <code>Likes to swim</code>.</p>
+</li>
+<li>
+<p><code>remark 1 r/</code><br>
+Remove the remark of the 1st person.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="remove-user-code-remove-code-since-v1-5"><a class="link" href="#remove-user-code-remove-code-since-v1-5">Remove User : <code>remove</code> - Since V1.5</a></h3>
+<div class="paragraph">
+<p>Remove an existing user from the account repository.<br>
+Format: <code>remove u/USER_NAME p/PASSWORD r/&lt;Y or N&gt;</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>The <code>USER_NAME</code> and <code>PASSWORD</code> must match with one of the accounts saved.</p>
+</li>
+<li>
+<p>The <code>USER_NAME</code> and <code>PASSWORD</code> are case-sensitive.</p>
+</li>
+<li>
+<p><code>r/&lt;Y or N&gt;</code> indicates if the user wants to delete the contacts associated with the user to be removed. Y means the
+contacts will be cleared and N means the contacts will be released to the public.</p>
+</li>
+<li>
+<p>If the user is still logged in before removing an account, regardless of whether the account to be removed is his
+own account or someone else&#8217;s, the user MUST log out first using the <code>logout</code> command.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>remove u/LEQUANGQUAN p/PASSWORD r/N</code>
+This command will remove the account <code>LEQUANGQUAN</code> and release his contacts to the public.</p>
+</li>
+<li>
+<p><code>remove u/LEQUANGQUAN p/PASSWORD r/Y</code>
+This command will remove the account <code>LEQUANGQUAN</code> and delete his contacts.</p>
+</li>
+</ul>
+</div>
+<hr>
+<div class="sect3">
+<h4 id="justification-3"><a class="link" href="#justification-3">Justification</a></h4>
+<div class="paragraph">
+<p>The Lock mechanism allows users to create user accounts that allow the programme to encrypt their contacts, enhancing
+the confidentiality of the data. This is important when the computer is shared among different people, or when a user
+wants to manage different lists of contacts.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="implementation-3"><a class="link" href="#implementation-3">Implementation</a></h4>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="lock-mechanism"><a class="link" href="#lock-mechanism">Lock Mechanism</a></h3>
+<div class="paragraph">
+<p>The addressbook.xml file will be encrypted to protect the confidentiality of the data. Contacts are encrypted in
+separate files named by the user&#8217;s <code>USERNAME</code> and encrypted by the user&#8217;s <code>PASSWORD</code>. If the contacts are open to the
+public, it will be in the <code>PUBLIC.encrypted</code> file, which is encrypted with the password <code>PUBLIC</code>. Every time TunedIn
+runs, it will decrypt the <code>PUBLIC.encrypted</code> file with the <code>PUBLIC</code> password and write the data into the
+addressbook.xml file for the rest of the program to load up. Once a mutating operation is done to the addressbook.xml
+file, the <code>save</code> command must be executed afterwards for the changes to be saved to the encrypted files. Till date,
+most of the mutating commands are incorporated with the <code>save</code> command, but users are advised to save manually in
+case of bugs or unincorporated commands.</p>
+</div>
+<div class="paragraph">
+<p>The <code>lock</code> command will enable a user to lock the current list of contacts using a user account comprising a user
+name and a password. The user credentials will then be persisted into the account.xml file as SHA-256 hash digests .
+In particular, User name will be hashed and stored directly into the account.xml file. Each user will be given a
+randomised salt value, which will be hex-coded and stored in the account.xml file. The password will first be
+prepended with the salt value from that user, after which the combined string will be hashed and stored. In this way,
+users with the same passwords will have different hash digests, upholding the confidentiality of the information.</p>
+</div>
+<div class="paragraph">
+<p>When the user uses the lock command, he/she needs to supply the <code>USERNAME</code> and <code>PASSWORD</code> to create an account. The
+program will then hash the <code>USERNAME</code> and compare with the existing user name hash digests from the file. If the hash
+values are the same, a <code>DuplicateUserException</code> exception will be thrown.</p>
+</div>
+<div class="paragraph">
+<p>Once an account is registered under the lock command, the current list of contacts will be to encrypt with the user&#8217;s
+password. When a user uses the lock command, he/she will be logged in as that newly-created user. To change to
+another account, the user has to log out first. Once user has locked the contact and logged out, the list of contacts
+will be emptied, the addressbook.xml file will be encrypted with the user&#8217;s password and named with the first 10
+characters of that user&#8217;s username hex digest and a new empty addressbook.xml file will be created. Once logged
+out, the current user is set to public. To log in with a registered user, use the log in command <code>login u/USERNAME
+p/PASSWORD</code> which requires the user to supply the <code>USERNAME</code> and <code>PASSWORD</code> for verification. The programme then
+verifies if the credentials are correct with the account.xml file. Finally, it will decrypt the contacts of that user
+using the plaintext of the supplied password.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/LockMechanism.jpg" alt="LockMechanism" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>The HashDigest.java in the digestutil package will apply the SHA-256 hash algorithm on a plaintext and return the
+message digest as a String</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="comment">/**
+ * Converts a string to a SHA-256 Hash Digest.
+ */</span>
+<span class="directive">public</span> <span class="type">class</span> <span class="class">HashDigest</span> {
+    <span class="comment">/**
+     * Return the hash digest of {@code text}. Used for creating accounts and validating log-ins.
+     */</span>
+    <span class="directive">public</span> <span class="type">byte</span><span class="type">[]</span> getHashDigest(<span class="predefined-type">String</span> text) {
+        <span class="predefined-type">MessageDigest</span> digest = <span class="predefined-constant">null</span>;
+        <span class="keyword">try</span> {
+            digest = <span class="predefined-type">MessageDigest</span>.getInstance(<span class="string"><span class="delimiter">&quot;</span><span class="content">SHA-256</span><span class="delimiter">&quot;</span></span>);
+            <span class="keyword">return</span> digest.digest(text.getBytes(StandardCharsets.UTF_8));
+        } <span class="keyword">catch</span> (<span class="exception">NoSuchAlgorithmException</span> e) {
+            <span class="keyword">return</span> <span class="predefined-constant">null</span>;
+        }
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The generation of salt and how the password digest is done are implemented in the LockCommand.java file as follows</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="annotation">@Override</span>
+    <span class="directive">public</span> CommandResult execute() <span class="directive">throws</span> CommandException, DuplicateUserException {
+        requireNonNull(model);
+        <span class="type">byte</span><span class="type">[]</span> uIdDigest = <span class="keyword">new</span> HashDigest().getHashDigest(userId);
+        <span class="type">byte</span><span class="type">[]</span> salt = <span class="keyword">new</span> <span class="type">byte</span>[<span class="integer">32</span>];
+        <span class="directive">final</span> <span class="predefined-type">Random</span> r = <span class="keyword">new</span> <span class="predefined-type">SecureRandom</span>();
+        r.nextBytes(salt);
+        <span class="predefined-type">String</span> saltText = <span class="keyword">new</span> <span class="predefined-type">String</span>(salt);
+        <span class="type">byte</span><span class="type">[]</span> pwDigest = <span class="keyword">new</span> seedu.address.logic.commands.digestutil.HashDigest()
+                .getHashDigest(saltText + passwordText);
+        <span class="predefined-type">String</span> hexUidDigest = getHexFormat(uIdDigest);
+        <span class="predefined-type">String</span> hexSalt = getHexFormat(salt);
+        <span class="predefined-type">String</span> hexPassword = getHexFormat(pwDigest);
+        <span class="keyword">try</span> {
+            model.persistUserAccount(<span class="keyword">new</span> User(hexUidDigest, hexSalt, hexPassword));
+        } <span class="keyword">catch</span> (DuplicateUserException due) {
+            <span class="keyword">throw</span> <span class="keyword">new</span> CommandException(MESSAGE_EXISTING_USER);
+        }
+        <span class="keyword">return</span> <span class="keyword">new</span> CommandResult(MESSAGE_SUCCESS);
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The conversion of the salts and digests into hexadecimal strings is handled by the HexCode.java file</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="comment">/**
+ * Provide the utilities to obtain hex strings from texts and texts from hex strings
+ */</span>
+<span class="directive">public</span> <span class="type">class</span> <span class="class">HexCode</span> {
+
+    <span class="comment">/**
+     * Return hex string of text
+     */</span>
+    <span class="directive">public</span> <span class="predefined-type">String</span> getHexFormat(<span class="predefined-type">String</span> text) {
+        <span class="type">char</span><span class="type">[]</span> chars = text.toCharArray();
+
+        <span class="predefined-type">StringBuffer</span> hex = <span class="keyword">new</span> <span class="predefined-type">StringBuffer</span>();
+        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="integer">0</span>; i &lt; chars.length; i++) {
+            hex.append(<span class="predefined-type">Integer</span>.toHexString((<span class="type">int</span>) chars[i]));
+        }
+
+        <span class="keyword">return</span> hex.toString();
+    }
+
+    <span class="comment">/**
+     * Return text of hex string
+     */</span>
+    <span class="directive">public</span> <span class="predefined-type">String</span> hexStringToByteArray(<span class="predefined-type">String</span> hexString) {
+        <span class="predefined-type">StringBuilder</span> sb = <span class="keyword">new</span> <span class="predefined-type">StringBuilder</span>();
+        <span class="predefined-type">StringBuilder</span> temp = <span class="keyword">new</span> <span class="predefined-type">StringBuilder</span>();
+
+        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="integer">0</span>; i &lt; hexString.length() - <span class="integer">1</span>; i += <span class="integer">2</span>) {
+
+            <span class="comment">//grab the hex in pairs</span>
+            <span class="predefined-type">String</span> output = hexString.substring(i, (i + <span class="integer">2</span>));
+            <span class="comment">//convert hex to decimal</span>
+            <span class="type">int</span> decimal = <span class="predefined-type">Integer</span>.parseInt(output, <span class="integer">16</span>);
+            <span class="comment">//convert the decimal to character</span>
+            sb.append((<span class="type">char</span>) decimal);
+
+            temp.append(decimal);
+        }
+        <span class="predefined-type">System</span>.out.println(<span class="string"><span class="delimiter">&quot;</span><span class="content">Decimal : </span><span class="delimiter">&quot;</span></span> + temp.toString());
+
+        <span class="keyword">return</span> sb.toString();
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The encryption and decryption of the files are done in the FileEncryptor.java file of the logic.command.encryption</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="comment">/**
+ * This provides encryption and decryption utilities
+ */</span>
+<span class="directive">public</span> <span class="type">class</span> <span class="class">FileEncryptor</span> {
+    <span class="directive">private</span> <span class="directive">static</span> <span class="directive">final</span> <span class="type">byte</span><span class="type">[]</span> salt = {
+        (<span class="type">byte</span>) <span class="hex">0x43</span>, (<span class="type">byte</span>) <span class="hex">0x76</span>, (<span class="type">byte</span>) <span class="hex">0x95</span>, (<span class="type">byte</span>) <span class="hex">0xc7</span>,
+        (<span class="type">byte</span>) <span class="hex">0x5b</span>, (<span class="type">byte</span>) <span class="hex">0xd7</span>, (<span class="type">byte</span>) <span class="hex">0x45</span>, (<span class="type">byte</span>) <span class="hex">0x17</span>
+    };
+
+    <span class="directive">private</span> <span class="directive">static</span> <span class="directive">final</span> <span class="predefined-type">String</span> addressBookFilePath = <span class="string"><span class="delimiter">&quot;</span><span class="content">data/addressbook.xml</span><span class="delimiter">&quot;</span></span>;
+
+    <span class="comment">/**
+     * Create a cipher
+     *
+     * @param pass        passphrase
+     * @param encryptMode true for encryption, false for decryption
+     * @return a cipher object
+     * @throws GeneralSecurityException
+     */</span>
+    <span class="directive">private</span> <span class="directive">static</span> <span class="predefined-type">Cipher</span> makeCipher(<span class="predefined-type">String</span> pass, <span class="predefined-type">Boolean</span> encryptMode) <span class="directive">throws</span> <span class="exception">GeneralSecurityException</span> {
+
+        <span class="comment">//Use a KeyFactory to derive the corresponding key from the passphrase:</span>
+        <span class="predefined-type">PBEKeySpec</span> keySpec = <span class="keyword">new</span> <span class="predefined-type">PBEKeySpec</span>(pass.toCharArray());
+        <span class="predefined-type">SecretKeyFactory</span> keyFactory = <span class="predefined-type">SecretKeyFactory</span>.getInstance(<span class="string"><span class="delimiter">&quot;</span><span class="content">PBEWithMD5AndDES</span><span class="delimiter">&quot;</span></span>);
+        <span class="predefined-type">SecretKey</span> key = keyFactory.generateSecret(keySpec);
+
+        <span class="comment">//Create parameters from the salt and an arbitrary number of iterations:</span>
+        <span class="predefined-type">PBEParameterSpec</span> pbeParamSpec = <span class="keyword">new</span> <span class="predefined-type">PBEParameterSpec</span>(salt, <span class="integer">42</span>);
+
+        <span class="comment">//Set up the cipher:</span>
+        <span class="predefined-type">Cipher</span> cipher = <span class="predefined-type">Cipher</span>.getInstance(<span class="string"><span class="delimiter">&quot;</span><span class="content">PBEWithMD5AndDES</span><span class="delimiter">&quot;</span></span>);
+
+        <span class="comment">//Set the cipher mode to decryption or encryption:</span>
+        <span class="keyword">if</span> (encryptMode) {
+            cipher.init(<span class="predefined-type">Cipher</span>.ENCRYPT_MODE, key, pbeParamSpec);
+        } <span class="keyword">else</span> {
+            cipher.init(<span class="predefined-type">Cipher</span>.DECRYPT_MODE, key, pbeParamSpec);
+        }
+
+        <span class="keyword">return</span> cipher;
+    }
+
+    <span class="comment">/**
+     * Encrypts one file to a second file using a key derived from a passphrase:
+     */</span>
+    <span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> encryptFile(<span class="predefined-type">String</span> userId, <span class="predefined-type">String</span> pass, <span class="type">boolean</span> emptyFile)
+            <span class="directive">throws</span> <span class="exception">IOException</span>, <span class="exception">GeneralSecurityException</span> {
+        <span class="type">byte</span><span class="type">[]</span> decData;
+        <span class="type">byte</span><span class="type">[]</span> encData;
+        <span class="predefined-type">File</span> inFile = <span class="keyword">new</span> <span class="predefined-type">File</span>(addressBookFilePath);
+        <span class="comment">//Generate the cipher using pass:</span>
+        <span class="predefined-type">Cipher</span> cipher = FileEncryptor.makeCipher(pass, <span class="predefined-constant">true</span>);
+
+        <span class="comment">//Read in the file:</span>
+        <span class="predefined-type">FileInputStream</span> inStream = <span class="keyword">new</span> <span class="predefined-type">FileInputStream</span>(inFile);
+
+        <span class="type">int</span> blockSize = <span class="integer">8</span>;
+        <span class="comment">//Figure out how many bytes are padded</span>
+        <span class="type">int</span> paddedCount = blockSize - ((<span class="type">int</span>) inFile.length() % blockSize);
+
+        <span class="comment">//Figure out full size including padding</span>
+        <span class="type">int</span> padded = (<span class="type">int</span>) inFile.length() + paddedCount;
+
+        decData = <span class="keyword">new</span> <span class="type">byte</span>[padded];
+
+
+        inStream.read(decData);
+
+        inStream.close();
+
+        <span class="comment">//Write out padding bytes as per PKCS5 algorithm</span>
+        <span class="keyword">for</span> (<span class="type">int</span> i = (<span class="type">int</span>) inFile.length(); i &lt; padded; ++i) {
+            decData[i] = (<span class="type">byte</span>) paddedCount;
+        }
+
+        <span class="comment">//Encrypt the file data:</span>
+        encData = cipher.doFinal(decData);
+
+
+        <span class="comment">//Write the encrypted data to a new file:</span>
+        <span class="predefined-type">FileOutputStream</span> outStream = <span class="keyword">new</span> <span class="predefined-type">FileOutputStream</span>(<span class="keyword">new</span> <span class="predefined-type">File</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">data/</span><span class="delimiter">&quot;</span></span> + userId + <span class="string"><span class="delimiter">&quot;</span><span class="content">.encrypted</span><span class="delimiter">&quot;</span></span>));
+        outStream.write(encData);
+        outStream.close();
+
+        <span class="keyword">if</span> (emptyFile) {
+            outStream = <span class="keyword">new</span> <span class="predefined-type">FileOutputStream</span>(<span class="keyword">new</span> <span class="predefined-type">File</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">data/addressbook.xml</span><span class="delimiter">&quot;</span></span>));
+            <span class="predefined-type">String</span> emptyContent = <span class="string"><span class="delimiter">&quot;</span><span class="content">&lt;?xml version=</span><span class="char">\&quot;</span><span class="content">1.0</span><span class="char">\&quot;</span><span class="content"> encoding=</span><span class="char">\&quot;</span><span class="content">UTF-8</span><span class="char">\&quot;</span><span class="content"> standalone=</span><span class="char">\&quot;</span><span class="content">yes</span><span class="char">\&quot;</span><span class="content">?&gt;</span><span class="char">\n</span><span class="delimiter">&quot;</span></span>
+                    + <span class="string"><span class="delimiter">&quot;</span><span class="content">&lt;addressbook/&gt;</span><span class="char">\n</span><span class="delimiter">&quot;</span></span>;
+            outStream.write(emptyContent.getBytes());
+            outStream.close();
+        }
+    }
+
+    <span class="comment">/**
+     * Decrypts one file to a second file using a key derived from a passphrase:
+     */</span>
+    <span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> decryptFile(<span class="predefined-type">String</span> fileName, <span class="predefined-type">String</span> pass)
+            <span class="directive">throws</span> <span class="exception">GeneralSecurityException</span>, <span class="exception">IOException</span> {
+        <span class="type">byte</span><span class="type">[]</span> encData;
+        <span class="type">byte</span><span class="type">[]</span> decData;
+        <span class="predefined-type">File</span> inFile = <span class="keyword">new</span> <span class="predefined-type">File</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">data/</span><span class="delimiter">&quot;</span></span> + fileName + <span class="string"><span class="delimiter">&quot;</span><span class="content">.encrypted</span><span class="delimiter">&quot;</span></span>);
+
+        <span class="comment">//Generate the cipher using pass:</span>
+        <span class="predefined-type">Cipher</span> cipher = FileEncryptor.makeCipher(pass, <span class="predefined-constant">false</span>);
+
+        <span class="comment">//Read in the file:</span>
+        <span class="predefined-type">FileInputStream</span> inStream = <span class="keyword">new</span> <span class="predefined-type">FileInputStream</span>(inFile);
+        encData = <span class="keyword">new</span> <span class="type">byte</span>[(<span class="type">int</span>) inFile.length()];
+        inStream.read(encData);
+        inStream.close();
+        <span class="comment">//Decrypt the file data:</span>
+        decData = cipher.doFinal(encData);
+
+        <span class="comment">//Figure out how much padding to remove</span>
+
+        <span class="type">int</span> padCount = (<span class="type">int</span>) decData[decData.length - <span class="integer">1</span>];
+
+        <span class="comment">//Naive check, will fail if plaintext file actually contained</span>
+        <span class="comment">//this at the end</span>
+        <span class="comment">//For robust check, check that padCount bytes at the end have same value</span>
+        <span class="keyword">if</span> (padCount &gt;= <span class="integer">1</span> &amp;&amp; padCount &lt;= <span class="integer">8</span>) {
+            decData = <span class="predefined-type">Arrays</span>.copyOfRange(decData, <span class="integer">0</span>, decData.length - padCount);
+        }
+        <span class="comment">//Write the decrypted data to a new file:</span>
+
+        <span class="predefined-type">FileOutputStream</span> target = <span class="keyword">new</span> <span class="predefined-type">FileOutputStream</span>(<span class="keyword">new</span> <span class="predefined-type">File</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">data/addressbook.xml</span><span class="delimiter">&quot;</span></span>));
+        target.write(decData);
+        target.close();
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Further more, users can check out who the current user is. The default user is <code>PUBLIC</code> which means no user has
+logged in and the address book is open to the public. The command is <code>currentuser</code> and the result is a display saying
+<code>Current user is: &lt;USERNAME&gt;</code>. The CurrentUserDetails class describes the <code>UserNameText</code>, the <code>UserNameHexDigest</code>,
+the <code>SaltHex</code> and the <code>PasswordHexDigest</code> of the current user. It is stored int the logic.command.currentuser package</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="comment">/**
+ * Describe the current user
+ */</span>
+<span class="directive">public</span> <span class="type">class</span> <span class="class">CurrentUserDetails</span> {
+    <span class="directive">private</span> <span class="directive">static</span> <span class="predefined-type">String</span> userId = <span class="string"><span class="delimiter">&quot;</span><span class="content">PUBLIC</span><span class="delimiter">&quot;</span></span>;
+    <span class="directive">private</span> <span class="directive">static</span> <span class="predefined-type">String</span> userIdHex = <span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span>;
+    <span class="directive">private</span> <span class="directive">static</span> <span class="predefined-type">String</span> saltText = <span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span>;
+    <span class="directive">private</span> <span class="directive">static</span> <span class="predefined-type">String</span> passwordText = <span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span>;
+
+    <span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> setCurrentUser(<span class="predefined-type">String</span> userId, <span class="predefined-type">String</span> userIdHex, <span class="predefined-type">String</span> saltText, <span class="predefined-type">String</span> passwordText) {
+        CurrentUserDetails.userId = userId;
+        CurrentUserDetails.userIdHex = userIdHex;
+        CurrentUserDetails.saltText = saltText;
+        CurrentUserDetails.passwordText = passwordText;
+    }
+
+    <span class="directive">public</span> <span class="directive">static</span> <span class="type">void</span> setPublicUser() {
+            userId = <span class="string"><span class="delimiter">&quot;</span><span class="content">PUBLIC</span><span class="delimiter">&quot;</span></span>;
+            userIdHex = <span class="string"><span class="delimiter">&quot;</span><span class="content">PUBLIC</span><span class="delimiter">&quot;</span></span>;
+            saltText = <span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span>;
+            passwordText = <span class="string"><span class="delimiter">&quot;</span><span class="content">PUBLIC</span><span class="delimiter">&quot;</span></span>;
+        }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Design Considerations:</strong><br>
+<strong>Aspect:</strong> Separation of addressbook.xml file into usercontact files<br>
+<strong>Description:</strong> Save the contacts that belong to a user in a separate file designated for that user only<br>
+<strong>Pros:</strong> Ease of encryption, decryption and navigation.<br>
+<strong>Cons:</strong> Greater overheads to manage multiple xml files which can interfere with other existing or incoming increments
+to the program<br></p>
+</div>
+<hr>
+<hr>
+</div>
+<div class="sect2">
+<h3 id="other-contributions"><a class="link" href="#other-contributions">Other contributions</a></h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Added differing colour codes for different tags</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2017-11-12 22:41:08 +08:00
+</div>
+</div>
+</body>
+</html>

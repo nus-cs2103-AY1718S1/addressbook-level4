@@ -18,20 +18,29 @@ import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.ConfigUtil;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.commons.util.encryption.FileEncryptor;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
+import seedu.address.model.Account;
 import seedu.address.model.AddressBook;
+import seedu.address.model.EventBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
+import seedu.address.model.ReadOnlyAccount;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlyEventBook;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.util.SampleDataUtil;
+import seedu.address.storage.AccountStorage;
 import seedu.address.storage.AddressBookStorage;
+import seedu.address.storage.EventBookStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
 import seedu.address.storage.Storage;
 import seedu.address.storage.StorageManager;
 import seedu.address.storage.UserPrefsStorage;
+import seedu.address.storage.XmlAccountStorage;
 import seedu.address.storage.XmlAddressBookStorage;
+import seedu.address.storage.XmlEventBookStorage;
 import seedu.address.ui.Ui;
 import seedu.address.ui.UiManager;
 
@@ -51,28 +60,53 @@ public class MainApp extends Application {
     protected Config config;
     protected UserPrefs userPrefs;
 
+    public static void main(String[] args) {
+        launch(args);
+    }
 
     @Override
     public void init() throws Exception {
         logger.info("=============================[ Initializing AddressBook ]===========================");
         super.init();
 
+        decryptPublicFile();
+
         config = initConfig(getApplicationParameter("config"));
 
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         userPrefs = initPrefs(userPrefsStorage);
-        AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
-        storage = new StorageManager(addressBookStorage, userPrefsStorage);
+        AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath(),
+                userPrefs.getAddressbookExportedPath(), userPrefs.getAddressbookHeader());
+        AccountStorage accountStorage = new XmlAccountStorage(userPrefs.getAccountFilePath());
+        EventBookStorage eventBookStorage = new XmlEventBookStorage(userPrefs.getEventBookFilePath(),
+                userPrefs.getEventbookExportedPath(), userPrefs.getEventbookHeader());
+        storage = new StorageManager(addressBookStorage, eventBookStorage, userPrefsStorage, accountStorage);
 
         initLogging(config);
 
-        model = initModelManager(storage, userPrefs);
+        model = initModelManager(storage, userPrefs, config);
+        model.setUserStorage(storage);
 
-        logic = new LogicManager(model);
+        logic = new LogicManager(model, userPrefs, config, ui);
 
         ui = new UiManager(logic, config, userPrefs);
 
+        //@@author keloysiusmak
+        logic.setUi(ui);
+        //@@author
+
         initEventsCenter();
+    }
+
+    /**
+     * Decrypt PUBLIC.encrypted file
+     */
+    private void decryptPublicFile() {
+        try {
+            FileEncryptor.decryptFile("PUBLIC", "PUBLIC");
+        } catch (Exception e) {
+            ;
+        }
     }
 
     private String getApplicationParameter(String parameterName) {
@@ -85,24 +119,42 @@ public class MainApp extends Application {
      * The data from the sample address book will be used instead if {@code storage}'s address book is not found,
      * or an empty address book will be used instead if errors occur when reading {@code storage}'s address book.
      */
-    private Model initModelManager(Storage storage, UserPrefs userPrefs) {
+    private Model initModelManager(Storage storage, UserPrefs userPrefs, Config config) {
         Optional<ReadOnlyAddressBook> addressBookOptional;
+        Optional<ReadOnlyAccount> accountOptional;
         ReadOnlyAddressBook initialData;
+        ReadOnlyAccount initialAccount;
+
+        Optional<ReadOnlyEventBook> eventBookOptional;
+        ReadOnlyEventBook initialEventData;
         try {
             addressBookOptional = storage.readAddressBook();
+            accountOptional = storage.readAccount();
+            eventBookOptional = storage.readEventBook();
             if (!addressBookOptional.isPresent()) {
                 logger.info("Data file not found. Will be starting with a sample AddressBook");
             }
+            if (!accountOptional.isPresent()) {
+                logger.info("Account file not found.");
+            }
+            if (!eventBookOptional.isPresent()) {
+                logger.info("Data file not found. Will be starting with a sample EventBook");
+            }
             initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
+            initialAccount = accountOptional.orElseGet(SampleDataUtil::getEmptyAccount);
+            initialEventData = eventBookOptional.orElseGet(SampleDataUtil::getSampleEventBook);
         } catch (DataConversionException e) {
             logger.warning("Data file not in the correct format. Will be starting with an empty AddressBook");
             initialData = new AddressBook();
+            initialAccount = new Account();
+            initialEventData = new EventBook();
         } catch (IOException e) {
             logger.warning("Problem while reading from the file. Will be starting with an empty AddressBook");
             initialData = new AddressBook();
+            initialAccount = new Account();
+            initialEventData = new EventBook();
         }
-
-        return new ModelManager(initialData, userPrefs);
+        return new ModelManager(initialData, initialEventData, userPrefs, initialAccount, config);
     }
 
     private void initLogging(Config config) {
@@ -204,9 +256,5 @@ public class MainApp extends Application {
     public void handleExitAppRequestEvent(ExitAppRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         this.stop();
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 }

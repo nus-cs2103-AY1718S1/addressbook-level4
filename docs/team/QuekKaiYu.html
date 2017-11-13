@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.3">
+<title>Quek Kai Yu - Project Portfolio</title>
+<link rel="stylesheet" href="../stylesheets/gh-pages.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="../stylesheets/coderay-asciidoctor.css">
+</head>
+<body class="article">
+<div id="header">
+<h1>Quek Kai Yu - Project Portfolio</h1>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="project-tunedin"><a class="link" href="#project-tunedin">Project: TunedIn</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>TunedIn is a free-to-use desktop application that brings you the power to organise your information in a neater way.
+Not only does it help to bring order to your life,
+it is also an amazing tool to facilitate the organization of your activities for the following day,
+week or even month. All this, against a beautiful,
+customizable background. Never before, is your calender a work of art.
+Now is the time to bring work-life balance into reality.
+Most of the interaction is done through Command-Line Interface (CLI), and it has a user-friendly Graphical Interface (GUI) created with JavaFX.
+The user interacts with it using a CLI, and it has a GUI created with JavaFX.
+It is written in Java, and has about 10 kLoC.</p>
+</div>
+<div class="paragraph">
+<p><strong>Code contributed</strong>: [<a href="https://github.com/CS2103AUG2017-T14-B2/main/blob/master/collated/main/kaiyu92.md">Functional code</a>] [<a href="https://github.com/CS2103AUG2017-T14-B2/main/tree/master/collated/test">Test code</a>]</p>
+</div>
+<div class="sect2">
+<h3 id="enhancement-added-new-command-code-remark-code"><a class="link" href="#enhancement-added-new-command-code-remark-code">Enhancement Added: New Command <code>remark</code></a></h3>
+<div class="sect3">
+<h4 id="external-behavior"><a class="link" href="#external-behavior">External behavior</a></h4>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="remarking-a-person-code-remark-code-since-v1-1"><a class="link" href="#remarking-a-person-code-remark-code-since-v1-1">Remarking a person : <code>remark</code> - Since V1.1</a></h3>
+<div class="paragraph">
+<p>Remarks an existing person in the address book.<br>
+Format: <code>remark INDEX r/REMARK</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Remarks the person at the specified <code>INDEX</code>. The index refers to the index number shown in the last person listing. The index <strong>must be a positive integer</strong> 1, 2, 3, &#8230;&#8203;</p>
+</li>
+<li>
+<p>Existing values will be updated to the input values.</p>
+</li>
+<li>
+<p>You can remove the person&#8217;s remark by typing <code>r/</code> without specifying any remarks after it.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>remark 1 r/Likes to swim.</code><br>
+Edits the remark of the 1st person to be <code>Likes to swim</code>.</p>
+</li>
+<li>
+<p><code>remark 1 r/</code><br>
+Remove the remark of the 1st person.</p>
+</li>
+</ul>
+</div>
+<hr>
+<div class="sect3">
+<h4 id="justification"><a class="link" href="#justification">Justification</a></h4>
+<div class="paragraph">
+<p>Remarking on individual contact allows the user to keep track of things that he/she supposed to do with that particular contact.
+This is only one out of many ways to use the remark feature (depending on how the user wants to use the remark feature).
+For example, assuming there is a remark "meeting John at Starbuck 4pm" added to John&#8217;s contact, it will act as a reminder to the user
+that he/she supposed to meet John at starbuck 4pm.
+{Justify the need for, and the current design (i.e. external behavior) of, the feature}</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="implementation"><a class="link" href="#implementation">Implementation</a></h4>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="remark-mechanism"><a class="link" href="#remark-mechanism">Remark mechanism</a></h3>
+<div class="paragraph">
+<p>The remark mechanism is facilitated by <code>Person</code>, which resides inside <code>Addressbook</code>. It supports adding a custom remark to individual contact
+by utilizing the CLI commands in the Tunedln application.</p>
+</div>
+<div class="paragraph">
+<p><code>Person</code> only deals with <code>Name</code>, <code>Phone</code>, <code>Email</code>, <code>Address</code>, <code>Birthday</code>, <code>Remark</code>, and <code>Tags</code>.</p>
+</div>
+<div class="paragraph">
+<p>The following diagram shows the inheritance diagram for <code>Person</code>:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/RemarkClassDiagram.png" alt="RemarkClassDiagram" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>As you can see from the diagram, Person stores the remark as an attribute. This Person object is then stored in the
+UniquePersonList, which resides in the AddressBook.</p>
+</div>
+<div class="paragraph">
+<p>The implementation of the constructor Remark class is shown below in greater detail. Each person in the UnqiuePersonList will have
+either an empty or textual remark. As you can see from the implementation, Remark require one String input. This input
+will be provided by the user (which is also owner of the Addressbook), and it will override the existing Remark value (*Note: Empty String is also allowed).
+Note that this technique of abstraction allows us to further expand Remark into different smaller class to display
+out a more detailed Remark (E.g. let&#8217;s take Address class for instance, it could consists of Block, Street, UnitNo, Postal).</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">  <span class="directive">public</span> Remark(<span class="predefined-type">String</span> remark) {
+        requireNonNull(remark);
+        <span class="local-variable">this</span>.value = remark;
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The implementation of storing Remark into a Person object is shown below:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">    <span class="directive">public</span> Person(<span class="predefined-type">Name</span> name, Phone phone, Email email, Address address, Birthday birthday, Remark remark,
+                  <span class="predefined-type">Set</span>&lt;Tag&gt; tags) {
+        requireAllNonNull(name, phone, email, address, birthday, tags);
+        <span class="local-variable">this</span>.name = <span class="keyword">new</span> SimpleObjectProperty&lt;&gt;(name);
+        <span class="local-variable">this</span>.phone = <span class="keyword">new</span> SimpleObjectProperty&lt;&gt;(phone);
+        <span class="local-variable">this</span>.email = <span class="keyword">new</span> SimpleObjectProperty&lt;&gt;(email);
+        <span class="local-variable">this</span>.address = <span class="keyword">new</span> SimpleObjectProperty&lt;&gt;(address);
+        <span class="local-variable">this</span>.birthday = <span class="keyword">new</span> SimpleObjectProperty&lt;&gt;(birthday);
+        <span class="local-variable">this</span>.remark = <span class="keyword">new</span> SimpleObjectProperty&lt;&gt;(remark);
+
+        <span class="comment">// protect internal tags from changes in the arg list</span>
+        <span class="local-variable">this</span>.tags = <span class="keyword">new</span> SimpleObjectProperty&lt;&gt;(<span class="keyword">new</span> UniqueTagList(tags));
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Suppose that the user has just launched the application. Assuming a valid addressbook xml file exists (with numerous person data in it),
+the UniquePersonList will start storing a list of Person object with correspondence to the xml file. Each person will either have a textual or empty remark.</p>
+</div>
+<div class="paragraph">
+<p>The user executes an <code>edit</code> Command by calling <code>edit 1 r/1st try</code>, to set the 1st person&#8217;s
+remark to "1st try" in the address book. The existing Remark value will be replaced by the user input "1st try" and
+the 1st Person&#8217;s object will be updated, since the Remark object is referencing to the 1st Person&#8217;s remark attribute.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/ReplacingRemarkDiagram.png" alt="ReplacingRemarkDiagram" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>The user executes another edit command by calling <code>edit 1 r/2nd try</code>, to replace the remark initial value which is
+"1st try" to "2nd try".</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/ReplacingRemarkDiagram2.png" alt="ReplacingRemarkDiagram2" width="800">
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+If the edit command fails its execution due to unacceptable syntax, the person&#8217;s remark will not be replaced.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The following sequence diagram shows how the edit remark operation works:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/ReplacingRemarkSequence.png" alt="ReplacingRemarkSequence" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>The following activity diagram summarize what happens inside the <code>Person</code> when a user executes a new command:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/ReplacingRemarkActivityDiagram.png" alt="ReplacingRemarkActivityDiagram" width="200">
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations"><a class="link" href="#design-considerations">Design Considerations</a></h4>
+<div class="paragraph">
+<p><strong>Aspect:</strong> Implementation of Remark<br>
+<strong>Alternative 1 (current choice):</strong> Replace the existing Person object with an edited
+Person object.<br>
+<strong>Pros:</strong> Neat and Clearer abstractions to be displayed in class diagram.<br>
+<strong>Cons:</strong> Tedious, as the implementation could have be simpler by assigning String as Remark attribute.<br>
+<strong>Alternative 2:</strong> Let String be the attribute for Remark<br>
+<strong>Pros:</strong> Easy to implement.<br>
+<strong>Cons:</strong> Harder to understand the flow of the implementation.</p>
+</div>
+<hr>
+<div class="paragraph">
+<p><strong>Aspect:</strong> Viewing of Remark
+<strong>Alternative 1 (current choice):</strong> Only one remark is able to store for one contact.<br>
+<strong>Pros:</strong> Easy to implement.<br>
+<strong>Cons:</strong> User is unable to keep more than 1 remark.<br>
+<strong>Alternative 2:</strong> Data structure to support multiple remark.<br>
+<strong>Pros:</strong> User is given the choice to overwrite or save a new remark.<br>
+<strong>Cons:</strong> Harder to implement.</p>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="enhancement-added-events-mechanism"><a class="link" href="#enhancement-added-events-mechanism">Enhancement Added: Events Mechanism</a></h3>
+<div class="sect3">
+<h4 id="external-behavior-2"><a class="link" href="#external-behavior-2">External behavior</a></h4>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="adding-an-event-code-addevent-code-since-v1-2"><a class="link" href="#adding-an-event-code-addevent-code-since-v1-2">Adding an event: <code>addevent</code> - Since V1.2</a></h3>
+<div class="paragraph">
+<p>Adds an event to the event book<br>
+Format: <code>addevent et/TITLE ed/DESCRIPTION el/LOCATION edt/DATETIME</code></p>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>addevent et/Halloween ed/Horror Night el/Universal Studio edt/13-10-17 2359</code></p>
+</li>
+<li>
+<p><code>addevent et/Basketball Competition ed/Tournament el/UTSH edt/26-10-2017 0800</code>
+=== Deleting an event : <code>deleteevent</code> - Since V1.2</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Deletes the specified event from the event book.<br>
+Format: <code>deleteevent INDEX</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Deletes the event at the specified <code>INDEX</code>.</p>
+</li>
+<li>
+<p>The index refers to the index number shown in the most recent listing.</p>
+</li>
+<li>
+<p>The index <strong>must be a positive integer</strong> 1, 2, 3, &#8230;&#8203;</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>deleteevent 2</code><br>
+Deletes the 2nd event in the event book.</p>
+</li>
+<li>
+<p><code>deleteevent 1</code><br>
+Deletes the 1st event in the event book.
+=== Editing an event : <code>editevent</code> - Since V1.2</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Edits an existing event in the event book.<br>
+Format: <code>editevent INDEX [et/TITLE] [ed/DESCRIPTION] [el/LOCATION] [edt/DATETIME]&#8230;&#8203;</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Edits the event at the specified <code>INDEX</code>. The index refers to the index number shown in the last event listing. The index <strong>must be a positive integer</strong> 1, 2, 3, &#8230;&#8203;</p>
+</li>
+<li>
+<p>At least one of the optional fields must be provided.</p>
+</li>
+<li>
+<p>Existing values will be updated to the input values.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>editevent 1 ed/Buy one get one free edt/13-10-2017 0900</code><br>
+Edits the description and datetime of the 1st event to be <code>Buy one get one free</code> and <code>13-10-2017 0900</code> respectively.</p>
+</li>
+<li>
+<p><code>editevent 2 et/2018 iPhone 11 Release</code><br>
+Edits the title of the 2nd event to be <code>2018 iPhone 11 Release</code>.
+=== Finding Event : <code>findevent</code> - Since V1.3</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Finds events whose titles contain any of the given keywords.<br>
+Format: <code>find &lt;attribute&gt;/KEYWORD</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p><code>&lt;attribute&gt;</code> refers to either <code>et</code>, standing for title, <code>ed</code>, standing for description, <code>edt</code>, standing for Datetime, or <code>em</code>, standing for mixed fields,
+or finding in any text field. This is case-sensitive.</p>
+</li>
+<li>
+<p>The search is case insensitive. e.g <code>sentosa</code> will match <code>Sentosa</code></p>
+</li>
+<li>
+<p>The keyword doesn&#8217;t have to be an exact word. e.g. <code>bask</code> will match similar words like <code>Basketball Competition</code>, <code>Basket Promotion</code></p>
+</li>
+<li>
+<p>The order of the keywords does not matter. e.g. <code>Universal Sentosa</code> will match <code>Sentosa Universal</code></p>
+</li>
+<li>
+<p>Events matching at least one keyword will be returned (i.e. <code>OR</code> search). e.g. <code>Sentosa Fun</code> will return <code>Sentosa Universal</code></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>findevent et/Basketball</code><br>
+Returns  any event having title with <code>Basketball</code> in the sequence</p>
+</li>
+<li>
+<p><code>findevent et/ball</code><br>
+Returns  any event having title with <code>ball</code> in the sequence
+=== Order events in Event Book by a parameter: <code>orderevent</code> - Since V1.3</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Order the list of events according to a specified parameter. Parameters are case insensitive.<br>
+Format: <code>orderevent PARAMETER [MORE_PARAMETER]</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>The allowable parameters are <code>TITLE</code>, <code>LOCATION</code> and 'DATETIME'.</p>
+</li>
+<li>
+<p>The parameter is case insensitive. e.g 'tiTle' will match 'TITLE'</p>
+</li>
+<li>
+<p>Only full word will be matched. e.g. 'locat' will not match 'LOCATION'</p>
+</li>
+<li>
+<p>To order by multiple parameters, each parameter should be separated by a single space.</p>
+</li>
+<li>
+<p>The command change the index of the event in the Event Book,
+which will affect other commands that use this attribute such as
+<code>deleteevent</code> or <code>selectevent</code>.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>orderevent TITLE</code><br>
+Returns event list sorted by title</p>
+</li>
+<li>
+<p><code>orderevent LOCATION</code><br>
+Returns event list sorted by location
+=== Selecting an event : <code>selectevent</code> - Since V1.4</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Selects the event identified by the index number used in the last event listing.<br>
+Format: <code>selectevent INDEX</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Selects the event at the specified <code>INDEX</code>.</p>
+</li>
+<li>
+<p>The index refers to the index number shown in the most recent listing.</p>
+</li>
+<li>
+<p>The index <strong>must be a positive integer</strong> <code>1, 2, 3, &#8230;&#8203;</code></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>listevent</code><br>
+<code>selectevent 2</code><br>
+Selects the 2nd event in the event book.</p>
+</li>
+<li>
+<p><code>findevent basketball</code><br>
+<code>selectevent 1</code><br>
+Selects the 1st event in the results of the <code>findevent</code> command.</p>
+</li>
+</ul>
+</div>
+<hr>
+<div class="sect3">
+<h4 id="justification-2"><a class="link" href="#justification-2">Justification</a></h4>
+<div class="paragraph">
+<p>Users such as students or working adults tends to be busy due to the workload.
+Therefore, they might not be able to keep track of all the events that they supposed to attend to.
+Hence, by including events mechanism in our app, it allows the user to have a simple and beautiful event calendar which
+take notes of events on certain dates.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="implementation-2"><a class="link" href="#implementation-2">Implementation</a></h4>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="event-mechanism"><a class="link" href="#event-mechanism">Event mechanism</a></h3>
+<div class="paragraph">
+<p>The event mechanism is facilitated by <code>EventBook</code>, which resides inside <code>ModelManager</code>. It supports the additional
+features of event management, which allows the user to add, edit, delete, find, or select event.</p>
+</div>
+<hr>
+</div>
+<div class="sect2">
+<h3 id="enhancement-added-new-command-code-export-code"><a class="link" href="#enhancement-added-new-command-code-export-code">Enhancement Added: New Command <code>export</code></a></h3>
+<div class="sect3">
+<h4 id="external-behavior-3"><a class="link" href="#external-behavior-3">External behavior</a></h4>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="export-code-export-code-since-v1-5"><a class="link" href="#export-code-export-code-since-v1-5">Export : <code>export</code> - Since V1.5</a></h3>
+<div class="paragraph">
+<p>Exports the TunedIn application data (either event book or address book) into csv format.<br>
+Format: <code>export BOOK</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>export the data of the specified <code>BOOK</code>. The book refers to either address book or event book.</p>
+</li>
+<li>
+<p><code>BOOK</code> is case-insensitive.</p>
+</li>
+<li>
+<p>Existing CSV will be overwrited.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>export addressbook</code><br>
+Exports the addressbook into csv format</p>
+</li>
+</ul>
+</div>
+<hr>
+<div class="sect3">
+<h4 id="justification-3"><a class="link" href="#justification-3">Justification</a></h4>
+<div class="paragraph">
+<p>In the case where data might be accidentally disappeared from the application,
+export feature allows the user to have a backup copy of the file in the format of csv.
+Reason being why in excel format is because user might want to use the data for other purpose apart from backing up the data,
+and excel is a more readable and user-friendly way.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="implementation-3"><a class="link" href="#implementation-3">Implementation</a></h4>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="export-mechanism"><a class="link" href="#export-mechanism">Export mechanism</a></h3>
+<div class="paragraph">
+<p>The export mechanism is facilitated by <code>XmlFileStorage</code>, which resides inside <code>StorageManager</code>. It allows the user
+to export either their addressbook or eventbook in a excel format.</p>
+</div>
+<hr>
+</div>
+<div class="sect2">
+<h3 id="enhancement-proposed-new-command-code-import-code"><a class="link" href="#enhancement-proposed-new-command-code-import-code">Enhancement Proposed: New command <code>import</code></a></h3>
+<div class="paragraph">
+<p>As the problem is mentioned in the enhancement added (export), user might want to import their backup data into the app
+(in the case where the data is already gone and the user still have a backup copy due to the export feature).</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="enhancement-proposed-integrating-to-online-platform-such-as-facebook-google"><a class="link" href="#enhancement-proposed-integrating-to-online-platform-such-as-facebook-google">Enhancement Proposed: Integrating to Online Platform such as Facebook, Google</a></h3>
+<div class="paragraph">
+<p>Allowing the user to add their Facebook friends birthday into the event calendar, so as to
+make things convenient for the user to keep track of the date while not manually adding the events to the calendar (since the birthday date
+comes from Facebook, it will synchronise the birthday dates into the calendar).</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="other-contributions"><a class="link" href="#other-contributions">Other contributions</a></h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Updated the GUI to include an event calendar with the additional feature of mouse click event to show the details of event on that specific day.</p>
+</li>
+<li>
+<p>Updated the GUI to have an additional "event" tab.</p>
+</li>
+<li>
+<p>Updated the architecture of [<a href="https://github.com/CS2103AUG2017-T14-B2/main/blob/master/docs/DeveloperGuide.adoc#ui-component">UI</a>],
+[<a href="https://github.com/CS2103AUG2017-T14-B2/main/blob/master/docs/DeveloperGuide.adoc#logic-component">Logic</a>],
+[<a href="https://github.com/CS2103AUG2017-T14-B2/main/blob/master/docs/DeveloperGuide.adoc#model-component">Model</a>],
+and [<a href="https://github.com/CS2103AUG2017-T14-B2/main/blob/master/docs/DeveloperGuide.adoc#storage-component">Storage</a>] according to the current application.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2017-11-09 13:07:23 +08:00
+</div>
+</div>
+</body>
+</html>

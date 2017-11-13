@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<eventbook>
+    <events>
+        <title>Halloween Horror Night</title>
+        <description>Horrifying night</description>
+        <location>Univsersal Studio</location>
+        <datetime>13-10-2017 2359</datetime>
+    </events>
+    <events>
+        <title>Basketball Competition</title>
+        <description>Championship tournament</description>
+        <location>UTSH</location>
+        <datetime>26-10-2017 0800</datetime>
+    </events>
+    <events>
+        <title>USProduction</title>
+        <description>Drama performance</description>
+        <location>YNC Blackbox</location>
+        <datetime>17-10-2017 1200</datetime>
+    </events>
+    <events>
+        <title>Chinese New Year</title>
+        <description>Buffet</description>
+        <location>Mandarin Hotel</location>
+        <datetime>02-02-2018 1345</datetime>
+    </events>
+    <events>
+        <title>Sentosa Party</title>
+        <description>There is a party at sentosa</description>
+        <location>Sentosa</location>
+        <datetime>13-05-2017 2200</datetime>
+    </events>
+    <events>
+        <title>National Day</title>
+        <description>Singapore bday</description>
+        <location>Marina Platform</location>
+        <datetime>09-08-2018 1900</datetime>
+    </events>
+</eventbook>
