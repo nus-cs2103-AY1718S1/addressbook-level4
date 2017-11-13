@@ -3,8 +3,8 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
-== Project: Mybook
-Mybook is a desktop address book application used for students or teachers who want to record the details of students.
+== Project: MyBook
+MyBook is a desktop address book application used for students or teachers who want to record the details of students.
 The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
 
 *Code contributed*: [https://github.com/CS2103AUG2017-F10-B4/main/blob/master/collated/main/renkai91.md[Functional code]]
