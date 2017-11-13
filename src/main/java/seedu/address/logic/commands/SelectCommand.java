@@ -57,10 +57,8 @@ public class SelectCommand extends Command {
 
         if (socialType != null && !checkPersonHasSocialType(selectedPerson, socialType)) {
             // check to see if the social type matches any of the selected person's social media accounts
-            // if (!checkPersonHasSocialType(selectedPerson, socialType)) {
             // if the selected person does not have the requested social type, throw a command exception
             throw new CommandException(MESSAGE_SOCIAL_TYPE_NOT_FOUND);
-            // }
         }
 
         try {
