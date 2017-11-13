@@ -263,36 +263,6 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `undo` (reverses the `delete 1` command) +
 `redo` (reapplies the `delete 1` command) +
 `redo` (reapplies the `clear` command) +
-// end::undoredo[]
-
-=== Redoing the previously undone command : `redo`
-
-Reverses the N most recent `undo` commands, where N refers to the number entered. If the number entered is greater than +
-the number of `undo` commands, all the `undo` commands will be reversed. If no number is given, only the most recent `undo` +
-command will be reversed.
-
-Format: `redo 2`
-
-Examples:
-
-* `favourite 3` +
-`delete 1` +
-`undo` (reverses the `delete 1` command) +
-`undo` (reverses the `favourite 3` command) +
-`redo` (reapplies the `favourite 3` command) +
-
-* `delete 1` +
-`undo 1` +
-`redo 1` (reapplies the `delete 1` command) +
-
-* `delete 1` +
-`redo` +
-The `redo` command fails as there are no `undo` commands executed previously.
-
-* `delete 1` +
-`clear` +
-`undo 2` (reverses the `clear` command, followed by the `delete 1` command) +
-`redo 2` (reapplies the `delete 1` command, followed by `clear` command) +
 
 === Clearing all entries : `clear`
 
@@ -548,7 +518,31 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `undo 2` (reverses the `clear` command, followed by the `delete 1` command) +
 `redo 2` (reapplies the `delete 1` command, followed by `clear` command) +
 
+Tips
+
+****
+* Similar to `undo`, you can `redo` all `undo`commands by keying in a ridiculously large index eg. `redo 1000`
+****
 // end::undoredo[]
+
+// tag::add[]
+=== Adding a person with empty fields: `add`
+
+Adds a person to the address book +
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+
+[TIP]
+A person can have any number of tags (including 0) +
+If email, phone number and/or address is not entered, it will appear as a dash.
+Name cannot be left empty.
+
+Examples:
+
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/Betsy Crowe t/friend a/Newgate Prison p/1234567 t/criminal` +
+* `add n/Thomas Barker`
+// end::add[]
 
 == Coming in v2.0
 
@@ -559,6 +553,14 @@ A dialog window pops up during contact editing.
 === Real time highlight
 
 Real time highlight when input command is not correct.
+
+=== `todo` command sets specified contact as a favourite.
+
+Person with `todo` tasks automatically becomes a favourite and shifts to top of list.
+
+=== Undo/redo all commands
+
+Entering `undo all` or `redo all` now undo and redo all commands respectively.
 
 == FAQ
 
