@@ -699,8 +699,8 @@ to import. +
 The tab autocomplete mechanism is facilitated by the `autocompleter` package. The structure of the `autocompleter`
 package can be seen in the class diagram below:
 
-image::AutocompleterClassDiagram.png[width="900"]
-_Figure 4.8.1 : Class diagram of the autocomplete package_
+image::AutoCompleterClassDiagram.png[width="900"]
+_Figure 4.9.1 : Class diagram of the autocomplete package_
 
 The role of the `CommandBoxParser` Class is to parse the text in the `CommandBox` to extract commands and arguments as well
 as to find missing prefixes. +
@@ -716,12 +716,12 @@ attached to the `TextField` which calls the `updateAutocompleter` method wheneve
 changed. The `updateAutocompleter` method then calls the `updateAutocompleter` method in the `Autocompleter` which
 updates the state of the `Autocompleter` according to the diagram below:
 
-image::AutocompleteStateActivityDiagram.PNG[width="900"]
-_Figure 4.8.2 : Activity diagram of the `updateAutocompleter` method_
+image::AutoCompleteStateActivityDiagram.PNG[width="900"]
+_Figure 4.9.2 : Activity diagram of the `updateAutocompleter` method_
 
 Besides updating the state, the updateState method also updates the `possibleAutocompleteOptions` list. In the case
 where there are multiple commands available, this will contain all the possible options. In the case where multiple
-prefixes are available, this will contain the missing prefixes. These options are accessed using the `resultIndex `which
+prefixes are available, this will contain the missing prefixes. These options are accessed using the `resultIndex` which
 is either incremented with wrap-around or reset depending on the state of the `Autocompleter` when autocomplete
 is called. +
 The countingIndex is used to keep track of the index field for commands that need it. Its maximum size is the
@@ -730,8 +730,8 @@ the state of the `Autocompleter` when `autocomplete` is called.
 When tab is entered by the user, the `autocomplete` method is called through the `processAutocompelete` in the
 Command box which then updates the text field according to the diagram below.
 
-image::AutocompleterAutocompleteActivityDiagram.PNG[width="900"]
-_Figure 4.8.3 : Activity diagram of the `autocomplete` method_
+image::AutoCompleterAutocompleteActivityDiagram.PNG[width="900"]
+_Figure 4.9.3 : Activity diagram of the `autocomplete` method_
 
 ==== Design Considerations
 
@@ -756,7 +756,7 @@ functions. +
 Also creates coupling between the `Autocompleter` and `CommandBox`. +
 * **Alternative 2:** Implement `autocomplete` inside `CommandBox`
 ** **Pros:** Easier to test since `CommandBoxTest` has already been set up and implemented. +
-** **Cons:** `CommandBox` class now has multiple responsibilities, which violates SRP. +=== Tab autocomplete mechanism
+** **Cons:** `CommandBox` class now has multiple responsibilities, which violates SRP. +
 
 //end::autocomplete[]
 
@@ -802,7 +802,7 @@ command is executed or a when a parcel is selected.
 [NOTE]
 Presently, the `PostalCode` field still does a very relaxed validation and does not completely ensure that the postal
 code exists even though it might meet the criteria above. The team is working on producing a database of postal codes
- in Singapore by quering the Google Maps Distance Matrix API. In the meantime, it is assumed that users will enter
+ in Singapore by querying the Google Maps Distance Matrix API. In the meantime, it is assumed that users will enter
  the correct postal code.
 
 ==== Design Considerations
@@ -836,10 +836,10 @@ district, Ark will reject that parcel from being entered,
 === Status field
 
 `Status` represents the current stage of delivery that a parcel is at. As seen in the class diagram below,
-`Status` is implements an `Enumeration` interface and it has the four possible values:
+`Status` implements an `Enumeration` interface and it has the four possible values:
 
 image::StatusClassDiagram.png[width:"150"]
-_Figure 4.13: Status Class Diagram_
+_Figure 4.12.1: Status Class Diagram_
 
 The following are the descriptions for the four possible values of `Status`:
 
@@ -889,7 +889,7 @@ test these methods and integrate the automatic `Status` update into the codebase
 ** **Cons:** More overhead. +
 * **Alternative 2:** Update `Status` in `getInstance()`.
 ** **Pros:** Less overhead and more intuitive.
-** **Cons:** More tedious to code because a `DeliveryDate` object has to be instantiated before programmer is able to
+** **Cons:** More tedious to code because a `DeliveryDate` object has to be instantiated before user is able to
 retrieve an updated `Status`.
 //end::status[]
 
@@ -937,7 +937,7 @@ The following sequence diagram shows how the delivery date is parsed to
 https://github.com/ocpsoft/prettytime[PrettyTime]'s parser:
 
 image::DeliveryDateSequenceDiagram.png[width="890"]
-_Figure 4.14.1 : Sequence diagram describing the parsing of delivery date when `edit 1 d/today` is executed_
+_Figure 4.13.1 : Sequence diagram describing the parsing of delivery date when `edit 1 d/today` is executed_
 
 As seen in the sequence diagram above, a request comes in to ParserUtil to parse the delivery date. A new
 DeliveryDate is then created and within it we instantiate a SimpleDateFormat object with the desired date
@@ -964,7 +964,7 @@ when handling.
 
 ==== Design Considerations
 
-**`Implementation of Tag`**
+**Implementation of `Tag`**
 
 * **Alternative 1 (current choice):** Tag implements the Enumeration interface.
 ** **Pros:** `Tag`s has fixed values. The user should also not be allowed to create new `Tag` objects.
@@ -978,7 +978,7 @@ use different tag names to refer to the same tag.
 //tag::sortedList[]
 === Maintain sorted and selection mechanism
 image::AddParcelSdForLogic.png[width="890"]
-_Figure 4.16.1 : Adding Alice to Ark, maintainSorted is actually called and returns void._
+_Figure 4.15.1 : Adding Alice to Ark, maintainSorted is actually called and returns void._
 
 The list of parcels in Ark is maintained to be always in sorted order according to delivery dates,
 with the earliest being on the top. This is so that the user will be able to look at the more
