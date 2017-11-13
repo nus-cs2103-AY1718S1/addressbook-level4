@@ -35,7 +35,7 @@ public class ChooseCommand extends Command {
     @Override
     public CommandResult execute() throws CommandException {
 
-        if (Selection.getSelectionStatus() == false) {
+        if (Selection.getSelectionStatus() == false && !targetDisplay.equals("meeting")) {
             throw new CommandException(Messages.MESSAGE_PERSON_NOT_SELECTED);
         }
 

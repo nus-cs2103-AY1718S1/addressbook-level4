@@ -172,9 +172,9 @@ Examples:
 * `list` +
 `delete 2` +
 Deletes the 2nd person in the address book.
-* `find Betsy` +
+* `serach Betsy` +
 `delete 1` +
-Deletes the 1st person in the results of the `find` command.
+Deletes the 1st person in the results of the `serach` command.
 
 === Deleting tags : `deleteTag`
 `From V1.3`
@@ -211,9 +211,9 @@ Examples:
 * `list` +
 `select 2` +
 Selects the 2nd person in the address book.
-* `find Betsy` +
+* `serach Betsy` +
 `select 1` +
-Selects the 1st person in the results of the `find` command.
+Selects the 1st person in the results of the `serach` command.
 
 === Listing entered commands : `history`
 
@@ -436,9 +436,6 @@ Can also use shortcut 'dt'
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com` +
 Can also use shortcut 'e'
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake` +
-Can also use shortcut 'f'
 * *List By Most Searched* : `ListByMostSearched` +
 Can also use shortcut 'lms'
 * *List* : `list` +

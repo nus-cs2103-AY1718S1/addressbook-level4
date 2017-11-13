@@ -22,6 +22,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyMeeting;
 import seedu.address.model.ReadOnlyMeetingList;
+import seedu.address.model.UniqueMeetingList;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.exceptions.DuplicateMeetingException;
 import seedu.address.model.exceptions.IllegalIdException;
@@ -108,7 +109,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public void resetData(ReadOnlyAddressBook newData) {
+        public void resetData(ReadOnlyAddressBook newData, ReadOnlyMeetingList newMeetingList) {
             fail("This method should not be called.");
         }
 
@@ -202,6 +203,9 @@ public class AddCommandTest {
         public ReadOnlyAddressBook getAddressBook() {
             return new AddressBook();
         }
+        public ReadOnlyMeetingList getMeetingList() {
+            return new UniqueMeetingList();
+        }
     }
 
     /**
@@ -218,6 +222,10 @@ public class AddCommandTest {
         @Override
         public ReadOnlyAddressBook getAddressBook() {
             return new AddressBook();
+        }
+        @Override
+        public ReadOnlyMeetingList getMeetingList() {
+            return new UniqueMeetingList();
         }
     }
 
