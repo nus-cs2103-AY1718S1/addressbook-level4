@@ -388,16 +388,87 @@ The sorting mechanism is facilitated by `SortCommand`, which extends `UndoableCo
 It supports the sorting of persons in the address book by the `PREFIX` specified.
 If the `r` flag is specified, the list of persons will be sorted in descending order.
 
-The sorting of persons occur in `UniquePersonList`, where a call to `Collections.sort` is
-made with the respective comparator and a `isReverse` boolean flag as parameters.
+`SortCommand` would return a `Comparator` depending on the `PREFIX` specified through this code snippet:
+[source,java]
+----
+private Comparator<ReadOnlyPerson> getSortComparator(String field) {
+        return (o1, o2) -> {
+            /** Person(s) marked as 'Favourite' will always remain at the top of the list **/
+            if (o1.getFavourite().getStatus()) {
+                if (isReverseOrder) {
+                    /** Ensure 'Favourite' persons is always greater than when sorted in descending order**/
+                    return 1;
+                } else {
+                    /** Ensure 'Favourite' persons is always smaller than when sorted in ascending order**/
+                    return -1;
+                }
+            }
 
-The sequence diagram below details the flow the execution of a `sort n/r` command.
+            switch (field) {
+            case PREFIX_NAME_FIELD:
+                this.sortBy = "name";
+                return o1.getName().toString()
+                        .compareToIgnoreCase(o2.getName().toString()
+                        );
 
-image::SortSequenceDiagram.png[width="800"]
+            case PREFIX_PHONE_FIELD:
+                this.sortBy = "phone";
+                return o1.getPhone().toString()
+                        .compareToIgnoreCase(o2.getPhone().toString()
+                        );
+
+            case PREFIX_EMAIL_FIELD:
+                this.sortBy = "email";
+                return o1.getEmail().toString()
+                        .compareToIgnoreCase(o2.getEmail().toString()
+                        );
+
+            case PREFIX_ADDRESS_FIELD:
+                this.sortBy = "address";
+                return o1.getAddress().toString()
+                        .compareToIgnoreCase(o2.getAddress().toString()
+                        );
+
+            default:
+                this.sortBy = "name";
+                return o1.getName().toString()
+                        .compareToIgnoreCase(o2.getName().toString()
+                        );
+            }
+        };
+
+    }
+----
+A person marked as *'Favourite'* will always be given priority during sorting to ensure consistency of the `Favourite` feature as
+*'Favourite'* persons should always stay at the top of the contact list to locate them easily.
+Thereafter, the sorting of persons occur in `UniquePersonList`, where a call to `Collections.sort` is
+made with the respective comparator and an `isReverse` boolean flag as parameters.
+
+The sort feature is implemented in `UniquePersonList` in this manner:
+[source,java]
+----
+public void sort(Comparator sortComparator, Boolean isReverseOrder) throws NoPersonsException {
+        requireNonNull(sortComparator);
+        requireNonNull(isReverseOrder);
+
+        if (internalList.size() < 1) {
+            throw new NoPersonsException();
+        }
+
+        Collections.sort(internalList, sortComparator);
+
+        if (isReverseOrder) {
+            Collections.reverse(internalList);
+        }
+    }
+----
+
+The following sequence diagram shows the flow of program execution when a `SortCommand` is executed by the user:
+image::SortPersonSdForLogic.png[width="800"]
 
 The execution of `sort` results in the reordering of the in-memory `UniquePersonList`.
-However, the change is transient and the order of the list will return to its
-original starting order as when the App initializes.
+The change is transient and the order of the list will return to its
+original starting order as when the application starts up.
 
 ==== Design Considerations
 
@@ -421,6 +492,16 @@ any future changes to these classes may be more contrived and difficult.
 **Alternative 2:** Save address book after every sort +
 **Pros:** Sorting order is preserved after program exits. +
 **Cons:** The original order of the address book is lost during every sort.
+
+---
+
+**Aspect:** Sorting `Favourite` Person(s) +
+**Alternative 1 (current choice):** `Favourite` person(s) are not subjected to sorting. +
+**Pros:** Presents a coherent and uniform `Favourite` feature as `Favourite` person(s) should always be found at the top of the list. +
+**Cons:** A user is unable to sort every person according to the `PREFIX` specified. +
+**Alternative 2:** `Favourite` person(s) are subjected to sorting. +
+**Pros:** A user is able to sort every person according to the `PREFIX` specified, regardless of the `Favourite` status. +
+**Cons:** `Favourite` person(s) will not remain at the top of the list after a user sorts the address book.
 // end::sort[]
 
 === Finding
