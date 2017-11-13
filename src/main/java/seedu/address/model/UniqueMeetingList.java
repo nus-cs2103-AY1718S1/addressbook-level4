@@ -15,8 +15,7 @@ import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.exceptions.DuplicateMeetingException;
 //@@author liuhang0213
 /**
- * A list of meetings that enforces no nulls and uniqueness between its elements.
- *
+ * A list of meetings that enforces no nulls and uniqueness between its elements. *
  * Supports minimal set of list operations for the app's features.
  *
  * @see Meeting#equals(Object)
@@ -65,6 +64,7 @@ public class UniqueMeetingList implements Iterable<ReadOnlyMeeting>, ReadOnlyMee
 
     /**
      * Replaces the Meetings in this list with those in the argument meeting list.
+     *
      * @param meetings
      */
     public void setMeetings(ObservableList<ReadOnlyMeeting> meetings) {

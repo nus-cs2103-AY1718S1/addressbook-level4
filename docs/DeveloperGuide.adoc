@@ -357,8 +357,6 @@ The mechanism and data structure of meetings are similar to that of the address 
 `data/meetinglist.xml` by default. For each meeting, the date, time location and participants are recorded. The participants
 must be from the address book.
 
-[NOTE]
-The meeting functionality is not fully implemented yet. There is currently no command to add or edit meetings.
 
 ===== Design Considerations
 

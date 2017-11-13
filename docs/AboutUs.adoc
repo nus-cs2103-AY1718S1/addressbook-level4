@@ -38,20 +38,20 @@ image::liuhang0213.jpg[width="150", align="left"]
 {empty}[http://github.com/liuhang0213[github]] [<<liuhang#, portfolio>>]
 
 Role: Developer + Functionality check +
-Responsibilities: Storage
+Responsibilities:
 
 a) Technical :
 
-**Implemented display photo for application
-**Created DisplayNextMeeting method
-**Added storage for user preferences, meetings and back-up functionality
-**Implemented UserPreferences management
-**Ensure storage methods conform to style regulations
+** Implemented profile photos
+** Implemented storage & model for meetings and created command to display next meeting
+** Added storage for user preferences, meetings and back-up functionality
+** Implemented user preferences management
+** Ensure storage methods conform to style regulations
 
 b) Project Management :
 
-**Ensure all the Pull Requests are merged properly
-**Update and maintain issue tracker weekly
+** Ensure all the Pull Requests are merged properly
+** Update and maintain issue tracker weekly
 
 '''
 

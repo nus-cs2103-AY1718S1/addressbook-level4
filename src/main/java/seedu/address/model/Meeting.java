@@ -54,30 +54,52 @@ public class Meeting implements ReadOnlyMeeting {
     }
 
     // Get methods
+
+    /**
+     * Returns the formatted date for the meeting
+     */
     public String getDate() {
         return dateTime.format(DATE_FORMATTER);
     }
 
+    /**
+     * Returns the formatted time for the meeting
+     */
     public String getTime() {
         return dateTime.format(TIME_FORMATTER);
     }
 
+    /**
+     * Returns the unformatted datetime String for the meeting
+     */
     public String getDateTimeStr() {
         return dateTime.toString();
     }
 
+    /**
+     * Returns the dateTime object for the meeting
+     */
     public LocalDateTime getDateTime() {
         return dateTime;
     }
 
+    /**
+     * Returns the location for the meeting
+     */
     public String getLocation() {
         return location;
     }
 
+    /**
+     * Returns the notes for the meeting
+     */
     public String getNotes() {
         return notes;
     }
 
+    /**
+     * Returns the list of internal id of meeting participants
+     */
     public ArrayList<InternalId> getListOfPersonsId() {
         return listOfPersonsId;
     }
@@ -98,7 +120,7 @@ public class Meeting implements ReadOnlyMeeting {
     }
 
     /**
-     * Format state as text for viewing.
+     * Returns the state of the Meeting as string for viewing.
      */
     public String toString() {
         return "Date: " + dateTime.format(DATE_FORMATTER) + "  Time: " + dateTime.format(TIME_FORMATTER) + '\n'
