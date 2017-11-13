@@ -491,6 +491,7 @@ public class FavoriteCommandSystemTest extends AddressBookSystemTest {
 ``` java
 package seedu.address.ui;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
@@ -524,11 +525,27 @@ public class IconImageTest {
 
     @Test
     public void testImage() {
-        assertTrue(heart.equals(image.getHeart()));
-        assertTrue(heartOutline.equals(image.getHeartOutline()));
-        assertTrue(fbicon.equals(image.getFbicon()));
-        assertTrue(circlePerson.equals(image.getCirclePerson()));
-        assertTrue(circleGroup.equals(image.getCircleGroup()));
+        assertImageEqual(heart, image.getHeart());
+        assertImageEqual(heartOutline, image.getHeartOutline());
+        assertImageEqual(fbicon, image.getFbicon());
+        assertImageEqual(circlePerson, image.getCirclePerson());
+        assertImageEqual(circleGroup, image.getCircleGroup());
+    }
+
+    /**
+     * Test the equality of 2 images
+     * @param image1 first image
+     * @param image2 second image
+     */
+    private void assertImageEqual(Image image1, Image image2) {
+        double epsilon = 0.001;
+        assertEquals(image1.getHeight(), image2.getHeight(), epsilon);
+        assertEquals(image1.getWidth(), image2.getWidth(), epsilon);
+        for (int i = 0; i < image1.getWidth(); i++) {
+            for (int j = 0; j < image1.getHeight(); j++) {
+                assertTrue(image1.getPixelReader().getColor(i, j).equals(image2.getPixelReader().getColor(i, j)));
+            }
+        }
     }
 }
 ```
@@ -551,22 +568,23 @@ public class IconImageTest {
 
         // associated facebook page of a person
         postNow(facebookOpenEventStub);
-        expectedPersonUrl = new URL(FACEBOOK_PREFIX + dummy.getFacebook().value);
+        expectedPersonUrl = new URL(FACEBOOK_PREFIX + StringUtil.partiallyEncode(dummy.getFacebook().value));
 
         waitUntilBrowserLoaded(browserPanelHandle);
         assertEquals(expectedPersonUrl, browserPanelHandle.getLoadedUrl());
 
         // search name of a person
         postNow(searchNameEvent);
-        expectedPersonUrl = new URL(GOOGLE_URL_PREFIX + dummy.getName().fullName + GOOGLE_URL_SUFFIX);
+        expectedPersonUrl = new URL(GOOGLE_URL_PREFIX
+                + StringUtil.partiallyEncode(dummy.getName().fullName + GOOGLE_URL_SUFFIX));
 
         waitUntilBrowserLoaded(browserPanelHandle);
         assertEquals(expectedPersonUrl, browserPanelHandle.getLoadedUrl());
 
         // search major of a person
         postNow(searchMajorEvent);
-        expectedPersonUrl = new URL(GOOGLE_URL_PREFIX
-                + "NUS " + dummy.getMajor().value + GOOGLE_URL_SUFFIX);
+        expectedPersonUrl = new URL(StringUtil.partiallyEncode(GOOGLE_URL_PREFIX
+                + "NUS " + dummy.getMajor().value + GOOGLE_URL_SUFFIX));
 
         waitUntilBrowserLoaded(browserPanelHandle);
         assertEquals(expectedPersonUrl, browserPanelHandle.getLoadedUrl());

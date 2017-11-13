@@ -40,6 +40,37 @@ include::../DeveloperGuide.adoc[tag=listalp]
 
 ---
 
+=== Enhancement Added: Locate
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=locate]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+For a user who likes to visit his friends, navigation function is a crucial part of the address book his is using.
+With the locate command, the user can easily find out the route from any location to the location of any of his
+friends or relatives.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=locate]
+
+#End of Extract#
+
+---
+
+
 === Enhancement Proposed: Link to useful websites such as IVLE or nusmods
 
 By linking to these websites, the user can view his schedule more easily and to
@@ -50,5 +81,4 @@ plan their activities conveniently with reference to information shown on the we
 * Implement delete tag command.
 * Improve find command to list favorite / unfavorite contacts.
 * Implement sort command.
-* Implement locate command.
 * Include google map direction url prefix and suffix for direction search

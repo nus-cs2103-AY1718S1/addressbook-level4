@@ -22,7 +22,7 @@ public class LocateCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds the route from the given address to  "
             + "the address of the specified contact .\n"
             + "Parameters: index address\n"
-            + "Example: " + COMMAND_WORD + "1 " + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25";
+            + "Example: " + COMMAND_WORD + " 1 " + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25";
     public static final String MESSAGE_SUCCESS = "Located person %1$s";
 
     private final Index index;

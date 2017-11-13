@@ -7,6 +7,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_EXECUTION_FAILURE;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.DeleteGroupCommand.MESSAGE_DELETE_GROUP_SUCCESS;
+import static seedu.address.logic.commands.DeleteGroupCommand.MESSAGE_INDEXOUTOFBOUND_GROUP;
 import static seedu.address.logic.commands.DeleteGroupCommand.MESSAGE_NONEXISTENT_GROUP;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
@@ -15,6 +16,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
@@ -39,15 +41,30 @@ public class DeleteGroupCommandTest {
         deleteGroupCommand = new DeleteGroupCommand(grpName, false);
         deleteGroupCommand.setData(model, new CommandHistory(), new UndoRedoStack());
     }
+
+    private void prepareCommand(Index idx) {
+        deleteGroupCommand = new DeleteGroupCommand(idx, true);
+        deleteGroupCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+    }
+
     @Test
     public void execute_grpNameExist_success() {
         TypicalGroups typicalGroups = new TypicalGroups();
         List<Group> testGrps = typicalGroups.getTypicalGroups();
-        expectedModel.deleteGroup(testGrps.get(0));
+        expectedModel.deleteGroup(testGrps.get(2));
 
         prepareCommand("TestGrp3");
         assertCommandSuccess(deleteGroupCommand, model,
                 String.format(MESSAGE_DELETE_GROUP_SUCCESS, "TestGrp3"), expectedModel);
+    }
+
+    @Test
+    public void execute_grpIndexValid_success() {
+        Index testIdx = Index.fromOneBased(4);
+        expectedModel.deleteGroup(new TypicalGroups().getTypicalGroups().get(testIdx.getZeroBased()));
+        prepareCommand(testIdx);
+        assertCommandSuccess(deleteGroupCommand, model, String.format(MESSAGE_DELETE_GROUP_SUCCESS, "TestGrp4"),
+                expectedModel);
     }
 
     @Test
@@ -59,6 +76,16 @@ public class DeleteGroupCommandTest {
 
         expectedFailureMessage = MESSAGE_EXECUTION_FAILURE + String.format(MESSAGE_NONEXISTENT_GROUP, "12Wot");
         prepareCommand("12Wot");
+        assertCommandFailure(deleteGroupCommand, model, expectedFailureMessage);
+    }
+
+    @Test
+    public void execute_grpIndexInvalid_failure() {
+        String expectedFailureMessage = MESSAGE_EXECUTION_FAILURE + MESSAGE_INDEXOUTOFBOUND_GROUP;
+        prepareCommand(Index.fromOneBased(10));
+        assertCommandFailure(deleteGroupCommand, model, expectedFailureMessage);
+
+        prepareCommand(Index.fromOneBased(5));
         assertCommandFailure(deleteGroupCommand, model, expectedFailureMessage);
     }
 

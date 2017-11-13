@@ -43,7 +43,7 @@ public class GroupingCommandTest {
         testIndexes.add(Index.fromOneBased(1));
         testIndexes.add(Index.fromOneBased(3));
 
-        GroupingCommand testCommand = prepareCommand("testGrp1", testIndexes);
+        GroupingCommand testCommand = prepareCommand("TestGrp1", testIndexes);
 
         String expectedMessage = MESSAGE_EXECUTION_FAILURE + GroupingCommand.MESSAGE_DUPLICATE_GROUP_NAME;
 

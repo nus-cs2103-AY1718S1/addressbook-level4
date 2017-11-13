@@ -301,13 +301,14 @@ import static seedu.address.commons.core.Messages.MESSAGE_EXECUTION_FAILURE;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_GROUP_DISPLAYED_INDEX;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.logic.commands.EditGroupCommand.MESSAGE_ADD_PERSON_SUCCESS;
 import static seedu.address.logic.commands.EditGroupCommand.MESSAGE_CHANGE_NAME_SUCCESS;
+import static seedu.address.logic.commands.EditGroupCommand.MESSAGE_DELETE_PERSON_SUCCESS;
 import static seedu.address.logic.commands.EditGroupCommand.MESSAGE_DUPLICATE_PERSON;
 import static seedu.address.logic.commands.EditGroupCommand.MESSAGE_GROUP_NONEXISTENT;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.List;
-import java.util.function.Predicate;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -322,6 +323,8 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.group.DuplicateGroupException;
 import seedu.address.model.group.Group;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.testutil.TypicalGroups;
 import seedu.address.testutil.TypicalPersons;
 
@@ -331,7 +334,6 @@ public class EditGroupCommandTest {
     private Model expectedModel;
     private EditGroupCommand editGrpCmd;
     private List<ReadOnlyPerson> typicalPersons = TypicalPersons.getTypicalPersons();
-    private Predicate predicate;
 
     @Before
     public void setUp() {
@@ -361,8 +363,8 @@ public class EditGroupCommandTest {
         expectedModel.setGrpName(testGroup, "validName");
 
         // by group name
-        prepareCommand("TestGrp3", null, "gn", "validName", false);
-        assertCommandSuccess(editGrpCmd, model, String.format(MESSAGE_CHANGE_NAME_SUCCESS, "TestGrp3", "validName"),
+        prepareCommand("TestGrp1", null, "gn", "validName", false);
+        assertCommandSuccess(editGrpCmd, model, String.format(MESSAGE_CHANGE_NAME_SUCCESS, "TestGrp1", "validName"),
                 expectedModel);
     }
 
@@ -375,11 +377,11 @@ public class EditGroupCommandTest {
 
         // by index
         prepareCommand(null, Index.fromOneBased(1), "gn", "validName", true);
-        assertCommandSuccess(editGrpCmd, model, String.format(MESSAGE_CHANGE_NAME_SUCCESS, "TestGrp3", "validName"),
+        assertCommandSuccess(editGrpCmd, model, String.format(MESSAGE_CHANGE_NAME_SUCCESS, "TestGrp1", "validName"),
                 expectedModel);
     }
 
-    /*
+
     @Test
     public void execute_addDeletePerson_success() throws DuplicatePersonException, PersonNotFoundException {
 
@@ -389,8 +391,6 @@ public class EditGroupCommandTest {
         Group testGroup = testGrps.get(0);
         ReadOnlyPerson person = typicalPersons.get(4);
         expectedModel.addPersonToGroup(testGroup, person);
-        predicate = new GroupContainsPersonPredicate(testGroup);
-        expectedModel.updateFilteredPersonList(predicate);
 
         prepareCommand("TestGrp3", null, "add", Index.fromOneBased(5), false);
         assertCommandSuccess(editGrpCmd, model, String.format(MESSAGE_ADD_PERSON_SUCCESS, "TestGrp3",
@@ -399,8 +399,6 @@ public class EditGroupCommandTest {
 
         // deleting the person that was added
         expectedModel.removePersonFromGroup(testGroup, person);
-        predicate = new GroupContainsPersonPredicate(testGroup);
-        expectedModel.updateFilteredPersonList(predicate);
         prepareCommand("TestGrp3", null, "delete", Index.fromOneBased(4), false);
         assertCommandSuccess(editGrpCmd, model, String.format(MESSAGE_DELETE_PERSON_SUCCESS, "TestGrp3",
                 person.toString()),
@@ -409,24 +407,20 @@ public class EditGroupCommandTest {
 
         // by index
         expectedModel.addPersonToGroup(testGroup, person);
-        predicate = new GroupContainsPersonPredicate(testGroup);
-        expectedModel.updateFilteredPersonList(predicate);
 
-        prepareCommand(null, Index.fromOneBased(1), "add", Index.fromOneBased(5), true);
-        assertCommandSuccess(editGrpCmd, model, String.format(MESSAGE_ADD_PERSON_SUCCESS, "TestGrp3",
+        prepareCommand(null, Index.fromOneBased(2), "add", Index.fromOneBased(5), true);
+        assertCommandSuccess(editGrpCmd, model, String.format(MESSAGE_ADD_PERSON_SUCCESS, "TestGrp2",
                 person.toString()),
                 expectedModel);
 
         // deleting the person that was added
         expectedModel.removePersonFromGroup(testGroup, person);
-        predicate = new GroupContainsPersonPredicate(testGroup);
-        expectedModel.updateFilteredPersonList(predicate);
-        prepareCommand(null, Index.fromOneBased(1), "delete", Index.fromOneBased(4), true);
-        assertCommandSuccess(editGrpCmd, model, String.format(MESSAGE_DELETE_PERSON_SUCCESS, "TestGrp3",
+        prepareCommand(null, Index.fromOneBased(2), "delete", Index.fromOneBased(3), true);
+        assertCommandSuccess(editGrpCmd, model, String.format(MESSAGE_DELETE_PERSON_SUCCESS, "TestGrp2",
                 person.toString()),
                 expectedModel);
     }
-    */
+
 
     @Test
     public void execute_groupNonExistent_failure() {
@@ -451,7 +445,7 @@ public class EditGroupCommandTest {
         assertCommandFailure(editGrpCmd, model,
                 MESSAGE_EXECUTION_FAILURE + Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
 
-        prepareCommand("testGrp1", null, "delete", Index.fromOneBased(20), false);
+        prepareCommand("TestGrp1", null, "delete", Index.fromOneBased(20), false);
         assertCommandFailure(editGrpCmd, model,
                 MESSAGE_EXECUTION_FAILURE + Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
 
@@ -655,6 +649,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_EXECUTION_FAILURE;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.DeleteGroupCommand.MESSAGE_DELETE_GROUP_SUCCESS;
+import static seedu.address.logic.commands.DeleteGroupCommand.MESSAGE_INDEXOUTOFBOUND_GROUP;
 import static seedu.address.logic.commands.DeleteGroupCommand.MESSAGE_NONEXISTENT_GROUP;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
@@ -663,6 +658,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
@@ -687,15 +683,30 @@ public class DeleteGroupCommandTest {
         deleteGroupCommand = new DeleteGroupCommand(grpName, false);
         deleteGroupCommand.setData(model, new CommandHistory(), new UndoRedoStack());
     }
+
+    private void prepareCommand(Index idx) {
+        deleteGroupCommand = new DeleteGroupCommand(idx, true);
+        deleteGroupCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+    }
+
     @Test
     public void execute_grpNameExist_success() {
         TypicalGroups typicalGroups = new TypicalGroups();
         List<Group> testGrps = typicalGroups.getTypicalGroups();
-        expectedModel.deleteGroup(testGrps.get(0));
+        expectedModel.deleteGroup(testGrps.get(2));
 
         prepareCommand("TestGrp3");
         assertCommandSuccess(deleteGroupCommand, model,
                 String.format(MESSAGE_DELETE_GROUP_SUCCESS, "TestGrp3"), expectedModel);
+    }
+
+    @Test
+    public void execute_grpIndexValid_success() {
+        Index testIdx = Index.fromOneBased(4);
+        expectedModel.deleteGroup(new TypicalGroups().getTypicalGroups().get(testIdx.getZeroBased()));
+        prepareCommand(testIdx);
+        assertCommandSuccess(deleteGroupCommand, model, String.format(MESSAGE_DELETE_GROUP_SUCCESS, "TestGrp4"),
+                expectedModel);
     }
 
     @Test
@@ -707,6 +718,16 @@ public class DeleteGroupCommandTest {
 
         expectedFailureMessage = MESSAGE_EXECUTION_FAILURE + String.format(MESSAGE_NONEXISTENT_GROUP, "12Wot");
         prepareCommand("12Wot");
+        assertCommandFailure(deleteGroupCommand, model, expectedFailureMessage);
+    }
+
+    @Test
+    public void execute_grpIndexInvalid_failure() {
+        String expectedFailureMessage = MESSAGE_EXECUTION_FAILURE + MESSAGE_INDEXOUTOFBOUND_GROUP;
+        prepareCommand(Index.fromOneBased(10));
+        assertCommandFailure(deleteGroupCommand, model, expectedFailureMessage);
+
+        prepareCommand(Index.fromOneBased(5));
         assertCommandFailure(deleteGroupCommand, model, expectedFailureMessage);
     }
 
@@ -779,7 +800,7 @@ public class GroupingCommandTest {
         testIndexes.add(Index.fromOneBased(1));
         testIndexes.add(Index.fromOneBased(3));
 
-        GroupingCommand testCommand = prepareCommand("testGrp1", testIndexes);
+        GroupingCommand testCommand = prepareCommand("TestGrp1", testIndexes);
 
         String expectedMessage = MESSAGE_EXECUTION_FAILURE + GroupingCommand.MESSAGE_DUPLICATE_GROUP_NAME;
 
@@ -873,6 +894,8 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_EXECUTION_FAILURE;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.logic.commands.ViewGroupCommand.MESSAGE_GROUPING_PERSON_SUCCESS;
 import static seedu.address.logic.commands.ViewGroupCommand.MESSAGE_GROUP_NONEXISTENT;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
@@ -886,6 +909,8 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.group.Group;
+import seedu.address.testutil.TypicalGroups;
 
 public class ViewGroupCommandTest {
 
@@ -912,36 +937,31 @@ public class ViewGroupCommandTest {
         return viewGrpCmd;
     }
 
-    /*
+
     @Test
     public void execute_grpNameGrpExist_success() {
-        // preparing expectedModel
         TypicalGroups typicalGroups = new TypicalGroups();
-        Group testGroup = typicalGroups.getTestGroup3();
-        Predicate predicate = new GroupContainsPersonPredicate(testGroup);
-        expectedModel.updateFilteredPersonList(predicate);
+        Group testGroup = typicalGroups.getTypicalGroups().get(2);
 
         ViewGroupCommand viewGroupCommand = prepareCommand("TestGrp3", null);
         String expectedMessage = String.format(MESSAGE_GROUPING_PERSON_SUCCESS,
                 testGroup.getPersonList().size(), testGroup.getGrpName());
         assertCommandSuccess(viewGroupCommand, model, expectedMessage, expectedModel);
     }
-    */
 
-    /*
+
+
     @Test
     public void execute_grpIndexGrpExist_success() {
         TypicalGroups typicalGroups = new TypicalGroups();
-        Group testGroup = typicalGroups.getTestGroup3();
-        Predicate predicate = new GroupContainsPersonPredicate(testGroup);
-        expectedModel.updateFilteredPersonList(predicate);
+        Group testGroup = typicalGroups.getTypicalGroups().get(2);
 
-        ViewGroupCommand viewGroupCommand = prepareCommand(null, Index.fromOneBased(1));
+        ViewGroupCommand viewGroupCommand = prepareCommand(null, Index.fromOneBased(3));
         String expectedMessage = String.format(MESSAGE_GROUPING_PERSON_SUCCESS,
                 testGroup.getPersonList().size(), testGroup.getGrpName());
         assertCommandSuccess(viewGroupCommand, model, expectedMessage, expectedModel);
     }
-    */
+
 
     @Test
     public void execute_grpNonExistent_failure() {
@@ -1075,12 +1095,29 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
  * to create typical groups
  */
 public class TypicalGroups {
-
+    private Group testGroup1;
+    private Group testGroup2;
     private Group testGroup3;
-
     private Group testGroup4;
 
     public TypicalGroups() {
+        testGroup1 = new Group("TestGrp1");
+        try {
+            testGroup1.add(TypicalPersons.HOON);
+            testGroup1.add(TypicalPersons.IDA);
+        } catch (DuplicatePersonException e) {
+            assert false : "not possible";
+        }
+
+        testGroup2 = new Group("TestGrp2");
+        try {
+            testGroup2.add(TypicalPersons.HOON);
+            testGroup2.add(TypicalPersons.ALICE);
+            testGroup2.add(TypicalPersons.AMY);
+        } catch (DuplicatePersonException e) {
+            assert false : "not possible";
+        }
+
         testGroup3 = new Group("TestGrp3");
         try {
             testGroup3.add(TypicalPersons.ALICE);
@@ -1098,18 +1135,212 @@ public class TypicalGroups {
         } catch (DuplicatePersonException e) {
             assert false : "not possible";
         }
-    }
 
-    public Group getTestGroup3() {
-        return testGroup3;
-    }
-
-    public Group getTestGroup4() {
-        return testGroup4;
     }
 
     public List<Group> getTypicalGroups() {
-        return new ArrayList<>(Arrays.asList(testGroup3, testGroup4));
+        return new ArrayList<>(Arrays.asList(testGroup1, testGroup2, testGroup3, testGroup4));
     }
+}
+```
+###### /java/guitests/guihandles/GroupListPanelHandle.java
+``` java
+package guitests.guihandles;
+
+import java.util.List;
+import java.util.Optional;
+
+import javafx.scene.control.ListView;
+import seedu.address.model.group.Group;
+import seedu.address.ui.GroupCard;
+
+/**
+ * Provides a handle for {@code GroupListPanel} containing the list of {@code GroupCard}.
+ */
+public class GroupListPanelHandle extends  NodeHandle<ListView<GroupCard>> {
+    public static final String GROUP_LIST_VIEW_ID = "#groupListView";
+
+    private Optional<GroupCard> lastRememberedSelectedGroupCard;
+
+    public GroupListPanelHandle(ListView<GroupCard> groupListPanelNode) {
+        super(groupListPanelNode);
+    }
+
+    /**
+     * Returns a handle to the selected {@code GroupCardHandle}.
+     * A maximum of 1 item can be selected at any time.
+     * @throws AssertionError if no card is selected, or more than 1 card is selected.
+     */
+    public GroupCardHandle getHandleToSelectedCard() {
+        List<GroupCard> groupList = getRootNode().getSelectionModel().getSelectedItems();
+
+        if (groupList.size() != 1) {
+            throw new AssertionError("Group list size expected 1.");
+        }
+
+        return new GroupCardHandle(groupList.get(0).getRoot());
+    }
+
+    /**
+     * Returns the index of the selected card.
+     */
+    public int getSelectedCardIndex() {
+        return getRootNode().getSelectionModel().getSelectedIndex();
+    }
+
+    /**
+     * Returns true if a card is currently selected.
+     */
+    public boolean isAnyCardSelected() {
+        List<GroupCard> selectedCardsList = getRootNode().getSelectionModel().getSelectedItems();
+
+        if (selectedCardsList.size() > 1) {
+            throw new AssertionError("Card list size expected 0 or 1.");
+        }
+
+        return !selectedCardsList.isEmpty();
+    }
+
+    /**
+     * Navigates the listview to display and select the group.
+     */
+    public void navigateToCard(Group group) {
+        List<GroupCard> cards = getRootNode().getItems();
+        Optional<GroupCard> matchingCard = cards.stream().filter(card -> card.group.equals(group)).findFirst();
+
+        if (!matchingCard.isPresent()) {
+            throw new IllegalArgumentException("Group does not exist.");
+        }
+
+        guiRobot.interact(() -> {
+            getRootNode().scrollTo(matchingCard.get());
+            getRootNode().getSelectionModel().select(matchingCard.get());
+        });
+        guiRobot.pauseForHuman();
+    }
+
+    /**
+     * Returns the group card handle of a group associated with the {@code index} in the list.
+     */
+    public GroupCardHandle getGroupCardHandle(int index) {
+        return getGroupCardHandle(getRootNode().getItems().get(index).group);
+    }
+
+    /**
+     * Returns the {@code GroupCardHandle} of the specified {@code group} in the list.
+     */
+    public GroupCardHandle getGroupCardHandle(Group group) {
+        Optional<GroupCardHandle> handle = getRootNode().getItems().stream()
+                .filter(card -> card.group.equals(group))
+                .map(card -> new GroupCardHandle(card.getRoot()))
+                .findFirst();
+        return handle.orElseThrow(() -> new IllegalArgumentException("Group does not exist."));
+    }
+
+    /**
+     * Selects the {@code GroupCard} at {@code index} in the list.
+     */
+    public void select(int index) {
+        getRootNode().getSelectionModel().select(index);
+    }
+
+    /**
+     * Remembers the selected {@code GroupCard} in the list.
+     */
+    public void rememberSelectedGroupCard() {
+        List<GroupCard> selectedItems = getRootNode().getSelectionModel().getSelectedItems();
+
+        if (selectedItems.size() == 0) {
+            lastRememberedSelectedGroupCard = Optional.empty();
+        } else {
+            lastRememberedSelectedGroupCard = Optional.of(selectedItems.get(0));
+        }
+    }
+
+    /**
+     * Returns true if the selected {@code GroupCard} is different from the value remembered by the most recent
+     * {@code rememberSelectedGroupCard()} call.
+     */
+    public boolean isSelectedGroupCardChanged() {
+        List<GroupCard> selectedItems = getRootNode().getSelectionModel().getSelectedItems();
+
+        if (selectedItems.size() == 0) {
+            return lastRememberedSelectedGroupCard.isPresent();
+        } else {
+            return !lastRememberedSelectedGroupCard.isPresent()
+                    || !lastRememberedSelectedGroupCard.get().equals(selectedItems.get(0));
+        }
+    }
+
+    /**
+     * Returns the size of the list.
+     */
+    public int getListSize() {
+        return getRootNode().getItems().size();
+    }
+}
+
+```
+###### /java/guitests/guihandles/GroupCardHandle.java
+``` java
+package guitests.guihandles;
+
+import javafx.scene.Node;
+import javafx.scene.control.Label;
+
+/**
+ * Provides a handle to a group card in the group list panel.
+ */
+public class GroupCardHandle extends  NodeHandle<Node> {
+    private static final String ID_FIELD_ID = "#id";
+    private static final String GROUPNAME_FIELD_ID = "#grpName";
+    private static final String FIRSTP_FIELD_ID = "#firstGroup";
+    private static final String SECONDP_FIELD_ID = "#secondGroup";
+    private static final String THIRDP_FIELD_ID = "#thirdGroup";
+    private static final String ELLIPSIS_FIELD_ID = "#ellipsis";
+
+    private final Label idLabel;
+    private final Label grpNameLabel;
+    private final Label firstPLabel;
+    private final Label secondPLabel;
+    private final Label thirdPLabel;
+    private final Label ellipsisLabel;
+
+    public GroupCardHandle(Node cardNode) {
+        super(cardNode);
+
+        this.idLabel = getChildNode(ID_FIELD_ID);
+        this.grpNameLabel = getChildNode(GROUPNAME_FIELD_ID);
+        this.firstPLabel = getChildNode(FIRSTP_FIELD_ID);
+        this.secondPLabel = getChildNode(SECONDP_FIELD_ID);
+        this.thirdPLabel = getChildNode(THIRDP_FIELD_ID);
+        this.ellipsisLabel = getChildNode(ELLIPSIS_FIELD_ID);
+
+    }
+
+    public String getId() {
+        return idLabel.getText();
+    }
+
+    public String getName() {
+        return grpNameLabel.getText();
+    }
+
+    public String getFirstPerson() {
+        return firstPLabel.getText();
+    }
+
+    public String getSecondPerson() {
+        return secondPLabel.getText();
+    }
+
+    public String getThirdPerson() {
+        return thirdPLabel.getText();
+    }
+
+    public String getEllipsis() {
+        return ellipsisLabel.getText();
+    }
+
 }
 ```

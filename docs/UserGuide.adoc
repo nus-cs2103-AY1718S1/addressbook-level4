@@ -161,6 +161,7 @@ Format: `listalp ALPHABET`
 ****
 // end::listalp[]
 
+// tag::locate[]
 === Finding the route from the specified address to a person in the addressbook: `locate`
 
 Finds the route from the given address to the address of the specified contact. +
@@ -170,6 +171,7 @@ Example:
 
 * `locate 1 a/clementi` +
 Displays the route from `clementi` to the address of the first person in the current list.
+// end::locate[]
 
 // tag::group[]
 === Creating a group: `createGroup`

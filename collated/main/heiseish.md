@@ -180,7 +180,7 @@ public class IconImage {
 ``` java
 
     private void loadFacebookPage(ReadOnlyPerson person) {
-        loadPage(FACEBOOK_PREFIX + person.getFacebook().value);
+        loadPage(FACEBOOK_PREFIX + StringUtil.partiallyEncode(person.getFacebook().value));
     }
 
     /**
@@ -191,7 +191,7 @@ public class IconImage {
     }
 
     public void googleSearch(String url) {
-        loadPage(GOOGLE_URL_PREFIX + url + GOOGLE_URL_SUFFIX);
+        loadPage(GOOGLE_URL_PREFIX + StringUtil.partiallyEncode(url) + GOOGLE_URL_SUFFIX);
     }
 ```
 ###### /java/seedu/address/ui/BrowserPanel.java
@@ -205,13 +205,13 @@ public class IconImage {
     @Subscribe
     private void handleSearchNameEvent(SearchNameEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        googleSearch(event.getName());
+        googleSearch(StringUtil.partiallyEncode(event.getName()));
     }
 
     @Subscribe
     private void handleSearchMajorEvent(SearchMajorEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        googleSearch("NUS " + event.getMajor());
+        googleSearch(StringUtil.partiallyEncode("NUS " + event.getMajor()));
     }
 ```
 ###### /java/seedu/address/ui/GroupCard.java
@@ -950,9 +950,11 @@ public class CommandList {
         commandList.add(HistoryCommand.COMMAND_WORD);
         commandList.add(ListCommand.COMMAND_WORD);
         commandList.add(ListAlphabetCommand.COMMAND_WORD);
+        commandList.add(LocateCommand.COMMAND_WORD);
         commandList.add(RedoCommand.COMMAND_WORD);
         commandList.add(RemarkCommand.COMMAND_WORD);
         commandList.add(SelectCommand.COMMAND_WORD);
+        commandList.add(SortCommand.COMMAND_WORD);
         commandList.add(UndoCommand.COMMAND_WORD);
         commandList.add(GroupingCommand.COMMAND_WORD);
         commandList.add(ListGroupsCommand.COMMAND_WORD);

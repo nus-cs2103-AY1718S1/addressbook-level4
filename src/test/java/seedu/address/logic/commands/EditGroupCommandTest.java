@@ -7,13 +7,14 @@ import static seedu.address.commons.core.Messages.MESSAGE_EXECUTION_FAILURE;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_GROUP_DISPLAYED_INDEX;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.logic.commands.EditGroupCommand.MESSAGE_ADD_PERSON_SUCCESS;
 import static seedu.address.logic.commands.EditGroupCommand.MESSAGE_CHANGE_NAME_SUCCESS;
+import static seedu.address.logic.commands.EditGroupCommand.MESSAGE_DELETE_PERSON_SUCCESS;
 import static seedu.address.logic.commands.EditGroupCommand.MESSAGE_DUPLICATE_PERSON;
 import static seedu.address.logic.commands.EditGroupCommand.MESSAGE_GROUP_NONEXISTENT;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.List;
-import java.util.function.Predicate;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -28,6 +29,8 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.group.DuplicateGroupException;
 import seedu.address.model.group.Group;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.testutil.TypicalGroups;
 import seedu.address.testutil.TypicalPersons;
 
@@ -37,7 +40,6 @@ public class EditGroupCommandTest {
     private Model expectedModel;
     private EditGroupCommand editGrpCmd;
     private List<ReadOnlyPerson> typicalPersons = TypicalPersons.getTypicalPersons();
-    private Predicate predicate;
 
     @Before
     public void setUp() {
@@ -67,8 +69,8 @@ public class EditGroupCommandTest {
         expectedModel.setGrpName(testGroup, "validName");
 
         // by group name
-        prepareCommand("TestGrp3", null, "gn", "validName", false);
-        assertCommandSuccess(editGrpCmd, model, String.format(MESSAGE_CHANGE_NAME_SUCCESS, "TestGrp3", "validName"),
+        prepareCommand("TestGrp1", null, "gn", "validName", false);
+        assertCommandSuccess(editGrpCmd, model, String.format(MESSAGE_CHANGE_NAME_SUCCESS, "TestGrp1", "validName"),
                 expectedModel);
     }
 
@@ -81,11 +83,11 @@ public class EditGroupCommandTest {
 
         // by index
         prepareCommand(null, Index.fromOneBased(1), "gn", "validName", true);
-        assertCommandSuccess(editGrpCmd, model, String.format(MESSAGE_CHANGE_NAME_SUCCESS, "TestGrp3", "validName"),
+        assertCommandSuccess(editGrpCmd, model, String.format(MESSAGE_CHANGE_NAME_SUCCESS, "TestGrp1", "validName"),
                 expectedModel);
     }
 
-    /*
+
     @Test
     public void execute_addDeletePerson_success() throws DuplicatePersonException, PersonNotFoundException {
 
@@ -95,8 +97,6 @@ public class EditGroupCommandTest {
         Group testGroup = testGrps.get(0);
         ReadOnlyPerson person = typicalPersons.get(4);
         expectedModel.addPersonToGroup(testGroup, person);
-        predicate = new GroupContainsPersonPredicate(testGroup);
-        expectedModel.updateFilteredPersonList(predicate);
 
         prepareCommand("TestGrp3", null, "add", Index.fromOneBased(5), false);
         assertCommandSuccess(editGrpCmd, model, String.format(MESSAGE_ADD_PERSON_SUCCESS, "TestGrp3",
@@ -105,8 +105,6 @@ public class EditGroupCommandTest {
 
         // deleting the person that was added
         expectedModel.removePersonFromGroup(testGroup, person);
-        predicate = new GroupContainsPersonPredicate(testGroup);
-        expectedModel.updateFilteredPersonList(predicate);
         prepareCommand("TestGrp3", null, "delete", Index.fromOneBased(4), false);
         assertCommandSuccess(editGrpCmd, model, String.format(MESSAGE_DELETE_PERSON_SUCCESS, "TestGrp3",
                 person.toString()),
@@ -115,24 +113,20 @@ public class EditGroupCommandTest {
 
         // by index
         expectedModel.addPersonToGroup(testGroup, person);
-        predicate = new GroupContainsPersonPredicate(testGroup);
-        expectedModel.updateFilteredPersonList(predicate);
 
-        prepareCommand(null, Index.fromOneBased(1), "add", Index.fromOneBased(5), true);
-        assertCommandSuccess(editGrpCmd, model, String.format(MESSAGE_ADD_PERSON_SUCCESS, "TestGrp3",
+        prepareCommand(null, Index.fromOneBased(2), "add", Index.fromOneBased(5), true);
+        assertCommandSuccess(editGrpCmd, model, String.format(MESSAGE_ADD_PERSON_SUCCESS, "TestGrp2",
                 person.toString()),
                 expectedModel);
 
         // deleting the person that was added
         expectedModel.removePersonFromGroup(testGroup, person);
-        predicate = new GroupContainsPersonPredicate(testGroup);
-        expectedModel.updateFilteredPersonList(predicate);
-        prepareCommand(null, Index.fromOneBased(1), "delete", Index.fromOneBased(4), true);
-        assertCommandSuccess(editGrpCmd, model, String.format(MESSAGE_DELETE_PERSON_SUCCESS, "TestGrp3",
+        prepareCommand(null, Index.fromOneBased(2), "delete", Index.fromOneBased(3), true);
+        assertCommandSuccess(editGrpCmd, model, String.format(MESSAGE_DELETE_PERSON_SUCCESS, "TestGrp2",
                 person.toString()),
                 expectedModel);
     }
-    */
+
 
     @Test
     public void execute_groupNonExistent_failure() {
@@ -157,7 +151,7 @@ public class EditGroupCommandTest {
         assertCommandFailure(editGrpCmd, model,
                 MESSAGE_EXECUTION_FAILURE + Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
 
-        prepareCommand("testGrp1", null, "delete", Index.fromOneBased(20), false);
+        prepareCommand("TestGrp1", null, "delete", Index.fromOneBased(20), false);
         assertCommandFailure(editGrpCmd, model,
                 MESSAGE_EXECUTION_FAILURE + Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
 

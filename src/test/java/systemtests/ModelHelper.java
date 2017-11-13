@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.function.Predicate;
 
 import seedu.address.model.Model;
+import seedu.address.model.group.Group;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -17,10 +18,16 @@ public class ModelHelper {
     /**
      * Updates {@code model}'s filtered list to display only {@code toDisplay}.
      */
-    public static void setFilteredList(Model model, List<ReadOnlyPerson> toDisplay) {
+    public static void setFilteredList(Model model, List<ReadOnlyPerson> pToDisplay) {
         Optional<Predicate<ReadOnlyPerson>> predicate =
-                toDisplay.stream().map(ModelHelper::getPredicateMatching).reduce(Predicate::or);
+                pToDisplay.stream().map(ModelHelper::getPredicateMatching).reduce(Predicate::or);
         model.updateFilteredPersonList(predicate.orElse(PREDICATE_MATCHING_NO_PERSONS));
+        model.updateFilteredGroupList(new Predicate<Group>() {
+            @Override
+            public boolean test(Group people) {
+                return true;
+            }
+        });
     }
 
     /**

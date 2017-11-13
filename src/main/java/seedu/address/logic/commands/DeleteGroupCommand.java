@@ -14,7 +14,7 @@ import seedu.address.model.group.Group;
 /**
  * Deletes a group, depending on the existence of the group
  */
-public class DeleteGroupCommand extends UndoableCommand {
+public class DeleteGroupCommand extends GroupTypeUndoableCommand {
 
     public static final String COMMAND_WORD = "deleteGroup";
 
@@ -93,12 +93,14 @@ public class DeleteGroupCommand extends UndoableCommand {
             for (Group grp : groupList) {
                 if (grp.getGrpName().equals(this.groupName)) {
                     grpToDelete = grp;
+                    undoGroupIndex = Index.fromZeroBased(groupList.indexOf(grp));
                     return true;
                 }
             }
         } else {
             try {
                 grpToDelete = groupList.get(index.getZeroBased());
+                undoGroupIndex = Index.fromZeroBased(index.getZeroBased());
                 groupName = grpToDelete.getGrpName();
                 return true;
             } catch (IndexOutOfBoundsException iobe) {

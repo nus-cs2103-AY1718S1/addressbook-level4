@@ -166,7 +166,7 @@ public class GroupCard extends UiPart<Region> {
 
 
     public GroupCard(Group group, int displayedIndex) {
-        this(group, displayedIndex, null);
+        this(group, displayedIndex, new IconImage());
     }
 
     public GroupCard(Group group, int displayedIndex, IconImage image) {
@@ -252,7 +252,7 @@ public class GroupListPanel extends UiPart<Region> {
     private ListView<GroupCard> groupListView;
 
     public GroupListPanel(ObservableList<Group> groupList) {
-        this(groupList, null);
+        this(groupList, new IconImage());
     }
     public GroupListPanel(ObservableList<Group> groupList, IconImage image) {
         super(FXML);
@@ -285,7 +285,8 @@ public class GroupListPanel extends UiPart<Region> {
     private void scrollTo(int index) {
         Platform.runLater(() -> {
             groupListView.scrollTo(index);
-            groupListView.getSelectionModel().clearAndSelect(index);
+            groupListView.getSelectionModel().clearSelection(index);
+            groupListView.getSelectionModel().select(index);
         });
     }
 
@@ -573,7 +574,7 @@ public class UndoCommandParser implements Parser<UndoCommand> {
 
         if (args.isEmpty()) {
             return new UndoCommand();
-        } else if (args.equals(" all")) {
+        } else if (args.equals("all")) {
             return new UndoCommand(Integer.MAX_VALUE);
         } else {
             try {
@@ -751,6 +752,20 @@ public class ViewGroupCommandParser implements Parser<ViewGroupCommand> {
     }
 }
 ```
+###### /java/seedu/address/logic/commands/GroypTypeUndoableCommand.java
+``` java
+package seedu.address.logic.commands;
+
+import seedu.address.commons.core.index.Index;
+
+/**
+ * abstract class to assist UndoableCommand
+ */
+abstract class GroupTypeUndoableCommand extends UndoableCommand {
+
+    protected Index undoGroupIndex;
+}
+```
 ###### /java/seedu/address/logic/commands/ListGroupsCommand.java
 ``` java
 package seedu.address.logic.commands;
@@ -816,7 +831,7 @@ import seedu.address.model.group.Group;
 /**
  * Deletes a group, depending on the existence of the group
  */
-public class DeleteGroupCommand extends UndoableCommand {
+public class DeleteGroupCommand extends GroupTypeUndoableCommand {
 
     public static final String COMMAND_WORD = "deleteGroup";
 
@@ -895,12 +910,14 @@ public class DeleteGroupCommand extends UndoableCommand {
             for (Group grp : groupList) {
                 if (grp.getGrpName().equals(this.groupName)) {
                     grpToDelete = grp;
+                    undoGroupIndex = Index.fromZeroBased(groupList.indexOf(grp));
                     return true;
                 }
             }
         } else {
             try {
                 grpToDelete = groupList.get(index.getZeroBased());
+                undoGroupIndex = Index.fromZeroBased(index.getZeroBased());
                 groupName = grpToDelete.getGrpName();
                 return true;
             } catch (IndexOutOfBoundsException iobe) {
@@ -910,6 +927,58 @@ public class DeleteGroupCommand extends UndoableCommand {
         return false;
     }
 }
+```
+###### /java/seedu/address/logic/commands/UndoableCommand.java
+``` java
+    /**
+     * Reverts the AddressBook to the state before this command
+     * was executed and updates the filtered person list to
+     * show all persons.
+     */
+
+    protected final void undo() {
+        requireAllNonNull(model, previousAddressBook);
+        model.resetData(previousAddressBook);
+        if (!(this instanceof  GroupTypeUndoableCommand)) {
+            model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        } else {
+            Index temp = ((GroupTypeUndoableCommand) this).undoGroupIndex;
+            EventsCenter.getInstance().post(new JumpToListRequestEvent(temp, true));
+
+        }
+    }
+
+
+    /**
+     * Executes the command and updates the filtered person
+     * list to show all persons.
+     */
+    protected final void redo() throws CommandException {
+        requireNonNull(model);
+        try {
+            executeUndoableCommand();
+        } catch (CommandException ce) {
+            if (!(this instanceof GroupTypeUndoableCommand)) {
+                throw new AssertionError("The command has been successfully executed previously; "
+                        + "it should not fail now");
+            } else {
+                throw new CommandException(ce.getExceptionHeader(), constructNewCommandExceptionMsg(ce));
+            }
+        }
+        if (!(this instanceof GroupTypeUndoableCommand)) {
+            model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        }
+    }
+
+    /**
+     * constructs new body message for command exception
+     * @param ce
+     * @return
+     */
+    private String constructNewCommandExceptionMsg(CommandException ce) {
+        return ce.getMessage() + "\n\nCommand you tried to redo: "
+                + ((EditGroupCommand) this).reconstructCommandString();
+    }
 ```
 ###### /java/seedu/address/logic/commands/EditGroupCommand.java
 ``` java
@@ -935,7 +1004,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 /**
  * Edits the group, either 1.change group name, 2.adds a person to the group or 3.deletes a person from the group
  */
-public class EditGroupCommand extends UndoableCommand {
+public class EditGroupCommand extends GroupTypeUndoableCommand {
 
     public static final String COMMAND_WORD = "editGroup";
 
@@ -996,13 +1065,109 @@ public class EditGroupCommand extends UndoableCommand {
     protected CommandResult executeUndoableCommand() throws CommandException {
 
         List<Group> grpList = model.getAddressBook().getGroupList();
-        Group targetGrp = null;
+        Group targetGrp = locateTargetGrp(grpList);
 
-        // locate target group
+        if ("gn".equals(operation)) {
+            return handleNameChangeOp(targetGrp);
+        } else {
+            Person targetPerson = null;
+            if ("add".equals(operation)) {
+                List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+                targetPerson = locateTargetPerson(lastShownList);
+                return handleAddOp(targetGrp, targetPerson);
+
+            } else {
+                List<ReadOnlyPerson> personListInGroup = targetGrp.getPersonList();
+                targetPerson = locateTargetPerson(personListInGroup);
+                return handleDeleteOp(targetGrp, targetPerson);
+            }
+        }
+    }
+
+    /**
+     * deletes the target person from target group
+     * @param targetGrp
+     * @param targetPerson
+     * @return
+     * @throws CommandException
+     */
+    private CommandResult handleDeleteOp(Group targetGrp, Person targetPerson) {
+        try {
+            model.removePersonFromGroup(targetGrp, targetPerson);
+        } catch (PersonNotFoundException e) {
+            assert false : "The target person cannot be missing";
+        }
+
+        EventsCenter.getInstance().post(new JumpToListRequestEvent(this.grpIndex, true));
+
+        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, grpName,
+                targetPerson.toString()));
+    }
+
+    /**
+     * locate and return the target person in the person list
+     * @param personList
+     * @return
+     * @throws CommandException
+     */
+    private Person locateTargetPerson(List<ReadOnlyPerson> personList) throws CommandException {
+        try {
+            ReadOnlyPerson targetPerson = personList.get(personIndex.getZeroBased());
+            Person copiedPerson = new Person(targetPerson);
+            return copiedPerson;
+        } catch (IndexOutOfBoundsException e) {
+            throw new CommandException(MESSAGE_EXECUTION_FAILURE,
+                    Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+    }
+
+    /**
+     * adds the target person to the target group
+     * @param targetGrp
+     * @return
+     */
+    private CommandResult handleAddOp(Group targetGrp, Person targetPerson) throws CommandException {
+        try {
+            model.addPersonToGroup(targetGrp, targetPerson);
+        } catch (DuplicatePersonException e) {
+            throw new CommandException(MESSAGE_EXECUTION_FAILURE, MESSAGE_DUPLICATE_PERSON);
+        }
+
+        EventsCenter.getInstance().post(new JumpToListRequestEvent(this.grpIndex, true));
+
+        return new CommandResult(String.format(MESSAGE_ADD_PERSON_SUCCESS, grpName,
+                targetPerson.toString()));
+    }
+
+    /**
+     * updates the group name of target group
+     * @param targetGrp
+     * @return
+     * @throws CommandException if a group by the new name already exists
+     */
+    private CommandResult handleNameChangeOp(Group targetGrp) throws CommandException {
+        try {
+            model.setGrpName(targetGrp, newName);
+            return new CommandResult(String.format(MESSAGE_CHANGE_NAME_SUCCESS, grpName, newName));
+        } catch (DuplicateGroupException e) {
+            throw new CommandException(MESSAGE_EXECUTION_FAILURE, String.format(MESSAGE_DUPLICATE_GROUP, newName));
+        }
+    }
+
+    /**
+     * locate and return the target group indicated by either index or group name
+     * @param grpList
+     * @return target group
+     * @throws CommandException
+     */
+    private Group locateTargetGrp(List<Group> grpList) throws CommandException {
+        Group targetGrp = null;
         if (indicateByIndex) {
             try {
                 targetGrp = grpList.get(grpIndex.getZeroBased());
+                undoGroupIndex = Index.fromZeroBased(grpIndex.getZeroBased());
                 grpName = targetGrp.getGrpName();
+                return targetGrp;
             } catch (IndexOutOfBoundsException e) {
                 throw new CommandException(MESSAGE_EXECUTION_FAILURE, MESSAGE_INVALID_GROUP_DISPLAYED_INDEX);
             }
@@ -1011,7 +1176,8 @@ public class EditGroupCommand extends UndoableCommand {
                 if (grp.getGrpName().equals(grpName)) {
                     targetGrp = grp;
                     grpIndex = Index.fromZeroBased(grpList.indexOf(grp));
-                    break;
+                    undoGroupIndex = Index.fromZeroBased(grpList.indexOf(grp));
+                    return targetGrp;
                 }
             }
         }
@@ -1019,55 +1185,7 @@ public class EditGroupCommand extends UndoableCommand {
         if (targetGrp == null) {
             throw new CommandException(MESSAGE_EXECUTION_FAILURE, MESSAGE_GROUP_NONEXISTENT);
         }
-
-        if ("gn".equals(operation)) {
-            try {
-                model.setGrpName(targetGrp, newName);
-                return new CommandResult(String.format(MESSAGE_CHANGE_NAME_SUCCESS, grpName, newName));
-            } catch (DuplicateGroupException e) {
-                throw new CommandException(MESSAGE_EXECUTION_FAILURE, String.format(MESSAGE_DUPLICATE_GROUP, newName));
-            }
-        } else {
-            ReadOnlyPerson targetPerson = null;
-            Person copiedPerson = null;
-            if ("add".equals(operation)) {
-                List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
-
-                try {
-                    targetPerson = lastShownList.get(personIndex.getZeroBased());
-                    copiedPerson = new Person(targetPerson);
-                    model.addPersonToGroup(targetGrp, copiedPerson);
-                } catch (IndexOutOfBoundsException e) {
-                    throw new CommandException(MESSAGE_EXECUTION_FAILURE,
-                            Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-                } catch (DuplicatePersonException e) {
-                    throw new CommandException(MESSAGE_EXECUTION_FAILURE, MESSAGE_DUPLICATE_PERSON);
-                }
-
-                EventsCenter.getInstance().post(new JumpToListRequestEvent(this.grpIndex, true));
-
-                return new CommandResult(String.format(MESSAGE_ADD_PERSON_SUCCESS, grpName,
-                        copiedPerson.toString()));
-            } else {
-                List<ReadOnlyPerson> personListInGroup = targetGrp.getPersonList();
-
-                try {
-                    targetPerson = personListInGroup.get(personIndex.getZeroBased());
-                    copiedPerson = new Person(targetPerson);
-                    model.removePersonFromGroup(targetGrp, copiedPerson);
-                } catch (IndexOutOfBoundsException e) {
-                    throw new CommandException(MESSAGE_EXECUTION_FAILURE,
-                            Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-                } catch (PersonNotFoundException e) {
-                    assert false : "The target person cannot be missing";
-                }
-
-                EventsCenter.getInstance().post(new JumpToListRequestEvent(this.grpIndex, true));
-
-                return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, grpName,
-                        copiedPerson.toString()));
-            }
-        }
+        return null;
     }
 
     @Override
@@ -1106,6 +1224,29 @@ public class EditGroupCommand extends UndoableCommand {
         }
         return false;
     }
+
+    /**
+     * Reconstructs command message, used by RedoCommand
+     * @return command message as a string
+     */
+    public String reconstructCommandString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(COMMAND_WORD + " ");
+
+        if (indicateByIndex) {
+            sb.append(grpIndex.getOneBased());
+        } else {
+            sb.append(grpName);
+        }
+        sb.append(" " + operation + " ");
+
+        if ("gn".equals(operation)) {
+            sb.append(newName);
+        } else {
+            sb.append(personIndex.getOneBased());
+        }
+        return sb.toString();
+    }
 }
 ```
 ###### /java/seedu/address/logic/commands/GroupingCommand.java
@@ -1113,8 +1254,6 @@ public class EditGroupCommand extends UndoableCommand {
 package seedu.address.logic.commands;
 
 import static seedu.address.commons.core.Messages.MESSAGE_EXECUTION_FAILURE;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_GROUPS;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -1179,9 +1318,6 @@ public class GroupingCommand extends UndoableCommand {
         } catch (DuplicateGroupException e) {
             throw new CommandException(MESSAGE_EXECUTION_FAILURE, MESSAGE_DUPLICATE_GROUP_NAME);
         }
-
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        model.updateFilteredGroupList(PREDICATE_SHOW_ALL_GROUPS);
 
         Index grpIndex = model.getGroupIndex(groupName);
 
@@ -1331,32 +1467,50 @@ public class ViewGroupCommand extends Command {
     public CommandResult execute() throws CommandException {
 
         List<Group> grpList = model.getAddressBook().getGroupList();
-        Group grpToView;
 
         if (this.index != null) {
-            try {
-                grpToView = grpList.get(index.getZeroBased());
+            return viewByIndex(grpList);
+        } else { //either index or grpName should be non-null
+            return viewByGrpName(grpList);
+        }
+    }
 
-                EventsCenter.getInstance().post(new JumpToListRequestEvent(this.index, true));
+    /**
+     * select the group using index provided
+     * @param grpList
+     * @return
+     * @throws CommandException
+     */
+    private CommandResult viewByIndex(List<Group> grpList) throws CommandException {
+        try {
+            Group grpToView = grpList.get(index.getZeroBased());
+
+            EventsCenter.getInstance().post(new JumpToListRequestEvent(this.index, true));
+
+            return new CommandResult(String.format(MESSAGE_GROUPING_PERSON_SUCCESS,
+                    grpToView.getPersonList().size(), grpToView.getGrpName()));
+        } catch (IndexOutOfBoundsException e) {
+            throw new CommandException(MESSAGE_EXECUTION_FAILURE, Messages.MESSAGE_INVALID_GROUP_DISPLAYED_INDEX);
+        }
+    }
+
+    /**
+     * select the group using group name provided
+     * @param grpList
+     * @return
+     * @throws CommandException
+     */
+    private CommandResult viewByGrpName(List<Group> grpList) throws CommandException {
+        for (int i = 0; i < grpList.size(); i++) {
+            if (grpList.get(i).getGrpName().equals(this.grpName)) {
+                Group grpToView = grpList.get(i);
+
+                EventsCenter.getInstance().post(new JumpToListRequestEvent(Index.fromZeroBased(i), true));
 
                 return new CommandResult(String.format(MESSAGE_GROUPING_PERSON_SUCCESS,
                         grpToView.getPersonList().size(), grpToView.getGrpName()));
-            } catch (IndexOutOfBoundsException e) {
-                throw new CommandException(MESSAGE_EXECUTION_FAILURE, Messages.MESSAGE_INVALID_GROUP_DISPLAYED_INDEX);
-            }
-        } else { //either index or grpName should be non-null
-            for (int i = 0; i < grpList.size(); i++) {
-                if (grpList.get(i).getGrpName().equals(this.grpName)) {
-                    grpToView = grpList.get(i);
-
-                    EventsCenter.getInstance().post(new JumpToListRequestEvent(Index.fromZeroBased(i), true));
-
-                    return new CommandResult(String.format(MESSAGE_GROUPING_PERSON_SUCCESS,
-                            grpToView.getPersonList().size(), grpToView.getGrpName()));
-                }
             }
         }
-
         throw new CommandException(MESSAGE_EXECUTION_FAILURE, MESSAGE_GROUP_NONEXISTENT);
     }
 
@@ -1679,7 +1833,9 @@ import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
  * A list of groups that enforces uniqueness between its elements and does not allow nulls.
@@ -1746,6 +1902,7 @@ public class UniqueGroupList implements Iterable<Group> {
 
     /**
      * Removes the specified group from the group list
+     *
      * @param grpToDelete
      */
     public void removeGroup(Group grpToDelete) {
@@ -1755,8 +1912,9 @@ public class UniqueGroupList implements Iterable<Group> {
 
     /**
      * sets the group to the new name
+     *
      * @param targetGrp group to change name
-     * @param newName new name to change to
+     * @param newName   new name to change to
      * @throws DuplicateGroupException if a group of newName already exists in the group list
      */
     public void setGrpName(Group targetGrp, String newName) throws DuplicateGroupException {
@@ -1764,13 +1922,20 @@ public class UniqueGroupList implements Iterable<Group> {
             if (grp.getGrpName().equals(newName)) {
                 throw new DuplicateGroupException();
             }
+            if (targetGrp.getGrpName().equals(grp.getGrpName())) {
+                targetGrp = grp;
+                break;
+            }
         }
-
         targetGrp.setGrpName(newName);
         sort();
     }
 
-
+    /**
+     * get the index of a group in the group list
+     * @param groupName
+     * @return -1 if the group isn't in the group list
+     */
     public int getGroupIndex(String groupName) {
         for (Group grp : internalList) {
             if (grp.getGrpName().equals(groupName)) {
@@ -1778,6 +1943,31 @@ public class UniqueGroupList implements Iterable<Group> {
             }
         }
         return -1;
+    }
+
+    /**
+     * removes a person from the group
+     * @param targetGrp
+     * @param targetPerson
+     */
+    public void removePersonFromGroup(Group targetGrp, ReadOnlyPerson targetPerson) {
+        try {
+            targetGrp.remove(targetPerson);
+            targetGrp.updatePreviews();
+        } catch (PersonNotFoundException e) {
+            assert false : "This person should be in the group";
+        }
+    }
+
+    /**
+     * adds target person into target group
+     * @param targetGrp
+     * @param targetPerson
+     * @throws DuplicatePersonException
+     */
+    public void addPersonToGroup(Group targetGrp, ReadOnlyPerson targetPerson) throws DuplicatePersonException {
+        targetGrp.add(targetPerson);
+        targetGrp.updatePreviews();
     }
 }
 ```
@@ -1915,6 +2105,24 @@ public class GroupContainsPersonPredicate implements Predicate<ReadOnlyPerson> {
     public Index getGroupIndex(String groupName) {
         return Index.fromZeroBased(groups.getGroupIndex(groupName));
     }
+
+    /**
+     * removes targetPerson from targetGroup
+     * @param targetGrp
+     * @param targetPerson
+     */
+    public void removePersonFromGroup(Group targetGrp, ReadOnlyPerson targetPerson) {
+        groups.removePersonFromGroup(targetGrp, targetPerson);
+    }
+
+    /**
+     * addes targetPerson to targetGroup
+     * @param targetGrp
+     * @param targetPerson
+     */
+    public void addPersonToGroup(Group targetGrp, ReadOnlyPerson targetPerson) throws DuplicatePersonException {
+        groups.addPersonToGroup(targetGrp, targetPerson);
+    }
 ```
 ###### /java/seedu/address/model/ModelManager.java
 ``` java
@@ -1922,7 +2130,6 @@ public class GroupContainsPersonPredicate implements Predicate<ReadOnlyPerson> {
     public void createGroup(String groupName, List<ReadOnlyPerson> personToGroup)
             throws DuplicateGroupException {
         addressBook.addGroup(groupName, personToGroup);
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
     }
 
@@ -1955,19 +2162,16 @@ public class GroupContainsPersonPredicate implements Predicate<ReadOnlyPerson> {
             throws DuplicatePersonException {
         requireAllNonNull(targetGrp, targetPerson);
 
-        targetGrp.add(targetPerson);
-        targetGrp.updatePreviews();
+        addressBook.addPersonToGroup(targetGrp, targetPerson);
 
         indicateAddressBookChanged();
     }
 
     @Override
-    public synchronized void removePersonFromGroup(Group targetGrp, ReadOnlyPerson targetPerson)
-            throws PersonNotFoundException {
+    public synchronized void removePersonFromGroup(Group targetGrp, ReadOnlyPerson targetPerson) {
         requireAllNonNull(targetGrp, targetPerson);
 
-        targetGrp.remove(targetPerson);
-        targetGrp.updatePreviews();
+        addressBook.removePersonFromGroup(targetGrp, targetPerson);
 
         indicateAddressBookChanged();
     }

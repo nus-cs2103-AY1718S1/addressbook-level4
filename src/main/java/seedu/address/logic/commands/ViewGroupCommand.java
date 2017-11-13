@@ -49,32 +49,50 @@ public class ViewGroupCommand extends Command {
     public CommandResult execute() throws CommandException {
 
         List<Group> grpList = model.getAddressBook().getGroupList();
-        Group grpToView;
 
         if (this.index != null) {
-            try {
-                grpToView = grpList.get(index.getZeroBased());
+            return viewByIndex(grpList);
+        } else { //either index or grpName should be non-null
+            return viewByGrpName(grpList);
+        }
+    }
 
-                EventsCenter.getInstance().post(new JumpToListRequestEvent(this.index, true));
+    /**
+     * select the group using index provided
+     * @param grpList
+     * @return
+     * @throws CommandException
+     */
+    private CommandResult viewByIndex(List<Group> grpList) throws CommandException {
+        try {
+            Group grpToView = grpList.get(index.getZeroBased());
+
+            EventsCenter.getInstance().post(new JumpToListRequestEvent(this.index, true));
+
+            return new CommandResult(String.format(MESSAGE_GROUPING_PERSON_SUCCESS,
+                    grpToView.getPersonList().size(), grpToView.getGrpName()));
+        } catch (IndexOutOfBoundsException e) {
+            throw new CommandException(MESSAGE_EXECUTION_FAILURE, Messages.MESSAGE_INVALID_GROUP_DISPLAYED_INDEX);
+        }
+    }
+
+    /**
+     * select the group using group name provided
+     * @param grpList
+     * @return
+     * @throws CommandException
+     */
+    private CommandResult viewByGrpName(List<Group> grpList) throws CommandException {
+        for (int i = 0; i < grpList.size(); i++) {
+            if (grpList.get(i).getGrpName().equals(this.grpName)) {
+                Group grpToView = grpList.get(i);
+
+                EventsCenter.getInstance().post(new JumpToListRequestEvent(Index.fromZeroBased(i), true));
 
                 return new CommandResult(String.format(MESSAGE_GROUPING_PERSON_SUCCESS,
                         grpToView.getPersonList().size(), grpToView.getGrpName()));
-            } catch (IndexOutOfBoundsException e) {
-                throw new CommandException(MESSAGE_EXECUTION_FAILURE, Messages.MESSAGE_INVALID_GROUP_DISPLAYED_INDEX);
-            }
-        } else { //either index or grpName should be non-null
-            for (int i = 0; i < grpList.size(); i++) {
-                if (grpList.get(i).getGrpName().equals(this.grpName)) {
-                    grpToView = grpList.get(i);
-
-                    EventsCenter.getInstance().post(new JumpToListRequestEvent(Index.fromZeroBased(i), true));
-
-                    return new CommandResult(String.format(MESSAGE_GROUPING_PERSON_SUCCESS,
-                            grpToView.getPersonList().size(), grpToView.getGrpName()));
-                }
             }
         }
-
         throw new CommandException(MESSAGE_EXECUTION_FAILURE, MESSAGE_GROUP_NONEXISTENT);
     }
 
