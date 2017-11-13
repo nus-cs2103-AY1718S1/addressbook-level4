@@ -24,10 +24,12 @@ public interface ReadOnlyPerson {
     Email getEmail();
     ObjectProperty<Address> addressProperty();
     Address getAddress();
+    //@@author Pujitha97
     ObjectProperty<DateOfBirth> dobProperty();
     DateOfBirth getDateOfBirth();
     ObjectProperty<Gender> genderProperty();
     Gender getGender();
+    //@@author
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
     String getReason();

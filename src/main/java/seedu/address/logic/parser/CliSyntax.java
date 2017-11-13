@@ -16,7 +16,9 @@ public class CliSyntax {
     public static final Prefix PREFIX_ADDRESS = new Prefix("a/");
     public static final Prefix PREFIX_TAG = new Prefix("t/");
     public static final Prefix PREFIX_DELTAG = new Prefix("dt/");
+    //@@author Pujitha97
     public static final Prefix PREFIX_DOB = new Prefix("d/");
+    //@@author
     public static final Prefix PREFIX_OWNER = new Prefix("o/");
     public static final Prefix PREFIX_INSURED = new Prefix("i/");
     public static final Prefix PREFIX_BENEFICIARY = new Prefix("b/");
@@ -24,6 +26,7 @@ public class CliSyntax {
     public static final Prefix PREFIX_CONTRACT_FILE_NAME = new Prefix("c/");
     public static final Prefix PREFIX_SIGNING_DATE = new Prefix("sd/");
     public static final Prefix PREFIX_EXPIRY_DATE = new Prefix("ed/");
+    //@@author Pujitha97
     public static final Prefix PREFIX_GENDER = new Prefix("g/");
     //@@author Juxarius
     public static final Set<Prefix> PREFIXES_PERSON = new HashSet<>(Arrays.asList(

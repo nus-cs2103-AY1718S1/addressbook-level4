@@ -40,7 +40,10 @@ public class ProfilePanelTest extends GuiUnitTest {
         assertEquals(expectedDefaultName, profilePanelHandle.getName());
         assertNull(profilePanelHandle.getEmail());
         assertNull(profilePanelHandle.getPhone());
+        //@@author Pujitha97
         assertNull(profilePanelHandle.getDateOfBirth());
+        assertNull(profilePanelHandle.getGender());
+        //@@author
         assertNull(profilePanelHandle.getAddress());
 
         // select Stub Person
@@ -51,9 +54,10 @@ public class ProfilePanelTest extends GuiUnitTest {
         assertEquals(expectedSelectedPerson.getName().toString(), profilePanelHandle.getName());
         assertEquals(expectedSelectedPerson.getEmail().toString(), profilePanelHandle.getEmail());
         assertEquals(expectedSelectedPerson.getPhone().toString(), profilePanelHandle.getPhone());
+        assertEquals(expectedSelectedPerson.getAddress().toString(), profilePanelHandle.getAddress());
         //@@author Pujitha97
         assertEquals(expectedSelectedPerson.getDateOfBirth().toString(), profilePanelHandle.getDateOfBirth());
-        assertEquals(expectedSelectedPerson.getAddress().toString(), profilePanelHandle.getAddress());
+        assertEquals(expectedSelectedPerson.getGender().toString(), profilePanelHandle.getGender());
         //@@author
     }
 }

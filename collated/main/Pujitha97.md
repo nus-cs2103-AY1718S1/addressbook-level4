@@ -1,12 +1,17 @@
 # Pujitha97
 ###### \java\seedu\address\logic\commands\AddCommand.java
 ``` java
+            + "[" + PREFIX_DOB + "DATE OF BIRTH] "
+            + "[" + PREFIX_GENDER + "GENDER] "
+```
+###### \java\seedu\address\logic\commands\AddCommand.java
+``` java
         public void setDateOfBirth(DateOfBirth dateofbirth) {
-            this.dateofbirth = dateofbirth;
+            this.dateOfBirth = dateofbirth;
         }
 
         public DateOfBirth getDateOfBirth() {
-            return dateofbirth;
+            return dateOfBirth;
         }
 
         public void setGender(Gender gender) {
@@ -21,6 +26,11 @@
 ``` java
             + "[" + PREFIX_DOB + "DATE OF BIRTH] "
             + "[" + PREFIX_GENDER + "GENDER] "
+```
+###### \java\seedu\address\logic\commands\EditCommand.java
+``` java
+        DateOfBirth updatedDateOfBirth = editPersonDescriptor.getDateOfBirth().orElse(personToEdit.getDateOfBirth());
+        Gender updatedGender = editPersonDescriptor.getGender().orElse(personToEdit.getGender());
 ```
 ###### \java\seedu\address\logic\commands\EditCommand.java
 ``` java
@@ -47,8 +57,16 @@
             ParserUtil.parseGender(argMultimap.getValue(PREFIX_GENDER))
                     .ifPresent(addPersonOptionalFieldDescriptor::setGender);
 
-            DateOfBirth dob = addPersonOptionalFieldDescriptor.getDateOfBirth();
-            Gender gender = addPersonOptionalFieldDescriptor.getGender();
+            final DateOfBirth dob = addPersonOptionalFieldDescriptor.getDateOfBirth();
+            final Gender gender = addPersonOptionalFieldDescriptor.getGender();
+```
+###### \java\seedu\address\logic\parser\CliSyntax.java
+``` java
+    public static final Prefix PREFIX_DOB = new Prefix("d/");
+```
+###### \java\seedu\address\logic\parser\CliSyntax.java
+``` java
+    public static final Prefix PREFIX_GENDER = new Prefix("g/");
 ```
 ###### \java\seedu\address\logic\parser\EditCommandParser.java
 ``` java
@@ -74,6 +92,31 @@
     public static Optional<Gender> parseGender(Optional<String> gender) throws IllegalValueException {
         requireNonNull(gender);
         return gender.isPresent() ? Optional.of(new Gender(gender.get())) : Optional.empty();
+    }
+```
+###### \java\seedu\address\model\person\DateOfBirth.java
+``` java
+    /**
+     * Validates given Date of Birth.
+     *
+     * @throws IllegalValueException if given date of birth string is invalid.
+     */
+    public DateOfBirth(String dob) throws IllegalValueException {
+        requireNonNull(dob);
+        if (dob.isEmpty()) {
+            throw new EmptyFieldException(PREFIX_DOB);
+        }
+        if (!isValidDateOfBirth(dob)) {
+            throw new IllegalValueException(MESSAGE_DOB_CONSTRAINTS);
+        }
+```
+###### \java\seedu\address\model\person\DateOfBirth.java
+``` java
+    /**
+     * Returns true if a given string is a valid person date of birth.
+     */
+    public static boolean isValidDateOfBirth(String test) {
+        return test.matches(DOB_VALIDATION_REGEX);
     }
 ```
 ###### \java\seedu\address\model\person\DateOfBirth.java
@@ -224,8 +267,16 @@ public class Gender {
         return gender.get();
     }
 ```
+###### \java\seedu\address\model\person\ReadOnlyPerson.java
+``` java
+    ObjectProperty<DateOfBirth> dobProperty();
+    DateOfBirth getDateOfBirth();
+    ObjectProperty<Gender> genderProperty();
+    Gender getGender();
+```
 ###### \java\seedu\address\storage\XmlAdaptedPerson.java
 ``` java
+    @XmlElement(required = true)
     private String dob;
     @XmlElement(required = true)
     private String gender;
@@ -258,4 +309,9 @@ public class Gender {
     private Label dob;
     @FXML
     private Label gender;
+```
+###### \java\seedu\address\ui\ProfilePanel.java
+``` java
+        dob.textProperty().bind(Bindings.convert(person.dobProperty()));
+        gender.textProperty().bind(Bindings.convert(person.genderProperty()));
 ```
