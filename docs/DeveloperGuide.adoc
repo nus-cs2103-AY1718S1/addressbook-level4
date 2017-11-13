@@ -677,14 +677,14 @@ The backup command saves the current ResidentBook into backup.xml located in the
 ==== Design Considerations
 
 **Aspect:** Implementation of Backup +
-**Alternative 1 (current choice):** Saves the backup file to current location  +
-**Pros:** Only require user to call function, with no additional details needed. Simple and straightforward  +
-**Cons:** File name is fixed as "backup.xml" and user may need to rename it on the system hard drive +
-**Alternative 2:** Allow user to specify backup file name +
+**Alternative 1 (current choice):** Saves entire ResidentBook in a backup file  +
+**Pros:** Simple and straightforward.   +
+**Cons:** Requires more storage space +
+**Alternative 2:** Allow user to specify which entries to be added to backup  +
 **Pros:** Flexible level of precision according to the needs of the user +
-**Cons:** May result in unnecessary backup with different names
+**Cons:** User may miss some entries when specifying. Hard to roll back to the latest data during crisis
 
-One consideration for the choosen mechanism is that backup should only happen when necessary, as it will take up a lot of space.
+One consideration for the chosen mechanism is that backup should aid during crisis, such as data corruption or lost. 
 
 [source,java]
 ----
