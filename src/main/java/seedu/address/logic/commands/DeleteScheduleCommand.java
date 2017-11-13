@@ -16,7 +16,7 @@ import seedu.address.model.schedule.exceptions.ScheduleNotFoundException;
 public class DeleteScheduleCommand extends Command {
 
     public static final String COMMAND_WORD = "deleteschedule";
-    public static final String COMMAND_ALIAS = "dsch";
+    public static final String COMMAND_ALIAS = "deletesch";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the schedule identified by the index number.\n"

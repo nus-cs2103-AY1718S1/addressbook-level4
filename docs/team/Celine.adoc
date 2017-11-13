@@ -156,37 +156,34 @@ include::../UserGuide.adoc[tag=deleteschedule]
 === Enhancement Proposed: Use `Postal Code` to display Google Map of student's address
 
 ==== External behavior
-
----
 Clicking the `Postal Code` attribute displayed on the `Student Details` panel would open a `Google Map` panel that displays the map of the student's address. The map would display the surroundings as well as provide all possible ways to get to the student's house.
 
----
-
 ==== Justification
-
----
 Sometimes when students fall sick for a long period of time, they might face huge difficulties in trying to catch up with their studies.
 The reason for this implementation is so that users of cherBook (teachers / educators) have the ability to conduct house visits easily to update their student on the school-related assignments, as well as to show concern for the student.
 
----
-
 ==== Implementation
-
----
 Link the `Postal Code` attribute to `Google Map` panel whereby the map would display the vicinity of the student's address. `Google` API would be called and the `Postal Code` of the user's current and designated location would be parsed before the map and routes are displayed and calculated respectively.
 
----
+=== Enhancement Proposed: Use Schedules to remind users (teachers / educators) about their meetings and appointments
 
+==== External behavior
+No external behaviour. The teacher only has to enter their schedules into cherBook. cherBook will automatically remind them ten minutes before when their scheduled date and time is due.
+
+==== Justification
+When teachers have many schedules to keep and meetings to attend in one day, and not forgetting their regular classes and duties, it is often hard for them to keep track of time. +
+Our cherBook application can make use of the schedules that the teacher has added and remind them ten minutes before any schedules are due. This is so that the teachers can focus on their work and let cherBook keep time for them instead.
+
+==== Implementation
+The clock function in cherBook is required to take note of the time and compare it with the date and time of every schedule in the schedule list. +
+cherBook will produce a audible reminder ten minutes before every scheduled appointment.
 
 
 === Other contributions
 
 * Update READMEs for the different versions, created Ui mockups and cherBook icon
-** https://github.com/CS2103AUG2017-T16-B2/main/pull/29[add new PostalCode field in v1.1]
-** https://github.com/CS2103AUG2017-T16-B2/main/pull/114[TabCommand in v1.5]
-** https://github.com/CS2103AUG2017-T16-B2/main/pull/124[DeleteScheduleCommand in v1.5]
+** https://github.com/CS2103AUG2017-T16-B2/main/pull/29[Add new PostalCode field in v1.1]
+** https://github.com/CS2103AUG2017-T16-B2/main/pull/132[Add graphics for all UserGuide commands]
 
-
-== Project: PowerPointLabs
-
-{Optionally (not graded), you may include other projects in your portfolio.}
+=== Helping out
+** https://github.com/CS2103AUG2017-T16-B2/main/pull/114[Helped teammate create TabCommand in v1.5]

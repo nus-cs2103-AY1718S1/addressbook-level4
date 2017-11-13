@@ -2,13 +2,8 @@ package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertEquals;
 import static seedu.address.commons.core.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
-import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
-import static seedu.address.testutil.TypicalPersons.CARL;
 import static seedu.address.testutil.TypicalPersons.DANIEL;
-import static seedu.address.testutil.TypicalPersons.ELLE;
-import static seedu.address.testutil.TypicalPersons.FIONA;
-import static seedu.address.testutil.TypicalPersons.GEORGE;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.Arrays;
@@ -27,6 +22,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.TagsContainsKeywordsPredicate;
 
 //@@author lincredibleJC
+
 /**
  * Contains integration tests (interaction with the Model) for {@code FindTagsCommand}.
  */
@@ -36,15 +32,15 @@ public class FindTagsCommandTest {
     @Test
     public void execute_singleKeyword_singlePersonFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
-        FindTagsCommand command = prepareCommand("owesMoney");
+        FindTagsCommand command = prepareCommand("studentcouncil scholarship Track owesMoney");
         assertCommandSuccess(command, expectedMessage, Collections.singletonList(BENSON));
     }
 
     @Test
     public void execute_multipleKeywords_multiplePersonsFound() {
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 7);
-        FindTagsCommand command = prepareCommand("friends");
-        assertCommandSuccess(command, expectedMessage, Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 2);
+        FindTagsCommand command = prepareCommand("scholarship");
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(BENSON, DANIEL));
     }
 
     /**
