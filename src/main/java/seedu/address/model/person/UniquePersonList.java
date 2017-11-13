@@ -149,6 +149,7 @@ public class UniquePersonList implements Iterable<Person> {
      * Updates the maximum internal index among all persons in the person list
      * Currently not used; implemented previously for remove(), but it was unnecessary to update
      * after each deletion
+     *
      * @return the maximum internal index
      */
     private int updateMaxInternalIndex() {

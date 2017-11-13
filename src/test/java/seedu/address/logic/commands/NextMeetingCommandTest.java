@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 //@@author liuhang0213
+import static org.junit.Assert.fail;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalMeetings.getTypicalMeetingList;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
@@ -47,7 +48,7 @@ public class NextMeetingCommandTest {
             expected.append(model.getMeetingList().getUpcomingMeeting().toString());
             assertCommandSuccess(nextMeetingCommand, model, expected.toString(), model);
         } catch (PersonNotFoundException e) {
-            e.printStackTrace();
+            fail("All people should be in the address book.");
         }
     }
 }

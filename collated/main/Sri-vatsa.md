@@ -18,350 +18,144 @@ public class MeetingListChangedEvent extends BaseEvent {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/AddMeetingCommand.java
+###### /java/seedu/address/ui/BrowserPanel.java
 ``` java
-/**
- * Adds a new meeting to the address book.
- */
-public class AddMeetingCommand extends Command {
-
-    public static final String COMMAND_WORD = "addMeeting";
-    public static final String COMMAND_ALIAS = "am";
-
-    public static final String GOOGLE_ADDRESS = "www.google.com";
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a meeting to the address book. "
-            + "Parameters: "
-            + PREFIX_DATE + "DATE "
-            + PREFIX_TIME + "TIME "
-            + PREFIX_LOCATION + "LOCATION "
-            + PREFIX_NOTES + "NOTES "
-            + PREFIX_PERSON + "PERSON 1 "
-            + PREFIX_PERSON + "PERSON 2 ...\n"
-            + "Example: "
-            + COMMAND_WORD + " "
-            + PREFIX_DATE + "20/11/2017 "
-            + PREFIX_TIME + "1800 "
-            + PREFIX_LOCATION + "UTown Starbucks "
-            + PREFIX_NOTES + "Project Meeting "
-            + PREFIX_PERSON + "1";
-
-
-    public static final String MESSAGE_SUCCESS_BOTH = "New meeting added locally and to Asana!";
-    public static final String MESSAGE_SUCCESS_NO_INET = "New meeting added locally!\n "
-            + "Connect to the internet to post the meeting on Asana.";
-    public static final String MESSAGE_SUCCESS_ASANA_NO_CONFIG = "New meeting added locally!\n"
-            + "Setup Asana to post the meeting on Asana.";
-    public static final String MESSAGE_SUCCESS_LOCAL = "New meeting added locally!\n"
-            + "Connect to the internet and setup Asana to post a meeting on Asana.";
-    public static final String MESSAGE_DUPLICATE_MEETING = "This meeting already exists in the address book";
-    public static final String MESSAGE_INVALID_ID = "Please input a valid person id!";
-    public static final String MESSAGE_TEMPLATE = COMMAND_WORD + " "
-            + PREFIX_DATE + "DATE "
-            + PREFIX_TIME + "TIME "
-            + PREFIX_LOCATION + "LOCATION "
-            + PREFIX_NOTES + "NOTES "
-            + PREFIX_PERSON + "PERSON ...";
-
-
-    private final Meeting toAdd;
-
-    public AddMeetingCommand(ReadOnlyMeeting meeting) {
-        toAdd = new Meeting(meeting);
-    }
-
-
-    @Override
-    public CommandResult execute() throws CommandException {
-        requireNonNull(model);
-        AsanaCredentials asanaCredentials = new AsanaCredentials();
-
-        //if there is internet connection && asana is configured
-        if (isThereInternetConnection() && asanaCredentials.getIsAsanaConfigured()) {
-
-            try {
-
-                //add meeting on Asana
-                PostTask newAsanaTask = null;
-                try {
-                    newAsanaTask = new PostTask(toAdd.getNotes(), toAdd.getDate());
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                newAsanaTask.execute();
-
-                //add meeting locally
-                model.addMeeting(toAdd);
-
-            } catch (DuplicateMeetingException e) {
-                throw new CommandException(MESSAGE_DUPLICATE_MEETING);
-            } catch (IllegalIdException ive) {
-                throw new CommandException(MESSAGE_INVALID_ID);
-            }
-
-            return new CommandResult(String.format(MESSAGE_SUCCESS_BOTH, toAdd));
-        } else {
-            //only add meeting locally, not on Asana
-            try {
-                model.addMeeting(toAdd);
-            } catch (DuplicateMeetingException e) {
-                throw new CommandException(MESSAGE_DUPLICATE_MEETING);
-            } catch (IllegalIdException ive) {
-                throw new CommandException(MESSAGE_INVALID_ID);
-            }
-
-            //there is a stable internet connection but Asana is not configured
-            if (isThereInternetConnection() && !asanaCredentials.getIsAsanaConfigured()) {
-                return new CommandResult(MESSAGE_SUCCESS_ASANA_NO_CONFIG);
-            } else if (!isThereInternetConnection() && asanaCredentials.getIsAsanaConfigured()) {
-                //No internet connection but Asana is configured
-                return new CommandResult(MESSAGE_SUCCESS_NO_INET);
-            } else {
-                //There is no internet connection and Asana is not configured
-                return new CommandResult(MESSAGE_SUCCESS_LOCAL);
-            }
-        }
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof AddMeetingCommand // instanceof handles nulls
-                && toAdd.equals(((AddMeetingCommand) other).toAdd));
-    }
-
-    /**
-     * Check if there is an internet connection available
-     * @return isThereInternetCOnnection, true if there is a connection and false otherwise
-     */
-    private boolean isThereInternetConnection() {
-        Socket sock = new Socket();
-        InetSocketAddress addr = new InetSocketAddress(GOOGLE_ADDRESS, 80);
-        try {
-            sock.connect(addr, 300);
-            return true;
-        } catch (IOException e) {
-            return false;
-        } finally {
-            try {
-                sock.close();
-            } catch (IOException e) {
-                return false;
-            }
-        }
-    }
-}
+    public static final String DEFAULT_PAGE = "default.html";
+    public static final String LINKEDIN_SEARCH_URL_PREFIX = "https://www.linkedin.com/search/results/";
+    public static final String LINKEDIN_SEARCH_PEOPLE = "people/";
+    public static final String LINKEDIN_SEARCH_PARAM_LOCATION = "?facetGeoRegion=%5B%22sg%3A0%22%5D";
+    public static final String LINKEDIN_SEARCH_PARAM_FIRST_NAME = "&firstName=";
+    public static final String LINKEDIN_SEARCH_PARAM_LAST_NAME = "&lastName=";
+    public static final String LINKEDIN_URL_SUFFIX = "&origin=FACETED_SEARCH";
 ```
-###### /java/seedu/address/logic/commands/DeleteTagCommand.java
+###### /java/seedu/address/ui/BrowserPanel.java
 ``` java
-/**
- * Deletes all tags identified from the address book.
- */
-public class DeleteTagCommand extends UndoableCommand {
-
-    public static final String COMMAND_WORD = "deleteTag";
-    public static final String COMMAND_ALIAS = "dt";
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Deletes a particular tag from everyone.\n"
-            + "Parameters: Tag1(text) Tag2(text)\n"
-            + "Example: " + COMMAND_WORD + " friends" + " family";
-
-    public static final String MESSAGE_SUCCESS = "Tag(s) successfully deleted";
-    public static final String MESSAGE_NO_TAGS_DELETED = "Tag(s) not in address book; Nothing to delete";
-    public static final String MESSAGE_TEMPLATE = COMMAND_WORD + " TAG 1" + " TAG2" + " ...";
-
-    private final String[] mTagsArgs;
-    private Tag[] mTagsToDelete;
-
-    public DeleteTagCommand(String[] tag) throws NullPointerException {
-        if (tag == null) {
-            throw new NullPointerException("Arguments cannot be null");
-        }
-        mTagsArgs = tag;
-    }
-
     /***
-     * Helper method that converts array of arguments (string type) to array of tags (Tag class)
-     * @param tag array of arguments in String
-     * @throws IllegalValueException
+     * Loads person page
+     * @param person
      */
-    private Tag[] stringToTag (String[] tag) throws IllegalValueException {
-        int numOfArgs = tag.length;
-        Tag[] tagsToDelete = new Tag[numOfArgs];
-
-        try {
-            for (int i = 0; i < numOfArgs; i++) {
-                tagsToDelete[i] = new Tag(tag[i]);
+    private void loadPersonPage(ReadOnlyPerson person) {
+        personSelected = person;
+        if (hasLinkedinBeenChosen) {
+            try {
+                loadLinkedIn();
+            } catch (CommandException e) {
+                e.printStackTrace();
             }
-        } catch (IllegalValueException ive) {
-            throw new IllegalValueException("Illegal tag value.");
-        } catch (IndexOutOfBoundsException ibe) {
-            throw new IndexOutOfBoundsException("Accessing tags that do not exist.");
-        }
-        return tagsToDelete;
-    }
-
-    @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
-        boolean hasOneOrMoreDeletion = false;
-        try {
-            mTagsToDelete = stringToTag(mTagsArgs);
-            hasOneOrMoreDeletion = model.deleteTag(mTagsToDelete);
-
-        } catch (IllegalValueException ive) {
-            assert false : "The tag is not a proper value";
-        } catch (PersonNotFoundException pnfe) {
-            assert false : "The person associated with the tag cannot be missing";
-        }
-
-        if (hasOneOrMoreDeletion) {
-            return new CommandResult(String.format(MESSAGE_SUCCESS));
+        } else if (hasMapsBeenChosen) {
+            try {
+                loadPersonMap(person);
+            } catch (CommandException e) {
+                e.printStackTrace();
+            }
         } else {
-            return new CommandResult(String.format(MESSAGE_NO_TAGS_DELETED));
+            loadPage(GOOGLE_SEARCH_URL_PREFIX + person.getName().fullName.replaceAll(" ", "+")
+                    + GOOGLE_SEARCH_URL_SUFFIX);
         }
     }
 
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof DeleteTagCommand // instanceof handles nulls
-                && Arrays.equals(this.mTagsArgs, ((DeleteTagCommand) other).mTagsArgs)); // state check
+```
+###### /java/seedu/address/ui/BrowserPanel.java
+``` java
+    /***
+     * Loads pages based on choose command selection
+     */
+    private void loadLinkedIn() throws CommandException {
+        if (personSelected == null) {
+            throw new CommandException("Please select a person");
+        }
+        setLinkedinChosenTrue();
+        setMapsChosenFalse();
+        String[] name = personSelected.getName().fullName.split(" ");
+
+        loadPage(LINKEDIN_SEARCH_URL_PREFIX + LINKEDIN_SEARCH_PEOPLE + LINKEDIN_SEARCH_PARAM_LOCATION
+                + LINKEDIN_SEARCH_PARAM_FIRST_NAME + name[0] + LINKEDIN_SEARCH_PARAM_LAST_NAME + name[1]
+                + LINKEDIN_URL_SUFFIX);
+    }
+```
+###### /java/seedu/address/ui/BrowserPanel.java
+``` java
+    /**
+     * Setter method to set the Boolean value of hasLinkedinBeenChosen
+     */
+    public void setLinkedinChosenTrue () {
+        hasLinkedinBeenChosen = true;
     }
 
+    public void setLinkedinChosenFalse () {
+        hasLinkedinBeenChosen = false;
+    }
+```
+###### /java/seedu/address/ui/BrowserPanel.java
+``` java
+    @Subscribe
+    private void handleBrowserPanelSelectionChangedEvent(BrowserPanelSelectionChangedEvent event)
+            throws CommandException {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        if (event.getBrowserSelection().equals("linkedin")) {
+            loadLinkedIn();
+
+        } else if (event.getBrowserSelection().equals("google")) {
+            setLinkedinChosenFalse();
+            setMapsChosenFalse();
+            loadPersonPage(personSelected);
+
+        } else if (event.getBrowserSelection().equals("maps")) {
+            loadPersonMap(personSelected);
+
+        }
+    }
+
+    //@author martyn-wong
+    @Subscribe
+    private void handleMapPanelEvent(MapPersonEvent event) throws CommandException {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadPersonMap(event.getPerson());
+    }
 }
 ```
-###### /java/seedu/address/logic/commands/FindCommand.java
+###### /java/seedu/address/ui/ResultDisplay.java
 ``` java
-    @Override
-    public CommandResult execute() throws CommandException {
+    public ResultDisplay(String message) {
+        super(FXML);
+        resultDisplay.textProperty().bind(displayed);
+        registerAsAnEventHandler(this);
 
-        model.updateFilteredPersonList(predicate);
-        int searchResultsCount = model.getFilteredPersonList().size();
-
-        if (searchResultsCount != NO_RESULTS) {
-            model.recordSearchHistory();
-        }
-        return new CommandResult(getMessageForPersonListShownSummary(searchResultsCount));
-    }
-```
-###### /java/seedu/address/logic/commands/ListByMostSearchedCommand.java
-``` java
-/***
- * Lists all users in the addressbook based on how frequently they are searched
- * Sorts by search frequency
- *
- */
-public class ListByMostSearchedCommand extends UndoableCommand {
-
-    public static final String COMMAND_WORD = "listMostSearched";
-    public static final String COMMAND_ALIAS = "lms";
-    public static final String MESSAGE_TEMPLATE = COMMAND_WORD;
-
-    public static final String MESSAGE_SUCCESS = "Listed all persons sorted by frequency of search";
-
-    @Override
-    public CommandResult executeUndoableCommand() {
-        model.sortPersonListBySearchCount();
-        return new CommandResult(MESSAGE_SUCCESS);
+        Platform.runLater(() -> {
+            displayed.setValue(message);
+            resultDisplay.setStyle("-fx-text-fill: white");
+        });
     }
 
-}
-
-```
-###### /java/seedu/address/logic/commands/ListCommand.java
-``` java
-    @Override
-    public CommandResult executeUndoableCommand() {
-        model.sortPersonListLexicographically();
-        return new CommandResult(MESSAGE_SUCCESS);
-    }
-```
-###### /java/seedu/address/logic/commands/SetUniqueKeyCommand.java
-``` java
-/**
- * Sets Unique key produced by Asana on Asana's webpage
- */
-public class SetUniqueKeyCommand extends Command {
-
-    public static final String COMMAND_WORD = "setKey";
-    public static final String COMMAND_ALIAS = "sk";
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD + " DIGIT/ALPHANUMERICS";
-
-
-    public static final String MESSAGE_SUCCESS = "Asana setup successful!";
-    public static final String MESSAGE_TEMPLATE = COMMAND_WORD + " DIGIT/ALPHANUMERICS";
-    private final String userAccessCode;
-
-    public SetUniqueKeyCommand(String code) {
-        userAccessCode = code;
+    @Subscribe
+    private void handleNewResultAvailableEvent(NewResultAvailableEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        Platform.runLater(() -> {
+            displayed.setValue(event.message);
+            if (event.errorStatus) {
+                resultDisplay.setStyle("-fx-text-fill: #e35252");
+            } else {
+                resultDisplay.setStyle("-fx-text-fill: #70db75");
+            }
+        });
     }
 
-    @Override
-    public CommandResult execute() throws CommandException {
-
-        try {
-            new StoreAccessToken(userAccessCode);
-        } catch (IOException e) {
-            throw new CommandException("Please try again with a valid code from Asana");
-        } catch (IllegalArgumentException iae) {
-            throw new CommandException("Please try again with a valid code from Asana");
-        }
-
-        return new CommandResult(MESSAGE_SUCCESS);
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof SetUniqueKeyCommand // instanceof handles nulls
-                && this.userAccessCode.equals(((SetUniqueKeyCommand) other).userAccessCode)); // state check
-    }
-
-}
-```
-###### /java/seedu/address/logic/commands/SetupAsanaCommand.java
-``` java
-/**
- * Initiates Authorisation with Asana on Asana's website
- */
-public class SetupAsanaCommand extends Command {
-    public static final String COMMAND_WORD = "setupAsana";
-    public static final String COMMAND_ALIAS = "sa";
-
-    public static final boolean CONFIGURED = true;
-
-    public static final String MESSAGE_SUCCESS = "1. Login & allow OurAB to access your Asana account\n"
-            + "2. Copy from the site, the code: DIGIT/ALPHANUMERICS\n"
-            + "Example: 0/123a689ny8912h324h78s\n"
-            + "3. Type: setKey 0/ALPHANUMERICS";
-    public static final String MESSAGE_TEMPLATE = COMMAND_WORD;
-
-    @Override
-    public CommandResult execute() throws CommandException {
-
-        try {
-
-            new AuthenticateAsanaUser();
-
-            AsanaCredentials asanaCredentials = new AsanaCredentials();
-            asanaCredentials.setIsAsanaConfigured(CONFIGURED);
-
-        } catch (URISyntaxException e) {
-            throw new CommandException("Failed to redirect to Asana's page. Please try again later!");
-        } catch (IOException e) {
-            throw new CommandException("Asana setup failed due to bad input. Please try again later!");
-        }
-
-        return new CommandResult(MESSAGE_SUCCESS);
-    }
 }
 ```
 ###### /java/seedu/address/logic/Logic.java
 ``` java
     /** Returns the address book */
     ArrayList<String> getMeetingNames(ReadOnlyMeeting meeting);
+```
+###### /java/seedu/address/logic/parser/CliSyntax.java
+``` java
+    public static final Prefix PREFIX_DATE = new Prefix("on ");
+    public static final Prefix PREFIX_TIME = new Prefix("from ");
+    public static final Prefix PREFIX_LOCATION = new Prefix("at ");
+    public static final Prefix PREFIX_NOTES = new Prefix("about ");
+    public static final Prefix PREFIX_PERSON = new Prefix("with ");
+
+}
 ```
 ###### /java/seedu/address/logic/parser/AddMeetingCommandParser.java
 ``` java
@@ -411,13 +205,17 @@ public class AddMeetingCommandParser implements Parser<AddMeetingCommand>  {
 
 }
 ```
-###### /java/seedu/address/logic/parser/CliSyntax.java
+###### /java/seedu/address/logic/parser/exceptions/IllegalDateTimeException.java
 ``` java
-    public static final Prefix PREFIX_DATE = new Prefix("on ");
-    public static final Prefix PREFIX_TIME = new Prefix("from ");
-    public static final Prefix PREFIX_LOCATION = new Prefix("at ");
-    public static final Prefix PREFIX_NOTES = new Prefix("about ");
-    public static final Prefix PREFIX_PERSON = new Prefix("with ");
+
+/**
+ * Catches illegal dates and times in user inputs
+ */
+public class IllegalDateTimeException extends IllegalValueException {
+
+    public IllegalDateTimeException (String message) {
+        super (message);
+    }
 
 }
 ```
@@ -449,20 +247,6 @@ public class DeleteTagCommandParser implements Parser<DeleteTagCommand>  {
 
 
 
-```
-###### /java/seedu/address/logic/parser/exceptions/IllegalDateTimeException.java
-``` java
-
-/**
- * Catches illegal dates and times in user inputs
- */
-public class IllegalDateTimeException extends IllegalValueException {
-
-    public IllegalDateTimeException (String message) {
-        super (message);
-    }
-
-}
 ```
 ###### /java/seedu/address/logic/parser/ParserUtil.java
 ``` java
@@ -625,363 +409,456 @@ public class SetUniqueKeyCommandParser implements Parser<SetUniqueKeyCommand> {
 
 }
 ```
-###### /java/seedu/address/model/AddressBook.java
-``` java
-    //// Sort methods
-    /***
-     * sorts persons in the addressbook by number of times they were previously searched
-     */
-    public void sortBySearchCount() {
-        persons.sortBySearchCount();
-    }
-
-
-    /***
-     * sorts persons in the addressbook alphabetically
-     */
-    public void sortLexicographically() {
-        persons.sortLexicographically();
-    }
-```
-###### /java/seedu/address/model/asana/AuthenticateAsanaUser.java
+###### /java/seedu/address/logic/commands/AddMeetingCommand.java
 ``` java
 /**
- * Authenticates Asana user by redirecting user to Asana's webpage
+ * Adds a new meeting to the address book.
  */
-public class AuthenticateAsanaUser {
+public class AddMeetingCommand extends Command {
 
-    public AuthenticateAsanaUser () throws URISyntaxException, IOException {
+    public static final String COMMAND_WORD = "addMeeting";
+    public static final String COMMAND_ALIAS = "am";
+
+    public static final String GOOGLE_ADDRESS = "www.google.com";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a meeting to the address book. "
+            + "Parameters: "
+            + PREFIX_DATE + "DATE "
+            + PREFIX_TIME + "TIME "
+            + PREFIX_LOCATION + "LOCATION "
+            + PREFIX_NOTES + "NOTES "
+            + PREFIX_PERSON + "PERSON 1 "
+            + PREFIX_PERSON + "PERSON 2 ...\n"
+            + "Example: "
+            + COMMAND_WORD + " "
+            + PREFIX_DATE + "20/11/2017 "
+            + PREFIX_TIME + "1800 "
+            + PREFIX_LOCATION + "UTown Starbucks "
+            + PREFIX_NOTES + "Project Meeting "
+            + PREFIX_PERSON + "1";
+
+
+    public static final String MESSAGE_SUCCESS_BOTH = "New meeting added locally and to Asana!";
+    public static final String MESSAGE_SUCCESS_NO_INET = "New meeting added locally!\n "
+            + "Connect to the internet to post the meeting on Asana.";
+    public static final String MESSAGE_SUCCESS_ASANA_NO_CONFIG = "New meeting added locally!\n"
+            + "Setup Asana to post the meeting on Asana.";
+    public static final String MESSAGE_SUCCESS_LOCAL = "New meeting added locally!\n"
+            + "Connect to the internet and setup Asana to post a meeting on Asana.";
+    public static final String MESSAGE_DUPLICATE_MEETING = "This meeting already exists in the address book";
+    public static final String MESSAGE_INVALID_ID = "Please input a valid person id!";
+    public static final String MESSAGE_TEMPLATE = COMMAND_WORD + " "
+            + PREFIX_DATE + "DATE "
+            + PREFIX_TIME + "TIME "
+            + PREFIX_LOCATION + "LOCATION "
+            + PREFIX_NOTES + "NOTES "
+            + PREFIX_PERSON + "PERSON ...";
+
+
+    private final Meeting toAdd;
+
+    public AddMeetingCommand(ReadOnlyMeeting meeting) {
+        toAdd = new Meeting(meeting);
+    }
+
+
+    @Override
+    public CommandResult execute() throws CommandException {
+        requireNonNull(model);
         AsanaCredentials asanaCredentials = new AsanaCredentials();
-        OAuthApp app = new OAuthApp(asanaCredentials.getClientId(), asanaCredentials.getClientSecret(),
-                asanaCredentials.getRedirectUri());
-        Client client = Client.oauth(app);
 
-        //to prevent CSRF attacks
-        String currentState = UUID.randomUUID().toString();
-        String url = app.getAuthorizationUrl(currentState);
+        //if there is internet connection && asana is configured
+        if (isThereInternetConnection() && asanaCredentials.getIsAsanaConfigured()) {
 
-        //open browser on desktop for authentication purpose --> Asana to show authorisation key
-        Desktop.getDesktop().browse(new URI(url));
+            try {
 
-    }
-}
-```
-###### /java/seedu/address/model/asana/CheckAuthenticateAsanaUser.java
-``` java
-/**
- * Authenticate & Store access token for Asana
- */
-public class CheckAuthenticateAsanaUser {
+                //add meeting on Asana
+                PostTask newAsanaTask = null;
+                try {
+                    newAsanaTask = new PostTask(toAdd.getNotes(), toAdd.getDate());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                newAsanaTask.execute();
 
-    private static String currentAccessToken;
+                //add meeting locally
+                model.addMeeting(toAdd);
 
-    public CheckAuthenticateAsanaUser() throws AsanaAuthenticationException {
-        if (!isAuthenticated()) {
-            throw new AsanaAuthenticationException("Please make sure you have allowed "
-                    + "OurAB to access your Asana account");
+            } catch (DuplicateMeetingException e) {
+                throw new CommandException(MESSAGE_DUPLICATE_MEETING);
+            } catch (IllegalIdException ive) {
+                throw new CommandException(MESSAGE_INVALID_ID);
+            }
+
+            return new CommandResult(String.format(MESSAGE_SUCCESS_BOTH, toAdd));
+        } else {
+            //only add meeting locally, not on Asana
+            try {
+                model.addMeeting(toAdd);
+            } catch (DuplicateMeetingException e) {
+                throw new CommandException(MESSAGE_DUPLICATE_MEETING);
+            } catch (IllegalIdException ive) {
+                throw new CommandException(MESSAGE_INVALID_ID);
+            }
+
+            //there is a stable internet connection but Asana is not configured
+            if (isThereInternetConnection() && !asanaCredentials.getIsAsanaConfigured()) {
+                return new CommandResult(MESSAGE_SUCCESS_ASANA_NO_CONFIG);
+            } else if (!isThereInternetConnection() && asanaCredentials.getIsAsanaConfigured()) {
+                //No internet connection but Asana is configured
+                return new CommandResult(MESSAGE_SUCCESS_NO_INET);
+            } else {
+                //There is no internet connection and Asana is not configured
+                return new CommandResult(MESSAGE_SUCCESS_LOCAL);
+            }
         }
     }
 
-    /**
-     * checks if user is authenticated by Asana
-     */
-    private boolean isAuthenticated() {
-        currentAccessToken = new AsanaCredentials().getAccessToken();
-        return !(currentAccessToken == null);
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof AddMeetingCommand // instanceof handles nulls
+                && toAdd.equals(((AddMeetingCommand) other).toAdd));
     }
 
+    /**
+     * Check if there is an internet connection available
+     * @return isThereInternetCOnnection, true if there is a connection and false otherwise
+     */
+    private boolean isThereInternetConnection() {
+        Socket sock = new Socket();
+        InetSocketAddress addr = new InetSocketAddress(GOOGLE_ADDRESS, 80);
+        try {
+            sock.connect(addr, 300);
+            return true;
+        } catch (IOException e) {
+            return false;
+        } finally {
+            try {
+                sock.close();
+            } catch (IOException e) {
+                return false;
+            }
+        }
+    }
 }
 ```
-###### /java/seedu/address/model/asana/PostTask.java
+###### /java/seedu/address/logic/commands/SetupAsanaCommand.java
 ``` java
-/***
- * Posts a task onto users meeting project on Asana
+/**
+ * Initiates Authorisation with Asana on Asana's website
  */
-@Ignore
-public class PostTask extends Command {
+public class SetupAsanaCommand extends Command {
+    public static final String COMMAND_WORD = "setupAsana";
+    public static final String COMMAND_ALIAS = "sa";
 
-    private String notes;
-    private String date;
+    public static final boolean CONFIGURED = true;
 
-    public PostTask(String notes, String localDate) throws ParseException {
-        this.notes = notes;
-        this.date = dateFormatter(localDate);
-    }
+    public static final String MESSAGE_SUCCESS = "1. Login & allow OurAB to access your Asana account\n"
+            + "2. Copy from the site, the code: DIGIT/ALPHANUMERICS\n"
+            + "Example: 0/123a689ny8912h324h78s\n"
+            + "3. Type: setKey 0/ALPHANUMERICS";
+    public static final String MESSAGE_TEMPLATE = COMMAND_WORD;
+
     @Override
     public CommandResult execute() throws CommandException {
 
-        Client client;
         try {
-            new CheckAuthenticateAsanaUser();
-            client = Client.accessToken((new AsanaCredentials()).getAccessToken());
-            //get user data
-            User user = client.users.me().execute();
 
-            // find user's "Personal Projects" project //default asana personal workspace
-            Workspace meetingsWorkspace = null;
-            for (Workspace workspace : client.workspaces.findAll()) {
-                if (workspace.name.equals("Personal Projects")) {
-                    meetingsWorkspace = workspace;
-                    break;
-                }
-            }
+            new AuthenticateAsanaUser();
 
-            if (meetingsWorkspace == null) {
-                throw new CommandException("Please create a workspace called "
-                        + "\"Personal Projects\" in your Asana account");
-            }
+            AsanaCredentials asanaCredentials = new AsanaCredentials();
+            asanaCredentials.setIsAsanaConfigured(CONFIGURED);
 
-            // create a "Meetings" if it doesn't exist
-            List<Project> projects = client.projects.findByWorkspace(meetingsWorkspace.id).execute();
-            Project myMeetings = null;
-            for (Project project : projects) {
-                if (project.name.equals("Meetings")) {
-                    myMeetings = project;
-                    break;
-                }
-            }
-            if (myMeetings == null) {
-                myMeetings = client.projects.createInWorkspace(meetingsWorkspace.id)
-                        .data("name", "Meetings")
-                        .execute();
-            }
-
-            // create a task in the project
-            client.tasks.createInWorkspace(meetingsWorkspace.id)
-                    .data("name", notes)
-                    .data("projects", Arrays.asList(myMeetings.id))
-                    .data("due_on", date)
-                    .data("assignee", user)
-                    .execute();
-
-        } catch (IOException io) {
-            throw new CommandException("Please setup Asana again!");
-        } catch (AsanaAuthenticationException e) {
-            throw new CommandException(e.getMessage());
+        } catch (URISyntaxException e) {
+            throw new CommandException("Failed to redirect to Asana's page. Please try again later!");
+        } catch (IOException e) {
+            throw new CommandException("Asana setup failed due to bad input. Please try again later!");
         }
 
-        return new CommandResult("");
+        return new CommandResult(MESSAGE_SUCCESS);
+    }
+}
+```
+###### /java/seedu/address/logic/commands/SetUniqueKeyCommand.java
+``` java
+/**
+ * Sets Unique key produced by Asana on Asana's webpage
+ */
+public class SetUniqueKeyCommand extends Command {
+
+    public static final String COMMAND_WORD = "setKey";
+    public static final String COMMAND_ALIAS = "sk";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " DIGIT/ALPHANUMERICS";
+
+
+    public static final String MESSAGE_SUCCESS = "Asana setup successful!";
+    public static final String MESSAGE_TEMPLATE = COMMAND_WORD + " DIGIT/ALPHANUMERICS";
+    private final String userAccessCode;
+
+    public SetUniqueKeyCommand(String code) {
+        userAccessCode = code;
     }
 
-    /**
-     * Formats date to suit input needs of Asana API
-     */
-    private String dateFormatter (String date) throws ParseException {
+    @Override
+    public CommandResult execute() throws CommandException {
 
-        DateFormat dateParse = new SimpleDateFormat("yyyy/mm/dd");
+        try {
+            new StoreAccessToken(userAccessCode);
+        } catch (IOException e) {
+            throw new CommandException("Please try again with a valid code from Asana");
+        } catch (IllegalArgumentException iae) {
+            throw new CommandException("Please try again with a valid code from Asana");
+        }
 
-        Date formattedDate = dateParse.parse(date);
+        return new CommandResult(MESSAGE_SUCCESS);
+    }
 
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
-
-        return dateFormat.format(formattedDate);
-
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof SetUniqueKeyCommand // instanceof handles nulls
+                && this.userAccessCode.equals(((SetUniqueKeyCommand) other).userAccessCode)); // state check
     }
 
 }
 ```
-###### /java/seedu/address/model/asana/StoreAccessToken.java
+###### /java/seedu/address/logic/commands/DeleteTagCommand.java
 ``` java
 /**
- * Stores AccessToken from user input
+ * Deletes all tags identified from the address book.
  */
-public class StoreAccessToken {
+public class DeleteTagCommand extends UndoableCommand {
 
-    private final AsanaCredentials asanaCredentials = new AsanaCredentials();
+    public static final String COMMAND_WORD = "deleteTag";
+    public static final String COMMAND_ALIAS = "dt";
 
-    public StoreAccessToken(String accessCode) throws IOException {
-        String accessToken = retrieveToken(accessCode);
-        asanaCredentials.setAccessToken(accessToken);
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Deletes a particular tag from everyone.\n"
+            + "Parameters: Tag1(text) Tag2(text)\n"
+            + "Example: " + COMMAND_WORD + " friends" + " family";
+
+    public static final String MESSAGE_SUCCESS = "Tag(s) successfully deleted";
+    public static final String MESSAGE_NO_TAGS_DELETED = "Tag(s) not in address book; Nothing to delete";
+    public static final String MESSAGE_TEMPLATE = COMMAND_WORD + " TAG 1" + " TAG2" + " ...";
+
+    private final String[] mTagsArgs;
+    private Tag[] mTagsToDelete;
+
+    public DeleteTagCommand(String[] tag) throws NullPointerException {
+        if (tag == null) {
+            throw new NullPointerException("Arguments cannot be null");
+        }
+        mTagsArgs = tag;
     }
 
     /***
-     * Retrieve access token using userAccessCode if it is valid
+     * Helper method that converts array of arguments (string type) to array of tags (Tag class)
+     * @param tag array of arguments in String
+     * @throws IllegalValueException
      */
-    private String retrieveToken(String accessCode) throws IOException {
-        OAuthApp app = new OAuthApp(asanaCredentials.getClientId(), asanaCredentials.getClientSecret(),
-                asanaCredentials.getRedirectUri());
-        Client.oauth(app);
-        String accessToken = app.fetchToken(accessCode);
+    private Tag[] stringToTag (String[] tag) throws IllegalValueException {
+        int numOfArgs = tag.length;
+        Tag[] tagsToDelete = new Tag[numOfArgs];
 
-        //check if user input is valid by testing if accesscode given by user successfully authorises the application
-        if (!(app.isAuthorized())) {
-            throw new IllegalArgumentException();
+        try {
+            for (int i = 0; i < numOfArgs; i++) {
+                tagsToDelete[i] = new Tag(tag[i]);
+            }
+        } catch (IllegalValueException ive) {
+            throw new IllegalValueException("Illegal tag value.");
+        } catch (IndexOutOfBoundsException ibe) {
+            throw new IndexOutOfBoundsException("Accessing tags that do not exist.");
+        }
+        return tagsToDelete;
+    }
+
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        boolean hasOneOrMoreDeletion = false;
+        try {
+            mTagsToDelete = stringToTag(mTagsArgs);
+            hasOneOrMoreDeletion = model.deleteTag(mTagsToDelete);
+
+        } catch (IllegalValueException ive) {
+            assert false : "The tag is not a proper value";
+        } catch (PersonNotFoundException pnfe) {
+            assert false : "The person associated with the tag cannot be missing";
         }
 
-        return accessToken;
+        if (hasOneOrMoreDeletion) {
+            return new CommandResult(String.format(MESSAGE_SUCCESS));
+        } else {
+            return new CommandResult(String.format(MESSAGE_NO_TAGS_DELETED));
+        }
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof DeleteTagCommand // instanceof handles nulls
+                && Arrays.equals(this.mTagsArgs, ((DeleteTagCommand) other).mTagsArgs)); // state check
     }
 
 }
 ```
-###### /java/seedu/address/model/exceptions/AsanaAuthenticationException.java
+###### /java/seedu/address/logic/commands/ListCommand.java
 ``` java
-/**
- * Raises an exception when authentication/authorization fails
- */
-public class AsanaAuthenticationException extends IllegalValueException {
-    public AsanaAuthenticationException(String message) {
-        super(message);
+    @Override
+    public CommandResult executeUndoableCommand() {
+        model.sortPersonListLexicographically();
+        return new CommandResult(MESSAGE_SUCCESS);
     }
-}
 ```
-###### /java/seedu/address/model/exceptions/DuplicateMeetingException.java
-``` java
-/**
- *Signals that an operation would have violated the 'no duplicates' property of the list.
- */
-public class DuplicateMeetingException extends DuplicateDataException {
-    public DuplicateMeetingException() {
-        super("Operation would result in duplicate meetings");
-    }
-}
-```
-###### /java/seedu/address/model/exceptions/IllegalIdException.java
+###### /java/seedu/address/logic/commands/ListByMostSearchedCommand.java
 ``` java
 /***
- * Signals that a particular person id does not exist in address book
+ * Lists all users in the addressbook based on how frequently they are searched
+ * Sorts by search frequency
+ *
  */
-public class IllegalIdException extends IllegalValueException {
+public class ListByMostSearchedCommand extends UndoableCommand {
 
-    public IllegalIdException(String message) {
-        super (message);
+    public static final String COMMAND_WORD = "listMostSearched";
+    public static final String COMMAND_ALIAS = "lms";
+    public static final String MESSAGE_TEMPLATE = COMMAND_WORD;
+
+    public static final String MESSAGE_SUCCESS = "Listed all persons sorted by frequency of search";
+
+    @Override
+    public CommandResult executeUndoableCommand() {
+        model.sortPersonListBySearchCount();
+        return new CommandResult(MESSAGE_SUCCESS);
     }
+
+}
+
+```
+###### /java/seedu/address/logic/commands/FindCommand.java
+``` java
+    @Override
+    public CommandResult execute() throws CommandException {
+
+        model.updateFilteredPersonList(predicate);
+        int searchResultsCount = model.getFilteredPersonList().size();
+
+        if (searchResultsCount != NO_RESULTS) {
+            model.recordSearchHistory();
+        }
+        return new CommandResult(getMessageForPersonListShownSummary(searchResultsCount));
+    }
+```
+###### /java/seedu/address/model/UniqueMeetingList.java
+``` java
+    /**
+     * Sorts the meeting by date. For retrieving earliest meeting in the list
+     */
+    public void sortByDate() {
+        internalList.sort(new DateTimeComparator());
+    }
+
+    /**
+     * Comparator that compares date time to sort meetings
+     */
+    public class DateTimeComparator implements Comparator<ReadOnlyMeeting> {
+        /**
+         * Custom comparator to compare meetings based on chronological order
+         * @param rom1 ReadOnlyMeeting 1
+         * @param rom2 ReadOnlyMeeting 2
+         * @return which meeting comes before the other
+         */
+        @Override
+        public int compare(ReadOnlyMeeting rom1, ReadOnlyMeeting rom2) {
+            return rom1.getDateTimeStr().compareTo(rom2.getDateTimeStr());
+        }
+    }
+
+    //@@liuhang0213
+    /**
+     * Returns the meeting with earliest date in the internal list
+     * Currently not checking if it is happening in the future
+     */
+    @Override
+    public ReadOnlyMeeting getUpcomingMeeting() {
+        this.sortByDate();
+        return internalList.get(0);
+    }
+
+    public ObservableList<ReadOnlyMeeting> getInternalList() {
+        return internalList;
+    }
+
+    @Override
+    public Iterator<ReadOnlyMeeting> iterator() {
+        assert CollectionUtil.elementsAreUnique(internalList);
+        return internalList.iterator();
+    }
+
+    /**
+     * Returns the backing list as an unmodifiable {@code ObservableList}.
+     */
+    public ObservableList<ReadOnlyMeeting> asObservableList() {
+        assert CollectionUtil.elementsAreUnique(internalList);
+        return FXCollections.unmodifiableObservableList(internalList);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        assert CollectionUtil.elementsAreUnique(internalList);
+        return other == this // short circuit if same object
+                || (other instanceof UniqueMeetingList // instanceof handles nulls
+                        && this.internalList.equals(((UniqueMeetingList) other).internalList));
+    }
+
+    /**
+     * Returns true if the element in this list is equal to the elements in {@code other}.
+     * The elements do not have to be in the same order.
+     */
+    public boolean equalsOrderInsensitive(UniqueMeetingList other) {
+        assert CollectionUtil.elementsAreUnique(internalList);
+        assert CollectionUtil.elementsAreUnique(other.internalList);
+        return this == other || new HashSet<>(this.internalList).equals(new HashSet<>(other.internalList));
+    }
+
+    @Override
+    public int hashCode() {
+        assert CollectionUtil.elementsAreUnique(internalList);
+        return internalList.hashCode();
+    }
+
+
 }
 ```
-###### /java/seedu/address/model/Model.java
+###### /java/seedu/address/model/ReadOnlyMeeting.java
 ``` java
-    /** Deletes given tag from everyone in the addressbook */
-    boolean deleteTag(Tag [] tags) throws PersonNotFoundException, DuplicatePersonException;
-    /** Adds the given person */
-    void addMeeting(ReadOnlyMeeting meeting) throws DuplicateMeetingException, IllegalIdException;
-```
-###### /java/seedu/address/model/Model.java
-``` java
-    /**
-     * Updates search count for each person who is searched using {@code FindCommand}
-     * Assumes filtered List of persons contains search results
-     */
-    void recordSearchHistory() throws CommandException;
+/**
+ * A read-only immutable interface for a Meeting in the addressbook.
+ * Implementations should guarantee: details are present and not null, field values are validated.
+ */
+public interface ReadOnlyMeeting {
+    String getDate();
+    String getTime();
+    String getDateTimeStr();
+    String getLocation();
+    String getNotes();
+    LocalDateTime getDateTime();
+    ArrayList<InternalId> getListOfPersonsId();
 
-    /**
-     * Sort everyone in addressbook by searchCount
-     */
-    void sortPersonListBySearchCount();
 
     /**
-     * Sort everyone in addressbook lexicographically
+     * Returns true if both have the same state. (interfaces cannot override .equals)
      */
-    void sortPersonListLexicographically();
-
-```
-###### /java/seedu/address/model/ModelManager.java
-``` java
-    /** Raises an event to indicate the model has changed */
-    private void indicateMeetingListChanged() {
-        raise(new MeetingListChangedEvent(meetingList));
+    default boolean isSameStateAs(ReadOnlyMeeting other) {
+        return other == this // short circuit if same object
+                || (other != null // this is first to avoid NPE below
+                && other.getDateTimeStr().equals(this.getDateTimeStr()) // state checks here onwards
+                && other.getLocation().equals(this.getLocation())
+                && other.getNotes().equals(this.getNotes()));
     }
 
-```
-###### /java/seedu/address/model/ModelManager.java
-``` java
-    @Override
-    public boolean deleteTag(Tag [] tags) throws PersonNotFoundException, DuplicatePersonException {
-        boolean isTagRemoved;
-        boolean hasOneOrMoreDeletion = false;
-        for (int i = 0; i < addressBook.getPersonList().size(); i++) {
-
-            ReadOnlyPerson oldPerson = addressBook.getPersonList().get(i);
-            //creates a new person without each of the tags
-            Person newPerson = new Person(oldPerson);
-            Set<Tag> newTags = new HashSet<>(newPerson.getTags());
-
-            for (Tag tag : tags) {
-                isTagRemoved = newTags.remove(tag);
-                if (isTagRemoved) {
-                    hasOneOrMoreDeletion = isTagRemoved;
-                }
-            }
-            newPerson.setTags(newTags);
-
-            addressBook.updatePerson(oldPerson, newPerson);
-        }
-        return hasOneOrMoreDeletion;
-    }
-
-    /***
-     * Adds a meeting to the Unique meeting list
-     * @param meeting
-     * @throws DuplicateMeetingException
-     * @throws IllegalIdException
-     */
-    public synchronized void addMeeting(ReadOnlyMeeting meeting) throws DuplicateMeetingException, IllegalIdException {
-        boolean isIdValid;
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-
-        //search through all Internal Ids, making sure that every id provided in argument is valid.
-        for (InternalId id: meeting.getListOfPersonsId()) {
-            isIdValid = false;
-            for (ReadOnlyPerson person:filteredPersons) {
-                if (person.getInternalId().equals(id)) {
-                    isIdValid = true;
-                }
-            }
-            if (!isIdValid) {
-                throw new IllegalIdException("Please input a valid person id");
-            }
-        }
-
-        meetingList.add(meeting);
-        indicateMeetingListChanged();
-    }
-```
-###### /java/seedu/address/model/ModelManager.java
-``` java
-    /***
-     * Records how many times each person in addressbook is searched for
-     * @throws CommandException
-     */
-    @Override
-    public void recordSearchHistory() throws CommandException {
-
-        int searchResultsCount = filteredPersons.size();
-
-        for (int i = 0; i < searchResultsCount; i++) {
-            ReadOnlyPerson searchedPerson = filteredPersons.get(i);
-            SearchData updatedSearchData = searchedPerson.getSearchData();
-            updatedSearchData.incrementSearchCount();
-            Person modifiedPerson = new Person(searchedPerson.getInternalId(), searchedPerson.getName(),
-                    searchedPerson.getPhone(), searchedPerson.getEmail(), searchedPerson.getAddress(),
-                    searchedPerson.getTags(), updatedSearchData);
-            try {
-                updatePerson(searchedPerson, modifiedPerson);
-            } catch (DuplicatePersonException dpe) {
-                throw new CommandException(MESSAGE_DUPLICATE_PERSON);
-            } catch (PersonNotFoundException pnfe) {
-                throw new AssertionError("The target person cannot be missing");
-            }
-        }
-    }
-
-    //=========== Sort addressBook methods =============================================================
-    /***
-     * Sorts persons in address book by searchCount
-     */
-    @Override
-    public void sortPersonListBySearchCount() {
-        addressBook.sortBySearchCount();
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        indicateAddressBookChanged();
-    }
-
-    /***
-     * Sorts persons in Address book alphabetically
-     */
-    @Override
-    public void sortPersonListLexicographically() {
-        addressBook.sortLexicographically();
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        indicateAddressBookChanged();
-    }
+    int compareTo(Meeting other);
+}
 ```
 ###### /java/seedu/address/model/person/Person.java
 ``` java
@@ -1114,116 +991,363 @@ public class SearchData {
 
     }
 ```
-###### /java/seedu/address/model/ReadOnlyMeeting.java
+###### /java/seedu/address/model/exceptions/DuplicateMeetingException.java
 ``` java
 /**
- * A read-only immutable interface for a Meeting in the addressbook.
- * Implementations should guarantee: details are present and not null, field values are validated.
+ *Signals that an operation would have violated the 'no duplicates' property of the list.
  */
-public interface ReadOnlyMeeting {
-    String getDate();
-    String getTime();
-    String getDateTimeStr();
-    String getLocation();
-    String getNotes();
-    LocalDateTime getDateTime();
-    ArrayList<InternalId> getListOfPersonsId();
-
-
-    /**
-     * Returns true if both have the same state. (interfaces cannot override .equals)
-     */
-    default boolean isSameStateAs(ReadOnlyMeeting other) {
-        return other == this // short circuit if same object
-                || (other != null // this is first to avoid NPE below
-                && other.getDateTimeStr().equals(this.getDateTimeStr()) // state checks here onwards
-                && other.getLocation().equals(this.getLocation())
-                && other.getNotes().equals(this.getNotes()));
+public class DuplicateMeetingException extends DuplicateDataException {
+    public DuplicateMeetingException() {
+        super("Operation would result in duplicate meetings");
     }
-
-    int compareTo(Meeting other);
 }
 ```
-###### /java/seedu/address/model/UniqueMeetingList.java
+###### /java/seedu/address/model/exceptions/AsanaAuthenticationException.java
 ``` java
-    /**
-     * Sorts the meeting by date. For retrieving earliest meeting in the list
-     */
-    public void sortByDate() {
-        internalList.sort(new DateTimeComparator());
+/**
+ * Raises an exception when authentication/authorization fails
+ */
+public class AsanaAuthenticationException extends IllegalValueException {
+    public AsanaAuthenticationException(String message) {
+        super(message);
+    }
+}
+```
+###### /java/seedu/address/model/exceptions/IllegalIdException.java
+``` java
+/***
+ * Signals that a particular person id does not exist in address book
+ */
+public class IllegalIdException extends IllegalValueException {
+
+    public IllegalIdException(String message) {
+        super (message);
+    }
+}
+```
+###### /java/seedu/address/model/ModelManager.java
+``` java
+    /** Raises an event to indicate the model has changed */
+    private void indicateMeetingListChanged() {
+        raise(new MeetingListChangedEvent(meetingList));
     }
 
-    /**
-     * Comparator that compares date time to sort meetings
+```
+###### /java/seedu/address/model/ModelManager.java
+``` java
+    @Override
+    public boolean deleteTag(Tag [] tags) throws PersonNotFoundException, DuplicatePersonException {
+        boolean isTagRemoved;
+        boolean hasOneOrMoreDeletion = false;
+        for (int i = 0; i < addressBook.getPersonList().size(); i++) {
+
+            ReadOnlyPerson oldPerson = addressBook.getPersonList().get(i);
+            //creates a new person without each of the tags
+            Person newPerson = new Person(oldPerson);
+            Set<Tag> newTags = new HashSet<>(newPerson.getTags());
+
+            for (Tag tag : tags) {
+                isTagRemoved = newTags.remove(tag);
+                if (isTagRemoved) {
+                    hasOneOrMoreDeletion = isTagRemoved;
+                }
+            }
+            newPerson.setTags(newTags);
+
+            addressBook.updatePerson(oldPerson, newPerson);
+        }
+        return hasOneOrMoreDeletion;
+    }
+
+    /***
+     * Adds a meeting to the Unique meeting list
+     * @param meeting
+     * @throws DuplicateMeetingException
+     * @throws IllegalIdException
      */
-    public class DateTimeComparator implements Comparator<ReadOnlyMeeting> {
-        /**
-         * Custom comparator to compare meetings based on chronological order
-         * @param rom1 ReadOnlyMeeting 1
-         * @param rom2 ReadOnlyMeeting 2
-         * @return which meeting comes before the other
-         */
-        @Override
-        public int compare(ReadOnlyMeeting rom1, ReadOnlyMeeting rom2) {
-            return rom1.getDateTimeStr().compareTo(rom2.getDateTimeStr());
+    public synchronized void addMeeting(ReadOnlyMeeting meeting) throws DuplicateMeetingException, IllegalIdException {
+        boolean isIdValid;
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+
+        //search through all Internal Ids, making sure that every id provided in argument is valid.
+        for (InternalId id: meeting.getListOfPersonsId()) {
+            isIdValid = false;
+            for (ReadOnlyPerson person:filteredPersons) {
+                if (person.getInternalId().equals(id)) {
+                    isIdValid = true;
+                }
+            }
+            if (!isIdValid) {
+                throw new IllegalIdException("Please input a valid person id");
+            }
+        }
+
+        meetingList.add(meeting);
+        indicateMeetingListChanged();
+    }
+```
+###### /java/seedu/address/model/ModelManager.java
+``` java
+    /***
+     * Records how many times each person in addressbook is searched for
+     * @throws CommandException
+     */
+    @Override
+    public void recordSearchHistory() throws CommandException {
+
+        int searchResultsCount = filteredPersons.size();
+
+        for (int i = 0; i < searchResultsCount; i++) {
+            ReadOnlyPerson searchedPerson = filteredPersons.get(i);
+            SearchData updatedSearchData = searchedPerson.getSearchData();
+            updatedSearchData.incrementSearchCount();
+            Person modifiedPerson = new Person(searchedPerson.getInternalId(), searchedPerson.getName(),
+                    searchedPerson.getPhone(), searchedPerson.getEmail(), searchedPerson.getAddress(),
+                    searchedPerson.getTags(), updatedSearchData);
+            try {
+                updatePerson(searchedPerson, modifiedPerson);
+            } catch (DuplicatePersonException dpe) {
+                throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            } catch (PersonNotFoundException pnfe) {
+                throw new AssertionError("The target person cannot be missing");
+            }
         }
     }
 
-    //@@liuhang0213
-    /**
-     * Returns the meeting with earliest date in the internal list
-     * Currently not checking if it is happening in the future
+    //=========== Sort addressBook methods =============================================================
+    /***
+     * Sorts persons in address book by searchCount
      */
     @Override
-    public ReadOnlyMeeting getUpcomingMeeting() {
-        this.sortByDate();
-        return internalList.get(0);
+    public void sortPersonListBySearchCount() {
+        addressBook.sortBySearchCount();
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        indicateAddressBookChanged();
     }
 
-    public ObservableList<ReadOnlyMeeting> getInternalList() {
-        return internalList;
-    }
-
-    @Override
-    public Iterator<ReadOnlyMeeting> iterator() {
-        assert CollectionUtil.elementsAreUnique(internalList);
-        return internalList.iterator();
-    }
-
-    /**
-     * Returns the backing list as an unmodifiable {@code ObservableList}.
+    /***
+     * Sorts persons in Address book alphabetically
      */
-    public ObservableList<ReadOnlyMeeting> asObservableList() {
-        assert CollectionUtil.elementsAreUnique(internalList);
-        return FXCollections.unmodifiableObservableList(internalList);
-    }
-
     @Override
-    public boolean equals(Object other) {
-        assert CollectionUtil.elementsAreUnique(internalList);
-        return other == this // short circuit if same object
-                || (other instanceof UniqueMeetingList // instanceof handles nulls
-                        && this.internalList.equals(((UniqueMeetingList) other).internalList));
+    public void sortPersonListLexicographically() {
+        addressBook.sortLexicographically();
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        indicateAddressBookChanged();
+    }
+```
+###### /java/seedu/address/model/asana/StoreAccessToken.java
+``` java
+/**
+ * Stores AccessToken from user input
+ */
+public class StoreAccessToken {
+
+    private final AsanaCredentials asanaCredentials = new AsanaCredentials();
+
+    public StoreAccessToken(String accessCode) throws IOException {
+        String accessToken = retrieveToken(accessCode);
+        asanaCredentials.setAccessToken(accessToken);
     }
 
-    /**
-     * Returns true if the element in this list is equal to the elements in {@code other}.
-     * The elements do not have to be in the same order.
+    /***
+     * Retrieve access token using userAccessCode if it is valid
      */
-    public boolean equalsOrderInsensitive(UniqueMeetingList other) {
-        assert CollectionUtil.elementsAreUnique(internalList);
-        assert CollectionUtil.elementsAreUnique(other.internalList);
-        return this == other || new HashSet<>(this.internalList).equals(new HashSet<>(other.internalList));
-    }
+    private String retrieveToken(String accessCode) throws IOException {
+        OAuthApp app = new OAuthApp(asanaCredentials.getClientId(), asanaCredentials.getClientSecret(),
+                asanaCredentials.getRedirectUri());
+        Client.oauth(app);
+        String accessToken = app.fetchToken(accessCode);
 
-    @Override
-    public int hashCode() {
-        assert CollectionUtil.elementsAreUnique(internalList);
-        return internalList.hashCode();
-    }
+        //check if user input is valid by testing if accesscode given by user successfully authorises the application
+        if (!(app.isAuthorized())) {
+            throw new IllegalArgumentException();
+        }
 
+        return accessToken;
+    }
 
 }
+```
+###### /java/seedu/address/model/asana/PostTask.java
+``` java
+/***
+ * Posts a task onto users meeting project on Asana
+ */
+@Ignore
+public class PostTask extends Command {
+
+    private String notes;
+    private String date;
+
+    public PostTask(String notes, String localDate) throws ParseException {
+        this.notes = notes;
+        this.date = dateFormatter(localDate);
+    }
+    @Override
+    public CommandResult execute() throws CommandException {
+
+        Client client;
+        try {
+            new CheckAuthenticateAsanaUser();
+            client = Client.accessToken((new AsanaCredentials()).getAccessToken());
+            //get user data
+            User user = client.users.me().execute();
+
+            // find user's "Personal Projects" project //default asana personal workspace
+            Workspace meetingsWorkspace = null;
+            for (Workspace workspace : client.workspaces.findAll()) {
+                if (workspace.name.equals("Personal Projects")) {
+                    meetingsWorkspace = workspace;
+                    break;
+                }
+            }
+
+            if (meetingsWorkspace == null) {
+                throw new CommandException("Please create a workspace called "
+                        + "\"Personal Projects\" in your Asana account");
+            }
+
+            // create a "Meetings" if it doesn't exist
+            List<Project> projects = client.projects.findByWorkspace(meetingsWorkspace.id).execute();
+            Project myMeetings = null;
+            for (Project project : projects) {
+                if (project.name.equals("Meetings")) {
+                    myMeetings = project;
+                    break;
+                }
+            }
+            if (myMeetings == null) {
+                myMeetings = client.projects.createInWorkspace(meetingsWorkspace.id)
+                        .data("name", "Meetings")
+                        .execute();
+            }
+
+            // create a task in the project
+            client.tasks.createInWorkspace(meetingsWorkspace.id)
+                    .data("name", notes)
+                    .data("projects", Arrays.asList(myMeetings.id))
+                    .data("due_on", date)
+                    .data("assignee", user)
+                    .execute();
+
+        } catch (IOException io) {
+            throw new CommandException("Please setup Asana again!");
+        } catch (AsanaAuthenticationException e) {
+            throw new CommandException(e.getMessage());
+        }
+
+        return new CommandResult("");
+    }
+
+    /**
+     * Formats date to suit input needs of Asana API
+     */
+    private String dateFormatter (String date) throws ParseException {
+
+        DateFormat dateParse = new SimpleDateFormat("yyyy/mm/dd");
+
+        Date formattedDate = dateParse.parse(date);
+
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
+
+        return dateFormat.format(formattedDate);
+
+    }
+
+}
+```
+###### /java/seedu/address/model/asana/CheckAuthenticateAsanaUser.java
+``` java
+/**
+ * Authenticate & Store access token for Asana
+ */
+public class CheckAuthenticateAsanaUser {
+
+    private static String currentAccessToken;
+
+    public CheckAuthenticateAsanaUser() throws AsanaAuthenticationException {
+        if (!isAuthenticated()) {
+            throw new AsanaAuthenticationException("Please make sure you have allowed "
+                    + "OurAB to access your Asana account");
+        }
+    }
+
+    /**
+     * checks if user is authenticated by Asana
+     */
+    private boolean isAuthenticated() {
+        currentAccessToken = new AsanaCredentials().getAccessToken();
+        return !(currentAccessToken == null);
+    }
+
+}
+```
+###### /java/seedu/address/model/asana/AuthenticateAsanaUser.java
+``` java
+/**
+ * Authenticates Asana user by redirecting user to Asana's webpage
+ */
+public class AuthenticateAsanaUser {
+
+    public AuthenticateAsanaUser () throws URISyntaxException, IOException {
+        AsanaCredentials asanaCredentials = new AsanaCredentials();
+        OAuthApp app = new OAuthApp(asanaCredentials.getClientId(), asanaCredentials.getClientSecret(),
+                asanaCredentials.getRedirectUri());
+        Client client = Client.oauth(app);
+
+        //to prevent CSRF attacks
+        String currentState = UUID.randomUUID().toString();
+        String url = app.getAuthorizationUrl(currentState);
+
+        //open browser on desktop for authentication purpose --> Asana to show authorisation key
+        Desktop.getDesktop().browse(new URI(url));
+
+    }
+}
+```
+###### /java/seedu/address/model/Model.java
+``` java
+    /** Deletes given tag from everyone in the addressbook */
+    boolean deleteTag(Tag [] tags) throws PersonNotFoundException, DuplicatePersonException;
+    /** Adds the given person */
+    void addMeeting(ReadOnlyMeeting meeting) throws DuplicateMeetingException, IllegalIdException;
+```
+###### /java/seedu/address/model/Model.java
+``` java
+    /**
+     * Updates search count for each person who is searched using {@code FindCommand}
+     * Assumes filtered List of persons contains search results
+     */
+    void recordSearchHistory() throws CommandException;
+
+    /**
+     * Sort everyone in addressbook by searchCount
+     */
+    void sortPersonListBySearchCount();
+
+    /**
+     * Sort everyone in addressbook lexicographically
+     */
+    void sortPersonListLexicographically();
+
+```
+###### /java/seedu/address/model/AddressBook.java
+``` java
+    //// Sort methods
+    /***
+     * sorts persons in the addressbook by number of times they were previously searched
+     */
+    public void sortBySearchCount() {
+        persons.sortBySearchCount();
+    }
+
+
+    /***
+     * sorts persons in the addressbook alphabetically
+     */
+    public void sortLexicographically() {
+        persons.sortLexicographically();
+    }
 ```
 ###### /java/seedu/address/storage/asana/storage/AsanaCredentials.java
 ``` java
@@ -1292,130 +1416,6 @@ public class AsanaCredentials {
      */
     public boolean getIsAsanaConfigured() {
         return isAsanaConfigured;
-    }
-
-}
-```
-###### /java/seedu/address/ui/BrowserPanel.java
-``` java
-    public static final String DEFAULT_PAGE = "default.html";
-    public static final String LINKEDIN_SEARCH_URL_PREFIX = "https://www.linkedin.com/search/results/";
-    public static final String LINKEDIN_SEARCH_PEOPLE = "people/";
-    public static final String LINKEDIN_SEARCH_PARAM_LOCATION = "?facetGeoRegion=%5B%22sg%3A0%22%5D";
-    public static final String LINKEDIN_SEARCH_PARAM_FIRST_NAME = "&firstName=";
-    public static final String LINKEDIN_SEARCH_PARAM_LAST_NAME = "&lastName=";
-    public static final String LINKEDIN_URL_SUFFIX = "&origin=FACETED_SEARCH";
-    public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/search?safe=off&q=";
-    public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
-    public static final String GOOGLE_MAPS_URL_PREFIX = "https://www.google.com.sg/maps?safe=off&q=";
-```
-###### /java/seedu/address/ui/BrowserPanel.java
-``` java
-    /***
-     * Loads person page
-     * @param person
-     */
-    private void loadPersonPage(ReadOnlyPerson person) {
-        personSelected = person;
-        if (hasLinkedinBeenChosen) {
-            try {
-                loadLinkedIn();
-            } catch (CommandException e) {
-                e.printStackTrace();
-            }
-        } else if (hasMapsBeenChosen) {
-            try {
-                loadPersonMap(person);
-            } catch (CommandException e) {
-                e.printStackTrace();
-            }
-        } else {
-            loadPage(GOOGLE_SEARCH_URL_PREFIX + person.getName().fullName.replaceAll(" ", "+")
-                    + GOOGLE_SEARCH_URL_SUFFIX);
-        }
-    }
-
-```
-###### /java/seedu/address/ui/BrowserPanel.java
-``` java
-    /***
-     * Loads pages based on choose command selection
-     */
-    private void loadLinkedIn() throws CommandException {
-        if (personSelected == null) {
-            throw new CommandException("Please select a person");
-        }
-        setLinkedinChosenTrue();
-        setMapsChosenFalse();
-        String[] name = personSelected.getName().fullName.split(" ");
-
-        loadPage(LINKEDIN_SEARCH_URL_PREFIX + LINKEDIN_SEARCH_PEOPLE + LINKEDIN_SEARCH_PARAM_LOCATION
-                + LINKEDIN_SEARCH_PARAM_FIRST_NAME + name[0] + LINKEDIN_SEARCH_PARAM_LAST_NAME + name[1]
-                + LINKEDIN_URL_SUFFIX);
-    }
-```
-###### /java/seedu/address/ui/BrowserPanel.java
-``` java
-    /**
-     * Setter method to set the Boolean value of hasLinkedinBeenChosen
-     */
-    public void setLinkedinChosenTrue () {
-        hasLinkedinBeenChosen = true;
-    }
-
-    public void setLinkedinChosenFalse () {
-        hasLinkedinBeenChosen = false;
-    }
-```
-###### /java/seedu/address/ui/BrowserPanel.java
-``` java
-    @Subscribe
-    private void handleBrowserPanelSelectionChangedEvent(BrowserPanelSelectionChangedEvent event)
-            throws CommandException {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        if (event.getBrowserSelection().equals("linkedin")) {
-            loadLinkedIn();
-        } else if (event.getBrowserSelection().equals("google")) {
-            hasLinkedinBeenChosen = false;
-            hasMapsBeenChosen = false;
-            loadPersonPage(personSelected);
-        } else if (event.getBrowserSelection().equals("maps")) {
-            loadPersonMap(personSelected);
-        }
-    }
-
-    //@author martyn-wong
-    @Subscribe
-    private void handleMapPanelEvent(MapPersonEvent event) throws CommandException {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadPersonMap(event.getPerson());
-    }
-}
-```
-###### /java/seedu/address/ui/ResultDisplay.java
-``` java
-    public ResultDisplay(String message) {
-        super(FXML);
-        resultDisplay.textProperty().bind(displayed);
-        registerAsAnEventHandler(this);
-
-        Platform.runLater(() -> {
-            displayed.setValue(message);
-            resultDisplay.setStyle("-fx-text-fill: white");
-        });
-    }
-
-    @Subscribe
-    private void handleNewResultAvailableEvent(NewResultAvailableEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        Platform.runLater(() -> {
-            displayed.setValue(event.message);
-            if (event.errorStatus) {
-                resultDisplay.setStyle("-fx-text-fill: #e35252");
-            } else {
-                resultDisplay.setStyle("-fx-text-fill: #70db75");
-            }
-        });
     }
 
 }
