@@ -29,6 +29,18 @@ public class GuiTestAssert {
     }
 
     /**
+     * Overloaded method to assertCardEquals for EventCard
+     * @param expectedCard
+     * @param actualCard
+     */
+    public static void assertCardEquals(EventCardHandle expectedCard, EventCardHandle actualCard) {
+        assertEquals(expectedCard.getId(), actualCard.getId());
+        assertEquals(expectedCard.getEventName(), actualCard.getEventName());
+        assertEquals(expectedCard.getTime(), actualCard.getTime());
+
+    }
+
+    /**
      * Asserts that {@code actualCard} displays the details of {@code expectedPerson}.
      */
     public static void assertCardDisplaysPerson(ReadOnlyPerson expectedPerson, PersonCardHandle actualCard) {
