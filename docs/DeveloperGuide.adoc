@@ -942,14 +942,13 @@ when handling.
 
 **`Implementation of Tag`**
 
-* **Alternative 1 (current choice):** Tag is an enum class.
-** **Pros:** `Tag`s should only have fixed values. The user should also not be allowed to create new `Tag` objects.
+* **Alternative 1 (current choice):** Tag is implements the Enumeration class.
+** **Pros:** `Tag`s has fixed values. The user should also not be allowed to create new `Tag` objects.
 ** **Cons:** Less options for the user to alter the `Tag` values +
 * **Alternative 2:** Allow the user to define any `Tag`s they wish.
 ** **Pros:** Users have more versatility on naming conventions
 ** **Cons:** It becomes difficult for delivery personnel to keep track of the tags since different personnel might
 use different tag names to refer to the same tag.
-
 //end::tags[]
 
 //tag::sortedList[]
