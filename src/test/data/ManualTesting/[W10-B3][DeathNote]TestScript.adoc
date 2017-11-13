@@ -510,7 +510,7 @@ Checks if the phone number provided is valid. +
 
 *Expected Output:* Phone numbers can only contain numbers, and should be at least 3 digits long +
 
-. ` add n/James p/abdce`
+. `add n/James p/abdce`
 
 *Expected Output:* Phone numbers can only contain numbers, and should be at least 3 digits long +
 
@@ -542,15 +542,15 @@ Checks if the tag used is valid. +
 *Invalid Add Command Test 8*
 Checks if the birthday provided is in the correct format and valid. *
 
-. `add n/James b/29/2/2013
+. `add n/James b/29/2/2013`
 
 *Expected Output*: Person Birthday should be in the format of DD/MM/YYYY and also valid.
 
-. `add n\James b/
+. `add n\James b/`
 
 *Expected Output*: Person Birthday should be in the format of DD/MM/YYYY and also valid.
 
-. `add n\James b/199/02/20111
+. `add n\James b/199/02/20111`
 
 *Expected Output*: Person Birthday should be in the format of DD/MM/YYYY and also valid.
 
@@ -642,7 +642,7 @@ Checks if the phone number provided is valid. +
 
 *Expected Output:* Phone numbers can only contain numbers, and should be at least 3 digits long +
 
-. ` edit 1 p/abdce`
+. `edit 1 p/abdce`
 
 *Expected Output:* Phone numbers can only contain numbers, and should be at least 3 digits long +
 
@@ -674,7 +674,7 @@ Checks if the tag used is valid. +
 *Invalid Edit Command Test 12*
 Checks if the birthday provided is in the correct format and valid. *
 
-. `edit 1 b/29/2/2013
+. `edit 1 b/29/2/2013`
 
 *Expected Output*: Person Birthday should be in the format of DD/MM/YYYY and also valid.
 
@@ -682,7 +682,7 @@ Checks if the birthday provided is in the correct format and valid. *
 
 *Expected Output*: Person Birthday should be in the format of DD/MM/YYYY and also valid.
 
-. `edit 1 b/199/02/20111
+. `edit 1 b/199/02/20111`
 
 *Expected Output*: Person Birthday should be in the format of DD/MM/YYYY and also valid.
 
