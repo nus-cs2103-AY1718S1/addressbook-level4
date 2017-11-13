@@ -25,7 +25,7 @@ By: `T15-B2`      `Aw Wen Hao`      `Calvin Tantio`      `Cheng Jin 
 
 === Welcome to ConTag!
 
-Contag is an efficient and feature-packed address book desktop application custom-built for PC, capable of organizing contacts for even the most demanding business users and busiest frequent travellers.
+Contag is an efficient and feature-packed address book desktop application, capable of organizing contacts for even the most demanding business users and busiest frequent travellers.
 
 === The ConTag Help System
 
