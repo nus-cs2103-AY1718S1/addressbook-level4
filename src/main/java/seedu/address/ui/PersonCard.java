@@ -68,6 +68,7 @@ public class PersonCard extends UiPart<Region> {
 
     private String personCardIndex;
 
+    //@@author aziziazfar
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {
         super(FXML);
         this.person = person;
@@ -80,13 +81,15 @@ public class PersonCard extends UiPart<Region> {
         colors.add("cadetblue");
         colors.add("cornflowerblue");
         colors.add("dodgerblue");
-        colors.add("lightskyblue");
+        colors.add("deepskyblue");
         colors.add("mediumblue");
         colors.add("royalblue");
         colors.add("steelblue");
-        colors.add("slateblue");
+        colors.add("lightseagreen");
         colors.add("teal");
+        colors.add("steelblue");
     }
+    //@@author
 
     /**
      * Binds the individual UI elements to observe their respective {@code Person} properties
@@ -125,6 +128,7 @@ public class PersonCard extends UiPart<Region> {
     }
 
     //@@author deep4k
+
     /**
      * Sets the additional info needed for their respective {@code person } properties
      * and adds it inside Hbox details. Hbox details will be added to PersonCard parent
@@ -197,6 +201,8 @@ public class PersonCard extends UiPart<Region> {
 
     }
 
+    //@@author aziziazfar
+
     /**
      * * Initialises the tags for {@code Person}
      * with the color properties.
@@ -204,7 +210,8 @@ public class PersonCard extends UiPart<Region> {
     private void initTags(ReadOnlyPerson person) {
         person.getTags().forEach(tag -> {
             Label tagLabel = new Label(tag.tagName);
-            tagLabel.setStyle("-fx-background-color: " + getColorForTag(tag.tagName));
+            tagLabel.setStyle("-fx-background-color: " + getColorForTag(tag.tagName)
+                    + ";-fx-background-radius: 3 3 3 3");
             tags.getChildren().add(tagLabel);
         });
     }
