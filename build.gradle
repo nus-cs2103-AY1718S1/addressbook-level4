@@ -151,7 +151,7 @@ class AddressBookTest extends Test {
 }
 
 task specificTests(type: AddressBookTest) {
-    include 'seedu/address/ui/**'
+    include 'seedu/address/ui/Browser*'
     exclude 'seedu/address/commons/util/**'
     exclude 'systemtests/**'
     exclude 'guitests/**'

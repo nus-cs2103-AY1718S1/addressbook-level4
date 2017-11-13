@@ -121,13 +121,13 @@ public class BrowserPanel extends UiPart<Region> {
     @Subscribe
     private void handleSearchNameEvent(SearchNameEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        googleSearch(StringUtil.partiallyEncode(event.getName()));
+        googleSearch(event.getName());
     }
 
     @Subscribe
     private void handleSearchMajorEvent(SearchMajorEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        googleSearch(StringUtil.partiallyEncode("NUS " + event.getMajor()));
+        googleSearch("NUS " + event.getMajor());
     }
     //@@author
 
