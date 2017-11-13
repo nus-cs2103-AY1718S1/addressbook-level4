@@ -944,22 +944,7 @@ _Figure 4.11.1: interaction model_
 
 There is a participant list in the Event model, which stores all the persons who are involved in this event.
 Similarly, the participation list in Person model stores all the event in which this person joins.
-
-Hence, we need to maintain both lists when operating `join` and `disjoin` commands. The two commands are implemented in a similar way.
-Take `disjoin` command as the example, and `join` command uses the same idea to implement. The command will call `ModelManager` 's quitEvent() method to connect the person and the event.
-The following code segment from `ModelManager`shows how `quitEvent()` operates:
-
-[source,java]
-----
-public void disjoin(Person personToRemove, Event eventToRemove) {
-    eventList.remove(personToRemove); //Maintain participantList in Event
-    personList.remove(eventToRemove); //Maintain participationList in Person
-
-    // Save changes to the storage.
-}
-----
-
-`AddressBook` and `EventList` will then locate the person/event-to-remove in its list, and perform deletion.
+Hence, we need to maintain both lists when operating `join` and `disjoin` commands.
 
 [discrete]
 ==== Storage level
@@ -977,6 +962,33 @@ image::DG_join_storage.png[width = "800"]
 _Figure 4.11.3: interaction storage_
 
 [discrete]
+
+*Disconnecting a person to an event: disjoin*
+This command will call `ModelManager` 's quitEvent() method to disconnect the person and the event. The following code segment from `ModelManager` shows how quitEvent() works:
+[source,java]
+----
+public void disjoin(Person personToRemove, Event eventToRemove) {
+    eventList.removeParticipant(personToRemove); //Maintain participantList in Event
+    personList.removeParticipant(eventToRemove); //Maintain participationList in Person
+
+    // Save changes to the storage.
+}
+----
+`PersonList` and `EventList` will then locate the person/event-to-remove in its list, and perform deletion.
+
+*Connecting a person to an event: join*
+Similar to `disjoin` command, `join` event follows the same mechanism. This command will call `ModelManager` ’s joinEvent() method to connect the person and the event, as shown in the following code segment. Subsequently, `PersonList` and `EventList` will then locate the person/event-to-add in its list, and perform addition.
+
+[source,java]
+----
+public void join(Person personToAdd, Event eventToAdd) {
+    eventList.addParticipant(personToAdd); //Maintain participantList in Event
+    personList.addParticipant(eventToAdd); //Maintain participationList in Person
+
+    // Save changes to the storage.
+}
+----
+
 ===== Design Considerations
 
 **Aspect:** How to implement person-event interaction +
