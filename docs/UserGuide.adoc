@@ -1,6 +1,7 @@
 = cherBook v1.5 - User Guide
 :toc:
-:toc-title:
+:toclevels: 4
+:toc-title: Table of contents
 :toc-placement: preamble
 :sectnums:
 :imagesDir: images
@@ -45,9 +46,15 @@ This app will not work with earlier versions of Java 8.
 .  Download the latest `cherBook.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
+.  This is your homepage.
 +
-image::Ui.png[width="790"]
-_Figure 3.1 : cherBook's application landing page_
+//image::Ui.png[width="790"]                                  Add the homepage UI here
+_Figure 3.1 : cherBook's home page_
+
+. Type the command `select 1` in the command box and press kbd:[Enter] to to go to access the switch out of the Home Page. +
++
+image::cherBook.png[width="790"]
+_Figure 3.2 : cherBook's application page_
 
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
@@ -71,7 +78,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 The following image highlights cherBook's User Interface and its 6 components.
 
-image::UiLayout.png[width="790"]
+image::UiLayout.png[width="800"]
 _Figure 4.1 : cherBook's User Interface layout_
 
 Here’s how you can use them:
@@ -103,7 +110,9 @@ Here’s how you can use them:
 * The `Graph Panel` displays either a line or bar chart containing grades of students in the currently selected student's class.
 
 [[features]]
-== Features : Commands
+== Features
+=== Student Management Features
+
 ====
 *Command Format*
 
@@ -115,17 +124,7 @@ Here’s how you can use them:
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
-=== Viewing help : `help` `Since v1.0`
-
-View cherBook's User Guide in the help window. +
-Format: `help`
-
-Example:
-
-image::HelpImage.png[width="800"]
-_Figure 5.1 : The two ways you can use 'help' in cherBook_
-
-=== Adding a person: `add` `Since v1.0`
+==== Adding a person: `add` `Since v1.0`
 
 [NOTE]
 ====
@@ -154,20 +153,38 @@ Examples:
 Example:
 
 image::AddImage.png[width="800"]
-_Figure 5.1 : How you can add contacts into your cherBook_
+_Figure 5.1.1.1 : How you can add contacts into your cherBook_
 
-=== Listing all persons : `list` `Since v1.0`
 
-Shows you a list of all persons in cherBook. +
-Format: `list` +
-Shorthand: `l`
+// tag::optionalinputtagstwo[]
+===== Optional fields for adding a person `Since v1.3`
+
+You can find a list of optional input fields for the add command in the table below.
+
+[NOTE]
+====
+When you do not enter any of the optional fields,
+a message will be generated to inform you that the particular field is not recorded.
+====
+
+[width="100%",cols="10%,<10%,<80%",options="header",]
+|=======================================================================
+|Optional Field |Prefix | Example of user's input in cherBook's command box without the optional field
+| Student Phone Number | p/ +| add n/John pp/97272700 e/John@gmail.com a/Johnny street, block 321, #01-01 f/6C g/91 c/600321 t/Smart +
+| Address | a/ + | add n/John p/97602611 pp/97272700 e/John@gmail.com f/6C g/91 c/600321 t/Smart +
+| Postal Code | c/  | add n/John p/97602611 pp/97272700 e/John@gmail.com a/Johnny street, block 321, #01-01 f/6C g/91 t/Smart +
+| Email | e/ + | add n/John p/97602611 pp/97272700 a/Johnny street, block 321, #01-01 f/6C g/91 c/600321 t/Smart +
+| Tag | t/ + | add n/John p/97602611 pp/97272700 e/John@gmail.com a/Johnny street, block 321, #01-01 f/6C g/91 c/600321 +
+|=======================================================================
+
 
 Example:
 
-image::ListImage.png[width="800"]
-_Figure 5.2 : Lists all contacts in your cherBook_
+image::OptionalInputsImage.png[width="800"]
+_Figure 5.1.1.2 : Displays optional inputs for your contacts_
+// end::optionalinputtagstwo[]
 
-=== Editing a person : `edit` `Since v1.0`
+==== Editing a person : `edit` `Since v1.0`
 
 Edits an existing person in cherBook. +
 Format: `edit INDEX [n/NAME] [p/(STUDENT_NUMBER)] [pp/(PARENT_NUMBER)] [e/EMAIL] [a/ADDRESS] [f/FORMCLASS] [g/GRADES] [c/POSTALCODE] [t/TAG]...` +
@@ -200,9 +217,103 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
 Example:
 
 image::EditImage.png[width="800"]
-_Figure 5.3 : Edits a contact in your cherBook_
+_Figure 5.1.2.1 : Edits a contact in your cherBook_
 
-=== Locating persons by name: `find` `Since v1.0`
+==== Deleting a person : `delete` `Since v1.0`
+
+Removes an existing person from cherBook. +
+Format: `delete INDEX` +
+Shorthand: `d INDEX`
+
+****
+* Deletes the person at the specified `INDEX`.
+* The index refers to the index number currently shown in the `Students Panel`.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `list` +
+`delete 2` +
+Deletes the 2nd person in cherBook.
+* `find Betsy` +
+`delete 1` +
+Deletes the 1st person in the results of the `find` command.
+* `list` (`list` command) +
+`d 3` (`delete 3` command) +
+Deletes the 3rd person in cherBook.
+
+Example:
+
+image::DeleteImage.png[width="800"]
+_Figure 5.1.3.1 : Deletes the contact in your cherBook with the specified index_
+
+// tag::remark[]
+==== Overwrites a remark to a person : `remark` `Since v1.2`
+Overwrites a remark from the specified person in cherBook +
+Format: `remark Index [rm/REMARK]` +
+Shorthand: `rm Index [rm/REMARK]`
+
+****
+* Overwrites a `remark` at the specific`INDEX`.
+* The index refers to the index number currently shown in the `Students Panel`.
+* The index *must be positive integer* 1, 2, 3, ...
+****
+
+[TIP]
+Addition of remarks on a person already with remarks will be overwritten. +
+Person with no remarks will display `(add a new remark)`. +
+Can only be changed through the use of the `remark` command.
+
+Examples:
+
+* `list` +
+`remark 2 rm/This is a remark` +
+Overwrites the 1st person remark.
+* `find betsy` +
+`remark 1 rm/Betsy is a female` +
+Overwrites the 1st person in the results of `find` command.
+* `list` +
+`remark 2 rm/` +
+Overwrites `remark` from the 2nd person in the address book and displays it as `(add a new remark)`.
+
+Example:
+
+image::RemarkImage.png[width="800"]
+_Figure 5.1.4.1 : Add a remark to your contacts in cherBook_
+
+// end::remark[]
+
+==== Selecting a person : `select` `Since v1.0`
+
+Selects an existing person in cherBook. +
+Format: `select INDEX` +
+Shorthand: `s INDEX`
+
+****
+* Selects the student and loads the student's details in the `Student Details Panel`.
+* The index refers to the index number currently shown in the `Students Panel`.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
+Examples:
+
+* `list` +
+`select 2` +
+Selects the 2nd person in cherBook.
+* `find Betsy` +
+`select 1` +
+Selects the 1st person in the results of the `find` command.
+* `l` (`list` command) +
+`s 3` (`select 3` command) +
+Selects the 3rd person in cherBook.
+
+Example:
+
+image::SelectImage.png[width="800"]
+_Figure 5.1.5.1 : Selects the contact in your cherBook with the specified index_
+
+==== Locating persons by name: `find` `Since v1.0`
 
 Finds persons whose names contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]` +
@@ -230,45 +341,102 @@ Returns any person having names `Betsy`, `Tim`, or `John`
 Example:
 
 image::FindImage.png[width="800"]
-_Figure 5.4 : Finds and displays all contacts in your cherBook with the specified keyword_
+_Figure 5.1.6.1 : Finds and displays all contacts in your cherBook with the specified keyword_
 
-=== Deleting a person : `delete` `Since v1.0`
+// tag::findtags[]
+==== Locating persons by tags: `findtags` `Since v1.1`
 
-Removes an existing person from cherBook. +
-Format: `delete INDEX` +
-Shorthand: `d INDEX`
+Finds persons whose tags contain all of the given keywords. +
+Format: `findtags KEYWORD [MORE_KEYWORDS]` +
+Shorthand: `ft KEYWORD [MORE_KEYWORDS]`
 
 ****
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number currently shown in the `Students Panel`.
-* The index *must be a positive integer* 1, 2, 3, ...
+* The search is case insensitive. e.g `friends` will match `Friends`
+* The order of the keywords does not matter. e.g. `friends owesMoney` will match `owesMoney friends`
+* Only the tags are searched.
+* Only full words will be matched e.g. `friends` will not match `closefriends`
+* Persons matching at least all keywords will be returned (i.e. `AND` search). e.g. `friends owesMoney` will not return people with only `friends` or only `owesMoney`
+****
+
+[TIP]
+Only one tag can be searched at any one time.
+
+
+Examples:
+
+* `findtags friends` +
+Returns any person having the tag `friends`
+* `findtags friends owesMoney` +
+Returns any person having both `friends` and `owesMoney` tags
+* `ft John` +
+Returns any person having the tag `friends`
+* `ft Betsy Tim John` +
+Returns any person having both `friends` and `owesMoney` tags
+
+Example:
+
+image::FindTagsImage.png[width="800"]
+_Figure 5.1.7.1 : Find contacts on your cherBook with the specified tags_
+// end::findtags[]
+
+==== Listing all persons : `list` `Since v1.0`
+
+Shows you a list of all persons in cherBook. +
+Format: `list` +
+Shorthand: `l`
+
+Example:
+
+image::ListImage.png[width="800"]
+_Figure 5.1.8.1 : Lists all contacts in your cherBook_
+
+// tag::sort[]
+==== Sorting all persons : `sort` `Since v1.2`
+
+Helps you sort all persons in cherBook. +
+Shows you a list of all persons in cherBook with their names sorted in alphabetical order. +
+If you want your list to be sorted at all times, you can use this sort command after adding contacts into cherBook, +
+After that, your contact list would always be sorted when you perform other commands on cherBook. +
+Format: `sort` +
+Shorthand: `st`
+
+****
+* Sorts all cherBook contacts in alphabetical order.
+* The sort is case insensitive. e.g `hans` will match `Hans`
+* If cherBook is empty, sort does nothing.
 ****
 
 Examples:
 
 * `list` +
-`delete 2` +
-Deletes the 2nd person in cherBook.
+`sort` +
+Sorts the list in alphabetical order.
 * `find Betsy` +
-`delete 1` +
-Deletes the 1st person in the results of the `find` command.
-* `list` (`list` command) +
-`d 3` (`delete 3` command) +
-Deletes the 3rd person in cherBook.
+`st` +
+Sorts the list in alphabetical order.
 
 Example:
 
-image::DeleteImage.png[width="800"]
-_Figure 5.5 : Deletes the contact in your cherBook with the specified index_
+image::SortImage.png[width="800"]
+_Figure 5.1.9.1 : Sorts and displays all your contacts in cherBook_
+// end::sort[]
 
-=== Selecting a person : `select` `Since v1.0`
+==== Clearing all entries : `clear` `Since v1.0`
+Clears all student and schedule entries from cherBook. +
+Format: `clear`
 
-Selects an existing person in cherBook. +
-Format: `select INDEX` +
-Shorthand: `s INDEX`
+
+=== Schedule Management Features
+
+// tag::schedule[]
+==== Adding a schedule : `schedule` `Since v1.4`
+
+Schedules the person identified by the index number used in the last person listing. +
+Format: `addschedule INDEX s/[DATE]` +
+Shorthand: `addsch INDEX s/[DATE]`
 
 ****
-* Selects the student and loads the student's details in the `Student Details Panel`.
+* Schedules the person at the specified `INDEX` and adds them to the schedule list in cherBook.
 * The index refers to the index number currently shown in the `Students Panel`.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
@@ -276,21 +444,178 @@ Shorthand: `s INDEX`
 Examples:
 
 * `list` +
-`select 2` +
-Selects the 2nd person in cherBook.
+`addschedule 2 s/tomorrow 7pm` +
+Schedules the 2nd person in cherBook for tomorrow at 7pm and adds the schedule to the schedule list.
 * `find Betsy` +
-`select 1` +
-Selects the 1st person in the results of the `find` command.
-* `l` (`list` command) +
-`s 3` (`select 3` command) +
-Selects the 3rd person in cherBook.
+`addsch 1 s/25 december 2017 3pm` +
+Schedules the 1st person in cherBook on 25 December at 3pm and adds the schedule to the schedule list in the results of the `find` command.
 
 Example:
 
-image::SelectImage.png[width="800"]
-_Figure 5.6 : Selects the contact in your cherBook with the specified index_
+image::AddScheduleImage.png[width="800"]
+_Figure 5.2.1.1 : Adds a schedule to your cherBook_
+// end::schedule[]
 
-=== Listing entered commands : `history` `Since v1.0`
+// tag::viewschedule[]
+==== Viewing my schedule : `viewschedule` `Since v1.5`
+
+View your full schedule list in cherBook. +
+Format: `viewschedules` +
+Shorthand: `viewsch`
+
+****
+* Displays all your schedules in the command box.
+****
+
+Examples:
+
+* `list` +
+`viewschedules` +
+Displays all your schedules in the command box.
+* `find Betsy` +
+`viewsch` +
+Displays all your schedules in the command box.
+
+Example:
+
+image::ViewScheduleImage.png[width="800"]
+_Figure 5.2.2.1 : View all your schedules in cherBook as shown in the box_
+// end::viewschedule[]
+
+==== Deleting a schedule : `deleteschedule` `Since v1.5`
+
+Deletes the specified schedule from cherBook. +
+Format: `deleteschedule INDEX` +
+Shorthand: `deletesch INDEX`
+
+****
+* Deletes the schedule at the specified `INDEX`.
+* The index refers to the schedule shown in schedules list.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `viewschedule` +
+`deleteschedule 2` +
+Deletes the 2nd schedule in the results of the `viewschedule` command which returns a list of schedules.
+* `viewsch` +
+`deletesch 1` +
+Deletes the 1st schedule in the results of the `viewsch` command which returns a list of schedules.
+
+Example:
+
+image::DeleteScheduleImage.png[width="800"]
+_Figure 5.2.3.1 : Deletes the schedule in your cherBook with the specified index_
+
+=== User Interface Features
+// tag::homepanel[]
+==== Home Panel `Since v1.5`
+
+cherBook has a start up `Home panel` which displays a picture to help you unwind even just a tiny bit.
+It also displays random inspirational quotes to help you make yourself feel better.
+What is better then starting off a day right feeling good.
+These quotes changes every time the home page displayed through either calling then `home` command or starting the application.
+//end::homepanel[]
+
+===== Switching to home screen: `home` `Since v1.5`
+
+Switch all panels on the right to the home page. +
+The quotes on the home page is generated on random for you. +
+Using the `select command` toggles the panel to `Student Details Panel`, `Statistics Panel` and `Graph Panel`.
+Format: `home`
+
+[NOTE]
+To select your contacts on this page, use the `select command`. This is to ensure that people who access your cherBook are unable to view the information of your contacts easily. +
+`Do Not click` on contacts while home page is being displayed! Use `select command` first and only when the panels do toggle are you able to click on the Students Panel.
+
+Examples:
+
+image::HomeImage.png[width="800"]
+_Figure 5.3.1.1 : Returns to the home page of cherBook_
+
+// tag::studentdetailspanel[]
+==== Student Details Panel `Since v1.3`
+
+cherBook uses the `Student Details Panel` to display details belonging to the currently selected student.
+The details changes automatically where there is a change to the list of students in the `Students Panel`.
+You can use these details to pick out relevant information you need from your student.
+// end::studentdetailspanel[]
+
+
+// tag::statisticspanel[]
+==== Statistics Panel `Since v1.4`
+
+cherBook uses the `Statistics Panel` to display the relevant statistics for the current list of students in the `Students Panel`.
+The statistics changes automatically when there is a change to the list of students in the `Students Panel`.
+E.g. When you enter the command `findtags studentCouncil`, the `Students Panel` will only show students with the `studentcouncil` tag and `Statistics Panel` will then show statistics for students with the `studentcouncil` tag.
+You can use these statistics to pick out trends in your student's grades and also monitor how well they are coping with their studies.
+// end::statisticspanel[]
+
+
+// tag::graphpanel[]
+==== Graph Panel `Since v1.3`
+
+cherBook uses a `GraphPanel` to plot the grades of all classmates of the selected student on a graph.
+The graphs are automatically sorted from the lowest grade to the highest.
+There are two tabs for you to choose from, line or bar and can be switch by using the `tab` command.
+The details changes when another student from a different class is selected.
+You can use these graph to better understand the trends of `grades` in a glance to easily see who are the weaker or stronger students.
+// end::graphpanel[]
+
+
+// tag::tab[]
+===== Switching between graphs: `tab` `Since v1.5`
+Switches between the line and bar chart in the `GraphPanel`. +
+Format: `tab TABNUMBER`
+
+[NOTE]
+Valid numbers are determined by number of tabs available. In this case, only 1 and 2 are valid, which displays line or bar respectively. +
+Typing the same index on the selected graph would just do nothing.
+
+Example:
+
+* `tab 2` +
+Remains at tab 2 if tab 2 is selected else switches to tab 2.
+
+Examples:
+
+image::Tab1Image.png[width="800"]
+_Figure 5.3.4.1 : Displays the graph in your cherBook with the first tab index_
+
+
+image::Tab2Image.png[width="800"]
+_Figure 5.3.4.2 : Displays the graph in your cherBook with the second tab index_
+// end::tab[]
+
+// tag::randomisedUniqueTagColors[]
+==== Randomised Unique Tag Colors: `Since v1.4`
+
+For your convenience, all assignment of colors will be automated by cherBook for you.
+
+Whenever you access the cherBook, a new range of `random` colors will be assigned to the background of the tags.
+
+Modifications were made to the range of possible colors. It is to ensure that the background color's `saturation` and `lumination` is at an optimal level
+to match with the white font of the tag description. Thus, allowing you to be able to see the tag description clearly as seen in the following picture.
+
+image::TagColor.png[width="350"]
+_Figure 5.3.5.1 : Example of color tags_
+
+// end::randomisedUniqueTagColors[]
+
+
+=== General Features
+==== Viewing help : `help` `Since v1.0`
+
+View cherBook's User Guide in the help window. +
+Format: `help`
+
+Example:
+
+image::HelpImage.png[width="800"]
+_Figure 5.4.1.1 : The two ways you can use 'help' in cherBook_
+
+==== Listing entered commands : `history` `Since v1.0`
 
 Lists all the commands that you have entered in reverse chronological order. +
 Format: `history` +
@@ -304,10 +629,10 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 Example:
 
 image::HistoryImage.png[width="800"]
-_Figure 5.7 : Displays a list of all your previous actions on cherBook_
+_Figure 5.4.2.1 : Displays a list of all your previous actions on cherBook_
 
 // tag::undoredo[]
-=== Undoing previous command : `undo` `Since v1.0`
+==== Undoing previous command : `undo` `Since v1.0`
 
 Restores cherBook to the state before the previous _undoable_ command was executed. +
 Format: `undo` +
@@ -341,9 +666,9 @@ The `undo` command fails as there are no undoable commands executed previously.
 Example:
 
 image::UndoImage.png[width="800"]
-_Figure 5.8 : Undo your previous action on cherBook_
+_Figure 5.4.3.1 : Undo your previous action on cherBook_
 
-=== Redoing the previously undone command : `redo` `Since v1.0`
+==== Redoing the previously undone command : `redo` `Since v1.0`
 
 Reverses the most recent `undo` command. +
 Format: `redo` +
@@ -373,238 +698,10 @@ The `redo` command fails as there are no `undo` commands executed previously.
 Example:
 
 image::RedoImage.png[width="800"]
-_Figure 5.9 : Redo your previous action on cherBook_
+_Figure 5.4.4.1 : Redo your previous action on cherBook_
 // end::undoredo[]
 
-=== Clearing all entries : `clear` `Since v1.0`
-//TODO: Celine to update this part, whether it clears schedules too?
-Clears all student and schedule entries from cherBook. +
-Format: `clear`
-
-// tag::findtags[]
-=== Locating persons by tags: `findtags` `Since v1.1`
-
-Finds persons whose tags contain all of the given keywords. +
-Format: `findtags KEYWORD [MORE_KEYWORDS]` +
-Shorthand: `ft KEYWORD [MORE_KEYWORDS]`
-
-****
-* The search is case insensitive. e.g `friends` will match `Friends`
-* The order of the keywords does not matter. e.g. `friends owesMoney` will match `owesMoney friends`
-* Only the tags are searched.
-* Only full words will be matched e.g. `friends` will not match `closefriends`
-* Persons matching at least all keywords will be returned (i.e. `AND` search). e.g. `friends owesMoney` will not return people with only `friends` or only `owesMoney`
-****
-
-[TIP]
-Only one tag can be searched at any one time.
-
-
-Examples:
-
-* `findtags friends` +
-Returns any person having the tag `friends`
-* `findtags friends owesMoney` +
-Returns any person having both `friends` and `owesMoney` tags
-* `ft John` +
-Returns any person having the tag `friends`
-* `ft Betsy Tim John` +
-Returns any person having both `friends` and `owesMoney` tags
-
-Example:
-
-image::FindTagsImage.png[width="800"]
-_Figure 5.10 : Find contacts on your cherBook with the specified tags_
-// end::findtags[]
-
-// tag::remark[]
-=== Overwrites a remark to a person : `remark` `Since v1.2`
-Overwrites a remark from the specified person in cherBook +
-Format: `remark Index [rm/REMARK]` +
-Shorthand: `rm Index [rm/REMARK]`
-
-****
-* Overwrites a `remark` at the specific`INDEX`.
-* The index refers to the index number currently shown in the `Students Panel`.
-* The index *must be positive integer* 1, 2, 3, ...
-****
-
-[TIP]
-Addition of remarks on a person already with remarks will be overwritten. +
-Person with no remarks will display `(add a new remark)`. +
-Can only be changed through the use of the `remark` command.
-
-Examples:
-
-* `list` +
-`remark 2 rm/This is a remark` +
-Overwrites the 1st person remark.
-* `find betsy` +
-`remark 1 rm/Betsy is a female` +
-Overwrites the 1st person in the results of `find` command.
-* `list` +
-`remark 2 rm/` +
-Overwrites `remark` from the 2nd person in the address book and displays it as `(add a new remark)`.
-
-Example:
-
-image::RemarkImage.png[width="800"]
-_Figure 5.11 : Add a remark to your contacts in cherBook_
-
-// end::remark[]
-
-// tag::sort[]
-=== Sorting all persons : `sort` `Since v1.2`
-
-Helps you sort all persons in cherBook. +
-Shows you a list of all persons in cherBook with their names sorted in alphabetical order. +
-If you want your list to be sorted at all times, you can use this sort command after adding contacts into cherBook, +
-After that, your contact list would always be sorted when you perform other commands on cherBook. +
-Format: `sort` +
-Shorthand: `st`
-
-****
-* Sorts all cherBook contacts in alphabetical order.
-* The sort is case insensitive. e.g `hans` will match `Hans`
-* If cherBook is empty, sort does nothing.
-****
-
-Examples:
-
-* `list` +
-`sort` +
-Sorts the list in alphabetical order.
-* `find Betsy` +
-`st` +
-Sorts the list in alphabetical order.
-
-Example:
-
-image::SortImage.png[width="800"]
-_Figure 5.12 : Sorts and displays all your contacts in cherBook_
-// end::sort[]
-
-// tag::schedule[]
-=== Adding a schedule : `schedule` `Since v1.4`
-
-Schedules the person identified by the index number used in the last person listing. +
-Format: `addschedule INDEX s/[DATE]` +
-Shorthand: `addsch INDEX s/[DATE]`
-
-****
-* Schedules the person at the specified `INDEX` and adds them to the schedule list in cherBook.
-* The index refers to the index number currently shown in the `Students Panel`.
-* The index *must be a positive integer* `1, 2, 3, ...`
-****
-
-Examples:
-
-* `list` +
-`addschedule 2 s/tomorrow 7pm` +
-Schedules the 2nd person in cherBook for tomorrow at 7pm and adds the schedule to the schedule list.
-* `find Betsy` +
-`addsch 1 s/25 december 2017 3pm` +
-Schedules the 1st person in cherBook on 25 December at 3pm and adds the schedule to the schedule list in the results of the `find` command.
-
-Example:
-
-image::AddScheduleImage.png[width="800"]
-_Figure 5.13 : Adds a schedule to your cherBook_
-// end::schedule[]
-
-// tag::viewschedule[]
-=== Viewing my schedule : `viewschedule` `Since v1.5`
-
-View your full schedule list in cherBook. +
-Format: `viewschedules` +
-Shorthand: `viewsch`
-
-****
-* Displays all your schedules in the command box.
-****
-
-Examples:
-
-* `list` +
-`viewschedules` +
-Displays all your schedules in the command box.
-* `find Betsy` +
-`viewsch` +
-Displays all your schedules in the command box.
-
-Example:
-
-image::ViewScheduleImage.png[width="800"]
-_Figure 5.14 : View all your schedules in cherBook as shown in the box_
-// end::viewschedule[]
-
-=== Deleting a schedule : `deleteschedule` `Since v1.5`
-
-Deletes the specified schedule from cherBook. +
-Format: `deleteschedule INDEX` +
-Shorthand: `deletesch INDEX`
-
-****
-* Deletes the schedule at the specified `INDEX`.
-* The index refers to the schedule shown in schedules list.
-* The index *must be a positive integer* 1, 2, 3, ...
-****
-
-Examples:
-
-* `viewschedule` +
-`deleteschedule 2` +
-Deletes the 2nd schedule in the results of the `viewschedule` command which returns a list of schedules.
-* `viewsch` +
-`deletesch 1` +
-Deletes the 1st schedule in the results of the `viewsch` command which returns a list of schedules.
-
-Example:
-
-image::DeleteScheduleImage.png[width="800"]
-_Figure 5.15 : Deletes the schedule in your cherBook with the specified index_
-
-// tag::tab[]
-=== Switching between graphs: `tab` `Since v1.5`
-Switches between the line and bar chart in the `GraphPanel`. +
-Format: `tab TABNUMBER`
-
-[NOTE]
-Valid numbers are determined by number of tabs available. In this case, only 1 and 2 are valid, which displays line or bar respectively. +
-Typing the same index on the selected graph would just do nothing.
-
-Example:
-
-* `tab 2` +
-Remains at tab 2 if tab 2 is selected else switches to tab 2.
-
-Examples:
-
-image::Tab1Image.png[width="800"]
-_Figure 5.16 : Displays the graph in your cherBook with the first tab index_
-
-
-image::Tab2Image.png[width="800"]
-_Figure 5.17 : Displays the graph in your cherBook with the second tab index_
-// end::tab[]
-
-// tag::home[]
-=== Switching to home screen: `home` `Since v1.5`
-
-Switch all panels on the right to the home page. +
-The quotes on the home page is generated on random for you. +
-Format: `home`
-
-[NOTE]
-To select your contacts on this page, use the select command. This is to ensure that people who access your cherBook are unable to view the information of your contacts easily.
-
-Examples:
-
-image::HomeImage.png[width="800"]
-_Figure 5.18 : Returns to the home page of cherBook_
-//end::home[]
-
-=== Exiting the program : `exit` `Since v1.0`
+==== Exiting the program : `exit` `Since v1.0`
 
 Exits the program. +
 Format: `exit`
@@ -612,96 +709,12 @@ Format: `exit`
 Example:
 
 image::ExitImage.png[width="800"]
-_Figure 5.19 : The two ways you can exit your cherBook_
+_Figure 5.4.5.1 : The two ways you can exit your cherBook_
 
-== Feature : Non - Commands
-
-=== Saving the data `Since v1.0`
+==== Saving the data `Since v1.0`
 
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
-
-
-// tag::studentdetailspanel[]
-=== Student Details Panel `Since v1.3`
-
-cherBook uses the `Student Details Panel` to display details belonging to the currently selected student.
-The details changes automatically where there is a change to the list of students in the `Students Panel`.
-You can use these details to pick out relevant information you need from your student.
-// end::studentdetailspanel[]
-
-
-// tag::optionalinputtagstwo[]
-=== Optional fields for adding a person `Since v1.3`
-
-You can find a list of optional input fields for the add command in the table below.
-
-[NOTE]
-====
-When you do not enter any of the optional fields,
-a message will be generated to inform you that the particular field is not recorded.
-====
-
-[width="100%",cols="10%,<10%,<80%",options="header",]
-|=======================================================================
-|Optional Field |Prefix | Example of user's input in cherBook's command box without the optional field
-| Student Phone Number | p/ +| add n/John pp/97272700 e/John@gmail.com a/Johnny street, block 321, #01-01 f/6C g/91 c/600321 t/Smart +
-| Address | a/ + | add n/John p/97602611 pp/97272700 e/John@gmail.com f/6C g/91 c/600321 t/Smart +
-| Postal Code | c/  | add n/John p/97602611 pp/97272700 e/John@gmail.com a/Johnny street, block 321, #01-01 f/6C g/91 t/Smart +
-| Email | e/ + | add n/John p/97602611 pp/97272700 a/Johnny street, block 321, #01-01 f/6C g/91 c/600321 t/Smart +
-| Tag | t/ + | add n/John p/97602611 pp/97272700 e/John@gmail.com a/Johnny street, block 321, #01-01 f/6C g/91 c/600321 +
-|=======================================================================
-
-
-Example:
-
-image::OptionalInputsImage.png[width="800"]
-_Figure 6.1 : Displays optional inputs for your contacts_
-// end::optionalinputtagstwo[]
-
-
-// tag::graphpanel[]
-=== Graph Panel `Since v1.3`
-
-cherBook uses a `GraphPanel` to plot the grades of all classmates of the selected student on a graph.
-The graphs are automatically sorted from the lowest grade to the highest.
-There are two tabs for you to choose from, line or bar and can be switch by using the `tab` command.
-The details changes when another student from a different class is selected.
-You can use these graph to better understand the trends of `grades` in a glance to easily see who are the weaker or stronger students.
-// end::graphpanel[]
-
-// tag::randomisedUniqueTagColors[]
-=== Randomised Unique Tag Colors: `Since v1.4`
-
-For your convenience, all assignment of colors will be automated by cherBook for you.
-
-Whenever you access the cherBook, a new range of `random` colors will be assigned to the background of the tags.
-
-Modifications were made to the range of possible colors. It is to ensure that the background color's `saturation` and `lumination` is at an optimal level
-to match with the white font of the tag description. Thus, allowing you to be able to see the tag description clearly as seen in the following picture.
-
-image::TagColor.png[width="350"]
-_Figure 6.2 : Example of color tags_
-
-// end::randomisedUniqueTagColors[]
-
-// tag::statisticspanel[]
-=== Statistics Panel `Since v1.4`
-
-cherBook uses the `Statistics Panel` to display the relevant statistics for the current list of students in the `Students Panel`.
-The statistics changes automatically when there is a change to the list of students in the `Students Panel`.
-E.g. When you enter the command `findtags studentCouncil`, the `Students Panel` will only show students with the `studentcouncil` tag and `Statistics Panel` will then show statistics for students with the `studentcouncil` tag.
-You can use these statistics to pick out trends in your student's grades and also monitor how well they are coping with their studies.
-// end::statisticspanel[]
-
-// tag::homepanel[]
-=== Home Panel `Since v1.5`
-
-cherBook has a start up `Home panel` which displays a picture to help you unwind even just a tiny bit.
-It also displays random inspirational quotes to help you make yourself feel better.
-What is better then starting off a day right feeling good.
-These quotes changes every time the home page displayed through either calling then `home` command or starting the application.
-//end::homepanel[]
 
 // tag::commandshortcuts[]
 == Command Shortcuts
@@ -784,16 +797,15 @@ In version v2.0, you will be able to:
 
 === Features added in v1.5
 In version v1.5, you are be able to:
-//TODO: update here and remove this comment
 
-* `update here and remove this comment`
+* View the home page and toggle it using the `home` command
 
 === Features added in v1.5rc
 In version v1.5rc, you are be able to:
 
 * View your appointments with the `viewschedule` command
 * Delete yor appointments with students with the `deleteschedule` command
-* Switch between the linge graph and bar chart with the `tab` command
+* Switch between the line graph and bar chart with the `tab` command
 
 === Features added in v1.4
 In version v1.4, you are be able to:
