@@ -12,8 +12,8 @@ Sync
 |Index |Command |Expected Output
 |S1 |sync  |Error message: “Please login first”
 |S2 |login | Browser window opens for Google login (Please complete your login)
-|S3 |sync | Google Contacts will be updated with local contacts (Only after S2 is completed)
-|S4 |Disable your wifi-connection and run sync | Error message: “Unable to connect to the Internet. Please check your internet and firewall settings
+|S3 |sync | Google Contacts will be updated with local contacts (Might take up to 2 minutes) (Only after S2 is completed)
+|S4 |Disable your wifi-connection and run sync after 30 seconds | Error message: “Unable to connect to the Internet. Please check your internet and firewall settings"
 ”
 |S5 |Enable wifi and logout | Error message: “Logged out!”
 |S6 |sync | Error message: “Please login first”
@@ -103,7 +103,7 @@ Example: find n/alice bob charlie p/98765432 93250124 e/johnd@example.com a/Clem
 |O18 |sort | Error message: Invalid command format!
 sort: Sorts the list of contacts by the field specified and displays them as a list. Parameters: FIELD
 Example: sort tag
-|O19 |sort e| suggestion for `sort email` would pop up
+|O19 |sort e | suggestion for `sort email` would pop up
 |O20 |sort email | List sorted successfully!
 |O21 |sort phone | List sorted successfully!
 |O22 |sort tag | List sorted successfully!
@@ -144,9 +144,9 @@ Example: select 1”
 |M12 |dm 1| Deleted Meeting: Health insurance (deleted on the originallist, not filtered list)
 |M13 |undo| Undo success! (undoes both bernice and abraham’s deletions)
 |M14 |click to select second contact| Alex Lim is selected, with 2 meetings
-|M15 |undo| Undo success!
-|M16 |undo| Undo success!
-|M17 |undo| Undo success!
+|M15 |undo| Undo success! (We undo to reset data to its default state for future tests)
+|M16 |undo| Undo success! (We undo to reset data to its default state for future tests)
+|M17 |undo| Undo success! (We undo to reset data to its default state for future tests)
 |=======================================================================
 
 Tags
@@ -173,13 +173,13 @@ Others
 |=======================================================================
 |Index |Command |Expected Output
 |Z1 |help |Opens the User Guide
-|Z2 |restore | Unable to execute restore as there is no backup file available
-|Z3 |backup | Data has been backed up
+|Z2 |restore | Unable to execute restore as there is no backup file available (Ensure ~/data/addressbook-backup.xml does not exist when executing Z2)
+|Z3 |backup | Data has been backed up (~/data/addressbook-backup.xml is created)
 |Z4 |clear | Address book has been cleared!
 |Z5 |rb | Data has been restored
 |Z6 |undo | Undo success!
 |Z7 |redo | Redo success!
-|Z8 |history|Entered commands (from most recent to earliest):redo undo rb ...
+|Z8 |history |Entered commands (from most recent to earliest):redo undo rb ...
 |Z9 |resize 200 200| Error message : `Invalid command format!
 resize: Resize the MainWindows to the specified (300<=)WIDTH(<=1920) and (230<=)HEIGHT(<=1080) Parameters: WIDTH HEIGHT Example: resize 1920 1080’
 |Z10 |resize 8| No suggestion
