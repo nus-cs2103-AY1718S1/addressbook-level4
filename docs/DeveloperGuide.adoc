@@ -1201,12 +1201,12 @@ The way we deal with recycle bin storage is the same as we deal with addressbook
 
 *Bin commands*
 
-* `bin-delete` : Delete the people in the recycle bin by index as shown in the list.
-* `bin-fresh` : Delete all the peopel in the recycle bin.
-* `bin-restore` : Restore the people in the recycle bin to address book by index.
+* `bin-delete` : Deletes the people in the recycle bin by index as shown in the list.
+* `bin-fresh` : Deletes all the peopel in the recycle bin.
+* `bin-restore` : Restores the people in the recycle bin to address book by given index.
 
 [NOTE]
-If we find duplicate people when moving a person to recyclebin or moving a person to addressbook, then this person will be omitted and directly remove.
+If we find duplicate people when restoring a person to recyclebin or moving a person to addressbook, then this person will be omitted and directly remove.
 
 ==== Design Considerations
 
