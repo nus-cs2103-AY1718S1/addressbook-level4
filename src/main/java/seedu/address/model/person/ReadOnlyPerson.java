@@ -75,7 +75,8 @@ public interface ReadOnlyPerson {
                 && other.getStatus().equals(this.getStatus())
                 && other.getPriority().equals(this.getPriority())
                 && other.getNote().equals(this.getNote())
-                && other.getPhoto().equals(this.getPhoto()));
+                && other.getPhoto().equals(this.getPhoto()))
+                && other.getRelation().equals(this.getRelation());
     }
 
     /**
