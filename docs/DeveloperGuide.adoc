@@ -132,7 +132,7 @@ The rest of the App consists of four components.
 
 Each of the four components:
 
-* Define its _API_ in an `interface` with the same name as the Component.
+* Define its _link:#api[API]_ in an `interface` with the same name as the Component.
 * Expose its functionality using a `{Component Name}Manager` class.
 
 For example, the `Logic` component (see the class diagram given below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
@@ -239,6 +239,7 @@ The `Storage` component is able to:
 == Implementation
 
 This section describes some noteworthy details on how certain features are implemented.
+The design considerations are also discussed at the end of each feature.
 
 // tag::undoredo[]
 === Undo/Redo mechanism
@@ -325,7 +326,9 @@ The following activity diagram summarize what happens inside the `UndoRedoStack`
 
 image::UndoRedoActivityDiagram.png[width="200"]
 
-==== Design Considerations
+*Design Considerations*:
+
+---
 
 **Aspect:** Implementation of `UndoableCommand` +
 **Alternative 1 (current choice):** Add a new abstract method `executeUndoableCommand()` +
@@ -373,11 +376,8 @@ image::UndoRedoActivityDiagram.png[width="200"]
 The email mechanism is facilitated by java `Desktop` class which allows java application to launch default mail application registered on the users' native desktop to handle a Uniform Resource Indentifier (link:#uri[URI]).
 In this case, the URI is created with reference to the mail command scheme and email addresses to mail to.
 
-==== Email command implementation
-
 image::EmailCommandSequenceDiagram.png[width="800"]
-
-_Figure 3.2.1 Email Command Sequence Diagram_
+_Figure 5.2.1 Email Command Sequence Diagram_
 
 From the diagram above, when users enter the command `email 1` to email a person in the contact list.
 `EmailCommandParser` will parse the arguments, which is a single index provided by the user, and stores it
@@ -420,13 +420,10 @@ public CommandResult execute() throws CommandException {
 The string `allEmailAddresses` is constructed by appending a comma after each email address of a contact. This is done to ensure that it follows the mailing scheme required when
 constructing a `URI`.
 
-==== Email request event process
-
 image::EmailRequestEventSequenceDiagram.png[width="800"]
+_Figure 5.2.2 Email Request Event Sequence Diagram_
 
-_Figure 5.2.1 Email Request Event Sequence Diagram_
-
-With reference to the diagram above, after `EmailCommand` has executed, it will post a new `EmailRequestEvent` and allows the UI to handle this event. In the UI, we are using java `Desktop` class to
+The diagram above illustrates the event driven process of the `EmailCommand`. After `EmailCommand` has executed, it will post a new `EmailRequestEvent` and allows the UI to handle this event. In the UI, we are using java `Desktop` class to
 launch the default mail application registered on users' native desktop. A `URI` instance has to be created and passed to the mail method in the `Desktop` class.
 Refer to the code example below: +
 
@@ -580,7 +577,9 @@ image::ImportSequenceDiagram.png[width="1000"]
 The import mechanism is built upon an `UndoableCommand`, which means that any changes made by the command can be easily reversed by calling the
 `undo` command.
 
-==== Design Considerations
+*Design Considerations*:
+
+---
 
 **Aspect:** How import executes +
 **Alternative 1 (current choice):** Individually adds each contact. +
@@ -620,8 +619,14 @@ authorization URL to be shown in the `BrowserPanel` +
 The export mechanism is facilitated by java `File` and `FileOutputStream` classes. It supports writing contact information into a link:#vCard[vCard] by creating a vCard format file.
 This file will be created and can be imported into other platforms such as Google Contacts.
 
-image::vCardClassDiagram.png[width="400"]
-_Figure 5.4 Vcard Class Diagram_
+The process when user enters the export command to the creation of the vCard file is summarized using the activity
+diagram shown below.
+
+image::ExportActivityDiagram.png[width="800"]
+_Figure 5.4.2 Export Activity Diagram_
+
+image::vCardClassDiagram.png[width="800"]
+_Figure 5.4.1 Vcard Class Diagram_
 
 With reference to the class diagram of `Vcard` above, a `Vcard` object created is unique for every person that user wants to export. `Vcard` of each person contains a unique
 string `cardDetails` that stores all information about the person such as `Name` and `Phone`.
@@ -807,7 +812,10 @@ public void copyImage(String currentImagePath, String imageName) throws IOExcept
 This method will copy the chosen image into the designated display picture storage folder and return the path to the copied image.
 The returned path will be stored as the display picture value of a person.
 
-==== Design Considerations
+*Design Considerations*:
+
+---
+
 **Aspect:** When to implement the feature +
 **Alternative 1 (current choice):** Prompts for display picture when parser detects `dp/` in `add` or `edit` commands +
 **Pros:** Natural flow of event as users can decide to add a display picture while adding the person +
@@ -853,7 +861,10 @@ The user will have to provide the command `tagdelete friends` to delete the tag 
  `TagDeleteCommand`. Next, `TagDeleteCommand` will call its method `executeUndoableCommand()` and ensure that the tag
  `friends` specified is valid.
 
-==== Design Considerations
+*Design Considerations*:
+
+---
+
 **Aspect:** implementation of `TagDeleteCommand` +
 **Alternative 1 (current choice):** implement it by extending `UndoableCommand` +
 **Pros:** Deleting tags is undoable/redoable +
@@ -876,7 +887,10 @@ tag `losers` in the address book. `TagEditCommandParser` will parse the 2 argume
 they are `friends` and `losers`) provided by the user and it will return `TagEditCommand`. Next, `TagEditCommand`
 will call its method `executeUndoableCommand()` and ensure that the tag `friends` specified is valid.
 
-==== Design Considerations
+*Design Considerations*:
+
+---
+
 **Aspect:** Implementation of `TagEditCommand` +
 **Alternative 1 (current choice):** implement it by extending `UndoableCommand` +
 **Pros:** Editing tags is undoable/redoable +
@@ -952,7 +966,10 @@ return `FindCommand`. In `FindCommand`, the method `PersonContainsKeywordsPredic
 against the existing list of names and tags and return all persons with the matching keyword `Alex` in their names and
 tag `friends`. Finally, `execute()` will run `updateFilteredPersonList` to show the list of persons returned.
 
-==== Design Considerations
+*Design Considerations*:
+
+---
+
 *Aspect:* How to input arguments for the command +
 *Alternative 1 (current choice):* flexible input, no prefixes needed +
 *Pros:* easy and simple to use for the users +
@@ -980,7 +997,10 @@ of social media platform in the 2nd argument of the user input. In this case, th
 posting a new `SocialRequestEvent` to the UI. In the UI, the `MainWindow` calls an instance of the `BrowserPanel` to
 load the Instagram page of the person at index 1.
 
-==== Design Considerations
+*Design Considerations*:
+
+---
+
 *Aspect:* What the user input for social media field should be +
 *Alternative 1 (current choice):* Use the same prefixes when adding person +
 *Pros:* Feels intuitive since you add people with the prefixes `ig` and `tw` and therefore should be able to invoke
@@ -1038,7 +1058,8 @@ The following activity diagram summarizes the flow of the location command:
 
 image::LocationActivityDiagram.png[width="800]
 
-==== Design Considerations
+*Design Considerations*:
+
 *Aspect:* How the Google Maps URL is passed to the BrowserPanel +
 *Alternative 1 (current choice):* Use a `showUrlEvent` to send the URL to the `MainWindow` subscriber +
 *Pros:* Allows `LocationCommand` to be more cohesive as it does not need to have an extra method to deal with the logic +
@@ -1048,8 +1069,6 @@ for displaying a URL in the `BrowserPanel` +
 *Pros:* Easy to implement, only 1 method in `MainWindow` required and it is called from the `execute` method of `LocationCommand` +
 *Cons:* Exposes functionality of `MainWindow` unnecessarily to other classes
 // end::location[]
-
-
 
 === Logging
 
@@ -1433,6 +1452,7 @@ Short for “application”, a program designed to perform a group of coordinate
 benefit of the user. In the Address Book, the user can keep track of his or her contacts.
 ....
 
+[[api]]
 Application Programming Interface (API)
 ....
 The interface that a computer system, library or application provides to allow other computer programs to request
