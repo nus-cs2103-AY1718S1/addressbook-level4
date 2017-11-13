@@ -7,7 +7,7 @@ https://ci.appveyor.com/project/danielbrzn/main[image:https://ci.appveyor.com/ap
 https://coveralls.io/github/CS2103AUG2017-W14-B3/main?branch=master[image:https://coveralls.io/repos/github/CS2103AUG2017-W14-B3/main/badge.svg?branch=master[Coverage Status]]
 
 ifdef::env-github[]
-image::docs/images/Ui.png[width="600"]
+image::docs/images/Ui.png[width="800"]
 endif::[]
 
 // tag::intro[]
