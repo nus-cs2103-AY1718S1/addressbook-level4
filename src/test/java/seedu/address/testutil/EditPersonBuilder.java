@@ -178,8 +178,10 @@ public class EditPersonBuilder {
         return this;
     }
 
+    //@@author huiyiiih
+
     /**
-     * Parses the {@code tags} into a {@code Set<Realtionship>} and set it to the {@code EditPerson}
+     * Parses the {@code relation} into a {@code Set<Realtionship>} and set it to the {@code EditPerson}
      * that we are building.
      */
     public EditPersonBuilder withToAddRel(String... relation) {
@@ -205,14 +207,14 @@ public class EditPersonBuilder {
     }
 
     /**
-     * Parses the {@code shouldClear} into a {@code Set<Relatinship>} and set it to the {@code EditPerson}
+     * Parses the {@code shouldClear} into a {@code Set<Relationship>} and set it to the {@code EditPerson}
      * that we are building.
      */
     public EditPersonBuilder withToClearRels(boolean shouldClear) {
         editPerson.setClearRels(shouldClear);
         return this;
     }
-
+    //@@author
     public EditPerson build() {
         return editPerson;
     }

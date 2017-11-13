@@ -1,4 +1,3 @@
-//@@author huiyiiih
 package seedu.address.logic.parser.relationship;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
@@ -23,6 +22,8 @@ import seedu.address.logic.commands.relationship.SetRelCommand;
 import seedu.address.logic.commands.relationship.SetRelCommand.EditPerson;
 import seedu.address.model.relationship.Relationship;
 import seedu.address.testutil.EditPersonBuilder;
+
+//@@author huiyiiih
 
 public class SetRelCommandParserTest {
 

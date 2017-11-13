@@ -1,8 +1,9 @@
-//@@author huiyiiih
 package seedu.address.logic.commands;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.exceptions.InvalidSortTypeException;
+
+//@@author huiyiiih
 
 /**
  * Lists all persons in the address book to the user.

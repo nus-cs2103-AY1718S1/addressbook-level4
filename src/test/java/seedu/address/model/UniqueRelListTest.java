@@ -1,4 +1,3 @@
-//@@author huiyiiih
 package seedu.address.model;
 
 import org.junit.Rule;
@@ -6,6 +5,8 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.model.relationship.UniqueRelList;
+
+//@@author huiyiiih
 
 public class UniqueRelListTest {
     @Rule
