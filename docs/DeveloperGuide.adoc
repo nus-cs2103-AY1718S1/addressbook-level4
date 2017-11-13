@@ -267,6 +267,32 @@ The user is able to view the disappearance of the relationship in the graph wind
 **Cons:** User has to know the specific information of the relationship, making this command not user-friendly.
 // end::deleterelationship[]
 
+// tag::editrelationship[]
+=== `editRelationship` command
+
+The `editRelationship` command edits a relationship between two persons in Intelli. Using this command, users can update the names and confidence estimates of relationships existing in Intelli without having to delete and add a new relationship.
+
+==== Design Considerations
+
+**Aspect:** Implementation for `editRelationship` command +
+**Alternative 1 (current choice):** The command is implemented internally as deleting an existing relationship and then adding a new relationship with the new name and the new confidence estimate. +
+**Pros:** Implementation does not have to access the internal state of a `Relationship`, and allows for immediate updates to the graph. +
+**Cons:** Additional step involved in having to delete and then add a new relationship between the same two persons. +
+**Alternative 2:** The command directly accesses and modifies the internal state of a `Relationship`. +
+**Pros:** The command can be completed in a single operation, which may be faster then deleting and adding a new relationship. +
+**Cons:** The change cannot be reflected dynamically on the graph after a successful edit.
+
+---
+
+**Aspect:** Type of command implemented +
+**Alternative 1 (current choice):** `editRelationship` command extends `UndoableCommand` instead of `Command`. +
+**Pros:** Users can easily undo their changes if they accidentally update the wrong relationship attribute or have mistakes in the updates (i.e. in the new relationship name/ confidence estimate). +
+**Cons:** Additional memory needed for recording the previous stage of the address book. +
+**Alternative 2:** `editRelationship` command extends `Command`. +
+**Pros:** No additional memory needed for recording the previous stage of the address book. +
+**Cons:** Users can do another `editRelationship` command to achieve the `undo` effect.
+// end::editrelationship[]
+
 // tag::removetag[]
 === removeTag command
 
