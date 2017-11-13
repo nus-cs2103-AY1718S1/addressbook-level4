@@ -1441,6 +1441,7 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Pros:** We do not need to maintain a separate stack, and just reuse what is already in the codebase. +
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 
+// tag::undoredoEnhance[]
 ==== Enhancement: Undone/Redone Command as feedback in addition to Success Message
 `v1.5 Implementation`
 Each undoable command class (AddCommand, DeleteCommand, ClearCommand, EditCommand) will have and overriden ToString()
@@ -1487,6 +1488,7 @@ After obtaining the command string, the popping of the undoable command from the
 
         return new CommandResult(feedbackToUser);
 ----
+// end::undoredoEnhance[]
 
 // end::undoredo[]
 
@@ -1909,6 +1911,12 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`*` |user | check last modified date for a contact| identify possible outdated contacts
 
 |`*` |lazy user| create an email by clicking on email address on person card| send email on the fly
+
+|`*` |prudent user| confirm what command I am undo-ing or redo-ing when I excecute the undo/redo command| do not make unintentional changes
+
+|`*` |efficient user | have my contact list sorted in alphabetical order| have a well ordered list of contacts in LISA or in the printed address book.
+
+|`*` |user | have interesting Easter Egg features| have some fun with the application
 
 
 |=======================================================================
