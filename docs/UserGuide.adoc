@@ -344,6 +344,7 @@ Returns any person having addresses containing `stadium` or `pier`
 
 // end::findByAddress[]
 
+// tag::findByPhone[]
 === Locating persons by phone: `findByPhone`
 
 Finds persons whose phone contain any of the given keywords. +
@@ -354,6 +355,8 @@ Examples:
 
 * `findByPhone 12345678` +
 Returns `john` and `John Doe` whose phone number is '12345678'.
+
+// end::findByPhone[]
 
 // tag::find2[]
 === Locating persons by email: `findByEmail`

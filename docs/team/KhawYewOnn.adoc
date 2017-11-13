@@ -35,4 +35,16 @@ include::../DeveloperGuide.adoc[tag=meetingLocation]
 #End of Extract#
 
 ---
-s
+=== Enhancement Added: Create Default Account
+
+==== External behavior
+
+---
+
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=findByPhone]
+
+#End of Extract#
+
+---
