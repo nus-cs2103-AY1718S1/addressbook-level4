@@ -58,6 +58,7 @@ public class SelectCommand extends Command {
         if (socialType != null) {
             // check to see if the social type matches any of the selected person's social media accounts
             if (!checkPersonHasSocialType(selectedPerson, socialType)) {
+                // if the selected person does not have the requested social type, throw a command exception
                 throw new CommandException(MESSAGE_SOCIAL_TYPE_NOT_FOUND);
             }
         }
@@ -75,10 +76,15 @@ public class SelectCommand extends Command {
         return new CommandResult(String.format(MESSAGE_SELECT_PERSON_SUCCESS, targetIndex.getOneBased()));
     }
 
+
     //@@author sarahnzx
+    /**
+     * Checks if a person has a specified social type.
+     */
     private boolean checkPersonHasSocialType(ReadOnlyPerson selectedPerson, String socialType) {
         Set<SocialInfo> selectedPersonSocialInfos = selectedPerson.getSocialInfos();
         boolean hasSameSocialType = false;
+        // iterate through the SocialInfos of the selected person
         for (SocialInfo si : selectedPersonSocialInfos) {
             if (si.getSocialType().equals(socialType)) {
                 hasSameSocialType = true;
