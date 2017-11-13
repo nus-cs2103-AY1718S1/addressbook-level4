@@ -3,6 +3,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
+
 == Project: BoNUS
 BoNUS is a desktop personal organizer application created for National University of Singapore (NUS) students, by NUS students.
 The application aims to better organize the lives of NUS students. This is accomplished through having a contacts list
@@ -15,6 +16,13 @@ https://se-edu.github.io/[SE-EDU team], the current codebase has expanded to aro
 is done in Java. The frontend of the application is mostly done up with JavaFX.
 
 *Code contributed*: [https://github.com/CS2103AUG2017-T09-B3/main/blob/master/collated/main/junyango.md[Functional code]] [https://github.com/CS2103AUG2017-T09-B3/main/blob/master/collated/test/junyango.md[Test code]]
+
+== Purpose
+
+This Project Portfolio's purpose is to give an overview of the contributions of Ng Jun Yang to Project BoNUS. The Project
+Portfolio will include enhancements added, enhancements proposed and lastly, other contributions to Project BoNUS which will
+be further elaborated below. 
+
 
 === Enhancement Added: Auto Reminders
 
