@@ -7,17 +7,26 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AddTaskCommand;
 import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.ClearTaskCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.DeleteTagCommand;
+import seedu.address.logic.commands.DeleteTaskCommand;
 import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.EditTaskCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.ListTaskCommand;
+import seedu.address.logic.commands.MultiFilterCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.SearchCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.SwitchThemeCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -44,32 +53,63 @@ public class AddressBookParser {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
         }
 
+        AutoCorrectCommand autoCorrectCommand = new AutoCorrectCommand();
+        autoCorrectCommand.setMessageToUser(""); //reset the string value to empty after each auto-correct
+        System.out.println(autoCorrectCommand.getMessageToUser());
         final String commandWord = matcher.group("commandWord");
         final String arguments = matcher.group("arguments");
-        switch (commandWord) {
+        final String autoCorrectedCommand = autoCorrectCommand(commandWord);
+        switch (autoCorrectedCommand) {
 
-        case AddCommand.COMMAND_WORD:
+        case AddCommand.COMMAND_WORD: case AddCommand.COMMAND_WORD_ALIAS:
             return new AddCommandParser().parse(arguments);
 
-        case EditCommand.COMMAND_WORD:
+        case AddTaskCommand.COMMAND_WORD:
+            return new AddTaskCommandParser().parse(arguments);
+
+        case EditCommand.COMMAND_WORD: case EditCommand.COMMAND_WORD_ALIAS:
             return new EditCommandParser().parse(arguments);
 
-        case SelectCommand.COMMAND_WORD:
+        case EditTaskCommand.COMMAND_WORD: case EditTaskCommand.COMMAND_WORD_ALIAS:
+            return new EditTaskCommandParser().parse(arguments);
+
+        case SelectCommand.COMMAND_WORD: case SelectCommand.COMMAND_WORD_ALIAS:
             return new SelectCommandParser().parse(arguments);
 
-        case DeleteCommand.COMMAND_WORD:
+        case SearchCommand.COMMAND_WORD: case SearchCommand.COMMAND_WORD_ALIAS:
+            return new SearchCommandParser().parse(arguments);
+
+        case SwitchThemeCommand.COMMAND_WORD:
+            return new SwitchThemeCommandParser().parse(arguments);
+
+        case DeleteCommand.COMMAND_WORD: case DeleteCommand.COMMAND_WORD_ALIAS:
             return new DeleteCommandParser().parse(arguments);
 
-        case ClearCommand.COMMAND_WORD:
+        case DeleteTaskCommand.COMMAND_WORD:
+            return new DeleteTaskCommandParser().parse(arguments);
+
+        case DeleteTagCommand.COMMAND_WORD: case DeleteTagCommand.COMMAND_WORD_ALIAS:
+            return new DeleteTagCommandParser().parse(arguments);
+
+        case ClearCommand.COMMAND_WORD: case ClearCommand.COMMAND_WORD_ALIAS:
             return new ClearCommand();
 
-        case FindCommand.COMMAND_WORD:
+        case ClearTaskCommand.COMMAND_WORD: case ClearTaskCommand.COMMAND_WORD_ALIAS:
+            return new ClearTaskCommand();
+
+        case FindCommand.COMMAND_WORD: case FindCommand.COMMAND_WORD_ALIAS:
             return new FindCommandParser().parse(arguments);
 
-        case ListCommand.COMMAND_WORD:
+        case MultiFilterCommand.COMMAND_WORD: case MultiFilterCommand.COMMAND_WORD_ALIAS:
+            return new MultiFilterCommandParser().parse(arguments);
+
+        case ListCommand.COMMAND_WORD: case ListCommand.COMMAND_WORD_ALIAS:
             return new ListCommand();
 
-        case HistoryCommand.COMMAND_WORD:
+        case ListTaskCommand.COMMAND_WORD:
+            return new ListTaskCommand();
+
+        case HistoryCommand.COMMAND_WORD: case HistoryCommand.COMMAND_WORD_ALIAS:
             return new HistoryCommand();
 
         case ExitCommand.COMMAND_WORD:
@@ -78,15 +118,19 @@ public class AddressBookParser {
         case HelpCommand.COMMAND_WORD:
             return new HelpCommand();
 
-        case UndoCommand.COMMAND_WORD:
+        case UndoCommand.COMMAND_WORD: case UndoCommand.COMMAND_WORD_ALIAS:
             return new UndoCommand();
 
-        case RedoCommand.COMMAND_WORD:
+        case RedoCommand.COMMAND_WORD: case RedoCommand.COMMAND_WORD_ALIAS:
             return new RedoCommand();
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }
+    }
+
+    public String autoCorrectCommand(String commandWord) {
+        return new AutoCorrectCommand().correctWord(commandWord);
     }
 
 }

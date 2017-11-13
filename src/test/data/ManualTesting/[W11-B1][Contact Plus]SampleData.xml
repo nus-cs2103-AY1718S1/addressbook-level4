@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addressbook>
+    <persons>
+        <name>Rajah Tan</name>
+        <phone>99941204</phone>
+        <phone2>71238493</phone2>
+        <email>jspg2013@gmail.com</email>
+        <address>blk 123 mcdonalds ave</address>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Arsenio Vega</name>
+        <phone>9766356</phone>
+        <phone2>58954373</phone2>
+        <email>mus.Proin.vel@utnisi.ca</email>
+        <address>P.O. Box 499, 1030 Mollis Road</address>
+    </persons>
+    <persons>
+        <name>Karmal Kelly</name>
+        <phone>75543392</phone>
+        <phone2>25049803</phone2>
+        <email>jspg2012@gmail.com</email>
+        <address>blk 123 mcdonalds ave</address>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Philip Beard</name>
+        <phone>85659876</phone>
+        <phone2>-</phone2>
+        <email>quam.a.felis@non.org</email>
+        <address>4913 Eget, Ave</address>
+    </persons>
+    <persons>
+        <name>Michael Hendricks</name>
+        <phone>78062538</phone>
+        <phone2>17058717</phone2>
+        <email>neque.tellus.imperdiet@quamafelis.net</email>
+        <address>671 Diam St.</address>
+    </persons>
+    <persons>
+        <name>Denton Bauer</name>
+        <phone>39752373</phone>
+        <phone2>-</phone2>
+        <email>ut.dolor@odioapurus.net</email>
+        <address>2620 Euismod Road</address>
+    </persons>
+    <persons>
+        <name>Mufutau Vance</name>
+        <phone>71715191</phone>
+        <phone2>42353412</phone2>
+        <email>ut.lacus@Nuncpulvinar.edu</email>
+        <address>847-5304 Dui, Rd.</address>
+    </persons>
+    <persons>
+        <name>Thomas Scott</name>
+        <phone>56063801</phone>
+        <phone2>-</phone2>
+        <email>risus.Morbi.metus@arcuMorbisit.org</email>
+        <address>663-4645 At, Av.</address>
+    </persons>
+    <persons>
+        <name>Zachary Hodge</name>
+        <phone>18445100</phone>
+        <phone2>25441234</phone2>
+        <email>feugiat.nec@lectusjustoeu.edu</email>
+        <address>7656 Proin Street</address>
+    </persons>
+    <persons>
+        <name>Drake Lindsey</name>
+        <phone>26989407</phone>
+        <phone2>95740195</phone2>
+        <email>malesuada@nuncQuisqueornare.edu</email>
+        <address>P.O. Box 718, 6347 Arcu Av.</address>
+    </persons>
+    <persons>
+        <name>Reece Rodriguez</name>
+        <phone>9909005</phone>
+        <phone2>-</phone2>
+        <email>ridiculus@velitegestas.ca</email>
+        <address>835-4672 A, St.</address>
+    </persons>
+    <persons>
+        <name>Erasmus Everett</name>
+        <phone>6321153</phone>
+        <phone2>52454353</phone2>
+        <email>vel@pharetra.ca</email>
+        <address>Ap #816-7804 Nam Rd.</address>
+    </persons>
+    <persons>
+        <name>Wing Shepard</name>
+        <phone>75889668</phone>
+        <phone2>57020171</phone2>
+        <email>sapien.imperdiet@dapibusgravida.com</email>
+        <address>Ap #213-8222 Sed Rd.</address>
+    </persons>
+    <persons>
+        <name>Roth Wood</name>
+        <phone>3747926</phone>
+        <phone2>-</phone2>
+        <email>dapibus.rutrum.justo@in.edu</email>
+        <address>973-2111 Ligula. Rd.</address>
+    </persons>
+    <persons>
+        <name>Yardley Stevenson</name>
+        <phone>48266653</phone>
+        <phone2>27237522</phone2>
+        <email>velit.egestas@aceleifendvitae.com</email>
+        <address>P.O. Box 937, 461 Sit Av.</address>
+    </persons>
+    <persons>
+        <name>Kennan Barlow</name>
+        <phone>42413857</phone>
+        <phone2>32483201</phone2>
+        <email>semperauctdiam@utpharetra.co.uk</email>
+        <address>2284 Ornare, Avenue</address>
+    </persons>
+    <persons>
+        <name>John Simmons</name>
+        <phone>40633641</phone>
+        <phone2>-</phone2>
+        <email>fringilla@estmaurisrhoncus.net</email>
+        <address>2336 Adipiscing Road</address>
+    </persons>
+    <persons>
+        <name>Drew Rivas</name>
+        <phone>1685181</phone>
+        <phone2>-</phone2>
+        <email>erat.Vivamus@nectellus.org</email>
+        <address>Ap #941-9624 Quisque Ave</address>
+    </persons>
+    <persons>
+        <name>Tarik Snow</name>
+        <phone>2754299</phone>
+        <phone2>42143825</phone2>
+        <email>lorem@sollicitudinamalesuada.edu</email>
+        <address>P.O. Box 702, 2495 Quisque Rd.</address>
+    </persons>
+    <persons>
+        <name>Jonas Kelley</name>
+        <phone>83452956</phone>
+        <phone2>53809735</phone2>
+        <email>ornare.sagittis@Infaucibus.co.uk</email>
+        <address>P.O. Box 550, 4178 Lacinia Ave</address>
+    </persons>
+    <persons>
+        <name>Mufutau Norman</name>
+        <phone>79397714</phone>
+        <phone2>43215554</phone2>
+        <email>ut.ipsum.ac@malesuada.com</email>
+        <address>764-9726 Eget Rd.</address>
+    </persons>
+    <tags>friends</tags>
+    <tasks>
+        <description>btuqrpinthhciqaeqvmp</description>
+        <priority>1</priority>
+        <duedate>10/10/2017</duedate>
+    </tasks>
+</addressbook>

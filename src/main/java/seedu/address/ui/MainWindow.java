@@ -1,6 +1,8 @@
 package seedu.address.ui;
 
+import java.io.IOException;
 import java.util.logging.Logger;
+import javax.xml.bind.JAXBException;
 
 import com.google.common.eventbus.Subscribe;
 
@@ -13,14 +15,20 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import seedu.address.MainApp;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.Messages;
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.commons.events.ui.SwitchThemeRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.UserPrefs;
 
 /**
@@ -29,10 +37,11 @@ import seedu.address.model.UserPrefs;
  */
 public class MainWindow extends UiPart<Region> {
 
-    private static final String ICON = "/images/address_book_32.png";
+    private static final String ICON = "/images/address_book_33.png";
     private static final String FXML = "MainWindow.fxml";
     private static final int MIN_HEIGHT = 600;
     private static final int MIN_WIDTH = 450;
+    private static String currentTheme;
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -62,6 +71,9 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private StackPane statusbarPlaceholder;
+
+    @FXML
+    private VBox mainWindow;
 
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
@@ -125,7 +137,7 @@ public class MainWindow extends UiPart<Region> {
     /**
      * Fills up all the placeholders of this window.
      */
-    void fillInnerParts() {
+    void fillInnerParts() throws JAXBException, IOException {
         browserPanel = new BrowserPanel();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
@@ -135,11 +147,17 @@ public class MainWindow extends UiPart<Region> {
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
+        StatusBarFooter statusBarFooter = new StatusBarFooter(logic.getFilteredPersonList().size());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
-        CommandBox commandBox = new CommandBox(logic);
+        CommandBox commandBox = new CommandBox(logic, browserPanel.getTaskDisplayed(), browserPanel.getTabPane());
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
+        currentTheme = "/view/" + prefs.getAddressBookTheme();
+        mainWindow.getStylesheets().add(currentTheme);
+        mainWindow.getStylesheets().add("/view/Extensions.css");
+
+
     }
 
     void hide() {
@@ -183,6 +201,16 @@ public class MainWindow extends UiPart<Region> {
                 (int) primaryStage.getX(), (int) primaryStage.getY());
     }
 
+    //@@author JYL123
+    /**
+     * Opens the weather forecast window.
+     */
+    @FXML
+    public void handleWeather() throws JAXBException, IOException {
+        WeatherWindow weatherWindow = new WeatherWindow();
+        weatherWindow.show();
+    }
+
     /**
      * Opens the help window.
      */
@@ -192,6 +220,28 @@ public class MainWindow extends UiPart<Region> {
         helpWindow.show();
     }
 
+    //@@author zhangshuoyang
+    /**
+     * Set theme based on user's input index
+     */
+    private void handleTheme(Index index) throws CommandException {
+        String[] themeArr = {"DarkTheme", "Light", "Ugly"};
+        String selectedTheme = themeArr[index.getZeroBased()];
+
+        String path = new String("/view/" + selectedTheme + ".css");
+        prefs.setAddressBookTheme(themeArr[index.getZeroBased()] + ".css");
+
+        if (MainApp.class.getResource(path) == null) {
+            throw new CommandException(Messages.MESSAGE_UNKNOWN_THEME);
+        }
+
+        mainWindow.getStylesheets().clear();
+        mainWindow.getStylesheets().add(path);
+        mainWindow.getStylesheets().add("/view/Extensions.css");
+
+    }
+
+    //@@author
     void show() {
         primaryStage.show();
     }
@@ -217,4 +267,11 @@ public class MainWindow extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
     }
+
+    @Subscribe
+    public void handleSwitchThemeRequestEvent(SwitchThemeRequestEvent event) throws CommandException {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleTheme(event.index);
+    }
+
 }

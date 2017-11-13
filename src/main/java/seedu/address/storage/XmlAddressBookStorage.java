@@ -24,11 +24,13 @@ public class XmlAddressBookStorage implements AddressBookStorage {
 
     public XmlAddressBookStorage(String filePath) {
         this.filePath = filePath;
+
     }
 
     public String getAddressBookFilePath() {
         return filePath;
     }
+
 
     @Override
     public Optional<ReadOnlyAddressBook> readAddressBook() throws DataConversionException, IOException {
@@ -73,5 +75,11 @@ public class XmlAddressBookStorage implements AddressBookStorage {
         FileUtil.createIfMissing(file);
         XmlFileStorage.saveDataToFile(file, new XmlSerializableAddressBook(addressBook));
     }
+
+    @Override
+    public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
+        saveAddressBook(addressBook, "data/backup.xml");
+    }
+
 
 }

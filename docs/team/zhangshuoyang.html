@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.3">
+<title>Zhang Shuoyang - Project Portfolio</title>
+<link rel="stylesheet" href="../stylesheets/gh-pages.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="../stylesheets/coderay-asciidoctor.css">
+</head>
+<body class="article">
+<div id="header">
+<h1>Zhang Shuoyang - Project Portfolio</h1>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="project-addressbook-level-4"><a class="link" href="#project-addressbook-level-4">Project: AddressBook - Level 4</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.</p>
+</div>
+<div class="paragraph">
+<p><strong>Code contributed</strong>: [<a href="https://github.com/CS2103AUG2017-W11-B1/main/blob/master/collated/main/zhangshuoyang.md">Functional code</a>] [<a href="https://github.com/CS2103AUG2017-W11-B1/main/blob/master/collated/test/zhangshuoyang.md">Test code</a>]</p>
+</div>
+<div class="sect2">
+<h3 id="enhancement-added-add-tasks"><a class="link" href="#enhancement-added-add-tasks">Enhancement Added: Add Tasks</a></h3>
+<div class="sect3">
+<h4 id="external-behavior"><a class="link" href="#external-behavior">External behavior</a></h4>
+<hr>
+<div class="paragraph">
+<p><mark>Start of Extract [from: User Guide]</mark></p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="addtask-command"><a class="link" href="#addtask-command">Add tasks [Since v1.3] <a id="addtask"></a></a></h3>
+<div class="paragraph">
+<p>Add personal tasks into <code>Contact Plus</code>.
+Format: <code>task d/DESCRIPTION pr/PRIORITY(0/1/2) on DUE DATE(dd/MM/yyyy)</code></p>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>task d/CS2103 Assignment pr/2 on 26/10/2017</code></p>
+</li>
+<li>
+<p><code>task d/Finish Teammate Feedback Session pr/0 on 01/11/2017</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><mark>End of Extract</mark></p>
+</div>
+<hr>
+<div class="sect3">
+<h4 id="justification"><a class="link" href="#justification">Justification</a></h4>
+<div class="paragraph">
+<p>The <code>addtask</code> feature allows users to manage their tasks within the address book application, instead of switching
+between different apps. It offers a place for the to-do list to be stored, managed and organised. This feature will
+not do your tasks for you, but it is powerful enough to get you started.</p>
+</div>
+<div class="paragraph">
+<p>Once the task is successfully added, it will be displayed on the sticky note in the task panel, as shown below:</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="../images/add_task.png" alt="width:500"></span></p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="implementation"><a class="link" href="#implementation">Implementation</a></h4>
+<hr>
+<div class="paragraph">
+<p><mark>Start of Extract [from: Developer Guide]</mark></p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="add-task-mechanism"><a class="link" href="#add-task-mechanism">Add Task Mechanism</a></h3>
+<div class="paragraph">
+<p>The 'add task' feature is facilitated by <code>AddTaskCommand</code> class. It allows users to add tasks into the address book
+with a description, the level of priority as well as the due date. The tasks added will be shown on the stickies
+in the address book.</p>
+</div>
+<div class="paragraph">
+<p>The command word for adding a task is <code>task</code>. When users key in the command word <code>task</code>, together with valid
+description, priority and due date, the <code>execute()</code> function in the <code>LogicManager</code> class will be called, which will
+pass the value of the command string into <code>parseCommand()</code> function in the <code>AddressBookParser</code> class.
+As a result, <code>AddTaskCommandParser</code> will be returned to separate the command string into three different parts
+- <code>Description</code>, <code>Priority</code> and <code>dueDate</code>. These three fields will be passed to <code>Task</code> class to check if they
+are valid. If yes, a new <code>Task</code> object will be returned and used to call <code>AddTaskCommand</code> class. Eventually,
+the <code>executeUndoableCommand()</code> function in <code>AddTaskCommand</code> class will be called and returns a <code>CommandResult</code> object to display once a task is successfully added.</p>
+</div>
+<div class="sect3">
+<h4 id="prerequisites-dependencies"><a class="link" href="#prerequisites-dependencies">Prerequisites/Dependencies</a></h4>
+<div class="ulist">
+<ul>
+<li>
+<p>The format of date must follow <code>dd/MM/yyyy</code>.</p>
+</li>
+<li>
+<p>The range of priority can only be from 0 to 2. Any other values will be deemed as invalid.</p>
+</li>
+<li>
+<p>Currently, all fields must be included in the command and cannot be omitted.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations"><a class="link" href="#design-considerations">Design Considerations</a></h4>
+<div class="paragraph">
+<p><strong>Aspect:</strong> Implementation of AddTaskCommand<br></p>
+</div>
+<div class="paragraph">
+<p><strong>Alternative 1 (current choice):</strong> Use stickies so that newly added tasks will show up in the stickies.<br>
+<strong>Pros:</strong> Tasks are easy to identify.<br>
+<strong>Cons:</strong> When too many tasks are added, it is difficult to display all the tasks.<br></p>
+</div>
+<div class="paragraph">
+<p><strong>Alternative 2:</strong> Use a task list similar to the person list in the address book.<br>
+<strong>Pros:</strong> Easy to display and look through all the tasks.<br>
+<strong>Cons:</strong> Less attractive.<br></p>
+</div>
+<div class="paragraph">
+<p><mark>End of Extract</mark></p>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="enhancement-added-theme-selection"><a class="link" href="#enhancement-added-theme-selection">Enhancement Added: Theme Selection</a></h3>
+<div class="sect3">
+<h4 id="external-behavior-2"><a class="link" href="#external-behavior-2">External behavior</a></h4>
+<hr>
+<div class="paragraph">
+<p><mark>Start of Extract [from: User Guide]</mark></p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="switch-theme-since-v1-5"><a class="link" href="#switch-theme-since-v1-5">Switch theme [Since v1.5]</a></h3>
+<div class="paragraph">
+<p>If you are not happy with the current theme and want to select a new theme, use <code>switch</code> command with the index to
+switch to the theme you like.<br>
+Format: <code>switch INDEX</code></p>
+</div>
+<div class="sect3">
+<h4 id="description"><a class="link" href="#description">Description</a></h4>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Index must be 1, 2 or 3 only. Other values are deemed as invalid.</p>
+</li>
+<li>
+<p>The command is not undoable. But you can switch back to the original theme by performing the command again.</p>
+</li>
+<li>
+<p>Once you update the theme, your preference will be saved. The next time you open Contact Plus, it will not
+set back to default theme.</p>
+</li>
+<li>
+<p>Default themes in Contact Plus are Dark, Light and Colourful. Below are the preview of 3 themes:<br>
+<span class="image"><img src="../images/DarkTheme.png" alt="DarkTheme" width="500"></span><br>
+<span class="image"><img src="../images/LightTheme.png" alt="LightTheme" width="500"></span><br>
+<span class="image"><img src="../images/ColourfulTheme.png" alt="ColourfulTheme" width="500"></span></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="how-to-use"><a class="link" href="#how-to-use">How to use</a></h4>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Enter the command <code>switch</code>, together with index of the theme. (<code>1</code> stands for DarkTheme, <code>2</code> stands for
+LightTheme and <code>3</code> stands for ColourfulTheme)<br></p>
+</li>
+<li>
+<p>Once the command is successfully executed, the theme of Contact Plus will be updated immediately.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="example"><a class="link" href="#example">Example</a></h4>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Your input</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Result</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>switch 2</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Theme updated: Light</code> will be displayed. The theme will be set to the Light Theme. (refer to
+the diagram below)<br>
+<span class="image"><img src="../images/LightTheme.png" alt="LightTheme" width="500"></span></p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><mark>End of Extract</mark></p>
+</div>
+<hr>
+</div>
+<div class="sect3">
+<h4 id="justification-2"><a class="link" href="#justification-2">Justification</a></h4>
+<div class="paragraph">
+<p>The <code>select theme</code> feature allows users to choose their favourite theme from the default set of themes available.
+It allows users to have a more personalised address book.</p>
+</div>
+<div class="paragraph">
+<p>After a theme is selected, the user interface will be updated immediately. For instance, after switching to Light Theme,
+the following result will be displayed.</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="../images/LightTheme.png" alt="width:500"></span></p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="implementation-2"><a class="link" href="#implementation-2">Implementation</a></h4>
+<hr>
+<div class="paragraph">
+<p><mark>Start of Extract [from: Developer Guide]</mark></p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="theme-selection-mechanism"><a class="link" href="#theme-selection-mechanism">Theme Selection Mechanism</a></h3>
+<div class="paragraph">
+<p>The 'theme support' feature allows user to choose their favorite theme for the address book, other than the default
+Dark Theme. It is facilitated by <code>SwitchThemeCommand</code> class.</p>
+</div>
+<div class="paragraph">
+<p>Currently, Contact Plus is presented with three themes: <strong>Dark</strong>(INDEX <code>1</code>), <strong>Light</strong>(INDEX <code>2</code>) and
+<strong>Colourful</strong>(INDEX <code>3</code>).</p>
+</div>
+<div class="paragraph">
+<p>The command word for switching theme is <code>switch</code>. When the user type the command word <code>switch</code> and the <strong>INDEX</strong>
+ of theme, <code>execute()</code> function in the <code>LogicManager</code> class will be called. Next the command line will be passed to
+<code>AddressBookParser</code> class which then returns <code>SwitchThemeCommandParser</code> to separate the <strong>INDEX</strong> from command word.
+The <strong>INDEX</strong> will be used to select the specific theme in the array of String <code>themeArr</code>. The theme selected
+will be used to build the filepath, which allows <code>MainWindow</code> class to retrieve the respective <code>.css</code> file and update
+theme accordingly.</p>
+</div>
+<div class="paragraph">
+<p>The overview of the themes is as follows:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/DarkTheme.png" alt="DarkTheme" width="500">
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/LightTheme.png" alt="LightTheme" width="500">
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/ColourfulTheme.png" alt="ColourfulTheme" width="500">
+</div>
+</div>
+<div class="sect3">
+<h4 id="prerequisites-dependencies-2"><a class="link" href="#prerequisites-dependencies-2">Prerequisites/Dependencies</a></h4>
+<div class="ulist">
+<ul>
+<li>
+<p>The line <code>&lt;URL value="@ThemeName.css" /&gt;</code> in <code>fxml</code> files is replaced by a method call via
+<code>javafx.scene.layout.VBox</code> object in <code>MainWindow</code> class.</p>
+</li>
+<li>
+<p>In current version of Contact Plus, the <code>INDEX</code> must be 1, 2, or 3.</p>
+</li>
+<li>
+<p>The <code>SwitchThemeCommand</code> is currently not undoable.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-2"><a class="link" href="#design-considerations-2">Design Considerations</a></h4>
+<div class="paragraph">
+<p><strong>Aspect:</strong> Implementation of <code>switch theme</code> feature<br></p>
+</div>
+<div class="paragraph">
+<p><strong>Alternative 1 (current choice):</strong> Use command line to switch theme.<br>
+<strong>Pros:</strong> Only keyboard action is required. Users do not need to use mouse to click.<br>
+<strong>Cons:</strong> Preview of theme is not available. Users will only find out after they execute the command.</p>
+</div>
+<div class="paragraph">
+<p><strong>Alternative 2:</strong> Use a selection window with theme preview image.<br>
+<strong>Pros:</strong> Users are able to know what the theme looks like before they choose the respective theme.<br>
+<strong>Cons:</strong> Additional space for <code>Theme Selection</code> window.<br></p>
+</div>
+<div class="paragraph">
+<p><mark>End of Extract</mark></p>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="enhancement-proposed-add-command-code-remark-code"><a class="link" href="#enhancement-proposed-add-command-code-remark-code">Enhancement Proposed: Add command <code>remark</code></a></h3>
+<div class="paragraph">
+<p>{Explain similar to the Undo/Redo feature above.}</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="other-contributions"><a class="link" href="#other-contributions">Other contributions</a></h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Create two new themes - Light and Colourful (Pull requests <a href="https://github.com/CS2103AUG2017-W11-B1/main/pull/56">#56</a>, <a href="https://github.com/CS2103AUG2017-W11-B1/main/pull/174">#174</a>)</p>
+</li>
+<li>
+<p>Update status bar to display the total number of people (Pull requests <a href="https://github.com/CS2103AUG2017-W11-B1/main/pull/30">#30</a>)</p>
+</li>
+<li>
+<p>Wrote additional tests to increase coverage from 82% to 84% (Pull requests <a href="https://github.com/CS2103AUG2017-W11-B1/main/pull/142">#142</a>)</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="project-powerpointlabs"><a class="link" href="#project-powerpointlabs">Project: PowerPointLabs</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>{Optionally (not graded), you may include other projects in your portfolio.}</p>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2017-11-08 01:22:55 +08:00
+</div>
+</div>
+</body>
+</html>

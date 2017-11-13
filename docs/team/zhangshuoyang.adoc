@@ -1,0 +1,94 @@
+= Zhang Shuoyang - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: Contact Plus
+include::../UserGuide.adoc[tag=welcome]
+
+The user interacts with this application using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-W11-B1/main/blob/master/collated/main/zhangshuoyang.md[Functional code]] [https://github.com/CS2103AUG2017-W11-B1/main/blob/master/collated/test/zhangshuoyang.md[Test code]]
+
+=== Enhancement Added: Add Tasks
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=addtask]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+The `addtask` feature allows users to manage their tasks within the address book application, instead of switching
+between different apps. It offers a place for the to-do list to be stored, managed and organised. This feature will
+not do your tasks for you, but it is powerful enough to get you started.
+
+Once the task is successfully added, it will be displayed on the sticky note in the `Task` tab, as shown below:
+
+image:add_task_successful.png[width:500]
+
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=addtask]
+
+#End of Extract#
+
+---
+<<<
+=== Enhancement Added: Theme Selection
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=themeselect]
+
+#End of Extract#
+
+---
+==== Justification
+
+The `select theme` feature allows users to choose their favourite theme from the default set of themes available.
+It allows users to have a more personalised address book.
+
+After a theme is selected, the user interface will be updated immediately. For instance, after switching to Light Theme,
+the following result will be displayed.
+
+image:LightTheme.png[width:500]
+
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=themeselect]
+
+#End of Extract#
+
+---
+
+
+=== Enhancement Proposed: command `sync`
+
+include::../UserGuide.adoc[tag=googlesync]
+
+=== Other contributions
+
+* Modify browser panel to display Google Map of the address of selected contact. (Pull requests https://github.com/CS2103AUG2017-W11-B1/main/pull/56/commits/8b4dc931ca959d47706add168ec74194fb801883[#56])
+* Create two new themes - Light and Colourful. (Pull requests https://github.com/CS2103AUG2017-W11-B1/main/pull/56[#56], https://github.com/CS2103AUG2017-W11-B1/main/pull/174[#174])
+* Update status bar to display the total number of people. (Pull requests https://github.com/CS2103AUG2017-W11-B1/main/pull/30[#30])
+* Wrote additional tests to increase coverage from 82% to 84%. (Pull requests https://github.com/CS2103AUG2017-W11-B1/main/pull/142[#142])
+* Report bugs in other team's product. (Issue https://github.com/CS2103AUG2017-T17-B4/main/issues/90[90])
+

@@ -16,6 +16,7 @@ public interface AddressBookStorage {
      */
     String getAddressBookFilePath();
 
+
     /**
      * Returns AddressBook data as a {@link ReadOnlyAddressBook}.
      *   Returns {@code Optional.empty()} if storage file is not found.
@@ -29,6 +30,9 @@ public interface AddressBookStorage {
      */
     Optional<ReadOnlyAddressBook> readAddressBook(String filePath) throws DataConversionException, IOException;
 
+
+
+
     /**
      * Saves the given {@link ReadOnlyAddressBook} to the storage.
      * @param addressBook cannot be null.
@@ -40,5 +44,10 @@ public interface AddressBookStorage {
      * @see #saveAddressBook(ReadOnlyAddressBook)
      */
     void saveAddressBook(ReadOnlyAddressBook addressBook, String filePath) throws IOException;
+
+
+    void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException;
+
+
 
 }

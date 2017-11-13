@@ -2,6 +2,7 @@ package seedu.address.ui;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import org.junit.Before;
@@ -26,7 +27,7 @@ public class CommandBoxTest extends GuiUnitTest {
     private CommandBoxHandle commandBoxHandle;
 
     @Before
-    public void setUp() {
+    public void setUp() throws FileNotFoundException {
         Model model = new ModelManager();
         Logic logic = new LogicManager(model);
 

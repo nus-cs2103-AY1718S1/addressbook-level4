@@ -1,0 +1,350 @@
+/** @@author zhangshuoyang */
+
+.background {
+    -fx-background-color: red;
+    background-color: #f2f2f2; /* Used in the default.html file */
+    background-image: url("../images/world_map_1.jpg");
+    background-size: 500px;
+    background-position: left 1px;
+    background-repeat: no-repeat;
+}
+
+.label { /* Used in status bar font size, tag font family */
+    -fx-font-size: 10pt;
+    -fx-font-family: "Helvetica";
+    -fx-text-fill: black;
+    -fx-opacity: 0.9;
+}
+
+.label-bright {
+    -fx-font-size: 11pt;
+    -fx-font-family: "Helvetica";
+    -fx-text-fill: black;
+    -fx-opacity: 1;
+}
+
+.label-header {
+    -fx-font-size: 32pt;
+    -fx-font-family: "Helvetica";
+    -fx-text-fill: black;
+    -fx-opacity: 1;
+}
+
+.text-field {
+    -fx-font-size: 12pt;
+    -fx-font-family: "Helvetica";
+    -fx-border-color: transparent;
+}
+
+.tab-pane {
+    -fx-padding: 0 0 0 1;
+}
+
+.tab-pane .tab-header-area {
+    -fx-padding: 0 0 0 0;
+    -fx-min-height: 0;
+    -fx-max-height: 0;
+}
+/* TODO: 1 */
+/* Not sure of what is it */
+.table-view {
+    -fx-base: #ca6850;
+    -fx-control-inner-background: #bd976a;
+    -fx-background-color: yellow;
+    -fx-table-cell-border-color: transparent;
+    -fx-table-header-border-color: transparent;
+    -fx-padding: 5;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header, .table-view .filler {
+    -fx-size: 35;
+    -fx-border-width: 0 0 1 0;
+    -fx-background-color: transparent;
+    -fx-border-color: red;
+    -fx-border-insets: 0 10 1 0;
+}
+
+.table-view .column-header .label {
+    -fx-font-size: 20pt;
+    -fx-font-family: "Segoe UI Light";
+    -fx-text-fill: white;
+    -fx-alignment: center-left;
+    -fx-opacity: 1;
+}
+
+.table-view:focused .table-row-cell:filled:focused:selected {
+    -fx-background-color: -fx-focus-color;
+}
+
+.split-pane:horizontal .split-pane-divider { /* Used for split pane divider color */
+    -fx-background-color: yellow;
+    -fx-border-color: transparent transparent transparent #CCCCCC;
+}
+
+.split-pane { /* Borders left pane. Borders right pane. */
+    -fx-background-color: green;
+}
+
+.list-view {
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+.list-cell {
+    -fx-label-padding: 0 0 0 0;
+    -fx-graphic-text-gap : 0;
+    -fx-padding: 0 0 0 0;
+}
+
+.list-cell:filled:even { /* Used for cell background */
+    -fx-background-color: #d0c8c0;
+}
+
+.list-cell:filled:odd { /* Used for cell background */
+    -fx-background-color: #8d776d;
+}
+
+.list-cell:filled:selected { /* Used for cell background when selected */
+    -fx-background-color: #a76666;
+}
+
+.list-cell:filled:selected #cardPane { /* Used for border on selected cell */
+    -fx-border-color: blue;
+    -fx-border-width: 0;
+}
+
+.list-cell .label {
+    -fx-text-fill: blue;
+}
+
+.cell_big_label { /* Used for people's names */
+    -fx-font-family: sans-serif;
+    -fx-font-size: 16px;
+    -fx-text-fill: #333333;
+}
+
+.cell_small_label { /* Used for people's details */
+    -fx-font-family: sans-serif;
+    -fx-font-size: 13px;
+    -fx-text-fill: #666666;
+}
+
+/* not sure */
+.anchor-pane { /* Effectively the command bar background */
+     -fx-background-color: yellow;
+     -fx-background-radius: 10px;
+}
+
+.anchor-pane-status { /* Effectively the status bar background */
+}
+
+.pane-with-border { /* Command pane border background color */
+     -fx-background-color: green; /* could be the same as split-pane bg colour*/
+}
+
+.status-bar {
+    -fx-background-color: B3B3B3;
+    -fx-text-fill: black;
+}
+
+.result-display { /* Used for command results */
+    -fx-font-family: sans-serif;
+    -fx-font-size: 20pt;
+    -fx-text-fill: yellow;
+}
+
+/* TODO: 2 */
+
+.result-display .label {
+    /* -fx-text-fill: black !important; */
+}
+
+.status-bar .label { /* Status bar font and colour of text */
+    -fx-font-family: "Helvetica";
+    -fx-text-fill: green;
+}
+
+.status-bar-with-border { /* not sure */
+    -fx-background-color: red;
+}
+
+.status-bar-with-border .label { /* not sure */
+    -fx-text-fill: blue;
+}
+
+.grid-pane { /* Background behind Status bar (border) */
+    -fx-background-color: blue;
+    -fx-background-radius: 0px;
+}
+
+.grid-pane .anchor-pane { /* Status bar background colour */
+    -fx-background-color: white;
+}
+
+.context-menu { /* Menu button background */
+    -fx-background-color: pink;
+}
+
+.context-menu .label { /* Menu button text colour */
+    -fx-text-fill: white;
+}
+
+.menu-bar { /* Menu bar colour */
+    -fx-background-color: #4F6D7A;
+}
+
+.menu-bar .label {
+    -fx-font-size: 14pt;
+    -fx-font-family: "Helvetica";
+    -fx-text-fill: white;
+    -fx-opacity: 0.9;
+}
+
+.menu .left-container { /* not sure */
+    -fx-background-color: yellow;
+}
+
+/*
+ * Metro style Push Button
+ * Author: Pedro Duque Vieira
+ * http://pixelduke.wordpress.com/2012/10/23/jmetro-windows-8-controls-on-java/
+ */
+.button { /* not sure what is button */
+    -fx-padding: 5 22 5 22;
+    -fx-border-color: red;
+    -fx-border-width: 2;
+    -fx-background-color: blue;
+    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-size: 11pt;
+    -fx-text-fill: #d8d8d8;
+    -fx-border-radius: 20;
+    -fx-background-insets: 0 0 0 0, 0, 1, 2;
+}
+
+.button:hover {
+    -fx-background-color: yellow;
+}
+
+.button:pressed, .button:default:hover:pressed {
+  -fx-background-color: green;
+  -fx-text-fill: blue;
+}
+
+.button:focused {
+    -fx-border-color: white, white;
+    -fx-border-width: 1, 1;
+    -fx-border-style: solid, segments(1, 1);
+    -fx-border-insets: 1 1 1 1, 0;
+}
+
+.button:disabled, .button:default:disabled {
+    -fx-opacity: 0.4;
+    -fx-background-color: blue;
+    -fx-text-fill: white;
+}
+
+.button:default {
+    -fx-background-color: -fx-focus-color;
+    -fx-text-fill: #ffffff;
+}
+
+.button:default:hover {
+    -fx-background-color: derive(-fx-focus-color, 30%);
+}
+
+/* TODO: 3 */
+.dialog-pane {
+    -fx-background-color: yellow;
+}
+
+.dialog-pane > *.button-bar > *.container { /*not sure */
+    -fx-background-color: green;
+}
+
+.dialog-pane > *.label.content { /*not sure */
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: pink;
+}
+
+.dialog-pane:header *.header-panel { /*not sure */
+    -fx-background-color: blue;
+}
+
+.dialog-pane:header *.header-panel *.label { /*not sure */
+    -fx-font-size: 18px;
+    -fx-font-style: italic;
+    -fx-fill: white;
+    -fx-text-fill: white;
+}
+
+.scroll-bar { /* Scroll bar column background color */
+    -fx-background-color: pink;
+}
+
+.scroll-bar .thumb { /* Scroll bar background color */
+    -fx-background-color: orange;
+    -fx-background-insets: 3;
+}
+
+.scroll-bar .increment-button, .scroll-bar .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0 0 0 0;
+}
+
+.scroll-bar .increment-arrow, .scroll-bar .decrement-arrow {
+    -fx-shape: " ";
+}
+
+.scroll-bar:vertical .increment-arrow, .scroll-bar:vertical .decrement-arrow {
+    -fx-padding: 1 8 1 8;
+}
+
+.scroll-bar:horizontal .increment-arrow, .scroll-bar:horizontal .decrement-arrow {
+    -fx-padding: 8 1 8 1;
+}
+
+#cardPane {
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+}
+
+#commandTypeLabel {
+    -fx-font-size: 11px;
+    -fx-text-fill: #F70D1A;
+}
+
+#commandTextField { /* Command box */
+    -fx-background-color: red;
+    -fx-background-insets: 0;
+    -fx-font-family: "Helvetica";
+    -fx-font-size: 14pt;
+    -fx-text-fill: green;
+}
+
+#filterField, #personListPanel, #personWebpage {
+    -fx-effect: innershadow(gaussian, black, 10, 0, 0, 0);
+}
+
+#resultDisplay .content { /* Result box background color and radius */
+    -fx-background-color: purple;
+    -fx-padding: 10px;
+}
+
+#tags {
+    -fx-hgap: 7;
+    -fx-vgap: 3;
+}
+
+#tags .label {
+    -fx-text-fill: purple;
+    -fx-background-color: #4F6D7A;
+    -fx-padding: 2 7 2 7;
+    -fx-border-radius: 2;
+    -fx-background-radius: 10;
+    -fx-font-size: 11;
+}

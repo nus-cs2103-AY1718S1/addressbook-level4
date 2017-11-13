@@ -1,0 +1,574 @@
+= Jiayao Li - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: Contact Plus
+Contact Plus is a command-line based contact-managing application used for busy students on campus as well as anyone who needs a contact-managing application. In addition to the management of contacts, this application
+can be served as a task-managing application as well. The user interacts with this application using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-W11-B1/main/blob/master/collated/main/JYL123.md[Functional code]] [https://github.com/CS2103AUG2017-W11-B1/main/blob/master/collated/test/JYL123.md[Test code]] {give links to collated code files}
+
+=== Enhancement Added: Alias for commands [Since v1.0]
+
+Too lazy to type the full command? The alias feature allows you to type a shorter version of the command name.
+
+Quick demo: link:#how-to-use-alias-command[here]
+
+==== External behavior
+
+Alias of a command has the same effect as its corresponding command word. A list of available alias is as follows:
+|===
+| *Commands* | *Alias*
+| `add` | `a` +
+| `edit` | `e` +
+| `select` | `st` +
+| `search` | `sh` +
+| `delete` | `d` +
+| `deletetag` | `dt` +
+| `clear` | `c` +
+| `multifilter` | `mf` +
+| `list` | `l` +
+| `history` | `h` +
+| `undo` | `u` +
+| `redo` | `r` +
+|===
+
+==== How to use [[how-to-use-alias-command]]
+. The image below demonstrates the example of using `a` as the alias for `add command` to add a person in your contact pane.
++
+image:AddCommandAlias.png[width="800"]
+
+. The image below demonstrates the result of the above alias.
++
+image:AddCommandAliasResult.png[width="800"]
+
+==== Justification
+
+1. Inevitably the command could be too long for users to memorise. With alias, the need for memorization of each command word is saved. Alias allows
+users to simply memorize one or two alphabets to perform the feature on the application.
+
+2. Aliases are much shorter than its corresponding command words, therefore it is more efficient to use than to use the command. Alias helps users to use the application efficiently.
+
+3. As aliases improve efficiency and saves users from heavy memorization. It contributes to user-friendliness aspect of this application.
+
+==== Implementation
+
+Alias Mechanism
+
+Alias in this application is a single alphabet or two alphabets. This purpose of alias is to save the labor of typing the full corresponding command words, therefore it is more efficient and easier to use.
+The alias mechanism is implemented in `AddressBookParser`, and its main logic can be described by the following activity diagram:
+
+image:AliasActivityDiagram.png[width="800"]
+
+* `AddressBookParser` receives the input argument from users. +
+* If the input argument is an alias, the corresponding command instance is created and command is processed. +
+* If the input argument is a command word, the command instance is created, and the command is processed.
+
+The code snippet is shown as follows:
+[source,java]
+----
+case AddCommand.COMMAND_WORD: case AddCommand.COMMAND_WORD_ALIAS:
+            return new AddCommandParser().parse(arguments);
+----
+
+==== Design Consideration
+
+**Aspect:** Length of an alias +
+
+**Alternative 1 (current choice):** Use one or two alphabets to represent a command, usually it is the first alphabet of its corresponding command word. +
+**Pros:** Easy to memories the alias as it is the first letter of the command word. +
+**Cons:** May be confusing when some command requires two alphabets for alias. This is because there will be overlapping alias when two command words have the same first letter.
+
+**Alternative 2:** Use a fixed length of three alphabets for every alias +
+**Pros:** The length for each alias is unformed. +
+**Cons:** Three alphabets would be too long for commands like `add`. +
+
+**Aspect:** Number of alias created +
+
+**Alternative 1 (current choice):** Alias is only available for frequently used commands or long commands. +
+**Pros:** Aliases for commonly used commands can save users' time and perform commands on Contact Plus efficiently. Also, aliases alleviate the labor of memorization of long commands for users. +
+**Cons:** Not all commands have aliases. It is possible that when users want to use an alias for a rarely used command, it is not featured in Contact Plus. +
+
+**Alternative 2:** Create aliases for all commands +
+**Pros:** For every command, there is an alias associated to it. Users can feel free to use any aliases for any commands. +
+**Cons:** It may be confusing for users if there are too many aliases. This is because aliases are short and similar. +
+
+
+=== Enhancement Added:  Locating groups by tag: search + tag name [Since v1.1]
+Searching a certain social group? or just search a certain group of persons? `search + tag name` can help you achieve this. +
+
+Quick demo: link:#how-to-use-search-tag[here]
+
+==== External behavior
+
+All persons with the same tag given by the user will be displayed on the application. +
+
+Command Format: `search KEYWORD [MORE_KEYWORDS]`, or `sh KEYWORD [MORE_KEYWORDS]`
+
+****
+* The search is case sensitive, e.g `Friends` will not match `friends`
+* The order of the tags does not matter, e.g. `friends colleague` is the same as `colleague friends`
+* You can search more than one tags, e.g. if `friends`, `family` are two tags in your application, you can do: `search friends family`
+* Only full tag name will be accepted, e.g. `friends` will not match `fri`
+* Result displays "Unknown tag" if no person has the tag
+* Alias for `search` is `sh`
+****
+
+==== How to use [[how-to-use-search-tag]]
+
+. Input the command to search contact of the same tag, e.g. friends.The image below gives you the correct command format:
++
+image:SearchTagCommand.png[width="800"]
+
+. The image below demonstrates the result of the above searching:
++
+image:SearchTagResult.png[width="800"]
+---
+
+==== Examples
+|===
+| *Your input* | *Result*
+| `search friends` | Returns the contacts with tag "friends", e.g. `John Alice` +
+| `search friend family` | Returns the contacts with tag "friends" and "family", e.g. `John Alice David` +
+| `search fri` | No match will be returned, `Unknown tag` is displayed. +
+|===
+
+==== Justification
+
+One of the property of tagging is that it categorizes contacts in the list, therefore it is intuitive that users would like to search a group of users with the same tag.
+
+==== Implementation
+
+Search Groups By Tag Mechanism
+
+The main logic for this mechanism lies in the class `NameWithTagContainsKeywordsPredicate.java`. This class compares the lists of tags from each person, and compare the list of tag with the set of tags given by users.
+This class makes uses of the powerful function from stream. The logic follow can be demonstrated by using the following activity diagram:
+
+image:SearchTagActivityDiagram.png[width="800"]
+
+In order to provide you another perspective, the following sequence diagram shows you how `SearchCommand` interacts with other objects in the Contact Plus application:
+
+image:SearchCommandSequenceDiagram.png[width="800"]
+
+The following code snippet shows the main logic in Java code in `NameWithTagContainsKeywordsPredicate.java`:
+
+[source,java]
+----
+@Override
+    public boolean test(ReadOnlyPerson person) {
+        Set<String> tagList = new HashSet<>();
+        for (Tag tag : person.getTags()) {
+            tagList.add(tag.getTagName());
+        }
+
+        return keywords.stream()
+                .anyMatch(tagList::contains);
+    }
+----
+
+==== Prerequisites/Dependencies
+* The tag name entered by users must be valid, i.e. exist in Contact Plus for the command to work successfully, else error message will be popped out.
+
+==== Design Consideration
+
+**Aspect:** Number of tags allowed to be specified by users. +
+
+**Alternative 1 (current choice):** Allow multiple tags to be entered by users +
+**Pros:** Increases the flexibility of this search by tag feature. There would be no restriction on the number of tags to be entered. Users can specify as many valid tags as they want to. +
+**Cons:** May not be obvious to users that they can enter multiple tag names. +
+
+**Alternative 2:** Only allow users to search one tag name at a time +
+**Pros:** It would be simpler for users to use this command as it is straight forward that they can only uindicate one command. +
+**Cons:** Adds limitation to what users can do. +
+
+
+=== Enhancement Added:  AutoCorrect command [Since v1.2]
+
+If you misspelt a command, no worries, Contact Plus will autoCorrect misspelt command whose names start with the command entered from the user.
+Application will notify you that the command entered is corrected and perform the corrected commmand. +
+
+Quick demo: link:#how-to-use-autoCorrect[here]
+
+==== External behavior
+Corrects misspelt command whose names start with the command entered from the user.
+Application will notify the user that the command entered is corrected and perform the corrected commmand. +
+
+Command Format: [misspelt command] + [corresponding arguments needed for the command]
+
+****
+* The autoCorrect function will only work on the misspelt words with 2 alphebets/1 alphabet different from the correct spelling.
+* The matching is case-insensitive, e.g. "sEarhC" is equals to "search".
+* If no match is found, the application will display "Unknown command".
+****
+
+==============================================
+NOTE: AutoCorrect is not designed for alias, in other words alias is excluded from autoCorrect.
+==============================================
+
+==== How to use [[how-to-use-autoCorrect]]
+. The image below demonstrates the usage to autoCorrect "deleet".
++
+image::AutoCorrectCommand.png[width="800"]
+
+. The image below is the result returned by Contact Plus using the command above.
++
+image::AutoCorrectResult.png[width="800"]
+
+==== Examples
+
+|===
+| *Your input* |  *Result*
+| `deleet` | will match to `delete`.
+|  `del` | will not match to any command, application will display "Unkown command".
+| `d` | will be matched to `delete` still as it is an alias.
+| `m` | will not match to any command, application will display "Unkown command".
+|===
+
+==== Justification
+It is often a problem that to ask users to retype their misspelt words. It would be a great feature if the application can autoCorrect these mistakes and allow users to use the application smoothly.
+
+==== Implementation
+
+AutoCorrect Mechanism
+
+The `AutoCorrect` feature enables misspelt commands entered by users to be autoCorrected by the application,
+and perform the correct command. The correction of the misspelt command is based on four types of prediction of the misspelt words, namely, addition of alphabets, deletion
+of alphabets, transposing of alphabets and Substitution of alphabets. For the sake of efficiency, the link:#edit-distance[edit distance] is limited to 2 (refer to `editDistance1`, and `checkMisspeltWords`).
+
+The logic flow of `AutoCorrect` can be loosely described by the following image:
+
+image:AutoCorrectFlow.png[width="800"]
+
+This is an example of how the misspelt words are predicted by adding one more alphabet:
+[source,java]
+----
+//Adding any one character (from the alphabet) anywhere in the word.
+        for (int i = 0; i <= formattedWord.length(); i++) {
+            for (int j = 0; j < alphabet.length(); j++) {
+                String newWord = formattedWord.substring(0, i) + alphabet.charAt(j)
+                        + formattedWord.substring(i, formattedWord.length());
+                results.add(newWord);
+            }
+        }
+----
+
+Auto-Correct is only utilized in `AddressBoonParser` class to check each input command, and correct the misspelt command which has an link:#edit-distance[edit distance] smaller than or equal to 2.
+The following diagram shows the interaction between `AutoCorrect` and `AddressBookParser` class:
+
+image::AddressBookParser.SequenceDiagram.png[width="800"]
+
+==== Prerequisites/Dependencies
+
+* The `COMMAND_WORD` for every available command must be added to the `getCommandPool` method for the command to be auto-corrected.
+* AutoCorrect will only work for misspelt words within link:#edit-distance[edit distance] of 2.
+* AutoCorrect is based on four types of prediction of misspelt words, namely, addition, deletion, switch, and substitution.
+* Alias will not be autoCorrected as it consists only one or two alphabets.
+* The logic for autoCorrecting commands is implemented in AutoCorrectCommand class.
+
+==== Design Consideration
+
+**Aspect:** Implementation of `AutoCorrect` +
+
+**Alternative 1 (current choice):** Consider edit distance is 2 and the command is predicted based on the first alphabet. +
+**Pros:** The speed of searching is improved by implementing matching command by the first alphabet as the first alphabet entered by users is often correct.
+Edit distance 2 allows a considerable number of commands to be corrected by the application. +
+**Cons:** The prediction by first alphabet limits the autoCorrection on those commands that have first alphabet wrong.
+Edit distance 2 does not cover many other misspelt commands. +
+
+**Alternative 2:** Read all the available file from an external file when the application begins. +
+**Pros:** It would be easier for developers to maintain the autoCorrect feature as it is easier to update new commands into a file rather than in a method. +
+**Cons:** It would not be able to utilise `COMMAND_WORD` defined in each command class
+as it is a good practice to reused what is already defined and extend its usage (Close to modification and Open to extension Principle). +
+
+=== Enhancement Added:  View Yahoo Weather Forecast [Since v1.3]
+
+==== External behavior
+This feature is for you to view weather forecast on Yahoo Weather page. +
+Accessible from  kbd:[File] dropdown list, kbd:[Weather Forecast] menu item.
+
+Quick demo: link:#how-to-use-Yahoo[here]
+
+==== How to use [[how-to-use-Yahoo]]
+. The button kbd:[Weather Forecast] is located as the image shown below.
++
+image::WeatherForecastButton.png[width="800"]
+
+. The expected page would be as follows:
++
+image::WeatherForecast.png[width="800"]
+
+==== Justification
+
+The aim of ou project is to provide a set of comprehensive services for users. Considering their daily needs, it is reasonable to include Yahhoo Weather Forecast and Yahoo News in the application so that users do not have to navigate to the browser again to retireve those information.
+
+==== Implementation
+
+Yahoo Weather Mechanism
+
+The Yahoo weather information display is aided by the external library "yahoo-weather-java-api:2.0.2". This library queries data from Yahoo Weather API, and the application display the information returned by calling the library functions with
+a simple string parser method to format the data return. The formatted data is displayed on the `StatusFooterBar`. +
+
+The query of weather information is closely related to the location. The location is specified by WOEID, so in this application we take the link:#WOEID[WOEID] of Singapore by default. +
+
+[source,java]
+----
+private final String woeid = "1062617";
+----
+
+The API method is called, and data returned as follows:
+
+[source,java]
+----
+YahooWeatherService service = new YahooWeatherService();
+Channel channel = service.getForecast(woeid, DegreeUnit.CELSIUS);
+
+return conditionStringParser(channel.getItem().getCondition().toString());
+----
+
+Yahoo Weather information can be seen from `statusFootBar` too, as follows:
+
+image::YahooWeatherFootBar.png[width="800"]
+---
+
+==== Prerequisites/Dependencies
+
+* This feature has a strong dependency on Yahoo Weather Server. Some exceptions or assertions should be implemented to prevent the failure of the application
+due to the failure of Yahoo Weather Server. +
+
+=== Enhancement Added:  Keyboard shortcuts [Since v1.3]
+If the commands are too long for you to type, keyboard shortcuts are designed for you.
+
+Quick demo: link:#how-to-use-shortcut[here]
+
+==== External behavior
+Keyboard shortcuts enables users to quickly get the command words without heavy memorization. +
+Format: kbd:[CONTROL] + kbd:[KEY]
+
+==============================================
+NOTE: The keyborad shortcuts are created only for commands with heavy text input or frequently used commands.
+==============================================
+
+==== How to use [[how-to-use-shortcut]]
+
+|===
+| *Command* | *Keyboard shortcut*
+| `add` | kbd:[control] + kbd:[a]/kbd:[A]
+| `multifilter` | kbd:[control] + kbd:[m]/kbd:[M]
+| `edit` | kbd:[control] + kbd:[e]/kbd:[E]
+| `search` | kbd:[control] + kbd:[s]/kbd:[S]
+| `delete` | kbd:[control] + kbd:[d]/kbd:[D]
+| `find` | kbd:[control] + kbd:[f]/kbd:[F]
+| `clear` | kbd:[control] + kbd:[c]/kbd:[C]
+|===
+
+==== Justification
+Keyboard shortcuts are implemented with the purpose to allow users to input their command efficiently. Users do not have to memorize the command words if they fnd it is difficult for them to do so.
+
+==== Implementation
+Keyboard Shortcuts Mechanism
+
+The detection of keyboard shortcut is detected in the `CommandBox.java` class. In the method `handleKeyPress`, multiple key press situations are listed there and to handle the correct key pressed by users.
+The code snippet is shown as follows:
+
+[source,java]
+----
+// Handles cases where multiple keys are pressed simultaneously
+        String getAlphabetPressed = keyEvent.getCode().toString();
+        logger.info(getAlphabetPressed);
+
+        if (keyEvent.getCode().isLetterKey() && keyEvent.isControlDown()) {
+            //keyboard shortcut for input text heavy command
+            switch (getAlphabetPressed) {
+            case "A":
+                keyEvent.consume();
+                commandTextField.setText(AddCommand.COMMAND_WORD);
+                break;
+            case "D":
+                keyEvent.consume();
+                commandTextField.setText(DeleteCommand.COMMAND_WORD);
+                break;
+             ....
+             //and many other cases
+             default:
+                  //do nothing
+            }
+        }
+----
+
+==== Design Consideration
+
+**Aspect:** Implementation of Keyborad shortcuts +
+
+**Alternative 1 (current choice):** Only frequently used commands have its keyboard shortcuts. +
+**Pros:** Allow users to complete their input command faster by directly pressing the shortcuts. +
+**Cons:** For some commands, users are not allowed to use keyboard shortcuts This is inconvenient. +
+
+**Alternative 2:** Give every command its keyboard shortcuts. +
+**Pros:** Users can use shortcut for every command freely. +
+**Cons:** It would be confusing to have to memorise many shortcuts. +
+
+**Aspect:** Select keys for keyboard shortcuts +
+
+**Alternative 1 (current choice):** Use kbd:[control] and teh first alphabet for the command shortcut. +
+**Pros:** It is very easy for use to memorise the shortcut for the command as we use the first alphabet of the command. Also, we use kbd:[control] which may users are familiar with. +
+**Cons:** If users have their personal preference for keyboard shortcuts,they cannot set their favorite keys. +
+
+**Alternative 2:** Use one key for keyboard shortcut for a certain command. +
+**Pros:** It may be easy for some users to memorise as it only quires one key for a shortcut. +
+**Cons:** Many users may not used to this  one-key shortcut as the majority of users are used to use kbd:[control] as part of keyboard shortcut. +
+
+=== Enhancement Added:  Edit tasks [Since v1.4]
+
+If you have recorded your task on Contact Plus application, and now you want to make some modification to it, you should use `ediitask`. +
+
+Quick demo: link:#how-to-use-edit-task[here]
+
+==== External behavior
+
+To edit your tasks, first you should learn how to list task. Listing tasks is for you to get the index of the task you indent to edit.
+Then use "edittask" command with its index to edit the task. The format is as follows:
+Format: `edittask INDEX d/DESCRIPTION priority/PRIORITY(0/1/2) on DUE DATE(dd/MM/yyyy)`
+
+*****
+* Index mist be a positive number.
+* At least one field (either priority or due date) has to be specified.
+* Description field is not editable. The only way to edit the description is to create a new task.
+*****
+
+==== How to use [[how-to-use-edit-task]]
+
+. Enter the command, the index of the task, and the details you wish to edit with its prefix. In this example, we wish to edit the priority of the tsk indexed as no.1 in the liast of tasks. The following image shows you the correct command format:
++
+image:EditTaskStep1.png[width="800"]
+
+. The application will give you conformation information displayed. Please refer to the image below for an example:
++
+image:EditTaskStep2.png[width="800"]
+
+==== Example
+
+|===
+| *Your input* | Result
+| `edittask 1 prioroty/1` | The application will display "Edited task: " + the details of the task you just edited. +
+| `edittask 1 on 12/11/2019` | The application will display "Edited task: " + the details of the task you just edited. +
+| `edittask 1 pr/1 on 12/11/2019` | This command edits the priority and due date for the task indexed no.1. The application will display the confirmation message: "Edited task: " + the details of the task you just edited. +
+|===
+
+==== Justification
+
+It is considerable to allow users to be able oto edit their tasks, and it is a common feature that every task application should have.
+
+==== Implementation
+
+Edit Task Mechanism
+
+The `edit task` is facilitated by EditTaskCommand class. It allows users to edit tasks in the address book with a description, the level of priority as well as the due date. The tasks added will be shown on the stickies in the address book.
+
+The command word for editing a task is `edittask`. When users key in the command word, together with valid description, priority and due date, the values will be passed into parseCommand() function in the AddressBookParser class.
+
+The basic logic flow for `edittask` is displayed in the following activity diagram:
+
+image:EditTaskMainFlow.png[width="800"]
+
+To provide you another perspective, the interaction of `EditTaskCommand` with other objects in Contact Plus Application is displayed in the following sequence diagram:
+image:EditTaskSequenceDiagram.png[width="800"]
+
+==== Prerequisites/Dependencies
+
+* The `getFilteredTaskList()` method in `Logic` class must return a list of `ReadOnlyTasks` containing
+the tasks in the address book.
+* The `updateTask()` method in model must be able to accept a `ReadOnlyTask` as input and
+delete it from the address book.
+
+==== Design Consideration
+
+**Aspect:** Fields to be editable. +
+
+**Alternative 1 (current choice):** Allow priority and due date to be editable but not description.
+**Pros:** It is logically clear that only the priority and due date of a task can be edited. Changing the description of the task essentially means to create a new task.
+**Cons:** May be not convenient for users who want to edit description of the task as well.
+
+**Alternative 2:** Only allow users to edit all three fields, description, priority and due date.
+**Pros:** This provides larger flexibility for users to edit any part of the given task.
+**Cons:** Logically it may not make sense to be able to edit description of the task.
+
+=== Enhancement Added:  Clear tasks [Since v1.4]
+If you want to clear all our tasks on Contact Plus application as you have accomplished all of them, you can use `cleartask`.
+
+Quick demo: link:#how-to-use-clear-task[here]
+
+==== External behavior
+
+To clear your task list, "cleartask" is the command to use. The format is as follows:
+Format: `cleartask`
+
+==============================================
+NOTE: You can perform command `undo`, if you accidentally clear your task list.
+==============================================
+
+==== How to use [[how-to-use-clear-task]]
+. Enter the command "cleartask". Please refer to the image below for an example:
++
+image:ClearTaskStep1.png[width="800"]
+
+. Confirmation message will be displayed. Please refer to the image below for an example:
++
+image:ClearTaskStep2.png[width="800"]
+
+==== Example
+
+|===
+| *Your input* | Result
+| `cleartask` | "Task list has been cleared." will be displayed on the window +
+|===
+
+==== Justification
+
+It is considerable to allow users to be able to clear their tasks when the stake of the task is too high. `clear task` helps users to clear their task panel.
+
+==== Implementation
+
+Clear Task Mechanism
+
+The `clear task` is facilitated by ClearTaskCommand class. It allows users to clear tasks in the address book.
+
+The command word for listing a task is `cleartask`. When users key in the command word, the command word `cleartask` is passed into AddressBookParser class, and the corresponding `ClearTaskCommand` is created and subsequently its function executeUndoableCommand() will clear the tasks from addressbook.xml.
+
+The basic main flow for `cleartask` is as follows:
+
+image:listTaskActivityDiagram.png[width="800"]
+
+To provide you another perspective, the following sequence diagram of `CleaTaskCommand` displays its interaction with the objects in teh Contact Plus application:
+image:ClearTaskSequenceDiagram.png[width="800"]
+
+==== Prerequisites/Dependencies
+
+* The `getFilteredTaskList()` method in `Logic` class must return a list of `ReadOnlyTasks` containing
+the tasks in the address book.
+* The `deleteTask()` method in model must be able to accept a `ReadOnlyTask` as input and
+delete it from the address book.
+
+=== Reference
+
+[[edit-distance]]
+Edit-distance
+
+....
+Edit distance is a way of quantifying how dissimilar two strings (e.g., words)
+are to one another by counting the minimum number of operations required to
+transform one string into the other.
+....
+
+[[WOEID]]
+WOEID
+
+....
+A WOEID (Where On Earth IDentifier) is a unique 32-bit reference identifier,
+originally defined by GeoPlanet and now assigned by Yahoo!, that identifies any feature on Earth.
+....
+
+=== Other contributions
+
+* Updated the icon images for email, phone number, and address. (Pull requests https://github.com/CS2103AUG2017-W11-B1/main/pull/162/commits/19c74676b0ffaa65b9c25daba5cf606836b2e75d[#162])
+* Updated GUI statusFootBar to display weather broadcast. (Pull request https://github.com/CS2103AUG2017-W11-B1/main/pull/112[#112])

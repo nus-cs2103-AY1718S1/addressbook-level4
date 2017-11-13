@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.3">
+<title>Rui Zhong - Project Portfolio</title>
+<link rel="stylesheet" href="../stylesheets/gh-pages.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="../stylesheets/coderay-asciidoctor.css">
+</head>
+<body class="article">
+<div id="header">
+<h1>Rui Zhong - Project Portfolio</h1>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="project-contact-plus"><a class="link" href="#project-contact-plus">Project: Contact Plus</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Contact Plus is a contact-managing service through command line. We strive to provide the very comprehensive services for busy students on the campus so that they can manage their contacts efficiently. In addition to contact-managing, Contact Plus also allows users to manage task all in a single application.
+Contact Plus is an extension of AddressBook - Level 4 which is a desktop address book application used for teaching Software Engineering principles.The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.</p>
+</div>
+<div class="paragraph">
+<p><strong>Code contributed</strong>: [<a href="https://github.com/CS2103AUG2017-W11-B1/main/blob/master/collated/main/chairz.md">Functional code</a>] [<a href="https://github.com/CS2103AUG2017-W11-B1/main/blob/master/collated/test/chairz.md">Test code</a>] {give links to collated code files}</p>
+</div>
+<div class="sect2">
+<h3 id="enhancement-added-deleting-multiple-person-in-a-single-command"><a class="link" href="#enhancement-added-deleting-multiple-person-in-a-single-command">Enhancement Added: Deleting Multiple Person in a Single Command</a></h3>
+<div class="sect3">
+<h4 id="external-behavior"><a class="link" href="#external-behavior">External behavior</a></h4>
+<hr>
+<div class="paragraph">
+<p><mark>Start of Extract [from: User Guide]</mark></p>
+</div>
+<div class="paragraph">
+<p>This command allows you to delete <strong>multiple</strong> contacts from <code>Contact Plus</code> in a
+single command.<br>
+Format: <code>delete INDEX/INDEX</code></p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="how-to-use"><a class="link" href="#how-to-use">How to use</a></h4>
+<div class="paragraph">
+<p>1) Enter <code>list</code> into the Command Box. You will see all the added contacts below.<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/deleteMultiplePerson1.png" alt="deleteMultiplePerson1" width="500">
+</div>
+</div>
+<div class="paragraph">
+<p>2) Enter <code>delete 2/3</code> to delete the 2nd and 3rd person from <code>Contact Plus</code>.<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/deleteMultiplePerson2.png" alt="deleteMultiplePerson2" width="500">
+</div>
+</div>
+<div class="paragraph">
+<p>3) You can now see that the 2nd and 3rd contact has been deleted and the<br>
+result is displayed to show the confirmation of deletion.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/deleteMultiplePerson3.png" alt="deleteMultiplePerson3" width="500">
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="example"><a class="link" href="#example">Example</a></h4>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Your input</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Result</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>list</code><br>
+<code>delete 1/2</code><br>
+</p><p class="tableblock">Note that <code>list</code> and <code>delete 1/2</code> are two different commands.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Deletes the first and second contact displayed by the <code>list</code> command.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><mark>End of Extract</mark></p>
+</div>
+<hr>
+</div>
+<div class="sect3">
+<h4 id="justification"><a class="link" href="#justification">Justification</a></h4>
+<div class="paragraph">
+<p>It is troublesome to retype the command delete if you are looking to delete multiple person from the contact list.
+As <code>Contact Plus</code> aims to achieve efficiency and speed, having this function adds on to it.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="implementation"><a class="link" href="#implementation">Implementation</a></h4>
+<hr>
+<div class="paragraph">
+<p><mark>Start of Extract [from: Developer Guide]</mark></p>
+</div>
+<div class="paragraph">
+<p>The <code>Delete</code> multiple contacts feature enables user to delete more than one contact in a single command by specifying more than one indices. It is
+invoked in the <code>DeleteCommand</code> class.<br>
+The interaction between <code>Model</code> and <code>Logic</code> classes can be seen from the following sequence diagram:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/DeleteMultiple/DeleteMultipleUML.PNG" alt="DeleteMultipleUML" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>The source code below shows the implementation of how multiple persons are deleted by using a loop:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">for</span> (Index i : targetIndex) {
+            <span class="keyword">if</span> (i.getZeroBased() &gt;= lastShownList.size()) {
+                <span class="keyword">throw</span> <span class="keyword">new</span> CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            }
+        }
+
+        <span class="predefined-type">String</span> result = <span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span>;
+        <span class="predefined-type">Collections</span>.sort(targetIndex);
+        <span class="keyword">for</span> (Index i : targetIndex) {
+            ReadOnlyPerson personToDelete = lastShownList.get(i.getZeroBased());
+
+            <span class="keyword">try</span> {
+                model.deletePerson(personToDelete);
+                <span class="keyword">if</span> (targetIndex.size() == <span class="integer">1</span>) {
+                    result = result.concat(personToDelete.toString());
+                } <span class="keyword">else</span> {
+                    result = result.concat(<span class="string"><span class="delimiter">&quot;</span><span class="char">\n</span><span class="delimiter">&quot;</span></span> + personToDelete.toString());
+                }
+            } <span class="keyword">catch</span> (PersonNotFoundException pnfe) {
+                <span class="keyword">assert</span> <span class="predefined-constant">false</span> : <span class="string"><span class="delimiter">&quot;</span><span class="content">The target person cannot be missing</span><span class="delimiter">&quot;</span></span>;
+            }
+
+        }</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="prerequisites-dependencies"><a class="link" href="#prerequisites-dependencies">Prerequisites/Dependencies</a></h4>
+<div class="ulist">
+<ul>
+<li>
+<p>The <code>Index</code> to be deleted is added to an ArrayList of <code>Index</code>.</p>
+</li>
+<li>
+<p>To identify different <code>Index</code>, Regex <code>/</code> is used.</p>
+</li>
+<li>
+<p>ArrayList <code>Index</code> needs to be sorted in descending order to prevent IndexOutOfBound
+exception.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations"><a class="link" href="#design-considerations">Design Considerations</a></h4>
+<div class="paragraph">
+<p><strong>Aspect:</strong> Implementation of <code>delete</code> Multiple Contact<br></p>
+</div>
+<div class="paragraph">
+<p><strong>Alternative 1 (current choice):</strong> Add the <code>Index</code> to be deleted to an ArrayList.<br>
+<strong>Pros:</strong> We do not need to care how many <code>Index</code> or the order of the <code>Index</code> being input by the user as long as it
+is separated by <code>/</code>.<br>
+<strong>Cons:</strong> Additional space is required for the ArrayList of <code>Index</code>.<br></p>
+</div>
+<div class="paragraph">
+<p><strong>Alternative 2:</strong> Use 'Lazy' delete by adding a boolean field to each element<br>
+<strong>Pros:</strong> We do not need to remove anything from the ArrayList. The boolean 0 or 1 will just
+indicate if the contact has been deleted.<br>
+<strong>Cons:</strong> The whole List has to be iterated to check if the contact has been deleted.</p>
+</div>
+<div class="paragraph">
+<p><mark>End of Extract</mark></p>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="enhancement-added-adding-a-second-phone-number"><a class="link" href="#enhancement-added-adding-a-second-phone-number">Enhancement Added: Adding a Second Phone Number</a></h3>
+<div class="sect3">
+<h4 id="external-behavior-2"><a class="link" href="#external-behavior-2">External behavior</a></h4>
+<hr>
+<div class="paragraph">
+<p><mark>Start of Extract [from: User Guide]</mark></p>
+</div>
+<div class="paragraph">
+<p>Add the second phone number for a person by using prefix "p2/"<br>
+Format: <code>COMMAND_WORD PARAMETERS p2/PHONE_NUMBER OTHER_PARAMETERS</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Input "p2/-" for add command, when no second phone number is provided.</p>
+</li>
+<li>
+<p>The order of the parameters does not matter. e.g. <code>p/87435783 p2/54729635</code> is the same as <code>p2/749374658 p/97453735</code></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Examples:
+* <code>add n/John Doe p/98765432 p2/73624789 e/johnd@example.com a/John street, block 123, #01-01</code><br>
+* <code>edit 1 p/91234567 p2/73624789 e/johndoe@example.com</code><br></p>
+</div>
+<div class="paragraph">
+<p><mark>End of Extract</mark></p>
+</div>
+<hr>
+</div>
+<div class="sect3">
+<h4 id="justification-2"><a class="link" href="#justification-2">Justification</a></h4>
+<div class="paragraph">
+<p>Some contacts may have multiple phone numbers and it is inefficient to create another entry in the addressbook
+to just add a second phone number.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="enhancement-added-switching-tab"><a class="link" href="#enhancement-added-switching-tab">Enhancement Added: Switching Tab</a></h3>
+<div class="sect3">
+<h4 id="external-behavior-3"><a class="link" href="#external-behavior-3">External behavior</a></h4>
+<hr>
+<div class="paragraph">
+<p><mark>Start of Extract [from: User Guide]</mark></p>
+</div>
+<div class="paragraph">
+<p>You can choose to switch between the <code>Task</code> tab or <code>Map</code> tab either by clicking on the user interface or
+the application will automatically switch it for you based on the command you entered.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="description"><a class="link" href="#description">Description</a></h4>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>If the command <code>delete 1/2</code> (Click on <a href="#delete-multiple-persons">link</a> to see how the command works) or any other command that is related to
+manipulating or displaying the contacts is entered, the tab will be automatically switched to the <code>Map</code> tab.</p>
+</li>
+<li>
+<p>If the command <code>listtask</code> (Click on <a href="#listtask-command">link</a> to see how the command works) or any other command that is related to
+manipulating or displaying the tasks is entered, the tab will be automatically switched to the <code>Task</code> tab.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="example-2"><a class="link" href="#example-2">Example</a></h4>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Before entering any command, you are at the <code>Task</code> tab.
+<span class="image"><img src="../images/switchtab1.png" alt="switchtab1" width="800"></span></p>
+</li>
+<li>
+<p>Enter command <code>delete 1/2</code> and press <kbd>ENTER</kbd>.
+<span class="image"><img src="../images/switchtab2.png" alt="switchtab2" width="800"></span></p>
+</li>
+<li>
+<p>The tab will be automatically switched to the <code>Map</code> tab.
+<span class="image"><img src="../images/switchtab3.png" alt="switchtab3" width="800"></span></p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><mark>End of Extract</mark></p>
+</div>
+<hr>
+</div>
+<div class="sect3">
+<h4 id="justification-3"><a class="link" href="#justification-3">Justification</a></h4>
+<div class="paragraph">
+<p>User does not have to do extra work by clicking on the UI to switch tab if they are executing commands that are
+related to the tab.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="implementation-2"><a class="link" href="#implementation-2">Implementation</a></h4>
+<hr>
+<div class="paragraph">
+<p><mark>Start of Extract [from: Developer Guide]</mark></p>
+</div>
+<div class="paragraph">
+<p>The tab pane will switch between <code>Task</code> and <code>Map</code> based on the command entered by the user. If the
+ Command input is related to the <code>person</code> model, it will be switched to the <code>Map</code> tab. Likewise, if the
+ Command input is related to the <code>task</code> model, it will be switched to the <code>task</code> tab.<br>
+The interaction between <code>Ui</code> and <code>Logic</code> classes can be seen from the following sequence diagram:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/SwitchTab.PNG" alt="SwitchTab" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>The source code shows how the Command input is checked and how the tab is switched:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">private</span> <span class="type">void</span> displayTab(<span class="predefined-type">String</span> commandTyped) {
+        <span class="predefined-type">Map</span>&lt;<span class="predefined-type">String</span>, <span class="predefined-type">String</span>&gt; commandFormatMap = Command.getMapOfCommandFormats();
+        <span class="predefined-type">List</span> listOfAliases = Command.getListOfAvailableCommandAliases();
+        <span class="type">int</span> index = tabPane.getSelectionModel().getSelectedIndex();
+        <span class="keyword">if</span> (commandFormatMap.containsKey(commandTyped) || listOfAliases.contains(commandTyped)) {
+            <span class="keyword">if</span> (index != <span class="integer">0</span>) {
+                tabPane.getSelectionModel().selectFirst();
+            }
+        } <span class="keyword">else</span> {
+            tabPane.getSelectionModel().selectLast();
+        }
+
+    }</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="prerequisites-dependencies-2"><a class="link" href="#prerequisites-dependencies-2">Prerequisites/Dependencies</a></h4>
+<div class="ulist">
+<ul>
+<li>
+<p>The <code>task</code> Commands and <code>Person</code> Commands needs to be stored in different hashmap in
+the <code>Command</code> class.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-2"><a class="link" href="#design-considerations-2">Design Considerations</a></h4>
+<div class="paragraph">
+<p><strong>Aspect:</strong> Implementation of Switch Tab mechanism<br></p>
+</div>
+<div class="paragraph">
+<p><strong>Alternative 1 (current choice):</strong> Checks the command typed by user to the hashmap of available commands
+ in <code>Command</code> class which are classified into <code>task</code> commands and <code>Person</code> commands.<br>
+<strong>Pros:</strong> Simple if-else case as the commands are stored in two different hashmaps.<br>
+<strong>Cons:</strong> Additional space is required for two different hashmaps.<br></p>
+</div>
+<div class="paragraph">
+<p><mark>End of Extract</mark></p>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="other-contributions"><a class="link" href="#other-contributions">Other contributions</a></h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Updated the GUI to display tasks (Pull requests <a href="https://github.com/CS2103AUG2017-W11-B1/main/pull/111/commits/7ca7ec4e3160938add788b3852eedf7101a17491">#111</a>, <a href="https://github.com/CS2103AUG2017-W11-B1/main/pull/137/commits/1e836c1ea43c61986cc51c8363ec929592f07f7c">#137</a>)</p>
+</li>
+<li>
+<p>Created Task Model (Pull requests <a href="https://github.com/CS2103AUG2017-W11-B1/main/pull/51/commits/75e5e18b153d2e0287b31e6f1a3b2724795b3068">#51</a>)</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2017-11-09 17:20:41 +08:00
+</div>
+</div>
+</body>
+</html>

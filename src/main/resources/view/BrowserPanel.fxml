@@ -1,8 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.web.WebView?>
 
-<StackPane xmlns:fx="http://javafx.com/fxml/1">
-  <WebView fx:id="browser"/>
+<!--@@chairz -->
+
+<StackPane prefHeight="374.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+   <TabPane fx:id="tabPane" prefHeight="200.0" prefWidth="200.0" stylesheets="@TabView.css" tabClosingPolicy="UNAVAILABLE">
+     <tabs>
+       <Tab text="Map">
+         <content>
+           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                  <children>
+                    <WebView fx:id="browser" layoutX="7.0" layoutY="9.0" prefHeight="601.0" prefWidth="840.0" AnchorPane.leftAnchor="7.0" AnchorPane.topAnchor="9.0" />
+                  </children>
+               </AnchorPane>
+         </content>
+       </Tab>
+       <Tab text="Tasks">
+            <content>
+             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="162.0" prefWidth="457.0">
+                  <children>
+                     <TextArea fx:id="taskDisplayed" editable="false" layoutX="17.0" layoutY="12.0" prefHeight="324.0" prefWidth="768.0" />
+                  </children>
+               </AnchorPane>
+            </content>
+       </Tab>
+     </tabs>
+      <StackPane.margin>
+         <Insets />
+      </StackPane.margin>
+      <padding>
+         <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+      </padding>
+   </TabPane>
 </StackPane>

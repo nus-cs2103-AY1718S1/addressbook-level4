@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+import seedu.address.logic.parser.AutoCorrectCommand;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 
 /**
@@ -9,6 +10,8 @@ import seedu.address.model.person.NameContainsKeywordsPredicate;
 public class FindCommand extends Command {
 
     public static final String COMMAND_WORD = "find";
+    public static final String COMMAND_WORD_ALIAS = "f";
+    public static final String AUTOCOMPLETE_FORMAT = COMMAND_WORD;
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose names contain any of "
             + "the specified keywords (case-sensitive) and displays them as a list with index numbers.\n"
@@ -17,6 +20,8 @@ public class FindCommand extends Command {
 
     private final NameContainsKeywordsPredicate predicate;
 
+    private AutoCorrectCommand autoCorrectCommand = new AutoCorrectCommand();
+
     public FindCommand(NameContainsKeywordsPredicate predicate) {
         this.predicate = predicate;
     }
@@ -24,7 +29,13 @@ public class FindCommand extends Command {
     @Override
     public CommandResult execute() {
         model.updateFilteredPersonList(predicate);
-        return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
+        if (autoCorrectCommand.getMessageToUser().equals("")) {
+            return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
+        } else {
+            return new CommandResult(autoCorrectCommand.getMessageToUser()
+                    + "\n"
+                    + getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
+        }
     }
 
     @Override

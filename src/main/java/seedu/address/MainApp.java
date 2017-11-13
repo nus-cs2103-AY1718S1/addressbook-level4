@@ -1,6 +1,7 @@
 package seedu.address;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -73,6 +74,11 @@ public class MainApp extends Application {
         ui = new UiManager(logic, config, userPrefs);
 
         initEventsCenter();
+
+        // empty the content in taskAdded.txt
+        PrintWriter out = new PrintWriter("taskAdded.txt");
+        out.close();
+
     }
 
     private String getApplicationParameter(String parameterName) {

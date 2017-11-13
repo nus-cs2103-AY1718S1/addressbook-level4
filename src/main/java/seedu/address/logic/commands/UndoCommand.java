@@ -5,6 +5,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.AutoCorrectCommand;
 import seedu.address.model.Model;
 
 /**
@@ -13,8 +14,13 @@ import seedu.address.model.Model;
 public class UndoCommand extends Command {
 
     public static final String COMMAND_WORD = "undo";
+    public static final String COMMAND_WORD_ALIAS = "u";
+    public static final String AUTOCOMPLETE_FORMAT = COMMAND_WORD;
+    public static final String MESSAGE_USAGE = "";
     public static final String MESSAGE_SUCCESS = "Undo success!";
     public static final String MESSAGE_FAILURE = "No more commands to undo!";
+
+    private AutoCorrectCommand autoCorrectCommand = new AutoCorrectCommand();
 
     @Override
     public CommandResult execute() throws CommandException {
@@ -25,7 +31,13 @@ public class UndoCommand extends Command {
         }
 
         undoRedoStack.popUndo().undo();
-        return new CommandResult(MESSAGE_SUCCESS);
+        if (autoCorrectCommand.getMessageToUser().equals("")) {
+            return new CommandResult(MESSAGE_SUCCESS);
+        } else {
+            return new CommandResult(autoCorrectCommand.getMessageToUser()
+                    + "\n"
+                    + MESSAGE_SUCCESS);
+        }
     }
 
     @Override

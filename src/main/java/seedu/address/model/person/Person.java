@@ -20,9 +20,9 @@ public class Person implements ReadOnlyPerson {
 
     private ObjectProperty<Name> name;
     private ObjectProperty<Phone> phone;
+    private ObjectProperty<Phone2> phone2;
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
-
     private ObjectProperty<UniqueTagList> tags;
 
     /**
@@ -37,12 +37,23 @@ public class Person implements ReadOnlyPerson {
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
     }
+    //@@author chairz
+    public Person(Name name, Phone phone, Phone2 phone2, Email email, Address address, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, tags);
+        this.name = new SimpleObjectProperty<>(name);
+        this.phone = new SimpleObjectProperty<>(phone);
+        this.phone2 = new SimpleObjectProperty<>(phone2);
+        this.email = new SimpleObjectProperty<>(email);
+        this.address = new SimpleObjectProperty<>(address);
+        // protect internal tags from changes in the arg list
+        this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+    }
 
     /**
      * Creates a copy of the given ReadOnlyPerson.
      */
     public Person(ReadOnlyPerson source) {
-        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
+        this(source.getName(), source.getPhone(), source.getPhone2(), source.getEmail(), source.getAddress(),
                 source.getTags());
     }
 
@@ -58,6 +69,25 @@ public class Person implements ReadOnlyPerson {
     @Override
     public Name getName() {
         return name.get();
+    }
+
+    //@@author chairz
+    public void setPhone2(Phone2 phone2) {
+        this.phone2.set(requireNonNull(phone2));
+    }
+
+    @Override
+    public ObjectProperty<Phone2> phone2Property() {
+        return phone2;
+    }
+
+    //@@author chairz
+    @Override
+    public Phone2 getPhone2() {
+        if (phone2 == null) {
+            return new Phone2();
+        }
+        return phone2.get();
     }
 
     public void setPhone(Phone phone) {
@@ -101,6 +131,7 @@ public class Person implements ReadOnlyPerson {
     public Address getAddress() {
         return address.get();
     }
+
 
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}

@@ -8,13 +8,15 @@ lib/*
 *.log
 *.log.*
 *.csv
-config.json
 src/test/data/sandbox/
 preferences.json
+config.json
 .DS_Store
 ./screenshot*.png
 classes/
-/data/
 /bin/
 src/main/resources/docs/
 out/
+/data/
+Collate-TUI.jar
+e.bat

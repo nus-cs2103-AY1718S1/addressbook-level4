@@ -1,18 +1,27 @@
-= AddressBook Level 4 - Developer Guide
+= Contact Plus - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
 :sectnums:
 :imagesDir: images
+:experimental:
 :stylesDir: stylesheets
 ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-W11-B1/main/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team W11-B1`      Since: `Sep 2107`      Licence: `MIT`
+
+== Welcome to Contact Plus
+Contact Plus is a contact-managing service through command line. We strive to provide the very comprehensive services for busy students on the campus so that they can manage their contacts efficiently. For example, the auto-correction feature allows
+our busy friend - David, a university student, to type fast on the keyboard without worrying spelling mistakes.
+
+To make Contact Plus better, there are many ways for you to contribute to this project: coding for new features, testing, integrating with third party APIs, or simply contributing to the documentations.
+This guide will not only help you get started as a Contact Plus contributor, but that you will find useful even though you are an experienced contributor.
+
 
 == Setting up
 
@@ -200,7 +209,7 @@ The `Model`,
 
 === Storage component
 
-image::StorageClassDiagram.png[width="800"]
+image::StorageClassDiagram2.png[width="800"]
 _Figure 2.5.1 : Structure of the Storage Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
@@ -218,8 +227,7 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
-// tag::undoredo[]
-=== Undo/Redo mechanism
+=== Undo/Redo Mechanism
 
 The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the address book (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
 
@@ -343,7 +351,711 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Alternative 2:** Use `HistoryManager` for undo/redo +
 **Pros:** We do not need to maintain a separate stack, and just reuse what is already in the codebase. +
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
-// end::undoredo[]
+
+=== AutoCorrect Mechanism
+
+The `AutoCorrect` feature enables misspelt commands entered by users to be autoCorrected by the application,
+and perform the correct command. The correction of the misspelt command is based on four types of prediction of the misspelt words, namely, addition of alphabets, deletion
+of alphabets, transposing of alphabets and Substitution of alphabets. For the sake of efficiency, the link:#edit-distance[edit distance] is limited to 2 (refer to `editDistance1`, and `checkMisspeltWords`).
+
+This is an example of how the misspelt words are predicted by adding one more alphabet:
+[source,java]
+----
+//Adding any one character (from the alphabet) anywhere in the word.
+        for (int i = 0; i <= formattedWord.length(); i++) {
+            for (int j = 0; j < alphabet.length(); j++) {
+                String newWord = formattedWord.substring(0, i) + alphabet.charAt(j)
+                        + formattedWord.substring(i, formattedWord.length());
+                results.add(newWord);
+            }
+        }
+----
+
+Auto-Correct is only utilized in `AddressBoonParser` class to check each input command, and correct the misspelt command which has an link:#edit-distance[edit distance] smaller than or equal to 2.
+The following diagram shows the interaction between `AutoCorrect` and `AddressBookParser` class:
+
+image::AddressBookParser.SequenceDiagram.png[width="800"]
+
+==== Prerequisites/Dependencies
+
+* The `COMMAND_WORD` for every available command must be added to the `getCommandPool` method for the command to be auto-corrected.
+* AutoCorrect will only work for misspelt words within link:#edit-distance[edit distance] of 2.
+* AutoCorrect is based on four types of prediction of misspelt words, namely, addition, deletion, switch, and substitution.
+* Alias will not be autoCorrected as it consists only one or two alphabets.
+* The logic for autoCorrecting commands is implemented in AutoCorrectCommand class.
+
+==== Design Consideration
+
+**Aspect:** Implementation of `AutoCorrect` +
+
+**Alternative 1 (current choice):** Consider edit distance is 2 and the command is predicted based on the first alphabet. +
+**Pros:** The speed of searching is improved by implementing matching command by the first alphabet as the first alphabet entered by users is often correct.
+Edit distance 2 allows a considerable number of commands to be corrected by the application. +
+**Cons:** The prediction by first alphabet limits the autoCorrection on those commands that have first alphabet wrong.
+Edit distance 2 does not cover many other misspelt commands. +
+
+**Alternative 2:** Read all the available file from an external file when the application begins. +
+**Pros:** It would be easier for developers to maintain the autoCorrect feature as it is easier to update new commands into a file rather than in a method. +
+**Cons:** It would not be able to utilise `COMMAND_WORD` defined in each command class
+as it is a good practice to reused what is already defined and extend its usage (Close to modification and Open to extension Principle). +
+
+=== Yahoo Weather Display Mechanism
+The Yahoo weather information display is aided by the external library "yahoo-weather-java-api:2.0.2". This library queries data from Yahoo Weather API, and the application display the information returned by calling the library functions with
+a simple string parser method to format the data return. The formatted data is displayed on the `StatusFooterBar`. +
+
+The query of weather information is closely related to the location. The location is specified by WOEID, so in this application we take the link:#WOEID[WOEID] of Singapore by default. +
+
+[source,java]
+----
+private final String woeid = "1062617";
+----
+
+The API method is called, and data returned as follows:
+
+[source,java]
+----
+YahooWeatherService service = new YahooWeatherService();
+Channel channel = service.getForecast(woeid, DegreeUnit.CELSIUS);
+
+return conditionStringParser(channel.getItem().getCondition().toString());
+----
+
+==== Prerequisites/Dependencies
+
+* This feature has a strong dependency on Yahoo Weather Server. Some exceptions or assertions should be implemented to prevent the failure of the application
+due to the failure of Yahoo Weather Server. +
+
+=== Alias for command Mechanism[[alias-for-command]]
+
+Alias in this application is a single alphabet or two alphabets. This purpose of alias is to save the labor of typing the full corresponding command words, therefore it is more efficient and easier to use.
+The alias mechanism is implemented in `AddressBookParser`, and its logic can be described by the following activity diagram:
+
+image:AliasActivityDiagram.png[width="800"]
+
+1. `AddressBookParser` receives the input argument from users. +
+2. If the input argument is an alias, the corresponding command instance is created and command is processed. +
+3. If the input argument is a command word, the command instance is created, and the command is processed.
+
+The code snippet is shown as follows:
+[source,java]
+----
+case AddCommand.COMMAND_WORD: case AddCommand.COMMAND_WORD_ALIAS:
+            return new AddCommandParser().parse(arguments);
+----
+
+==== Design Consideration
+
+**Aspect:** Length of an alias +
+**Alternative 1 (current choice):** Use one or two alphabets to represent a command, usually it is the first alphabet of its corresponding command word. +
+**Pros:** Easy to memories the alias as it is the first letter of the command word. +
+**Cons:** May be confusing when some command requires two alphabets for alias. This is because there will be overlapping alias when two command words have the same first letter. +
+
+**Alternative 2:** Use a fixed length of three alphabets for every alias. +
+**Pros:** The length for each alias is unformed. +
+**Cons:** Three alphabets would be too long for commands like `add`. +
+
+=== Autocomplete Mechanism[[autocomplete-feature]]
+
+//tag::autocomplete-mechanism[]
+
+The `autocomplete` feature is implemented in `AutoCompleteUtil` class. It enables commands to be automatically suggested and
+completed for users. For example, when the user types, "sea", and press kbd:[TAB] key, the complete command `search` appears on the command line. This feature saves time for users and improves the efficiency of the application in general.
+It is invoked in subclasses of `Logic` (e.g. `LogicManager`).
+
+The interaction between `AutoCompleteUtil` and `Logic` classes can be seen from the following sequence diagram:
+
+image::AutoCompleteCommand.sequenceDiagram.png[width="800"]
+
+As seen in the sequence diagram, `Logic` will get a list of all available commands from the `AutoCompleteUtil` class. Thereafter, it will pass
+this list, together with the user's input string, to the `autoCompleteCommand()` method in the `AutoCompleteUtil` class, which will
+generate and return a list of suggested commands.
+
+==== Prerequisites/Dependencies [[autocomplete-dependencies]]
+
+* The hotkey for launching `autocomplete` is indicated in the `CommandBox` class.
+Currently, the hotkey is kbd:[TAB].
+* The `COMMAND_WORD` field must exist in the class file representing each command.
+* The `COMMAND_WORD` field in each command class is defined as the string that is used to invoke
+that command.
+For example, "add" is the `COMMAND_WORD` in the `AddCommand` class and is used to invoke the `add` operation.
+* The `COMMAND_WORD` for every command must be added to
+the `mapOfAvailableCommands` map in the  `Command` class.
+If the developer forgets to perform this step, `AddressBook` will work
+normally but there will be no hints for those commands.
+* Although `autocomplete` currently does not support autocompletion
+for aliases. The `COMMAND_WORD_ALIAS` alias for every command, that has an alias,
+should be added to the `listOfCommandAliases` list in the `Command` class
+for completeness and testing purposes.
+* The logic for filtering matching commands is implemented in the `AutoCompleteUtil`
+class. This is shown in the following code snippet:
+
+image::AutoCompleteCommand.png[width="800"]
+
+* If the need arises to autocomplete other fields such as `name`, `address` and `email`,
+another method should be implemented in the `AutoCompleteUtil` class.
+
+==== Design Considerations
+
+**Aspect:** Implementation of `autocomplete`. +
+
+**Alternative 1 (current choice):** Add a list of names of available commands to `Command` class. +
+**Pros:** We do not need to care about how `autocomplete` works when adding new commands. We simply need to add the
+ `COMMAND_WORD` of new commands to the Command class and `autocomplete` will automatically use them for hints.
+ Furthermore, command names can be dynamically obtained via the `COMMAND_WORD` field for every command. +
+**Cons:** Additional level of dependency as the developer has to consistently update the `Command` class whenever
+ a new type of command is created. +
+
+**Alternative 2:** Place the `COMMAND_WORD` of all commands into a text file and read it when `AddressBook` starts. +
+**Pros:** No additional dependency among classes as `AddressBook` gets all command names from a text file rather
+ than obtaining them from the `COMMAND_WORD` field of each type of command. +
+**Cons:** The developer has to add the `COMMAND_WORD` of every new command to the text file.
+ Furthermore, there is repeated work (and higher risk of error) as the developer must take care to ensure that the text file's entry corresponds with the
+`COMMAND_WORD` field.
+
+//end::autocomplete-mechanism[]
+
+=== Extended Autocomplete Mechanism[[extended-autocomplete-feature]]
+
+//tag::extended-autocomplete-mechanism[]
+
+The `extended autocomplete` feature is an add-on to the `autocomplete` feature
+and enables the full format of commands to be automatically filled into the command bar.
+It is invoked in the `LogicManager` class.
+
+==== Prerequisites/Dependencies
+
+* The hotkey for launching `extended autocomplete` is indicated in the `CommandBox` class.
+Currently, the hotkey is kbd:[Ctrl]. The following excerpt briefly shows how the `autocomplete` string
+is determined based on the `Command` entered by the user.
+
+image::extended-autocomplete-snippet.png[width="800"]
+
+* The `COMMAND_WORD` and `AUTOCOMPLETE_FORMAT` fields must exist in all class files that represent commands.
+* For definition of `COMMAND_WORD`, see <<autocomplete-dependencies, this>>
+* The `AUTOCOMPLETE_FORMAT` field is defined as a string that contains the format of the command that is represented by the enclosing class.
+For example, if `test` command has the format of `test positive_integer` then `AUTOCOMPLETE_FORMAT` must be defined as
+`test positive_integer` in the `TestCommand` class.
+* The `mapOfAvailableCommands` map in the `Command` class must contain `<command_class.COMMAND_WORD, command_class.AUTCOMPLETE_FORMAT>`
+as `<key, value>` pairs. An example of such a pair is `<AddCommand.COMMAND_WORD, AddCommand.AUTOCOMPLETE_FORMAT>`.
+* If the developer forgets to perform the above step, `AddressBook` will work
+normally but there will be no completion for those commands.
+* `extended autocomplete` currently does not support autocompletion
+for aliases.
+
+==== Design Considerations
+
+**Aspect:** Implementation of `extended autocomplete`. +
+
+**Alternative 1 (current choice):** Use a shortcut key to launch `extended autocomplete` when a valid `COMMAND NAME`
+has been typed into the command bar. +
+**Pros:** It is easy to implement as we simply need to return a string based on the immediate user input. Furthermore, the `autocomplete` feature
+complements this by enabling users to easily input a correct `COMMAND_NAME`. +
+**Cons:** The user cannot choose from the list of suggestions by `Autocomplete`. He still has to type/autofill a
+single command name first before being able to use the shortcut for `extended autocomplete`. +
+
+**Alternative 2:** Allocate shortcut keys to select non-negative integers 0, 1, 2, 3 ... Each integer will be used as an
+index to select a specific command from the `autocomplete` list of suggestions. +
+Pros: Convenient for user to input any command as he only has to type its prefix partially before using `autocomplete` and
+select the desired command using the shortcut for `extended autocomplete`. +
+Cons: Finite number of keys on the keyboard make it impossible to do a one-to-one mapping of shortcut keys to commands.
+ Furthermore, it is quite tricky to implement as using keys with printable characters will result in extra characters
+ being printed together with the string returned by `extended autocomplete`.
+
+//end::extended-autocomplete-mechanism[]
+
+=== Delete Tag Mechanism
+
+//tag::deletetag-mechanism[]
+
+This mechanism is modelled by the `DeleteTagCommand` class. An instance of
+`DeleteTagCommand` is created by the `AddressBookParser` class when the
+user attempts to delete tags. The following sequence diagram shows the process from the
+moment the user enters the `deletetag` command until the remaining tags
+are displayed in the interface of `Contact Plus`.
+
+image::DeleteTagCommand-sequence-diagram.png[width="800"]
+
+The following code snippet shows how the `DeleteTagCommand` class
+handles the user input - if there is no tag with the specified name, then
+an error message is shown instead of a success message.
+
+image::deletetag-snippet.png[]
+
+
+==== Prerequisites/Dependencies
+
+* The `deleteTag()` method in model must be able to accept a `Tag` as input and
+delete it from the address book.
+
+==== Design Considerations
+
+**Aspect:** Implementation of `deletetag()` command. +
+
+**Alternative 1 (current choice):** Delete the specified tag from all contacts in the address book. +
+**Pros:** Easy to implement. +
+**Cons:** If the user wishes to only remove that tag from one particular person. He has to re-add the tag
+to every person who had that tag previously (except the one from which he wanted to remove the tag).
+
+**Alternative 2:** Enable the user to choose several contacts from which he/she wishes to delete the tag. +
+**Pros:** User has more control over which users to remove the tag from. Hence, this implementation removes
+ the problem from alternative 1. +
+**Cons:** Implementation is more complex as contacts have to be validated before handling the tag names.
+
+//end::deletetag-mechanism[]
+
+=== Locating groups by tag Mechanism
+
+The main logic for this mechanism lies in the class `NameWithTagContainsKeywordsPredicate.java`. This class compares the lists of tags from each person, and compare the list of tag with the set of tags given by users.
+This class makes uses of the powerful function from stream. The logic follow can be demonstrated by using the following activity diagram:
+
+image:SearchTagActivityDiagram.png[width="800"]
+
+The following code snippet shows the main logic in `NameWithTagContainsKeywordsPredicate.java`:
+
+[source,java]
+----
+@Override
+    public boolean test(ReadOnlyPerson person) {
+        Set<String> tagList = new HashSet<>();
+        for (Tag tag : person.getTags()) {
+            tagList.add(tag.getTagName());
+        }
+
+        return keywords.stream()
+                .anyMatch(tagList::contains);
+    }
+----
+==== Prerequisites/Dependencies
+* The tag name entered by users must be valid, i.e. exist in Contact Plus for the command to work successfully, else error message will be popped out.
+
+==== Design Consideration
+
+**Aspect:** Number of tags allowed to be specified by users. +
+**Alternative 1 (current choice):** Allow multiple tags to be entered by users
+**Pros:** Increases the flexibility of this search by tag feature. There would be no restriction on the number of tags to be entered. Users can specify as many valid tags as they want to.
+**Cons:** May not be obvious to users that they can enter multiple tag names.
+
+**Alternative 2:** Only allow users to search one tag name at a time
+**Pros:** The feature may looks simpler.
+**Cons:** Adds limitation to what users can do.
+
+
+=== Multiple Filter Mechanism
+
+//tag::multifilter-mechanism[]
+
+This mechanism is modelled by the `MultiFilterCommand` class. An instance of
+`MultiFilterCommand` is created by the `AddressBookParser` class.
+The following sequence diagram shows the process from the
+moment the user enters the `multifilter` command until the results
+are displayed in the interface of `Contact Plus`.
+
+image::MultiFilterCommand-sequence-diagram.png[width="800"]
+
+==== Prerequisites/Dependencies
+
+* The `clearFiltersOnPersonList()` method in the `Model` class must clear all filters
+in the filtered list of persons (i.e. show all elements in the list).
+* The `updateFilteredPersonList()` method in the `Model` class must accept a `Predicate` as
+input and apply it on the filtered list of persons (i.e. the list will only show
+elements that match the condition specified by the given `Predicate`).
+
+==== Design Considerations
+
+**Aspect:** Implementation of `multifilter` command. +
+
+**Alternative 1 (current choice):** Allow the user to enter any number of filter fields (e.g. name, email, address, etc.) in any order. +
+**Pros:** The user does not have to type unnecessary information (e.g. he/she does not have to specify a blank email if he/she just wants
+to find a contact with a particular name). +
+**Cons:** Technically difficult to implement as missing filter fields have to be detected and handled appropriately.
+
+**Alternative 2:** Only allow the user to filter by one criteria in a single command. E.g.
+If the user wishes to filter by name and address, he/she has to filter by name then
+by address (using 2 commands). +
+**Pros:** Very easy to implement as there is only one filter field to handle. +
+**Cons:** Requires multiple steps, which could be irritating and non-intuitive to the user.
+
+//end::multifilter-mechanism[]
+
+=== Delete Multiple Contacts Mechanism
+//tag::deletemultiple[]
+The `Delete` multiple contacts feature enables user to delete more than one contact in a single command by specifying more than one indices. It is
+invoked in the `DeleteCommand` class. +
+The interaction between `Model` and `Logic` classes can be seen from the following sequence diagram:
+
+image::DeleteMultiple/DeleteMultipleUML.PNG[width="800"]
+
+The source code below shows the implementation of how multiple persons are deleted by using a loop:
+[source,java]
+----
+for (Index i : targetIndex) {
+            if (i.getZeroBased() >= lastShownList.size()) {
+                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            }
+        }
+
+        String result = "";
+        Collections.sort(targetIndex);
+        for (Index i : targetIndex) {
+            ReadOnlyPerson personToDelete = lastShownList.get(i.getZeroBased());
+
+            try {
+                model.deletePerson(personToDelete);
+                if (targetIndex.size() == 1) {
+                    result = result.concat(personToDelete.toString());
+                } else {
+                    result = result.concat("\n" + personToDelete.toString());
+                }
+            } catch (PersonNotFoundException pnfe) {
+                assert false : "The target person cannot be missing";
+            }
+
+        }
+----
+
+==== Prerequisites/Dependencies
+
+* The `Index` to be deleted is added to an ArrayList of `Index`.
+* To identify different `Index`, Regex `/` is used.
+* ArrayList `Index` needs to be sorted in descending order to prevent IndexOutOfBound
+exception.
+
+==== Design Considerations
+
+**Aspect:** Implementation of `delete` Multiple Contact +
+
+**Alternative 1 (current choice):** Add the `Index` to be deleted to an ArrayList. +
+**Pros:** We do not need to care how many `Index` or the order of the `Index` being input by the user as long as it
+is separated by `/`. +
+**Cons:** Additional space is required for the ArrayList of `Index`. +
+
+**Alternative 2:** Use 'Lazy' delete by adding a boolean field to each element +
+**Pros:** We do not need to remove anything from the ArrayList. The boolean 0 or 1 will just
+indicate if the contact has been deleted. +
+**Cons:** The whole List has to be iterated to check if the contact has been deleted.
+//end::deletemultiple[]
+
+=== Tab Switching Mechanism
+//tag::tabswitch[]
+The tab pane will switch between `Task` and `Map` based on the command entered by the user. If the
+ Command input is related to the `person` model, it will be switched to the `Map` tab. Likewise, if the
+ Command input is related to the `task` model, it will be switched to the `task` tab. +
+The interaction between `Ui` and `Logic` classes can be seen from the following sequence diagram:
+
+image::SwitchTab.png[width="800"]
+
+The source code shows how the Command input is checked and how the tab is switched:
+[source,java]
+----
+private void displayTab(String commandTyped) {
+        Map<String, String> commandFormatMap = Command.getMapOfCommandFormats();
+        List listOfAliases = Command.getListOfAvailableCommandAliases();
+        int index = tabPane.getSelectionModel().getSelectedIndex();
+        if (commandFormatMap.containsKey(commandTyped) || listOfAliases.contains(commandTyped)) {
+            if (index != 0) {
+                tabPane.getSelectionModel().selectFirst();
+            }
+        } else {
+            tabPane.getSelectionModel().selectLast();
+        }
+
+    }
+----
+==== Prerequisites/Dependencies
+
+* The `task` Commands and `Person` Commands needs to be stored in different hashmap in
+the `Command` class.
+
+==== Design Considerations
+
+**Aspect:** Implementation of Switch Tab mechanism +
+
+**Alternative 1 (current choice):** Checks the command typed by user to the hashmap of available commands
+ in `Command` class which are classified into `task` commands and `Person` commands. +
+**Pros:** Simple if-else case as the commands are stored in two different hashmaps. +
+**Cons:** Additional space is required for two different hashmaps. +
+//end::tabswitch[]
+
+
+=== Keyboard Shortcut Mechanism
+The detection of keyboard shortcut is detected in the `CommandBox.java` class. In the method `handleKeyPress`, multiple key press situations are listed there and to handle the correct key pressed by users.
+The code snippet is shown as follows:
+
+[source,java]
+----
+// Handles cases where multiple keys are pressed simultaneously
+        String getAlphabetPressed = keyEvent.getCode().toString();
+        logger.info(getAlphabetPressed);
+
+        if (keyEvent.getCode().isLetterKey() && keyEvent.isControlDown()) {
+            //keyboard shortcut for input text heavy command
+            switch (getAlphabetPressed) {
+            case "A":
+                keyEvent.consume();
+                commandTextField.setText(AddCommand.COMMAND_WORD);
+                break;
+            case "D":
+                keyEvent.consume();
+                commandTextField.setText(DeleteCommand.COMMAND_WORD);
+                break;
+             ....
+             //and many other cases
+             default:
+                  //do nothing
+            }
+        }
+----
+
+==== Design Consideration
+
+**Aspect:** Implementation of Keyborad shortcuts +
+
+**Alternative 1 (current choice):** Only a few commands have its keyboard shortcuts. +
+**Pros:** Allow users to complete their input command faster by directly pressing the shortcuts. +
+**Cons:** For some commands, users are not allowed to use keyboard shortcuts This is inconvenient. +
+
+**Alternative 2:** Give every command its keyboard shortcuts. +
+**Pros:**  Users can use shortcut for every command freely. +
+**Cons:** It would be confusing to have to memorise many shortcuts.
+
+// tag::themeselect[]
+=== Theme Selection Mechanism
+
+The 'theme support' feature allows user to choose their favorite theme for the address book, other than the default
+Dark Theme. It is facilitated by `SwitchThemeCommand` class.
+
+Currently, Contact Plus is presented with three themes: **Dark**(INDEX `1`), **Light**(INDEX `2`) and
+**Colourful**(INDEX `3`).
+
+The command word for switching theme is `switch`. When the user type the command word `switch` and the **INDEX**
+ of theme, `execute()` function in the `LogicManager` class will be called. Next the command line will be passed to
+`AddressBookParser` class which then returns `SwitchThemeCommandParser` to separate the **INDEX** from command word.
+The **INDEX** will be used to select the specific theme in the array of String `themeArr`. The theme selected
+will be used to build the filepath, which allows `MainWindow` class to retrieve the respective `.css` file and update
+theme accordingly.
+
+The overview of the themes is as follows:
+|===
+| *1* Dark Theme | image:DarkTheme.png[width="500"] +
+| *2* Light Theme | image:LightTheme.png[width="500"] +
+| *3* Colourful Theme| image:ColourfulTheme.png[width="500"]
+|===
+
+
+
+==== Prerequisites/Dependencies
+
+* The line `<URL value="@ThemeName.css" />` in `fxml` files is replaced by a method call via
+`javafx.scene.layout.VBox` object in `MainWindow` class.
+* In current version of Contact Plus, the `INDEX` must be 1, 2, or 3.
+* The `SwitchThemeCommand` is currently not undoable.
+
+==== Design Considerations
+
+**Aspect:** Implementation of `switch theme` feature +
+
+**Alternative 1 (current choice):** Use command line to switch theme. +
+**Pros:** Only keyboard action is required. Users do not need to use mouse to click. +
+**Cons:** Preview of theme is not available. Users will only find out after they execute the command.
+
+**Alternative 2:** Use a selection window with theme preview image. +
+**Pros:** Users are able to know what the theme looks like before they choose the respective theme. +
+**Cons:** Additional space for `Theme Selection` window. +
+// end::themeselect[]
+
+// tag::addtask[]
+=== Add Task Mechanism
+
+The 'add task' feature is facilitated by `AddTaskCommand` class. It allows users to add tasks into the address book
+with a description, the level of priority as well as the due date. The tasks added will be shown on the stickies
+in the address book.
+
+The command word for adding a task is `task`. When users key in the command word `task`, together with valid
+description, priority and due date, the `execute()` function in the `LogicManager` class will be called, which will
+pass the value of the command string into `parseCommand()` function in the `AddressBookParser` class.
+As a result, `AddTaskCommandParser` will be returned to separate the command string into three different parts
+- `Description`, `Priority` and `dueDate`. These three fields will be passed to `Task` class to check if they
+are valid. If yes, a new `Task` object will be returned and used to call `AddTaskCommand` class. Eventually,
+the `executeUndoableCommand()` function in `AddTaskCommand` class will be called and returns a `CommandResult` object to display once a task is successfully added.
+
+image::AddTaskCommand_sequence_diagram.png[width="800"]
+
+==== Prerequisites/Dependencies
+
+* The format of date must follow `dd/MM/yyyy`.
+* The date must also be a valid date.
+* The range of priority can only be from *0* to *2*. Any other values will be deemed as invalid, and an error message will be thrown.
+* Currently, all fields must be included in the command and cannot be omitted.
+
+==== Design Considerations
+
+**Aspect:** Implementation of `AddTaskCommand` +
+
+**Alternative 1 (current choice):** Use stickies so that newly added tasks will show up in the stickies. +
+**Pros:** Tasks are easy to identify. +
+**Cons:** When too many tasks are added, it is difficult to display all the tasks. +
+
+**Alternative 2:** Use a task list similar to the person list in the address book. +
+**Pros:** Easy to display and look through all the tasks. +
+**Cons:** Less attractive. +
+// end::addtask[]
+
+=== List Task Mechanism
+
+//tag::listtask-mechanism[]
+
+This mechanism is modelled by the `ListTaskCommand` class. An instance of
+`ListTaskCommand` is created by the `AddressBookParser` class when the
+user attempts to list tasks. The following sequence diagram shows the process from the
+moment the user enters the `listtask` command until the tasks
+are displayed in the interface of `Contact Plus`.
+
+image::ListTaskCommand-sequence-diagram.png[width="800"]
+
+==== Prerequisites/Dependencies
+
+* The `taskDisplayed` variable in `CommandBox` must be set to the instance of the `BrowserPanel`
+that contains the sticky where the tasks are to be displayed.
+* The `getFilteredTaskList()` method in `Logic` class must return a list of `ReadOnlyTasks` containing
+the tasks in the address book.
+
+==== Design Considerations
+
+**Aspect:** Implementation of `listtask` command. +
+
+**Alternative 1 (current choice):** List all the tasks in one sticky note. +
+**Cons:** When too many tasks are added, the tasks will look very clutterd when displayed. +
+
+**Alternative 2:** Use one sticky note to display each task. +
+**Pros:** Interface will look much neater. +
+**Cons:** Not scalable as it is not practical to generate a large number of sticky notes. +
+
+//end::listtask-mechanism[]
+
+=== Delete Task Mechanism
+
+//tag::deletetask-mechanism[]
+
+This mechanism is modelled by the `DeleteTaskCommand` class. An instance of
+`DeleteTaskCommand` is created by the `AddressBookParser` class when the
+user attempts to delete tasks. The following sequence diagram shows the process from the
+moment the user enters the `deletetask` command until the remaining tasks
+are displayed in the interface of `Contact Plus`.
+
+image::DeleteTaskCommand-sequence-diagram.png[width="800"]
+
+==== Prerequisites/Dependencies
+
+* The `taskDisplayed` variable in `CommandBox` must be set to the instance of the `BrowserPanel`
+that contains the sticky where the tasks are to be displayed.
+* The `getFilteredTaskList()` method in `Logic` class must return a list of `ReadOnlyTasks` containing
+the tasks in the address book.
+* The `deleteTask()` method in model must be able to accept a `ReadOnlyTask` as input and
+delete it from the address book.
+
+==== Design Considerations
+
+**Aspect:** Implementation of DeleteTaskCommand. +
+
+**Alternative 1 (current choice):** Delete tasks from the address book every time the user executes the command to
+delete task. +
+**Pros:** Don't have to keep track of which tasks are no longer valid. +
+**Cons:** Causes overhead if the user repeatedly executes a command to delete tasks.
+
+**Alternative 2:** Use lazy deletion (i.e. use a boolean array to mark which tasks are no longer valid) without
+ automatically displaying the remaining tasks. Only delete tasks when
+  the user chooses to list tasks. +
+**Pros:** Less overhead as deletion only has to be done when user chooses to list tasks. +
+**Cons:** Difficult to implement and causes a lot of technical issues such as updating the
+list of tasks when the user closes the address book after deletion.
+
+//end::deletetask-mechanism[]
+
+=== Edit Task Mechanism
+The `edit task` is facilitated by EditTaskCommand class. It allows users to edit tasks in the address book with a description, the level of priority as well as the due date. The tasks added will be shown on the stickies in the address book.
+
+The command word for editing a task is `edittask`. When users key in the command word, together with valid description, priority and due date, the values will be passed into parseCommand() function in the AddressBookParser class.
+
+The basic main flow for `edittask` is as follows:
+
+image:EditTaskMainFlow.png[width="800"]
+
+==== Prerequisites/Dependencies
+
+* The `getFilteredTaskList()` method in `Logic` class must return a list of `ReadOnlyTasks` containing
+the tasks in the address book.
+* The `updateTask()` method in model must be able to accept a `ReadOnlyTask` as input and
+delete it from the address book.
+
+==== Design Consideration
+
+**Aspect:** fields to be editable. +
+**Alternative 1 (current choice):** Allow priority and due date to be editable but not description.
+**Pros:** It is logically clear that only the priority and due date of a task can be edited. Changing the description of the task essentially means to create a new task.
+**Cons:** May be not convenient for users who want to edit description of the task as well.
+
+**Alternative 2:** Only allow users to edit all three fields, description, priority and due date.
+**Pros:** This provides larger flexibility for users to edit any part of the given task.
+**Cons:** Logically it may not make sense to be able to edit description of the task.
+
+=== Clear Task Mechanism
+
+The `clear task` is facilitated by ClearTaskCommand class. It allows users to clear tasks in the address book.
+
+The command word for listing a task is `cleartask`. When users key in the command word, the command word `cleartask` is passed into AddressBookParser class, and the corresponding `ClearTaskCommand` is created and subsequently its function executeUndoableCommand() will clear the tasks from addressbook.xml.
+
+The basic main flow for `cleartask` is as follows:
+
+image:listTaskActivityDiagram.png[width="800"]
+
+==== Prerequisites/Dependencies
+
+* The `getFilteredTaskList()` method in `Logic` class must return a list of `ReadOnlyTasks` containing
+the tasks in the address book.
+* The `deleteTask()` method in model must be able to accept a `ReadOnlyTask` as input and
+delete it from the address book.
+
+
+=== Sound Effect for Commands
+
+// tag::music-feature[]
+
+This mechanism is implemented in the `AudioUtil` class. The static method
+`playClip()`, which plays a specified .wav format sound clip, is invoked on the `AudioUtil` class when a command is issued by
+the user. Distinct sound clips will be played based on whether the command
+was successfully executed or it failed to execute (due to various reasons such
+as parse error). A visualization of this is shown in the following sequence diagram:
+
+image::SoundEffect-sequence-diagram.png[width="800"]
+
+The implementation of the `playClip()` method in the `AudioUtil` class is shown below:
+
+image::playClipMethod.png[width="800"]
+
+==== Prerequisites/Dependencies
+
+* The audio file whose name is specified to the `playClip()` method must exist
+in the src/resources/audio/ folder.
+* The name of a .wav format audio clip should be provided to the `playClip()` method as
+only this format has been tried and tested. Other audio file formats may/may not work.
+
+==== Design Considerations
+
+**Aspect:** Implementation of sound effects. +
+
+**Alternative 1 (current choice):** Play preset clips on command success or failure. +
+**Pros:** Easy to implement as the clips to be played are always the same and will only be played
+during two events. +
+**Cons:** The sound clips are limited to two types - success or failure.
+
+**Alternative 2:** Allow the user to select the command success and failure audio clips from
+a predefined list. +
+**Pros:** User is able to have more personalized settings. +
+**Cons:** Technically challenging as additional commands have to be implemented to list
+the available audio clips and select the desired ones.
+
+//end::music-feature[]
+
 
 === Logging
 
@@ -511,7 +1223,7 @@ Do take a look at the link:#model-component[Design: Model Component] section bef
 ** The link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model`] API needs to be updated.
 **  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] classes can be used to implement the tag removal logic. link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] allows you to update a person, and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] allows you to update the tags.
 * Solution
-** Add the implementation of `deleteTag(Tag)` method in link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`]. Loop through each person, and remove the `tag` from each person.
+** Add the implementation of `deletetag(Tag)` method in link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`]. Loop through each person, and remove the `tag` from each person.
 ** See this https://github.com/se-edu/addressbook-level4/pull/591/files[PR] for the full solution.
 ****
 
@@ -719,20 +1431,56 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
 
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
-|=======================================================================
+
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *` |university student |backup and restore my contacts |recover my contacts in case of unexpected incidents. [Coming in V2.0]
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |person with a large social circle |filter my contacts by multiple criteria |search for specific contacts more easily [Since V1.1]
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |careless user |have autocorrection for my misspelt words |my contact details will be properly spelt [Since V1.2]
 
-|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+|`* * *` |user |add multiple phone numbers to a person |know different ways of contacting one person [Since V1.1]
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
-|=======================================================================
+|`* * *` |busy user |sort the address book alphabetically |locate my contacts easily [Since V1.0]
+
+|`* * *` |user |search friends by tags |search friends by group [Since V1.1]
+
+|`* * *` |music lovers |add different sound for different events|have a better feedback system to the user. [Coming in V2.0]
+
+|`* * *` |traveller |add weather forecast|plan my trips efficiently. [Coming in V2.0]
+
+|`* * *` |forgetful person |push notifications for upcoming tasks| i can be reminded of my priorities and tasks. [Coming in V2.0]
+
+|`* * *` |impatient person |date picker| so that i can input the format of the date correctly. [Coming in V2.0]
+
+|`* * *` |lazy person |have keyboard shortcuts| so i can perform the functions without typing the whole command. [Coming in V2.0]
+
+|`* * *` |artistic person |change the font size and font family of my contacts' records|have a more aesthetically pleasing addressbook interface. [Since V1.2]
+
+|`* * *` |user loves emoji |add emoji as special tags to the contact cards |have an interesting address book contacts. [Coming in V2.0]
+
+|`* *` |busy businessman |delete multiple users simultaneously|perform bookeeping more easily [Since V1.2]
+
+|`* *` |businessman |share my contact |easier for my client to contact me [Coming in V2.0]
+
+|`* *` |user with bad memory of commands |autocomplete commands|type lengthy commands in full [Since V1.2]
+
+|`* *` |user |check my most frequently contacted list of people |add them to my favourite list, or located them more easily. [Coming in V2.0]
+
+|`*` |user |merge my address book with another address book|add contacts in bulk. [Coming in V2.0]
+
+|`*` |user |access address boook through slack |access address book quickly and conveniently. [Coming in V2.0]
+
+|`*` |user with non-english as their native speaking language |add non-english names of friends |have localization for the language. [Coming in V2.0]
+
+|`*` |user likes customization |change the colour theme |make my address book more personalised. [Coming in V2.0]
+
+|`*` |forgetful person |display avatars for each contact|recall who a particular person is. [Coming in V2.0]
+
+|`*` |lazy user |voice out the commands rather than typing |be more efficient at adding contacts. [Coming in V2.0]
+
+|`*` |user with many friends |record the appointments with friends and be notified by the application |be reminded to attend the appointments. [Coming in V2.0]
 
 {More to be added}
 
@@ -742,30 +1490,258 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
-=== Use case: Delete person
+=== Use case: Backup and restore contacts
+
+*MSS*
+
+1.  User requests to backup contacts to a particular location
+2.  AddressBook makes a copy of the existing contacts database to the specified location
+3.  User requests to restore contacts from a particular location on the local disk
+4.  AddressBook makes a backup of the current database and overrides the existing file with
+the user's backup
++
+Use case ends
+
+*Extensions*
+
+[none]
+* 2a. The backup file cannot be read during restoration
++
+[none]
+** 2a1. AddressBook shows an error message
++
+Use case resumes at step 3
+
+* 3a. The specified location cannot be written to during backup
+** 3a1. AddressBook shows an error message
++
+Use case resumes at step 1
+
+[discrete]
+=== Use case: Add multiple phone numbers
 
 *MSS*
 
 1.  User requests to list persons
 2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+3.  User requests to add multiple phone numbers to a specific person in the list
+4.  AddressBook add multiple phone numbers of the person
+
+*Extensions*
+
+* 3a. The number added is already existed
+** 3a1. AddressBook shows an error message
++
+Use case ends
+
+[discrete]
+=== Use case: Search contacts by multiple criteria
+
+*MSS*
+
+1.  User requests to list contacts by specifying substrings of name and/or address
+2.  AddressBook displays the matching contacts in the GUI interface (if any)
+
+*Extensions*
+
+* 2a. The list is empty
++
+Use case ends
+
+[discrete]
+=== Use case: Sort persons names in alphabetical order
+
+*MSS*
+
+1. User requests to list persons
+2. AddressBook shows a list of persons unsorted
+3. User requests to sort persons in alphabetical order
+
+*Extensions*
+
+[none]
+* 2a. The list is sorted
++
+Use case ends
+
+* 2b. The list is empty
++
+Use case ends
+
+[discrete]
+=== Use case: Auto-correct misspelt words
+
+*MSS*
+
+1.  User inputs a misspelt word
+2.  AddressBook identifies and autocorrects the word
++
+Use case ends
+
+[discrete]
+=== Use case: Search person by tag
+
+*MSS*
+
+1. User requests to sort persons with a specific tag
+2. AddressBook shows a list of persons with the same tag
++
+Use case ends
+
+*Extensions*
+
+* 1a. The tag is not recognizable
+** 1a1. Addressbook shows the user "Unknown tag"
++
+Use case ends
+
+* 2a. The list is empty
++
+Use case ends
+
+[discrete]
+=== Use case: Delete a particular tag
+
+*MSS*
+
+1.  User requests to delete a tag with a particular name
+2.  AddressBook deletes the specified tag from all contacts in
+ AddressBook and updates the GUI.
+ +
+Use case ends
+
+*Extensions*
+
+* 1a. The tag is not found
++
+Use case ends
+
+=== Use case: Delete many persons simultaneously
+
+*MSS*
+
+1.  User requests to delete contacts specified by indices
+2.  AddressBook deletes the requested contacts
+3.  Addressbook reports the entries that have been deleted (if any)
++
+Use case ends
+
+[discrete]
+=== Use case: Load more than 100,000 persons at one time
+
+*MSS*
+
+1.  User requests to list more than 100,000 persons at one time
+2.  AddressBook shows a list of 100,000 persons
++
+Use case ends
+
+*Extensions*
+
+* 1a. The list is empty
++
+Use case ends
+
+[discrete]
+=== Use case: Check most frequently contacted list of persons
+
+*MSS*
+
+1.  User requests to list most frequently contacted persons
+2.  AddressBook shows a list of matching persons
+3.  User requests to add the list to his/her favourite list
+4.  AddressBook add the list to the favourite list
++
+Use case ends
+
+*Extensions*
+
+* 2a. The list is empty
++
+Use case ends
+
+[discrete]
+=== Use case: Add appointments
+
+*MSS*
+
+1. User inputs the appointment
+2. Address book shows the message that the appointment is recorded
+3. Address book pushes the notification the day before the appointment
++
+Use case ends
+
+*Extensions*
+
+* 1a. The input date is invalid
+** 1a1. Address book requests user to input a valid date
++
+Steps 1a - 1a1 are repeated util the date entered is valid
++
+Use case resumes from Step 2
+
+[discrete]
+=== Use case: Change colour theme
+
+*MSS*
+
+1.  User requests to change colour theme of the address book
+2.  AddressBook shows a list of colours available
+3.  User requests to change the theme to a specific colour
+4.  AddressBook changes the address book to the specified colour theme
++
+Use case ends
+
+[discrete]
+=== Use case: Share contact by index
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to share a person contact detail by specifying an index
+4.  AddressBook shows the person's contact detail and export the contact
++
+Use case ends
+
+*Extensions*
+
+* 3a. The given index is invalid
+** 3a1. AddressBook shows an error message
++
+Use case ends
+
+[discrete]
+=== Use case: Auto-complete command names
+
+*MSS*
+
+1.  User types a command halfway and presses the <<autocomplete-feature, autocomplete>> hotkey.
+2.  AddressBook prints suggested commands, whose prefixes match the
+ text (case-insenstive) entered by user, in the result pane of the GUI.
+3. User enters one of the suggested commands to perform
+his task.
 +
 Use case ends.
 
 *Extensions*
 
-[none]
-* 2a. The list is empty.
+* 3a. No text has been entered.
+** 3a1. AddressBook prints the names of all available commands in the result pane.
+* 3b. Text entered does not match the prefix of the name of any available command.
+** 3b1. AddressBook does not provide any suggestions.
+* 3c. There is only 1 command whose prefix matches the
+ text entered by the user.
+** 3c1. AddressBook replaces the text entered by user, in
+the command box, with the name of the matching command.
+** 3c2. User types additional flags and options for the
+completed command name (if any). +
+* 3d. The user enters a valid `COMMAND_WORD` (i.e. case and spelling matches) and presses
+the <<extended-autocomplete-feature, extended autocomplete>> hotkey.
+** 3d1. AddressBook autofills the command bar with the full syntax of the matching command.
+** 3d2. User replaces the placeholders in the syntax string with his own text.
 +
 Use case ends.
-
-* 3a. The given index is invalid.
-+
-[none]
-** 3a1. AddressBook shows an error message.
-+
-Use case resumes at step 2.
 
 {More to be added}
 
@@ -774,7 +1750,22 @@ Use case resumes at step 2.
 
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
+.  Should be compatible with both Mac and Windows operating system.
+.  Should be able to handle unicode (UTF-8) text.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  The system should be backward compatible with data produced by earlier versions of the system.
+.  The system should work on both 32-bit and 64-bit environments.
+.  Should return the list of persons in the storage within 1 second when users sort persons by tag.
+.  Should be able to recover itself after a power shutdown.
+.  Should display specific error messages if the system fails react to user.
+.  This product should be free for the public.
+.  Should be no more than 10 alphabets for a command so that users can easily memorize it.
+.  Should be usable by a novice who has never tried command line interface.
+.  The product is not required to handle the printing of reports.
+.  Should follow Java naming convention.
+.  Should strictly adhere OOP standard and follow the existing code style when changes are made on the project.
+.  Should update documentation necessarily with each new change on the project.
+.  Should update JUnit tests for each new feature, and important newly-created functions.
 
 {More to be added}
 
@@ -793,6 +1784,48 @@ Private contact detail
 
 ....
 A contact detail that is not meant to be shared with others
+....
+
+[[Substring]]
+Substring
+
+....
+A string containing one or more consecutive characters of
+a longer string. E.g. ppl is a substring of apple but ae is not.
+....
+
+[[error-message]]
+Error Message
+
+....
+A message displayed on a monitor screen or printout indicating that
+an incorrect instruction has been given or that there is an error resulting from faulty software or hardware.
+....
+
+[[API]]
+API
+
+....
+An Application Programming Interface (API) specifies the interface
+through which other programs can interact with a software component.
+It is a contract between the component and its clients.
+....
+
+[[edit-distance]]
+Edit-distance
+
+....
+Edit distance is a way of quantifying how dissimilar two strings (e.g., words)
+are to one another by counting the minimum number of operations required to
+transform one string into the other.
+....
+
+[[WOEID]]
+WOEID
+
+....
+A WOEID (Where On Earth IDentifier) is a unique 32-bit reference identifier,
+originally defined by GeoPlanet and now assigned by Yahoo!, that identifies any feature on Earth.
 ....
 
 [appendix]

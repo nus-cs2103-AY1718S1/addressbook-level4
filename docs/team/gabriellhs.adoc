@@ -1,0 +1,263 @@
+:toc:
+:toc-title:
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+:experimental:
+
+
+= Gabriel Li - Project Portfolio
+
+== Project: Contact Plus
+
+include::../UserGuide.adoc[tag=welcome]
+
+link:https://github.com/CS2103AUG2017-W11-B1/main/blob/master/collated/main/lancehaoh.md[[Functional code]]
+link:https://github.com/CS2103AUG2017-W11-B1/main/blob/master/collated/main/lancehaoh.md[[Test code]] {give links to collated code files}
+
+=== Enhancement Added: Delete Tag
+
+==== External behavior
+
+---
+
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=deletetag-command]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Enables users to reorganize their social circles. E.g. when a student has completed the module CS2101,
+he/she could remove the tag `CS2101 groupmate` from all contacts in
+`Contact Plus` as it is no longer applicable.
+
+==== Implementation
+
+---
+
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=deletetag-mechanism]
+
+#End of Extract#
+
+---
+
+
+
+
+=== Enhancement Added: Autocomplete
+
+==== External behavior
+
+---
+
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=autocomplete-feature]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Users may find it difficult ot remember the exact spelling of commands.
+Some may feel that it is tiring to type the some of the long command names.
+`Autocomplete` enables the automatic insertion of command names so that
+the user is relieved of all these problems.
+
+==== Implementation
+
+---
+
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=autocomplete-mechanism]
+
+#End of Extract#
+
+---
+
+
+
+
+=== Enhancement Added: Extended Autocomplete
+
+==== External behavior
+
+---
+
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=extended-autocomplete-feature]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+While `Autocomplete` allows the automatic completion of command names,
+users may also find it difficult to remember the format of every command.
+`extended autocomplete` enables the user to automatically insert the format of
+commands so that the user just needs to fill in his own information into the address book
+without needing to remember anything related to the commands.
+
+==== Implementation
+
+---
+
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=extended-autocomplete-mechanism]
+
+#End of Extract#
+
+---
+
+
+
+=== Enhancement Added: Multiple Filter for Contacts
+
+==== External behavior
+
+---
+
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=multifilter-feature]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+The `find` command only allows the user to find contacts by name keyword(s). Multiple contacts could
+have the same keyword(s). Furthermore, the user may not remember the contact's name.
+`multifilter` gives the user multiple choices to filter his contacts in such cases.
+
+==== Implementation
+
+---
+
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=multifilter-mechanism]
+
+#End of Extract#
+
+---
+
+
+
+
+=== Enhancement Added: List Tasks
+
+==== External behavior
+
+---
+
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=listtask-command]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+After adding tasks, `Listtask` allows the user to retrieve them.
+
+==== Implementation
+
+---
+
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=listtask-mechanism]
+
+#End of Extract#
+
+---
+
+
+
+=== Enhancement Added: Delete Tasks
+
+==== External behavior
+
+---
+
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=deletetask-command]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+`deletetask` enables the user to organize his/her tasks in `Contact Plus` (i.e. he/she can delete
+those that are no longer needed).
+
+==== Implementation
+
+---
+
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=deletetask-mechanism]
+
+#End of Extract#
+
+---
+
+
+
+=== Enhancement Added: Sound effects for Commands
+
+==== External behavior
+
+---
+
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=music-feature]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Sound effects provide additional and clear feedback to the user about the
+outcome of his/her command.
+
+==== Implementation
+
+---
+
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=music-feature]
+
+#End of Extract#
+
+---
+
+=== Other contributions
+
+* Helped to spot bugs in the code of other team members (Issues: https://github.com/CS2103AUG2017-W11-B1/main/issues/124[#124], https://github.com/CS2103AUG2017-W11-B1/main/issues/165[#165],
+https://github.com/CS2103AUG2017-W11-B1/main/issues/215[#215]).
+
+== Project: PowerPointLabs
+
+{Optionally (not graded), you may include other projects in your portfolio.}

@@ -3,6 +3,8 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -12,9 +14,14 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
+import seedu.address.model.task.ReadOnlyTask;
+import seedu.address.model.task.exceptions.DuplicateTaskException;
+import seedu.address.model.task.exceptions.TaskNotFoundException;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -25,6 +32,8 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
+    private final FilteredList<ReadOnlyPerson> filteredPersonsByTags;
+    private final FilteredList<ReadOnlyTask> filteredTasks;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -37,6 +46,8 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        filteredPersonsByTags =  new FilteredList<>(this.addressBook.getPersonList());
+        filteredTasks = new FilteredList<>(this.addressBook.getTaskList());
     }
 
     public ModelManager() {
@@ -81,6 +92,71 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author zhangshuoyang
+    /** For further implementation. */
+    @Override
+    public synchronized void deleteTask(ReadOnlyTask target) throws TaskNotFoundException {
+        addressBook.removeTask(target);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public synchronized void addTask(ReadOnlyTask task) throws DuplicateTaskException {
+        addressBook.addTask(task);
+        updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
+        indicateAddressBookChanged();
+    }
+
+    /** For further implementation. */
+    @Override
+    public void updateTask(ReadOnlyTask target, ReadOnlyTask editedTask)
+            throws DuplicateTaskException, TaskNotFoundException {
+        requireAllNonNull(target, editedTask);
+
+        addressBook.updateTask(target, editedTask);
+        indicateAddressBookChanged();
+    }
+
+
+    //@@author lancehaoh
+    /**
+     * Deletes a tag from the address book
+     *
+     * @param t tag object
+     * @return a variable indicator if at least one tag was deleted
+     */
+    @Override
+    public boolean deleteTag(Tag t) {
+        // Get all contacts in AddressBook
+        ObservableList<ReadOnlyPerson> persons = addressBook.getPersonList();
+        boolean tagWasDeleted = false;
+
+        try {
+            for (ReadOnlyPerson unmodifiablePerson : persons) {
+                Person updatedPerson = new Person(unmodifiablePerson);
+                // Remove the desired tag from every person where applicable
+                Set<Tag> tags = new HashSet<>(updatedPerson.getTags());
+                if (tags.contains(t)) {
+                    tagWasDeleted = true;
+                    tags.remove(t);
+                    updatedPerson.setTags(tags);
+                    addressBook.updatePerson(unmodifiablePerson, updatedPerson);
+                }
+            }
+        } catch (PersonNotFoundException pnfe) {
+            assert false : "The target person cannot be missing";
+        } catch (DuplicatePersonException dpe) {
+            assert false : "Update will cause two contacts to be the same";
+        }
+        return tagWasDeleted;
+    }
+
+    //@@author JYL123
+    @Override
+    public ObservableList<ReadOnlyPerson> getFilteredPersonByTagList() {
+        return FXCollections.unmodifiableObservableList(filteredPersonsByTags);
+    }
+
     //=========== Filtered Person List Accessors =============================================================
 
     /**
@@ -98,6 +174,39 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons.setPredicate(predicate);
     }
 
+    //@@author JYL123
+    @Override
+    public void updateFilteredPersonByTagList(Predicate<ReadOnlyPerson> predicate) {
+        requireNonNull(predicate);
+        filteredPersonsByTags.setPredicate(predicate);
+    }
+
+    @Override
+    public void clearFiltersOnPersonList() {
+        filteredPersons.setPredicate(dummy -> true);
+    }
+
+
+
+    //@@author zhangshuoyang
+    //=========== Filtered Task List Accessors =============================================================
+
+    /**
+     * Returns an unmodifiable view of the list of {@code ReadOnlyTask} backed by the internal list of
+     * {@code addressBook}
+     */
+    @Override
+    public ObservableList<ReadOnlyTask> getFilteredTaskList() {
+        return FXCollections.unmodifiableObservableList(filteredTasks);
+    }
+
+    @Override
+    public void updateFilteredTaskList(Predicate<ReadOnlyTask> predicate) {
+        requireNonNull(predicate);
+        filteredTasks.setPredicate(predicate);
+    }
+
+    //@@author
     @Override
     public boolean equals(Object obj) {
         // short circuit if same object
@@ -113,7 +222,8 @@ public class ModelManager extends ComponentManager implements Model {
         // state check
         ModelManager other = (ModelManager) obj;
         return addressBook.equals(other.addressBook)
-                && filteredPersons.equals(other.filteredPersons);
+                && filteredPersons.equals(other.filteredPersons)
+                && filteredTasks.equals(other.filteredTasks);
     }
 
 }
