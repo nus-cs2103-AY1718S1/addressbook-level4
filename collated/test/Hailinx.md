@@ -1768,6 +1768,19 @@ public class TodoItemTest {
     }
 
     @Test
+    public void test_compareTo() throws Exception {
+        TodoItem firstTodoItem = new TodoItem(EARLY_TIME_ONE, null, "task");
+        TodoItem secondTodoItem = new TodoItem(LATE_TIME_ONE, null, "task");
+        TodoItem thirdTodoItem = new TodoItem(EARLY_TIME_ONE, null, "task");
+
+        Assert.assertTrue(firstTodoItem.compareTo(secondTodoItem) < 0);
+
+        Assert.assertTrue(firstTodoItem.compareTo(thirdTodoItem) == 0);
+
+        Assert.assertTrue(secondTodoItem.compareTo(thirdTodoItem) > 0);
+    }
+
+    @Test
     public void test_invalidInput_throwException() {
         try {
             new TodoItem(LATE_TIME_ONE, EARLY_TIME_ONE, "task");
@@ -1838,6 +1851,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.ReloadAddressBookEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.exceptions.EncryptOrDecryptException;
 import seedu.address.model.ReadOnlyAddressBook;
@@ -1878,6 +1892,17 @@ public class SecurityManagerTest {
     public void test_isSecured() {
         Security security = SecurityManager.getInstance(storage);
         Assert.assertFalse(security.isSecured());
+    }
+
+    @Test
+    public void test_raise() {
+        try {
+            Security security = SecurityManager.getInstance(storage);
+            security.raise(new ReloadAddressBookEvent());
+        } catch (Exception e) {
+            e.printStackTrace();
+            Assert.fail("Should not throw exception.");
+        }
     }
 
     @Test
@@ -2004,7 +2029,7 @@ import seedu.address.commons.events.BaseEvent;
 import seedu.address.commons.exceptions.EncryptOrDecryptException;
 
 /**
- * Provides Security Stubs for testing.
+ * Provides three Security Stubs for testing.
  */
 public class SecurityStubUtil {
 
@@ -2079,6 +2104,7 @@ public class SecurityStubUtil {
 
     /**
      * Represents a SecurityManager which indicates that the address book is secured.
+     * Throws EncryptOrDecryptException when call encryptAddressBook and decryptAddressBook methods.
      */
     private class SecurityStubEncryptOrDecryptException extends BaseSecurityStub {
 
@@ -2716,7 +2742,7 @@ public class TodoPanelTest extends GuiUnitTest {
 ``` java
     @Test
     public void findByDetail() {
-        /* Case: find multiple persons in address book by name detail, command with leading spaces and trailing spaces
+        /* Case: find multiple persons in address book by name field, command with leading spaces and trailing spaces
          * -> 2 persons found
          */
         String command = "   " + FindCommand.COMMAND_WORD + " " + FindCommand.PREFIX_FIND_IN_DETAIL
@@ -2726,7 +2752,7 @@ public class TodoPanelTest extends GuiUnitTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find multiple persons in address book by name detail, name is not complete
+        /* Case: find multiple persons in address book by name, name is not complete
          * -> 3 persons found
          */
         command = FindCommand.COMMAND_WORD + " " + FindCommand.PREFIX_FIND_IN_DETAIL + " " + PREFIX_NAME + "me";
@@ -2827,7 +2853,7 @@ public class TodoPanelTest extends GuiUnitTest {
     }
 
     @Test
-    public void findFuzzySearch() {
+    public void findByFuzzySearch() {
         /* Case: find multiple persons in address book by fuzzy search, command with leading spaces and trailing spaces
          * -> 3 persons found
          */

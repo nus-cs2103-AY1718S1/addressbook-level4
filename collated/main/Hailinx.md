@@ -28,7 +28,7 @@ package seedu.address.commons.events.ui;
 import seedu.address.commons.events.BaseEvent;
 
 /**
- * Indicates a request for changing search mode for browser
+ * Indicates a request for changing search mode of browser
  */
 public class ChangeSearchEvent extends BaseEvent {
 
@@ -134,7 +134,6 @@ package seedu.address.commons.exceptions;
 
 /**
  * Signals an error caused by encryption and decryption.
- * The reason can be wrong keyword.
  */
 public class EncryptOrDecryptException extends Exception {
 }
@@ -283,9 +282,8 @@ public class LockCommand extends Command {
 
     public static final String COMMAND_WORD = "lock";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Encrypts all contact with a input password."
-            + "Parameters: "
-            + "PASSWORD\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Encrypts all contact with a input password.\n"
+            + "Parameters: PASSWORD (at least contains 4 characters)\n"
             + "Example: " + COMMAND_WORD + " mykey";
 
     public static final String MESSAGE_SUCCESS = "Address book is locked successfully.";
@@ -1573,9 +1571,6 @@ public class DetailsContainsPredicate implements Predicate<ReadOnlyPerson> {
      * @return true if tag in {@code descriptor} present but not match tag of {@code person}
      */
     private boolean isTagNotMatchedIfPresent(ReadOnlyPerson person) {
-        if (!descriptor.getTags().isPresent()) {
-            return false;
-        }
         Iterator<Tag> descriptorIterator = descriptor.getTags().get().iterator();
         Iterator<Tag> personIterator = person.getTags().iterator();
         while (descriptorIterator.hasNext()) {
@@ -1632,7 +1627,7 @@ package seedu.address.model.person;
 import java.util.function.Predicate;
 
 /**
- * Conducts fuzzy test on whether a {@code ReadOnlyPerson}'s attribute matches any of the keywords given.
+ * Conducts a fuzzy test on whether a {@code ReadOnlyPerson}'s attribute matches any of the keywords given.
  */
 public class FuzzySearchPredicate implements Predicate<ReadOnlyPerson> {
     private final String keyword;
