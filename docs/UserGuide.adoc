@@ -698,7 +698,7 @@ You can share the selected contact's details to as many email addresses as you w
 
 * For example, to share to three 3 email addresses,
 use the format `share INDEX s/INDEX INDEX INDEX` or `INDEX s/EMAIL INDEX EMAIL`.
-* The `INDEX` after the "s/" can also be replaced with an `EMAIL` and it is interchangeable.
+* The `INDEX` after the "s/" can also be replaced with an `EMAIL` and it is also interchangeable.
 
 
 image::UG_header_examples.png[width="400"]
@@ -795,7 +795,7 @@ image::UG_musicplay2.png[width="590"]
 image::header_note.png[width="400"]
 
 * You can repeat image:step1.png[width="70"] again with a different `[GENRE]` as the input to play other  music `[GENRE]` songs.
-* For example, input `music play classic` at step 1 to play classical songs instead.
+* For example, input `music play classic` at image:step1.png[width="70"] to play classical songs instead.
 
 {sp}+
 
@@ -873,7 +873,7 @@ image::UG_nointernet.png[width="590"]
 image::header_note.png[width="400"]
 
 * You can repeat image:step1.png[width="70"] again with a different `[GENRE]` as the input to play other  radio `[GENRE]` stations.
-* For example, input `radio play classic` at step 1 to listen to the classical radio station.
+* For example, input `radio play classic` at image:step1.png[width="70"] to listen to the classical radio station.
 
 {sp}+
 
