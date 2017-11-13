@@ -530,30 +530,16 @@ Examples:
 Deletes all photos from all contacts in the address book.
 // end::deletesallphotos[]
 
-=== Clearing all entries : `clear`
-
-In case, you want to clear all the contact on your list. You may do so with the clear function. +
-[WARNING]
-It is advised that you should do a backup copy of your contact list before using this command. As it would wipe out all the contact information in the application.
-
-Format: `clear` or `c`
-
-=== Exiting the program : `exit`
-
-When you are done with the application, you may close it with the exit command. +
-Format: `exit`
-[NOTE]
-Address book data are saved in the hard disk automatically after any command that changes the data. +
-There is no need to save manually.
-
 === Clearing ConnectUs LogFile : `clearlog`
 // tag::connectuslog[]
-If you happen to realise that you committed a mistake after closing the application. Where the function of undo or redo is not valid to use, you can take advantage of our backend logging function that keeps track of all actions done by you in forms of '.txt' file. It includes information of important actions as well as timestamp for each actions done. This command allows you to clear the logfile which you might want to do so to keep the logfile neat and organised. +
+If you happen to realise that you committed a mistake after closing the application. Where the function of undo or redo is not valid to use, +
+you can take advantage of our backend logging function that keeps track of all actions done by you in forms of '.txt' file. +
+It includes information of important actions as well as timestamp for each actions done. +
+This command allows you to clear the logfile which you might want to do so to keep the logfile neat and organised. +
 Format: 'clearlog' or 'cl'
 [WARNING]
-All important actions made by the user such as add,clear,edit,delete,import,list,redo,undo and starting of application +
-are recorded in the ConnectUs.txt logfile. Users have the option of clearing the logfile in order to make the log more+
-organised. +
+All important actions made by the user such as add,clear,edit,delete,import,list,redo,undo and starting of application are recorded in the ConnectUs.txt logfile. +
+Users have the option of clearing the logfile in order to make the log more organised. +
 All information will be wipe out. So use the function with care.
 // end::connectuslog[]
 
@@ -630,6 +616,22 @@ Generate QR Save Contact Code for the 2nd person in the address book.
 `qrs 1` +
 Generate QR Save Contact Code for the 1st person in the results of the `find` command.
 // end::qrsave[]
+
+=== Clearing all entries : `clear`
+
+In case, you want to clear all the contact on your list. You may do so with the clear function. +
+[WARNING]
+It is advised that you should do a backup copy of your contact list before using this command. As it would wipe out all the contact information in the application.
+
+Format: `clear` or `c`
+
+=== Exiting the program : `exit`
+
+When you are done with the application, you may close it with the exit command. +
+Format: `exit`
+[NOTE]
+Address book data are saved in the hard disk automatically after any command that changes the data. +
+There is no need to save manually.
 
 == Upcoming Features
 (added in v1.2) +

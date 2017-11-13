@@ -1167,6 +1167,7 @@ The ClearLog Method implementation for commandline with the following codes.
 === QrCall Function
 (added in v1.4)
 // tag::qrcall[]
+
 In this section, we explain how users can generation Quick Response(QR) Code for calling with any contact number available in the addressbook.
 
 To make user experience more convenience, QR Code can make calling easy through the use of Smartphone with QR Scanner application installed.
@@ -1281,6 +1282,7 @@ The QrGenCallCommand to retrieve QrCode with the following codes.
 === QrSms Function
 (added in v1.4)
 // tag::qrsms[]
+
 In this section, we explain how users can generation Quick Response(QR) Code for Sms(Short Message Services) with any contact number available in the addressbook.
 
 To make user experience more convenience, QR Code can make sms easy through the use of Smartphone with QR Scanner application installed.
