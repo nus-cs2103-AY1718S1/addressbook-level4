@@ -1,4 +1,4 @@
-= Tourist Book - Useful Contacts
+= Tourist-Book - Useful Contacts
 :toc:
 :toc-title:
 :toc-placement: preamble

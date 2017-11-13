@@ -1,4 +1,4 @@
-= Tourist Book - Developer Guide
+= Tourist-Book - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -350,11 +350,11 @@ image::UndoRedoActivityDiagram.png[width="200"]
 // tag::bookmarkDesign[]
 === Bookmark & Clear Bookmark mechanism
 
-The underlying implementation of Bookmark (BM) and Clear Bookmark (CBM) is tag manipulation in the model component.
+The underlying implementation of `Bookmark` and `Clear Bookmark` is tag manipulation in the model component.
 Two methods were added to `Model` interface to support this feature (`addTag` and `removeAllTags`).
 
-Both BM and CBM extends from `UndoableCommand` as shown in **Figure 2.3.2** , which allows Undo/Redo by the user.
-Also, BM is an index based command like (`delete` or `edit`) +
+Both `Bookmark` and `Clear Bookmark` extends from `UndoableCommand` as shown in **Figure 2.3.2** , which allows Undo/Redo by the user.
+Also, `Bookmark` is an index based command like (`delete` or `edit`) +
 
 The following are the sequence diagrams each command +
 
@@ -495,7 +495,7 @@ private static final String TITLE = "MRT Map";
 The code above shows the setting up of `MrtWindow.java` for MrtWindow Browser.
 
 image::MrtMapButtonUI.png[width="600"]
-_Figure 3.6.3 : UI button added to the `MainWindow`.
+_Figure 3.6.3 : UI button added to the `MainWindow`_
 
 ==== Design Considerations
 
@@ -518,7 +518,7 @@ Following is the sequence diagram of `sort` command.
 
 image::SortCommandSequenceDiagram.png[width="600"]
 
-_Figure 3.7.1 : Sequence diagram of `sort` command.
+_Figure 3.7.1 : Sequence diagram of `sort` command_
 
     @Override
     public int compareTo(Place otherPlace) {
@@ -542,12 +542,16 @@ The method `loadUrl` will pass the Google Map url to link:{repoURL}/src/main/jav
 MainWindow.loadUrl("https://www.google.com.sg/maps/place/"
                 + locationToGo.getName().fullName.replaceAll(" ", "+"));
 ----
+image::LocationWebsiteUI.png[width="800"]
+_Figure 3.6.3 : Singapore Botanic Gardens' website_
 // end::goto[]
+
 ---
+
 //tag::findCommand[]
 === Editing the Find Command to search by Name and Tag
 
-The Find command is able to search the Tourist Book by Name of the place of by the Tags of the place.
+The Find command is able to search the Tourist Book by Name of the place or by the Tags of the place.
 
 The user is able to invoke the command with `find` or `fd`, followed by a PREFIX.
 
@@ -627,6 +631,45 @@ all the way back to `LogicManager`.
 The implementation of the method is credited to link:https://github.com/AceCentury[Ryan Teo] and +
 link:https://github.com/nus-cs2103-AY1718S1/forum/issues/158[this issue].
 //end::exportCommand[]
+
+// tag::directionDesign[]
+=== Direction Implementation
+
+The underlying principle of direction is to retrieve 2 places from the index given by the user and convert each place's
+name and postal code into a usable URL. The URL is then passed to the Ui component, within `MainWindow` to change the
+URL of the `BrowserPanel`.
+
+`DirectionCommandParser` gets indexes with the help of `parseIndexFromPosition` in `ParserUtil`. It
+extracts the first 2 indexes from a given string using zero-based positions 0 and 1.
+
+[NOTE]
+Direction uses 1 based indexing from the user, index 0 is not used.
+Same index values will be rejected by the parser, and if either index are out
+of bounds, it will throw a `CommandExceptionError` during execute().
+
+The following is the sequence diagram for `dir` command +
+
+image::DirectionSequenceDiagram.PNG[width="800"]
+
+==== Design Considerations
+**Aspect:** Implementation of `dir`.  +
+**Alternative 1 (current choice)** place's name and postal code transformation to URL. +
+**Pros:** Least amount of maintenance and takes advantage of browser panel to do more work. +
+**Cons:** Command can only work with an internet connection. +
+**Alternative 2:** Cache directions from one place to all other places within a attribute of a place. +
+**Pros:** Same directions given as google maps and works offline. +
+**Cons:** Huge amount of space required (complete graph) and tedious implementation through Google Maps API. +
+
+---
+
+**Aspect:** Amount of places user can "chain" for getting directions.  +
+**Alternative 1 (current choice)** Maximum of 2 places is used, with directions given between them.  +
+**Pros:** No additional data structure needed to support this, less scope means quicker deployment and less prone to bugs. +
+**Cons:** User must use "dir 1 2" then "dir 2 3" to plan their schedule for places 1 2 3. +
+**Alternative 2:** Implement a queue structure. +
+**Pros:** User can type "dir 1 2 3" to store all the data needed. Use another command like "next_dir" to show directions instead of typing the `dir` command again. +
+**Cons:** Data structure implementation requires extensive test coverage, longer to deploy and needs a limit on how many places can it store. +
+// end::directionDesign[]
 
 == Documentation
 
@@ -741,6 +784,7 @@ Suggested path for new programmers:
 
 2. Next, add a feature that touches multiple components to learn how to implement an end-to-end feature across all components. The section link:#creating-a-new-command-code-remark-code[Creating a new command: `remark`] explains how to go about adding such a feature.
 
+[discrete]
 === Improving each component
 
 Each individual exercise in this section is component-based (i.e. you would not need to modify the other components to get it to work).
@@ -863,7 +907,7 @@ Do take a look at the link:#storage-component[Design: Storage Component] section
 === Creating a new command: `remark`
 
 By creating this command, you will get a chance to learn how to implement a feature end-to-end, touching all major components of the app.
-
+[discrete]
 ==== Description
 Edits the remark for a place specified in the `INDEX`. +
 Format: `remark INDEX r/[REMARK]`
@@ -874,9 +918,9 @@ Examples:
 Edits the remark for the first place to `Likes to drink coffee.`
 * `remark 1 r/` +
 Removes the remark for the first place.
-
+[discrete]
 ==== Step-by-step Instructions
-
+[discrete]
 ===== [Step 1] Logic: Teach the app to accept 'remark' which does nothing
 Let's start by teaching the application how to parse a `remark` command. We will add the logic of `remark` later.
 
@@ -889,7 +933,7 @@ Let's start by teaching the application how to parse a `remark` command. We will
 
 . Add `RemarkCommandTest` that tests that `executeUndoableCommand()` throws an Exception.
 . Add new test method to link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`], which tests that typing "remark" returns an instance of `RemarkCommand`.
-
+[discrete]
 ===== [Step 2] Logic: Teach the app to accept 'remark' arguments
 Let's teach the application to parse arguments that our `remark` command will accept. E.g. `1 r/Likes to drink coffee.`
 
@@ -905,7 +949,7 @@ Let's teach the application to parse arguments that our `remark` command will ac
 . Add `RemarkCommandParserTest` that tests different boundary values
 for `RemarkCommandParser`.
 . Modify link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`] to test that the correct command is generated according to the user input.
-
+[discrete]
 ===== [Step 3] Ui: Add a placeholder for remark in `PlaceCard`
 Let's add a placeholder on all our link:{repoURL}/src/main/java/seedu/address/ui/PlaceCard.java[`PlaceCard`] s to display a remark for each place later.
 
@@ -917,7 +961,7 @@ Let's add a placeholder on all our link:{repoURL}/src/main/java/seedu/address/ui
 **Tests:**
 
 . Modify link:{repoURL}/src/test/java/guitests/guihandles/PlaceCardHandle.java[`PlaceCardHandle`] so that future tests can read the contents of the remark label.
-
+[discrete]
 ===== [Step 4] Model: Add `Remark` class
 We have to properly encapsulate the remark in our link:{repoURL}/src/main/java/seedu/address/model/place/ReadOnlyPlace.java[`ReadOnlyPlace`] class. Instead of just using a `String`, let's follow the conventional class structure that the codebase already uses by adding a `Remark` class.
 
@@ -929,7 +973,7 @@ We have to properly encapsulate the remark in our link:{repoURL}/src/main/java/s
 **Tests:**
 
 . Add test for `Remark`, to test the `Remark#equals()` method.
-
+[discrete]
 ===== [Step 5] Model: Modify `ReadOnlyPlace` to support a `Remark` field
 Now we have the `Remark` class, we need to actually use it inside link:{repoURL}/src/main/java/seedu/address/model/place/ReadOnlyPlace.java[`ReadOnlyPlace`].
 
@@ -938,7 +982,7 @@ Now we have the `Remark` class, we need to actually use it inside link:{repoURL}
 . Add three methods `setRemark(Remark)`, `getRemark()` and `remarkProperty()`. Be sure to implement these newly created methods in link:{repoURL}/src/main/java/seedu/address/model/place/ReadOnlyPlace.java[`Place`], which implements the link:{repoURL}/src/main/java/seedu/address/model/place/ReadOnlyPlace.java[`ReadOnlyPlace`] interface.
 . You may assume that the user will not be able to use the `add` and `edit` commands to modify the remarks field (i.e. the place will be created without a remark).
 . Modify link:{repoURL}/src/main/java/seedu/address/model/util/SampleDataUtil.java/[`SampleDataUtil`] to add remarks for the sample data (delete your `addressBook.xml` so that the application will load the sample data when you launch it.)
-
+[discrete]
 ===== [Step 6] Storage: Add `Remark` field to `XmlAdaptedPlace` class
 We now have `Remark` s for `Place` s, but they will be gone when we exit the application. Let's modify link:{repoURL}/src/main/java/seedu/address/storage/XmlAdaptedPlace.java[`XmlAdaptedPlace`] to include a `Remark` field so that it will be saved.
 
@@ -950,7 +994,7 @@ We now have `Remark` s for `Place` s, but they will be gone when we exit the app
 **Tests:**
 
 . Fix `validAddressBook.xml` such that the XML tests will not fail due to a missing `<remark>` element.
-
+[discrete]
 ===== [Step 7] Ui: Connect `Remark` field to `PlaceCard`
 Our remark label in link:{repoURL}/src/main/java/seedu/address/ui/PlaceCard.java[`PlaceCard`] is still a placeholder. Let's bring it to life by binding it with the actual `remark` field.
 
@@ -962,7 +1006,7 @@ Our remark label in link:{repoURL}/src/main/java/seedu/address/ui/PlaceCard.java
 
 . Modify link:{repoURL}/src/test/java/seedu/address/ui/testutil/GuiTestAssert.java[`GuiTestAssert#assertCardDisplaysPlace(...)`] so that it will compare the remark label.
 . In link:{repoURL}/src/test/java/seedu/address/ui/PlaceCardTest.java[`PlaceCardTest`], call `placeWithTags.setRemark(ALICE.getRemark())` to test that changes in the link:{repoURL}/src/main/java/seedu/address/model/place/ReadOnlyPlace.java[`Place`] 's remark correctly updates the corresponding link:{repoURL}/src/main/java/seedu/address/ui/PlaceCard.java[`PlaceCard`].
-
+[discrete]
 ===== [Step 8] Logic: Implement `RemarkCommand#execute()` logic
 We now have everything set up... but we still can't modify the remarks. Let's finish it up by adding in actual logic for our `remark` command.
 
@@ -973,16 +1017,17 @@ We now have everything set up... but we still can't modify the remarks. Let's fi
 **Tests:**
 
 . Update `RemarkCommandTest` to test that the `execute()` logic works.
-
+[discrete]
 ==== Full Solution
 
 See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-by-step solution.
 
 [appendix]
 == User Stories
+[discrete]
 === Target User
 We are targeting tourists who are visiting Singapore and are generally unaware of the attractions here.
-
+[discrete]
 === Problem statement
 Due to a large number of attractions and different websites, we want a platform that is intuitive to find attractions.
 The user should not need to view multiple sources to decide where to go. Relevant information to aid their decision making
@@ -1099,7 +1144,6 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-//@@author aungmyin23
 [discrete]
 === Use case: Bookmark a place
 
@@ -1215,7 +1259,6 @@ Use case ends.
 ** Steps 2a1-2a2 are repeated until the data entered is correct
 Use case continue from step 3.
 
-//@@author
 [appendix]
 == Non Functional Requirements
 
@@ -1268,36 +1311,3 @@ Documentation
 .  The user guide should be updated with the most updated functions of the application with every incremental version.
 ....
 
-[appendix]
-== Glossary
-
-[[mainstream-os]]
-Mainstream OS
-
-....
-Windows, Linux, Unix, OS-X
-....
-
-[[private-contact-detail]]
-Private contact detail
-
-....
-A contact detail that is not meant to be shared with others
-....
-
-[appendix]
-== Product Survey
-
-*Product Name*
-
-Author: ...
-
-Pros:
-
-* ...
-* ...
-
-Cons:
-
-* ...
-* ...

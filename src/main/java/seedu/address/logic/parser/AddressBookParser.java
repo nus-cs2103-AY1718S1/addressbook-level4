@@ -14,7 +14,7 @@ import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.ContactsCommand;
 import seedu.address.logic.commands.DeleteCommand;
-import seedu.address.logic.commands.DirCommand;
+import seedu.address.logic.commands.DirectionCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.ExportCommand;
@@ -94,9 +94,9 @@ public class AddressBookParser {
         //@@author
 
         //@@author Chng-Zhi-Xuan
-        case DirCommand.COMMAND_WORD:
-        case DirCommand.COMMAND_WORD_ALIAS:
-            return new DirCommandParser().parse(arguments);
+        case DirectionCommand.COMMAND_WORD:
+        case DirectionCommand.COMMAND_WORD_ALIAS:
+            return new DirectionCommandParser().parse(arguments);
 
         case ShowBookmarkCommand.COMMAND_WORD:
             return new ShowBookmarkCommandParser().parse(arguments);

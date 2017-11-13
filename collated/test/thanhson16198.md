@@ -1,4 +1,8 @@
 # thanhson16198
+###### \java\guitests\GuiRobot.java
+``` java
+    private static final int DEFAULT_WAIT_FOR_EVENT_TIMEOUT_MILLISECONDS = 500000;    //#Default: 5000
+```
 ###### \java\seedu\address\logic\commands\GotoCommandTest.java
 ``` java
 package seedu.address.logic.commands;

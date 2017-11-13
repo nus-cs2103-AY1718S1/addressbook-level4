@@ -81,7 +81,7 @@ public class StorageManager extends ComponentManager implements Storage {
     //@@author huyuanrong
     @Override
     public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
-        logger.fine("Attempting to create a backup for Tourist Book data file" );
+        logger.fine("Attempting to create a backup for Tourist Book data file");
         addressBookStorage.backupAddressBook(addressBook);
     }
 

@@ -97,7 +97,7 @@ import seedu.address.commons.events.ui.ShowWeatherRequestEvent;
 
 /**
  *
- * Format full help instructions for every command for display.
+ * Show the real-time weather on the `BrowserPanel`
  */
 public class WeatherCommand extends Command {
     public static final String COMMAND_WORD = "weather";
@@ -183,7 +183,6 @@ public class GotoCommandParser implements Parser<GotoCommand> {
     /**
      * Opens the Weather on browser.
      */
-    @FXML
     public void handleWeather() {
         logger.info("Open a weather forecast for today on BrowerPanel.");
         browserPanel.loadPage("https://www.accuweather.com/en/sg/singapore/300597/hourly-weather-forecast/300597");
@@ -208,7 +207,6 @@ public class GotoCommandParser implements Parser<GotoCommand> {
      * 800080 : Purple
      * 008000 : Green
      * 808000 : Olive
-     * FFFF00 : Yellow
      * 000080 : Navy
      * D300D3 : A shade of magenta
      * FB6542 : A medium light shade of red-orange
@@ -219,7 +217,7 @@ public class GotoCommandParser implements Parser<GotoCommand> {
      * 07575B : A dark shade of cyan
      */
     private static String[] colors = {"#800000", "#FF0000", "#800080",
-        "#008000", "#808000", "#FFFF00", "#000080", "#D300D3",
+        "#008000", "#808000", "#000080", "#D300D3",
         "#FB6542", "#CC3D00", "#D55448", "#063852", "#2D4262", "#07575B"};
     private static HashMap<String, String> tagColors = new HashMap<String, String>();
     private static Random random = new Random();

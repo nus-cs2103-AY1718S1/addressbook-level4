@@ -6,7 +6,7 @@ import seedu.address.commons.events.ui.ShowWeatherRequestEvent;
 
 /**
  *
- * Format full help instructions for every command for display.
+ * Show the real-time weather on the `BrowserPanel`
  */
 public class WeatherCommand extends Command {
     public static final String COMMAND_WORD = "weather";
