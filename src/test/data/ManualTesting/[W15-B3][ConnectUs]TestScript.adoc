@@ -15,7 +15,7 @@ endif::[]
 
 ---
 
-. Download the `[W15-B3][ConnectUs]SampleData.xml` from the ManualTesting folder.
+. Download the file `[W15-B3][ConnectUs]SampleData.xml`.
 . Create a folder called `data` and place it on the same directory as the `[W15-B3][ConnectUs].jar` file.
 . Rename the `[W15-B3][ConnectUs]SampleData.xml` to `addressbook.xml` and place it inside the `data` folder.
 . Double click on the `[W15-B3][ConnectUs].jar` file to start our application.
