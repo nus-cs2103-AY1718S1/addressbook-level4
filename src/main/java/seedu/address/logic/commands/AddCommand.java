@@ -34,7 +34,7 @@ public class AddCommand extends UndoableCommand {
             + "[" + PREFIX_POSITION + "POSITION] "
             + "[" + PREFIX_STATUS + "STATUS] "
             + "[" + PREFIX_PRIORITY + "PRIORITY] "
-            + "[" + PREFIX_PHOTO + "PRIORITY] "
+            + "[" + PREFIX_PHOTO + "PHOTO] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "
