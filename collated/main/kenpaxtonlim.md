@@ -1,194 +1,170 @@
 # kenpaxtonlim
-###### /java/seedu/address/ui/BrowserPanel.java
-``` java
-    @Subscribe
-    private void handleChangeBrowserPanelUrlEvent(ChangeBrowserPanelUrlEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadPage(event.url);
-    }
-```
-###### /java/seedu/address/model/person/Person.java
-``` java
-    @Override
-    public ObjectProperty<SocialMedia> socialMediaProperty() {
-        return socialMedia;
-    }
-
-    @Override
-    public SocialMedia getSocialMedia() {
-        return socialMedia.get();
-    }
-
-    public void setSocialMedia(SocialMedia socialMedia) {
-        this.socialMedia.set(requireNonNull(socialMedia));
-    }
-```
-###### /java/seedu/address/model/person/SocialMedia.java
+###### /java/seedu/address/commons/events/ui/ChangeBrowserPanelUrlEvent.java
 ``` java
 /**
- * Represents a Person's social media usernames in the address book.
+ * Indicates a request to change the url on the browser panel.
  */
-public class SocialMedia {
+public class ChangeBrowserPanelUrlEvent extends BaseEvent {
 
-    public static final String MESSAGE_USERNAME_CONSTRAINTS =
-            "Social media username should be alphanumeric without spaces";
-    public static final String USERNAME_VALIDATION_REGEX = "[^\\s]+|[\\s*]";
+    public final String url;
 
-    public final String facebook;
-    public final String twitter;
-    public final String instagram;
-
-    /**
-     * All usernames are empty.
-     */
-    public SocialMedia() {
-        facebook = "";
-        twitter = "";
-        instagram = "";
-    }
-
-    /**
-     * Validates given usernames.
-     *
-     * @throws IllegalValueException if either of given username string is invalid.
-     */
-    public SocialMedia(String facebook, String twitter, String instagram) throws IllegalValueException {
-        if (facebook == null) {
-            facebook = "";
-        }
-
-        if (twitter == null) {
-            twitter = "";
-        }
-
-        if (instagram == null) {
-            instagram = "";
-        }
-
-        this.facebook = facebook;
-        this.twitter = twitter;
-        this.instagram = instagram;
-    }
-
-    public SocialMedia(SocialMedia oldData, SocialMedia newData) {
-        facebook = newData.facebook.equals("") ? oldData.facebook : newData.facebook;
-        twitter = newData.twitter.equals("") ? oldData.twitter : newData.twitter;
-        instagram = newData.instagram.equals("") ? oldData.instagram : newData.instagram;
-    }
-
-    /**
-     * Returns true if a given string is a valid person name.
-     */
-    public static boolean isValidName(String test) {
-        return test.matches(USERNAME_VALIDATION_REGEX);
+    public ChangeBrowserPanelUrlEvent(String url) {
+        this.url = url;
     }
 
     @Override
     public String toString() {
-        String toString = "";
-
-        if (!facebook.equals("")) {
-            toString += "FB: " + facebook + " ";
-        }
-        if (!twitter.equals("")) {
-            toString += "TW: " + twitter + " ";
-        }
-        if (!instagram.equals("")) {
-            toString += "IG: " + instagram;
-        }
-        if (toString.equals("")) {
-            toString = "-No Social Media Accounts-";
-        }
-        return toString;
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof SocialMedia // instanceof handles nulls
-                && this.facebook.equals(((SocialMedia) other).facebook)
-                && this.twitter.equals(((SocialMedia) other).twitter)
-                && this.instagram.equals(((SocialMedia) other).instagram)); // state check
+        return this.getClass().getSimpleName();
     }
 }
 ```
-###### /java/seedu/address/logic/commands/SocialMediaCommand.java
+###### /java/seedu/address/logic/commands/AddRemoveTagsCommand.java
 ``` java
 /**
- * Display social media page of the person identified using it's last displayed index from the address book.
+ * Adds tags to an existing person in the address book.
  */
-public class SocialMediaCommand extends Command {
+public class AddRemoveTagsCommand extends UndoableCommand {
 
-    public static final String COMMAND_WORD = "socialmedia";
-    public static final String COMMAND_ALIAS = "sm";
-    public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Shows the social media of the person identified by the index number used in the last person listing.\n"
-            + "Parameters: TYPE (either \"facebook\", \"twitter\", or\"instagram\")"
-            + "INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + "facebook 1";
+    public static final String COMMAND_WORD = "tags";
+    public static final String COMMAND_ALIAS = "t";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Add or remove tags to the person identified "
+            + "by the index number used in the last person listing. \n"
+            + "Parameters: TYPE (either add or remove) INDEX (must be a positive integer) "
+            + "TAG [TAG] (can add 1 or more tags)... \n"
+            + "Example: " + COMMAND_WORD + " add 1 "
+            + "NUS CS2103 classmate";
 
-    public static final String TYPE_FACEBOOK = "facebook";
-    public static final String TYPE_TWITTER = "twitter";
-    public static final String TYPE_INSTAGRAM = "instagram";
+    public static final String MESSAGE_ADD_TAGS_SUCCESS = "Added Tag/s to Person: %1$s";
+    public static final String MESSAGE_REMOVE_TAGS_SUCCESS = "Removed Tag/s to Person: %1$s";
+    public static final String MESSAGE_NO_TAG = "One or more tags must be entered.";
+    public static final String MESSAGE_TAG_DONT_EXIST = "The following tag/s to be removed do not exist in person: ";
 
-    public static final String URL_FACEBOOK = "https://www.facebook.com/";
-    public static final String URL_TWITTER = "https://twitter.com/";
-    public static final String URL_INSTAGRAM = "https://www.instagram.com/";
+    private final boolean isAdd;
+    private final Index index;
+    private final Set<Tag> tags;
 
-    public static final String MESSAGE_SUCCESS = "Social media shown!";
-    public static final String MESSAGE_NO_FACEBOOK = "This person has no facebook.";
-    public static final String MESSAGE_NO_TWITTER = "This person has no twitter.";
-    public static final String MESSAGE_NO_INSTAGRAM = "This person has no instagram.";
-    public static final String MESSAGE_INVALID_TYPE = "No such social media type.";
+    public AddRemoveTagsCommand(boolean isAdd, Index index, Set<Tag> tags) {
+        requireNonNull(isAdd);
+        requireNonNull(index);
+        requireNonNull(tags);
 
-    private final Index targetIndex;
-    private final String type;
-
-    public SocialMediaCommand(Index targetIndex, String type) {
-        this.targetIndex = targetIndex;
-        this.type = type;
+        this.isAdd = isAdd;
+        this.index = index;
+        this.tags = tags;
     }
 
     @Override
-    public CommandResult execute() throws CommandException {
+    protected CommandResult executeUndoableCommand() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
-        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+        checkParameterValidity(lastShownList);
+
+        ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
+        Person editedPerson = prepareEditedPerson(personToEdit);
+
+        try {
+            model.updatePerson(personToEdit, editedPerson);
+        } catch (DuplicatePersonException dpe) {
+            throw new AssertionError("The target person should not be duplicated");
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("The target person cannot be missing");
+        }
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+
+        return isAdd ? new CommandResult(String.format(MESSAGE_ADD_TAGS_SUCCESS, editedPerson))
+                : new CommandResult(String.format(MESSAGE_REMOVE_TAGS_SUCCESS, editedPerson));
+    }
+
+    /**
+     * Returns the edited Person based on whether is it an add or remove action.
+     */
+    private Person prepareEditedPerson(ReadOnlyPerson personToEdit) throws CommandException {
+        Person editedPerson;
+        if (isAdd) {
+            editedPerson = addTagsToPerson(personToEdit, tags);
+        } else {
+            editedPerson = removeTagsFromPerson(personToEdit, tags);
+        }
+        return editedPerson;
+    }
+
+    /**
+     * Checks that the index is valid and tags are present.
+     */
+    private void checkParameterValidity(List<ReadOnlyPerson> lastShownList) throws CommandException {
+        if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
-        ReadOnlyPerson personToEdit = lastShownList.get(targetIndex.getZeroBased());
-        personToEdit.incrementAccess();
 
-        switch(type) {
-        case TYPE_FACEBOOK:
-            if (personToEdit.getSocialMedia().facebook.equals("")) {
-                throw new CommandException(MESSAGE_NO_FACEBOOK);
-            } else {
-                EventsCenter.getInstance().post(new ChangeBrowserPanelUrlEvent(
-                        URL_FACEBOOK + personToEdit.getSocialMedia().facebook));
-            }
-            break;
-        case TYPE_TWITTER:
-            if (personToEdit.getSocialMedia().twitter.equals("")) {
-                throw new CommandException(MESSAGE_NO_TWITTER);
-            } else {
-                EventsCenter.getInstance().post(new ChangeBrowserPanelUrlEvent(
-                        URL_TWITTER + personToEdit.getSocialMedia().twitter));
-            }
-            break;
-        case TYPE_INSTAGRAM:
-            if (personToEdit.getSocialMedia().instagram.equals("")) {
-                throw new CommandException(MESSAGE_NO_INSTAGRAM);
-            } else {
-                EventsCenter.getInstance().post(new ChangeBrowserPanelUrlEvent(
-                        URL_INSTAGRAM + personToEdit.getSocialMedia().instagram));
-            }
-            break;
-        default:
-            throw new CommandException(MESSAGE_INVALID_TYPE);
+        if (tags.isEmpty()) {
+            throw new CommandException(MESSAGE_NO_TAG);
+        }
+    }
+
+    /**
+     * Creates and returns a {@code Person} with the details of {@code personToEdit}
+     * edited with the {@code tags} to be added.
+     */
+    private static Person addTagsToPerson(ReadOnlyPerson personToEdit, Set<Tag> tags) {
+        assert personToEdit != null;
+
+        Set<Tag> personTags = personToEdit.getTags();
+        HashSet<Tag> newTags = new HashSet<>(personTags);
+        newTags.addAll(tags);
+
+        AccessCount accessCount = new AccessCount((personToEdit.getAccessCount().numAccess() + 1));
+
+        return new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
+                personToEdit.getAddress(), personToEdit.getRemark(), newTags,
+                personToEdit.getCreatedAt(), personToEdit.getSocialMedia(), accessCount);
+
+    }
+
+    /**
+     * Creates and returns a {@code Person} with the details of {@code personToEdit}
+     * edited with the {@code tags} to be removed.
+     */
+    private static Person removeTagsFromPerson(ReadOnlyPerson personToEdit, Set<Tag> tags) throws CommandException {
+        assert personToEdit != null;
+
+        Set<Tag> personTags = personToEdit.getTags();
+
+        String[] dontExist = getTagsNamesThatDontExist(tags, personTags);
+
+        if (dontExist.length > 0) {
+            throw new CommandException(makeTagDontExistMessage(dontExist));
         }
 
-        return new CommandResult(MESSAGE_SUCCESS);
+        HashSet<Tag> newTags = new HashSet<>(personTags);
+        newTags.removeAll(tags);
+
+        AccessCount accessCount = new AccessCount(personToEdit.getAccessCount().numAccess() + 1);
+
+        return new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
+                personToEdit.getAddress(), personToEdit.getRemark(), newTags, personToEdit.getCreatedAt(),
+                personToEdit.getSocialMedia(), accessCount);
+    }
+
+    /**
+     * From a given set of {@code tags}, extract those that do not exist in {@code personTags}
+     */
+    public static String[] getTagsNamesThatDontExist(Set<Tag> tags, Set<Tag> personTags) {
+        ArrayList<String> list = new ArrayList<>();
+        for (Tag t: tags) {
+            if (!personTags.contains(t)) {
+                list.add(t.tagName);
+            }
+        }
+        String[] arr = new String[list.size()];
+        arr = list.toArray(arr);
+        return arr;
+    }
+
+    /**
+     * Make the error message when there are tags that don't exist
+     */
+    public static String makeTagDontExistMessage(String... tags) {
+        return MESSAGE_TAG_DONT_EXIST + String.join(" ", tags);
     }
 
     @Override
@@ -199,12 +175,12 @@ public class SocialMediaCommand extends Command {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof SocialMediaCommand)) {
+        if (!(other instanceof AddRemoveTagsCommand)) {
             return false;
         }
 
-        SocialMediaCommand e = (SocialMediaCommand) other;
-        return targetIndex.equals(e.targetIndex) && type.equals(e.type);
+        AddRemoveTagsCommand e = (AddRemoveTagsCommand) other;
+        return isAdd == e.isAdd && index.equals(e.index) && tags.equals(e.tags);
     }
 }
 ```
@@ -252,124 +228,88 @@ public class QuickHelpCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/AddRemoveTagsCommand.java
+###### /java/seedu/address/logic/commands/SocialMediaCommand.java
 ``` java
 /**
- * Adds tags to an existing person in the address book.
+ * Display social media page of the person identified using it's last displayed index from the address book.
  */
-public class AddRemoveTagsCommand extends UndoableCommand {
+public class SocialMediaCommand extends Command {
 
-    public static final String COMMAND_WORD = "tags";
-    public static final String COMMAND_ALIAS = "t";
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Add or remove tags to the person identified "
-            + "by the index number used in the last person listing. \n"
-            + "Parameters: TYPE (either add or remove) INDEX (must be a positive integer) "
-            + "TAG [TAG] (can add 1 or more tags)... \n"
-            + "Example: " + COMMAND_WORD + " add 1 "
-            + "NUS CS2103 classmate";
+    public static final String COMMAND_WORD = "socialmedia";
+    public static final String COMMAND_ALIAS = "sm";
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Shows the social media of the person identified by the index number used in the last person listing.\n"
+            + "Parameters: TYPE (either \"facebook\", \"twitter\", or\"instagram\")"
+            + "INDEX (must be a positive integer)\n"
+            + "Example: " + COMMAND_WORD + " facebook 1";
 
-    public static final String MESSAGE_ADD_TAGS_SUCCESS = "Added Tag/s to Person: %1$s";
-    public static final String MESSAGE_REMOVE_TAGS_SUCCESS = "Removed Tag/s to Person: %1$s";
-    public static final String MESSAGE_NO_TAG = "One or more tags must be entered.";
+    public static final String TYPE_FACEBOOK = "facebook";
+    public static final String TYPE_TWITTER = "twitter";
+    public static final String TYPE_INSTAGRAM = "instagram";
 
-    private final boolean isAdd;
-    private final Index index;
-    private final Set<Tag> tags;
+    public static final String URL_FACEBOOK = "https://www.facebook.com/";
+    public static final String URL_TWITTER = "https://twitter.com/";
+    public static final String URL_INSTAGRAM = "https://www.instagram.com/";
 
-    public AddRemoveTagsCommand(boolean isAdd, Index index, Set<Tag> tags) {
-        requireNonNull(isAdd);
-        requireNonNull(index);
-        requireNonNull(tags);
+    public static final String MESSAGE_SUCCESS = "Social media shown!";
+    public static final String MESSAGE_NO_FACEBOOK = "This person has no facebook.";
+    public static final String MESSAGE_NO_TWITTER = "This person has no twitter.";
+    public static final String MESSAGE_NO_INSTAGRAM = "This person has no instagram.";
+    public static final String MESSAGE_INVALID_TYPE = "No such social media type.";
 
-        this.isAdd = isAdd;
-        this.index = index;
-        this.tags = tags;
+    private final Index targetIndex;
+    private final String type;
+
+    public SocialMediaCommand(Index targetIndex, String type) {
+        this.targetIndex = targetIndex;
+        this.type = type;
     }
 
     @Override
-    protected CommandResult executeUndoableCommand() throws CommandException {
+    public CommandResult execute() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
-        checkParameterValidity(lastShownList);
-
-        Person editedPerson;
-        ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
-        editedPerson = prepareEditedPerson(personToEdit);
-
-        try {
-            model.updatePerson(personToEdit, editedPerson);
-        } catch (DuplicatePersonException dpe) {
-            throw new AssertionError("The target person should not be duplicated");
-        } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("The target person cannot be missing");
-        }
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-
-        return isAdd ? new CommandResult(String.format(MESSAGE_ADD_TAGS_SUCCESS, editedPerson))
-                : new CommandResult(String.format(MESSAGE_REMOVE_TAGS_SUCCESS, editedPerson));
-    }
-
-    /**
-     * Returns the edited Person based on whether is it an add or remove action.
-     */
-    private Person prepareEditedPerson(ReadOnlyPerson personToEdit) {
-        Person editedPerson;
-        if (isAdd) {
-            editedPerson = addTagsToPerson(personToEdit, tags);
-        } else {
-            editedPerson = removeTagsFromPerson(personToEdit, tags);
-        }
-        return editedPerson;
-    }
-
-    /**
-     * Checks that the index is valid and tags are present.
-     */
-    private void checkParameterValidity(List<ReadOnlyPerson> lastShownList) throws CommandException {
-        if (index.getZeroBased() >= lastShownList.size()) {
+        if (targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
+        ReadOnlyPerson personToEdit = lastShownList.get(targetIndex.getZeroBased());
 
-        if (tags.isEmpty()) {
-            throw new CommandException(MESSAGE_NO_TAG);
+        switch(type) {
+        case TYPE_FACEBOOK:
+            if (personToEdit.getSocialMedia().facebook.equals("")) {
+                throw new CommandException(MESSAGE_NO_FACEBOOK);
+            } else {
+                EventsCenter.getInstance().post(new ToggleBrowserPanelEvent());
+                EventsCenter.getInstance().post(new AddressBookAccessChangedEvent(personToEdit));
+                EventsCenter.getInstance().post(new ChangeBrowserPanelUrlEvent(
+                        URL_FACEBOOK + personToEdit.getSocialMedia().facebook));
+            }
+            break;
+        case TYPE_TWITTER:
+            if (personToEdit.getSocialMedia().twitter.equals("")) {
+                throw new CommandException(MESSAGE_NO_TWITTER);
+            } else {
+                EventsCenter.getInstance().post(new ToggleBrowserPanelEvent());
+                EventsCenter.getInstance().post(new AddressBookAccessChangedEvent(personToEdit));
+                EventsCenter.getInstance().post(new ChangeBrowserPanelUrlEvent(
+                        URL_TWITTER + personToEdit.getSocialMedia().twitter));
+            }
+            break;
+        case TYPE_INSTAGRAM:
+            if (personToEdit.getSocialMedia().instagram.equals("")) {
+                throw new CommandException(MESSAGE_NO_INSTAGRAM);
+            } else {
+                EventsCenter.getInstance().post(new ToggleBrowserPanelEvent());
+                EventsCenter.getInstance().post(new AddressBookAccessChangedEvent(personToEdit));
+                EventsCenter.getInstance().post(new ChangeBrowserPanelUrlEvent(
+                        URL_INSTAGRAM + personToEdit.getSocialMedia().instagram));
+            }
+            break;
+        default:
+            throw new CommandException(MESSAGE_INVALID_TYPE);
         }
-    }
 
-    /**
-     * Creates and returns a {@code Person} with the details of {@code personToEdit}
-     * edited with the {@code tags} to be added.
-     */
-    private static Person addTagsToPerson(ReadOnlyPerson personToEdit, Set<Tag> tags) {
-        assert personToEdit != null;
-
-        Set<Tag> personTags = personToEdit.getTags();
-        HashSet<Tag> newTags = new HashSet<Tag>(personTags);
-        newTags.addAll(tags);
-
-        AccessCount accessCount = new AccessCount((personToEdit.getAccessCount().numAccess() + 1));
-
-        return new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
-                personToEdit.getAddress(), personToEdit.getRemark(), newTags,
-                personToEdit.getCreatedAt(), personToEdit.getSocialMedia(), accessCount);
-
-    }
-
-    /**
-     * Creates and returns a {@code Person} with the details of {@code personToEdit}
-     * edited with the {@code tags} to be removed.
-     */
-    private static Person removeTagsFromPerson(ReadOnlyPerson personToEdit, Set<Tag> tags)  {
-        assert personToEdit != null;
-
-        Set<Tag> personTags = personToEdit.getTags();
-        HashSet<Tag> newTags = new HashSet<Tag>(personTags);
-        newTags.removeAll(tags);
-
-        AccessCount accessCount = new AccessCount(personToEdit.getAccessCount().numAccess() + 1);
-
-        return new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
-                personToEdit.getAddress(), personToEdit.getRemark(), newTags, personToEdit.getCreatedAt(),
-                personToEdit.getSocialMedia(), accessCount);
+        return new CommandResult(MESSAGE_SUCCESS);
     }
 
     @Override
@@ -380,12 +320,12 @@ public class AddRemoveTagsCommand extends UndoableCommand {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof AddRemoveTagsCommand)) {
+        if (!(other instanceof SocialMediaCommand)) {
             return false;
         }
 
-        AddRemoveTagsCommand e = (AddRemoveTagsCommand) other;
-        return isAdd == e.isAdd && index.equals(e.index) && tags.equals(e.tags);
+        SocialMediaCommand e = (SocialMediaCommand) other;
+        return targetIndex.equals(e.targetIndex) && type.equals(e.type);
     }
 }
 ```
@@ -480,12 +420,18 @@ public class AddRemoveTagsCommandParser implements Parser<AddRemoveTagsCommand> 
      * Parses three {@code String facebook, twitter, instagram} into an {@code SocialMedia}.
      */
     public static SocialMedia parseSocialMedia(Optional<String> facebook,
-            Optional<String> twitter, Optional<String> instagram) throws IllegalValueException {
+            Optional<String> twitter, Optional<String> instagram, boolean isAdding) {
         requireAllNonNull(facebook, twitter, instagram);
 
-        String fb = facebook.isPresent() ? facebook.get() : "";
-        String tw = twitter.isPresent() ? twitter.get() : "";
-        String in = instagram.isPresent() ? instagram.get() : "";
+        String defaultValue;
+        if (isAdding) {
+            defaultValue = "";
+        } else {
+            defaultValue = null;
+        }
+        String fb = facebook.isPresent() ? facebook.get() : defaultValue;
+        String tw = twitter.isPresent() ? twitter.get() : defaultValue;
+        String in = instagram.isPresent() ? instagram.get() : defaultValue;
 
         return new SocialMedia(fb, tw, in);
     }
@@ -533,22 +479,105 @@ public class SocialMediaCommandParser implements Parser<SocialMediaCommand> {
     }
 }
 ```
-###### /java/seedu/address/commons/events/ui/ChangeBrowserPanelUrlEvent.java
+###### /java/seedu/address/model/person/Person.java
+``` java
+    @Override
+    public ObjectProperty<SocialMedia> socialMediaProperty() {
+        return socialMedia;
+    }
+
+    @Override
+    public SocialMedia getSocialMedia() {
+        return socialMedia.get();
+    }
+
+    public void setSocialMedia(SocialMedia socialMedia) {
+        this.socialMedia.set(requireNonNull(socialMedia));
+    }
+```
+###### /java/seedu/address/model/person/SocialMedia.java
 ``` java
 /**
- * Indicates a request to change the url on the browser panel.
+ * Represents a Person's social media usernames in the address book.
  */
-public class ChangeBrowserPanelUrlEvent extends BaseEvent {
+public class SocialMedia {
 
-    public final String url;
+    public static final String MESSAGE_USERNAME_CONSTRAINTS =
+            "Social media username should be alphanumeric without spaces";
+    public static final String USERNAME_VALIDATION_REGEX = "[^\\s]+|[\\s*]";
 
-    public ChangeBrowserPanelUrlEvent(String url) {
-        this.url = url;
+    public final String facebook;
+    public final String twitter;
+    public final String instagram;
+
+    /**
+     * All usernames are empty.
+     */
+    public SocialMedia() {
+        facebook = "";
+        twitter = "";
+        instagram = "";
+    }
+
+    /**
+     * Set usernames based on input.
+     */
+    public SocialMedia(String facebook, String twitter, String instagram) {
+        this.facebook = facebook;
+        this.twitter = twitter;
+        this.instagram = instagram;
+    }
+
+    /**
+     * Replace old usernames if new usernames is valid (not null).
+     */
+    public SocialMedia(SocialMedia oldData, SocialMedia newData) {
+        facebook = newData.facebook == null ? oldData.facebook : newData.facebook;
+        twitter = newData.twitter == null ? oldData.twitter : newData.twitter;
+        instagram = newData.instagram == null ? oldData.instagram : newData.instagram;
+    }
+
+    /**
+     * Returns true if a given string is a valid person name.
+     */
+    public static boolean isValidName(String test) {
+        return test.matches(USERNAME_VALIDATION_REGEX);
     }
 
     @Override
     public String toString() {
-        return this.getClass().getSimpleName();
+        String toString = "";
+
+        if (!facebook.equals("")) {
+            toString += "FB: " + facebook + " ";
+        }
+        if (!twitter.equals("")) {
+            toString += "TW: " + twitter + " ";
+        }
+        if (!instagram.equals("")) {
+            toString += "IG: " + instagram;
+        }
+        if (toString.equals("")) {
+            toString = "-No Social Media Accounts-";
+        }
+        return toString;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof SocialMedia // instanceof handles nulls
+                && this.facebook.equals(((SocialMedia) other).facebook)
+                && this.twitter.equals(((SocialMedia) other).twitter)
+                && this.instagram.equals(((SocialMedia) other).instagram)); // state check
     }
 }
+```
+###### /java/seedu/address/ui/BrowserPanel.java
+``` java
+    @Subscribe
+    private void handleChangeBrowserPanelUrlEvent(ChangeBrowserPanelUrlEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadPage(event.url);
+    }
 ```

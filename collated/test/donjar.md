@@ -1,104 +1,22 @@
 # donjar
-###### /java/seedu/address/model/person/PhoneTest.java
+###### /java/seedu/address/logic/commands/AddCommandTest.java
 ``` java
-    @Test
-    public void extractPhone() throws IllegalValueException {
-        assertEquals("93121534", Phone.extractPhone("9312 1534")); // spaces within digits
-        assertEquals("93121534", Phone.extractPhone("9312-1534")); // dashes within digits
-        assertEquals("93121534", Phone.extractPhone("(9312) 1534")); // parentheses within digits
-        assertEquals("1234567890", Phone.extractPhone("(123) 456-7890")); // complex phone number
-    }
-```
-###### /java/seedu/address/model/person/NameMatchesRegexTest.java
-``` java
+        @Override
+        public int getFontSizeChange() {
+            fail("This method should not be called.");
+            return 0;
+        }
 
-package seedu.address.model.person;
+        @Override
+        public void resetFontSize() {
+            fail("This method should not be called.");
+        }
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import org.junit.Test;
-
-import seedu.address.testutil.PersonBuilder;
-
-public class NameMatchesRegexTest {
-
-    @Test
-    public void equals() {
-        String firstRegex = "^asdf$";
-        String secondRegex = "a+s";
-
-        NameMatchesRegexPredicate firstPredicate = new NameMatchesRegexPredicate(firstRegex);
-        NameMatchesRegexPredicate secondPredicate = new NameMatchesRegexPredicate(secondRegex);
-
-        // same object -> returns true
-        assertTrue(firstPredicate.equals(firstPredicate));
-
-        // same values -> returns true
-        NameMatchesRegexPredicate firstPredicateCopy = new NameMatchesRegexPredicate(firstRegex);
-        assertTrue(firstPredicate.equals(firstPredicateCopy));
-
-        // different types -> returns false
-        assertFalse(firstPredicate.equals(1));
-
-        // null -> returns false
-        assertFalse(firstPredicate.equals(null));
-
-        // different person -> returns false
-        assertFalse(firstPredicate.equals(secondPredicate));
-    }
-
-    @Test
-    public void test_nameContainsKeywords() {
-        NameMatchesRegexPredicate predicate = new NameMatchesRegexPredicate("^Man[mn]a$");
-        assertTrue(predicate.test(new PersonBuilder().withName("Manna").build()));
-        assertTrue(predicate.test(new PersonBuilder().withName("Manma").build()));
-        assertFalse(predicate.test(new PersonBuilder().withName("Manma Chi").build()));
-    }
-}
-```
-###### /java/seedu/address/model/person/NameTest.java
-``` java
-        assertTrue(Name.isValidName("p")); // one letter
-```
-###### /java/seedu/address/model/person/NameTest.java
-``` java
-        assertTrue(Name.isValidName("Nguyễn Nguyễn Nguyễn")); // Vietnamese name sample
-        assertTrue(Name.isValidName("习近平")); // Chinese name sample
-```
-###### /java/seedu/address/logic/commands/UndoCommandTest.java
-``` java
-    @Test
-    public void execute_undoManyTimes() {
-        UndoRedoStack undoRedoStack = prepareStack(
-                Arrays.asList(deleteCommandOne, deleteCommandTwo), Collections.emptyList());
-        UndoCommand undoCommand = new UndoCommand(2);
-        undoCommand.setData(model, EMPTY_COMMAND_HISTORY, undoRedoStack);
-
-        String successMessage = UndoCommand.getSuccessMessage(2);
-
-        Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        assertCommandSuccess(undoCommand, model, successMessage, expectedModel);
-
-        // no command in undoStack
-        assertCommandFailure(undoCommand, model, UndoCommand.MESSAGE_FAILURE);
-    }
-
-    @Test
-    public void execute_undoTooManyTimes() {
-        UndoRedoStack undoRedoStack = prepareStack(
-                Arrays.asList(deleteCommandOne, deleteCommandTwo), Collections.emptyList());
-        UndoCommand undoCommand = new UndoCommand(3);
-        undoCommand.setData(model, EMPTY_COMMAND_HISTORY, undoRedoStack);
-
-        String successMessage = UndoCommand.getSuccessMessage(2);
-
-        Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        assertCommandSuccess(undoCommand, model, successMessage, expectedModel);
-
-        // no command in undoStack
-        assertCommandFailure(undoCommand, model, UndoCommand.MESSAGE_FAILURE);
-    }
+        @Override
+        public int updateFontSize(int change) throws FontSizeOutOfBoundsException {
+            fail("This method should not be called.");
+            return 0;
+        }
 ```
 ###### /java/seedu/address/logic/commands/RedoCommandTest.java
 ``` java
@@ -152,7 +70,6 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
-import seedu.address.commons.events.ui.FontSizeChangeRequestEvent;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -183,9 +100,8 @@ public class SizeCommandTest {
 
             assertEquals(SizeCommand.MESSAGE_RESET_FONT_SUCCESS, commandResult.feedbackToUser);
 
-            FontSizeChangeRequestEvent lastEvent =
-                    (FontSizeChangeRequestEvent) eventsCollectorRule.eventsCollector.getMostRecent();
-            assertEquals(0, lastEvent.sizeChange);
+            assertEquals("FontSizeRefreshRequestEvent",
+                    eventsCollectorRule.eventsCollector.getMostRecent().toString());
         } catch (CommandException e) {
             fail("This exception should not be thrown.");
         }
@@ -253,7 +169,7 @@ public class SizeCommandTest {
     }
 
     /**
-     * Executes a {@code SizeCommand} with the given {@code change}, and checks that {@code FontSizeChangeRequestEvent}
+     * Executes a {@code SizeCommand} with the given {@code change}, and checks that {@code FontSizeRefreshRequestEvent}
      * is raised with the correct size change.
      */
     private void assertExecutionSuccess(int change, String message) {
@@ -263,9 +179,8 @@ public class SizeCommandTest {
 
             assertEquals(message, commandResult.feedbackToUser);
 
-            FontSizeChangeRequestEvent lastEvent =
-                    (FontSizeChangeRequestEvent) eventsCollectorRule.eventsCollector.getMostRecent();
-            assertEquals(change, lastEvent.sizeChange);
+            assertEquals("FontSizeRefreshRequestEvent",
+                    eventsCollectorRule.eventsCollector.getMostRecent().toString());
         } catch (CommandException e) {
             fail("This exception should not be thrown.");
         }
@@ -287,18 +202,39 @@ public class SizeCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/AddCommandTest.java
+###### /java/seedu/address/logic/commands/UndoCommandTest.java
 ``` java
-        @Override
-        public void resetFontSize() {
-            fail("This method should not be called.");
-        }
+    @Test
+    public void execute_undoManyTimes() {
+        UndoRedoStack undoRedoStack = prepareStack(
+                Arrays.asList(deleteCommandOne, deleteCommandTwo), Collections.emptyList());
+        UndoCommand undoCommand = new UndoCommand(2);
+        undoCommand.setData(model, EMPTY_COMMAND_HISTORY, undoRedoStack);
 
-        @Override
-        public int updateFontSize(int change) throws FontSizeOutOfBoundsException {
-            fail("This method should not be called.");
-            return 0;
-        }
+        String successMessage = UndoCommand.getSuccessMessage(2);
+
+        Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        assertCommandSuccess(undoCommand, model, successMessage, expectedModel);
+
+        // no command in undoStack
+        assertCommandFailure(undoCommand, model, UndoCommand.MESSAGE_FAILURE);
+    }
+
+    @Test
+    public void execute_undoTooManyTimes() {
+        UndoRedoStack undoRedoStack = prepareStack(
+                Arrays.asList(deleteCommandOne, deleteCommandTwo), Collections.emptyList());
+        UndoCommand undoCommand = new UndoCommand(3);
+        undoCommand.setData(model, EMPTY_COMMAND_HISTORY, undoRedoStack);
+
+        String successMessage = UndoCommand.getSuccessMessage(2);
+
+        Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        assertCommandSuccess(undoCommand, model, successMessage, expectedModel);
+
+        // no command in undoStack
+        assertCommandFailure(undoCommand, model, UndoCommand.MESSAGE_FAILURE);
+    }
 ```
 ###### /java/seedu/address/logic/parser/AddressBookParserTest.java
 ``` java
@@ -329,43 +265,6 @@ public class SizeCommandTest {
         assertTrue(parser.parseCommand(SizeCommand.COMMAND_ALIAS + " -1") instanceof SizeCommand);
         assertTrue(parser.parseCommand(SizeCommand.COMMAND_ALIAS) instanceof SizeCommand);
     }
-```
-###### /java/seedu/address/logic/parser/UndoCommandParserTest.java
-``` java
-
-package seedu.address.logic.parser;
-
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
-
-import org.junit.Test;
-
-import seedu.address.logic.commands.UndoCommand;
-
-/**
- * Test scope: similar to {@code DeleteCommandParserTest}.
- * @see DeleteCommandParserTest
- */
-public class UndoCommandParserTest {
-
-    private UndoCommandParser parser = new UndoCommandParser();
-
-    @Test
-    public void parse_validArgs_returnsUndoCommand() {
-        assertParseSuccess(parser, "12", new UndoCommand(12));
-    }
-
-    @Test
-    public void parse_emptyArgs_returnsUndoCommand() {
-        assertParseSuccess(parser, "", new UndoCommand(1));
-    }
-
-    @Test
-    public void parse_invalidArgs_throwsParseException() {
-        assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT, UndoCommand.MESSAGE_USAGE));
-    }
-}
 ```
 ###### /java/seedu/address/logic/parser/FindRegexCommandParserTest.java
 ``` java
@@ -399,43 +298,6 @@ public class FindRegexCommandParserTest {
         }
     }
 
-}
-```
-###### /java/seedu/address/logic/parser/RedoCommandParserTest.java
-``` java
-
-package seedu.address.logic.parser;
-
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
-
-import org.junit.Test;
-
-import seedu.address.logic.commands.RedoCommand;
-
-/**
- * Test scope: similar to {@code DeleteCommandParserTest}.
- * @see DeleteCommandParserTest
- */
-public class RedoCommandParserTest {
-
-    private RedoCommandParser parser = new RedoCommandParser();
-
-    @Test
-    public void parse_validArgs_returnsRedoCommand() {
-        assertParseSuccess(parser, "12", new RedoCommand(12));
-    }
-
-    @Test
-    public void parse_emptyArgs_returnsRedoCommand() {
-        assertParseSuccess(parser, "", new RedoCommand(1));
-    }
-
-    @Test
-    public void parse_invalidArgs_throwsParseException() {
-        assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT, RedoCommand.MESSAGE_USAGE));
-    }
 }
 ```
 ###### /java/seedu/address/logic/parser/ParserUtilTest.java
@@ -611,6 +473,193 @@ public class RedoCommandParserTest {
         Set<Tag> expectedTagSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_1), new Tag(VALID_TAG_2)));
 
         assertEquals(expectedTagSet, actualTagSet);
+    }
+}
+```
+###### /java/seedu/address/logic/parser/RedoCommandParserTest.java
+``` java
+
+package seedu.address.logic.parser;
+
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+
+import org.junit.Test;
+
+import seedu.address.logic.commands.RedoCommand;
+
+/**
+ * Test scope: similar to {@code DeleteCommandParserTest}.
+ * @see DeleteCommandParserTest
+ */
+public class RedoCommandParserTest {
+
+    private RedoCommandParser parser = new RedoCommandParser();
+
+    @Test
+    public void parse_validArgs_returnsRedoCommand() {
+        assertParseSuccess(parser, "12", new RedoCommand(12));
+    }
+
+    @Test
+    public void parse_emptyArgs_returnsRedoCommand() {
+        assertParseSuccess(parser, "", new RedoCommand(1));
+    }
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT, RedoCommand.MESSAGE_USAGE));
+    }
+}
+```
+###### /java/seedu/address/logic/parser/UndoCommandParserTest.java
+``` java
+
+package seedu.address.logic.parser;
+
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+
+import org.junit.Test;
+
+import seedu.address.logic.commands.UndoCommand;
+
+/**
+ * Test scope: similar to {@code DeleteCommandParserTest}.
+ * @see DeleteCommandParserTest
+ */
+public class UndoCommandParserTest {
+
+    private UndoCommandParser parser = new UndoCommandParser();
+
+    @Test
+    public void parse_validArgs_returnsUndoCommand() {
+        assertParseSuccess(parser, "12", new UndoCommand(12));
+    }
+
+    @Test
+    public void parse_emptyArgs_returnsUndoCommand() {
+        assertParseSuccess(parser, "", new UndoCommand(1));
+    }
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT, UndoCommand.MESSAGE_USAGE));
+    }
+}
+```
+###### /java/seedu/address/model/person/NameMatchesRegexTest.java
+``` java
+
+package seedu.address.model.person;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
+import seedu.address.testutil.PersonBuilder;
+
+public class NameMatchesRegexTest {
+
+    @Test
+    public void equals() {
+        String firstRegex = "^asdf$";
+        String secondRegex = "a+s";
+
+        NameMatchesRegexPredicate firstPredicate = new NameMatchesRegexPredicate(firstRegex);
+        NameMatchesRegexPredicate secondPredicate = new NameMatchesRegexPredicate(secondRegex);
+
+        // same object -> returns true
+        assertTrue(firstPredicate.equals(firstPredicate));
+
+        // same values -> returns true
+        NameMatchesRegexPredicate firstPredicateCopy = new NameMatchesRegexPredicate(firstRegex);
+        assertTrue(firstPredicate.equals(firstPredicateCopy));
+
+        // different types -> returns false
+        assertFalse(firstPredicate.equals(1));
+
+        // null -> returns false
+        assertFalse(firstPredicate.equals(null));
+
+        // different person -> returns false
+        assertFalse(firstPredicate.equals(secondPredicate));
+    }
+
+    @Test
+    public void test_nameContainsKeywords() {
+        NameMatchesRegexPredicate predicate = new NameMatchesRegexPredicate("^Man[mn]a$");
+        assertTrue(predicate.test(new PersonBuilder().withName("Manna").build()));
+        assertTrue(predicate.test(new PersonBuilder().withName("Manma").build()));
+        assertFalse(predicate.test(new PersonBuilder().withName("Manma Chi").build()));
+    }
+}
+```
+###### /java/seedu/address/model/person/NameTest.java
+``` java
+        assertTrue(Name.isValidName("p")); // one letter
+```
+###### /java/seedu/address/model/person/NameTest.java
+``` java
+        assertTrue(Name.isValidName("Nguyễn Nguyễn Nguyễn")); // Vietnamese name sample
+        assertTrue(Name.isValidName("习近平")); // Chinese name sample
+```
+###### /java/seedu/address/model/person/PhoneTest.java
+``` java
+    @Test
+    public void extractPhone() throws IllegalValueException {
+        assertEquals("93121534", Phone.extractPhone("9312 1534")); // spaces within digits
+        assertEquals("93121534", Phone.extractPhone("9312-1534")); // dashes within digits
+        assertEquals("93121534", Phone.extractPhone("(9312) 1534")); // parentheses within digits
+        assertEquals("1234567890", Phone.extractPhone("(123) 456-7890")); // complex phone number
+    }
+```
+###### /java/seedu/address/ui/testutil/LogicStub.java
+``` java
+
+    private ObservableList<ReadOnlyPerson> persons;
+
+    public LogicStub() {
+        this.persons = null;
+    }
+
+    public LogicStub(ObservableList<ReadOnlyPerson> persons) {
+        this.persons = persons;
+    }
+
+    @Override
+    public CommandResult execute(String commandText) throws CommandException, ParseException {
+        fail("This method should not be called.");
+        return null;
+    }
+
+    @Override
+    public ObservableList<ReadOnlyPerson> getAllPersonList() {
+        fail("This method should not be called.");
+        return null;
+    }
+
+    @Override
+    public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
+        if (persons == null) {
+            fail("This method should not be called.");
+        }
+
+        return persons;
+    }
+
+    @Override
+    public ListElementPointer getHistorySnapshot() {
+        fail("This method should not be called.");
+        return null;
+    }
+
+    @Override
+    public int getFontSizeChange() {
+        return 0;
     }
 }
 ```

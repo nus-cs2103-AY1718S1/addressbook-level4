@@ -1,88 +1,228 @@
 # 500poundbear
+###### /java/seedu/address/model/person/Remark.java
+``` java
+/**
+ * Represents a Person's remark in the address book.
+ */
+public class Remark {
+
+    public static final String MESSAGE_REMARK_CONSTRAINTS =
+            "The remark of a person can take any value.";
+
+    public final String value;
+
+    public Remark(String remark) {
+        requireNonNull(remark);
+        this.value = remark;
+    }
+
+    @Override
+    public String toString() {
+        return value;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this
+                || ((other instanceof Remark)
+                && this.value.equals(((Remark) other).value));
+    }
+
+    @Override
+    public int hashCode() {
+        return value.hashCode();
+    }
+}
+```
+###### /java/seedu/address/model/Statistics.java
+``` java
+/**
+ * A model for calculating the values for Statistics Panel
+ */
+public class Statistics {
+
+    private static final String ZONE_ID = "UTC";
+
+    private ObservableList<ReadOnlyPerson> personList;
+
+    private Integer totalNumberOfPeople = 0;
+    private Integer hasNoFacebook = 0;
+    private Integer hasNoTwitter = 0;
+    private Integer hasNoInstagram = 0;
+
+    private Integer currentYear;
+    private Integer currentMonth;
+
+    public Statistics (ObservableList<ReadOnlyPerson> list, int currentMonth, int currentYear) {
+        setStatisticAttributes(list, currentMonth, currentYear);
+        tabulateSocialMediaUsage();
+    }
+
+    /**
+     * Returns Array for each month in past displayYears with a count of new persons added in that month
+     * Current month is also included
+     *
+     * @param displayYears The number of years to be displayed
+     * @return ArrayList of integers
+     */
+    public ArrayList<Integer> getNewPersonsAddByMonth(int displayYears) {
+        int totalMonthsDisplayed = yearsToMonth(displayYears) + 1;
+
+        ArrayList<Integer> countByMonth = new ArrayList<>(
+                Collections.nCopies(totalMonthsDisplayed, 0));
+
+        personList.forEach(p -> {
+            Date givenDate = p.getCreatedAt();
+            ZonedDateTime given = givenDate.toInstant().atZone(ZoneId.of(ZONE_ID));
+
+            int personAddedYear = Integer.parseInt(Year.from(given).toString());
+            int personAddedMonth = Month.from(given).getValue();
+
+            int indOffset = calculateCountByMonthOffset(personAddedMonth, personAddedYear);
+
+            if (isOffsetWithinDisplayRange(indOffset, totalMonthsDisplayed)) {
+                countByMonth.set(indOffset, countByMonth.get(indOffset) + 1);
+            }
+        });
+
+        return countByMonth;
+    }
+
+    /**
+     * Fetches number of persons with no facebook information added
+     *
+     * @return Number of Persons with no facebook
+     */
+    public Integer getHasNoFacebook() {
+        return this.hasNoFacebook;
+    }
+
+    /**
+     * Fetches number of persons with no twitter information added
+     *
+     * @return Number of Persons with no twitter
+     */
+    public Integer getHasNoTwitter() {
+        return this.hasNoTwitter;
+    }
+
+    /**
+     * Fetches number of persons with no instagram information added
+     *
+     * @return Number of Persons with no twitter
+     */
+    public Integer getHasNoInstagram() {
+        return this.hasNoInstagram;
+    }
+
+    /**
+     * Fetches total number of persons
+     *
+     * @return Number of Persons added
+     */
+    public Integer getTotalNumberOfPeople() {
+        return this.totalNumberOfPeople;
+    }
+
+    /**
+     * Set the initialisation parameters into the Statistics instance attributes
+     */
+    private void setStatisticAttributes(ObservableList<ReadOnlyPerson> list, int currentMonth, int currentYear) {
+        this.personList = list;
+        this.currentMonth = currentMonth;
+        this.currentYear = currentYear;
+
+        this.totalNumberOfPeople = personList.size();
+    }
+
+    /**
+     * Count the offset when adding to the array list of sum by months
+     */
+    private int calculateCountByMonthOffset(int personAddedMonth, int personAddedYear) {
+        return yearsToMonth(this.currentYear - personAddedYear) + (this.currentMonth - personAddedMonth);
+    }
+
+    /**
+     * Tabulates number of users of each social media platform
+     */
+    private void tabulateSocialMediaUsage() {
+        for (ReadOnlyPerson person : personList) {
+            SocialMedia personSocialMedia = person.getSocialMedia();
+            if (personSocialMedia.facebook.isEmpty()) {
+                this.hasNoFacebook++;
+            }
+            if (personSocialMedia.twitter.isEmpty()) {
+                this.hasNoTwitter++;
+            }
+            if (personSocialMedia.instagram.isEmpty()) {
+                this.hasNoInstagram++;
+            }
+        }
+    }
+
+    /**
+     * Sort by ReadOnlyPerson.getAccessCount()
+     *
+     * @return new comparator
+     */
+    private static Comparator<ReadOnlyPerson> sortByGetAccessCount() {
+        return new Comparator<ReadOnlyPerson>() {
+            @Override
+            public int compare(ReadOnlyPerson s1, ReadOnlyPerson s2) {
+                return s1.getAccessCount().numAccess() - s2.getAccessCount().numAccess();
+            }
+        };
+    }
+
+    /**
+     * Converts the number of years into number of months
+     *
+     * @param years
+     * @return Number of months
+     */
+    private int yearsToMonth(int years) {
+        return years * 12;
+    }
+
+
+    /**
+     * Returns whether month offset provided is within range of [0, displayYear * 12]
+     *
+     * @param indOffset Value to be checked
+     * @param totalMonthsDisplayed To determine maximum bound of offset accepted
+     * @return Boolean whether offset is accepted or not
+     */
+    private boolean isOffsetWithinDisplayRange(int indOffset, int totalMonthsDisplayed) {
+        return (indOffset >= 0) && (indOffset < totalMonthsDisplayed);
+    }
+}
+```
 ###### /java/seedu/address/ui/MainWindow.java
 ``` java
+    /**
+     * Instantiates and adds the statistics panel to the UI
+     */
+    private void switchToStatisticsPanel() {
+        logger.info("Switched to statistics panel");
+
+        statisticsPanel = new StatisticsPanel(logic.getAllPersonList());
+        browserOrStatisticsPlaceholder.getChildren().clear();
+        browserOrStatisticsPlaceholder.getChildren().add(statisticsPanel.getRoot());
+        statisticsPanelOpen = true;
+    }
+
+
     /**
      * Instantiates and adds the browser panel to the UI
      */
     private void switchToBrowserPanel() {
+        logger.info("Switched to browser panel");
+
         browserPanel = new BrowserPanel();
         browserOrStatisticsPlaceholder.getChildren().clear();
         browserOrStatisticsPlaceholder.getChildren().add(browserPanel.getRoot());
         statisticsPanelOpen = false;
     }
-
-    void hide() {
-        primaryStage.hide();
-    }
-
-    private void setTitle(String appTitle) {
-        primaryStage.setTitle(appTitle);
-    }
-
-    /**
-     * Sets the given image as the icon of the main window.
-     * @param iconSource e.g. {@code "/images/help_icon.png"}
-     */
-    private void setIcon(String iconSource) {
-        FxViewUtil.setStageIcon(primaryStage, iconSource);
-    }
-
-    /**
-     * Sets the default size based on user preferences.
-     */
-    private void setWindowDefaultSize(UserPrefs prefs) {
-        primaryStage.setHeight(prefs.getGuiSettings().getWindowHeight());
-        primaryStage.setWidth(prefs.getGuiSettings().getWindowWidth());
-        if (prefs.getGuiSettings().getWindowCoordinates() != null) {
-            primaryStage.setX(prefs.getGuiSettings().getWindowCoordinates().getX());
-            primaryStage.setY(prefs.getGuiSettings().getWindowCoordinates().getY());
-        }
-    }
-
-    private void setWindowMinSize() {
-        primaryStage.setMinHeight(MIN_HEIGHT);
-        primaryStage.setMinWidth(MIN_WIDTH);
-    }
-
-    /**
-     * Returns the current size and the position of the main Window.
-     */
-    GuiSettings getCurrentGuiSetting() {
-        return new GuiSettings(primaryStage.getWidth(), primaryStage.getHeight(),
-                (int) primaryStage.getX(), (int) primaryStage.getY());
-    }
-
-    /**
-     * Opens the help window.
-     */
-    @FXML
-    public void handleHelp() {
-        HelpWindow helpWindow = new HelpWindow();
-        helpWindow.show();
-    }
-
-    void show() {
-        primaryStage.show();
-    }
-
-    /**
-     * Closes the application.
-     */
-    @FXML
-    private void handleExit() {
-        raise(new ExitAppRequestEvent());
-    }
-
-    void releaseResources() {
-        browserPanel.freeResources();
-    }
-
-    @Subscribe
-    private void handleShowHelpEvent(ShowHelpRequestEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        handleHelp();
-    }
-
 ```
 ###### /java/seedu/address/ui/MainWindow.java
 ``` java
@@ -92,24 +232,46 @@
         switchToBrowserPanel();
     }
 
-```
-###### /java/seedu/address/ui/MainWindow.java
-``` java
     @Subscribe
     private void handleToggleStatisticsPanelEvent(ToggleStatisticsPanelEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         switchToStatisticsPanel();
     }
 
-```
-###### /java/seedu/address/ui/MainWindow.java
-``` java
     @Subscribe
     private void handleRefreshStatisticsPanelIfOpenEvent(RefreshStatisticsPanelIfOpenEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         if (statisticsPanelOpen) {
             switchToStatisticsPanel();
         }
+    }
+}
+```
+###### /java/seedu/address/ui/PeopleCount.java
+``` java
+/**
+ * A ui for the people count that is displayed at the header of the application.
+ */
+public class PeopleCount extends UiPart<Region> {
+
+    private static final String FXML = "PeopleCount.fxml";
+
+    @FXML
+    private StatusBar totalPersons;
+
+    public PeopleCount(int totalPersons) {
+        super(FXML);
+        setTotalPersons(totalPersons);
+        registerAsAnEventHandler(this);
+    }
+
+    private void setTotalPersons(int totalPersons) {
+        this.totalPersons.setText(Integer.toString(totalPersons));
+    }
+
+    @Subscribe
+    public void handleAddressBookChangedEvent(AddressBookChangedEvent abce) {
+        setTotalPersons(abce.data.getPersonList().size());
     }
 }
 ```
@@ -142,7 +304,7 @@
         personAddedChart.setBarGap(PERSON_ADDED_CHART_BAR_GAP);
 
         fbChart.setTitle(FACEBOOK_BREAKDOWN_CHART_TITLE);
-        fbChart.setData(formatTwitterData());
+        fbChart.setData(formatFacebookData());
         twChart.setTitle(TWITTER_BREAKDOWN_CHART_TITLE);
         twChart.setData(formatTwitterData());
         igChart.setTitle(INSTAGRAM_BREAKDOWN_CHART_TITLE);
@@ -254,139 +416,5 @@
         return Calendar.getInstance().get(Calendar.MONTH) + 1;
     }
 
-}
-```
-###### /java/seedu/address/model/Statistics.java
-``` java
-    public Statistics (ObservableList<ReadOnlyPerson> list, int currentMonth, int currentYear) {
-
-        this.currentYear = currentYear;
-        this.currentMonth = currentMonth;
-
-        this.personList = list;
-
-        tabulateTotalNumberOfPeople();
-        tabulateSocialMediaUsage();
-    }
-
-    public ArrayList<Integer> getNewPersonsAddByMonth(int displayYears) {
-
-        ArrayList<Integer> countByMonth = new ArrayList<>(Collections.nCopies(displayYears * 12 + 1, 0));
-
-        personList.forEach((p) -> {
-            Date givenDate = p.getCreatedAt();
-            ZonedDateTime given = givenDate.toInstant().atZone(ZoneId.of("UTC"));
-
-            int personAddedYear = Integer.parseInt(Year.from(given).toString());
-            int personAddedMonth = Month.from(given).getValue();
-
-            int indOffset = calculateCountByMonthOffset(personAddedMonth, personAddedYear);
-            if (indOffset >= 0 && indOffset <= displayYears * 12) {
-                countByMonth.set(indOffset, countByMonth.get(indOffset) + 1);
-            }
-        });
-
-        return countByMonth;
-    }
-
-    /**
-     * Count the offset when adding to the array list of sum by months
-     */
-    public int calculateCountByMonthOffset(int personAddedMonth, int personAddedYear) {
-        return (this.currentYear - personAddedYear) * 12
-                + (this.currentMonth - personAddedMonth);
-    }
-
-    /**
-     * Tabulate the total number of people in the list
-     */
-    public void tabulateTotalNumberOfPeople() {
-        this.totalNumberOfPeople = personList.size();
-    }
-
-    /**
-     * Tabulates number of users of each social media platform
-     */
-    public void tabulateSocialMediaUsage() {
-        for (ReadOnlyPerson aList : personList) {
-            SocialMedia current = aList.getSocialMedia();
-            if (current.facebook.isEmpty()) {
-                this.hasNoFacebook++;
-            }
-            if (current.twitter.isEmpty()) {
-                this.hasNoTwitter++;
-            }
-            if (current.instagram.isEmpty()) {
-                this.hasNoInstagram++;
-            }
-        }
-    }
-
-    /**
-     * Fetches n people with the highest access count
-     */
-    public List<ReadOnlyPerson> getAllTimeMostAccesses() {
-        ArrayList<ReadOnlyPerson> sortedByMostAccesses = new ArrayList<>(personList);
-        sortedByMostAccesses.sort(sortByGetAccessCount());
-
-        int startingIndex = this.totalNumberOfPeople - NUMBER_OF_PERSONS_IN_TOP_LIST;
-        int endingIndex = this.totalNumberOfPeople - 1;
-
-        return sortedByMostAccesses.subList(startingIndex, endingIndex);
-    }
-
-    /**
-     * Fetches n people with the lowest access count
-     */
-    public List<ReadOnlyPerson> getAllTimeLeastAccesses() {
-        ArrayList<ReadOnlyPerson> sortedByMostAccesses = new ArrayList<>(personList);
-        sortedByMostAccesses.sort(sortByGetAccessCount());
-
-        int startingIndex = 0;
-        int endingIndex = NUMBER_OF_PERSONS_IN_BOTTOM_LIST - 1;
-
-        return sortedByMostAccesses.subList(startingIndex, endingIndex);
-    }
-
-    /**
-     * Fetches number of persons with no facebook information added
-     */
-    public Integer getHasNoFacebook() {
-        return this.hasNoFacebook;
-    }
-
-    /**
-     * Fetches number of persons with no twitter information added
-     */
-    public Integer getHasNoTwitter() {
-        return this.hasNoTwitter;
-    }
-
-    /**
-     * Fetches number of persons with no instagram information added
-     */
-    public Integer getHasNoInstagram() {
-        return this.hasNoInstagram;
-    }
-
-    /**
-     * Fetches total number of persons
-     */
-    public Integer getTotalNumberOfPeople() {
-        return this.totalNumberOfPeople;
-    }
-
-    /**
-     * Sort by ReadOnlyPerson.getAccessCount()
-     * @return
-     */
-    private static Comparator<ReadOnlyPerson> sortByGetAccessCount() {
-        return new Comparator<ReadOnlyPerson>() {
-            @Override
-            public int compare(ReadOnlyPerson s1, ReadOnlyPerson s2) {
-                return s1.getAccessCount().numAccess() - s2.getAccessCount().numAccess();
-            }
-        };
-    }
 }
 ```

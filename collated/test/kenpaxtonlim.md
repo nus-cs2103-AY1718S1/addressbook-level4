@@ -1,139 +1,159 @@
 # kenpaxtonlim
-###### /java/systemtests/SocialMediaCommandSystemTest.java
+###### /java/seedu/address/logic/commands/AddRemoveTagsCommandTest.java
 ``` java
-public class SocialMediaCommandSystemTest extends AddressBookSystemTest {
+public class AddRemoveTagsCommandTest {
+
+    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+
     @Test
-    public void socialmedia() {
-        /* Case: show facebook of first person in list -> shown */
-        String command = SocialMediaCommand.COMMAND_WORD + " " + SocialMediaCommand.TYPE_FACEBOOK
-                + " " + INDEX_FIRST_PERSON.getOneBased();
-        assertCommandSuccess(command, INDEX_FIRST_PERSON, SocialMediaCommand.TYPE_FACEBOOK);
+    public void execute_addTags_success() throws Exception {
+        Person editedPerson = new PersonBuilder(
+                model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()))
+                .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND, "friends").build();
 
-        /* Case: show twitter of first person in list -> shown */
-        command = SocialMediaCommand.COMMAND_WORD + " " + SocialMediaCommand.TYPE_TWITTER
-                + " " + INDEX_FIRST_PERSON.getOneBased();
-        assertCommandSuccess(command, INDEX_FIRST_PERSON, SocialMediaCommand.TYPE_TWITTER);
+        ArrayList<String> tagsList = new ArrayList<>();
+        tagsList.add(VALID_TAG_HUSBAND);
+        tagsList.add(VALID_TAG_FRIEND);
 
-        /* Case: show instagram of first person in list -> shown */
-        command = SocialMediaCommand.COMMAND_WORD + " " + SocialMediaCommand.TYPE_INSTAGRAM
-                + " " + INDEX_FIRST_PERSON.getOneBased();
-        assertCommandSuccess(command, INDEX_FIRST_PERSON, SocialMediaCommand.TYPE_INSTAGRAM);
+        AddRemoveTagsCommand addTagsCommand = prepareCommandAdd(INDEX_FIRST_PERSON, ParserUtil.parseTags(tagsList));
 
-        /* Case: undo previous showing of social media -> rejected */
-        command = UndoCommand.COMMAND_WORD;
-        String expectedResultMessage = UndoCommand.MESSAGE_FAILURE;
-        assertCommandFailure(command, expectedResultMessage);
+        String expectedMessage = String.format(AddRemoveTagsCommand.MESSAGE_ADD_TAGS_SUCCESS,
+                editedPerson);
 
-        /* Case: redo showing instagram of first person in list -> rejected */
-        command = RedoCommand.COMMAND_WORD;
-        expectedResultMessage = RedoCommand.MESSAGE_FAILURE;
-        assertCommandFailure(command, expectedResultMessage);
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
+                new UserPrefs());
+        expectedModel.updatePerson(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()), editedPerson);
 
-        /* Case: invalid index (size + 1) -> rejected */
-        int invalidIndex = getModel().getFilteredPersonList().size() + 1;
-        command = SocialMediaCommand.COMMAND_WORD + " " + SocialMediaCommand.TYPE_INSTAGRAM + " " + invalidIndex;
-        assertCommandFailure(command, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandSuccess(addTagsCommand, model, expectedMessage, expectedModel);
+    }
 
-        /* Case: invalid social media type -> rejected */
-        command = SocialMediaCommand.COMMAND_WORD + " " + "abc" + " " + invalidIndex;
-        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, SocialMediaCommand.MESSAGE_USAGE));
+    @Test
+    public void execute_removeTags_success() throws Exception {
+        Person editedPerson = new PersonBuilder(
+                model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased())).withTags().build();
+
+        ArrayList<String> tagsList = new ArrayList<>();
+        tagsList.add("friends");
+
+        AddRemoveTagsCommand removeTagsCommand = prepareCommandRemove(INDEX_FIRST_PERSON,
+                ParserUtil.parseTags(tagsList));
+
+        String expectedMessage = String.format(AddRemoveTagsCommand.MESSAGE_REMOVE_TAGS_SUCCESS,
+                editedPerson);
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
+                new UserPrefs());
+        expectedModel.updatePerson(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()), editedPerson);
+
+        assertCommandSuccess(removeTagsCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_removeTags_failure() throws Exception {
+        Person editedPerson = new PersonBuilder(
+                model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased())).withTags().build();
+
+        ArrayList<String> tagsList = new ArrayList<>();
+        tagsList.add("friends");
+        tagsList.add("husband");
+
+        AddRemoveTagsCommand removeTagsCommand = prepareCommandRemove(INDEX_FIRST_PERSON,
+                ParserUtil.parseTags(tagsList));
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
+                new UserPrefs());
+        expectedModel.updatePerson(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()), editedPerson);
+
+        assertCommandFailure(removeTagsCommand, model,
+                AddRemoveTagsCommand.makeTagDontExistMessage("husband"));
+    }
+
+    @Test
+    public void execute_invalidPersonIndexUnfilteredList_failure() throws Exception {
+        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
+        ArrayList<String> tagsList = new ArrayList<>();
+        tagsList.add(VALID_TAG_HUSBAND);
+        tagsList.add(VALID_TAG_FRIEND);
+        AddRemoveTagsCommand addRemoveTagsCommand = prepareCommandAdd(outOfBoundIndex, ParserUtil.parseTags(tagsList));
+
+        assertCommandFailure(addRemoveTagsCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
     /**
-     * Executes {@code command} and verifies that the command box displays an empty string, the result display
-     * box displays the success message of executing select command with the {@code expectedSelectedCardIndex}
-     * of the selected person, and the model related components equal to the current model.
-     * These verifications are done by
-     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
-     * Also verifies that the command box has the default style class remains unchanged. The resulting
-     * browser url and selected card will be verified if the current selected card and the card at
-     * {@code expectedSelectedCardIndex} are different.
-     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
-     * @see AddressBookSystemTest#assertSelectedCardChanged(Index)
+     * Edit filtered list where index is larger than size of filtered list,
+     * but smaller than size of address book
      */
-    private void assertCommandSuccess(String command, Index index, String type) {
-        Model expectedModel = getModel();
-        String expectedResultMessage = SocialMediaCommand.MESSAGE_SUCCESS;
+    @Test
+    public void execute_invalidPersonIndexFilteredList_failure() throws Exception {
+        showFirstPersonOnly(model);
+        Index outOfBoundIndex = INDEX_SECOND_PERSON;
+        // ensures that outOfBoundIndex is still in bounds of address book list
+        assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
 
-        executeCommand(command);
-        assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
+        ArrayList<String> tagsList = new ArrayList<>();
+        tagsList.add(VALID_TAG_HUSBAND);
+        tagsList.add(VALID_TAG_FRIEND);
+        AddRemoveTagsCommand addRemoveTagsCommand = prepareCommandAdd(outOfBoundIndex, ParserUtil.parseTags(tagsList));
 
-        String url = "";
-        switch (type) {
-        case SocialMediaCommand.TYPE_FACEBOOK:
-            url = SocialMediaCommand.URL_FACEBOOK
-                    + expectedModel.getFilteredPersonList().get(index.getZeroBased()).getSocialMedia().facebook;
-            break;
-        case SocialMediaCommand.TYPE_TWITTER:
-            url = SocialMediaCommand.URL_TWITTER
-                    + expectedModel.getFilteredPersonList().get(index.getZeroBased()).getSocialMedia().twitter;
-            break;
-        case SocialMediaCommand.TYPE_INSTAGRAM:
-            url = SocialMediaCommand.URL_INSTAGRAM
-                    + expectedModel.getFilteredPersonList().get(index.getZeroBased()).getSocialMedia().instagram;
-            break;
-        default:
-            throw new AssertionError();
-        }
+        assertCommandFailure(addRemoveTagsCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
 
-        assertCommandBoxShowsDefaultStyle();
+    @Test
+    public void equals() throws Exception {
+        ArrayList<String> tagsList = new ArrayList<>();
+        tagsList.add(VALID_TAG_HUSBAND);
+        tagsList.add(VALID_TAG_FRIEND);
+        Set<Tag> tags = ParserUtil.parseTags(tagsList);
+        final AddRemoveTagsCommand standardCommand = new AddRemoveTagsCommand(true, INDEX_FIRST_PERSON, tags);
+
+        // Returns true with itself
+        assertTrue(standardCommand.equals(standardCommand));
+
+        // Returns true with same values
+        AddRemoveTagsCommand commandWithSameValues = new AddRemoveTagsCommand(true, INDEX_FIRST_PERSON, tags);
+        assertTrue(standardCommand.equals(commandWithSameValues));
+
+        // Return false with different type
+        AddRemoveTagsCommand commandWithDifferentType = new AddRemoveTagsCommand(false, INDEX_FIRST_PERSON, tags);
+        assertFalse(standardCommand.equals(commandWithDifferentType));
+
+        // Returns false with null
+        assertFalse(standardCommand.equals(null));
+
+        // Returns false with different command types
+        assertFalse(standardCommand.equals(new ClearCommand()));
+
+        // Returns false with different indexes
+        AddRemoveTagsCommand commandWithDifferentIndex = new AddRemoveTagsCommand(true, INDEX_SECOND_PERSON,
+                ParserUtil.parseTags(tagsList));
+        assertFalse(standardCommand.equals(commandWithDifferentIndex));
+
+        // Returns false with different tags
+        ArrayList<String> differentTagsList = new ArrayList<>();
+        tagsList.add(VALID_TAG_HUSBAND);
+        AddRemoveTagsCommand commandWithDifferentTags = new AddRemoveTagsCommand(true, INDEX_FIRST_PERSON,
+                ParserUtil.parseTags(differentTagsList));
+        assertFalse(standardCommand.equals(commandWithDifferentTags));
     }
 
     /**
-     * Executes {@code command} and verifies that the command box displays {@code command}, the result display
-     * box displays {@code expectedResultMessage} and the model related components equal to the current model.
-     * These verifications are done by
-     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
-     * Also verifies that the browser url remains unchanged, and the command box has the
-     * error style.
-     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     * Returns an add {@code AddRemoveTagsCommand} with parameters {@code index} and {@code tags}.
      */
-    private void assertCommandFailure(String command, String expectedResultMessage) {
-        Model expectedModel = getModel();
+    private AddRemoveTagsCommand prepareCommandAdd(Index index, Set<Tag> tags) {
+        AddRemoveTagsCommand addRemoveTagsCommand = new AddRemoveTagsCommand(true, index, tags);
+        addRemoveTagsCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return addRemoveTagsCommand;
+    }
 
-        executeCommand(command);
-        assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
-        assertCommandBoxShowsErrorStyle();
+    /**
+     * Returns a remove {@code AddRemoveTagsCommand} with parameters {@code index} and {@code tags}.
+     */
+    private AddRemoveTagsCommand prepareCommandRemove(Index index, Set<Tag> tags) {
+        AddRemoveTagsCommand addRemoveTagsCommand = new AddRemoveTagsCommand(false, index, tags);
+        addRemoveTagsCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return addRemoveTagsCommand;
     }
 }
-```
-###### /java/seedu/address/testutil/PersonBuilder.java
-``` java
-    /**
-     * Sets the {@code SocialMedia} of the {@code Person} that we are building.
-     */
-    public PersonBuilder withSocialMedia(String facebook, String twitter, String instagram) {
-        try {
-            this.person.setSocialMedia(new SocialMedia(facebook, twitter, instagram));
-        } catch (IllegalValueException e) {
-            throw new IllegalArgumentException("usernames is expected to be unique.");
-        }
-        return this;
-    }
-```
-###### /java/seedu/address/testutil/EditPersonDescriptorBuilder.java
-``` java
-    /**
-     * Sets the {@code SocialMedia} of the {@code EditPersonDescriptor} that we are building.
-     */
-    public EditPersonDescriptorBuilder withSocialMedia(String facebook, String twitter, String instagram) {
-        try {
-            descriptor.setSocialMedia(ParserUtil.parseSocialMedia(
-                    Optional.of(facebook), Optional.of(twitter), Optional.of(instagram)));
-        } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("social media usernames is expected to be unique.");
-        }
-        return this;
-    }
-```
-###### /java/seedu/address/testutil/PersonUtil.java
-``` java
-    /**
-     * Returns an add command string using alias for adding the {@code person}.
-     */
-    public static String getAddCommandAlias(ReadOnlyPerson person) {
-        return AddCommand.COMMAND_ALIAS + " " + getPersonDetails(person);
-    }
 ```
 ###### /java/seedu/address/logic/commands/QuickHelpCommandTest.java
 ``` java
@@ -304,139 +324,36 @@ public class SocialMediaCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/AddRemoveTagsCommandTest.java
+###### /java/seedu/address/logic/parser/AddRemoveTagsCommandParserTest.java
 ``` java
-public class AddRemoveTagsCommandTest {
-
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-
-    @Test
-    public void execute_addTags_success() throws Exception {
-        Person editedPerson = new PersonBuilder(
-                model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()))
-                .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND, "friends").build();
-
-        ArrayList<String> tagsList = new ArrayList<>();
-        tagsList.add(VALID_TAG_HUSBAND);
-        tagsList.add(VALID_TAG_FRIEND);
-
-        AddRemoveTagsCommand addTagsCommand = prepareCommandAdd(INDEX_FIRST_PERSON, ParserUtil.parseTags(tagsList));
-
-        String expectedMessage = String.format(AddRemoveTagsCommand.MESSAGE_ADD_TAGS_SUCCESS,
-                editedPerson);
-
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
-                new UserPrefs());
-        expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
-
-        assertCommandSuccess(addTagsCommand, model, expectedMessage, expectedModel);
-    }
+public class AddRemoveTagsCommandParserTest {
+    private AddRemoveTagsCommandParser parser = new AddRemoveTagsCommandParser();
 
     @Test
-    public void execute_removeTags_success() throws Exception {
-        Person editedPerson = new PersonBuilder(
-                model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased())).withTags().build();
-
-        ArrayList<String> tagsList = new ArrayList<>();
-        tagsList.add("friends");
-
-        AddRemoveTagsCommand removeTagsCommand = prepareCommandRemove(INDEX_FIRST_PERSON,
-                ParserUtil.parseTags(tagsList));
-
-        String expectedMessage = String.format(AddRemoveTagsCommand.MESSAGE_REMOVE_TAGS_SUCCESS,
-                editedPerson);
-
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
-                new UserPrefs());
-        expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
-
-        assertCommandSuccess(removeTagsCommand, model, expectedMessage, expectedModel);
-    }
-
-    @Test
-    public void execute_invalidPersonIndexUnfilteredList_failure() throws Exception {
-        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
-        ArrayList<String> tagsList = new ArrayList<>();
-        tagsList.add(VALID_TAG_HUSBAND);
-        tagsList.add(VALID_TAG_FRIEND);
-        AddRemoveTagsCommand addRemoveTagsCommand = prepareCommandAdd(outOfBoundIndex, ParserUtil.parseTags(tagsList));
-
-        assertCommandFailure(addRemoveTagsCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-    }
-
-    /**
-     * Edit filtered list where index is larger than size of filtered list,
-     * but smaller than size of address book
-     */
-    @Test
-    public void execute_invalidPersonIndexFilteredList_failure() throws Exception {
-        showFirstPersonOnly(model);
-        Index outOfBoundIndex = INDEX_SECOND_PERSON;
-        // ensures that outOfBoundIndex is still in bounds of address book list
-        assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
-
-        ArrayList<String> tagsList = new ArrayList<>();
-        tagsList.add(VALID_TAG_HUSBAND);
-        tagsList.add(VALID_TAG_FRIEND);
-        AddRemoveTagsCommand addRemoveTagsCommand = prepareCommandAdd(outOfBoundIndex, ParserUtil.parseTags(tagsList));
-
-        assertCommandFailure(addRemoveTagsCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-    }
-
-    @Test
-    public void equals() throws Exception {
+    public void parse_argsSpecified_success() throws Exception {
         ArrayList<String> tagsList = new ArrayList<>();
         tagsList.add(VALID_TAG_HUSBAND);
         tagsList.add(VALID_TAG_FRIEND);
         Set<Tag> tags = ParserUtil.parseTags(tagsList);
-        final AddRemoveTagsCommand standardCommand = new AddRemoveTagsCommand(true, INDEX_FIRST_PERSON, tags);
 
-        // Returns true with itself
-        assertTrue(standardCommand.equals(standardCommand));
+        String userInputAdd = " add " + INDEX_FIRST_PERSON.getOneBased() + " " + VALID_TAG_HUSBAND
+                + " " + VALID_TAG_FRIEND;
+        AddRemoveTagsCommand expectedCommandAdd = new AddRemoveTagsCommand(true, INDEX_FIRST_PERSON, tags);
 
-        // Returns true with same values
-        AddRemoveTagsCommand commandWithSameValues = new AddRemoveTagsCommand(true, INDEX_FIRST_PERSON, tags);
-        assertTrue(standardCommand.equals(commandWithSameValues));
+        assertParseSuccess(parser, userInputAdd, expectedCommandAdd);
 
-        // Return false with different type
-        AddRemoveTagsCommand commandWithDifferentType = new AddRemoveTagsCommand(false, INDEX_FIRST_PERSON, tags);
-        assertFalse(standardCommand.equals(commandWithDifferentType));
+        String userInputRemove = " remove " + INDEX_FIRST_PERSON.getOneBased() + " " + VALID_TAG_HUSBAND
+                + " " + VALID_TAG_FRIEND;
+        AddRemoveTagsCommand expectedCommandRemove = new AddRemoveTagsCommand(false, INDEX_FIRST_PERSON, tags);
 
-        // Returns false with null
-        assertFalse(standardCommand.equals(null));
-
-        // Returns false with different command types
-        assertFalse(standardCommand.equals(new ClearCommand()));
-
-        // Returns false with different indexes
-        AddRemoveTagsCommand commandWithDifferentIndex = new AddRemoveTagsCommand(true, INDEX_SECOND_PERSON,
-                ParserUtil.parseTags(tagsList));
-        assertFalse(standardCommand.equals(commandWithDifferentIndex));
-
-        // Returns false with different tags
-        ArrayList<String> differentTagsList = new ArrayList<>();
-        tagsList.add(VALID_TAG_HUSBAND);
-        AddRemoveTagsCommand commandWithDifferentTags = new AddRemoveTagsCommand(true, INDEX_FIRST_PERSON,
-                ParserUtil.parseTags(differentTagsList));
-        assertFalse(standardCommand.equals(commandWithDifferentTags));
+        assertParseSuccess(parser, userInputRemove, expectedCommandRemove);
     }
 
-    /**
-     * Returns an add {@code AddRemoveTagsCommand} with parameters {@code index} and {@code tags}.
-     */
-    private AddRemoveTagsCommand prepareCommandAdd(Index index, Set<Tag> tags) {
-        AddRemoveTagsCommand addRemoveTagsCommand = new AddRemoveTagsCommand(true, index, tags);
-        addRemoveTagsCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-        return addRemoveTagsCommand;
-    }
+    @Test
+    public void parse_noFieldSpecified_failure() throws Exception {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddRemoveTagsCommand.MESSAGE_USAGE);
 
-    /**
-     * Returns a remove {@code AddRemoveTagsCommand} with parameters {@code index} and {@code tags}.
-     */
-    private AddRemoveTagsCommand prepareCommandRemove(Index index, Set<Tag> tags) {
-        AddRemoveTagsCommand addRemoveTagsCommand = new AddRemoveTagsCommand(false, index, tags);
-        addRemoveTagsCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-        return addRemoveTagsCommand;
+        assertParseFailure(parser, AddRemoveTagsCommand.COMMAND_WORD, expectedMessage);
     }
 }
 ```
@@ -617,39 +534,6 @@ public class AddRemoveTagsCommandTest {
         assertEquals(new QuickHelpCommand(), command);
     }
 ```
-###### /java/seedu/address/logic/parser/AddRemoveTagsCommandParserTest.java
-``` java
-public class AddRemoveTagsCommandParserTest {
-    private AddRemoveTagsCommandParser parser = new AddRemoveTagsCommandParser();
-
-    @Test
-    public void parse_argsSpecified_success() throws Exception {
-        ArrayList<String> tagsList = new ArrayList<>();
-        tagsList.add(VALID_TAG_HUSBAND);
-        tagsList.add(VALID_TAG_FRIEND);
-        Set<Tag> tags = ParserUtil.parseTags(tagsList);
-
-        String userInputAdd = " add " + INDEX_FIRST_PERSON.getOneBased() + " " + VALID_TAG_HUSBAND
-                + " " + VALID_TAG_FRIEND;
-        AddRemoveTagsCommand expectedCommandAdd = new AddRemoveTagsCommand(true, INDEX_FIRST_PERSON, tags);
-
-        assertParseSuccess(parser, userInputAdd, expectedCommandAdd);
-
-        String userInputRemove = " remove " + INDEX_FIRST_PERSON.getOneBased() + " " + VALID_TAG_HUSBAND
-                + " " + VALID_TAG_FRIEND;
-        AddRemoveTagsCommand expectedCommandRemove = new AddRemoveTagsCommand(false, INDEX_FIRST_PERSON, tags);
-
-        assertParseSuccess(parser, userInputRemove, expectedCommandRemove);
-    }
-
-    @Test
-    public void parse_noFieldSpecified_failure() throws Exception {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddRemoveTagsCommand.MESSAGE_USAGE);
-
-        assertParseFailure(parser, AddRemoveTagsCommand.COMMAND_WORD, expectedMessage);
-    }
-}
-```
 ###### /java/seedu/address/logic/parser/SocialMediaCommandParserTest.java
 ``` java
 public class SocialMediaCommandParserTest {
@@ -697,6 +581,134 @@ public class SocialMediaCommandParserTest {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, SocialMediaCommand.MESSAGE_USAGE);
 
         assertParseFailure(parser, userInput, expectedMessage);
+    }
+}
+```
+###### /java/seedu/address/testutil/EditPersonDescriptorBuilder.java
+``` java
+    /**
+     * Sets the {@code SocialMedia} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withSocialMedia(String facebook, String twitter, String instagram) {
+        descriptor.setSocialMedia(ParserUtil.parseSocialMedia(
+                Optional.of(facebook), Optional.of(twitter), Optional.of(instagram), true));
+        return this;
+    }
+```
+###### /java/seedu/address/testutil/PersonBuilder.java
+``` java
+    /**
+     * Sets the {@code SocialMedia} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withSocialMedia(String facebook, String twitter, String instagram) {
+        this.person.setSocialMedia(new SocialMedia(facebook, twitter, instagram));
+        return this;
+    }
+```
+###### /java/seedu/address/testutil/PersonUtil.java
+``` java
+    /**
+     * Returns an add command string using alias for adding the {@code person}.
+     */
+    public static String getAddCommandAlias(ReadOnlyPerson person) {
+        return AddCommand.COMMAND_ALIAS + " " + getPersonDetails(person);
+    }
+```
+###### /java/systemtests/SocialMediaCommandSystemTest.java
+``` java
+public class SocialMediaCommandSystemTest extends AddressBookSystemTest {
+    @Test
+    public void socialmedia() {
+        /* Case: show facebook of first person in list -> shown */
+        String command = SocialMediaCommand.COMMAND_WORD + " " + SocialMediaCommand.TYPE_FACEBOOK
+                + " " + INDEX_FIRST_PERSON.getOneBased();
+        assertCommandSuccess(command, INDEX_FIRST_PERSON, SocialMediaCommand.TYPE_FACEBOOK);
+
+        /* Case: show twitter of first person in list -> shown */
+        command = SocialMediaCommand.COMMAND_WORD + " " + SocialMediaCommand.TYPE_TWITTER
+                + " " + INDEX_FIRST_PERSON.getOneBased();
+        assertCommandSuccess(command, INDEX_FIRST_PERSON, SocialMediaCommand.TYPE_TWITTER);
+
+        /* Case: show instagram of first person in list -> shown */
+        command = SocialMediaCommand.COMMAND_WORD + " " + SocialMediaCommand.TYPE_INSTAGRAM
+                + " " + INDEX_FIRST_PERSON.getOneBased();
+        assertCommandSuccess(command, INDEX_FIRST_PERSON, SocialMediaCommand.TYPE_INSTAGRAM);
+
+        /* Case: undo previous showing of social media -> rejected */
+        command = UndoCommand.COMMAND_WORD;
+        String expectedResultMessage = UndoCommand.MESSAGE_FAILURE;
+        assertCommandFailure(command, expectedResultMessage);
+
+        /* Case: redo showing instagram of first person in list -> rejected */
+        command = RedoCommand.COMMAND_WORD;
+        expectedResultMessage = RedoCommand.MESSAGE_FAILURE;
+        assertCommandFailure(command, expectedResultMessage);
+
+        /* Case: invalid index (size + 1) -> rejected */
+        int invalidIndex = getModel().getFilteredPersonList().size() + 1;
+        command = SocialMediaCommand.COMMAND_WORD + " " + SocialMediaCommand.TYPE_INSTAGRAM + " " + invalidIndex;
+        assertCommandFailure(command, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+
+        /* Case: invalid social media type -> rejected */
+        command = SocialMediaCommand.COMMAND_WORD + " " + "abc" + " " + invalidIndex;
+        assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, SocialMediaCommand.MESSAGE_USAGE));
+    }
+
+    /**
+     * Executes {@code command} and verifies that the command box displays an empty string, the result display
+     * box displays the success message of executing select command with the {@code expectedSelectedCardIndex}
+     * of the selected person, and the model related components equal to the current model.
+     * These verifications are done by
+     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * Also verifies that the command box has the default style class remains unchanged. The resulting
+     * browser url and selected card will be verified if the current selected card and the card at
+     * {@code expectedSelectedCardIndex} are different.
+     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     * @see AddressBookSystemTest#assertSelectedCardChanged(Index)
+     */
+    private void assertCommandSuccess(String command, Index index, String type) {
+        Model expectedModel = getModel();
+        String expectedResultMessage = SocialMediaCommand.MESSAGE_SUCCESS;
+
+        executeCommand(command);
+        assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
+
+        String url = "";
+        switch (type) {
+        case SocialMediaCommand.TYPE_FACEBOOK:
+            url = SocialMediaCommand.URL_FACEBOOK
+                    + expectedModel.getFilteredPersonList().get(index.getZeroBased()).getSocialMedia().facebook;
+            break;
+        case SocialMediaCommand.TYPE_TWITTER:
+            url = SocialMediaCommand.URL_TWITTER
+                    + expectedModel.getFilteredPersonList().get(index.getZeroBased()).getSocialMedia().twitter;
+            break;
+        case SocialMediaCommand.TYPE_INSTAGRAM:
+            url = SocialMediaCommand.URL_INSTAGRAM
+                    + expectedModel.getFilteredPersonList().get(index.getZeroBased()).getSocialMedia().instagram;
+            break;
+        default:
+            throw new AssertionError();
+        }
+
+        assertCommandBoxShowsDefaultStyle();
+    }
+
+    /**
+     * Executes {@code command} and verifies that the command box displays {@code command}, the result display
+     * box displays {@code expectedResultMessage} and the model related components equal to the current model.
+     * These verifications are done by
+     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * Also verifies that the browser url remains unchanged, and the command box has the
+     * error style.
+     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     */
+    private void assertCommandFailure(String command, String expectedResultMessage) {
+        Model expectedModel = getModel();
+
+        executeCommand(command);
+        //assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
+        assertCommandBoxShowsErrorStyle();
     }
 }
 ```

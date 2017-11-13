@@ -40,10 +40,23 @@ include::../DeveloperGuide.adoc[tag=remark]
 
 ---
 
-=== Enhancement Proposed: []
+=== Enhancement Proposed (for v2.0)
 
-{}
+1) Viewing statistics based on start and end date +
+A socialite might want to scrutinise and breakdown his/her activities more granularly, and thus with a date picker for the start and end date, a socalite will be able to find out precise information about certain periods in his/her life.
+
+2) Birthday +
+It is important for a socialite to be able to plan his/her schedule based on their birthdays. As such, a feature to add and view a monthly breakdown of people with their birthdays in a certain month will be highly relevant to a socalite.
+
 
 === Other contributions
 
 * Added total number of people and total recently added people to status bar (Pull requests https://github.com[#2], https://github.com[#75])
+
+* Help identify bugs in other projects: +
+https://github.com/CS2103AUG2017-W15-B3/main/issues/97 +
+https://github.com/CS2103AUG2017-W15-B3/main/issues/127 +
+https://github.com/CS2103AUG2017-W15-B3/main/issues/128
+
+* Submitted a pull request which was merged into the course repository: +
+https://github.com/se-edu/addressbook-level2/pull/209

@@ -161,6 +161,8 @@ public class MainWindow extends UiPart<Region> {
      * Instantiates and adds the statistics panel to the UI
      */
     private void switchToStatisticsPanel() {
+        logger.info("Switched to statistics panel");
+
         statisticsPanel = new StatisticsPanel(logic.getAllPersonList());
         browserOrStatisticsPlaceholder.getChildren().clear();
         browserOrStatisticsPlaceholder.getChildren().add(statisticsPanel.getRoot());
@@ -172,6 +174,8 @@ public class MainWindow extends UiPart<Region> {
      * Instantiates and adds the browser panel to the UI
      */
     private void switchToBrowserPanel() {
+        logger.info("Switched to browser panel");
+
         browserPanel = new BrowserPanel();
         browserOrStatisticsPlaceholder.getChildren().clear();
         browserOrStatisticsPlaceholder.getChildren().add(browserPanel.getRoot());
