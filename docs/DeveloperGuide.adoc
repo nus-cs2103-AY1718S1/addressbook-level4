@@ -1211,6 +1211,8 @@ Use case ends.
 
 {More to be added}
 
+// end::shaocong1[]
+
 [appendix]
 == Glossary
 
@@ -1227,7 +1229,9 @@ Private contact detail
 ....
 A contact detail that is not meant to be shared with others
 ....
-./gradlew clean
+
+// tag::shaocong2[]
+
 [[Invalid-action]]
 Invalid-action
 
@@ -1266,4 +1270,4 @@ Cons:
 * Not command line software, so not very friendly for developers and command line lovers
 * Unable to work offline and often clash with not so stable Internet connections
 
-// end::shaocong1[]
+// end::shaocong2[]

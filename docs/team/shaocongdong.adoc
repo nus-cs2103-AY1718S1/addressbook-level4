@@ -47,6 +47,7 @@ include::../UserGuide.adoc[tag=shaocong4]
 
 include::../DeveloperGuide.adoc[tag=taskbook]
 include::../DeveloperGuide.adoc[tag=shaocong1]
+include::../DeveloperGuide.adoc[tag=shaocong2]
 
 #End of Extract#
 
