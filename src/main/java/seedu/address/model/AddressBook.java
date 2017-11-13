@@ -115,6 +115,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         } catch (EventTimeClashException e) {
             assert false : "AddressBooks should not have time-clashing events";
         }
+        logger.info("EVENT SIZE AT UNDO" + newData.getEventList().size());
         //@@author
 
         setTags(new HashSet<>(newData.getTagList()));

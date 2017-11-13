@@ -19,7 +19,7 @@
             <Font size="28.0" />
          </font>
       </Label>
-      <ImageView fx:id="photo" fitHeight="100" layoutX="725.0" layoutY="14.0" preserveRatio="true" AnchorPane.rightAnchor="25.0">
+      <ImageView fx:id="photo" fitHeight="100" layoutX="725.0" layoutY="14.0" preserveRatio="true">
       </ImageView>
       <!--<Button fx:id="photoSelectionButton" layoutX="438" layoutY="125"-->
               <!--prefWidth="80" prefHeight="25" text="import..."-->
@@ -36,7 +36,7 @@
          </font>
       </Label>
       <FlowPane id="tags" fx:id="tagsPane" layoutX="14.0" layoutY="119.0" prefHeight="40.0" prefWidth="200.0" />
-      <Label layoutX="579.0" layoutY="170.0" prefHeight="21.0" prefWidth="49.0" text="Email: " AnchorPane.leftAnchor="600.0">
+      <Label fx:id="emailName" layoutX="579.0" layoutY="170.0" prefHeight="21.0" prefWidth="49.0" text="Email: ">
          <font>
             <Font size="14.0" />
          </font>
@@ -46,7 +46,7 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="emailLabel" layoutX="428.0" layoutY="170.0" AnchorPane.leftAnchor="645.0">
+      <Label fx:id="emailLabel" layoutX="428.0" layoutY="170.0">
          <font>
             <Font size="14.0" />
          </font>
@@ -76,12 +76,12 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <Label layoutX="383.0" layoutY="200.0" text="Status: " AnchorPane.leftAnchor="600.0">
+      <Label fx:id="statusName" layoutX="383.0" layoutY="200.0" text="Status: ">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="statusLabel" layoutX="432.0" layoutY="200.0" AnchorPane.leftAnchor="650.0">
+      <Label fx:id="statusLabel" layoutX="432.0" layoutY="200.0">
          <font>
             <Font size="14.0" />
          </font>
@@ -109,8 +109,8 @@
          </ScrollPane>
       <!-- @@author -->
       <ImageView fx:id="imageView" fitHeight="200.0" fitWidth="150.0" layoutX="636.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true" />
-      <Line endX="720.0" layoutX="115.0" layoutY="285.0" startX="-100.0" stroke="#d0d0d0" />
-         <Button fx:id="photoSelectionButton" alignment="CENTER" minHeight="25" prefHeight="25" prefWidth="100" styleClass="importButton" text="import photo" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="130.0">
+      <Line fx:id="line" endX="720.0" layoutX="115.0" layoutY="285.0" startX="-100.0" stroke="#d0d0d0" />
+         <Button fx:id="photoSelectionButton" alignment="CENTER" minHeight="25" prefHeight="25" prefWidth="100" styleClass="importButton" text="import photo">
 
       </Button>
    </children>
