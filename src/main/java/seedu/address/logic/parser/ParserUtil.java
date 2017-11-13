@@ -176,8 +176,7 @@ public class ParserUtil {
                 throw new IllegalValueException(Photo.MESSAGE_PHOTO_CONSTRAINTS);
             } else {
                 try {
-                    destFilePath = "src" + s + "main" + s + "resources" + s
-                            + "images" + s + fileName;
+                    destFilePath = "data" + s + fileName;
                     File originalFile = new File(originalFilePath);
                     File destFile = new File(destFilePath);
 

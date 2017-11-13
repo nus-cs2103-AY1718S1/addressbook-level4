@@ -32,8 +32,7 @@ public class AddEventCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John's 21st Birthday "
             + PREFIX_TIMESLOT + "22/10/2017 1900-2200 "
-            + PREFIX_DESCRIPTION + "johnd@example.com "
-            + PREFIX_PERIOD + "14";
+            + PREFIX_DESCRIPTION + "johnd@example.com ";
 
     public static final String MESSAGE_SUCCESS = "New event added: %1$s";
     public static final String MESSAGE_TIME_CLASH = "This event has time clash with an existing event";
