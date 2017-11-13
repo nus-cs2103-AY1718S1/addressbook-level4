@@ -24,6 +24,8 @@ public class MapsPanel extends UiPart<Region> {
     public static final String MAPS_DIR_URL_PREFIX = "https://www.google.com/maps/dir/?api=1";
     public static final String MAPS_DEFAULT_ORIGIN = "&origin=My+Location";
     public static final String MAPS_DEST_PREFIX = "&destination=";
+    public static final String MAPS_SEARCH_ORIGIN = "&query=My+Location";
+    public static final String MAPS_SEARCH_URL_PREFIX = "https://www.google.com/maps/search/?api=1";
     public static final String MAPS_SEARCH_URL_SUFFIX = "&dg=dbrw&newdg=1";
 
     private static final String FXML = "MapsPanel.fxml";
@@ -57,8 +59,7 @@ public class MapsPanel extends UiPart<Region> {
      * Loads a default HTML file with a background that matches the general theme.
      */
     private void loadDefaultPage() {
-        URL defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
-        loadPage(defaultPage.toExternalForm());
+        loadPage(MAPS_SEARCH_URL_PREFIX + MAPS_SEARCH_ORIGIN);
     }
 
     /**
