@@ -3,6 +3,7 @@ package seedu.address.logic;
 import static junit.framework.TestCase.assertEquals;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_OVERDUE_PERSONS;
+import static seedu.address.model.util.DateUtil.formatDate;
 import static seedu.address.testutil.TypicalPersons.getSizeOfTypicalOverdueListPersons;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
@@ -18,10 +19,15 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.OverdueListCommand;
+import seedu.address.logic.commands.PaybackCommand;
+import seedu.address.logic.commands.RepaidCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.DateRepaid;
+import seedu.address.model.person.Deadline;
+import seedu.address.model.person.Debt;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
@@ -96,6 +102,68 @@ public class OverdueListSyncTest {
                 model.updateFilteredOverduePersonList(PREDICATE_SHOW_ALL_OVERDUE_PERSONS));
     }
 
+    @Test
+    public void execute_repaidCommandOnMasterListRemovesPersonFromOverdueList_success() throws Exception {
+        int numberOfOverduePersons = getSizeOfTypicalOverdueListPersons();
+        assertEquals(numberOfOverduePersons, model
+                .updateFilteredOverduePersonList(PREDICATE_SHOW_ALL_OVERDUE_PERSONS));
+
+        Person personInOverdueList = (Person) model.getFilteredOverduePersonList().get(0);
+        Index index = Index.fromZeroBased(model.getFilteredPersonList().indexOf(personInOverdueList));
+
+        Person expectedPerson = new PersonBuilder(personInOverdueList).withDebt("0.00")
+                .withDeadline(Deadline.NO_DEADLINE_SET).build();
+        expectedPerson.setDateRepaid(new DateRepaid(formatDate(new Date())));
+        expectedPerson.setHasOverdueDebt(false);
+        expectedPerson.setIsWhitelisted(true);
+
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.updatePerson(personInOverdueList, expectedPerson);
+        expectedModel.setCurrentListName("overduelist");
+
+        RepaidCommand repaidCommand = prepareRepaidCommand(index);
+        repaidCommand.execute();
+        model.getFilteredOverduePersonList();
+
+        OverdueListCommand overdueListCommand = prepareOverdueListCommand();
+        model.setCurrentListName("overduelist");
+
+        assertCommandSuccess(overdueListCommand, model, expectedMessage, expectedModel);
+        assertEquals(numberOfOverduePersons - 1,
+                model.updateFilteredOverduePersonList(PREDICATE_SHOW_ALL_OVERDUE_PERSONS));
+    }
+
+    @Test
+    public void execute_paybackCommandOnMasterListRemovesPersonFromOverdueList_success() throws Exception {
+        int numberOfOverduePersons = getSizeOfTypicalOverdueListPersons();
+        assertEquals(numberOfOverduePersons, model
+                .updateFilteredOverduePersonList(PREDICATE_SHOW_ALL_OVERDUE_PERSONS));
+
+        Person personInOverdueList = (Person) model.getFilteredOverduePersonList().get(0);
+        Index index = Index.fromZeroBased(model.getFilteredPersonList().indexOf(personInOverdueList));
+
+        Person expectedPerson = new PersonBuilder(personInOverdueList).withDebt("0.00")
+                .withDeadline(Deadline.NO_DEADLINE_SET).build();
+        expectedPerson.setDateRepaid(new DateRepaid(formatDate(new Date())));
+        expectedPerson.setHasOverdueDebt(false);
+        expectedPerson.setIsWhitelisted(true);
+
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.updatePerson(personInOverdueList, expectedPerson);
+        expectedModel.setCurrentListName("overduelist");
+
+        PaybackCommand paybackCommand = preparePaybackCommand(index, personInOverdueList.getDebt());
+        paybackCommand.execute();
+        model.getFilteredOverduePersonList();
+
+        OverdueListCommand overdueListCommand = prepareOverdueListCommand();
+        model.setCurrentListName("overduelist");
+
+        assertCommandSuccess(overdueListCommand, model, expectedMessage, expectedModel);
+        assertEquals(numberOfOverduePersons - 1,
+                model.updateFilteredOverduePersonList(PREDICATE_SHOW_ALL_OVERDUE_PERSONS));
+    }
+
     /**
      * @return {@code DeleteCommand} with the parameter {@code index}.
      */
@@ -122,6 +190,24 @@ public class OverdueListSyncTest {
         EditCommand editCommand = new EditCommand(index, descriptor);
         editCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return editCommand;
+    }
+
+    /**
+     * Returns a {@code PaybackCommand} with the parameter {@code index} & {@code amount}.
+     */
+    private PaybackCommand preparePaybackCommand(Index index, Debt amount) throws CommandException {
+        PaybackCommand paybackCommand = new PaybackCommand(index, amount);
+        paybackCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return paybackCommand;
+    }
+
+    /**
+     * Returns a {@code RepaidCommand} with the parameter {@code index}.
+     */
+    private RepaidCommand prepareRepaidCommand(Index index) throws CommandException {
+        RepaidCommand repaidCommand = new RepaidCommand(index);
+        repaidCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return repaidCommand;
     }
 
     /**
