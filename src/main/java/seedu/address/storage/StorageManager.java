@@ -69,6 +69,7 @@ public class StorageManager extends ComponentManager implements Storage {
     @Override
     public void saveAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
         saveAddressBook(addressBook, addressBookStorage.getAddressBookFilePath());
+        backupAddressBook(addressBook);
     }
 
     @Override
@@ -77,6 +78,19 @@ public class StorageManager extends ComponentManager implements Storage {
         addressBookStorage.saveAddressBook(addressBook, filePath);
     }
 
+    //@@author Jeremy
+
+    /**
+     * Saves a backup of the address book.
+     *
+     * @param addressBook Address book to be saved. Cannot be null.
+     * @throws IOException if address book is invalid.
+     */
+    @Override
+    public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
+        saveAddressBook(addressBook, addressBookStorage.getAddressBookFilePath() + "-backup.xml");
+    }
+    //@@author
 
     @Override
     @Subscribe

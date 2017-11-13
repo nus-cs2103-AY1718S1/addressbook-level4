@@ -9,17 +9,16 @@ import org.fxmisc.easybind.EasyBind;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.commons.util.CollectionUtil;
+
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
  * A list of persons that enforces uniqueness between its elements and does not allow nulls.
- *
+ * <p>
  * Supports a minimal set of list operations.
  *
  * @see Person#equals(Object)
- * @see CollectionUtil#elementsAreUnique(Collection)
  */
 public class UniquePersonList implements Iterable<Person> {
 
@@ -52,7 +51,7 @@ public class UniquePersonList implements Iterable<Person> {
      * Replaces the person {@code target} in the list with {@code editedPerson}.
      *
      * @throws DuplicatePersonException if the replacement is equivalent to another existing person in the list.
-     * @throws PersonNotFoundException if {@code target} could not be found in the list.
+     * @throws PersonNotFoundException  if {@code target} could not be found in the list.
      */
     public void setPerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException {
@@ -103,6 +102,38 @@ public class UniquePersonList implements Iterable<Person> {
         return FXCollections.unmodifiableObservableList(mappedList);
     }
 
+    //@@author Jeremy
+    /**
+     * @return the list as an unmodifiable list and sorted by name in ascending order
+     */
+    public ObservableList<ReadOnlyPerson> asObservableListSortedByNameAsc() {
+        internalList.sort((o1, o2) -> {
+            int output = (o1.getName().fullName.compareToIgnoreCase(o2.getName().fullName) >= 0) ? 1 : -1;
+            return output;
+        });
+        return FXCollections.unmodifiableObservableList(mappedList);
+    }
+
+    /**
+     * @return the list as an unmodifiable list and sorted by name in descending order
+     */
+    public ObservableList<ReadOnlyPerson> asObservableListSortedByNameDsc() {
+        internalList.sort((o1, o2) -> {
+            int output = (o1.getName().fullName.compareToIgnoreCase(o2.getName().fullName) <= 0) ? 1 : -1;
+            return output;
+        });
+        return FXCollections.unmodifiableObservableList(mappedList);
+    }
+
+    /**
+     * @return a reversed list
+     */
+    public ObservableList<ReadOnlyPerson> asObservableListReversed() {
+        FXCollections.reverse(internalList);
+        return FXCollections.unmodifiableObservableList(mappedList);
+    }
+    //@@author
+
     @Override
     public Iterator<Person> iterator() {
         return internalList.iterator();
@@ -112,11 +143,56 @@ public class UniquePersonList implements Iterable<Person> {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof UniquePersonList // instanceof handles nulls
-                        && this.internalList.equals(((UniquePersonList) other).internalList));
+                && this.internalList.equals(((UniquePersonList) other).internalList));
     }
 
     @Override
     public int hashCode() {
         return internalList.hashCode();
     }
+
+    //@@author Eric
+    /**
+     * Adds appointment to a person in the internal list.
+     *
+     * @throws PersonNotFoundException if no such person exist in the internal list
+     */
+    public void addAppointment(ReadOnlyPerson target, Appointment appointment) throws PersonNotFoundException {
+        requireNonNull(target);
+        requireNonNull(appointment);
+        Person person = getPerson(target);
+        List<Appointment> list = target.getAppointments();
+        list.add(appointment);
+        person.setAppointment(list);
+    }
+    /**
+     * Removes an appointment from a person in the internal list
+     *
+     * @throws PersonNotFoundException if no such person exist in the internal list
+     */
+    public void removeAppointment(ReadOnlyPerson target, Appointment appointment)
+            throws PersonNotFoundException {
+        requireNonNull(target);
+        requireNonNull(appointment);
+
+        Person person = getPerson(target);
+        List<Appointment> newApptList = person.getAppointments();
+        newApptList.remove(appointment);
+        person.setAppointment(newApptList);
+
+    }
+
+    /**
+     * Util method to extract person out from a list
+     */
+    private Person getPerson(ReadOnlyPerson target) throws PersonNotFoundException {
+        requireNonNull(target);
+        for (Person person : internalList) {
+            if (person.equals(target)) {
+                return person;
+            }
+        }
+        throw new PersonNotFoundException();
+    }
+    //@@author
 }

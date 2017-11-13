@@ -1,0 +1,96 @@
+= Eric Loh - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+:collatedDir: ../../collated
+
+== Project: MedNus
+MedNus is a desktop address book application used by Medical Professionals. +
+The user interacts with it using a CLI, and it has a GUI created with JavaFX. +
+It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: +
+link:https://github.com/CS2103AUG2017-T17-B2/main/blob/master/collated/main/Eric.md[Functional code] +
+link:https://github.com/CS2103AUG2017-T17-B2/main/blob/master/collated/test/Eric.md[Test code] +
+
+=== Enhancement Added: Setting Tag Color
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=color]
+
+#End of Extract#
+
+---
+
+
+---
+#Start of Extract [from: Developer Guide]#
+
+==== Justification
+include::../DeveloperGuide.adoc[tag=colorjustification]
+
+==== Implementation
+
+include::../DeveloperGuide.adoc[tag=colorimplementation]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Setting Appointment
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=appointment]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+include::../DeveloperGuide.adoc[tag=appointmentjustification]
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=appointmentimplementation]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Change calendar view
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=calendar]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed (for Version 2.0)
+* More CLI for calendar view. Allow users to go to a selected date.
+** Currently there is no way for the user to navigate through the calendar without using the mouse. It would be useful
+for the doctors if they have the access to such shortcuts.
+* Make deletion of appointments easier. Remove the need to type in the whole description to delete.
+** Current deletion is too verbose and takes too much effort. This implementation has to be reworked in order to use
+the index for deletion instead of the name.
+
+=== Other Contributions
+* https://github.com/CS2103AUG2017-T17-B2/main/pull/101[Revamped Developer Guide content] with Ru Shan
+* https://github.com/CS2103AUG2017-W09-B2/main/issues/121[Uncover bugs for other teams]
+

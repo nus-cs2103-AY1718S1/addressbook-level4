@@ -4,53 +4,104 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: images
 :stylesDir: stylesheets
 
-AddressBook - Level 4 was developed by the https://se-edu.github.io/docs/Team.html[se-edu] team. +
-The dummy content given below serves as a placeholder to be used by future forks of the project. +
-{empty} +
+MedNus was developed by the CS2103T AY17/18 T17-B2 team. +
+
 We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
 
 == Project Team
 
-=== John Doe
-image::damithc.jpg[width="150", align="left"]
-{empty}[http://www.comp.nus.edu.sg/~damithch[homepage]] [https://github.com/damithc[github]] [<<johndoe#, portfolio>>]
-
-Role: Project Advisor
-
-'''
-
-=== John Roe
-image::lejolly.jpg[width="150", align="left"]
-{empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
-
-Role: Team Lead +
-Responsibilities: UI
-
-'''
-
-=== Johnny Doe
-image::yijinl.jpg[width="150", align="left"]
-{empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
+=== Eric Loh
+image::EricLoh.jpg[width="150", align="left"]
+{empty}[https://github.com/Ericloh[Github]] [<<ericloh#, Portfolio>>]
 
 Role: Developer +
-Responsibilities: Data
+Responsibilities: UI + Integration + Deliverables and Deadlines
+
+* Features Implemented : +
+** https://github.com/CS2103AUG2017-T17-B2/main/pull/74[Appointment Setting]
+** https://github.com/CS2103AUG2017-T17-B2/main/pull/190[Calendar View]
+** https://github.com/CS2103AUG2017-T17-B2/main/pull/55[Tag Colors]
+
+* Other Contributions : +
+** https://github.com/CS2103AUG2017-T17-B2/main/pull/101[Revamped Developer Guide content] with Ru Shan
+** https://github.com/CS2103AUG2017-W09-B2/main/issues/121[Uncover bugs for other teams]
 
 '''
 
-=== Johnny Roe
-image::m133225.jpg[width="150", align="left"]
-{empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]
+=== Ernest Ong Yuheng
+image::ernestong.png[width="150", align="left"]
+{empty}[http://github.com/ErnestOYH[Github]] [<<ernestong#, Portfolio>>]
 
 Role: Developer +
-Responsibilities: Dev Ops + Threading
+Responsibilities: Logic
+
+* Features Implemented : +
+** Bloodtype Class related +
+https://github.com/CS2103AUG2017-T17-B2/main/pull/41[Bloodtype Class] +
+https://github.com/CS2103AUG2017-T17-B2/main/pull/113[Bloodtype Class Regex Enhancement] +
+https://github.com/CS2103AUG2017-T17-B2/main/pull/145[Bloodtype consistency] +
+https://github.com/CS2103AUG2017-T17-B2/main/pull/81[List By Bloodtype Command]
+** https://github.com/CS2103AUG2017-T17-B2/main/pull/197[Relationship Command]
+
+* Other Enhancement(s) : +
+** https://github.com/CS2103AUG2017-T17-B2/main/pull/121[Case Insensitive Command Word input]
+** https://github.com/CS2103AUG2017-T17-B2/main/pull/158[Consistency for Name, Address and Email]
+
+** User Guide +
+https://github.com/CS2103AUG2017-T17-B2/main/pull/79[Wording Changes] +
+https://github.com/CS2103AUG2017-T17-B2/main/pull/183[Acceptance Testing Changes] +
+(In collaboration with http://github.com/Jeremylsw[Jeremy])
 
 '''
 
-=== Benson Meier
-image::yl_coder.jpg[width="150", align="left"]
-{empty}[http://github.com/yl-coder[github]] [<<johndoe#, portfolio>>]
+=== Jeremy Long Shi Wei
+image::jeremylong.JPG[width="150", align="left"]
+{empty}[https://github.com/Jeremylsw[Github]] [<<jeremylong#, Portfolio>>]
 
 Role: Developer +
-Responsibilities: UI
+Responsibilities: Storage + Testing + Documentation
+
+* Features Implemented : +
+** https://github.com/CS2103AUG2017-T17-B2/main/pull/46[Remark Command]
+** https://github.com/CS2103AUG2017-T17-B2/main/pull/48[List By Tags Command]
+** Keyboard Shortcuts +
+https://github.com/CS2103AUG2017-T17-B2/main/pull/73[Escape, Shift-Alt, Shift-Control, Add Command] +
+https://github.com/CS2103AUG2017-T17-B2/main/pull/78[Alt, Control] +
+https://github.com/CS2103AUG2017-T17-B2/main/pull/82[Shift-Delete, Shift-Backspace] +
+https://github.com/CS2103AUG2017-T17-B2/main/pull/112/files[Edit Command]
+** https://github.com/CS2103AUG2017-T17-B2/main/pull/124[List Package] +
+Ascending, Descending, Reverse
+
+* Other Major Contributions : +
+** https://github.com/CS2103AUG2017-T17-B2/main/pull/50/files[MedNus UI theme] +
+(Special Thanks to https://github.com/rushan-khor[rushan] for creating the first UI +
+https://github.com/CS2103AUG2017-T17-B2/main/pull/49/files[template] and
+code comments to identify the respective +
+CSS parts)
+** https://github.com/CS2103AUG2017-T17-B2/main/pull/112[Add Command - Only name input is compulsory]
+** User Guide +
+*** https://github.com/CS2103AUG2017-T17-B2/main/pull/91/files[Major Formatting]
+(In collaboration with http://github.com/ErnestOYH[Ernest]) +
+*** https://github.com/CS2103AUG2017-T17-B2/main/pull/125/files[Illustrations] +
+** https://github.com/CS2103AUG2017-T17-B2/main/pull/61[Test Coverage]
+
+
 
 '''
+
+=== Khor Ru Shan
+image::rushan-khor.png[width="150", align="left"]
+{empty}[https://github.com/rushan-khor[Github]] [<<rushan-khor#, Portfolio>>]
+
+Role: Developer +
+Responsibilities: Model component + Documentation
+
+* Features Implemented : +
+** https://github.com/CS2103AUG2017-T17-B2/main/pull/83[Batch deletion of contacts by tag]
+** https://github.com/CS2103AUG2017-T17-B2/main/pull/117[Display potential duplicate contacts]
+** https://github.com/CS2103AUG2017-T17-B2/main/pull/157[Copy contact's email address to clipboard]
+
+* Other Contributions : +
+** https://github.com/CS2103AUG2017-T17-B2/main/pull/49[Drafted the light UI theme]
+** https://github.com/CS2103AUG2017-T17-B2/main/pull/101[Revamped Developer Guide content] with Eric
+** https://github.com/CS2103AUG2017-T17-B2/main/pull/206[Unified diagram styles in User Guide]

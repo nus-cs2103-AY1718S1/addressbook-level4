@@ -59,6 +59,7 @@ public class XmlAddressBookStorage implements AddressBookStorage {
     @Override
     public void saveAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
         saveAddressBook(addressBook, filePath);
+        backupAddressBook(addressBook);
     }
 
     /**
@@ -72,6 +73,19 @@ public class XmlAddressBookStorage implements AddressBookStorage {
         File file = new File(filePath);
         FileUtil.createIfMissing(file);
         XmlFileStorage.saveDataToFile(file, new XmlSerializableAddressBook(addressBook));
+    }
+
+    //@@author Jeremy
+
+    /**
+     * Saves a backup address book.
+     *
+     * @param addressBook Address book to be saved. Cannot be null.
+     * @throws IOException If input address book is invalid.
+     */
+    @Override
+    public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
+        saveAddressBook(addressBook, filePath + "-backup.xml");
     }
 
 }

@@ -41,6 +41,10 @@ public class PersonListPanel extends UiPart<Region> {
         setEventHandlerForSelectionChangeEvent();
     }
 
+    public void reset(ObservableList<ReadOnlyPerson> personList) {
+        setConnections(personList);
+    }
+
     private void setEventHandlerForSelectionChangeEvent() {
         personListView.getSelectionModel().selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> {

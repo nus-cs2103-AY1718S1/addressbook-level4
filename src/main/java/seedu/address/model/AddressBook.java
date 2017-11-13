@@ -2,6 +2,7 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.person.Appointment;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
@@ -39,7 +41,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         tags = new UniqueTagList();
     }
 
-    public AddressBook() {}
+    public AddressBook() {
+    }
 
     /**
      * Creates an AddressBook using the Persons and Tags in the {@code toBeCopied}
@@ -55,9 +58,25 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.persons.setPersons(persons);
     }
 
+    //@@author Eric
+    public void setTags(Set<Tag> tags, String tagString, String color) {
+        this.tags.setTags(tags, tagString, color);
+    }
+
+
     public void setTags(Set<Tag> tags) {
         this.tags.setTags(tags);
     }
+
+
+    public void addAppointment(ReadOnlyPerson target, Appointment appointment) throws PersonNotFoundException {
+        persons.addAppointment(target, appointment);
+    }
+
+    public void removeAppointment(ReadOnlyPerson target, Appointment appointment) throws PersonNotFoundException {
+        persons.removeAppointment(target, appointment);
+    }
+    //@@author
 
     /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
@@ -69,7 +88,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         } catch (DuplicatePersonException e) {
             assert false : "AddressBooks should not have duplicate persons";
         }
-
         setTags(new HashSet<>(newData.getTagList()));
         syncMasterTagListWith(persons);
     }
@@ -97,9 +115,8 @@ public class AddressBook implements ReadOnlyAddressBook {
      * {@code AddressBook}'s tag list will be updated with the tags of {@code editedReadOnlyPerson}.
      *
      * @throws DuplicatePersonException if updating the person's details causes the person to be equivalent to
-     *      another existing person in the list.
-     * @throws PersonNotFoundException if {@code target} could not be found in the list.
-     *
+     *                                  another existing person in the list.
+     * @throws PersonNotFoundException  if {@code target} could not be found in the list.
      * @see #syncMasterTagListWith(Person)
      */
     public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedReadOnlyPerson)
@@ -116,8 +133,8 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /**
      * Ensures that every tag in this person:
-     *  - exists in the master list {@link #tags}
-     *  - points to a Tag object in the master list
+     * - exists in the master list {@link #tags}
+     * - points to a Tag object in the master list
      */
     private void syncMasterTagListWith(Person person) {
         final UniqueTagList personTags = new UniqueTagList(person.getTags());
@@ -136,9 +153,10 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /**
      * Ensures that every tag in these persons:
-     *  - exists in the master list {@link #tags}
-     *  - points to a Tag object in the master list
-     *  @see #syncMasterTagListWith(Person)
+     * - exists in the master list {@link #tags}
+     * - points to a Tag object in the master list
+     *
+     * @see #syncMasterTagListWith(Person)
      */
     private void syncMasterTagListWith(UniquePersonList persons) {
         persons.forEach(this::syncMasterTagListWith);
@@ -146,9 +164,13 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /**
      * Removes {@code key} from this {@code AddressBook}.
+     *
      * @throws PersonNotFoundException if the {@code key} is not in this {@code AddressBook}.
      */
     public boolean removePerson(ReadOnlyPerson key) throws PersonNotFoundException {
+        Set<Tag> personTags = key.getTags();
+        removeUnusedTags(personTags);
+
         if (persons.remove(key)) {
             return true;
         } else {
@@ -156,17 +178,63 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    //@@author rushan-khor
+    /**
+     * Deletes all persons in the {@code AddressBook} who have a particular {@code tag}.
+     *
+     * @param tag all persons containing this tag will be deleted
+     */
+    public void deletePersonsWithTag(Tag tag) throws PersonNotFoundException {
+        ArrayList<Person> personsToRemove = new ArrayList<>();
+        for (Person person : persons) {
+            if (person.hasTag(tag)) {
+                personsToRemove.add(person);
+            }
+        }
+
+        if (personsToRemove.isEmpty()) {
+            throw new PersonNotFoundException();
+        }
+        for (Person person : personsToRemove) {
+            removePerson(person);
+            removeUnusedTags(person.getTags());
+        }
+    }
+    //@@author
+
     //// tag-level operations
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
         tags.add(t);
     }
 
+    //@@author rushan-khor
+    /**
+     * Removes {@code tagsToRemove} from this {@code AddressBook} if and only if they are not help by any persons.
+     */
+    public void removeUnusedTags(Set<Tag> tagsToRemove) {
+        Set<Tag> cleanedTagList = getTagsExcluding(tagsToRemove);
+        tags.setTags(cleanedTagList);
+        syncMasterTagListWith(persons);
+    }
+
+    /**
+     * Returns tag list from this {@code AddressBook} excluding {@code excludedTags}.
+     */
+    public Set<Tag> getTagsExcluding(Set<Tag> excludedTags) {
+        Set<Tag> results = tags.toSet();
+        for (Tag excludedTag : excludedTags) {
+            results.remove(excludedTag);
+        }
+        return results;
+    }
+    //@@author
+
     //// util methods
 
     @Override
     public String toString() {
-        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags";
+        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() + " tags";
         // TODO: refine later
     }
 
@@ -174,6 +242,36 @@ public class AddressBook implements ReadOnlyAddressBook {
     public ObservableList<ReadOnlyPerson> getPersonList() {
         return persons.asObservableList();
     }
+
+    //@@author Jeremy
+
+    /**
+     * Filters person list by name in ascending order.
+     *
+     * @return Filtered UniquePersonList.
+     */
+    public ObservableList<ReadOnlyPerson> getPersonListSortByNameAscending() {
+        return persons.asObservableListSortedByNameAsc();
+    }
+
+    /**
+     * Filters person list by name in descending order.
+     *
+     * @return Filtered UniquePersonList.
+     */
+    public ObservableList<ReadOnlyPerson> getPersonListSortByNameDescending() {
+        return persons.asObservableListSortedByNameDsc();
+    }
+
+    /**
+     * Filters person list in reverse order.
+     *
+     * @return Filtered UniquePersonList.
+     */
+    public ObservableList<ReadOnlyPerson> getPersonListReversed() {
+        return persons.asObservableListReversed();
+    }
+    //@@author
 
     @Override
     public ObservableList<Tag> getTagList() {

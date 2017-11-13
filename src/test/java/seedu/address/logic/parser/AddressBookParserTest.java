@@ -1,36 +1,59 @@
 package seedu.address.logic.parser;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_RELATIONSHIP;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+// Unused import. But it looks important. I'll leave it here for now
+// import com.sun.org.apache.regexp.internal.RE;
+
+import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.AddAppointmentCommand;
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.BatchCommand;
 import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.CopyCommand;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.DuplicatesCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
+import seedu.address.logic.commands.ListByBloodtypeCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.RelationshipCommand;
+import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.ToggleTagColorCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.Appointment;
+import seedu.address.model.person.BloodtypeContainsKeywordPredicate;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Relationship;
+import seedu.address.model.person.Remark;
+import seedu.address.model.tag.Tag;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
@@ -49,6 +72,31 @@ public class AddressBookParserTest {
     }
 
     @Test
+    public void parseCommandToggleColor() throws ParseException {
+        ToggleTagColorCommand command = (ToggleTagColorCommand) parser.parseCommand("tagcolor off");
+        assertEquals(new ToggleTagColorCommand("off", null), command);
+    }
+
+    @Test
+    public void parseCommandAddAppointment() throws Exception {
+        AddAppointmentCommand command = (AddAppointmentCommand)
+                parser.parseCommand("appointment 1 d/Lunch, tomorrow 5pm");
+        Appointment appointment = AddAppointmentParser.getAppointmentFromString("Lunch, tomorrow 5pm");
+        assertTrue(command.equals(new AddAppointmentCommand(Index.fromOneBased(1), appointment)));
+    }
+
+    //@@author Ernest
+    @Test
+    public void parseCommandListByBloodtype() throws Exception {
+        List<String> keyword = Arrays.asList("A+", "ab", "O-");
+        ListByBloodtypeCommand command = (ListByBloodtypeCommand) parser.parseCommand(
+                ListByBloodtypeCommand.COMMAND_WORD + " "
+                        + keyword.stream().collect(Collectors.joining(" ")));
+        assertEquals(new ListByBloodtypeCommand(new BloodtypeContainsKeywordPredicate(keyword)), command);
+    }
+    //@@author
+
+    @Test
     public void parseCommand_clear() throws Exception {
         assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD) instanceof ClearCommand);
         assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD + " 3") instanceof ClearCommand);
@@ -60,6 +108,31 @@ public class AddressBookParserTest {
                 DeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new DeleteCommand(INDEX_FIRST_PERSON), command);
     }
+
+    @Test
+    public void parseCommand_duplicates() throws Exception {
+        DuplicatesCommand command = (DuplicatesCommand) parser.parseCommand(
+                DuplicatesCommand.COMMAND_WORD);
+        assertEquals(new DuplicatesCommand(), command);
+    }
+
+    @Test
+    public void parseCommandCopy() throws Exception {
+        CopyCommand command = (CopyCommand) parser.parseCommand(
+                CopyCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new CopyCommand(INDEX_FIRST_PERSON), command);
+    }
+
+    @Test
+    public void parseCommand_batch() throws Exception {
+        Set<Tag> tagSet = new HashSet<>();
+        tagSet.add(new Tag("friends", Tag.DEFAULT_COLOR));
+
+        BatchCommand command = (BatchCommand) parser.parseCommand(
+                BatchCommand.COMMAND_WORD + " " + "friends");
+        assertEquals(new BatchCommand(tagSet), command);
+    }
+
 
     @Test
     public void parseCommand_edit() throws Exception {
@@ -106,7 +179,9 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_list() throws Exception {
         assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
-        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD + " 3") instanceof ListCommand);
+
+
+        assertFalse(parser.parseCommand(ListCommand.COMMAND_WORD + " 3") instanceof ListCommand);
     }
 
     @Test
@@ -127,6 +202,33 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(UndoCommand.COMMAND_WORD) instanceof UndoCommand);
         assertTrue(parser.parseCommand("undo 3") instanceof UndoCommand);
     }
+
+    //@@author Jeremy
+    @Test
+    public void parseCommandRemarkCommandWordReturnsRemarkCommand() throws Exception {
+        //Create RemarkCommand up for testing
+        String remark = "Dummy";
+        Index index = INDEX_FIRST_PERSON;
+
+        RemarkCommand testRemarkCommand = (RemarkCommand) parser.parseCommand(
+                RemarkCommand.COMMAND_WORD + " "
+                        + index.getOneBased() + " " + PREFIX_REMARK + remark);
+
+        assertTrue(testRemarkCommand instanceof RemarkCommand);
+        assertEquals(new RemarkCommand(index, new Remark(remark)), testRemarkCommand);
+        assertNotEquals(new RemarkCommand(index, new Remark("")), testRemarkCommand);
+    }
+    //@@author
+
+    //@@author Ernest
+    @Test
+    public void parseCommandRelationship() throws Exception {
+        final Relationship relation = new Relationship("Some relation.");
+        RelationshipCommand command = (RelationshipCommand) parser.parseCommand(RelationshipCommand.COMMAND_WORD
+                + " " + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_RELATIONSHIP + " " + relation.value);
+        assertEquals(new RelationshipCommand(INDEX_FIRST_PERSON, relation), command);
+    }
+    //@@author
 
     @Test
     public void parseCommand_unrecognisedInput_throwsParseException() throws Exception {

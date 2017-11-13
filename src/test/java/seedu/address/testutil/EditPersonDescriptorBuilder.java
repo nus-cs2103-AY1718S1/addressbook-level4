@@ -32,7 +32,10 @@ public class EditPersonDescriptorBuilder {
         descriptor.setPhone(person.getPhone());
         descriptor.setEmail(person.getEmail());
         descriptor.setAddress(person.getAddress());
+        descriptor.setBloodType(person.getBloodType());
+        descriptor.setRemark(person.getRemark());
         descriptor.setTags(person.getTags());
+
     }
 
     /**
@@ -82,6 +85,34 @@ public class EditPersonDescriptorBuilder {
         }
         return this;
     }
+
+    //@@author Ernest
+    /**
+     * Sets the {@code Bloodtype} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withBloodType(String bloodType) {
+        try {
+            ParserUtil.parseBloodType(Optional.of(bloodType)).ifPresent(descriptor::setBloodType);
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("bloodtype is expected to be unique.");
+        }
+        return this;
+    }
+    //@@author
+
+    //@@author Jeremy
+    /**
+     * Sets the {@code Remark} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withRemark(String remark) {
+        try {
+            ParserUtil.parseRemark(Optional.of(remark)).ifPresent(descriptor::setRemark);
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("bloodtype is expected to be unique.");
+        }
+        return this;
+    }
+    //@@author
 
     /**
      * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code EditPersonDescriptor}

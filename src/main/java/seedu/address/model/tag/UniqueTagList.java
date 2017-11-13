@@ -22,7 +22,6 @@ import seedu.address.commons.util.CollectionUtil;
 public class UniqueTagList implements Iterable<Tag> {
 
     private final ObservableList<Tag> internalList = FXCollections.observableArrayList();
-
     /**
      * Constructs empty TagList.
      */
@@ -31,11 +30,12 @@ public class UniqueTagList implements Iterable<Tag> {
     /**
      * Creates a UniqueTagList using given tags.
      * Enforces no nulls.
+     *
+     * Assign each tag with a unique color
      */
     public UniqueTagList(Set<Tag> tags) {
         requireAllNonNull(tags);
         internalList.addAll(tags);
-
         assert CollectionUtil.elementsAreUnique(internalList);
     }
 
@@ -48,15 +48,59 @@ public class UniqueTagList implements Iterable<Tag> {
         return new HashSet<>(internalList);
     }
 
+    //@@author Eric
     /**
      * Replaces the Tags in this list with those in the argument tag list.
      */
+    public void setTags(Set<Tag> tags, String tagString, String color) {
+
+        requireAllNonNull(tags);
+
+        // If color is null, it means either tag color random or tag color off
+        // Else it means color is specified, and addressBook should assign a color to a tag
+
+        if (color == null) {
+            if ("random".equals(tagString)) {
+                setRandomColor(tags);
+            } else if ("off".equals(tagString)) {
+                setOffColor(tags);
+            }
+        } else {
+            setColor(tags, tagString, color);
+        }
+
+        assert CollectionUtil.elementsAreUnique(internalList);
+        internalList.setAll(tags);
+    }
+    //@@author
     public void setTags(Set<Tag> tags) {
         requireAllNonNull(tags);
         internalList.setAll(tags);
         assert CollectionUtil.elementsAreUnique(internalList);
     }
 
+    //@@author Eric
+    private void setOffColor(Set<Tag> tags) {
+        for (Tag tag : tags) {
+            tag.setOffColor();
+        }
+    }
+
+
+    private void setColor(Set<Tag> tags, String tagString, String color) {
+        for (Tag tag : tags) {
+            if (tag.tagName.equals(tagString)) {
+                tag.setColor(color);
+            }
+        }
+    }
+
+    private void setRandomColor(Set<Tag> tags) {
+        for (Tag tag : tags) {
+            tag.setRandomColor();
+        }
+    }
+    //@@author
     /**
      * Ensures every tag in the argument list exists in this object.
      */
@@ -138,5 +182,4 @@ public class UniqueTagList implements Iterable<Tag> {
             super("Operation would result in duplicate tags");
         }
     }
-
 }

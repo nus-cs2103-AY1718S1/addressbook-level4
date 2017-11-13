@@ -1,6 +1,7 @@
-= AddressBook Level 4 - User Guide
+
+= MedNus - User Guide
 :toc:
-:toc-title:
+:toc-title: Table of Contents
 :toc-placement: preamble
 :sectnums:
 :imagesDir: images
@@ -10,243 +11,696 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-T17-B2/main.git
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `MedNus`      Since: `OCT 2017`      Licence: `MIT`
 
-== Quick Start
+== *INTRODUCTION*
 
-.  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
+MedNus is a custom address book made for medical professionals. +
+ +
+You can find many different features available in MedNus that are useful for medical professionals such as +
+recording appointments, listing your patients based on blood type and provides you with various keyboard and +
+command shortcuts so that you can work efficiently and effectively. +
+ +
+With MedNus's unique UI theme, keyboard shortcuts and productivity features, you can do your job effectively +
+and productively. +
+ +
+This user guide comes with instructions and examples to help you get used to using MedNus.
+
+== *ABOUT*
+This user guide shows you how to get started using MedNus +
+ +
+This user guide introduces you to the features MedNus have and leads you through with examples. +
+ +
+You are required to know how to use Java to run a Graphical User Interface (GUI) application. +
+
+== *GETTING STARTED*
+
+.  Make sure you have link:https://java.com/en/download/[Java] version `1.8.0_60` or later installed in your Computer.
 +
-[NOTE]
+[WARNING]
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
+.  You can download the latest `MedNus.jar` link:https://github.com/CS2103AUG2017-T17-B2/main/releases[here].
+.  You should create a new folder to store the jar file.
+.  Copy the jar file to the folder you want to use as the home folder for your Address Book.
+.  Double-click the file to start the app. The graphical user interface (GUI) should appear in a few seconds.
 +
-image::Ui.png[width="790"]
+image::Ui.png[width="800"]
+    Figure 1: Successful start up UI Sample
 +
-.  Type the command in the command box and press kbd:[Enter] to execute it. +
+.  You can type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
 * *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
+* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/O+` : adds a contact named `John Doe` to the Address Book.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
-.  Refer to the link:#features[Features] section below for details of each command.
+.  You can refer to the features section below for details of each command. +
 
-== Features
+<<<
 
-====
-*Command Format*
+== *FEATURES*
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
-* Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
-* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
-====
+[width="59%",cols="22%,<23%,<25%,<30%",options="header",]
+|=======================================================================
+|Command Format |Meaning |Example |Remark
+
+|Upper Case |Parameters supplied by User |`add n/NAME` |`NAME` is a parameter which can be used as `add n/John Doe`
+
+|Square Brackets |Optional inputs |`n/NAME [t/TAG]` |`[t/TAG]` is an optional field
+
+|`…`​ |Can be used multiple times |`[t/TAG]...` |Can have multiple tags: `[t/TAG1] [t/TAG2] [t/TAG3]`
+
+|=======================================================================
+
+[NOTE]
+Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+[TIP]
+You can input your command words in capital letters, small letters or a mix of both. +
+Example: Typing "help" is the same as typing "HELP" and "hELp".
+
+<<<
 
 === Viewing help : `help`
+You can use the `help` command to access the User Guide from MedNus. +
+You can also click the `Help` at the top left corner of MedNus.
 
-Format: `help`
+*Example:*
+
+image::helpUI.png[width="800"]
+    Figure 2: Methods to access `help` command
 
 === Adding a person: `add`
 
-Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+You can add a person to the address book by following the format below. +
+*Format:* `add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BLOODTYPE] [r/REMARK] [d/APPOINTMENTDATE] [t/TAG]...` +
+*Shorthand Format:* `a n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BLOODTYPE] [r/REMARK] [d/APPOINTMENTDATE] [t/TAG]...`
 
 [TIP]
-A person can have any number of tags (including 0)
+You can add any number of tags for a person or none at all. +
+You can use tags as labels for a patient's condition such "Sprain" or "Insomnia".
+You can add appointment or none at all.
 
-Examples:
+*Example:*
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+image::addexample.png[width="800"]
+    Figure 3: Add Command Usage Diagram
 
-=== Listing all persons : `list`
+[NOTE]
+Your inputs for NAME and ADDRESS will have the +
+first letter of each word capitalized and the rest small letters. +
+Your inputs for EMAIL will have all words in lower case.
 
-Shows a list of all persons in the address book. +
-Format: `list`
+// tag::bloodtype[]
+
+[NOTE]
+You can only use the following twelve inputs for BLOODTYPE. +
+A, A+, A-, B, B+, B-, AB, AB+, AB-, O, O+, O-. +
+Both capital letters and small letters are can be entered. +
+Your inputs for BLOODTYPE will always be shown in capital letters as shown below.
+
+image::bloodtypestored.png[width="800"]
+    Figure 4: Mixed case BLOODTYPE input
+
+// end::bloodtype[]
+
+<<<
+
+// tag::list[]
+=== Listing Contacts: `list`
+
+You have a variety of ways to list your contacts. +
+Click <<MedNus Features, here>> for a tabulated version of all available listing options. +
+
+* *Listing all persons* +
+You can use `list` to show a list of all persons in the address book. +
+*Format:* `list` +
+*Shorthand Format:* `l`
+
+* *Reverse a List* +
+You can use `list reverse` to reverse the displayed list. +
+*Format:* `list reverse` +
+*Shorthand Format:* `l rev`
+
+* *Listing persons by tag* +
+You can list contacts based on tag(s) using the optional keywords : "and" or "or". +
+*Format:* `list tag TAG1 [and] TAG2 [or] TAG3 ...` +
+
+*Example:*
+
+[width="59%",cols="22%,<30%,<30%",options="header",]
+|=======================================================================
+|Arguments |Remarks |Result
+
+|`Family and Friend` |Inputs are case insensitive |Filters contacts with both tags `family` and `friend`
+
+|`Family or Friend` |Inputs are case insensitive |Filters contacts with either/both `family` or/and `friend` tags
+
+|`Family Friend Female` |If not specified, keywords are evaluated based on the "AND" logic |Filters contacts with the tags `family` `friend` and `female`.
+
+|=======================================================================
+
+* *Listing contacts by name (Ascending)* +
+You can use `list ascending` to show a list of contacts sorted by name in ascending order. +
+*Format:* `list ascending` +
+*Shorthand Format:* `l asc`
+
+* *Listing contacts by name (Descending)* +
+You can use `list descending` to show a list of contacts sorted by name in descending order. +
+*Format:* `list descending` +
+*Shorthand Format:* `l dsc`
+// end::list[]
+
+// tag::listbloodtype[]
+=== Listing persons by blood type : `bloodtype` [Since v1.2]
+
+You can use `bloodtype` to show a list of people with that specific blood type. +
+*Format:* `bloodtype BLOODTYPE` +
+*Shorthand Format:* `bt BLOODTYPE`
+
+*Example:*
+
+image::btexample.png[width="800"]
+    Figure 5: Bloodtype Command Usage Diagram
+
+[NOTE]
+BLOODTYPE is case insensitive.
+// end::listbloodtype[]
+
+// tag::dups[]
+=== Showing duplicate persons: `duplicates` [Since v1.3]
+
+You may use the duplicates command to narrow down patients who share the same name. +
+This makes it convenient for finding and resolving duplicate contacts. +
+*Format:* `duplicates` +
+*Shorthand Format:* `dups`
+
+*Example:*
+
+image::dupsexample.png[width="800"]
+    Figure 6: Duplicates Command Usage Example
+
+[NOTE]
+The results are from case-insensitive comparisons.
+// end::dups[]
 
 === Editing a person : `edit`
 
-Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+You can edit the information of a person you have added in the address book. +
+*Format:* `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BLOODTYPE] [r/REMARK] [d/APPOINTMENTDATE] [t/TAG]...` +
+*Shorthand Format:* `e INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BLOODTYPE] [r/REMARK] [d/APPOINTMENTDATE] [t/TAG]...`
 
-****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
-****
+[width="59%",cols="22%,<30%",options="header",]
+|=======================================================================
+|Word |Remarks
 
-Examples:
+|`edit` |Keyword to call the edit command
 
-* `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+|`INDEX` |Index number shown in the last person listing
+
+|`INDEX` |Must be a positive integer
+
+|=======================================================================
+
+*Example:*
+
+image::editexample.png[width="800"]
+    Figure 7: Edit Command Usage Diagram
+
+[WARNING]
+At least one of the optional fields must be provided. +
+Current Information will be replaced with new information +
+Existing tags will be removed and have to be respecified when editing.
+
+[TIP]
+You can check the index using the `list` command. +
+You can remove all the person's tags by typing `t/` without specifying any tags after it.
 
 === Locating persons by name: `find`
 
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+You can find people whose names contain any of the given keywords. +
+*Format:* `find KEYWORD [MORE_KEYWORDS]` +
+*Shorthand Format:* `f KEYWORD [MORE_KEYWORDS]`
 
-****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-****
+[width="59%",cols="22%,<30%",options="header",]
+|=======================================================================
+|Remarks |Example
 
-Examples:
+|The search is case insensitive |`hans` will match `Hans`
 
-* `find John` +
-Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
+|The order of the keywords does not matter |`Hans Bo` will match `Bo Hans`
+
+|You can only search for names |`Hans Bo` (Name) is valid `Colleague` (Tag)  is not
+
+|Only full words will be matched | You cannot type `Han` to search for names with keyword `Hans`
+
+|People matching at least one keyword will be returned |`Hans Bo` will return `Hans Gruber`, `Bo Yang`
+
+|=======================================================================
+
+
+*Example:*
+
+image::findexample.png[width="800"]
+    Figure 8: Find Command Usage Diagram
 
 === Deleting a person : `delete`
 
-Deletes the specified person from the address book. +
-Format: `delete INDEX`
+You can delete a specific person from the address book at a specified `INDEX`. +
+*Format:* `delete INDEX` +
+*Shorthand Format:* `d INDEX`
 
-****
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-****
+*Example:*
 
-Examples:
+image::deleteexample.png[width="800"]
+    Figure 9: Delete Command Usage Diagram
 
-* `list` +
-`delete 2` +
-Deletes the 2nd person in the address book.
-* `find Betsy` +
-`delete 1` +
-Deletes the 1st person in the results of the `find` command.
+[WARNING]
+The index *must be a positive integer* `1, 2, 3, ...`
 
-=== Selecting a person : `select`
+[TIP]
+You can check the index using the `list` command
 
-Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
-
-****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
-****
-
-Examples:
-
-* `list` +
-`select 2` +
-Selects the 2nd person in the address book.
-* `find Betsy` +
-`select 1` +
-Selects the 1st person in the results of the `find` command.
+<<<
 
 === Listing entered commands : `history`
 
-Lists all the commands that you have entered in reverse chronological order. +
-Format: `history`
+You can list all the commands that you have entered in reverse chronological order. +
+*Format:* `history` +
+*Shorthand Format:* `h`
 
 [NOTE]
-====
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
-====
 
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
 Restores the address book to the state before the previous _undoable_ command was executed. +
-Format: `undo`
+*Format:* `undo` +
+*Shorthand Format:* `u`
 
 [NOTE]
-====
 Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
-====
 
-Examples:
 
-* `delete 1` +
-`list` +
-`undo` (reverses the `delete 1` command) +
+*Example:*
 
-* `select 1` +
-`list` +
-`undo` +
-The `undo` command fails as there are no undoable commands executed previously.
-
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
+image::undoexample.png[width="800"]
+    Figure 10: Undo Command Usage Diagram
 
 === Redoing the previously undone command : `redo`
 
-Reverses the most recent `undo` command. +
-Format: `redo`
+You can reverse the most recent `undo` command. +
+*Format:* `redo` +
+*Shorthand Format:* `r`
 
-Examples:
+*Example:*
 
-* `delete 1` +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
+image::redoexample.png[width="800"]
+    Figure 11: Redo Command Usage Diagram
 
-* `delete 1` +
-`redo` +
-The `redo` command fails as there are no `undo` commands executed previously.
-
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
-`redo` (reapplies the `clear` command) +
+[WARNING]
+*Known issue: when `redo` is used on a modified list.* +
+If you change the list after executing an `undo` command (e.g. by using `duplicates`),
+and then use `redo`, `redo` will not execute properly. +
+Only use `redo` on lists which have not been modified since executing the `undo` command.
 // end::undoredo[]
 
 === Clearing all entries : `clear`
 
-Clears all entries from the address book. +
-Format: `clear`
+You can clear all entries in the address book. +
+*Format:* `clear` +
+*Shorthand Format:* `cl`
+
+// tag::color[]
+=== Set Tag Color Mode : `tagcolor`
+
+You can set random colors to all tags OR remove colors. +
+*Format:* `tagcolor random/off` +
+*Shorthand Format:* `tc random/off`
+
+You can set a color to a specific tag type. +
+*Format:* `tagcolor TAGNAME COLOR` +
+*Shorthand Format:* `tc TAGNAME COLOR`
+
+[NOTE]
+You can see all available colors in the following
+https://docs.oracle.com/javafx/2/api/javafx/scene/doc-files/cssref.html#typecolor[link] +
+Color name input can be in english or hexadecimal form.
+
+// end::color[]
+
+
+
+// tag::appointment[]
+=== Set appointment: `appointment`
+
+You can add and sort appointments from a specific contact at a given index. +
+
+Appointment can be set using natural language. +
+You can add multiple appointments to the same contact. +
+If no end time of appointment is specified, default appointment time is 1 hour. +
+
+*Format:* `appointment 1 d/Dinner, tonight 7pm to 10pm` +
+*Shorthand Format:* `appt 1 d/Checkup, tomorrow 10am to 12pm`
+
+
+[WARNING]
+Please do not input invalid dates/time. +
+You can refer to the following http://natty.joestelmach.com/doc.jsp[link] for the supported formats. +
+You can only set dates that are after current time. (i.e. You cannot set a time to yesterday) +
+
+
+
+*Example:*
+
+image::aptexample.png[width="800"]
+    Figure 12: Appointment Command Usage Diagram for Adding
+
+=== Cancel Appointment: `cancel`
+
+You can cancel an appointment with contact. Refer to the agenda in the daily view to cancel appointments.
+If more than one appointment has the same description and contact, the earliest appointment will be deleted.
+
+*Format:* `cancel Dinner with Alice Lee` +
+
+
+
+[NOTE]
+If the appointment does not show on the daily view, it may be too far ahead. +
+As of v1.5, you must wait until a least
+a month before the appointment before the appointment will show up on the daily view.
+
+*Example:*
+
+image::aptexamplecancel.png[width="800"]
+    Figure 13: Appointment Command Usage Diagram for Cancelling
+
+// end::appointment[]
+
+
+// tag::calendar[]
+=== Changing Calendar View: `calendar`
+
+You can change the calendar view to daily, monthly, weekly, or yearly mode.
+
+Changing view: Change the calendar view +
+
+*Format:* `calendar LETTER` +
+*Shorthand format:* : `cal LETTER`
+
+[width="59%",cols="<20%,20%,50%",options="header",]
+|=======================================================================
+|`LETTER`| Corresponding view|Description
+
+|`d`| Day view | Shows your appointments for the day. Also shows a list of appointments for the month that is sorted
+according to appointment
+|`w`| Week view| Shows your appointments for the week.
+|`m`| Month view| Shows your appointments for the month.
+|`y`| Year view| Shows your appointments for the year.
+
+|=======================================================================
+
+*Examples:* +
+
+Day View +
+
+image::calendardexample.PNG[width="800"]
+    Figure 14: Appointment Calendar Day View
+
+Week View +
+
+image::calendarwexample.PNG[width="800"]
+    Figure 15: Appointment Calendar Week View
+
+Month View +
+
+image::calendarmexample.PNG[width="800"]
+    Figure 16: Appointment Calendar Month View
+
+Year View +
+
+image::calendaryexample.PNG[width="800"]
+    Figure 17: Appointment Calendar Year View
+
+// end::calendar[]
+
+// tag::remark[]
+=== Adding/Removing Remarks to a person : `remark`
+
+You can add or remove a remark from an existing person in the address book. +
+
+Adding a Remark: You can add a remark by typing 'r/' followed by the remarks +
+*Format:* `remark INDEX r/REMARK` +
+ +
+Removing a Remark: You can remove a remark by typing 'r/' without specifying anything after it. +
+*Format:* `remark INDEX r/` +
+
+*Examples:*
+
+You can refer to Figure 18 below for an example on using the `remark` command. +
+
+image::remarkexample.png[width="800"]
+    Figure 18: Remark Command Usage Diagram
+
+[WARNING]
+Existing remarks of the person will be removed
+
+[NOTE]
+The index refers to the index number shown in the last person listing +
+The index *must be a positive integer* `1, 2, 3, ...`
+
+// end::remark[]
+
+// tag::batch[]
+=== Delete all patients with any of the following tags : `batch` [Since v1.2]
+
+You can delete a batch of patients who share a single tag. Or, you may specify multiple tags and MedNus will perform this same batch deletion operation for each of these tags. +
+*Format:* `batch TAG TAG TAG...` +
+*Shorthand format:* `b TAG TAG...`
+
+*Example:*
+
+image::batchexample.png[width="800"]
+    Figure 19: Batch Command Usage Example
+
+[NOTE]
+If one or more of the specified tags does not exist in MedNus, the command will not be executed.
+// end::batch[]
+
+// tag::copy[]
+=== Copy a patient's email address to your clipboard : `copy` [Since v1.4]
+
+You can copy a patient's email address to your clipboard +
+*Format:* `copy INDEX` +
+*Shorthand format:* `c INDEX`
+
+*Example:*
+
+image::copyexample.png[width="800"]
+    Figure 20: Copy Command Usage Example
+
+// end::copy[]
+
+// tag::relationship[]
+=== Adding a person's relationships: `relation` [Since v1.5]
+
+You can add relationships to a person's details +
+*Format:* `relation INDEX rel/RELATIONSHIP` +
+*Shorthand Format:* `rel INDEX rel/RELATIONSHIP`
+
+*Example:*
+
+image::addrelationship.png[width="800"]
+    Figure 21: Add Relationship Example
+
+You can remove a relationship by adding nothing after rel/ +
+*Format:* `relation INDEX rel/` +
+*Shorthand Format:* `rel INDEX rel/`
+
+*Example:*
+
+image::removerelationship.png[width="800"]
+    Figure 22: Remove Relationship Example
+
+[WARNING]
+Existing relationships of the person will be removed
+
+[NOTE]
+The index refers to the index number shown in the last person listing +
+The index *must be a positive integer* `1, 2, 3, ...`
+
+// end::relationship[]
+
+=== KeyBoard Shortcuts [Since v1.2]
+
+You can use keyboard shortcuts in the command box to use the address book more efficiently.
+You can refer to the <<Keyboard Shortcut, summary>> for a table of the shortcuts available.
 
 === Exiting the program : `exit`
 
-Exits the program. +
-Format: `exit`
+You can exit MedNus by using the `exit` command. +
+You can also exit MedNus by clicking on `File` in the top left corner +
+and clicking on `Exit`.
 
-=== Saving the data
+image::exitUI.png[width="800"]
+    Figure 23: Methods to access `exit` command
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
-There is no need to save manually.
+=== Adding/Deleting a Tag to a Person : [Coming in v2.0]
+****
+* Allows the user to add/delete a tag to a person
+* The index refers to the index number shown in the last person listing. +
+The index *must be a positive integer* 1, 2, 3, ...
+* Basic Error catching: Throws error when Person is not present
+* Potential Upgrades:
+1. Adding multiple tags
+2. Customising colors while adding tags
+****
 
-== FAQ
+=== Patient's Condition Tag: [Coming in v2.0]
+****
+* Stores the patient's condition as a specialized Tag
+* Potential distinction between a specialized tag and normal tag:
+1. Browser bar goes to a known medical site, showing potential cures for the +
+described condition
+****
+
+
+== *FAQ*
 
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
 
-== Command Summary
+*Q*: How do I save my data? +
+*A*: Data are saved in the hard disk automatically after any running any command that changes it. +
+You do not need to save data manually.
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX` +
-e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *List* : `list`
-* *Help* : `help`
-* *Select* : `select INDEX` +
-e.g.`select 2`
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
+<<<
+
+== *COMMAND SUMMARY*
+
+=== MedNus Features
+
+[width="59%",cols="22%,<23%,<25%,<30%",options="header",]
+|=======================================================================
+|Command |Purpose |Format |Example
+
+|*Add* |Adds a contact |`add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BLOODTYPE [t/TAG]...` |`add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 b/B+ t/friend t/colleague`
+
+|*Add Shorthand* |Adds a contact |`a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BLOODTYPE [t/TAG]...` |`a n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 b/B+ t/friend t/colleague`
+
+|*Clear* |Clears all contacts |`clear` |`clear`
+
+|*Clear Shorthand* |Clears all contacts |`cl` |`cl`
+
+|*Copy* |Copy a contact's email |`copy INDEX` |`copy 2`
+
+|*Copy Shorthand* |Copy a contact's email |`c INDEX` |`c 2`
+
+|*Delete* |Delete a contact |`delete INDEX` |`delete 3`
+
+|*Delete Shorthand* |Delete a contact |`d INDEX` |`d 3`
+
+|*Edit* |Edits a contact's details |`edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BLOODTYPE] [t/TAG]...` |`edit 2 n/James Lee e/jameslee@example.com`
+
+|*Edit Shorthand* |Edits a contact's details |`e INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BLOODTYPE] [t/TAG]...` |`e 2 n/James Lee e/jameslee@example.com`
+
+|*Find* |Finds a contact based on keyword |`find KEYWORD [MORE_KEYWORDS]` |`find James Jake`
+
+|*Find Shorthand* |Finds a contact based on keyword |`f KEYWORD [MORE_KEYWORDS]` |`f James Jake`
+
+|*List* |Lists all existing contacts |`list` |`list`
+
+|*List* |Reverses a list |`list reverse` |`list reverse`
+
+|*List* |Lists contacts with specific tag without "AND" or "OR |`list tag TAG/s` |`list tag colleagues family female`
+
+|*List* |Lists contacts with specific tag with "AND" |`list tag TAG/s and TAG/s` |`list tag colleagues and family and female`
+
+|*List* |Lists contacts with specific tag with "OR" |`list tag TAG/s or TAG/s` |`list tag colleagues or family or female`
+
+|*List* |Lists contacts with specific tag with "AND" and "OR" |`list tag TAG/s and TAG/s or TAG/s` |`list tag colleagues and family or female`
+
+|*List* |Lists contacts by name in ascending order |`list asc` |`list asc`
+
+|*List* |Lists contacts by name in descending order |`list dsc` |`list dsc`
+
+|*List Shorthand* |Lists all existing contacts |`l` |`l`
+
+|*List Shorthand* |Reverses a list |`l rev` |`l rev`
+
+|*List Shorthand* |Lists contacts by name in ascending order |`l asc` |`l asc`
+
+|*List Shorthand* |Lists contacts by name in descending order |`l dsc` |`l dsc`
+
+|*Help* |Shows you the user guide |`help` |`help`
+
+|*History* |Shows you a history of all used commands |`history` |`history`
+
+|*History Shorthand* |Shows you a history of all used commands |`h` |`h`
+
+|*Undo* |Undo your previous command |`undo` |`undo`
+
+|*Undo Shorthand* |Undo your previous command |`u` |`u`
+
+|*Redo* |Redo your undo |`redo` |`redo`
+
+|*Redo Shorthand* |Redo your undo |`r` |`r`
+
+|*Adding a Remark* |Adds a remark to a contact |`remark INDEX r/REMARK` |`remark 1 r/Likes coffee`
+
+|*Deleting a Remark* |Removes a remark from a contact |`remark INDEX r/` |`remark 1 r/`
+
+|*Adding an appointment*| Adds an appointment to a contact |`appointment INDEX d/DESCRIPTION, TIME`
+| `appointment 1 d/Dinner, Tonight 7pm to 8pm`
+
+|*Adding an appointment Shorthand*| Adds an appointment to a contact | `appt INDEX d/DESCRIPTION, TIME`
+| `appt 1 d/Dinner, Tonight 7pm to 10pm`
+
+|*Cancel an appointment*| Cancels an appointment with a contact. Refer to agenda in daily view |
+ `cancel DESCRIPTION with NAME` | `cancel lunch with alice yeo`
+
+|*Setting all tag color to random*| Sets all tags to random color | `tagcolor random` | `tagcolor random`
+
+|*Off all tag colors*| Off all colors of tags | `tagcolor off` | `tagcolor off`
+
+|*Set a color to a tag*| Set a tag to a color | `tagcolor TAG COLOR` | `tagcolor Friends blue`
+
+|*Set a color to a tag shorthand*| Set a tag to a color | `tc TAG COLOR` | `tc Friends blue`
+
+|=======================================================================
+
+<<<
+
+// tag::shortcut[]
+=== Keyboard Shortcut
+
+[width="59%",cols="22%,<40%,<40%",options="header",]
+|=======================================================================
+|Shortcut |Purpose |Remarks
+
+|*Escape* |Clears entire command box text field |-
+
+|*Alt* |Shifts text cursor to the start of the previous word |-
+
+|*Control* |Shifts text cursor to the end of the next word |-
+
+|*Shift-Alt* |Shifts text cursor all the way to the left |-
+
+|*Shift-Control* |Shifts text cursor all the way to the right |-
+
+|*Shift-Delete* |Deletes a chunk of word/blank space |For Mac Users
+
+|*Shift-Backspace* |Deletes a chunk of word/blank space |For Windows Users
+
+|*Right* (Add Command)|Add Command Shortcut to autofill Prefixes |"Add" or "A" must be present at the start of the line
+
+|*Right* (Edit Command)|Edit Command Shortcut to autofill Prefixes |"Edit INDEX" or "e INDEX" must be present at the start of the line
+
+|=======================================================================
+// end::shortcut[]

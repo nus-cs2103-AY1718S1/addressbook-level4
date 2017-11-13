@@ -11,9 +11,12 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Bloodtype;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Relationship;
+import seedu.address.model.person.Remark;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -79,6 +82,40 @@ public class ParserUtil {
         return email.isPresent() ? Optional.of(new Email(email.get())) : Optional.empty();
     }
 
+    //@@author Jeremy
+    /**
+     * Parses a {@code Optional<String> remark} into an {@code Optional<Remark>} if {@code remark} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     *
+     * @param remark String to be evaluated for remark prefix.
+     * @return Remark command if remark prefix is present else returns Optional.empty().
+     */
+    public static Optional<Remark> parseRemark(Optional<String> remark) throws IllegalValueException {
+        requireNonNull(remark);
+        return remark.isPresent() ? Optional.of(new Remark(remark.get())) : Optional.empty();
+    }
+    //@@author
+
+    //@@author Ernest
+    /**
+     * Parses a {@code Optional<String> bloodType} into an {@code Optional<Bloodtype>} if {@code bloodType} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Bloodtype> parseBloodType(Optional<String> bloodType) throws IllegalValueException {
+        requireNonNull(bloodType);
+        return bloodType.isPresent() ? Optional.of(new Bloodtype(bloodType.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> relation} into an {@code Optional<Relationship>} if {@code relation} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Relationship> parseRelationship(Optional<String> relation) throws IllegalValueException {
+        requireNonNull(relation);
+        return relation.isPresent() ? Optional.of(new Relationship(relation.get())) : Optional.empty();
+    }
+    //@@author
+
     /**
      * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
      */
@@ -86,8 +123,9 @@ public class ParserUtil {
         requireNonNull(tags);
         final Set<Tag> tagSet = new HashSet<>();
         for (String tagName : tags) {
-            tagSet.add(new Tag(tagName));
+            tagSet.add(new Tag(tagName, Tag.DEFAULT_COLOR));
         }
         return tagSet;
     }
+
 }

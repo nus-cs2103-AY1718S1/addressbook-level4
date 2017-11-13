@@ -2,6 +2,8 @@ package seedu.address.model;
 
 import static org.junit.Assert.assertEquals;
 import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.testutil.TypicalPersons.BENSON;
+import static seedu.address.testutil.TypicalPersons.CARL;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.ArrayList;
@@ -16,8 +18,11 @@ import org.junit.rules.ExpectedException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
 public class AddressBookTest {
@@ -69,6 +74,44 @@ public class AddressBookTest {
         addressBook.getTagList().remove(0);
     }
 
+    @Test
+    public void testHashCodeFalse() {
+        int addressBookAHash = new AddressBook().hashCode();
+        int addressBookBHash = new AddressBook().hashCode();
+        assertEquals(addressBookAHash, addressBookBHash);
+    }
+
+    //@@author rushan-khor
+    @Test
+    public void testDeletePersonsWithTag() {
+        // Setup for testing
+        AddressBook addressBookUnderTest = new AddressBook();
+        try {
+            addressBookUnderTest.addPerson(ALICE);
+            addressBookUnderTest.addPerson(BENSON);
+            addressBookUnderTest.addPerson(CARL);
+        } catch (DuplicatePersonException dpe) {
+            System.out.println(dpe.getMessage());
+        }
+        try {
+            addressBookUnderTest.deletePersonsWithTag(new Tag("friends", Tag.DEFAULT_COLOR));
+        } catch (IllegalValueException | PersonNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+
+        // Setup expected outcome
+        AddressBook expectedAddressBook = new AddressBook();
+        try {
+            expectedAddressBook.addPerson(CARL);
+        } catch (DuplicatePersonException dpe) {
+            System.out.println(dpe.getMessage());
+        }
+
+        // Test equality
+        assertEquals(addressBookUnderTest, expectedAddressBook);
+    }
+
+    //@@author
     /**
      * A stub ReadOnlyAddressBook whose persons and tags lists can violate interface constraints.
      */

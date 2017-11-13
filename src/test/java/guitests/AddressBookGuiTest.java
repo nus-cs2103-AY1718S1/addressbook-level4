@@ -9,18 +9,21 @@ import org.junit.Rule;
 import org.junit.rules.TestName;
 import org.testfx.api.FxToolkit;
 
-import guitests.guihandles.BrowserPanelHandle;
+import guitests.guihandles.CalendarViewHandle;
 import guitests.guihandles.CommandBoxHandle;
 import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.MainWindowHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.StatusBarFooterHandle;
+
 import javafx.stage.Stage;
+
 import seedu.address.TestApp;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.model.AddressBook;
 import seedu.address.testutil.TypicalPersons;
+
 
 /**
  * A GUI Test class for AddressBook.
@@ -79,8 +82,8 @@ public abstract class AddressBookGuiTest {
         return mainWindowHandle.getMainMenu();
     }
 
-    protected BrowserPanelHandle getBrowserPanel() {
-        return mainWindowHandle.getBrowserPanel();
+    protected CalendarViewHandle getCalendarView() {
+        return mainWindowHandle.getCalendarView();
     }
 
     protected StatusBarFooterHandle getStatusBarFooter() {

@@ -1,5 +1,6 @@
 package seedu.address.storage;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -9,11 +10,15 @@ import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Appointment;
+import seedu.address.model.person.Bloodtype;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.Relationship;
+import seedu.address.model.person.Remark;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -29,6 +34,14 @@ public class XmlAdaptedPerson {
     private String email;
     @XmlElement(required = true)
     private String address;
+    @XmlElement(required = true)
+    private String remark;
+    @XmlElement(required = true)
+    private String bloodType;
+    @XmlElement(required = true)
+    private String relation;
+    @XmlElement
+    private List<XmlAdaptedAppointment> appointments = new ArrayList<>();
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -37,7 +50,8 @@ public class XmlAdaptedPerson {
      * Constructs an XmlAdaptedPerson.
      * This is the no-arg constructor that is required by JAXB.
      */
-    public XmlAdaptedPerson() {}
+    public XmlAdaptedPerson() {
+    }
 
 
     /**
@@ -50,9 +64,15 @@ public class XmlAdaptedPerson {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
+        bloodType = source.getBloodType().type;
         tagged = new ArrayList<>();
+        remark = source.getRemark().value;
+        relation = source.getRelationship().value;
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
+        }
+        for (Appointment appointment : source.getAppointments()) {
+            appointments.add(new XmlAdaptedAppointment(appointment));
         }
     }
 
@@ -60,8 +80,9 @@ public class XmlAdaptedPerson {
      * Converts this jaxb-friendly adapted person object into the model's Person object.
      *
      * @throws IllegalValueException if there were any data constraints violated in the adapted person
+     * @throws ParseException if there were any data contraints violated in the appointments
      */
-    public Person toModelType() throws IllegalValueException {
+    public Person toModelType() throws IllegalValueException, ParseException {
         final List<Tag> personTags = new ArrayList<>();
         for (XmlAdaptedTag tag : tagged) {
             personTags.add(tag.toModelType());
@@ -70,7 +91,14 @@ public class XmlAdaptedPerson {
         final Phone phone = new Phone(this.phone);
         final Email email = new Email(this.email);
         final Address address = new Address(this.address);
+        final Bloodtype bloodType = new Bloodtype(this.bloodType);
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, tags);
+        final Remark remark = new Remark(this.remark);
+        final Relationship relation = new Relationship(this.relation);
+        final List<Appointment> personAppointmentList = new ArrayList<>();
+        for (XmlAdaptedAppointment appointment : appointments) {
+            personAppointmentList.add(appointment.toModelType());
+        }
+        return new Person(name, phone, email, address, bloodType, tags, remark, relation, personAppointmentList);
     }
 }

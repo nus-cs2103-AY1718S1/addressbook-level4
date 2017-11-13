@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addressbook>
+    <persons>
+        <name>Alex Yeoh</name>
+        <phone>87438807</phone>
+        <email>alexyeoh@example.com</email>
+        <address>Blk 30 Geylang Street 29, #06-40</address>
+        <remark></remark>
+        <bloodType>A</bloodType>
+        <relation></relation>
+        <appointments>
+            <description>Lunch</description>
+            <appointmentStart>2017/11/28 17:00</appointmentStart>
+            <appointmentEnd>2017/11/28 19:00</appointmentEnd>
+        </appointments>
+        <appointments>
+            <description>Checkup</description>
+            <appointmentStart>2017/11/29 20:00</appointmentStart>
+            <appointmentEnd>2017/11/29 21:00</appointmentEnd>
+        </appointments>
+        <tagged tagColor="#c7946f">Rashes</tagged>
+        <tagged tagColor="#6fdd74">Fever</tagged>
+    </persons>
+    <persons>
+        <name>Amanda Lee</name>
+        <phone>91931193</phone>
+        <email>alee@gmail.com</email>
+        <address>121 Bugis Street</address>
+        <remark></remark>
+        <bloodType>AB</bloodType>
+        <relation></relation>
+        <appointments>
+            <description>Lunch</description>
+            <appointmentStart>2017/11/28 16:00</appointmentStart>
+            <appointmentEnd>2017/11/28 17:00</appointmentEnd>
+        </appointments>
+        <tagged tagColor="#afca4d">Cold</tagged>
+        <tagged tagColor="#6fdd74">Fever</tagged>
+    </persons>
+    <persons>
+        <name>Andy Tan</name>
+        <phone>97382831</phone>
+        <email>andyy@gmail.com</email>
+        <address>190 Toa Payoh Street</address>
+        <remark></remark>
+        <bloodType>B</bloodType>
+        <relation></relation>
+        <appointments>
+            <description>Checkup</description>
+            <appointmentStart>2017/12/12 19:00</appointmentStart>
+            <appointmentEnd>2017/12/12 20:00</appointmentEnd>
+        </appointments>
+        <tagged tagColor="#d438a4">XRayCentre</tagged>
+        <tagged tagColor="#c73c49">BrokenLeg</tagged>
+    </persons>
+    <persons>
+        <name>Bernice Yu</name>
+        <phone>99272758</phone>
+        <email>berniceyu@example.com</email>
+        <address>Blk 30 Lorong 3 Serangoon Gardens, #07-18</address>
+        <remark></remark>
+        <bloodType>B</bloodType>
+        <relation>Husband: David Li</relation>
+        <appointments>
+            <description>Checkup</description>
+            <appointmentStart>2017/12/10 18:00</appointmentStart>
+            <appointmentEnd>2017/12/10 19:00</appointmentEnd>
+        </appointments>
+        <tagged tagColor="#6fdd74">Fever</tagged>
+        <tagged tagColor="#476b26">Flu</tagged>
+    </persons>
+    <persons>
+        <name>Charlie Goh</name>
+        <phone>92931193</phone>
+        <email>cgoh@gmail.com</email>
+        <address>122 Bugis Street</address>
+        <remark></remark>
+        <bloodType>A-</bloodType>
+        <relation></relation>
+        <appointments>
+            <description>Checkup</description>
+            <appointmentStart>2017/12/16 18:00</appointmentStart>
+            <appointmentEnd>2017/12/16 19:00</appointmentEnd>
+        </appointments>
+        <tagged tagColor="#b5d62f">Diabetes</tagged>
+    </persons>
+    <persons>
+        <name>Charlotte Oliveiro</name>
+        <phone>93210283</phone>
+        <email>charlotte@example.com</email>
+        <address>Blk 11 Ang Mo Kio Street 74, #11-04</address>
+        <remark></remark>
+        <bloodType>AB</bloodType>
+        <relation></relation>
+        <appointments>
+            <description>Checkup</description>
+            <appointmentStart>2017/12/15 15:00</appointmentStart>
+            <appointmentEnd>2017/12/15 17:00</appointmentEnd>
+        </appointments>
+        <tagged tagColor="#a2b8cf">Dengue</tagged>
+    </persons>
+    <persons>
+        <name>David Li</name>
+        <phone>91031282</phone>
+        <email>lidavid@example.com</email>
+        <address>Blk 436 Serangoon Gardens Street 26, #16-43</address>
+        <remark></remark>
+        <bloodType>O</bloodType>
+        <relation>Wife: Bernice Yu</relation>
+        <appointments>
+            <description>Review report</description>
+            <appointmentStart>2017/12/15 13:00</appointmentStart>
+            <appointmentEnd>2017/12/15 14:00</appointmentEnd>
+        </appointments>
+        <tagged tagColor="#a2b8cf">Dengue</tagged>
+    </persons>
+    <persons>
+        <name>Irfan Ibrahim</name>
+        <phone>92492021</phone>
+        <email>irfan@example.com</email>
+        <address>Blk 47 Tampines Street 20, #17-35</address>
+        <remark></remark>
+        <bloodType>A</bloodType>
+        <relation></relation>
+        <tagged tagColor="#afca4d">Cold</tagged>
+        <tagged tagColor="#476b26">Flu</tagged>
+        <tagged tagColor="#6fdd74">Fever</tagged>
+    </persons>
+    <persons>
+        <name>Mandy Wong</name>
+        <phone>87382831</phone>
+        <email>mandyyy@gmail.com</email>
+        <address>191 Toa Payoh Street</address>
+        <remark></remark>
+        <bloodType>B</bloodType>
+        <relation></relation>
+        <tagged tagColor="#d438a4">XRayCentre</tagged>
+        <tagged tagColor="#c73c49">BrokenLeg</tagged>
+    </persons>
+    <persons>
+        <name>Mary Lee</name>
+        <phone>91935593</phone>
+        <email>mlee@gmail.com</email>
+        <address>129 Bishan Street</address>
+        <remark></remark>
+        <bloodType>A+</bloodType>
+        <relation></relation>
+        <tagged tagColor="#e6e4aa">BrokenNeck</tagged>
+        <tagged tagColor="#d438a4">XRayCentre</tagged>
+    </persons>
+    <persons>
+        <name>Mary Tan</name>
+        <phone>93931193</phone>
+        <email>mt@gmail.com</email>
+        <address>123 Bugis Street</address>
+        <remark></remark>
+        <bloodType>A-</bloodType>
+        <relation></relation>
+        <tagged tagColor="#cc8ef6">HandFootMouth</tagged>
+    </persons>
+    <persons>
+        <name>Peter Griffin</name>
+        <phone>81938793</phone>
+        <email>pg@gmail.com</email>
+        <address>188 Thomson Road</address>
+        <remark></remark>
+        <bloodType>B</bloodType>
+        <relation></relation>
+        <tagged tagColor="#902078">BrokenArm</tagged>
+        <tagged tagColor="#d438a4">XRayCentre</tagged>
+    </persons>
+    <persons>
+        <name>Roy Balakrishnan</name>
+        <phone>92624417</phone>
+        <email>royb@example.com</email>
+        <address>Blk 45 Aljunied Street 85, #11-31</address>
+        <remark></remark>
+        <bloodType>O</bloodType>
+        <relation></relation>
+        <tagged tagColor="#ea2326">Sprain</tagged>
+    </persons>
+    <persons>
+        <name>Thomas Lee</name>
+        <phone>81938293</phone>
+        <email>tl@gmail.com</email>
+        <address>170 Thomson Road</address>
+        <remark></remark>
+        <bloodType>A+</bloodType>
+        <relation></relation>
+        <tagged tagColor="#3a4e01">Fracture</tagged>
+        <tagged tagColor="#d438a4">XRayCentre</tagged>
+    </persons>
+    <persons>
+        <name>Zeypher Lee</name>
+        <phone>81931193</phone>
+        <email>zl@gmail.com</email>
+        <address>121 Thomson Road</address>
+        <remark></remark>
+        <bloodType>B</bloodType>
+        <relation></relation>
+        <tagged tagColor="#d438a4">XRayCentre</tagged>
+        <tagged tagColor="#bc69c8">BrokenFeet</tagged>
+    </persons>
+    <persons>
+        <name>Peter Thomas Lee</name>
+        <phone>83382131</phone>
+        <email>ptl@gmail.com</email>
+        <address>193 Serangoon Street</address>
+        <remark></remark>
+        <bloodType>B</bloodType>
+        <relation></relation>
+        <tagged tagColor="#e6e4aa">BrokenNeck</tagged>
+        <tagged tagColor="#d438a4">XRayCentre</tagged>
+    </persons>
+    <persons>
+        <name>Charles Goh</name>
+        <phone>81182131</phone>
+        <email>cg@gmail.com</email>
+        <address>109 Serangoon Drive</address>
+        <remark></remark>
+        <bloodType>AB</bloodType>
+        <relation></relation>
+        <tagged tagColor="#a2b8cf">Dengue</tagged>
+    </persons>
+    <persons>
+        <name>Frank Lee</name>
+        <phone>81312131</phone>
+        <email>frankl@gmail.com</email>
+        <address>100 Lentor Drive</address>
+        <remark></remark>
+        <bloodType>O</bloodType>
+        <relation></relation>
+        <tagged tagColor="#1c9a31">Chickenpox</tagged>
+    </persons>
+    <persons>
+        <name>Cassandra Lee</name>
+        <phone>8839283</phone>
+        <email>cassy@gmail.com</email>
+        <address>101 Tuas Road</address>
+        <remark></remark>
+        <bloodType>O</bloodType>
+        <relation></relation>
+        <tagged tagColor="#1c9a31">Chickenpox</tagged>
+    </persons>
+    <persons>
+        <name>Dickson Tan</name>
+        <phone>81193829</phone>
+        <email>dicksont@gmail.com</email>
+        <address>140 Paya Lebar Road</address>
+        <remark></remark>
+        <bloodType>A-</bloodType>
+        <relation></relation>
+        <tagged tagColor="#3ff1c5">Eczema</tagged>
+    </persons>
+    <persons>
+        <name>Muhammad Ali</name>
+        <phone>81193829</phone>
+        <email>-</email>
+        <address>140 Paya Lebar Road</address>
+        <remark></remark>
+        <bloodType>A-</bloodType>
+        <relation></relation>
+        <tagged tagColor="grey">Constipation</tagged>
+    </persons>
+    <persons>
+        <name>Lee Jun Hui</name>
+        <phone>82293829</phone>
+        <email>junhui@gmail.com</email>
+        <address>139 Paya Lebar Road</address>
+        <remark></remark>
+        <bloodType>A+</bloodType>
+        <relation></relation>
+        <tagged tagColor="grey">Constipation</tagged>
+    </persons>
+    <persons>
+        <name>Chen Ai Li</name>
+        <phone>89993811</phone>
+        <email>-</email>
+        <address>199 Queensway Road</address>
+        <remark></remark>
+        <bloodType>A-</bloodType>
+        <relation></relation>
+        <tagged tagColor="grey">Constipation</tagged>
+    </persons>
+    <persons>
+        <name>Chen Ai Li</name>
+        <phone>89993811</phone>
+        <email>cal@gmail.com</email>
+        <address>182 Prince George Park</address>
+        <remark></remark>
+        <bloodType>O</bloodType>
+        <relation></relation>
+        <tagged tagColor="#476b26">Flu</tagged>
+        <tagged tagColor="#6fdd74">Fever</tagged>
+    </persons>
+    <persons>
+        <name>May Fang</name>
+        <phone>81193811</phone>
+        <email>-</email>
+        <address>182 Prince George Park</address>
+        <remark></remark>
+        <bloodType>O</bloodType>
+        <relation></relation>
+        <tagged tagColor="grey">BrokenFinger</tagged>
+        <tagged tagColor="#d438a4">XRayCentre</tagged>
+        <tagged tagColor="#6fdd74">Fever</tagged>
+    </persons>
+    <tags tagColor="#afca4d">Cold</tags>
+    <tags tagColor="#cc8ef6">HandFootMouth</tags>
+    <tags tagColor="#a2b8cf">Dengue</tags>
+    <tags tagColor="#e6e4aa">BrokenNeck</tags>
+    <tags tagColor="#1c9a31">Chickenpox</tags>
+    <tags tagColor="#c7946f">Rashes</tags>
+    <tags tagColor="#632ff2">neighbours</tags>
+    <tags tagColor="#3a4e01">Fracture</tags>
+    <tags tagColor="#d438a4">XRayCentre</tags>
+    <tags tagColor="#bc69c8">BrokenFeet</tags>
+    <tags tagColor="#662f50">friends</tags>
+    <tags tagColor="#6fdd74">Fever</tags>
+    <tags tagColor="#476b26">Flu</tags>
+    <tags tagColor="#c73c49">BrokenLeg</tags>
+    <tags tagColor="#902078">BrokenArm</tags>
+    <tags tagColor="#ea2326">Sprain</tags>
+    <tags tagColor="#e08c7e">colleagues</tags>
+    <tags tagColor="#3ff1c5">Eczema</tags>
+    <tags tagColor="#552eab">classmates</tags>
+    <tags tagColor="#b5d62f">Diabetes</tags>
+    <tags tagColor="#283e7d">family</tags>
+    <tags tagColor="grey">Constipation</tags>
+    <tags tagColor="grey">BrokenFinger</tags>
+</addressbook>
+

@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.io.Serializable;
 import java.util.Objects;
 
+
 /**
  * A Serializable class that contains the GUI settings.
  */

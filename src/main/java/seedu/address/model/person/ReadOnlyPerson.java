@@ -1,5 +1,6 @@
 package seedu.address.model.person;
 
+import java.util.List;
 import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
@@ -20,9 +21,16 @@ public interface ReadOnlyPerson {
     Email getEmail();
     ObjectProperty<Address> addressProperty();
     Address getAddress();
+    ObjectProperty<Bloodtype> bloodTypeProperty();
+    Bloodtype getBloodType();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
-
+    ObjectProperty<Remark> remarkProperty();
+    Remark getRemark();
+    ObjectProperty<Relationship> relationshipProperty();
+    Relationship getRelationship();
+    ObjectProperty<AppointmentList> appointmentProperty();
+    List<Appointment> getAppointments();
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
      */
@@ -32,7 +40,8 @@ public interface ReadOnlyPerson {
                 && other.getName().equals(this.getName()) // state checks here onwards
                 && other.getPhone().equals(this.getPhone())
                 && other.getEmail().equals(this.getEmail())
-                && other.getAddress().equals(this.getAddress()));
+                && other.getAddress().equals(this.getAddress())
+                && other.getBloodType().equals(this.getBloodType()));
     }
 
     /**
@@ -47,6 +56,12 @@ public interface ReadOnlyPerson {
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
+                .append(" BloodType: ")
+                .append(getBloodType())
+                .append(" Remark: ")
+                .append(getRemark())
+                .append(" Relationship: ")
+                .append(getRelationship())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();
