@@ -69,6 +69,19 @@ include::../DeveloperGuide.adoc[tag=appointmentimplementation]
 
 ---
 
+=== Enhancement Added: Change calendar view
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=calendar]
+
+#End of Extract#
+
+---
+
 === Enhancement Proposed (for Version 2.0)
 * More CLI for calendar view. Allow users to go to a selected date.
 ** Currently there is no way for the user to navigate through the calendar without using the mouse. It would be useful
