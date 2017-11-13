@@ -131,7 +131,7 @@ public class AddressBookParser {
         //@@author 1moresec
         case FindTaskCommand.COMMAND_WORD:
         case FindTaskCommand.COMMAND_ALIAS:
-             return new FindTaskCommandParser().parse(arguments);
+            return new FindTaskCommandParser().parse(arguments);
 
         case RemarkCommand.COMMAND_WORD:
             return new RemarkCommandParser().parse(arguments);
