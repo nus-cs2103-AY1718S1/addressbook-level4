@@ -830,6 +830,7 @@ The `XmlAdaptedLifeInsurance`
 
 * represents a JAXB-friendly version of the `LifeInsurance`.
 * follows the format below when saved in xml format:
+
 [source,xml]
 ----
 <id>ad4dc852-e6bb-44e9-800e-fa8a8964e7f1</id>
@@ -850,6 +851,7 @@ The `Map<String, XmlAdaptedLifeInsurance>`,
 [NOTE]
 The `String` key inside the map has the same value with the `String` field inside the `XmlAdaptedLifeInsurance` it maps to.
 * follows the format below when saved in xml format:
+
 [source,xml]
 ----
 <lifeInsuranceMap>
@@ -863,7 +865,6 @@ The `String` key inside the map has the same value with the `String` field insid
 </lifeInsuranceMap>
 ----
 
-
 ==== Synchronizing Life Insurances with Persons
 
 Inside `Addressbook.java` there are two methods in charge of keeping the life insurance master map `UniqueLifeInsuranceMap` and person master list `UniquePersonList` synchronized with each other.
@@ -873,6 +874,7 @@ second method is `syncMasterPersonListWith(UniqueLifeInsuranceMap lifeInsuranceM
 The first method ensures that the three `InsurancePerson` objects (owner, insured, and beneficiary) of every `LifeInsurance` in the master map links to its corresponding `Person` object if it exists in the persons list.
 In addition, it also populates the list of insurance ids `List<UUID>` in every `Person` object with id of the life insurance he/her is involved in.
 It is implemented in this way:
+
 [source,java]
 ----
 public void syncMasterLifeInsuranceMapWith(UniquePersonList persons) {
@@ -900,6 +902,7 @@ This internal list is used for exposing an `ObservableList<ReadOnlyInsurance>` t
 
 The second method ensures that every `Person` in the master list contains the correct list of `LifeInsurance` objects corresponding to his/her list of insurance ids `List<UUID>`.
 It is implemented in this way:
+
 [source,java]
 ----
 public void syncMasterPersonListWith(UniqueLifeInsuranceMap lifeInsuranceMap) throws InsuranceNotFoundException {
@@ -927,6 +930,15 @@ The internal list have to be synchronized when data in the map changes. +
 **Pros:** Does not require internal list. Easier implementation. +
 **Cons:** Less efficient data access. Requires iterating through the entire list to search for a life insurance using id.
 
+**Aspect:** Data structure for storing and saving life insurances in xml format: +
+**Alternative 1 (current choice):** Use a map to store ids as keys and life insurances as values. +
+**Pros:** Provides efficient O(1) data access using the id. +
+**Cons:** Requires an internal list to provide an `ObservableList<ReadOnlyInsurance>` to the UI for binding.
+The internal list have to be synchronized when data in the map changes. +
+**Alternative 2:** Use a list to store all `LifeInsurances`. +
+**Pros:** Does not require internal list. Easier implementation. +
+**Cons:** Less efficient data access. Requires iterating through the entire list to search for a life insurance using id.
+
 ---
 // end::li[]
 
@@ -935,7 +947,8 @@ The internal list have to be synchronized when data in the map changes. +
 `since v1.4`
 
 The following sequence diagram shows how the add life insurance operation works:
-image::AddLifeInsuranceSequenceDiagram.png[width="800"]
+
+image::AddLifeInsuranceCommandSequenceDiagram.png[width="800"]
 
 // end::addli[]
 
