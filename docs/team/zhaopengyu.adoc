@@ -57,5 +57,5 @@ include::../UserGuide.adoc[tag=fontsize]
 
 === Other contributions
 
-* Update the GUI of recyclebin list.
+* Update the GUI of recyclebin list (Pull requests https://github.com/CS2103AUG2017-W09-B3/main/pull/138 [#138]) and (Pull requests https://github.com/CS2103AUG2017-W09-B3/main/pull/131 [#131]).
 
