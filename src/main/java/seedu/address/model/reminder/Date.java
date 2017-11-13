@@ -18,7 +18,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 public class Date {
 
     public static final String MESSAGE_DATE_CONSTRAINTS =
-            "Date should conform the following format: dd/MM/yyyy HH:mm";
+            "Date should conform the following format: dd/mm/yyyy hh:mm";
 
     public final String date;
 

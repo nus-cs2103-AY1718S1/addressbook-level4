@@ -214,6 +214,7 @@ public class TagCommandTest {
                 model.getDatabase(), new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), firstTaggedPerson);
         expectedModel.updatePerson(model.getFilteredPersonList().get(1), secondTaggedPerson);
+        showFirstAndSecondPersonsOnly(expectedModel);
 
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
     }
@@ -240,6 +241,7 @@ public class TagCommandTest {
                 model.getDatabase(), new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), firstTaggedPerson);
         expectedModel.updatePerson(model.getFilteredPersonList().get(1), secondTaggedPerson);
+        showFirstAndSecondPersonsOnly(expectedModel);
 
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
     }
