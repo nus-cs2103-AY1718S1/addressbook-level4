@@ -1,9 +1,6 @@
 package seedu.address.model.asana;
 
-//@@author Sri-vatsa
-
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -17,11 +14,13 @@ import com.asana.models.User;
 import com.asana.models.Workspace;
 
 import jdk.nashorn.internal.ir.annotations.Ignore;
-import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.exceptions.AsanaAuthenticationException;
+import seedu.address.storage.asana.storage.AsanaCredentials;
 
+//@@author Sri-vatsa
 /***
  * Posts a task onto users meeting project on Asana
  */
@@ -40,8 +39,8 @@ public class PostTask extends Command {
 
         Client client;
         try {
-            AuthenticateAsanaUser authenticateAsanaUser = new AuthenticateAsanaUser();
-            client = Client.accessToken(authenticateAsanaUser.getAccessToken());
+            new CheckAuthenticateAsanaUser();
+            client = Client.accessToken((new AsanaCredentials()).getAccessToken());
             //get user data
             User user = client.users.me().execute();
 
@@ -52,6 +51,11 @@ public class PostTask extends Command {
                     meetingsWorkspace = workspace;
                     break;
                 }
+            }
+
+            if (meetingsWorkspace == null) {
+                throw new CommandException("Please create a workspace called "
+                        + "\"Personal Projects\" in your Asana account");
             }
 
             // create a "Meetings" if it doesn't exist
@@ -77,12 +81,10 @@ public class PostTask extends Command {
                     .data("assignee", user)
                     .execute();
 
-        } catch (URISyntaxException e) {
-            throw new CommandException("Invalid URL redirection");
         } catch (IOException io) {
-            throw new CommandException("Invalid Command");
-        } catch (IllegalValueException ive) {
-            throw new CommandException("OurAB failed to sync with Asana, Please try again later!");
+            throw new CommandException("Please setup Asana again!");
+        } catch (AsanaAuthenticationException e) {
+            throw new CommandException(e.getMessage());
         }
 
         return new CommandResult("");

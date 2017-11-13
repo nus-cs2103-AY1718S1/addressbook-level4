@@ -1,23 +1,40 @@
 package seedu.address.model.asana;
 
+import java.io.IOException;
+
+import com.asana.Client;
+import com.asana.OAuthApp;
+
+import seedu.address.storage.asana.storage.AsanaCredentials;
+
 //@@author Sri-vatsa
-
-import seedu.address.logic.commands.Command;
-import seedu.address.logic.commands.CommandResult;
-import seedu.address.logic.commands.exceptions.CommandException;
-
 /**
- * Stores AccessToken hashed
+ * Stores AccessToken from user input
  */
-public class StoreAccessToken extends Command {
+public class StoreAccessToken {
 
-    private final String mAccessToken;
+    private final AsanaCredentials asanaCredentials = new AsanaCredentials();
 
-    public StoreAccessToken(String accessToken) {
-        mAccessToken = accessToken;
+    public StoreAccessToken(String accessCode) throws IOException {
+        String accessToken = retrieveToken(accessCode);
+        asanaCredentials.setAccessToken(accessToken);
     }
-    @Override
-    public CommandResult execute() throws CommandException {
-        return new CommandResult("");
+
+    /***
+     * Retrieve access token using userAccessCode if it is valid
+     */
+    private String retrieveToken(String accessCode) throws IOException {
+        OAuthApp app = new OAuthApp(asanaCredentials.getClientId(), asanaCredentials.getClientSecret(),
+                asanaCredentials.getRedirectUri());
+        Client.oauth(app);
+        String accessToken = app.fetchToken(accessCode);
+
+        //check if user input is valid by testing if accesscode given by user successfully authorises the application
+        if (!(app.isAuthorized())) {
+            throw new IllegalArgumentException();
+        }
+
+        return accessToken;
     }
+
 }

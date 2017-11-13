@@ -4,7 +4,9 @@ import seedu.address.commons.events.BaseEvent;
 import seedu.address.model.ReadOnlyMeetingList;
 
 //@@author Sri-vatsa
-/** Indicates the MeetingList in the model has changed*/
+/**
+ *  Indicates the MeetingList in the model has changed
+ */
 public class MeetingListChangedEvent extends BaseEvent {
 
     public final ReadOnlyMeetingList meetingData;
@@ -18,4 +20,3 @@ public class MeetingListChangedEvent extends BaseEvent {
         return "Number of Meetings: " + meetingData.getMeetingList().size();
     }
 }
-

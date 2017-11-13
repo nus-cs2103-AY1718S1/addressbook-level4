@@ -15,8 +15,8 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UniqueMeetingList;
 import seedu.address.model.UserPrefs;
 
+//@@author Sri-vatsa
 /**
- * @author Sri-vatsa
  * Contains integration tests (interaction with the Model) and unit tests for ListCommand.
  */
 public class ListCommandTest {

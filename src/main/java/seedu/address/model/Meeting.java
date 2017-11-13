@@ -105,10 +105,10 @@ public class Meeting implements ReadOnlyMeeting {
                 + "Location: " + location + '\n'
                 + "Notes: " + notes;
     }
-    /*
+
     @Override
     public int compareTo(Meeting other) {
         return dateTime.compareTo(other.dateTime);
     }
-    */
+
 }

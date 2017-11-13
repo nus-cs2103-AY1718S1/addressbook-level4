@@ -9,7 +9,6 @@ import seedu.address.model.tag.Tag;
 
 //@@author Sri-vatsa
 /**
- *
  * Deletes all tags identified from the address book.
  */
 public class DeleteTagCommand extends UndoableCommand {
@@ -85,4 +84,3 @@ public class DeleteTagCommand extends UndoableCommand {
     }
 
 }
-//@@author

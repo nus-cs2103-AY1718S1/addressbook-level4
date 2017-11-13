@@ -25,6 +25,8 @@ import seedu.address.logic.commands.PrefCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SearchCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.SetUniqueKeyCommand;
+import seedu.address.logic.commands.SetupAsanaCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -130,6 +132,14 @@ public class AddressBookParser {
         case SearchCommand.COMMAND_WORD:
         case SearchCommand.COMMAND_ALIAS:
             return new SearchCommandParser().parse(arguments);
+
+        case SetupAsanaCommand.COMMAND_WORD:
+        case SetupAsanaCommand.COMMAND_ALIAS:
+            return new SetupAsanaCommand();
+
+        case SetUniqueKeyCommand.COMMAND_WORD:
+        case SetUniqueKeyCommand.COMMAND_ALIAS:
+            return new SetUniqueKeyCommandParser().parse(arguments);
 
         default:
 

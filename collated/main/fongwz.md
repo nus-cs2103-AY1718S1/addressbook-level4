@@ -229,6 +229,8 @@ public class ChooseCommand extends Command {
                 ListByMostSearchedCommand.COMMAND_WORD,
                 RedoCommand.COMMAND_WORD,
                 SelectCommand.COMMAND_WORD,
+                SetupAsanaCommand.COMMAND_WORD,
+                SetUniqueKeyCommand.COMMAND_WORD,
                 UndoCommand.COMMAND_WORD,
                 PrefCommand.COMMAND_WORD,
                 ChooseCommand.COMMAND_WORD,
@@ -243,6 +245,7 @@ public class ChooseCommand extends Command {
     public List<String> getCommandTemplateList() {
         List<String> templateList = Arrays.asList(
                 AddCommand.MESSAGE_TEMPLATE,
+                AddMeetingCommand.MESSAGE_TEMPLATE,
                 ClearCommand.MESSAGE_TEMPLATE,
                 DeleteCommand.MESSAGE_TEMPLATE,
                 DeleteTagCommand.MESSAGE_TEMPLATE,
@@ -255,6 +258,8 @@ public class ChooseCommand extends Command {
                 ListByMostSearchedCommand.MESSAGE_TEMPLATE,
                 RedoCommand.MESSAGE_TEMPLATE,
                 SelectCommand.MESSAGE_TEMPLATE,
+                SetupAsanaCommand.MESSAGE_TEMPLATE,
+                SetUniqueKeyCommand.MESSAGE_TEMPLATE,
                 UndoCommand.MESSAGE_TEMPLATE,
                 PrefCommand.MESSAGE_TEMPLATE,
                 ChooseCommand.MESSAGE_TEMPLATE,

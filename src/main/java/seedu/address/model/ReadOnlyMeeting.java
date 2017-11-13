@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import seedu.address.model.person.InternalId;
 
+//@@author Sri-vatsa
 /**
  * A read-only immutable interface for a Meeting in the addressbook.
  * Implementations should guarantee: details are present and not null, field values are validated.
@@ -30,25 +31,5 @@ public interface ReadOnlyMeeting {
                 && other.getNotes().equals(this.getNotes()));
     }
 
-    /*
-    /**
-     * Formats the meeting as text, showing all contact details.
-     *
-    default String getAsText() {
-        ReadOnlyAddressBook abData = ;
-        final StringBuilder builder = new StringBuilder();
-        builder.append("You have meeting on ")
-                .append(getDate())
-                .append("from ")
-                .append(getTime())
-                .append("at ")
-                .append(getLocation())
-                .append("with ");
-        getListOfPersonsId().forEach(abData.getPersonByInternalIndex(i));
-
-        getListOfPersonsId().forEach(builder::append);
-        return builder.toString();
-    }*/
-
-
+    int compareTo(Meeting other);
 }
