@@ -472,8 +472,8 @@ _Figure 4.3.1.1a : Structure of Commands in the Logic Component._
 
 You will not be able to enter the birthday parameter when adding contacts. +
 Suppose that you have a list of persons. The birthday parameters of each contact will be empty if you have not modified them before. +
-You can then choose to add their birthday using the BirthdayCommand. For example if you want to add the birthday of the
-second person in your contact list, key in " `birthday 2 b/20/07/1994` "  where his birthday is 20/07/1994. +
+You can then choose to add their birthday using the BirthdayCommand. For example if you want to add the birthday (20/07/1994) of the
+second person in your contact list, key in " `birthday 2 b/20/07/1994` "  +
 Similarly, you can edit their birthday using the same command. +
 To delete their birthday, simply not key in anything for his birthday. For example,
 " `birthday 2 b/` "

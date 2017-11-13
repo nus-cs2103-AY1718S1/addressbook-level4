@@ -754,9 +754,3 @@ Reminder list is empty.
 [NOTE]
 Execute `undo` command twice to revert back to original list +
 
-
-
-
-(NOTE)
-Execute `undo` command twice to revert back to original list +
-
