@@ -488,55 +488,51 @@ In addition, the `MusicCommand` class will create a new `music thread`, this is 
 
 [source,java]
 ----
-public CommandResult execute() {
-    boolean genreExist = Arrays.asList(GENRE_LIST).contains(genre);
-        switch (command) {
-        case "play":
-            if (RadioCommand.isRadioPlaying()) {
-                RadioCommand.stopRadioPlayer();
-            }
-            stopMusicPlayer();
-            if (genreExist) {
-                //check if current genre same previous playing music genre
-                //if different reset track number
-                if (!genre.equals(previousGenre)) {
-                    trackNumber = 1;
-                }
-                messageSuccess = genre.toUpperCase() + " Music " + trackNumber + " Playing";
-                music = new Music("audio/music/"
-                        + genre + trackNumber + ".mp3");
-                music.start();
-
-                if (trackNumber < maxTrackNumber) {
-                    trackNumber++;
-                } else {
-                    //reset track number back to 1
-                    trackNumber = 1;
-                }
-                //Text to Speech
-                new TextToSpeech(messageSuccess).speak();
-                //set current playing genre as previousGenre
-                previousGenre = genre;
-                return new CommandResult(messageSuccess);
-            } else {
-                return new CommandResult(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MusicCommand.MESSAGE_USAGE));
-            }
-        //Stop the music that is currently playing
-        case "stop":
-            if (!isMusicPlaying()) {
-                //Text to Speech
-                new TextToSpeech(MESSAGE_NO_MUSIC_PLAYING).speak();
-                return new CommandResult(MESSAGE_NO_MUSIC_PLAYING);
-            }
-            stopMusicPlayer();
-            //Text to Speech
-            new TextToSpeech(MESSAGE_STOP).speak();
-            return new CommandResult(MESSAGE_STOP);
-
-        default:
-            return new CommandResult(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MusicCommand.MESSAGE_USAGE));
-        }
+switch (command) {
+case "play":
+    if (RadioCommand.isRadioPlaying()) {
+        RadioCommand.stopRadioPlayer();
     }
+    stopMusicPlayer();
+    if (genreExist) {
+        //check if current genre same previous playing music genre
+        //if different reset track number
+        if (!genre.equals(previousGenre)) {
+            trackNumber = 1;
+        }
+        messageSuccess = genre.toUpperCase() + " Music " + trackNumber + " Playing";
+        music = new Music("audio/music/"
+                + genre + trackNumber + ".mp3");
+        music.start();
+
+        if (trackNumber < maxTrackNumber) {
+            trackNumber++;
+        } else {
+            //reset track number back to 1
+            trackNumber = 1;
+        }
+        //Text to Speech
+        new TextToSpeech(messageSuccess).speak();
+        //set current playing genre as previousGenre
+        previousGenre = genre;
+        return new CommandResult(messageSuccess);
+    } else {
+        return new CommandResult(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MusicCommand.MESSAGE_USAGE));
+    }
+//Stop the music that is currently playing
+case "stop":
+    if (!isMusicPlaying()) {
+        //Text to Speech
+        new TextToSpeech(MESSAGE_NO_MUSIC_PLAYING).speak();
+        return new CommandResult(MESSAGE_NO_MUSIC_PLAYING);
+    }
+    stopMusicPlayer();
+    //Text to Speech
+    new TextToSpeech(MESSAGE_STOP).speak();
+    return new CommandResult(MESSAGE_STOP);
+
+default:
+    return new CommandResult(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MusicCommand.MESSAGE_USAGE));
 }
 ----
 
@@ -544,9 +540,9 @@ public CommandResult execute() {
 
 image::header_note.png[width="400"]
 
-* If you wish to include more music tracks, you also have to change the variable `maxTrackNumber = 2` to the desired number. For example, if you wish to have 3 music tracks for each genre, you have to change it to `maxTrackNumber = 3` and ensure that each genre have at least 3 music tracks in the `resources/audio/music` folder.
+* If you wish to include more music tracks, you also have to change the variable `maxTrackNumber = 2` to the desired number. For example, if you wish to have 3 music tracks for each genre, you have to change it to `maxTrackNumber = 3` and ensure that each genre has at least 3 music tracks in the `resources/audio/music` folder.
 
-* You are also able to add a new genre of music, however make sure that it too has the equal number of music tracks as the other genres. In addition, you have to update the `GENRE_LIST` array to include the new genre that you have just added.
+* You are also able to add a new genre of music. However make sure that it too has the equal number of music tracks as the other genres. In addition, you have to update the `GENRE_LIST` array to include the new genre that you have just added.
 
 * Adding more music tracks will result in a large .jar file size.
 
@@ -588,20 +584,20 @@ image::MusicList.jpg[width="200"]
 **Aspect:** Naming of music tracks +
 
 **Alternative 1 (current choice):** Name begins with the genre followed by track number +
-**Pros:** Easy to maintain, as it allows addition of music tracks by adding more mp3 files and a change of only one or two variables in the code. +
+**Pros:** Easy to maintain, as it allows the addition of music tracks by adding more mp3 files and a change of only one or two variables in the code. +
 **Cons:** Require to have the same exact number of music tracks for each genre +
 
 **Alternative 2:** Any file name  +
-**Pros:** Able to hold music track title name, which can be use to display to the user in the result box +
+**Pros:** Able to hold music track title name, which can be used to display to the user in the result box +
 **Cons:** Requires an array to keep track of the music tracks for each genre. More code manipulation required when adding more music tracks +
 
 {sp}
 
 **Aspect:** Which music file to play first +
 
-**Alternative 1 (current choice):** Play the music file that starts with 1 then increase from there +
-**Pros:** Easy to implement. Users are able to know what song is coming up next in the track list +
-**Cons:** Always start at the same music track first +
+**Alternative 1 (current choice):** Play the music file that starts with 1 then increases from there +
+**Pros:** Easy to implement. Users are able to know what song is coming up next on the tracklist +
+**Cons:** Always start playing the same music track first +
 
 **Alternative 2:** Play a random music file +
 **Pros:** Has a chance to be different the next time the user starts playing music. +
@@ -616,8 +612,8 @@ The `radio` command is extended with an additional command behind it. For exampl
 will stop the current radio player.
 
 Both the `radio play` and the `radio stop` commands are executed in the same `RadioCommand` class. This also makes the commands easier to remember for the user as well, as anything related to `radio` will start with `radio` as a command.
-In addition, the `RadioCommand` class will create a new `radio thread`, this is to prevent the User Interface from being non-responsive in the current thread. The radio thread will stream endlessly as the broadcast stream is 24h/7 unless it is shutdown.
-Hence, the radio thread will only be closed when the user execute the `radio stop` command.
+In addition, the `RadioCommand` class will create a new `radio thread`, this is to prevent the User Interface from being non-responsive in the current thread. The radio thread will stream endlessly unless the stream has been shut down.
+Hence, the radio thread will only be closed when the user executes the `radio stop` command.
 
 image::header_note.png[width="400"]
 
@@ -687,8 +683,8 @@ This library is required as it can convert input stream into .mp3 codec immediat
 
 image::header_warning.png[width="400"]
 
-* In order for the radio player to work, it requires Internet connection, as it streams the radio broadcast through the Internet.
-* Remember to check the status of the stream urls. As it is possible but highly unlikely that one of those radio broadcast has shutdown.
+* In order for the radio player to work, it requires an Internet connection, as it streams the radio broadcast through the Internet.
+* Remember to check the status of the stream URLs. As it is possible but highly unlikely that one of those radio broadcast has shut down.
 // end::radiocommand[]
 
 ---
@@ -699,9 +695,9 @@ image::header_warning.png[width="400"]
 The `share` command takes in the parameter that consists an `INDEX`, of which is the selected contact's details to be shared with.
 Followed by s/`INDEX` `EMAIL`, which are the parameters for the recipient email address. This format allows the parameters `INDEX` `EMAIL` found are interchangeable.
 
-By using the `isNumeric(string)` method, which returns us a boolean. If it return true, it means that input is an `INDEX`, otherwise it is an string.
-Next we want to check if those string values are indeed valid email addresses, use the isValidEmailAddress(string) to check whether is it a valid email address.
-This method requires the use of `javax.mail` api ,as it creates a new `InternetAddress` object and calls `validate()' method to check if the email address is valid or not.
+By using the `isNumeric(string)` method, which returns us a boolean. If it returns true, it means that input is an `INDEX`, otherwise, it is a string.
+Next, we want to check if those string values are indeed valid email addresses, use the isValidEmailAddress(string) to check whether is it a valid email address.
+This method requires the use of `javax.mail` API, as it creates a new `InternetAddress` object and calls `validate()' method to check if the email address is valid or not.
 
 Once, we know the email address are valid. We have to create a new thread to send these emails. Because, if we were to send more than 2 emails,
 the main thread for the UI will be non-responsive.
@@ -709,9 +705,9 @@ the main thread for the UI will be non-responsive.
 image::header_note.png[width="400"]
 
 * If you wish to change to a different host email address, just simply modify `sendEmail.java` class as shown below, and change the variable values, such as senderEmail, password, and the host.
-* If your sender's email is from `Gmail`, your host have to be `smtp.gmail.com`
-* If your sender's email is from `Outlook`, your host have to be `smtp-mail.outlook.com`
-* If your sender's email is from `Hotmail`, your host have to be `smtp.live.com`
+* If your sender's email is from `Gmail`, your host has to be `smtp.gmail.com`
+* If your sender's email is from `Outlook`, your host has to be `smtp-mail.outlook.com`
+* If your sender's email is from `Hotmail`, your host has to be `smtp.live.com`
 
 
 [source,java]
@@ -762,7 +758,7 @@ image::header_warning.png[width="400"]
 
 **Alternative 2:** Let user input the subject header +
 **Pros:** Different subject header can be used for different purpose. +
-**Cons:** Can be abused and send negative subject header, leading to a bad reputation for Unify, as the recipients thinks that these offensive subject header is from Unify.
+**Cons:** Can be abused to send offensive subject headers, leading to a bad reputation for Unify, as the recipients think that the offensive subject header is from Unify.
 
 // end::sharecommand[]
 
@@ -770,11 +766,11 @@ image::header_warning.png[width="400"]
 
 // tag::audiblefeedback[]
 === Audible Feedback Mechanism
-Audio feedback are created by using 2 different audio cues. First is the typing sound, that is created by playing a .mp3 sound file using the `Audio.java` class. You may use this class to play a sound file without looping. You just have to create a new `Audio`
+Audio feedback is created by using two different audio cues. First is the typing sound, that is created by playing a .mp3 sound file using the `Audio.java` class. You may use this class to play a sound file without looping. You just have to create a new `Audio`
 object with an `audioFileName` of which is your .mp3 resource file.
 
-The second audio cue comes from the Text-To-Speech feature, which plays an human-like speech back to the user when they have successful execute a command.
-This be easily added for any new commands by creating a new `TextToSpeech` object with the string `word` that you want it speak. Next call the `TextToSpeech.speak()` method to run the Text-To-Speech feature.
+The second audio cue comes from the Text-To-Speech feature, which plays an human-like speech back to the user when they have successfully executed a command.
+This can be easily added to any new commands by creating a new `TextToSpeech` object with the string `word` that you want it to speak. Next call the `TextToSpeech.speak()` method to run the Text-To-Speech feature.
 
 For example, `new TextToSpeech("hello").speak();` will cause the system to say "hello" when it is executed.
 
@@ -817,7 +813,7 @@ dependencies {
 **Pros:** Giving audible feedback when users needed it the most, such as confirmation of successful command execution +
 **Cons:** Invalid commands have no audio feedback +
 
-**Alternative 2:** All commands, including invalid commands have audio feedback +
+**Alternative 2:** All commands, including invalid commands, have audio feedback +
 **Pros:** Users able to have audible feedback for every action they take +
 **Cons:** Users may find it annoying as every action they take, the system will play an audio cue. +
 

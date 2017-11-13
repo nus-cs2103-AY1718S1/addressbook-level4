@@ -48,16 +48,16 @@ image::UG_header_howtouseuserguide.png[width="500"]
 
 Everything you need to know about Unify is in this user guide.
 
-You are able to quickly navigate the user guide by clicking on the links found in the table of contents at the top of the user guide.
+You can quickly navigate the user guide by clicking on the links found in the table of contents at the top of the user guide.
 
-An example of the user guide for the features is shown below. You are able to identify the feature's title, description, format and easy to follow step by step instructions.
+An example of the user guide for the features is shown below. You can identify the feature's title, description, format and easy to follow step by step instructions.
 
 image::UG_howtouse1.png[width="590"]
 {sp}
 
 To find the information you need, just look out for these sub-headers in the user guide. These are the few sub-headers you will find in this user guide below.
 
-These sub-headers are unique, they are marked with a circle surrounding the first letter of the header. This help you find the information quickly. Just look out for the first letter in the circle and you are able to find what you need to know!
+These sub-headers are unique, they are marked with a circle surrounding the first letter of the header. This help you find the information quickly. Just look out for the first letter in the circle and you can find what you need to know immediately!
 
 For example, the letter "F" in the circle represent format. Hence, you just have to look out for the letter "F" in the circle, to find the format quickly.
 
@@ -167,26 +167,25 @@ image::UG_commandheader_add.png[width="500"]
 Adding a new contact? Unify's `add` command takes a person's information and records it in Unify as a contact!
 
 image::UG_header_format.png[width="400"]
-{sp}+
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [r/REMARK] [i/AVATAR_FILE_PATH] [t/TAG]...`
 
 image::header_note.png[width="400"]
+* You can have multiple tags for each of your contacts.
 
-Remark, avatar and tag fields are optional! You do not have to fill them if you do not have any remarks, avatar picture, or tags to add currently. +
-Don't worry! You are still able to add these later using the link:#editcommand[Edit] command.
+* Remark, avatar and tag fields are optional! You do not have to fill them if you do not have any remarks, avatar picture, or tags to add currently. +
+Don't worry! You are still able to add these to your contacts later using the link:#editcommand[Edit] command.
 
 [TIP]
 Still unsure of what fields are required? Not to worry! Unify's in-line hints will prompt you on the fields required.
 Simply press kbd:[Tab] to auto-complete to the next required prefix!
 
 image::UG_header_alias.png[width="400"]
-{sp}+
 Alias: `new`, `create`
 
 image::UG_header_examples.png[width="400"]
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 r/Loves Tea`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 i/d:/pictures/betsy.png t/criminal`
+* `add n/Leonard Tan t/friend e/leonard@example.com a/Jurong East #23-24 p/1234567 i/d:/pictures/leonard.png t/classmates` +
 
 image::UG_header_stepbystep.png[width="400"]
 {sp}+
@@ -196,10 +195,14 @@ image::UG_add1.png[width="590"]
 
 image:step2.png[width="70"] The result box will display "New person added:" with the contact details that you have just input.
 
-image:step3.png[width="70"] The contact list will be displayed with the newly added contact at the bottom of the list.
+image:step3.png[width="70"] Your contact list will display the newly added contact at the bottom of the list.
 
 image::UG_add2.png[width="590"]
 {sp}+
+
+image::header_warning.png[width="400"]
+Duplicate contact cannot be added! You cannot add a new contact that have same exact details as another contact in your contact list. You may encounter this message
+"This person already exists in the address book" at image:step2.png[width="70"] if you try to do so.
 
 image::header_note.png[width="400"]
 * When choosing the right image for your contact, make sure that the image is in .jpg or .png format.
@@ -256,8 +259,10 @@ Alias: `remove`
 image::header_note.png[width="400"]
 
 * Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
+* The `INDEX` refers to the index number shown in the most recent listing.
+
+image::header_warning.png[width="400"]
+* The `INDEX` *must be a positive integer* 1, 2, 3, ...
 
 image::UG_header_examples.png[width="400"]
 
@@ -310,7 +315,6 @@ image::UG_header_format.png[width="400"]
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [r/REMARK] [t/TAG]...` +
 
 image::UG_header_alias.png[width="400"]
-{sp}+
 Alias: `change`
 
 image::header_note.png[width="400"]
@@ -328,10 +332,10 @@ image::UG_header_examples.png[width="400"]
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 
 * `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+Edits the name of the 2nd person to `Betsy Crower` and clears all existing tags.
 
 * `edit 3 r/Loan me $50` +
-Edits the remarks of the 3rd person to be `Loan me $50.
+Edits the remarks of the 3rd person to `Loan me $50.
 
 * `edit 3 r/` +
 Remove the remarks of the 3rd person.
@@ -348,6 +352,10 @@ image:step3.png[width="70"] The details of last updated will be also updated wit
 
 image::UG_edit2.png[width="590"]
 {sp}+
+
+image::header_warning.png[width="400"]
+You cannot edit a contact to have the same exact details as another contact in your contact list. You may encounter this message
+"This person already exists in the address book" at image:step2.png[width="70"] if you try to do so.
 
 image::divider.png[width="900"]
 
@@ -379,16 +387,14 @@ image::divider.png[width="900"]
 === Listing all persons : `list`
 
 image::UG_commandheader_list.png[width="500"]
-{sp}+
+
 Looking to scroll through your entire contact list? Or just want to admire your large network?
 Unify's `list` command will list of all your contacts! +
 
 image::UG_header_format.png[width="400"]
-{sp}+
 Format: `list` +
 
 image::UG_header_alias.png[width="400"]
-{sp}+
 Alias: `ls`, `show`
 
 image::UG_header_stepbystep.png[width="400"]
@@ -500,7 +506,6 @@ Feeling lost and not sure what to do? You can type the `help` command and Unify 
 user guide for your reference!
 
 image::UG_header_format.png[width="400"]
-{sp}+
 Format: `help`
 
 image::UG_header_stepbystep.png[width="400"]
@@ -685,7 +690,7 @@ image::divider.png[width="900"]
 === Sharing contact's details by email : `share`
 image::UG_commandheader_share.png[width="500"]
 
-Want to share a contact to your colleagues or friends via e-mail?
+Want to share a contact to your colleagues or friends via email?
 Unify's `share` command lets you email the selected contact's details to your designated email!
 
 image::UG_header_format.png[width="400"]
@@ -695,11 +700,13 @@ Format:
 * `share INDEX s/INDEX`
 * `share INDEX s/EMAIL INDEX` is same as `share INDEX s/INDEX EMAIL`
 
+image::header_note.png[width="400"]
+
 You can share the selected contact's details to as many email addresses as you wish.
 
-* For example, to share to three 3 email addresses,
+* For example, to share a contact with three email addresses,
 use the format `share INDEX s/INDEX INDEX INDEX` or `INDEX s/EMAIL INDEX EMAIL`.
-* The `INDEX` after the "s/" can also be replaced with an `EMAIL` and it is also interchangeable.
+* The `INDEX` after the "s/" can also be replaced with an `EMAIL`, and it is also interchangeable.
 
 
 image::UG_header_examples.png[width="400"]
@@ -716,19 +723,13 @@ Sends the 1st contact's details in the address book as an email to the 2nd conta
 `share 1 s/cs2103@gmail.com 2` +
 Sends the 1st contact's details in the address book as an email to both cs2103@gmail.com and the 2nd contact's email in the address book.
 
-image::header_note.png[width="400"]
-
-* The format of the `share` between email and index
-* If you are unable to find the email that has been sent out to your inbox, try searching for it under the "junk" folder.
-
 image::header_warning.png[width="400"]
-* Ensure that you have input a valid email address to send to, otherwise the result box will display "Email address is no valid!"
- and the email will not be sent.
+Ensure that you have input a valid email address to send to, otherwise the result box will display "Email address is not valid!"
+and the email will not be sent.
 
 image::UG_sharewarning.png[width="590"]
 
 {sp}+
-
 
 image::UG_header_stepbystep.png[width="400"]
 {sp}+
@@ -738,7 +739,7 @@ image::UG_list1.png[width="590"]
 
 image:step2.png[width="70"] The result box will display "Listed all persons".
 
-image:step3.png[width="70"] The contact list will display every contacts found in the address book. You can scroll down to view more contacts in the list.
+image:step3.png[width="70"] The contact list will display every contact found in the address book. You can scroll down to view more contacts in the list.
 
 image::UG_list2.png[width="590"]
 
@@ -754,10 +755,16 @@ image::UG_share2.png[width="590"]
 
 image::header_warning.png[width="400"]
 
-* It requires internet connection to share a contact details by email.
+* This share feature requires an Internet connection!
 * Otherwise, your  image:step5.png[width="70"] will have the result box displaying "Not Connected to the Internet".
 
 image::UG_share2a.png[width="590"]
+
+{sp}+
+
+image::header_note.png[width="400"]
+
+If you are unable to find the email that has been sent out to your inbox, try searching for it under the "junk" folder.
 
 {sp}+
 
@@ -768,22 +775,23 @@ image::divider.png[width="900"]
 === Playing music : `music play`
 image::UG_commandheader_musicplay.png[width="500"]
 
-Want to listen to some of your favourite tunes, but do not have any internet connection currently? Fear not! Unify has got you covered! Unify's `music play [GENRE]` command plays a music track
-from a specific genre from a list of built-in mp3 music. You are able to select from three different genre, such as "pop", "dance" and "classic".
+Want to listen to some of your favourite tunes, but do not have any Internet connection currently? Fear not! Unify has got you covered! Unify's `music play` command plays a music track
+from a specific genre from a list of built-in mp3 music. You can select from three different genres, such as "pop", "dance" and "classic".
 
 image::UG_header_format.png[width="400"]
 Format: `music play [GENRE]`
 
 image::header_note.png[width="400"]
 
-* You can only select either "pop", "dance" or "classic" as the `[GENRE]` of the music. `music play` command without any `[GENRE]` will play "pop" songs as default.
-* Tired of the same music playing on a loop?  To skip to the next track, input the same command as previously for example, if you have input `music play pop`,
-input the same command `music play pop` again to go to the next pop song.
-* Changing of the music `[GENRE]` or inputting the `radio play` command, will reset your music playlist back to track number 1.
+* You can only select either "pop", "dance" or "classic" as the `[GENRE]` of the music.
+* If you had input `music play` command without any `[GENRE]`. It will play some "pop" music by default.
+* Tired of the same music playing on a loop?  To skip to the next track, input the same command as previously for example, if you had input `music play pop`,
+input the same command `music play pop` again to go to the next pop music track.
+* Changing of the music `[GENRE]` or inputting the `radio stop` command, will reset your music playlist back to track number 1.
 
 image::UG_header_stepbystep.png[width="400"]
 {sp}+
-image:step1.png[width="70"] To start off your day with some songs, type `music play` into the command box, then follows by a `[GENRE]` and press kbd:[Enter] to execute it.
+image:step1.png[width="70"] To start off your day with some music, type `music play` into the command box, then follows by a `[GENRE]` and press kbd:[Enter] to execute it.
 
 image::UG_musicplay1.png[width="590"]
 
@@ -795,8 +803,8 @@ image::UG_musicplay2.png[width="590"]
 
 image::header_note.png[width="400"]
 
-* You can repeat image:step1.png[width="70"] again with a different `[GENRE]` as the input to play other  music `[GENRE]` songs.
-* For example, input `music play classic` at image:step1.png[width="70"] to play classical songs instead.
+* To play a different `[GENRE]` music track. You can repeat image:step1.png[width="70"] again with a different `[GENRE]` as the input.
+* For example, input `music play classic` at image:step1.png[width="70"] to play classical music instead.
 
 {sp}+
 
@@ -806,18 +814,18 @@ image::divider.png[width="900"]
 image::UG_commandheader_musicstop.png[width="500"]
 
 Maybe the music is getting a little distracting or you are just not in the mood for some tunes.
-`music stop` stops the current music track playing so that you can focus on the task at hand.
+`music stop` command stops the current music track playing so that you can focus on the task at hand.
 
 image::UG_header_format.png[width="400"]
 Format: `music stop`
 
 image::UG_header_stepbystep.png[width="400"]
 {sp}+
-image:step1.png[width="70"] To stop the music from playing, type `music stop` into the command box, and press kbd:[Enter] to execute it.
+image:step1.png[width="70"] You can stop the music from playing by typing `music stop` into the command box, and press kbd:[Enter] to execute it.
 
 image::UG_musicstop1.png[width="590"]
 
-image:step2.png[width="70"] Now you have the silence that you need and the result box will display "Music Stopped".
+image:step2.png[width="70"] Now you have the silence that you need and the result box will also display "Music Stopped".
 
 image::UG_musicstop2.png[width="590"]
 
@@ -825,8 +833,8 @@ image::UG_musicstop2.png[width="590"]
 
 image::header_note.png[width="400"]
 
-* If there is no music currently playing and you try to stop the music player, you may encounter "No music is currently playing" in the result box at your image:step2.png[width="70"]. No worries! It is not a problem at all! Just issue the `music stop`
-command only, when there is music currently playing.
+If there is no music currently playing and you try to stop the music player, you may encounter "No music is currently playing" in the result box at image:step2.png[width="70"].  No worries! It is not a problem at all! Just execute the `music stop`
+command only when the music player is currently playing.
 
 image::UG_musicstop2a.png[width="590"]
 
@@ -839,16 +847,18 @@ image::divider.png[width="900"]
 === Playing radio : `radio play`
 image::UG_commandheader_radioplay.png[width="500"]
 
-Want to hear the latest pop songs or the latest news? Tune in to Unify's radio player using the `radio play [GENRE]` command. There are four different `[GENRE]` to choose from,
-as "pop", "chinese", "classic" and "news". However, do note that this radio player requires internet connection in order to work!
+Want to hear the latest pop songs that everyone is talking about? Or maybe you are interested to hear the news for weather broadcast or potential sales advertisement
+that only happens on a radio channel! Then tune in to Unify's radio player using the `radio play [GENRE]` command. There are currently four different `[GENRE]` to choose from,
+as "pop", "chinese", "classic" and "news".
 
 image::UG_header_format.png[width="400"]
 Format: `radio play [GENRE]`
 
 image::header_note.png[width="400"]
 
-* The genre can only be "pop", "chinese", "classic" or "news" `radio play` alone will play pop radio station as default.
-* If your radio player suddenly stops playing, ensure that you are still connected to the internet, as it requires internet connection in order to work.
+* The genre can only be "pop", "chinese", "classic" or "news".
+* If you had input `radio play` command without any `[GENRE]`. It will play the broadcast from the "pop" genre radio station by default.
+* If your radio player suddenly stops playing, ensure that you are still connected to the Internet, as it requires an Internet connection in order to work.
 
 image::UG_header_stepbystep.png[width="400"]
 {sp}+
@@ -864,7 +874,7 @@ image::UG_radioplay2.png[width="590"]
 
 image::header_warning.png[width="400"]
 
-* Unify's radio player requires internet connection!
+* Unify's radio player requires an Internet connection to work!
 * Otherwise, your  image:step2.png[width="70"] will have the result box displaying "Not Connected to the Internet".
 
 image::UG_nointernet.png[width="590"]
@@ -873,7 +883,7 @@ image::UG_nointernet.png[width="590"]
 
 image::header_note.png[width="400"]
 
-* You can repeat image:step1.png[width="70"] again with a different `[GENRE]` as the input to play other  radio `[GENRE]` stations.
+* To play other  radio `[GENRE]` stations, you can repeat image:step1.png[width="70"] again with a different `[GENRE]` as the input.
 * For example, input `radio play classic` at image:step1.png[width="70"] to listen to the classical radio station.
 
 {sp}+
@@ -883,19 +893,19 @@ image::divider.png[width="900"]
 === Stopping radio : `radio stop`
 image::UG_commandheader_radiostop.png[width="500"]
 
-Maybe the radio broadcast is getting a little distracting or you are just not in the mood for some tunes.
-`radio stop` stops the radio player from playing so that you can focus on the task at hand.
+Maybe the radio broadcast is getting a little distracting. No worries!
+`radio stop` command stops the radio player from playing so that you can focus on your task at hand.
 
 image::UG_header_format.png[width="400"]
 Format: `radio stop`
 
 image::UG_header_stepbystep.png[width="400"]
 {sp}+
-image:step1.png[width="70"] To stop the radio player from playing, type `radio stop` into the command box, and press kbd:[Enter] to execute it.
+image:step1.png[width="70"] You can stop the radio player from playing by typing `radio stop` into the command box, and press kbd:[Enter] to execute it.
 
 image::UG_radiostop1.png[width="590"]
 
-image:step2.png[width="70"] Now, the radio player will stop playing the broadcast and you have the silence that you need. The result box will also
+image:step2.png[width="70"] The radio player will stop playing the broadcast and you have the silence that you need. The result box will also
 display "Radio Stopped".
 
 image::UG_radiostop2.png[width="590"]
@@ -904,8 +914,8 @@ image::UG_radiostop2.png[width="590"]
 
 image::header_note.png[width="400"]
 
-* If the radio player is currently not playing and you try to stop the radio player, you may encounter "No Radio is currently playing" in the result box at your image:step2.png[width="70"]. No worries! It is not a problem at all! Just issue the `radio stop`
-command only, when the radio playing is currently playing.
+If the radio player is currently not playing and you try to stop the radio player, you may encounter "No Radio is currently playing" in the result box at image:step2.png[width="70"]. No worries! It is not a problem at all! Just execute the `radio stop`
+command only when the radio player is currently playing.
 
 image::UG_radiostop2a.png[width="590"]
 
@@ -1015,7 +1025,7 @@ Unify knows that your contacts are important and automatically saves them to you
 === Audible Feedback
 image::UG_header_audiblefeedback.png[width="500"]
 
-Unify knows that speed is essential to you, hence audible feedback is an another key component in giving you that extra confirmation
+Unify knows that speed is important to you, hence audible feedback is another key component in giving you that extra confirmation
 that your actions have been executed.
 
 * An audible typing sound will be played whenever you are typing in the command box.
