@@ -17,6 +17,7 @@ public class DateOfBirth {
     public static final String MESSAGE_DOB_CONSTRAINTS =
             "Please enter in Day Month Year format where the month can be a number or the name"
                     + " and the year can be input in 2-digit or 4-digit format.";
+
     /*
      * The first character of the address must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
