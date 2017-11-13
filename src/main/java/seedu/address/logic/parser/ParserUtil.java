@@ -139,4 +139,16 @@ public class ParserUtil {
             throw new IllegalValueException(MESSAGE_INVALID_TYPE);
         }
     }
+
+    /**
+     * Parses the String into an array of Index
+     */
+    public static Index[] parseIndexArr(String indices) throws IllegalValueException {
+        String[] strArr = indices.split(" ");
+        Index[] indexArr = new Index[strArr.length];
+        for (int i = 0; i < strArr.length; i++) {
+            indexArr[i] = parseIndex(strArr[i]);
+        }
+        return indexArr;
+    }
 }

@@ -14,7 +14,11 @@ public class Time {
     private Integer time;
 
     public Time(String time) throws IllegalValueException {
-        this.time = Integer.parseInt(time);
+        try {
+            this.time = Integer.parseInt(time);
+        } catch (NumberFormatException e) {
+            throw new IllegalValueException("Not a proper time form");
+        }
         if (!isValid()) {
             throw new IllegalValueException("Not a proper time form");
         }

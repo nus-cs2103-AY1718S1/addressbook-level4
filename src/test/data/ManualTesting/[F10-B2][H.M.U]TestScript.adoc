@@ -1,0 +1,229 @@
+= H.M.U - Test Script
+:toc:
+:toc-title:
+:toc-placement: preamble
+:sectnums:
+:imagesDir: ../../../../docs/images
+:stylesDir: ../../../../docs/stylesheets
+:experimental:
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+endif::[]
+:repoURL: https://github.com/CS2103AUG2017-F10-B2/main
+
+// Workaround for asciidoctor-pdf compatibility issues.
+:keyboard-icon: &#9000;
+
+By: `CS2103T F10-B2 Team`      Since: `Sep 2017`      Licence: `MIT`
+
+== Setting up
+
+This test script will guide you on how to test the various features of **H.M.U**.
+
+image::Ui.png[width="700"]
+_Figure 1 : User Interface Demo_
+
+=== Prerequisites
+
+. Have Java (JRE) version `1.8.0_60` or later installed in your Computer.
+. Download the latest release `[F10-B2][H.M.U].jar`, the sample data `[F10-B2][H.M.U]SampleData.xml` and test instructions
+`[F10-B2][H.M.U]TestScript.pdf` (this document itself).
+. A folder you want to use as home folder for testing **H.M.U** and copy the `.jar` you have downloaded there.
+
+=== Importing the Sample Data
+
+. Rename the downloaded `[F10-B2][H.M.U]SampleData.xml` to `addressbook.xml`.
+. Create a folder called `data` under the home folder used for testing **H.M.U**.
+. Move `addressbook.xml` into the `data` folder created just now.
+
+=== Troubleshooting
+
+If you have any doubt or need further clarification, you may want to visit our https://github.com/CS2103AUG2017-F10-B2/main[project website]
+for more information.
+
+== Testing
+
+=== Add/view/edit/delete contacts
+
+==== Add a new contact
+
+To add a new contact, we need to use the `add` command.
+
+*Positive test case*
+
+Let's add a new person called `Martin` into *H.M.U* +
+_Command:_ +
+`add n/Martin Smith p/85930167 e/martin.smith@example.com a/25 Scene Road, 119587 m/Kent Ridge t/friends` +
+_Result:_ +
+`New person added: Martin Smith Phone: 85930167 Email: martin.smith@example.com Address: 25 Scene Road, 119587 Mrt Station: Kent Ridge Tags: [friends]`
+
+*Negative test cases*
+
+. The value for one property is invalid +
+_Command:_ +
+`add n/Den Smith p/85930167 e/www.smith.com a/25 New York City m/Pasir Ris` +
+_Result:_ +
+`Person emails should be 2 alphanumeric/period strings separated by '@'`
+
+. The person already exists +
+_Command:_ +
+`add n/Martin Smith p/85930167 e/martin.smith@example.com a/25 Scene Road, 119587 m/Kent Ridge t/friends` +
+_Result:_ +
+`This person already exists in the application.`
+
+==== Edit an existing contact
+
+To edit an existing contact, we need to use the `edit` command.
+
+*Positive test case*
+
+. First, let's list all the contacts +
+_Command:_ +
+`list` +
+_Result:_ +
+`Listed all persons`
+
+. Let's edit the person called `Martin` we added just now (assume the index is `8`) +
+_Command:_ +
+`edit 1 p/86129854` +
+_Result:_ +
+`Edited Person: Alex Yeoh Phone: 86129854 Email: alexyeoh@example.com Address: Blk 30 Geylang Street 29, #06-40 Mrt Station: Kallang Tags: [friends]`
+
+*Negative test cases*
+
+. The index is invalid (assume there are fewer than 100 contacts in the application) +
+_Command:_ +
+`edit 100 a/LA` +
+_Result:_ +
+`The person index provided is invalid.`
+
+==== View the details of a person
+
+To view the details of an existing contact, we need to use the `select` command.
+
+. First, let's list all the contacts  +
+_Command:_ +
+`list` +
+_Result:_ +
+`Listed all persons`
+
+. Then, select the person we want to view (assume there is at least 1 contact in the application) +
+_Command:_ +
+`select 1` +
+_Result:_ +
+The person's details will be shown on the right-hand side of the interface.
+
+==== Delete an existing person
+
+To delete an existing contact, we need to use the `delete` command.
+
+. First, let's list all the contacts +
+_Command:_ +
+`list` +
+_Result:_ +
+`Listed all persons`
+
+. Then, delete the first person (assume there is at least 1 contact in the application) +
+_Command:_ +
+`delete 1` +
+_Result:_ +
+`Deleted Person: Alex Yeoh Phone: 87438807 Email: alexyeoh@example.com Address: Blk 30 Geylang Street 29, #06-40 Tags: [friends]`
+
+
+==== Add, Clear and visualize the schedule to an existing person
+
+
+
+. First, let's list all the contacts +
+_Command:_ +
+`list` +
+_Result:_ +
+`Listed all persons`
+
+. Add schedule to a person +
+_Command:_ +
+`addSchedule 1 d/Monday st/0800 et/1000` +
+_Result:_ +
+`Free time slot successfully added`
+
+. Visualize schedule of a person +
+_Command:_ +
+`visualize 1` +
+_Result:_ +
+`Visualized Success! 1`
+and shows all free time slots in the ui as well as the console.
+
+. Clear schedule of a person +
+_Command:_ +
+`clearSchedule 1 d/Monday st/0930 et/1000` +
+_Result:_ +
+`Schedule successfully cleared`
+
+. Visualize schedule of a person +
+_Command:_ +
+`visualize 1` +
+_Result:_ +
+`Visualized Success! 1`
+and shows all free time slots in the ui as well as the console. +
+Note that the free time slot is cleared from 9:30 to 10:00.
+
+==== Arrange a meeting schedule for a list of people
+
+To arrange a meeting slot we need to use the `arrange` command.
+Let's configure some schedule first: +
+`addSchedule 1 d/Monday st/0800 et/1000` +
+`addSchedule 2 d/Monday st/0900 et/1000` +
+`addSchedule 3 d/Monday st/0600 et/0930` +
+`addSchedule 4 d/Monday st/0900 et/1800` +
+`addSchedule 1 d/Saturday st/0800 et/1000` +
+`addSchedule 2 d/Saturday st/0900 et/1000` +
+`addSchedule 3 d/Saturday st/0600 et/0930` +
+`addSchedule 4 d/Saturday st/0900 et/1800` +
+Then, `arrange 1 2 3 4` will only show Monday and Saturday 9:00-9:30 as common slots.
+
+==== Login feature
+
+To create a default account, the user needs to type in `createDefaultAcc`
+The default user name and password are all "admin". +
+
+To remove this account, one needs to type `removeLogin username password`
+e.g `removeLogin admin admin`
+_Result:_ +
+`Login removed successfully` +
+
+Again, we create the login feature `createDefaultAcc`. +
+Let's say the password is to be changed to `123456`. +
+Another command, `changepw` is to be used here. +
+_Command:_ +
+`changepw admin password newpassword` +
+then `newpassword` is the password for account admin now. +
+If the user wants to change the user name, he can call +
+`changeuser admin user newpassword` and the account name is admin now. +
+
+==== Looking for an existing contact
+
+To look for a specific contact we can use the comprehensive find command to do so.
+
+
+*Positive test case*
+
+. First, let's list all the contacts +
+_Command:_ +
+`list` +
+_Result:_ +
+`Listed all persons`
+
+. Let's try to find the contacts that satisfy any of the conditions of the command.
+_Command:_ +
+`find OR n/John e/johndoe t/friend` +
+Will result in all the contacts with the name John, the email johndoe or a friend of the user listed.
+
+. Let's try to find the contacts that satisfy all of the conditions of the command.
+_Command:_ +
+`find AND n/John e/johndoe t/friend` +
+only one person is listed.
+
+==== Undo/redo previous commands
+
+Use `undo` or `redo` to undo/redo the last command entered.

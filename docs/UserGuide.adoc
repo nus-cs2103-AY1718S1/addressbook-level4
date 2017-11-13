@@ -1,4 +1,4 @@
-= H.M.U v1.3 - User Guide
+= H.M.U - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -316,11 +316,14 @@ Returns `john` and `John Doe`
 * `findByName Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
-<<<<<<< HEAD
-// tag::findByAddress[]
-=======
+
 // end::find1[]
->>>>>>> 56cf6ff83cd5ce3e2016315f65ce749fe377e916
+// tag::findByAddress[]
+
+// tag::findByAddress[]
+
+// end::find1[]
+>>>>>>> 107d96a8e9057ac320b9aec5aa02a6d9ebdb4883
 
 === Locating persons by address: `findByAddress`
 
@@ -498,6 +501,23 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 
 Sorts all the entries in addressbook in the alphabetical order of the names. +
 Format: `sort`
+
+=== Storing scheduled content in a tag : `addEventTag` or `event`
+
+Store information of an event and its participants in a tag. +
+Format: `event n/EVENT d/DAY st/START et/END loc/LOCATION persons/INDEX [INDEX]`
+
+Examples:
+
+* `event n/EVENT d/DAY st/TIME et/TIME` +
+`loc/LOCATION persons/INDEX [INDEX]` +
+adds the tag "EVENTonDAYatLOCATION" for the person whose index was mentioned if all can make it
+
+* `event n/Training d/Monday st/1000 et/1700` +
+`loc/School persons/1 2 3 4` +
+adds the tag "TrainingonMondayatSchool" for all the persons whose index are listed if all can make it
+
+
 // end::sort[]
 
 // tag::undoredo[]
@@ -594,24 +614,40 @@ e.g.`select 2`
 * *Redo* : `redo`
 * *Change Password* : `changepw username old_password new_password`
 
+== Release Notes
+
+=== What's new in v1.1
+* Google Maps Support
+* Sort Command
+
+=== What's new in v1.2
+* Password Support
+* Change Password
+* Search by Address
+* Add Closest MRT to Contacts
+* Search by Phone Number
+
+=== What's new in v1.3
+* User-Friendly Login
+* Search by Email
+* Search by Phone Number
+
+=== What's new in v1.4
+* Search Contact's Location on Google Maps
+* Create Default Login Account
+* Remove Login Account
+* Arrange Schedule
+* Visualize Schedule
+
+=== What's new in v1.5 rc
+* New UI to show contact's details
+* Select search contacts on Facebook
+* Improve Find Command
+* Autocompletion for commands
+
 == Coming Soon in v2.0
-Customizable Toolbar +
-Password Support (Available in v1.2) +
-More User-Friendly Login (Available in v1.3) +
-Change Password (Available in v1.2) +
-More User-Friendly Change Password +
-Google Maps Support (Available in v1.1) +
-Contact's photo support +
-Search by Address (Available in v1.2) +
-Add Closest MRT Station to Contacts (Available in v1.2) +
-Search Contacts by Phone Number(Available in v1.2) +
-Scheduling (Available in v1.4) +
-Closest Meet-up Point +
-Search by Email (Available in v1.3) +
-Search by Phone Number (Available in v1.3) +
-Search Contact's Location on Google Maps (Available in v1.4) +
-Create Default Account for new users (Available in v1.4) +
-Remove Login Account (Available in v1.4) +
-Arrange Schedule (Available in v1.4) +
-Visualize Schedule (Available in v1.4)
+* Customizable Toolbar
+* More User-Friendly Change Password
+* Contact's photo support
+* Closest Meet-up Point
 

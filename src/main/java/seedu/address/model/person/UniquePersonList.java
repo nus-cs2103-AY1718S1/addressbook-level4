@@ -184,4 +184,8 @@ public class UniquePersonList implements Iterable<Person> {
     public void clearSchedule(Integer toClear, TreeSet<Integer> timeSpan) {
         internalList.get(toClear).clearSpanForSchedule(timeSpan);
     }
+    //@@author hj2304
+    public void addEventTag(Integer toAdd, Tag event) {
+        internalList.get(toAdd).addEventTag(event);
+    }
 }

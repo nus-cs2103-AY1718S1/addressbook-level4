@@ -256,4 +256,51 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void sort() {
         persons.sort();
     }
+    //@@author hj2304
+    /**
+     * Checks Meeting Time based on the list of Index.
+     */
+    public boolean checkMeetingTime(Index[] listOfIndex, int day, int start, int end) {
+        boolean res = true;
+        TreeSet<Integer> satisfiedTimeSet = new TreeSet<>();
+        boolean started = false;
+        boolean ended = false;
+        for (int k = 0; k < PossibleTimes.TIMES.length; k++) {
+            if (PossibleTimes.TIMES[k] == start) {
+                started = true;
+            }
+            if (PossibleTimes.TIMES[k] == end) {
+                ended = true;
+            }
+            if (started && !ended) {
+                satisfiedTimeSet.add(day * PossibleDays.DAY_COEFFICIENT + PossibleTimes.TIMES[k]);
+            }
+            if (ended) {
+                break;
+            }
+        }
+        if (!started || !ended) {
+            res = false;
+        }
+        for (int j = 0; j < listOfIndex.length; j++) {
+            if (!res) {
+                break;
+            }
+            Iterator<Integer> iterator = satisfiedTimeSet.iterator();
+            Schedule currentSchedule = getPersonList().get(listOfIndex[j].getZeroBased()).getSchedule();
+            while (iterator.hasNext()) {
+                Integer timeNumber = iterator.next();
+                if (!currentSchedule.containsTimeNumber(timeNumber)) {
+                    res = false;
+                    break;
+                }
+            }
+        }
+        return res;
+    }
+
+    public void addEventToPerson(Integer index, Tag event) {
+        persons.addEventTag(index, event);
+    }
+    //@@author
 }

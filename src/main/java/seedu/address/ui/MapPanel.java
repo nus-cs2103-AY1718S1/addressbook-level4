@@ -17,6 +17,8 @@ import seedu.address.commons.events.ui.LocateMrtCommandEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
+// @@author derickjw
+
 /**
  * The Map Panel of the App.
  */
@@ -48,6 +50,8 @@ public class MapPanel extends UiPart<Region> {
         loadPage(FACEBOOK_SEARCH_URL_PREFIX + person.getName().fullName.replaceAll(" ", "+"));
     }
 
+    //@@author
+
     //@@author YuchenHe98
     private void loadLocationPage(ReadOnlyPerson person) {
         loadPage(GOOGLE_MAP_URL_PREFIX + person.getAddress().value.replaceAll(" ", "+"));
@@ -58,6 +62,8 @@ public class MapPanel extends UiPart<Region> {
         loadPage(GOOGLE_MAP_URL_PREFIX + person.getMrt().value.replaceAll("", "+")
                 + GOOGLE_MRT_URL_SUFFIX);
     }
+
+    //@@author derickjw
 
     public void loadPage(String url) {
         Platform.runLater(() -> browser.getEngine().load(url));
@@ -83,6 +89,8 @@ public class MapPanel extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadPersonPage(event.getNewSelection().person);
     }
+
+    //@@author
 
     //@@author YuchenHe98
     @Subscribe

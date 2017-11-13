@@ -8,7 +8,7 @@ H.M.U is a software to help people manage their contacts easily. Apart from the 
 
 H.M.U cares about the security of its users as well. As such, users have to login with a username or password to continue using the app.
 
-*Code contributed*: [https://github.com/CS2103AUG2017-F10-B2/main/blob/master/collated/main/derickjw.md[Functional code]] [https://github.com/CS2103AUG2017-F10-B2/main/blob/master/collated/test/derickjw.md[Test code]] [https://github.com/CS2103AUG2017-F10-B2/main/blob/master/collated/unused/derickjw.md[Unused code]]
+*Code contributed*: [https://github.com/CS2103AUG2017-F10-B2/main/blob/master/collated/main/YuchenHe98.md[Functional code]] [https://github.com/CS2103AUG2017-F10-B2/main/blob/master/collated/test/YuchenHe.md[Test code]] [https://github.com/CS2103AUG2017-F10-B2/main/blob/master/collated/unused/Yuchen.md[Unused code]]
 
 === Enhancement Added: AddSchedule
 
@@ -26,9 +26,15 @@ include::../UserGuide.adoc[tag=addSchedule]
 
 ==== Justification
 
+---
+
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=addSchedule]
+include::../DeveloperGuide.adoc[tag=scdconsideration]
+
+#End of Extract#
+
+---
 
 ==== Implementation
 
@@ -36,7 +42,7 @@ include::../DeveloperGuide.adoc[tag=addSchedule]
 
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=addSchedule]
+include::../DeveloperGuide.adoc[tag=addclearSchedule]
 
 #End of Extract#
 
@@ -58,9 +64,15 @@ include::../UserGuide.adoc[tag=clearSchedule]
 
 ==== Justification
 
+---
+
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=clearSchedule]
+include::../DeveloperGuide.adoc[tag=scdconsideration]
+
+#End of Extract#
+
+---
 
 ==== Implementation
 
@@ -68,7 +80,7 @@ include::../DeveloperGuide.adoc[tag=clearSchedule]
 
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=clearSchedule]
+include::../DeveloperGuide.adoc[tag=addclearSchedule]
 
 #End of Extract#
 
@@ -90,9 +102,15 @@ include::../UserGuide.adoc[tag=visualize]
 
 ==== Justification
 
+---
+
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=visualize]
+include::../DeveloperGuide.adoc[tag=Vconsideration]
+
+#End of Extract#
+
+---
 
 ==== Implementation
 
@@ -100,7 +118,7 @@ include::../DeveloperGuide.adoc[tag=visualize]
 
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=visualize]
+include::../DeveloperGuide.adoc[tag=VisualizeSchedule]
 
 #End of Extract#
 
@@ -122,9 +140,15 @@ include::../UserGuide.adoc[tag=arrange]
 
 ==== Justification
 
+---
+
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=arrange]
+include::../DeveloperGuide.adoc[tag=Aconsideration]
+
+#End of Extract#
+
+---
 
 ==== Implementation
 
@@ -132,7 +156,7 @@ include::../DeveloperGuide.adoc[tag=arrange]
 
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=arrange]
+include::../DeveloperGuide.adoc[tag=arrangeMeeting]
 
 #End of Extract#
 
@@ -154,9 +178,15 @@ include::../UserGuide.adoc[tag=locate]
 
 ==== Justification
 
+---
+
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=locate]
+include::../DeveloperGuide.adoc[tag=locateCon]
+
+#End of Extract#
+
+---
 
 ==== Implementation
 
@@ -164,7 +194,7 @@ include::../DeveloperGuide.adoc[tag=locate]
 
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=visualize]
+include::../DeveloperGuide.adoc[tag=locate]
 
 #End of Extract#
 
@@ -184,24 +214,8 @@ include::../UserGuide.adoc[tag=findByAddress]
 
 ---
 
-==== Justification
-
-#Start of Extract [from: Developer Guide]#
-
-include::../DeveloperGuide.adoc[tag=findByAddress]
-
-==== Implementation
-
----
-
-#Start of Extract [from: Developer Guide]#
-
-include::../DeveloperGuide.adoc[tag=findByAddress]
-
-#End of Extract#
-
----
-
-
 === Other contributions
 
+*Helped resolve the storage problem in MRT +
+*Helped fix the format of userguide and developerguide +
+*Wrote the TestScript

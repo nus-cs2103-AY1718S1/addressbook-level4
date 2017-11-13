@@ -17,6 +17,7 @@ import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
 
 
 /**
@@ -89,6 +90,10 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.updatePerson(target, editedPerson);
         indicateAddressBookChanged();
     }
+    //@@author hj2304
+    public void addEventToPerson(Integer index, Tag event) {
+        addressBook.addEventToPerson(index, event);
+    }
 
     //@@author YuchenHe98
     @Override
@@ -156,6 +161,16 @@ public class ModelManager extends ComponentManager implements Model {
         if (addressBook.removeTag(str)) {
             indicateAddressBookChanged();
         }
+    }
+
+
+    //@@author hj2304
+    /**
+     * Tests meeting time.
+     */
+    @Override
+    public boolean checkMeetingTime(Index[] listOfIndex, int day, int start, int end) {
+        return addressBook.checkMeetingTime(listOfIndex, day, start, end);
     }
 
     //@@author YuchenHe98

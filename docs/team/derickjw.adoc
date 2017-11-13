@@ -108,6 +108,8 @@ include::../DeveloperGuide.adoc[tag=createDefaultAcc]
 
 === Other contributions
 
+* Gave suggestions to other groups (https://github.com/CS2103AUG2017-T09-B3/main/issues/143[Link])
+* Detected bug from other groups (https://github.com/CS2103AUG2017-F09-B4/main/issues/97[Link])
 * Fixed Some of Team Member's bugs (Pull requests https://github.com/CS2103AUG2017-F10-B2/main/pull/8[#8])
 * Added Auto-complete feature (Pull request https://github.com/CS2103AUG2017-F10-B2/main/pull/72[#72])
 * Helped with fixing JUnit Tests for Team Member (Pull request https://github.com/CS2103AUG2017-F10-B2/main/pull/44[#44])
