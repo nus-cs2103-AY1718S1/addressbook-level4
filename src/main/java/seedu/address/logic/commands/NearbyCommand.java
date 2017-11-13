@@ -28,7 +28,6 @@ public class NearbyCommand extends Command {
     public static final String MESSAGE_NEARBY_PERSON_SUCCESS = "Selected person in same area: %1$s";
     public static final String MESSAGE_INVALID_NEARBY_INDEX = "The index provided is invalid. There are only %d "
             + "contacts in this area";
-    public static final String MESSAGE_NO_NEARBY_PERSON = "There is only one person in this area";
 
     private final Index targetIndex;
 

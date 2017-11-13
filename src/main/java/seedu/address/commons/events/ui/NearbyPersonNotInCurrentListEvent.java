@@ -10,7 +10,6 @@ import seedu.address.ui.PersonCard;
  */
 public class NearbyPersonNotInCurrentListEvent extends BaseEvent {
 
-
     private final PersonCard newSelection;
 
     public NearbyPersonNotInCurrentListEvent(PersonCard newSelection) {

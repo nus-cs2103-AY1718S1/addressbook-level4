@@ -31,8 +31,9 @@ public abstract class UndoableCommand extends Command {
     }
 
     /**
-     * Reverts the AddressBook to the state before this command was executed and updates the filtered person list to
-     * show all persons.
+     * Reverts the {@code model#addressBook} to the state before this command was executed and updates the filtered
+     * person list to show all persons. Also reselects the person selected prior to the execution of the command to be
+     * undone.
      */
     protected final void undo() throws CommandException {
         requireAllNonNull(model, previousAddressBook);

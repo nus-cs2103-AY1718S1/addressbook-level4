@@ -507,7 +507,7 @@ The following sequence diagram, Figure 4.5.1, shows further details of the inter
 image::BlacklistCommandSequenceDiagram1.PNG[width="800"]
 _Figure 4.5.1 : Sequence diagram of how the `blacklist` command works_
 
-The following sequence diagram, Figure 4.5.2, shows further details of the interaction between `ModelManager` and 'ReadOnlyAddressBook` to obtain the blacklist:
+The following sequence diagram, Figure 4.5.2, shows further details of the interaction between `ModelManager` and `ReadOnlyAddressBook` to obtain the blacklist:
 
 image::BlacklistCommandSequenceDiagram2.png[width="800"]
 _Figure 4.5.2 : Sequence diagram of how `ModelManager` interacts with `ReadOnlyAddressBook` To generate blacklist From all persons_

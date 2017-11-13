@@ -28,17 +28,13 @@ import seedu.address.model.person.ReadOnlyPerson;
  */
 public class AddPictureCommandTest extends CommandTest {
 
-    // This test fails if AlicePauline.jpg resides in src/main/resources/images/profilePics
     @Test
-    public void execute_validIndexUnfilteredListInvalidPath_failure() {
+    public void execute_validIndexUnfilteredListInvalidPath_failure() throws Exception {
         try {
             ReadOnlyPerson personToUpdate = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
             AddPictureCommand addPictureCommand = prepareCommand(INDEX_FIRST_PERSON);
 
             String expectedMessage = String.format(AddPictureCommand.MESSAGE_ADDPIC_FAILURE, personToUpdate.getName());
-
-            ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-            expectedModel.addProfilePicture(personToUpdate);
 
             assertCommandFailure(addPictureCommand, model, expectedMessage);
             assertTrue(personToUpdate.getAsText().equals(model.getFilteredPersonList()
@@ -49,7 +45,7 @@ public class AddPictureCommandTest extends CommandTest {
     }
 
     @Test
-    public void execute_validIndexUnfilteredListValidPath_success() {
+    public void execute_validIndexUnfilteredListValidPath_success() throws Exception {
         try {
             ReadOnlyPerson personToUpdate = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
             AddPictureCommand addPictureCommand = prepareCommand(INDEX_FIRST_PERSON);
@@ -57,10 +53,11 @@ public class AddPictureCommandTest extends CommandTest {
             String expectedMessage = ListObserver.MASTERLIST_NAME_DISPLAY_FORMAT
                     + String.format(AddPictureCommand.MESSAGE_ADDPIC_SUCCESS, personToUpdate.getName());
 
-            ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-            expectedModel.addProfilePicture(personToUpdate);
             SetPathCommand setPathCommand = prepareSetPathCommand("src/test/resources/TestProfilePics/");
             setPathCommand.execute();
+
+            ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+            expectedModel.addProfilePicture(personToUpdate);
 
             assertCommandSuccess(addPictureCommand, model, expectedMessage, expectedModel);
             assertTrue(personToUpdate.getAsText().equals(model.getFilteredPersonList()
