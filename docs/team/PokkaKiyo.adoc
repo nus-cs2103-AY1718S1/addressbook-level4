@@ -1,0 +1,454 @@
+= PokkaKiyo - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: Contact'em
+Contact’em is a desktop address book application, and the user interacts with it through typing commands into the application.
+Compared to other typical  address book applications, Contact'em is designed to allow users to easily find their contacts and _contact them_ through a
+variety of ways such as Facebook Messenger and Gmail.
+
+This Portfolio showcases the implementations of enhancements I have added and proposed for the project, shown
+through extracts from the project User Guide and Developer Guide. Links to Functional and Test codes are provided below.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T11-B4/main/blob/master/collated/main/PokkaKiyo.md[Functional code]][https://github.com/CS2103AUG2017-T11-B4/main/blob/master/collated/test/PokkaKiyo.md[Test code]]
+
+=== Enhancement Added: Find Contacts by Tags
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+=== Finding Contacts by Tag : `findtags`
+`SINCE V1.2`
+
+Finds contacts who have tags matching any of the given keywords. The command keyword is `findtags` +
+
+[TIP]
+You can substitute the command keyword `findtags` with `findtag` or `ft`.
+
+==== The Command
+Format: `findtags KEYWORD [MORE_KEYWORDS]` +
+
+==== Examples
+* `findtags friends` +
+Returns any contact tagged `friends`.
+
+* `findtags friends colleagues schoolmates` +
+Returns any person having any of the tags `friends`, `colleagues`, and/or `schoolmates`.
+
+==== Demonstration
+image::findtags-before.PNG[width="200"]
+_Figure 5.6.3a : Before entering command_
+
+image::findtags-enter-command.PNG[width="200"]
+_Figure 5.6.3b : Entering command to find all contacted tagged as friends_
+
+image::findtags-after.png[width="200"]
+_Figure 5.6.3c : Application displays all contacts tagged as friends_
+
+The figures above demonstrate an example of how this command is used, with respect to the first example.
+
+
+==== Note on Singular and Plural Keywords
+To make it more convenient for you to search for contacts through their tags, this search function will attempt to be more lenient with singular and plural tenses.
+For example: +
+
+* `friend` will return contacts with either tag `friend` or `friends`. +
+* `colleagues` will return contacts with either tag `colleague` or `colleagues`.
+
+However, this will not work for words where plural and singular differs not only by a single letter 's'.
+Searching by tag `family` will attempt to find contacts with tags `family` and `familyS` instead of `families`.
+
+==== Specifying Exclusions
+`SINCE V1.4`
+
+You can now specify tags to be excluded in this command, by simply adding a dash ('-') before keywords specified for exclusion.
+This feature will help you better manage your contacts.
+
+===== Usage examples of exclusions
+Specifying both tags to include and tags to exclude +
+Example 1:
+`findtags` friends #-colleagues# +
+In this case, the application will show only those who are tagged as friends, but are #NOT# tagged as colleagues.
+
+Specifying only tags to exclude +
+Example 2:
+`findtags` #-colleagues# +
+In this case, the application will show **all** contacts who are #NOT# tagged colleagues, regardless of other tags.
+
+#End of Extract#
+
+---
+
+==== Justification
+
+One of the main themes of Contact'em is to be able to easily find/filter the contacts in the application.
+This feature allows users to easily search for contacts in big numbers by locating them according to their tags.
+
+==== Implementation
+
+---
+
+#Start of Extract [from: Developer Guide]#
+
+=== Finding Contacts by Tags
+
+The application allows users to find contacts based on their tags. The command word is `findtags`, and the alternatives are `findtag` and `ft`. The following subsections explain how the program is supposed to function given this command, and how it is implemented.
+
+==== User Inputs and Expected Actions/Results
+
+There are three ways to use this command. Some pseudo-code is provided for each of these 3 scenarios to aid understanding.
+
+**Scenario 1**
+
+In the first scenario, also the most basic, the user only specifies tags to **include**. For this, the program should simply return all contacts that have at least one of the tags.
+
+**Example Command 1:** findtags friends +
+Expected result: returns contacts that are tagged “friends”.
+
+**Pseudo-code snippet**
+[source,java]
+----
+for each tag : contact.getTagList {
+    if (keywordsToInclude.hasAnyMatchingWordsWith(tag.value)) {
+        return true;
+    }
+}
+return false;
+----
+
+**Scenario 2**
+
+In the second scenario, the user only specifies tags to **exclude**. To specify a tag to exclude, user includes a hyphen "-"  before the keyword to be excluded. In this case, the program should return all contacts that do not have any of these tags to be excluded.
+
+Note that this includes contacts with no tags.
+
+
+**Example Command 2:** findtags -colleagues +
+Expected result: returns all contacts not tagged “colleagues”.
+
+**Pseudo-code snippet**
+[source,java]
+----
+for each tag : contact.getTagList {
+    if (keywordsToExclude.hasAnyMatchingWordsWith(tag.value)) {
+        return false;
+    }
+}
+return true;
+----
+
+**Scenario 3**
+
+In the third scenario, the user specifies **both tags to include and exclude**. The program will return all contacts that have: +
+1) ANY of the tags to include. +
+2) NONE of the tags to exclude.
+
+**Example Command 3:** findtags friends -colleagues +
+Expected result: returns all contacts tagged “friends” but not tagged “colleagues”.
+
+**Pseudo-code snippet:**
+[source,java]
+----
+boolean personHasAtLeastOneMatchingTag = false;
+
+for each tag : contact.getTagList {
+     if keywordsToExclude.hasAnyMatchingWordsWith(tag.value)
+                return false;
+     if keywordsToInclude.hasAnyMatchingWordsWith(person.getTagList()
+                 personHasAtLeastOneMatchingTag = true;
+}
+
+if (personHasAtLeastOneMatchingTag)
+      return true;
+else
+      return false;
+----
+
+[NOTE]
+There must be at least one parameter specified, but the order of parameters entered does not matter.
+
+==== Brief Overview of Command Procedure
+
+3 diagrams are provided below to help illustrate a big picture view of the command.
+
+===== Class Diagram:
+
+image::FindTagsCommandClassDiagram.png[width="800"]
+_Figure 3.3.2.1 : Class Diagram of Find Tags Command_
+
+Firstly, _Figure 3.3.2.1_ above is the class diagram of this command, which should
+provide a basic understanding of the classes involved.
+
+
+===== Activity Diagram:
+
+image::findtags-activitydiagram.png[width="200"]
+_Figure 3.3.2.2 : Brief Overview of Find Tags Command Procedure_
+
+Secondly, _Figure 3.3.2.2_ above is the activity diagram of the command.
+As you can see, the entire command consists of 4 main steps:
+
+1) The parameters are parsed and deciphered. +
+2) Using the deciphered information from step 1, the Predicate and Command are constructed. +
+3) Command is executed. +
+4) Predicate is called and the Model is updated.
+
+More detailed explanations and elaborations are given in the subsections below.
+
+===== Sequence Diagram:
+image::FindContactsByTagsSequenceDiagram.png[width="800"]
+_Figure 3.3.2.3 : Findtags Sequence Diagram_
+
+Last but not least, _Figure 3.3.2.3_ above shows the overall sequence diagram, to give a more detailed look into the steps taken
+by the program to run the command.
+
+==== Implementation of Parser
+
+The parser associated with this command is **FindPersonsWithTagsCommandParser**, under **seedu.address.logic.parser**. Due to this parser’s long name, it will be referred to as the “command parser” or simply “parser” within this section to aid clarity.
+
+When this command is invoked by the user, this command parser will be constructed by **AddressbookParser**, receiving the user’s input as a String parameter. The command parser deciphers the input, and eventually returns a **FindPersonsWithTagsCommand** for execution.
+
+The command parser first checks if the arguments are valid. If the arguments are empty, a **ParseException** will be thrown for invalid arguments. If the arguments are valid (non-empty), they are split into individual keywords and stored in a String array tagKeywords.
+
+image::StringToTagKeywords.png[width="800"]
+_Figure 3.3.3.1 : Splitting Up Keywords_
+
+
+As the diagram above shows, the keywords are split by the spaces in between each word, and each of these words are stored in a String array **tagKeywords**.
+
+The array of keywords is then passed into the parser’s private method, **getImprovedList()**, to retrieve a more comprehensive list of tags in addition to the original list of keywords.
+
+[NOTE]
+The details of **getImprovedList** are not crucially important to the functionality of the parser, and is thus omitted here, but included in the addendum in Section 3.3.6.
+
+After obtaining the improved list, the parser constructs the command _Predicate_ (details in Section 3.3.4), and the _Command_ itself (details in the Section 3.3.5). Then it returns the _Command_ to **AddressbookParser** and then the **LogicManager** for execution.
+
+
+==== Implementation of Predicate
+
+The _Predicate_ associated with this functionality is called **PersonContainsTagsPredicate**, found in **seedu.address.model.person**.
+
+This _Predicate_ has three attributes, _keywords_, which are generated in the _parser_, and 2 lists, _keywordsToInclude_ and _keywordsToExclude_. The 2 lists are generated from _keywords_.
+
+After this _Predicate_ is constructed, it is used in the constructor of a **FindPersonsWithTagsCommand** and becomes that command’s attribute.
+
+When the command is executed, this _Predicate_ will be called for every contact in the address book to determine if a contact should be filtered or not based on the user’s inputs.
+
+To do so, the **test** method of this Predicate is used, which returns a Boolean value: true if this contact should be returned, and false otherwise.
+
+Within this test method, the following steps occur, for each contact in the currently stored in the application:
+
+image::findtags-pathdiagram.png[width="800"]
+_Figure 3.3.4.1 : Findtags Predicate Activity Diagram_
+
+As seem from _Figure 3.3.4.1_, firstly, all of the person’s tags, if any, are appended to a String **allTagNames**. For example, if a contact has tags "friends" and "colleagues", the resulting String is "friends colleagues".
+
+Then, the comparison is made between **allTagNames** and the 2 lists generated in constructor, to return the appropriate Boolean value. Below is the code snippet used in the comparison. Note that this is not the only way to implement this comparison.
+
+**Code Snippet:**
+[source,java]
+----
+//For scenario 2
+if (onlyKeywordsToExcludeAreSpecified) {
+            return !(keywordsToExclude.stream()
+                    .anyMatch((keyword -> StringUtil.containsWordIgnoreCase(allTagNames, keyword))));
+}
+
+
+//For scenarios 1 and 3
+return keywordsToInclude.stream()
+    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(allTagNames, keyword)) &&
+    !(keywordsToExclude.stream()
+    .anyMatch((keyword -> StringUtil.containsWordIgnoreCase(allTagNames, keyword))));
+----
+
+==== Implementation of Command
+The command executed in this feature is **FindPersonsWithTagsCommand**, found in **seedu.address.logic.commands**.
+
+After the command parser returns the command to **AddressbookParser** and then to the **LogicManager**, assuming that no exceptions are thrown so far, the command is executed, by calling its **execute()** method.
+
+In this **execute()** method, the current model invokes its **updateFilteredPersonList** method, with the command _Predicate_ as described above as its parameter.
+
+This runs the **test()** method of the _Predicate_, which determines the appropriate contacts to filter. This causes the model to update accordingly and filters the contacts displayed in the UI.
+
+Finally, this command returns a **CommandResult**, which includes the number of contacts being displayed. This value is displayed on the UI command box for the user’s reference.
+
+
+
+==== Addendum
+
+**Implementation of getImprovedList** +
+In the command parser (as detailed in Section 3.3.3), there exists a private method **getImprovedList()**, which takes in the list of keywords entered by the user and attempts to return a more comprehensive one in addition to the original list, to account for grammatical differences in plural and singular forms of the keywords.
+
+To give an example, if the keyword is “friend”, the extra keyword generated is “friends” and vice-versa. This works for “exclusion-keywords” (keywords with a dash in front) as well.
+
+What is of note is that this method is merely a crude, quality-of-life improvement for the user. It simply generates the keywords by appending the letter ‘s’ to keywords which do not end with ‘s’, and removes ‘s’ from words that do end with the letter ‘s’.
+
+As a result, it does not account for words where singular and plural forms differ by more than just a single letter ‘s’, such as “family” and “families”.
+
+It is therefore recommended that future developers improve this method, perhaps by implementing a proper dictionary or library for this method, after weighing the costs and benefits. Alternatively, this idea could be further improved or refined on with a Lookup Table to save file storage space.
+
+Nevertheless, this improvement is meant to increase user enjoyment and convenience. The onus of organising and spelling tags in an organised manner is still on the user. To that end,  if the case arises that, based on user feedback, this improvement does more harm than good, it is recommended that this feature be removed or made optional. However, this is not something that the current developers foresee will occur based on observation of how people in general spell their tags.
+
+
+==== Design Considerations
+
+**Aspect:** Improving list of keywords. +
+
+**Alternative 1 (current choice):** Add 's' to letters that do not end with 's', and vice-versa. +
+**Pros:** Easy to implement and read. +
+**Cons:** Does not account for all words in English, may have non-English words. +
+
+**Alternative 2:** Import appropriate library for getting singular/plural words. +
+**Pros:** More likely to account for all words. +
+**Cons:** May impact performance. +
+
+**Alternative 3:** Implement a Look-up Table. +
+**Pros:** Can account for more words than alternative 1, and less impact on performance and storage than alternative 2. +
+**Cons:** Might be difficult to implement and may not be as comprehensive as alternative 2. +
+
+---
+
+**Aspect**: Comparision of tag names and keywords in predicate. +
+
+**Alternative 1 (current choice): **Append names to an empty String for comparision with keywords. +
+**Pros:** Easy to implement and change. +
+**Cons:** Requires use of lambda, which may be more difficult to understand for beginners. +
+
+**Alternative 2:** Compare tag against tag by encapsulating all keywords into Tags. +
+**Pros:** Can use the equals specified in Tag, and/or comparator instead of lambda for better readability. +
+**Cons:** More difficult to implement, and may create many tags that are never used because the keywords and expanded to improve user convenience (singular vs plural tag names). +
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: List Tags
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+=== List tags : `listtags` +
+`SINCE V1.3`
+
+Lists all existing tags in Contact'em. +
+
+[TIP]
+Listing all tags is designed to help you choose which tags to specify when using `findtags`.
+
+==== The Command
+Format: `listtags` +
+
+#End of Extract#
+
+---
+
+==== Justification
+
+The main intention of this enhancement is to supplement the find contacts by tags function as described above.
+For users with large numbers of tags, it may be difficult to remember what tags are saved in the application.
+This enhancement allows users to easily refer to the tags that they have saved in the application, enhancing ease of use and quality of life.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+=== Implementation of List Tags
+The application allows users to see the list of all tags that are currently attached to contacts in the application. The command word is `listtags`, and
+the shortcut alternative is `lt`. The follow subsections explain how the program is supposed to function given the command, and how it is implemented.
+
+==== User Inputs and Expected Actions/Results
+In general, when this command is used, there are only 2 scenarios that will occur.
+
+**Scenario 1** +
+There is at least 1 tag attached to at least 1 contact.
+
+In this scenario, the application will show these tags in the result box.
+
+Below is the format of the results: +
+You have the following tags: [tag1] [tag2] [tag3] ...
+
+**Scenario 2** +
+There are no tags attached to any contacts in the application. This could happen if there are: +
+1. No contacts in the application. +
+2. No tags attached to any contact.
+
+In this scenario, the application will show to user the following message: +
+"You do not have any tags!"
+
+==== Brief Overview of the Command
+A brief overview of the steps taken by the application in producing the appropriate results is as given: +
+1. Creates a list of tags by iterating through every Contact in the application and adding their tags to the list. +
+2. Check if this list of tags is empty or not, that is, whether it is scenario 1 or scenario 2. +
+2a. If it is scenario 2, that is, there are no tags to output, the command merely returns the failure message. +
+3. If the list is not empty, it will output the success message along with the list of tags in the appropriate format. The details of this step is given
+in the next subsection.
+
+==== Implementation of Success Scenario
+The steps taken are: +
+1. Converts the list of Tags to a list of String containing the names of each Tag. +
+2. Sorts the list in alphabetical order. +
+3. Using a StringBuilder, appends the names to each other with the appropriate formatting. +
+4. Output the result.
+
+==== Design Considerations
+
+**Aspect:** Order of Tags displayed +
+**Alternative 1 (current choice):** Display in alphabetical order. +
+**Pros:** More readable and more easily understood. +
+**Cons:** May not be the most meaningful. +
+
+**Alternative 2:** Display based on how many of each tag there are, for example in ascending order. +
+**Pros:** Might be more meaningful for certain users and cases. +
+**Cons:** Much more difficult to implement, and may appear more confusing to users, as alphabetical order is generally more easily understood. +
+
+**Alternative 3:** Allow option to display both in alphabetical order or in ascending order. +
+**Pros:** Best of both worlds, allowing user to choose the most meaningful. +
+**Cons:** Adding on to the already numerous commands may not be the most meaningful, especially when the main
+function of this enhancement is to complement the find tags feature.
+
+---
+
+#End of Extract#
+
+---
+=== Enhancement Proposed: Adding a Profile Picture to Contacts
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+=== Adding Profile Picture to Contacts
+`Coming in V2.0`
+
+To help you identify your contacts, in Version 2.0 of Contact'em, you will be able to attach pictures to each of your contacts.
+All that is required is a link to the image on the Internet.
+
+==== The Command
+Format: `addPicture INDEX IMAGE_URL` +
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Since we are considering the fact that users might have a large number of contacts, being able to attach a profile picture
+to the contacts will help the user with identifying the contact. +
+This is highly synergistic and can be used in conjunction with the Facebook Profile.
+
+---
+
+=== Other contributions
+
+* Allow contacts to support a Facebook URL field (Pull Request https://github.com/CS2103AUG2017-T11-B4/main/pull/46[#46]).
+* Select Command now opens the Facebook URL of the Contact in the Browser
+(Pull Request https://github.com/CS2103AUG2017-T11-B4/main/pull/95[#95]).
+* Updated the GUI color scheme (Pull request https://github.com/CS2103AUG2017-T11-B4/main/pull/93[#93]).

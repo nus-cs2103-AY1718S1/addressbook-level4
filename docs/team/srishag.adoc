@@ -1,0 +1,432 @@
+= srishag - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: Contact'em
+Contact’em is a desktop address book application, and the user interacts with it through typing commands into the application.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T11-B4/main/blob/master/collated/main/srishag.md[Functional code]]
+[https://github.com/CS2103AUG2017-T11-B4/main/blob/master/collated/test/srishag.md[Test code]]
+
+=== Enhancement Added: Birthday attribute for Person
+
+==== Justification
+
+It is crucial that we remember the special day of the people who are important in our life.
+The Birthday attribute helps users to remember the birthday of contacts and make this data more accessible.
+However, it remains an optional field to ensure that a random date is not added when the birthday of a contact is
+not known to the user. It also checks that the date entered is valid.
+
+==== Implementation
+
+#Start of Extract [from: Developer Guide]#
+
+=== Birthdays
+
+Users are able to store birthdays of their contacts by inputting in the format of ddMMyyyy when adding a person, using the prefix `b/`.
+
+In general, the ability to store a person’s birthday was implemented by adding it to the component of `Person`.
+
+=== Representation of birthdays
+
+Storing of birthdays is facilitated by an immutable `Birthday` object, which is a component of `Person`.
+
+The main classes that implement this attribute is: AddCommand, AddCommandParser, EditCommand, EditCommandParser, Person, PersonListCard.
+
+However, birthday has been made to be an optional field to include while adding a new contact.
+
+=== Validation of birthday
+
+Birthday uses the DateFormat and the SimpleDateFormat packages to check if the birthday entered is a valid date.
+For example, 31/02/1998 is not a valid date.
+
+Validation of birthday is implemented this way:
+[source,java]
+---
+public static boolean isValidBirthday(String test) {
+    if (test.matches(BIRTHDAY_VALIDATION_REGEX)) {
+        try {
+            DateFormat df = new SimpleDateFormat(DATE_FORMAT);
+            df.setLenient(false);
+            df.parse(test);
+            return true;
+        } catch (ParseException pe) {
+            return false;
+        }
+    } else if (test.matches("")) {
+        return true;
+    }
+    return false;
+}
+---
+
+==== Design Considerations
+**Aspect:** Representation of birthdays +
+**Alternative 1 (current choice):** Display the birthday of the specified contact after the address of the contact +
+**Pros:** It follows the format of the person card +
+**Cons:** It is difficult to recognise the number displayed is the birthday as it is merely represented as an eight digit number +
+
+**Alternative 2:** Display the birthday with "Birthday:" in front +
+**Pros:** Simple and easy to understand +
+**Cons:** Inconsistent with the format in person card
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Send Email
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+=== Gmail integration : `send`
+
+You can now use Contact'em to send e-mails to your contacts using the Command Line Interface of the application. +
+
+==== The Command
+Format: `send INDEX [es/EMAIL_SUBJECT] [eb/EMAIL_BODY]`
+
+==== Usage Examples
+* `send 1 es/Meeting for next Monday. eb/Looking forward to next Monday.` +
+Sends an e-mail using the e-mail account you used to login to the contact at index 1 with the subject `Meeting for next Monday.`
+and with the body `Looking forward to next Monday.`
+* `send 8 es/Merry Christmas! eb/Wishing you and your family a very Merry Christmas!` +
+Sends an e-mail using the e-mail account you used to login to the contact at index 8 with the subject `Merry Christmas!`
+and with the body `Wishing you and your family a very Merry Christmas!`
+
+==== More Information
+You must login using your e-mail and password to a specific Google account before you can start using this feature.
+If login is unsuccessful, you will be prompted to login again.
+
+Please ensure you have clicked `Allow` when asked for account permissions by Google.
+
+==== Common Problems
+* Unable to send an e-mail after using other commands except `login` +
+Ensure that you only `send` command is used once you login to your Google Account. +
+* Unable to send e-mail despite providing the correct format for the command +
+Ensure that your desktop is connected to the Internet.
+* Unable to send e-mails to a particular account
+If a contact has several e-mails, it is likely that the e-mail you want to send to is not present in Contact'em.
+Please ensure you have entered the necessary details for each contact.
+
+[NOTE]
+`Index` is the #currently displayed# number corresponding to the contact, which may differ if the current displayed list has been filtered.
+
+#End of Extract#
+
+---
+
+==== Justification
+
+The main intention of this enhancement is to utilise the email attribute added to person and contact them.
+We used the Gmail API as this works well together with the `import`, `sync` and `export` commands.
+
+==== Implementation
+
+#Start of Extract [from: Developer Guide]#
+
+=== Send email mechanism
+
+The send email mechanism is facilitated by a specific Google account, which the user needs to login to before he can begin using the application to send e-mails.
+He can then use the command-line interface of the application to add the recipient, subject and body of the e-mail.
+
+E-mails can be sent to the e-mail address attached to any contact in the address book.
+
+Sending of e-mails is implemented this way:
+[source,java]
+----
+public CommandResult execute() throws CommandException, GoogleAuthException {
+    requireNonNull(model);
+    List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+
+    if (targetIndex.getZeroBased() >= lastShownList.size()) {
+        throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+
+    String personToSendEmail = lastShownList.get(targetIndex.getZeroBased()).getEmail().toString();
+
+    try {
+        MimeMessage emailToBeSent = ModelManager.createEmail(personToSendEmail,
+                EMAIL_SENDER, emailSubject, emailBody);
+        Gmail gmailService = new GetGmailService().getGmailService();
+        message = ModelManager.sendMessage(gmailService, EMAIL_SENDER, emailToBeSent);
+    } catch (MessagingException | IOException E) {
+        assert false;
+    }
+
+    return new CommandResult(String.format(MESSAGE_SUCCESS));
+}
+----
+
+[NOTE]
+Users must login using your e-mail and password to a specific Google account before they can start using this feature.
+If login is unsuccessful, they will be prompted to login again.
+
+[NOTE]
+Requested access by Google must be provided before any e-mails can be sent.
+
+[NOTE]
+Internet connectivity is needed for this feature as the application does not store any e-mail drafts.
+
+[NOTE]
+Send e-mail feature must be used immediately after login as the application does not store any user data. Hence after login is
+successful, it is not possible to use other commands and then use the send e-mail command.
+
+
+==== Design Considerations
+
+**Aspect:** Implementation of send e-mail +
+**Alternative 1:** Save login details to allow more flexibilty.` +
+**Pros:** Easier access to command as users can execute other commands in between login and sending e-mails. +
+**Cons:** Security concerns raised as user data is saved within the application. +
+**Alternative 2 (current choice):** Only allow users to use send command immediately after login.` +
+**Pros:** Safe option as no user details are stored even when the command is used repeatedly. +
+**Cons:** Not user-friendly as it forces users to use features of the application in a certain order.
+
+#End of Extract#
+
+---
+
+=== Added Tasks feature
+
+This allows Contact'em to be a multi-functional application where users can store the details of people who matter to them and the tasks that
+they need to complete.
+
+The full implementation can be seen throughout the changed Storage, UI and Model classes of the application.
+
+image::StorageClassDiagram.png[width="800"]
+_Figure 1: Structure of the Storage Component_
+
+image::UiClassDiagram.png[width="800"]
+_Figure 2: Structure of the UI Component_
+
+image::ModelClassDiagram.png[width="800"]
+_Figure 3: Structure of the Model Component_
+
+=== Implementation
+
+A short snippet for the different commands can be seen below.
+
+=== Task class mechanism
+
+The `Task` class, which is located inside `Model`, is implemented with similar logic as `Person` class. We have introduced three commands that modifies the address book: `addt`, `editt` and `deletet`, which extends `UndoableCommand`.
+A `Task` consist of three sub-components: `Header`, `Desc` and `Deadline`. Commands such as `undo` and `redo` can be used to alter events in the list as they deal with code that directly modifies the address book.
+
+The `TaskPanel` is incorporated into the address book `MainWindow` to display all the tasks inside the internal list using `ObservableList<ReadOnlyTask>`. This process will be explained later on under the section `Task card`.
+
+==== Task methods
+As mentioned earlier, the `Task` class contains three main methods: `addt`, `editt` and `deletet`.
+The execution flow is similar for all three methods on a higher level.
+
+==== Exceptions
+When the user input a task command with its parameters, the validity of the command word is checked inside the `AddressBookParser`. Next, the presence of the parameter prefixes is checked inside `AddTaskCommandParser`.
+An appropriate `ParseException` will be thrown if the command word or prefixes are incorrect.
+
+Before modifying the list of tasks inside the address book, the system may throw exceptions due to some invalid parameters. Here are the possible exceptions:
+
+* `TaskNotFoundException`: This exception can be thrown by `editt` and `deletet` command when the an invalid index for a task is provided by the user. The index needs to be within the size of the task list at the current state of the address book.
+* `DuplicateTaskException`: This exception can be thrown by `addt` and `editt` command. The system will first create an `Task` object with the input parameters, compare the object to all tasks residing in the task list and throw this exception if there is a duplicate found.
+
+Editing of task is implemented this way:
+
+[source,java]
+----
+ReadOnlyTask taskToEdit = lastShownList.get(index.getZeroBased());
+Task editedTask = createEditedTask(taskToEdit, editTaskDescriptor);
+
+try {
+    model.updateTask(taskToEdit, editedTask);
+} catch (DuplicateTaskException dee) {
+    throw new CommandException(MESSAGE_DUPLICATE_TASK);
+} catch (TaskNotFoundException enfe) {
+    throw new AssertionError("The target task cannot be missing");
+}
+model.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
+return new CommandResult(String.format(MESSAGE_EDIT_TASK_SUCCESS, editedTask));
+----
+
+==== Task card
+The `TaskCard` class extends `UiPart<Region>` to represent a distinct part of the UI. The object properties of every task is assigned to a label held by an `TaskCard`. The graphic scene is then constructed with the appropriate `FXML` files created to support the display of all tasks.
+
+===== Design implementation
+When the user starts the `MainApp`, the system calls the `UiManager` to create a new `MainWindow` and fills it with `TaskListPanel` and other components. The displayed events are created by `UniqueTaskList` and the binding of individual UI elements to the `TaskCard` ensures that any changes to the parameter will be displayed in the `TaskListPanel`.
+The sequence diagram below illustrates the interaction between the `TaskCard` and the `UiManager`:
+
+==== Design Considerations
+**Aspect(future enhancement):** How to implement adding/tagging of contacts into a `Task` using a `Person` list parameter +
+
+**Chosen Implementation:** +
+Add by the index of contact shown in the `PersonListPanel`. +
+**Pros:** +
+The system only has to check for validity of index which leads to increased performance. +
+**Cons:** +
+This requires the user to refer to the `PersonListPanel` before executing command to add contact into task's `Person` list. +
+
+**Alternative:** Add by the name of contact in the `Person` list. +
+**Pros:** +
+Easier for users to add using names, as they do not need to refer to the `Person` list. +
+**Cons:** +
+System has to check through the list to check if the contact's name exist in the current address book, which can be more difficult if there are more than one contacts with the same name.
+
+=== Enhancement Added: Add Task
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+=== Adding tasks : `addt`
+
+You can also use Contact'em to add tasks using the Command Line Interface of the application. +
+
+==== The Command
+Format: `addt th/TASK_HEADER td/DESCRIPTION tdl/DEADLINE`
+
+==== Usage Examples
+* `addt th/Homework td/Questions 1 to 4 tdl/23/11/2017.` +
+Adds a task with the header `Homework` with a description `Questions 1 to 4` and deadline `23/11/2017`.
+* `addt th/Assignment td/Tutorial homework tdl/today` +
+Adds a task with the header `Assignment` with a description `Tutorial homework` and deadline `today`.
+
+==== More Information
+You must specify all fields of task headers and description to successfully add tasks to the application.
+
+Deadline is an optional field, with no required format. You can add both days and dates with your preferred format here.
+
+==== Common Problems
+
+* Missing required fields +
+Compulsory fields to be entered are
+`*_header and description._*`
+
+* Missing/wrong prefixes +
+The right prefixes are needed so the application can decipher the command.
+
+* Confusing with `add` and `addt` +
+The application will prompt you for the wrong format as the prefixes `th/`, `td/` or `tdl/` are not applicable to `add`.
+
+
+#End of Extract#
+
+---
+
+==== Justification
+
+We wanted Contact'em to be more than just an place to store contacts.
+Here we add the ability to add tasks into a separate list of tasks, each with their own Header, Description and Deadline.
+
+=== Enhancement Added: Edit Task
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+=== Editing tasks : `editt`
+
+Edits the information of an existing task. +
+
+==== The Command
+
+Format: `editt INDEX [th/TASK_HEADER] [td/DESCRIPTION] [tdl/DEADLINE]`
+
+==== Examples
+
+* `editt 1 th/CS2103T Homework` +
+Edits the header of the first task to `CS2103T Homework`.
+* `editt 2 td/Tutorial 3 homework` +
+Edits the description of the second task to `Tutorial 2 homework`.
+
+[NOTE]
+`INDEX` refers to the number on the task to be edited in the displayed list.
+
+[NOTE]
+You can specify any number of fields (in square brackets), but naturally at least one field must be changed for it to be a valid command. Unspecified fields will be unchanged.
+
+[TIP]
+To remove a deadline, simply include the field `tdl/`.
+
+[TIP]
+If user wishes to revert the edit, simply type in the `undo` command **without closing the app**
+
+==== Common Problems
+* Not providing the right prefix/field +
+The field entered must be suitable for the prefix, for example, entering a header with the description field prefix `td/` will not pass.
+
+* Old deadline were unintentionally removed +
+Use the `undo` command to revert changes.
+
+* Not entering the correct `index` +
+Ensure that the `index` entered is correct, or it may cause unintentional changes to another task. +
+
+* Confusing with `edit` and `editt` +
+The application will prompt you for the wrong format as the prefixes `th/`, `td/` or `tdl/` are not applicable to `edit`.
+
+
+[NOTE]
+`Index` is the #currently displayed# number corresponding to the contact, which may differ if the current displayed list has been filtered.
+
+#End of Extract#
+
+---
+
+==== Justification
+
+It is common for tasks to change, more or less things to include, different deadlines, etc.
+Editing a task is crucial for any user. Simply deleting and adding it again with different parameters is just not practical.
+
+=== Enhancement Added: Delete Task
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+=== Deleting a task : `deletet`
+
+Deletes the specified task from the address book. +
+
+==== The Command
+Format: `deletet INDEX`
+
+[NOTE]
+`INDEX` refers to the number on the task to be edited in the displayed list.
+
+[WARNING]
+If wrong task was deleted, **`undo` immediately without exiting the application!**
+
+==== Examples
+
+* `list` +
+`deletet 2` +
+Deletes the 2nd task in the address book.
+* `deletet 1` +
+Deletes the 1st task in the address book.
+
+==== Common Problems
+* Not entering the correct `index` +
+Ensure that the `index` entered is correct, or it may cause unintentional changes to another task. +
+
+* Confusing with `delete` and `deletet` +
+The application will prompt you for the wrong format as the prefixes `th/`, `td/` or `tdl/` are not applicable to `delete`.
+
+
+[NOTE]
+`Index` is the #currently displayed# number corresponding to the task, which may differ if the current displayed list has been filtered.
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Deleting a task is crucial to indicate a completed, cancelled or even a task passed on to someone else.
+As long as it's off the task list of the user, we want it to be removed from the task list on Contact'em.
+
+=== Other contributions
+
+* Performed acceptance testing in for team T10-B4 and raised the [https://github.com/CS2103AUG2017-T10-B4/main/issues/100[issue]].
+

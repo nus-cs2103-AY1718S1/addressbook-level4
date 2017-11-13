@@ -10,36 +10,64 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-T11-B4/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `CS2103T T11-B4 Team`      Since: `Sep 2017`      Licence: `MIT`
 
-== Quick Start
+== Product Overview
+Contact'em is a convenient and easy addressbook application, that allows you to both store and retrieve your contacts as well as your tasks easily and quickly.
+Compared to other similar applications, Contact'em prides itself on its ease-of-use. Never again will you wish the application was easier to use.
 
-.  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
+== About
+##to be added##
+
+== Key Features
+
+=== Convenience
+
+Contact'em provides convenience and ease of use in your daily life.
+
+* Import and export contacts from Google to keep your contacts organised.
+* Send emails to your contacts using your Gmail account.
+* Sync between all your devices.
+
+=== Security
+
+We value your privacy and security and we understand how important security is to all our users.
+
+* We use state-of-the-art Google login credentials to ensure your details are kept safe.
+* We do not save any of your passwords or emails sent to your contacts so you can use the application freely.
+* No contact details are shared with third-party applications without your approval.
+
+== Getting Started
+
+.  Ensure that you have Java version `1.8.0_60` or later installed in your Computer.
 +
 [NOTE]
 Having any Java 8 version is not enough. +
-This app will not work with earlier versions of Java 8.
+This app will not work with earlier versions of Java 8. +
+Download the latest version of java at https://java.com/en/download/
 +
 .  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
+.  Double-click the file to start the app. The main window, pictured below, will appear.
 +
 image::Ui.png[width="790"]
 +
-.  Type the command in the command box and press kbd:[Enter] to execute it. +
+.  Type commands in the command box (near the top of the screen) and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
 * *`list`* : lists all contacts
 * **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
+* **`delete`**`1` : deletes the 1st contact shown in the current list
 * *`exit`* : exits the app
 
-.  Refer to the link:#features[Features] section below for details of each command.
+.  Refer to the _Commands_ section below (Section 3) for more details on each command.
 
-== Features
+== Using the Application
+
+Below are the details of commands currently available and their usage.
 
 ====
 *Command Format*
@@ -50,80 +78,288 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
-=== Viewing help : `help`
+=== Viewing Help : `help`
+Lists useful information such as the commands available.
 
+==== The Command
 Format: `help`
 
-=== Adding a person: `add`
+=== Adding a Person: `add`
+Adds a contact to the address book.
 
-Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+==== The Command
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [b/BIRTHDAY] [f/FACEBOOK] [t/TAG]...`
+
+`add` is the command word, and the other `fields` (e.g. n/NAME) are details of the contact to be added.
+
+Appropriate `prefixes`, e.g. `n/`, `p/`, are required before typing in the required field.
+
+After entering the command, the application will also respond with the details of the added contact, for your reference.
+Refer to `section 3.2.3` below for recommended actions if contact was added with errors.
 
 [TIP]
-A person can have any number of tags (including 0)
+Optional parameters are in square brackets, such as Birthday, Facebook and Tag. These do not need to be specified when first adding a contact.
 
-Examples:
+[TIP]
+Contacts can have any number of tags, including zero.
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+[TIP]
+The order of parameters entered does not matter. However, the command word `add` must be in front.
 
-=== Listing all persons : `list`
+[WARNING]
+Prefixes are necessary before the corresponding fields, e.g. **n/** John will work, but just entering John will not.
 
-Shows a list of all persons in the address book. +
+==== Usage Examples
+
+* `add n/John Doe p/98765432 e/johnd@example.com a/John Street, block 123, #01-01` +
+Adds a contact named John Doe, with phone number: 98765432, email address: johnd@example.com, and address: John Street, block 123, #01-01.
+
+* `add n/Betsy Crowe e/betsycrowe@example.com a/Betsy road, block 456, #01-02 p/98765432 t/friend` +
+Adds a contact `named Betsy Crowe`, with `phone number: 98765432`, `email address: betsycrowe@example.com`, and `address: Betsy Road, block 456, #01-02`.
+Also tags contact with `friend`.
+
+==== Demonstration
+
+image::add-enter-command.png[width="200"]
+_Figure 5.2.3a : Before entering command_
+
+image::add-after.png[width="200"]
+_Figure 5.2.3a : After entering command_
+
+==== Contact Added With Error
+If a contact was added in error, or with errors, user can `undo`, `edit`, or `delete` it. +
+
+* To undo, enter `undo` (recommended). +
+
+* To edit, refer to `section 3.4` below (recommended for experienced users). +
+
+* To delete, refer to `section 3.8` below (least recommended). +
+
+==== Common Problems
+
+1. Missing required fields +
+Compulsory fields to be entered are
+`*_name, address, phone number and email address._*`
+
+2. Missing/wrong prefixes +
+The right prefixes are needed so the application can decipher the command.
+
+3. Duplicate contacts +
+If there is a duplicate contact, Contact'em will not allow the addition.
+
+=== Listing All Contacts : `list`
+
+Displays all contacts in the application.
+
+[TIP]
+If you are searching for particular contact(s), it is recommended to use `find` or `findtags` instead, see details at #....#
+
+==== The Command
 Format: `list`
+
+==== Common Problems
+
+1. No contacts in list +
+Import contacts or start adding them! +
+
+[WARNING]
+If this occurred due to an accidental `clear` command, it is recommended to `undo` as soon as possible, #without closing the application as data will be permanently lost after otherwise.#
 
 === Editing a person : `edit`
 
-Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Edits the information of an existing contact. +
 
-****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
-****
+==== The Command
 
-Examples:
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [t/TAG]...`
+
+==== Examples
 
 * `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+Edits the phone number and email address of the 1st person to `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+Edits the name of the 2nd person to `Betsy Crower` and clears all existing tags.
+
+[NOTE]
+`INDEX` refers to the number on the contact to be edited in the displayed list.
+#refer to picture below, to be added!#
+
+[NOTE]
+You can specify any number of fields (in square brackets), but naturally at least one field must be changed for it to be a valid command. Unspecified fields will be unchanged.
+
+[WARNING]
+In this version, editing of tags changes the entire list of tags to the new one, that is, the previous list of tags the person had will be completely wiped if tags are edited.
+Therefore, to add tags, user must include previous tags.
+
+[TIP]
+To remove tags, simply include the field `t/`.
+
+[TIP]
+If user wishes to revert the edit, simply type in the `undo` command **without closing the app**
+
+
+==== Common Problems
+* Not providing the right prefix/field +
+The field entered must be suitable for the prefix, for example, entering a phone number with the address field prefix `a/` will not pass.
+
+* Old tags were unintentionally removed +
+Use the `undo` command to revert changes.
+
+* Not entering the correct `index` +
+Ensure that the `index` entered is correct, or it may cause unintentional changes to another contact. +
+[NOTE]
+`Index` is the #currently displayed# number corresponding to the contact, which may differ if the current displayed list has been filtered.
+
+
+#Feature to edit tags specifically coming in future updates!#
 
 === Locating persons by name: `find`
+`Find` contacts whose names contain any of the given keywords. +
 
-Finds persons whose names contain any of the given keywords. +
+==== The Command
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
-****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-****
-
-Examples:
-
+==== Examples
 * `find John` +
-Returns `john` and `John Doe`
+Returns `john` and `John Doe`.
 * `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
+Returns any person having names `Betsy`, `Tim`, or `John`.
+
+[TIP]
+Keywords are not case-sensitive.
+
+[TIP]
+Order of keywords does not matter.
+
+[NOTE]
+As long as a single word in a contact's name matches any of the keywords, that contact will be displayed.
+
+[NOTE]
+Only full words will be matched, for example, finding `Han` will not match `Hans`. To search for a contact without specifying the full word, refer to `EasyFind` in the section below.
+
+// tag::EasyFind[]
+==== EasyFind
+
+The easyfind feature improves on the find feature. Contact'em now auto updates the results display whenever user inputs a letter with the `find` command word.
+Find persons whose names contain any of the letters in the command box constantly having the user to input `enter`.
+
+==== Examples
+ * `find Alex` +
+ Returns `Alex` and `Alexandra`
+ * `find Alexan` +
+ Returns `Alexandra`
+* `find Bet Ti Jo` +
+Returns any person having starting alphabets `Betsy`, `Tim`, or `John`
+
+image::EasyFind example.png[width="800"]
+_Figure 5.5.1 : Example of usage of EasyFind feature_
+
+[NOTE]
+Letters are case-insensitive.
+
+[NOTE]
+Different letter sequences will be separated by a space .
+
+[NOTE]
+As long as a letter in a contact’s name matches any of the keywords, that contact will be displayed.
+
+[NOTE]
+When the search results displays no results , the letters will not match any contacts even when the user continues inputting new characters.
+
+// end::EasyFind[]
+
+
+// tag::findtags[]
+=== Finding Contacts by Tag : `findtags`
+`SINCE V1.2`
+
+Finds contacts who have tags matching any of the given keywords. The command keyword is `findtags` +
+
+[TIP]
+You can substitute the command keyword `findtags` with `findtag` or `ft`.
+
+==== The Command
+Format: `findtags KEYWORD [MORE_KEYWORDS]` +
+
+==== Examples
+* `findtags friends` +
+Returns any contact tagged `friends`.
+
+* `findtags friends colleagues schoolmates` +
+Returns any person having any of the tags `friends`, `colleagues`, and/or `schoolmates`.
+
+==== Demonstration
+image::findtags-before.PNG[width="200"]
+_Figure 5.6.3a : Before entering command_
+
+image::findtags-enter-command.PNG[width="200"]
+_Figure 5.6.3b : Entering command to find all contacted tagged as friends_
+
+image::findtags-after.png[width="200"]
+_Figure 5.6.3c : Application displays all contacts tagged as friends_
+
+The figures above demonstrate an example of how this command is used, with respect to the first example.
+
+
+==== Note on Singular and Plural Keywords
+To make it more convenient for you to search for contacts through their tags, this search function will attempt to be more lenient with singular and plural tenses.
+For example: +
+
+* `friend` will return contacts with either tag `friend` or `friends`. +
+* `colleagues` will return contacts with either tag `colleague` or `colleagues`.
+
+However, this will not work for words where plural and singular differs not only by a single letter 's'.
+Searching by tag `family` will attempt to find contacts with tags `family` and `familyS` instead of `families`.
+
+==== Specifying Exclusions
+`SINCE V1.4`
+
+You can now specify tags to be excluded in this command, by simply adding a dash ('-') before keywords specified for exclusion.
+This feature will help you better manage your contacts.
+
+===== Usage examples of exclusions
+Specifying both tags to include and tags to exclude +
+Example 1:
+`findtags` friends #-colleagues# +
+In this case, the application will show only those who are tagged as friends, but are #NOT# tagged as colleagues.
+
+Specifying only tags to exclude +
+Example 2:
+`findtags` #-colleagues# +
+In this case, the application will show **all** contacts who are #NOT# tagged colleagues, regardless of other tags.
+
+// end::findtags[]
+
+// tag::listtags[]
+=== List tags : `listtags` +
+`SINCE V1.3`
+
+Lists all existing tags in Contact'em. +
+
+[TIP]
+Listing all tags is designed to help you choose which tags to specify when using `findtags`.
+
+==== The Command
+Format: `listtags` +
+
+// end::listtags[]
+
 
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
+
+==== The Command
 Format: `delete INDEX`
 
-****
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-****
+[NOTE]
+`INDEX` refers to the number on the contact to be edited in the displayed list.
+#refer to picture below, to be added!#
 
-Examples:
+[WARNING]
+If wrong person was deleted, **`undo` immediately without exiting the application!**
+
+==== Examples
 
 * `list` +
 `delete 2` +
@@ -132,19 +368,44 @@ Deletes the 2nd person in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
+==== Demonstration
+
+===== For Deleting a Contact
+
+image::delete-before.png[width="200"]
+_Figure 5.8.3a : Before entering delete command_
+
+image::delete-enter-command.png[width="200"]
+_Figure 5.8.3b : Entering command to delete first person in the list_
+
+image::delete-after.png[width="200"]
+_Figure 5.8.3c : Application displays new list with deleted person_
+
+===== For Undoing a Deletion
+
+image::delete-enter-undo.png[width="200"]
+_Figure 5.8.3d : Before entering undo command to revert a deletion_
+
+image::delete-undo-after.png[width="200"]
+_Figure 5.8.3e : After undoing the deletion_
+
+
+==== Common Problems
+* Not entering the correct `index` +
+Ensure that the `index` entered is correct, or it may cause unintentional changes to another contact. +
+
+[NOTE]
+`Index` is the #currently displayed# number corresponding to the contact, which may differ if the current displayed list has been filtered.
+
+
 === Selecting a person : `select`
 
 Selects the person identified by the index number used in the last person listing. +
+
+==== The Command
 Format: `select INDEX`
 
-****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
-****
-
-Examples:
-
+==== Usage Examples
 * `list` +
 `select 2` +
 Selects the 2nd person in the address book.
@@ -152,9 +413,31 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
-=== Listing entered commands : `history`
+==== More Information
+Selects the contact and loads the Facebook Profile of the contact specified.
+
+[NOTE]
+If Facebook page of the contact is not stored in the application, the default Facebook homepage will be loaded instead.
+
+This is designed to let you connect with your contact through Facebook Messenger, but of course you can also use it to view his/her profile.
+
+==== Common Problems
+* Facebook page does not load +
+Ensure that: +
+a) the correct Facebook Address of contact was saved and is not outdated. +
+b) your device is connected to the Internet.
+
+* Not entering the correct `index` +
+Ensure that the `index` entered is correct, or it may cause unintentional changes to another contact. +
+
+[NOTE]
+`Index` is the #currently displayed# number corresponding to the contact, which may differ if the current displayed list has been filtered.
+
+=== Viewing command history : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
+
+==== The Command
 Format: `history`
 
 [NOTE]
@@ -162,39 +445,256 @@ Format: `history`
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
 
+[NOTE]
+When the application is closed, command history is wiped.
+
+==== Common problems
+1. Command fails to display history from previous usages +
+Command history is not saved on exit, therefore,
+it will only show the command history from when the application was opened.
+
+// tag::google[]
+=== Google Contacts integration : `login` `import` `export` `sync`
+
+Contact'em is now integrated with the ability to import/ export / sync contacts from google contacts.
+Being able to access contacts from your mobile phones is the quickest way to get things done. Export your contact directly to your android phones through google contacts to have your contacts on the go. Simply synchronize Contact’em whenever you make changes to your Google Contacts and your contacts will be updated.
+
+Enter `login` to link Contact’em with Google Contacts / Gmail. When the login page is loaded, simply key in your credentials and you will be redirected to google contacts.
+
+==== The Command
+Format: `login`  `import`  `export`  `sync`
+
+
+Enter `import` to have all your Google Contacts transferred to Contact’em.
+
+image::importusage.png[width="800"]
+_Figure 5.14.1 : Example of usage of Import command_
+
+Use `export` to have all your contacts in Contact’em transferred to Google Contacts.
+
+image::exportusage.png[width="800"]
+_Figure 5.14.2 : Example of usage of Export command_
+
+[NOTE]
+Export might take several minutes. Please do not close your application meanwhile even if it becomes unresponsive
+
+Enter `sync` to have your contacts in Google Contacts updated to Contact’em. Contacts in Google Contacts takes higher precedence and when sync is used, contacts in Contact’em will be updated to the contacts in Google Contacts.
+
+
+==== Usage Notes
+* When using `import` / `export` / `sync` command, your browser must have google contacts page loaded
+    If you have switched the page, you will have to login again to use the commands.
+
+* Please refresh the Google contacts page after exporting for the exported contacts to show up. Check FAQ for more information if contacts are still missing.
+
+
+* If a google contact fails to import or sync, please check the contact to make sure that the parameters are valid.
+    Please check the reference guide on the validity of the parameters
+
+* All google contacts imported are tagged with a ‘GoogleContact’ tag to indicate that they are linked to Google Contacts.
+    Contacts deleted in Google Contacts will not be deleted in Contact’em when synced. It will simply lose its `GoogleContact` tag.
+
+
+
+// end::google[]
+
+// tag::gmail[]
+=== Gmail integration : `send`
+
+You can now use Contact'em to send e-mails to your contacts using the Command Line Interface of the application. +
+
+==== The Command
+Format: `send INDEX [es/EMAIL_SUBJECT] [eb/EMAIL_BODY]`
+
+==== Usage Examples
+* `send 1 es/Meeting for next Monday. eb/Looking forward to next Monday.` +
+Sends an e-mail using the e-mail account you used to login to the contact at index 1 with the subject `Meeting for next Monday.`
+and with the body `Looking forward to next Monday.`
+* `send 8 es/Merry Christmas! eb/Wishing you and your family a very Merry Christmas!` +
+Sends an e-mail using the e-mail account you used to login to the contact at index 8 with the subject `Merry Christmas!`
+and with the body `Wishing you and your family a very Merry Christmas!`
+
+==== More Information
+You must login using your e-mail and password to a specific Google account before you can start using this feature.
+If login is unsuccessful, you will be prompted to login again.
+
+Please ensure you have clicked `Allow` when asked for account permissions by Google.
+
+==== Common Problems
+* Unable to send an e-mail after using other commands except `login` +
+Ensure that you only `send` command is used once you login to your Google Account. +
+* Unable to send e-mail despite providing the correct format for the command +
+Ensure that your desktop is connected to the Internet.
+* Unable to send e-mails to a particular account
+If a contact has several e-mails, it is likely that the e-mail you want to send to is not present in Contact'em.
+Please ensure you have entered the necessary details for each contact.
+
+[NOTE]
+`Index` is the #currently displayed# number corresponding to the contact, which may differ if the current displayed list has been filtered.
+// end::gmail[]
+
+// tag::add-task[]
+=== Adding tasks : `addt`
+
+You can also use Contact'em to add tasks using the Command Line Interface of the application. +
+
+==== The Command
+Format: `addt th/TASK_HEADER td/DESCRIPTION tdl/DEADLINE`
+
+==== Usage Examples
+* `addt th/Homework td/Questions 1 to 4 tdl/23/11/2017.` +
+Adds a task with the header `Homework` with a description `Questions 1 to 4` and deadline `23/11/2017`.
+* `addt th/Assignment td/Tutorial homework tdl/today` +
+Adds a task with the header `Assignment` with a description `Tutorial homework` and deadline `today`.
+
+==== More Information
+You must specify all fields of task headers and description to successfully add tasks to the application.
+
+Deadline is an optional field, with no required format. You can add both days and dates with your preferred format here.
+
+==== Common Problems
+
+* Missing required fields +
+Compulsory fields to be entered are
+`*_header and description._*`
+
+* Missing/wrong prefixes +
+The right prefixes are needed so the application can decipher the command.
+
+* Confusing with `add` and `addt` +
+The application will prompt you for the wrong format as the prefixes `th/`, `td/` or `tdl/` are not applicable to `add`.
+
+// end::add-task[]
+
+// tag::edit-task[]
+=== Editing tasks : `editt`
+
+Edits the information of an existing task. +
+
+==== The Command
+
+Format: `editt INDEX [th/TASK_HEADER] [td/DESCRIPTION] [tdl/DEADLINE]`
+
+==== Examples
+
+* `editt 1 th/CS2103T Homework` +
+Edits the header of the first task to `CS2103T Homework`.
+* `editt 2 td/Tutorial 3 homework` +
+Edits the description of the second task to `Tutorial 2 homework`.
+
+[NOTE]
+`INDEX` refers to the number on the task to be edited in the displayed list.
+
+[NOTE]
+You can specify any number of fields (in square brackets), but naturally at least one field must be changed for it to be a valid command. Unspecified fields will be unchanged.
+
+[TIP]
+To remove a deadline, simply include the field `tdl/`.
+
+[TIP]
+If user wishes to revert the edit, simply type in the `undo` command **without closing the app**
+
+==== Common Problems
+* Not providing the right prefix/field +
+The field entered must be suitable for the prefix, for example, entering a header with the description field prefix `td/` will not pass.
+
+* Old deadline were unintentionally removed +
+Use the `undo` command to revert changes.
+
+* Not entering the correct `index` +
+Ensure that the `index` entered is correct, or it may cause unintentional changes to another task. +
+
+* Confusing with `edit` and `editt` +
+The application will prompt you for the wrong format as the prefixes `th/`, `td/` or `tdl/` are not applicable to `edit`.
+
+
+[NOTE]
+`Index` is the #currently displayed# number corresponding to the contact, which may differ if the current displayed list has been filtered.
+
+// end::edit-task[]
+
+// tag::delete-task[]
+=== Deleting a task : `deletet`
+
+Deletes the specified task from the address book. +
+
+==== The Command
+Format: `deletet INDEX`
+
+[NOTE]
+`INDEX` refers to the number on the task to be edited in the displayed list.
+
+[WARNING]
+If wrong task was deleted, **`undo` immediately without exiting the application!**
+
+==== Examples
+
+* `list` +
+`deletet 2` +
+Deletes the 2nd task in the address book.
+* `deletet 1` +
+Deletes the 1st task in the address book.
+
+==== Common Problems
+* Not entering the correct `index` +
+Ensure that the `index` entered is correct, or it may cause unintentional changes to another task. +
+
+* Confusing with `delete` and `deletet` +
+The application will prompt you for the wrong format as the prefixes `th/`, `td/` or `tdl/` are not applicable to `delete`.
+
+
+[NOTE]
+`Index` is the #currently displayed# number corresponding to the task, which may differ if the current displayed list has been filtered.
+
+// end::delete-task[]
+
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
 Restores the address book to the state before the previous _undoable_ command was executed. +
-Format: `undo`
 
 [NOTE]
 ====
 Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
 ====
 
-Examples:
+==== The Command
+Format: `undo`
+
+==== Usage Examples
 
 * `delete 1` +
 `list` +
 `undo` (reverses the `delete 1` command) +
-
-* `select 1` +
-`list` +
-`undo` +
-The `undo` command fails as there are no undoable commands executed previously.
 
 * `delete 1` +
 `clear` +
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
 
-=== Redoing the previously undone command : `redo`
+* `select 1` +
+`list` +
+`undo` +
+The `undo` command fails as there are no undoable commands executed previously. +
+(Select and List are both **not** commands that can be undone)
+
+==== Common Problems
+* Trying to `Undo` commands that cannot be undone, for example trying to undo a `find`. +
+The commands that can be undone are `add`, `delete`, `edit`, `clear`. +
+However, reverting find commands can still be done, by entering the search command with the previous criteria.
+
+* No commands to undo because application was closed. +
+When the application is closed, the command history is deleted and not stored. Therefore, the application will not be able to know which command to undo. +
+It is therefore recommended to undo any changes needed before closing the application.
+
+=== Reverting last undo command : `redo`
 
 Reverses the most recent `undo` command. +
+
+==== The Command
 Format: `redo`
 
-Examples:
+==== Usage Examples
 
 * `delete 1` +
 `undo` (reverses the `delete 1` command) +
@@ -215,38 +715,251 @@ The `redo` command fails as there are no `undo` commands executed previously.
 === Clearing all entries : `clear`
 
 Clears all entries from the address book. +
+
+==== The Command
 Format: `clear`
+
+==== Notes on Usage
+If `cleared` was used unintentionally, it is recommended to immediately enter `undo`. **DO NOT** close the application as data will be irreversibly removed.
+
+##More updates for login to Google account and sending emails using Gmail coming soon!##
 
 === Exiting the program : `exit`
 
 Exits the program. +
+
+==== The Command
 Format: `exit`
+
+[TIP]
+Alternatively, you can exit by clicking on the RED X at the top right of the Application to close (for Windows)
+
+[NOTE]
+#DO NOT# exit the application if you still have errors left to `undo` as command history is deleted when the application closes.
 
 === Saving the data
 
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
+=== Adding Profile Picture to Contacts
+`Coming in V2.0`
+
+To help you identify your contacts, in Version 2.0 of Contact'em, you will be able to attach pictures to each of your contacts.
+All that is required is a link to the image on the Internet.
+
+==== The Command
+Format: `addPicture INDEX IMAGE_URL` +
+
+== Transferring of Data to Another Device
+Do you wish to transfer the data stored in Contact'em on one device to another?
+For example, you may wish to use Contact'em on device B with the data currently stored on device A.
+Or you may simply want to create a backup. Simply follow the easy steps below to get set.
+
+Option A: Using a storage device (e.g. thumb drive)
+
+1. Connect storage device to Device A (old device).
+2. On Device A (old device), open the `Contact'em` directory
+3. In the `Contact'em` directory, open the `data` folder.
+4. Copy the data file `addressbook` from device A to your storage device.
+5. Install Contact'em on Device B (new device).
+6. Connect storage device to Device B.
+7. Open `data` folder in `Device B` (similar to steps 2 and 3 above).
+8. Copy `addressbook` from storage device into `data`.
+9. Done! Contact'em on Device B ready for use!
+
+
+Option B: Directly connecting the 2 devices
+
+1. Install Contact'em on new device.
+2. Connect the 2 devices.
+3. Open the `Contact'em` directory to find the `data` folder on both devices.
+4. Copy the file `addressbook` from the `data` folder of the older device to the newer device.
+5. Done! Contact'em on newer device is ready for use!
+
 == FAQ
+
 
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+Refer to Section 3 above for details.
 
-== Command Summary
+*Q*: How do I resolve a problem  with _this_ command? +
+*A*: Refer to the `Common Problems` subsection of the corresponding command in the **features** section above (Section 2).
+Alternatively, if the command can be undone, enter `undo` and resolve from there.
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX` +
-e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *List* : `list`
-* *Help* : `help`
-* *Select* : `select INDEX` +
-e.g.`select 2`
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
+*Q*: Why does the Facebook Page not show when I select a contact? +
+*A*: Your device may have a slow or perhaps no connection to the Internet. Alternatively, ensure that the contact’s Facebook Page URL is correct.
+
+*Q*:  Why does my contacts not show in google contacts after i have exported them? +
+*A*: It might take some time for the contacts to show up in google contacts due to server issues.
+You may also switch to the old version of google contacts if the problem persists. However, please switch back to the new version if you wish to import / export / sync again.
+
+*Q*: How do i resolve the “authentication failed. Please login again” error? +
+*A*: Make sure you switch back to the new google contacts page if you are on the old version of google contacts. Then log in again and provide all the required permissions for Contact’em when prompted.
+
+== Quick-Reference Guide
+
+
+.Summary of Commands
+|===
+|Command |Desecription |Format |Example |Notes
+
+|Add Contact +
+Command Words: **add**, **a**
+|Adds a contact
+|**add** n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [b/BIRTHDAY] [t/TAG]...
+|**add** n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+|Compulsory fields are **name, phone number, email address, and address**
+
+|Edit Contact +
+Command Words: **edit**, **e**
+|Edits the details of a contact
+|**edit** INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [t/TAG]...`
+|**edit** 2 n/James Lee e/jameslee@example.com
+|Can edit any number of fields (at least 1)
+
+|Delete Contact+
+Command Words: **delete**, **de**
+|Deletes a contact
+|**delete** INDEX
+|**delete** 3
+|Do **NOT** exit the application if you plan on reverting this command with *undo*
+
+|Add Task +
+Command Words: **addt**, **at**
+|Adds a task
+|**addt** th/TASK_HEADER td/DESCRIPTION [tdl/DEADLINE]...
+|**addt** th/Homework td/Questions 1 to 4 td/23112017`
+|Compulsory fields are **task header and description**
+
+|Edit Task +
+Command Words: **editt**, **et**
+|Edits the details of a task
+|**editt** INDEX [th/TASK_HEADER] [td/DESCRIPTION] [tdl/DEADLINE]`
+|**editt** 2 th/Homework assignment td/Graded homework
+|Can edit any number of fields (at least 1)
+
+|Delete Task +
+Command Words: **deletet**, **dt**
+|Deletes a task
+|**deletet** INDEX
+|**deletet** 3
+|Do **NOT** exit the application if you plan on reverting this command with *undo*
+
+|Select +
+Command Words: **select**, **se**
+|Selects a contact in the displayed list
+|**select** INDEX
+|**select** 2
+|Opens the specified Facebook page (if any) of the contact selected as well
+
+|List +
+Command Words: **list**, **li**
+|Lists all stored contacts
+|**list**
+|**list**
+|-
+
+|Find (by name) +
+Command Words: **find**, **fi**
+|Finds contacts whose name matches any keyword(s)
+|**find** KEYWORD [MORE KEYWORDS]
+|**find** john
+|Not case sensitive, but only fully matching words in name will be matched
+
+|Find (by tag names) +
+Command Words: **findtags**, **findtag**, **ft**
+|Finds contacts who have tags matching any keyword(s)
+|**findtags** KEYWORDS [MORE KEYWORDS]
+|**findtags** friends colleagues
+|Not case sensitive, but only fully matching words in name will be matched
+
+|Send +
+Command Words: **send**, **sd**
+|Sends e-mail to a contact
+|**send** INDEX [es/EMAIL_SUBJECT] [eb/EMAIL_BODY]
+|**send** 1 es/Meeting for next Monday. eb/Looking forward to next Monday.
+|`//` is used for adding the following text to the next line.
+
+|Clear +
+Command Words: **clear**, **cl**
+|Removes **ALL** contacts from the addressbook
+|**clear**
+|**clear**
+|Do **NOT** exit the application if you plan on reverting this command with *undo*
+
+|Undo +
+Command Words: **undo**, **un**
+|Reverts the last command (that can be undone)
+|**undo**
+|**undo**
+|Commands that can be undone are *add*, *edit, *delete* and *clear*
+
+|Redo +
+Command Words: **redo**, **re**
+|Reverts the last **undo** command (that can be undone)
+|**redo**
+|**redo**
+|-
+
+|History +
+Command Words: **history**, **hi**
+|Shows the commands entered since turning on the application
+|**history**
+|**history**
+|-
+
+|Help +
+Command Words: **help**, **h**
+|Shows program usage instructions
+|**help**
+|**help**
+|-
+
+|Login +
+Command Words: **login**
+|Shows program usage instructions
+|**login**
+|**login**
+|Have to stay on the Google Contacts page to use the following commands : import, sync, export.
+
+
+|Import +
+Command Words: **import**
+|Import contacts from Google Contacts
+|**import**
+|**import**
+|Following parameters in google contact must be present:
+ *name*, *phone*, *address*, *email*
+
+ _Validity of parameter:_ +
+ Phone number : digits +
+ Email Format: example@example.com
+
+
+|Sync +
+Command Words: **sync**
+|Syncs contacts to Google Contacts
+|**sync**
+|**sync**
+|Following parameters in google contact must be present:
+ *name*, *phone*, *address*, *email*
+
+ _Validity of parameter:_ +
+ Phone number : digits +
+ Email Format: example@example.com
+
+|Export +
+Command Words: **export**
+|Export contacts to Google Contacts
+|**export**
+|**export**
+|-
+
+
+|===
+
+
+=======
+

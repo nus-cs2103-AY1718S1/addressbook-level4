@@ -20,8 +20,15 @@ public interface ReadOnlyPerson {
     Email getEmail();
     ObjectProperty<Address> addressProperty();
     Address getAddress();
+    //@@author srishag
+    ObjectProperty<Birthday> birthdayProperty();
+    Birthday getBirthday();
+    //@@author
+    ObjectProperty<FacebookAddress> facebookAddressProperty();
+    FacebookAddress getFacebookAddress();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
+    GoogleId getGoogleId();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
@@ -32,7 +39,12 @@ public interface ReadOnlyPerson {
                 && other.getName().equals(this.getName()) // state checks here onwards
                 && other.getPhone().equals(this.getPhone())
                 && other.getEmail().equals(this.getEmail())
-                && other.getAddress().equals(this.getAddress()));
+                && other.getAddress().equals(this.getAddress())
+                && other.getGoogleId().equals(this.getGoogleId()))
+                //@@author srishag
+                && other.getBirthday().equals(this.getBirthday())
+                //@@author
+                && other.getFacebookAddress().equals(this.getFacebookAddress());
     }
 
     /**
@@ -47,6 +59,12 @@ public interface ReadOnlyPerson {
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
+                //@@author srishag
+                .append(" Birthday: ")
+                .append(getBirthday())
+                //@@author
+                .append(" Facebook: ")
+                .append(getFacebookAddress())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();

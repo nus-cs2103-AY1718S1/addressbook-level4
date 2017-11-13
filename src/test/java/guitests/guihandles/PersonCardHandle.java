@@ -16,6 +16,10 @@ public class PersonCardHandle extends NodeHandle<Node> {
     private static final String ADDRESS_FIELD_ID = "#address";
     private static final String PHONE_FIELD_ID = "#phone";
     private static final String EMAIL_FIELD_ID = "#email";
+    //@@author srishag
+    private static final String BIRTHDAY_FIELD_ID = "#birthday";
+    //@@author
+    private static final String FACEBOOKADDRESS_FIELD_ID = "#facebookAddress";
     private static final String TAGS_FIELD_ID = "#tags";
 
     private final Label idLabel;
@@ -23,6 +27,10 @@ public class PersonCardHandle extends NodeHandle<Node> {
     private final Label addressLabel;
     private final Label phoneLabel;
     private final Label emailLabel;
+    //@@author srishag
+    private final Label birthdayLabel;
+    //@@author
+    private final Label facebookAddressLabel;
     private final List<Label> tagLabels;
 
     public PersonCardHandle(Node cardNode) {
@@ -33,6 +41,10 @@ public class PersonCardHandle extends NodeHandle<Node> {
         this.addressLabel = getChildNode(ADDRESS_FIELD_ID);
         this.phoneLabel = getChildNode(PHONE_FIELD_ID);
         this.emailLabel = getChildNode(EMAIL_FIELD_ID);
+        //@@author srishag
+        this.birthdayLabel = getChildNode(BIRTHDAY_FIELD_ID);
+        //@@author
+        this.facebookAddressLabel = getChildNode(FACEBOOKADDRESS_FIELD_ID);
 
         Region tagsContainer = getChildNode(TAGS_FIELD_ID);
         this.tagLabels = tagsContainer
@@ -61,6 +73,18 @@ public class PersonCardHandle extends NodeHandle<Node> {
     public String getEmail() {
         return emailLabel.getText();
     }
+
+    //@@author srishag
+    public String getBirthday() {
+        return birthdayLabel.getText();
+    }
+    //@@author
+
+    //@@author PokkaKiyo
+    public String getFacebookAddress() {
+        return facebookAddressLabel.getText();
+    }
+    //@@author
 
     public List<String> getTags() {
         return tagLabels

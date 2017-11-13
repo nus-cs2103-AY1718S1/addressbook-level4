@@ -10,7 +10,7 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-T11-B4/main/tree/master
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
@@ -120,7 +120,7 @@ Each of the four components
 * Defines its _API_ in an `interface` with the same name as the Component.
 * Exposes its functionality using a `{Component Name}Manager` class.
 
-For example, the `Logic` component (see the class diagram given below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
+For example, the `Logic` component (see the class diagram given below) defines its API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
 
 image::LogicClassDiagram.png[width="800"]
 _Figure 2.1.2 : Class Diagram of the Logic Component_
@@ -153,7 +153,7 @@ _Figure 2.2.1 : Structure of the UI Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `TaskListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
@@ -195,7 +195,7 @@ The `Model`,
 
 * stores a `UserPref` object that represents the user's preferences.
 * stores the Address Book data.
-* exposes an unmodifiable `ObservableList<ReadOnlyPerson>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* exposes an unmodifiable `ObservableList<ReadOnlyPerson>` and `ObservableList<ReadOnlyTask>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
 === Storage component
@@ -215,8 +215,574 @@ The `Storage` component,
 Classes used by multiple components are in the `seedu.addressbook.commons` package.
 
 == Implementation
-
 This section describes some noteworthy details on how certain features are implemented.
+
+// tag::googleimplementation[]
+=== Google Implementation
+
+Contact’em now incorporates and integrates Google Contacts and Gmail which will enhance its usability. Firstly,
+`Login Command` is implemented so that the Contact’em can authenticate with the google servers when the user has successfully logged in.
+The new `GoogleAuthenticator` class is created to run the authentication process.
+
+The `Login Command` sequence diagram is as follows:
+
+image::LoginSequence.png[width="800"]
+_Figure 3.1.1 : Login command sequence diagram_
+
+The login page will be loaded in the browser panel after the login command has successfully executed. This is for the user to authenticate with google. Contact’em will then redirect the user to the Google contacts web page after successful authentication.
+
+==== GoogleContactsBuilder class and GoogleID attribute
+The `GoogleContactsBuilder` class can be instantiated to access the list of contacts from Google and also to obtain the `PeopleService` object needed to modify the contacts in Google. This is done by making use of the methods in the `GoogleAuthenticator` object to obtain the access token and `PeopleService` from Google.
+
+The token required for authentication is obtained from the redirect url after logging in. This means that the user must stay on the Google contacts page in the browser panel when instantiating this class (For import / export / sync
+commands). The class diagram for `GoogleContactsBuilder` is shown below.
+
+image::Class diagram.png[width="800"]
+_Figure 3.1.1.1 : GoogleContactsBuilder class diagram_
+
+Every Person in the address book now has a new attribute known as the GoogleID. This ID refers to its own GoogleID in Google contacts. Contacts that are not synchronised with Google will have a null GoogleID.
+
+==== Import Command
+After successful authentication, the user can proceed to import contacts from his google account. The import command creates a `GoogleContactsBuilder` object to retrieve the list of google contacts from the server.
+
+The `Import command` sequence diagram is as follows:
+
+image::Import command.png[width="800"]
+_Figure 3.1.2.1 : Import command sequence diagram_
+
+When the command is executed, the list of Google contacts will be looped through and compared with the contacts in Contact’em. If the GoogleID of a particular Google contact is not found in Contact’em, the contact will be imported. This is represented by the code snippet as shown below.
+
+`Pseudo-code snippet:`
+[source,java]
+----
+for each contact: googleContactsList {
+    if contact does not exists in Contact’em
+               model.addPerson(newPerson(contact))
+}
+----
+
+`Scenario 1`
+
+The newPerson(...) method shown in the above code snippet successfully creates a Person object using attributes from the Google contact and it will be added to the address book. The GoogleID of the contact will also be instantiated within the new Person Object. The Person will also be given a GoogleContact Tag.
+
+`Scenario 2`
+
+The newPerson(...) method fails to create a Person object from the Google contact. The Google contact will fail to import. Reasons for the above mentioned failure includes, +
+1) Google contact might have invalid attributes. Eg: Invalid email format +
+2) Google contact might not have all attributes required to create a new Person object.
+	All the following attributes must be present: Name, Phone, Email and Address.
+
+A message detailing the result of the command will be displayed to inform the user on the number of contacts imported or the number of contacts along with a string of names of contacts that failed to import.
+
+==== Export Command
+After successful authentication, the user can next proceed to export contacts from Contact’em into his google account. The command creates a GoogleContactsBuilder object to retrieve peopleService from google which is required to modify/add contacts in Google.
+
+The `Export command` sequence diagram is as follows:
+
+image::Export Command.png[width="800"]
+_Figure 3.1.3.1 : Export command sequence diagram_
+
+When the command is executed, the list of contacts in Contact’em will be looped through to check whether they are a google contact. If they are not, they will be exported to Google contacts. This is represented by the code snippet shown below.
+
+**Pseudo-code snippet**
+[source,java]
+----
+for each contact: addressBookList{
+    if contact does not have a GoogleContact Tag
+               New googleContact = createGoogleContact (contact);
+               googleContact = builder.getPeopleService().people() createContact(googleContact).
+                                            execute();
+               model.updatePerson(contact, newAddressBookContact(contact));
+}
+----
+
+`Scenario 1`
+
+The createGoogleContact method shown in the above code snippet successfully creates a GooglePerson that will be exported to Google contacts. The export command will then update the contact by instantiating its GoogleID attribute retrieved from the newly created Google contact and adding a GoogleContacts tag to it.
+
+`Scenario 2`
+
+The contact might not be exported to Google due to the failure in connecting to Google servers. This is can be due to token expiring.
+
+A message detailing the result of the command will be displayed to inform the user on the number of contacts imported or failed to import.
+
+==== Sync Command
+After successful authentication, the user can proceed to sync contacts in Contact’em. The sync command creates a GoogleContactsBuilder object to retrieve the list of Google contacts from the server. In this case, the contacts in Google contacts takes higher precedence and any changes to them will be updated to the contacts in Contact’em when the user syncs. However, any changes made to the contacts in the Contact’em will not be transferred to Google contacts when the user syncs but instead, its attribute will be restored to its original value.
+
+The `Sync command` sequence diagram is as follows:
+
+image::Sync Command.png[width="800"]
+_Figure 3.1.4.1 : Sync command sequence diagram_
+
+When the command is executed, the list of contacts in Contact’em will be looped through to check if they exists within the list of Google contacts. If they are, a Person object based on the Google contact will be created and it will be used to compare with the contact in the Contact'em. This is represented by the code snippet shown below.
+
+`Pseudo-code snippet:`
+[source,java]
+----
+for each contact: addressBookList{
+    for each googlecontact : googleContactsList{
+               if contact shares a similar googleID with the googlecontact
+               exists = true;
+                          if convertToAddress(googlecontact) is not the same as contact
+                                    model.updatePerson(contact, convertToAddress(googlecontact))
+     }
+    if contact is a google contact but exists == false
+                model.updatePerson(contact, removeGoogleContactStatus(contact));
+}
+----
+
+`Scenario 1`
+
+The attributes of the contact are the same as itself in Google contacts. No synchronising will be done on that contact.
+
+`Scenario 2`
+
+The attributes of the contact are different from itself in Google contacts. A newly created contact will replace the previous contact as shown in the above code snippet in model.updatePerson(...).
+
+`Scenario 3`
+
+The format of the Google contact is invalid and hence no new Person is created for comparison with the contact in Contact’em. The contact in the Contact’em will not be synchronised.
+
+`Scenario 4`
+
+The contact in the Contact’em is thought to exist in Google contacts but is not found. The removeGoogleContactStatus() method shown in the above code snippet will remove the Google contact status of the contact.
+
+A message detailing the result of the command will be displayed to inform the user on the number of contacts synced and the number of contacts along with a string of names of contacts that failed to sync.
+
+==== Design Considerations
+
+**Aspect:** Storage of access token. +
+**Alternative 1 (current choice):** Users have to be on the Google contact web page in order to use the following commands : `Import`, `Export`, `Sync`. This is because the token is retrieved from the url every time the user uses the above mentioned commands. +
+**Pros:** Users will be able to inspect the contacts within the Google contacts and they will be able to update the contacts if the contacts fail to import or synchronise by referring to the warning messages displayed. +
+**Cons:** This might cause some inconvenience because the users have to re-login to use the above mentioned commands if they have switched pages in the browser panel. +
+**Alternative 2:** Stores the token within the program once the user has logged in. +
+**Pros:** More convenience for user as they do not have to stay on the Google contacts page whenever they want to use the above mentioned commands. +
+**Cons:** In the case when some contacts fail to synchronise or import, the user have to re-login anyway to check on the contacts in google. By doing so, the error message produced earlier on will be removed and the user does not have a reference to see which contact is not importing or synchronising. +
+
+---
+
+**Aspect:** Precedence of Google contacts over Contact’em contacts in sync command +
+**Alternative 1 (current choice):** Google contacts takes higher precedence. Contacts updated in Google contacts will be synchronised to Contact'em. +
+**Pros:** This alternative allow users to update contacts in Google contacts on-the-go which can be synchronised to Contact’em next time they use it. +
+**Cons:** Contacts updated in Contact’em must be manually updated in the Google contacts as well. If not, next time when the user synchronises Contact'em, the changes will be removed. +
+**Alternative 2:** Contact’em takes higher precedence. Contacts updated in Contact’em will be synchronised to Google contacts. +
+**Pros:** This is better for user who uses Contact’em  more often than Google contacts. For some, the contacts in Google contacts might just be an on-the-go reference and most updating is done within Contact’em. +
+**Cons:** Will not be able to update contacts if they are away from the computer.
+// end::googleimplementation[]
+
+
+// tag::EasyFind[]
+=== EasyFind mechanism
+
+The EasyFind mechanism is an action driven task, which activates when the user tries to search for a contact by updating the search results whenever the user inputs a letter into the command box.
+
+The mechanism is facilitated by a new command `FindLettersCommand` which will search for contacts matching the letters in the command box. The command is called every time the user inputs or remove a character from the command box while using the command `Find`.
+
+The key release event of the command box is constantly searching for the term `find` and when the user inputs the mentioned term into the command box, the key release event will begin searching for contacts by passing the letters entered after the term `find` into `FindLettersCommand`.
+
+The application will display the number of contacts that share the same letters as the input.
+
+
+[NOTE]
+After the user inputs `enter`, normal find command will be executed
+[NOTE]
+EasyFind mechanism is case insensitive
+
+The following sequence diagram shows how the `FindLettersCommand` works:
+
+image::FindLettersCommand.png[width="800"]
+_Figure 3.2.1 : FindLettersCommand sequence diagram_
+
+
+==== Design Considerations
+
+**Aspect:** Intertwining of `FindLettersCommand` and `FindCommand` +
+**Alternative 1 (current choice):** Separate both commands. +
+**Pros:** We will not lose the original functionality of the `FindCommand` and creating a new `FindLettersCommand` allows the application to search for contacts more frequently when the EasyFind mechanism is activated. +
+**Cons:** This might confuse the user as the `FindCommand` and `FindLettersCommand` could generate different results. The contact that the user is searching for may be displayed when a partial name is inputted. However, when the user inputs `enter` before typing in the full name, the displayed contact will be removed by the original `FindCommand` +
+**Alternative 2:** Replace `FindCommand` with `FindLettersCommand` +
+**Pros:** The results displayed will not change even after the user has pressed `enter`. It can also help the user to speed up the process of searching for contacts as they user does not have to input the full name +
+**Cons:** Removing the find Command may affect other functions of Contact'em.
+// end::EasyFind[]
+
+
+// tag::findbytags[]
+=== Finding Contacts by Tags
+
+The application allows users to find contacts based on their tags. The command word is `findtags`, and the alternatives are `findtag` and `ft`. The following subsections explain how the program is supposed to function given this command, and how it is implemented.
+
+==== User Inputs and Expected Actions/Results
+
+There are three ways to use this command. Some pseudo-code is provided for each of these 3 scenarios to aid understanding.
+
+**Scenario 1**
+
+In the first scenario, also the most basic, the user only specifies tags to **include**. For this, the program should simply return all contacts that have at least one of the tags.
+
+**Example Command 1:** findtags friends +
+Expected result: returns contacts that are tagged “friends”.
+
+**Pseudo-code snippet**
+[source,java]
+----
+for each tag : contact.getTagList {
+    if (keywordsToInclude.hasAnyMatchingWordsWith(tag.value)) {
+        return true;
+    }
+}
+return false;
+----
+
+**Scenario 2**
+
+In the second scenario, the user only specifies tags to **exclude**. To specify a tag to exclude, user includes a hyphen "-"  before the keyword to be excluded. In this case, the program should return all contacts that do not have any of these tags to be excluded.
+
+Note that this includes contacts with no tags.
+
+
+**Example Command 2:** findtags -colleagues +
+Expected result: returns all contacts not tagged “colleagues”.
+
+**Pseudo-code snippet**
+[source,java]
+----
+for each tag : contact.getTagList {
+    if (keywordsToExclude.hasAnyMatchingWordsWith(tag.value)) {
+        return false;
+    }
+}
+return true;
+----
+
+**Scenario 3**
+
+In the third scenario, the user specifies **both tags to include and exclude**. The program will return all contacts that have: +
+1) ANY of the tags to include. +
+2) NONE of the tags to exclude.
+
+**Example Command 3:** findtags friends -colleagues +
+Expected result: returns all contacts tagged “friends” but not tagged “colleagues”.
+
+**Pseudo-code snippet:**
+[source,java]
+----
+boolean personHasAtLeastOneMatchingTag = false;
+
+for each tag : contact.getTagList {
+     if keywordsToExclude.hasAnyMatchingWordsWith(tag.value)
+                return false;
+     if keywordsToInclude.hasAnyMatchingWordsWith(person.getTagList()
+                 personHasAtLeastOneMatchingTag = true;
+}
+
+if (personHasAtLeastOneMatchingTag)
+      return true;
+else
+      return false;
+----
+
+[NOTE]
+There must be at least one parameter specified, but the order of parameters entered does not matter.
+
+==== Brief Overview of Command Procedure
+
+3 diagrams are provided below to help illustrate a big picture view of the command.
+
+===== Class Diagram:
+
+image::FindTagsCommandClassDiagram.png[width="800"]
+_Figure 3.3.2.1 : Class Diagram of Find Tags Command_
+
+Firstly, _Figure 3.3.2.1_ above is the class diagram of this command, which should
+provide a basic understanding of the classes involved.
+
+
+===== Activity Diagram:
+
+image::findtags-activitydiagram.png[width="200"]
+_Figure 3.3.2.2 : Brief Overview of Find Tags Command Procedure_
+
+Secondly, _Figure 3.3.2.2_ above is the activity diagram of the command.
+As you can see, the entire command consists of 4 main steps:
+
+1) The parameters are parsed and deciphered. +
+2) Using the deciphered information from step 1, the Predicate and Command are constructed. +
+3) Command is executed. +
+4) Predicate is called and the Model is updated.
+
+More detailed explanations and elaborations are given in the subsections below.
+
+===== Sequence Diagram:
+image::FindContactsByTagsSequenceDiagram.png[width="800"]
+_Figure 3.3.2.3 : Findtags Sequence Diagram_
+
+Last but not least, _Figure 3.3.2.3_ above shows the overall sequence diagram, to give a more detailed look into the steps taken
+by the program to run the command.
+
+==== Implementation of Parser
+
+The parser associated with this command is **FindPersonsWithTagsCommandParser**, under **seedu.address.logic.parser**. Due to this parser’s long name, it will be referred to as the “command parser” or simply “parser” within this section to aid clarity.
+
+When this command is invoked by the user, this command parser will be constructed by **AddressbookParser**, receiving the user’s input as a String parameter. The command parser deciphers the input, and eventually returns a **FindPersonsWithTagsCommand** for execution.
+
+The command parser first checks if the arguments are valid. If the arguments are empty, a **ParseException** will be thrown for invalid arguments. If the arguments are valid (non-empty), they are split into individual keywords and stored in a String array tagKeywords.
+
+image::StringToTagKeywords.png[width="800"]
+_Figure 3.3.3.1 : Splitting Up Keywords_
+
+
+As the diagram above shows, the keywords are split by the spaces in between each word, and each of these words are stored in a String array **tagKeywords**.
+
+The array of keywords is then passed into the parser’s private method, **getImprovedList()**, to retrieve a more comprehensive list of tags in addition to the original list of keywords.
+
+[NOTE]
+The details of **getImprovedList** are not crucially important to the functionality of the parser, and is thus omitted here, but included in the addendum in Section 3.3.6.
+
+After obtaining the improved list, the parser constructs the command _Predicate_ (details in Section 3.3.4), and the _Command_ itself (details in the Section 3.3.5). Then it returns the _Command_ to **AddressbookParser** and then the **LogicManager** for execution.
+
+
+==== Implementation of Predicate
+
+The _Predicate_ associated with this functionality is called **PersonContainsTagsPredicate**, found in **seedu.address.model.person**.
+
+This _Predicate_ has three attributes, _keywords_, which are generated in the _parser_, and 2 lists, _keywordsToInclude_ and _keywordsToExclude_. The 2 lists are generated from _keywords_.
+
+After this _Predicate_ is constructed, it is used in the constructor of a **FindPersonsWithTagsCommand** and becomes that command’s attribute.
+
+When the command is executed, this _Predicate_ will be called for every contact in the address book to determine if a contact should be filtered or not based on the user’s inputs.
+
+To do so, the **test** method of this Predicate is used, which returns a Boolean value: true if this contact should be returned, and false otherwise.
+
+Within this test method, the following steps occur, for each contact in the currently stored in the application:
+
+image::findtags-pathdiagram.png[width="800"]
+_Figure 3.3.4.1 : Findtags Predicate Activity Diagram_
+
+As seem from _Figure 3.3.4.1_, firstly, all of the person’s tags, if any, are appended to a String **allTagNames**. For example, if a contact has tags "friends" and "colleagues", the resulting String is "friends colleagues".
+
+Then, the comparison is made between **allTagNames** and the 2 lists generated in constructor, to return the appropriate Boolean value. Below is the code snippet used in the comparison. Note that this is not the only way to implement this comparison.
+
+**Code Snippet:**
+[source,java]
+----
+//For scenario 2
+if (onlyKeywordsToExcludeAreSpecified) {
+            return !(keywordsToExclude.stream()
+                    .anyMatch((keyword -> StringUtil.containsWordIgnoreCase(allTagNames, keyword))));
+}
+
+
+//For scenarios 1 and 3
+return keywordsToInclude.stream()
+    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(allTagNames, keyword)) &&
+    !(keywordsToExclude.stream()
+    .anyMatch((keyword -> StringUtil.containsWordIgnoreCase(allTagNames, keyword))));
+----
+
+==== Implementation of Command
+The command executed in this feature is **FindPersonsWithTagsCommand**, found in **seedu.address.logic.commands**.
+
+After the command parser returns the command to **AddressbookParser** and then to the **LogicManager**, assuming that no exceptions are thrown so far, the command is executed, by calling its **execute()** method.
+
+In this **execute()** method, the current model invokes its **updateFilteredPersonList** method, with the command _Predicate_ as described above as its parameter.
+
+This runs the **test()** method of the _Predicate_, which determines the appropriate contacts to filter. This causes the model to update accordingly and filters the contacts displayed in the UI.
+
+Finally, this command returns a **CommandResult**, which includes the number of contacts being displayed. This value is displayed on the UI command box for the user’s reference.
+
+
+
+==== Addendum
+
+**Implementation of getImprovedList** +
+In the command parser (as detailed in Section 3.3.3), there exists a private method **getImprovedList()**, which takes in the list of keywords entered by the user and attempts to return a more comprehensive one in addition to the original list, to account for grammatical differences in plural and singular forms of the keywords.
+
+To give an example, if the keyword is “friend”, the extra keyword generated is “friends” and vice-versa. This works for “exclusion-keywords” (keywords with a dash in front) as well.
+
+What is of note is that this method is merely a crude, quality-of-life improvement for the user. It simply generates the keywords by appending the letter ‘s’ to keywords which do not end with ‘s’, and removes ‘s’ from words that do end with the letter ‘s’.
+
+As a result, it does not account for words where singular and plural forms differ by more than just a single letter ‘s’, such as “family” and “families”.
+
+It is therefore recommended that future developers improve this method, perhaps by implementing a proper dictionary or library for this method, after weighing the costs and benefits. Alternatively, this idea could be further improved or refined on with a Lookup Table to save file storage space.
+
+Nevertheless, this improvement is meant to increase user enjoyment and convenience. The onus of organising and spelling tags in an organised manner is still on the user. To that end,  if the case arises that, based on user feedback, this improvement does more harm than good, it is recommended that this feature be removed or made optional. However, this is not something that the current developers foresee will occur based on observation of how people in general spell their tags.
+
+
+==== Design Considerations
+
+**Aspect:** Improving list of keywords. +
+
+**Alternative 1 (current choice):** Add 's' to letters that do not end with 's', and vice-versa. +
+**Pros:** Easy to implement and read. +
+**Cons:** Does not account for all words in English, may have non-English words. +
+
+**Alternative 2:** Import appropriate library for getting singular/plural words. +
+**Pros:** More likely to account for all words. +
+**Cons:** May impact performance. +
+
+**Alternative 3:** Implement a Look-up Table. +
+**Pros:** Can account for more words than alternative 1, and less impact on performance and storage than alternative 2. +
+**Cons:** Might be difficult to implement and may not be as comprehensive as alternative 2. +
+
+---
+
+**Aspect**: Comparision of tag names and keywords in predicate. +
+
+**Alternative 1 (current choice): **Append names to an empty String for comparision with keywords. +
+**Pros:** Easy to implement and change. +
+**Cons:** Requires use of lambda, which may be more difficult to understand for beginners. +
+
+**Alternative 2:** Compare tag against tag by encapsulating all keywords into Tags. +
+**Pros:** Can use the equals specified in Tag, and/or comparator instead of lambda for better readability. +
+**Cons:** More difficult to implement, and may create many tags that are never used because the keywords and expanded to improve user convenience (singular vs plural tag names). +
+
+// end::findbytags[]
+
+// tag::birthday[]
+
+=== Birthdays
+
+Users are able to store birthdays of their contacts by inputting in the format of ddMMyyyy when adding a person, using the prefix `b/`.
+
+In general, the ability to store a person’s birthday was implemented by adding it to the component of `Person`.
+
+=== Representation of birthdays
+
+Storing of birthdays is facilitated by an immutable `Birthday` object, which is a component of `Person`.
+
+The main classes that implement this attribute is: AddCommand, AddCommandParser, EditCommand, EditCommandParser, Person, PersonListCard.
+
+However, birthday has been made to be an optional field to include while adding a new contact.
+
+=== Validation of birthday
+
+Birthday uses the DateFormat and the SimpleDateFormat packages to check if the birthday entered is a valid date.
+For example, 31/02/1998 is not a valid date.
+
+Validation of birthday is implemented this way:
+[source,java]
+---
+public static boolean isValidBirthday(String test) {
+    if (test.matches(BIRTHDAY_VALIDATION_REGEX)) {
+        try {
+            DateFormat df = new SimpleDateFormat(DATE_FORMAT);
+            df.setLenient(false);
+            df.parse(test);
+            return true;
+        } catch (ParseException pe) {
+            return false;
+        }
+    } else if (test.matches("")) {
+        return true;
+    }
+    return false;
+}
+---
+
+==== Design Considerations
+**Aspect:** Representation of birthdays +
+**Alternative 1 (current choice):** Display the birthday of the specified contact after the address of the contact +
+**Pros:** It follows the format of the person card +
+**Cons:** It is difficult to recognise the number displayed is the birthday as it is merely represented as an eight digit number +
+
+**Alternative 2:** Display the birthday with "Birthday:" in front +
+**Pros:** Simple and easy to understand +
+**Cons:** Inconsistent with the format in person card
+
+// end::birthday[]
+
+// tag::listtags[]
+=== Implementation of List Tags
+The application allows users to see the list of all tags that are currently attached to contacts in the application. The command word is `listtags`, and
+the shortcut alternative is `lt`. The follow subsections explain how the program is supposed to function given the command, and how it is implemented.
+
+==== User Inputs and Expected Actions/Results
+In general, when this command is used, there are only 2 scenarios that will occur.
+
+**Scenario 1** +
+There is at least 1 tag attached to at least 1 contact.
+
+In this scenario, the application will show these tags in the result box.
+
+Below is the format of the results: +
+You have the following tags: [tag1] [tag2] [tag3] ...
+
+**Scenario 2** +
+There are no tags attached to any contacts in the application. This could happen if there are: +
+1. No contacts in the application. +
+2. No tags attached to any contact.
+
+In this scenario, the application will show to user the following message: +
+"You do not have any tags!"
+
+==== Brief Overview of the Command
+A brief overview of the steps taken by the application in producing the appropriate results is as given: +
+1. Creates a list of tags by iterating through every Contact in the application and adding their tags to the list. +
+2. Check if this list of tags is empty or not, that is, whether it is scenario 1 or scenario 2. +
+2a. If it is scenario 2, that is, there are no tags to output, the command merely returns the failure message. +
+3. If the list is not empty, it will output the success message along with the list of tags in the appropriate format. The details of this step is given
+in the next subsection.
+
+==== Implementation of Success Scenario
+The steps taken are: +
+1. Converts the list of Tags to a list of String containing the names of each Tag. +
+2. Sorts the list in alphabetical order. +
+3. Using a StringBuilder, appends the names to each other with the appropriate formatting. +
+4. Output the result.
+
+==== Design Considerations
+
+**Aspect:** Order of Tags displayed +
+**Alternative 1 (current choice):** Display in alphabetical order. +
+**Pros:** More readable and more easily understood. +
+**Cons:** May not be the most meaningful. +
+
+**Alternative 2:** Display based on how many of each tag there are, for example in ascending order. +
+**Pros:** Might be more meaningful for certain users and cases. +
+**Cons:** Much more difficult to implement, and may appear more confusing to users, as alphabetical order is generally more easily understood. +
+
+**Alternative 3:** Allow option to display both in alphabetical order or in ascending order. +
+**Pros:** Best of both worlds, allowing user to choose the most meaningful. +
+**Cons:** Adding on to the already numerous commands may not be the most meaningful, especially when the main
+function of this enhancement is to complement the find tags feature.
+
+---
+
+// end::listtags[]
+
+=== Implementation of Facebook Field
+Each contact can now support a Facebook field, which is displayed on the person card.
+
+A few things to note about this field:
+
+1. The Facebook field is not compulsory when adding to the application.
+
+2. If user does not input the Facebook field, removes it using the edit command, it will be replaced by
+the default Facebook homepage, "https://facebook.com/".
+
+3. User can input Facebook field in 2 ways, the first is the entire link to the Facebook profile.
+In this case, the program should take the entire link and store it as the Facebook field of the user.
+
+4. If the user enters in the Facebook field a String that is not a link, the programe should **assume** that what was
+entered was instead the **profile name** or **profile number** of the contact, and thus append the Facebook link prefix to it. +
+For example, if user enters f/john for a contact, john's Facebook field would be "https://facebook.com/john/".
+
+To perform steps 3 and 4, the program checks if that is entered in the field is a valid URL. If it is, then assume
+it is 3. and store the entire URL as the Facebook field. Else, append and store that String as the Facebook field, which is 4.
+
+In future update, will allow select command to open the facebook field instead of google searching the contact's name.
+
+==== Design Considerations
+
+**Aspect:** Empty or non-valid URL Facebook fields +
+**Alternative 1 (current choice):** Turn it into a proper URL by appending the correct prefixes. +
+**Pros:** More readable on the Person Card, user can easily see if there is a mistake. +
+**Cons:** May create some strange links. +
+**Alternative 2:** Leave it as it is. +
+**Pros:** Simple to implement. +
+**Cons:** Will look strange and ambiguous on the Person Card, especially if user made a mistake and does not notice. +
+
+---
 
 // tag::undoredo[]
 === Undo/Redo mechanism
@@ -344,6 +910,129 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Pros:** We do not need to maintain a separate stack, and just reuse what is already in the codebase. +
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
+
+// tag::tasks[]
+=== Task class mechanism
+
+The `Task` class, which is located inside `Model`, is implemented with similar logic as `Person` class. We have introduced three commands that modifies the address book: `addt`, `editt` and `deletet`, which extends `UndoableCommand`.
+A `Task` consist of three sub-components: `Header`, `Desc` and `Deadline`. Commands such as `undo` and `redo` can be used to alter events in the list as they deal with code that directly modifies the address book.
+
+The `TaskPanel` is incorporated into the address book `MainWindow` to display all the tasks inside the internal list using `ObservableList<ReadOnlyTask>`. This process will be explained later on under the section `Task card`.
+
+==== Task methods
+As mentioned earlier, the `Task` class contains three main methods: `addt`, `editt` and `deletet`.
+The execution flow is similar for all three methods on a higher level.
+
+==== Exceptions
+When the user input a task command with its parameters, the validity of the command word is checked inside the `AddressBookParser`. Next, the presence of the parameter prefixes is checked inside `AddTaskCommandParser`.
+An appropriate `ParseException` will be thrown if the command word or prefixes are incorrect.
+
+Before modifying the list of tasks inside the address book, the system may throw exceptions due to some invalid parameters. Here are the possible exceptions:
+
+* `TaskNotFoundException`: This exception can be thrown by `editt` and `deletet` command when the an invalid index for a task is provided by the user. The index needs to be within the size of the task list at the current state of the address book.
+* `DuplicateTaskException`: This exception can be thrown by `addt` and `editt` command. The system will first create an `Task` object with the input parameters, compare the object to all tasks residing in the task list and throw this exception if there is a duplicate found.
+
+Editing of task is implemented this way:
+
+[source,java]
+----
+    ReadOnlyTask taskToEdit = lastShownList.get(index.getZeroBased());
+    Task editedTask = createEditedTask(taskToEdit, editTaskDescriptor);
+
+    try {
+        model.updateTask(taskToEdit, editedTask);
+    } catch (DuplicateTaskException dee) {
+        throw new CommandException(MESSAGE_DUPLICATE_TASK);
+    } catch (TaskNotFoundException enfe) {
+        throw new AssertionError("The target task cannot be missing");
+    }
+    model.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
+    return new CommandResult(String.format(MESSAGE_EDIT_TASK_SUCCESS, editedTask));
+----
+
+==== Task card
+The `TaskCard` class extends `UiPart<Region>` to represent a distinct part of the UI. The object properties of every task is assigned to a label held by an `TaskCard`. The graphic scene is then constructed with the appropriate `FXML` files created to support the display of all tasks.
+
+===== Design implementation
+When the user starts the `MainApp`, the system calls the `UiManager` to create a new `MainWindow` and fills it with `TaskListPanel` and other components. The displayed events are created by `UniqueTaskList` and the binding of individual UI elements to the `TaskCard` ensures that any changes to the parameter will be displayed in the `TaskListPanel`.
+The sequence diagram below illustrates the interaction between the `TaskCard` and the `UiManager`:
+
+==== Design Considerations
+**Aspect(future enhancement):** How to implement adding/tagging of contacts into a `Task` using a `Person` list parameter +
+
+**Chosen Implementation:** +
+Add by the index of contact shown in the `PersonListPanel`. +
+**Pros:** +
+The system only has to check for validity of index which leads to increased performance. +
+**Cons:** +
+This requires the user to refer to the `PersonListPanel` before executing command to add contact into task's `Person` list. +
+
+**Alternative:** Add by the name of contact in the `Person` list. +
+**Pros:** +
+Easier for users to add using names, as they do not need to refer to the `Person` list. +
+**Cons:** +
+System has to check through the list to check if the contact's name exist in the current address book, which can be more difficult if there are more than one contacts with the same name.
+// end::tasks[]
+
+// tag::gmail[]
+=== Send email mechanism
+
+The send email mechanism is facilitated by a specific Google account, which the user needs to login to before he can begin using the application to send e-mails.
+He can then use the command-line interface of the application to add the recipient, subject and body of the e-mail.
+
+E-mails can be sent to the e-mail address attached to any contact in the address book.
+
+Sending of e-mails is implemented this way:
+[source,java]
+----
+public CommandResult execute() throws CommandException, GoogleAuthException {
+    requireNonNull(model);
+    List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+
+    if (targetIndex.getZeroBased() >= lastShownList.size()) {
+        throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+
+    String personToSendEmail = lastShownList.get(targetIndex.getZeroBased()).getEmail().toString();
+
+    try {
+        MimeMessage emailToBeSent = ModelManager.createEmail(personToSendEmail,
+                EMAIL_SENDER, emailSubject, emailBody);
+        Gmail gmailService = new GetGmailService().getGmailService();
+        message = ModelManager.sendMessage(gmailService, EMAIL_SENDER, emailToBeSent);
+    } catch (MessagingException | IOException E) {
+        assert false;
+    }
+
+    return new CommandResult(String.format(MESSAGE_SUCCESS));
+}
+----
+
+[NOTE]
+Users must login using your e-mail and password to a specific Google account before they can start using this feature.
+If login is unsuccessful, they will be prompted to login again.
+
+[NOTE]
+Requested access by Google must be provided before any e-mails can be sent.
+
+[NOTE]
+Internet connectivity is needed for this feature as the application does not store any e-mail drafts.
+
+[NOTE]
+Send e-mail feature must be used immediately after login as the application does not store any user data. Hence after login is
+successful, it is not possible to use other commands and then use the send e-mail command.
+
+
+==== Design Considerations
+
+**Aspect:** Implementation of send e-mail +
+**Alternative 1:** Save login details to allow more flexibilty.` +
+**Pros:** Easier access to command as users can execute other commands in between login and sending e-mails. +
+**Cons:** Security concerns raised as user data is saved within the application. +
+**Alternative 2 (current choice):** Only allow users to use send command immediately after login.` +
+**Pros:** Safe option as no user details are stored even when the command is used repeatedly. +
+**Cons:** Not user-friendly as it forces users to use features of the application in a certain order.
+// end::gmail[]
 
 === Logging
 
@@ -675,6 +1364,7 @@ Now we have the `Remark` class, we need to actually use it inside link:{repoURL}
 . Modify link:{repoURL}/src/main/java/seedu/address/model/util/SampleDataUtil.java/[`SampleDataUtil`] to add remarks for the sample data (delete your `addressBook.xml` so that the application will load the sample data when you launch it.)
 
 ===== [Step 6] Storage: Add `Remark` field to `XmlAdaptedPerson` class
+
 We now have `Remark` s for `Person` s, but they will be gone when we exit the application. Let's modify link:{repoURL}/src/main/java/seedu/address/storage/XmlAdaptedPerson.java[`XmlAdaptedPerson`] to include a `Remark` field so that it will be saved.
 
 **Main:**
@@ -723,15 +1413,71 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
+|`* * *` |new user |import existing contacts |add contacts quickly when starting to use the App or reinstalling the App
+
+|`* * *` |frequent user |backup existing contacts as I add/remove them |restore a previous version of my contacts if I make a big mistake
+
 |`* * *` |user |add a new person |
 
 |`* * *` |user |delete a person |remove entries that I no longer need
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |user |sort persons by arrange the names in my contacts by Alphabetical order |locate a person easily
+
+|`* * *` |forgetful user |have prompts for right command syntax when I enter the wrong one |use the app more conveniently
+
+|`* * *` |user |arrange the names in my contacts according to first name |locate a person easily
+
+|`* * *` |user |arrange the names in my contacts according to last name |locate a person easily
+
+|`* * *` |user |favourite a contact |have favorites appear at the top of search results
+
+|`* * *` |user |update information for any of my contacts |not have to delete and add a contact just to change his details
+
+|`* * *` |user |share a contact with other people|
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* *` |forgetful user |view my contacts' profile picture(s) |have a picture to attach to the contact
+
+|`* *` |user |alternate between using the alias and the name of my contacts |have a nickname to attach to the person
+
+|`* *` |user |view frequently contacted/searched for people at the top of the list |
+
+|`* *` |lazy user |delete multiple users at a time |
+
+|`* *` |power user |call a selected contact within 1 command after selecting the contact|
+
+|`* *` |power user |message a selected contact within 1 command after selecting the contact|
+
+|`* *` |power user |attach multiple notes to each contact|
+
+|`* *` |user with many contacts|notified when I have 2 contacts with the same name to add an alias or tag |do not get confused by 2 contacts with the same name
+
+|`* *` |user with many contacts|add multiple tags to each contact |easily group them
+
+|`* *` |user |search results to be displayed and updated every time i key in an alphabet |search for contacts without having to finish typing in the whole name
+
+|`*` |user |arrange the names in my contacts according to their address in alphabetical order  |locate a person easily
+
+|`*` |user |view the number of contacts that I have |
+
+|`*` |user |merge contacts |
+
+|`*` |user |select relevant information and export to a list |
+
+|`*` |user |access to more buttons | have more convenience using the App
+
+|`*` |user |see the address of a selected contact on Google Maps within 1 command |
+
+|`*` |user |link my contacts to their social media account |
+
+|`*` |user with many contacts |have tabs for different category of contacts |easily see who is in which group
+
+|`*` |user |customize the background colour of the application |personalize the App.
+
+
 |=======================================================================
 
 {More to be added}
@@ -769,12 +1515,110 @@ Use case resumes at step 2.
 
 {More to be added}
 
+[discrete]
+=== Use case: Sort contacts alphabetically
+
+*MSS*
+
+1. User requests to sort contacts alphabetically
+2. AddressBook sorts contacts alphabetically according to their names
+3. AddressBook shows contact list to user
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The list is empty.
++
+[none]
+** 1a1. AddressBook shows “empty list of contacts” to user
++
+Use case ends.
+
+[discrete]
+=== Use case:  Adding a tag to a person
+
+*MSS*
+
+1. User requests to list persons
+2. AddressBook shows list of persons
+3. User requests to add a specific tag to a person in the list
+4. AddressBook confirms the details of the instruction with the user
+5. User confirms command
+6. AddressBook adds tag to this person
++
+Use case ends
+
+*Extensions*
+
+[none]
+* 1a. The list is empty.
++
+[none]
+** 1a1. AddressBook shows “empty list of contacts” to user
++
+Use case ends.
+
+[none]
+* 3a. User enters an invalid person on the list (out of bound of list)
++
+[none]
+** 3a1. AddressBook shows “invalid person, choose correct person (starting index to ending index)” and
+displays list again in background
++
+Use case resumes at step 3.
+
+[none]
+* 3b. User enters unsupported character for tag
++
+[none]
+** 3b1. AddressBook shows “invalid tag name, only valid characters (display valid characters)”.
++
+Use case resumes at step 3.
+
+[none]
+* 4a. User cancels command
++
+[none]
+** 4a1. AddressBook shows “command cancelled”.
++
+Use case ends.
+
+[discrete]
+=== Use case: finding by tags
+
+*MSS*
+
+1. User requests to find contacts with a certain tag name
+2. App displays all contacts with such tags
++
+Use case ends
+
+[discrete]
+=== Use case: displaying list of tags
+
+*MSS*
+
+1. User reuqests to list all tags
+2. App displays all existing tags
++
+Use case ends
+
 [appendix]
 == Non Functional Requirements
 
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Any command should not take longer than 1 second to execute
+.  App should be able to hold at least 5000 contacts
+.  Should support integration with Google contacts
+.  Should support integration with Google Map for proximity services
+.  App should support importing and exporting of contacts in Microsoft Excel Format
+.  Support multiple instances of the app on a single device
+.  Support integration with telecommunication apps such as, but not limited to, WhatsApp, Line etc.
+.  Support integration with social media services and apps
 
 {More to be added}
 
@@ -795,19 +1639,4 @@ Private contact detail
 A contact detail that is not meant to be shared with others
 ....
 
-[appendix]
-== Product Survey
 
-*Product Name*
-
-Author: ...
-
-Pros:
-
-* ...
-* ...
-
-Cons:
-
-* ...
-* ...

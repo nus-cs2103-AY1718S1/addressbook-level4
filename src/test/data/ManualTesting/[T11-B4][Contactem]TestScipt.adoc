@@ -1,0 +1,409 @@
+= Contact'em - Test Script
+:imagesDir: images
+:toc:
+:toc-title:
+:toc-placement: preamble
+:sectnums:
+:imagesDir: images
+:stylesDir: stylesheets
+:experimental:
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+endif::[]
+
+By: `Team T11-B4`      Since: `Aug 2017`      Licence: `MIT`
+
+---
+
+=== Before You Start Testing
+
+=== Add Person Command
+
+==== Description
+
+The add command has been slightly modified from the original command given in address book level 4, to support adding of 2 fields, Birthday and Facebook Address (basically a Facebook profile URL).
+
+==== Steps To Execute And Expected Results
+First, test if the original command works.
+
+*Type in*: add n/Will Johnson p/91111111 e/william@johnson.com a/ 123 William Street #12-34 +
+*Expected result*: Besides the usual contact details, there should be an empty line (due to an empty Birthday field) followed by the default Facebook homepage (https://facebook.com). +
+*Result message*: New person added: Will Johnson Phone: 91111111 Email: william@johnson.com Address: 123 William Street #12-34 Birthday:  Facebook: https://www.facebook.com/ Tags:
+
+After that, *undo* the command to save time. +
+(*Type in*: undo) +
+You can also try the *redo* command out here. Remember to *undo* again if you choose to test *redo*! +
+(*Type in*: redo)
+
+Next, try the following 4 commands, using an *undo* after each command to speed up testing.
+
+*Type in*: add n/William Johnson p/91111111 e/william@johnson.com a/ 123 William Street #12-34 b/10101995 +
+*Expected result*: A new contact with birthday as stated should appear. The Facebook field should be the default Facebook homepage as well. +
+*Result message*: New person added: William Johnson Phone: 91111111 Email: william@johnson.com Address: 123 William Street #12-34 Birthday: 10101995 Facebook: https://www.facebook.com/ Tags: +
+
+*Type in*: add n/William Johnson p/91111111 e/william@johnson.com a/ 123 William Street #12-34 f/William +
+*Expected result*: A new contact with Facebook field _https://facebook.com/William_ should appear. Birthday field should be left as a blank space on the person card. +
+*Result message*: New person added: William Johnson Phone: 91111111 Email: william@johnson.com Address: 123 William Street #12-34 Birthday:  Facebook: https://www.facebook.com/William Tags: +
+
+*Type in*: add n/William Johnson p/91111111 e/william@johnson.com a/ 123 William Street #12-34 f/https://www.facebook.com/William +
+*Expected result*: Similar to the above, with facebook field _https://www.facebook.com/William_. +
+*Result message*: New person added: William Johnson Phone: 91111111 Email: william@johnson.com Address: 123 William Street #12-34 Birthday:  Facebook: https://www.facebook.com/William Tags: +
+
+*Type in*: add n/William Johnson p/91111111 e/william@johnson.com a/ 123 William Street #12-34 b/10101995 f/https://www.facebook.com/William +
+*Expected result*: A new contact with both birthday field and Facebook field should appear. +
+*Result message*: New person added: William Johnson Phone: 91111111 Email: william@johnson.com Address: 123 William Street #12-34 Birthday: 10101995 Facebook: https://www.facebook.com/William Tags:
+
+=== Find Person Command
+
+==== Description
+
+The find command is now enhanced with the easy find functionality. Contact’em now updates the results display every time the user inputs a letter.
+
+==== Steps To Execute And Expected Results
+*[NOTE] Dont input enter unless advised to.*
+
+*Type in*: find a +
+*Expected Result*:  Contact "Alex Yeoh" and "Alanis Otis" will be displayed +
+*Result message*: 2 persons found!
+
+*Type in*: find ale +
+*Expected Result*:  Contact "Alex Yeoh" will be displayed +
+*Result Message*: 1 persons found!
+
+*Type in*: find alea +
+*Expected Result*:  No Contact displayed +
+*Result Message*: no results
+
+*Type in*: find alex [ENTER HERE] +
+*Expected Result*:  Contact "Alex Yeoh" will be displayed +
+*Result Message*: 1 persons listed!
+
+=== Delete Person Command
+
+==== Description
+
+This command is used to delete contacts in Contact'em
+
+==== Steps To Execute And Expected Results
+
+*Type in*: delete 1 +
+*Expected Result*:  Contact "Alex Yeoh" will be deleted +
+*Result message*: Deleted Person: Alex Yeoh Phone: 87438807 Email: alexyeoh@example.com Address: Blk 30 Geylang Street 29, #06-40 Birthday: 03041987 Facebook: https://www.facebook.com/Alex Tags: [friends]
+
+*Type in*: undo +
+*Expected Result*:  Contact "Alex Yeoh" will be restored +
+*Result message*: Undo success!
+
+=== Edit Person Command
+
+==== Description
+
+This command is used to edit a contact's information.
+
+==== Steps To Execute And Expected Results
+
+*Type in*: edit +
+*Expected Result*: Error message suggesting correct command format. +
+*Result message*: Invalid command format!
+edit: Edits the details of the person identified by the index number used in the last person listing. Existing values will be overwritten by the input values.
+Parameters: INDEX (must be a positive integer) [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [f/FACEBOOK ADDRESS] [t/TAG]...
+Example: edit 1 p/91234567 e/johndoe@example.com
+
+*Type in*: edit 2 p/98009898 b/28041991 +
+*Expected Result*: Success message showing the person with the relevant fields edited. +
+*Result message*: Edited Person: Bernice Yu Phone: 98009898 Email: berniceyu@example.com Address: Blk 30 Lorong 3 Serangoon Gardens, #07-18 Birthday: 28041991 Facebook: https://www.facebook.com/BerniceYu Tags: [colleagues][friends]
+
+*Type in*: edit 8 n/Alex Yeoh p/87438807 a/Blk 30 Geylang Street 29, #06-40 e/alexyeoh@example.com b/03041987 f/https://www.facebook.com/Alex +
+*Expected Result*: Error message due to containing the same person in the address book. +
+*Result Message*: This person already exists in the address book.
+
+*Type in*: edit 4 p/abc +
+*Expected Result*: Error message suggesting the correct phone format. +
+*Result Message*: Phone numbers can only contain numbers, and should be at least 3 digits long
+
+*Type in*: edit 6 e/emailexample.com +
+*Expected Result*: Error message suggesting the correct email format. +
+*Result Message*: Person emails should be 2 alphanumeric/period strings separated by '@'
+
+*Type in*: edit 1 b/29021997 +
+*Expected Result*: Error message suggesting the correct birthday format. +
+*Result Message*: Person birthday can only be digits, and should be a valid date represented by a 8 digit number with format ddMMyyyy
+
+*Type in*: edit 100 b/28021996 +
+*Expected Result*: Error message suggesting the correct index. +
+*Result Message*: The person index provided is invalid
+
+*Type in*: edit -1 b/28021996 +
+*Expected Result*: Error message suggesting the correct command format as format requires valid index. +
+*Result Message*: Edits the details of the person identified by the index number used in the last person listing. Existing values will be overwritten by the input values.
+Parameters: INDEX (must be a positive integer) [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [f/FACEBOOK ADDRESS] [t/TAG]...
+Example: edit 1 p/91234567 e/johndoe@example.com
+
+=== Add Task Command
+
+==== Description
+
+This command is used to add tasks into the application. The deadline field is currently optional, however the prefix `tdl/` is still required.
+
+==== Steps To Execute And Expected Results
+
+*Type in*: addt th/Buy furniture td/From Ikea Tampines tdl/this weekend +
+*Expected Result*: Success message with task information displayed. +
+*Result Message*: New task added: Buy furniture Desc: From Ikea Tampines Deadline: this weekend
+
+*Type in*: addt th/Buy furniture td/From Ikea Tampines +
+*Expected Result*: Error message suggesting the correct command format. +
+*Result Message*: Invalid command format!
+addt: Adds a task to the address book. Parameters: th/HEADER td/DESC tdl/DATE
+Example: addt th/Homework td/Finish page 6 to 9 tdl/08/11/2017
+
+*Type in*: addt th/Buy furniture +
+*Expected Result*: Error message suggesting the correct command format. +
+*Result Message*: Invalid command format!
+addt: Adds a task to the address book. Parameters: th/HEADER td/DESC tdl/DATE
+Example: addt th/Homework td/Finish page 6 to 9 tdl/08/11/2017
+
+*Type in*: addt td/From Ikea Tampines +
+*Expected Result*: Error message suggesting the correct command format. +
+*Result Message*: Invalid command format!
+addt: Adds a task to the address book. Parameters: th/HEADER td/DESC tdl/DATE
+Example: addt th/Homework td/Finish page 6 to 9 tdl/08/11/2017
+
+*Type in*: addt +
+*Expected Result*: Error message suggesting the correct command format. +
+*Result Message*: Invalid command format!
+addt: Adds a task to the address book. Parameters: th/HEADER td/DESC tdl/DATE
+Example: addt th/Homework td/Finish page 6 to 9 tdl/08/11/2017
+
+=== Edit Task Command
+
+==== Description
+
+This command is used to edit a task's details.
+
+==== Steps To Execute And Expected Results
+
+*Type in*: editt +
+*Expected Result*: Error message suggesting correct command format. +
+*Result message*: Invalid command format!
+editt: Edits the details of the task identified by the index number used in the last task listing. Existing values will be overwritten by the input values.
+Parameters: INDEX (must be a positive integer) [th/HEADER] [td/DESC] [tdl/DEADLINE]
+Example: editt 1th/ homework tdl/31/12/2017
+
+*Type in*: editt 2 th/Shopping for food td/Grocery shopping +
+*Expected Result*: Success message showing the task with the relevant fields edited. +
+*Result message*: Edited Task: Shopping for food Desc: Grocery shopping Deadline: tomorrow
+
+*Type in*: editt 7 td/Project portfolio +
+*Expected Result*: Error message due to containing the same task in the address book. +
+*Result Message*: This task already exists in the address book.
+
+*Type in*: editt 100 tdl/today +
+*Expected Result*: Error message suggesting the correct index. +
+*Result Message*: The task index provided is invalid
+
+*Type in*: edit -1 tdl/today +
+*Expected Result*: Error message suggesting the correct index. +
+*Result Message*: Invalid command format!
+editt: Edits the details of the task identified by the index number used in the last task listing. Existing values will be overwritten by the input values.
+Parameters: INDEX (must be a positive integer) [th/HEADER] [td/DESC] [tdl/DEADLINE]
+Example: editt 1th/ homework tdl/31/12/2017
+
+=== List Command
+
+==== Description
+
+This command is used to list all contacts in the address book.
+
+==== Steps To Execute And Expected Results
+
+*Type in*: list +
+*Expected Result*: All contacts in address book listed. +
+*Result Message*: Listed all persons
+
+=== Help Command
+
+==== Description
+
+This command is used to open the User Guide for users to refer to.
+
+==== Steps To Execute And Expected Results
+
+*Type in*: help +
+*Expected Result*: Help window pops up. +
+*Result Message*: Opened help window.
+
+=== Select Command
+
+==== Description
+
+The select command is mostly unchanged from the original address book. However, instead of opening a Google search of the contact’s name, the browser component instead opens the Facebook URL of the contact. Do note you have to be connected to the Internet for this to work.
+
+==== Steps To Execute And Expected Results
+
+*Type in*: select 3 +
+*Expected Result*: Check that the Browser opens up the correct page as specified in the person card, and that the selected person card changes color.
+If it does not open up immediately, please give it some time, this usually happens on the first time the browser is opened. +
+*Result Message*: Selected Person: 3
+
+
+Also, note that since these test data are randomly generated, they will not all point to an actual Facebook Profile. If this is the case, it will point to a Facebook Search (or prompt you to log in to do the search). This is intended, as it is up to the onus of the user to maintain the correct Facebook Address.
+Therefore, select 3 is used as it coincidentally points to an actual Facebook URL, correct as of time of writing.
+
+You can also try to enter other indexes for the parameter of the Select command.
+Next, you may optionally try to click on the contact, and see if the browser still opens up to the Facebook URL of the contact, although since this is a CLI-app, this step may be omitted. +
+Note that if you try to click on the contacts instead of typing, the result message will NOT change.
+
+Now, try some out of bound numbers, for example: +
+*Type in*: select 100 +
+*Expected Result*: No action taken as the index is out of bounds.
+*Result Message*: The person index provided is invalid
+
+*Type in*: select 0 +
+*Expected Result*: No action taken as the index is out of bounds.
+*Result Message*: +
+Invalid command format! +
+select: Selects the person identified by the index number used in the last person listing. +
+Parameters: INDEX (must be a positive integer) +
+Example: select 1 +
+
+*Type in*: select -1 +
+*Expected Result*: No action taken as the index is out of bounds.
+*Result Message*: As above.
+
+=== Clear Command
+
+==== Description
+
+This command is used to clear the data in the address book.
+
+==== Steps To Execute And Expected Results
+
+*Type in*: clear +
+*Expected Result*: All persons and tasks are cleared. +
+*Result Message*: Address book has been cleared!
+
+*Type in*: undo +
+*Expected Result*: The person list and task list is restored to its previous form. +
+*Result Message*: Undo success!
+
+=== List All Tags Command
+
+==== Description
+The command for listing all the tags in the application is listtags. Alternatively, try lt as well, which is the shortcut alias. Note that only tags which are currently attached to at least one contact is shown.
+
+==== Steps To Execute And Expected Results
+
+*Type in*: listtags +
+and/or +
+*Type in*: lt +
+*Expected result*: In the result box (under the command line), it should show which tags are currently in the application, in alphabetical order. +
+*Result Message*: You have the following tags: [classmates] [colleagues] [family] [friends] [neighbours] [schoolmates]
+
+To further test the functionality, try: +
+*Type in*: add n/William Johnson p/91111111 e/william@johnson.com a/ 123 William Street #12-34 b/10101995 t/uniquetag +
+*Type in*: listtags +
+*Expected result*: This should display the new [uniquetag]. +
+*Result Message*: You have the following tags: [classmates] [colleagues] [family] [friends] [neighbours] [schoolmates] [uniquetag]
+
+Next,
+*Type in*: undo or delete [Index of above contact] +
+*Type in*: listtags +
+*Expected result*: The [uniquetag] should no longer be shown. +
+*Result Message*: You have the following tags: [classmates] [colleagues] [family] [friends] [neighbours] [schoolmates]
+
+Note that this command cannot be reversed by the undo command.
+
+=== Finding Contacts by Tags
+
+==== Description
+
+The command keyword for this feature is findtags, findtag, or ft.
+
+==== Steps To Execute And Expected Results
+
+Try the following command: +
+*Type in*: findtags friends +
+*Expected result*: This should display all contacts that have the friends (or friend) tag. Should also show, in the result box, the number of contacts being displayed. +
+*Result Message*: 14 persons listed!
+
+Now, try the singular form of the word. +
+*Type in*: findtags friend +
+*Expected result*: The results should be the same as above, as the application searches for both singular and plural form of the word. +
+*Result Message*: 14 persons listed!
+
+Note that this is done by adding the letter ‘S’ or removing the letter ‘S’ from the keyword, so if you try **findtags family** it will attempt to find familys as well instead of family. This is a known limitation of the enhancement,
+ but it is still implemented this way to reduce complexity and performance impact while bringing about some quality-of-life improvement for the user.
+
+Next, test the exclusion, as follows: (note the dash ‘-‘ before colleagues) +
+*Type in*: findtags friends -colleagues +
+*Expected result*: Only friends that do not have the colleague tag are shown. +
+*Result Message*: 9 persons listed!
+
+
+Finally, try: (note the dash ‘-‘ before friends). +
+*Type in*: findtags -friends +
+*Expected result*: All contacts in the application, except those with the friends tags, are shown. +
+*Result Message*: 6 persons listed!
+
+Note that this command cannot be reversed by the undo command.
+
+=== Google Contacts Commands
+
+==== Description
+*[Important] please follow the following steps closely to fully test the google integration feature.*
+
+==== Steps To Execute And Expected Results
+
+
+*Type in*: login +
+*Expected Result*: Google login page will be loaded in browser panel. +
+*Result Message*: Please Login
+
+*Please login to your google contacts. The following tests are created with the assumption that your google contacts account is empty.* +
+Please disable your 2 step verification to log in. Use this link to disable it "https://myaccount.google.com/security?pli=1#signin" +
+
+*You may use this dummy account if you do not have a google account* +
+Email : dummy2103@hotmail.com +
+Password : password2103 +
+
+Next, Create a contact in the dummy google contacts. +
+*Example Name: Mark, Phone: 92345678, Email: wrong@hotmail.com, Address: Blk 1 simei Avenue*
+
+*Type in*: import +
+*Expected Result*: The contact “Mark” created previously will be imported to Contact'em. +
+*Result Message*: 1 contact/s imported!     0 contact/s failed to import!
+
+*Edit “Mark” email address to correct@hotmail.com in Google Contacts*
+
+*Type in*: sync +
+*Expected Result*: The email address of contact “Mark” will be updated in Contact'em. +
+*Result Message*: 1 contact/s Synced!     0 contact/s failed to Sync!
+
+*Remove “Mark” email address in Google Contacts (Leave it blank)*
+
+*Type in*: sync +
+*Expected Result*: Contact “Mark” will not be updated in Contact'em due to missing attributes. +
+*Result Message*: 0 contact/s Synced!     1 contact/s failed to Sync!
+                  Please check the format of the following google contacts : Mark
+
+*[Important] The next command may take several minutes to run. Do not stop the application even if it becomes unresponsive. Contact’em will inform you that all contacts has been exported.*
+
+*Type in*: export +
+*Expected Result*: Contacts in Contact'em will be exported. +
+*Result Message*: 20 contact/s exported!     All contacts can be now found in google contact
+
+*Type in*: login +
+*Expected Result*: To refresh the google contacts page so that the contacts exported will be shown
+
+=== ExitCommand
+
+==== Description
+
+This command is used to exit the program
+
+==== Steps To Execute And Expected Results
+
+*Type in*: exit +
+*Expected Result*: The application closes.

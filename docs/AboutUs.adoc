@@ -11,29 +11,28 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 
 == Project Team
 
-=== John Doe
-image::damithc.jpg[width="150", align="left"]
-{empty}[http://www.comp.nus.edu.sg/~damithch[homepage]] [https://github.com/damithc[github]] [<<johndoe#, portfolio>>]
+=== Srishti Aggarwal
+image::srishti.jpg[width="150", align="left"]
+{empty} [https://github.com/srishag[github]]
 
-Role: Project Advisor
-
-'''
-
-=== John Roe
-image::lejolly.jpg[width="150", align="left"]
-{empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
-
-Role: Team Lead +
-Responsibilities: UI
+Role: Developer
 
 '''
 
-=== Johnny Doe
-image::yijinl.jpg[width="150", align="left"]
-{empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
+=== Tan Wei Jie
+image::pokkakiyo.jpg[width="150", align="left"]
+{empty} [https://github.com/pokkakiyo[github]] [<<PokkaKiyo#, portfolio>>]
 
-Role: Developer +
-Responsibilities: Data
+Role: Documentation, code quality, in charge of Model.
+
+'''
+
+=== Phua Jun Jie
+image::PhuaJunJie.png[width="150", align="left"]
+{empty} [https://github.com/phuajunjie[github]]
+
+Role: Developer
+
 
 '''
 
@@ -54,3 +53,8 @@ Role: Developer +
 Responsibilities: UI
 
 '''
+
+=======
+=======
+'''
+

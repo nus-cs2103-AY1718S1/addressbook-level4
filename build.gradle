@@ -1,4 +1,4 @@
-/*
+/**
  * Gradle Configuration File
  *
  * For more details take a look at the Java Quickstart chapter in the Gradle
@@ -20,17 +20,23 @@ allprojects {
     apply plugin: 'java'
     apply plugin: 'jacoco'
     apply plugin: 'checkstyle'
+    apply plugin: 'application'
 
 
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
+
 
     repositories {
         jcenter()
         mavenCentral()
         maven { url "https://repo.eclipse.org/content/repositories/egit-releases/" }
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        flatDir {
+            dirs 'Library'
+        }
     }
+
 
     // This part is similar to global variables
     // Access them by using double-quoted strings (GStrings) and referencing by $ e.g. "Variable contains $Variable"
@@ -44,7 +50,7 @@ allprojects {
         monocleVersion = '1.8.0_20'
         checkstyleVersion = '8.1'
 
-        libDir = 'lib'
+        LibraryDir = 'Library'
     }
 
     checkstyle {
@@ -60,6 +66,7 @@ allprojects {
     }
 
     dependencies {
+        compile fileTree(dir: 'Library', include: ['*.jar'])
         compile group: 'org.fxmisc.easybind', name: 'easybind', version: '1.0.3'
         compile "org.controlsfx:controlsfx:$controlsFxVersion"
         compile "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"

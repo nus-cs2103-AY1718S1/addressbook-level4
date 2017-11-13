@@ -19,22 +19,38 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.task.Deadline;
+import seedu.address.model.task.Desc;
+import seedu.address.model.task.Header;
 
 public class ParserUtilTest {
     private static final String INVALID_NAME = "R@chel";
     private static final String INVALID_PHONE = "+651234";
     private static final String INVALID_ADDRESS = " ";
     private static final String INVALID_EMAIL = "example.com";
+    private static final String INVALID_BIRTHDAY = "13/10/1990";
     private static final String INVALID_TAG = "#friend";
+
+    //@@author srishag
+    private static final String INVALID_HEADER = " ";
+    private static final String INVALID_DESC = " ";
+    private static final String INVALID_DEADLINE = "81947113";
+
+    private static final String VALID_HEADER = "Homework";
+    private static final String VALID_DESC = "Questions 1 and 2";
+    private static final String VALID_DEADLINE = "23/12/2017";
+    //@@author
 
     private static final String VALID_NAME = "Rachel Walker";
     private static final String VALID_PHONE = "123456";
     private static final String VALID_ADDRESS = "123 Main Street #0505";
     private static final String VALID_EMAIL = "rachel@example.com";
+    private static final String VALID_BIRTHDAY = "13101990";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
 
@@ -163,6 +179,33 @@ public class ParserUtilTest {
         assertEquals(expectedEmail, actualEmail.get());
     }
 
+    //@@author srishag
+    @Test
+    public void parseBirthday_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseBirthday(null);
+    }
+
+    @Test
+    public void parseBirthday_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseBirthday(Optional.of(INVALID_BIRTHDAY));
+    }
+
+    @Test
+    public void parseBirthday_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseBirthday(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseBirthday_validValue_returnsBirthday() throws Exception {
+        Birthday expectedBirthday = new Birthday(VALID_BIRTHDAY);
+        Optional<Birthday> actualBirthday = ParserUtil.parseBirthday(Optional.of(VALID_BIRTHDAY));
+
+        assertEquals(expectedBirthday, actualBirthday.get());
+    }
+    //@@author
+
     @Test
     public void parseTags_null_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
@@ -187,4 +230,81 @@ public class ParserUtilTest {
 
         assertEquals(expectedTagSet, actualTagSet);
     }
+
+    //@@author srishag
+    @Test
+    public void parseHeader_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseHeader(null);
+    }
+
+    @Test
+    public void parseHeader_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseHeader(Optional.of(INVALID_HEADER));
+    }
+
+    @Test
+    public void parseHeader_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseHeader(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseHeader_validValue_returnsName() throws Exception {
+        Header expectedHeader = new Header(VALID_HEADER);
+        Optional<Header> actualHeader = ParserUtil.parseHeader(Optional.of(VALID_HEADER));
+
+        assertEquals(expectedHeader, actualHeader.get());
+    }
+
+    @Test
+    public void parseDesc_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseDesc(null);
+    }
+
+    @Test
+    public void parseDesc_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseDesc(Optional.of(INVALID_DESC));
+    }
+
+    @Test
+    public void parseDesc_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseDesc(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseDesc_validValue_returnsPhone() throws Exception {
+        Desc expectedDesc = new Desc(VALID_DESC);
+        Optional<Desc> actualDesc = ParserUtil.parseDesc(Optional.of(VALID_DESC));
+
+        assertEquals(expectedDesc, actualDesc.get());
+    }
+
+    @Test
+    public void parseDeadline_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseDeadline(null);
+    }
+
+    /*@Test
+    public void parseDeadline_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseDeadline(Optional.of(INVALID_DEADLINE));
+    }*/
+
+    @Test
+    public void parseDeadline_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseDeadline(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseDeadline_validValue_returnsAddress() throws Exception {
+        Deadline expectedDeadline = new Deadline(VALID_DEADLINE);
+        Optional<Deadline> actualDeadline = ParserUtil.parseDeadline(Optional.of(VALID_DEADLINE));
+
+        assertEquals(expectedDeadline, actualDeadline.get());
+    }
 }
+

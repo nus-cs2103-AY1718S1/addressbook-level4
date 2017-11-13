@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addressbook>
+    <persons>
+        <name>Alex Yeoh</name>
+        <phone>87438807</phone>
+        <email>alexyeoh@example.com</email>
+        <address>Blk 30 Geylang Street 29, #06-40</address>
+        <birthday>03041987</birthday>
+        <facebookAddress>https://www.facebook.com/Alex</facebookAddress>
+        <tagged>friends</tagged>
+        <id>not GoogleContact</id>
+    </persons>
+    <persons>
+        <name>Bernice Yu</name>
+        <phone>99272758</phone>
+        <email>berniceyu@example.com</email>
+        <address>Blk 30 Lorong 3 Serangoon Gardens, #07-18</address>
+        <birthday>28031990</birthday>
+        <facebookAddress>https://www.facebook.com/BerniceYu</facebookAddress>
+        <tagged>colleagues</tagged>
+        <tagged>friends</tagged>
+        <id>not GoogleContact</id>
+    </persons>
+    <persons>
+        <name>Charlotte Oliveiro</name>
+        <phone>93210283</phone>
+        <email>charlotte@example.com</email>
+        <address>Blk 11 Ang Mo Kio Street 74, #11-04</address>
+        <birthday>18111993</birthday>
+        <facebookAddress>https://www.facebook.com/CharlotteO</facebookAddress>
+        <tagged>neighbours</tagged>
+        <id>not GoogleContact</id>
+    </persons>
+    <persons>
+        <name>David Li</name>
+        <phone>91031282</phone>
+        <email>lidavid@example.com</email>
+        <address>Blk 436 Serangoon Gardens Street 26, #16-43</address>
+        <birthday>15072010</birthday>
+        <facebookAddress>https://www.facebook.com/davidli</facebookAddress>
+        <tagged>family</tagged>
+        <id>not GoogleContact</id>
+    </persons>
+    <persons>
+        <name>Irfan Ibrahim</name>
+        <phone>92492021</phone>
+        <email>irfan@example.com</email>
+        <address>Blk 47 Tampines Street 20, #17-35</address>
+        <birthday>17121994</birthday>
+        <facebookAddress>https://www.facebook.com/ii</facebookAddress>
+        <tagged>classmates</tagged>
+        <id>not GoogleContact</id>
+    </persons>
+    <persons>
+        <name>Kelvin Naomi</name>
+        <phone>96847231</phone>
+        <email>kelvin@example.com</email>
+        <address>Blk 13 Naomi Street 20, #17-35</address>
+        <birthday>12121994</birthday>
+        <facebookAddress>https://www.facebook.com/kelvin</facebookAddress>
+        <tagged>classmates</tagged>
+        <id>not GoogleContact</id>
+    </persons>
+    <persons>
+        <name>Lovell Josephine</name>
+        <phone>96847232</phone>
+        <email>Lovell@example.com</email>
+        <address>Blk 23 Josephine Street 20, #17-35</address>
+        <birthday>12101967</birthday>
+        <facebookAddress>https://www.facebook.com/Lovell</facebookAddress>
+        <tagged>schoolmates</tagged>
+        <id>not GoogleContact</id>
+    </persons>
+    <persons>
+        <name>Shevon Ocean</name>
+        <phone>96847233</phone>
+        <email>Ocean@example.com</email>
+        <address>Blk 33 Shevon Street 20, #17-35</address>
+        <birthday>12111994</birthday>
+        <facebookAddress>https://www.facebook.com/Shevon</facebookAddress>
+        <tagged>friends</tagged>
+        <id>not GoogleContact</id>
+    </persons>
+    <persons>
+        <name>Reagan Deforest</name>
+        <phone>96847243</phone>
+        <email>Reagen@example.com</email>
+        <address>Blk 322 Reagen Street 20, #17-35</address>
+        <birthday>12111974</birthday>
+        <facebookAddress>https://www.facebook.com/kelvin</facebookAddress>
+        <tagged>friends</tagged>
+        <id>not GoogleContact</id>
+    </persons>
+    <persons>
+        <name>Roxy Glenda</name>
+        <phone>96842233</phone>
+        <email>Glenda@example.com</email>
+        <address>Blk 323 Roxy Street 20, #17-35</address>
+        <birthday>12111994</birthday>
+        <facebookAddress>https://www.facebook.com/Glenda</facebookAddress>
+        <tagged>colleagues</tagged>
+        <tagged>friends</tagged>
+        <id>not GoogleContact</id>
+    </persons>
+    <persons>
+        <name>Jamey Lillia</name>
+        <phone>95684343</phone>
+        <email>Lillia@example.com</email>
+        <address>Blk 312 Lillia Street 22, #12-34</address>
+        <birthday>23101994</birthday>
+        <facebookAddress>https://www.facebook.com/Lillia</facebookAddress>
+        <tagged>friends</tagged>
+        <id>not GoogleContact</id>
+    </persons>
+    <persons>
+        <name>Kaylee Bryanna</name>
+        <phone>96842233</phone>
+        <email>Bryanna@example.com</email>
+        <address>Blk 323 Bryanna Street 20, #17-35</address>
+        <birthday>12031994</birthday>
+        <facebookAddress>https://www.facebook.com/Kaylee</facebookAddress>
+        <tagged>colleagues</tagged>
+        <tagged>friends</tagged>
+        <id>not GoogleContact</id>
+    </persons>
+    <persons>
+        <name>Gervase Steve</name>
+        <phone>95748321</phone>
+        <email>Gervase@example.com</email>
+        <address>Blk 32 Steve Street 22, #2-34</address>
+        <birthday>12102994</birthday>
+        <facebookAddress>https://www.facebook.com/GervaseSteve</facebookAddress>
+        <tagged>friends</tagged>
+        <id>not GoogleContact</id>
+    </persons>
+    <persons>
+        <name>Brendon Bram</name>
+        <phone>96584743</phone>
+        <email>Brendon@example.com</email>
+        <address>Blk 323 Brendon Street 9, #9-35</address>
+        <birthday>12031994</birthday>
+        <facebookAddress>https://www.facebook.com/Brendon</facebookAddress>
+        <tagged>classmates</tagged>
+        <tagged>neighbours</tagged>
+        <tagged>friends</tagged>
+        <id>not GoogleContact</id>
+    </persons>
+    <persons>
+        <name>Dane Edric</name>
+        <phone>96823133</phone>
+        <email>Edric@example.com</email>
+        <address>Blk 968 Edric Street 54, #13-22</address>
+        <birthday>12111992</birthday>
+        <facebookAddress>https://www.facebook.com/Edric</facebookAddress>
+        <tagged>colleagues</tagged>
+        <tagged>friends</tagged>
+        <id>not GoogleContact</id>
+    </persons>
+    <persons>
+        <name>Tawnee Merilyn</name>
+        <phone>95684343</phone>
+        <email>Tawnee@example.com</email>
+        <address>Blk 685 Tawnee Street 22, #14-34</address>
+        <birthday>09091993</birthday>
+        <facebookAddress>https://www.facebook.com/Tawnee</facebookAddress>
+        <tagged>friends</tagged>
+        <id>not GoogleContact</id>
+    </persons>
+    <persons>
+        <name>Ellen Daryl</name>
+        <phone>96842233</phone>
+        <email>Ellen@example.com</email>
+        <address>Blk 657 Ellen Street 20, #6-52</address>
+        <birthday>12071994</birthday>
+        <facebookAddress>https://www.facebook.com/Ellen</facebookAddress>
+        <tagged>colleagues</tagged>
+        <tagged>friends</tagged>
+        <id>not GoogleContact</id>
+    </persons>
+    <persons>
+        <name>Sonnie Kate</name>
+        <phone>95742321</phone>
+        <email>Sonnie@example.com</email>
+        <address>Blk 32 Sonnie Street 22, #2-34</address>
+        <birthday>12111973</birthday>
+        <facebookAddress>https://www.facebook.com/GervaseSteve</facebookAddress>
+        <tagged>friends</tagged>
+        <id>not GoogleContact</id>
+    </persons>
+    <persons>
+        <name>Alanis Otis</name>
+        <phone>96584743</phone>
+        <email>Otis@example.com</email>
+        <address>Blk 323 Alanis Street 9, #9-35</address>
+        <birthday>10101956</birthday>
+        <facebookAddress>https://www.facebook.com/Otis</facebookAddress>
+        <tagged>classmates</tagged>
+        <tagged>neighbours</tagged>
+        <tagged>friends</tagged>
+        <id>not GoogleContact</id>
+    </persons>
+    <persons>
+        <name>Roy Balakrishnan</name>
+        <phone>92624417</phone>
+        <email>royb@example.com</email>
+        <address>Blk 45 Aljunied Street 85, #11-31</address>
+        <birthday>03081970</birthday>
+        <facebookAddress>https://www.facebook.com/roy</facebookAddress>
+        <tagged>colleagues</tagged>
+        <id>not GoogleContact</id>
+    </persons>
+    <tasks>
+        <header>Submission</header>
+        <desc>Project portfolio</desc>
+        <deadline>today</deadline>
+    </tasks>
+    <tasks>
+        <header>Shopping</header>
+        <desc>Buy groceries</desc>
+        <deadline>tomorrow</deadline>
+    </tasks>
+    <tasks>
+        <header>Chores</header>
+        <desc>Washing clothes</desc>
+        <deadline>tomorrow, 5 pm</deadline>
+    </tasks>
+    <tasks>
+        <header>Project</header>
+        <desc>Finish Verilog code</desc>
+        <deadline>13/12/2017</deadline>
+    </tasks>
+    <tasks>
+        <header>Vacation plans</header>
+        <desc>Plan for holiday</desc>
+        <deadline>tomorrow</deadline>
+    </tasks>
+    <tasks>
+        <header>Homework</header>
+        <desc>Page 6 to 9</desc>
+        <deadline>21/11/2017</deadline>
+    </tasks>
+    <tasks>
+        <header>Submission</header>
+        <desc>Project report</desc>
+        <deadline>today</deadline>
+    </tasks>
+    <tasks>
+        <header>Assignment</header>
+        <desc>Tutorial homework</desc>
+        <deadline>17/12/2017</deadline>
+    </tasks>
+    <tags>schoolmates</tags>
+    <tags>colleagues</tags>
+    <tags>classmates</tags>
+    <tags>neighbours</tags>
+    <tags>family</tags>
+    <tags>friends</tags>
+</addressbook>
