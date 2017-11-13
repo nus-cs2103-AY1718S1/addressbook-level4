@@ -16,10 +16,6 @@ endif::[]
 * Contag is an efficient and feature-packed address book desktop application custom-built for PC, capable of organizing contacts for even the most demanding business users and busiest frequent travellers.
 * It is a Java application built for the most demanding business users as well as frequent travellers.
 * It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
-* What's different from https://github.com/se-edu/addressbook-level3[level 3]:
-** A more sophisticated GUI that includes a list  panel and an in-built Browser.
-** More test cases, including automated GUI testing.
-** Support for _Build Automation_ using Gradle and for _Continuous Integration_ using Travis CI.
 
 == Site Map
 
