@@ -46,14 +46,21 @@ public class SetRelCommandParser implements Parser<SetRelCommand> {
             PREFIX_DELETE_RELATIONSHIP, PREFIX_CLEAR_RELATIONSHIP);
         Index indexOne;
         Index indexTwo;
+        String value;
+        String[] indexes;
         boolean addPrefixPresent = false;
+        value = argMultimap.getPreamble();
+        if (!sizeOfinput(value)) {
+            throw new ParseException("One index is not allowed, please enter two");
+        }
+        indexes = value.split("\\s+");
         if (!areAnyPrefixesPresent(argMultimap, PREFIX_ADD_RELATIONSHIP, PREFIX_DELETE_RELATIONSHIP,
             PREFIX_CLEAR_RELATIONSHIP)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SetRelCommand.MESSAGE_USAGE));
         }
         try {
-            indexOne = ParserUtil.parseIndex(argMultimap.getPreamble().split("\\s+")[0]);
-            indexTwo = ParserUtil.parseIndex(argMultimap.getPreamble().split("\\s+")[1]);
+            indexOne = ParserUtil.parseIndex(indexes[0]);
+            indexTwo = ParserUtil.parseIndex(indexes[1]);
         } catch (IllegalValueException ive) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SetRelCommand.MESSAGE_USAGE));
         }
@@ -116,6 +123,17 @@ public class SetRelCommandParser implements Parser<SetRelCommand> {
      */
     private static boolean areAnyPrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
         return Stream.of(prefixes).anyMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
+    }
+
+    /**
+     * Check to make sure the length of argMultiMap.getPreamble is 3.
+     * @param input
+     */
+    private static boolean sizeOfinput(String input) {
+        if (input.length() == 3) {
+            return true;
+        }
+        return false;
     }
 }
 //@@author
