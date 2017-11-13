@@ -74,6 +74,15 @@ include::../DeveloperGuide.adoc[tag=edit]
 #End of Extract#
 
 ---
+=======
+=== Enhancement Added: more powerful `edit` command
+A more powerful `edit` command that has several sub-features and brings multiple benefits.
+
+==== Edit multiple contacts at the same time
+
+External Behaviour:
+
+
 
 === Enhancement Proposed: Add support for foreign languages
 
