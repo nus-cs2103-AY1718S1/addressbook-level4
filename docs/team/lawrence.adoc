@@ -47,6 +47,37 @@ include::../UserGuide.adoc[tag=overduelist]
 It would be more convenient for debt collectors to view all the debtors with overdue debts with a simple
 command.
 
+=== Enhancement Added: Interest calculator
+
+==== External Behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=interestCalculator]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+It would be a convenient feature for debt collectors to have their debt collectors debts automatically updated.
+However, it should be noted that it is still a basic feature as it only accrues a debtor's debt at the start of each month.
+A more updated version will be included in V2.0.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=interest]
+
+#End of Extract#
+
+---
+
+
 === other contributions
 
 ==== Added various fields to the Person Class

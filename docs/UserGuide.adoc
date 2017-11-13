@@ -665,6 +665,25 @@ To quickly revert address book data to the state of last use:
 ====
 // end::saveload[]
 
+
+== Non-command features
+
+// tag::interestCalculator[]
+=== Interest Calculator
+
+[NOTE]
+This is only applicable to debtors with a set interest rate. For the current version, only positive whole numbers are accepted. +
+
+[NOTE]
+`Codii` only checks through it's list of debtors when the user logs into the application. +
+
+At the start of each month, `Codii` will check through the list of debtors and accrue their debt
+if applicable. Even if the user has not logged into `Codii` for many months, the application will compound
+the debt accordingly.
+
+This is convenient for debts or loans with a monthly interest rate.
+// end::interestCalculator[]
+
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
