@@ -63,7 +63,7 @@ public interface Model {
      * @throws PersonNotFoundException if {@code target} could not be found in the list.
      */
     void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
-            throws DuplicatePersonException, PersonNotFoundException;
+            throws DuplicatePersonException, PersonNotFoundException, DeleteOnCascadeException;
 
     Set<Tag> extractNewTag(ReadOnlyPerson person);
 
@@ -107,7 +107,7 @@ public interface Model {
      * @throws EventNotFoundException if {@code target} could not be found in the list.
      */
     void updateEvent(ReadOnlyEvent target, ReadOnlyEvent editedEvent)
-            throws DuplicateEventException, EventNotFoundException;
+            throws DuplicateEventException, EventNotFoundException, DeleteOnCascadeException;
 
     /** Returns an unmodifiable view of the filtered event list */
     ObservableList<ReadOnlyEvent> getFilteredEventList();

@@ -243,6 +243,8 @@ public class CommandTestUtil {
             throw new AssertionError("Impossible.", dpe);
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("Person in filtered list must exist in model.", pnfe);
+        } catch (DeleteOnCascadeException doce) {
+            throw new AssertionError("Impossible", doce);
         }
     }
 
@@ -257,6 +259,8 @@ public class CommandTestUtil {
             throw new AssertionError("Impossible.", e);
         } catch (EventNotFoundException e) {
             throw new AssertionError("Event in filtered list must exist in model.", e);
+        } catch (DeleteOnCascadeException doce) {
+            throw new AssertionError("Impossible", doce);
         }
     }
 

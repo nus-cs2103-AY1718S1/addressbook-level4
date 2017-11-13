@@ -86,9 +86,7 @@ public class AddCommand extends UndoableCommand {
         try {
             model.deletePerson(toAdd);
             model.removeTags(newTags);
-        } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError(MESSAGE_UNDO_ASSERTION_ERROR);
-        } catch (DeleteOnCascadeException doce) {
+        } catch (PersonNotFoundException | DeleteOnCascadeException pnfe) {
             throw new AssertionError(MESSAGE_UNDO_ASSERTION_ERROR);
         }
     }

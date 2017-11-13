@@ -77,9 +77,7 @@ public class DeleteCommand extends UndoableCommand {
         requireAllNonNull(model, personToDelete);
         try {
             model.deletePerson(personToDelete);
-        } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError(MESSAGE_REDO_ASSERTION_ERROR);
-        } catch (DeleteOnCascadeException doce) {
+        } catch (PersonNotFoundException |  DeleteOnCascadeException e) {
             throw new AssertionError(MESSAGE_REDO_ASSERTION_ERROR);
         }
     }

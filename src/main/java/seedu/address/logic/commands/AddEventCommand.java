@@ -64,9 +64,7 @@ public class AddEventCommand extends UndoableCommand {
         requireNonNull(model);
         try {
             model.deleteEvent(toAdd);
-        } catch (EventNotFoundException enfe) {
-            throw new AssertionError(MESSAGE_UNDO_ASSERTION_ERROR);
-        } catch (DeleteOnCascadeException doce) {
+        } catch (EventNotFoundException | DeleteOnCascadeException e) {
             throw new AssertionError(MESSAGE_UNDO_ASSERTION_ERROR);
         }
     }

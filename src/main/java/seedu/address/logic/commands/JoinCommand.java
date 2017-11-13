@@ -83,9 +83,7 @@ public class JoinCommand extends UndoableCommand {
     protected void undo() {
         try {
             model.quitEvent(personToJoin, eventToJoin);
-        } catch (PersonNotParticipateException pnpe) {
-            throw new AssertionError(MESSAGE_UNDO_ASSERTION_ERROR);
-        } catch (NotParticipateEventException npee) {
+        } catch (PersonNotParticipateException | NotParticipateEventException e) {
             throw new AssertionError(MESSAGE_UNDO_ASSERTION_ERROR);
         }
     }
@@ -94,9 +92,7 @@ public class JoinCommand extends UndoableCommand {
     protected void redo() {
         try {
             model.joinEvent(personToJoin, eventToJoin);
-        } catch (PersonHaveParticipateException phpe) {
-            throw new AssertionError(MESSAGE_REDO_ASSERTION_ERROR);
-        } catch (HaveParticipateEventException hpee) {
+        } catch (PersonHaveParticipateException | HaveParticipateEventException e) {
             throw new AssertionError(MESSAGE_REDO_ASSERTION_ERROR);
         }
     }

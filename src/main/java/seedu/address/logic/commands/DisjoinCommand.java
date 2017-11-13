@@ -61,8 +61,8 @@ public class DisjoinCommand extends UndoableCommand {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        personToRemove = new Person (lastShownPersonList.get(personIndex.getZeroBased()));
-        eventToRemove = new Event (lastShownEventList.get(eventIndex.getZeroBased()));
+        personToRemove = (Person) lastShownPersonList.get(personIndex.getZeroBased());
+        eventToRemove = (Event) lastShownEventList.get(eventIndex.getZeroBased());
         try {
             model.quitEvent(personToRemove, eventToRemove);
             return new CommandResult(String.format(MESSAGE_DISJOIN_SUCCESS, personToRemove.getName(),
@@ -78,9 +78,7 @@ public class DisjoinCommand extends UndoableCommand {
     protected void undo() {
         try {
             model.joinEvent(personToRemove, eventToRemove);
-        } catch (PersonHaveParticipateException pnpe) {
-            throw new AssertionError(MESSAGE_UNDO_ASSERTION_ERROR);
-        } catch (HaveParticipateEventException hpee) {
+        } catch (PersonHaveParticipateException | HaveParticipateEventException e) {
             throw new AssertionError(MESSAGE_UNDO_ASSERTION_ERROR);
         }
     }
@@ -89,12 +87,9 @@ public class DisjoinCommand extends UndoableCommand {
     protected void redo() {
         try {
             model.quitEvent(personToRemove, eventToRemove);
-        } catch (PersonNotParticipateException pnpe) {
-            throw new AssertionError(MESSAGE_REDO_ASSERTION_ERROR);
-        } catch (NotParticipateEventException npee) {
+        } catch (PersonNotParticipateException | NotParticipateEventException e) {
             throw new AssertionError(MESSAGE_REDO_ASSERTION_ERROR);
         }
-
     }
 
     /**

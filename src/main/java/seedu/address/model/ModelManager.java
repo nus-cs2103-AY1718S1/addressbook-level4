@@ -114,7 +114,7 @@ public class ModelManager extends ComponentManager implements Model {
     // @@author
     @Override
     public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
-            throws DuplicatePersonException, PersonNotFoundException {
+            throws DuplicatePersonException, PersonNotFoundException, DeleteOnCascadeException {
         requireAllNonNull(target, editedPerson);
 
         addressBook.updatePerson(target, editedPerson);
@@ -190,7 +190,7 @@ public class ModelManager extends ComponentManager implements Model {
     // @@author Adoby7
     @Override
     public void updateEvent(ReadOnlyEvent target, ReadOnlyEvent editedEvent)
-            throws DuplicateEventException, EventNotFoundException {
+            throws DuplicateEventException, EventNotFoundException, DeleteOnCascadeException {
         requireAllNonNull(target, editedEvent);
 
         eventList.updateEvent(target, editedEvent);

@@ -75,9 +75,7 @@ public class DeleteEventCommand extends UndoableCommand {
         requireAllNonNull(model, eventToDelete);
         try {
             model.deleteEvent(eventToDelete);
-        } catch (EventNotFoundException pnfe) {
-            throw new AssertionError(MESSAGE_REDO_ASSERTION_ERROR);
-        } catch (DeleteOnCascadeException doce) {
+        } catch (EventNotFoundException | DeleteOnCascadeException e) {
             throw new AssertionError(MESSAGE_REDO_ASSERTION_ERROR);
         }
     }

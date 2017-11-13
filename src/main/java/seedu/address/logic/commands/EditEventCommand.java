@@ -14,6 +14,7 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.exceptions.DeleteOnCascadeException;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.EventDescription;
 import seedu.address.model.event.EventName;
@@ -44,6 +45,8 @@ public class EditEventCommand extends UndoableCommand {
     public static final String MESSAGE_EDIT_EVENT_SUCCESS = "Edited Event: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_EVENT = "This event already exists in the address book.";
+    public static final String MESSAGE_EVENT_BEING_PARTICIPATED_FAIL = "Some person participates this event,"
+            + "please disjoin all participated persons before deleting this event";
 
     private Index index;
     private EditEventDescriptor editEventDescriptor;
@@ -79,6 +82,8 @@ public class EditEventCommand extends UndoableCommand {
             throw new CommandException(MESSAGE_DUPLICATE_EVENT);
         } catch (EventNotFoundException pnfe) {
             throw new AssertionError("The target event cannot be missing");
+        } catch (DeleteOnCascadeException doce) {
+            throw new CommandException(MESSAGE_EVENT_BEING_PARTICIPATED_FAIL);
         }
         return new CommandResult(String.format(MESSAGE_EDIT_EVENT_SUCCESS, editedEvent));
     }
@@ -87,9 +92,7 @@ public class EditEventCommand extends UndoableCommand {
     protected void undo() {
         try {
             model.updateEvent(editedEvent, eventToEdit);
-        } catch (DuplicateEventException dpe) {
-            throw new AssertionError(MESSAGE_UNDO_ASSERTION_ERROR);
-        } catch (EventNotFoundException pnfe) {
+        } catch (DuplicateEventException | EventNotFoundException | DeleteOnCascadeException e) {
             throw new AssertionError(MESSAGE_UNDO_ASSERTION_ERROR);
         }
     }
@@ -98,9 +101,7 @@ public class EditEventCommand extends UndoableCommand {
     protected void redo() {
         try {
             model.updateEvent(eventToEdit, editedEvent);
-        } catch (DuplicateEventException dpe) {
-            throw new AssertionError(MESSAGE_REDO_ASSERTION_ERROR);
-        } catch (EventNotFoundException pnfe) {
+        } catch (DuplicateEventException | EventNotFoundException | DeleteOnCascadeException e) {
             throw new AssertionError(MESSAGE_REDO_ASSERTION_ERROR);
         }
     }

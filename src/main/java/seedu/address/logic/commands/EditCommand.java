@@ -18,6 +18,7 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.exceptions.DeleteOnCascadeException;
 import seedu.address.model.event.Event;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Birthday;
@@ -55,6 +56,8 @@ public class EditCommand extends UndoableCommand {
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
+    public static final String MESSAGE_PERSON_PARTICIPATE_EVENT_FAIL = "This person has participated some events,"
+            + "please disjoin all events before editing this person";
 
     private Index index;
     private EditPersonDescriptor editPersonDescriptor;
@@ -93,6 +96,8 @@ public class EditCommand extends UndoableCommand {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
+        } catch (DeleteOnCascadeException doce) {
+            throw new CommandException(MESSAGE_PERSON_PARTICIPATE_EVENT_FAIL);
         }
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedPerson));
     }
@@ -124,9 +129,7 @@ public class EditCommand extends UndoableCommand {
         try {
             model.updatePerson(editedPerson, personToEdit);
             model.removeTags(newTags);
-        } catch (DuplicatePersonException dpe) {
-            throw new AssertionError(MESSAGE_UNDO_ASSERTION_ERROR);
-        } catch (PersonNotFoundException pnfe) {
+        } catch (DuplicatePersonException | PersonNotFoundException | DeleteOnCascadeException e) {
             throw new AssertionError(MESSAGE_UNDO_ASSERTION_ERROR);
         }
     }
@@ -135,9 +138,7 @@ public class EditCommand extends UndoableCommand {
     protected void redo() {
         try {
             model.updatePerson(personToEdit, editedPerson);
-        } catch (DuplicatePersonException dpe) {
-            throw new AssertionError(MESSAGE_REDO_ASSERTION_ERROR);
-        } catch (PersonNotFoundException pnfe) {
+        } catch (DuplicatePersonException | PersonNotFoundException | DeleteOnCascadeException e) {
             throw new AssertionError(MESSAGE_REDO_ASSERTION_ERROR);
         }
     }
