@@ -16,7 +16,6 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
-import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.Website;
