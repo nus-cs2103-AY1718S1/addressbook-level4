@@ -1170,7 +1170,7 @@ messages will be printed, such as "Because John Doe appreciates you".
 
 Allows for pdf file of the contract to be added to the project, and accessed by clicking on the link on insurance profile page.
 
-image::contractPdf.png[][width="380"]
+image::contractPdf.png[width="380"]
 
 If file is not detected in the project folder (data folder), filechooser will popup to allow user to add the pdf file into the project. Regardless of the name of the file chosen, it will automatically be renamed to the name specified in the insurance profile.
 
