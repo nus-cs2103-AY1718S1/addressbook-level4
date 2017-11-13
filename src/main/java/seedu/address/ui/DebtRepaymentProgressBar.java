@@ -17,13 +17,14 @@ import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author jelneo
 /**
- * Displays debt repayment progress bar of each person.
+ * Displays and sets the correct information to display in the debt repayment progress bar for each person.
  */
 public class DebtRepaymentProgressBar extends UiPart<Region> {
     private static final String FXML = "DebtRepaymentProgressBar.fxml";
     private static final String COMPLETED_REPAYMENT_MESSAGE = "Completed";
     private static final String OVERDUE_REPAYMENT_MESSAGE = "Overdue";
     private static final String NO_DEADLINE_REPAYMENT_MESSAGE = "No deadline set";
+    private static final String DEADLINE_TODAY_REPAYMENT_MESSAGE = "Today is the deadline";
     private static final String YEARS_LEFT_TO_REPAY_DEBT_MESSAGE = "%1$s years(s)";
     private static final String MONTHS_LEFT_TO_REPAY_DEBT_MESSAGE = " %1$s month(s)";
     private static final String DAYS_LEFT_TO_REPAY_DEBT_MESSAGE = " %1$s day(s)";
@@ -138,6 +139,9 @@ public class DebtRepaymentProgressBar extends UiPart<Region> {
      */
     private String formatTimeTillDeadline(long years, long months, long days) {
         StringBuilder stringBuilder = new StringBuilder();
+        if (years == 0 && months == 0 && days == 0) {
+            return DEADLINE_TODAY_REPAYMENT_MESSAGE;
+        }
         if (years != 0) {
             stringBuilder.append(String.format(YEARS_LEFT_TO_REPAY_DEBT_MESSAGE, years));
         }
