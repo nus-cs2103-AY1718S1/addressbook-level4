@@ -1248,7 +1248,7 @@ private static String getColorForTag(String tag) {
 // end::styling[]
 
 
-// tag::eventsbook[]
+// tag::eventbook[]
 === Events and EventBook
 In version 1.4 and above, the application has been expanded to allow not only list of `Residents` but also of `Events`. The rationale behind is to allow the hostel management staff be aware of the events taking place in the hostel and make necessary preparations for the same. This section breifly explains the implementation of `Events` and the `EventBook` at four different levels: `Model` `Logic` `UI` and `Storage`
 
@@ -1344,7 +1344,7 @@ Possible Future Implementations:
 * Allow `EventCards` to be selectable so that when selected, a Panel with all the details about the events is displayed
 * Allow the Calendar to be clickable and selectable so that when a day is selected, the Events for the day are displayed.
 
-// end::eventsbook[]
+// end::eventbook[]
 
 == Documentation
 
