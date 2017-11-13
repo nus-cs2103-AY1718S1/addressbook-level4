@@ -496,7 +496,6 @@ This flattened list is then matched with the incomplete user input stub, such th
 
 ---
 
-(added v1.3)
 **Aspect:** Implement dropdown menu UI for autocomplete +
 **Alternative 1 (current choice):** No dropdown menu
 **Pros:** No need for additional UI component. +
