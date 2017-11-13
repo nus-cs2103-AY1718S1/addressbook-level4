@@ -12,7 +12,7 @@ import seedu.address.logic.MrtMapLogic;
 /**
  * The java class displays the UI.
  */
-public class MrtMapUi {
+public class MrtMapDisplay {
     //radius of circle use to visualise mrt stations in the graph
     private static final int DEFAULT_CIRCLE_RADIUS = 4;
     private static final int MAX_CIRCLE_RADIUS = 35;
@@ -52,7 +52,7 @@ public class MrtMapUi {
     /**
      * Initialise all relevant informations required for the running of the UI.
      */
-    public MrtMapUi() {
+    public MrtMapDisplay() {
         initialise();
     }
 
