@@ -10,6 +10,9 @@ import seedu.address.model.tag.Tag;
 
 /**
  * Parses input arguments and creates a new DeleteTagCommand object
+ *
+ * Deprecated in Ark v1.5
+ * See {@link DeleteTagCommand}
  */
 public class DeleteTagCommandParser implements Parser<DeleteTagCommand> {
 

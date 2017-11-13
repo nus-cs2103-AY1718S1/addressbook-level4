@@ -12,9 +12,6 @@ import seedu.address.model.parcel.Status;
 import seedu.address.model.parcel.UniqueParcelList;
 import seedu.address.model.parcel.exceptions.DuplicateParcelException;
 import seedu.address.model.parcel.exceptions.ParcelNotFoundException;
-import seedu.address.model.tag.Tag;
-import seedu.address.model.tag.exceptions.TagInternalErrorException;
-import seedu.address.model.tag.exceptions.TagNotFoundException;
 
 /**
  * The API of the Model component.
@@ -52,13 +49,6 @@ public interface Model {
      * Deletes the given parcel.
      */
     void deleteParcel(ReadOnlyParcel target) throws ParcelNotFoundException;
-
-    //@@author fustilio
-    /**
-     * Deletes the given tag from every parcel.
-     */
-    void deleteTag(Tag target) throws TagNotFoundException, TagInternalErrorException;
-    //@@author
 
     /**
      * Adds the given parcel

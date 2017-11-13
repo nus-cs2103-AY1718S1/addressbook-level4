@@ -8,6 +8,10 @@ import seedu.address.model.tag.exceptions.TagNotFoundException;
 
 /**
  * Deletes a tag from all parcels from the address book.
+ *
+ * Deprecated in Ark v1.5
+ * This function was deprecated in v1.5 as the team decided that it did not enhance
+ * the overall functionality of Ark and did not fit in well with the other features.
  */
 public class DeleteTagCommand extends UndoableCommand {
 

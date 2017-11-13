@@ -96,6 +96,7 @@ public class MainApp extends Application {
             try {
                 bot = new ArkBot(logic, model,
                         config.getBotToken(), config.getBotUsername());
+                logger.info("Bot Authentication Token: " + config.getBotToken());
                 botSession = botsApi.registerBot(bot);
                 botStarted = true;
             } catch (TelegramApiException e) {
