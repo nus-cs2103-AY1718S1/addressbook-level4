@@ -11,11 +11,9 @@ import java.util.logging.Logger;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.beans.binding.Bindings;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
 import javafx.stage.FileChooser;
@@ -75,9 +73,7 @@ public class InsuranceProfilePanel extends UiPart<Region> {
         this.insurance = insurance;
 
         initializeContractFile(insurance);
-
         enableNameToProfileLink(insurance);
-
         bindListeners(insurance);
         setPremiumLevel(insurance.getPremium().toDouble());
     }
@@ -118,24 +114,21 @@ public class InsuranceProfilePanel extends UiPart<Region> {
         } else {
             contractName.getStyleClass().clear();
             contractName.getStyleClass().add("missing-file");
-            contractName.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    FileChooser.ExtensionFilter extFilter =
-                            new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf");
-                    FileChooser chooser = new FileChooser();
-                    chooser.getExtensionFilters().add(extFilter);
-                    File openedFile = chooser.showOpenDialog(null);
+            contractName.setOnMouseClicked(event -> {
+                FileChooser.ExtensionFilter extensionFilter =
+                        new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf");
+                FileChooser chooser = new FileChooser();
+                chooser.getExtensionFilters().add(extensionFilter);
+                File openedFile = chooser.showOpenDialog(null);
 
-                    if (isFileExists(openedFile)) {
-                        try {
-                            Files.copy(openedFile.toPath(), insuranceFile.toPath());
-                            if (isFileExists(insuranceFile)) {
-                                activateLinkToInsuranceFile();
-                            }
-                        } catch (IOException ex) {
-                            logger.info("Unable to open at path: " + openedFile.getAbsolutePath());
+                if (isFileExists(openedFile)) {
+                    try {
+                        Files.copy(openedFile.toPath(), insuranceFile.toPath());
+                        if (isFileExists(insuranceFile)) {
+                            activateLinkToInsuranceFile();
                         }
+                    } catch (IOException ex) {
+                        logger.info("Unable to open file at path: " + openedFile.getAbsolutePath());
                     }
                 }
             });
