@@ -135,32 +135,6 @@ _Figure 3.2.1.1: UI display for HelpCommand_
 
 === Modifying Contacts
 
-// tag::welcomeScreen[]
-==== Enabling and disabling the welcome screen: `welcome`
-
-=> Alias: `w` <=
-
-Enables or disables the welcome screen.
-Format: `welcome ENABLING_KEYWORD`
-
-Examples:
-
-* `welcome enable`
-
-* `welcome disable` +
-
-[NOTE]
-The welcome screen is disabled by default.
-
-[TIP]
-Try enabling the welcome screen, close and rerun ConTag.
-
-If the welcome screen is successfully enabled, you should be able to see a the following screen, as shown in _Figure 3.5.5.1_ every time ConTag is run. The welcome screen displays 1 out of the 15 default productivity quotes at random to keep you motivated throughout the day.
-
-image::WelcomeScreen.png[width="400"]
-_Figure 3.4.3.1: The welcome screen_
-// end::welcomeScreen[]
-
 // tag::multipleemails[]
 ==== Adding a Person: `add`
 
@@ -260,6 +234,32 @@ Clears all entries from the address book. +
 Format: `clear`
 
 === Key Features
+
+// tag::welcomeScreen[]
+==== Enabling and disabling the welcome screen: `welcome`
+
+=> Alias: `w` <=
+
+Enables or disables the welcome screen.
+Format: `welcome ENABLING_KEYWORD`
+
+Examples:
+
+* `welcome enable`
+
+* `welcome disable` +
+
+[NOTE]
+The welcome screen is disabled by default.
+
+[TIP]
+Try enabling the welcome screen, close and rerun ConTag.
+
+If the welcome screen is successfully enabled, you should be able to see a the following screen, as shown in _Figure 3.5.5.1_ every time ConTag is run. The welcome screen displays 1 out of the 15 default productivity quotes at random to keep you motivated throughout the day.
+
+image::WelcomeScreen.png[width="400"]
+_Figure 3.4.3.1: The welcome screen_
+// end::welcomeScreen[]
 
 // tag::find[]
 ==== Finding persons by any field : `find`
