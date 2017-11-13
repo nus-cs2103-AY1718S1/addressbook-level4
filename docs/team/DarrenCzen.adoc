@@ -141,7 +141,9 @@ Code on GitHub: Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/
 ---
 #Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag=add]
+include::../UserGuide.adoc[tag=add1]
+image::UGPrefix.PNG[width="500"]
+include::../UserGuide.adoc[tag=add2]
 
 #End of Extract#
 
