@@ -16,13 +16,13 @@ public class ListFailureCommand extends Command {
 
     public static final String MESSAGE_FAILURE = "Invalid input detected. Valid list variations: \n"
             + COMMAND_WORD + " \n"
-            + COMMAND_WORD + " tag [TAG/s] \n"
-            + COMMAND_WORD + " asc \n"
-            + COMMAND_WORD + " ascending \n"
-            + COMMAND_WORD + " dsc \n"
-            + COMMAND_WORD + " descending \n"
-            + COMMAND_WORD + " rev \n"
-            + COMMAND_WORD + " reverse \n";
+            + COMMAND_WORD + " " + ListByTagCommand.COMMAND_SELECTOR + " [TAG/s] \n"
+            + COMMAND_WORD + " " + ListAscendingNameCommand.COMMAND_ALIAS + "\n"
+            + COMMAND_WORD + " " + ListAscendingNameCommand.COMMAND_WORD + "\n"
+            + COMMAND_WORD + " " + ListDescendingNameCommand.COMMAND_ALIAS + "\n"
+            + COMMAND_WORD + " " + ListDescendingNameCommand.COMMAND_WORD + "\n"
+            + COMMAND_WORD + " " + ListReverseCommand.COMMAND_ALIAS + "\n"
+            + COMMAND_WORD + " " + ListReverseCommand.COMMAND_WORD + "\n";
 
     /**
      * Returns a failure message to indicate invalid command available in list package.

@@ -23,6 +23,7 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListAscendingNameCommand;
 import seedu.address.logic.commands.ListByBloodtypeCommand;
+import seedu.address.logic.commands.ListByTagCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.ListDescendingNameCommand;
 import seedu.address.logic.commands.ListFailureCommand;
@@ -168,19 +169,19 @@ public class AddressBookParser {
         case "":
             returnThisCommand = new ListCommand();
             break;
-        case "tag":
+        case ListByTagCommand.COMMAND_SELECTOR:
             returnThisCommand = new ListByTagCommandParser().parse(arguments.substring(firstArgLength + 1));
             break;
-        case "asc":
-        case "ascending":
+        case ListAscendingNameCommand.COMMAND_ALIAS:
+        case ListAscendingNameCommand.COMMAND_WORD:
             returnThisCommand = (argSplit.length == 1) ? new ListAscendingNameCommand() : new ListFailureCommand();
             break;
-        case "dsc":
-        case "descending":
+        case ListDescendingNameCommand.COMMAND_ALIAS:
+        case ListDescendingNameCommand.COMMAND_WORD:
             returnThisCommand = (argSplit.length == 1) ? new ListDescendingNameCommand() : new ListFailureCommand();
             break;
-        case "rev":
-        case "reverse":
+        case ListReverseCommand.COMMAND_ALIAS:
+        case ListReverseCommand.COMMAND_WORD:
             returnThisCommand = (argSplit.length == 1) ? new ListReverseCommand() : new ListFailureCommand();
             break;
         default:
