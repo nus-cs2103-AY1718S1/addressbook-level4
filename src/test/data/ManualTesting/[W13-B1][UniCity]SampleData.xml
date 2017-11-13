@@ -3,7 +3,7 @@
     <persons>
         <name>Alex Yeoh</name>
         <phone>87438807</phone>
-        <email>alexyeoh@example.com</email>
+        <email>alexyeoh@yahoo.com</email>
         <address>Blk 30 Geylang Street 29, #06-40</address>
         <favourite>True</favourite>
         <birthday>04/05/1995</birthday>
@@ -13,7 +13,7 @@
     <persons>
         <name>Charlotte Oliverio</name>
         <phone>91031282</phone>
-        <email>charoli@example.com</email>
+        <email>charoli@gmail.com</email>
         <address>Blk 436 Serangoon Gardens Street 26, #16-43</address>
         <favourite>False</favourite>
         <birthday>02/03/1994</birthday>
@@ -22,15 +22,40 @@
     <persons>
         <name>Roy Banner</name>
         <phone>92624417</phone>
-        <email>royb@example.com</email>
+        <email>royb@hotmail.com</email>
         <address>Blk 45 Aljunied Street 85, #11-31</address>
         <favourite>False</favourite>
         <birthday>06/04/1995</birthday>
         <tagged>colleagues</tagged>
     </persons>
-    <tags>help</tags>
+    <persons>
+        <name>Courtney Prince</name>
+        <phone>93415783</phone>
+        <email>courtprince@gmail.com</email>
+        <address>Blk 11 Ang Mo Kio Street 74, #11-04</address>
+        <favourite>False</favourite>
+        <birthday>03/04/1995</birthday>
+        <tagged>classmates</tagged>
+    </persons>
+    <persons>
+        <name>Kathy Forest</name>
+        <phone>98438201</phone>
+        <email>kathy@gmail.com</email>
+        <address>Blk 30 Lorong 3 Serangoon Gardens, #07-18</address>
+        <favourite>False</favourite>
+        <birthday>03/03/1992</birthday>
+        <tagged>classmates</tagged>
+    </persons>
+    <persons>
+        <name>Bernice Yu</name>
+        <phone>99272758</phone>
+        <email>bernice@yahoo.com</email>
+        <address>Blk 30 Lorong 3 Serangoon Gardens, #07-18</address>
+        <favourite>False</favourite>
+        <birthday>No Birthday Added</birthday>
+        <tagged>friends</tagged>
+    </persons>
     <tags>colleagues</tags>
-    <tags>helpers1</tags>
     <tags>classmates</tags>
     <tags>neighbours</tags>
     <tags>family</tags>

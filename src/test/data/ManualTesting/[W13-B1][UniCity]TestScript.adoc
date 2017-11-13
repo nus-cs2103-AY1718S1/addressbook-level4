@@ -21,4 +21,81 @@ This is by no means an exhaustive list of tests.
 A common mistake is renaming the file name as `addressbook.xml` making the entire file to be read as
 `addressbook.xml.xml`. Make sure that the name is simply addressbook and the file type is xml.
 
-== Commands
+== Manual testing on UniCity commands
+
+=== Find command
+
+Command usage: `find KEYWORD [MORE_KEYWORDS]`
+
+* `find alex` +
+Expected result: 1 persons listed!
++
+`Alex Yeoh` will be displayed.
+
+* `find yeoh` +
+Expected result: 1 persons listed!
++
+`Alex Yeoh` will be displayed.
+
+* `find alex yeoh` +
+Expected result: 1 persons listed!
++
+`Alex Yeoh` will be displayed.
+
+* `find alx` +
+Expected result: No results for alx. Showing results for Alex instead.
++
+`Alex Yeoh` will be displayed.
+
+* `find alx char` +
+Expected result: No results for alx char. Showing results for Alex, Charlotte instead.
++
+`Alex Yeoh` and `Charlotte Oliverio` will be displayed.
+
+* `find asdkh` +
+Expected result: No results for asdkh. Showing results for Kathy instead.
++
+`Kathy Forest` will be displayed.
+
+[NOTE]
+The suggestion of the closest matching name is just a prediction.If the given name is too ambiguous,
+it will return closest name it can find.
+
+* `find` +
+Expected result:
+Invalid command format!
+find OR f: Finds all persons whose names contain any of the specified keywords (case-sensitive) and displays them as a
+list with index numbers. Command is case-insensitive. +
+Parameters: KEYWORD [MORE_KEYWORDS]... +
+Example 1: find alice bob charlie +
+Example 2: F alice bob charlie
+
+* `find 123` +
+Expected result: No matching name found for 123. Showing all contacts instead.
++
+All contacts will be displayed.
+
+
+=== Add tags command
+
+Command usage: `addtag INDEX [MORE_INDEXES] [t/TAG]...`
+
+* `addtag 1 2 t/groupmates` +
+Expected result: Added Tag: [groupmates]
++
+First two persons in the list will have the tag [groupmates] added to them.
+
+=== Remove tags command
+
+Command usage: `find KEYWORD [MORE_KEYWORDS]`
+
+
+=== Multiple undo/redo
+
+Command usage: `find KEYWORD [MORE_KEYWORDS]`
+
+
+=== Change window size command
+
+Command usage: `find KEYWORD [MORE_KEYWORDS]`
+
