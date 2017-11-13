@@ -258,7 +258,7 @@ public abstract class AddressBookSystemTest {
             assertEquals("", getCommandBox().getInput());
             assertEquals("", getResultDisplay().getText());
             assertListMatching(getPersonListPanel(), getModel().getFilteredPersonList());
-            assertEquals(new URL(MAPS_SEARCH_URL_PREFIX + MAPS_SEARCH_ORIGIN), getMapsPanel().getLoadedUrl());
+            assertEquals(new URL(MAPS_SEARCH_URL_PREFIX + MAPS_SEARCH_ORIGIN + MAPS_SEARCH_URL_SUFFIX), getMapsPanel().getLoadedUrl());
             assertEquals("./" + testApp.getStorageSaveLocation(), getStatusBarFooter().getSaveLocation());
             assertEquals(SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
         } catch (Exception e) {

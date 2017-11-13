@@ -39,7 +39,7 @@ public class MapsPanelTest extends GuiUnitTest {
     @Test
     public void display() throws Exception {
         // default web page
-        URL expectedDefaultPageUrl = new URL(MAPS_SEARCH_URL_PREFIX + MAPS_SEARCH_ORIGIN);
+        URL expectedDefaultPageUrl = new URL(MAPS_SEARCH_URL_PREFIX + MAPS_SEARCH_ORIGIN + MAPS_SEARCH_URL_SUFFIX);
         assertEquals(expectedDefaultPageUrl, mapsPanelHandle.getLoadedUrl());
 
         // associated web page of a person

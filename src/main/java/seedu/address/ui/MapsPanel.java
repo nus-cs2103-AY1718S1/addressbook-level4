@@ -57,7 +57,7 @@ public class MapsPanel extends UiPart<Region> {
      * Loads a default HTML file with a background that matches the general theme.
      */
     private void loadDefaultPage() {
-        loadPage(MAPS_SEARCH_URL_PREFIX + MAPS_SEARCH_ORIGIN);
+        loadPage(MAPS_SEARCH_URL_PREFIX + MAPS_SEARCH_ORIGIN + MAPS_SEARCH_URL_SUFFIX);
     }
 
     /**
