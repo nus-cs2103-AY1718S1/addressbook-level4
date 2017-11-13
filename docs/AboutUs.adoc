@@ -25,7 +25,7 @@ image::itsdickson.png[width="150", align="left"]
 {empty}[https://github.com/itsdickson[github]]
 {empty}[https://cs2103aug2017-t15-b3.github.io/main/team/itsdickson.html[Portfolio]]
 
-Role: Developer +
+Role: Developer & Documentation +
 Responsibilities: UI & Model
 
 '''
