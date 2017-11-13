@@ -182,6 +182,7 @@ public abstract class AddressBookSystemTest {
      * @see PersonListPanelHandle#isSelectedPersonCardChanged()
      */
     protected void assertSelectedCardChanged(Index expectedSelectedCardIndex) {
+
         String selectedCardName = getPersonListPanel().getHandleToSelectedCard().getName();
         URL expectedUrl;
         try {
@@ -191,6 +192,7 @@ public abstract class AddressBookSystemTest {
             throw new AssertionError("URL expected to be valid.");
         }
         assertEquals(expectedUrl, getBrowserPanel().getLoadedUrl());
+
 
         assertEquals(expectedSelectedCardIndex.getZeroBased(), getPersonListPanel().getSelectedCardIndex());
     }

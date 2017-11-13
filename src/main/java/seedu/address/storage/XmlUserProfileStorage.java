@@ -67,7 +67,7 @@ public class XmlUserProfileStorage implements UserProfileStorage {
             throw new DataConversionException(e);
         } catch (IllegalValueException e) {
             logger.warning("Illegal parameters");
-            return null;
+            return Optional.empty();
         }
     }
 

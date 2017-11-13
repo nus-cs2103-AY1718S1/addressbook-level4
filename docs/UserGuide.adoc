@@ -456,12 +456,15 @@ e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
 * *List* : `list`
+* *Sort* : `sort phone`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
-* *Update User* : `update`
+* *Update* : `update`
+e.g `update n/James Leong p/92334311 e/james@gmail.com w/https://www.facebook.com/james`
+* *Share* : `share`
 * *Redo* : `redo`
 * *Web* : `web facebook`
 
