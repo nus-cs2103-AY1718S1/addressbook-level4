@@ -230,6 +230,7 @@ Successfully bookmarked the first place in the list.
 
 ** *Expected output* +
 Error message will be display as `INDEX 5` has already been bookmarked.
+
 . `list` +
 `bookmark 45`
 
@@ -509,13 +510,10 @@ even if the values are the same.
 === Negative Test Cases
 . `edit -1 t/`
 ** *Expected output* +
-
-====
-Invalid command format!
-edit: Edits the details of the place identified by the index number used in the last place listing. Existing values will be overwritten by the input values.
-Parameters: INDEX (must be a positive integer) [n/NAME] [ph/PHONE] [w/WEBSITE] [a/ADDRESS] [p/POSTAL CODE] [t/TAG]...
+Invalid command format! +
+edit: Edits the details of the place identified by the index number used in the last place listing. Existing values will be overwritten by the input values. +
+Parameters: INDEX (must be a positive integer) [n/NAME] [ph/PHONE] [w/WEBSITE] [a/ADDRESS] [p/POSTAL CODE] [t/TAG]... +
 Example: edit 1 ph/91234567 w/www.marinabaysands.comp/639304
-====
 
 . `Edit 1 a/20 Bayfront Avenue p/000001 t/bookmarks`
 ** *Expected output* +
@@ -580,13 +578,10 @@ The UI will display a `Unknown Command` message.
 
 . `find singapore`
 ** *Expected output* +
-
-====
-Invalid command format!
-find: Finds all places whose names contain any of the specified keywords (case-sensitive) and displays them as a list with index numbers.
-Parameters: KEYWORD [MORE_KEYWORDS]...
+Invalid command format! +
+find: Finds all places whose names contain any of the specified keywords (case-sensitive) and displays them as a list with index numbers. +
+Parameters: KEYWORD [MORE_KEYWORDS]... +
 Example: find n/Marina Bay Sands or Example: find t/[bookmark] [attractions]
-====
 
 . `find n/Singapore t/nature`
 ** *Expected output* +
@@ -623,53 +618,38 @@ The UI will display a `Go to: 1` message and displays the place on Google Maps t
 === Negative Test Cases
 . `goto`
 ** *Expected output* +
-
-====
 Invalid command format! +
 goto: Display the place on Google Map identified by the index number used in the last place listing. +
 Parameters: INDEX (must be a positive integer) +
 Example: goto 1
-====
 
 . `goto 0`
 ** *Expected output* +
-
-====
 Invalid command format! +
 goto: Display the place on Google Map identified by the index number used in the last place listing. +
 Parameters: INDEX (must be a positive integer) +
 Example: goto 1
-====
 
 . `goto -1`
 ** *Expected output* +
-
-====
 Invalid command format! +
 goto: Display the place on Google Map identified by the index number used in the last place listing. +
 Parameters: INDEX (must be a positive integer) +
 Example: goto 1
-====
 
 . `GOto 3`
 ** *Expected output* +
-
-====
 Invalid command format! +
 goto: Display the place on Google Map identified by the index number used in the last place listing. +
 Parameters: INDEX (must be a positive integer) +
 Example: goto 1
-====
 
 . `GoTo 2`
 ** *Expected output* +
-
-====
 Invalid command format! +
 goto: Display the place on Google Map identified by the index number used in the last place listing. +
 Parameters: INDEX (must be a positive integer) +
 Example: goto 1
-====
 
 == Select Command
 The command allows the user to select a place identified by the index number of the place. +
@@ -705,53 +685,39 @@ The UI will display an `Unknown command` message.
 
 . `select`
 ** *Expected output* +
-
-====
-Invalid command format!
-select: Selects the place identified by the index number used in the last place listing.
-Parameters: INDEX (must be a positive integer)
+Invalid command format! +
+select: Selects the place identified by the index number used in the last place listing. +
+Parameters: INDEX (must be a positive integer) +
 Example: select 1
-====
+
 
 . `s`
 ** *Expected output* +
-
-====
-Invalid command format!
-select: Selects the place identified by the index number used in the last place listing.
-Parameters: INDEX (must be a positive integer)
+Invalid command format! +
+select: Selects the place identified by the index number used in the last place listing. +
+Parameters: INDEX (must be a positive integer) +
 Example: select 1
-====
 
 . `s 0`
 ** *Expected output* +
-
-====
-Invalid command format!
-select: Selects the place identified by the index number used in the last place listing.
-Parameters: INDEX (must be a positive integer)
+Invalid command format! +
+select: Selects the place identified by the index number used in the last place listing. +
+Parameters: INDEX (must be a positive integer) +
 Example: select 1
-====
 
 . `select 0`
 ** *Expected output* +
-
-====
-Invalid command format!
-select: Selects the place identified by the index number used in the last place listing.
-Parameters: INDEX (must be a positive integer)
+Invalid command format! +
+select: Selects the place identified by the index number used in the last place listing. +
+Parameters: INDEX (must be a positive integer) +
 Example: select 1
-====
 
 . `select -1`
 ** *Expected output* +
-
-====
-Invalid command format!
-select: Selects the place identified by the index number used in the last place listing.
-Parameters: INDEX (must be a positive integer)
+Invalid command format! +
+select: Selects the place identified by the index number used in the last place listing. +
+Parameters: INDEX (must be a positive integer) +
 Example: select 1
-====
 
 == History Command
 This command lists all the commands that the user has entered in reverse chronological order. +
@@ -948,32 +914,22 @@ Running this command after the first time will overwrite the previous save file 
 
 [discrete]
 === Positive Test Cases
-. `export`
-** *Expected output* +
-The UI will display a message `Successfully exported data.` and the save file will be created in the folder that holds +
-the jar file, in .csv format.
-
-image::exportsuccessful.png[title="Export File Successful", width="400"]
-
 . `export 1`
 ** *Expected output* +
 The UI will display a message `Successfully exported data.` and the save file will be created in the folder that holds +
 the jar file, in .csv format.
 
-[NOTE]
-====
-Refer to above image at the first test case.
-====
-
-. `export [DATE]
+. `export`
 ** *Expected output* +
 The UI will display a message `Successfully exported data.` and the save file will be created in the folder that holds +
 the jar file, in .csv format.
 
-[NOTE]
-====
-Refer to above image at the first test case.
-====
+. `export [DATE]`
+** *Expected output* +
+The UI will display a message `Successfully exported data.` and the save file will be created in the folder that holds +
+the jar file, in .csv format.
+
+image::exportsuccessful.png[title="Export File Successful", width="400"]
 
 [discrete]
 === Negative Test Cases
@@ -1021,27 +977,17 @@ Running this command after the first time will overwrite the previous save file 
 The UI will display a message `A Tourist Book backup has been created!` and the save file will be created in the same +
 folder as the main data file.
 
-image::backupsuccessful.png[title="Backup File Successful", width="400"]
-
 . `backup 2`
 ** *Expected output* +
 The UI will display a message `A Tourist Book backup has been created!` and the save file will be created in the same +
 folder as the main data file.
-
-[NOTE]
-====
-Refer to above image at the first test case.
-====
 
 . `backup [DATE]`
 ** *Expected output* +
 The UI will display a message `A Tourist Book backup has been created!` and the save file will be created in the same +
 folder as the main data file.
 
-[NOTE]
-====
-Refer to above image at the first test case.
-====
+image::backupsuccessful.png[title="Backup File Successful", width="400"]
 
 [discrete]
 === Negative Test Cases
