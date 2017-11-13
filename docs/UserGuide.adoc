@@ -103,7 +103,7 @@ This section covers commonly used commands.
 
 //tag::add[]
 
-=== Add a person: `add` / `a` / `curse` kbd:[V2.0]
+=== Add a person: `add` / `a` / `curse` [Since v1.2]
 
 Adds a person to DeathNote +
 
@@ -129,7 +129,7 @@ Adds a person to DeathNote +
 * `add n/Dwayne Johnson pic/C:\Users\user\Desktop\TheRock.png`
 //end::profilepictureadd[]
 
-=== Add a remark : `remark` kbd:[V2.0]
+=== Add a remark : `remark` [Since v1.1]
 //tag::remark[]
 Adds or edits remarks to the person identified by the INDEX
 
@@ -145,7 +145,7 @@ Edits the remark for the first person to Likes to drink coffee.
 * `remark 2 r/` +
 Removes the remark for the second person.
 
-=== Edit a person : `edit` / `e` / `mutate` kbd:[V2.0]
+=== Edit a person : `edit` / `e` / `mutate` [Since v1.2]
 
 Edits an existing person in DeathNote. +
 
@@ -201,7 +201,7 @@ Deletes the 1st person in the results of the `find` command.
 
 //tag::find[]
 
-=== Find a person: `find` / `f` / `summon` kbd:[V2.0]
+=== Find a person: `find` / `f` / `summon` [Improved since v1.3]
 
 Finds persons who matches the given attributes. +
 
@@ -264,7 +264,7 @@ Shows a list of all persons in DeathNote. +
 
 //tag::opennew[]
 
-=== Create new DeathNote : `new` / `n` kbd:[V2.0]
+=== Create new DeathNote : `new` / `n` [Since v1.4]
 
 Opens a new instance of DeathNote.
 
@@ -278,7 +278,7 @@ Opens a new instance of DeathNote.
 . Locate your desired DeathNote data file on the pop-up window. The file will be in an xml format.
 . Select the file and click Save
 
-=== Open existing DeathNote : `open` / `o` kbd:[V2.0]
+=== Open existing DeathNote : `open` / `o` [Since v1.4]
 
 Opens another existing instance of DeathNote.
 
@@ -305,7 +305,7 @@ Exits DeathNote. +
 This section contains more sophisticated usage of DeathNote.
 
 //tag::brem[]
-=== View birthday reminder : `reminders` / `rem` kbd:[V2.0]
+=== View birthday reminder : `reminders` / `rem` [Since v1.4]
 
 Opens the birthday Reminders Window. The same can be done by clicking Reminders --> Birthdays
 
@@ -397,7 +397,7 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 ====
 
 //tag::theme[]
-=== Change theme : `theme` kbd:[V2.0]
+=== Change theme : `theme` [Since v1.2]
 Changes the theme of DeathNote. +
 
   Format: theme
@@ -419,7 +419,7 @@ image::darkTheme.png[width="200"]
 
 //end::theme[]
 
-=== Sorting Behavior kbd:[V2.0]
+=== Sorting Behavior [Since v1.3]
 
 Listed persons are sorted automatically in alphabetical order. No command is required.
 
