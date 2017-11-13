@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<!-- @@author vicisapotato -->
+
+<StackPane styleClass="pane-with-border" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox>
+         <children>
+            <Label alignment="CENTER" prefHeight="48.0" prefWidth="314.0" styleClass="label-bright" text="Overdue Parcels" textAlignment="CENTER">
+               <padding>
+                  <Insets bottom="10.0" />
+               </padding>
+            </Label>
+            <Label fx:id="contentPlaceholder" alignment="TOP_LEFT" prefHeight="128.0" prefWidth="312.0" styleClass="cell_big_label" text="\$Content" wrapText="true" />
+         </children>
+      </VBox>
+   </children>
+</StackPane>
+<!-- @@author -->

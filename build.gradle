@@ -61,10 +61,16 @@ allprojects {
 
     dependencies {
         compile group: 'org.fxmisc.easybind', name: 'easybind', version: '1.0.3'
+        compile group: 'org.telegram', name: 'telegrambots', version: '3.4'
+        compile "org.telegram:telegrambots-abilities:3.4"
+        compile "com.google.zxing:core:3.3.0"
+        compile 'com.google.zxing:javase:3.3.0'
         compile "org.controlsfx:controlsfx:$controlsFxVersion"
         compile "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
         compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jacksonDataTypeVersion"
         compile "com.google.guava:guava:$guavaVersion"
+        compile group: 'org.ocpsoft.prettytime', name: 'prettytime-nlp', version: '4.0.0.Final'
+        compile group: 'org.ocpsoft.prettytime', name: 'prettytime', version: '4.0.1.Final'
 
         testCompile "junit:junit:$junitVersion"
         testCompile "org.testfx:testfx-core:$testFxVersion"
@@ -73,6 +79,8 @@ allprojects {
             exclude group: "junit", module: "junit"
         }
         testCompile "org.testfx:openjfx-monocle:$monocleVersion"
+        testCompile group: 'org.mockito', name: 'mockito-core', version: '2.0.31-beta'
+
     }
 
     sourceSets {

@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
+
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.logic.ListElementPointer;
@@ -14,6 +15,7 @@ import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.ui.autocompleter.Autocompleter;
 
 /**
  * The UI component that is responsible for receiving user command inputs.
@@ -25,6 +27,7 @@ public class CommandBox extends UiPart<Region> {
 
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
+    private Autocompleter autocompleter;
     private ListElementPointer historySnapshot;
 
     @FXML
@@ -33,8 +36,11 @@ public class CommandBox extends UiPart<Region> {
     public CommandBox(Logic logic) {
         super(FXML);
         this.logic = logic;
+        autocompleter = new Autocompleter(logic);
+        registerAsAnEventHandler(this);
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
+        commandTextField.textProperty().addListener((observable, oldInput, newInput) -> updateAutocompleter());
         historySnapshot = logic.getHistorySnapshot();
     }
 
@@ -48,16 +54,37 @@ public class CommandBox extends UiPart<Region> {
             // As up and down buttons will alter the position of the caret,
             // consuming it causes the caret's position to remain unchanged
             keyEvent.consume();
-
             navigateToPreviousInput();
             break;
+
         case DOWN:
             keyEvent.consume();
             navigateToNextInput();
             break;
+
+        case TAB:
+            keyEvent.consume();
+            processAutocomplete();
+            break;
+
         default:
             // let JavaFx handle the keypress
         }
+    }
+
+    /**
+     * Updates the text field with the command that is the closest to the current text field string
+     */
+    private void processAutocomplete() {
+        replaceText(autocompleter.autocomplete());
+    }
+
+    /**
+     * Updates the state of the autocompleter
+     */
+    private void updateAutocompleter() {
+        String currentText = commandTextField.getText();
+        autocompleter.updateAutocompleter(currentText);
     }
 
     /**
@@ -107,14 +134,14 @@ public class CommandBox extends UiPart<Region> {
             // process result of the command
             commandTextField.setText("");
             logger.info("Result: " + commandResult.feedbackToUser);
-            raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
+            raise(new NewResultAvailableEvent(commandResult.feedbackToUser, false));
 
         } catch (CommandException | ParseException e) {
             initHistory();
             // handle command failure
             setStyleToIndicateCommandFailure();
             logger.info("Invalid command: " + commandTextField.getText());
-            raise(new NewResultAvailableEvent(e.getMessage()));
+            raise(new NewResultAvailableEvent(e.getMessage(), true));
         }
     }
 

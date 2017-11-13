@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
@@ -17,6 +18,8 @@ import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.parcel.ReadOnlyParcel;
+import seedu.address.model.parcel.Status;
 
 /**
  * The manager of the UI component.
@@ -30,7 +33,7 @@ public class UiManager extends ComponentManager implements Ui {
     public static final String FILE_OPS_ERROR_DIALOG_CONTENT_MESSAGE = "Could not save data to file";
 
     private static final Logger logger = LogsCenter.getLogger(UiManager.class);
-    private static final String ICON_APPLICATION = "/images/address_book_32.png";
+    private static final String ICON_APPLICATION = "/images/ark_icon.png";
 
     private Logic logic;
     private Config config;
@@ -56,12 +59,39 @@ public class UiManager extends ComponentManager implements Ui {
             mainWindow = new MainWindow(primaryStage, config, prefs, logic);
             mainWindow.show(); //This should be called before creating other UI parts
             mainWindow.fillInnerParts();
+            mainWindow.initSplitPanePlaceholder();
+            //@@author vicisapotato
+            //Popup window only shows if there are overdue parcels in the list
+            //Popup window will then hide itself after 7 seconds.
+            if (hasOverdueParcels(logic.getUncompletedParcelList())) {
+                PopupOverdueParcelsWindow popupOverdueParcelsWindow =
+                        new PopupOverdueParcelsWindow(logic.getUncompletedParcelList());
+                popupOverdueParcelsWindow.showAndHide();
+            }
+            //@@author
 
         } catch (Throwable e) {
             logger.severe(StringUtil.getDetails(e));
             showFatalErrorDialogAndShutdown("Fatal error during initializing", e);
         }
     }
+    //@@author vicisapotato
+    /**
+     * Checks for presence of overdue parcels in parcel list
+     * by iterating through the uncompleted parcel list and checking the status of each parcel.
+     * Returns true the moment one parcel has an overdue status.
+     */
+    public boolean hasOverdueParcels (ObservableList<ReadOnlyParcel> uncompletedParcelList) {
+
+        for (int i = 0; i < uncompletedParcelList.size(); i++) {
+            if (uncompletedParcelList.get(i).getStatus().equals(Status.OVERDUE)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+    //@@author
 
     @Override
     public void stop() {

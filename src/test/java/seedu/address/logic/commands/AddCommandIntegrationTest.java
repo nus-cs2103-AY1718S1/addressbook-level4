@@ -2,7 +2,7 @@ package seedu.address.logic.commands;
 
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalParcels.getTypicalAddressBook;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -12,8 +12,9 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.Person;
-import seedu.address.testutil.PersonBuilder;
+import seedu.address.model.parcel.Parcel;
+import seedu.address.model.parcel.Status;
+import seedu.address.testutil.ParcelBuilder;
 
 /**
  * Contains integration tests (interaction with the Model) for {@code AddCommand}.
@@ -28,27 +29,44 @@ public class AddCommandIntegrationTest {
     }
 
     @Test
-    public void execute_newPerson_success() throws Exception {
-        Person validPerson = new PersonBuilder().build();
+    public void execute_newParcel_success() throws Exception {
+        Parcel validParcel = new ParcelBuilder().build();
 
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.addPerson(validPerson);
-
-        assertCommandSuccess(prepareCommand(validPerson, model), model,
-                String.format(AddCommand.MESSAGE_SUCCESS, validPerson), expectedModel);
+        expectedModel.addParcel(validParcel);
+        expectedModel.maintainSorted();
+        assertCommandSuccess(prepareCommand(validParcel, model), model,
+                String.format(AddCommand.MESSAGE_SUCCESS, validParcel), expectedModel);
     }
 
+    //@@author kennard123661
     @Test
-    public void execute_duplicatePerson_throwsCommandException() {
-        Person personInList = new Person(model.getAddressBook().getPersonList().get(0));
-        assertCommandFailure(prepareCommand(personInList, model), model, AddCommand.MESSAGE_DUPLICATE_PERSON);
+    public void execute_duplicateParcel_throwsCommandException() {
+        Parcel parcelInList = new Parcel(model.getAddressBook().getParcelList().get(0));
+        assertCommandFailure(prepareCommand(parcelInList, model), model, AddCommand.MESSAGE_DUPLICATE_PARCEL);
+
+        // Adding a parcel from a undelivered list -> fails
+        Parcel parcelInUndeliveredList = new Parcel(model.getUncompletedParcelList().get(0));
+        assertCommandFailure(prepareCommand(parcelInUndeliveredList, model), model,
+                AddCommand.MESSAGE_DUPLICATE_PARCEL);
+
+        // Adding a parcel from a delivered list -> fails
+        Parcel parcelInDeliveredList = new Parcel(model.getCompletedParcelList().get(0));
+        assertCommandFailure(prepareCommand(parcelInDeliveredList, model), model,
+                AddCommand.MESSAGE_DUPLICATE_PARCEL);
+
+        // Adding the same parcel with
+        Parcel parcelInListWithDifferentStatus = new Parcel(model.getAddressBook().getParcelList().get(0));
+        parcelInListWithDifferentStatus.setStatus(Status.COMPLETED);
+        assertCommandFailure(prepareCommand(parcelInDeliveredList, model), model,
+                AddCommand.MESSAGE_DUPLICATE_PARCEL);
     }
 
     /**
-     * Generates a new {@code AddCommand} which upon execution, adds {@code person} into the {@code model}.
+     * Generates a new {@code AddCommand} which upon execution, adds {@code parcel} into the {@code model}.
      */
-    private AddCommand prepareCommand(Person person, Model model) {
-        AddCommand command = new AddCommand(person);
+    private AddCommand prepareCommand(Parcel parcel, Model model) {
+        AddCommand command = new AddCommand(parcel);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }

@@ -2,6 +2,7 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
+import java.io.FileNotFoundException;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
@@ -10,11 +11,16 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Phone;
+import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.parcel.Address;
+import seedu.address.model.parcel.DeliveryDate;
+import seedu.address.model.parcel.Email;
+import seedu.address.model.parcel.Name;
+import seedu.address.model.parcel.Phone;
+import seedu.address.model.parcel.Status;
+import seedu.address.model.parcel.TrackingNumber;
 import seedu.address.model.tag.Tag;
+import seedu.address.storage.XmlAddressBookStorage;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
@@ -27,8 +33,9 @@ import seedu.address.model.tag.Tag;
  */
 public class ParserUtil {
 
+    public static final String MESSAGE_FILE_NOT_FOUND = "File to import not found.";
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
-    public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
+    public static final String MESSAGE_INVALID_DATA = "Xml file to import at %1$s is not in the correct format.";
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -42,6 +49,45 @@ public class ParserUtil {
         }
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
     }
+
+    /**
+     * Parses {@code filePath} and retrieve an {@code ReadOnlyAddressBook} from the filepath and returns it.
+     * Leading and trailing whitespaces will be trimmed.
+     * @throws IllegalValueException if the specified file cannot be formed or it is not the proper addressbook xml
+     * format.
+     */
+    public static ReadOnlyAddressBook parseImportFilePath(String filePath) throws IllegalValueException {
+        requireNonNull(filePath);
+        String trimmedFilePath = filePath.trim();
+
+        try {
+            Optional<ReadOnlyAddressBook> addressBookOptional = new XmlAddressBookStorage(trimmedFilePath)
+                    .readAddressBook();
+
+            if (addressBookOptional.isPresent()) {
+                return addressBookOptional.get();
+            } else {
+                throw new FileNotFoundException();
+            }
+        } catch (FileNotFoundException e) {
+            throw new IllegalValueException(MESSAGE_FILE_NOT_FOUND);
+        } catch (Exception e) {
+            throw new IllegalValueException(String.format(MESSAGE_INVALID_DATA, filePath));
+        }
+    }
+
+    //@@author kennard123661
+    /**
+     * Parses a {@code Optional<String> trackingNumber} into an {@code Optional<TrackingNumber>} if
+     * {@code trackingNumber} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<TrackingNumber> parseTrackingNumber(Optional<String> trackingNumber)
+            throws IllegalValueException {
+        requireNonNull(trackingNumber);
+        return trackingNumber.isPresent() ? Optional.of(new TrackingNumber(trackingNumber.get())) : Optional.empty();
+    }
+    //@@author
 
     /**
      * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
@@ -79,6 +125,28 @@ public class ParserUtil {
         return email.isPresent() ? Optional.of(new Email(email.get())) : Optional.empty();
     }
 
+    //@@author fustilio
+    /**
+     * Parses {@code Optional<String>} into an {@code Optional<DeliveryDate>} and returns it. Leading and trailing
+     * whitespaces will be trimmed.
+     */
+    public static Optional<DeliveryDate> parseDeliveryDate(Optional<String> deliveryDate) throws IllegalValueException {
+        requireNonNull(deliveryDate);
+        return deliveryDate.isPresent() ? Optional.of(new DeliveryDate(deliveryDate.get())) : Optional.empty();
+    }
+    //@author
+
+    //@@author kennard123661
+    /**
+     * Parses {@code Optional<String>} into an {@code Optional<Status>} if {@code Status} is present.
+     * Leading and trailing whitespaces will be trimmed.
+     */
+    public static Optional<Status> parseStatus(Optional<String> status) throws IllegalValueException {
+        requireNonNull(status);
+        return status.isPresent() ? Optional.of(Status.getInstance(status.get())) : Optional.empty();
+    }
+    //@@author
+
     /**
      * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
      */
@@ -86,8 +154,17 @@ public class ParserUtil {
         requireNonNull(tags);
         final Set<Tag> tagSet = new HashSet<>();
         for (String tagName : tags) {
-            tagSet.add(new Tag(tagName));
+            tagSet.add(Tag.getInstance(tagName));
         }
         return tagSet;
+    }
+
+    /**
+     * Parses {@code String tag} into a {@code Tag}.
+     */
+    public static Tag parseTag(String tag) throws IllegalValueException {
+        requireNonNull(tag);
+        Tag parsedTag = Tag.getInstance(tag);
+        return parsedTag;
     }
 }

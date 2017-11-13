@@ -1,0 +1,116 @@
+= Victoria Lim Yan Hui - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: AddressBook - Level 4
+AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
+
+=== Enhancement Added: Google Maps Browser
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=browser]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Since Ark is meant to assist in deliveries, it is necessary for Ark to have a Google Maps browser implemented
+within the application to show to users the exact location of parcel delivery addresses.
+This would enable our users to continue using Ark without the need to keep switching between our application
+and a web browser, thus saving users time and hassle.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=browser]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Tab Command
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=tabCommand]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Since Ark has 4 different statuses for parcels, it is essential that our users are able to quickly
+navigate between the different statuses. Hence we have implemented different parcelLists for undelivered and delivered
+parcels. These lists are viewed in separate tabs in the parcelListPanel.
+To improve usability for users of Ark to be able to quickly search between the different parcel statuses
+without the need for a mouse, a `tab` command is required.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=tabCommand]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Overdue Parcels Popup Window
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=overduePopup]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Since our application is meant to be used as a parcel manager, it is important that our users
+know when they have overdue parcels. Since these parcels are either late for delivery or possibly
+missing, it is important to notify the users of these overdue parcels. A popup window right at the
+startup of the Ark application is the best way to notify users since it would be the first thing
+users see whenever they startup Ark.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=overduePopup]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed:
+
+
+
+=== Other contributions
+
+* Changed the UI layout of MainWindow
+(Pull requests https://github.com/CS2103AUG2017-T16-B1/main/pull/98[#98])
+
+* Changed the UI layout of ParcelList and ParcelCard
+(Pull requests https://github.com/CS2103AUG2017-T16-B1/main/pull/100[#100])

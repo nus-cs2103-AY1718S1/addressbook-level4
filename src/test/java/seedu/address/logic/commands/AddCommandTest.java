@@ -3,66 +3,68 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.function.Predicate;
+import java.util.Collections;
+import java.util.logging.Logger;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import javafx.collections.ObservableList;
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
+import seedu.address.model.ModelStub;
 import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.testutil.PersonBuilder;
+import seedu.address.model.parcel.Parcel;
+import seedu.address.model.parcel.ReadOnlyParcel;
+import seedu.address.model.parcel.exceptions.DuplicateParcelException;
+import seedu.address.testutil.ParcelBuilder;
 
 public class AddCommandTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
+    private final Logger logger = LogsCenter.getLogger(this.getClass());
+
     @Test
-    public void constructor_nullPerson_throwsNullPointerException() {
+    public void constructor_nullParcel_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
         new AddCommand(null);
     }
 
     @Test
-    public void execute_personAcceptedByModel_addSuccessful() throws Exception {
-        ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
-        Person validPerson = new PersonBuilder().build();
+    public void execute_parcelAcceptedByModel_addSuccessful() throws Exception {
+        ModelStubAcceptingParcelAdded modelStub = new ModelStubAcceptingParcelAdded();
+        Parcel validParcel = new ParcelBuilder().build();
 
-        CommandResult commandResult = getAddCommandForPerson(validPerson, modelStub).execute();
+        CommandResult commandResult = getAddCommandForParcel(validParcel, modelStub).execute();
 
-        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, validPerson), commandResult.feedbackToUser);
-        assertEquals(Arrays.asList(validPerson), modelStub.personsAdded);
+        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, validParcel), commandResult.feedbackToUser);
+        assertEquals(Arrays.asList(validParcel), modelStub.parcelsAdded);
     }
 
     @Test
-    public void execute_duplicatePerson_throwsCommandException() throws Exception {
-        ModelStub modelStub = new ModelStubThrowingDuplicatePersonException();
-        Person validPerson = new PersonBuilder().build();
+    public void execute_duplicateParcel_throwsCommandException() throws Exception {
+        ModelStub modelStub = new ModelStubThrowingDuplicateParcelException();
+        Parcel validParcel = new ParcelBuilder().build();
 
         thrown.expect(CommandException.class);
-        thrown.expectMessage(AddCommand.MESSAGE_DUPLICATE_PERSON);
+        thrown.expectMessage(AddCommand.MESSAGE_DUPLICATE_PARCEL);
 
-        getAddCommandForPerson(validPerson, modelStub).execute();
+        getAddCommandForParcel(validParcel, modelStub).execute();
     }
 
     @Test
     public void equals() {
-        Person alice = new PersonBuilder().withName("Alice").build();
-        Person bob = new PersonBuilder().withName("Bob").build();
+        Parcel alice = new ParcelBuilder().withName("Alice").build();
+        Parcel bob = new ParcelBuilder().withName("Bob").build();
         AddCommand addAliceCommand = new AddCommand(alice);
         AddCommand addBobCommand = new AddCommand(bob);
 
@@ -79,69 +81,36 @@ public class AddCommandTest {
         // null -> returns false
         assertFalse(addAliceCommand.equals(null));
 
-        // different person -> returns false
+        // different parcel -> returns false
         assertFalse(addAliceCommand.equals(addBobCommand));
     }
 
     /**
-     * Generates a new AddCommand with the details of the given person.
+     * Generates a new AddCommand with the details of the given parcel.
      */
-    private AddCommand getAddCommandForPerson(Person person, Model model) {
-        AddCommand command = new AddCommand(person);
+    private AddCommand getAddCommandForParcel(Parcel parcel, Model model) {
+        AddCommand command = new AddCommand(parcel);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
 
     /**
-     * A default model stub that have all of the methods failing.
+     * A Model stub that always throw a DuplicateParcelException when trying to add a parcel.
      */
-    private class ModelStub implements Model {
+    private class ModelStubThrowingDuplicateParcelException extends ModelStub {
         @Override
-        public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
-            fail("This method should not be called.");
+        public void addParcel(ReadOnlyParcel parcel) throws DuplicateParcelException {
+            throw new DuplicateParcelException();
         }
 
         @Override
-        public void resetData(ReadOnlyAddressBook newData) {
-            fail("This method should not be called.");
+        public void addParcelCommand(ReadOnlyParcel parcel) throws DuplicateParcelException {
+            addParcel(parcel);
         }
 
         @Override
-        public ReadOnlyAddressBook getAddressBook() {
-            fail("This method should not be called.");
-            return null;
-        }
-
-        @Override
-        public void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
-                throws DuplicatePersonException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
-            fail("This method should not be called.");
-            return null;
-        }
-
-        @Override
-        public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
-            fail("This method should not be called.");
-        }
-    }
-
-    /**
-     * A Model stub that always throw a DuplicatePersonException when trying to add a person.
-     */
-    private class ModelStubThrowingDuplicatePersonException extends ModelStub {
-        @Override
-        public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
-            throw new DuplicatePersonException();
+        public boolean getActiveIsAllBool() {
+            return true;
         }
 
         @Override
@@ -150,15 +119,42 @@ public class AddCommandTest {
         }
     }
 
+    //@@author fustilio
     /**
-     * A Model stub that always accept the person being added.
+     * A Model stub that always accept the parcel being added.
      */
-    private class ModelStubAcceptingPersonAdded extends ModelStub {
-        final ArrayList<Person> personsAdded = new ArrayList<>();
+    private class ModelStubAcceptingParcelAdded extends ModelStub {
+        final ArrayList<Parcel> parcelsAdded = new ArrayList<>();
+
+        /*
+        @Override
+        public boolean hasSelected() {
+            return false;
+        }
+        */
+        @Override
+        public void addParcelCommand(ReadOnlyParcel parcel) throws DuplicateParcelException {
+            addParcel(parcel);
+        }
 
         @Override
-        public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
-            personsAdded.add(new Person(person));
+        public void maintainSorted() {
+            Collections.sort(parcelsAdded);
+        }
+
+        @Override
+        public void forceSelectParcel(ReadOnlyParcel parcel) {
+            logger.info("Simulate force selection of parcel.");
+        }
+
+        @Override
+        public void addParcel(ReadOnlyParcel parcel) throws DuplicateParcelException {
+            parcelsAdded.add(new Parcel(parcel));
+        }
+
+        @Override
+        public boolean getActiveIsAllBool() {
+            return true;
         }
 
         @Override
@@ -166,5 +162,6 @@ public class AddCommandTest {
             return new AddressBook();
         }
     }
+    //@@author
 
 }

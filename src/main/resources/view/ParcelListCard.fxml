@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<HBox id="cardPane" fx:id="cardPane" prefHeight="40.0" prefWidth="1840.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+  <VBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="1846.0">
+    <padding>
+      <Insets bottom="5" left="15" right="5" top="5" />
+    </padding>
+        <!-- @@author vicisapotato -->
+      <GridPane hgap="15.0" prefWidth="1367.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="111.66668701171875" minWidth="10.0" prefWidth="37.33333206176758" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="234.33331298828125" minWidth="10.0" prefWidth="128.66666793823242" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="213.0" minWidth="10.0" prefWidth="125.5" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="239.5" minWidth="10.0" prefWidth="129.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="458.0" minWidth="10.0" prefWidth="342.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="400.0" minWidth="10.0" prefWidth="334.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="234.0" minWidth="10.0" prefWidth="111.0" />
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="194.0" minWidth="10.0" prefWidth="109.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="386.0" minWidth="10.0" prefWidth="377.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+        <!-- @@author kennard123661 -->
+        <Label fx:id="id" styleClass="cell_big_label" text="\$id">
+          <minWidth>
+            <!-- Ensures that the label text is never truncated -->
+            <Region fx:constant="USE_PREF_SIZE" />
+          </minWidth>
+               <tooltip>
+                  <Tooltip fx:id="idTooltip" text="id tooltip" />
+               </tooltip>
+        </Label>
+        <Label fx:id="name" styleClass="cell_big_label" text="\$first" GridPane.columnIndex="1">
+               <tooltip>
+                  <Tooltip fx:id="nameTooltip" text="name tooltip" />
+               </tooltip></Label>
+        <Label fx:id="trackingNumber" styleClass="cell_big_label" text="\$trackingNumber" GridPane.columnIndex="2">
+               <tooltip>
+                  <Tooltip fx:id="trackingNumberTooltip" text="tracking number tooltip" />
+               </tooltip></Label>
+        <Label fx:id="phone" styleClass="cell_big_label" text="\$phone" GridPane.columnIndex="3">
+               <tooltip>
+                  <Tooltip fx:id="phoneTooltip" text="phone tooltip" />
+               </tooltip></Label>
+        <Label fx:id="address" styleClass="cell_big_label" text="\$address" GridPane.columnIndex="4">
+               <tooltip>
+                  <Tooltip fx:id="addressTooltip" text="address tooltip" />
+               </tooltip></Label>
+        <Label fx:id="email" styleClass="cell_big_label" text="\$email" GridPane.columnIndex="5">
+               <tooltip>
+                  <Tooltip fx:id="emailTooltip" text="email tooltip" />
+               </tooltip></Label>
+        <Label fx:id="deliveryDate" styleClass="cell_big_label" text="\$deliveryDate" GridPane.columnIndex="6">
+               <tooltip>
+                  <Tooltip fx:id="deliveryDateTooltip" text="delivery date tooltip" />
+               </tooltip></Label>
+        <Label fx:id="status" styleClass="cell_small_label" text="\$status" textAlignment="CENTER" GridPane.columnIndex="7">
+               <tooltip>
+                  <Tooltip fx:id="statusTooltip" text="status tooltip" />
+               </tooltip></Label>
+          <FlowPane fx:id="tags" alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="249.0" GridPane.columnIndex="8" />
+         </children>
+      </GridPane>
+    <!-- @@author -->
+  </VBox>
+</HBox>

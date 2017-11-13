@@ -5,11 +5,18 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Logger;
 
+import org.telegram.telegrambots.ApiContextInitializer;
+import org.telegram.telegrambots.TelegramBotsApi;
+import org.telegram.telegrambots.exceptions.TelegramApiException;
+import org.telegram.telegrambots.generics.BotSession;
+
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
+import seedu.address.bot.ArkBot;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
@@ -42,6 +49,9 @@ public class MainApp extends Application {
 
     public static final Version VERSION = new Version(0, 6, 0, true);
 
+    protected static boolean botStarted = false;
+    protected static ArkBot bot;
+
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
 
     protected Ui ui;
@@ -50,11 +60,13 @@ public class MainApp extends Application {
     protected Model model;
     protected Config config;
     protected UserPrefs userPrefs;
+    protected BotSession botSession;
+
 
 
     @Override
     public void init() throws Exception {
-        logger.info("=============================[ Initializing AddressBook ]===========================");
+        logger.info("=============================[ Initializing Ark ]=============================");
         super.init();
 
         config = initConfig(getApplicationParameter("config"));
@@ -73,6 +85,26 @@ public class MainApp extends Application {
         ui = new UiManager(logic, config, userPrefs);
 
         initEventsCenter();
+
+        //@@author fustilio
+        // Instantiate bot here
+        if (!botStarted) {
+
+            ApiContextInitializer.init();
+
+            TelegramBotsApi botsApi = new TelegramBotsApi();
+            try {
+                bot = new ArkBot(logic, model,
+                        config.getBotToken(), config.getBotUsername());
+                logger.info("Bot Authentication Token: " + config.getBotToken());
+                botSession = botsApi.registerBot(bot);
+                botStarted = true;
+            } catch (TelegramApiException e) {
+                logger.warning("Invalid Telegram Bot authentication token. Please check to ensure that "
+                        + "you have keyed in the token correctly and restart the application.");
+            }
+        }
+        //@@author
     }
 
     private String getApplicationParameter(String parameterName) {
@@ -100,6 +132,13 @@ public class MainApp extends Application {
         } catch (IOException e) {
             logger.warning("Problem while reading from the file. Will be starting with an empty AddressBook");
             initialData = new AddressBook();
+        }
+
+        logger.info("Updating and saving Status field of parcels in the storage based on today's date.");
+        try {
+            storage.saveAddressBook(initialData);
+        } catch (IOException e) {
+            logger.warning("Problem while saving to file. Updating of status is skipped");
         }
 
         return new ModelManager(initialData, userPrefs);
@@ -191,6 +230,7 @@ public class MainApp extends Application {
     public void stop() {
         logger.info("============================ [ Stopping Address Book ] =============================");
         ui.stop();
+
         try {
             storage.saveUserPrefs(userPrefs);
         } catch (IOException e) {
@@ -209,4 +249,23 @@ public class MainApp extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+
+    //@@author fustilio
+    /**
+     * Method to return instance of logic manager for testing.
+     */
+    @VisibleForTesting
+    public Logic getLogic() {
+        return this.logic;
+    }
+
+
+    /**
+     * Method to return instance of bot for testing.
+     */
+    @VisibleForTesting
+    public ArkBot getBot() {
+        return this.bot;
+    }
+    //@@author
 }
