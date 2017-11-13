@@ -4,7 +4,10 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :stylesDir: ../stylesheets
 
 == Project: Planno
-Planno is a desktop application which combines address book and task manager.
+
+Planno is a desktop address book application targeted to those users who have multiple contacts and events. The users interacts with Planno using a Command Line Interface (CLI) which needs users to type commands instead of clicking buttons. The Graphical User Interface (GUI) of Planno is created with JavaFx. Furthermore, this application is written in Java with 10 thousand lines of code (LOC). With Planno, besides managing contacts and events, users are able to keep track of the participants of their events and collect emails, phone numbers or addresses from the participants of a specific event.
+
+The purpose of this portfolio is to highlight the enhancements I have contributed to Planno and the other features I plan to add in the future. Moreover, I will also introduce the other contributions to the development of Planno.
 
 *Code contributed*: [https://github.com/CS2103AUG2017-W14-B4/main/blob/master/collated/main/HouDenghao.md[Functional code]] [https://github.com/CS2103AUG2017-W14-B4/main/blob/master/collated/test/HouDenghao.md[Test code]] {give links to collated code files}
 
@@ -23,7 +26,7 @@ include::../UserGuide.adoc[tag=sort]
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+Sort command will help users to view a list of sorted persons in the person list according to the alphabetical order of their names. The reason for sorting contacts by their names is because some users may not remember the names of some contacts and it costs them a lot of time to search for a name if they have many contacts. So users may need a command to sort the person list so that they can search for the name like using a dictionary.
 
 ==== Implementation
 
@@ -31,6 +34,35 @@ include::../UserGuide.adoc[tag=sort]
 #Start of Extract [from: Developer Guide]#
 
 include::../DeveloperGuide.adoc[tag=sort]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Sort Event
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=sortE]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Sort event command will help users to view a list of sorted events in the event list according to the ascending order of their event dates. The reason for sort events by their dates is because it is hard for some users to decide which event to process first. So they may need a command to sort events by their dates and they can choose to process which event first according to the order of events.
+
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=sortE]
 
 #End of Extract#
 
@@ -51,7 +83,7 @@ include::../UserGuide.adoc[tag=listE]
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+List event command will help users to list all the events in the event list. The reason for creating this command is because users will only see some specific events in the event list after they execute some commands. For example, when users type select event command, they can only see the events which a certain person joins. Therefore, users may need a command to view all the events after they filter the event list.
 
 ==== Implementation
 
@@ -107,7 +139,7 @@ include::../UserGuide.adoc[tag=findE]
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+Find event command will help users to find events whose names contain any of the given keywords and the result will be shown in the event list. The reason for creating this command is because some users may spend a lot of on finding the event they want if the event list is too long. Therefore, users may need a command to find the event quickly by searching its name. Moreover, considering that some users may not remember the full name of the event, find event command only needs some words of the event’s name and it can return the relevant results for users.
 
 ==== Implementation
 
@@ -120,14 +152,11 @@ include::../DeveloperGuide.adoc[tag=findE]
 
 ---
 
-=== Enhancement Proposed:
-
-
 === Other contributions
 
+* Wrote about us and getting started for User Guide(Pull requests https://github.com/CS2103AUG2017-W14-B4/main/pull/52[#52])
 * Updated the GUI model and color (Pull requests https://github.com/CS2103AUG2017-W14-B4/main/pull/35[#35], https://github.com/CS2103AUG2017-W14-B4/main/pull/83[#83])
-* Reported bugs in the other team's product(Issues https://github.com/CS2103AUG2017-T15-B1/main/issues/102[#102], https://github.com/CS2103AUG2017-T15-B1/main/issues/103[#103], https://github.com/CS2103AUG2017-T15-B1/main/issues/104[#104])
+* Reported bugs for the other team's product(Issues https://github.com/CS2103AUG2017-T15-B1/main/issues/102[#102], https://github.com/CS2103AUG2017-T15-B1/main/issues/103[#103], https://github.com/CS2103AUG2017-T15-B1/main/issues/104[#104])
+* Wrote additional tests to increase coverage from 74% to 77%(Pull requests https://github.com/CS2103AUG2017-W14-B4/main/pull/152[#152])
 
-== Project: PowerPointLabs
 
-{Optionally (not graded), you may include other projects in your portfolio.}

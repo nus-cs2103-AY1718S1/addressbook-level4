@@ -163,21 +163,33 @@ _Figure 3.3: list command result_
 // end::listE[]
 
 // tag::sort[]
-=== Sorting all persons and events: `sort`
+=== Sorting
 
-You can use it to view a list of sorted persons in the address book according to the alphabetical order of their names,
- and a list of sorted events in the event list according to the event time. +
+An sort command can modify the order of the person list or event list.
+
+==== Sorting person list : `sort`
+
+You can use it to view a list of sorted persons in the address book according to the alphabetical order of their names. +
 Format & Example: `sort`
 ****
 * The sorting of person names is case-insensitive.
-* event is sorted in ascending order
+****
+// end::sort[]
+
+// tag::sortE[]
+==== Sorting event list : `sortE`
+
+You can use it to view a list of sorted events in the event list according to the event time.
+Format & Example: `sortE`
+****
+* Events are sorting in the ascending order.
 ****
 
-You will see the following after typing sort command:
+You will see the following after typing sort command and sortE command:
 
 image::UG_sort.png[width="790"]
 _Figure 3.4: sort command result_
-// end::sort[]
+// end::sortE[]
 
 === Editing
 An edit command can modify the information of an existing person or event.
