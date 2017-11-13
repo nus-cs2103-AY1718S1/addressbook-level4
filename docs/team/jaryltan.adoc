@@ -1,0 +1,191 @@
+= Jaryl Tan - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== LISA: Levels Integrated Secretarial Agent
+LISA: Levels Integrated Secretarial Agent is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T13-B1/main/tree/master/collated/main/Juxarius.md[Functional code]]
+ [https://github.com/CS2103AUG2017-T13-B1/main/tree/master/collated/test/Juxarius.md[Test code]]
+
+=== Enhancement Added: Multiple Command Words
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+Every command has multiple command words that are recognised.
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Many commands require the user to type out the entire word which can be a hassle. We want to provide
+familiar users with shortcuts to the commands. Also, was suggested by textbook.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=commandWord]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Add Life Insurance Prefix Autofill
+
+=== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=prefixAutofill]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+All fields are required here as a contract needs to be complete before it is valid.
+However, due to the multitude of information required, users are given a method to prompt them
+on all the missing information as well as aid them in re-positioning the caret to the correct position
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=prefixAutofill]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Date Parser
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+Generalised to all forms of dates used in LISA to use this parser.
+
+#End of Extract#
+
+---
+
+==== Justification
+
+The `LocalDate` class was used to store date data but it contained a strict parser on the format
+of the input. It does not allow users to follow different input styles. The date parser was then
+created for this purpose to allow more intuitive adding of dates and correction. Other date parser
+APIs were considered but may require dependencies that the User may not have.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=dateParser]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Autofill Feature
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+As above in the edit feature.
+
+#End of Extract#
+
+---
+
+==== Justification
+
+This idea stems from the consideration of convenience in editing typos in a contact.
+This is especially so when the user wishes to update a small typo in very long field but
+does not wish to re-type out everything in the current field.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=autofill]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Improved Tag management, allowing Tags to be added on and deleted without being overwritten
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=edit]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Tags are an important feature for LISA because of how it gives the user the freedom to connect
+attributes to certain contacts. Overwriting previously saved tags mean a lot of work and unintented
+mistake as the main use case of an edit function for tags is to add on rather than to replace.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=tagManagement]
+
+#End of Extract#
+
+---
+
+
+=== Enhancements Implemented:
+Multiple Command Words +
+Prefix Autofill for Add Insurance Command +
+Improved Tag Management +
+Autofill Feature +
+Date Parser +
+Overall Architecture of Program Flow for UI +
+
+=== Enhancements Proposed and has been implemented:
+Prefix Autofill for Add Insurance Command +
+Improved Tag Management +
+Autofill Feature +
+Insurance Class +
+Insurance Management Features +
+Date Parser +
+Overall Architecture of Program Flow for UI +
+
+=== Enhancements Proposed to be implemented in the future:
+Command Shadowing +
+
+=== Other contributions
+Helped properly implement sort contacts by name feature +
+Helped review fellow teammates PR and correct teammates misconceptions +
+Helped organise team's repo +
+Responsible for glass box testing of LISA and follow-up debugging +
+Improved various commands of LISA +
+Helped out in CS2103 module forums [https://github.com/nus-cs2103-AY1718S1/forum/issues/177[Example Thread]] +
+Offered `DateParser` as a `Reuse-Offer` on module forums [https://github.com/nus-cs2103-AY1718S1/forum/issues/167[Easy Date Parser]] +
+Assisted other teams in finding bugs during acceptance testing session [https://github.com/CS2103AUG2017-F11-B1/main/issues/73[Bug Issue]]

@@ -1,0 +1,5 @@
+{
+  "appTitle" : "LISA",
+  "logLevel" : "INFO",
+  "userPrefsFilePath" : "preferences.json"
+}

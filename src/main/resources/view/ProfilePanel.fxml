@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<!-- @@author RSJunior37 -->
+<StackPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <ScrollPane fx:id="scrollPane" prefHeight="600.0" prefWidth="800.0" styleClass="anchor-pane">
+            <content>
+                <AnchorPane fx:id="profilePanel" prefHeight="1000.0" prefWidth="1200" styleClass="anchor-pane">
+                    <children>
+                        <Label fx:id="name" layoutX="2.0" styleClass="profile-header" text="\$name" />
+                        <VBox layoutX="14.0" layoutY="72.0" spacing="3.0">
+                            <Label fx:id="phone" styleClass="profile-field" text="\$phone" />
+                            <Label fx:id="address" styleClass="profile-field" text="\$address" />
+                            <Label fx:id="dob" styleClass="profile-field" text="\$dob" />
+                            <Label fx:id="gender" styleClass="profile-field" text="\$gender" />
+                            <Label fx:id="email" styleClass="profile-field" text="\$email" />
+                            <Label fx:id="insuranceHeader" styleClass="profile-field" text="\$insuranceHeader" />
+                     <ListView fx:id="insuranceListView" prefHeight="200.0" prefWidth="200.0">
+                        <VBox.margin>
+                           <Insets />
+                        </VBox.margin>
+                        <padding>
+                           <Insets top="20.0" />
+                        </padding></ListView>
+                        </VBox>
+                    </children>
+                </AnchorPane>
+            </content>
+        </ScrollPane>
+    </children>
+</StackPane>

@@ -12,6 +12,10 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.model.insurance.ReadOnlyInsurance;
+import seedu.address.model.insurance.exceptions.DuplicateContractFileNameException;
+import seedu.address.model.insurance.exceptions.DuplicateInsuranceException;
+import seedu.address.model.insurance.exceptions.InsuranceNotFoundException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -25,6 +29,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
+    private final FilteredList<ReadOnlyInsurance> filteredInsurances;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -37,6 +42,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        filteredInsurances = new FilteredList<>(this.addressBook.getInsuranceList());
     }
 
     public ModelManager() {
@@ -76,10 +82,50 @@ public class ModelManager extends ComponentManager implements Model {
     public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException {
         requireAllNonNull(target, editedPerson);
-
         addressBook.updatePerson(target, editedPerson);
         indicateAddressBookChanged();
     }
+
+    //@@author OscarWang114
+    @Override
+    public synchronized void addLifeInsurance(ReadOnlyInsurance insurance)
+            throws DuplicateInsuranceException, DuplicateContractFileNameException {
+        addressBook.addLifeInsurance(insurance);
+        updateFilteredInsuranceList(PREDICATE_SHOW_ALL_INSURANCES);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public synchronized void deleteInsurance(ReadOnlyInsurance target) throws InsuranceNotFoundException {
+        addressBook.deleteInsurance(target);
+        updateFilteredInsuranceList(PREDICATE_SHOW_ALL_INSURANCES);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void updateLifeInsurance(ReadOnlyInsurance target, ReadOnlyInsurance editedInsurance)
+        throws InsuranceNotFoundException {
+        requireAllNonNull(target, editedInsurance);
+        addressBook.updateLifeInsurance(target, editedInsurance);
+        indicateAddressBookChanged();
+    }
+    //=========== Insurance List Accessors ==================================================================
+    /**
+     * Returns an unmodifiable view of the list of {@code ReadOnlyPerson} backed by the internal list of
+     * {@code addressBook}
+     */
+    @Override
+    public ObservableList<ReadOnlyInsurance> getFilteredInsuranceList() {
+        return FXCollections.unmodifiableObservableList(filteredInsurances);
+    }
+
+
+    @Override
+    public void updateFilteredInsuranceList(Predicate<ReadOnlyInsurance> predicate) {
+        requireNonNull(predicate);
+        filteredInsurances.setPredicate(predicate);
+    }
+    //@@author
 
     //=========== Filtered Person List Accessors =============================================================
 

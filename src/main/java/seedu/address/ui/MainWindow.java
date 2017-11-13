@@ -8,17 +8,22 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputControl;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.commons.events.ui.SwitchToInsurancePanelRequestEvent;
+import seedu.address.commons.events.ui.SwitchToProfilePanelRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
@@ -29,10 +34,13 @@ import seedu.address.model.UserPrefs;
  */
 public class MainWindow extends UiPart<Region> {
 
-    private static final String ICON = "/images/address_book_32.png";
+    private static final String ICON = "/images/lisalogo.png";
     private static final String FXML = "MainWindow.fxml";
+    private static final String COMMANDBOX_TEXTFIELD_ID = "#commandTextField";
+    private static final String SEARCHBOX_TEXTFIELD_ID = "#searchTextField";
     private static final int MIN_HEIGHT = 600;
-    private static final int MIN_WIDTH = 450;
+    private static final int MIN_WIDTH = 600;
+
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -40,13 +48,18 @@ public class MainWindow extends UiPart<Region> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private BrowserPanel browserPanel;
+    private InsuranceListPanel insuranceListPanel;
+    private InsuranceProfilePanel insuranceProfilePanel;
+    private ProfilePanel profilePanel;
     private PersonListPanel personListPanel;
     private Config config;
     private UserPrefs prefs;
 
     @FXML
-    private StackPane browserPlaceholder;
+    private VBox mainWindow;
+
+    @FXML
+    private StackPane middlePanelPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -55,13 +68,25 @@ public class MainWindow extends UiPart<Region> {
     private MenuItem helpMenuItem;
 
     @FXML
+    private StackPane searchBoxPlaceholder;
+
+    @FXML
     private StackPane personListPanelPlaceholder;
+
+    @FXML
+    private StackPane insuranceListPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
 
     @FXML
     private StackPane statusbarPlaceholder;
+
+    @FXML
+    private TextField commandTextField;
+
+    @FXML
+    private TextField searchTextField;
 
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
@@ -115,6 +140,14 @@ public class MainWindow extends UiPart<Region> {
          * in CommandBox or ResultDisplay.
          */
         getRoot().addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+            if (event.getCode().equals(KeyCode.TAB)) {
+                if (commandTextField.isFocused()) {
+                    searchTextField.requestFocus();
+                } else {
+                    commandTextField.requestFocus();
+                }
+                event.consume();
+            }
             if (event.getTarget() instanceof TextInputControl && keyCombination.match(event)) {
                 menuItem.getOnAction().handle(new ActionEvent());
                 event.consume();
@@ -126,8 +159,13 @@ public class MainWindow extends UiPart<Region> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+        insuranceListPanel = new InsuranceListPanel(logic.getFilteredInsuranceList());
+        insuranceListPanelPlaceholder.getChildren().add(insuranceListPanel.getRoot());
+
+        insuranceProfilePanel = new InsuranceProfilePanel();
+
+        profilePanel = new ProfilePanel();
+        middlePanelPlaceholder.getChildren().add(profilePanel.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
@@ -135,11 +173,17 @@ public class MainWindow extends UiPart<Region> {
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
+        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath(),
+                logic.getFilteredPersonList().size());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
+        SearchBox searchBox = new SearchBox(logic);
+        searchBoxPlaceholder.getChildren().add(searchBox.getRoot());
+
+        setTransversableTextFields();
     }
 
     void hide() {
@@ -175,6 +219,11 @@ public class MainWindow extends UiPart<Region> {
         primaryStage.setMinWidth(MIN_WIDTH);
     }
 
+    public void setTransversableTextFields() {
+        commandTextField = (TextField) primaryStage.getScene().lookup(COMMANDBOX_TEXTFIELD_ID);
+        searchTextField = (TextField) primaryStage.getScene().lookup(SEARCHBOX_TEXTFIELD_ID);
+    }
+
     /**
      * Returns the current size and the position of the main Window.
      */
@@ -192,8 +241,10 @@ public class MainWindow extends UiPart<Region> {
         helpWindow.show();
     }
 
+
     void show() {
         primaryStage.show();
+        primaryStage.setMaximized(true);
     }
 
     /**
@@ -208,13 +259,27 @@ public class MainWindow extends UiPart<Region> {
         return this.personListPanel;
     }
 
-    void releaseResources() {
-        browserPanel.freeResources();
-    }
-
     @Subscribe
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
     }
+
+    //@@author RSJunior37
+    @Subscribe
+    private void handleSwitchToProfilePanelRequestEvent(SwitchToProfilePanelRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+
+        middlePanelPlaceholder.getChildren().clear();
+        middlePanelPlaceholder.getChildren().add(profilePanel.getRoot());
+    }
+
+    @Subscribe
+    private void handleSwitchToInsurancePanelRequestEvent(SwitchToInsurancePanelRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+
+        middlePanelPlaceholder.getChildren().clear();
+        middlePanelPlaceholder.getChildren().add(insuranceProfilePanel.getRoot());
+    }
+    //@@author
 }

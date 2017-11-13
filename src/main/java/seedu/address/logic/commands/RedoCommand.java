@@ -12,8 +12,10 @@ import seedu.address.model.Model;
  */
 public class RedoCommand extends Command {
 
+    public static final String[] COMMAND_WORDS = {"redo", "r"};
     public static final String COMMAND_WORD = "redo";
     public static final String MESSAGE_SUCCESS = "Redo success!";
+    public static final String FULL_MESSAGE_SUCCESS = "Redo success!\nRedone Command: %1$s";
     public static final String MESSAGE_FAILURE = "No more commands to redo!";
 
     @Override
@@ -24,9 +26,22 @@ public class RedoCommand extends Command {
             throw new CommandException(MESSAGE_FAILURE);
         }
 
+        String commandString = undoRedoStack.peekRedo().toString();
+        String feedbackToUser = parseRedoCommand(commandString);
         undoRedoStack.popRedo().redo();
-        return new CommandResult(MESSAGE_SUCCESS);
+
+        return new CommandResult(feedbackToUser);
     }
+
+    //@@arnollim
+    /**
+     * Parses the output command to display the previously redone command
+     */
+    public static String parseRedoCommand(String commandString) {
+        String output = String.format(FULL_MESSAGE_SUCCESS, commandString);
+        return output;
+    }
+    //@@author
 
     @Override
     public void setData(Model model, CommandHistory commandHistory, UndoRedoStack undoRedoStack) {

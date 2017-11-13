@@ -1,0 +1,134 @@
+= Rattanin Siripornpitak - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== LISA: Levels Integrated Secretarial Agent
+LISA: Levels Integrated Secretarial Agent is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T13-B1/main/tree/master/collated/main/RSJunior37.md[Functional code]] [https://github.com/CS2103AUG2017-T13-B1/main/tree/master/collated/test/RSJunior37.md[Test code]] {give links to collated code files}
+
+=== Enhancement Added: Searchbox with partialsearch command
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=pfind]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Quick, intuitive and user-friendly filtering mechanism
+
+==== Implementation
+Follows the implementation of `find` `command` with modification made to predicate class
+
+Usage extends to searchbox which is implemented as follows:
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=searchbox]
+
+#End of Extract#
+
+---
+=== Enhancement Added: Save & Load contract pdf file
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=pdfSaveLoad]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Accessing of external files via LISA allows it to act as self-sufficient software for its purpose. This also aids user with managing their files storage directory.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=pdfSaveLoad]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Switching middle panel between Insurance and Profile
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=linkAllProfileAndInsurance]
+
+#End of Extract#
+
+Note : `InsuranceListPanel` is written by OscarWang114. This is later embedded into standalone right panel on `MainWindow` by me.
+
+---
+
+==== Justification
+
+Easy tracking all related persons to insurance contracts and vice versa will improve navigability of LISA
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=switchBetweenProfileAndInsurance]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Restricting 'Tab' only to Textfields
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=tabSwitch]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+As mentioned above, to lower dependence on mouse
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=restrictTabToTextField]
+
+#End of Extract#
+
+---
+
+
+
+=== Enhancement Proposed:
+
+- Features listed above (excluding restricted Tab)
+- Appointment management & notifications
+- Allow adding of photo onto profile page
+
+=== Other contributions
+
+- Handles and assists in implementations related to Ui (excluding css)
+- Housekeeping of (Class, Test, etc.) names which required refactoring

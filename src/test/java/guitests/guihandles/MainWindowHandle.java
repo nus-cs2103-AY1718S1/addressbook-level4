@@ -12,7 +12,8 @@ public class MainWindowHandle extends StageHandle {
     private final CommandBoxHandle commandBox;
     private final StatusBarFooterHandle statusBarFooter;
     private final MainMenuHandle mainMenu;
-    private final BrowserPanelHandle browserPanel;
+    private final InsuranceListPanelHandle insuranceListPanelHandle;
+    private final ProfilePanelHandle profilePanelHandle;
 
     public MainWindowHandle(Stage stage) {
         super(stage);
@@ -22,7 +23,9 @@ public class MainWindowHandle extends StageHandle {
         commandBox = new CommandBoxHandle(getChildNode(CommandBoxHandle.COMMAND_INPUT_FIELD_ID));
         statusBarFooter = new StatusBarFooterHandle(getChildNode(StatusBarFooterHandle.STATUS_BAR_PLACEHOLDER));
         mainMenu = new MainMenuHandle(getChildNode(MainMenuHandle.MENU_BAR_ID));
-        browserPanel = new BrowserPanelHandle(getChildNode(BrowserPanelHandle.BROWSER_ID));
+        profilePanelHandle = new ProfilePanelHandle(getChildNode(ProfilePanelHandle.PROFILE_ID));
+        insuranceListPanelHandle = new InsuranceListPanelHandle(
+                getChildNode(InsuranceListPanelHandle.INSURANCE_LIST_VIEW_ID));
     }
 
     public PersonListPanelHandle getPersonListPanel() {
@@ -45,7 +48,13 @@ public class MainWindowHandle extends StageHandle {
         return mainMenu;
     }
 
-    public BrowserPanelHandle getBrowserPanel() {
-        return browserPanel;
+    //@@author RSJunior37
+    public ProfilePanelHandle getProfilePanelHandle() {
+        return profilePanelHandle;
     }
+
+    public InsuranceListPanelHandle getInsuranceListPanelHandle() {
+        return insuranceListPanelHandle;
+    }
+    //@@author
 }

@@ -8,9 +8,11 @@ import seedu.address.commons.events.ui.ShowHelpRequestEvent;
  */
 public class HelpCommand extends Command {
 
+    public static final String[] COMMAND_WORDS = {"help", "h", "hlp", "f1", "commands", "command", "sos"};
     public static final String COMMAND_WORD = "help";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Shows program usage instructions.\n"
+    public static final String MESSAGE_USAGE = concatenateCommandWords(COMMAND_WORDS)
+            + ": Shows program usage instructions.\n"
             + "Example: " + COMMAND_WORD;
 
     public static final String SHOWING_HELP_MESSAGE = "Opened help window.";

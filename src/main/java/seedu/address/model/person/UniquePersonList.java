@@ -68,6 +68,9 @@ public class UniquePersonList implements Iterable<Person> {
         }
 
         internalList.set(index, new Person(editedPerson));
+        //@@author arnollim
+        sortPersons();
+        //@@author
     }
 
     /**
@@ -93,8 +96,34 @@ public class UniquePersonList implements Iterable<Person> {
         for (final ReadOnlyPerson person : persons) {
             replacement.add(new Person(person));
         }
+        //@@author arnollim
+        replacement.sortPersons();
+        //@@author
         setPersons(replacement);
     }
+
+    //@@author arnollim
+    /**
+     * Sorts the internal list of people in alphabetical order
+     * rather than in order of date added. This is more useful to the user especially when scrolling
+     * the addressbook manually to search for contacts
+     */
+    public void sortPersons() throws DuplicatePersonException {
+        ObservableList<Person> listToSort = FXCollections.observableArrayList(internalList);
+        listToSort.sort((ReadOnlyPerson first, ReadOnlyPerson second)-> {
+            int x = String.CASE_INSENSITIVE_ORDER.compare(first.getName().fullName, second.getName().fullName);
+            if (x == 0) {
+                x = (first.getName().fullName).compareTo(second.getName().fullName);
+            }
+            return x;
+        });
+        UniquePersonList listToReplace = new UniquePersonList();
+        for (ReadOnlyPerson person : listToSort) {
+            listToReplace.add(person);
+        }
+        setPersons(listToReplace);
+    }
+    //@@author
 
     /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.

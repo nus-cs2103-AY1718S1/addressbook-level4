@@ -15,6 +15,7 @@ import org.junit.Test;
 
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -27,6 +28,8 @@ public class RedoCommandTest {
     private final DeleteCommand deleteCommandOne = new DeleteCommand(INDEX_FIRST_PERSON);
     private final DeleteCommand deleteCommandTwo = new DeleteCommand(INDEX_FIRST_PERSON);
 
+    private AddressBookParser addressBookParser = new AddressBookParser();
+
     @Before
     public void setUp() {
         deleteCommandOne.setData(model, EMPTY_COMMAND_HISTORY, EMPTY_STACK);
@@ -34,20 +37,30 @@ public class RedoCommandTest {
     }
 
     @Test
-    public void execute() {
+    public void execute() throws Exception {
         UndoRedoStack undoRedoStack = prepareStack(
                 Collections.emptyList(), Arrays.asList(deleteCommandTwo, deleteCommandOne));
         RedoCommand redoCommand = new RedoCommand();
         redoCommand.setData(model, EMPTY_COMMAND_HISTORY, undoRedoStack);
         Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
+        //@@author arnollim
         // multiple commands in redoStack
         deleteFirstPerson(expectedModel);
-        assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
+        String lastCommand = undoRedoStack.peekRedo().toString();
+        Command previousCommand = addressBookParser.parseCommand(lastCommand);
+        String previousCommandString = previousCommand.toString();
+        String expectedResultMessage = RedoCommand.parseRedoCommand(previousCommandString);
+        assertCommandSuccess(redoCommand, model, expectedResultMessage, expectedModel);
 
         // single command in redoStack
         deleteFirstPerson(expectedModel);
-        assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
+        lastCommand = undoRedoStack.peekRedo().toString();
+        previousCommand = addressBookParser.parseCommand(lastCommand);
+        previousCommandString = previousCommand.toString();
+        expectedResultMessage = RedoCommand.parseRedoCommand(previousCommandString);
+        assertCommandSuccess(redoCommand, model, expectedResultMessage, expectedModel);
+        //@@author
 
         // no command in redoStack
         assertCommandFailure(redoCommand, model, RedoCommand.MESSAGE_FAILURE);

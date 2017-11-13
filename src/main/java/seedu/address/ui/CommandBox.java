@@ -13,6 +13,8 @@ import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.exceptions.EmptyFieldException;
+import seedu.address.logic.parser.exceptions.MissingPrefixException;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -94,7 +96,7 @@ public class CommandBox extends UiPart<Region> {
         commandTextField.setText(text);
         commandTextField.positionCaret(commandTextField.getText().length());
     }
-
+    //@@author Juxarius
     /**
      * Handles the Enter button pressed event.
      */
@@ -107,16 +109,34 @@ public class CommandBox extends UiPart<Region> {
             // process result of the command
             commandTextField.setText("");
             logger.info("Result: " + commandResult.feedbackToUser);
-            raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
+            raise(new NewResultAvailableEvent(commandResult.feedbackToUser, false));
+        } catch (EmptyFieldException efe) {
+            initHistory();
+            // autofill function triggered
+            logger.info("Autofill triggered: " + commandTextField.getText());
+            historySnapshot.next();
+            commandTextField.setText(historySnapshot.previous());
+            commandTextField.positionCaret(commandTextField.getText().length());
+            raise(new NewResultAvailableEvent("Autofilled!", false));
 
+        } catch (MissingPrefixException mpe) {
+            initHistory();
+            logger.info("Autofilling Prefixes!");
+            historySnapshot.next();
+            String filledCommand = historySnapshot.previous();
+            int unfilledPrefixPosition = filledCommand.indexOf("/ ") + 1;
+            commandTextField.setText(filledCommand.trim());
+            commandTextField.positionCaret(unfilledPrefixPosition);
+            raise(new NewResultAvailableEvent(mpe.getMessage(), true));
         } catch (CommandException | ParseException e) {
             initHistory();
             // handle command failure
             setStyleToIndicateCommandFailure();
             logger.info("Invalid command: " + commandTextField.getText());
-            raise(new NewResultAvailableEvent(e.getMessage()));
+            raise(new NewResultAvailableEvent(e.getMessage(), true));
         }
     }
+    //@@author
 
     /**
      * Initializes the history snapshot.

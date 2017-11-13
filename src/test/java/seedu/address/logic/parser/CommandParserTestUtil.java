@@ -12,7 +12,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 public class CommandParserTestUtil {
 
     /**
-     * Asserts that the parsing of {@code userInput} by {@code parser} is successful and the command created
+     * Asserts that the parsing of {@code userInput} by {@code parse} is successful and the command created
      * equals to {@code expectedCommand}.
      */
     public static void assertParseSuccess(Parser parser, String userInput, Command expectedCommand) {
@@ -25,7 +25,7 @@ public class CommandParserTestUtil {
     }
 
     /**
-     * Asserts that the parsing of {@code userInput} by {@code parser} is unsuccessful and the error message
+     * Asserts that the parsing of {@code userInput} by {@code parse} is unsuccessful and the error message
      * equals to {@code expectedMessage}.
      */
     public static void assertParseFailure(Parser parser, String userInput, String expectedMessage) {

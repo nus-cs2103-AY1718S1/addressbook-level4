@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox id="insuranceCardPane" fx:id="insuranceCardPane" prefHeight="150.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <HBox prefHeight="40.0">
+         <children>
+            <Label fx:id="index" styleClass="insurance-header" text="\$name">
+               <padding>
+                  <Insets left="8.0" />
+               </padding>
+            </Label>
+            <Label fx:id="insuranceName" styleClass="insurance-header" text="\$insuranceName">
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+            </Label>
+         </children>
+         <VBox.margin>
+            <Insets top="7.0" />
+         </VBox.margin>
+      </HBox>
+      <GridPane prefHeight="110.0" prefWidth="400.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="140.0" minWidth="140.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="300.0" minWidth="200.0" prefWidth="240.0" />
+         </columnConstraints>
+         <!-- @@author OscarWang114 -->
+         <VBox alignment="CENTER_LEFT" GridPane.columnIndex="0">
+            <padding>
+               <Insets left="15.0" />
+            </padding>
+            <HBox>
+               <children>
+                  <Label styleClass="static-insurance-labels" text="Owner: " />
+               </children>
+            </HBox>
+            <HBox>
+               <children>
+                  <Label styleClass="static-insurance-labels" text="Insured: " />
+               </children>
+            </HBox>
+            <HBox>
+               <children>
+                  <Label styleClass="static-insurance-labels" text="Beneficiary: " />
+               </children>
+            </HBox>
+            <HBox>
+               <children>
+                  <Label styleClass="static-insurance-labels" text="Premium: " />
+               </children>
+            </HBox>
+         </VBox>
+         <!-- @@author -->
+         <!-- @@author Juxarius -->
+         <VBox alignment="CENTER_LEFT" GridPane.columnIndex="1">
+            <children>
+               <HBox>
+                  <children>
+                     <Label fx:id="owner" styleClass="particular-link" text="\$owner" />
+                  </children>
+               </HBox>
+               <HBox>
+                  <children>
+                     <Label fx:id="insured" styleClass="particular-link" text="\$insured" />
+                  </children>
+               </HBox>
+               <HBox>
+                  <children>
+                     <Label fx:id="beneficiary" styleClass="particular-link" text="\$beneficiary" />
+                  </children>
+               </HBox>
+               <HBox>
+                  <children>
+                     <Label fx:id="premium" styleClass="particular-link" text="\$premium" />
+                  </children>
+               </HBox>
+            </children>
+         </VBox>
+         <!-- @@author -->
+         <rowConstraints>
+            <RowConstraints />
+         </rowConstraints>
+         <VBox.margin>
+            <Insets bottom="5.0" />
+         </VBox.margin>
+      </GridPane>
+   </children>
+</VBox>

@@ -1,0 +1,79 @@
+= Pujitha Desiraju - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== LISA: Levels Integrated Secretarial Agent
+LISA: Levels Integrated Secretarial Agent is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*:
+  [https://github.com/CS2103AUG2017-T13-B1/main/pull/106/commits[Functional code]]
+  [https://github.com/CS2103AUG2017-T13-B1/main/pull/62/commits/f82cbafa6a8a3fb5797b7ae7ebe72b92a3644d7a[Test code]]
+
+
+=== Enhancement Added: Add Date of Birth field to the add command
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+Included the date of birth field within the details of the person's record to be added
+,edited and displayed in the UI.
+
+#End of Extract#
+
+---
+
+==== Justification
+
+The Date of Birth of a person signifies the age of the person existing in the record
+to be used by insurance class to check eligibility.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=dob]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Include Gender field
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+Included the Gender field within the details of the person's record to be added
+,edited and displayed in the UI.
+
+#End of Extract#
+
+---
+
+==== Justification
+
+The gender of a person signifies the gender of the person existing in the record.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=gender]
+
+#End of Extract#
+
+---
+
+=== Enhancements Proposed:
+Autofill Feature +
+Print Commmand +
+Insurance Management Features +
+
+=== Other contributions
+Helped brainstorm ideas for the project and its enhancements

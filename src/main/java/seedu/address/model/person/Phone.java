@@ -1,8 +1,10 @@
 package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.parser.exceptions.EmptyFieldException;
 
 /**
  * Represents a Person's phone number in the address book.
@@ -16,6 +18,16 @@ public class Phone {
     public static final String PHONE_VALIDATION_REGEX = "\\d{3,}";
     public final String value;
 
+    //@@author OscarWang114
+    /**
+     * Initialize a Phone object with value of empty String. This can only be used in the default field of
+     * {@code AddPersonOptionalFieldDescriptor}
+     */
+    public Phone() {
+        this.value = "";
+    }
+    //@@author
+
     /**
      * Validates given phone number.
      *
@@ -24,6 +36,9 @@ public class Phone {
     public Phone(String phone) throws IllegalValueException {
         requireNonNull(phone);
         String trimmedPhone = phone.trim();
+        if (trimmedPhone.isEmpty()) {
+            throw new EmptyFieldException(PREFIX_PHONE);
+        }
         if (!isValidPhone(trimmedPhone)) {
             throw new IllegalValueException(MESSAGE_PHONE_CONSTRAINTS);
         }

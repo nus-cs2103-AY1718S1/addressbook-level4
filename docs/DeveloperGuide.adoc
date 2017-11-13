@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+﻿= LISA: Levels Integrated Secretarial Agent - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -153,7 +153,7 @@ _Figure 2.2.1 : Structure of the UI Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `SearchBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `ProfilePanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
@@ -217,6 +217,1119 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 == Implementation
 
 This section describes some noteworthy details on how certain features are implemented.
+
+// tag::commandWord[]
+=== Multiple Command Words
+
+Many commands require the user to type out the entire word which can be a hassle. We want to provide
+familiar users with shortcuts to the commands. Also, was suggested by textbook.
+
+This feature is implemented by adding a public constant `String[] COMMAND_WORDS` in every command class.
+The `AddressBookParser` will also have to change its implementation. We classified every command
+into an enumerator `CommandType` which all the command words can funnel into.
+
+`v1.5 Implementation` +
+A `HashMap` is used to contain all links from key command words to their `CommandType` enumerator.
+The `commandWord` is passed into the processing function. The function checks if the map is empty,
+in which case, it calls the map setup function, then refers to the map to get its respective
+`CommandType` and the default is `CommandType.NONE` which returns an invalid command error message.
+The map setup function converts every `COMMAND_WORDS` to a stream before mapping it with the `forEach`
+function.
+
+`v1.2 Implementation` +
+A brute force approach is applied where the `commandWord` is compared against every command's
+`COMMAND_WORDS` using for-in-if loops. Any successful comparison is to return the respective
+`CommandType` enumerator.
+// end::commandWord[]
+
+// tag::prefixAutofill[]
+=== Prefix Autofill
+
+When adding a new insurance, all fields are required as a contract needs to be complete before it is valid.
+However, due to the multitude of information required, users should have the convenience of
+pressing enter with an unfilled command to trigger the autofill to prompt you with the prefixes
+required and move the the caret to the next field.
+
+This enhancement follows a similar method to the autofill feature, however, since it does not
+require the pulling of data from the LISA, it is simpler.
+
+A `MissingPrefixException` is thrown from the `AddLifeInsuranceCommandParser` in the case of
+a missing prefix OR an empty field. This exception is caught by the `LogicManager` which analyses
+and fills the missing prefix.
+
+*How the analysis is done*
+
+----
+catch (MissingPrefixException mpe) {
+        // this assertion is because this exception should only
+        // be thrown by the addli command,
+        // to change if this exception is used elsewhere
+        final String inputToTest = commandText;
+        assert Arrays.stream(AddLifeInsuranceCommand.COMMAND_WORDS).anyMatch(commandWord ->
+            inputToTest.contains(commandWord));
+        commandText = getCommandWithFilledPrefixes(commandText);
+        throw mpe;
+}
+----
+
+Since we are assuming that this exception is only thrown by the `AddLifeInsuranceCommandParser` ,
+we use the assert here together with a lambda function to ensure that the `commandText` starts with
+any of the valid `COMMAND_WORDS`. In the case that another new function throws the same exception,
+this assert needs to be removed and the catch should handle the exception appropriately.
+
+The `commandText` is then sent to the autofill function which gets the constant `Set<Prefix>` from `CliSyntax`
+called `PREFIXES_INSURANCE` and filters the list according to which is not already inside the
+`commandText`, appends the prefixes and returns the filled text.
+
+The filled text is then passed on to the `history`. `commandBox` then takes over to show the last
+command as from the `historySnapshot` and places the caret at the 1st empty field found.
+
+// end::prefixAutofill[]
+
+// tag::dateParser[]
+=== Date Parser
+
+The date parser was created as an easy alternative to parsing user input to create a `LocalDate`
+class. A string is obtained from the user containing details of the date and is to follow a
+Day-Month-Year format, separated by any of the common dividers (i.e. `\\s,/-.`). The rearrangement
+of the 3 details is not allowed due to the multitude of confusions it may come with.
+
+Pros of using this parser:
+****
+- Date and month can be typed as a single digit
+- Month can be expressed as a number or string, in both long and 3 letter forms (e.g Oct and October)
+- Case-insensitive
+- `dateString(LocalDate date)` gives a very nice all-friendly string for display purposes
+- Year can be expressed as 4-digits or 2-digits
+- 2 digit years are smartly corrected to a year before the current year, a commented line shows you where to change if you wish to change the correction bracket
+- Ignores extra stuff after accepting a 4-digit year
+****
+
+Cons of using this parser:
+****
+- Only accepts Day-Month-Year format
+- Have to conform to using a `LocalDate` class to store your dates
+****
+
+*How the string is parsed*
+
+Below is the main parse function of the parser
+----
+public LocalDate parse(String dob) throws IllegalValueException {
+     List<String> arguments = Arrays.asList(dob.split("[\\s-/.,]"));
+     if (arguments.size() < 2) {
+         throw new IllegalValueException(MESSAGE_DATE_CONSTRAINTS);
+     }
+     String day = arguments.get(0);
+     String month = arguments.get(1);
+     String year = arguments.size() > 2 ? arguments.get(2)
+            : String.valueOf(LocalDate.now().getYear());
+     return LocalDate.parse(getValidDay(day) + " " + getValidMonth(month)
+            + " " + getValidYear(year), DATE_FORMAT);
+ }
+----
+
+The string is first split using the delimiters as stated above using the `String::split` function. +
+If the number of arguments is less than 2, there is insufficient information to
+create a date and an exception os thrown. If more than 3 arguments are input,
+only th first 3 are taken, in the Day-Month_Year format. The year is optional
+which defaults to the current year if not input. The 3 details are then each
+passed into their own correcting function in order to fit the correct format
+for the actual `LocalDate::parse` method to create a `LocalDate` object according
+to a standard format.
+
+The `getValidDay` function simply checks if the date given is less than 32 as
+it only corrects dates up to the 31st (e.g. if you tried to input 31 Feb,
+`LocalDate::parse` will be able to help you correct to 28 or 29 Feb but it throws
+an exception if you tried to input 32 or higher). This function also checks if
+the date is a single digit, in which it will then add a zero in front to fit the
+standard format.
+
+The `getValidMonth` function does the same checks as the `getValidDay` function
+(i.e. input is 12 and below and add a zero if it is a single digit). In addition,
+it checks if the month was given as a name, if so, it then searches the constant
+string arrays in the parser to check the month. It allows a case-insensitive search
+(use of `String::toLowerCase` method) and 3 letter representations of months
+(`MONTH_NAME_LONG` and `MONTH_NAME_SHORT` const string arrays).
+
+The `getValidYear` function only takes in the first 4 characters if more than 4
+are provided and can only do this since it is the last argument in the string.
+It then checks if a 2-digit year was given, if so, it auto corrects to a bracket,
+currently defined as the last century. Else 4 digit form will be taken as
+the whole year. This implementation assumes the user does not intend a 2 or 3
+digit year. Otherwise, users will have to append zeros at the start of the year
+input to indicate.
+
+// end::dateParser[]
+// tag::autofill[]
+=== Autofill Feature
+
+The `edit` command now allows empty fields to be entered to trigger an autofill response.
+The autofill replaces all empty fields entered in the command box at once.
+This idea stems from the consideration of convenience in editing typos in a contact. This is especially so
+when the user wishes to update a small typo in very long field but does not wish to re-type out everything in the current field.
+
+The `Undo` command can help reverse an added contact and pressing the up button will recall the used `add` command but
+this causes more hassle than needed. Also, the up button will not be able to recall a command that was used in a previous
+session which increases the need for an autofill feature.
+
+*How it is triggered* +
+Below is the activity diagram on how the `editCommandParser` works while editing the `editPersonDescriptor`.
+
+image::autofillactivitydiagram.png[]
+
+The part in orange is the added branch to the the flow of activities. The set of argument validation events happen within each `Person`
+attribute's constructor. (i.e. constructors of `Name` `Email` `Address` `Phone` `DateOfBirth`)
+
+The exception thrown, `EmptyFieldException`, is a subclass of `ParserException` and helps indicate the presence of an empty field
+which is to be distinguished from an argument regex mismatch and to be thrown out to the `LogicManager` which has access to
+the contacts and is able to carry out the autofill feature. The `EmptyFieldException` is conceptually
+correct to be a subclass of `ParserException` as it is indeed a type of exception when processing invalid arguments.
+Furthermore, there is no need to declare a new type of exception thrown as it is a type of `ParseException`.
+
+*How the autofilling is done* +
+`v1.2` +
+The `EmptyFieldException` contains the empty field prefix and the index of the contact in concern which allows the
+`LogicManager` to retrieve the relevant detail and replace the prefix with the filled prefix. However, this method
+restricts the feature to only fill one prefix at a time, per enter key pressed. Also, in conjunction with the feature
+as in *3.2*, this causes a problem as contacts with empty fields will not be able to have other specified fields filled.
+
+`v1.3` +
+The autofill function now scans and replaces every prefix that is present in the command line. Effectively
+solving the problem of inconvenience where multiple enter key presses is required to fill multiple fields and
+contacts with empty fields no longer prevent the autofilling of other empty prefixes. This also means that
+the `EmptyFieldException` is no longer unique to the empty prefix and thus, there is no need for the prefix parameter,
+which is removed from the constructor of the exception.
+// end::autofill[]
+
+// tag::add[]
+=== Making NAME the only compulsory field in Add Command
+
+The `add` command follows the format below:
+
+`add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [d/DATE_OF_BIRTH] [g/GENDER] [t/TAG]...`
+
+This means when adding a new person in LISA, the user only needs to provide value for the compulsory `NAME` field. Every other field is optional.
+
+Every field in a person corresponds to one class type. Inside each class, there exists a `final String FIELD_VALIDATION_REGEX` used for validation during construction.
+For instance, the `PHONE` field has `Phone` class containing a `PHONE_VALIDATION_REGEX` which only accepts numbers that are at least three digits long:
+[source,java]
+----
+public static final String PHONE_VALIDATION_REGEX = "\\d{3,}";
+----
+
+Whenever the phone tag `p/` is provided in the input, e.g. `add n/John Doe p/98765432` and `add n/Johnny Doe p/`,
+the string after `p/` is trimmed and passed into `isValidPhone(String test)` for validation when constructing the `Phone` object.
+[source,java]
+----
+public Phone(String phone) throws IllegalValueException {
+    // ... constructor logic ...
+    if (!isValidPhone(trimmedPhone)) {
+        throw new IllegalValueException(MESSAGE_PHONE_CONSTRAINTS);
+    }
+    this.value = trimmedPhone;
+}
+
+public static boolean isValidPhone(String test) {
+    return test.matches(PHONE_VALIDATION_REGEX);
+}
+----
+
+Therefore, in the first example, `"98765432"` is passed as the argument. In the second example, `""` is passed in since nothing was provided after `p/`.
+According to `PHONE_VALIDATION_REGEX`, the former passes the validation while the latter throws an `IllegalValueException`.
+Overall, this guarantees that the user input will always be validated.
+
+If the phone tag is not provided, e.g. `add n/John Doe e/johnd@email.com`, the no-argument constructor is used.
+It sets the `value` of the `Phone` object to an empty string without any validation.
+[source,java]
+----
+public Phone() {
+    this.value = "";
+}
+----
+
+The logic provided above can be applied to other optional fields, namely `[p/PHONE_NUMBER]`, `[e/EMAIL]`, `[a/ADDRESS]`, `[g/GENDER]` and `[d/DATE_OF_BIRTH]`.
+`[t/TAG]...` uses a different implementation and will not be covered in this section.
+
+Due to this implementation, the field attribute of a `Person` object can never be `null`.
+If a field is not provided during input, an object with the value of an empty string will still be created and assigned to the corresponding attribute in `Person`.
+
+
+An alternative implementation would be "Do not create the field object at all if it is not specified in the user input".
+This approach is more flexible, but may require resolving " value equals to `null` " and `NullPointerException` when adding and editing a person.
+// end::add[]
+
+// tag::dob[]
+=== Addition of Date of Birth field
+
+The Date of birth field includes information concerning the age of the user stored in the record.
+Its impact is noticed in the add and edit command.
+
+The `add` command has the following format:
+
+`add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [g/Gender] [d/DATE_OF_BIRTH] [t/TAG]...`
+
+The prefix d/ as indicated in the CliSyntax.java denotes the beginning of the date of birth argument.
+
+The class DateOfBirth.java within the Model component , validates the input from the user through the following regex:
+[source,java]
+----
+ public static final String DOB_VALIDATION_REGEX = "\\d+[\\s-./,]\\p{Alnum}+[\\s-./,]\\d+.*";
+----
+
+With the help of the date parser(details mentioned above) , the acceptance of the date format
+is flexible and inclusive.
+
+When the d/ is encountered , the trailing argument is passed into `isValidDateOfBirth(String test)` for validation when constructing the `DateOfBirth` object.
+eg : `add n/John Doe p/98765432 d/27 01 1997 g/MALE`
+
+[source,java]
+----
+ /**
+      * Validates given Date of Birth.
+      *
+      * @throws IllegalValueException if given date of birth string is invalid.
+      */
+     public DateOfBirth(String dob) throws IllegalValueException {
+         requireNonNull(dob);
+         if (dob.isEmpty()) {
+             throw new EmptyFieldException(PREFIX_DOB);
+         }
+         if (!isValidDateOfBirth(dob)) {
+             throw new IllegalValueException(MESSAGE_DOB_CONSTRAINTS);
+         }
+         this.dateOfBirth = new DateParser().parse(dob);
+         this.dateSet = true;
+     }
+
+ /**
+ * Returns true if a given string is a valid person date of birth.
+ */
+ public static boolean isValidDateOfBirth(String test) {
+        return test.matches(DOB_VALIDATION_REGEX);
+ }
+----
+
+Therefore, in the above example, `"27 01 1997"` is passed as the argument.
+
+Date of birth field is also an optional field , unlike the Name field. When the date of birth is not specified,
+eg :  add n/Johnny Doe  , the no-argument constructor is used.
+It sets the `value` of the `DateOfBirth` object to an empty string without any validation.
+
+[source,java]
+----
+public DateOfBirth() {
+        this.dateOfBirth = LocalDate.now();
+        this.dateSet = false;
+    }
+----
+In the above code snippet , the dataset variable denotes if the user specified the date
+of birth of the entry. This helps in assigning an empty string to an empty object.
+
+// end::dob[]
+
+// tag::gender[]
+=== Addition of Gender field
+
+The Gender field includes information concerning the gender of the user stored in the record.
+Its impact is noticed in the add and edit command.
+
+The `add` command has the following format:
+
+`add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [d/DATE_OF_BIRTH] [g/GENDER] [t/TAG]...`
+
+The prefix g/ as indicated in the CliSyntax.java denotes the beginning of the gender argument.
+
+The class Gender.java within the Model component , validates the input from the user through the following regex:
+[source,java]
+----
+private static final String GENDER_VALIDATION_REGEX = "(?i)\\b(female|f|male|m|other|o|"
+            + "notspecified|not_specified|not specified)\\b";
+----
+The above regex accepts the words : female, male , other , o , f or m
+, not_specified regardless of the case they are entered in.
+
+The gender field is of type ENUM and can consist of the following values:
+[source,java]
+----
+enum GenderType {
+        NOT_SPECIFIED, MALE, FEMALE, OTHER
+    }
+----
+
+When the g/ is encountered , the trailing argument is passed into `isValidGender(String test)` for validation when constructing the `Gender` object.
+eg : `add n/John Doe p/98765432 d/27 01 1997 g/m`
+Therefore, in the above example, `"m"` is passed as the argument.
+
+[source,java]
+----
+ /**
+      * Validates given gender.
+      *
+      * @throws IllegalValueException if given gender string is invalid.
+      */
+     public Gender(String gen) throws IllegalValueException {
+         requireNonNull(gen);
+         if (gen.isEmpty()) {
+             throw new EmptyFieldException(PREFIX_GENDER);
+         }
+         if (!isValidGender(gen)) {
+             throw new IllegalValueException(MESSAGE_GENDER_CONSTRAINTS);
+         }
+         switch (gen.toLowerCase()) {
+         case ("female"):
+         case ("f"):
+             this.value = GenderType.FEMALE;
+             break;
+         case ("male"):
+         case ("m"):
+             this.value = GenderType.MALE;
+             break;
+         case ("other"):
+         case("o"):
+             this.value = GenderType.OTHER;
+             break;
+         default:
+             this.value = GenderType.NOT_SPECIFIED;
+         }
+         this.genderset = true;
+     }
+----
+
+
+As can be seen from the above code snippet , the given argument is converted to lower case and then given a value amongst
+the available enumerated constants : FEMALE , MALE and NOT_SPECIFIED (when no gender is specified)
+
+The `genderset` variable is specified to know if the user has entered the gender of the entry
+or not. If not , instead of displaying the default enum type :NOT_SPECIFIED , we can display
+a blank string. If specified , we can display the actual gender of the entry in a string format.
+
+Gender field is also an optional field , unlike the Name field. When the gender is not specified,
+eg :  add n/Johnny Doe  , the no-argument constructor is used.
+It sets the `value` of the `Gender` object to the following :
+
+[source,java]
+----
+public Gender() {
+        this.value = GenderType.NOT_SPECIFIED;
+        this.genderset = false;
+    }
+----
+As the value above specified by the user is empty , we make sure to set the genderset variable
+to False.
+
+When requested by the UI , to display , teh following code snippet is used to display either
+an empty string or the gender:
+
+[source,java]
+----
+@Override
+    public String toString() {
+        return genderset ? value.toString() : "";
+    }
+----
+
+// end::gender[]
+
+//tag::sortFunction[]
+=== Improved Contact Arrangement: sort function
+Originally, new contacts added into LISA will be added to the end of the list of contacts. If there were 19 contacts in
+LISA, then adding a new person named "Adam Lim" for example (add n/Adam Lim) will place him as the 20th contact in LISA.
+While a chronological order of contacts has limited benefits, especially when the user wishes to scroll through contacts
+manually or read through contacts in a printed contact list, a list of contacts sorted by alphabetical order will be much
+more useful.
+
+UniquePersonList.java
+[source,java]
+----
+    public void sortPersons() throws DuplicatePersonException {
+        ObservableList<Person> listToSort = FXCollections.observableArrayList(internalList);
+        listToSort.sort((ReadOnlyPerson first, ReadOnlyPerson second)-> {
+            int x = String.CASE_INSENSITIVE_ORDER.compare(first.getName().fullName, second.getName().fullName);
+            if (x == 0) {
+                x = (first.getName().fullName).compareTo(second.getName().fullName);
+            }
+            return x;
+        });
+        UniquePersonList listToReplace = new UniquePersonList();
+        for (ReadOnlyPerson person : listToSort) {
+            listToReplace.add(person);
+        }
+        setPersons(listToReplace);
+    }
+----
+sortPersons() takes in the old list of persons, sorts them alphabetically, and returns a replaced list of persons, now sorted
+in alphabetical order. This method is called in both setPerson and setPersons methods in ReadOnlyPerson, after a new person
+is added into the address book.
+
+
+Example, add a new person named "Kelvin Liew"
+
+image::BeforeAddingKelvin.png[width="800"]
+
+
+After the new contact "Kelvin Liew" is added, he is well placed between Irfan Ibrahim and Mary Jane.
+
+image::AfterAddingKelvin.png["width="800"]
+
+//end::sortFunction[]
+
+// tag::tagManagement[]
+=== Improved Tag Management
+
+The original tag system management within the edit function has several difficulties
+which cause the user inconvenience and inefficiency in managing
+their tags. This is mainly due to how the editing of a tag works. When using the
+ edit function, just like how entering a new name will replace the existing name,
+ using the tag prefix to add tags to a user will end up overwriting all the existing tags
+  and replace it with the new tag(s). For example, entering the `edit 1 t/Awesome` results in the following: +
+Command entered:
+
+image::addtagui.jpg[]
+
+Original result:
+
+image::addtagoverwritten.png[]
+
+Main use case:
+
+image::addtagadded.png[]
+
+
+What would be in line with a main use case of `edit 1 t/trainer` is to add the `trainer` tag onto
+ existing tags instead. This entire process is controlled by the edit function whereby an
+ `editPersonDescriptor`, which is a class within the `EditCommand` class
+ is created using all the parsed arguments and represents all the changes
+ that are to be made. Then the `createEditedPerson` method is called to compare between
+ the `personToEdit` and the `editPersonDescriptor` and merge all the changes to create a new `Person`.
+
+
+
+Thus, the changes to enable such a feature is mainly implemented in the `createEditedPerson` method
+ the `Set` method `addAll()` is called to facilitate the merging of the tags.
+
+However, one thing to note here is that since the overwriting implementation is no longer used,
+ the only way for the tags to be deleted is gone which means we must also implement a method
+ of deleting tags. The intent to delete a tag must be clear and it is difficult to represent
+ the intention to delete using the current notation for the edit command. This is why we introduced a new
+ prefix to process detagging `dt/`. This way the user can clearly express the intent on which tags
+ are to be deleted and which are to remain, along with the ability to add on. The detagging is parsed
+ and implemented the same way as the tagging which simplifies constructing and understanding
+ the structure of tag deletion. We added a new `Set<Tag> tagsToBeDeleted` in the `editPersonDescriptor`
+ to signify deletion changes. Then we use the `removeAll` method from the `Set` class
+ which allows us to selectively only remove the tags in the user input.
+
+Then there comes a difficulty where an ambitious user wishes to express multiple tag managing commands
+ on one line. Regardless, this method is still very viable as the original structure supports the
+ input of multiple tags, and since the detagging mimics tagging, it is also supported.
+ However, one convenience that came with the overwriting method is the ease of deletion
+ which we would wish to allow users to perform as well. Thus, using `dt/all` will delete all existing
+ tags a contact has. The only issue with this is that a tag named `all` cannot be deleted if added.
+
+In the case of multiple tagging and detagging in one command line, we have chosen the
+ detagging to executed first because of the following reasons:
+
+****
+* Users are unlikely to remove a tag that is being added in the same line. The result of this would be that the deleted
+tag is added back.
+* Tags and detags are handled 1 by 1 so there is usually no conflict between tagging and detagging.
+* The only sensible conflict is when the user does `dt/all` and adds tags on the same line.
+The main use case for this is to mimic the overwriting method. Thus, if adding was executed first,
+the added tags will be deleted afterwards.
+* With respect to the previous reason, users are also given the freedom to type the prefix
+in any part of the command and the program will be able to execute the user's intention.
+****
+// end::tagManagement[]
+
+// tag::searchbox[]
+=== Searchbox
+
+The additional searchbox used for quick partial search/filter is a child of `UiParts` and is based on using `Listener` to detect any changes to `TextProperty`.
+
+Upon detecting changes in observables, a handler (using Lambda Expression) then passes them to `Logic` to execute the pfind command.
+
+[source,java]
+----
+public SearchBox (Logic logic) {
+        super(FXML);
+
+        searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+
+            if (newValue.equals("")) {
+                try {
+                    CommandResult commandResult = logic.execute("list");
+                    // ... log ...
+                    raise(new NewResultAvailableEvent(commandResult.feedbackToUser, false));
+
+                } catch (CommandException | ParseException e) {
+                    // ...
+                }
+            } else {
+                try {
+                    CommandResult commandResult = logic.execute("pfind " + newValue);
+                    // ... log ....
+                    raise(new NewResultAvailableEvent(commandResult.feedbackToUser, false));
+
+                } catch (CommandException | ParseException e) {
+                    // ...
+                }
+            }
+
+        });
+    }
+----
+
+Seen from the script, this handle takes care of 2 cases.
+
+1) When `newValue` is empty string, it calls `list` command
+
+2) Otherwise, calls `pfind` command with the `newValue` as arguments
+
+[NOTE]
+Case (1) is to restore the default list of all contacts after users have used the searchbox and removed all text from field after usage
+
+The rest of the execution then, follows closely to the case where the command is executed through `CommandBox`
+
+==== Design Considerations
+
+**Aspect:** Approach user should follow to input the command +
+**Alternative 1 (current choice):** Track every single changes in `SearchBox` textField. +
+**Pros:** Intuitive, need no additional step as the person card below changes real-time. +
+**Cons:** Many handler calls, duplicate execution when retyping same characters +
+**Alternative 2:** Confirmation with `Enter` key or similar feedback. +
+**Pros:** Less calls and hence more effective logging. +
+**Cons:** May not be intuitive pressing `Enter` with partially filled input.
+
+---
+
+**Aspect:** Execution of `pfind` +
+**Alternative 1 (current choice):** Through `Logic` +
+**Pros:** Reusing code. Binding it to `Logic` will automatically update any related possible changes occuring in `Logic Component`. Also easier to perform tests. +
+**Cons:** More detoured execution, going through checking of command type and parser. +
+**Alternative 2:** Directly create `PartialCommand` object with trimmed list of arguments. +
+**Pros:** Lowers coupling and dependencies, less irrelevant logs.  +
+**Cons:** Lower accountability and assumes no future changes to `Command` signature +
+
+---
+
+**Aspect:** Position and choice of FXML container  +
+**Alternative 1 (current choice):** Follows `CommandBox` styleClass` which is in turn contained by `VBox` together with and directly above `PersonListCard`. +
+**Pros:** Similar aesthetic look to `CommandBox` to promote intuition to type in command, but within immediate proximity of person cards to suggest some sort of filtering. +
+**Cons:** Looks somewhat awkward if the person list is scrolled down (slight disjoint in seperation line and card) +
+**Alternative 2:** Popup textField ui upon hover +
+**Pros:** Can save space in case this software is run on very low resolution. Also prevent confusion of which textField to type in command. +
+**Cons:** More keyboard-based user may not notice the feature and/or movement in cursor may close the popup unintentionally. +
+// end::searchbox[]
+
+// tag::li[]
+=== Reading and Storing Life Insurances:
+`since v1.3`
+
+image::LifeInsuranceClassDiagram.png[width="800"]
+_Figure 2.4.1 : Structure of the Components related to LifeInsurance_
+
+The `LifeInsurance`,
+
+* represents a life insurance in LISA.
+
+Fields inside a `LifeInsurance`:
+
+* `UUID` represents a unique id of the life insurance.
+* `InsuranceName` represents the name of the life insurance.
+* `Roles` is a `enum` type that represents the three person roles in a life insurance.
+Namely owner, insured, and beneficiary.
+* `EnumMap` maps a person role in a life insurance to the name of the corresponding person.
+* `InsurancePerson` represents a person in a life insurance. There are three such fields - owner, insured, and beneficiary  in a life insurance.
+* `Premium` represents the premium of a life insurance.
+* `ContractFileName` represents the name of a digital contract file (e.g. AlexYeohTermLife.pdf, BerniceYuWholeLife.docx) of a life insurance.
+* `LocalDate` represents the date components of a life insurance.
+There are two such fields - signing date and expiry date in a life insurance.
+
+
+The `UniqueLifeInsuranceMap`,
+
+* stores all `LifeInsurance` objects in LISA.
+* maps a `UUID` key to a `LifeInsurance` value.
+* exposes an unmodifiable `ObservableList<ReadOnlyInsurance>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+[NOTE]
+The `UUID` key inside the map has the same value with the `UUID` field inside the `LifeInsurance` it maps to.
+
+The `List<UUID>`,
+
+* stores all the `UUID` objects of the life insurances a `Person` object is involved.
+A person is involved in a life insurance if he/she is an owner, insured, or beneficiary of that piece of life insurance.
+* prevents storing duplicate ids, e.g., even if a person is both an owner and insured of a life insurance, `List<UUID>` will only store a single copy of the `UUID` of that life insurance.
+
+The `UniqueLifeInsuranceList`,
+
+* stores all the `LifeInsurance` objects  a `Person` object is involved.
+A person is involved in a life insurance if he/she is an owner, insured, or beneficiary of that piece of life insurance.
+* prevents storing duplicate life insurances, e.g., even if a person is both an owner and insured of a life insurance, `UniqueLifeInsuranceList` will only store a single copy of that life insurance.
+
+
+image::XmlAdaptedLifeInsuranceClassDiagram.png[width="800"]
+_Figure 2.4.1 : Structure of the Components related to XmlAdaptedLifeInsurance_
+
+The `XmlAdaptedLifeInsurance`
+
+* represents a JAXB-friendly version of the `LifeInsurance`.
+* follows the format below when saved in xml format:
+
+[source,xml]
+----
+<id>ad4dc852-e6bb-44e9-800e-fa8a8964e7f1</id>
+<insuranceName>Sample Life Insurance</insuranceName>
+<owner>Oscar Wang</owner>
+<insured>Oscar Wang</insured>
+<beneficiary>John Doe</beneficiary>
+<premium>1000.0</premium>
+<contractFileName>SampleOscarWang.pdf</contractFileName>
+<signingDate>01 Nov 2017</signingDate>
+<expiryDate>01 Nov 2047</expiryDate>
+----
+
+The `Map<String, XmlAdaptedLifeInsurance>`,
+
+* stores all `XmlAdaptedLifeInsurance` objects.
+* maps a `String` key to a `XmlAdaptedLifeInsurance` value.
+[NOTE]
+The `String` key inside the map has the same value with the `String` field inside the `XmlAdaptedLifeInsurance` it maps to.
+* follows the format below when saved in xml format:
+
+[source,xml]
+----
+<lifeInsuranceMap>
+    <entry>
+        <key>ad4dc852-e6bb-44e9-800e-fa8a8964e7f1</key>
+        <value>
+            <!-- XmlAdaptedLifeInsurance -->
+        </value>
+    </entry>
+    <!-- more entries -->
+</lifeInsuranceMap>
+----
+
+==== Synchronizing Life Insurances with Persons
+
+Inside `Addressbook.java` there are two methods in charge of keeping the life insurance master map `UniqueLifeInsuranceMap` and person master list `UniquePersonList` synchronized with each other.
+The first method, according to execution order, is `syncMasterLifeInsuranceMapWith(UniquePersonList persons)` and the
+second method is `syncMasterPersonListWith(UniqueLifeInsuranceMap lifeInsuranceMap)`
+
+The first method ensures that the three `InsurancePerson` objects (owner, insured, and beneficiary) of every `LifeInsurance` in the master map links to its corresponding `Person` object if it exists in the persons list.
+In addition, it also populates the list of insurance ids `List<UUID>` in every `Person` object with id of the life insurance he/her is involved in.
+It is implemented in this way:
+
+[source,java]
+----
+public void syncMasterLifeInsuranceMapWith(UniquePersonList persons) {
+    clearAllPersonsInsuranceIds();
+    lifeInsuranceMap.forEach((id, insurance) -> {
+        insurance.resetAllInsurancePersons();
+
+        String owner = insurance.getOwnerName();
+        // ... similar logic for insured and beneficiary...
+        persons.forEach(person -> {
+            if (person.getName().toString().equals(owner)) {
+                insurance.setOwner(new InsurancePerson(person));
+                person.addLifeInsuranceIds(id);
+            }
+            // ... similar logic for insured and beneficiary...
+        });
+    });
+    lifeInsuranceMap.syncMappedListWithInternalMap();
+}
+----
+
+[NOTE]
+The method `syncMappedListWithInternalMap()` in the last line is used to synchronize the internal list of `LifeInsurances` inside `UniqueLifeInsuranceMap`.
+This internal list is used for exposing an `ObservableList<ReadOnlyInsurance>` to the UI for binding.
+
+[NOTE]
+Because `Person` objects are identified by `Name` and stored in a list,
+for every `LifeInsurance` object we have to iterate through the entire list of persons to check if the name of the `Person` object matches with the name of the three `InsurancePerson` objects.
+
+The second method ensures that every `Person` in the master list contains the correct list of `LifeInsurance` objects corresponding to his/her list of insurance ids `List<UUID>`.
+It is implemented in this way:
+
+[source,java]
+----
+public void syncMasterPersonListWith(UniqueLifeInsuranceMap lifeInsuranceMap) throws InsuranceNotFoundException {
+    persons.forEach((ThrowingConsumer<Person>) person -> {
+        List<UUID> idList = person.getLifeInsuranceIds();
+        if (!idList.isEmpty()) {
+            person.clearLifeInsurances();
+            idList.forEach((ThrowingConsumer<UUID>) id -> {
+                LifeInsurance lf = lifeInsuranceMap.get(id);
+                person.addLifeInsurances(lf);
+            });
+        }
+    });
+}
+----
+
+[NOTE]
+Because `LifeInsurance` objects are identified by `UUID` and stored in a map,
+for every `Person` object can simply retrieve the `LifeInsurance` he/she is involved by providing the id rather than iterating through the entire map.
+
+The two methods above are grouped into a method called `synWithUpdate()`, which is called every time when
+an operation related to `LifeInsurance` or `Person` in is executed, e.g. `addPerson(ReadOnlyPerson p)`, `deleteInsurance(ReadOnlyInsurance target)`.
+
+==== Design Considerations
+
+**Aspect:** Data structure for storing and saving life insurances in xml format: +
+**Alternative 1 (current choice):** Use a map to store ids as keys and life insurances as values. +
+**Pros:** Provides efficient O(1) data access using the id. +
+**Cons:** Requires an internal list to provide an `ObservableList<ReadOnlyInsurance>` to the UI for binding.
+The internal list have to be synchronized when data in the map changes. +
+**Alternative 2:** Use a list to store all `LifeInsurances`. +
+**Pros:** Does not require internal list. Easier implementation. +
+**Cons:** Less efficient data access. Requires iterating through the entire list to search for a life insurance using id.
+
+---
+// end::li[]
+
+// tag::addli[]
+=== Add Life Insurance Command:
+`since v1.4`
+
+The following sequence diagram shows how the add life insurance operation works:
+
+image::AddLifeInsuranceCommandSequenceDiagram.png[width="800"]
+
+There are eight compulsory fields required for the user to input in the add life insurance command.
+They are: name, owner, insured, beneficiary, premium, signing date, expiry date, and contract file name.
+
+
+
+[source,java]
+----
+private void isAnyPersonInList(List<ReadOnlyPerson> list, LifeInsurance lifeInsurance) {
+    String ownerName = lifeInsurance.getOwner().getName();
+    // ... similar logic for insured and beneficiary...
+    for (ReadOnlyPerson person: list) {
+        String lowerCaseName = person.getName().toString().toLowerCase();
+        if (lowerCaseName.equals(ownerName)) {
+            lifeInsurance.setOwner(new InsurancePerson(person));
+        }
+        // ... similar logic for insured and beneficiary...
+    }
+}
+----
+
+==== Design Considerations
+
+**Aspect:** Number of fields required from the user input: +
+**Alternative 1 (current choice):** Every field must be provided. +
+**Pros:** Ensures no field with null or empty value exists in a `LifeInsurance` object. +
+**Cons:** Not user-friendly. The user needs to fill in every field every time.
+**Alternative 2:** Making the name field the only compulsory field. The rest can be not provided. +
+**Pros:** More flexibility and user-friendly. +
+**Cons:** Requires good handling of null or empty values. In addition, an edit life insurance command has to be created to allow users to update the unfilled fields.
+
+// end::addli[]
+
+
+// tag::print[]
+=== Addition of Print Command
+The print command enables the user to save his/her addressbook in the form of a printable .txt file
+
+The print command has the following format:
+print [FILENAME]
+
+There is no need to specify the .txt extension as the program does this automatically.
+
+[source,java]
+----
+        //First line in the .txt file is the time and date printed, so that the user will know the recency
+        //of the printed address book
+        lines.add("LISA was last updated on: " + timeStamp + "\n\n");
+        //Next, feedback the total number of contacts at said time and date
+        lines.add("There are " + lastShownList.size() + " contacts in LISA\n\n");
+
+        int personIndex = 1;
+
+        //iterating through each person in LISA
+        for (ReadOnlyPerson person: lastShownList) {
+            String entry = personIndex + ". " + person.getAsParagraph();
+            lines.add(entry);
+            lines.add("\n" + person.getName().fullName
+                    + " is a personnel involved in the following insurance policies:\n");
+
+            UniqueLifeInsuranceList insurances = person.getLifeInsurances();
+            int insuranceIndex = 1;
+
+            //within each person, iterate through all the insurance policies associated
+            //with this person
+            for (ReadOnlyInsurance insurance: insurances) {
+                String insuranceHeader = "Insurance Policy " + insuranceIndex
+                        + ": " + insurance.getInsuranceName() + " ======";
+                lines.add(insuranceHeader);
+                String owner = insurance.getOwner().getName();
+                String insured = insurance.getInsured().getName();
+                String beneficiary = insurance.getBeneficiary().getName();
+                String premium = insurance.getPremium().toString();
+                String signingDate = insurance.getSigningDateString();
+                String expiryDate = insurance.getExpiryDateString();
+                lines.add("Owner: " + owner + "\n"
+                        + "Insured: " + insured + "\n"
+                        + "Beneficiary: " + beneficiary + "\n"
+                        + "Premium: " + premium + "\n"
+                        + "Signing Date: " + signingDate + "\n"
+                        + "Expiry Date: " + expiryDate
+                );
+
+                //insuranceEnd is just a printed line "=====" which ties with the length
+                //of insuranceHeader to make the txt file more organised.
+                String insuranceEnd = "";
+                int headerLength = insuranceHeader.length();
+                for (int i = 1; i <= headerLength; i++) {
+                    insuranceEnd = insuranceEnd + "=";
+                }
+                lines.add(insuranceEnd);
+
+                lines.add("\n");
+                insuranceIndex++;
+            }
+            lines.add("--------End of " + person.getName().fullName + "'s profile");
+            lines.add("\n");
+            personIndex++;
+        }
+----
+Firstly, the time and date the address book is printed will be written down.
+After this, the total number of people in LISA at this time will also be written.
+Print Command iterates through each contact in the addressbook and prints out his/her basic details first.
+For each person, print command then iterates through ALL insurance policies he is involved in (whether as an
+owner/beneficiary/insured) and prints out the policy details.
+
+The Print Command requires two things: (1) That a filepath be specified, and (2) that the filepath does not contain illegal
+file path characters, which includes the following: /:*?"<>|
+
+[source,java]
+----
+    public static String parseFilePath(String args) throws IllegalValueException, InvalidPathException {
+        final Matcher matcher = PRINT_ARGS_FORMAT.matcher(args.trim());
+        if (!matcher.matches()) {
+            throw new IllegalValueException(MESSAGE_INVALID_COMMAND_FORMAT);
+        }
+        final Matcher matcherFilePath = PRINT_ARGS_ILLEGAL.matcher(args.trim());
+        if (!matcherFilePath.matches()) {
+            throw new InvalidPathException(args, MESSAGE_INVALID_FILEPATH);
+        }
+        return matcher.group("filename");
+    }
+----
+If the first requirement is violated, an IllegalValueException will be thrown.
+
+For the second requirement a regex has been set to detect the above mentioned illegal characters
+[source, java]
+----
+public static final Pattern PRINT_ARGS_ILLEGAL =
+            Pattern.compile("(?<filename>[^\\\\/:*?\"<>|]+)"); //Filepath cannot include illegal characters
+----
+If the specified file path contains illegal characters such that the second requirement is violated, then an
+InvalidPathException will be thrown.
+// end::print[]
+
+// tag::why[]
+=== Addition of Why Command
+The Why Command throws the user with random information about the indexed person upon
+asking "why".
+
+A fun, interesting easter egg feature for the user to play with in LISA.
+
+[source,java]
+----
+    public String getReason() {
+            Address address = this.getAddress();
+            Name name = this.getName();
+            Email email = this.getEmail();
+            DateOfBirth dob = this.getDateOfBirth();
+            Random randomGenerator = new Random();
+            int randomInt = randomGenerator.nextInt(6);
+            if (randomInt == 0) {
+                if (address.toString() == "") {
+                    this.reason = String.format(SHOWING_WHY_MESSAGE_NO_ADDRESS, name);
+                } else {
+                    this.reason = String.format(SHOWING_WHY_MESSAGE, name, address);
+                }
+            } else if (randomInt == 1) {
+                if (dob.toString() == "") {
+                    this.reason = String.format(SHOWING_WHY_MESSAGE_NO_DOB, name);
+                } else {
+                    this.reason = String.format(SHOWING_WHY_MESSAGE_2, name, dob);
+                }
+            } else if (randomInt == 2) {
+                if (email.value == "") {
+                    this.reason = String.format(SHOWING_WHY_MESSAGE_NO_EMAIL, name);
+                } else {
+                    this.reason = String.format(SHOWING_WHY_MESSAGE_3, name, email);
+                }
+            } else if (randomInt == 3) {
+                this.reason = String.format(SHOWING_WHY_MESSAGE_4, name);
+            } else if (randomInt == 4) {
+                this.reason = String.format(SHOWING_WHY_MESSAGE_5, name);
+            } else if (randomInt == 5) {
+                this.reason = String.format(SHOWING_WHY_MESSAGE_6, name);
+            }
+            return reason;
+        }
+----
+Why command takes in the index of a person, for e.g. why 1. The command parser then parses the index
+(in a similar way to edit) and runs through a random "reason" generator in getReason() in Person.java.
+For if 1, 2 or 3 is generated by randomGenerator.nextInt(5),  then the persons address, dob or email will
+be returned respectively, for example, "Because John Doe lives in Clementi Ave 2". For 4, 5 and 6, other interesting
+messages will be printed, such as "Because John Doe appreciates you".
+//end::why[]
+
+// tag::pdfSaveLoad[]
+=== Save/Load (contract) pdf file
+
+Allows for pdf file of the contract to be added to the project, and accessed by clicking on the link on insurance profile page.
+
+image::contractPdf.png[width="380"]
+
+If file is not detected in the project folder (data folder), filechooser will popup to allow user to add the pdf file into the project. Regardless of the name of the file chosen, it will automatically be renamed to the name specified in the insurance profile.
+
+In the case that the file exist in the project folder, the entry for contract file will be highlighted upon hover and will open the file upon clicking.
+
+[source,java]
+----
+  private void initializeContractFile(ReadOnlyInsurance insurance) {
+         insuranceFile =  new File(PDFFOLDERPATH + insurance.getContractPath());
+         if (isFileExists(insuranceFile)) {
+             activateLinkToInsuranceFile();
+         } else {
+             contractName.getStyleClass().clear();
+             contractName.getStyleClass().add("missing-file");
+             contractName.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                 @Override
+                 public void handle(MouseEvent event) {
+                     FileChooser.ExtensionFilter extFilter =
+                             new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf");
+                     FileChooser chooser = new FileChooser();
+                     chooser.getExtensionFilters().add(extFilter);
+                     File openedFile = chooser.showOpenDialog(null);
+                     activateLinkToInsuranceFile();
+
+                     if (isFileExists(openedFile)) {
+                         try {
+                             Files.copy(openedFile.toPath(), insuranceFile.toPath());
+                         } catch (IOException ex) {
+                             logger.info("Unable to open at path: " + openedFile.getAbsolutePath());
+                         }
+                     }
+                 }
+             });
+
+         }
+     }
+----
+
+As seen, the `File insuranceFile` attempts to find the file in the folder containing all save files.
+[source,Java]
+----
+private static final String PDFFOLDERPATH = "data/";
+----
+Upon successful retrieval of the file, or adding of the file if it does not exist, the method `activateLinkToInsuranceFile()` is then called to add a mouse click handler onto the contract entry to open up the file.
+
+[source,java]
+----
+private void activateLinkToInsuranceFile() {
+         contractName.getStyleClass().clear();
+         contractName.getStyleClass().add("valid-file");
+         contractName.setOnMouseClicked(event -> {
+             try {
+                 Desktop.getDesktop().open(insuranceFile);
+             } catch (IOException ee) {
+                 logger.info("File do not exist: " + PDFFOLDERPATH + insurance.getContractPath());
+             }
+         });
+     }
+----
+// end::pdfSaveLoad[]
+
+// tag::switchBetweenProfileAndInsurance[]
+=== Switching middle panel between Profile and Insurance page
+
+Implemented by raising events when one of the following events is detected
+
+1) `Person` card selected from left panel : `PersonPanelSelectionChangedEvent`
+
+2) `Insurance` card selected from right panel : `InsurancePanelSelectionChangedEvent`
+
+3) `Person` name selected from `InsuranceProfilePanel` when bound to middle panel : `PersonNameClickedEvent`
+
+4) `Insurance` selected from `ProfilePanel` when bound to middle panel : `InsuranceClickedEvent`
+
+Each of these events call their own respective event handler and raise `SwitchToProfilePanelRequestEvent` or `SwitchToInsurancePanelRequestEvent` as required.
+These 2 events are picked up by `MainWindow` which switch the middle panel placeholder binding to respective node.
+[source, java]
+----
+ @Subscribe
+    private void handleSwitchToProfilePanelRequestEvent(SwitchToProfilePanelRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+
+        middlePanelPlaceholder.getChildren().clear();
+        middlePanelPlaceholder.getChildren().add(profilePanel.getRoot());
+    }
+
+    @Subscribe
+    private void handleSwitchToInsurancePanelRequestEvent(SwitchToInsurancePanelRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+
+        middlePanelPlaceholder.getChildren().clear();
+        middlePanelPlaceholder.getChildren().add(insuranceProfilePanel.getRoot());
+    }
+----
+// end::switchBetweenProfileAndInsurance[]
+
+// tag::restrictTabToTextField[]
+
+=== Restrict 'Tab' key to switching only between the textfields
+
+This feature is implemented in `MainWindow` in order to circumvent direct coupling between `CommandBox` and `SearchBox` class. In order to locate the nodes for this two textfields, `lookup` function from `Scene` is utilized.
+
+[source, java]
+----
+    public void setTransversableTextFields() {
+        commandTextField = (TextField) primaryStage.getScene().lookup(COMMANDBOX_TEXTFIELD_ID);
+        searchTextField = (TextField) primaryStage.getScene().lookup(SEARCHBOX_TEXTFIELD_ID);
+    }
+----
+
+[NOTE]
+The function above must be called after the `show()` function
+
+The two static arguments are their respective `fx:id`
+
+[source, java]
+----
+ private static final String COMMANDBOX_TEXTFIELD_ID = "#commandTextField";
+     private static final String SEARCHBOX_TEXTFIELD_ID = "#searchTextField";
+----
+
+Handle for `KeyEvent` is then written in such the way that Tab will be handled by MainWindow and not its children. After setting up the nodes, all is left is to call `requestFocus()` accordingly.
+
+[source, java]
+----
+ getRoot().addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+            if (event.getCode().equals(KeyCode.TAB)) {
+                if (commandTextField.isFocused()) {
+                    searchTextField.requestFocus();
+                }
+                else {
+                    commandTextField.requestFocus();
+                }
+                event.consume();
+            }
+            if (event.getTarget() instanceof TextInputControl && keyCombination.match(event)) {
+                menuItem.getOnAction().handle(new ActionEvent());
+                event.consume();
+            }
+        });
+    }
+----
+// end::restrictTabToTextField[]
 
 // tag::undoredo[]
 === Undo/Redo mechanism
@@ -343,6 +1456,56 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Alternative 2:** Use `HistoryManager` for undo/redo +
 **Pros:** We do not need to maintain a separate stack, and just reuse what is already in the codebase. +
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
+
+// tag::undoredoEnhance[]
+==== Enhancement: Undone/Redone Command as feedback in addition to Success Message
+`v1.5 Implementation`
+Each undoable command class (AddCommand, DeleteCommand, ClearCommand, EditCommand) will have and overriden ToString()
+function that allows the relevant details of the executed command to be printed out.
+
+Below is an example of the overriden ToString() function in the context of AddCommand.java
+[source,java]
+----
+    /**
+     * Returns the Command String of that added this person into the addressbook
+     */
+    @Override
+    public String toString() {
+        final StringBuilder builder = new StringBuilder();
+        builder.append(toAdd.getName())
+                .append(" Phone: ")
+                .append(toAdd.getPhone())
+                .append("Email: ")
+                .append(toAdd.getEmail())
+                .append("Address: ")
+                .append(toAdd.getAddress())
+                .append("DateOfBirth: ")
+                .append(toAdd.getDateOfBirth())
+                .append("Gender: ")
+                .append(toAdd.getGender())
+                .append(" Tags: ");
+        toAdd.getTags().forEach(builder::append);
+        String person = builder.toString();
+        return COMMAND_WORD + " " + person;
+    }
+----
+
+Before executing an Undo Command and transferring the undoable command from the undoStack to the redoStack, a peek is taken
+into the undoStack to obtain the undoable command to be undone. The command string that of this command to be undone can
+then be obtained from the overriden ToString() function of this undoable command.
+
+After obtaining the command string, the popping of the undoable command from the undoStack to the redoStack will proceed.
+
+[source,java]
+----
+        String commandString = undoRedoStack.peekUndo().toString();
+        String feedbackToUser = parseUndoCommand(commandString);
+        undoRedoStack.popUndo().undo();
+
+        return new CommandResult(feedbackToUser);
+----
+// end::undoredoEnhance[]
+
 // end::undoredo[]
 
 === Logging
@@ -721,17 +1884,66 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
+
+|`* * *` |insurance agent | add an insurance | manage my clients according to the insurances they purchased
+
+|`* * *` |insurance agent | delete an insurance | remove entries that I no longer needed
+
+|`* * *` |insurance agent | link an insurance to a digital contract file| have a digital copy reference
+
+|`* * *` |user | export my contacts as a printable file| have a hard copy reference
+
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *` |user |Include gender as a field in record entry|
+
+|`* * *` |user |Include date of birth as a field in record entry|
+
+|`* * *` |user |add a new person by providing only his/her name| edit and provide the details later on
 
 |`* * *` |user |delete a person |remove entries that I no longer need
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |careless user| undo/redo previous command | to easily correct the mistake I made
+
+|`* * *` |user | add/delete tags without overwriting/rewriting the entire tag list |
+
+|`* * *` |user | be able to edit a small typo in the contact without re-typing the entire contact detail |
+
+|`* *` |user | search with partial keyword | find details I'm not sure of
+
+|`* *` |user | import contact from other types of file|
+
+|`* *` |user | add birthday to contacts |
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
+|`* *` |artistic user| customize the GUI without extensive programming knowledge|
+
+|`* *` |forgetful user| have reminder for upcoming link:#event[events]|
+
+|`* *` |lazy user | auto-complete my command| reduce typing
+
+|`* *` |secured user| set password to unlock the addressbook| have enhanced security
+
+|`* *` |unorganized user| add link:#appointment[appointment] to contacts|
+
+|`* *` |user with international friends| add country/area code to phone number| know exactly where the number connects to
+
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*` |user | check last modified date for a contact| identify possible outdated contacts
+
+|`*` |lazy user| create an email by clicking on email address on person card| send email on the fly
+
+|`*` |prudent user| confirm what command I am undo-ing or redo-ing when I excecute the undo/redo command| do not make unintentional changes
+
+|`*` |efficient user | have my contact list sorted in alphabetical order| have a well ordered list of contacts in LISA or in the printed address book.
+
+|`*` |user | have interesting Easter Egg features| have some fun with the application
+
+
 |=======================================================================
 
 {More to be added}
@@ -767,6 +1979,35 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+=== Use case: Filter contact with search box
+
+*MSS*
+
+1. User types the desired contact partially into the search box
+2. AddressBooks shows specific contacts that matched the partial search
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. User input too few partial keywords
++
+[none]
+** 1a1. AddressBook shows filtered list with too many contacts
+** 1a2. User extends the keyword to narrow down the search further
++
+Use case resumes at step 2.
++
+[none]
+* 1b. No match for given keywords
++
+[none]
+** 1b1. AddressBook shows empty contact panel
++
+Use case ends.
+
+
 {More to be added}
 
 [appendix]
@@ -781,6 +2022,20 @@ Use case resumes at step 2.
 [appendix]
 == Glossary
 
+[[appointment]]
+Appointment
+
+....
+Agenda, Venue, Date and Time
+....
+
+[[event]]
+Event
+
+....
+Things specific to a contact which requires attention. eg: appointment, birthday, etc.
+....
+
 [[mainstream-os]]
 Mainstream OS
 
@@ -794,6 +2049,7 @@ Private contact detail
 ....
 A contact detail that is not meant to be shared with others
 ....
+
 
 [appendix]
 == Product Survey

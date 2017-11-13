@@ -1,0 +1,110 @@
+= Oscar Wang - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== LISA: Levels Integrated Secretarial Agent
+LISA: Levels Integrated Secretarial Agent is a desktop address book application designed for insurance agents to manage the complex relationship between the providers and clients.
+While the main user interactions happen across CLI, it also has a GUI built with JavaFX.
+LISA is developed by enhancing the original program "addressbook-level4" provided in class for teaching Software Engineering principles.
+The original program is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T13-B1/main/tree/master/collated/main/OscarWang114.md[Functional code]] [https://github.com/CS2103AUG2017-T13-B1/main/tree/master/collated/test/OscarWang114.md[Test code]]
+
+=== Enhancement Added: 'add' command with only one compulsory field: NAME
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=add]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+As a user, I can add contacts even if I only know his/her name.
+In reality, it is unreasonable to require users to provide complete information of a person when adding his/her as a contact.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=add]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Reading and Storing Life Insurances
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+
+#End of Extract#
+
+---
+
+==== Justification
+
+This feature serves as a precursor of the implementation for the user story: As an insurance agent, I can specify the provider-client relationship among my contacts.
+
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=li]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: 'addli' command for adding life insurances
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=addli]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+This feature is an implementation of the user story: As an insurance agent, I can specify the provider-client relationship among my contacts.
+It is crucial for LISA to allow insurance agents to create insurances, a provider-client relationship in the contacts.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=addli]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed:
+
+- All the features listed above
+- Implement date-related classes using Java 8 LocalDate
+- Create a Gender class for each contact
+
+=== Other contributions
+
+- Reviewed the majority of the pull requests submitted by other team members.
+- Assisted several team members personally in programming, debugging, and Git-related issues.
+- Reported bugs in other team's product in acceptance testing. [https://github.com/CS2103AUG2017-F11-B3/main/issues/74[Bug 1]] [https://github.com/CS2103AUG2017-F11-B3/main/issues/73[Bug 2]]

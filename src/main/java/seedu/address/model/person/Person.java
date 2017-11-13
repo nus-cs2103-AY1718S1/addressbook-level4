@@ -2,13 +2,36 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.logic.commands.WhyCommand.SHOWING_WHY_MESSAGE;
+import static seedu.address.logic.commands.WhyCommand.SHOWING_WHY_MESSAGE_2;
+import static seedu.address.logic.commands.WhyCommand.SHOWING_WHY_MESSAGE_3;
+import static seedu.address.logic.commands.WhyCommand.SHOWING_WHY_MESSAGE_4;
+import static seedu.address.logic.commands.WhyCommand.SHOWING_WHY_MESSAGE_5;
+import static seedu.address.logic.commands.WhyCommand.SHOWING_WHY_MESSAGE_6;
+import static seedu.address.logic.commands.WhyCommand.SHOWING_WHY_MESSAGE_NO_ADDRESS;
+import static seedu.address.logic.commands.WhyCommand.SHOWING_WHY_MESSAGE_NO_DOB;
+import static seedu.address.logic.commands.WhyCommand.SHOWING_WHY_MESSAGE_NO_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DELTAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DOB;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_GENDER;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
-import java.util.Collections;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 import java.util.Set;
+import java.util.UUID;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import seedu.address.logic.parser.Prefix;
+import seedu.address.model.insurance.ReadOnlyInsurance;
+import seedu.address.model.insurance.UniqueLifeInsuranceList;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -22,28 +45,64 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Phone> phone;
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
+    private ObjectProperty<DateOfBirth> dob;
+    private ObjectProperty<Gender> gender;
+
+    private String reason;
 
     private ObjectProperty<UniqueTagList> tags;
+    private ObjectProperty<List<UUID>> lifeInsuranceIds;
+    private ObjectProperty<UniqueLifeInsuranceList> lifeInsurances;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
+    public Person(Name name, Phone phone, Email email, Address address, DateOfBirth dob, Gender gender, Set<Tag> tags,
+                  List<UUID> lifeInsuranceIds) {
+        requireAllNonNull(name, phone, email, address, dob, gender, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
+        this.dob = new SimpleObjectProperty<>(dob);
+        this.gender = new SimpleObjectProperty<>(gender);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+        this.lifeInsuranceIds = new SimpleObjectProperty<>(lifeInsuranceIds);
+        this.lifeInsurances = new SimpleObjectProperty<>(new UniqueLifeInsuranceList());
     }
 
+    /**
+     * Only the name field is required
+     */
+    public Person(Name name, Phone phone, Email email, Address address, DateOfBirth dob, Gender gender, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, dob, tags);
+        this.name = new SimpleObjectProperty<>(name);
+        this.phone = new SimpleObjectProperty<>(phone);
+        this.email = new SimpleObjectProperty<>(email);
+        this.address = new SimpleObjectProperty<>(address);
+        this.dob = new SimpleObjectProperty<>(dob);
+        this.gender = new SimpleObjectProperty<>(gender);
+        // protect internal tags from changes in the arg list
+        this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+        this.lifeInsuranceIds = new SimpleObjectProperty<>(new ArrayList<UUID>());
+        this.lifeInsurances = new SimpleObjectProperty<>(new UniqueLifeInsuranceList());
+    }
+
+    //@@author OscarWang114
     /**
      * Creates a copy of the given ReadOnlyPerson.
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
-                source.getTags());
+                source.getDateOfBirth(), source.getGender(), source.getTags());
+        if (source.getLifeInsuranceIds() != null) {
+            this.lifeInsuranceIds = new SimpleObjectProperty<>(source.getLifeInsuranceIds());
+        }
+        if (source.getLifeInsurances() != null) {
+            this.lifeInsurances = new SimpleObjectProperty<>(source.getLifeInsurances());
+        }
+
     }
 
     public void setName(Name name) {
@@ -102,15 +161,150 @@ public class Person implements ReadOnlyPerson {
         return address.get();
     }
 
+    //@@author Pujitha97
+    public void setDateOfBirth(DateOfBirth dob) {
+        this.dob.set(requireNonNull(dob));
+    }
+
+    @Override
+    public ObjectProperty<DateOfBirth> dobProperty() {
+        return dob;
+    }
+
+    @Override
+    public DateOfBirth getDateOfBirth() {
+        return dob.get();
+    }
+
+    public void setGender(Gender gender) {
+        this.gender.set(requireNonNull(gender));
+    }
+
+    @Override
+    public ObjectProperty<Gender> genderProperty() {
+        return gender;
+    }
+
+    @Override
+    public Gender getGender() {
+        return gender.get();
+    }
+    //@@author
+
+    //@@author arnollim
+    @Override
+    public String getReason() {
+        Address address = this.getAddress();
+        Name name = this.getName();
+        Email email = this.getEmail();
+        DateOfBirth dob = this.getDateOfBirth();
+
+        Random randomGenerator = new Random();
+        int randomInt = randomGenerator.nextInt(6);
+        /**
+         * There are 6 easter egg messages that can be returned as feedback to the user. Which message is returned is
+         * randomly generated as decided by randomInt.
+         */
+        if (randomInt == 0) {
+
+            if (address.toString() == "") {
+                this.reason = String.format(SHOWING_WHY_MESSAGE_NO_ADDRESS, name);
+            } else {
+                this.reason = String.format(SHOWING_WHY_MESSAGE, name, address);
+            }
+
+        } else if (randomInt == 1) {
+
+            if (dob.toString() == "") {
+                this.reason = String.format(SHOWING_WHY_MESSAGE_NO_DOB, name);
+            } else {
+                this.reason = String.format(SHOWING_WHY_MESSAGE_2, name, dob);
+            }
+
+        } else if (randomInt == 2) {
+            if (email.value == "") {
+                this.reason = String.format(SHOWING_WHY_MESSAGE_NO_EMAIL, name);
+            } else {
+                this.reason = String.format(SHOWING_WHY_MESSAGE_3, name, email);
+            }
+
+        } else if (randomInt == 3) {
+            this.reason = String.format(SHOWING_WHY_MESSAGE_4, name);
+        } else if (randomInt == 4) {
+            this.reason = String.format(SHOWING_WHY_MESSAGE_5, name);
+        } else if (randomInt == 5) {
+            this.reason = String.format(SHOWING_WHY_MESSAGE_6, name);
+        }
+        return reason;
+    }
+    //@@author
+
+    //@@author OscarWang114
+    /**
+     * Adds a life insurance id to {@code lifeInsuranceIds} of this person.
+     * Returns if a duplicate of the id to add already exists in the list.
+     */
+    public void addLifeInsuranceIds(UUID toAdd) {
+        for (UUID id : lifeInsuranceIds.get()) {
+            if (id.equals(toAdd)) {
+                return;
+            }
+        }
+        lifeInsuranceIds.get().add(toAdd);
+    }
+
+    /**
+     * Clears the list of life insurance ids in this person.
+     */
+    public void clearLifeInsuranceIds() {
+        lifeInsuranceIds = new SimpleObjectProperty<>(new ArrayList<UUID>());
+    }
+
+    @Override
+    public ObjectProperty<List<UUID> > lifeInsuranceIdProperty() {
+        return this.lifeInsuranceIds;
+    }
+
+    @Override
+    public List<UUID> getLifeInsuranceIds() {
+        return this.lifeInsuranceIds.get();
+    }
+
+    /**
+     * Adds a life insurance to {@code UniqueLifeInsuranceList} of this person.
+     */
+    public void addLifeInsurances(ReadOnlyInsurance lifeInsurance) {
+        this.lifeInsurances.get().add(lifeInsurance);
+    }
+
+    /**
+     * Clears the list of life insurances in this person.
+     */
+    public void clearLifeInsurances() {
+        this.lifeInsurances = new SimpleObjectProperty<>(new UniqueLifeInsuranceList());
+    }
+
+    @Override
+    public ObjectProperty<UniqueLifeInsuranceList> lifeInsuranceProperty() {
+        return this.lifeInsurances;
+    }
+
+    @Override
+    public UniqueLifeInsuranceList getLifeInsurances() {
+        return this.lifeInsurances.get();
+    }
+    //@@author
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
      */
     @Override
     public Set<Tag> getTags() {
-        return Collections.unmodifiableSet(tags.get().toSet());
+        return tags.get().toSet();
     }
 
+    @Override
     public ObjectProperty<UniqueTagList> tagProperty() {
         return tags;
     }
@@ -120,6 +314,30 @@ public class Person implements ReadOnlyPerson {
      */
     public void setTags(Set<Tag> replacement) {
         tags.set(new UniqueTagList(replacement));
+    }
+
+    public String getDetailByPrefix(Prefix prefix) {
+        if (prefix.equals(PREFIX_NAME)) {
+            return getName().toString();
+        } else if (prefix.equals(PREFIX_ADDRESS)) {
+            return getAddress().toString();
+        } else if (prefix.equals(PREFIX_EMAIL)) {
+            return getEmail().toString();
+        } else if (prefix.equals(PREFIX_PHONE)) {
+            return getPhone().toString();
+        } else if (prefix.equals(PREFIX_DOB)) {
+            return getDateOfBirth().toString();
+        } else if (prefix.equals(PREFIX_GENDER)) {
+            return getGender().toString();
+        } else if (prefix.equals(PREFIX_TAG) || prefix.equals(PREFIX_DELTAG)) {
+            Set<Tag> tags = getTags();
+            String detail = "";
+            for (Tag tag : tags) {
+                detail += tag.tagName + " ";
+            }
+            return detail.trim();
+        }
+        return "";
     }
 
     @Override
@@ -132,7 +350,7 @@ public class Person implements ReadOnlyPerson {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(name, phone, email, address, dob, gender, tags);
     }
 
     @Override

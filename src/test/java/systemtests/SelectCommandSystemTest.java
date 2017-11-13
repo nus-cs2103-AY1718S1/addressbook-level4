@@ -2,7 +2,6 @@ package systemtests;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
-import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.SelectCommand.MESSAGE_SELECT_PERSON_SUCCESS;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
@@ -74,16 +73,17 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
         assertCommandFailure(SelectCommand.COMMAND_WORD + " " + -1,
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
 
-        /* Case: invalid arguments (alphabets) -> rejected */
-        assertCommandFailure(SelectCommand.COMMAND_WORD + " abc",
+        /* Case: invalid arguments (invalid panel choice) -> rejected */
+        assertCommandFailure(SelectCommand.COMMAND_WORD + " " + validIndex.getZeroBased() + " abc",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
 
-        /* Case: invalid arguments (extra argument) -> rejected */
-        assertCommandFailure(SelectCommand.COMMAND_WORD + " 1 abc",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
+        /* Case: extra arguments -> cleared */
+        command = SelectCommand.COMMAND_WORD + " " + validIndex.getOneBased() + " left" + " abc";
+        assertCommandSuccess(command, validIndex);
 
-        /* Case: mixed case command word -> rejected */
-        assertCommandFailure("SeLeCt 1", MESSAGE_UNKNOWN_COMMAND);
+        /* Case: mixed case command word -> cleared */
+        command = "SeLeCt" + " " + validIndex.getOneBased();
+        assertCommandSuccess(command, validIndex);
 
         /* Case: select from empty address book -> rejected */
         executeCommand(ClearCommand.COMMAND_WORD);

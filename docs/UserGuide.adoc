@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= LISA: Levels Integrated Secretarial Agent - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -22,7 +22,7 @@ By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
+.  Download the latest `LISA.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
@@ -48,51 +48,83 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+* Dates require a DAY-MONTH-YEAR format, where day and month can be single or double digit, month can also be
+the name in 3-letter form or the long name, and year can be 2 or 4-digit, where the 2-digit form is
+corrected to the last century
 ====
 
 === Viewing help : `help`
 
-Format: `help`
+Command words: `help` `h` `hlp` `f1` `commands` `command` `sos`
 
+
+// tag::add[]
 === Adding a person: `add`
+`since v1.1`
+
+Command words: `add` `a` `+`
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+
+Format: `add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [g/Gender] [d/DATE_OF_BIRTH] [t/TAG]...`
 
 [TIP]
-A person can have any number of tags (including 0)
+A person must have a name and can have any number of tags (including 0)
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/John Doe`
+* `add n/Mary Jane p/98765432 e/maryjane@example.com a/Mary street, block 123, #01-01`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison d/28 02 1996 g/FEMALE t/criminal`
 
+// end::add[]
 === Listing all persons : `list`
+
+Command words: `list`
 
 Shows a list of all persons in the address book. +
 Format: `list`
+// tag::edit[]
 
 === Editing a person : `edit`
+`v1.3` Autofill replaces all empty fields at once +
+`v1.2` Only Name field necessary +
+
+Command words: `edit` `e` `change` `ed`
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [g/Gender] [d/DATE OF BIRTH] [t/TAG] [dt/TAG_TO_DELETE]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
+* When editing tags, tags will be added on to the current existing tags.
+* You can remove all the person's tags by typing dt/all.
+* Autofill feature is enabled, by typing the prefix of interest and pressing enter, the details of the selected person is autofilled.
+* Press multiple times to autofill multiple prefixes.
 ****
+[TIP]
+====
+*Autofilling* +
+In the event that you wish to edit a very long field in the contact and just wish
+to correct a typo, you can enter the prefix(es) (e.g. edit 1 n/ p/) and press enter
+for LISA to fill it up for you.
+====
 
 Examples:
 
 * `edit 1 p/91234567 e/johndoe@example.com` +
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+* `edit 2 n/Betsy Crower dt/all t/cute` +
+Edits the name of the 2nd person to be `Betsy Crower`, clears all existing tags and adds the cute tag.
+* `edit 1 n/` +
+Triggers the programme to autofill the name after the prefix is entered, becoming `edit 1 n/Betsy Crower`
+// end::edit[]
 
 === Locating persons by name: `find`
+
+Command words: `find` `f` `look` `lookup`
 
 Finds persons whose names contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
@@ -112,13 +144,45 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
-=== Deleting a person : `delete`
 
-Deletes the specified person from the address book. +
-Format: `delete INDEX`
+// tag::pfind[]
+=== Locating persons by the first few alphabets of the name: `pfind`
+`since v1.1`
+
+Command words: `pfind` `pf` `plook` `plookup`
+
+Finds persons whose names begins with the given keywords. +
+Format: `pfind PARTIALNAME [MORE_PARTIALNAMES]`
 
 ****
-* Deletes the person at the specified `INDEX`.
+* The search is case insensitive. e.g `ha` will match `Hans`
+* Searches anywhere within the name. eg `ar` will match `Jaryl`
+* Both partial or full name will be matched. e.g. A or Alice will both return `Alice`
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Ha B` will return `Hans Gruber`, `Bo Yang`
+****
+
+Examples:
+
+* `pfind li` +
+Returns any name containing li anywhere within the name, eg: `Alice Syn`, `Charlotte Oliveiro`, `David Li`
+
+Alternatively, this command can perform by directly inputting `PARTIALNAME` into the search box right above the contact panel.
+
+image::searchBox.png[width="380"]
+
+// end::pfind[]
+=== Deleting a person : `delete`
+
+Command words: `delete` `del` `d` `-`
+
+Deletes the specified person/insurance from the address book. +
+Format: `delete INDEX [PANEL_CHOICE]`
+
+****
+* Deletes the person/insurance at the specified `INDEX`.
+* Panel choice can be indicated by adding an additional argument `[left|l|person|p]` for the
+person panel or `[right|r|insurance|i]` for the insurance panel.
+* Panel choice is the person panel by default.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
@@ -128,19 +192,24 @@ Examples:
 * `list` +
 `delete 2` +
 Deletes the 2nd person in the address book.
-* `find Betsy` +
-`delete 1` +
-Deletes the 1st person in the results of the `find` command.
+* `delete 1 r` +
+Deletes the 1st insurance in the insurance panel.
 
 === Selecting a person : `select`
 
-Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
+Command words: `select` `s` `choose` `sel`
+
+Selects the person/insurance identified by the index number used in the last listing. +
+Format: `select INDEX [PANEL_CHOICE]`
 
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
+* Selects the person and loads the personal profile of the person or selects the insurance
+and loads the insurance profile of the insurance at the specified `INDEX`
+* Panel choice can be indicated by adding an additional argument `[left|l|person|p]` for the
+person panel or `[right|r|insurance|i]` for the insurance panel.
+* Panel choice is the person panel by default.
 * The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
+* The index *must be a positive integer* `1, 2, 3, ...` and *index must be within the respective list.*
 ****
 
 Examples:
@@ -148,11 +217,41 @@ Examples:
 * `list` +
 `select 2` +
 Selects the 2nd person in the address book.
-* `find Betsy` +
-`select 1` +
-Selects the 1st person in the results of the `find` command.
+* `select 1 r` +
+Selects the 1st insurance in the insurance panel.
 
+// tag::addli[]
+=== Adding a Life Insurance: `addli`
+`since v1.5`
+
+Command words: `addli` `ali` `+li`
+
+Adds a life insurance in Lisa +
+
+Format: `addli n/NAME o/OWNER i/INSURED b/BENEFICIARY pr/PREMIUM c/CONTRACT_FILE_PATH sd/SIGNING_DATE ed/EXPIRY_DATE`
+
+// tag::prefixAutofill[]
+[TIP]
+====
+*Prefix filling* +
+All fields are required here as a life insurance needs to be complete before it is valid.
+However, due to the multitude of information required, you can press enter with an unfilled
+command to trigger the autofill to prompt you with the prefixes required. Also,
+pressing enter allows you to move to the next field.
+====
+// end::prefixAutofill[]
+
+Examples:
+
+* `addli n/Term Life o/Alex Yeoh i/John Doe b/Mary Jane c/TermLife.pdf
+         pr/600 sd/01 11 2017 ed/01 11 2037`
+* `addli n/Whole Life o/Bernice Yu i/David Li b/Roy Balakrishnan c/WholeLife.pdf
+            pr/8500 sd/01 11 2017 ed/01 11 2117`
+
+// end::addli[]
 === Listing entered commands : `history`
+
+Command words: `history` `last` `h` `hist`
 
 Lists all the commands that you have entered in reverse chronological order. +
 Format: `history`
@@ -164,6 +263,8 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 
 // tag::undoredo[]
 === Undoing previous command : `undo`
+
+Command words: `undo` `u` `revert`
 
 Restores the address book to the state before the previous _undoable_ command was executed. +
 Format: `undo`
@@ -191,6 +292,8 @@ The `undo` command fails as there are no undoable commands executed previously.
 
 === Redoing the previously undone command : `redo`
 
+Command words: `redo` `r`
+
 Reverses the most recent `undo` command. +
 Format: `redo`
 
@@ -214,13 +317,110 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 === Clearing all entries : `clear`
 
+Command words: `clear` `clr` `c` `cl`
+
 Clears all entries from the address book. +
 Format: `clear`
 
+// tag::linkAllProfileAndInsurance[]
+=== Tracing a person from insurance profile
+`since v1.3`
+
+Directly switching to a person profile page by clicking on their name on insurance profile
+
+image::profileJump.png[width="380"]
+
+Person name will be highlighted upon hover to indicate it is a link
+
+=== Finding insurance from insurance panel list on the right
+`since v1.4`
+
+image::insurancePanel.png[width="380"]
+
+Specific insurance contract can be displayed directly by selecting them on this panel
+
+=== Tracing all insurance files the current person selected is involved in
+`since v1.4`
+
+image::linkToInsurance.png[width="380"]
+List of all related insurance contracts are now displayed on person profile page. These entries can be clicked on which will switch up the selected insurance page
+// end::linkAllProfileAndInsurance[]
+
+// tag::pdfSaveLoad[]
+=== Add/View contract pdf file
+`since v1.4`
+
+The pdf file for contract can now be added by clicking on file name beside "Contract Path:"  which will bring up the file directory. Afterwards, clicking on the same entry will directly open the file for viewing
+
+image::contractPdf.png[width="380"]
+// end::pdfSaveLoad[]
+
+// tag::tabSwitch[]
+=== Tab key will only switch between CommandBox and SearchBox
+`since v1.5`
+
+To facilitate the usage of LISA via keyboard only, tabs nagivation is restricted only to the two textfields for easy input.
+// end::tabSwitch[]
+
+
+// tag::print[]
+=== Printing the Address book : `print`
+`since v1.4`
+
+Command words: `print`
+
+Saves the entire address book into a printable .txt file. +
+Format: `print FILENAME`
+
+After executing the command, the user can find the saved file as FILENAME.txt in the same directory where the project/.jar
+file is saved.
+
+For example: the user intends to print the address book as FILEPATH.txt
+
+image::PrintCommandSuccess.png[width="800"]
+
+Now, he can find his FILEPATH.txt file along side the .jar file directory.
+
+image::TextFilePath.png[width="600"]
+
+* Note: The file name cannot contain illegal file path characters, which includes the following: /:*?"<>|
+
+
+The result of the created .txt file is illustrated in the figure below
+
+image::PrintedTxtFile.png[width="800"]
+
+Examples:
+
+* `print FILENAME` +
+Prints the entire addressbook by listing all the contacts, and the associated insurance policies with each contact.
+//end::print[]
+
+
+// tag::why[]
+=== Easter egg : `why`
+`since v1.2`
+
+Command words: `why`
+
+Prints out a line telling the user "why" for a particular person
+Format: `why INDEX`
+
+After executing, the user will be presented with a feedback which looks something like this:
+"Because John Doe lives in 123 Clementi Ave 2"
+
+Examples:
+
+* `list` +
+`why 1` +
+Returns "Because Kelvin Liew appreciates you"
+// end::why[]
+
 === Exiting the program : `exit`
 
+Command words: `exit` `quit` `esc` `off` `x`
+
 Exits the program. +
-Format: `exit`
 
 === Saving the data
 
@@ -234,15 +434,17 @@ There is no need to save manually.
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *Add* `add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [g/Gender] [d/DATE_OF_BIRTH] [t/TAG]...` +
+e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 g/MALE t/friend t/colleague`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [g/Gender][d/DATE OF BIRTH] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
+* *Partial Find* : `pfind PARTIALNAME [MORE_PARTIALNAMES]` +
+e.g. `pfind Ja arl Al`
 * *List* : `list`
 * *Help* : `help`
 * *Select* : `select INDEX` +
@@ -250,3 +452,6 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Print* : `print`
+* *Why* : `why`
+

@@ -56,6 +56,11 @@ public class StorageManager extends ComponentManager implements Storage {
     }
 
     @Override
+    public Optional<ReadOnlyAddressBook> readBackupAddressBook() throws DataConversionException, IOException {
+        return readAddressBook(addressBookStorage.getAddressBookFilePath() + "-backup.xml");
+    }
+
+    @Override
     public Optional<ReadOnlyAddressBook> readAddressBook() throws DataConversionException, IOException {
         return readAddressBook(addressBookStorage.getAddressBookFilePath());
     }
@@ -64,6 +69,11 @@ public class StorageManager extends ComponentManager implements Storage {
     public Optional<ReadOnlyAddressBook> readAddressBook(String filePath) throws DataConversionException, IOException {
         logger.fine("Attempting to read data from file: " + filePath);
         return addressBookStorage.readAddressBook(filePath);
+    }
+
+    @Override
+    public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
+        saveAddressBook(addressBook, addressBookStorage.getAddressBookFilePath() + "-backup.xml");
     }
 
     @Override

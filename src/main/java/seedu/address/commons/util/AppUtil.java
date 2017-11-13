@@ -10,6 +10,15 @@ import seedu.address.MainApp;
  */
 public class AppUtil {
 
+    //@@author Juxarius
+    /**
+     * Choice of panel to be selected
+     */
+    public enum PanelChoice {
+        PERSON, INSURANCE
+    }
+    //@@author
+
     public static Image getImage(String imagePath) {
         requireNonNull(imagePath);
         return new Image(MainApp.class.getResourceAsStream(imagePath));

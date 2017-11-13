@@ -8,13 +8,17 @@ import com.google.common.eventbus.Subscribe;
 
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.InsurancePanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
+import seedu.address.commons.events.ui.PersonNameClickedEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.commons.util.AppUtil.PanelChoice;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -43,12 +47,12 @@ public class PersonListPanel extends UiPart<Region> {
 
     private void setEventHandlerForSelectionChangeEvent() {
         personListView.getSelectionModel().selectedItemProperty()
-                .addListener((observable, oldValue, newValue) -> {
-                    if (newValue != null) {
-                        logger.fine("Selection in person list panel changed to : '" + newValue + "'");
-                        raise(new PersonPanelSelectionChangedEvent(newValue));
-                    }
-                });
+            .addListener((observable, oldValue, newValue) -> {
+                if (newValue != null) {
+                    logger.fine("Selection in person list panel changed to : '" + newValue + "'");
+                    raise(new PersonPanelSelectionChangedEvent(newValue));
+                }
+            });
     }
 
     /**
@@ -63,9 +67,31 @@ public class PersonListPanel extends UiPart<Region> {
 
     @Subscribe
     private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        scrollTo(event.targetIndex);
+        if (event.panelChoice == PanelChoice.PERSON) {
+            logger.info(LogsCenter.getEventHandlingLogMessage(event));
+            scrollTo(event.targetIndex);
+        }
     }
+
+    //@@author Juxarius
+    @Subscribe
+    private void handleInsurancePanelSelectionChangedEvent(InsurancePanelSelectionChangedEvent event) {
+        personListView.getSelectionModel().clearSelection();
+    }
+
+    @Subscribe
+    private void handlePersonNameClickedEvent(PersonNameClickedEvent event) {
+        FilteredList<PersonCard> filtered = personListView.getItems().filtered(p ->
+                p.person.getName().toString().equals(event.getName())
+        );
+        if (filtered.size() < 1) {
+            return;
+        } else {
+            personListView.scrollTo(filtered.get(0));
+            personListView.getSelectionModel().select(filtered.get(0));
+        }
+    }
+    //@@author
 
     /**
      * Custom {@code ListCell} that displays the graphics of a {@code PersonCard}.

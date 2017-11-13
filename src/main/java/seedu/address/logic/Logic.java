@@ -4,6 +4,7 @@ import javafx.collections.ObservableList;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.insurance.ReadOnlyInsurance;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -21,6 +22,11 @@ public interface Logic {
 
     /** Returns an unmodifiable view of the filtered list of persons */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
+
+    //@@author OscarWang114
+    /** Returns an unmodifiable view of the list of insurances */
+    ObservableList<ReadOnlyInsurance> getFilteredInsuranceList();
+    //@@author
 
     /** Returns the list of input entered by the user, encapsulated in a {@code ListElementPointer} object */
     ListElementPointer getHistorySnapshot();
