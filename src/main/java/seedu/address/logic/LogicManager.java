@@ -11,6 +11,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
+import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -45,13 +46,35 @@ public class LogicManager extends ComponentManager implements Logic {
         }
     }
 
+    //@@author itsdickson
     @Override
     public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
         return model.getFilteredPersonList();
+    }
+    //@@author
+
+    @Override
+    public ObservableList<ReadOnlyEvent> getFilteredEventList() {
+        return model.getFilteredEventList();
     }
 
     @Override
     public ListElementPointer getHistorySnapshot() {
         return new ListElementPointer(history.getHistory());
     }
+
+    //@@author itsdickson
+    @Override
+    public void setCurrentTheme(String theme) {
+        model.setCurrentTheme(theme);
+    }
+    //@@author
+
+    //@@author archthegit
+
+    @Override
+    public void updateSelectedPerson(ReadOnlyPerson person) {
+        model.updateSelectedPerson(person);
+    }
+
 }

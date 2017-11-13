@@ -12,8 +12,8 @@ import javafx.scene.layout.Region;
 import javafx.scene.web.WebView;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
-import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.commons.events.ui.AccessLocationRequestEvent;
+import seedu.address.commons.events.ui.AccessWebsiteRequestEvent;
 
 /**
  * The Browser Panel of the App.
@@ -21,7 +21,9 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class BrowserPanel extends UiPart<Region> {
 
     public static final String DEFAULT_PAGE = "default.html";
-    public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/search?safe=off&q=";
+    public static final String DEFAULT_LIGHT_PAGE = "defaultLight.html";
+    public static final String DARK_THEME_PAGE = "DarkTheme.css";
+    public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/maps?safe=off&q=";
     public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
 
     private static final String FXML = "BrowserPanel.fxml";
@@ -41,11 +43,21 @@ public class BrowserPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
-    private void loadPersonPage(ReadOnlyPerson person) {
-        loadPage(GOOGLE_SEARCH_URL_PREFIX + person.getName().fullName.replaceAll(" ", "+")
+    //@@author DarrenCzen
+    /**
+     * Access website through browser panel based on person's link
+     * @param website
+     */
+    public void handleWebsiteAccess(String website) {
+        loadPage(website);
+    }
+
+    private void loadPersonLocation(String location) {
+        loadPage(GOOGLE_SEARCH_URL_PREFIX + location.replaceAll(" ", "+")
                 + GOOGLE_SEARCH_URL_SUFFIX);
     }
 
+    //@@author
     public void loadPage(String url) {
         Platform.runLater(() -> browser.getEngine().load(url));
     }
@@ -58,6 +70,21 @@ public class BrowserPanel extends UiPart<Region> {
         loadPage(defaultPage.toExternalForm());
     }
 
+    //@@author itsdickson
+    /**
+     * Sets the default HTML file based on the current theme.
+     */
+    public void setDefaultPage(String currentTheme) {
+        URL defaultPage;
+        if (currentTheme.contains(DARK_THEME_PAGE)) {
+            defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
+        } else {
+            defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_LIGHT_PAGE);
+        }
+        loadPage(defaultPage.toExternalForm());
+    }
+    //@@author
+
     /**
      * Frees resources allocated to the browser.
      */
@@ -65,9 +92,16 @@ public class BrowserPanel extends UiPart<Region> {
         browser = null;
     }
 
+    //@@author DarrenCzen
     @Subscribe
-    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+    private void handleAccessWebsiteEvent(AccessWebsiteRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadPersonPage(event.getNewSelection().person);
+        handleWebsiteAccess(event.website);
+    }
+
+    @Subscribe
+    private void handleAccessLocationEvent(AccessLocationRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadPersonLocation(event.location);
     }
 }

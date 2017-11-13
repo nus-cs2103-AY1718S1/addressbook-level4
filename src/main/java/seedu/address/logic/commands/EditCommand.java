@@ -1,27 +1,39 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_BIRTHDAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_HOME_NUMBER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SCH_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_WEBSITE;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.JumpToListRequestEvent;
+import seedu.address.commons.events.ui.PersonSelectionChangedEvent;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.HomeNumber;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.SchEmail;
+import seedu.address.model.person.Website;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
@@ -32,6 +44,7 @@ import seedu.address.model.tag.Tag;
 public class EditCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "edit";
+    public static final String COMMAND_ALIAS = "e";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
             + "by the index number used in the last person listing. "
@@ -39,8 +52,12 @@ public class EditCommand extends UndoableCommand {
             + "Parameters: INDEX (must be a positive integer) "
             + "[" + PREFIX_NAME + "NAME] "
             + "[" + PREFIX_PHONE + "PHONE] "
+            + "[" + PREFIX_HOME_NUMBER + "HOME NUMBER] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
+            + "[" + PREFIX_SCH_EMAIL + "SCHOOL EMAIL] "
+            + "[" + PREFIX_WEBSITE + "WEBSITE] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
+            + "[" + PREFIX_BIRTHDAY + "BIRTHDAY] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
@@ -70,7 +87,7 @@ public class EditCommand extends UndoableCommand {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_DISPLAYED_INDEX);
         }
 
         ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
@@ -78,12 +95,14 @@ public class EditCommand extends UndoableCommand {
 
         try {
             model.updatePerson(personToEdit, editedPerson);
+            EventsCenter.getInstance().post(new JumpToListRequestEvent(index));
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        EventsCenter.getInstance().post(new PersonSelectionChangedEvent(editedPerson));
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedPerson));
     }
 
@@ -97,11 +116,17 @@ public class EditCommand extends UndoableCommand {
 
         Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
+        HomeNumber updatedHomeNumber = editPersonDescriptor.getHomeNumber().orElse(personToEdit.getHomeNumber());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
+        SchEmail updatedSchEmail = editPersonDescriptor.getSchEmail().orElse(personToEdit.getSchEmail());
+        Website updatedWebsite = editPersonDescriptor.getWebsite().orElse(personToEdit.getWebsite());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
+        Birthday updatedBirthday = editPersonDescriptor.getBirthday().orElse(personToEdit.getBirthday());
+        Boolean favourite = editPersonDescriptor.getFavourite().orElse(personToEdit.getFavourite());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
+        return new Person(updatedName, updatedPhone, updatedHomeNumber, updatedEmail, updatedSchEmail,
+                        updatedWebsite, updatedAddress, updatedBirthday, favourite, updatedTags);
     }
 
     @Override
@@ -129,8 +154,13 @@ public class EditCommand extends UndoableCommand {
     public static class EditPersonDescriptor {
         private Name name;
         private Phone phone;
+        private HomeNumber homeNumber;
         private Email email;
+        private SchEmail schEmail;
+        private Website website;
         private Address address;
+        private Birthday birthday;
+        private Boolean favourite;
         private Set<Tag> tags;
 
         public EditPersonDescriptor() {}
@@ -138,8 +168,13 @@ public class EditCommand extends UndoableCommand {
         public EditPersonDescriptor(EditPersonDescriptor toCopy) {
             this.name = toCopy.name;
             this.phone = toCopy.phone;
+            this.homeNumber = toCopy.homeNumber;
             this.email = toCopy.email;
+            this.schEmail = toCopy.schEmail;
+            this.website = toCopy.website;
             this.address = toCopy.address;
+            this.birthday = toCopy.birthday;
+            this.favourite = toCopy.favourite;
             this.tags = toCopy.tags;
         }
 
@@ -147,7 +182,9 @@ public class EditCommand extends UndoableCommand {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.tags);
+
+            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.homeNumber,
+                    this.email, this.schEmail, this.website, this.address, this.birthday, this.tags);
         }
 
         public void setName(Name name) {
@@ -166,6 +203,14 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(phone);
         }
 
+        public void setHomeNumber(HomeNumber homeNumber) {
+            this.homeNumber = homeNumber;
+        }
+
+        public Optional<HomeNumber> getHomeNumber() {
+            return Optional.ofNullable(homeNumber);
+        }
+
         public void setEmail(Email email) {
             this.email = email;
         }
@@ -174,12 +219,46 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(email);
         }
 
+        public void setSchEmail(SchEmail schEmail) {
+            this.schEmail = schEmail;
+        }
+
+        public Optional<SchEmail> getSchEmail() {
+            return Optional.ofNullable(schEmail);
+        }
+
+        //@@author DarrenCzen
+        public void setWebsite(Website website) {
+            this.website = website;
+        }
+
+        public Optional<Website> getWebsite() {
+            return Optional.ofNullable(website);
+        }
+
+        //@@author
         public void setAddress(Address address) {
             this.address = address;
         }
 
         public Optional<Address> getAddress() {
             return Optional.ofNullable(address);
+        }
+
+        public void setBirthday(Birthday birthday) {
+            this.birthday = birthday;
+        }
+
+        public Optional<Birthday> getBirthday() {
+            return Optional.ofNullable(birthday);
+        }
+
+        public void setFavourite(Boolean favourite) {
+            this.favourite = favourite;
+        }
+
+        public Optional<Boolean> getFavourite() {
+            return Optional.ofNullable(favourite);
         }
 
         public void setTags(Set<Tag> tags) {
@@ -207,8 +286,13 @@ public class EditCommand extends UndoableCommand {
 
             return getName().equals(e.getName())
                     && getPhone().equals(e.getPhone())
+                    && getHomeNumber().equals(e.getHomeNumber())
                     && getEmail().equals(e.getEmail())
+                    && getSchEmail().equals(e.getSchEmail())
+                    && getWebsite().equals(e.getWebsite())
                     && getAddress().equals(e.getAddress())
+                    && getBirthday().equals(e.getBirthday())
+                    && getFavourite().equals(e.getFavourite())
                     && getTags().equals(e.getTags());
         }
     }

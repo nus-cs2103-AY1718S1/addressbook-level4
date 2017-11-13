@@ -70,6 +70,11 @@ public abstract class UiPart<T> {
         EventsCenter.getInstance().registerHandler(handler);
     }
 
+    //@@author archthegit
+    protected void unregisterAsAnEventHandler(Object handler) {
+        EventsCenter.getInstance().unregisterHandler(handler);
+    }
+    //@@author
     /**
      * Creates a modal dialog.
      * @param title Title of the dialog.

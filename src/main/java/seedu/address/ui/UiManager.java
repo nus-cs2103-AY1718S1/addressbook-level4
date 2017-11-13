@@ -30,7 +30,7 @@ public class UiManager extends ComponentManager implements Ui {
     public static final String FILE_OPS_ERROR_DIALOG_CONTENT_MESSAGE = "Could not save data to file";
 
     private static final Logger logger = LogsCenter.getLogger(UiManager.class);
-    private static final String ICON_APPLICATION = "/images/address_book_32.png";
+    private static final String ICON_APPLICATION = "/images/address_icon_32.png";
 
     private Logic logic;
     private Config config;
@@ -66,6 +66,7 @@ public class UiManager extends ComponentManager implements Ui {
     @Override
     public void stop() {
         prefs.updateLastUsedGuiSetting(mainWindow.getCurrentGuiSetting());
+        prefs.updateLastUsedTheme(mainWindow.getCurrentTheme());
         mainWindow.hide();
         mainWindow.releaseResources();
     }
@@ -109,6 +110,16 @@ public class UiManager extends ComponentManager implements Ui {
         Platform.exit();
         System.exit(1);
     }
+
+    //@@author itsdickson
+    /**
+     * Sets the given theme as the main theme of the main window.
+     * @param theme .g. {@code "DarkTheme.css"}
+     */
+    public void setTheme(String theme) {
+        mainWindow.getRoot().getStylesheets().add("/view/" + theme);
+    }
+    //@@author
 
     //==================== Event Handling Code ===============================================================
 

@@ -1,8 +1,12 @@
 package seedu.address.ui;
 
+import java.util.HashMap;
+import java.util.Random;
+
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
@@ -14,6 +18,11 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
+
+    private static String[] colors = {"red", "blue", "black", "grey", "teal", "brown", "green",
+                                         "orange", "purple"};
+    private static HashMap<String, String> tagColors = new HashMap<String, String>();
+    private static Random random = new Random();
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -34,17 +43,18 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label phone;
     @FXML
-    private Label address;
-    @FXML
     private Label email;
     @FXML
     private FlowPane tags;
+    @FXML
+    private ImageView favouriteImage;
 
     public PersonCard(ReadOnlyPerson person, int displayedIndex) {
         super(FXML);
         this.person = person;
         id.setText(displayedIndex + ". ");
         initTags(person);
+        initFavourite(person);
         bindListeners(person);
     }
 
@@ -55,17 +65,57 @@ public class PersonCard extends UiPart<Region> {
     private void bindListeners(ReadOnlyPerson person) {
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
-        address.textProperty().bind(Bindings.convert(person.addressProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
-            person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+            initTags(person);
+        });
+        person.favouriteProperty().addListener((observable, oldValue, newValue) -> {
+            initFavourite(person);
         });
     }
 
+    //@@author itsdickson
+    /**
+     * Initialises the tags with a randomised color.
+     *
+     * @param person
+     */
     private void initTags(ReadOnlyPerson person) {
-        person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        person.getTags().forEach(tag -> {
+            Label label = new Label(tag.tagName);
+            label.setStyle("-fx-background-color: " + getColorForTag(tag.tagName));
+            tags.getChildren().add(label);
+        });
     }
+
+    /**
+     * Randomises a color name into a HashMap of color names.
+     *
+     * @param tag
+     * @return name of the color
+     */
+    private static String getColorForTag(String tag) {
+        if (!tagColors.containsKey(tag)) {
+            tagColors.put(tag, colors[random.nextInt(colors.length)]);
+        }
+
+        return tagColors.get(tag);
+    }
+
+    /**
+     * Initialises the person with a favourite image if he/she is favourited.
+     *
+     * @param person
+     */
+    private void initFavourite(ReadOnlyPerson person) {
+        if (person.isFavourite()) {
+            favouriteImage.setVisible(true);
+        } else {
+            favouriteImage.setVisible(false);
+        }
+    }
+    //@@author
 
     @Override
     public boolean equals(Object other) {

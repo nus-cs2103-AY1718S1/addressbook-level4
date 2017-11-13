@@ -4,12 +4,14 @@ import javafx.collections.ObservableList;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
  * API of the Logic component
  */
 public interface Logic {
+
     /**
      * Executes the command and returns the result.
      * @param commandText The command as entered by the user.
@@ -22,6 +24,17 @@ public interface Logic {
     /** Returns an unmodifiable view of the filtered list of persons */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
 
+    //@@author itsdickson
+    /** Returns an unmodifiable view of the filtered list of events */
+    ObservableList<ReadOnlyEvent> getFilteredEventList();
+    //@@author
+
     /** Returns the list of input entered by the user, encapsulated in a {@code ListElementPointer} object */
     ListElementPointer getHistorySnapshot();
+
+    //@@author itsdickson
+    void setCurrentTheme(String theme);
+    //@@author
+
+    void updateSelectedPerson(ReadOnlyPerson person);
 }

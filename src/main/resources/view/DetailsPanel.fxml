@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
+
+<!--//@@author archthegit-->
+
+<StackPane fx:id="detailsPanel" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+<VBox fx:id="pane" prefHeight="600.0" prefWidth="800.0">
+    <children>
+        <Label fx:id="name" alignment="TOP_LEFT" prefHeight="50.0" prefWidth="360.0" styleClass="window_big_label" text="\$name" wrapText="true" />
+        <FlowPane fx:id="tags" prefHeight="50.0" prefWidth="774.0" />
+        <TextFlow prefHeight="50.0" prefWidth="100.0">
+            <children>
+                <Text fx:id="phoneField" styleClass="window_small_text" text="Phone: " />
+                <Label fx:id="phone" styleClass="window_small_label" text="\$phone" />
+            </children>
+        </TextFlow>
+        <TextFlow prefHeight="50.0" prefWidth="100.0">
+            <children>
+                <Text fx:id="homePhoneField" styleClass="window_small_text" text="Home Phone: " />
+                <Label fx:id="homePhone" styleClass="window_small_label" text="\$homePhone" />
+            </children>
+        </TextFlow>
+        <TextFlow prefHeight="50.0" prefWidth="400.0">
+            <children>
+                <Text fx:id="addressField" styleClass="window_small_text" text="Address: " />
+                <Label fx:id="address" alignment="TOP_LEFT" maxHeight="800.0" styleClass="window_small_label" text="\$address" wrapText="true" />
+            </children>
+        </TextFlow>
+        <TextFlow prefHeight="50.0" prefWidth="400.0">
+            <children>
+                <Text fx:id="emailField" styleClass="window_small_text" text="Email: " />
+                <Label fx:id="email" styleClass="window_small_label" text="\$email" />
+            </children>
+        </TextFlow>
+        <TextFlow prefHeight="50.0" prefWidth="400.0">
+            <children>
+                <Text fx:id="schoolEmailField" styleClass="window_small_text" text="School Email: " />
+                <Label fx:id="schoolEmail" styleClass="window_small_label" text="\$schoolEmail" />
+            </children>
+        </TextFlow>
+        <TextFlow prefHeight="50.0" prefWidth="400.0">
+            <children>
+                <Text fx:id="birthdayField" styleClass="window_small_text" text="Birthday: " />
+                <Label fx:id="birthday" styleClass="window_small_label" text="\$birthday" />
+            </children>
+        </TextFlow>
+        <TextFlow prefHeight="50.0" prefWidth="400.0">
+            <children>
+                <Text fx:id="websiteField" styleClass="window_small_text" text="Website: " />
+                <Label fx:id="website" styleClass="window_small_label" text="\$website" />
+            </children>
+        </TextFlow>
+    </children>
+</VBox>
+</StackPane>

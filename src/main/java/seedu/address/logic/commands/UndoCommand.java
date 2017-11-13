@@ -2,6 +2,9 @@ package seedu.address.logic.commands;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.PersonPanelUnselectEvent;
+
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -13,6 +16,8 @@ import seedu.address.model.Model;
 public class UndoCommand extends Command {
 
     public static final String COMMAND_WORD = "undo";
+    public static final String COMMAND_ALIAS = "u";
+
     public static final String MESSAGE_SUCCESS = "Undo success!";
     public static final String MESSAGE_FAILURE = "No more commands to undo!";
 
@@ -25,6 +30,7 @@ public class UndoCommand extends Command {
         }
 
         undoRedoStack.popUndo().undo();
+        EventsCenter.getInstance().post(new PersonPanelUnselectEvent());
         return new CommandResult(MESSAGE_SUCCESS);
     }
 

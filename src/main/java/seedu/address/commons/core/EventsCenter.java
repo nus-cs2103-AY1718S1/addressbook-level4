@@ -33,6 +33,13 @@ public class EventsCenter {
         eventBus.register(handler);
     }
 
+    //@@author archthegit
+    public void unregisterHandler(Object handler) {
+        eventBus.unregister(handler);
+    }
+
+    //@@author
+
     /**
      * Posts an event to the event bus.
      */

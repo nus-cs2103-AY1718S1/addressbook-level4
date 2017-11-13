@@ -41,6 +41,52 @@ public class StringUtil {
         return false;
     }
 
+    //@@author archthegit
+
+    /**
+     * Returns true if the {@code sentence} contains part the {@code word}.
+     *   Ignores case and a full word match is not required. The keyword must be in the beginning of any of the names.
+     *   <br>examples:<pre>
+     *       containsPartOfWord("Bernice Yeoh", "ber")=true
+     *       containsPartOfWord("Irfan Ibrahim", "Ib")=true
+     *
+     *   </pre>
+     * @param sentence cannot be null
+     * @param word cannot be null, cannot be empty, must be a single word, has to be at least two characters long
+     */
+    public static boolean containsPartOfWord(String sentence, String word) {
+        requireNonNull(sentence);
+        requireNonNull(word);
+        String preppedWord = word.trim();
+        checkArgument(!preppedWord.isEmpty(), "Word parameter cannot be empty");
+        checkArgument(preppedWord.split("\\s+").length == 1, "Word parameter should be a single word");
+
+        String preppedSentence = sentence;
+        String[] wordsInPreppedSentence = preppedSentence.split("\\s+");
+
+        if ((preppedWord.length() >= 2) && isWordInName(preppedWord, wordsInPreppedSentence)) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Returns true if keyword is in the starting part of the name ignoring cases.
+     * @param preppedWord
+     * @param wordsInPreppedSentence
+     * @return
+     */
+    private static boolean isWordInName(String preppedWord, String[] wordsInPreppedSentence) {
+        for (String wordInSentence : wordsInPreppedSentence) {
+            if ((wordInSentence.toLowerCase().contains(preppedWord.toLowerCase()))
+                    && (wordInSentence.toLowerCase().startsWith(preppedWord.toLowerCase()))) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //@@author
     /**
      * Returns a detailed message of the t, including the stack trace.
      */

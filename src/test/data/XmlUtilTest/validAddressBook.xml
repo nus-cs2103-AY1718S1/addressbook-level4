@@ -3,55 +3,96 @@
     <persons>
         <name>Hans Muster</name>
         <phone isPrivate="false">9482424</phone>
+        <homeNumber isPrivate="false">68671263</homeNumber>
         <email isPrivate="false">hans@example.com</email>
+        <schEmail isPrivate="false">hansmuster@u.nus.edu</schEmail>
+        <website isPrivate="false">https://www.facebook.com/hansM</website>
         <address isPrivate="false">4th street</address>
+        <birthday isPrivate="false">12/11/1998</birthday>
     </persons>
     <persons>
         <name>Ruth Mueller</name>
         <phone isPrivate="false">87249245</phone>
+        <homeNumber isPrivate="false">61122990</homeNumber>
         <email isPrivate="false">ruth@example.com</email>
+        <schEmail isPrivate="false">ruth@u.nus.edu</schEmail>
+        <website isPrivate="false">https://www.facebook.com/ruthM</website>
         <address isPrivate="false">81th street</address>
+        <birthday isPrivate="false">10/01/1998</birthday>
     </persons>
     <persons>
         <name>Heinz Kurz</name>
         <phone isPrivate="false">95352563</phone>
+        <homeNumber isPrivate="false">65657234</homeNumber>
         <email isPrivate="false">heinz@example.com</email>
+        <schEmail isPrivate="false">heinz@u.nus.edu</schEmail>
+        <website isPrivate="false">https://www.facebook.com/heinzK</website>
         <address isPrivate="false">wall street</address>
+        <birthday isPrivate="false">22/05/1988</birthday>
     </persons>
     <persons>
         <name>Cornelia Meier</name>
         <phone isPrivate="false">87652533</phone>
+        <homeNumber isPrivate="false">67234521</homeNumber>
         <email isPrivate="false">cornelia@example.com</email>
+        <schEmail isPrivate="false">cornelia@u.ntu.edu</schEmail>
+        <website isPrivate="false">https://www.facebook.com/corneliaM</website>
         <address isPrivate="false">10th street</address>
+        <birthday isPrivate="false">10/01/1998</birthday>
     </persons>
     <persons>
         <name>Werner Meyer</name>
         <phone isPrivate="false">9482224</phone>
+        <homeNumber isPrivate="false">60932145</homeNumber>
         <email isPrivate="false">werner@example.com</email>
+        <schEmail isPrivate="false">werner@u.ntu.edu</schEmail>
+        <website isPrivate="false">https://www.facebook.com/wernerM</website>
         <address isPrivate="false">michegan ave</address>
+        <birthday isPrivate="false">10/01/1998</birthday>
     </persons>
     <persons>
         <name>Lydia Kunz</name>
         <phone isPrivate="false">9482427</phone>
+        <homeNumber isPrivate="false">68125164</homeNumber>
         <email isPrivate="false">lydia@example.com</email>
+        <schEmail isPrivate="false">lydia@u.nus.edu</schEmail>
+        <website isPrivate="false">https://www.facebook.com/lydiaK</website>
         <address isPrivate="false">little tokyo</address>
+        <birthday isPrivate="false">12/11/1974</birthday>
     </persons>
     <persons>
         <name>Anna Best</name>
         <phone isPrivate="false">9482442</phone>
+        <homeNumber isPrivate="false">69021415</homeNumber>
         <email isPrivate="false">anna@example.com</email>
+        <schEmail isPrivate="false">annabest@u.nus.edu</schEmail>
+        <website isPrivate="false">https://www.facebook.com/annaB</website>
         <address isPrivate="false">4th street</address>
+        <birthday isPrivate="false">05/06/2000</birthday>
     </persons>
     <persons>
         <name>Stefan Meier</name>
         <phone isPrivate="false">8482424</phone>
+        <homeNumber isPrivate="false">61214125</homeNumber>
         <email isPrivate="false">stefan@example.com</email>
+        <schEmail isPrivate="false">stefan@u.nus.edu</schEmail>
+        <website isPrivate="false">https://www.facebook.com/stefanM</website>
         <address isPrivate="false">little india</address>
+        <birthday isPrivate="false">10/01/1995</birthday>
     </persons>
     <persons>
         <name>Martin Mueller</name>
         <phone isPrivate="false">8482131</phone>
+        <homeNumber isPrivate="false">68612356</homeNumber>
         <email isPrivate="false">hans@example.com</email>
+        <schEmail isPrivate="false">martinnus@u.nus.edu</schEmail>
+        <website isPrivate="false">https://www.facebook.com/martinM</website>
         <address isPrivate="false">chicago ave</address>
+        <birthday isPrivate="false">10/01/1978</birthday>
     </persons>
+    <events>
+        <name>ZoukOut</name>
+        <address isPrivate="false">Sentosa Beach, Siloso</address>
+        <date isPrivate="false">2017-12-05</date>
+    </events>
 </addressbook>

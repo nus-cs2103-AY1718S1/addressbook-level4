@@ -22,13 +22,16 @@ public class StorageManager extends ComponentManager implements Storage {
     private static final Logger logger = LogsCenter.getLogger(StorageManager.class);
     private AddressBookStorage addressBookStorage;
     private UserPrefsStorage userPrefsStorage;
+    private AddressBookStorage backUpLocation;
 
 
     public StorageManager(AddressBookStorage addressBookStorage, UserPrefsStorage userPrefsStorage) {
         super();
         this.addressBookStorage = addressBookStorage;
         this.userPrefsStorage = userPrefsStorage;
+        this.backUpLocation = new XmlAddressBookStorage(addressBookStorage.getAddressBookFilePath());
     }
+
 
     // ================ UserPrefs methods ==============================
 
@@ -77,6 +80,11 @@ public class StorageManager extends ComponentManager implements Storage {
         addressBookStorage.saveAddressBook(addressBook, filePath);
     }
 
+    //@@author chernghann
+    public Optional<ReadOnlyAddressBook> readBackupAddressBook() throws DataConversionException, IOException {
+        return readAddressBook(backUpLocation.getAddressBookFilePath());
+    }
+    //@@author chernghann
 
     @Override
     @Subscribe
@@ -84,9 +92,17 @@ public class StorageManager extends ComponentManager implements Storage {
         logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local data changed, saving to file"));
         try {
             saveAddressBook(event.data);
+            backUpAddressBook(event.data);
         } catch (IOException e) {
             raise(new DataSavingExceptionEvent(e));
         }
     }
 
+    //@@author chernghann
+    private void backUpAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
+        String backupPath = backUpLocation.getAddressBookFilePath();
+        logger.fine("Backing up data to: " + backupPath);
+        saveAddressBook(addressBook, backupPath);
+    }
+    //@@author
 }

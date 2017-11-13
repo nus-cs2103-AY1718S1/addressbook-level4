@@ -12,6 +12,7 @@ public class UserPrefs {
     private GuiSettings guiSettings;
     private String addressBookFilePath = "data/addressbook.xml";
     private String addressBookName = "MyAddressBook";
+    private String theme;
 
     public UserPrefs() {
         this.setGuiSettings(500, 500, 0, 0);
@@ -28,6 +29,20 @@ public class UserPrefs {
     public void setGuiSettings(double width, double height, int x, int y) {
         guiSettings = new GuiSettings(width, height, x, y);
     }
+
+    //@@author itsdickson
+    public String getTheme() {
+        return theme == null ? "/view/DarkTheme.css" : theme;
+    }
+
+    public void setTheme(String theme) {
+        this.theme = theme;
+    }
+
+    public void updateLastUsedTheme(String theme) {
+        this.theme = theme;
+    }
+    //@@author
 
     public String getAddressBookFilePath() {
         return addressBookFilePath;

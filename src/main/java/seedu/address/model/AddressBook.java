@@ -2,6 +2,7 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -10,6 +11,12 @@ import java.util.Objects;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.PopulateRequestEvent;
+import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.model.event.UniqueEventList;
+import seedu.address.model.event.exceptions.DuplicateEventException;
+import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
@@ -25,21 +32,26 @@ import seedu.address.model.tag.UniqueTagList;
 public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
+    private final UniqueEventList events;
     private final UniqueTagList tags;
+    private final ArrayList<String> themes;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
      * between constructors. See https://docs.oracle.com/javase/tutorial/java/javaOO/initial.html
-     *
      * Note that non-static init blocks are not recommended to use. There are other ways to avoid duplication
      *   among constructors.
      */
     {
         persons = new UniquePersonList();
+        events = new UniqueEventList();
         tags = new UniqueTagList();
+        themes = new ArrayList<>();
     }
 
-    public AddressBook() {}
+    public AddressBook() {
+        initialiseThemes();
+    }
 
     /**
      * Creates an AddressBook using the Persons and Tags in the {@code toBeCopied}
@@ -55,6 +67,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.persons.setPersons(persons);
     }
 
+    //@@author chernghann
+    public void setEvents(List<? extends ReadOnlyEvent> events) throws DuplicateEventException {
+        this.events.setEvent(events);
+    }
+    //@@author
+
     public void setTags(Set<Tag> tags) {
         this.tags.setTags(tags);
     }
@@ -66,8 +84,11 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(newData);
         try {
             setPersons(newData.getPersonList());
+            setEvents(newData.getEventList());
         } catch (DuplicatePersonException e) {
             assert false : "AddressBooks should not have duplicate persons";
+        } catch (DuplicateEventException e) {
+            assert false : "AddressBooks should not have duplicate events";
         }
 
         setTags(new HashSet<>(newData.getTagList()));
@@ -114,6 +135,24 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.setPerson(target, editedPerson);
     }
 
+    //@@author itsdickson
+    /**
+     * Favourites {@code target} to this {@code AddressBook}.
+     * @throws PersonNotFoundException if the {@code target} is not in this {@code AddressBook}.
+     */
+    public void favouritePerson(ReadOnlyPerson target) throws PersonNotFoundException {
+        persons.favouritePerson(target);
+    }
+
+    /**
+     * Unfavourites {@code target} from this {@code AddressBook}.
+     * @throws PersonNotFoundException if the {@code target} is not in this {@code AddressBook}.
+     */
+    public void unfavouritePerson(ReadOnlyPerson target) throws PersonNotFoundException {
+        persons.unfavouritePerson(target);
+    }
+    //@@author
+
     /**
      * Ensures that every tag in this person:
      *  - exists in the master list {@link #tags}
@@ -156,6 +195,57 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    //// event-level operations
+
+    /**
+     * Adds an event to the address book.
+     *
+     * @throws DuplicateEventException if an equivalent event already exists.
+     */
+    //@@author chernghann
+    public void addEvent(ReadOnlyEvent p) throws DuplicateEventException {
+        events.add(p);
+        EventsCenter.getInstance().post(new PopulateRequestEvent(events));
+    }
+    //@@author
+
+    //@@author itsdickson
+    /**
+     * Deletes an event from the address book.
+     *
+     * @throws EventNotFoundException if the {@code event} is not in this {@code AddressBook}.
+     */
+    public boolean deleteEvent(ReadOnlyEvent event) throws EventNotFoundException {
+        if (events.remove(event)) {
+            EventsCenter.getInstance().post(new PopulateRequestEvent(events));
+            return true;
+        } else {
+            throw new EventNotFoundException();
+        }
+    }
+
+    /**
+     * Initialises the Themes ArrayList
+     */
+    private void initialiseThemes() {
+        themes.add("DarkTheme.css");
+        themes.add("BrightTheme.css");
+    }
+
+    public ArrayList<String> getThemesList() {
+        return themes;
+    }
+    //@@author
+
+    //@@author DarrenCzen
+    /** Ensures that every person in the AddressBook
+     *  is sorted in an alphabetical order.
+     */
+    public void sort() {
+        persons.sort();
+    }
+
+    //@@author
     //// tag-level operations
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
@@ -175,6 +265,13 @@ public class AddressBook implements ReadOnlyAddressBook {
         return persons.asObservableList();
     }
 
+    //@@author chernghann
+    @Override
+    public ObservableList<ReadOnlyEvent> getEventList() {
+        return events.asObservableList();
+    }
+    //@@author chernghann
+
     @Override
     public ObservableList<Tag> getTagList() {
         return tags.asObservableList();
@@ -185,12 +282,13 @@ public class AddressBook implements ReadOnlyAddressBook {
         return other == this // short circuit if same object
                 || (other instanceof AddressBook // instanceof handles nulls
                 && this.persons.equals(((AddressBook) other).persons)
-                && this.tags.equalsOrderInsensitive(((AddressBook) other).tags));
+                && this.tags.equalsOrderInsensitive(((AddressBook) other).tags))
+                && this.events.equals(((AddressBook) other).events);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(persons, tags);
+        return Objects.hash(persons, tags, events);
     }
 }

@@ -61,4 +61,5 @@ public class BrowserPanelHandle extends NodeHandle<Node> {
     public boolean isLoaded() {
         return isWebViewLoaded;
     }
+
 }

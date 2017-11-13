@@ -2,7 +2,10 @@ package guitests.guihandles;
 
 import java.net.URL;
 
+import org.testfx.api.FxRobot;
+
 import guitests.GuiRobot;
+
 import javafx.stage.Stage;
 
 /**
@@ -25,10 +28,15 @@ public class HelpWindowHandle extends StageHandle {
         return new GuiRobot().isWindowShown(HELP_WINDOW_TITLE);
     }
 
+    public FxRobot getLoadedPage() {
+        return new GuiRobot().targetWindow(HELP_WINDOW_TITLE);
+    }
+
     /**
      * Returns the {@code URL} of the currently loaded page.
      */
     public URL getLoadedUrl() {
         return WebViewUtil.getLoadedUrl(getChildNode(HELP_WINDOW_BROWSER_ID));
     }
+
 }

@@ -1,0 +1,35 @@
+= The Myth's Book - Themes List
+:toc:
+:toc-title:
+:toc-placement: preamble
+:sectnums:
+:imagesDir: images
+:stylesDir: stylesheets
+:experimental:
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+endif::[]
+:repoURL: https://github.com/CS2103AUG2017-T15-B3/main
+
+By: `The Myth`      Since: `Jun 2016`      Licence: `MIT`
+
+== Introduction
+
+This themes list will provide you with the list of colour themes that is available for you in The Myth's Book.
+
+== Themes
+
+=== Dark Theme : `switch`
+
+Format: `switch 1`
+
+image::DarkTheme.png[align="left"]
+
+=== Bright Theme : `switch`
+
+Format: `switch 2`
+
+image::BrightTheme.png[align="left"]
+
+

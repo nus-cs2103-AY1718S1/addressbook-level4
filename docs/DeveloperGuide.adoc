@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= The Myth's Book - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,11 +10,31 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-T15-B3/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `The Myth`      Since: `Jun 2016`      Licence: `MIT`
+
+== Introduction
+
+The Myth's Book is an address book dedicated for university students to store useful information such
+as websites, phone numbers and emails of the people around them for personal usage. The application helps students
+to keep track of birthday dates and upcoming events through a calendar and facilitate convenient access to their friend's website
+and even Google Maps location through the in-built browser panel in the application. Furthermore, there are many
+useful tools such as finding group tags (e.g. friends, neighbours) and switching themes for better user preference and usability.
+
+The Myth's Book is a `Command Line Input` based software which helps caters to students who are efficient and comfortable
+in typing out command line inputs to manipulate with information of their contacts in the address book.
+The Myth's Book is a software application that is coded in `Java` programming language.
+
+== About
+
+This developer guide will guide you on how to set up the application software on IntelliJ IDEA and
+allow you to understand more about the process, features and structure of the application software
+as you are updating, improving and debugging The Myth's Book.
 
 == Setting up
+
+This section guides you on how to set up The Myth's Book on IntelliJ IDEA.
 
 === Prerequisites
 
@@ -81,29 +101,36 @@ Having both Travis and AppVeyor ensures your App works on both Unix-based platfo
 
 ==== Getting started with coding
 
-When you are ready to start coding,
+Before you start coding, it is advisable that you should read and recognise the overall design by reading the link:#architecture[Architecture] section.
 
-1. Get some sense of the overall design by reading the link:#architecture[Architecture] section.
-2. Take a look at the section link:#suggested-programming-tasks-to-get-started[Suggested Programming Tasks to Get Started].
+link:#the-myths-book---developer-guide[Back To Top]
 
 == Design
 
+This section enables you to understand the structure of the application software and its components.
+
 === Architecture
 
-image::Architecture.png[width="600"]
-_Figure 2.1.1 : Architecture Diagram_
+This section enables you to understand the overall architecture of the application software.
 
-The *_Architecture Diagram_* given above explains the high-level design of the App. Given below is a quick overview of each component.
+The *_Architecture Diagram_* given below explains the high-level design of the App. Given below is a quick overview of each component.
+
+image::Architecture.png[width="600"]
+_Figure 4.1.1 : Architecture Diagram_
 
 [TIP]
 The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
 
-`Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for,
+In the `Main` component of the software, there is only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`].
 
-* At app launch: Initializes the components in the correct sequence, and connects them up with each other.
-* At shut down: Shuts down the components and invokes cleanup method where necessary.
+`MainApp` is responsible for,
 
-link:#common-classes[*`Commons`*] represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level.
+* Launching of the application where it initializes the components in the correct sequence, and connects them together.
+* Shutting down the components and invokes cleanup method where necessary.
+
+In the software, link:#common-classes[*`Commons`*] represents a collection of classes used by multiple other components.
+
+Two of the classes below play important roles in the software at the architecture level.
 
 * `EventsCenter` : This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design)
 * `LogsCenter` : Used by many classes to write log messages to the App's log file.
@@ -123,7 +150,7 @@ Each of the four components
 For example, the `Logic` component (see the class diagram given below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
 
 image::LogicClassDiagram.png[width="800"]
-_Figure 2.1.2 : Class Diagram of the Logic Component_
+_Figure 4.1.2 : Class Diagram of the Logic Component_
 
 [discrete]
 ==== Events-Driven nature of the design
@@ -131,7 +158,7 @@ _Figure 2.1.2 : Class Diagram of the Logic Component_
 The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
 
 image::SDforDeletePerson.png[width="800"]
-_Figure 2.1.3a : Component interactions for `delete 1` command (part 1)_
+_Figure 4.1.3a : Component interactions for `delete 1` command (part 1)_
 
 [NOTE]
 Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
@@ -139,7 +166,7 @@ Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address 
 The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
 image::SDforDeletePersonEventHandling.png[width="800"]
-_Figure 2.1.3b : Component interactions for `delete 1` command (part 2)_
+_Figure 4.1.3b : Component interactions for `delete 1` command (part 2)_
 
 [NOTE]
 Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
@@ -149,7 +176,7 @@ The sections below give more details of each component.
 === UI component
 
 image::UiClassDiagram.png[width="800"]
-_Figure 2.2.1 : Structure of the UI Component_
+_Figure 4.2.1 : Structure of the UI Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
@@ -166,10 +193,10 @@ The `UI` component,
 === Logic component
 
 image::LogicClassDiagram.png[width="800"]
-_Figure 2.3.1 : Structure of the Logic Component_
+_Figure 4.3.1 : Structure of the Logic Component_
 
 image::LogicCommandClassDiagram.png[width="800"]
-_Figure 2.3.2 : Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in Figure 2.3.1_
+_Figure 4.3.2 : Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in Figure 4.3.1_
 
 *API* :
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
@@ -182,12 +209,12 @@ link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
 
 image::DeletePersonSdForLogic.png[width="800"]
-_Figure 2.3.1 : Interactions Inside the Logic Component for the `delete 1` Command_
+_Figure 4.3.1 : Interactions Inside the Logic Component for the `delete 1` Command_
 
 === Model component
 
 image::ModelClassDiagram.png[width="800"]
-_Figure 2.4.1 : Structure of the Model Component_
+_Figure 4.4.1 : Structure of the Model Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
@@ -201,7 +228,7 @@ The `Model`,
 === Storage component
 
 image::StorageClassDiagram.png[width="800"]
-_Figure 2.5.1 : Structure of the Storage Component_
+_Figure 4.5.1 : Structure of the Storage Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 
@@ -213,6 +240,8 @@ The `Storage` component,
 === Common classes
 
 Classes used by multiple components are in the `seedu.addressbook.commons` package.
+
+link:#the-myths-book---developer-guide[Back To Top]
 
 == Implementation
 
@@ -345,6 +374,1628 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+// tag::events[]
+=== Events mechanism
+
+Events mechanism activates the Events mode in The Myth's Book, where the users are locked to using commands pertaining to `Events`,
+which are `AddEventCommand` and `DeleteEventCommand`, and commands that are common between Events and Persons, such as `ExitCommand`,
+`HelpCommand` and more.
+
+The events mechanism also lists down the list of events, which is facilitated by an `EventList`, which is stored in The Myth's Book.
+Similar to the PersonList and TagList, the list contains the different events with their information given by the user. This command inherits from `Command`.
+
+As seen in the diagram below, `EventsCommand` inherits `Command`, which means its state is not saved by the address book, and it cannot be undone after executing the command.
+
+image::EventsCommandDiagram1.png[width="800"]
+_Figure 5.2.1 EventsCommand Logic Class Diagram_
+
+The execution of EventsCommand is processed in this way:
+
+. User will execute `events` to activate the `Events` mode.
+. The execution of `events` posts events `TogglePanelEvent`, `PersonPanelUnselectEvent` and `AccessWebsiteRequestEvent`, which will
+  then be listened and handled by `handleToggleEvent` in `MainWindow`, `handleUnselectOfPersonCardEvent` in `MainWindow` and `handleAccessWebsiteEvent` in `BrowserPanel` respectively.
+. The `EventListPanel` will then be brought to front over `PersonListPanel`, showing the list of events from `EventList`.
+. Subsequently, `DetailsPanel`, which shows a person's details, will be removed and be replaced by `EventsDetailsPanel` which shows an event's details.
+. The `BrowserPanel` section will also display `Google Maps` when `events` is executed.
+
+Code of `EventsCommand`:
+[source,java]
+----
+public class EventsCommand extends Command {
+    @Override
+    public CommandResult execute() {
+        // ... events logic ...
+        EventsCenter.getInstance().post(new TogglePanelEvent(COMMAND_WORD));
+        EventsCenter.getInstance().post(new PersonPanelUnselectEvent());
+        EventsCenter.getInstance().post(new AccessWebsiteRequestEvent("https://maps.google.com/"));
+    }
+}
+----
+
+Listener for TogglePanelEvent in MainWindow.java:
+[source,java]
+----
+@Subscribe
+private void handleToggleEvent(TogglePanelEvent event) {
+    handleToggle(event.selectedPanel);
+}
+----
+
+Bringing of EventListPanel to front in MainWindow.java:
+[source,java]
+----
+public void handleToggle(String selectedPanel) {
+    if (selectedPanel.equals(EventsCommand.COMMAND_WORD)) {
+        eventListPanelPlaceholder.toFront();
+    } else if (selectedPanel.equals(ListCommand.COMMAND_WORD)) {
+        personListPanelPlaceholder.toFront();
+    }
+}
+----
+
+Listener for PersonPanelUnselectEvent in MainWindow.java:
+[source,java]
+----
+@Subscribe
+private void handleUnselectOfPersonCardEvent(PersonPanelUnselectEvent event) {
+    detailsPanel = new DetailsPanel();
+    detailsPanelPlaceholder.getChildren().clear();
+    detailsPanelPlaceholder.getChildren().add(detailsPanel.getRoot());
+}
+----
+
+Listener for AccessWebsiteRequestEvent in BrowserPanel.java:
+[source,java]
+----
+@Subscribe
+private void handleAccessWebsiteEvent(AccessWebsiteRequestEvent event) {
+    handleWebsiteAccess(event.website);
+}
+----
+
+Displaying of Google Maps in BrowserPanel.java:
+[source,java]
+----
+public void handleWebsiteAccess(String website) {
+    loadPage(website);
+}
+----
+
+The following sequence diagram shows how the events operation works:
+
+As seen in the diagram below, when `events` is typed into the command line input, a new `EventsCommand` is created.
+
+image::EventsCommandDiagram2.png[width="800"]
+_Figure 5.2.2 EventsCommand Logic Sequence Diagram_
+
+==== Design Considerations
+**Aspect:** Implementation of `EventsCommand` +
+**Alternative 1 (current choice):** Extends to `Command` +
+**Pros:** Developers do not need to learn the implementation of `UndoableCommand` class. +
+**Cons:** Users may want to undo `EventsCommand` as they may not have wanted to be in Events mode. +
+**Alternative 2:** Extends to `UndoableCommand` +
+**Pros:** Users can undo `EventsCommand` when they mistype the command. +
+**Cons:** Developers need to learn the implementation of `UndoableCommand`. Unnecessary to extend to `UndoableCommand` since users can type `ListCommand` to go back to Persons mode. +
+// end::events[]
+
+// tag::addevent[]
+=== Add Event mechanism
+
+An `Event` is created by `EventName`, `Date` and `Address` as the details of the event.
+It also implements `ReadOnlyEvent` interface. The class diagram is shown in Figure 5.3.1 below.
+
+image::eventclassdiagram.PNG[width="800"]
+_Figure 5.3.1 Event Class Diagram_
+
+Add event mechanism adds an Event which stores in the The Myth's Book. The add event mechanism is facilitated by an `EventList`, which is stored in The Myth's Book. Similar to the PersonList and TagList, the list contains the
+different events with their information given by the user. This command inherits from `UndoableCommand`.
+
+From Figure 5.3.2 below, it is visible that `AddEventCommand` inherits from `UndoableCommand` which is an extra layer between abstract `Command` class in which the AddEventCommand
+can be undoable, where the previous state of The Myth's Book before the event is saved.
+
+image::AddEventDiagram.PNG[width="800"]
+_Figure 5.3.2 AddEventCommand Logic Class Diagram_
+
+The execution of AddEventCommand is processed in this way:
+
+. User will execute and create a new `AddEventCommand` so as to add an event into The Myth's Book.
+. When `executeUndoable()` of `AddEventCommand` is called, `model.addEvent()` in the method will be processed.
+. The `internalList` of the AddressBook will store all the Events.
+. After `internalList` has added the event, function `updateFilterEventList(PREDICATE_SHOW_ALL_EVENT)` is called
+  to update the list being filtered and also call an event `indicatedAddressBookChanged()` to show that the addressBook has be updated
+  with additional event.
+
+The illustration of the execution is illustrated in Figure 5.3.3 below.
+
+image::addeventmodelseqdiagram.PNG[width="800"]
+_Figure 5.3.3 AddEventCommand Model Sequence Diagram_
+
+Code of `AddEventCommand`:
+[source,java]
+----
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        requireNonNull(model);
+        try {
+            model.addEvent(toAdd);
+            return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
+        } catch (DuplicateEventException e) {
+            throw new CommandException(MESSAGE_DUPLICATE_EVENT);
+        }
+    }
+----
+[source,java]
+----
+    public class UniqueEventList implements Iterable<Event> {
+
+        private final ObservableList<Event> internalList = FXCollections.observableArrayList();
+        ...
+        public void add(ReadOnlyEvent toAdd) throws DuplicateEventException {
+            requireNonNull(toAdd);
+            if (contains(toAdd)) {
+                throw new DuplicateEventException();
+            }
+            internalList.add(new Event(toAdd));
+        }
+        ...
+    }
+----
+
+Code from `ModelManager`
+[source,java]
+----
+    @Override
+    public synchronized void addEvent(ReadOnlyEvent event) throws DuplicateEventException {
+        addressBook.addEvent(event);
+        updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
+        indicateAddressBookChanged();
+    }
+----
+
+
+==== Design Consideration
+**Aspect:** Implementation of `AddEventCommand` +
+**Alternative 1 (current choice):** Extends to UndoableCommand +
+**Pros:** Developer can undo their command when they do not want to add the event. +
+**Cons:** Developer has to understand the implementation of UndoableCommand +
+
+---
+**Aspect:** How does add event executes +
+**Alternative 1 (current choice):** Take in EventName(event) , Date(event) and Address(person) +
+**Pros:** Simple to implement as add event uses EventName and Date from Event and Address from Person due to similar CliSyntax. +
+**Cons:** Developer might get confused with the different use of imports as EventName and Date are from events while Address is from person. +
+// end::addevent[]
+
+// tag::deleteevent[]
+=== Delete Event mechanism
+
+Delete event mechanism deletes an event which is stored in the The Myth's Book, which will then be updated in the `Calendar` upon deletion.
+
+The delete event mechanism is facilitated by an `EventList`, which is stored in The Myth's Book. Similar to the PersonList and TagList, the list contains the
+different events with their information given by the user. This command inherits from `UndoableCommand`.
+
+As seen in Figure 5.4.1 below, `DeleteEventCommand` inherits `UndoableCommand` which is an extra layer between abstract `Command` class and concrete commands that can be undone.
+When `DeleteEventCommand` is executed, the previous state of the address book before the deleting of an event is saved.
+
+image::DeleteEventCommandDiagram1.png[width="800"]
+_Figure 5.4.1 DeleteEventCommand Logic Class Diagram_
+
+The execution of DeleteEventCommand is processed in this way:
+
+. User will execute `events` to enter Events mode, and user can look through the list of events that he or she may want to delete.
+
+. User will then execute `deleteevent 2`, with `2` being the `index` of the event that the user wants to delete, provided by the executed `events`.
+
+. The `EventList` in `AddressBook` will then delete the event specified by the user's execution of `deleteevent 2`.
+
+. The deleting of event in `AddressBook` posts an event `PopulateRequestEvent`, which will then be listened and handled by `handlePopulateEvent` in `MainWindow`.
+
+. The `Calendar` will look through the `EventList` and update the calendar by populating the dates of the calendar where there are events.
+
+Code of `DeleteEventCommand`:
+[source,java]
+----
+public class DeleteEventCommand extends UndoableCommand {
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+
+        // ... delete event logic ...
+
+        List<ReadOnlyEvent> lastShownList = model.getFilteredEventList();
+
+        ReadOnlyEvent eventToDelete = lastShownList.get(targetIndex.getZeroBased());
+
+        model.deleteEvent(eventToDelete);
+    }
+}
+----
+
+Removing of event in AddressBook.java:
+[source,java]
+----
+public class AddressBook implements ReadOnlyAddressBook {
+    public boolean deleteEvent(ReadOnlyEvent event) throws EventNotFoundException {
+        if (events.remove(event)) {
+            EventsCenter.getInstance().post(new PopulateRequestEvent(events));
+            return true;
+        } else {
+            throw new EventNotFoundException();
+        }
+    }
+}
+----
+
+Listener for PopulateRequestEvent in MainWindow.java:
+[source,java]
+----
+@Subscribe
+private void handlePopulateEvent(PopulateRequestEvent request) {
+    calendar.populateUpdatedCalendar(request.eventList, YearMonth.now());
+}
+----
+
+Updating of the deletion of event in Calendar.java:
+[source,java]
+----
+public class Calendar {
+    public void populateUpdatedCalendar(UniqueEventList eventList) {
+        for (AnchorPaneNode ap : allCalendarDays) {
+            ap.setStyle("calendar-color");
+            for (Event event1 : eventList) {
+                // ... populate updated calendar logic ...
+                if (newDate.equals(event1.getDate().toString())) {
+                    ap.getChildren();
+                    ap.setStyle("-fx-background-color: #ffebcd;");
+                }
+            }
+        }
+    }
+}
+----
+
+The following sequence diagram shows how the delete event operation works:
+
+As seen in the diagram below, when `deleteevent 1` is typed into the command line input, a new `DeleteEventCommand` is created.
+
+image::DeleteEventCommandDiagram2.png[width="800"]
+_Figure 5.4.2 DeleteEventCommand Logic Sequence Diagram_
+
+As seen in Figure 5.4.3, when `deleteevent 1` is executed in `DeleteEventCommand`, it will remove the event in `UniqueEventList`.
+
+image::DeleteEventCommandDiagram3.png[width="800"]
+_Figure 5.4.3 DeleteEventCommand Logic & Model Sequence Diagram_
+
+As seen in the diagram below, when `deleteEvent` is executed in `AddressBook`, it will post an event `PopulateRequestEvent` in`EventsCenter`, which is handled by `MainWindow` and `Calendar`.
+
+image::DeleteEventCommandDiagram4.png[width="800"]
+_Figure 5.4.4 DeleteEventCommand Logic, EventsCenter & UI Sequence Diagram_
+
+==== Design Considerations
+**Aspect:** Implementation of `DeleteEventCommand` +
+**Alternative 1 (current choice):** Extends to `UndoableCommand` +
+**Pros:** Users can undo their command when they make a mistake in deleting an event. +
+**Cons:** Developer needs to understand the implementation of UndoableCommand. +
+**Alternative 2:** Extends to `Command` +
+**Pros:** Developers do not need to understand the implementation of UndoableCommand. +
+**Cons:** Users are unable to undo their command when they make a mistake in deleting an event. +
+// end::deleteevent[]
+
+// tag::switch[]
+=== Switch Theme mechanism
+
+The switch theme mechanism is facilitated by a `ThemesList`, which resides inside `AddressBook`. `Themes` contains a list of CSS files, in which each file are of differing colour themes for the application user interface. It sets the theme of the application to the theme specified by the index given by the user. This command will inherit from `Command`.
+
+As seen in the diagram below, `SwitchThemeCommand` inherits `Command`, which means its state is not saved by the address book, and it cannot be undone after executing the command.
+
+image::SwitchThemeCommandDiagram1.png[width="800"]
+_Figure 5.5.1 SwitchThemeCommand Logic Class Diagram_
+
+The execution of SwitchThemeCommand is processed in this way:
+
+. User has just launched the application. The `Themes` will be initialised based on `CurrentTheme` which resides in `ModelManager`.
+
+. User will execute `themes` to look through the existing colour themes, and pick one that he or she wants.
+
+. User will then execute `switch 2`, with `2` being the `index` of the theme that the user prefers, provided by the executed `themes`.
+
+. The `ThemesList` will take the `index` provided by the user, and return a `String` of the CSS file name based on the `index`.
+
+. The execution of `switch 2` posts an event `ChangeThemeRequestEvent`, which will then be listened and handled by `handleChangeThemeEvent` in `MainWindow`.
+
+. The `Stylesheets` of the `MainWindow` will then remove the current existing CSS file, which is the current theme, and add the given `String` of the CSS file into `Stylesheets`.
+  That will set the current colour theme of The Myth's Book to the preferred colour theme.
+
+. Subsequently, the colour theme chosen will update `CurrentTheme` of The Myth's Book in `UserPrefs` through `LogicManager` and `ModelManager`. This will
+  allow the application to check the latest colour theme before the application was closed and sets the application's colour theme to it through `MainWindow`.
+
+Code of SwitchThemeCommand:
+[source, java]
+----
+public class SwitchThemeCommand extends Command {
+    @Override
+    public CommandResult execute() {
+        // ... switch theme logic ...
+        EventsCenter.getInstance().post(new ChangeThemeRequestEvent(themeToChange));
+    }
+}
+----
+
+Listener for ChangeThemeRequestEvent in MainWindow.java:
+[source,java]
+----
+@Subscribe
+private void handleChangeThemeEvent(ChangeThemeRequestEvent event) {
+    handleChangeTheme(event.theme);
+    browserPanel.setDefaultPage(event.theme);
+    logic.setCurrentTheme(getCurrentTheme());
+}
+----
+
+Removing and adding of CSS file into Stylesheets in MainWindow.java:
+[source, java]
+----
+public void handleChangeTheme(String theme) {
+    if (getRoot().getStylesheets().size() > 1) {
+        getRoot().getStylesheets().remove(CURRENT_THEME_INDEX);
+    }
+    getRoot().getStylesheets().add(VIEW_PATH + theme);
+}
+----
+
+Setting of default theme of application based on UserPrefs in MainWindow.java:
+[source, java]
+----
+private void setWindowDefaultTheme(UserPrefs prefs) {
+    getRoot().getStylesheets().add(prefs.getTheme());
+}
+----
+
+The following sequence diagram shows how the switch theme operation works:
+
+As seen in the diagram below, when `switch 1` is typed into the command line input, a new `SwitchThemeCommand` is created.
+
+image::SwitchThemeCommandDiagram2.png[width="800"]
+_Figure 5.5.2 SwitchThemeCommand Logic Sequence Diagram_
+
+As seen in the diagram below, when `switch 1` is executed in `SwitchThemeCommand`, it will post `ChangeThemeRequestEvent` to the `EventsCenter`.
+
+image::SwitchThemeCommandDiagram3.png[width="800"]
+_Figure 5.5.3 SwitchThemeCommand Logic, EventsCenter & UI Sequence Diagram_
+
+Upon detecting `ChangeThemeRequestEvent`, `MainWindow` will call `handleChangeTheme` to handle the event.
+
+==== Design Considerations
+
+**Aspect:** Implementation of `SwitchThemeCommand` +
+**Alternative 1 (current choice):** Extending to `Command` class. +
+**Pros:** Developers do not need to learn the implementation of `UndoableCommand` class. +
+**Cons:** `SwitchThemeCommand` cannot be undone and have to repeatedly call command to switch to different themes. +
+**Alternative 2:** Extending to `UndoableCommand` class. +
+**Pros:** Might be more favourable to users to undo `SwitchThemeCommand` if he/she switch to an incorrect theme. +
+**Cons:** Developers need to learn the implementation of `UndoableCommand`. Difficult to implement. +
+
+---
+
+**Aspect:** How switch theme executes +
+**Alternative 1 (current choice):** Taking in index (type Integer) as the argument. +
+**Pros:** Simple to implement since the index will tally with `Themes`. Simple to use since users don't have to remember the names and look at the index in `Themes`. +
+**Cons:** Maybe less favourable for users when the size of `Themes` increase. +
+**Alternative 2:** Taking in theme's name (type String) as the argument. +
+**Pros:** Might be more favourable for long-time users since names may be easier to remember than numbers after using the application for a long time. +
+**Cons:** Harder to implement and test. +
+
+=== Theme List mechanism
+
+The theme list mechanism is facilitated by a `ThemesWindow`, which resides in `MainWindow`. `ThemesWindow` is a pop-up window that is populated by `Themes.html`, a HTML file
+consisting of a list of available colour themes in The Myth's Book.
+
+`Themes.html` will then populate `ThemesWindow`. This command will inherit from `Command`.
+
+As seen in the diagram below, the `ThemeListCommand` inherts from `Command`, which means its state is not saved by the address book, and it cannot be undone after executing the command.
+
+image::ThemeListCommandDiagram1.png[width="800"]
+_Figure 5.6.1 ThemeListCommand Logic Class Diagram_
+
+The execution of ThemeListCommand is processed in this way:
+
+. When the user execute `themes`, it posts an event `ShowThemeRequestEvent`, which will then be listened and handled by `handleShowThemeEvent` in `MainWindow`.
+
+. `gradle` will then convert the document `Themes.adoc` into `Themes.html` file.
+
+. `ThemesWindow` will then be activated, and will be populated by `Themes.html`.
+
+Code of ThemeListCommand:
+[source, java]
+----
+public class ThemeListCommand extends Command {
+    @Override
+    public CommandResult execute() {
+        // ... theme list logic ...
+        EventsCenter.getInstance().post(new ShowThemeRequestEvent());
+    }
+}
+----
+
+Code of ThemesWindow.java:
+[source,java]
+----
+public ThemesWindow() {
+    // ... themes window logic ...
+    dialogStage = createDialogStage(TITLE, null, scene);
+    dialogStage.setMaximized(true);
+    FxViewUtil.setStageIcon(dialogStage, ICON);
+
+    String userGuideUrl = getClass().getResource(THEMES_FILE_PATH).toString();
+    browser.getEngine().load(userGuideUrl);
+}
+
+public void show() {
+    // ... show logic ...
+    dialogStage.showAndWait();
+}
+----
+
+Listener for ShowThemeRequestEvent in MainWindow.java:
+[source,java]
+----
+@Subscribe
+private void handleShowThemesEvent(ShowThemeRequestEvent event) {
+    logger.info(LogsCenter.getEventHandlingLogMessage(event));
+    handleThemes();
+}
+----
+
+Creating and showing of ThemesWindow in MainWindow.java:
+[source,java]
+----
+@FXML
+public void handleThemes() {
+    ThemesWindow themesWindow = new ThemesWindow();
+    themesWindow.show();
+}
+----
+
+Including of Themes.html in build.gradle:
+[source,java]
+----
+task deployOfflineDocs(type: Copy) {
+    into('src/main/resources/docs')
+
+    from ("${asciidoctor.outputDir}/html5") {
+        include 'stylesheets/*'
+        include 'images/*'
+        include 'UserGuide.html'
+        include 'Themes.html'
+    }
+}
+----
+
+The following sequence diagram shows how the theme list operation works:
+
+As seen in the diagram below, when `themes` is typed into the command line input, a new `ThemeListcommand` is created.
+
+image::ThemeListCommandDiagram2.png[width="800"]
+_Figure 5.6.2 ThemeListCommand Logic Sequence Diagram_
+
+As seen in the diagram below, when `themes` is executed in `ThemeListCommand`, it will post `ShowThemeRequestEvent` to the `EventsCenter`, which will be handled by `MainWindow` through `handleThemes`.
+
+image::ThemeListCommandDiagram3.png[width="800"]
+_Figure 5.6.3 ThemeListCommand Logic, EventsCenter & UI Diagram_
+
+==== Design Considerations
+
+**Aspect:** How theme list executes +
+**Alternative 1 (current choice):** Showing the list of themes through a pop-up window populated by a HTML file. +
+**Pros:** Improve user-friendliness because users will be able to see how each theme looks like, and will be able to decide and choose which theme they prefer easily. +
+**Cons:** Developers need to learn the implementation of `gradle`, `asciidoctor` and `deployOfflineDocs`.
+**Alternative 2:** Showing the list of themes through `CommandResult` in `ResultDisplay`.
+**Pros:** Simple to implement since the list of themes can come as `String` and do not need to convert asciidoc to HTML file. Developers do not need to learn implementation of `gradle`, `asciidoctor` and `deployOfflineDocs`. +
+**Cons:** Reduce user-friendliness since users will not be able to see how each theme looks like, and will not be able to decide and choose preferred theme. +
+// end::switch[]
+
+// tag::sort[]
+=== Sort mechanism
+
+The sort mechanism sorts the contacts based on their names inside the `addressbook` of the `ModelManager`.
+When the sort method is executed, it organizes the position of the people existing in the `addressbook`
+based on their names in alphabetical order. The sort mechanism touches all components of the software application
+but mainly involving the logic and model component.
+
+In the figure [Figure 5.7.1] below, the `SortCommand` inherits from `UndoableCommand`
+which is an extra layer between abstract `Command` class which belongs to the Logic Component.
+This allows the SortCommand to be undoable, where the previous state of the address book before sorting is saved.
+
+image::SortCommandLogicClassDiagram.PNG[width="600"]
+_Figure 5.7.1 SortCommand Logic Class Diagram_
+
+Suppose a user has an unorganized list of contacts and executes the `SortCommand` to organize his contacts.
+
+The execution of SortCommand is processed in this way:
+
+. User will execute and create a new `SortCommand` so as to sort the address book.
+. When `executeUndoableCommand()` of `SortCommand` is called, `model.sort()` in the method will be processed.
+. The `internalList` of the address book is then accessed and sorted through a `lambda` function which
+  compares the name of everyone and necessarily switches the position between contacts throughout the `internalList` by comparing names between person r1 and r2 sequentially.
+. After `internalList` is sorted, function `updateFilterPersonList(PREDICATE_SHOW_ALL_PERSONS)` is called
+  to update the list being filtered and also call an event `indicatedAddressBookChanged()`
+  to update the `PersonListPanel` of the GUI being shown.
+
+Code of `SortCommand.java` and its method `executeUndoableCommand`:
+[source,java]
+----
+public class SortCommand extends UndoableCommand {
+    // ... SortCommand logic ...
+    @Override
+    public CommandResult executeUndoableCommand() {
+        model.sort();
+        return new CommandResult(MESSAGE_SUCCESS);
+    }
+}
+----
+
+Code of sort method inside `ModelManager.java`:
+[source,java]
+----
+@Override
+public synchronized void sort() {
+    addressBook.sort();
+    updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+    indicateAddressBookChanged();
+}
+----
+
+Code of sort method inside `UniquePersonList.java` using a lambda function to sort `internalList`:
+[source,java]
+----
+public void sort() {
+    internalList.sort((r1, r2) -> (
+            r1.getName().toString().compareTo(r2.getName().toString())));
+}
+
+----
+The following sequence diagrams shows how the sort operation works:
+As seen in the figure [Figure 5.7.2] below, when sort is typed into command line input, new `SortCommand` is created.
+
+image::SortCommandLogicSequenceDiagram.PNG[width="600"]
+_Figure 5.7.2 SortCommand Logic Sequence Diagram_
+
+As seen in the figure [Figure 5.7.3] below, when `executeUndoableCommand` is called in SortCommand class, it will call the sort function in ModelManager.
+It will call the sort() function of its own class until it reaches InternalList.sort() where the sorting of
+contacts positions based on their names will be executed.
+
+image::SortCommandModelSequenceDiagram.PNG[width="600"]
+_Figure 5.7.3 SortCommand Model Sequence Diagram_
+
+Finally, the execution will create a sorted addressbook where the names of contacts are alphabetically sorted
+and shown in the `PersonListPanel`.
+
+==== Design Considerations
+**Aspect:** Implementation of `SortCommand` +
+**Alternative 1 (current choice):** extending to `UndoableCommand` class +
+**Pros:** Sort method call is able to be undone if needed as it now inherits from the Super Class. +
+**Cons:** Developers might need to understand how `UndoableCommand` works before implementation. +
+**Alternative 2:** Just extend to `Command` class +
+**Pros:** Does not need understanding of `UndoableCommand` class. +
+**Cons:** Unable to undo sort method and work from previous state of address book if user has called `SortCommand` to sort address book.
+
+---
+**Aspect:** Implementation of how sort executes +
+**Alternative 1 (current choice):** Compare and sort the names of every individual alphabetically. +
+**Pros:** Easy to implement and uses less complexity. +
+**Cons:** Unable to sort based on user preferences like email, phone number. +
+**Alternative 2:** Include all types of sorting like sorting phone numbers and emails. +
+**Pros:** Might be more favourable for user who have specific needs to collate certain information such as
+ email or phone number about his contacts in an alphanumeric order. +
+**Cons:** Difficult to implement and wastes memory space as sorting might be unnecessary and complex for general users
+          since main goal is to keep address book organized. +
+
+//end::sort[]
+
+// tag::access[]
+=== Access Website mechanism
+
+The access website mechanism has an `AccessCommand` that allows users to access the website by stating the
+index of the desired contact in the contact list viewed.
+The implementation of the access website mechanism is mostly done in the `UI`, `Model`, and `Logic` component.
+The `AccessCommand` class inherits from the `Command` class.
+
+Suppose a user would like to access one of his contacts website that is listed in the `PersonListPanel` of the address book
+and executes the `AccessCommand` to access the website.
+
+The execution of AccessCommand is processed in this way:
+
+. User will input `access index` where `index` refers to the index of the person listed in the `PersonListPanel` in GUI.
+. Input of user will be parse as an argument through the AddressBookParser and AccessCommandParser to extract the index.
+. A new `AccessCommand` with the index inputted will be created.
+. The method `execute()` of the `AccessCommand` will then be processed,
+ where the person of the website that the user wants to access will be obtained through the
+ index of the `lastShownList` and stored into `person` variable which is of `ReadOnlyPerson` data-type.
+. The `EventsCenter` will then post a new `AccessWebsiteRequestEvent` with parameter input of the `website` of the `person` variable.
+. The `AccessWebsiteRequestEvent` event would then be handled by an event handler `handleAccessWebsiteEvent` in `BrowserPanel`.
+. The event handler will help to load the website of the person through the browser panel based on the website inputted.
+
+Code of `AccessCommand` and its method `execute()`:
+[source,java]
+----
+public class AccessCommand extends Command {
+    private final Index targetIndex;
+
+    // ... AccessCommand logic ...
+    public AccessCommand(Index targetIndex) {
+        this.targetIndex = targetIndex;
+    }
+
+    @Override
+    public CommandResult execute() throws CommandException {
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+
+        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_DISPLAYED_INDEX);
+        }
+
+        ReadOnlyPerson person = lastShownList.get(targetIndex.getZeroBased());
+        String name = person.getName().toString();
+        String website = person.getWebsite().toString();
+
+        if (website.equals("NIL")) {
+            throw new CommandException(Messages.MESSAGE_INVALID_WEBSITE);
+        }
+
+        EventsCenter.getInstance().post(new AccessWebsiteRequestEvent(website));
+        return new CommandResult(String.format(MESSAGE_ACCESS_PERSON_SUCCESS, targetIndex.getOneBased(), name));
+    }
+}
+----
+
+Code of how accessing website event is handled in `BrowserPanel`:
+[source,java]
+----
+public class BrowserPanel extends UiPart<Region> {
+    // ... BrowserPanel logic ...
+
+    public void handleWebsiteAccess(String website) {
+        browserPanel.loadPage(website);
+    }
+
+    public void loadPage(String url) {
+        Platform.runLater(() -> browser.getEngine().load(url));
+    }
+
+    @Subscribe
+    private void handleAccessWebsiteEvent(AccessWebsiteRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleWebsiteAccess(event.website);
+    }
+}
+----
+
+Through the sequence diagrams below, you can see how the code executes when a user
+inputs `access 1` into the command line.
+
+When a user inputs `access 1`, it will trigger `LogicManager` to parse the arguments
+into the `AddressBookParser` so that it can create a new `AccessCommand` and store it as a `Command`.
+
+Sequence diagram for `Logic` Component for `AccessCommand` and its execution:
+
+image::AccessCommandLogicSequenceDiagram.PNG[width="800"]
+_Figure 5.8.1 AccessCommand Logic Sequence Diagram_
+
+After creating a new `AccessCommand`, `LogicManager` will call execute on `AccessCommand`
+and this will result in the website of the person at the index inputted to be attained through the `ObservableList<ReadOnlyPerson>`
+of the `ModelManager`. The website attained will be parsed through an event request and event handler.
+Finally, the website will then be loaded onto the browser of the `BrowserPanel` of the `MainWindow`.
+
+The process can be observed in the sequence diagram below
+where it shows the sequence of `execute()` method of `AccessCommand` and its event handling.
+
+image::AccessCommandEventsSequenceDiagram.PNG[width="800"]
+_Figure 5.8.2 AccessCommand Model, EventsCenter & UI Sequence Diagram_
+
+==== Design Considerations
+**Aspect:** How accessing a website of a person executes +
+**Alternative 1 (current choice):** Create a new event request and event handler for AccessCommand. +
+**Pros:** Able to have more features like AccessWebsite and Select feature that is able to exist concurrently in the application. +
+**Cons:** Having the current select feature which is to search for names of contact of Google is quite unnecessary. +
+**Alternative 2:** Change the code of event request and event handler related to SelectCommand to allow users to access website of their contacts instead
+of creating a search on contacts name through the browser panel. +
+**Pros:** Select feature which seems unnecessary is replaced with a more useful feature of AccessWebsite. +
+**Cons:** Will not be able to replace the select feature anymore which might be important for other aspects such as creating a Person Card Viewer
+which is important for GUI enhancement. +
+
+//end::access[]
+
+// tag::locate[]
+=== Location mechanism
+The location mechanism has a `LocationCommand` that allows users to access the address through Google Maps Search
+by stating the index of the desired contact in the contact list viewed.
+The implementation of the location mechanism is mostly done in the `UI`, `Model`, and `Logic` component
+and is very similar to the access website mechanism in terms of implementation and execution sequence.
+The `LocationCommand` class inherits from the `Command` class.
+
+Suppose a user would like to access one of his contacts address that is listed in the `PersonListPanel` of the address book
+and executes the `LocationCommand` to access the location using the address attained.
+
+The execution of LocationCommand is processed in this way:
+
+. User will input `locate index` where `index` refers to the index of the person listed in the `PersonListPanel` in GUI.
+. Input of user will be parse as an argument through the AddressBookParser and LocationCommandParser to extract the index.
+. A new `LocationCommand` with the index inputted will be created.
+. The method `execute()` of the `LocationCommand` will then be processed,
+ where the person of the address that the user wants to find on Google Maps Search will be obtained through the
+ index of the `lastShownList` and stored into `person` variable which is of `ReadOnlyPerson` data-type.
+. The `EventsCenter` will then post a new `AccessLocationRequestEvent` with parameter input of the `address` of the `person` variable.
+. The `AccessLocationRequestEvent` event would then be handled by an event handler `handleAccessLocationEvent` in `BrowserPanel`.
+. The event handler will help to load the address of the person through Google Maps Search in the browser panel.
+
+Code of `LocationCommand` and its method `execute()`:
+[source,java]
+----
+public class LocationCommand extends Command {
+    private final Index targetIndex;
+
+    // ... LocationCommand logic ...
+
+    public LocationCommand(Index targetIndex) {
+        this.targetIndex = targetIndex;
+    }
+
+    @Override
+    public CommandResult execute() throws CommandException {
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+
+        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_DISPLAYED_INDEX);
+        }
+
+        ReadOnlyPerson person = lastShownList.get(targetIndex.getZeroBased());
+        String name = person.getName().toString();
+        String location = person.getAddress().toString();
+        if (location.equals("NIL")) {
+            throw new CommandException(Messages.MESSAGE_INVALID_LOCATION);
+        }
+
+        EventsCenter.getInstance().post(new AccessLocationRequestEvent(location));
+        return new CommandResult(String.format(MESSAGE_LOCATE_PERSON_SUCCESS, targetIndex.getOneBased(), name));
+    }
+}
+----
+
+Code of how accessing location event is handled in `BrowserPanel`:
+[source,java]
+----
+public class BrowserPanel extends UiPart<Region> {
+
+    public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/maps?safe=off&q=";
+    public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
+
+    // ... BrowserPanel logic ...
+
+    private void loadPersonLocation(String location) {
+        loadPage(GOOGLE_SEARCH_URL_PREFIX + location.replaceAll(" ", "+")
+                + GOOGLE_SEARCH_URL_SUFFIX);
+    }
+
+    public void loadPage(String url) {
+        Platform.runLater(() -> browser.getEngine().load(url));
+    }
+
+    @Subscribe
+    private void handleAccessLocationEvent(AccessLocationRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadPersonLocation(event.location);
+    }
+}
+----
+
+Through the sequence diagram, you can see how the code executes when a user
+inputs `locate 1` into the command line.
+
+When a user inputs `locate 1`, it will trigger `LogicManager` to parse the arguments
+into the `AddressBookParser` so that it can create a new `LocationCommand` and store it as a `Command`.
+
+Sequence diagram for `Logic` Component for `LocationCommand` and how it is executed:
+
+image::LocationCommandLogicSequenceDiagram.png[width="800"]
+_Figure 5.9.1 LocationCommand Logic Sequence Diagram_
+
+After creating a new `LocationCommand`, `LogicManager` will call execute on `LocationCommand`
+and this will result in the address of the person at the index inputted to be attained through
+the `ObservableList<ReadOnlyPerson>` of the `ModelManager`.
+The address attained will be parsed through an event request and event handler.
+Finally, the address will then be loaded onto Google Maps Search of the browser of the `MainWindow`.
+
+The process can be observed in the sequence diagram below
+where it shows the sequence of `execute()` method of `LocationCommand` and its event handling.
+
+image::LocationCommandEventsSequenceDiagram.png[width="800"]
+_Figure 5.9.2 LocationCommand Model, EventsCenter & UI Sequence Diagram_
+
+==== Design Considerations
+**Aspect:** How accessing a location of a person executes +
+**Alternative 1 (current choice):** Create a new event request and event handler for LocationCommand. +
+**Pros:** Able to have more features like Location, AccessWebsite and Select feature that is able to exist concurrently in the application. +
+**Cons:** Having the current select feature which is to search for names of contact of Google is quite unnecessary. +
+**Alternative 2:** Change the code of event request and event handler related to SelectCommand to allow users to access the address through Google Maps Search instead
+of processing a search on contact's name through the google search using browser. +
+**Pros:** Select feature which seems unnecessary is replaced with a more useful feature of AccessWebsite. +
+**Cons:** Will not be able to replace the select feature anymore which might be important for other aspects such as creating a PersonCard Viewer
+which is important for GUI enhancement. +
+
+//end::locate[]
+
+// tag::find[]
+=== Find mechanism
+The find mechanism is facilitated by the `NameContainsKeyWordsPredicate` class which resides in the person class. It supports finding any person in the address book using their full name or a part of the name.
+
+However, if a user is searching by part of a name, the substring must be in the beginning of the first name or last name and it has to be at least two characters long.
+
+The `find` command is not an undoable command and therefore it inherits from `Command` rather than `UndoableCommand`.
+
+The `NameContainsKeyWordsPredicate` class has a test function that uses stream, a new feature of Java 8 to process data more efficiently than using loops. The `test()` returns true if either the full name(first name + last name) ignoring case or it contains a substring of the name ignoring case.
+
+The main logic in the `NameContainsKeyWordsPredicate` class comes from the `StringUtil` class that acts as a helper function for handling any operations related to strings.
+
+How the `containsPartofWord()` function works:
+[source,java]
+----
+public static boolean containsPartOfWord(String sentence, String word) {
+    requireNonNull(sentence);
+    requireNonNull(word);
+    ...
+}
+----
+
+The function takes in two string arguments, one being the name of the person and the other being the substring. The function first checks to see if either of these arguments are null using java.util.Objects.requireNonNull. If any of the arguments are null, it throws a NullPointerException.
+[source,java]
+----
+public static boolean containsPartOfWord(String sentence, String word) {
+    ....
+    checkArgument(preppedWord.split("\\s+").length == 1, "Word parameter should be a single word");
+    String preppedSentence = sentence;
+    String[] wordsInPreppedSentence = preppedSentence.split("\\s+");
+    ...
+}
+----
+
+If both strings are valid, it then checks that the substring is only one word. The function then splits up the person’s name into first name and last name.
+[source,java]
+----
+public static boolean containsPartOfWord(String sentence, String word) {
+    ....
+    if (preppedWord.length() >= 2) {
+        for (String wordInSentence : wordsInPreppedSentence) {
+            if ((wordInSentence.toLowerCase().contains(preppedWord.toLowerCase()))
+                && (wordInSentence.toLowerCase().startsWith(preppedWord.toLowerCase()))) {
+            return true;
+            }
+        }
+    ....
+----
+The function first checks if the length of the substring is greater than, equal to 2. Using an enhanced for loop, the function iterates through the words in a person’s name and checks to see if any of them start with the substring ignoring cases.
+
+If yes, then the function returns true else it returns false.
+
+==== Design Considerations
+**Aspect:** Implementation of `containsPartOfWord` +
+**Alternative 1 (current choice):** length>=2 +
+**Pros:** Making sure that not every person's name comes up in find. For e.g: 'find a' +
+**Cons:** There might exist people whose first or last name is stored as a single character +
+**Alternative 2:** Allow any length of substrings +
+**Pros:** No exception cases +
+**Cons:** No purpose of using find as if you search for one character, all contacts might get filtered +
+// end::find[]
+
+// tag::findtag[]
+=== Find Tag mechanism
+
+The find tag mechanism is facilitated by `TagContainsKeywordsPredicate`, a predicate class that finds persons in the address book with the tag specified by the user.
+It lists out all contacts that have the specified tag. Contacts with substrings of the tag will not be listed, unlike the Find mechanism. This command will inherit from `Command`.
+
+From Figure 5.11.1 below, the `FindTagCommand` inherits from `Command`, which means its state is not saved by the address book, and it cannot be undone after executing the command.
+
+image::FindTagCommandDiagram1.png[width="800"]
+_Figure 5.11.1 FindTagCommand Logic Class Diagram_
+
+The execution of FindTagCommand is processed in this way:
+
+. User will execute `findtag classmates` to find contacts in The Myth's Book with the tag `classmates`.
+
+. The execution of `findtag classmates` updates the `PersonList` in `AddressBook` with `TagContainsKeywordsPredicate`, which checks if the contacts in `PersonList` have the tag `classmates`.
+
+Code of `FindTagCommand`:
+[source,java]
+----
+public class FindTagCommand extends Command {
+    @Override
+    public CommandResult execute() {
+        // ... find tag logic ...
+        model.updateFilteredPersonList(predicate);
+    }
+}
+----
+
+Code of `TagContainsKeywordsPredicate`:
+[source,java]
+----
+public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
+    @Override
+    public boolean test(ReadOnlyPerson person) {
+        return (keywords.stream().anyMatch(keyword -> StringUtil.containsWordIgnoreCase
+                (person.getTagsText(), keyword)));
+    }
+}
+----
+
+The follow sequence diagram shows how the find tag operation works:
+
+As seen in Figure 5.11.2, when `findtag classmates` is typed into the command line input, a new `FindTagCommand` is created.
+
+image::FindTagCommandDiagram2.png[width="800"]
+_Figure 5.11.2 FindTagCommand Logic Sequence Diagram_
+
+==== Design Considerations
+
+**Aspect:** Implementation of `TagContainsKeywordsPredicate` +
+**Alternative 1 (current choice):** Tag of contacts has to match with the tag specified by the user +
+**Pros:** Persons found are specific to the tags that the user wants to find. Easy to implement. +
+**Cons:** `FindTagcommand` cannot account for mistypes or account for cases where users can't remember the exact tag for his/her contacts. +
+**Alternative 2:** Substrings of the tag of contacts can be matched as well +
+**Pros:** `FindTagCommand` can account for cases where users do not remember the exact tag for his/her contacts. +
+**Cons:** Difficult to implement. Not exactly a big improvement to `FindTagCommand`. +
+// end::findtag[]
+
+// tag::favouriteunfavourite[]
+=== Favourite/Unfavourite mechanism
+
+The favourite/unfavourite mechanism is facilitated by the `Favourite` field that resides in `Person`. These commands will inherit from `UndoableCommand`.
+
+As seen in the diagram below,`FavouriteCommand` and `UnfavouriteCommand` inherits `UndoableCommand`, which is an extra layer between abstract Command class and concrete commands that can be undone. When `FavouriteCommand` or `UnfavouriteCommand` is executed,
+the previous state of the address book before favouriting or unfavouriting a person is saved.
+
+image::FavouriteCommandDiagram1.png[width="800"]
+_Figure 5.12.1 FavouriteCommand Logic Class Diagram_
+
+The execution of FavouriteCommand is processed in this way:
+
+. User will execute `list` to view the list of persons in The Myth's Book.
+
+. User will then execute `favourite 1`, with `1` being the `index` of the person that the user wants to favourite, provided by the executed `list`.
+
+. The `PersonList` in `AddressBook` will then favourite the person specified by the user's execution of `favourite 1`.
+
+. The `PersonCard` will be notified through `BindListeners` that the person specified is favourited, and will set the favourite icon beside the person's name.
+
+The execution of UnfavouriteCommand is processed similarly, but the person will be unfavourited, and the favourite icon will be removed instead.
+The execution of UnfavouriteCommand will also enable the display of `FavouriteList`.
+
+Code of `FavouriteCommand`:
+[source,java]
+----
+public class FavouriteCommand extends UndoableCommand {
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        // ... favourite logic ...
+
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+
+        ReadOnlyPerson personToFavourite = lastShownList.get(targetIndex.getZeroBased());
+
+        model.favouritePerson(personToFavourite);
+    }
+}
+----
+
+Code of `UnfavouriteCommand`:
+[source,java]
+----
+public class UnfavouriteCommand extends UndoableCommand {
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        // ... unfavourite logic ...
+
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+
+        ReadOnlyPerson personToUnfavourite = lastShownList.get(targetIndex.getZeroBased());
+
+        model.unfavouritePerson(personToUnfavourite);
+    }
+}
+----
+
+Favouriting/Unfavouriting of person in AddressBook.java:
+[source,java]
+----
+public void favouritePerson(ReadOnlyPerson target) throws PersonNotFoundException {
+    persons.favouritePerson(target);
+}
+
+public void unfavouritePerson(ReadOnlyPerson target) throws PersonNotFoundException {
+    persons.unfavouritePerson(target);
+}
+----
+
+Listener for change of favourite field in PersonCard.java:
+[source,java]
+----
+private void bindListeners(ReadOnlyPerson person) {
+    // ... listeners logic for other fields ...
+    person.favouriteProperty().addListener((observable, oldValue, newValue) -> {
+        initFavourite(person);
+    });
+}
+----
+
+Setting visibility of favourite icon beside name in PersonCard.java:
+[source,java]
+----
+private void initFavourite(ReadOnlyPerson person) {
+    if (person.isFavourite()) {
+        favouriteImage.setVisible(true);
+    } else {
+        favouriteImage.setVisible(false);
+    }
+}
+----
+
+The following sequence diagram shows how the favourite/unfavourite operation works:
+
+As seen in the diagram below, when `favourite 1` is typed into the command line input, a new `FavouriteCommand` is created.
+The same works for `UnfavouriteCommand` when `unfavourite 1` is typed into the command line input.
+
+image::FavouriteCommandDiagram2.png[width="800"]
+_Figure 5.12.2 FavouriteCommand Logic Sequence Diagram_
+
+==== Design Considerations
+
+**Aspect:** Implementation of `FavouriteCommand` and `UnfavouriteCommand` +
+**Alternative 1 (current choice):** Extending to `UndoableCommand` class. +
+**Pros:** Better for users to undo `FavouriteCommand` or `UnfavouriteCommand` if he/she favourites/unfavourites the wrong person. +
+**Cons:** Developers need to learn the implementation of `UndoableCommand`. +
+**Alternative 2:** Extending to `Command` class. +
+**Pros:** Developers do not need to learn the implementation of `UndoableCommand` class. +
+**Cons:** `FavouriteCommand` cannot be undone and have to call `UnfavouriteCommand` or vice versa to undo mistyped command +
+
+=== Favourite List mechanism
+
+The favourite list mechanism is facilitated by `NameContainsFavouritePredicate`, a predicate class that checks if a person is favourited. It lists out all contacts that are favourited. This command will inherit from `Command`.
+
+As seen in the diagram below, `FavouriteListCommand` inherits from `Command`, which means its state is not saved by the address book, and it cannot be undone after executing the command.
+
+image::FavouriteListCommandDiagram1.png[width="800"]
+_Figure 5.13.1 FavouriteListCommand Logic Class Diagram_
+
+The execution of `FavouriteListCommand` is processed in this way:
+
+. User will execute `favourites` to display a list of favourited persons in The Myth's Book.
+
+. The execution of `favourites` updates the `PersonList` in `AddressBook` with `NameContainsFavouritePredicate`, which checks if a person is favourited.
+
+Code of `FavouriteListCommand`:
+[source,java]
+----
+public class FavouriteListCommand extends Command {
+    @Override
+    public CommandResult execute() {
+        // ... favourite list logic ...
+        model.updateFilteredPersonList(predicate);
+    }
+}
+----
+
+Code of `NameContainsFavouritePredicate`:
+[source,java]
+----
+public class NameContainsFavouritePredicate implements Predicate<ReadOnlyPerson> {
+    @Override
+    public boolean test(ReadOnlyPerson person) {
+        return person.getFavourite();
+    }
+}
+----
+
+The following sequence diagram shows how the favourite list operation works:
+
+As seen in Figure 5.13.2, when `favourites` is typed into the command line input, a new `FavouriteListCommand` is created.
+
+image::FavouriteListCommandDiagram2.png[width="800"]
+_Figure 5.13.2 FavouriteListCommand Logic Sequence Diagram_
+
+==== Design Considerations
+
+**Aspect:** Implementation of `FavouriteListCommand` +
+**Alternative 1 (current choice):** Extends to `Command` +
+**Pros:** Developers do not need to learn the implementation of `UndoableCommand` class. +
+**Cons:** Users may want to undo `FavouriteListCommand` as they may not have wanted to list the favourited persons. +
+**Alternative 2:** Extends to `UndoableCommand` +
+**Pros:** Users can undo `FavouriteListCommand` when they mistype the command. +
+**Cons:** Developers need to learn the implementation of `UndoableCommand`. Unnecessary to extend to `UndoableCommand` since users can type `ListCommand` to go back to the list of all persons. +
+// end::favouriteunfavourite[]
+
+//tag::birthday[]
+=== Birthdays mechanism
+The Birthdays mechanism is facilitated by the `CheckIfBirthday` class which resides in the person class. It lists out all contacts that have their birthdays today.
+
+The `Birthdays` command is not an undoable command and thus inherits from `Command` rather than `UndoableCommand`.
+
+The `CheckIfBirthday` class checks if the birth month and day of a contact matches today. As the birthday field is a birthday object, it is converted to a string using the `toString()` method in the `Birthday` class and then parsed into a date object using `simpleDateFormat()`.
+[source,java]
+----
+ Date date = new SimpleDateFormat("dd/MM/yyyy").parse(birthday);
+----
+
+The date is then converted into a `Calendar` object for easier comparison. Then the Day and Month of today is compared with the day and month of a person's birthday in the following way.
+[source,java]
+----
+return (((cal.get(Calendar.MONTH)) == Calendar.getInstance().get(Calendar.MONTH))
+                && ((cal.get(Calendar.DAY_OF_MONTH) == Calendar.getInstance().get(Calendar.DAY_OF_MONTH))));
+    }
+----
+
+An overall view of birthdays command logic is shown in Figure 5.14.1:
+
+image::BirthdayMechanism.png[width="800"]
+_Figure 5.14.1 Birthdays Command Logic Sequence Diagram_
+
+What the user finally sees is a list of people with their birthday today. This is because the `executeUndoableCommand()` which is overriden in the BirthdaysCommand class updates the `filteredPersonList`.
+[source,java]
+----
+ @Override
+    public CommandResult executeUndoableCommand() {
+        model.updateFilteredPersonList(check);
+        return new CommandResult(getBirthdayMessageSummary(model.getFilteredPersonList().size()));
+    }
+----
+
+==== Design Considerations
+**Aspect:** UI of `BirthdaysCommand` +
+**Alternative 1 (current choice):** Showing the persons as a list. +
+**Pros:** g: Voluntary action. users can check birthday if they want to and won't get confused even if there are multiple contacts with the same name as to whose birthday it is. +
+**Cons:** Some users might want the birthdays to appear as a pop up. +
+**Alternative 2:** Use a pop up which is triggered when the app is opened. +
+**Pros:** Involuntary and less effort from the users' part. +
+**Cons:** If pop up only shows a list of names, users might get confused as to who the person is if there are multiple persons with the same name. +
+//end::birthday[]
+
+// tag::modeswitch[]
+=== Mode Switching mechanism
+
+This mechanism allows the switching between `two` modes in The Myth's Book which is firstly, `Persons Mode` which is activated by typing `list`,
+and secondly, `Events Mode` which is activated by typing `events`. The mode switching mechanism allows users to type in different specific commands based on the mode
+that is being used in the software.
+
+The commands are categorised into three groups:
+
+* `Person Commands` such as the `AddCommand` or `EditCommand`.
+* `Event Commands` such as the `AddEventCommand` or `DeleteEventCommand`.
+* `General Commands` such as the `HelpCommand` or `SwitchThemeCommand`.
+
+The `Person Commands` and `Event Commands` commands are controlled by a boolean variable `personListActivated`
+which is initially set as true
+where system is in `Persons Mode` at the start. +
+The `General Commands` is not controlled by the boolean variable `personListActivated` and is able to be executed in both modes.
+`Person Commands` can be used when `personListActivated` is `true` while `Event Commands` can be used when `personListActivated` is `false`.
+
+The implementation of the mode switching mechanism is mostly done in the `Logic` component.
+The Mode Switching Mechanism is implemented in the `AddressBookParser` code of the `Logic` component.
+
+Suppose a user is currently on the `Persons Mode` on The Myth's Book and he wants to use
+the `Events Mode` and the commands related to `Events`. As such, user is currently able to
+use `Person Commands` and `General Commands` but unable to use `Event Commands`.
+
+The execution of Mode Switching Mechanism from `Persons Mode` to `Events Mode` processed in this way:
+
+. User wants to add a new event so user inputs `addevent n/ZoukOut d/5/12/2017 a/Sentosa Beach, Siloso`.
+. Input of user is parse as an argument through the `AddressBookParser` but throws an error as application is not in the `Events Mode`.
+. User then switches to `Events Mode` by inputting `events` which would turn `personListActivated` to `false`.
+. User is now able to use `Event Commands` such as the `AddEventCommand` or `DeleteEventCommand`.
+. User then uses the `AddEventCommand` and inputs `addevent n/ZoukOut d/5/12/2017 a/Sentosa Beach, Siloso`.
+. Input of user is successfully parse as an argument through the `AddressBookParser` and then through the `AddEventCommandParser` and adds a new event successfully.
+
+Suppose a user is currently on the `Events Mode` and wants to use the `Persons Mode` and the commands related to `Persons`.
+
+In order for user to switch back from `Events Mode` to `Persons Mode`:
+
+. User wants to add a new contact so user inputs `add n/Dion Poh p/63425234 e/dionPoh@hotmail.com`.
+. User switches to `Persons Mode` by inputting `list` which would turn `personListActivated` to `true`.
+. User is now able to use `Person Commands` such as the `AddCommand`.
+. User then uses the `AddCommand` and inputs `add n/Dion Poh p/63425234 e/dionPoh@hotmail.com`.
+. Input of user is successfully parse as an argument through the `AddressBookParser` and then through the `AddCommandParser` and adds a new contact successfully.
+
+
+Code of `AddressBookParser` class and how it executes:
+[source,java]
+----
+public class AddressBookParser {
+
+    /**
+     * Used to control lock mechanism for different commands between person and events platforms.
+     */
+    private static Boolean personListActivated = true;
+
+    // ... AddressBookParser logic ...
+
+    public Command parseCommand(String userInput) throws ParseException {
+        // ... parseCommand logic ...
+
+        switch (commandWord) {
+        case AddCommand.COMMAND_WORD: case AddCommand.COMMAND_ALIAS:
+            if (personListActivated) {
+                return new AddCommandParser().parse(arguments);
+            } else {
+                throw new ParseException(MESSAGE_INVALID_PERSON_PLATFORM);
+            }
+
+        // ... other code ...
+
+        case ListCommand.COMMAND_WORD: case ListCommand.COMMAND_ALIAS:
+            personListActivated = true;
+            return new ListCommand();
+
+        // ... other code ...
+
+        case HelpCommand.COMMAND_WORD: case HelpCommand.COMMAND_ALIAS:
+            return new HelpCommand();
+
+        case AddEventCommand.COMMAND_WORD: case AddEventCommand.COMMAND_ALIAS:
+            if (!personListActivated) {
+                return new AddEventCommandParser().parse(arguments);
+            } else {
+                throw new ParseException(MESSAGE_INVALID_EVENT_PLATFORM);
+            }
+
+        case EventsCommand.COMMAND_WORD:
+            personListActivated = false;
+            return new EventsCommand();
+
+        // ... other code ...
+    }
+}
+----
+
+==== Design Considerations
+**Aspect:** The handling of different commands inputted into CommandBox for the two different modes(Persons or Events) in The Myth's Book.  +
+**Alternative 1 (current choice):** Create a system in the AddressBookParser that can differentiate the different commands for different modes(Persons or Events). +
+**Pros:** Able to have better usability as it can separate and classify features for both Persons and Events that is able to exist concurrently with lesser bugs in the application. +
+**Cons:** Users would have to switch between Events and Persons platform when they want to use the other platform that they are not currently on. +
+**Alternative 2:** Use the initial AddressBookParser given that accepts all of command and still executes regardless of the software being used in either mode. +
+**Pros:** User can use all commands and does not need to face the issue of having to switch between the two platforms to use the different commands. +
+**Cons:** User experience and software might feel buggy as user might be on the events mode but executing commands related to the persons mode which user might be unable to see. +
+
+//end::modeswitch[]
+
+//tag::optionalfield[]
+===  Optional Person Fields mechanism
+
+This mechanism allows certain fields of the `Person` class to be optional when adding a contact.
+The implementation of making fields optional for `AddCommand` allows users to add contacts with lesser
+information required as it only requires name,phone,email to add a contact and other fields can be
+optionally added together into the input of adding a contact. The implementation is mostly done in the`Model` and `Logic` component.
+
+Suppose a user would like to add a new contact with an address to The Myth's Book and executes the `AddCommand`
+by typing `add n/Adam Bait e/adambait@example.com p/98123414 a/18 Taiseng`.
+
+The execution of `AddCommand` is processed in this way:
+
+. User will input `add n/Adam Bait e/adambait@example.com p/98123414 a/18 Taiseng`.
+. Input of user will be handled by the `LogicManager` and parse as an argument through the `AddressBookParser` and `AddCommandParser`.
+. `AddCommandParser` will check for all the prefixes inputted and the existence of compulsory prefixes required.
+. As `Name`,`Phone`,`Email` fields are necessary fields, they are handled as per normal in the `parse` method of `AddCommandParser`
+after being checked that the user has inputted the correct prefixes and information for the 3 necessary fields.
+. For the `Address` field which are similar to other optional fields, it tests whether user has inputted
+the address field or not in `parse` method of `AddCommandParser` and `parseAddress` method of `ParserUtil.java`.
+. Based on whether the user has inputted the optional `Address` field, it is handled either by
+assigning it with the inputted and validated string of address or assigning it with a
+temporary string variable as seen from `Address` constructor of `Address.java`.
+. Once all information inputted is handled, user's inputted contact will be successfully added into The Myth's Book.
+
+Code of `parse` method inside `AddCommandParser.java`:
+[source,java]
+----
+public AddCommand parse(String args) throws ParseException {
+
+    Address address;
+    // ... method logic ...
+
+    ArgumentMultimap argMultimap =
+            ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_HOME_NUMBER,
+                    PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_WEBSITE, PREFIX_SCH_EMAIL,
+                    PREFIX_BIRTHDAY, PREFIX_TAG);
+
+    if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL)) {
+        throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+    }
+
+    try {
+        Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get();
+        Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).get();
+        Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get();
+
+        // ... method logic ...
+
+        Optional<Address> tempAddress = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS));
+        address = (tempAddress.isPresent()) ? tempAddress.get() : new Address(null);
+
+        // ... method logic ...
+
+        ReadOnlyPerson person = new Person(name, phone, homeNumber,
+             email, schEmail, website, address, birthday, false, tagList);
+
+        return new AddCommand(person);
+    } catch (IllegalValueException ive) {
+        throw new ParseException(ive.getMessage(), ive);
+    }
+}
+----
+
+Code of `parseAddress` method inside `ParserUtil.java`:
+[source,java]
+----
+public static Optional<Address> parseAddress(Optional<String> address) throws IllegalValueException {
+    return address.isPresent() ? Optional.of(new Address(address.get())) : Optional.empty();
+}
+----
+
+Code of `Address` constructor inside `Address.java`:
+[source,java]
+----
+public Address(String address) throws IllegalValueException {
+    if (address == null) {
+        this.value = ADDRESS_TEMPORARY;
+    } else {
+        if (!isValidAddress(address)) {
+            throw new IllegalValueException(MESSAGE_ADDRESS_CONSTRAINTS);
+        }
+        this.value = address;
+    }
+}
+----
+==== Design Considerations
+**Aspect:** The ease of adding contacts to The Myth's Book.  +
+**Alternative 1 (current choice):** Make certain fields that are supposed to be inputted to be optional. +
+**Pros:** Users are able to add contacts without much trouble as it only requires minimally 3 inputs. +
+**Cons:** Users would not have full details of a contact that is being added if all fields are not filled in. +
+**Alternative 2:** All fields must be inputted in order for users to add a contact. +
+**Pros:** When a contact is added, all information related to the contact is accounted for. +
+**Cons:** As there are currently 8-9 fields that are required to fill in, it might be realistically troublesome for a user
+to add a contact which is not user friendly. +
+
+//end::optionalfield[]
+
+
+//tag::calendar[]
+=== Calendar mechanism
+
+==== Creating Calendar Layout
+
+The Calendar is created with GridPanes and VBox. The following code snippets describes how the `AnchorPaneNode` object fills up the
+GridPane of the calendar. At the end of the method, the VBox gathers all the required parameters to get the view of the calendar.
+
+[source,java]
+----
+    public Calendar(YearMonth yearMonth, ObservableList<ReadOnlyEvent> eventList) {
+        currentYearMonth = yearMonth;
+        // Create the calendar grid pane
+        GridPane calendar = new GridPane();
+        calendar.setPrefSize(600, 400);
+        // Create rows and columns with anchor panes for the calendar
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 7; j++) {
+                AnchorPaneNode ap = new AnchorPaneNode();
+                ap.setPrefSize(200, 200);
+                calendar.add(ap, j, i);
+                allCalendarDays.add(ap);
+                ap.getStyleClass().add("calendar-color");
+            }
+        }
+
+        // Days of the week labels
+        Text[] dayNames = new Text[]{new Text("Sunday"), new Text("Monday"),
+                          new Text("Tuesday"), new Text("Wednesday"), new Text("Thursday"),
+                          new Text("Friday"), new Text("Saturday")};
+
+        GridPane dayLabels = new GridPane();
+        dayLabels.setPrefWidth(600);
+        Integer col = 0;
+        for (Text txt : dayNames) {
+            txt.getStyleClass().add("calendar-color");
+            AnchorPane ap = new AnchorPane();
+            ap.setPrefSize(200, 10);
+            ap.setBottomAnchor(txt, 5.0);
+            ap.getChildren().add(txt);
+            dayLabels.add(ap, col++, 0);
+        }
+        ...
+    }
+----
+
+==== Populating Calendar
+
+Now, you have the Calendar outline, the populateCalendar method calendar called will then populate the Calendar with the individual dates of the months.
+During the process, we would check if is there any events that are on the date corresponding to the AnchorPaneNode. If it tallies, the AnchorPaneNode will
+be populated with a change in background color.
+
+[source,java]
+----
+    public void populateCalendar(YearMonth yearMonth, ObservableList<ReadOnlyEvent> events) {
+        // Get the date we want to start with on the calendar
+        LocalDate calendarDate = LocalDate.of(yearMonth.getYear(), yearMonth.getMonthValue(), 1);
+        // Dial back the day until it is SUNDAY (unless the month starts on a sunday)
+        while (!calendarDate.getDayOfWeek().toString().equals("SUNDAY")) {
+            calendarDate = calendarDate.minusDays(1);
+        }
+        // Populate the calendar with day numbers
+        for (AnchorPaneNode ap : allCalendarDays) {
+            if (ap.getChildren().size() != 0) {
+                ap.getChildren().remove(0);
+            }
+            Text txt = new Text(String.valueOf(calendarDate.getDayOfMonth()));
+            txt.getStyleClass().add("calendar-color");
+            ap.setDate(calendarDate);
+            ap.setTopAnchor(txt, 5.0);
+            ap.setLeftAnchor(txt, 5.0);
+            ap.setStyle("-fx-background-color: transparent;");
+            ap.getChildren().add(txt);
+            calendarDate = calendarDate.plusDays(1);
+        }
+
+        for (AnchorPaneNode ap : allCalendarDays) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
+            String newDate = formatter.format(ap.getDate());
+            for (ReadOnlyEvent event : events) {
+                String date = event.getDate().toString();
+                if (newDate.equals(date)) {
+                    ap.getChildren();
+                    ap.setStyle("-fx-background-color: #ffebcd;");
+                }
+            }
+        }
+        // Change the title of the calendar
+        calendarTitle.setText(yearMonth.getMonth().toString() + " " + String.valueOf(yearMonth.getYear()));
+    }
+----
+
+View the full code at https://github.com/CS2103AUG2017-T15-B3/main/blob/master/src/main/java/seedu/address/ui/Calendar.java[Calendar] ,
+https://github.com/CS2103AUG2017-T15-B3/main/blob/master/src/main/java/seedu/address/ui/AnchorPaneNode.java[AnchorPaneNode]
+
+The updating of different months and population of event nodes are done by the two separate methods that will post events to
+`EventsCenter` to update the calendar based on the `currentYearMonth`. The listener `handlePopulateMonthEvent` method
+will then populate the Calendar in `MainWindow` with `EventList`.
+
+----
+    public void previousMonth() {
+        currentYearMonth = currentYearMonth.minusMonths(1);
+        EventsCenter.getInstance().post(new PopulateMonthEvent(currentYearMonth));
+    }
+    public void nextMonth() {
+        currentYearMonth = currentYearMonth.plusMonths(1);
+        EventsCenter.getInstance().post(new PopulateMonthEvent(currentYearMonth));
+    }
+----
+
+----
+    @Subscribe
+    private void handlePopulateMonthEvent(PopulateMonthEvent request) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(request));
+        calendar.populateCalendar(request.yearMonth, logic.getFilteredEventList());
+    }
+----
+
+==== Dialog Box
+
+The mechanism behind the process of adding an event from the dialog box is shown in Figure 5.17.3.1 below.
+
+image::dialogaddeventsequencediagram.PNG[width="800"]
+_Figure 5.17.3.1 Dialog Add Event Model, EventsCenter & UI Sequence Diagram_
+
+From the startDialog method in `AnchorPaneNode` class, after receiving a valid Event, an `AddEventRequestEvent` object will be posted to `EventsCenter`.
+Then with the `@Subscribe` function, a handleAddEvent() method in `ModelManager` will be called to addEvent of the `AddressBook` object. The following code snippets
+shows the key implementation of how an Event object is added to the addressbook.
+
+[source,java]
+----
+   dialog.setResultConverter(dialogButton -> {
+        if (dialogButton == button) {
+                return new BuildEvent().withName(text1.getText())
+                                       .withDate(date).withAddress(text2.getText()).build();
+            }
+            return null;
+        });
+
+        Optional<Event> result = dialog.showAndWait();
+        result.ifPresent(event -> {
+            EventsCenter.getInstance().post(new AddEventRequestEvent(event));
+   });
+----
+
+[source,java]
+----
+    @Subscribe
+    private void handleAddEvent(AddEventRequestEvent event) throws DuplicateEventException {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        addressBook.addEvent(event.event);
+        updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
+        indicateAddressBookChanged();
+    }
+----
+
+Population of the calendar after Adding or Delete of Events will be completed by this method in the `Calendar.java` class.
+It reverts every node to be of the same color, then runs through the events list to update the individual event node.
+
+[source,java]
+----
+    public void populateUpdatedCalendar(UniqueEventList eventList) {
+        for (AnchorPaneNode ap : allCalendarDays) {
+            ap.setStyle("-fx-background-color: transparent;");
+            for (Event event1 : eventList) {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
+                String newDate = formatter.format(ap.getDate());
+                if (newDate.equals(event1.getDate().toString())) {
+                    ap.getChildren();
+                    ap.setStyle("-fx-background-color: #ffebcd;");
+                }
+            }
+        }
+    }
+----
+
+==== Design Considerations
+
+**Aspect:** UI of `Calendar` +
+**Alternative 1 (current choice):** Showing the calendar on a GridPane +
+**Pros:** A customizable calendar for the user and easy access to add an event on the calendar  +
+**Cons:** Some users might want to have better user interface experience +
+**Alternative 2:** Google calendar implementation +
+**Pros:** Ready made calendar for developers to implement +
+**Cons:** Difficult to apply changes and suit the calendar to be as what user wants. +
+
+//end::calendar[]
+
+//tag::details[]
+=== Details Panel Mechanism
+The details panel is used to show all the information regarding a person as compared to the person card which shows only a person's name, tags, phone number and email id.
+
+The details panel can be accessed by using the `select` command or by directly clicking on the peron card in the ui.
+
+The  panel is directly accessed by `MainWindow` class. The `details panel` class extends from `UiPart<Region>` and calls the super class constructor to use the FXML file.
+
+It also calls the `loadBlankPage()` method in its constructor so that the user does not see anything on the details panel when the application is first opened.
+
+The `loadPersonInfo()` method is called from  two event handlers `handlePersonPanelSelectionChangedEvent()` and `handlePersonSelectionChangedEvent()` as shown in the code snippet below.
+[source,java]
+----
+ @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadPersonInfo(event.getNewSelection().person);
+    }
+
+    @Subscribe
+    private void handlePersonSelectionChangedEvent(PersonSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadPersonInfo(event.getNewSelection());
+    }
+
+----
+
+The `handlePersonPanelSelectionChangedEvent` is used to load a person's details only when a person card has been selected and a personPanelSelectionChangedEvent is raised. The PersonSelectionchangedEvent is raised when the person's details are updated using the `edit` command.
+
+The `loadPersonInfo` is facilitated by the `bindListeners()` method that "listens" for a change in any of the fields of the person.
+
+The sequence diagram is shown in 5.18.1 below.
+
+image::DetailsPanelMechanism.png[width="800"]
+Figure 5.18.1 Details Panel Sequence Diagram
+
+==== Design Considerations
+**Aspect:** Creating the details panel when there is a person card. +
+**Alternative 1 (current choice):** details panel
+**Pros:** g: Offers more abstraction to the user as they only see necessary information on the person card and the rest is on the details panel. +
+**Cons:** Some users might find it a hassle to access the details panel to see more information. +
+**Alternative 2:** All the information on the person card. +
+**Pros:** Users will have all the information in one place. +
+**Cons:** Some fields are optional so the person card will look confusing to a new user if they see that some person cards have more information on them than the others. +
+//end::details[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
@@ -360,9 +2011,12 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 * `INFO` : Information showing the noteworthy actions by the App
 * `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
 
+
 === Configuration
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
+
+link:#the-myths-book---developer-guide[Back To Top]
 
 == Documentation
 
@@ -392,7 +2046,9 @@ Here are the steps to convert the project documentation files to PDF format.
 .  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For best results, use the settings indicated in the screenshot below.
 
 image::chrome_save_as_pdf.png[width="300"]
-_Figure 5.6.1 : Saving documentation as PDF files in Chrome_
+_Figure 6.3.1 : Saving documentation as PDF files in Chrome_
+
+link:#the-myths-book---developer-guide[Back To Top]
 
 == Testing
 
@@ -443,6 +2099,8 @@ e.g. `seedu.address.logic.LogicManagerTest`
 * Reason: One of its dependencies, `UserGuide.html` in `src/main/resources/docs` is missing.
 * Solution: Execute Gradle task `processResources`.
 
+link:#the-myths-book---developer-guide[Back To Top]
+
 == Dev Ops
 
 === Build Automation
@@ -468,250 +2126,7 @@ A project often depends on third-party libraries. For example, Address Book depe
 a. Include those libraries in the repo (this bloats the repo size) +
 b. Require developers to download those libraries manually (this creates extra work for developers)
 
-[appendix]
-== Suggested Programming Tasks to Get Started
-
-Suggested path for new programmers:
-
-1. First, add small local-impact (i.e. the impact of the change does not go beyond the component) enhancements to one component at a time. Some suggestions are given in this section link:#improving-each-component[Improving a Component].
-
-2. Next, add a feature that touches multiple components to learn how to implement an end-to-end feature across all components. The section link:#creating-a-new-command-code-remark-code[Creating a new command: `remark`] explains how to go about adding such a feature.
-
-=== Improving each component
-
-Each individual exercise in this section is component-based (i.e. you would not need to modify the other components to get it to work).
-
-[discrete]
-==== `Logic` component
-
-[TIP]
-Do take a look at the link:#logic-component[Design: Logic Component] section before attempting to modify the `Logic` component.
-
-. Add a shorthand equivalent alias for each of the individual commands. For example, besides typing `clear`, the user can also type `c` to remove all persons in the list.
-+
-****
-* Hints
-** Just like we store each individual command word constant `COMMAND_WORD` inside `*Command.java` (e.g.  link:{repoURL}/src/main/java/seedu/address/logic/commands/FindCommand.java[`FindCommand#COMMAND_WORD`], link:{repoURL}/src/main/java/seedu/address/logic/commands/DeleteCommand.java[`DeleteCommand#COMMAND_WORD`]), you need a new constant for aliases as well (e.g. `FindCommand#COMMAND_ALIAS`).
-** link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] is responsible for analyzing command words.
-* Solution
-** Modify the switch statement in link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser#parseCommand(String)`] such that both the proper command word and alias can be used to execute the same intended command.
-** See this https://github.com/se-edu/addressbook-level4/pull/590/files[PR] for the full solution.
-****
-
-[discrete]
-==== `Model` component
-
-[TIP]
-Do take a look at the link:#model-component[Design: Model Component] section before attempting to modify the `Model` component.
-
-. Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in the address book.
-+
-****
-* Hints
-** The link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model`] API needs to be updated.
-**  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] classes can be used to implement the tag removal logic. link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] allows you to update a person, and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] allows you to update the tags.
-* Solution
-** Add the implementation of `deleteTag(Tag)` method in link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`]. Loop through each person, and remove the `tag` from each person.
-** See this https://github.com/se-edu/addressbook-level4/pull/591/files[PR] for the full solution.
-****
-
-[discrete]
-==== `Ui` component
-
-[TIP]
-Do take a look at the link:#ui-component[Design: UI Component] section before attempting to modify the `UI` component.
-
-. Use different colors for different tags inside person cards. For example, `friends` tags can be all in grey, and `colleagues` tags can be all in red.
-+
-**Before**
-+
-image::getting-started-ui-tag-before.png[width="300"]
-+
-**After**
-+
-image::getting-started-ui-tag-after.png[width="300"]
-+
-****
-* Hints
-** The tag labels are created inside link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard#initTags(ReadOnlyPerson)`] (`new Label(tag.tagName)`). https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html[JavaFX's `Label` class] allows you to modify the style of each Label, such as changing its color.
-** Use the .css attribute `-fx-background-color` to add a color.
-* Solution
-** See this https://github.com/se-edu/addressbook-level4/pull/592/files[PR] for the full solution.
-****
-
-. Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] such that link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] can show a different style on error (currently it shows the same regardless of errors).
-+
-**Before**
-+
-image::getting-started-ui-result-before.png[width="200"]
-+
-**After**
-+
-image::getting-started-ui-result-after.png[width="200"]
-+
-****
-* Hints
-** link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] is raised by link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] which also knows whether the result is a success or failure, and is caught by link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] which is where we want to change the style to.
-** Refer to link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] for an example on how to display an error.
-* Solution
-** Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] 's constructor so that users of the event can indicate whether an error has occurred.
-** Modify link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay#handleNewResultAvailableEvent(event)`] to react to this event appropriately.
-** See this https://github.com/se-edu/addressbook-level4/pull/593/files[PR] for the full solution.
-****
-
-. Modify the link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to show the total number of people in the address book.
-+
-**Before**
-+
-image::getting-started-ui-status-before.png[width="500"]
-+
-**After**
-+
-image::getting-started-ui-status-after.png[width="500"]
-+
-****
-* Hints
-** link:{repoURL}/src/main/resources/view/StatusBarFooter.fxml[`StatusBarFooter.fxml`] will need a new `StatusBar`. Be sure to set the `GridPane.columnIndex` properly for each `StatusBar` to avoid misalignment!
-** link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] needs to initialize the status bar on application start, and to update it accordingly whenever the address book is updated.
-* Solution
-** Modify the constructor of link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to take in the number of persons when the application just started.
-** Use link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter#handleAddressBookChangedEvent(AddressBookChangedEvent)`] to update the number of persons whenever there are new changes to the addressbook.
-** See this https://github.com/se-edu/addressbook-level4/pull/596/files[PR] for the full solution.
-****
-
-[discrete]
-==== `Storage` component
-
-[TIP]
-Do take a look at the link:#storage-component[Design: Storage Component] section before attempting to modify the `Storage` component.
-
-. Add a new method `backupAddressBook(ReadOnlyAddressBook)`, so that the address book can be saved in a fixed temporary location.
-+
-****
-* Hint
-** Add the API method in link:{repoURL}/src/main/java/seedu/address/storage/AddressBookStorage.java[`AddressBookStorage`] interface.
-** Implement the logic in link:{repoURL}/src/main/java/seedu/address/storage/StorageManager.java[`StorageManager`] class.
-* Solution
-** See this https://github.com/se-edu/addressbook-level4/pull/594/files[PR] for the full solution.
-****
-
-=== Creating a new command: `remark`
-
-By creating this command, you will get a chance to learn how to implement a feature end-to-end, touching all major components of the app.
-
-==== Description
-Edits the remark for a person specified in the `INDEX`. +
-Format: `remark INDEX r/[REMARK]`
-
-Examples:
-
-* `remark 1 r/Likes to drink coffee.` +
-Edits the remark for the first person to `Likes to drink coffee.`
-* `remark 1 r/` +
-Removes the remark for the first person.
-
-==== Step-by-step Instructions
-
-===== [Step 1] Logic: Teach the app to accept 'remark' which does nothing
-Let's start by teaching the application how to parse a `remark` command. We will add the logic of `remark` later.
-
-**Main:**
-
-. Add a `RemarkCommand` that extends link:{repoURL}/src/main/java/seedu/address/logic/commands/UndoableCommand.java[`UndoableCommand`]. Upon execution, it should just throw an `Exception`.
-. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to accept a `RemarkCommand`.
-
-**Tests:**
-
-. Add `RemarkCommandTest` that tests that `executeUndoableCommand()` throws an Exception.
-. Add new test method to link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`], which tests that typing "remark" returns an instance of `RemarkCommand`.
-
-===== [Step 2] Logic: Teach the app to accept 'remark' arguments
-Let's teach the application to parse arguments that our `remark` command will accept. E.g. `1 r/Likes to drink coffee.`
-
-**Main:**
-
-. Modify `RemarkCommand` to take in an `Index` and `String` and print those two parameters as the error message.
-. Add `RemarkCommandParser` that knows how to parse two arguments, one index and one with prefix 'r/'.
-. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to use the newly implemented `RemarkCommandParser`.
-
-**Tests:**
-
-. Modify `RemarkCommandTest` to test the `RemarkCommand#equals()` method.
-. Add `RemarkCommandParserTest` that tests different boundary values
-for `RemarkCommandParser`.
-. Modify link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`] to test that the correct command is generated according to the user input.
-
-===== [Step 3] Ui: Add a placeholder for remark in `PersonCard`
-Let's add a placeholder on all our link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] s to display a remark for each person later.
-
-**Main:**
-
-. Add a `Label` with any random text inside link:{repoURL}/src/main/resources/view/PersonListCard.fxml[`PersonListCard.fxml`].
-. Add FXML annotation in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] to tie the variable to the actual label.
-
-**Tests:**
-
-. Modify link:{repoURL}/src/test/java/guitests/guihandles/PersonCardHandle.java[`PersonCardHandle`] so that future tests can read the contents of the remark label.
-
-===== [Step 4] Model: Add `Remark` class
-We have to properly encapsulate the remark in our link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`] class. Instead of just using a `String`, let's follow the conventional class structure that the codebase already uses by adding a `Remark` class.
-
-**Main:**
-
-. Add `Remark` to model component (you can copy from link:{repoURL}/src/main/java/seedu/address/model/person/Address.java[`Address`], remove the regex and change the names accordingly).
-. Modify `RemarkCommand` to now take in a `Remark` instead of a `String`.
-
-**Tests:**
-
-. Add test for `Remark`, to test the `Remark#equals()` method.
-
-===== [Step 5] Model: Modify `ReadOnlyPerson` to support a `Remark` field
-Now we have the `Remark` class, we need to actually use it inside link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`].
-
-**Main:**
-
-. Add three methods `setRemark(Remark)`, `getRemark()` and `remarkProperty()`. Be sure to implement these newly created methods in link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`Person`], which implements the link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`] interface.
-. You may assume that the user will not be able to use the `add` and `edit` commands to modify the remarks field (i.e. the person will be created without a remark).
-. Modify link:{repoURL}/src/main/java/seedu/address/model/util/SampleDataUtil.java/[`SampleDataUtil`] to add remarks for the sample data (delete your `addressBook.xml` so that the application will load the sample data when you launch it.)
-
-===== [Step 6] Storage: Add `Remark` field to `XmlAdaptedPerson` class
-We now have `Remark` s for `Person` s, but they will be gone when we exit the application. Let's modify link:{repoURL}/src/main/java/seedu/address/storage/XmlAdaptedPerson.java[`XmlAdaptedPerson`] to include a `Remark` field so that it will be saved.
-
-**Main:**
-
-. Add a new Xml field for `Remark`.
-. Be sure to modify the logic of the constructor and `toModelType()`, which handles the conversion to/from  link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`].
-
-**Tests:**
-
-. Fix `validAddressBook.xml` such that the XML tests will not fail due to a missing `<remark>` element.
-
-===== [Step 7] Ui: Connect `Remark` field to `PersonCard`
-Our remark label in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] is still a placeholder. Let's bring it to life by binding it with the actual `remark` field.
-
-**Main:**
-
-. Modify link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard#bindListeners()`] to add the binding for `remark`.
-
-**Tests:**
-
-. Modify link:{repoURL}/src/test/java/seedu/address/ui/testutil/GuiTestAssert.java[`GuiTestAssert#assertCardDisplaysPerson(...)`] so that it will compare the remark label.
-. In link:{repoURL}/src/test/java/seedu/address/ui/PersonCardTest.java[`PersonCardTest`], call `personWithTags.setRemark(ALICE.getRemark())` to test that changes in the link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`Person`] 's remark correctly updates the corresponding link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`].
-
-===== [Step 8] Logic: Implement `RemarkCommand#execute()` logic
-We now have everything set up... but we still can't modify the remarks. Let's finish it up by adding in actual logic for our `remark` command.
-
-**Main:**
-
-. Replace the logic in `RemarkCommand#execute()` (that currently just throws an `Exception`), with the actual logic to modify the remarks of a person.
-
-**Tests:**
-
-. Update `RemarkCommandTest` to test that the `execute()` logic works.
-
-==== Full Solution
-
-See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-by-step solution.
+link:#the-myths-book---developer-guide[Back To Top]
 
 [appendix]
 == User Stories
@@ -721,27 +2136,88 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
-
-|`* * *` |user |add a new person |
+|`* * *` |user |add a new person |store more information about people around me
 
 |`* * *` |user |delete a person |remove entries that I no longer need
 
+|`* * *` |user |request for a help guide |know more about the address book and use it with less difficulty
+
+|`* * *` |user |list and view all my contacts |browse through my stored contacts and in the event of not being able to search for them
+
+|`* * *` |user |edit a person's information |constantly update or correct a contact's information
+
+|`* * *` |user |select a person by index |use the information provided to search on Google
+
+|`* * *` |user |view the history of the commands inputted |know which steps have been made to the addressbook
+
+|`* * *` |user |undo the commands that were inputted |revert unnecessary or unwanted changes
+
+|`* * *` |user |redo the commands that is undone |revert changes that were undone
+
+|`* * *` |user |clear entries in my addressbook |remove unnecessary information of my contacts or remake a new contact list
+
+|`* * *` |user |exit the program |
+
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+
+|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+
+|`* * *` |user |have a CLI prompt that can exhibit the required information to add an individual  |avoid inputting the wrong information
+
+|`* * *` |user |store multiple phone numbers and email addresses for any contact |store extra communication information of my contact
+
+|`* * *` |social user |access Facebook, LinkedIn and Google |search and add my contacts on respective websites
+
+|`* * *` |user |have a confirmation request of the details inputted before adding an individual|make changes to any errors inputted
+
+|`* * *` |responsible user |have a confirmation request & warning message upon using the clear command |avoid accidentally clearing my address book
+
+|`* * *` |user |find contacts based on part of their names |ease the search for the necessary contacts without being too specific in spelling names
+
+|`* * *` |user |find users based on any of their details (i.e. phone or tag) |find the person more easily
+
+|`* * *` |user |have a filter system to find contacts first by name, and then any additional relevant information(tags or email addresses) |search for a person more accurately in the case of multiple people with similar names.
+
+|`* * *` |organized user |sort my contacts in an alphabetical order |view my overall contact list in an alphabetically organized manner
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* *` |user |have directions to the contact's address with Google Maps from current location |have direct and easier access in being referred to the location in Google Maps application
+
+|`* *` |user |choose various colour themes for the address book |view the address book in my favourite visuals
+
+|`* *` |social user |add some important people to a favourites list |access my favourite contacts easily
+
+|`* *` |task-oriented user |see my most viewed contacts on a "speed check" tab |search quickly for contacts that i often search for based on the number of times i searched for them
+
+|`* *` |task-oriented user |sort the list of contacts based on their details |view contacts based on my preferable detail i am wishing to search for
+
+|`* *` |responsible user |save my contacts list in a portable format |keep a soft copy of it and be able to retrieve if i lost my original contact list or want to access it in another computer
+
+|`* *` |social user |add organisations/groups |search for individuals based on their organization groups
+
+|`* *` |social user |store internet links to their organization website, github, linkedIn or facebook |more information on my contacts
+
+|`* *` |social user |have the option to add a picture of an individual |recognize contacts by their facial features.
+
+|`* *` |task-oriented user |get reminders |know if i am attending an event with another contact, or if it is the contact's birthday
+
+|`* *` |task-oriented user |be able to create appointments with my contacts |be notified of my upcoming meetings
+
+|`* *` |social user |add birthday information to my contact in the address book |have easier access to the upcoming birthday dates of the people around me
+
 |=======================================================================
 
-{More to be added}
+Social user - a user who likes to know more information about the people around them so as to understand them better +
+Task-oriented user - a user who prefers to have purposeful functions which would help facilitate easier access towards executing his work +
+
+link:#the-myths-book---developer-guide[Back To Top]
 
 [appendix]
 == Use Cases
 
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
 
-[discrete]
 === Use case: Delete person
 
 *MSS*
@@ -767,7 +2243,355 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-{More to be added}
+=== Use case: Sort list
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to sort list
+4.  AddressBook sorts the list of persons
+5.  AddressBook shows sorted list of persons
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+[none]
+* 5a. The list is empty.
++
+Use case ends.
+
+=== Use case: Find person
+
+*MSS*
+
+1.  User requests to find person with keyword (name or first few characters of name)
+2.  AddressBook shows a list of persons with keyword
++
+Use case ends.
+
+*Extensions*
+
+* 1a. Person name is invalid.
++
+[none]
+** 1a1. AddressBook shows an error message.
++
+Use case ends.
+
+=== Use case: Find tag
+
+*MSS*
+
+1.  User requests to find person with tag keyword (tag of person)
+2.  AddressBook shows a list of persons with tags matching with user specified tags
++
+Use case ends.
+
+*Extensions*
+
+* 1a. Tag name is invalid.
++
+[none]
+** 1a1. AddressBook shows an error image.
++
+Use case ends.
+
+=== Use case: Add person
+
+*MSS*
+
+1.  User requests to add person
+2.  User types in details of person to add
+3.  AddressBook shows details of person to add
+4.  AddressBook requests confirmation to add person
+5.  User confirms adding of person
+6.  AddressBook adds person to list of persons
+7.  AddressBook shows updated list of persons with added person
++
+Use case ends.
+
+*Extensions*
+
+* 2a. Details are invalid.
++
+[none]
+** 2a1. AddressBook shows an error message.
++
+Use case resumes at step 1.
+
+* 5a. User denies adding of person.
++
+[none]
+** 5a1. AddressBook requests details to edit
+** 5a2. User types in new, edited details
++
+Use case resumes at step 3.
+
+=== Use case: Favourite person
+
+*MSS*
+
+1.  User requests to favourite person
+2.  User types in index of person to favourite
+3.  AddressBook favourites person
++
+Use case ends.
+
+*Extensions*
+
+* 2a. Index is invalid.
++
+[none]
+** 2a1. AddressBook shows an error message.
++
+Use case ends.
+
+* 2b. Person specified is already favourited.
++
+[none]
+** 2b1. AddressBook shows an error message.
++
+Use case ends.
+
+=== Use case: Unfavourite person
+
+*MSS*
+
+1.  User requests to unfavourite person
+2.  User types in index of person to unfavourite
+3.  AddressBook unfavourites person
++
+Use case ends.
+
+*Extensions*
+
+* 2a. Index is invalid.
++
+[none]
+** 2a1. AddressBook shows an error message.
++
+Use case ends.
+
+* 2b. Person specified is already unfavourited.
++
+[none]
+** 2b1. AddressBook shows an error message.
++
+Use case ends.
+
+=== Use case: List favourited persons
+
+*MSS*
+
+1.  User requests to list favourited persons
+2.  AddressBook shows a list of favourited persons
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+=== Use case: Undo command
+
+*MSS*
+
+1.  User uses add, delete, edit or clear command
+2.  User requests undo of command
+3.  AddressBook returns to the state before the command
+4.  AddressBook shows updated state
++
+Use case ends.
+
+*Extensions*
+
+* 2a. No more commands to undo.
+
++
+[none]
+** 2a1. AddressBook shows an error message.
++
+Use case ends.
+
+=== Use case: List persons
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+=== Use case: List birthdays
+
+*MSS*
+
+1.  User wants to know if any person has a birthday today
+2.  User requests birthdays command
+3.  AddressBook lists all persons with birthday today
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. No birthdays today.
++
+Use case ends.
+
+=== Use case: List events
+
+*MSS*
+
+1.  User requests to list events
+2.  AddressBook lists all events
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+=== Use case: Add event
+
+*MSS*
+
+1.  User requests to add event
+2.  User types in details of event to add
+3.  AddressBok adds event to list of events
++
+Use case ends.
+
+*Extensions*
+
+* 2a. Details of event is invalid.
++
+[none]
+** 2a1. AddressBook shows an error message.
++
+Use case ends.
+
+=== Use case: Delete event
+
+*MSS*
+
+1.  User requests to delete event
+2.  User types in index of event to delete
+3.  AddressBook deletes event from list of events
++
+Use case ends.
+
+*Extensions*
+
+* 2a. Index is invalid.
++
+[none]
+** 2a1. AddressBook shows an error message.
++
+Use case ends.
+
+=== Use case: List themes
+
+*MSS*
+
+1.  User requests to list themes
+2.  AddressBook pops-up a window with the list of themes
++
+Use case ends.
+
+=== Use case: Switch theme
+
+*MSS*
+
+1.  User requests to switch theme
+2.  User types in index of theme to switch to
+3.  AddressBook switches to specified theme
++
+Use case ends.
+
+*Extensions*
+
+* 2a. Index is invalid.
++
+[none]
+** 2a1. AddressBook shows an error message.
++
+Use case ends.
+
+* 2b. AddressBook is already in theme specified by user.
++
+[none]
+** 2b1. AddressBook shows an error message.
++
+Use case ends.
+
+=== Use case: Access website
+
+*MSS*
+
+1.  User chooses to access a contact's website
+2.  AddressBook requests for details of the access
+3.  User enters the requested details which includes the index of the desired contact
+4.  AddressBook shows the website of the desired contact for user to use
++
+Use case ends.
+
+*Extensions*
+
+* 3a. AddressBook detects an error in the entered data.
++
+[none]
+** 3a1. AddressBook shows an error message and requests for correct data.
+** 3a2. User enters new data.
++
+Steps 3a1-3a2 are repeated until the data entered are correct.
++
+Use case resumes at step 4.
+
+=== Use case: Access location
+
+*MSS*
+
+1.  User chooses to access a contact's location
+2.  AddressBook requests for details of the access
+3.  User enters the requested details which includes the index of the desired contact
+4.  AddressBook shows the location of the desired contact for user to view
++
+Use case ends.
+
+*Extensions*
+
+* 3a. AddressBook detects an error in the entered data.
++
+[none]
+** 3a1. AddressBook shows an error message and requests for correct data.
+** 3a2. User enters new data.
++
+Steps 3a1-3a2 are repeated until the data entered are correct.
++
+Use case resumes at step 4.
+
+link:#the-myths-book---developer-guide[Back To Top]
 
 [appendix]
 == Non Functional Requirements
@@ -775,8 +2599,17 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Should be able to work for 32-bit and 64-bit systems.
+.  Should be able to respond within a second.
+.  Should be able to be used by any individual who has not used an address book before.
+.  The source code should be open source.
+.  Should maintain application every month.
+.  Should be able to retrieve, save and use on another computer.
+.  A user should be able to back up and restore all contacts if application breakdown.
 
 {More to be added}
+
+link:#the-myths-book---developer-guide[Back To Top]
 
 [appendix]
 == Glossary
@@ -788,26 +2621,35 @@ Mainstream OS
 Windows, Linux, Unix, OS-X
 ....
 
-[[private-contact-detail]]
-Private contact detail
+[[abstract]]
+Abstract
 
 ....
-A contact detail that is not meant to be shared with others
+An abstract class is a class that is declared abstract—it may or may not include abstract methods. Abstract classes cannot be instantiated, but they can be subclassed.
+An abstract method is a method that is declared without an implementation
 ....
 
-[appendix]
-== Product Survey
+[[API]]
+API
 
-*Product Name*
+....
+Application Programming Interface (API)is a collection of pre-written packages,
+classes, and interfaces with their respective methods, fields and constructors.
+....
 
-Author: ...
+[[javaFX]]
+JavaFX
 
-Pros:
+....
+JavaFX is a software platform for creating and delivering desktop applications,
+as well as rich internet applications (RIAs) that can run across a wide variety of devices.
+....
 
-* ...
-* ...
+[[gradle]]
+Gradle
 
-Cons:
+....
+Gradle is an open source build automation system that builds upon the concepts of Apache Ant and Apache Maven.
+....
 
-* ...
-* ...
+link:#the-myths-book---developer-guide[Back To Top]

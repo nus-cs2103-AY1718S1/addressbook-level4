@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.time.YearMonth;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -17,10 +18,20 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.ChangeThemeRequestEvent;
+import seedu.address.commons.events.ui.EventPanelUnselectEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.PersonPanelUnselectEvent;
+import seedu.address.commons.events.ui.PopulateMonthEvent;
+import seedu.address.commons.events.ui.PopulateRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.commons.events.ui.ShowThemeRequestEvent;
+import seedu.address.commons.events.ui.TogglePanelEvent;
+
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
+import seedu.address.logic.commands.EventsCommand;
+import seedu.address.logic.commands.ListCommand;
 import seedu.address.model.UserPrefs;
 
 /**
@@ -29,10 +40,12 @@ import seedu.address.model.UserPrefs;
  */
 public class MainWindow extends UiPart<Region> {
 
-    private static final String ICON = "/images/address_book_32.png";
+    private static final String ICON = "/images/address_icon_32.png";
     private static final String FXML = "MainWindow.fxml";
     private static final int MIN_HEIGHT = 600;
     private static final int MIN_WIDTH = 450;
+    private static final int CURRENT_THEME_INDEX = 1;
+    private static final String VIEW_PATH = "/view/";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -41,12 +54,25 @@ public class MainWindow extends UiPart<Region> {
 
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
+    private DetailsPanel detailsPanel;
+    private EventsDetailsPanel eventsDetailsPanel;
     private PersonListPanel personListPanel;
+    private EventListPanel eventListPanel;
     private Config config;
     private UserPrefs prefs;
+    private Calendar calendar;
 
     @FXML
     private StackPane browserPlaceholder;
+
+    @FXML
+    private StackPane detailsPanelPlaceholder;
+
+    @FXML
+    private StackPane eventsDetailsPanelPlaceholder;
+
+    @FXML
+    private StackPane personAndEventDetailsPanelPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -58,10 +84,19 @@ public class MainWindow extends UiPart<Region> {
     private StackPane personListPanelPlaceholder;
 
     @FXML
+    private StackPane eventListPanelPlaceholder;
+
+    @FXML
+    private StackPane personAndEventListPlaceholder;
+
+    @FXML
     private StackPane resultDisplayPlaceholder;
 
     @FXML
     private StackPane statusbarPlaceholder;
+
+    @FXML
+    private StackPane calendarPanel;
 
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
@@ -77,6 +112,7 @@ public class MainWindow extends UiPart<Region> {
         setIcon(ICON);
         setWindowMinSize();
         setWindowDefaultSize(prefs);
+        setWindowDefaultTheme(prefs);
         Scene scene = new Scene(getRoot());
         primaryStage.setScene(scene);
 
@@ -128,9 +164,24 @@ public class MainWindow extends UiPart<Region> {
     void fillInnerParts() {
         browserPanel = new BrowserPanel();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
+        browserPanel.setDefaultPage(prefs.getTheme());
+
+        detailsPanel = new DetailsPanel();
+        detailsPanelPlaceholder.getChildren().add(detailsPanel.getRoot());
+
+        eventsDetailsPanel = new EventsDetailsPanel();
+        eventsDetailsPanelPlaceholder.getChildren().add(eventsDetailsPanel.getRoot());
+
+        eventListPanel = new EventListPanel(logic.getFilteredEventList());
+        eventListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+
+        personAndEventListPlaceholder.getChildren().add(personListPanelPlaceholder);
+        personAndEventListPlaceholder.getChildren().add(eventListPanelPlaceholder);
+
+        personListPanelPlaceholder.toFront();
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
@@ -140,6 +191,9 @@ public class MainWindow extends UiPart<Region> {
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
+        calendar = new Calendar(YearMonth.now(), logic.getFilteredEventList());
+        calendarPanel.getChildren().add(calendar.getView());
     }
 
     void hide() {
@@ -183,6 +237,22 @@ public class MainWindow extends UiPart<Region> {
                 (int) primaryStage.getX(), (int) primaryStage.getY());
     }
 
+    //@@author itsdickson
+    /**
+     * Sets the default theme based on user preferences.
+     */
+    private void setWindowDefaultTheme(UserPrefs prefs) {
+        getRoot().getStylesheets().add(prefs.getTheme());
+    }
+
+    /**
+     * Returns the current theme of the main Window.
+     */
+    String getCurrentTheme() {
+        return getRoot().getStylesheets().get(CURRENT_THEME_INDEX);
+    }
+    //@@author
+
     /**
      * Opens the help window.
      */
@@ -191,6 +261,38 @@ public class MainWindow extends UiPart<Region> {
         HelpWindow helpWindow = new HelpWindow();
         helpWindow.show();
     }
+
+    //@@author itsdickson
+    /**
+     * Opens the theme window.
+     */
+    @FXML
+    public void handleThemes() {
+        ThemesWindow themesWindow = new ThemesWindow();
+        themesWindow.show();
+    }
+
+    /**
+     * Changes the theme based on the input theme.
+     */
+    public void handleChangeTheme(String theme) {
+        if (getRoot().getStylesheets().size() > 1) {
+            getRoot().getStylesheets().remove(CURRENT_THEME_INDEX);
+        }
+        getRoot().getStylesheets().add(VIEW_PATH + theme);
+    }
+
+    /**
+     * Toggles the list panel based on the input panel.
+     */
+    public void handleToggle(String selectedPanel) {
+        if (selectedPanel.equals(EventsCommand.COMMAND_WORD)) {
+            eventListPanelPlaceholder.toFront();
+        } else if (selectedPanel.equals(ListCommand.COMMAND_WORD)) {
+            personListPanelPlaceholder.toFront();
+        }
+    }
+    //@@author
 
     void show() {
         primaryStage.show();
@@ -212,9 +314,77 @@ public class MainWindow extends UiPart<Region> {
         browserPanel.freeResources();
     }
 
+
     @Subscribe
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
     }
+
+    //@@author itsdickson
+    @Subscribe
+    private void handleShowThemesEvent(ShowThemeRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleThemes();
+    }
+
+    @Subscribe
+    private void handleChangeThemeEvent(ChangeThemeRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleChangeTheme(event.theme);
+        browserPanel.setDefaultPage(event.theme);
+        logic.setCurrentTheme(getCurrentTheme());
+    }
+    //@@author
+
+    //@@author DarrenCzen
+    @Subscribe
+    private void handleToggleEvent(TogglePanelEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleToggle(event.selectedPanel);
+    }
+    //@@author
+
+    //@@author archthegit
+    @Subscribe
+    private void handleUnselectOfPersonCardEvent(PersonPanelUnselectEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        detailsPanel = new DetailsPanel();
+        detailsPanelPlaceholder.getChildren().clear();
+        detailsPanelPlaceholder.getChildren().add(detailsPanel.getRoot());
+    }
+    //@@author
+
+    //@@author DarrenCzen
+    @Subscribe
+    private void handleUnselectOfEventCardEvent(EventPanelUnselectEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        eventsDetailsPanel = new EventsDetailsPanel();
+        eventsDetailsPanelPlaceholder.getChildren().clear();
+        eventsDetailsPanelPlaceholder.getChildren().add(eventsDetailsPanel.getRoot());
+    }
+    //@@author
+
+    //@@author chernghann
+    /**
+     * this method is to populate the calendar when there is an add event.
+     * @param request
+     */
+    @Subscribe
+    private void handlePopulateEvent(PopulateRequestEvent request) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(request));
+        calendar.populateUpdatedCalendar(request.eventList);
+    }
+
+    /**
+     * For populating the calendar when starting the application and changing the months
+     * @param request
+     */
+    @Subscribe
+    private void handlePopulateMonthEvent(PopulateMonthEvent request) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(request));
+        calendar.populateCalendar(request.yearMonth, logic.getFilteredEventList());
+    }
+    //@@author
+
 }

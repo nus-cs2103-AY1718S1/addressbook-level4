@@ -1,0 +1,260 @@
+= Chan Kin Hung Dickson - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Purpose
+
+This Project Portfolio Page introduces the software, The Myth's Book, and subsequently displays the contributions that Chan Kin Hung Dickson
+done for The Myth's Book. The contributions include enhancements added, enhancements proposed, and other additional contributions.
+
+== Project: The Myth's Book
+The Myth's Book is an address book dedicated for university students to store useful information such
+as websites, phone numbers and emails of the people around them for personal usage. The application helps students
+to keep track of birthday dates and upcoming events through a calendar and facilitate convenient access to their friend's website
+and even Google Maps location through the in-built browser panel in the application. Furthermore, there are many
+useful tools such as finding group tags (e.g. friends, neighbours) and switching themes for better user preference and usability.
+
+The Myth's Book is a `Command Line Input` based software which helps caters to students who are efficient and comfortable
+in typing out command line inputs to manipulate with information of their contacts in the address book.
+The Myth's Book is a software application that is coded in `Java` programming language.
+
+The figure below is the start page of The Myth's Book.
+
+image::Ui.png[width="800"]
+_Figure 1.1 The Myth's Book UI_
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T15-B3/main/blob/master/collated/main/itsdickson.md[Functional code]] [https://github.com/CS2103AUG2017-T15-B3/main/blob/master/collated/test/itsdickson.md[Test code]]
+
+=== Enhancement Added: Favourite/Unfavourite
+
+This section includes the behaviour, justification and implementation of `FavouriteCommand`, `Unfavouritecommand` and `FavouriteListCommand`.
+
+*Code on GitHub*: Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/67[#67], https://github.com/CS2103AUG2017-T15-B3/main/pull/82[#82]
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=favouriteunfavourite]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+University students tend to make many friends while they are in school, and when the contacts list increase in number, it becomes hard for the students to keep track
+which one of them are their close friends. Furthermore, it becomes tedious to search around the contacts list to find their good or even best friends. Hence, `FavouriteCommand`,
+`UnfavouriteCommand` and `FavouriteListCommand` will help university students better categorise their good and best friends, so that they can easily look for their best friends when they need to.
+This would also help improve the efficiency of using The Myth's Book, as less time would be spent trying to find their favourited contacts.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=favouriteunfavourite]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Switch/Themes
+
+This section includes the behaviour, justification and implementation of `SwitchThemeCommand` and `ThemeListCommand`. It also includes the behaviour and justification of `Bright Theme`.
+
+*Code on GitHub*: Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/50[#50], https://github.com/CS2103AUG2017-T15-B3/main/pull/63[#63], https://github.com/CS2103AUG2017-T15-B3/main/pull/78[#78]
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=brighttheme]
+
+include::../UserGuide.adoc[tag=themes]
+
+include::../UserGuide.adoc[tag=switch]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+University students in this age would often like customisation of their application. Furthermore, different students have different preferences in how their application should look like.
+If there is no customisation, some students may not want to use the application as it does not appeal to them. Hence, `SwitchThemeCommand`, `ThemeListCommand` and `Bright Theme` provides the ability for
+university students to choose the type of colour theme they want their The Myth's Book to have. This improves the overall user experience of the university students since they can choose their
+preferred colour theme for the application.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=switch]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Events List
+
+This section includes the behaviour, justification and implementation of `EventsCommand`.
+
+*Code on GitHub*: Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/135[#135]
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=events]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+University students are often particular about the overall organisation and structure of an application. They would prefer to have lesser things to see or look at.
+Hence, `EventsCommand` helps reduce the amount of objects to look at, by replacing the `PersonList`, and only showing items that are related to `Events`, such as
+the details of the events, a calendar and a Google Maps browser to help the students navigate to their intended location. `EventsCommand` will help improve the overall
+user-friendliness and user experience of The Myth's Book, since the students will not be overwhelmed by multiple objects to view.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=events]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Delete Event
+
+This section includes the behaviour, justification and implementation of `DeleteEventCommand`.
+
+*Code on GitHub*: Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/107[#107]
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=deleteevent]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+University students are particular with the organisation of their events, and hence, with `DeleteEventCommand`, they can clean up their events list
+by deleting completed events so that they can better keep track of their upcoming or overdue events. This way, university students will be able to
+plan their schedule accordingly and balance their study life and social life.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=deleteevent]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Find Tag
+
+This section includes the behaviour, justification and implementation of `FindTagCommand`.
+
+*Code on GitHub*: Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/86[#86], https://github.com/CS2103AUG2017-T15-B3/main/pull/103[#103]
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=findtag]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+University students tend to make many friends while they are in school, and when the contacts list increase in number, it becomes hard for the students to differentiate
+or find the correct contacts. Hence, `FindTagCommand` will help university students better search for their group of friends through the finding of the contacts' tags,
+Furthermore, `FindTagCommand` will also prevent the university students to find the wrong friends, maybe due to the similarities in the name.
+This would also help improve the efficiency of using The Myth's Book, as less time would be spent trying to find the correct contacts.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=findtag]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Composing and Sending of Emails
+
+==== External Behaviour
+
+This enhancement will allow university students to compose and send emails to their classmates or professors. It will include an `EmailCommand` that takes in the `index` specified by the user.
+A pop-up window will be activated and it will go to an `Outlook` window, where university students can compose to the email field of the contact specified by the user.
+This enhancement will make use of the `Outlook API`.
+
+==== Justification
+
+University students would prefer having lesser things to worry about amidst their work load. Hence, this enhancement will reduce the multi-tasking factor of university students, so that
+students don't have to open multiple application or browsers. This would improve efficiency of using The Myth's Book and also the efficiency of the students doing their work, as they don't have to
+waste time opening additional browsers to send an email.
+
+=== Enhancement Proposed: To-Do List
+
+==== External Behaviour
+
+This enhancement will improve the overall structure of `Events` and `Birthdays`, where it will include reminders through the notification tray, when the day of the event or birthday is up.
+Furthermore, the `Events` and `Birthdays` would combine so that there are lesser commands for users to use, improving user experience and user-friendliness of The Myth's Book.
+This enhancement will also allow university students to tick off events that they have completed, and upcoming events will also be notified to the users, through a different background colour
+of the event in the event list.
+
+==== Justification
+
+University students would want to balance their social and study life. Hence, this enhancement will allow them to better schedule their events since they can take note of upcoming events, and plan
+accordingly. Moreover, this enhancement will prevent students from opening too many applications that will potentially cause multi-tasking, reducing university students' efficiency in doing their work.
+This enhancement will also improve user-friendliness and user experience of The Myth's Book as it reduces the number of commands that the university students have to know.
+
+=== Other contributions
+
+This section outlines the additional contributions by Chan Kin Hung Dickson for The Myth's Book and Ark (Software by Team T16-B1).
+
+==== Software Contributions
+
+* Updated the GUI color scheme, structure, layout and overall outlook (Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/97[#97], https://github.com/CS2103AUG2017-T15-B3/main/pull/124[#124])
+* Updated AddCommand and EditCommand so that the application will select the person added or edited (Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/124[#124])
+* Updated CommandBox so that when there is a valid command, border of CommandBox turns green, and when command typed is invalid, border of CommandBox turns red (Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/97[#97])
+* Created additional color scheme `Bright Theme` for users to choose (Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/50[#50])
+* Implemented randomised colors for tags in PersonCard (Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/37[#37])
+* Implemented tests to increase overall test coverage (Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/63[#63], https://github.com/CS2103AUG2017-T15-B3/main/pull/82[#82], https://github.com/CS2103AUG2017-T15-B3/main/pull/103[#103])
+
+==== Documentation Contributions
+
+* Updated the images used in User Guide (Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/106[#106])
+* Created use cases in Developer Guide (Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/39[#39], https://github.com/CS2103AUG2017-T15-B3/main/pull/163[#163])
+* Updated User Guide layout (Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/102[#102], https://github.com/CS2103AUG2017-T15-B3/main/pull/152[#152])
+
+==== Acceptance Testing: Ark (Team T16-B1):
+
+* Found bug where the team's example for their add command does not work (Issue https://github.com/CS2103AUG2017-T16-B1/main/issues/157[#157])
+* Provided suggestion for them to provide a sample XML file for testers to test their import feature (Issue https://github.com/CS2103AUG2017-T16-B1/main/issues/158[#158])
+* Found possible bug where the team's undo command may be fixated on showing the list of all persons even if it was showing a list of something else (Issue https://github.com/CS2103AUG2017-T16-B1/main/issues/159[#159])
+* Provided suggestion and bug on the command `deleteTag` where it should only delete the tags of specified parcels and not all, and that the example provided is invalid (Issue https://github.com/CS2103AUG2017-T16-B1/main/issues/162[#162])

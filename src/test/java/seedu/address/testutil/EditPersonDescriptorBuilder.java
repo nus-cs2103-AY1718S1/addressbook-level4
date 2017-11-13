@@ -30,8 +30,12 @@ public class EditPersonDescriptorBuilder {
         descriptor = new EditPersonDescriptor();
         descriptor.setName(person.getName());
         descriptor.setPhone(person.getPhone());
+        descriptor.setHomeNumber(person.getHomeNumber());
         descriptor.setEmail(person.getEmail());
+        descriptor.setSchEmail(person.getSchEmail());
+        descriptor.setWebsite(person.getWebsite());
         descriptor.setAddress(person.getAddress());
+        descriptor.setBirthday(person.getBirthday());
         descriptor.setTags(person.getTags());
     }
 
@@ -60,6 +64,18 @@ public class EditPersonDescriptorBuilder {
     }
 
     /**
+     * Sets the {@code HomeNumber} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withHomeNumber(String homeNumber) {
+        try {
+            ParserUtil.parseHomeNumber(Optional.of(homeNumber)).ifPresent(descriptor::setHomeNumber);
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("home number is expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
      * Sets the {@code Email} of the {@code EditPersonDescriptor} that we are building.
      */
     public EditPersonDescriptorBuilder withEmail(String email) {
@@ -72,6 +88,32 @@ public class EditPersonDescriptorBuilder {
     }
 
     /**
+     * Sets the {@code SchEmail} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withSchEmail(String schEmail) {
+        try {
+            ParserUtil.parseSchEmail(Optional.of(schEmail)).ifPresent(descriptor::setSchEmail);
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("school email is expected to be unique.");
+        }
+        return this;
+    }
+
+    //@@author DarrenCzen
+    /**
+     * Sets the {@code Website} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withWebsite(String website) {
+        try {
+            ParserUtil.parseWebsite(Optional.of(website)).ifPresent(descriptor::setWebsite);
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("website is expected to be unique.");
+        }
+        return this;
+    }
+
+    //@@author
+    /**
      * Sets the {@code Address} of the {@code EditPersonDescriptor} that we are building.
      */
     public EditPersonDescriptorBuilder withAddress(String address) {
@@ -82,6 +124,29 @@ public class EditPersonDescriptorBuilder {
         }
         return this;
     }
+    //@@author archthegit
+
+    /**
+     * Sets the {@code Birthday} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withBirthday(String birthday) {
+        try {
+            ParserUtil.parseBirthday(Optional.of(birthday)).ifPresent(descriptor::setBirthday);
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("address is expected to be unique.");
+        }
+        return this;
+    }
+
+    // @@author itsdickson
+    /**
+     * Sets the {@code Favourite} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withFavourite(String favourite) {
+        descriptor.setFavourite(new Boolean(favourite));
+        return this;
+    }
+    // @@author
 
     /**
      * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code EditPersonDescriptor}

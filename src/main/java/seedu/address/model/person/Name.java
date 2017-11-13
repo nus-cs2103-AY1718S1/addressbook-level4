@@ -28,7 +28,7 @@ public class Name {
      */
     public Name(String name) throws IllegalValueException {
         requireNonNull(name);
-        String trimmedName = name.trim();
+        String trimmedName = toCapitalized(name.trim());
         if (!isValidName(trimmedName)) {
             throw new IllegalValueException(MESSAGE_NAME_CONSTRAINTS);
         }
@@ -60,4 +60,26 @@ public class Name {
         return fullName.hashCode();
     }
 
+    //@@author DarrenCzen
+    /**
+     * This method was adapted from user, scottb, on StackOverFlow.
+     * Code Implementation: https://stackoverflow.com/a/15738441
+     * This method converts a name to become capitalized fully.
+     * e.g. from "dArrEn cHiN" to "Darren Chin"
+     */
+    public static String toCapitalized(String s) {
+
+        final String delimiters = " ";
+        StringBuilder newString = new StringBuilder();
+        boolean isCapital = true;
+
+        for (char c : s.toCharArray()) {
+            c = (isCapital) ? Character.toUpperCase(c) : Character.toLowerCase(c);
+            newString.append(c);
+
+            isCapital = (delimiters.indexOf((int) c) >= 0);
+        }
+        return newString.toString();
+    }
+    //@@author
 }

@@ -14,6 +14,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 public class DeleteCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "delete";
+    public static final String COMMAND_ALIAS = "d";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the person identified by the index number used in the last person listing.\n"
@@ -35,13 +36,14 @@ public class DeleteCommand extends UndoableCommand {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_DISPLAYED_INDEX);
         }
 
         ReadOnlyPerson personToDelete = lastShownList.get(targetIndex.getZeroBased());
 
         try {
             model.deletePerson(personToDelete);
+            model.unselectPerson();
         } catch (PersonNotFoundException pnfe) {
             assert false : "The target person cannot be missing";
         }

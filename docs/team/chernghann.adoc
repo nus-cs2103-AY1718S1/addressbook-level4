@@ -1,0 +1,158 @@
+= Chia Cherng Hann - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Purpose
+
+This project portfolio showcases my contributions to The Myth's Book, a software engineering product made by
+my team and I during our study in National University of Singapore. The portfolio provides an outline of our project and
+showcases my contributions and justifications made to The Myth's Book.
+
+== Project: The Myth's Book
+
+The Myth's Book is an address book dedicated for university students to store useful information such
+as websites, phone numbers and emails of the people around them for personal usage. The application allows students
+to keep track of birthday dates and upcoming events through a calendar and facilitate convenient access to their friend's website
+and even Google Maps location through the in-built browser panel in the application. Furthermore, there are many
+useful tools such as finding group tags (e.g. friends, neighbours) and switching themes for better user preference and usability.
+
+The Myth's Book is a `Command Line Input` based software which caters to students who are more efficient and comfortable
+in typing out command line inputs to manipulate with information of their contacts in a address book in their laptops.
+The Myth's Book is a software application that is coded in `Java` programming language.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T15-B3/main/blob/master/collated/main/chernghann.md[Functional code]] [https://github.com/CS2103AUG2017-T15-B3/main/blob/master/collated/test/chernghann.md[Test code]]
+
+=== Enhancement Added: School Email and Home Number Field
+
+This section includes the behavior and justification of the new fields and explains how it is implemented.
+
+Code on GitHub: Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/65[#65], https://github.com/CS2103AUG2017-T15-B3/main/pull/55[#55]
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=add1]
+image::UGPrefix.PNG[width="500"]
+include::../UserGuide.adoc[tag=add2]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+As university students, most of us would have school emails and personal emails. An extra field for the user to store an extra set of emails is definitely useful so
+that the particular user can be contacted at a different email.
+Same idea applies to having an additional Home Number Field to be implemented for adding of a person into The Myth's Book.
+
+=== Enhancement Added: Add Events
+
+This section includes the behaviour and justification of the `Add Event Command` and explains how it is implemented.
+
+Code on GitHub: Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/70[#70]
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=addevent]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+The Myth's Book is targeted at University students in Singapore age between 18-24. On average, an university students have to juggle between many commitments in school and out of school,
+actively participating in many events internally and externally. Thus, the add event feature allows the users to be able to store and keep track of what events that are coming up and be
+able to plan and organise their schedule.
+
+== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=addevent]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Calendar
+
+This section includes the behaviour and justification of the Calendar enhancement and how it is implemented.
+
+Code on GitHub: Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/89[#89]
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=calendar]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+A Calendar User Interface will enhance the user's experience in using and organising their upcoming events. The calendar will be populated by the
+events added by the `AddEvent` Command. Also, a simple click on the calendar, the user will be able to get to add the events and be shown to them
+on the calendar with it being populating with a shade of colour.
+
+=== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=calendar]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed 1: School Timetable
+
+==== External Behaviour & Justification
+
+Nusmods is commonly used by students in National University of Singapore to plan for their school modules and organising their timetable.
+I am proposing an in-app timetable that caters to the all the different universities in Singapore. Similar to Nusmods, the students
+will be able to key in their module code and plan out their timetable in The Myth's Book. Thankfully for the Nusmods api, I believe that
+this enhancement could be achieve in a few month's time and be implemented in the next version of The Myth's Book.
+
+=== Enhancement Proposed 2: Name Card Recognition
+
+==== External Behaviour & Justification
+
+As we attempt to allow The Myth's Book to reach out to the target audience, I feel that the working adults could also use this application
+at work. Thus, this enhancement that I propose is for the working adults who tend to have name cards or business cards. User of
+the application can then simply use their laptop's web camera feature to scan the name card and store the details of the contact.
+
+=== Other contributions
+
+This section outlines the additional contribution for The Myth's Book and UniFy (Software by Team W09-B1).
+
+** Acceptance Testing
+* Provided suggestions for improvement
+- Improvement in their User Guide instructions for deleting tags. (Pull request https://github.com/CS2103AUG2017-W09-B1/main/issues/121#event-1330982844[#121])
+- Improvement in their command result display when removing pictures (Pull request https://github.com/CS2103AUG2017-W09-B1/main/issues/115[#115])
+
+*  Found a bug in implementation (Pull request https://github.com/CS2103AUG2017-W09-B1/main/issues/113[#113])
+
+**  Documentation
+- Included a `Back to Top` button for both User Guide and Developer Guide that improves user friendliness.
+(Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/42[#42])
+- Included Non-Functional Requirements for The Myth's Book
+(Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/38[#38])
+
+
+** Software Contributions
+* Storage
+- Included ability to readBackUpAddressBook (Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/48[#45])
+* Test coverages
+- Increased test coverages (Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/151[#151], https://github.com/CS2103AUG2017-T15-B3/main/pull/158[#158], https://github.com/CS2103AUG2017-T15-B3/main/pull/167[#167])

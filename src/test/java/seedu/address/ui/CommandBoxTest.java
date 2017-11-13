@@ -22,6 +22,7 @@ public class CommandBoxTest extends GuiUnitTest {
 
     private ArrayList<String> defaultStyleOfCommandBox;
     private ArrayList<String> errorStyleOfCommandBox;
+    private ArrayList<String> successStyleOfCommandBox;
 
     private CommandBoxHandle commandBoxHandle;
 
@@ -39,6 +40,10 @@ public class CommandBoxTest extends GuiUnitTest {
 
         errorStyleOfCommandBox = new ArrayList<>(defaultStyleOfCommandBox);
         errorStyleOfCommandBox.add(CommandBox.ERROR_STYLE_CLASS);
+
+        successStyleOfCommandBox = new ArrayList<>(defaultStyleOfCommandBox);
+        successStyleOfCommandBox.add(CommandBox.SUCCESS_STYLE_CLASS);
+
     }
 
     @Test
@@ -144,7 +149,7 @@ public class CommandBoxTest extends GuiUnitTest {
     private void assertBehaviorForSuccessfulCommand() {
         commandBoxHandle.run(COMMAND_THAT_SUCCEEDS);
         assertEquals("", commandBoxHandle.getInput());
-        assertEquals(defaultStyleOfCommandBox, commandBoxHandle.getStyleClass());
+        assertEquals(successStyleOfCommandBox, commandBoxHandle.getStyleClass());
     }
 
     /**

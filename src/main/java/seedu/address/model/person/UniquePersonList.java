@@ -48,6 +48,16 @@ public class UniquePersonList implements Iterable<Person> {
         internalList.add(new Person(toAdd));
     }
 
+    //@@author DarrenCzen
+    /**
+     * Sorts every person in the list alphabetically.
+     */
+    public void sort() {
+        internalList.sort((r1, r2) -> (
+                r1.getName().toString().compareTo(r2.getName().toString())));
+    }
+
+    //@@author
     /**
      * Replaces the person {@code target} in the list with {@code editedPerson}.
      *
@@ -83,6 +93,38 @@ public class UniquePersonList implements Iterable<Person> {
         }
         return personFoundAndDeleted;
     }
+
+    // @@author itsdickson
+    /**
+     * Favourites the equivalent person in the list.
+     *
+     * @throws PersonNotFoundException if no such person could be found in the list.
+     */
+    public void favouritePerson(ReadOnlyPerson toFavourite) throws PersonNotFoundException {
+        requireNonNull(toFavourite);
+        int index = internalList.indexOf(toFavourite);
+        if (index == -1) {
+            throw new PersonNotFoundException();
+        }
+
+        internalList.get(index).setFavourite(true);
+    }
+
+    /**
+     * Unfavourites the equivalent person from the list.
+     *
+     * @throws PersonNotFoundException if no such person could be found in the list.
+     */
+    public void unfavouritePerson(ReadOnlyPerson toUnfavourite) throws PersonNotFoundException {
+        requireNonNull(toUnfavourite);
+        int index = internalList.indexOf(toUnfavourite);
+        if (index == -1) {
+            throw new PersonNotFoundException();
+        }
+
+        internalList.get(index).setFavourite(false);
+    }
+    // @@author
 
     public void setPersons(UniquePersonList replacement) {
         this.internalList.setAll(replacement.internalList);
