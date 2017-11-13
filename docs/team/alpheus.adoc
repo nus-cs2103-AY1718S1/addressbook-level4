@@ -162,8 +162,9 @@ include::../DeveloperGuide.adoc[tag=parentmode]
 
 ---
 
-=== Enhancement Proposed: Import/Export Google contacts
-This allows for easy transfer of contacts from the user's phone when they first use Bluebird.
+=== Enhancement Proposed: Pin/Unpin Task
+Users may have trouble keeping track of important tasks that they have to do. This feature allows them to pin imortant tasks for
+easy access.
 
 === Enhancement Proposed: Cloud Storage
 Bluebird will prompt user to select if they would like to upload and save their data to a cloud storage
