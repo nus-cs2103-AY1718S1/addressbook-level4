@@ -29,6 +29,7 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSucces
 import org.junit.Test;
 
 import seedu.address.logic.commands.AddTaskCommand;
+import seedu.address.model.task.DateTime;
 import seedu.address.model.task.Task;
 import seedu.address.testutil.TaskBuilder;
 
@@ -57,6 +58,7 @@ public class AddTaskCommandParserTest {
     @Test
     public void parse_compulsoryFieldMissing_failure() {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTaskCommand.MESSAGE_USAGE);
+        String expectedMessageForDateTime = DateTime.MESSAGE_DATE_TIME_FORMAT_CONSTRAINTS;
 
         // missing name prefix
         assertParseFailure(parser, AddTaskCommand.COMMAND_WORD + VALID_NAME_DEMO
@@ -78,10 +80,10 @@ public class AddTaskCommandParserTest {
                 + DESC_DESC_DEMO + START_DESC_DEMO
                 + VALID_END_DEMO + TAG_DESC_DEMO, expectedMessage);
 
-        // missing tag prefix -> to be un commented after date field being implemented
-        //assertParseFailure(parser, AddTaskCommand.COMMAND_WORD + NAME_DESC_DEMO +
-        //        DESC_DESC_DEMO + START_DESC_DEMO
-        //        + END_DESC_DEMO + VALID_TAG_DEMO, expectedMessage);
+        // missing tag prefix -> the format of the datetime will be incorrect
+        assertParseFailure(parser, AddTaskCommand.COMMAND_WORD + NAME_DESC_DEMO
+                + DESC_DESC_DEMO + START_DESC_DEMO
+                + END_DESC_DEMO + VALID_TAG_DEMO, expectedMessageForDateTime);
 
         // missing all prefix
         assertParseFailure(parser, AddTaskCommand.COMMAND_WORD + VALID_NAME_DEMO

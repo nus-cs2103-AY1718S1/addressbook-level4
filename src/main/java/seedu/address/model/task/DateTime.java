@@ -206,5 +206,16 @@ public class DateTime {
         }
     }
 
+    /**
+     * Compare two DateTime object
+     * @param other , another DateTime object
+     * @return true if they are of the same object or of the same value
+     */
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof DateTime // instanceof handles nulls
+                && (this.compareTo((DateTime) other) == 0));
+    }
+
 
 }

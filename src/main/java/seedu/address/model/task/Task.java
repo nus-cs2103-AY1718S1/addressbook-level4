@@ -35,7 +35,7 @@ public class Task implements ReadOnlyTask {
     public Task () {
         this.tags = new SimpleObjectProperty<>(new UniqueTagList());
         this.complete = new SimpleObjectProperty<>(false);
-        this.taskPriority = new SimpleObjectProperty<>(1);
+        this.taskPriority = new SimpleObjectProperty<>(3);
         this.id = new SimpleObjectProperty<>(this.hashCode());
         this.peopleIds = new SimpleObjectProperty<>(new ArrayList<Integer>());
     }
@@ -54,7 +54,7 @@ public class Task implements ReadOnlyTask {
         this.startDateTime = new SimpleObjectProperty<>(startDateTime);
         this.endDateTime = new SimpleObjectProperty<>(endDateTime);
         this.complete = new SimpleObjectProperty<>(false);
-        this.taskPriority = new SimpleObjectProperty<>(1);
+        //this.taskPriority = new SimpleObjectProperty<>(1);
     }
 
     /**

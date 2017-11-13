@@ -1,109 +1,6 @@
-//@@author ShaocongDong
-package seedu.address.model;
-
-import static java.util.Objects.requireNonNull;
-
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
-
-import javafx.collections.ObservableList;
-
-import seedu.address.model.tag.Tag;
-import seedu.address.model.tag.UniqueTagList;
-import seedu.address.model.task.ReadOnlyTask;
-import seedu.address.model.task.Task;
-import seedu.address.model.task.UniqueTaskList;
-import seedu.address.model.task.exceptions.DuplicateTaskException;
-import seedu.address.model.task.exceptions.TaskNotFoundException;
-
-/**
- * Wraps all data at the address-book level
- * Duplicates are not allowed (by .equals comparison)
- */
-public class TaskBook implements ReadOnlyTaskBook {
-
-    private final UniqueTaskList tasks;
-    private final UniqueTagList tags;
-
-    /*
-     * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
-     * between constructors. See https://docs.oracle.com/javase/tutorial/java/javaOO/initial.html
-     *
-     * Note that non-static init blocks are not recommended to use. There are other ways to avoid duplication
-     *   among constructors.
-     */
-    {
-        tasks = new UniqueTaskList();
-        tags = new UniqueTagList();
-    }
-
-    public TaskBook() {}
-
-    /**
-     * Creates an AddressBook using the tasks and Tags in the {@code toBeCopied}
-     */
-    public TaskBook(ReadOnlyTaskBook toBeCopied) {
-        this();
-        resetData(toBeCopied);
-    }
-
-    //// list overwrite operations
-
-    public void setTasks(List<? extends ReadOnlyTask> tasks) throws DuplicateTaskException {
-        this.tasks.setTasks(tasks);
-    }
-
-    public void setTags(Set<Tag> tags) {
-        this.tags.setTags(tags);
-    }
-
-    /**
-     * Resets the existing data of this {@code AddressBook} with {@code newData}.
-     */
-    public void resetData(ReadOnlyTaskBook newData) {
-        requireNonNull(newData);
-        try {
-            setTasks(newData.getTaskList());
-        } catch (DuplicateTaskException e) {
-            assert false : "AddressBooks should not have duplicate tasks";
-        }
-
-        setTags(new HashSet<>(newData.getTagList()));
-        syncMasterTagListWith(tasks);
-    }
-
-    //// task-level operations
-
-    /**
-     * Adds a task to the task book.
-     * Also checks the new task's tags and updates {@link #tags} with any new tags found,
-     * and updates the Tag objects in the task to point to those in {@link #tags}.
-     *
-     * @throws DuplicateTaskException if an equivalent task already exists.
-     */
-    public void addTask(ReadOnlyTask p) throws DuplicateTaskException {
-        Task newTask = new Task(p);
-        syncMasterTagListWith(newTask);
-        // TODO: the tags master list will be updated even though the below line fails.
-        // This can cause the tags master list to have additional tags that are not tagged to any task
-        // in the task list.
-        tasks.add(newTask);
-    }
-
-    //@@author KongjiaQi
-    /**
-     * Marks an existing task to be completed.
-     * @throws TaskNotFoundException if the task could not be found in the list..
-     */
-    public void markTask(ReadOnlyTask p) throws TaskNotFoundException {
-        tasks.setComplete(p);
-    }
-
-    //@@author ShaocongDong
+# Shaocong
+###### /java/seedu/address/model/TaskBook.java
+``` java
     /**
      * Replaces the given task {@code target} in the list with {@code editedReadOnlyTask}.
      * {@code AddressBook}'s tag list will be updated with the tags of {@code editedReadOnlyTask}.
@@ -239,3 +136,4 @@ public class TaskBook implements ReadOnlyTaskBook {
         return Objects.hash(tasks, tags);
     }
 }
+```

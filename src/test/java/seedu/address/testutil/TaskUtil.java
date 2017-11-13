@@ -32,8 +32,7 @@ public class TaskUtil {
         sb.append(PREFIX_START_DATE_TIME + task.getStartDateTime().getState() + " ");
         sb.append(PREFIX_END_DATE_TIME + task.getEndDateTime().getState() + " ");
         task.getTags().stream().forEach(
-                s -> sb.append(PREFIX_TAG + s.tagName + " ")
-        );
+            s -> sb.append(PREFIX_TAG + s.tagName + " "));
         return sb.toString();
     }
 }
