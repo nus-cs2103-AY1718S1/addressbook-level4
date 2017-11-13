@@ -29,6 +29,7 @@ import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.LocateCommand;
 import seedu.address.logic.commands.LocateMrtCommand;
+import seedu.address.logic.commands.MeetingLocationCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemoveAccountCommand;
 import seedu.address.logic.commands.SelectCommand;
@@ -169,6 +170,10 @@ public class AddressBookParser {
 
         case RemoveAccountCommand.COMMAND_WORD:
             return new RemoveAccountCommandParser().parse(arguments);
+
+        case MeetingLocationCommand.COMMAND_WORD:
+        case MeetingLocationCommand.COMMAND_ALIAS:
+            return new MeetingLocationCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

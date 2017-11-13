@@ -303,6 +303,37 @@ The following activity diagram summarize what happens inside the `UndoRedoStack`
 
 image::UndoRedoActivityDiagram.png[width="200"]
 
+=== Best Meeting Location Mechanism
+image::mrtMapImage.png[width="800"]
+TheBest Meeting Location Mechanism is an algorithm to compute the best mrt
+station for the user to meet. The "best mrt station" is defined as the mrt station
+that requires the least total travelling time among all the users. As shown in the
+image above, MacPherson is the "best mrt station". The other non-grey circle (that
+doesn't have name indicated) are mrt stations where the users lives. The size of that
+circle reflects the number of people actually living there or near there.
+
+The primary logic for getting the best meeting location is stored with the
+MrtMapLogic.java file. This method uses Dijkstra's algorithm to find the minimum
+travelling time to every mrt stations for every users. The total travelling time for
+a particular mrt station is the summation of all the user's least travelling time
+for the original location to that location. The mrt station that has the least
+total travelling time will be declared as the "best mrt station" for meeting.
+
+The travelling time computed reflects the actual travelling time if a person is to
+actually travel physically from one station in singapore to another. Note that only
+Singapore's currently operating Mrt Stations are included. The time taken for an
+individual to transfer a station is reflected as 5 minutes, which is accurate considering
+that a person need to walk to the other mrt line, then wait for the train to arrive.
+
+The information regarding the mrt station and travelling time is hard coded within
+the java class itself to avoid any other class from altering any of that information.
+Another reason for storing the information within the java class is because the class
+that visualises the MRT MAP (shown above) requires the exact same station to work.
+As shown in the image, the mrt map is roughtly similar with that found in that
+standard Singapore map. This is made possible with some of the coordinate of the
+mrt station within the canvass itself being hard coded.
+
+
 === Locate mechanism
 
 The Locate Command gets the last shown list, which is the current list of persons being shown before using this command.
