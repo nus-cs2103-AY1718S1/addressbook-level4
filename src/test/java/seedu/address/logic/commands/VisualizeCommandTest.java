@@ -37,7 +37,7 @@ public class VisualizeCommandTest {
     }
 
     @Test
-    public void findCommonSlotSuccess() throws IllegalValueException, PersonNotFoundException {
+    public void visualizeCommonSlotSuccess() throws IllegalValueException, PersonNotFoundException {
         Slot firstSlot = new Slot(new Day("Monday"), new Time("0700"), new Time("1000"));
         Slot secondSlot = new Slot(new Day("Tuesday"), new Time("0930"), new Time("1100"));
         model.addScheduleToPerson(0, firstSlot.getBusyTime());

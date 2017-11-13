@@ -45,6 +45,7 @@ public class VisualizeCommand extends Command {
         }
         Schedule scheduleToBeShown =
                 model.getAddressBook().getPersonList().get(targetIndex.getZeroBased()).getSchedule();
+
         ScheduleTable.generates(scheduleToBeShown);
         String toShow = scheduleInfo();
         return new CommandResult(String.format(MESSAGE_VISUALIZE_PERSON_SUCCESS + targetIndex.getOneBased() + toShow));

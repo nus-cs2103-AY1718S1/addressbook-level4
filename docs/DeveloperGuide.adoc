@@ -332,33 +332,19 @@ loadLocationPage adds the person's address info after the searching URL of Googl
 ==== Design Considerations
 
 
-*Aspect:* To use a tree or a boolean array to store the schedules.
+*Aspect:* Whether to truncate the string of address.
 
-*Alternative 1 (current choice):* use a tree.
+*Alternative 1 (current choice):* no.
 
-*Pros:* Avoid converting the index to time, efficient to search.
+*Pros:* Accurate and unambiguous.
 
-*Cons:* Not intuitive to enhance and visualize.
+*Cons:* Will generate a very complex string in the google map search column.
 
-*Alternative 2*: use an array.
+*Alternative 2*: Truncate the address string.
 
-*Pros:* Straightforward.
+*Pros:* The text to be searched in google map column will be clear and succinct.
 
-*Cons:* Need to link the index to the number that specifies time. Magic numbers introduced.
-
-*Aspect:* Whether to store free time slots or busy time slots.
-
-*Alternative 1 (current choice):* Store free time slots.
-
-*Pros:* Easy to use, make the user feel less troublesome in adding slots.
-
-*Cons:* Not simulating modern schedule apps' scheme.
-
-*Alternative 2*: Store busy time slots.
-
-*Pros:* Easy for the user to edit when he/she encounter a new event.
-
-*Cons:* Extremely difficult for the user to initialize the schedule.
+*Cons:* The addresses don't have a standard format so it's not feasible to get the truncated address.
 
 // end::locateCon[]
 // tag::addclearSchedule[]

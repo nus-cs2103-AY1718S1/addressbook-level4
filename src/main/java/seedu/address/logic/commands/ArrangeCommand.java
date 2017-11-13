@@ -49,6 +49,7 @@ public class ArrangeCommand extends Command {
             }
         }
         TreeSet<Integer>[] timeSetArray = Schedule.splitScheduleToDays(model.generateMeetingTime(listOfIndex));
+
         ScheduleTable.generates(timeSetArray);
         String toShow = scheduleInfo();
         return new CommandResult(String.format(MESSAGE_ARRANGE_PERSON_SUCCESS) + toShow);
