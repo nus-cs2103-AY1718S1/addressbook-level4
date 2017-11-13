@@ -129,7 +129,7 @@ Examples:
 * `help a` (using alias)
 
 image::HelpEnhancementScreenShot.PNG[width="800"]
-_Figure 3.2.1.1: UI display for HelpCommand_
+_Figure 3.2.1: UI display for HelpCommand_
 
 // end::help[]
 
@@ -258,7 +258,7 @@ Try enabling the welcome screen, close and rerun ConTag.
 If the welcome screen is successfully enabled, you should be able to see a the following screen, as shown in _Figure 3.5.5.1_ every time ConTag is run. The welcome screen displays 1 out of the 15 default productivity quotes at random to keep you motivated throughout the day.
 
 image::WelcomeScreen.png[width="400"]
-_Figure 3.4.3.1: The welcome screen_
+_Figure 3.4.1: The welcome screen_
 // end::welcomeScreen[]
 
 // tag::find[]
@@ -317,25 +317,25 @@ Returns all persons with tag `Party` and `Presentation`
 Returns all persons of country code `Singapore`
 
 image::FindCommand_Name.PNG[width="400"]
-_Figure 3.4.1.1a : Find by name [n/NAME]_
+_Figure 3.4.2a : Find by name [n/NAME]_
 
 image::FindCommand_Phone.PNG[width="400"]
-_Figure 3.4.1.1b : Find by phone [p/PHONE]_
+_Figure 3.4.2b : Find by phone [p/PHONE]_
 
 image::FindCommand_Email.PNG[width="400"]
-_Figure 3.4.1.1c : Find by email [e/EMAIL]_
+_Figure 3.4.2c : Find by email [e/EMAIL]_
 
 image::FindCommand_Address.PNG[width="400"]
-_Figure 3.4.1.1d : Find by address [a/ADDRESS]_
+_Figure 3.4.2d : Find by address [a/ADDRESS]_
 
 image::FindCommand_Activity.PNG[width="400"]
-_Figure 3.4.1.1e : Find by activity [act/ACTIVITY]_
+_Figure 3.4.2e : Find by activity [act/ACTIVITY]_
 
 image::FindCommand_Tag.PNG[width="400"]
-_Figure 3.4.1.1f : Find by tag [t/TAG]_
+_Figure 3.4.2f : Find by tag [t/TAG]_
 
 image::FindCommand_Country.PNG[width="400"]
-_Figure 3.4.1.1g : Find by country [c/COUNTRY]_
+_Figure 3.4.2g : Find by country [c/COUNTRY]_
 
 // end::find[]
 
@@ -364,7 +364,7 @@ Locates the 2nd person's address in the address book.
 Locates the 1st person's address in the results of the `find` command.
 
 image::Full UI outcome for LocateCommand.png[width="800"]
-_Figure 3.4.2 :  UI display of LocateCommand_
+_Figure 3.4.3 :  UI display of LocateCommand_
 
 // end::locate[]
 
@@ -393,10 +393,10 @@ Associates the specified schedule with the 1st person in the results of the `fin
 // tag::agenda[]
 ===== Viewing of user's agenda
 
-A list of all scheduled activities by the user is displayed in the 'My Agenda' section of the application, as shown below in _Figure 3.4.3.1_.
+A list of all scheduled activities by the user is displayed in the 'My Agenda' section of the application, as shown below in _Figure 3.4.4.1_.
 
 image::AgendaPanelUI.png[width="300"]
-_Figure 3.4.3.1: UI display for user's agenda_
+_Figure 3.4.4.1: UI display for user's agenda_
 
 When an activity is scheduled, the agenda list will be immediately updated, with the list being arranged from earliest to latest date with the earliest being at the top.
 // end::agenda[]
@@ -407,7 +407,7 @@ When an activity is scheduled, the agenda list will be immediately updated, with
 A pop-up reminder will be appear after the main application window has opened, if there exists scheduled activities by the user which are due the day after the current date. The display of the reminder window can be seen in _Figure 3.4.3.2_ below:
 
 image::ReminderWindowUI.png[width="700"]
-_Figure 3.4.3.2: UI display for pop-up reminder window_
+_Figure 3.4.4.2: UI display for pop-up reminder window_
 // end::reminder[]
 
 // tag::copy[]
@@ -433,7 +433,7 @@ Outputs the 1st person's email address in console: `johndoe@example.com`
 Outputs email addresses of people at index 1, 4 and 5, with a semi-colon between each: `a@a.com; d@d.com; e@e.com`
 
 image::CopyCommand_browser_result.PNG[width="600"]
-_Figures 3.4.4.1: UI display of CopyCommand_
+_Figures 3.4.5: UI display of CopyCommand_
 
 // end::copy[]
 
@@ -454,7 +454,7 @@ Opens up calendar browser in the address book.
 
 image::CalendarCommand.png[width="800"]
 
-_Figure 3.4.5.1: UI display of CalendarCommand_
+_Figure 3.4.6: UI display of CalendarCommand_
 // end::calendar[]
 
 //tag::email[]
@@ -482,7 +482,7 @@ Emails the 1st and 2nd person in the address book.
 Emails the 1st person in the results of the `find` command.
 
 image::EmailCommand.PNG[width="700"]
-_Figure 3.4.6.1: UI display of EmailCommand_
+_Figure 3.4.7: UI display of EmailCommand_
 
 // end::email[]
 
@@ -525,10 +525,10 @@ can take in either format.
 
 
 image::backup demo 1.PNG[width="700"]
-_Figure 3.4.7.1 : UI display for BackupCommand1_
+_Figure 3.4.8 : UI display for BackupCommand1_
 
 image::backup demo 2.PNG[width="700"]
-_Figure 3.4.7.2 : UI display for BackupCommand2_
+_Figure 3.4.8 : UI display for BackupCommand2_
 
 //end::backup[]
 

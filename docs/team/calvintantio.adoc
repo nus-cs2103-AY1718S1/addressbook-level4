@@ -23,7 +23,7 @@ include::../UserGuide.adoc[tag=help]
 
 ==== Justification
 
-ConTag supports various commands with different command formats. This makes it difficult for new users to remember how each command is used. Displaying the format of a specific command will save users the trouble to go through the user guide repeatedly. This enhancement serves as a quick reminder for the users, catered especially towards new users.
+ConTag supports various commands with different command formats. This makes it difficult for new users to remember how each command is used. Displaying the format of a specific command will save users the trouble to go through the user guide repeatedly. This enhancement serves as a quick reminder for both new and frequent users.
 
 ==== Implementation
 

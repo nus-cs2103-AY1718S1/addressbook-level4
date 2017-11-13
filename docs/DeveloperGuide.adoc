@@ -297,7 +297,7 @@ The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides insi
 `UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. _Figure 4.1.1_ below shows the inheritance diagram for commands:
 
 image::NewCommandClassDiagram.PNG[width="800"]
-_Figure 4.1.1 : Inheritance Diagram for Commands_
+_Figure 4.1.1 : Inheritance diagram for commands_
 
 As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
 
@@ -339,12 +339,12 @@ Suppose that the user has just launched the application. The `UndoRedoStack` wil
 As depicted in _Figure 4.1.4_: The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
 
 image::UndoRedoStartingStackDiagram.png[width="800"]
-_Figure 4.1.4 : UndoRedoStack Diagram 1_
+_Figure 4.1.4 : UndoRedoStack diagram 1_
 
 As depicted in _Figure 4.1.5_: As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person.
 
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
-_Figure 4.1.5 : UndoRedoStack Diagram 2_
+_Figure 4.1.5 : UndoRedoStack diagram 2_
 
 [NOTE]
 If a command fails its execution, it will not be pushed to the `UndoRedoStack` at all.
@@ -354,7 +354,7 @@ The user now decides that adding the person was a mistake, and decides to undo t
 As depicted in _Figure 4.1.6_: We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed.
 
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
-_Figure 4.1.6 : UndoRedoStack Diagram 3_
+_Figure 4.1.6 : UndoRedoStack diagram 3_
 
 [NOTE]
 If the `undoStack` is empty, then there are no other commands left to be undone, and an `Exception` will be thrown when popping the `undoStack`.
@@ -372,19 +372,19 @@ If the `redoStack` is empty, then there are no other commands left to be redone,
 As depicted in _Figure 4.1.8_: The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow).
 
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
-_Figure 4.1.8 : UndoRedoStack Diagram 4_
+_Figure 4.1.8 : UndoRedoStack diagram 4_
 
 As depicted in _Figure 4.1.9_: Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution.
 
 image::UndoRedoNewCommand3StackDiagram.png[width="800"]
-_Figure 4.1.9 : UndoRedoStack Diagram 5_
+_Figure 4.1.9 : UndoRedoStack diagram 5_
 
 The following activity diagram in _Figure 4.1.10_ below summarizes what happens inside the `UndoRedoStack` when a user executes a new command:
 
 image::UndoRedoActivityDiagram.png[width="200"]
-_Figure 4.1.10 : UndoRedoStack Activity Diagram_
+_Figure 4.1.10 : UndoRedoStack activity diagram_
 
-==== Design Considerations for `UndoableCommand`
+==== Design Considerations
 
 **Aspect:** Implementation of `UndoableCommand` +
 **Alternative 1 (current choice):** Add a new abstract method `executeUndoableCommand()`. +
@@ -418,16 +418,16 @@ _Figure 4.1.10 : UndoRedoStack Activity Diagram_
 ---
 
 **Aspect:** Data structure to support the undo/redo commands +
-**Alternative 1 (current choice):** Use separate stack for undo and redo +
+**Alternative 1 (current choice):** Use separate stack for undo and redo. +
 **Pros:** Easy to understand for new Computer Science student undergraduates to understand, who are likely to be the new incoming developers of our project. +
 **Cons:** Logic is duplicated twice. For example, when a new command is executed, we must remember to update both `HistoryManager` and `UndoRedoStack`. +
-**Alternative 2:** Use `HistoryManager` for undo/redo +
+**Alternative 2:** Use `HistoryManager` for undo/redo. +
 **Pros:** We do not need to maintain a separate stack, and just reuse what is already in the codebase. +
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
 // tag::deletemultiple[]
-=== Deleting multiple persons [Since v1.1]
+=== Deleting Multiple Persons [Since v1.1]
 
 In _Figure 3.3.3_, the interactions in the `Logic` component are shown when a person is deleted. Since version 1.1, the `DeleteCommand` has been enhanced in its execution, to delete persons belonging to different indices keyed in by the user.
 
@@ -537,7 +537,7 @@ public class DeleteCommand extends UndoableCommand {
 ----
 _Figure 4.2.4 : Code section in DeleteCommand.java_
 
-==== Design Considerations for Deleting Multiple Persons
+==== Design Considerations
 
 **Aspect:** User input restrictions +
 **Alternative 1 (current choice):** Disallow repeated indices from user, even if indices can be found in the list. +
@@ -564,9 +564,10 @@ _Figure 4.2.4 : Code section in DeleteCommand.java_
 
 === Displaying the Usage of a Specific Command [Since v1.2]
 
-This function is an enhancement of the existing help function, which opens the help window. The modification allows the help command to take in an optional command identifier argument. If the command identifier is specified, the result display panel will display the usage of the command specified. Otherwise, help window will be opened. This enhancement requires modifications in the Logic component of the application.
+This function is an enhancement of the existing help function, which opens the help window. The modification allows the `HelpCommand` to take in an optional `CommandIdentifier` argument. If the command identifier is specified, the result display panel will display the usage of the command specified. Otherwise, help window will be opened. This enhancement requires modifications in the `Logic` component of the application.
 
-`CommandIdentifier` class is created to cater to the new type of argument that users can key in. The code snippet below shows how it is implemented.
+`CommandIdentifier` class is created to cater to the new type of argument that users can key in. The code section in _Figure 4.3.1_ below shows how it is implemented.
+
 [source,java]
 ----
 public class CommandIdentifier {
@@ -586,11 +587,12 @@ public class CommandIdentifier {
     }
 }
 ----
+_Figure 4.3.1 : Code section in CommandIdentifier.java_
 
 [NOTE]
 A valid command identifier includes all existing command and their aliases.
 
-For the Logic component, `HelpCommandParser` has been created to parse user input that follows the `help` command word.
+For the Logic component, `HelpCommandParser` has been created to parse user input that follows the `help` command word. Refer to the code section in _Figure 4.3.2_ below to understand how it is implemented.
 
 [source,java]
 ----
@@ -612,8 +614,9 @@ public class HelpCommandParser implements Parser<HelpCommand> {
     }
 }
 ----
+_Figure 4.3.2 : Code section from HelpCommandParser.java_
 
-To accommodate this enhancement, the following method is added into `ParserUtil`. The method takes in user input string and return a `CommandIdentifier` object.
+To accommodate this enhancement, the following method, as shown in _Figure 4.3.3_ is added into `ParserUtil`. The method takes in user input string and return a `CommandIdentifier` object.
 
 [source,java]
 ----
@@ -622,8 +625,9 @@ public static CommandIdentifier parseCommandIdentifier(String commandWord) throw
     return new CommandIdentifier(commandWord.trim());
 }
 ----
+_Figure 4.3.3 : Code section from ParserUtil.java_
 
-Finally, the `CommandIdentifier` is passed into `HelpCommand` to do the command execution. The execute method in the `HelpCommand` is implemented as follows.
+Finally, the `CommandIdentifier` is passed into `HelpCommand` to do the command execution. _Figure 4.3.4_ shows how the help command execution is implemented.
 
 [source,java]
 ----
@@ -633,28 +637,29 @@ public CommandResult execute() {
     // ... default case: opens help window ...
 }
 ----
+_Figure 4.3.4 : Code section from CommandResult.java_
 
-The following sequence diagram shows an example that summarises how the `HelpCommand` is being called and executed.
+The following sequence diagram in _Figure 4.3.5_ shows an example that summarises how the `HelpCommand` is being called and executed.
 
 image::HelpCommandLogicComponent.png[width="800"]
 
-_Figure 4.3.1: Interactions Inside the Logic Component for the `help add` Command_
+_Figure 4.3.5: Interactions Inside the Logic Component for the `help add` Command_
 
-_Figure 4.3.2_ below shows the enhanced help command in action.
+_Figure 4.3.6_ below shows the enhanced help command in action.
 
 image::HelpEnhancementScreenShot.PNG[width="800"]
 
-_Figure 4.3.3: Enhanced `HelpCommand` execution_
+_Figure 4.3.6: Enhanced `HelpCommand` execution_
 
 ==== Design Considerations
 
 **Aspect:** Enhancement of `HelpCommand` +
-**Alternative 1 (current choice)**: Allowing the `HelpCommand` to take in an optional command identifier argument +
-**Pros:** Users can easily find out about the format of a specific command they want to key in. +
-**Cons:** Users have to know at least the command identifier of the command they want execute. +
-**Alternative 2:** Only allowing `HelpCommand` to open help window  +
-**Pros:** It is simpler and more intuitive for new users. +
-**Cons:** Users have to go through the user guide every time they forget the format of a certain command.
+**Alternative 1 (current choice)**: `HelpCommand` allows the user to take in an optional `CommandIdentifier` argument. +
+**Pros:** The user can easily find out about the format of a specific command he wants to execute. +
+**Cons:** The users has to know the command identifier to utilise this feature. +
+**Alternative 2:** `HelpCommand` can only allow the user to open help window.  +
+**Pros:** It is simpler and more intuitive for a new user. +
+**Cons:** The user has to go through the User Guide every time he needs to check on the usage of a specific command.
 // end::help[]
 
 //tag::locate[]
@@ -775,7 +780,7 @@ _Figure 4.4.8_ below shows the full UI outcome of selecting a selecting a `Perso
 image::Full UI outcome for LocateCommand.png[width="800"]
 _Figure 4.4.8 : Full UI outcome of locate implementation_
 
-==== Design Considerations for `LocateCommand`
+==== Design Considerations
 
 **Aspect:** Execution of `LocateCommand` +
 **Alternative 1 (current choice):** Posts a new `JumpToListRequestEvent` to `EventBus`. +
@@ -849,7 +854,7 @@ an urgent need to be copied as the Locate command in our app already copies the 
 As such, until user feedback proves otherwise, copying email addresses is the main priority for this feature.
 
 **Aspect:** Which field(s) to copy +
-**Alternative 1 (current choice):** Email address +
+**Alternative 1 (current choice):** Email address. +
 **Pros:** Emails more widely copied than any other field. +
 **Cons:** Users who want to copy other fields cannot do so. +
 **Alternative 2:** All fields can be copied with their respective identifiers (e.g. address/, phone/) +
@@ -935,14 +940,13 @@ image::CalendarCommand.png[width="800"]
 
 _Figure 4.6.5: Output of `CalendarCommand.java` execution_
 
-==== Design Considerations for `CalendarCommand`
-
+==== Design Considerations
 
 **Aspect:** Implementation of `CalendarCommand` +
 **Alternative 1 (current choice)**: Opening  `Calendar` web page in `BrowserPanel`. +
-**Pros:** To brings about greater convenience for the user as user does not need to navigate between multple webpages to find the calendar.User are able to find out about the public holidays which are not avaliable on desktop calendar. +
-**Cons:** User might bypass the `CalendarCommand` and rely on desktop calendar +
-**Alternative 2:** Opening up of Google calendar +
+**Pros:** To brings about greater convenience for the user as user does not need to navigate between multple webpages to find the calendar. User are able to find out about the public holidays which are not avaliable on desktop calendar. +
+**Cons:** User might bypass the `CalendarCommand` and rely on desktop calendar. +
+**Alternative 2:** Opening up of Google calendar. +
 **Pros:** User are able to store the events in the google calendar. +
 **Cons:** Unable to view public holidays.User also have to go through the hassle of logging in just to view the calendar. +
 
@@ -1035,13 +1039,13 @@ public class UniqueEmailList {
 ----
 _Figure 4.7.4: Code section in UniqueEmailList.java_
 
-==== Design Considerations for Adding or Editing contact with Multiple Emails
+==== Design Considerations
 
 **Aspect:** Storing of emails in `Person` +
 **Alternative 1 (current choice)**: Emails stored as `ObjectProperty` of `UniqueEmailList`. +
 **Pros:** We are able to add listeners to track changes in the object `UniqueEmailList`. +
 **Cons:** Need to call more methods to get the set of emails. +
-**Alternative 2:** Emails stored as a set +
+**Alternative 2:** Emails stored as a set. +
 **Pros:** Able to get the set of emails and use it from a simple getter method. +
 **Cons:** We are unable to track changes in the email list if we want the UI to change accordingly.
 // end::multipleemails[]
@@ -1167,7 +1171,7 @@ rejected. The current list of acceptable codes can be listed with the command `h
 image::country_code demo 3.PNG[width="800"]
 _Figure 4.8.8 : Copy from multiple contacts_
 
-==== Design Considerations for `Country`
+==== Design Considerations
 
 Most importantly, this feature allows the user to skip the input of a new contact's country, and makes the country section
 of the Address input optional as well. This reduces the number of steps during contact creation and modification.
@@ -1192,13 +1196,13 @@ many users may skip, we decided to infer this field from existing information in
 the idea of allowing custom user-defined input, concurrent to a default country inference when a contact is first made.
 
 **Aspect:** How to input Country name +
-**Alternative 1 (current choice):** Automatic detection from phone number +
+**Alternative 1 (current choice):** Automatic detection from phone number. +
 **Pros:** Fewer steps by user, ensures all contacts have country. +
 **Cons:** User cannot change a custom country for contact.  +
 **Alternative 2:** Automatic detection from address +
 **Pros:** Fewer steps by user, does not rely on phone prefixes. +
 **Cons:** User may not input country in some addresses. +
-**Alternative 3:** Manual entry of contact's country +
+**Alternative 3:** Manual entry of contact's country. +
 **Pros:** Guarantees satisfactory country field as defined by user. +
 **Cons:** More steps, users may not want to expend the extra time while populating address book over time.
 
@@ -1208,22 +1212,21 @@ the idea of allowing custom user-defined input, concurrent to a default country 
 //tag::scheduleSingle[]
 === Scheduling an Activity with a Single Person [Since v1.3]
 
-The `ScheduleCommand` allows users to schedule and activity with one person in the contact list. It is one of the commands that extend `UndoableCommand`. This allows users to `undo` their scheduling. `UndoableCommand`, in turn, inherits from `Command` as shown in _Figure4.9.1_ below.
+The `ScheduleCommand` allows the user to schedule and activity with one person in the contact list per execution. It is one of the commands that extend `UndoableCommand`. This allows users to `undo` their scheduling. `UndoableCommand`, in turn, inherits from `Command` as shown in _Figure 4.9.1_ below.
 
 image::ScheduleCommandLogicCommandClassDiagram.png[width="800"]
 
-_Figure 4.9.1: `ScheduleCommand` inherits from `UndoableCommand`_
-
+_Figure 4.9.1 : Inheritance diagram for commands_
 
 The diagram in _Figure 4.9.2_ below shows the sequence of the schedule operation.
 
 image::ScheduleCommandLogic.png[width="800"]
 
-_Figure 4.9.2: Interactions Inside the Logic Component for the `schedule 1 d/15-12-2017 act/Meeting` Command_
+_Figure 4.9.2 : Interactions inside the `Logic` component for the `schedule 1 d/15-12-2017 act/Meeting` command execution_
 
-The `ScheduleCommand` takes in `Index`, which is already available in the original application, as well as `ScheduleDate` and `Activity`. The Model component of the application has been extended to include these two new classes.
+The `ScheduleCommand` takes in `Index`, which is already available in the v1.0 code, as well as `ScheduleDate` and `Activity`. The Model component of the application has been extended to include the two new classes.
 
-`DateUtil` has also been created to make sure that users enter a valid data which follows DD-MM-YYYY format. The code snippet below shows how `DateUtil` checks the validity of an input date.
+`DateUtil` has also been created to make sure that users enter a valid data which follows DD-MM-YYYY format. The code snippet in _Figure 4.9.3_ below shows how `DateUtil` checks the validity of an input date.
 
 [source, java]
 ----
@@ -1245,51 +1248,50 @@ private static boolean isActualDate (String date) {
 }
 ----
 
-The activity scheduled will be displayed together with the other components of a `Person` in the `PersonCard` as shown in _Figure 4.9.3_ below.
+_Figure 4.9.3 : Code section from DateUtil.java_
+
+The activity scheduled will be displayed together with the other components of a contact as shown in _Figure 4.9.4_ below.
 
 image::ScheduleCommandSingleScreenShot.png[width="400"]
 
-_Figure 4.9.3: UI display of a successful `ScheduleCommand` execution_
+_Figure 4.9.4 : UI display of a successful `ScheduleCommand` execution_
 
 ==== Design Considerations
 
-**Aspect:** Valid date format +
-**Alternative 1 (current choice)**: DD-MM-YYYY is the only valid date format +
-**Pros:** It is now possible to arrange the schedules based on which date comes first. +
-**Cons:** Users have lesser flexibility in inputting dates. +
-**Alternative 2:** Allowing users to key in dates in DD-MM format in addition to DD-MM-YYYY format  +
-**Pros:** This gives users a greater flexibility when keying in dates.  +
-**Cons:** This creates ambiguity when arranging the schedules based on dates.
-
----
-
 **Aspect:** Creation of master schedule list +
-**Alternative 1 (current choice)**: Creation of a master schedule list that stores all the unique activities scheduled +
-**Pros:** It is possible to display the unique activities scheduled. +
-**Cons:** Master schedule list has to be synchronised with all the schedules attached to persons every time a schedule is added. +
-**Alternative 2:** Absence of master schedule list  +
+**Alternative 1 (current choice)**: A master schedule list is created to store all the unique activities scheduled. +
+**Pros:** It is possible to utilise the master schedule list to display all the unique schedules that the user has scheduled. +
+**Cons:** The master schedule list has to be synchronised with all the schedules attached to all persons in the contact list every time a new schedule is added. +
+**Alternative 2:** A master schedule list is not created.  +
 **Pros:** It is easier to implement.  +
-**Cons:** Users can only search for an activity scheduled by searching the person they have scheduled the activity with.
-
----
-
-Both current choices above facilitate the creation of link:#viewing-of-user-s-agenda-since-v1-4[My Agenda] panel.
-
-Initially, the application can take in both DD-MM and DD-MM-YYYY date formats. After further considerations, DD-MM format is removed and is no longer accepted by the application owing to 2 reasons:
-
-* DD-MM date format introduces ambiguity when schedules need to be arranged according to dates.
-* It is impossible for users not to know the exact year in which an activity is scheduled.
+**Cons:** The user can only search for an activity scheduled by searching for the person he has scheduled the activity with.
 
 [NOTE]
-Since v1.4, schedules in both the `AgendaPanel` and the `PersonCard` are arranged based on dates.
+This choice facilitates the creation of the link:#viewing-of-user-s-agenda-since-v1-4[agenda panel].
+
+---
+
+**Aspect:** The choice of valid date format +
+**Alternative 1 (current choice)**: DD-MM-YYYY is the only valid date format. +
+**Pros:** It is possible to determine which date comes first and which comes later. +
+**Cons:** The user has lesser flexibility in inputting dates. +
+**Alternative 2:** Both DD-MM and DD-MM-YYYY are acceptable date formats.  +
+**Pros:** This gives the user more flexibility when inputting dates.  +
+**Cons:** This creates ambiguity when arranging the schedules based on dates.
+
+[NOTE]
+Since v1.4, schedules in both the agenda panel and the person cards are arranged based on dates.
+
 //end::scheduleSingle[]
 
 //tag::scheduleMultiple[]
 === Scheduling an Activity with Multiple Persons [Since v1.4]
 
-This enhancement builds upon the schedule feature developed in v1.3, which allows users to schedule an activity with one person. Users can now input multiple indices to schedule an activity with multiple persons at the same time.
+This enhancement builds upon the schedule feature developed in v1.3, which allows the user to schedule an activity with only one person. With this enhancement, the user can now input multiple indices to schedule an activity with multiple persons at the same time.
 
-The implementation of `Comparable` interface for `Schedule` allows the activities scheduled with a person to be displayed from the smallest date value. The code extract below shows how the `compareTo()` function is being defined in the `Schedule`.
+The schedule attached to a contact is stored inside a `List`, and is sorted based on the `ScheduleDate` every time a new `Schedule` is added.
+
+The implementation of `Comparable` interface for `Schedule` allows the activities scheduled with a person to be displayed from the earliest date to the latest date. The code section in _Figure 4.10.1_ below shows how the `compareTo()` function is being defined in the `Schedule` class.
 
 [source, java]
 ----
@@ -1319,29 +1321,33 @@ public class Schedule implements Comparable<Schedule> {
 }
 ----
 
-The outcome of schedule multiple command execution is shown in _Figure 4.10.1_ below.
+_Figure 4.10.1 : Code section from Schedule.java_
+
+The outcome of schedule multiple command execution is shown in _Figure 4.10.2_ below.
 
 image::ScheduleCommandMultipleScreenShot.png[width="400"]
 
-_Figure 4.10.1: UI Display of a Successful Enhanced `ScheduleCommand` Execution_
+_Figure 4.10.2 : UI display of a successful enhanced `ScheduleCommand` execution_
 
 ==== Design Considerations
 
-**Aspect:** Data structure to support multiple `Index` +
-**Alternative 1 (current choice)**: Use Set to store indices input +
-**Pros:** The application becomes smart enough to eliminate duplicate indices input and speed up the execution of `ScheduleCommand` +
-**Alternative 2:** Use ArrayList to store indices input  +
-**Cons:** Users receive an error message if they input non-unique indices.
+**Aspect:** Data structure to support multiple indices input +
+**Alternative 1 (current choice)**: `Set` is used to store indices input. +
+**Pros:** The application becomes smart enough to eliminate duplicate indices input and speed up the `ScheduleCommand` execution. +
+**Cons:** There is a need to override the `hashCode()` and `equals()` methods in the `Index` for the `Set` implementation to work correctly. +
+**Alternative 2:** `ArrayList` is used to store indices input. +
+**Pros:** `List` implementation allows the indices input to be stored in order; and hence, easier to manipulate if required.  +
+**Cons:** The user receives an error message if he inputs non-unique indices.
 
 ---
 
 **Aspect:** Data structure to support scheduling multiple activities with a contact +
-**Alternative 1 (current choice)**: Use ArrayList to store multiple schedules +
+**Alternative 1 (current choice)**: `ArrayList` is used to store multiple schedules. +
 **Pros:** This makes it possible to arrange the schedules based on dates. +
 **Cons:** There is a need to check for duplicate schedules so that all the schedules attached to a person are unique. +
-**Alternative 2:** Use Set to store multiple schedules  +
-**Pros:** There is no need to specially check for duplicate schedules.  +
-**Cons:** The arrangement of the schedules will appear at random.
+**Alternative 2:** `Set` is used to store multiple schedules.  +
+**Pros:** There is no need to specially check for duplicate schedules. +
+**Cons:** `Set` does not provide any ordering guarantees for the schedules.
 //end::scheduleMultiple[]
 
 //tag::find[]
@@ -1419,8 +1425,7 @@ _Figure 4.11.6f : Find by tag [t/TAG]_
 image::FindCommand_Country.PNG[width="400"]
 _Figure 4.11.6g : Find by country [c/COUNTRY]_
 
-==== Design Considerations for `FindCommand`
-
+==== Design Considerations
 
 **Aspect:** Enhancement of `FindCommand` +
 **Alternative 1 (current choice)**: Searching for contact based on the `prefix` of search field given. +
@@ -1506,16 +1511,16 @@ _Figure 4.12.4: UI display for user's agenda_
 //tag::welcomeScreen[]
 === Welcome Screen Display [Since v1.5]
 
-If enabled, the `WelcomeScreen` will be loaded before the `MainWindow`. The information regarding the enabling or disabling of `WelcomeScreen` is stored inside `preferences.json` file, which is accessed and modified by `UserPrefs` class.
+If enabled, the welcome screen will be launched before the main window is displayed. The information regarding the enabling or disabling of welcome screen is stored inside `preferences.json` file, which is accessed and modified by `UserPrefs` class.
 
-`UserPrefs` contains boolean variable `isWelcomeScreenEnabled`, which is initially set to false. This means that the `WelcomeScreen` is disabled by default.
+`UserPrefs` contains boolean variable `isWelcomeScreenEnabled`, which is initially set to false. This means that the welcome screen is disabled by default.
 
-To facilitate the enabling and disabling of `WelcomeScreen`, `WelcomeCommand`, which takes in `EnablingKeyword` argument, is created.
+To facilitate the enabling and disabling of welcome screen, `WelcomeCommand`, which takes in `EnablingKeyword` argument, is created.
 
 [NOTE]
-`EnablingKeyword` allows two possible values: `enable` and `disable`.
+`EnablingKeyword` guarantees two possible values: `enable` and `disable`.
 
-Depending on the value of `EnablingKeyword`, `WelcomeCommand` will call one of the following two methods in `UserPrefs` to change the `isWelcomeScreenEnabled` value in `preferences.json`.
+Depending on the value of `EnablingKeyword`, `WelcomeCommand` will call one of the following two methods in `UserPrefs`, as shown by the code section in _Figure 4.13.1_, to change the `isWelcomeScreenEnabled` value in `preferences.json`.
 
 [source, java]
 ----
@@ -1534,7 +1539,9 @@ public class UserPrefs {
 }
 ----
 
-Every time the application is run, `UiManager` will call `getWelcomeScreenEnabledInfo()` in `UserPrefs` to check whether the `WelcomeScreen` is enabled. The code snippet below shows how this is implemented.
+_Figure 4.13.1 : Code section from UserPrefs.java_
+
+Every time the application is run, `UiManager` will call `getWelcomeScreenEnabledInfo()` in `UserPrefs` to check whether the welcome screen is enabled. The code section in _Figure 4.13.2_ below shows how this is implemented.
 
 [source, java]
 ----
@@ -1556,36 +1563,36 @@ public void start(Stage primaryStage) {
 }
 ----
 
-_Figure 4.13.1_ below shows the UI display of the `WelcomeScreen`. The welcome screen displays the ConTag logo and 1 out of the default 15 productivity quotes at random.
+_Figure 4.13.2 : Code section from UiManager.java_
+
+_Figure 4.13.3_ below shows the UI display of the as implemented in the `WelcomeScreen`. The welcome screen displays the ConTag logo and 1 out of the default 15 productivity quotes at random.
 
 image::WelcomeScreen.png[width="400"]
 
-_Figure 4.13.1: The welcome screen_
+_Figure 4.13.3 : The welcome screen_
 
-When the `Continue` button is pressed, `WelcomeScreen` will pass the `MainWindow` scene into the `primaryStage`, replacing `WelcomScreen` with `MainWindow`.
+When the "Continue" button is pressed, `WelcomeScreen` will pass the `MainWindow` scene into the `primaryStage`, replacing `WelcomeScreen` with `MainWindow`.
 
 ==== Design Considerations
 
-**Aspect:** Nature of `WelcomeScreen` +
-**Alternative 1 (current choice)**: Users' action is required to close the welcome screen. +
-**Pros:** Users will have enough time to read the text on the welcome screen. +
+**Aspect:** Nature of the welcome screen +
+**Alternative 1 (current choice)**: The users' action is required to close the welcome screen. +
+**Pros:** This enables the developer to customise the text on the welcome screen as required, such as tips or important notice. This is because the user will have enough time to read the text on the welcome screen. +
 **Cons:** A button is required to handle the passing of scenes into the `primaryStage`. +
 **Alternative 2:** Welcome screen closes by itself after a fixed period of time.  +
-**Pros:** It does not require additional button; and hence is more straightforward to implement.  +
-**Cons:** Welcome screen can only display logo and minimum text as it is not guaranteed that users can read the text within the period the welcome screen is displayed.
+**Pros:** It does not require additional button; and hence, is more straightforward to implement.  +
+**Cons:** Welcome screen can only display logo and minimum text as it is not guaranteed that the user can read the text within the period the welcome screen is displayed.
 
 ---
 
-**Aspect:** Disabling welcome screen +
-**Alternative 1 (current choice)**: Users have the choice to enable or disable welcome screen. +
-**Pros:** Users who want the welcome screen to be displayed can save time by skipping the welcome screen.
+**Aspect:** Disabling of the welcome screen +
+**Alternative 1 (current choice)**: The user has the choice to enable or disable the welcome screen. +
+**Pros:** Some users who do not want the welcome screen to be displayed can save time by skipping the welcome screen. +
 **Cons:** A new command must be created to cater to this purpose. +
 **Alternative 2:** Welcome screen is always displayed when the application is run.  +
 **Pros:** This does not require additional command to be implemented.  +
-**Cons:** Users who think that welcome screen is unnecessary cannot skip the welcome screen.
+**Cons:** All users are forced to wait for the the welcome screen to launch before the main window. Some users may not be contented.
 //end::welcomeScreen[]
-
-
 
 // tag::reminder[]
 === Pop-up Reminder Window [Since v1.5]
@@ -1667,7 +1674,7 @@ public class Schedule {
 _Figure 4.14.3: Code section in Schedule.java_
 
 
-==== Design Considerations for Pop-up Reminder Window
+==== Design Considerations
 
 **Aspect:** Content of reminder window +
 **Alternative 1 (current choice)**: Show list view of schedule cards like the user agenda feature +
@@ -1735,14 +1742,13 @@ image::EmailCommand.PNG[width="800"]
 _Figure 4.15.5: Output of `EmailCommand.java` execution_
 
 
-==== Design Considerations for `EmailCommand`
-
+==== Design Considerations
 
 **Aspect:** Data structure to support `EmailCommand` +
 **Alternative 1 (current choice)**: Use Set for storing of user's input of indices.  +
 **Pros:** Prevent duplication of indices to speed up execution of `EmailCommand`. +
-**Cons:** Set provides random access.Two objects might be considred equal if they have the same hascode even though they are different.  +
-**Alternative 2:** Using ArrayList +
+**Cons:** `Set` provides random access.Two objects might be considred equal if they have the same hashcode even though they are different.  +
+**Alternative 2:** Using `ArrayList` for storing of user's input of indices. +
 **Pros:** List implementations are ordered as List stores element in the order they were added. +
 **Cons:** Unable to detect duplicate indicies. +
 
@@ -1808,7 +1814,7 @@ _Figure 4.16.3 : Quick-start help on application launch_
 image::quick_help demo 1.PNG[width="400"]
 _Figure 4.16.4 : Quick-start help through entering help command_
 
-==== Design Considerations for `Quick-Start Help`
+==== Design Considerations
 
 As there is only about 3 lines' worth of space in the result display box, we needed to prioritize the most important
 information to the user. Since a Command Line Interface (CLI) may have a steeper learning curve stemming from users being
@@ -1822,11 +1828,11 @@ in a long straight line in either direction.
 
 *Alternatives considered*
 
-**Aspect:** Where to display quick-start help information+
-**Alternative 1 (current choice):** Inside result display box +
+**Aspect:** Where to display quick-start help information +
+**Alternative 1 (current choice):** Inside result display box. +
 **Pros:** Space-saving and strategically placed in easy-to-view area. +
 **Cons:** The help info is removed after user's first command entered. +
-**Alternative 2:** In a new box or central main window area +
+**Alternative 2:** In a new box or central main window area. +
 **Pros:** Information can be displayed for a longer time as needed. +
 **Cons:** Less convenient to look at, takes up more precious space and may not be compatible with lower resolution displays.
 
@@ -1906,7 +1912,7 @@ the message shown in Figure 4.17.4 will be displayed instead.
 image::backup demo 2.PNG[width="600"]
 _Figure 4.17.4 : Copy from multiple contacts_
 
-==== Design considerations for `Backup`
+==== Design considerations
 
 The Backup function makes it easier for the user to secure their valuable information, with no room for error.
 As such, the implementation forbids overwriting another addressbook.xml file when writing a new one. Users must
@@ -1934,7 +1940,7 @@ across all devices.
 **Alternative 1 (current choice):** In a local directory on user's PC. +
 **Pros:** Easy to implement, easy for the user to understand. +
 **Cons:** The address book may still be lost in the event of local catastrophic failure, such as a house fire or power surge. +
-**Alternative 2:** On a cloud service +
+**Alternative 2:** On a cloud service. +
 **Pros:** Information is safe as long as user has credentials to their cloud accounts. +
 **Cons:** Not all users have cloud service accounts, or know how to operate one. More difficult to implement.
 

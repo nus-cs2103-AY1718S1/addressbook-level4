@@ -26,7 +26,7 @@ include::../UserGuide.adoc[tag=copy]
 ---
 
 Multiple emails are copied rather than other fields as it is the most used mode of communication in a personal computer (PC),
-which is where this application resides. We expect this feature to be used for people who do not use their PC's native Mail app feature,
+which is where this application resides. We expect this feature to be used by people who do not use their PC's native Mail app feature,
 in which case the Email command cannot be used. Those who want to share their contacts' email details with others can also
 save time with this command.
 
@@ -36,7 +36,7 @@ an urgent need to be copied as the Locate command in our app already copies the 
 As such, until user feedback proves otherwise, copying email addresses is the main priority for this feature.
 
 In terms of mode of input, current multiple email copy works with one or more indices as the user can already filter for a small list of people
-that may be of interest, cutting the amount of scrolling significantly. In addition, as we assume that most users
+that may be of interest, cutting the amount of scrolling significantly. In addition, we assume that most users
 using the application would not have to send email to a massive number of recipients at a time, which may cause our implementation
 to become prohibitively inefficient.
 
@@ -194,3 +194,4 @@ include::../DeveloperGuide.adoc[tag=quick_start]
 
 * Creating JUnit tests to ensure application is in working order during development.
 * Revamping User Guide e.g. phrasing, formatting and feature grouping.
+* Continuous integration of above-stated features with other ongoing developments by other team members.
