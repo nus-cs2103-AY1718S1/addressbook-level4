@@ -530,6 +530,8 @@ Certain properties of the application can be controlled (e.g App name, logging l
 // tag::rmtag[]
 === RemoveTag Function
 
+This section details the implementation of the Rubrika's `RemoveTag` feature.
+
 The remove tag function is done by calling a `removetag` function which resides in the `ModelManager` class. Currently it supports removing the tag from every individual of the addressbook as well as removing a specific tag from a specified person shown on the list.
 
 The following is the sequence diagram of how the RemoveTagCommands removes a tag from a specified person in the list after a person has entered a `removetag` command.
@@ -537,9 +539,9 @@ The following is the sequence diagram of how the RemoveTagCommands removes a tag
 image::RemoveOneTagSequenceDiagram.png[width="800"]
 _Figure 4.5.1 : Sequence Diagram of removeTag function_
 
-If the user inputs `all` in the `INDEX` field, instead of removing a tag based on the list displayed in `Model`, the tag is removed from everyone in the `internalList` of `AddressBook`. The `TAG` is then deleted from the `UniqueTagList` in `AddressBook`. +
+If the user inputs `all` in the `INDEX` field, instead of removing a tag based on the list displayed in `Model`, the tag is removed from everyone in the `UniquePersonList` of `AddressBook`. The `TAG` is then deleted from the `UniqueTagList` in `AddressBook`. +
 
-If the user inputs an `Integer` in the `INDEX` field, the tag is removed from the person as well as the `UniqueTagList` in the `AddressBook`. Thereafter, we re-sync the `Tag` Objects in `UniqueTagList` with all the `Tag` contained within the `Person` Object in the `internalList`. +
+If the user inputs an `Integer` in the `INDEX` field, the tag is removed from the person as well as the `UniqueTagList` in the `AddressBook`. Thereafter, we re-sync the `Tag` Objects in `UniqueTagList` with all the `Tag` contained within the `Person` Object in the `UniquePersonList`. +
 
 [NOTE]
 If more than one tag is given or if `INDEX` out of the range of the shown list is given, `ParseException` will be thrown before execution of the function.
@@ -571,6 +573,8 @@ If more than one tag is given or if `INDEX` out of the range of the shown list i
 
 // tag::sort[]
 === Sort Function
+
+This section details the implementation of the Rubrika's `Sort` feature.
 
 Rubrika's sort function allows user to display their list of contacts in a specified order.
 
@@ -636,18 +640,20 @@ Sort Command is an undoable Command.
 **Aspect:** Whether to sort the intern list of the addressBook or just the filtered list. +
 
 **Alternative 1 (current):** Sorts the filteredList found in `ModelManager`. +
-**Pros:** A more defensive approach as internalList in `AddressBook` is not modified in anyway. +
+**Pros:** A more defensive approach as `UniquePersonList` in `AddressBook` is not modified in anyway. +
 **Pros:** User may have already have a preferred way of listing users and may only want to sort once for convenience. +
 **Cons:** More difficult to implement, and requires the `SortedList` object. +
 **Cons:** Other methods within `ModelManager` must be modified since `SortedList` is the list being displayed, not FilteredList. +
 
-**Alternative 2:** Sorts the internalList found in `AddressBook`. +
-**Pros:** Easier to implement since `internalList` is implemented using `List`. +
+**Alternative 2:** Sorts the `UniquePersonList` found in `AddressBook`. +
+**Pros:** Easier to implement since `UniquePersonList` is implemented using `List`. +
 **Cons:** A sort will rearrange contacts permanently, and the previous arrangement will be lost permanently.+
 // end::sort[]
 
 // tag::importexport[]
 === Import function
+
+This section details the implementation of the Rubrika's `Import` feature.
 
 The `import` function supports importing of vCard files (.vcf) and XML files (.xml).
 
@@ -688,12 +694,17 @@ Also, for importing of .vcf files, due to using an inbuilt parser, only vCards c
 
 === Export Function
 
-The export function is done by the `ExportCommand` class, and currently supports vCard files (.vcf) and XML files (.xml).
+This section details the implementation of the Rubrika's `Export` feature.
+
+The export function is done by the `ExportCommand` class, and currently supports exporting to vCard files (.vcf) and XML files (.xml).
+
+[NOTE]
+Currently, the export function only ensures that the vCard file created is supported by Rubrika application.
+
+After input validation in the `ExportCommandParser` class, the file path is passed to the `ExportCommand` class.
 
 [NOTE]
 If the file format is not specified by the user during input, ParseException will be thrown before execution of the Command.
-
-After input validation in the `ExportCommandParser` class, the file path is passed to the `ExportCommand` class.
 
 In the `ExportCommand` class, depending on the file type requested by the user, a different method will be used to create the export file.
 
@@ -717,6 +728,18 @@ If the file defined by the user uses a vCard (.vcf) file extension, then the add
 **Alternative 2**: Include .csv file types +
 **Pros**: More file types to choose from for the users. +
 **Cons**: Relatively harder to create a csv export file.
+
+---
+
+**Aspect**: Interoperability of vCards. +
+
+**Alternative 1 (current choice)**: vCards created by Rubrika are only expected to be readable by Rubrika.
+**Pros:** Relatively easier to implement, as long as the `Import` function is able to take in the fields created by the `Export` function. +
+**Cons:** Export file might not work on other applications.
+
+**Alternative 2**: Allow vCard exported to be used universally. +
+**Pros:** More usability of vCard export. +
+**Cons:** Extremely difficult to implement as vCards have many variation of formats across different application.
 
 // end::importexport[]
 

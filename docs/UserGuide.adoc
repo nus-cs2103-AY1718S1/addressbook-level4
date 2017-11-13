@@ -237,8 +237,8 @@ The `TAG` that you have given should now be removed from the addressbook or from
 
 Do take note that:
 ****
-* The tag must exist in any person.
-* `INDEX` must be a positive integer
+* The tag *must exist* in any person.
+* `INDEX` *must be a positive integer*. e.g 1,2,3.
 * `INDEX` of the person refers to his/her `INDEX` in the list displayed.
 * `removetag` is an undoable command, and you can restore your deleted tags.
 ****
@@ -266,7 +266,9 @@ To help keep your contact list in an organise manner, you can choose to rearrang
 
 Format: `sort FIELD ORDER` +
 
-Currently, Rubrika allows you to list your clients by your client's name, email or phone in ascending or descending order.
+Currently, Rubrika allows you to list your clients by `FIELD` (*name, email or phone*) following an `ORDER` (*[asc]* ascending, *[dsc]* descending). +
+
+To re-arrange your contact list follow these steps.
 
 . Type `sort` followed by the `FIELD` followed by the `ORDER` that you wish to list your contacts. An example is shown below.
 +
@@ -282,8 +284,8 @@ Your list of contacts should now be displayed in the specified order based on yo
 
 Do take note that:
 ****
-* The available `FIELD` are name, email or phone.
-* The available `ORDER` are be asc (ascending) or dsc (descending)
+* The available `FIELD` are *name, email or phone*.
+* The available `ORDER` are be *asc* (ascending) or *dsc* (descending)
 * Sort is not an undoable command.
 ****
 
@@ -368,7 +370,7 @@ Do take note that:
 ****
 
 [TIP]
-You may choose to skip the file selection process if you place the export file directly in the same folder as your Rubrika application. +
+You may choose to skip the file selection process if you place the export file *directly in the same folder* as your Rubrika application. +
 You can do so by typing `import FILENAME`. +
 
 Examples:
