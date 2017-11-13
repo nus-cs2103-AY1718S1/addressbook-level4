@@ -3,16 +3,17 @@ package seedu.address.model.property;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 import org.junit.Test;
 
+import seedu.address.testutil.EventBuilder;
 import seedu.address.testutil.PersonBuilder;
 
 public class NameContainsKeywordsPredicateTest {
-
     @Test
     public void equals() {
         List<String> firstPredicateKeywordList = Collections.singletonList("first");
@@ -39,37 +40,61 @@ public class NameContainsKeywordsPredicateTest {
     }
 
     @Test
-    public void test_nameContainsKeywords_returnsTrue() {
+    public void testForPerson_nameContainsKeywords_returnsTrue() {
         // One keyword
-        NameContainsKeywordsPredicate predicate = new NameContainsKeywordsPredicate(Collections.singletonList("Alice"));
+        NameContainsKeywordsPredicate predicate = generatePredicate("Alice");
         assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
 
         // Multiple keywords
-        predicate = new NameContainsKeywordsPredicate(Arrays.asList("Alice", "Bob"));
+        predicate = generatePredicate("Alice", "Bob");
         assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
 
         // Only one matching keyword
-        predicate = new NameContainsKeywordsPredicate(Arrays.asList("Bob", "Carol"));
+        predicate = generatePredicate("Bob", "Carol");
         assertTrue(predicate.test(new PersonBuilder().withName("Alice Carol").build()));
 
         // Mixed-case keywords
-        predicate = new NameContainsKeywordsPredicate(Arrays.asList("aLIce", "bOB"));
+        predicate = generatePredicate("aLIce", "bOB");
         assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
     }
 
     @Test
-    public void test_nameDoesNotContainKeywords_returnsFalse() {
+    public void testForPerson_nameDoesNotContainKeywords_returnsFalse() {
         // Zero keywords
-        NameContainsKeywordsPredicate predicate = new NameContainsKeywordsPredicate(Collections.emptyList());
+        NameContainsKeywordsPredicate predicate = generatePredicate();
         assertFalse(predicate.test(new PersonBuilder().withName("Alice").build()));
 
         // Non-matching keyword
-        predicate = new NameContainsKeywordsPredicate(Arrays.asList("Carol"));
+        predicate = generatePredicate("Carol");
         assertFalse(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
 
         // Keywords match phone, email and address, but does not match name
-        predicate = new NameContainsKeywordsPredicate(Arrays.asList("12345", "alice@email.com", "Main", "Street"));
+        predicate = generatePredicate("12345", "alice@email.com", "Main", "Street");
         assertFalse(predicate.test(new PersonBuilder().withName("Alice").withPhone("12345")
                 .withEmail("alice@email.com").withAddress("Main Street").build()));
+    }
+
+    //@@author yunpengn
+    @Test
+    public void testForEvent_nameContainsKeywords_returnsTrue() {
+        // One keyword
+        NameContainsKeywordsPredicate predicate = generatePredicate("CS2103T");
+        assertTrue(predicate.test(new EventBuilder().withName("CS2103T Tutorial").build()));
+
+        // Multiple keywords
+        predicate = generatePredicate("CS2103T", "Tutorial");
+        assertTrue(predicate.test(new EventBuilder().withName("CS2103T Tutorial").build()));
+
+        // Only one matching keyword
+        predicate = generatePredicate("CS2103T", "Examination");
+        assertTrue(predicate.test(new EventBuilder().withName("CS2103T Tutorial").build()));
+
+        // Mixed-case keywords
+        predicate = generatePredicate("cs2103T", "tutorial");
+        assertTrue(predicate.test(new EventBuilder().withName("CS2103T Tutorial").build()));
+    }
+
+    private NameContainsKeywordsPredicate generatePredicate(String... names) {
+        return new NameContainsKeywordsPredicate(Arrays.asList(names));
     }
 }

@@ -921,6 +921,32 @@ public class PersonTest {
     }
 }
 ```
+###### \java\seedu\address\model\property\NameContainsKeywordsPredicateTest.java
+``` java
+    @Test
+    public void testForEvent_nameContainsKeywords_returnsTrue() {
+        // One keyword
+        NameContainsKeywordsPredicate predicate = generatePredicate("CS2103T");
+        assertTrue(predicate.test(new EventBuilder().withName("CS2103T Tutorial").build()));
+
+        // Multiple keywords
+        predicate = generatePredicate("CS2103T", "Tutorial");
+        assertTrue(predicate.test(new EventBuilder().withName("CS2103T Tutorial").build()));
+
+        // Only one matching keyword
+        predicate = generatePredicate("CS2103T", "Examination");
+        assertTrue(predicate.test(new EventBuilder().withName("CS2103T Tutorial").build()));
+
+        // Mixed-case keywords
+        predicate = generatePredicate("cs2103T", "tutorial");
+        assertTrue(predicate.test(new EventBuilder().withName("CS2103T Tutorial").build()));
+    }
+
+    private NameContainsKeywordsPredicate generatePredicate(String... names) {
+        return new NameContainsKeywordsPredicate(Arrays.asList(names));
+    }
+}
+```
 ###### \java\seedu\address\model\property\PropertyManagerTest.java
 ``` java
 public class PropertyManagerTest {
