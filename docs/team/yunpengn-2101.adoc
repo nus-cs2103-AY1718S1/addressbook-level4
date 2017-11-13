@@ -51,6 +51,8 @@ or +
 `cfg --add-property s/SHORT_NAME f/FULL_NAME [m/MESSAGE r/REGULAR_EXPRESSION]`
 
 ****
+_(As shown in Figure 1)_
+
 . You need to think of a short name for this new property (corresponding to `s/SHORT_NAME`).
 . You should make sure this short name is unique, meaning that there is no existing property with the same short name.
 . You need to define a full name for this new property (corresponding to `f/FULL_NAME`).
@@ -60,31 +62,30 @@ or +
 format (corresponding to `m/MESSAGE`).
 ****
 
+image::AddNewPropertyCommandBox.png[width="700"]
+_Figure 1: Add a new property "birthday"_
+
 Example:
 
 * `config --add-property s/ag f/age`
 * `config --add-property s/b f/birthday m/Birthday should be in the format of DD/MM/YYYY r/[^\s].*` +
 After adding a new property _birthday_, you can use it when adding a new contact. +
 `add n/Linda p/85438796 e/linda@example.com a/5 Marina Bay Road b/Jan 29, 1987 t/friends` +
-Now, Linda's birthday is stored as Jan 29th, 1987.
+Now, Linda's birthday is stored as Jan 29th, 1987 (as shown in Figure 2).
 
 [NOTE]
 ====
 * You need to use the short name as the prefix in `add`/`addE` and `edit`/`editE` commands.
-* Full name is used to display the name of each property on the right panel (to show details of the selected person, use `select` command).
-* Constraint message is the string that will be shown in result display box when the input value for this property is invalid.
-* Regular expression is used to check whether the input value for this property is valid.
+* You will see the full name when viewing contact's details on the right panel (as shown in Figure 2).
+* You will see the constraint message when the input value for this property is not in the required format.
 ====
+
+image::PersonDetailsWithCustomizeProperty.png[width="550"]
+_Figure 2: Linda with her birthday on Jan 29th, 1987_
 
 ==== Implementation
 
----
-
-=== Generic property
-
-We are using a generic `Property` class to support **arbitrary field** feature.
-
-==== Inspiration
+===== Inspiration
 
 Users should not be limited to the provided four fields, i.e. `Name`, `Email`, `Phone`, `Address` (we are talking about
 the contact component here, of course one more `DateTime` for event component). They should have the freedom to enter all
@@ -97,18 +98,18 @@ a major drawback if the data are not stored (and thus presented to users) in a w
 
 Learning from many modern database implementations, we should think of the data as two tables: one for *contacts* and the
 other one for *events*. Each table is composed of many rows and many columns. A single contact/event is one row, while
-all their different properties/fields are the columns (as can be seen from Figure 4.3.1.1 and 4.3.1.2).
+all their different properties/fields are the columns (as shown in Figure 3 and 4).
 
 image::phpmyadminTableView.png[width="700"]
-_Figure 4.3.1.1 : Data Table View of phpMyAdmin (a MySQL visualization tool)_
+_Figure 3 : Data Table View of phpMyAdmin (a MySQL visualization tool)_
 
 image::phpmyadminAddColumn.png[width="700"]
-_Figure 4.3.1.2 : Add New Column in phpMyAdmin_
+_Figure 4 : Add New Column in phpMyAdmin_
 
-==== Design Consideration
+===== Design Consideration
 
 **Aspect:** Where to store the "_metadata_" of different properties (short name, full name, regular expression, etc.) +
-**Alternative 1 (current choice):** Create a new class `PropertyManager` in Figure 4.3.2.1 +
+**Alternative 1 (current choice):** Create a new class `PropertyManager` in Figure 5 +
 **Pros:** Efficient (there is only one copy) and easy for future development since it is centralized. +
 **Cons:** Requires major change to `Model` component and `Storage` component. +
 **Alternative 2:** Store these data along with each specific property class, like `Name`, `Email` +
@@ -116,51 +117,65 @@ _Figure 4.3.1.2 : Add New Column in phpMyAdmin_
 **Cons:** Hard to implement `AddPropertyCommand`, and difficult to manage as the project grows larger.
 
 image::PropertyManagerClassDiagram.png[width="200"]
-_Figure 4.3.2.1 : Class Diagram for_ `PropertyManager`
+_Figure 5 : Class diagram for_ `PropertyManager`
 
-==== Implementation Outline
+===== Implementation Outline
 
 . Create a more general class to capture the common patterns among all columns (all different fields/properties): according to
 the basic OOP concept, a more generic class should become the superclass `Property`; then, other more specific classes
-(like `Name`, `Email`, `Phone`, etc.) can inherit from it. This design reduces a lot of code duplicates.
+(like `Name`, `Email`, `Phone`, etc.) can inherit from it. You can reduce code duplicates using this design.
 
-. Find a way to store the metadata of all columns (fields/properties): in popular SQL database implementation, they
-usually have a separate database reserved for the database server system itself. We must store similar information somewhere
-as well. Thus, we create a `PropertyManager` to store these "metadata", including short names, full names, constraint
+. Find a way to store the metadata of all columns (fields/properties): in popular SQL database implementation, database
+server usually have a separate database reserved for the system itself. You have to store similar information somewhere
+as well. Thus, you should create a `PropertyManager` to store these "metadata", including short names, full names, constraint
 messages and regular expressions used for input validation. They are all `static` variables because there should only be
-one copy of these "metadata". It will waste a lot of resources if we store these "metadata" with each instance of the
+one copy of these "metadata". You will waste a lot of resources if you store these "metadata" with each instance of the
 `Property` class.
 
-. _Pre-loaded properties_: Things like `Name`, `Email` and `Phone` are widely used. They should ship with the application
-and users do not need any additional setup steps to use them.
+. Deal with _Pre-loaded properties_: things like `Name`, `Email` and `Phone` are commonly used. Thus, you should ship
+them with the application so that users do not need any additional setup steps to use them.
 
-. Add new customize properties: advanced users should be provided with a command (`config --add-property`) to add their
-own customize fields (as shown in Figure 4.3.3.1). They should have the freedom to arbitrarily choose things like short
-name, full name, etc. They can easily add/edit these properties of each contact stored in the application, just like the
-_pre-loaded_ ones.
+. Add new customize properties: you should provide a command (`config --add-property`) to allow advance users to add their
+own customize fields (as shown in Figure 6). Thus, they should have the freedom to arbitrarily choose things like short
+name, full name, etc. They can easily add/edit these properties of each contact stored in the application as well, just
+like the _pre-loaded_ ones.
 
 image::PropertyManagerSequenceDiagram.png[width="800"]
-_Figure 4.3.3.1 : Sequence Diagram for Adding a Customize Property_
+_Figure 6 : Sequence diagram for adding a customize property_
 
 === Enhancement Added: Import NUSMods Timetable
 
+==== Justification
+
+This feature addresses a specific need of NUS students, since they are our target users.
+
+For university students, the lessons and exams reflected on their school timetable account for a large part of their
+schedule. When they are using *BoNUS*, it is very likely they want to put all these activities into the application as
+upcoming events. However, it becomes very tedious to do so manually.
+
+Most of the NUS students are currently using NUSMods as their school timetable builder. Their NUSMods timetable contains
+information about all their lessons and exams (as shown in Figure 7). Thus, it would be very convenient if users could
+directly import their NUSMods timetable into *BoNUS* in one step.
+
+image::NusmodsWebsite.png[width="750"]
+_Figure 7 : NUSMods Website Interface_
+
 ==== External behavior
 
----
+Do you want to get reminders for all your lessons and exams at NUS? Do you want to import your NUSMods timetable into *BoNUS*
+automatically? `import --nusmods` command can easily help you achieve this.
 
-_(Exclusive feature for NUS students)_
-
-The **BoNUS** team understands that https://nusmods.com/[NUSMods] has become an indispensable school timetable builder
-for almost all students at NUS. Thus, you are definitely allowed to import your timetable from NUSMods to the *BoNUS*
-application. +
 Format: `(i)import --nusmods YOUR_NUSMODS_URL`
 
 ****
-* The URL provided must be complete and should begin with `http(s)://nusmods.com/timetable/`.
-* Directly copy from the address bar of your browser. Do *NOT* use the short URL generated by the _Sharing Timetable_ feature
-provided by NUSMods.
-* Final examinations for all modules in your NUSMods timetable will be automatically added as events to the application.
+. You should directly copy the URL from the address bar of your browser, which should begin with `http(s)://nusmods.com/timetable/`.
+. You should refrain from using the short URL generated by the _Sharing Timetable_ feature in NUSMods.
+. You should see final examinations for all modules in your NUSMods timetable in the event listing interface (as shown
+in Figure 8).
 ****
+
+image::ImportNusmodsResult.png[width="400"]
+_Figure 8 : Result of importing NUSMods timetable_
 
 Example:
 
@@ -172,43 +187,9 @@ Example:
 * You may need to wait for a while as the application is retrieving information from NUSMods.
 ====
 
-==== Justification
-
----
-
-Most of the NUS students are currently using NUSMods as their school timetable builder. Also, the lessons and exams
-reflected on their NUSMods timetable account for a large part of their schedule. Thus, users definitely want to add all
-these activities into *BoNUS*. It would be much more convenient if they could import their school timetable to *BoNUS*
-directly rather than manually add upcoming events.
-
 ==== Implementation
 
----
-
-=== Import timetable from NUSMods
-
-We implement an  `ImportNusmodsCommand` to help users directly import their NUSMods timetable to *BoNUS* by simply copy-paste
-the URL.
-
-==== Inspiration
-
-As stated in <<UserGuide#, User Guide>>, *BoNUS* helps you _better(B) organize(o) your NUS life_. Thus, we want to make
-the application an integrated personal manager for NUS students. The main activities for most students are study-related and
-most NUS students are currently using https://nusmods.com/[NUSMods] to build their school timetable (as shown in Figure 4.7.1.1).
-
-image::NusmodsWebsite.png[width="750"]
-_Figure 4.7.1.1 : NUSMods Website Interface_
-
-Let's imagine some of our users want to use the event feature in *BoNUS*. They want to input final examinations for all
-the modules they are taking as upcoming events. It would be very inconvenient and tedious if they have to do this manually.
-Even worse, it is very likely they are already using NUSMods and thus are not willing to add these events again. They may
-end up not using the event feature at all.
-
-However, users may find it very useful if they can import their NUSMods timetable using a simple command. Eventually, they
-would choose *BoNUS* because they can manage both contacts and events in one application conveniently and the migration
-from NUSMods to *BoNUS* is not troublesome.
-
-==== Design Considerations
+===== Design Considerations
 
 **Aspect:** Relationship between `ImportXmlCommand` and `ImportNusmodsCommand` +
 **Alternative 1 (current choice):** Add a new abstract `ImportCommand` class and let both of them become its sub-commands
@@ -236,22 +217,22 @@ _(Similar strategy has been adopted in `ConfigCommand`)_
 browser is typically smaller than OS browser and NUSMods does not fully adopt link:#mainstream-os[responsive UI framework]
 and may not work well on a small browser window.
 
-==== Implementation Outline
+===== Implementation Outline
 
-===== `ImportCommand` abstract class
+====== `ImportCommand` abstract class
 
-Create an `ImportCommand` abstract class and let `ImportXmlCommand` and `ImportNusmodsCommand` inherit from it (as in
-Figure 4.7.3.1). It is also a good practice to use an enumeration `ImportType` because the possible types of the import
+You should create an `ImportCommand` abstract class and let `ImportXmlCommand` and `ImportNusmodsCommand` inherit from it (as in
+Figure 9). It is also a good practice to use an enumeration `ImportType` because the possible types of the import
 are within a fixed set of values. This leads to better modularity in `ImportCommandParser` as well.
 
 image::ImportNusmodsClassDiagram.png[width="600"]
-_Figure 4.7.3.1 : Class Diagram for Related Import Commands_ +
+_Figure 9 : Class diagram for related import commands_ +
 
 ===== Parsing of NUSMods Timetable URL
 
-Implement utility method to validate a given URL and parse the `GET` parameters. Although it is possible to utilize
-external library like https://hc.apache.org/[Apache HttpComponents], we decide to implement on our own because it is relative
-simple to do so and using external library comes with extra expenses (such as licence, etc).
+You need to implement utility method to validate a given URL and parse the `GET` parameters. Although it is possible to
+utilize external library like https://hc.apache.org/[Apache HttpComponents], it is better to implement on your own because
+it is relative simple to do so and using external library comes with extra expenses (such as licence, etc).
 
 [source,java]
 ----
@@ -274,10 +255,10 @@ public static Map<String, String> fetchUrlParameters(URL url) throws Unsupported
 
 ===== Fetch information from NUSMods API
 
-The URL parsed just now only contains the module codes and grouping for each module. In order to add upcoming events, we
-need more information such as module names, examination dates, etc. We decide to use API provided by NUSMods to fetch the
-information we need. NUSMods API is in JSON format, which would be very simple for us as we already use
-https://github.com/FasterXML/jackson[Jackson] library in our project.
+The URL parsed just now only contains the module codes and grouping for each module. In order to add upcoming events, you
+need more information such as module names, examination dates, etc. You can use API provided by NUSMods to fetch the
+information you need. NUSMods API is in JSON format, which would be very suitable to use as https://github.com/FasterXML/jackson[Jackson]
+library in this project.
 
 [source,java]
 ----
@@ -292,75 +273,78 @@ public static <T> T fromJsonUrl(URL url, Class<T> instanceClass) throws IOExcept
 
 ===== Add upcoming events
 
-After obtaining all the information we need, we can simply use the `addEvent` method in `ModelManager` class to add the
+After obtaining all the information you need, you can simply use the `addEvent` method in `ModelManager` class to add the
 final examinations as upcoming events into *BoNUS*. This should be a similar process as `AddEventCommand`.
 
 === Enhancement Proposed: Import From BoNUS-specified Script file
 
-==== External behavior
-
----
-
-==== From `.bo` format
-
-_(Coming in v2.0)_
-
-Imports the data in an external BoNUS script file (which ends with `.bo`), including data from all three components:
-*Contacts*, *Events* and *Calendar*, into the application. +
-Format: `(i)import --script FILEPATH`
-
-****
-* You must explicitly provide the `--script` parameter.
-* `FILEPATH` must end with an extension of `.bo`.
-* The file name in `FILEPATH` should not be empty, nor should it contain any prohibited characters `?!%*+:|"<>`.
-* If a relative path is provided, the data will be imported from a location relative to the *BoNUS* installation directory.
-* The provided script file should include one or multiple lines of valid *BoNUS* command(s). Each line can only have **at
-most one** command.
-* The *command* here refers to any command mentioned in this guide.
-****
-
-Examples:
-
-* For `Windows` users: +
-`import C:\Users\John Doe\Documents\bonus.bo`
-
-* For `macOS` and `Linux` users: +
-`import /Users/John Doe/Documents/bonus.bo`
-
-[NOTE]
-====
-For `Windows` users, use `\` as the name-separator in your `FILEPATH`. +
-For `macOS` and `Linux` users, use `/` instead.
-====
-
 ==== Justification
 
----
-
-This feature is meant for advanced users. To build an **epic** application, we need to essentially build an _ecosystem_ for
-this software. According to the _Unix_ philosophy, providing a shell scripting and command language is the minimum requirement
+This feature is meant for advanced users. To build an **epic** application, it is essential to build an _ecosystem_ for
+the software. According to the _Unix_ philosophy, providing a shell scripting and command language is the minimum requirement
 for a complete system.
 
 With the support for scripting file, advance users (or system administers if **BoNUS** is used as an enterprise application)
 can generate a scripting file and import it into **BoNUS**. Data management and frequent operations can be done easily in
 one step. Otherwise, they have to type one command each time in the GUI interface, which becomes a very tedious work.
 
-=== Enhancement Proposed: Export Data to Microsoft Excel^TM^ Worksheet
+A sample script file is shown as follows in Figure 10.
+
+image::ScriptFileSample.png[width="900"]
+_Figure 10 : A sample script file_
 
 ==== External behavior
 
----
+_(Coming in v2.0)_
 
-==== To Microsoft Excel^TM^ Worksheet
+Do you repeat doing the same set of commands again and again in *BoNUS*? Why not save them in a script file and import
+it whenever you need so that you do not need to type all the commands again?
+
+If so, `import --script` command is here for you.
+
+Format: `(i)import --script FILEPATH`
+
+****
+. You must explicitly provide the `--script` parameter.
+. You need to make sure `FILEPATH` ends with an extension of `.bo`.
+. You should put **at most one** command per line in the script file.
+****
+
+Examples:
+
+* For `Windows` users: +
+`import --script C:\Users\John Doe\Documents\bonus.bo`
+
+* For `macOS` and `Linux` users: +
+`import --script /Users/John Doe/Documents/bonus.bo`
+
+=== Enhancement Proposed: Export Data to Microsoft Excel^TM^ Worksheet
+
+==== Justification
+
+Currently, users can use `ExportCommand` to save data to a separate location as a backup. However, `.xml` files
+are not considered to be user-friendly, as you can see from Figure 11.
+
+image::SampleXmlFile.png[width="900"]
+_Figure 11 : A sample XML file_
+
+Thus, it would be useful to natively support exporting data to a format with better visuals. As stated before,
+data stored in **BoNUS** can be considered as _tables_. Naturally,  Microsoft Excel^TM^ would be an appropriate format
+to present data to users.
+
+==== External behavior
 
 _(Coming in v2.0)_
 
-Exports the current data in the application to an external file of Microsoft Excel^TM^ format. +
+Do you hate reading `XML` files? Are you looking for exporting your data in *BoNUS to a reader-friendly format?
+
+You can export the data in the application to an external file of Microsoft Excel^TM^ format now. +
 Format: `(p)export --excel FILEPATH`
 
 ****
-* The file name should follow similar rules to the section above.
-* However, it must end with an extension of `.xls` (`.xlsx` is currently not supported).
+. You must explicitly provide the `--excel` parameter.
+. You need to make sure `FILEPATH` ends with an extension of `.xls`.
+. You should have installer Microsoft Excel^TM^ on your computer to open the exported file.
 ****
 
 Examples:
@@ -370,23 +354,6 @@ Examples:
 
 * For `macOS` and `Linux` users: +
 `export --excel /Users/John Doe/Documents/bonus.xls`
-
-[NOTE]
-====
-For `Windows` users, use `\` as the name-separator in your `FILEPATH`. +
-For `macOS` and `Linux` users, use `/` instead.
-====
-
-==== Justification
-
----
-
-We already support `ExportCommand` so that users can save data to a separate location as a backup. However, `.xml` files
-are not considered to be user-friendly (except for programmers and geeks).
-
-Thus, it becomes essential for us to natively support exporting data to a format with better visuals. As stated before,
-data stored in **BoNUS** can be considered as _tables_. Naturally, it comes to my mind that Microsoft Excel^TM^ would
-be a perfect format to present data to users.
 
 === Other contributions
 
