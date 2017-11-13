@@ -123,7 +123,8 @@ public class CalendarView {
             ap.setLeftAnchor(txt, 5.0);
 
             //populating birthday of contacts to the calendar
-            String dateValue = getFormatDate(calendarDate.getDayOfMonth() + "", calendarDate.getMonthValue() + "");
+            String dateValue = correctDayFormat(calendarDate.getDayOfMonth() + "") + "/"
+                    + correctMonthFormat(calendarDate.getMonthValue() + "");
             String birthdayValue = Birthday.DEFAULT_BIRTHDAY;
             Boolean birthdayExist = false;
             for (ReadOnlyPerson person : contactList) {
@@ -187,14 +188,20 @@ public class CalendarView {
     /**
      * Returns the correct format of the day in String format
      */
-    private String getFormatDate(String day, String month) {
-
+    private String correctDayFormat(String day) {
         if (day.length() == 1) {
-            day = "0" + day;
+            return "0" + day;
         }
+        return day;
+    }
+
+    /**
+     * Returns the correct format of the month in String format
+     */
+    private String correctMonthFormat(String month) {
         if (month.length() == 1) {
-            month = "0" + month;
+            return "0" + month;
         }
-        return day + "/" + month;
+        return month;
     }
 }
