@@ -4,11 +4,13 @@ import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Avatar;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.Remark;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
@@ -21,6 +23,9 @@ public class PersonBuilder {
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
+    public static final String DEFAULT_FAVOURITE = "false";
+    public static final String DEFAULT_REMARK = "Eats, shoots, and leaves";
+    public static final String DEFAULT_AVATAR = "";
     public static final String DEFAULT_TAGS = "friends";
 
     private Person person;
@@ -31,8 +36,12 @@ public class PersonBuilder {
             Phone defaultPhone = new Phone(DEFAULT_PHONE);
             Email defaultEmail = new Email(DEFAULT_EMAIL);
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
+            Boolean defaultFavourite = new Boolean(DEFAULT_FAVOURITE);
+            Remark defaultRemark = new Remark(DEFAULT_REMARK);
+            Avatar defaultAvatar = new Avatar(DEFAULT_AVATAR);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
-            this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress, defaultTags);
+            this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress, defaultFavourite,
+                                     defaultRemark, defaultAvatar, defaultTags);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default person's values are invalid.");
         }
@@ -80,7 +89,31 @@ public class PersonBuilder {
         }
         return this;
     }
+    //@@author charlesgoh
+    /**
+     * Sets the {@code Phone} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withRemark(String remark) {
+        try {
+            this.person.setRemark(new Remark(remark));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("Remark is invalid");
+        }
+        return this;
+    }
 
+    /**
+     * Sets the {@code Phone} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withAvatar(String filepath) {
+        try {
+            this.person.setAvatar(new Avatar(filepath));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("Avatar is invalid");
+        }
+        return this;
+    }
+    //@@author
     /**
      * Sets the {@code Phone} of the {@code Person} that we are building.
      */
@@ -104,7 +137,15 @@ public class PersonBuilder {
         }
         return this;
     }
-
+    //@@author wangyiming1019
+    /**
+     * Sets the {@code Boolean} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withFavourite(String favourite) {
+        this.person.setFavourite(new Boolean(favourite));
+        return this;
+    }
+    //@@author
     public Person build() {
         return this.person;
     }

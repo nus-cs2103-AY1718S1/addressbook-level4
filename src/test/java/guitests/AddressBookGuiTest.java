@@ -64,7 +64,7 @@ public abstract class AddressBookGuiTest {
      * Return null to use the data in the file specified in {@link #getDataFileLocation()}
      */
     protected AddressBook getInitialData() {
-        return TypicalPersons.getTypicalAddressBook();
+        return TypicalPersons.getTypicalPersonsAddressBook();
     }
 
     protected CommandBoxHandle getCommandBox() {

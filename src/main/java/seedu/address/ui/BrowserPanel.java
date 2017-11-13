@@ -12,7 +12,9 @@ import javafx.scene.layout.Region;
 import javafx.scene.web.WebView;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.BrowserPanelLocateEvent;
+import seedu.address.commons.events.ui.BrowserPanelNavigateEvent;
+import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -23,8 +25,18 @@ public class BrowserPanel extends UiPart<Region> {
     public static final String DEFAULT_PAGE = "default.html";
     public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/search?safe=off&q=";
     public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
+    public static final String PRIVATE_NAME_CANNOT_SEARCH = "Cannot perform a search on that person. "
+            + "Their name is private.";
+    public static final String GOOGLE_MAPS_URL_PREFIX = "https://www.google.com.sg/maps/search/";
+    public static final String GOOGLE_MAPS_URL_SUFFIX  = "/";
+    public static final String PRIVATE_ADDRESS_CANNOT_SEARCH = "Cannot perform a search on that person's address. "
+            + "Their address is private.";
+    public static final String GOOGLE_MAPS_DIRECTIONS_PREFIX = "https://www.google.com.sg/maps/dir/?api=1";
+    public static final String GOOGLE_MAPS_DIRECTIONS_SUFFIX  = "/";
 
     private static final String FXML = "BrowserPanel.fxml";
+
+
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -41,11 +53,51 @@ public class BrowserPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
+    /**
+     * Loads a google search for a person's name if their name is not private
+     * Prints out a message on the result display otherwise
+     * @param person The person we want to search for
+     */
     private void loadPersonPage(ReadOnlyPerson person) {
-        loadPage(GOOGLE_SEARCH_URL_PREFIX + person.getName().fullName.replaceAll(" ", "+")
-                + GOOGLE_SEARCH_URL_SUFFIX);
+        if (person.getName().getIsPrivate()) {
+            raise(new NewResultAvailableEvent(PRIVATE_NAME_CANNOT_SEARCH));
+        } else {
+            loadPage(GOOGLE_SEARCH_URL_PREFIX + person.getName().value.replaceAll(" ", "+")
+                    + GOOGLE_SEARCH_URL_SUFFIX);
+        }
     }
 
+    //@@author jeffreygohkw
+    /**
+     * Loads a google search for a person's address if their address is not private
+     * Prints out a message on the result display otherwise
+     * @param person The person's address we want to search for
+     */
+    private void loadMapsPage(ReadOnlyPerson person) {
+        if (person.getAddress().getIsPrivate()) {
+            raise(new NewResultAvailableEvent(PRIVATE_ADDRESS_CANNOT_SEARCH));
+        } else {
+            loadPage(GOOGLE_MAPS_URL_PREFIX + person.getAddress().toString().replaceAll(" ", "+")
+                + GOOGLE_MAPS_URL_SUFFIX);
+        }
+    }
+
+    /**
+     * Loads Google Maps with directions on how to go from one location to another
+     * @param fromLocation The location we want to start from
+     * @param toLocation The location we want to reach
+     */
+    private void loadDirectionsPage(String fromLocation, String toLocation) {
+        loadPage(GOOGLE_MAPS_DIRECTIONS_PREFIX + "&origin="
+                + fromLocation.replaceAll("#(\\w+)\\s*", "").replaceAll(" ", "+")
+                .replaceAll("-(\\w+)\\s*", "")
+                + "&destination="
+                + toLocation.replaceAll("#(\\w+)\\s*", "").replaceAll(" ", "+")
+                .replaceAll("-(\\w+)\\s*", "")
+                + GOOGLE_MAPS_DIRECTIONS_SUFFIX);
+    }
+
+    //@@author
     public void loadPage(String url) {
         Platform.runLater(() -> browser.getEngine().load(url));
     }
@@ -65,9 +117,18 @@ public class BrowserPanel extends UiPart<Region> {
         browser = null;
     }
 
+
+
+    //@@author jeffreygohkw
     @Subscribe
-    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+    private void handleBrowserPanelLocateEvent(BrowserPanelLocateEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadPersonPage(event.getNewSelection().person);
+        loadMapsPage(event.getNewSelection());
+    }
+
+    @Subscribe
+    private void handleBrowserPanelNavigateEvent(BrowserPanelNavigateEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadDirectionsPage(event.getFromLocation().toString(), event.getToLocation().toString());
     }
 }

@@ -17,7 +17,6 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 
-
 public class LogicManagerTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();

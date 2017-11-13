@@ -12,6 +12,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.UserPrefs;
 
 /**
  * A class to access AddressBook data stored as an xml file on the hard disk.
@@ -74,4 +75,24 @@ public class XmlAddressBookStorage implements AddressBookStorage {
         XmlFileStorage.saveDataToFile(file, new XmlSerializableAddressBook(addressBook));
     }
 
+    /**
+     * Backs up data to a custom save file name
+     * @param addressBook
+     * @param filePath
+     * @throws IOException
+     */
+    public void backupAddressBook(ReadOnlyAddressBook addressBook, String filePath) throws IOException {
+        logger.fine("Attempting to write to backup data file in custom location");
+        logger.info(filePath);
+        this.saveAddressBook(addressBook, filePath);
+    }
+
+    /**
+     * Changes the file path of the save file
+     * @param filepath the new file path of the save file. Cannot be null
+     */
+    public void changeFilePath(String filepath, UserPrefs u) {
+        requireNonNull(filepath);
+        filePath = filepath;
+    }
 }

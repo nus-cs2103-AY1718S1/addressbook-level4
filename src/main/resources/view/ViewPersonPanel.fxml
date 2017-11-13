@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- author Esilocke -->
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<StackPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox prefHeight="200.0" prefWidth="100.0">
+         <children>
+            <HBox prefHeight="92.0" prefWidth="800.0">
+               <children>
+                  <Label fx:id="name" prefHeight="150.0" prefWidth="971.0" styleClass="cell_big_label" text="\$name" wrapText="true">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding></Label>
+                  <ImageView fx:id="avatarImage" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../docs/images/Avatar.png" />
+                     </image></ImageView>
+               </children>
+            </HBox>
+            <SplitPane prefHeight="419.0" prefWidth="800.0" VBox.vgrow="ALWAYS">
+              <items>
+                  <VBox prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <HBox prefHeight="64.0" prefWidth="798.0">
+                           <children>
+                              <Label prefHeight="92.0" prefWidth="179.0" styleClass="cell_small_label" text="Phone:">
+                                 <padding>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </padding>
+                              </Label>
+                              <Label fx:id="phone" prefHeight="92.0" prefWidth="600.0" styleClass="cell_small_label" text="\$phone">
+                                 <padding>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </padding>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="64.0" prefWidth="798.0">
+                           <children>
+                              <Label prefHeight="92.0" prefWidth="179.0" styleClass="cell_small_label" text="Email:">
+                                 <padding>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </padding>
+                              </Label>
+                              <Label fx:id="email" prefHeight="92.0" prefWidth="600.0" styleClass="cell_small_label" text="\$email">
+                                 <padding>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </padding>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="64.0" prefWidth="798.0">
+                           <children>
+                              <Label prefHeight="92.0" prefWidth="179.0" styleClass="cell_small_label" text="Address:">
+                                 <padding>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </padding>
+                              </Label>
+                              <Label fx:id="address" prefHeight="92.0" prefWidth="600.0" styleClass="cell_small_label" text="\$address">
+                                 <padding>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </padding>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="64.0" prefWidth="798.0">
+                           <children>
+                              <Label prefHeight="92.0" prefWidth="179.0" styleClass="cell_small_label" text="Remark:">
+                                 <padding>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </padding>
+                              </Label>
+                              <Label fx:id="remark" prefHeight="92.0" prefWidth="600.0" styleClass="cell_small_label" text="\$remark">
+                                 <padding>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </padding>
+                              </Label>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+              </items>
+            </SplitPane>
+         </children>
+      </VBox>
+   </children>
+</StackPane>

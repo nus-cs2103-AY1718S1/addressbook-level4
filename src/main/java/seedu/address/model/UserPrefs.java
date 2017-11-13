@@ -1,6 +1,9 @@
 package seedu.address.model;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Objects;
+
+import com.google.common.hash.Hashing;
 
 import seedu.address.commons.core.GuiSettings;
 
@@ -11,10 +14,15 @@ public class UserPrefs {
 
     private GuiSettings guiSettings;
     private String addressBookFilePath = "data/addressbook.xml";
-    private String addressBookName = "MyAddressBook";
-
+    private String addressBookName = "My Address++";
+    private boolean addressBookLockState = false;
+    private String addressBookEncryptedPassword = Hashing.sha256()
+            .hashString("password", StandardCharsets.UTF_8).toString();
+    //@@author jeffreygohkw
+    private String theme;
+    //@@author
     public UserPrefs() {
-        this.setGuiSettings(500, 500, 0, 0);
+        this.setGuiSettings(1080, 720, 0, 0);
     }
 
     public GuiSettings getGuiSettings() {
@@ -44,7 +52,28 @@ public class UserPrefs {
     public void setAddressBookName(String addressBookName) {
         this.addressBookName = addressBookName;
     }
+    //@@author charlesgoh
+    public String getAddressBookEncryptedPassword() {
+        return addressBookEncryptedPassword;
+    }
 
+    public void setAddressBookEncryptedPassword(String addressBookPasswordInput) {
+        this.addressBookEncryptedPassword = Hashing.sha256()
+                .hashString(addressBookPasswordInput, StandardCharsets.UTF_8).toString();
+    }
+
+    public void lockAddressBook() {
+        this.addressBookLockState = true;
+    }
+
+    public void unlockAddressBook() {
+        this.addressBookLockState = false;
+    }
+
+    public boolean getAddressBookLockState() {
+        return this.addressBookLockState;
+    }
+    //@@author
     @Override
     public boolean equals(Object other) {
         if (other == this) {
@@ -58,7 +87,9 @@ public class UserPrefs {
 
         return Objects.equals(guiSettings, o.guiSettings)
                 && Objects.equals(addressBookFilePath, o.addressBookFilePath)
-                && Objects.equals(addressBookName, o.addressBookName);
+                && Objects.equals(addressBookName, o.addressBookName)
+                && Objects.equals(addressBookEncryptedPassword, o.addressBookEncryptedPassword)
+                && Objects.equals(addressBookLockState, o.addressBookLockState);
     }
 
     @Override
@@ -72,7 +103,21 @@ public class UserPrefs {
         sb.append("Gui Settings : " + guiSettings.toString());
         sb.append("\nLocal data file location : " + addressBookFilePath);
         sb.append("\nAddressBook name : " + addressBookName);
+        sb.append("\nPassword : " + addressBookEncryptedPassword);
+        sb.append("\nLock State: " + Boolean.toString(this.addressBookLockState));
         return sb.toString();
     }
 
+    //@@author jeffreygohkw
+    public String getTheme() {
+        if (theme == null) {
+            return "/view/DarkTheme.css";
+        } else {
+            return theme;
+        }
+    }
+
+    public void setTheme(String theme) {
+        this.theme = theme;
+    }
 }

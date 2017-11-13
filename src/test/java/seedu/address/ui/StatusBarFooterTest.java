@@ -45,10 +45,10 @@ public class StatusBarFooterTest extends GuiUnitTest {
 
     @Before
     public void setUp() {
-        StatusBarFooter statusBarFooter = new StatusBarFooter(STUB_SAVE_LOCATION);
-        uiPartRule.setUiPart(statusBarFooter);
+        StatusBarFooter sbf = new StatusBarFooter(STUB_SAVE_LOCATION, EVENT_STUB.data.getPersonList().size());
+        uiPartRule.setUiPart(sbf);
 
-        statusBarFooterHandle = new StatusBarFooterHandle(statusBarFooter.getRoot());
+        statusBarFooterHandle = new StatusBarFooterHandle(sbf.getRoot());
     }
 
     @Test

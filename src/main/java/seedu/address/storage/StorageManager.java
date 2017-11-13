@@ -1,5 +1,7 @@
 package seedu.address.storage;
 
+import static java.util.Objects.requireNonNull;
+
 import java.io.IOException;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -10,6 +12,7 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
+import seedu.address.commons.events.ui.BackupRequestEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
@@ -22,7 +25,6 @@ public class StorageManager extends ComponentManager implements Storage {
     private static final Logger logger = LogsCenter.getLogger(StorageManager.class);
     private AddressBookStorage addressBookStorage;
     private UserPrefsStorage userPrefsStorage;
-
 
     public StorageManager(AddressBookStorage addressBookStorage, UserPrefsStorage userPrefsStorage) {
         super();
@@ -77,6 +79,16 @@ public class StorageManager extends ComponentManager implements Storage {
         addressBookStorage.saveAddressBook(addressBook, filePath);
     }
 
+    //@@author charlesgoh
+    @Override
+    @Subscribe
+    public void handleBackupAddressBook(BackupRequestEvent event) throws IOException {
+        logger.fine("Attempting to write to backup data file in custom location");
+        ReadOnlyAddressBook addressBook = event.getModel().getAddressBook();
+        String args = event.getArgs();
+        this.saveAddressBook(addressBook, args);
+    }
+    //@@author
 
     @Override
     @Subscribe
@@ -89,4 +101,10 @@ public class StorageManager extends ComponentManager implements Storage {
         }
     }
 
+    @Override
+    public void changeFilePath(String fp, UserPrefs u) {
+        requireNonNull(fp);
+        u.setAddressBookFilePath(fp);
+        addressBookStorage.changeFilePath(fp, u);
+    }
 }

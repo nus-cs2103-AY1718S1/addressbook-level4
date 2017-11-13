@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -13,15 +15,29 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import seedu.address.MainApp;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.BrowserPanelLocateEvent;
+import seedu.address.commons.events.ui.BrowserPanelNavigateEvent;
+import seedu.address.commons.events.ui.ChangeFontSizeEvent;
+import seedu.address.commons.events.ui.ChangeThemeRequestEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.OpenRequestEvent;
+import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.SaveAsRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.commons.events.ui.TaskPanelSelectionChangedEvent;
+import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
+import seedu.address.model.Model;
 import seedu.address.model.UserPrefs;
+import seedu.address.storage.Storage;
+import seedu.address.storage.XmlFileStorage;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -29,21 +45,30 @@ import seedu.address.model.UserPrefs;
  */
 public class MainWindow extends UiPart<Region> {
 
-    private static final String ICON = "/images/address_book_32.png";
+    private static final String ICON = "/images/address_book_32_alternative.png";
     private static final String FXML = "MainWindow.fxml";
     private static final int MIN_HEIGHT = 600;
     private static final int MIN_WIDTH = 450;
+    private static final String VIEW_PATH = "/view/";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
+    private final FileChooser fileChooser = new FileChooser();
+
+    private MainApp mainApp;
+    private Storage storage;
+    private Model model;
     private Stage primaryStage;
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
     private PersonListPanel personListPanel;
+    private TaskListPanel taskListPanel;
     private Config config;
     private UserPrefs prefs;
+    private ViewTaskPanel viewTaskPanel;
+    private ViewPersonPanel viewPersonPanel;
 
     @FXML
     private StackPane browserPlaceholder;
@@ -55,13 +80,35 @@ public class MainWindow extends UiPart<Region> {
     private MenuItem helpMenuItem;
 
     @FXML
+    private MenuItem openMenuItem;
+
+    @FXML
+    private MenuItem saveMenuItem;
+
+    @FXML
+    private MenuItem exitMenuItem;
+
+    @FXML
+    private MenuItem increaseSizeMenuItem;
+
+    @FXML
+    private MenuItem decreaseSizeMenuItem;
+
+    @FXML
+    private MenuItem resetSizeMenuItem;
+
+    @FXML
     private StackPane personListPanelPlaceholder;
+
+    @FXML
+    private StackPane taskListPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
 
     @FXML
     private StackPane statusbarPlaceholder;
+
 
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
@@ -77,6 +124,7 @@ public class MainWindow extends UiPart<Region> {
         setIcon(ICON);
         setWindowMinSize();
         setWindowDefaultSize(prefs);
+        setWindowDefaultTheme(prefs);
         Scene scene = new Scene(getRoot());
         primaryStage.setScene(scene);
 
@@ -88,8 +136,15 @@ public class MainWindow extends UiPart<Region> {
         return primaryStage;
     }
 
+    //@@author jeffreygohkw
     private void setAccelerators() {
         setAccelerator(helpMenuItem, KeyCombination.valueOf("F1"));
+        setAccelerator(openMenuItem, KeyCombination.valueOf("SHORTCUT+O"));
+        setAccelerator(saveMenuItem, KeyCombination.valueOf("SHORTCUT+S"));
+        setAccelerator(exitMenuItem, KeyCombination.valueOf("ALT+F4"));
+        setAccelerator(increaseSizeMenuItem, KeyCombination.valueOf("SHORTCUT+W"));
+        setAccelerator(decreaseSizeMenuItem, KeyCombination.valueOf("SHORTCUT+E"));
+        setAccelerator(resetSizeMenuItem, KeyCombination.valueOf("SHORTCUT+R"));
     }
 
     /**
@@ -123,19 +178,52 @@ public class MainWindow extends UiPart<Region> {
     }
 
     /**
+     * Is called by the main application to give a reference back to itself.
+     *
+     * @param mainApp the MainApp itself
+     */
+    public void setMainApp(MainApp mainApp) {
+        this.mainApp = mainApp;
+    }
+
+    /**
+     * Is called by the main application to provide MainWindow with Storage
+     *
+     * @param s the Storage used by MainApp
+     */
+    public void setStorage(Storage s) {
+        this.storage = s;
+    }
+
+    /**
+     * Is called by the main application to  provide MainWindow with Model
+     *
+     * @param m the Model used by MainApp
+     */
+    public void setModel(Model m) {
+        this.model = m;
+    }
+
+    /**
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
         browserPanel = new BrowserPanel();
+        viewTaskPanel = new ViewTaskPanel();
+        viewPersonPanel = new ViewPersonPanel();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
+        taskListPanel = new TaskListPanel(logic.getFilteredTaskList());
+        taskListPanelPlaceholder.getChildren().add(taskListPanel.getRoot());
+
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
+        String preferredFilePath = this.prefs.getAddressBookFilePath();
+        StatusBarFooter statusBarFooter = new StatusBarFooter(preferredFilePath, logic.getFilteredPersonList().size());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
         CommandBox commandBox = new CommandBox(logic);
@@ -170,9 +258,20 @@ public class MainWindow extends UiPart<Region> {
         }
     }
 
+    /**
+     * Sets the default theme based on user preferences.
+     */
+    private void setWindowDefaultTheme(UserPrefs prefs) {
+        getRoot().getStylesheets().add(prefs.getTheme());
+    }
+
     private void setWindowMinSize() {
         primaryStage.setMinHeight(MIN_HEIGHT);
         primaryStage.setMinWidth(MIN_WIDTH);
+    }
+
+    public String getTheme() {
+        return getRoot().getStylesheets().get(1);
     }
 
     /**
@@ -182,6 +281,35 @@ public class MainWindow extends UiPart<Region> {
         return new GuiSettings(primaryStage.getWidth(), primaryStage.getHeight(),
                 (int) primaryStage.getX(), (int) primaryStage.getY());
     }
+
+    //@@author charlesgoh
+    /**
+     * Handle increase font size command for menu item
+     */
+    @FXML
+    public void handleIncreaseFontSize() {
+        logger.info("Handling increase in font size");
+        raise(new ChangeFontSizeEvent(ChangeFontSizeEvent.getIncreaseSizeEventIndex()));
+    }
+
+    /**
+     * Handle decrease font size command for menu item
+     */
+    @FXML
+    public void handleDecreaseFontSize() {
+        logger.info("Handling decrease in font size");
+        raise(new ChangeFontSizeEvent(ChangeFontSizeEvent.getDecreaseSizeEventIndex()));
+    }
+
+    /**
+     * Handle reset font size command
+     */
+    @FXML
+    public void handleResetFontSize() {
+        logger.info("Handling reset in font size");
+        raise(new ChangeFontSizeEvent(ChangeFontSizeEvent.getResetSizeEventIndex()));
+    }
+    //@@author
 
     /**
      * Opens the help window.
@@ -196,9 +324,80 @@ public class MainWindow extends UiPart<Region> {
         primaryStage.show();
     }
 
+    //@@author jeffreygohkw
     /**
-     * Closes the application.
+     * Opens the data from a desired location
      */
+    @FXML
+    private void handleOpen() throws IOException, DataConversionException {
+        // Set extension filter
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
+                "XML files (*.xml)", "*.xml");
+        fileChooser.getExtensionFilters().add(extFilter);
+
+        // Show open file dialog
+        File file = fileChooser.showOpenDialog(primaryStage);
+        if (file != null) {
+            // Change file path to the opened file
+            storage.changeFilePath(file.getPath(), prefs);
+            // Reset data in the model to the data from the opened file
+            model.resetData(XmlFileStorage.loadDataFromSaveFile(file));
+            // Update the UI
+            fillInnerParts();
+        }
+    }
+
+    @Subscribe
+    private void handleOpenRequestEvent(OpenRequestEvent event) throws IOException, DataConversionException {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleOpen();
+    }
+
+    /**
+     * Saves the data at a desired location
+     */
+    @FXML
+    private void handleSaveAs() throws IOException {
+        // Set extension filter
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
+                "XML files (*.xml)", "*.xml");
+        fileChooser.getExtensionFilters().add(extFilter);
+
+        // Show save file dialog
+        File file = fileChooser.showSaveDialog(primaryStage);
+
+        if (file != null) {
+            // Make sure it has the correct extension
+            if (!file.getPath().endsWith(".xml")) {
+                file = new File(file.getPath() + ".xml");
+            }
+            // Change file path to the new save file
+            storage.changeFilePath(file.getPath(), prefs);
+            // Save the address book data and the user preferences
+            storage.saveAddressBook(model.getAddressBook());
+            storage.saveUserPrefs(prefs);
+            // Update the UI
+            fillInnerParts();
+        }
+    }
+
+    @Subscribe
+    private void handleSaveAsRequestEvent(SaveAsRequestEvent event) throws IOException, DataConversionException {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleSaveAs();
+    }
+
+    /**
+     * Changes the existing theme to the input theme
+     */
+    public void handleChangeTheme(String theme) {
+        if (getRoot().getStylesheets().size() > 1) {
+            getRoot().getStylesheets().remove(1);
+        }
+        getRoot().getStylesheets().add(VIEW_PATH + theme);
+    }
+
+    //@@author
     @FXML
     private void handleExit() {
         raise(new ExitAppRequestEvent());
@@ -206,6 +405,10 @@ public class MainWindow extends UiPart<Region> {
 
     public PersonListPanel getPersonListPanel() {
         return this.personListPanel;
+    }
+
+    public TaskListPanel getTaskListPanel() {
+        return this.taskListPanel;
     }
 
     void releaseResources() {
@@ -216,5 +419,42 @@ public class MainWindow extends UiPart<Region> {
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
+    }
+
+    //@@author Esilocke
+    @Subscribe
+    private void handleTaskPanelSelectionChangedEvent(TaskPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        browserPlaceholder.getChildren().clear();
+        browserPlaceholder.getChildren().add(viewTaskPanel.getRoot());
+    }
+
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        browserPlaceholder.getChildren().clear();
+        browserPlaceholder.getChildren().add(viewPersonPanel.getRoot());
+    }
+    //@@author
+
+    @Subscribe
+    private void handleBrowserPanelLocateEvent(BrowserPanelLocateEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        browserPlaceholder.getChildren().clear();
+        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+    }
+
+    @Subscribe
+    private void handleBrowserPanelNavigateEvent(BrowserPanelNavigateEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        browserPlaceholder.getChildren().clear();
+        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+    }
+
+    //@@author jeffreygohkw
+    @Subscribe
+    private void handleChangeThemeEvent(ChangeThemeRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleChangeTheme(event.getStyleSheet());
     }
 }

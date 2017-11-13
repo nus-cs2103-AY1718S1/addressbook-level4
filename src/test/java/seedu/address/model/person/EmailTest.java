@@ -1,16 +1,18 @@
 package seedu.address.model.person;
 
+import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
+
+import seedu.address.commons.exceptions.IllegalValueException;
 
 public class EmailTest {
 
     @Test
     public void isValidEmail() {
         // blank email
-        assertFalse(Email.isValidEmail("")); // empty string
         assertFalse(Email.isValidEmail(" ")); // spaces only
 
         // missing parts
@@ -36,5 +38,13 @@ public class EmailTest {
         assertTrue(Email.isValidEmail("_user_@_e_x_a_m_p_l_e_.com_"));    // underscores
         assertTrue(Email.isValidEmail("peter_jack@very_very_very_long_example.com"));   // long domain name
         assertTrue(Email.isValidEmail("if.you.dream.it_you.can.do.it@example.com"));    // long local part
+    }
+
+    //@@author jeffreygohkw
+    @Test
+    public void privateEmailIsHidden_success() throws IllegalValueException {
+        Email e = new Email("AnyEmail@example.com", true);
+        assertTrue(e.getIsPrivate());
+        assertEquals(e.toString(), "<Private Email>");
     }
 }

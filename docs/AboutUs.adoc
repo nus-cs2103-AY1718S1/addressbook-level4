@@ -4,53 +4,45 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: images
 :stylesDir: stylesheets
 
-AddressBook - Level 4 was developed by the https://se-edu.github.io/docs/Team.html[se-edu] team. +
-The dummy content given below serves as a placeholder to be used by future forks of the project. +
-{empty} +
-We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
+AddressBook++ - Developed by the https://github.com/CS2103T-W09B2/main/blob/master/docs/AboutUs.adoc[CS2103T-W09B2] team.
+
+Initial source code this project was based on was from AddressBook-Level4 project created by SE-EDU initiative at https://github.com/se-edu/.
+
 
 == Project Team
+'''
+=== Goh Chang Kang, Charles
+{empty}[http://charlesgoh.me[homepage]] [https://github.com/charlesgoh[github]]
 
-=== John Doe
-image::damithc.jpg[width="150", align="left"]
-{empty}[http://www.comp.nus.edu.sg/~damithch[homepage]] [https://github.com/damithc[github]] [<<johndoe#, portfolio>>]
+Role: Project Integration, Git Expert, Password Security Commands
 
-Role: Project Advisor
+Responsibilities: UI Component
 
 '''
 
-=== John Roe
-image::lejolly.jpg[width="150", align="left"]
-{empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
+=== Jeffrey Goh Keng Wee
+{empty}[http://github.com/jeffreygohkw[github]]
 
-Role: Team Lead +
-Responsibilities: UI
+Role: Testing
 
-'''
-
-=== Johnny Doe
-image::yijinl.jpg[width="150", align="left"]
-{empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
-
-Role: Developer +
-Responsibilities: Data
+Responsibilities: Storage Component
 
 '''
 
-=== Johnny Roe
-image::m133225.jpg[width="150", align="left"]
-{empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]
+=== Lin Ziwen Kelvin
+{empty}[http://github.com/esiloke[github]]
 
-Role: Developer +
-Responsibilities: Dev Ops + Threading
+Role: Code Quality
+
+Responsibilities: Model Component
 
 '''
 
-=== Benson Meier
-image::yl_coder.jpg[width="150", align="left"]
-{empty}[http://github.com/yl-coder[github]] [<<johndoe#, portfolio>>]
+=== Wang Yiming
+{empty}[http://github.com/wangyiming1090[github]]
 
-Role: Developer +
-Responsibilities: UI
+Role: Developer
+
+Responsibilities: Logic Component
 
 '''

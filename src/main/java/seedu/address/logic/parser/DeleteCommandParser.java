@@ -1,10 +1,11 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG_FULL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TASK;
 
-import seedu.address.commons.core.index.Index;
-import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.DeleteTaskCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -18,12 +19,18 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public DeleteCommand parse(String args) throws ParseException {
-        try {
-            Index index = ParserUtil.parseIndex(args);
-            return new DeleteCommand(index);
-        } catch (IllegalValueException ive) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_TASK, PREFIX_TAG_FULL);
+
+        if (argMultimap.getValue(PREFIX_TASK).isPresent() && argMultimap.getValue(PREFIX_TAG_FULL).isPresent()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteTaskCommand.MESSAGE_USAGE));
+        } else if (argMultimap.getValue(PREFIX_TASK).isPresent()) {
+            String filteredString = args.replace(PREFIX_TASK.getPrefix(), " ");
+            return new DeleteTaskCommandParser().parse(filteredString);
+        } else if (argMultimap.getValue(PREFIX_TAG_FULL).isPresent()) {
+            String filteredArgs = args.replace(PREFIX_TAG_FULL.getPrefix(), " ");
+            return new DeleteTagCommandParser().parse(filteredArgs);
+        } else {
+            return new DeletePersonCommandParser().parse(args);
         }
     }
 

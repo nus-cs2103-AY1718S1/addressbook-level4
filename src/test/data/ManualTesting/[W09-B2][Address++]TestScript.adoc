@@ -1,0 +1,493 @@
+= Address++ - Test Script
+:toc:
+:toc-title:
+:toc-placement: preamble
+:sectnums:
+:imagesDir: images
+:stylesDir: stylesheets
+:experimental:
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+endif::[]
+:repoURL: https://github.com/CS2103AUG2017-W09-B2/main
+
+By: `Team W09-B2`      Since: `Aug 2017`      Licence: `MIT` +
+
+== Getting Started
+
+Ensure that you have the Address++.jar file and the [W09-B2][Address++]SampleData.xml available on your computer and a working internet connection.
+
+=== Importing the test data
+. Launch Address++.jar.
+. On initial launch, it should contain sample data of 6 different persons and 0 tasks.
+. Type `open` to open a pop up window.
+. Navigate to the location of the [W09-B2][Address++]SampleData.xml file and click Open to open it.
+. The sample data containing 20 different persons and 7 different tasks should be loaded.
+. You are now ready to begin testing.
+
+== User Interface
+* The Menu on the top of the screen contains 3 buttons: `File`, `Help` and `Font Size`.
+* Below the menu is the command line, you can type your commands in here.
+* The box below the command line will show feedback when you type in commands, such as if the command is successful or if you have typed an erroneous command.
+* The leftmost panel contains the list of persons in the address book.
+* The middle panel contains the list of tasks in the address book.
+* The rightmost panel contains either the details of the selected task or person, or the in-application browser.
+* The bottom bar contains miscellaneous information about the address book, such as the file where the save data will be stored and the number of persons in the address book.
+
+== Testing
+
+=== LocateCommand
+
+*Locating a person's address on Google Maps*
+
+Input Command: +
+****
+locate 1
+****
+Expected Result: +
+Google Maps opens, and searches for Blk 30 Geylang Street 29. +
+
+Expected Message: +
+****
+Searching for Person at Index: 1
+****
+
+*Failing to locate a person with no address*
+
+Input Command: +
+****
+locate 2
+****
+Expected Result: +
+An error message is printed, as the person at index 2 has no address. +
+
+Expected Message: +
+****
+Person 2 has no Address
+****
+
+=== ThemeCommand
+
+*Changing the theme of the address book*
+
+Input Command: +
+****
+theme light
+****
+Expected Result: +
+The address book's colour scheme changes to a bright colour. +
+
+Expected Message: +
+****
+Theme Changed to: light
+****
+
+Input Command: +
+****
+theme dark
+****
+Expected Result: +
+The address book's colour scheme changes to a dark colour.+
+Expected Message: +
+****
+Theme Changed to: dark
+****
+
+=== HistoryCommand
+
+*Lists all commands done in reverser chronological order*
+
+Input Command: +
+****
+notacommand +
+alsonotacommand +
+history
+****
+Expected Result: +
+The two previous commands are listed in the box below the command line in reverse chronological order from top to bottom. +
+
+Expected Message: +
+****
+Entered commands (from most recent to earliest): +
+alsonotacommand +
+notacommand
+****
+
+=== ClearCommand
+Input Command: +
+****
+clear
+****
+Expected Result: +
+All persons and tasks vanish from the leftmost and middle columns, leaving them empty. +
+
+Expected Message: +
+****
+*Address book has been cleared!*
+****
+
+****
+* You may wish to use `undo` to restore the address book before continuing with testing.
+****
+
+=== OpenCommand and SaveAsCommand
+
+*Saves data as a new .xml file and switches to that file*
+
+Input Command: +
+****
+save +
+Navigate to the file path where you saved [W09-B2][Address++]SampleData.xml. +
+Save the new save file as test.xml. +
+Click save.
+****
+
+Expected Result: The file path in the bottom right corner changes to the location of where you saved the file followed by test.xml. +
+
+Expected Message: +
+****
+Successfully saved file.
+****
+*Opens and switches to a new .xml save file*
+
+Following the above save command:
+
+Input Command: +
+****
+clear
+****
+To differentiate the test.xml with the [W09-B2][Address++]SampleData.xml. +
+
+Expected Result: +
+****
+The address book contains no more persons or tasks.
+****
+
+Input Command: +
+****
+open +
+Navigate to the file path where you saved [W09-B2][Address++]SampleData.xml and select [W09-B2][Address++]SampleData.xml. +
+Click open.
+****
+Expected Result: The file path in the bottom right corner changes to the location of where you saved the [W09-B2][Address++]SampleData.xml followed by the name [W09-B2][Address++]SampleData.xml. +
+The original data is restored in the address book. +
+
+Expected Message: +
+****
+Successfully opened file.
+****
+
+=== ExitCommand
+
+*Exits Address++*
+
+Input Command:
+****
+exit
+****
+Expected Result: Address++ closes.
+
+=== AddTagCommand
+
+*Adding tags to persons in Address++*
+
+Input Command: +
+****
+add tag/ 1 2 t/friends
+****
+Expected Result: +
+The first two person in the person list will have the tag `friends` but it will not show in the person panel.
+
+Expected Message: +
+Added Tag: [friends]
+
+Input Command: +
+****
+add tag/ t/friends
+****
+Expected Result: +
+All persons in the Address++ will have the tag `friends`.
+
+Expected Message: +
+Added Tag: [friends]
+
+*Failing to add tags to persons if all of them having the input tags*
+
+Input Command: +
+****
+add tag/ 1 3 t/friends
+****
+Expected Result: +
+An error message will displayed since all of them have the tag `friends` already.
+
+Expected Message: +
+This tag already exists in all target persons in the current list.
+
+*Failing to add tags to persons with invalid index*
+
+Input Command: +
+****
+add tag/ 23 t/friends
+****
+Expected Result: +
+An error message will displayed since there is no 23rd person in the person list.
+
+Expected Message: +
+The person index provided is invalid.
+
+*Failing to add tags to persons with no input tags*
+
+Input Command: +
+****
+add tag/ 1 t/
+****
+Expected Result: +
+An error message will displayed since there is no input tags.
+
+Expected Message: +
+Tags names should be alphanumeric
+
+=== DeleteTagCommand
+
+*Deleting tags from persons in the Address++*
+
+Input Command: +
+****
+delete tag/ 1 2 t/friends
+****
+Expected Result: +
+The tag `friends` for the first person will be deleted. The rest tags remain no change.
+
+Expected Message: +
+Deleted Tag: [friends]
+
+Input Command: +
+****
+delete tag/ t/friends
+****
+Expected Result: +
+All persons in the Address++ will not have the tag `friends`.
+
+Expected Message: +
+Deleted Tag: [friends]
+
+*Failing to delete tags from persons if none of them have the input tags*
+
+Input Command: +
+****
+delete tag/ 1 2 t/neighbour
+****
+Expected Result: +
+An error message will display since target persons do not have tag `neighbour`.
+
+Expected Message: +
+The target persons do not have input tags.
+
+*Failing to delete tags from persons with invalid index*
+
+Input Command: +
+****
+delete tag/ 23 t/friends
+****
+Expected Result: +
+An error message will displayed since there is no 23rd person in the person list.
+
+Expected Message: +
+The person index provided is invalid
+
+*Failing to delete tags from persons with no input tags*
+
+Input Command: +
+****
+delete tag/ 1 t/
+****
+Expected Result: +
+An error message will displayed since there is no input tags.
+
+Expected Message: +
+Tags names should be alphanumeric
+
+=== TagListCommand
+
+*Listing all the tag in the Address++*
+
+Input Command: +
+****
+showtag
+****
+Expected Result: +
+Tags contain capital letter will displayed in front. All the tags (with or without capital letter) will be displayed in alphabetical order.
+
+Expected Message: +
+All the tags are here: <GEQ2000> <acquaintance> <classmates> <enemy> <family> <friends> <neighbours> <project> <secretive> <tutee>
+
+*Listing empty tag list with no tags in Address++*
+
+Input Command: +
+****
+showtag
+****
+Expected Result: +
+There is no tag list.
+
+Expected Message: +
+There is no tag!
+
+=== FindTagCommand
+
+*Finding person in the Address++ with specific tags*
+
+Input Command: +
+****
+find tag/ friends
+****
+Expected Result: +
+List all the persons who have tag `friends`.
+
+Expected Message: +
+6 persons listed!
+
+*Finding person in the Address++ without specific tags*
+
+Input Command: +
+****
+find tag/ /friends
+****
+Expected Result: +
+List all the persons without tag `friends`.
+
+Expected Message: +
+14 persons listed!
+
+*Finding person in the Address++ with "TAGA" but without "TAGB"*
+
+Input Command: +
+****
+find tag/ friends /classmates
+****
+Expected Result: +
+Persons have tag `friends` but do not have tag `classmates` will be listed.
+
+Expected Message: +
+5 persons listed!
+
+*Failing to find persons in the Address++ with valid tags*
+
+Input Command: +
+****
+find tag/ fff
+****
+Expected Result: +
+Although it is a valid tag, there is no person with tag `fff`. Hence, no person will be listed.
+
+Expected Message: +
+0 persons listed!
+
+=== FavouriteCommand
+
+*Setting a person in the Address++ to be the favourite person*
+
+Input Command: +
+****
+list +
+favourite 2
+****
+Expected Result: +
+The 2nd person in the Address++ will be favoured and a heart picture will be shown next to his name.
+
+Expected Message: +
+Favourited Person: Antoinette Chan Phone: 89912301 Email: antoinette@example.com Address:  Remark:  Avatar:  Tags: [GEQ2000]
+
+*Failing to set a favourite person if he has been favoured*
+
+Input Command: +
+****
+list +
+favourite 1
+****
+Expected Result: +
+An error message will display since the first person in the Address++ has been favoured.
+
+Expected Message: +
+Person is already favourited.
+
+*Failing to set a favourite person with invalid index*
+
+Input Command: +
+****
+favourite 56
+****
+Expected Result: +
+An error message will display since there is no 56th person in the current list.
+
+Expected Message: +
+The person index provided is invalid
+
+=== UnfavouriteCommand
+
+*Setting a favoured person in the Address++ to be the unfavoured person*
+
+Input Command: +
+****
+list +
+unfavourite 1
+****
+Expected Result: +
+The 1st person in the Address++ will be unfavoured and the heart picture will disappear.
+
+Expected Message: +
+Unfavourited Person: Alex Yeoh Phone: 87438807 Email: alexyeoh@example.com Address: Blk 30 Geylang Street 29, #06-40 Remark: Cheerful lad Avatar:  Tags: [friends]
+
+*Failing to set a unfavored person if he has not been favoured*
+
+Input Command: +
+****
+list +
+unfavourite 2
+****
+Expected Result: +
+An error message will display since the second person in the Address++ has bot been favoured.
+
+Expected Message: +
+Person is not favourited yet.
+
+*Failing to set a unfavoured person with invalid index*
+
+Input Command: +
+****
+unfavourite 56
+****
+Expected Result: +
+An error message will display since there is no 56th person in the current list.
+
+Expected Message: +
+The person index provided is invalid
+
+=== FavouriteListCommand
+
+*Listing all favoured persons in the Address++*
+
+Input Command: +
+****
+showfavourite
+****
+Expected Result: +
+List all the favoured persons.
+
+Expected Message: +
+Listed all favourited persons.
+
+*Listing empty list with no favoured person in the Address++*
+
+Input Command: +
+****
+showfavourite
+****
+Expected Result: +
+An empty list but with successful message.
+
+Expected Message: +
+Listed all favourited persons.
+
+

@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Optional;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
+import seedu.address.logic.commands.EditPersonCommand.EditPersonDescriptor;
 import seedu.address.logic.parser.ParserUtil;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -32,6 +32,8 @@ public class EditPersonDescriptorBuilder {
         descriptor.setPhone(person.getPhone());
         descriptor.setEmail(person.getEmail());
         descriptor.setAddress(person.getAddress());
+        descriptor.setRemark(person.getRemark());
+        descriptor.setAvatar(person.getAvatar());
         descriptor.setTags(person.getTags());
     }
 
@@ -83,6 +85,32 @@ public class EditPersonDescriptorBuilder {
         return this;
     }
 
+    //@@author charlesgoh
+    /**
+     * Sets the {@code Remark} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withRemark(String remark) {
+        try {
+            ParserUtil.parseRemark(Optional.of(remark)).ifPresent(descriptor::setRemark);
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("remark is expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
+     * Sets the {@code Avatar} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withAvatar(String avatar) {
+        try {
+            ParserUtil.parseAvatar(Optional.of(avatar)).ifPresent(descriptor::setAvatar);
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("avatar is expected to be unique.");
+        }
+        return this;
+    }
+    //@author
+
     /**
      * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code EditPersonDescriptor}
      * that we are building.
@@ -95,7 +123,15 @@ public class EditPersonDescriptorBuilder {
         }
         return this;
     }
-
+    //@@author wangyiming1019
+    /**
+     * Sets the {@code Favourite} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withFavourite(String favourite) {
+        descriptor.setFavourite(new Boolean(favourite));
+        return this;
+    }
+    //@@author
     public EditPersonDescriptor build() {
         return descriptor;
     }

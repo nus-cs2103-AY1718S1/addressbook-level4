@@ -19,7 +19,9 @@ public class Name {
      */
     public static final String NAME_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
 
-    public final String fullName;
+    public final String value;
+    private boolean isPrivate = false;
+    private int privacyLevel = 2;
 
     /**
      * Validates given name.
@@ -32,9 +34,16 @@ public class Name {
         if (!isValidName(trimmedName)) {
             throw new IllegalValueException(MESSAGE_NAME_CONSTRAINTS);
         }
-        this.fullName = trimmedName;
+        this.value = trimmedName;
     }
 
+    //@@author jeffreygohkw
+    public Name(String name, boolean isPrivate) throws IllegalValueException {
+        this(name);
+        this.setPrivate(isPrivate);
+    }
+
+    //@@author
     /**
      * Returns true if a given string is a valid person name.
      */
@@ -42,22 +51,45 @@ public class Name {
         return test.matches(NAME_VALIDATION_REGEX);
     }
 
-
+    //@@author jeffreygohkw
     @Override
     public String toString() {
-        return fullName;
+        if (privacyLevel == 1) {
+            return value;
+        } else {
+            if (isPrivate) {
+                return "<Private Name>";
+            }
+            return value;
+        }
     }
 
+    //@@author
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Name // instanceof handles nulls
-                && this.fullName.equals(((Name) other).fullName)); // state check
+                && this.value.equals(((Name) other).value)); // state check
     }
 
     @Override
     public int hashCode() {
-        return fullName.hashCode();
+        return value.hashCode();
+    }
+    //@@author jeffreygohkw
+    public boolean getIsPrivate() {
+        return isPrivate;
     }
 
+    public void setPrivate(boolean isPrivate) {
+        this.isPrivate = isPrivate;
+    }
+
+    public void setPrivacyLevel(int level) {
+        this.privacyLevel = level;
+    }
+
+    public int getPrivacyLevel() {
+        return this.privacyLevel;
+    }
 }

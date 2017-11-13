@@ -1,0 +1,152 @@
+= Jeffrey Goh - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: Address++
+Address++ is a desktop address book application primarily targeted at students with projects. Users will interact with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-W09-B2/main/blob/master/collated/main/jeffreygohkw.md[Functional code]] [https://github.com/CS2103AUG2017-W09-B2/main/blob/master/collated/test/jeffreygohkw.md[Test code]]
+
+=== Enhancement Added: Privacy of Fields
+
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[tag=addprivacy]
+
+include::../UserGuide.adoc[tag=editprivacy]
+
+include::../UserGuide.adoc[tag=changeprivacy]
+
+include::../UserGuide.adoc[tag=privacylevel]
+
+---
+
+==== Justification
+
+Users may have contacts that they would like to keep confidential or those that they do not feel comfortable displaying in public. Instead of removing the contact from the address book, setting a field to private allows users to choose exactly what information they would like to display and what they would like to hide.
+
+In addition, a private name cannot be searched for, and a private address cannot be used in the locate and navigate commands to prevent users from finding out the value of the private field.
+
+Having a private field also doubles up as an extra layer of protection against unintentional modifications, as private fields cannot be edited without changing them back to public fields.
+
+It may be inconvenient for a user to set a person's fields to public and back to private every time they would like to have a peek at the data that was hidden, or to set a person's every field to private if they want to hide them. Thus, having a command to change the privacy level of the address book will make it much more convenient for users to access private information.
+
+==== Implementation
+
+---
+
+include::../DeveloperGuide.adoc[tag=privacy]
+
+---
+
+=== Enhancement Added: Locating a person's address
+
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[tag=locate]
+
+
+---
+
+==== Justification
+
+While a person's phone and email address can be used directly, users often are unaware of where exactly their contacts' addresses are located in real life. The locate command aims to solve this problem by taking the address of a contact and searching for it on Google Maps. This allows the user to find out where exactly their contacts' addresses are located.
+
+==== Implementation
+
+---
+
+include::../DeveloperGuide.adoc[tag=locate]
+
+---
+
+=== Enhancement Added: Navigating from one address to another
+
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[tag=navigate]
+
+
+---
+
+==== Justification
+
+Locating a contact does not tell users how to arrive at that particular contact's address. Furthermore, users may face the scenario where they have to travel and meet different groups and different contacts throughout the day. The Navigate command allows users to find out the most efficient path from one address to another with the aid of Google Maps.
+
+Users are able to utilize the addresses attached to a person, as well as those attached to a task, in the navigate command. They can also manually input addresses in the custom line if they are looking for directions to or from an address that is not presently stored inside the address book. This greatly enhances the flexibility of the command, and allows users to use the command without having to add a dummy task or person to store new addresses beforehand.
+
+==== Implementation
+
+---
+
+include::../DeveloperGuide.adoc[tag=navigate]
+
+---
+
+=== Enhancement Added: Opening and Saving of the .xml save file
+
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[tag=open]
+
+include::../UserGuide.adoc[tag=saveas]
+
+include::../UserGuide.adoc[tag=opensaveas]
+
+
+---
+
+==== Justification
+
+Open and Save As will allow users to more easily manage their data. Open allows them to load their data from a .xml file, letting them easily work on multiple different address books. +
+Save As allows users to save their address book data, letting it serve as backup or allowing them to be placed in a different location on the computer while still remaining operational. +
+This also allows for easier transfers of save files between devices without having to manually drag and manage the save files to and from the folder where Address++ is located.
+It can even potentially allow for syncing save files between devices if external software like Dropbox is used.
+
+==== Implementation
+
+---
+
+include::../DeveloperGuide.adoc[tag=opensaveas]
+
+---
+
+=== Enhancement Added: Changing the theme of the Address Book
+
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[tag=theme]
+
+---
+
+==== Justification
+
+Different users may have different preferences for the style and colour scheme of the address book. Instead of having all users conform to one style, by having a Theme command, each user can choose the look of the address book that fits them best.
+
+==== Implementation
+
+---
+
+include::../DeveloperGuide.adoc[tag=theme]
+
+---
+
+=== Other contributions
+
+* Add Menu Icons for Open, Save As, Exit and Help (Pull request https://github.com/CS2103AUG2017-W09-B2/main/pull/10[#10])
+* Add Keyboard Shortcuts for Open, Save As, Exit and Help (Pull request https://github.com/CS2103AUG2017-W09-B2/main/pull/10[#11], https://github.com/CS2103AUG2017-W09-B2/main/pull/101[#101])
+* Modified SortCommand to be undoable, and wrote test cases for it (Pull requests https://github.com/CS2103AUG2017-W09-B2/main/pull/29[#29], https://github.com/CS2103AUG2017-W09-B2/main/pull/30[#30])
+* Created TaskAddress to store the address of tasks (Pull requests https://github.com/CS2103AUG2017-W09-B2/main/pull/129[#129], https://github.com/CS2103AUG2017-W09-B2/main/pull/132[#132])
+* Added Travis, Coveralls and Appveyor links for Continuous Integration (Pull requests https://github.com/CS2103AUG2017-W09-B2/main/pull/4[#4], https://github.com/CS2103AUG2017-W09-B2/main/pull/22[#22])
+* Performed Acceptance Testing for Team T16-B2 (Issue https://github.com/CS2103AUG2017-T16-B2/main/issues/102[#102])

@@ -20,7 +20,7 @@ public class SystemTestSetupHelper {
      */
     public TestApp setupApplication() {
         try {
-            FxToolkit.setupApplication(() -> testApp = new TestApp(TypicalPersons::getTypicalAddressBook,
+            FxToolkit.setupApplication(() -> testApp = new TestApp(TypicalPersons::getTypicalPersonsAddressBook,
                     TestApp.SAVE_LOCATION_FOR_TESTING));
         } catch (TimeoutException te) {
             throw new AssertionError("Application takes too long to set up.");

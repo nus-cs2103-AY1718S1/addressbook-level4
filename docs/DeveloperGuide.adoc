@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= Address++ - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,9 +10,9 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103T-W09B2/addressbook-level4
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team W09-B2`      Since: `August 2017`      Licence: `MIT`
 
 == Setting up
 
@@ -32,7 +32,7 @@ IntelliJ by default has Gradle and JavaFx plugins installed. +
 Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plugins` to re-enable them.
 
 
-=== Setting up the project in your computer
+=== Setting up Address++ in your computer
 
 . Fork this repo, and clone the fork to your computer
 . Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
@@ -68,7 +68,7 @@ Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> docume
 
 ==== Updating documentation to match your fork
 
-After forking the repo, links in the documentation will still point to the `se-edu/addressbook-level4` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `se-edu/addressbook-level4`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
+After forking the repo, links in the documentation will still point to the `CS2103AUG2017-W09-B2/main` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `CS2103AUG2017-W09-B2/main`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
 
 ==== Setting up CI
 
@@ -196,6 +196,7 @@ The `Model`,
 * stores a `UserPref` object that represents the user's preferences.
 * stores the Address Book data.
 * exposes an unmodifiable `ObservableList<ReadOnlyPerson>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* exposes an unmodifiable `ObservableList<ReadOnlyTask>` that can be 'observed'.
 * does not depend on any of the other three components.
 
 === Storage component
@@ -218,7 +219,81 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
-// tag::undoredo[]
+//tag::fontsize[]
+=== Increase/Decrease/Reset Font Size
+
+On some screens, the text appear to be too small. The aim of the increase/decrease/reset font size feature is to allow
+users to customize the application's font size quickly on the go.
+
+image::FontSizeUI.png[width="540"]
+
+There are two methods of calling changes in font size:
+
+1. `onAction` handlers are used to handle UI font size buttons. These handlers will post
+new events via `ComponentManager`.
+
+2. CLI commands also post new events to handle font size changes, when the relevant command is entered (e.g. `fontsize increase`).
+
+image::FontSizeChangeSequenceDiagram.png[width="800"]
+From the sequence diagram above, we can observe that the font size changes are handled by subscriber functions in PersonListPanel
+and TaskListPanel.
+
+[NOTE]
+The initial implementation required access to the model from the UI. This implementation was replaced with one that
+standardised the handling of font size change requests through events.
+
+==== Design Considerations
+
+**Aspect:** Use either UI or CLI based implementations +
+**Alternative 1 (current choice):** Implementing both UI and CLI functionality +
+**Pros:** More options for the user. Not much increase in complexity when implementing the CLI version  +
+**Cons:** This implementation required passing information between classes, which may cause unnecessary coupling. +
+
+**Alternative 2:** Implementing only UI functionality +
+**Pros:** Less tedious to implement and very intuitive for the user +
+**Cons:** Users who prefer typing commands will not have the option of editing their font sizes using the CLI
+//end::fontsize[]
+
+//tag::avatar[]
+=== Setting Avatar on ViewPersonPanel
+
+The following function allows the setting of URL for the `ImageView` attribute within the `ViewPersonPanel` class:
+[source,java]
+----
+private void initializeAvatar() {
+        try {
+            String avatarPath = person.getAvatar().value;
+            if (!avatarPath.equals("")) {
+                logger.info("Initializing avatar to image at saved URL");
+                Image newImage = new Image(avatarPath);
+                avatarImage.setImage(newImage);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+----
+
+The `initializeAvatar` method piggybacks on the `handlePersonPanelSelectionChangedEvent` event handler. Whenever there is
+a change in the person selection panel, this function will call the `initializeAvatar` method, which will update
+the `ImageView` attribute.
+[source,java]
+----
+@Subscribe
+private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+    logger.info(LogsCenter.getEventHandlingLogMessage(event));
+    this.person = event.getNewSelection().person;
+    initializeWithPerson(person);
+    initializeAvatar();
+}
+----
+
+[NOTE]
+As of v1.5, the avatar field supports only URLs sourced online. References to local files may work but require the
+prefix "file:"
+//end::avatar[]
+
+//tag::undoredo[]
 === Undo/Redo mechanism
 
 The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the address book (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
@@ -308,6 +383,7 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Aspect:** Implementation of `UndoableCommand` +
 **Alternative 1 (current choice):** Add a new abstract method `executeUndoableCommand()` +
 **Pros:** We will not lose any undone/redone functionality as it is now part of the default behaviour. Classes that deal with `Command` do not have to know that `executeUndoableCommand()` exist. +
+
 **Cons:** Hard for new developers to understand the template pattern. +
 **Alternative 2:** Just override `execute()` +
 **Pros:** Does not involve the template pattern, easier for new developers to understand. +
@@ -319,6 +395,7 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Alternative 1 (current choice):** Saves the entire address book. +
 **Pros:** Easy to implement. +
 **Cons:** May have performance issues in terms of memory usage. +
+
 **Alternative 2:** Individual command knows how to undo/redo by itself. +
 **Pros:** Will use less memory (e.g. for `delete`, just save the person being deleted). +
 **Cons:** We must ensure that the implementation of each individual command are correct.
@@ -329,10 +406,10 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Alternative 1 (current choice):** Only include commands that modifies the address book (`add`, `clear`, `edit`). +
 **Pros:** We only revert changes that are hard to change back (the view can easily be re-modified as no data are lost). +
 **Cons:** User might think that undo also applies when the list is modified (undoing filtering for example), only to realize that it does not do that, after executing `undo`. +
+
 **Alternative 2:** Include all commands. +
 **Pros:** Might be more intuitive for the user. +
 **Cons:** User have no way of skipping such commands if he or she just want to reset the state of the address book and not the view. +
-**Additional Info:** See our discussion  https://github.com/se-edu/addressbook-level4/issues/390#issuecomment-298936672[here].
 
 ---
 
@@ -340,10 +417,1238 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Alternative 1 (current choice):** Use separate stack for undo and redo +
 **Pros:** Easy to understand for new Computer Science student undergraduates to understand, who are likely to be the new incoming developers of our project. +
 **Cons:** Logic is duplicated twice. For example, when a new command is executed, we must remember to update both `HistoryManager` and `UndoRedoStack`. +
+
 **Alternative 2:** Use `HistoryManager` for undo/redo +
 **Pros:** We do not need to maintain a separate stack, and just reuse what is already in the codebase. +
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
+
+// tag::task[]
+=== Task Object
+
+The Task object stores information related to a single deadline or task, in a manner similar to how Person information is stored. +
+As such, it also shares the same types of commands as the Person object, namely the `add`, `delete`, `find`, `select`, and `edit` commands.
+Object inheritance is thus used to create the commands that are shared with those used to handle Person objects.
+
+==== Task-related Command implementation
+
+An example of using inheritance to handle Person vs Task addition:
+
+[source,java]
+----
+public class AddPersonCommand extends AddCommand {
+}
+
+public class AddTaskCommand extends AddCommand {
+}
+----
+
+[source,java]
+----
+public AddCommand parse(String args) throws ParseException {
+    int objectType = checkType(args);
+
+    if (objectType == HANDLE_TYPE_PERSON) {
+        Person toAdd = createNewPerson(args);
+        return AddPersonCommand(toAdd);
+    } else if (objectType == HANDLE_TYPE_TASK) {
+        Task toAdd = createNewTask(args);
+        return AddTaskCommand(toAdd);
+    }
+}
+----
+
+The Parser in charge of the command will thus return either an AddPersonCommand, or an AddTaskCommand, depending on whether you specify to add a Task or not in the arguments.
+ +
+The sequence diagram below shows how this is done:
+
+image::AddTaskSeq.png[width="800"]
+_Figure 3.4.1.1 : Sequence Diagram for adding a Task_
+
+==== Task structure and subclasses
+
+The Task object has several subclasses, which store information about the task. The following class diagram illustrates the structure of a Task object.
+
+image::TaskClassDiagram.png[width="800"]
+_Figure 3.4.2.1 : Class Diagram for the Task class_
+
+Each subclass contains its own methods for input validation, and the Assignees class supports some methods for changing its assignedList.
+
+==== Task Object Storage
+
+[source, xml]
+---
+    <persons>
+        <name>someone else</name>
+        <phone></phone>
+        <email></email>
+        <address></address>
+    </persons>
+    <tasks>
+        <name>Buy new pencil</name>
+        <description>Buy new pencil for writing purposes</description>
+        <deadline></deadline>
+        <priority>2</priority>
+    </tasks>
+---
+
+Task objects are stored in a similar manner to Person objects, and share the same level of hierarchy as Person objects. During startup, tasks are read and entered into the UniqueTaskList, which handles all the tasks that are present in the address book.
+
+
+==== Design Considerations
+
+**Aspect:** Implementation of Task-related commands +
+
+**Alternative 1 (current choice):** Use inheritance to implement different commands for Task and Person objects +
+**Pros:** Can be easily extended to allow handling of other types of objects, and preserves Separation of Concerns. +
+**Cons:** Minor code duplication occurs as the commands for Person and Tasks objects share the same structure. +
+
+**Alternative 2:** Use polymorphism to allow existing commands to implement task handling +
+**Pros:** Code duplication is kept to a minimum as the Command will handle Task and Person objects in the same class. +
+**Cons:** Single Responsibility Principle is violated as each Command class now needs to handle 2 different types of objects. +
+
+---
+
+**Aspect:** Storage of Task objects +
+
+**Alternative 2:** Store Task objects together in the default XML storage file +
+**Pros** Only 1 storage file is needed. The storage manager thus only needs to refer to one storage +
+**Cons** Any changes to the Person or Task will affect the storage of both the Person and Task objects. This will increase coupling between the Person and Task classes. +
+
+**Alternative 1 (current choice):** Store Tasks objects in a separate XML file +
+**Pros:** Easier to manage as Person storage will not interfere with Task storage, and vice versa. +
+**Cons:** All existing save/load functions will require an additional method to handle Task storage. +
+// end::task[]
+// tag::assignDismiss[]
+
+=== Assign and Dismiss Commands
+
+The `assign` and `dismiss` command allows you to assign contacts to and from your tasks, thus aiding coordination and collaboration. +
+The Assignees class stores information related to who is assigned to a particular task through maintaining an internal ArrayList that keeps track of all the indexes of the people who are assigned to the task. +
+
+The indexes stored in the Assignees class *refer to the index of the person in the UniquePersonList, not the visible index shown to the user in the UI*. This means that the indexes will not change even if the list shown in the UI changes, such as after a `find` operation. +
+For example, given the below list of persons:
+
+image::AssignIndexMovement.png[width="800"]
+_Figure 3.5.1 : Mapping of indexes to a task_
+
+After a `find` operation, only the second, fourth and fifth persons are visible.
+When you call `assign 1 2 to/1`, while the first and second persons in the visible list will be assigned to the first Task, in this case the "Second person" and "Fourth person", internally the assignee list contain Indexes corresponding the following values: +
+
+[source, java]
+assignedList = {1, 3}
+
+The indexes 1 and 3 refer to the zero-based index of the "Second person" and "Fourth person" in the complete list.
+
+Due to this requirement, when the UniquePersonList changes, the assigned indexes of each task will be updated as well.
+
+The `add` operation will not require the assigned indexes to be updated, as each newly added person is not assigned to any task by default, and when a person is added, he is inserted to the end of the list, thus the order of the other persons will not change.
+
+After a `clear` operation that clears only the persons list, all task assignee lists will be cleared and re-initialized.
+
+After a `delete` operation, the order of the persons in the persons list may change. This is especially so when the first person is deleted, as this will cause the positions of all other persons to decrease by 1.
+The activity diagram below illustrates the process of updating task assignee lists when a person is deleted.
+
+image::AssignIndexDelete.png[width="800]
+_Figure 3.5.2 : Activity Diagram for updating Assignees after deleting a Person_
+
+After a `sort` operation, the order of the persons in the persons list may change as well. However, in comparison to `delete`, the new position of the person is not fixed.
+To ensure that the indexes are updated properly, the change in positions after each `sort` operation is maintained as well inside the UniquePersonList. +
+
+image::AssignIndexSort.png[width="800"]
+_Figure 3.5.3 : Mapping of indexes after a sort operation_
+
+All task assignee lists will thus be updated using the mappings from the sort operation. Each index in the list will be replaced by the value given in the mappings.
+For example, if a task previously had an index of "1" assigned to it, it be replaced by an index of "4".
+
+==== Design Considerations
+
+**Aspect:** Storage of assigned persons in the Assignee class +
+**Alternative 1 (current choice):** Store the Indexes of the persons only +
+**Pros:** The assigned persons will only need to be retrieved on a per-need basis, rather than residing in the Assignee class all the time, thus making storage simpler +
+**Cons:** UniquePersonList will be coupled to Tasks, as Tasks will need to retrieve information from the UniquePersonList in order to update itself after any operation that could potentially change the UniquePersonList ordering. +
+**Alternative 2:** Store the whole person in the Assignees class +
+**Pros:** The Assignees class will not need to depend on the UniquePersonList as its internal list is independent from that of the UniquePersonList +
+**Cons:** Repetition of information is incurred in the storage file, as the same person can appear multiple times if he is assigned to multiple tasks. This will increase the size of the storage file, and make read-write operations slow. +
+
+---
+// end::assignDismiss[]
+// tag::sort[]
+=== Sort Command
+
+The sort command is facilitated by the `sortBy` methods in UniquePersonList and UniqueTaskList. It supports
+sort by ascending or by descending order in any field.
+
+The sort enhancement utilises the Java Collections Sort API by passing it a custom Comparator.
+
+The sort command is parsed through `SortCommandParser`, which passes control over to the `SortCommand`
+class. The actual sorting happens via the UniquePersonList class or the UniqueTaskList class.
+
+The UML Class diagram for sort commands that trigger sorting in person listings is shown below:
+
+image::SortCommandPersonDiagram.png[width="800"]
+
+Likewise, the UML Class diagram for sort commands that trigger sorting in task listings is shown below:
+
+image::SortCommandTaskDiagram.png[width="800"]
+
+We can deduce from the UML diagrams diagrams above that the only difference between the implementation
+of the sorting for persons and tasks lies in the location where the sorting is actually executed.
+The sorting of persons happens in `UniquePersonList` class while the sorting of tasks happens in `UniqueTaskList`.
+
+Suppose a user enters a new command `sort person name desc`. The following sequence diagram
+demonstrates how the sort command works.
+
+image::SortSequenceDiagram.png[width="800]
+
+Note that the execution of the sort methods results in the actual person or task list being sorted. This list will be
+reflected in both the application's storage as well as the graphical user interface.
+
+==== Design Considerations
+
+**Aspect:** Implementation of `sort Command` +
+
+**Alternative 1 (current choice):** Implement sorting functionality in `UniquePersonList` and `UniqueTaskList` class. +
+**Pros:** Delegates the concern of sorting to the class that is responsible for the core of most operations done to the lists.
+Future changes to the implementation will be easier as a consequence. +
+**Cons:** Hard for new developers to understand the flow of control passed between classes at first. +
+
+**Alternative 2:** Implement the sorting functionality within other classes like `AddressBook` or `SortCommand`. +
+**Pros:** May be more intuitive for new developers and it is easier to trace function calls between lesser classes involved. +
+**Cons:** Violates Separation of Concern principle and causes unnecessary content coupling whereby the `UniquePersonList`
+and `UniqueTaskList` will have to rely on the `SortCommand` class.
+
+---
+
+**Aspect:** Temporary Sort Implementation vs. Persistent Sort Implementation +
+
+**Alternative 1 (current choice):** Saves the entire address book after sorting. +
+**Pros:** More intuitive and reduces complexity in implementation. +
+**Cons:** Old order of contact instances in the address book will be lost +
+
+**Alternative 2:** Duplicate a temporary version of the list and sort it for viewing (i.e. the actual list is not sorted) +
+**Pros:** Old order of contact instances remains intact. +
+**Cons:** Will use more memory and may be less intuitive for developer to understand and in terms of user experience. Also, sorting will not persist in the system.
+// end::sort[]
+
+// tag::backup[]
+=== Backup Command
+
+The `backup` command uses the event handler `BackupRequestEvent`. When raised, this
+event notifies the subscriber `backupAddressBook` method in Storage class.
+
+The outlining sequence diagram for this process (excluding the interaction with the
+`BackupRequestEvent`) is shown below:
+
+image::BackupSequenceDiagram.png[width="800]
+
+==== Design Considerations
+
+**Aspect:** Implementation of `backup Command` +
+
+**Alternative 1 (current choice):** Use an event handler to initialize the backup process +
+**Pros:** Avoids coupling the logic to the storage unnecessarily. +
+**Cons:** May not be as intuitive for some developers in the beginning +
+
+**Alternative 2:** Access storage component directly instead of using event handlers +
+**Pros:** May be more intuitive as it is a direct approach +
+**Cons:** Violates the Law of Demeter.
+// end::backup[]
+
+// tag::password[]
+=== Lock and Unlock Command
+
+The `lock` and `unlock` commands utilise the Model to access the user preferences of
+the application.
+
+Arguments are processed in the `UnlockCommandParser` or `LockCommandParser`,
+which passes control over to the `UnlockCommand` and `LockCommand` class respectively.
+These `Command` classes will then call the Model to toggle the lock's state.
+
+The activity diagram below outlines the basic logic of the lock states concept.:
+
+image::LockStatesActivityDiagram.png[width="800]
+
+From the activity diagram we can see that lock states are preserved in the `preferences.json`
+file after the application closes by passing the lock state into the `UserPrefs` class to be
+saved by the Storage component.
+
+[NOTE]
+The default state of the lock is set to False (i.e. locked) when the user first opens the
+application. Subsequent changes to the lock will persist in the user preferences.
+
+==== Design Considerations
+
+**Aspect:** Implementation of `lock` and `unlock` Commands
+
+**Alternative 1 (current choice):** Call methods in the Model directly to change UserPrefs +
+**Pros:** More intuitive. Highest returns for minimal amount of code +
+**Cons:** May be confusing to some developers in the beginning, since another
+intuitive approach is to use event handlers +
+
+**Alternative 2:** Use Event Handlers +
+**Pros:** More intuitive for some developers +
+**Cons:** Will still have to access Model, which makes its advantage over direct calls next to none
+
+=== ChangePassword Command
+The default password when users first open Address++ is `password`. The ChangePassword command
+sets a new password in the temporary User Preferences. When the application is closed, this
+information is passed to the Storage Component to be saved into the file `preferences.json`
+
+To illustrate this concept better, let us have a look at the `preferences.json` file:
+[source, json]
+{
+  "guiSettings" : {
+    "windowWidth" : 1309.0,
+    "windowHeight" : 720.0,
+    "windowCoordinates" : {
+      "x" : 0,
+      "y" : 22
+    }
+  },
+  "addressBookFilePath" : "data/addressbook.xml",
+  "addressBookName" : "My Address++",
+  "addressBookLockState" : false,
+  "addressBookEncryptedPassword" : "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
+  "theme" : "/view/DarkTheme.css"
+}
+
+As shown in the cope snippet above, the password is stored as one of the entries in the JSON
+file.
+
+[NOTE]
+SHA256 encryption was used to calculate a hash for the password. This is to delay anyone snooping around the
+user's file directories from seeing the real password immediately.
+
+**Validation Checks**
+****
+1. **Password Validation** -> Is the password correct?
+2. **Password Confirmation** -> Does the new password and confirmation password match?
+3. **Password Uniqueness** -> Is the new password different from the old password?
+****
+
+The activity diagram below outlines the process flow for the `ChangePasswordCommand`:
+
+image::ChangePasswordActivityDiagram.png[width="800]
+
+==== Design Considerations
+
+**Aspect:** On Demand Saving vs. Save On Exit +
+
+**Alternative 1 (current choice):** Save On Exit +
+**Pros:** Simplifies process flow as the command class no longer has to access both Model and Storage components +
+**Cons:** Any system/application crash may cause change password data to be lost +
+
+**Alternative 2:** On Demand Saving +
+**Pros:** Changes may persist even through system and application crashes +
+**Cons:** May slow down application, although not significantly. Complicates process flow.
+// end::password[]
+
+// tag::privacy[]
+=== Privacy of fields
+
+The `Name`, `Phone`, `Email`, `Address` and `Remark` of a `Person` contains a boolean `isPrivate`, which will determine if the field belonging to that person is private or not.
+
+image::PersonClassDiagramPrivacy.png[width="800"]
+_Figure 3.10.1 : Class diagram for a Person, only Name, Phone, Email, Address and Remark contain an isPrivate boolean to indicate if it is private or not_
+
+Adding a person with private fields uses the same `AddCommand` as adding a person with no public fields. +
+To determine if the field that is added should be set to private, a `p` is added to the start of the prefix. +
+Hence, `pe/[EMAIL]` will set that person's email to be private, whereas if `e/[EMAIL]` was used, that person's email would be public. +
+
+These new prefixes can be found in `CliSyntax`, and `AddCommandParser` will take data with these prefixes.
+`AddCommandParser` will then call the appropriate method in `ParserUtil`, which will parse the string provided into a new field.
+Depending on whether or not the field is supposed to be private, `ParsetUtil` will call the appropriate constructor.
+Upon obtaining all the fields anc creating a new `Person`, `AddCommandParser` will create a new `AddCommand` to handle the addition of the new `Person`.
+
+image::AddPrivateSequenceDiagram.png[width="800"]
+_Figure 3.10.2 : Sequence Diagram for adding a Person with private fields_
+
+If a field is private, then the `toString` method will return a string `<Private [FIELD]>`, where `[FIELD]` is the name of that field. +
+This can be seen from the `toString` method in `Name`:
+[source,java]
+----
+@Override
+public String toString() {
+    if (isPrivate) {
+        return "<Private Name>";
+    }
+    return fullName;
+}
+----
+
+Since the information displayed in a person's card in the UI gets the value of the field through the `toString()` method, this hides the actual value of the field in the UI.
+
+In addition, if `isPrivate` is `true` for `Name`, clicking on a person's card in the UI will not trigger a search on Google for that person's name.
+
+Instead, a `NewResultAvailableEvent` will be raised by `BrowserPanel` to inform the user that they are not allowed to search for a person possessing a private `Name`.
+
+To keep track of whether each field is private or not, `XmlAdaptedPerson` will have to store the `isPrivate` value for each field of `Person`.
+This is done by adding the following
+
+[source,java]
+----
+@XmlElement(required = true)
+   private Boolean nameIsPrivate;
+@XmlElement(required = true)
+   private Boolean phoneIsPrivate;
+@XmlElement(required = true)
+   private Boolean emailIsPrivate;
+@XmlElement(required = true)
+   private Boolean addressIsPrivate;
+@XmlElement(required = true)
+   private Boolean remarkIsPrivate;
+----
+Which results in a `Person` being saved in the xml file in the following format
+
+[source, html]
+----
+<persons>
+    <name>Alex Yeoh</name>
+    <nameIsPrivate>false</nameIsPrivate>
+    <phone>87438807</phone>
+    <phoneIsPrivate>false</phoneIsPrivate>
+    <email>alexyeoh@example.com</email>
+    <emailIsPrivate>false</emailIsPrivate>
+    <address>Blk 30 Geylang Street 29, #06-40</address>
+    <addressIsPrivate>false</addressIsPrivate>
+    <remark>cheerful lad</remark>
+    <remarkIsPrivate>false</remarkIsPrivate>
+    <tagged>friends</tagged>
+</persons>
+----
+
+If an old save file without privacy data is loaded, then the `toModelType()` method in `XmlAdaptedPerson` will set `isPrivate` to be `false` for each field of `Person`, to keep the displayed information the same.
+
+[NOTE]
+If a private field is to be edited by `EditCommand`, `createEditedPerson()` in `EditCommand` will not modify the data of that field, even though `EditCommand` will create a new `CommandResult` with a success message. +
+Hence, a private field will remain private and the value stored by that field will remain the same as it originally was.
+
+This is done through the `createEditedPerson` method in `EditCommand`.
+`createEditedPerson` sets the boolean `areFieldsAllPrivate` to initially be true.
+
+As the new instance of each field is being generated, if any field contains a value in the input `EditPersonDescriptor` and that field was not originally private, `areFieldsAllPrivate` is set to false.
+
+This can be seen from the following code, which is used for the generation of a new `Name` object.
+[source,java]
+----
+private static Name createUpdatedName(ReadOnlyPerson personToEdit, EditPersonDescriptor editPersonDescriptor) {
+    Name updatedName;
+    if (!personToEdit.getName().isPrivate()) {
+        updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
+        if (editPersonDescriptor.getName().isPresent()) {
+            areFieldsAllPrivate = false;
+        }
+    } else {
+        updatedName = personToEdit.getName();
+    }
+    return updatedName;
+}
+----
+
+Upon generation of all the fields, if `areFieldsAllPrivate` is still true, `createEditedPerson` will throw an `IllegalArgumentException`, which will cause `EditCommand` to throw a `CommandException` and prevent the command from continuing.
+
+==== Design Considerations
+
+**Aspect:** Implementation of `isPrivate` +
+
+**Alternative 1 (current choice):** Add a boolean to each field class. +
+**Pros:** Similar implementation to how the fields are currently being implemented. Privacy settings can be obtained directly from the field class itself. +
+**Cons:** Repetitive code. Additional overloaded constructor and methods are needed to set and get the value of `isPrivate`.  +
+
+**Alternative 2:** Store a person's privacy settings outside of the field classes in an Array or a HashMap in `Person`. +
+**Pros:** Can access and modify the privacy settings of all fields easily. +
+**Cons:** The fields themselves do not have any indication of whether or not they are private, and will have to check with the `Person` the belong to.
+
+---
+**Aspect:** How to determine if a field for a newly added person should be private. +
+
+**Alternative 1 (current choice):** Add a `p` to the start of each field's prefix to signify that that field should be private. +
+**Pros:** Can add `Person` containing any combination of private and public fields in 1 command line. +
+**Cons:** Have to modify `AddCommand`, `AddCommandParser`, `ParserUtil` and other classes to detect the new prefix and call a separate constructor when a field is private. +
+
+**Alternative 2:** A `Person` is added with all field public, a separate command will then have to be used to set the desired fields to be private. +
+**Pros:** Easier implementation, do not have to modify `AddCommand`. +
+**Cons:** Requires 2 command lines to create a `Person` with private fields, which takes more time and is more inconvenient for users.
+
+=== Changing of a Person's Privacy
+
+`ChangePrivacyCommand` facilitates the setting of an existing person's field's privacy. Depending on the user's input, `ChangePrivacyCommand` will use each field's `setPrivate()` method to set the value of `isPrivate`.
+
+The sequence diagram for `ChangePrivacyCommand` is illustrated below.
+
+image::ChangePrivacySequenceDiagram.png[width="800"]
+_Figure 3.11.1 : Sequence Diagram for changing the privacy of a Person's fields_
+
+Upon receiving a String containing the arguments from `AddressBookParser`, `ChangePrivacyCommandParser` will create a `PersonPrivacySettings` object.
+
+Depending on the input, the `ChangePrivacyCommandParser` will set the privacy values, represented by Booleans, in the `PersonPrivacySettings` object to be `true` or `false`.
+This is illustrated in the code below, which shows how the privacy of `Name` is set in `PersonPrivacySettings`:
+[source, java]
+----
+private void checkName(ArgumentMultimap argMultimap, PersonPrivacySettings pps) throws ParseException {
+    if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
+        if (argMultimap.getValue(PREFIX_NAME).toString().equals("Optional[true]")) {
+            pps.setNameIsPrivate(true);
+
+        } else if (argMultimap.getValue(PREFIX_NAME).toString().equals("Optional[false]")) {
+            pps.setNameIsPrivate(false);
+        } else {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    ChangePrivacyCommand.MESSAGE_USAGE));
+        }
+    }
+}
+----
+`ChangePrivacyCommandParser` will then create a new `ChangePrivacyCommand` using the input `Index` and the `PersonPrivacySettings`
+
+When `ChangePrivacyCommand` starts executing, it will create a new `Person` based on the data of the `Person` at the specified `Index`.
+It will then adjust the privacy values based on the input `PersonPrivacySettings`. For example, the new `Name` is created in the code snippet below:
+
+[source, java]
+----
+private static Name createNameWithPrivacy(ReadOnlyPerson person, PersonPrivacySettings pps) {
+    Name name;
+    try {
+        if (person.getName().getIsPrivate()) {
+            person.getName().setPrivate(false);
+            name = new Name(person.getName().toString());
+            person.getName().setPrivate(true);
+        } else {
+            name = new Name(person.getName().toString());
+        }
+    } catch (IllegalValueException e) {
+        throw new AssertionError("Invalid Name");
+    }
+    if (pps.getNameIsPrivate() != null) {
+        name.setPrivate(pps.getNameIsPrivate());
+    } else {
+        name.setPrivate(person.getName().getIsPrivate());
+    }
+    return name;
+}
+----
+Once it is done, it will update the original `Person` with the newly created `Person` in `Model`.
+
+[NOTE]
+If there are missing fields in the input string, the getter methods in `PersonPrivacySettings` will return `false`, but the actual value stored will remain as `null`.
+This allows `isAnyFieldNonNull` to check if the user has input any field at all.
+
+==== Design Considerations
+
+**Aspect:** Implementation of changing of a person's privacy. +
+
+**Alternative 1 (current choice):** Create a separate command to do so. +
+**Pros:** It is clear to users and developers that `changeprivacy` is to modify a person's privacy while `edit` changes the actual data if the relevant field is not private.  +
+**Cons:** Additional command, parser and tests must be created.  +
+
+**Alternative 2:** Enhance the functionality of EditCommand. +
+**Pros:** Can make use of existing code to aid the implementation. +
+**Cons:** Increases the complexity of EditCommand for both users and developers. More ambiguous as to how editing a private field will affect the data.
+
+=== Changing the address book's privacy level
+
+`PrivacyLevelCommand` allows the user to change the privacy level of Address++, letting users easily reveal data hidden by private fields, or hide persons containing private fields entirely.
+
+The sequence diagram for `PrivacyLevelCommand` is illustrated below.
+
+image::PrivacyLevelSequenceDiagram.png[width="800"]
+_Figure 3.12.1 : Sequence Diagram for changing the privacy level of the address book_
+
+`PrivacyLevelCommandParser` will accept any integer that is input in the command line, and create a `PrivacyLevelCommand` that stores the integer, which represents the privacy level to switch to.
+
+Upon execution,`PrivacyLevelCommand` will first check if the integer falls within the range of the minimum and maximum privacy level. If it does not, a new `CommandException` is thrown, reminding the user of the valid input levels.
+
+If the integer is within the valid range, `PrivacyLevelCommand` will update the privacy level of `Model`. Following that, it will proceed to update the privacy level of each person.
+
+`Model`, each `Person` and each field that can be set as private all contain a `privacyLevel` variable to indicate the current privacy level. This value should remain the same between all of these objects throughout the operation of Address++.
+
+image::PersonClassDiagramPrivacyLevel.png[width="800"]
+_Figure 3.12.2 : Class Diagram of Person, which shows which classes contain an integer to indicate the privacy level_
+
+Finally, depending on the privacy level, `PrivacyLevelCommand` will update the call `model.updateFilteredPersonList()` with the appropriate predicate.
+
+This process is illustrated in the code snippet below.
+
+[source, java]
+----
+public CommandResult execute() throws CommandException {
+    requireNonNull(model);
+    if (level < MIN_PRIVACY_LEVEL || level > MAX_PRIVACY_LEVEL) {
+        throw new CommandException(WRONG_PRIVACY_LEVEL_MESSAGE);
+    }
+    model.setPrivacyLevel(level);
+    for (int i = 0; i < model.getAddressBook().getPersonList().size(); i++) {
+        ReadOnlyPerson toReplace = model.getPersonAtIndexFromAddressBook(i);
+        Person newPerson = new Person(toReplace);
+        newPerson.setPrivacyLevel(level);
+        try {
+            model.updatePerson(toReplace, newPerson);
+        } catch (DuplicatePersonException e) {
+            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        } catch (PersonNotFoundException e) {
+            throw new AssertionError("The target person cannot be missing");
+        }
+    }
+    if (level == 3) {
+        model.updateFilteredPersonList(new ShowAllPrivacyLevelPredicate());
+    } else {
+        model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
+    }
+    return new CommandResult(String.format(CHANGE_PRIVACY_LEVEL_SUCCESS, Integer.toString(level)));
+}
+----
+
+==== Design Considerations
+
+**Aspect:** Storing of the privacy level +
+
+**Alternative 1 (current choice):** Have each relevant class store a privacy level integer. +
+**Pros:** Less coupling, less modification of existing code required.  +
+**Cons:** Have to modify every relevant object every time `PrivacyLevelCommand` is called. Runs the risk that an object may accidentally not have its privacy level modified to match the other objects if privacy levels are not properly updated. +
+
+**Alternative 2:** Store the privacy level in the model and have any object that needs to check it query from model. +
+**Pros:** Only one integer needs to be modified for the privacy level of the entire address book to change, which also eliminates any possibility that privacy level may be different when used by different objects. +
+**Cons:** Increases coupling, classes such as Name will need to have a Model object as one of its variables to access Model. Large scale modification of existing code and tests are necessary.
+// end::privacy[]
+
+// tag::locate[]
+=== Locating a Person on Google Maps
+
+Locating a person's address allows users to take the address that is stored by a person and search it on Google Maps in the browser.
+
+Upon calling the `locate` command, `LocateCommandParser` will parse the input string into an `Index`, and create a new `LocateCommand`. Should the arguments be a non-integer, a `ParseException` will be thrown. +
+This can be seen from the code snippet below:
+
+[source, java]
+----
+ public LocateCommand parse(String args) throws ParseException {
+    try {
+        Index index = ParserUtil.parseIndex(args);
+        return new LocateCommand(index);
+    } catch (IllegalValueException ive) {
+        throw new ParseException(
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, LocateCommand.MESSAGE_USAGE));
+    }
+}
+----
+
+Upon execution of `LocateCommand`, it will search the `Model` for the `Person` at the input `Index`. If the `Index` is out of range of the list of persons, a `CommandException` will be thrown.
+
+Otherwise, `LocateCommand` will post a new `BrowserPanelLocateEvent` and pass in the `Person` found to that event. It will then return a `CommandResult` indicating the success of its execution.
+
+This code for this can be found below:
+
+[source, java]
+----
+public CommandResult execute() throws CommandException {
+
+    List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+
+    if (targetIndex.getZeroBased() >= lastShownList.size()) {
+        throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+
+    EventsCenter.getInstance().post(new BrowserPanelLocateEvent(
+            model.getFilteredPersonList().get(targetIndex.getZeroBased())));
+    return new CommandResult(String.format(MESSAGE_LOCATE_PERSON_SUCCESS, targetIndex.getOneBased()));
+
+}
+----
+
+BrowserPanel will then use `handleBrowserPanelLocationEvent` to process this newly created event. It will call `loadMapsPage`, which will check if the `Person`'s `Address` is private or not. If their `Address` is public, it will launch the browser, showing the `Address` of that `Person` on Google Maps. Otherwise, an error message will be printed, as can be seen below:
+
+[source, java]
+----
+ private void loadMapsPage(ReadOnlyPerson person) {
+    if (person.getAddress().isPrivate()) {
+        raise(new NewResultAvailableEvent(PRIVATE_ADDRESS_CANNOT_SEARCH));
+    } else {
+        loadPage(GOOGLE_MAPS_URL_PREFIX + person.getAddress().toString().replaceAll(" ", "+")
+            + GOOGLE_MAPS_URL_SUFFIX);
+    }
+}
+----
+
+The overall sequence of events is illustrated by the following sequence diagram:
+
+image::LocateSequenceDiagram.png[width="800"]
+_Figure 3.13.1 : Sequence Diagram for Locating a Person's Address_
+
+==== Design Considerations
+
+**Aspect:** Implementation of the Google Maps to search for a person's `Address` +
+
+**Alternative 1 (current choice):** Create a separate command `locate`. +
+**Pros:** No modification needed for existing commands, which makes it clear the purpose of each command. +
+**Cons:** Additional commands will need to be learnt for both developers and users. +
+
+**Alternative 2:** Add the functionality into `SelectCommand`. +
+**Pros:** Expands the utility of `SelectCommand` beyond performing a Google search on their name. +
+**Cons:** Will require significant modification of existing code, and may make it more confusing for users.
+// end::locate[]
+
+// tag::navigate[]
+=== Navigating from one address to another using Google Maps
+
+When the `navigate` command is entered into the command line, `NavigateCommandParse` will first reset its internal `from`, `to`, `fromIndex`, `toIndex` to null. It will then check for the input prefixes and ensure that only one of the prefixes from the group `fp/`, `ft/`, and `fa/`, which we will subsequently call the `from` prefixes are present. It then does the same with the prefixes from the group `tp/`, `tt/` and `ta/`, which we will call the `to` prefixes. +
+
+This is done by invoking the `checkFrom` and `checkTo` methods as can be seen from the code snippet below. For the example `checkFrom`, it takes in 3 booleans on whether or not each prefix is present and checks whether or not there is exactly one kind of `from` prefix. It throws an error if there are no `from` prefixes or more than one type of `from` prefixes.
+
+[source, java]
+----
+private void checkFrom(ArgumentMultimap argumentMultimap, boolean fromAddress, boolean fromPerson, boolean fromTask)
+        throws ParseException {
+    if (!(fromAddress || fromPerson || fromTask)) {
+        throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, NavigateCommand.MESSAGE_USAGE));
+    } else if ((fromAddress && (fromPerson || fromTask)) || (fromPerson && fromTask)) {
+        // If 2 or more from prefixes are present
+        throw new ParseException(NavigateCommand.MESSAGE_MULTIPLE_FROM_ERROR);
+    } else {
+        try {
+            setArgsForNavigateCommand(argumentMultimap, fromAddress, fromPerson, true);
+        } catch (IllegalValueException e) {
+            throw new ParseException(e.getMessage(), e);
+        }
+    }
+}
+----
+
+`checkFrom` calls `setArgsForNavigateCommand`, which sets the variables in the `NavigateCommandParser` to the appropriate values depending on whether the address originates from a person, a task or is a manual input by the user.
+
+[source, java]
+----
+private void setArgsForNavigateCommand(ArgumentMultimap argumentMultimap, boolean address, boolean person, boolean forFrom) throws IllegalValueException {
+    if (address) {
+        if (forFrom) {
+            from = new Location(ParserUtil.parseLocationFromAddress(
+                    argumentMultimap.getValue(PREFIX_NAVIGATE_FROM_ADDRESS)).get().toString());
+        } else {
+            to = new Location(ParserUtil.parseLocationFromAddress(
+                    argumentMultimap.getValue(PREFIX_NAVIGATE_TO_ADDRESS)).get().toString());
+        }
+    } else if (person) {
+        if (forFrom) {
+            fromIndex = ParserUtil.parseIndex(argumentMultimap
+                    .getValue(PREFIX_NAVIGATE_FROM_PERSON).get());
+        } else {
+            toIndex = ParserUtil.parseIndex(argumentMultimap
+                    .getValue(PREFIX_NAVIGATE_TO_PERSON).get());
+        }
+    } else {
+        if (forFrom) {
+            fromIndex = ParserUtil.parseIndex(argumentMultimap
+                    .getValue(PREFIX_NAVIGATE_FROM_TASK).get());
+        } else {
+            toIndex = ParserUtil.parseIndex(argumentMultimap
+                    .getValue(PREFIX_NAVIGATE_TO_TASK).get());
+        }
+    }
+}
+----
+
+Finally, `NavigateCommandParser` will create a new `NavigateCommand` based on the inputs as set by `setArgsForNavigateCommand`.
+
+When `NavigateCommand` is created, it first checks if there are duplicate `from` or `to` addresses that are passed into it and throws an error if that is the case.
+
+[source, java]
+----
+private void checkDuplicateFromAndToLocation(Location locationFrom, Location locationTo, Index fromIndex, Index toIndex) throws IllegalArgumentException {
+    if (locationFrom != null && fromIndex != null) {
+        throw new IllegalArgumentException(MESSAGE_MULTIPLE_FROM_ERROR);
+    }
+    if (locationTo != null && toIndex != null) {
+        throw new IllegalArgumentException(MESSAGE_MULTIPLE_TO_ERROR);
+    }
+}
+----
+
+If it passes this check, `NavigateCommand` stores `fromLocation` and `toLocation`, which are the Locations of any manually added address by the user to navigate from and to respectively. It also stores `toIndex` and `fromIndex`, which are the Indexes of the `Person` or `Task` to extract the address from as well as `toIsTask` and `fromIsTask`, which are booleans that indicate whether `toIndex` and `fromIndex` are indexes of Persons or Tasks.
+
+Upon execution of `NavigateCommmand`, it will first check if it has a non-null `fromIndex`, if it does, it will create a new Location based on its `fromIndex` and `fromIsTask` values using the `setLocationByIndex` method. Otherwise, it will set the Location to be the Location in `locationfrom`. This can be seen below:
+[source, java]
+----
+if (fromIndex != null) {
+    try {
+        from = setLocationByIndex(fromIndex, fromIsTask);
+    } catch (IllegalValueException e) {
+        throw new IllegalArgumentException(MESSAGE_PRIVATE_PERSON_ADDRESS_ERROR);
+    }
+} else {
+    from = locationFrom;
+}
+----
+
+setLocationByIndex throws CommandException if the target Person or Task does not have a valid Address to extract due to the Address being blank, or it being private.
+
+[source, java]
+----
+ private Location setLocationByIndex(Index index, boolean isTask) throws IllegalValueException, CommandException {
+    if (isTask) {
+        if (model.getFilteredTaskList().get(index.getZeroBased()).getTaskAddress().toString().equals("")) {
+            throw new CommandException(String.format(MESSAGE_TASK_HAS_NO_ADDRESS_ERROR, index.getOneBased()));
+        } else {
+            return new Location(model.getFilteredTaskList().get(index.getZeroBased()).getTaskAddress().toString());
+        }
+    } else {
+        if (model.getFilteredPersonList().get(index.getZeroBased()).getAddress().toString().equals("")) {
+            throw new CommandException(String.format(MESSAGE_PERSON_HAS_NO_ADDRESS_ERROR, index.getOneBased()));
+        } else if (model.getFilteredPersonList().get(index.getZeroBased()).getAddress().getIsPrivate()) {
+            throw new CommandException(String.format(MESSAGE_PRIVATE_PERSON_ADDRESS_ERROR, index.getOneBased()));
+        } else {
+            return new Location(model.getFilteredPersonList().get(index.getZeroBased())
+                    .getAddress().toString());
+        }
+    }
+}
+----
+
+`NavigateCommand` does the same for the Address to navigate `To` and posts a new `BrowserPanelNavigateEvent`, passing in the `Location` to navigate `From` and the `Location` to navigate `To`. +
+`NavigateCommand` will then create a new `CommandResult` to indicate a successful `Command`.
+
+`BrowserPanel` will then get the information from this `BrowserPanelNavigateEvent`, and load the appropriate Google Maps URL after replacing information such as the Unit Number and extra whitespaces. This has to be done as Google Maps does not function properly with Unit Numbers or spaces in its URL.
+
+[source, java]
+----
+private void loadDirectionsPage(String fromLocation, String toLocation) {
+    loadPage(GOOGLE_MAPS_DIRECTIONS_PREFIX + "&origin="
+            + fromLocation.replaceAll("#(\\w+)\\s*", "").replaceAll(" ", "+")
+            .replaceAll("-(\\w+)\\s*", "")
+            + "&destination="
+            + toLocation.replaceAll("#(\\w+)\\s*", "").replaceAll(" ", "+")
+            .replaceAll("-(\\w+)\\s*", "")
+            + GOOGLE_MAPS_DIRECTIONS_SUFFIX);
+}
+----
+The overall sequence of events is illustrated by the following sequence diagram:
+
+image::NavigateSequenceDiagram.png[width="800"]
+_Figure 3.14.1 : Sequence Diagram for Navigating from one Address to another_
+
+
+==== Design Considerations
+
+**Aspect:** How to pass the appropriate information to NavigateCommand +
+
+**Alternative 1 (current choice):** Have a constructor that takes in a large number of arguments so that NavigateCommand can correctly identify what kind of Location to post in BrowserPanelNavigateEvent. +
+**Pros:** Only 1 constructor needed. +
+**Cons:** Additional methods will be needed to properly identify which Location to use for navigation.  +
+
+**Alternative 2:** Create many constructors to segregate the different possible scenarios that might happen. +
+**Pros:** It is clear what information to use to generate the Locations +
+**Cons:** Requires large numbers of constructors to be created, easy for mistakes to occur as Constructors all share the same name but different argument types.
+
+**Aspect:** How to transfer information of the address from one class to another +
+
+**Alternative 1 (current choice):** Wrap the address in a `Location` class before posting the BrowserPanelNavigateEvent. +
+**Pros:** Only Locations, which indicates that the address is properly parsed, will be passed for the BrowserPanel to read, reducing the possibility of BrowserPanel reading stray unwanted strings as addresses to navigate to and from. The value stored inside each Location cannot be altered once that Location object has been created. +
+**Cons:** A new class has to be created and Strings, Addresses and TaskAddresses will need to be converted to Locations first.  +
+
+**Alternative 2:** Simply pass on a String containing the address from class to class +
+**Pros:** Easy to read and transfer information, lower overhead +
+**Cons:** It is easier for stray Strings to pollute the information, and the Strings can be unintentionally modified.
+// end::navigate[]
+
+// tag::opensaveas[]
+=== Opening and Saving of the .xml save file
+Both `OpenCommand` and `SaveAsCommand` function in a very similar way.
+When `open` or `save` is input by the user, `AddressBookParser` will create a new `OpenCommand` or `SaveAsCommand`.
+
+These two commands will then post a new `OpenRequestEvent` or a new `SaveAsRequestEvent` and return a successful `CommandResult`.
+
+`MainWindow` will have two methods, `HandleOpenRequestEvent` and `HandleSaveAsRequestEvent` that subscribe to the above two events and will call `handleOpen` and `handleSaveAs`.
+
+[source, java]
+----
+private void handleOpen() throws IOException, DataConversionException {
+    // Set extension filter
+    FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
+            "XML files (*.xml)", "*.xml");
+    fileChooser.getExtensionFilters().add(extFilter);
+
+    // Show open file dialog
+    File file = fileChooser.showOpenDialog(primaryStage);
+    if (file != null) {
+        // Change file path to the opened file
+        storage.changeFilePath(file.getPath(), prefs);
+        // Reset data in the model to the data from the opened file
+        model.resetData(XmlFileStorage.loadDataFromSaveFile(file));
+        // Update the UI
+        fillInnerParts();
+    }
+}
+----
+
+[source, java]
+----
+private void handleSaveAs() throws IOException {
+    // Set extension filter
+    FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(
+            "XML files (*.xml)", "*.xml");
+    fileChooser.getExtensionFilters().add(extFilter);
+
+    // Show save file dialog
+    File file = fileChooser.showSaveDialog(primaryStage);
+
+    if (file != null) {
+        // Make sure it has the correct extension
+        if (!file.getPath().endsWith(".xml")) {
+            file = new File(file.getPath() + ".xml");
+        }
+        // Change file path to the new save file
+        storage.changeFilePath(file.getPath(), prefs);
+        // Save the address book data and the user preferences
+        storage.saveAddressBook(model.getAddressBook());
+        storage.saveUserPrefs(prefs);
+        // Update the UI
+        fillInnerParts();
+    }
+}
+----
+
+Both `handleOpen` and `handleSaveAs` will create a new `FileChooser` extension filter that only allows the pop-up window to save files and load files in the .xml format.
+
+Upon successfully selecting a file to load or a location to save as in the pop-up window, both methods will call `changefilepath` in `Storage` to the selected file path.
+
+Finally, both commands diverge as `handleOpen` will call `resetData` to reset the data using the new save file, while `handleSaveAs` will call `saveAddressBook` and `saveUserPrefs` to save the data. Both methods will finally call `fillInnerParts()` to refresh the data displayed on the UI.
+
+This process is illustrated using the sequence diagram below:
+
+image::OpenSequenceDiagram.png[width="800"]
+_Figure 3.15.1 : Sequence Diagram for Opening a save file_
+
+==== Design Considerations
+**Aspect:** How does `OpenCommand` and `SaveAsCommand` determine the file location to save or load the save file from +
+
+**Alternative 1 (current choice):** Open a `FileChooser` window, allowing the user to move through their file directory to acquire their save location and to select the name of the save file. +
+**Pros:** User friendly, many other applications function similarly when saving and loading. Easier to implement and use as part of the dropdown menu in the User Interface. +
+**Cons:** Not entirely command line based.  +
+
+**Alternative 2:** Input the file directory and file name to save or load from as part of the command. +
+**Pros:** Entirely command line based, may be more preferable for users who prefer using the command line. +
+**Cons:** Requires more complex code. Command must check if the file location to save or load from is valid, and that there is a valid file of that name.
+// end::opensaveas[]
+
+// tag::theme[]
+=== Changing the theme of the address book
+
+The original style of the address book may not be for everyone. `ThemeCommand` allows users to switch between multiple preset themes.
+
+`ThemeCommandParser` trims the arguments after the word `theme` in the command line, removing any whitespaces leading up to and following that word. If the entire String ended up trimmed, then `ThemeCommandParser` will throw a `ParseException`. Otherwise, it creates a new `ThemeCommand`, passing in the trimmed word as seen below:
+
+[source, java]
+----
+public ThemeCommand parse(String args) throws ParseException {
+    String trimmed = args.trim();
+    if (trimmed.isEmpty() || trimmed == null) {
+        throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ThemeCommand.MESSAGE_USAGE));
+    } else {
+        return new ThemeCommand(trimmed);
+    }
+}
+----
+
+When initialising the Address Book, the `AddressBook` class will create a `HashMap<String, String>` to store the keys and values of the themes.
+
+[source, java]
+----
+private void initialiseStyleMap() {
+    styleMap.put("dark", "DarkTheme.css");
+    styleMap.put("Dark", "DarkTheme.css");
+    styleMap.put("light", "LightTheme.css");
+    styleMap.put("Light", "LightTheme.css");
+}
+----
+
+The keys correspond to the possible user inputs, such as `light` or `dark`, while the values contain the filepath of the .css files, such as `DarkTheme.css`. This way, users do not need to remember and will not have to know what the .css files are like to use the theme command.
+
+On executing `ThemeCommand`, it first checks if the input string can be found in the set of keys in the HashMap contained by the `AddressBook` class. If it cannot be found, or if the value corresponding to the input string is identical to that of the value of the file path of the .css file stored in Model, then a `CommandException` is thrown, as users cannot change to a non-existent theme, or a theme that is already in use.
+
+If the string is valid, `ThemeCommand` will post a `ChangeThemeRequestEvent` and set the theme to the new file path corresponding to the input String in `Model`. `Model` will then continue on to set the theme in `UserPrefs` as well, so that it can be loaded on starting the application.
+
+`MainWindow` contains a method `handleChangeThemeEvent` that subscribes to the `ChangeThemeRequestEvent`. `handleChangeThemeEvent` calls `handlChangeTheme`, which first checks if there is an existing theme, if there is, it removes it, then sets adds the new theme through the file path that was passed to it.
+
+[source, java]
+----
+public void handleChangeTheme(String theme) {
+    if (getRoot().getStylesheets().size() > 1) {
+         getRoot().getStylesheets().remove(1);
+     }
+     getRoot().getStylesheets().add(VIEW_PATH + theme);
+ }
+----
+
+After all is done, `ThemeCommand` returns a `CommandResult`, indicating the success of the command.
+The overall execution of `ThemeCommand` is seen in the following code snippet.
+[source, java]
+----
+public CommandResult execute() throws CommandException {
+    requireNonNull(model);
+
+    String styleSheet;
+
+    if (model.getStyleMap().containsKey(style)) {
+        styleSheet = model.getStyleMap().get(style);
+    } else {
+        throw new CommandException(String.format(MESSAGE_THEME_NOT_AVAILABLE, style));
+    }
+
+    if (model.getTheme().equals(styleSheet)) {
+        throw new CommandException(String.format(MESSAGE_THEME_IN_USE, style));
+    }
+
+    EventsCenter.getInstance().post(new ChangeThemeRequestEvent(styleSheet));
+    model.setTheme(styleSheet);
+    return new CommandResult(String.format(MESSAGE_THEME_CHANGE_SUCCESS, style));
+}
+----
+
+The sequence diagram for the whole process is show below:
+
+image::ThemeSequenceDiagram.png[width="800"]
+_Figure 3.16.1 : Sequence Diagram for Changing Themes_
+
+==== Design Considerations
+**Aspect:** Getting the correct file path to the .css file +
+**Alternative 1 (current choice):** Store the file path in a HashMap, where the keys are the possible inputs that the user may type and the values are the actual filepaths +
+**Pros:** Easier on the user. They do not need to remember any complicated .css names or file paths, and the input string can be customisable by changing the names of the keys added to the HashMap. +
+**Cons:** Slightly more work needed to initialise the HashMap and check if the file paths are valid. +
+**Alternative 2:** Change the name of the .css file and file paths such that what the user directly inputs can correspond to the actual .css file. +
+**Pros:** A HashMap is no longer needed, instead, the input string just needs to be parsed to be turned into a file path. This makes it easier to add additional .css files, as developers do not have to keep modifying the initialisation of the HashMap +
+**Cons:** Less flexibility in naming the file, user may break the code if they realise the input string directly used as part of the file path.
+// end::theme[]
+
+// tag::adddeletetag[]
+=== Add/Delete Tag mechanism
+
+The add/delete tag mechanism is facilitated by `personArrayList`, which resides inside `LogicManager`. It supports add/delete
+tag for all persons in the address book. This command will inherit from `UndoableCommand`.
+
+The add/delete tag command are executed by `AddTagCommand` and `DeleteTagCommand` are parsed through `AddTagCommandParser` and `DeleteTagCommandParser`.
+It is different from `edit [INDEX] [TAG]` since it allows the user to perform the addition and deletion of tags for multiple people at once.
+If the user wants to add the `t/friends` tag for the first 3 persons in the address book, the `AddTagCommand` (`add tag/ 1 2 3 t/friends`) will be executed.
+The same operation will happen for `delete tag/` command.
+
+The `AddTagCommand` goes through all the persons in the address book and add tag to the persons with specific index. The `DeleteTagCommand` works
+in a similar way.
+
+The example of how `AddTagCommand` is working:
+[source,java]
+----
+/**
+ * Adds a tag to the persons in the list from the address book.
+ */
+public class AddTagCommand extends AddCommand {
+    /**
+         * Check whether the index within the range then checks whether the specific persons have the tag.
+         * If not, add the tag to the person that doesn't have the given tag.
+         */
+        @Override
+        public CommandResult executeUndoableCommand() throws CommandException {
+
+            for (Index targetIndex : targetIndexes) {
+                // check whether the index within the range
+            }
+            for (int i = 0; i < targetIndexes.size(); i++) {
+                // check whether all persons have the given tag
+            }
+            // throw exception for duplicated tag
+            return new CommandResult();
+        }
+----
+
+Suppose the user enter the `add tag/ 1 2 t/friends` command. The following sequence diagram shows how the add tag command works:
+
+image::AddTagSdForLogic.png[width="800"]
+_Figure 3.17.1 : Add Tag Sequence Diagram for Logic_ +
+The `delete tag/` command works the same as `add tag/` command with different name only.
+
+[NOTE]
+If the input index does not exist, the `AddTagCommand` and `DeleteTagCommand` will throw an exception. +
+If the tag to be deleted does not exist, the `DeleteTagCommand` will throw an exception. +
+If the tag to be added exists in every target person in the address book, the `AddTagCommand` will throw an exception.
+
+==== Design Considerations
+
+
+**Aspect:** Implementation of the `add tag/` and `delete tag/` +
+**Alternative 1 (current choice):** implement the methods in `ModelManager` +
+**Pros:** Easier to implement. `ModelManager` includes all the methods and variables. +
+**Cons:** Must modify `Model` also to fit the `ModelManager`. Beginner may have difficulty to understand the different functions in Model component+
+
+**Alternative 2:** Implement the `addtag` and `deletetag` in `AddTagCommand` and `DeleteTagCommand` respectively. +
+**Pros:** Easier to understand. +
+**Cons:** Repetitive code. Additional overload constructor needs to be implement. The `AddTagCommand` and `DeleteTagCommand` will have to update the person list.
+This violates the Single Responsibility Principle.
+
+---
+**Aspect:** Implementation of the `AddTagCommand` and `DeleteTagCommand` +
+**Alternative 1 (current choice):** create new command `add tag/` and `delete tag/` +
+**Pros:** Less modification of existing command and parser +
+**Cons:** Users have to learn how to use the additional commands +
+
+**Alternative 2:** Modify the existing `add` and `delete` command +
+**Pros:** Users could use the same commands to achieve different purpose +
+**Cons:** Additional override the constructor for the existing command. It might not be easy for the beginner.
+// end::adddeletetag[]
+
+// tag::findtag[]
+
+=== Find Tag mechanism
+
+The find tag mechanism is facilitated by an ArrayList of Tags, which resides inside `LogicManager`. It supports finding persons by their tags in the address book.
+This command will not inherit from `UndoableCommand`.
+
+The `find tag/` command is executed by `FindTagCommand` and is parsed through `FindTagCommandParser`.
+After parsing through `FindTagCommandParser`, it does not goes to the `FindTagCommand` straightly. The list of tags input will be processed by `NameContainsTagsPredicate` first.
+It is similar to the `find` command since find persons through their names and find persons through their tags are quite similar.
+
+Please take not that although `FindTagCommand` is similar to `FindCommand`, there are still some differences.
+`FindTagCommand` provides exclusive finding whereas `FindCommand` does not. It is achieved in the `NameContainsTagsPredicate`.
+
+This is the example of how `NameContainsTagsPredicate` is working:
+Firstly, it will convert a Set of Tag to String.
+
+[source,java]
+----
+private String convertTagToString(ReadOnlyPerson person) {
+        Set<Tag> personTags = person.getTags();
+        StringBuilder allTagNames = new StringBuilder();
+        for (Tag tag : personTags) {
+            allTagNames.append(tag.getTagName());
+            allTagNames.append(" ");
+        }
+        return allTagNames.toString().trim();
+    }
+----
+After having a list of string, it will then split strings into two ArrayList. One is for the tags we are looking for and another one
+is for the tags to be excluded.
+
+[source,java]
+----
+/**
+     * Update the wantedTag and unwantedTag list
+     * @param wantedTag list of tags to be searched
+     * @param unwantedTag list of tags to not be searched
+     */
+    private void updateWantedTagUnwantedTag(List<String> wantedTag, List<String> unwantedTag) {
+        for (String everyTag : tags) {
+            if (!everyTag.startsWith("/not")) {
+                wantedTag.add(everyTag);
+            } else {
+                unwantedTag.add(everyTag.substring(4));
+            }
+        }
+    }
+----
+
+Lastly, it will return the result according to the user input. +
+Suppose the user enter `find tag/ friends` command. The following sequence diagram shows how the find tag command works:
+
+image::FindTagSequenceDiagram.png[width="800"]
+_Figure 3.18.1 : Find Tag Sequence Diagram for Logic_ +
+
+[NOTE]
+If the input index tags do not exist, the `FindTagCommand` will give a empty list.
+
+==== Design Considerations
+
+
+**Aspect:** Implementation of the `find tag/` +
+**Alternative 1 (current choice):** implement a new command `find tag/` +
+**Pros:** Easier to implement. `find tag/` command will be similar to the `find` command. +
+**Cons:** Must create `NameContainsTagsPredicate` in model. It does not fully utilize the existing `NameContainsKeywordsPredicate`. +
+
+**Alternative 2:** Implement the `find tag/` in `FindCommand`. +
+**Pros:** Easier for user. They do not have to memorize some many commands. +
+**Cons:** The existing `FindCommand` will not only response for finding persons through names only. This Violates Single Responsibility Principle
+and Separation of Concerns as FindCommand now needs to do two different things.
+// end::findtag[]
+
+// tag::favunfav[]
+
+=== Favourite/Unfavourite Person mechanism
+To favourite a person is achieved by `FavouriteCommand`. It basically changes the value of the `favourite` status of a `Person` but there is no specific `Favourite` field for person.
+
+In this sense, a boolean value needs to be created to store the favourite status of a contact. As `AddCommand` does not involve `favourite`, the default `favourite` status for every newly added `Person` is false.
+
+The `favourite` status is a boolean value and it will be set as true through `FavouriteCommand`. Then, the target person will be updated.
+
+[source,java]
+----
+public CommandResult executeUndoableCommand() throws CommandException {
+
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+
+        // throw invalid person index
+
+        // update favourite status
+        ReadOnlyPerson personToFavourite = lastShownList.get(targetIndex.getZeroBased());
+        Person editedPerson = new Person(personToFavourite.getName(),
+                personToFavourite.getPhone(), personToFavourite.getEmail(),
+                personToFavourite.getAddress(), true,
+                personToFavourite.getRemark(), personToFavourite.getAvatar(),
+                personToFavourite.getTags());
+        // update target person
+        try {
+            model.updatePerson(personToFavourite, editedPerson);
+        } catch (DuplicatePersonException dpe) {
+            // throw exception
+        }
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+
+        return new CommandResult(String.format(MESSAGE_FAVOURITE_PERSON_SUCCESS, personToFavourite));
+    }
+----
+`FavouriteCommand` takes in an integer as its argument. The command is first being parsed in `AddressBookParser` to be identified as an instance of `FavouriteCommand`.
+Then it is parsed by `FavouriteCommandParser` to parse the index. Invalid indexes will be handled by throwing an exception. This is how `FavouriteCommandParser` is implemented:
+[source,java]
+----
+/**
+     * Parses the given {@code String} of arguments in the context of the FavouriteCommand
+     * and returns an FavouriteCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public FavouriteCommand parse(String args) throws ParseException {
+        try {
+            Index index = ParserUtil.parseIndex(args);
+            return new FavouriteCommand(index);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FavouriteCommand.MESSAGE_USAGE));
+        }
+    }
+----
+
+The following sequence diagram shows how a `FavouriteCommand` is processed: +
+
+image::FavouriteSequenceDiagram.png[width="800"]
+_Figure 3.19.1 : Favourite Sequence Diagram for Logic_ +
+
+To indicate that a person has been `favoured`, `PersonCard` is modified to contain a `favouriteLabel` that changes its appearance based on the `favourite` status of the person.
+It will first detect the boolean favourite status of the person. If the person is a favourite contact, a heart will be shown.
+The colours of the border and the background of the label are set to transparent, so that only the background picture, which is a heart, will be shown.
+
+==== Design Consideration
+
+**Aspect:** Implementation of `favourite` +
+**Alternative 1 (current choice):** implement a new command `favourite`. +
+**Pros:** Easier to implement. Does not need to modify existing command. +
+**Cons:** Must modify `Person` class to update the person status. The constructor of `person` has been modified so all the `person` in the address book must change accordingly. +
+**Alternative 2:** Implement the `favourite` in `AddCommand` +
+**Pros:** Easier for user. They do not have to memorize some many commands. +
+**Cons:** Difficult to implement. The `favourite` status will be treated as an optional field when using `AddCommand`. In order to change `favourite` status, `EditCommand` may be modified which is very troublesome. +
+
+---
+**Aspect:** Store `Favourite` values +
+**Alternative 1 (current choice):** Store it as a `Boolean` value +
+**Pros:** Easier to implement. Does not need to create another class. +
+**Cons:** Must modify `Model` and `ModelManager` to update the person status.It is also prone to bugs when developers forget to change the ObjectProperty to `String` in UI classes. +
+
+**Alternative 2:** Add a new `Favourite` field +
+**Pros:** Similar way to store other personal information. It also follows the open-close principle and exercises cohesion, where all matters related to `Favourite` field is dealt in its own class. +
+**Cons:** Difficult to implement. Adding a new field will cause many changes in UI, Logic, Model and Storage. Some test cases will be rewritten.
+// end::favunfav[]
 
 === Logging
 
@@ -359,6 +1664,7 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 * `WARNING` : Can continue, but with caution
 * `INFO` : Information showing the noteworthy actions by the App
 * `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
+
 
 === Configuration
 
@@ -464,254 +1770,9 @@ Here are the steps to create a new release.
 
 === Managing Dependencies
 
-A project often depends on third-party libraries. For example, Address Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
+A project often depends on third-party libraries. For example, Address++ depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
 a. Include those libraries in the repo (this bloats the repo size) +
 b. Require developers to download those libraries manually (this creates extra work for developers)
-
-[appendix]
-== Suggested Programming Tasks to Get Started
-
-Suggested path for new programmers:
-
-1. First, add small local-impact (i.e. the impact of the change does not go beyond the component) enhancements to one component at a time. Some suggestions are given in this section link:#improving-each-component[Improving a Component].
-
-2. Next, add a feature that touches multiple components to learn how to implement an end-to-end feature across all components. The section link:#creating-a-new-command-code-remark-code[Creating a new command: `remark`] explains how to go about adding such a feature.
-
-=== Improving each component
-
-Each individual exercise in this section is component-based (i.e. you would not need to modify the other components to get it to work).
-
-[discrete]
-==== `Logic` component
-
-[TIP]
-Do take a look at the link:#logic-component[Design: Logic Component] section before attempting to modify the `Logic` component.
-
-. Add a shorthand equivalent alias for each of the individual commands. For example, besides typing `clear`, the user can also type `c` to remove all persons in the list.
-+
-****
-* Hints
-** Just like we store each individual command word constant `COMMAND_WORD` inside `*Command.java` (e.g.  link:{repoURL}/src/main/java/seedu/address/logic/commands/FindCommand.java[`FindCommand#COMMAND_WORD`], link:{repoURL}/src/main/java/seedu/address/logic/commands/DeleteCommand.java[`DeleteCommand#COMMAND_WORD`]), you need a new constant for aliases as well (e.g. `FindCommand#COMMAND_ALIAS`).
-** link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] is responsible for analyzing command words.
-* Solution
-** Modify the switch statement in link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser#parseCommand(String)`] such that both the proper command word and alias can be used to execute the same intended command.
-** See this https://github.com/se-edu/addressbook-level4/pull/590/files[PR] for the full solution.
-****
-
-[discrete]
-==== `Model` component
-
-[TIP]
-Do take a look at the link:#model-component[Design: Model Component] section before attempting to modify the `Model` component.
-
-. Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in the address book.
-+
-****
-* Hints
-** The link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model`] API needs to be updated.
-**  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] classes can be used to implement the tag removal logic. link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] allows you to update a person, and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] allows you to update the tags.
-* Solution
-** Add the implementation of `deleteTag(Tag)` method in link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`]. Loop through each person, and remove the `tag` from each person.
-** See this https://github.com/se-edu/addressbook-level4/pull/591/files[PR] for the full solution.
-****
-
-[discrete]
-==== `Ui` component
-
-[TIP]
-Do take a look at the link:#ui-component[Design: UI Component] section before attempting to modify the `UI` component.
-
-. Use different colors for different tags inside person cards. For example, `friends` tags can be all in grey, and `colleagues` tags can be all in red.
-+
-**Before**
-+
-image::getting-started-ui-tag-before.png[width="300"]
-+
-**After**
-+
-image::getting-started-ui-tag-after.png[width="300"]
-+
-****
-* Hints
-** The tag labels are created inside link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard#initTags(ReadOnlyPerson)`] (`new Label(tag.tagName)`). https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html[JavaFX's `Label` class] allows you to modify the style of each Label, such as changing its color.
-** Use the .css attribute `-fx-background-color` to add a color.
-* Solution
-** See this https://github.com/se-edu/addressbook-level4/pull/592/files[PR] for the full solution.
-****
-
-. Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] such that link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] can show a different style on error (currently it shows the same regardless of errors).
-+
-**Before**
-+
-image::getting-started-ui-result-before.png[width="200"]
-+
-**After**
-+
-image::getting-started-ui-result-after.png[width="200"]
-+
-****
-* Hints
-** link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] is raised by link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] which also knows whether the result is a success or failure, and is caught by link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] which is where we want to change the style to.
-** Refer to link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] for an example on how to display an error.
-* Solution
-** Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] 's constructor so that users of the event can indicate whether an error has occurred.
-** Modify link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay#handleNewResultAvailableEvent(event)`] to react to this event appropriately.
-** See this https://github.com/se-edu/addressbook-level4/pull/593/files[PR] for the full solution.
-****
-
-. Modify the link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to show the total number of people in the address book.
-+
-**Before**
-+
-image::getting-started-ui-status-before.png[width="500"]
-+
-**After**
-+
-image::getting-started-ui-status-after.png[width="500"]
-+
-****
-* Hints
-** link:{repoURL}/src/main/resources/view/StatusBarFooter.fxml[`StatusBarFooter.fxml`] will need a new `StatusBar`. Be sure to set the `GridPane.columnIndex` properly for each `StatusBar` to avoid misalignment!
-** link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] needs to initialize the status bar on application start, and to update it accordingly whenever the address book is updated.
-* Solution
-** Modify the constructor of link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to take in the number of persons when the application just started.
-** Use link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter#handleAddressBookChangedEvent(AddressBookChangedEvent)`] to update the number of persons whenever there are new changes to the addressbook.
-** See this https://github.com/se-edu/addressbook-level4/pull/596/files[PR] for the full solution.
-****
-
-[discrete]
-==== `Storage` component
-
-[TIP]
-Do take a look at the link:#storage-component[Design: Storage Component] section before attempting to modify the `Storage` component.
-
-. Add a new method `backupAddressBook(ReadOnlyAddressBook)`, so that the address book can be saved in a fixed temporary location.
-+
-****
-* Hint
-** Add the API method in link:{repoURL}/src/main/java/seedu/address/storage/AddressBookStorage.java[`AddressBookStorage`] interface.
-** Implement the logic in link:{repoURL}/src/main/java/seedu/address/storage/StorageManager.java[`StorageManager`] class.
-* Solution
-** See this https://github.com/se-edu/addressbook-level4/pull/594/files[PR] for the full solution.
-****
-
-=== Creating a new command: `remark`
-
-By creating this command, you will get a chance to learn how to implement a feature end-to-end, touching all major components of the app.
-
-==== Description
-Edits the remark for a person specified in the `INDEX`. +
-Format: `remark INDEX r/[REMARK]`
-
-Examples:
-
-* `remark 1 r/Likes to drink coffee.` +
-Edits the remark for the first person to `Likes to drink coffee.`
-* `remark 1 r/` +
-Removes the remark for the first person.
-
-==== Step-by-step Instructions
-
-===== [Step 1] Logic: Teach the app to accept 'remark' which does nothing
-Let's start by teaching the application how to parse a `remark` command. We will add the logic of `remark` later.
-
-**Main:**
-
-. Add a `RemarkCommand` that extends link:{repoURL}/src/main/java/seedu/address/logic/commands/UndoableCommand.java[`UndoableCommand`]. Upon execution, it should just throw an `Exception`.
-. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to accept a `RemarkCommand`.
-
-**Tests:**
-
-. Add `RemarkCommandTest` that tests that `executeUndoableCommand()` throws an Exception.
-. Add new test method to link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`], which tests that typing "remark" returns an instance of `RemarkCommand`.
-
-===== [Step 2] Logic: Teach the app to accept 'remark' arguments
-Let's teach the application to parse arguments that our `remark` command will accept. E.g. `1 r/Likes to drink coffee.`
-
-**Main:**
-
-. Modify `RemarkCommand` to take in an `Index` and `String` and print those two parameters as the error message.
-. Add `RemarkCommandParser` that knows how to parse two arguments, one index and one with prefix 'r/'.
-. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to use the newly implemented `RemarkCommandParser`.
-
-**Tests:**
-
-. Modify `RemarkCommandTest` to test the `RemarkCommand#equals()` method.
-. Add `RemarkCommandParserTest` that tests different boundary values
-for `RemarkCommandParser`.
-. Modify link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`] to test that the correct command is generated according to the user input.
-
-===== [Step 3] Ui: Add a placeholder for remark in `PersonCard`
-Let's add a placeholder on all our link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] s to display a remark for each person later.
-
-**Main:**
-
-. Add a `Label` with any random text inside link:{repoURL}/src/main/resources/view/PersonListCard.fxml[`PersonListCard.fxml`].
-. Add FXML annotation in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] to tie the variable to the actual label.
-
-**Tests:**
-
-. Modify link:{repoURL}/src/test/java/guitests/guihandles/PersonCardHandle.java[`PersonCardHandle`] so that future tests can read the contents of the remark label.
-
-===== [Step 4] Model: Add `Remark` class
-We have to properly encapsulate the remark in our link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`] class. Instead of just using a `String`, let's follow the conventional class structure that the codebase already uses by adding a `Remark` class.
-
-**Main:**
-
-. Add `Remark` to model component (you can copy from link:{repoURL}/src/main/java/seedu/address/model/person/Address.java[`Address`], remove the regex and change the names accordingly).
-. Modify `RemarkCommand` to now take in a `Remark` instead of a `String`.
-
-**Tests:**
-
-. Add test for `Remark`, to test the `Remark#equals()` method.
-
-===== [Step 5] Model: Modify `ReadOnlyPerson` to support a `Remark` field
-Now we have the `Remark` class, we need to actually use it inside link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`].
-
-**Main:**
-
-. Add three methods `setRemark(Remark)`, `getRemark()` and `remarkProperty()`. Be sure to implement these newly created methods in link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`Person`], which implements the link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`] interface.
-. You may assume that the user will not be able to use the `add` and `edit` commands to modify the remarks field (i.e. the person will be created without a remark).
-. Modify link:{repoURL}/src/main/java/seedu/address/model/util/SampleDataUtil.java/[`SampleDataUtil`] to add remarks for the sample data (delete your `addressBook.xml` so that the application will load the sample data when you launch it.)
-
-===== [Step 6] Storage: Add `Remark` field to `XmlAdaptedPerson` class
-We now have `Remark` s for `Person` s, but they will be gone when we exit the application. Let's modify link:{repoURL}/src/main/java/seedu/address/storage/XmlAdaptedPerson.java[`XmlAdaptedPerson`] to include a `Remark` field so that it will be saved.
-
-**Main:**
-
-. Add a new Xml field for `Remark`.
-. Be sure to modify the logic of the constructor and `toModelType()`, which handles the conversion to/from  link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`].
-
-**Tests:**
-
-. Fix `validAddressBook.xml` such that the XML tests will not fail due to a missing `<remark>` element.
-
-===== [Step 7] Ui: Connect `Remark` field to `PersonCard`
-Our remark label in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] is still a placeholder. Let's bring it to life by binding it with the actual `remark` field.
-
-**Main:**
-
-. Modify link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard#bindListeners()`] to add the binding for `remark`.
-
-**Tests:**
-
-. Modify link:{repoURL}/src/test/java/seedu/address/ui/testutil/GuiTestAssert.java[`GuiTestAssert#assertCardDisplaysPerson(...)`] so that it will compare the remark label.
-. In link:{repoURL}/src/test/java/seedu/address/ui/PersonCardTest.java[`PersonCardTest`], call `personWithTags.setRemark(ALICE.getRemark())` to test that changes in the link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`Person`] 's remark correctly updates the corresponding link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`].
-
-===== [Step 8] Logic: Implement `RemarkCommand#execute()` logic
-We now have everything set up... but we still can't modify the remarks. Let's finish it up by adding in actual logic for our `remark` command.
-
-**Main:**
-
-. Replace the logic in `RemarkCommand#execute()` (that currently just throws an `Exception`), with the actual logic to modify the remarks of a person.
-
-**Tests:**
-
-. Update `RemarkCommandTest` to test that the `execute()` logic works.
-
-==== Full Solution
-
-See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-by-step solution.
 
 [appendix]
 == User Stories
@@ -723,18 +1784,62 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *` |user |add a new person | keep track of my contacts
 
 |`* * *` |user |delete a person |remove entries that I no longer need
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |user |add a new task | keep track of my tasks and assignments
+
+|`* * *` |user |delete a person |remove entries that I no longer need
+
+|`* * *` |user |have a search function |easily search for the contact I am looking for without browsing through thousands of contacts
+
+|`* * *` |user |have the option to edit my created contacts |make changes to the contacts that I have added
+
+|`* * *` |error-prone user |have the ability to Undo and Redo |automatically undo or redo the changes that I have made
+
+|`* * *` |user with secretive friends |be able to add contacts with incomplete data |operate without the need to create dummy values
+
+|`* * *` |cautious user |be able to lock my address book application whenever I want with a password | prevent people with malicious intent from making changes to my data
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
-|=======================================================================
+|`* *` |user |load contact data from any file of my choosing | have more flexibility for my file's storage location
 
-{More to be added}
+|`* *` |user |save contact data in a directory of my choosing |save the file in a location that fits my needs
+
+|`* *` |user |type commands partially and have the application fill in the rest for me | increase typing productivity
+
+|`* *` |multi-tasking user |be able to record things other than contacts, such as tasks |manage myself better
+
+|`* *` |user |be able to filter my contacts based on tags |view the people who are relevant to me
+
+|`* *` |organized user |be able to sort my contacts by different fields such as by name and birthday  |better organize my contacts
+
+|`* *` |user with multiple devices |be able to import and export my address book |use the address book without having to add all my contacts when I switch platforms
+
+|`* *` |user who values privacy |be able to to choose and modify which contacts and what information are to be displayed |hide information I do not want to share from others
+
+|`* *` |cautious user |be able to back up my address book data | retrieve my back up data in the event I make breaking changes to my actual address book and there is no way of undoing them
+
+|`* *` |user with poor eyesight |be able to increase the font size | use the application without straining my eyes
+
+|`* *` |forgetful user |be able to see who is assigned to a task | find my contacts who are in charge more quickly
+
+|`*` |lazy user |have an easy way to add a person with his full details into my address book |add new contacts quickly
+
+|`*` |user who values aesthetics |be able to customize my layout |display self-identity, and use a layout that I like
+
+|`*` |user |have the ability to add a short description to my contacts |add more information about my contacts
+
+|`*` |user |be able to mark my favourite contacts |find them more easily
+
+|`*` |long-time user |be able to access shortcut commands |use the address book more efficiently
+
+|`*` |user |be able to update the address book application easily when new updates are published |continue using the address book easily with any newly added features
+
+
+|=======================================================================
 
 [appendix]
 == Use Cases
@@ -767,7 +1872,125 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-{More to be added}
+[discrete]
+=== Use case: Search for person
+
+*MSS*
+
+1.  User requests to search for a person with criteria
+2.  AddressBook shows a list of persons who match the criteria
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 2b. No such person was found.
++
+[none]
+** 2b1. AddressBook informs the user that no matching users were found.
++
+Use case ends.
+
+[discrete]
+=== Use case: Edit person
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to change the details of a specific person in the list
+4.  AddressBook changes the details of the specified person.
+5.  AddressBook shows the new details of the person.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3b. The specified detail to change is invalid.
++
+[none]
+** 3b1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 4a. The specified detail to change is exactly the same as the previous detail.
++
+[none]
+** 4a1. AddressBook informs the user that no change was made.
++
+Use case ends.
+
+[discrete]
+=== Use case: Undo/Redo by multiple steps
+
+*MSS*
+
+1.  User requests to undo/redo a specified number of steps
+2.  AddressBook undos/redos the last X commands, where X was the number of commands to undo/redo
+3.  AddressBook displays a success message
+4.  AddressBook displays a list of all the commands that were undone/redone.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The number of commands entered were less than the specified number of undo commands.
++
+[none]
+** 2a1. AddressBook undos all previous commands.
++
+Use case resumes at step 3.
+
+[none]
+* 2b. The number of commands entered were less than the specified number of redo commands.
++
+[none]
+** 2b1. AddressBook redos all previously undone commands.
++
+Use case resumes at step 3
+
+[discrete]
+=== Use case: Sort
+
+*MSS*
+
+1.  User requests to sort by a criteria
+2.  AddressBook sorts the contacts by the criteria
+3.  AddressBook shows a success message.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 1a. The given criteria is invalid.
++
+[none]
+** 1a1. AddressBook shows an error message.
++
+Use case resumes at step 1.
 
 [appendix]
 == Non Functional Requirements
@@ -775,8 +1998,10 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-{More to be added}
+.  Feature sets are to be rolled out on a regular weekly basis, following the proper forking workflow procedure.
+.  The application should be intuitive the target users: students (and professionals) who prefer typing over using the mouse.
+.  Future versions of the application should be backwards compatible with data saved in versions after v1.0.
+.  The application is not required to handle physical printing.
 
 [appendix]
 == Glossary
@@ -788,26 +2013,11 @@ Mainstream OS
 Windows, Linux, Unix, OS-X
 ....
 
-[[private-contact-detail]]
-Private contact detail
+[[backwards-compatible]]
+Backwards Compatible
 
 ....
-A contact detail that is not meant to be shared with others
+In the context of this project, backwards compatible save data refers to the ability for multiple versions of this application to use the same saved data.
 ....
 
 [appendix]
-== Product Survey
-
-*Product Name*
-
-Author: ...
-
-Pros:
-
-* ...
-* ...
-
-Cons:
-
-* ...
-* ...

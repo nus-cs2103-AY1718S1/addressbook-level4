@@ -1,0 +1,118 @@
+= Kelvin Lin - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: AddressBook++
+Address++ is an application that keeps track of your contacts and your daily to-dos for you. It is targeted
+at students who work on projects or assignments frequently, but it can also be used for other purposes.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-W09-B2/main/blob/master/collated/main/Esilocke.md[Functional code]] [https://github.com/CS2103AUG2017-W09-B2/main/blob/master/collated/test/Esilocke.md[Test code]]
+
+=== Enhancement Added: Edit Tag
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=edittag]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+The user may find a need to change the name of a particular name. +
+In the context of the target user, suppose that a user wishes to change the tag `CS2103Groupmates` to `friends`, after he has completed the module. +
+The user would need to delete the tag from all users who are tagged with `CS2103Groupmates`, and add the tag `friends` to them one-by-one. `edittag` thus aims to make this process faster by allowing users to rename all instances of the tag from the address book.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=edittag]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Optional Data Input
+
+==== External behavior
+
+---
+
+Optional Data Input allows tasks and persons to have only one compulsory field, the name. All other fields in a person or task can be left unspecified, allowing for a greater range of inputs.
+
+---
+
+==== Justification
+
+We may not always have the opportunity to find contacts or tasks with complete information. +
+This means that some contacts may not have an address, or email address, while some tasks may not have a deadline, or a description. Without Optional Data Input, the user would need to come up with random placeholder values for each prefix, which would greatly hinder user experience as the user would need to type in unnecessary values to satisfy the command format. +
+Allowing optional data input thus lifts the restriction of making every field compulsory, and thus allows users to fill in a wider range of input.
+
+==== Implementation
+
+---
+When a user does not fill in a prefix for a particular field, the parser will create an object corresponding to the missing field with a placeholder value.
+
+[source, java]
+public Phone(String args) {
+    if (args == null) {
+        this.value = PHONE_PLACEHOLDER_VALUE;
+    }
+    ...
+}
+public boolean isValidPhone(String args) {
+    if (args.equals(PHONE_PLACEHOLDER_VALUE) {
+        return true;
+    }
+    ...
+}
+
+In addition, the isValid method is also updated to accept placeholder values as valid inputs.
+
+---
+
+=== Enhancement Added: Tasks Management
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=addtask]
+include::../UserGuide.adoc[tag=edittask]
+include::../UserGuide.adoc[tag=deletetask]
+include::../UserGuide.adoc[tag=findtask]
+include::../UserGuide.adoc[tag=selecttask]
+include::../UserGuide.adoc[tag=setstate]
+include::../UserGuide.adoc[tag=assignDismiss]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Our intended target audience are primarily NUS students, who are working on projects. In addition to managing their contact details, allowing users to manage their tasks would also greatly improve their user experience, as they would not need to keep track of their project deadlines separately.
+
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=task]
+include::../DeveloperGuide.adoc[tag=assignDismiss]
+
+#End of Extract#
+
+=== Other contributions
+
+* Conducted internal acceptance testing [https://github.com/CS2103AUG2017-W09-B2/main/issues/155[Issue #155]]
+* Conducted Acceptance Testing for other teams [https://github.com/CS2103AUG2017-F09-B1/main/issues/83[F09-B1]] [https://github.com/CS2103AUG2017-F09-B1/main/issues/82[F09-B1]]

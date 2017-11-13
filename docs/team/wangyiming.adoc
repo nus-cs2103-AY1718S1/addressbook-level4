@@ -1,0 +1,189 @@
+= Wang Yiming - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: Address++
+
+=== Introduction
+Address++ is an application that targets university students, aiming to help them manage their contacts and other aspects of their university life in an efficient manner.
+Address++ is a Command Line Interface (CLI) application, where most of the commands are executed by typing rather than clicking on buttons.
+Address++ also provides a simple Graphical User Interface (GUI) for a better User Experience (UX).
+
+This project is the result of a Software Engineering module, https://nus-cs2103.github.io/website/[CS2103T],
+in NUS. Address++ is written mainly in Java, while JavaFX is used for the frontend design. Address++ is built
+based on https://github.com/se-edu/addressbook-level4[Address Book (Level 4)] and the current codebase has expanded to around 10 kLoC.
+
+=== Purpose of Project Portfolio
+The purpose of this project portfolio is to showcase my contribution to the Address++, a project for the introductory Software Engineering module (CS2103T) at the National University of Singapore.
+It highlights some of the key features I implemented during the course of this module and the technical details behind how these features were implemented.
+It also demonstrates my ability to work with a large code base (about 10KLoC).
+
+This is a snapshot of our User Interface
+
+image::Ui.png[width="800"]
+
+My contributions to this project are listed below:
+
+*Code contributed*: [https://github.com/CS2103AUG2017-W09-B2/main/blob/master/collated/main/wangyiming1019.md[Functional code]] [https://github.com/CS2103AUG2017-W09-B2/main/blob/master/collated/test/wangyiming1019.md[Test code]]
+
+=== Enhancement Added: Add/Delete Tags
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=addtag]
+include::../UserGuide.adoc[tag=deletetag]
+
+#End of Extract#
+
+---
+
+==== Justification
+The existing `EditCommand` has the similar functionality which is to modify the tags. However, it has two limitations.
+First, it can only edit tags for one person only. Second, modified tags will replace all the original tags.
+Our user, university students, often want to organize and modify their contacts in an efficient way.
+To make modifying tags easier, `AddTagCommand` and `DeleteTagCommand` allow our users to add and delete tags for multiple persons.
+They only modify the specific tags, leaving the rest tags intact.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=adddeletetag]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Find Persons by Tags
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=findtag]
+
+#End of Extract#
+
+---
+
+==== Justification
+Address++ is designed as an assistant tool for university students. It aims to help users to manage their contacts in an easy way.
+With the help of this command, users are able to easily find the contacts in the application. This feature allows users to easily
+search for contacts in big numbers by locating them according to their tags.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=findtag]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: List Tags
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=showtag]
+
+#End of Extract#
+
+---
+
+==== Justification
+This enhancement is to supplement the find by tags function as described above. For users with large numbers of tags,
+it may be difficult for them to remember what tags are saved in the application. This enhancement allows users to easily
+refer to the tags that they have saved in the application.
+
+==== Implementation
+There are two scenarios of this feature: +
+**scenario 1:** There are no tags or persons in the Address++. +
+**scenario 2:** There are [TAG] [MORE TAGS]... +
+
+==== A brief explanation of `showtag`: +
+* Creates a list of tags by iterating through every Contact in the application and adding their tags to the list. +
+* Check if this list of tags is empty or not. +
+** If it is empty, it falls into scenario 1. Address++ will display an empty list. +
+** If the list is not empty, it will output the success message along with the list of tags in the appropriate format.
+The details of this step is given in the next subsection. +
+
+==== Implementation of Scenario 2 +
+* Converts the list of Tags to a list of String. +
+* Sorts the String list in alphabetical order. +
+* Appends the names to each other with the appropriate formatting by using a String Builder. +
+* Output the result. +
+
+==== Design Considerations +
+**Aspect:** Order of Tags displayed +
+**Alternative 1 (current choice):** Display in alphabetical order. +
+**Pros:** Easier to understand and more readable. +
+**Cons:** May not be the most helpful way. +
+
+**Alternative 2:** Display based on how many of each tag there are. (ascending order) +
+**Pros:** Might be more meaningful for certain users and cases. +
+**Cons:** Much more difficult to implement. Alphabetical order is generally easier to understand. +
+
+---
+**Aspect:** Implementation of `showtag` +
+**Alternative 1 (current choice):** Implement a new command `showtag`. +
+**Pros:** Easier to implement. `showtag` command will be similar to the `list` command.. +
+**Cons:** Must create function to convert tags to string. It does not fully utilize the existing `updateFilteredPersonList`. +
+
+**Alternative 2:** Modify the `ListCommand`. +
+**Pros:** Easier for user. They do not have to memorize some many commands.  +
+**Cons:** The existing `ListCommand` will not only response for listing persons only. This Violates Single Responsibility Principle and Separation of Concerns as `ListCommand` now needs to do two different things. +
+
+=== Enhancement Added: Favourite/Unfavourite Persons
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=favourite]
+include::../UserGuide.adoc[tag=unfavourite]
+
+#End of Extract#
+
+---
+
+==== Justification
+Users will always want to differentiate some of their favourite contacts from the others so that they can find their frequently contacted persons easily.
+Therefore, `FavouriteCommand` is implemented in Address++.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=favunfav]
+
+#End of Extract#
+
+---
+
+=== Other contributions
+
+* Randomize the tag color. (Pull requests https://github.com/CS2103AUG2017-W09-B2/main/pull/33[#33],
+https://github.com/CS2103AUG2017-W09-B2/main/pull/76[#76])
+* Show the heart picture for favourite person in UI.
+ (Pull requests https://github.com/CS2103AUG2017-W09-B2/main/pull/147[#147])
+* Display favourite person list.
+ (Pull requests https://github.com/CS2103AUG2017-W09-B2/main/pull/79[#79])
+* Fix bug that `unfavourite` command causes person list disappear.
+ (Pull requests https://github.com/CS2103AUG2017-W09-B2/main/pull/130[#130])
+* Add more test case to increase coverage. (Pull request https://github.com/CS2103AUG2017-W09-B2/main/pull/63[#63],
+https://github.com/CS2103AUG2017-W09-B2/main/pull/79[#79],
+https://github.com/CS2103AUG2017-W09-B2/main/pull/156[#156])
+* Conduct Acceptance Testing for other teams. (https://github.com/CS2103AUG2017-T14-B1/main/issues/70[T14-B1])

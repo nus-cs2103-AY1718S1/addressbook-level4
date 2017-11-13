@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addressbook>
+    <persons>
+        <name>Alex Yeoh</name>
+        <nameIsPrivate>false</nameIsPrivate>
+        <phone>87438807</phone>
+        <phoneIsPrivate>false</phoneIsPrivate>
+        <email>alexyeoh@example.com</email>
+        <emailIsPrivate>false</emailIsPrivate>
+        <address>Blk 30 Geylang Street 29, #06-40</address>
+        <addressIsPrivate>false</addressIsPrivate>
+        <favourite>true</favourite>
+        <remark>Cheerful lad</remark>
+        <remarkIsPrivate>false</remarkIsPrivate>
+        <avatar></avatar>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Antoinette Chan</name>
+        <nameIsPrivate>false</nameIsPrivate>
+        <phone>89912301</phone>
+        <phoneIsPrivate>false</phoneIsPrivate>
+        <email>antoinette@example.com</email>
+        <emailIsPrivate>false</emailIsPrivate>
+        <address></address>
+        <addressIsPrivate>false</addressIsPrivate>
+        <favourite>false</favourite>
+        <remark></remark>
+        <remarkIsPrivate>false</remarkIsPrivate>
+        <avatar></avatar>
+        <tagged>GEQ2000</tagged>
+    </persons>
+    <persons>
+        <name>Bernice Yu</name>
+        <nameIsPrivate>false</nameIsPrivate>
+        <phone>99272758</phone>
+        <phoneIsPrivate>false</phoneIsPrivate>
+        <email>berniceyu@example.com</email>
+        <emailIsPrivate>false</emailIsPrivate>
+        <address>Blk 30 Lorong 3 Serangoon Gardens, #07-18</address>
+        <addressIsPrivate>false</addressIsPrivate>
+        <favourite>false</favourite>
+        <remark>Very friendly</remark>
+        <remarkIsPrivate>false</remarkIsPrivate>
+        <avatar></avatar>
+        <tagged>acquaintance</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Charlotte Oliveiro</name>
+        <nameIsPrivate>false</nameIsPrivate>
+        <phone>93210283</phone>
+        <phoneIsPrivate>false</phoneIsPrivate>
+        <email>charlotte@example.com</email>
+        <emailIsPrivate>false</emailIsPrivate>
+        <address>Blk 11 Ang Mo Kio Street 74, #11-04</address>
+        <addressIsPrivate>false</addressIsPrivate>
+        <favourite>false</favourite>
+        <remark>She sells sea shells on the sea shore</remark>
+        <remarkIsPrivate>false</remarkIsPrivate>
+        <avatar></avatar>
+        <tagged>neighbours</tagged>
+    </persons>
+    <persons>
+        <name>David Li</name>
+        <nameIsPrivate>false</nameIsPrivate>
+        <phone>91031282</phone>
+        <phoneIsPrivate>true</phoneIsPrivate>
+        <email>lidavid@example.com</email>
+        <emailIsPrivate>false</emailIsPrivate>
+        <address>Blk 436 Serangoon Gardens Street 26, #16-43</address>
+        <addressIsPrivate>false</addressIsPrivate>
+        <favourite>true</favourite>
+        <remark>Laughs too much</remark>
+        <remarkIsPrivate>false</remarkIsPrivate>
+        <avatar></avatar>
+        <tagged>family</tagged>
+    </persons>
+    <persons>
+        <name>David Ng</name>
+        <nameIsPrivate>false</nameIsPrivate>
+        <phone>87877003</phone>
+        <phoneIsPrivate>false</phoneIsPrivate>
+        <email>david_ng@example.com</email>
+        <emailIsPrivate>false</emailIsPrivate>
+        <address>Blk 678 Clementi Street 34, #06-772</address>
+        <addressIsPrivate>true</addressIsPrivate>
+        <favourite>false</favourite>
+        <remark></remark>
+        <remarkIsPrivate>false</remarkIsPrivate>
+        <avatar></avatar>
+    </persons>
+    <persons>
+        <name>Elizabeth Edelweiss</name>
+        <nameIsPrivate>false</nameIsPrivate>
+        <phone>91120442</phone>
+        <phoneIsPrivate>false</phoneIsPrivate>
+        <email>elizabeth@edel.weiss</email>
+        <emailIsPrivate>false</emailIsPrivate>
+        <address></address>
+        <addressIsPrivate>false</addressIsPrivate>
+        <favourite>false</favourite>
+        <remark>Maribel's sister</remark>
+        <remarkIsPrivate>false</remarkIsPrivate>
+        <avatar></avatar>
+    </persons>
+    <persons>
+        <name>Ima Hidearu</name>
+        <nameIsPrivate>false</nameIsPrivate>
+        <phone></phone>
+        <phoneIsPrivate>false</phoneIsPrivate>
+        <email></email>
+        <emailIsPrivate>false</emailIsPrivate>
+        <address></address>
+        <addressIsPrivate>false</addressIsPrivate>
+        <favourite>false</favourite>
+        <remark>Refuses to provide information</remark>
+        <remarkIsPrivate>false</remarkIsPrivate>
+        <avatar></avatar>
+        <tagged>secretive</tagged>
+    </persons>
+    <persons>
+        <name>Irfan Ibrahim</name>
+        <nameIsPrivate>false</nameIsPrivate>
+        <phone>92492021</phone>
+        <phoneIsPrivate>false</phoneIsPrivate>
+        <email>irfan@example.com</email>
+        <emailIsPrivate>false</emailIsPrivate>
+        <address>Blk 47 Tampines Street 20, #17-35</address>
+        <addressIsPrivate>false</addressIsPrivate>
+        <favourite>false</favourite>
+        <remark>Goes to the same coffee shop every morning</remark>
+        <remarkIsPrivate>false</remarkIsPrivate>
+        <avatar></avatar>
+        <tagged>classmates</tagged>
+    </persons>
+    <persons>
+        <name>Jackson Ang</name>
+        <nameIsPrivate>false</nameIsPrivate>
+        <phone>92286100</phone>
+        <phoneIsPrivate>false</phoneIsPrivate>
+        <email>jackson.a@example.com</email>
+        <emailIsPrivate>false</emailIsPrivate>
+        <address>Clementi Street 26, Block 332B #05-166</address>
+        <addressIsPrivate>false</addressIsPrivate>
+        <favourite>true</favourite>
+        <remark></remark>
+        <remarkIsPrivate>false</remarkIsPrivate>
+        <avatar></avatar>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Louise Excella</name>
+        <nameIsPrivate>true</nameIsPrivate>
+        <phone>98811314</phone>
+        <phoneIsPrivate>true</phoneIsPrivate>
+        <email>louise_e@example.com</email>
+        <emailIsPrivate>false</emailIsPrivate>
+        <address></address>
+        <addressIsPrivate>false</addressIsPrivate>
+        <favourite>false</favourite>
+        <remark></remark>
+        <remarkIsPrivate>false</remarkIsPrivate>
+        <avatar></avatar>
+        <tagged>classmates</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Maribel Edelweiss</name>
+        <nameIsPrivate>false</nameIsPrivate>
+        <phone>82291021</phone>
+        <phoneIsPrivate>false</phoneIsPrivate>
+        <email>maribel_edelweiss@example.com</email>
+        <emailIsPrivate>false</emailIsPrivate>
+        <address></address>
+        <addressIsPrivate>false</addressIsPrivate>
+        <favourite>false</favourite>
+        <remark>Eldest daughter of the Edelweiss family?</remark>
+        <remarkIsPrivate>false</remarkIsPrivate>
+        <avatar></avatar>
+        <tagged>secretive</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Roy Balakrishnan</name>
+        <nameIsPrivate>false</nameIsPrivate>
+        <phone>92624417</phone>
+        <phoneIsPrivate>false</phoneIsPrivate>
+        <email>royb@example.com</email>
+        <emailIsPrivate>false</emailIsPrivate>
+        <address>Blk 45 Aljunied Street 85, #11-31</address>
+        <addressIsPrivate>false</addressIsPrivate>
+        <favourite>true</favourite>
+        <remark>Disappearing act?</remark>
+        <remarkIsPrivate>false</remarkIsPrivate>
+        <avatar></avatar>
+        <tagged>tutee</tagged>
+    </persons>
+    <persons>
+        <name>Steve Robinson</name>
+        <nameIsPrivate>false</nameIsPrivate>
+        <phone>98821551</phone>
+        <phoneIsPrivate>false</phoneIsPrivate>
+        <email>steve@example.com</email>
+        <emailIsPrivate>false</emailIsPrivate>
+        <address>Blk 787 Tampines Street 56, #09-114</address>
+        <addressIsPrivate>false</addressIsPrivate>
+        <favourite>false</favourite>
+        <remark>Photocopying shop owner</remark>
+        <remarkIsPrivate>false</remarkIsPrivate>
+        <avatar></avatar>
+    </persons>
+    <persons>
+        <name>Stuart Lee</name>
+        <nameIsPrivate>false</nameIsPrivate>
+        <phone>95336013</phone>
+        <phoneIsPrivate>false</phoneIsPrivate>
+        <email>stuart_cs@example.com</email>
+        <emailIsPrivate>false</emailIsPrivate>
+        <address>Boon Lay Avenue 6, Block 502 #01-01</address>
+        <addressIsPrivate>false</addressIsPrivate>
+        <favourite>false</favourite>
+        <remark>Lazy project member</remark>
+        <remarkIsPrivate>false</remarkIsPrivate>
+        <avatar></avatar>
+        <tagged>project</tagged>
+        <tagged>enemy</tagged>
+    </persons>
+    <persons>
+        <name>Thomas Watson</name>
+        <nameIsPrivate>false</nameIsPrivate>
+        <phone>91241124</phone>
+        <phoneIsPrivate>false</phoneIsPrivate>
+        <email>thomas@example.com</email>
+        <emailIsPrivate>false</emailIsPrivate>
+        <address>Watt Street, Block 4A #-02-122</address>
+        <addressIsPrivate>false</addressIsPrivate>
+        <favourite>false</favourite>
+        <remark>Unable to use "Cookie Dynamic"</remark>
+        <remarkIsPrivate>false</remarkIsPrivate>
+        <avatar></avatar>
+    </persons>
+    <persons>
+        <name>Einheria Venus</name>
+        <nameIsPrivate>false</nameIsPrivate>
+        <phone>98132151</phone>
+        <phoneIsPrivate>false</phoneIsPrivate>
+        <email>einzweidrei@example.com</email>
+        <emailIsPrivate>false</emailIsPrivate>
+        <address>60 Kaki Bukit Pl</address>
+        <addressIsPrivate>false</addressIsPrivate>
+        <favourite>false</favourite>
+        <remark>Serious and dedicated</remark>
+        <remarkIsPrivate>false</remarkIsPrivate>
+        <avatar></avatar>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Clarissa Liselotte</name>
+        <nameIsPrivate>false</nameIsPrivate>
+        <phone>87729513</phone>
+        <phoneIsPrivate>false</phoneIsPrivate>
+        <email></email>
+        <emailIsPrivate>false</emailIsPrivate>
+        <address>Blk 731A #06-331, Boon Lay Avenue 5</address>
+        <addressIsPrivate>false</addressIsPrivate>
+        <favourite>false</favourite>
+        <remark></remark>
+        <remarkIsPrivate>false</remarkIsPrivate>
+        <avatar></avatar>
+        <tagged>GEQ2000</tagged>
+    </persons>
+    <persons>
+        <name>Myucel Plumley</name>
+        <nameIsPrivate>false</nameIsPrivate>
+        <phone>9981823</phone>
+        <phoneIsPrivate>false</phoneIsPrivate>
+        <email>myucel@example.com</email>
+        <emailIsPrivate>false</emailIsPrivate>
+        <address>#02, Bukit Timah Street 56</address>
+        <addressIsPrivate>false</addressIsPrivate>
+        <favourite>true</favourite>
+        <remark>Wears her hair on her left</remark>
+        <remarkIsPrivate>false</remarkIsPrivate>
+        <avatar></avatar>
+        <tagged>project</tagged>
+    </persons>
+    <persons>
+        <name>Myuria Plumley</name>
+        <nameIsPrivate>false</nameIsPrivate>
+        <phone>99831115</phone>
+        <phoneIsPrivate>false</phoneIsPrivate>
+        <email>myuria@example.com</email>
+        <emailIsPrivate>false</emailIsPrivate>
+        <address>#02, Bukit Timah Street 56</address>
+        <addressIsPrivate>false</addressIsPrivate>
+        <favourite>true</favourite>
+        <remark>Wears her hair on her right</remark>
+        <remarkIsPrivate>false</remarkIsPrivate>
+        <avatar></avatar>
+        <tagged>project</tagged>
+    </persons>
+    <tags>groupmates</tags>
+    <tags>secretive</tags>
+    <tags>project</tags>
+    <tags>neighbours</tags>
+    <tags>tutee</tags>
+    <tags>enemy</tags>
+    <tags>friends</tags>
+    <tags>asa</tags>
+    <tags>GEQ2000</tags>
+    <tags>colleagues</tags>
+    <tags>classmates</tags>
+    <tags>acquaintance</tags>
+    <tags>family</tags>
+    <tasks>
+        <name>Tuition</name>
+        <description>Roy's math tuition on Friday</description>
+        <deadline>Fri Nov 10 17:00:00 SGT 2017</deadline>
+        <priority>3</priority>
+        <state>true</state>
+        <assignees>0</assignees>
+        <assignees>5</assignees>
+        <assignees>7</assignees>
+        <address>Blk 45 Aljunied Street 85, #11-31</address>
+    </tasks>
+    <tasks>
+        <name>Buy groceries</name>
+        <description>Buy carrots, potatoes for stew tonight</description>
+        <deadline>Mon Nov 06 19:00:00 SGT 2017</deadline>
+        <priority>2</priority>
+        <state>true</state>
+        <address></address>
+    </tasks>
+    <tasks>
+        <name>Visit David's house</name>
+        <description>Visit to David Li's house next Saturday</description>
+        <deadline>Sat Nov 18 12:00:00 SGT 2017</deadline>
+        <priority>2</priority>
+        <state>false</state>
+        <address>Blk 436 Serangoon Gardens Street 26, #16-43</address>
+    </tasks>
+    <tasks>
+        <name>Presentation</name>
+        <description>Presentation about Data Analytics</description>
+        <deadline>Tue Dec 12 15:00:00 SGT 2017</deadline>
+        <priority>4</priority>
+        <state>false</state>
+        <address>SR-1, COM-1 NUS</address>
+    </tasks>
+    <tasks>
+        <name>Report</name>
+        <description>Write a 1500-word long essay on philosophical thinking</description>
+        <deadline>Tue Nov 21 18:00:00 SGT 2017</deadline>
+        <priority>4</priority>
+        <state>false</state>
+        <address></address>
+    </tasks>
+    <tasks>
+        <name>Interview</name>
+        <description>Interview with Einheria Venus at her office</description>
+        <deadline>Sun Nov 19 10:00:00 SGT 2017</deadline>
+        <priority>5</priority>
+        <state>false</state>
+        <address>60 Kaki Bukit Pl</address>
+    </tasks>
+    <tasks>
+        <name>Paper Model for project</name>
+        <description>Paper model of Himeji castle for project. Myucel/Myuria twins in charge</description>
+        <deadline>Wed Dec 13 17:00:00 SGT 2017</deadline>
+        <priority>3</priority>
+        <state>false</state>
+        <assignees>18</assignees>
+        <assignees>19</assignees>
+        <address></address>
+    </tasks>
+</addressbook>
