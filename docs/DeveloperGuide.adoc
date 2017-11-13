@@ -448,6 +448,7 @@ _Figure 5.5.1 : Sequence diagram of Add Meeting_
 
 // end::addmeeting[]
 
+// tag::deletemeeting[]
 === Delete Meeting
 
 The delete meeting command inherits from UndoableCommand which allows user to delete meeting with the following parameters: 'INDEX' of meeting in the meeting list.
@@ -472,6 +473,9 @@ INDEX: 1
 The `INDEX` of meeting provides the name, date and location of the meeting which is used to remove it
 from the meeting list.
 
+// end::deletemeeting[]
+
+// tag::findmeeting[]
 === Find Meeting
 
 The find meeting command inherits from Command which allows users to find meeting with the following parameters: [KEYWORD] of the meeting in the meeting list.
@@ -496,6 +500,7 @@ KEYWORD: makan
 The `KEYWORD` of meeting provides the name, date and location of the meeting which is used to list it.
 
 If none of the meetings contains the `KEYWORD`, the results would show "No meetings found".
+// end::findmeeting[]
 
 // tag::findexactmeeting[]
 === Find Exact Meeting
