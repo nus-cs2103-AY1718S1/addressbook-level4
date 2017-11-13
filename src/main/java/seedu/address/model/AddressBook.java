@@ -179,8 +179,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         tags.add(t);
     }
 
-    //// Sort methods
     //@@author Sri-vatsa
+    //// Sort methods
     /***
      * sorts persons in the addressbook by number of times they were previously searched
      */

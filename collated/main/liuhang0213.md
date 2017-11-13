@@ -299,12 +299,12 @@ public class Meeting implements ReadOnlyMeeting {
                 + "Location: " + location + '\n'
                 + "Notes: " + notes;
     }
-    /*
+
     @Override
     public int compareTo(Meeting other) {
         return dateTime.compareTo(other.dateTime);
     }
-    */
+
 }
 ```
 ###### \java\seedu\address\model\ModelManager.java
@@ -421,7 +421,6 @@ public class InternalId {
         }
         return maxIndex;
     }
-
 ```
 ###### \java\seedu\address\model\ReadOnlyAddressBook.java
 ``` java

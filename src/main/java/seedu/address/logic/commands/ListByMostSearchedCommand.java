@@ -1,12 +1,11 @@
-//@@author Sri-vatsa
 package seedu.address.logic.commands;
 
+//@@author Sri-vatsa
 /***
  * Lists all users in the addressbook based on how frequently they are searched
  * Sorts by search frequency
  *
  */
-
 public class ListByMostSearchedCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "listMostSearched";
