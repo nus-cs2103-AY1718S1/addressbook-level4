@@ -59,7 +59,10 @@ include::../UserGuide.adoc[tag=importNusmods]
 
 ---
 
-Most of the NUS students are currently using NUSMods as their school timetable builder.
+Most of the NUS students are currently using NUSMods as their school timetable builder. Also, the lessons and exams
+reflected on their NUSMods timetable account for a large part of their schedule. Thus, users definitely want to add all
+these activities into *BoNUS*. It would be much more convenient if they could import their school timetable to *BoNUS*
+directly rather than manually add upcoming events.
 
 ==== Implementation
 
@@ -77,9 +80,9 @@ include::../DeveloperGuide.adoc[tag=importNusmods]
 
 include::../UserGuide.adoc[tag=importScript]
 
----
-
 ==== Justification
+
+---
 
 This feature is meant for advanced users. To build an **epic** application, we need to essentially build an _ecosystem_ for
 this software. According to the _Unix_ philosophy, providing a shell scripting and command language is the minimum requirement
@@ -99,9 +102,9 @@ The scripting file should consist of one or multiple valid **BoNUS** commands an
 
 include::../UserGuide.adoc[tag=exportExcel]
 
----
-
 ==== Justification
+
+---
 
 We already support `ExportCommand` so that users can save data to a separate location as a backup. However, `.xml` files
 are not considered to be user-friendly (except for programmers and geeks).

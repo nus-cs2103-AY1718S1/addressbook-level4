@@ -715,7 +715,7 @@ the URL.
 
 As stated in <<UserGuide#, User Guide>>, *BoNUS* helps you _better(B) organize(o) your NUS life_. Thus, we want to make
 the application an integrated personal manager for NUS students. The main activities for most students are study-related and
-most NUS students are currently using https://nusmods.com/[NUSMods] to build their school timetable.
+most NUS students are currently using https://nusmods.com/[NUSMods] to build their school timetable (as shown in Figure 4.7.1.1).
 
 image::NusmodsWebsite.png[width="750"]
 _Figure 4.7.1.1 : NUSMods Website Interface_
