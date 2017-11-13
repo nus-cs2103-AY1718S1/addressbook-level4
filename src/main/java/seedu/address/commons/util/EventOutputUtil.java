@@ -4,6 +4,7 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
+import seedu.address.model.event.Event;
 import seedu.address.model.event.EventDuration;
 import seedu.address.model.event.EventName;
 import seedu.address.model.event.EventTime;
@@ -18,16 +19,16 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class EventOutputUtil {
 
     /**
-     * Takes in a Duration and outputs it hours and minutes
+     * Returns a Duration in String format, in days, hours and minutes
      *
-     * @param d1 given duration of Event, guaranteed to be less than 23hr59min
+     * @param duration given duration of Event
      * @return a String of Duration in human-readable form
      */
-    public static String toStringDuration(Duration d1) {
+    public static String toStringDuration(Duration duration) {
 
         StringBuilder sb = new StringBuilder();
 
-        int totalSeconds = (int) d1.getSeconds();
+        int totalSeconds = (int) duration.getSeconds();
         int daysOutput = totalSeconds / (60 * 60 * 24);
         int hoursOutput = (totalSeconds % (60 * 60 * 24)) / (60 * 60);
         int minutesOutput = (totalSeconds % (60 * 60)) / 60;
@@ -53,10 +54,10 @@ public class EventOutputUtil {
     }
 
     /**
-     * Takes in a list of members and output their names in readable form
+     * Returns a String representation of a list of members's name.
      *
-     * @param members
-     * @return a String with members name separated by commas
+     * @param members a list of members
+     * @return String with members name separated by commas
      */
     public static String toStringMembers(ArrayList<ReadOnlyPerson> members) {
         if (members.isEmpty()) {
@@ -70,13 +71,14 @@ public class EventOutputUtil {
     }
 
     /**
-     * Outputs an Event details in readable form
+     * Returns a String representation of an Event.
      *
-     * @param eventName
-     * @param eventTime
-     * @param eventDuration
-     * @param memberList
-     * @return
+     * @param eventName the name of an Event
+     * @param eventTime the time of an Event
+     * @param eventDuration the duration of an Event
+     * @param memberList the list of members of an Event
+     * @return String with details of an Event
+     * @see Event#toString()
      */
     public static String toStringEvent(EventName eventName, EventTime eventTime,
                                        EventDuration eventDuration, MemberList memberList) {

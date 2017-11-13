@@ -51,7 +51,7 @@ public class MemberList {
     }
 
     /**
-     * Search member list to see if given person exist.
+     * Returns true if given person exist in member list.
      *
      * @param toFind
      * @return returns true if success; false if not found

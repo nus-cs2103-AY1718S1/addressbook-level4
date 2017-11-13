@@ -6,9 +6,19 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 == Project: AddressBook - Level 4
 AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
 
-*Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
+*Code contributed*: [https://github.com/CS2103AUG2017-W09-B3/main/blob/master/collated/main/eldriclim.md[Functional code]] [https://github.com/CS2103AUG2017-W09-B3/main/blob/master/collated/test/eldriclim.md[Test code]]
 
-=== Enhancement Added: Sort
+=== Changes made to DG:
+
+#Start of Extract [from: Developer Guide]#
+
+*Intro to DG*
+
+include::../DeveloperGuide.adoc[tag=dgintro]
+
+#End of Extract#
+
+=== Enhancement Added: Sort, ScheduleAdd, ScheduleRemove
 
 ==== External behavior
 
@@ -17,13 +27,21 @@ AddressBook - Level 4 is a desktop address book application used for teaching So
 
 include::../UserGuide.adoc[tag=sort]
 
+include::../UserGuide.adoc[tag=sadd]
+
+include::../UserGuide.adoc[tag=sremove]
+
 #End of Extract#
 
 ---
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+* Having the `sort` command allows users to fine tune how their person list panel should appear.
+
+* Having the `s-add` command allows users to add events to their address book to better manage their schedule.
+
+* Having the `s-remove` command allows users to remove events from the address book.
 
 ==== Implementation
 
@@ -32,18 +50,22 @@ include::../UserGuide.adoc[tag=sort]
 
 include::../DeveloperGuide.adoc[tag=sortmech]
 
+include::../DeveloperGuide.adoc[tag=schedule]
+
 #End of Extract#
 
 ---
 
-=== Enhancement Proposed: Add command `remark`
+=== Enhancement Proposed:
 
-{Explain similar to the Undo/Redo feature above.}
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=snusmods]
+
+#End of Extract#
 
 === Other contributions
 
-* Add interactive Calendar and Event list panel (Pull requests https://github.com/CS2103AUG2017-W09-B3/main/pull/88[#88])
-
-== Project: PowerPointLabs
-
-{Optionally (not graded), you may include other projects in your portfolio.}
+* Add interactive Calendar to UI (Pull requests https://github.com/CS2103AUG2017-W09-B3/main/pull/88[#88])
+* Add Event list panel and card to UI (Pull requests https://github.com/CS2103AUG2017-W09-B3/main/pull/88[#88])
+* Fix memory leak issue regarding overwritten listeners in program (Pull requests https://github.com/CS2103AUG2017-W09-B3/main/pull/125)

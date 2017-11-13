@@ -37,6 +37,7 @@ public class BrowserPanelHandle extends NodeHandle<Node> {
      * Returns the {@code URL} of the currently loaded page.
      */
     public URL getLoadedUrl() {
+        System.out.println("1");
         return WebViewUtil.getLoadedUrl(getChildNode(BROWSER_ID));
     }
 

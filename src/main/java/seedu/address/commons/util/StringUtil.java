@@ -75,11 +75,11 @@ public class StringUtil {
 
     //@@author eldriclim
     /**
-     * Output a series of Strings with the specified separator.
+     * Returns a String with list elements linked by the given separator.
      *
      * @param list
      * @param separator
-     * @return
+     * @return a String with list elements linked by the given separator
      */
     public static String multiStringPrint(List<String> list, String separator) {
         Iterator<String> iterator = list.iterator();

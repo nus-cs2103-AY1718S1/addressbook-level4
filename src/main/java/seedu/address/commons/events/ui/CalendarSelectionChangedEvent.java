@@ -6,7 +6,7 @@ import seedu.address.commons.events.BaseEvent;
 
 //@@author eldriclim
 /**
- * When a selection is made in the calendar
+ * Represents a selection change in the Calendar view
  */
 public class CalendarSelectionChangedEvent extends BaseEvent {
 

@@ -25,6 +25,14 @@ include::../UserGuide.adoc[tag=birthday]
 
 ---
 
+==== Justification
+
+* Having the enhanced `find` command allows users to find specific contacts more efficiently.
+
+* Having the `m-show` and `m-route` command allows users to find the home location of their contacts in case they would like to meet them.
+
+* Having a `b-add` and `b-remove` command allows users to add, update and remove birthdays of their contacts, adding a personal touch to their address book.
+
 ==== Implementation
 
 ---

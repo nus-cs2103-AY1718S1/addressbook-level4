@@ -117,8 +117,7 @@ public class ScheduleRemoveCommand extends UndoableCommand {
 
 
     /**
-     * Stores the details of modified person with updated event list. Each non-empty field value will replace the
-     * corresponding field value of the person.
+     * Stores the details of modified person with updated event list.
      */
     private static class EditEventListPersonDescriptor {
         private Name name;

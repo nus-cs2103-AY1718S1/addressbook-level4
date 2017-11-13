@@ -143,7 +143,7 @@ public class Event {
     }
 
     /**
-     * Checks all attribute of Events
+     * Returns true if Event is equal.
      *
      * @param other
      * @return true if all attributes are similar; false if otherwise

@@ -49,6 +49,8 @@ public class SortCommand extends UndoableCommand {
     private String sortOrderReadable = "ascending";
 
     /**
+     * Creates a SortCommand with the given sort type and sort order.
+     *
      * @param sortType     specify which attribute to sort by
      * @param isDescending specify if sorting is to be in descending order
      */

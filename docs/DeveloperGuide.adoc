@@ -15,10 +15,11 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 By: `Team W09-B03`      Since: `Sep 2017`      Licence: `MIT`
 
 == Introduction
-
+// tag::dgintro[]
 iConnect is a command-line interface (CLI) based application which allows students to manage their contacts and keep track of their schedule. This documentation aims to guide you through the development process of iConnect, getting you started as an iConnect contributor. iConnect is written in Java and the editor of choice is IntelliJ IDE.
 
 Due its sizable codebase, you may want to get familiarise with the different architectural components to have a better understanding of each component works together.
+// end::dgintro[]
 
 == Setting up
 
@@ -708,9 +709,9 @@ _Figure 4.4.5 : UndoRedoStack Entering New Commands_
 
 The sorting mechanism is facilitated by `SortCommandParser` and `SortCommand`, with both classes residing in the `Logic` component of the address book. Since the address book state will be modified during the sorting process, the `sort` has to be undoable.
 
-`SortCommandParser` takes in an argument in the form of `[PREFIX]/[ORDER]` that defines how `UniquePersonList` should be sorted, with `PREFIX` specifying the sort type and `ORDER` specifying the sort order. It first checks for validity against a regular expression. Once verified, the argument will be tokenized to identify the sort order and sort type. A `SortCommand` object is then created with the identified sort type and sort order.
+`SortCommandParser` takes in an argument in the form of `[PREFIX]/[ORDER]` that defines how `UniquePersonList` should be sorted. You may customise the sort operation, with `PREFIX` specifying the sort type and `ORDER` specifying the sort order. It first checks for validity against a regular expression. Once verified, the argument will be tokenized to identify your specified sort order and sort type. A `SortCommand` object is then created with the identified sort type and sort order.
 
-The `PREFIX` can be any of the following: `n/` for sorting persons by name, `p/` for sorting persons by phone number, `e/` for sorting persons by email, `a/` for sorting persons by address and `t/` for sorting persons by the time they was first added into the address book. The `ORDER` can be either `asc` for sorting in ascending order or `dsc` for sorting in descending order. Suppose both `PREFIX` and `ORDER` are not specified, the argument will be defaulted to name in ascending order. Alternatively, suppose the `ORDER` is not specified, it will be defaulted to ascending.
+The `PREFIX` can be any of the following: `n/` for sorting persons by name, `p/` for sorting persons by phone number, `e/` for sorting persons by email, `a/` for sorting persons by address and `t/` for sorting persons by the time they was first added into the address book. The `ORDER` can be either `asc` for sorting in ascending order or `dsc` for sorting in descending order. Suppose both `PREFIX` and `ORDER` are not specified, your sort operation will be defaulted to name in ascending order. Alternatively, suppose the `ORDER` is not specified, it will be defaulted to ascending.
 
 Upon execution of `SortCommand`, a `Comparator<ReadOnlyPerson>` will be initialised based on the sort type and sort order it receives. A `sortPerson` function call will be made to `Model`, which propagates down to `UniquePersonList`, where the sorting of the `internalList` occurs. Since sorting of `internalList` results in the change of state to address book, `SortCommand` is to be implemented as an `UndoableCommand`.
 
@@ -757,98 +758,8 @@ If the list is found to be empty, an `EmptyListException` will be thrown from `U
 **Alternative 2:** Not implementing sorting by time added +
 **Pros:** Can be achieved by restarting app. +
 **Cons:** Requires restarting of app which waste time and processing resources when list is long. +
-//end::sortmech[]
+// end::sortmech[]
 
-=== Scheduler Feature
-The `ScheduleAddCommand` allows you to add an `Event` into address book and is stored in an ArrayList-like `UniqueEventList` in `AddressBook`. Each event may have a number of members and they are specified by their `Index` in the `PersonListPanel` during the user input phase. The `ScheduleRemoveCommand` allows you to remove an `Event` from address book by inputting the `Index` of an event in the `EventListPanel`. Note that you may input more than one `Index` to remove multiple events at a time.
-
-Since both command requires the modification of `AddressBook` contents, they implemented as an UndoableCommand.
-
-****
-*Event-Person Relationship* +
-
-Each time an `Event` is created, four other composite objects are created as well:
-
-* `EventName` contains a single variable `fullName` that is verified to only contain alphanumeric characters and spaces and should not be blank.
-* `EventTime` stores and handles the start time, end time and the duration of an event. Since the concept of start and end time involves duration, `EvenTime` has to have an instance of an event’s duration despite us having `EventDuration`. You can also check an event’s status, with the function `isUpcoming` which returns a boolean value.
-* `EventDuration` stores the duration of an event and may range from having a value of 0 to days.
-* `MemberList` stores a list of `Person` who is involved with the event and may be empty. Each element is synced to a `Person` in the master `UniquePersonList` in `AddressBook`.
-
-Each `Person` maintains its own `UniqueEventList` with each element synced to an `Event` in the master `UniqueEventList` in `AddressBook`. In otherwords, both object references each other.
-****
-
-`UniqueEventList` functions as a List of `Events` where every element is unique and the uniqueness of an event is defined by its name, time and duration. If two different events have the same value for the three attributes, it is considered to be a duplicate. You can also check if an `Event` clashes with any of the events in `UniqueEventList`, by running the `hasClashes` function which returns true if a clash exist.
-
-*Adding an Event to Schedule*
-
-Each time `ScheduleAddCommand` is executed, `AddressBook` first checks if there are any `Person` involved in the `Event`. Suppose no `Index` was specified in the user input, it signifies that the event has no members and is directly added into the `UniqueEventList` in `AddressBook`. However, suppose a number of `Person` has been selected as members in the input, a list of new `Person` object will be created and events will be added through a person update. Each `Person` in the new list reflects a `Person` that was selected, with the addition of the `Event`, that is to be added, in his/her `UniqueEventList`. The list of new `Person` will then be used to update its respective counterpart in `AddressBook`, where it undergoes a direct replacement followed by a two `Event`-related syncing. This sync process will result in the adding of events in the master `UniqueEventList` of `AddressBook`.
-
-*Syncing the Event-Person Relationship*
-
-The first sync checks that every event of a `Person` exist is the master `UniqueEventList` in `AddressBook`, and points each event to an event in the master list. Suppose an event does not exist in the master list, it is added to the master list before the syncing process. The second sync updates all the `Event` of each newly edited `Person` to have their `MemberList` point to a `Person` in the master person list in `AddressBook`.
-
-[source,java]
-----
-    /**
-     * Ensures that every event in this person:
-     * - exists in the master list {@link #events}
-     * - points to a Event object in the master list
-     */
-    private void syncMasterEventListWith(Person person) {
-        final UniqueEventList personEvents = new UniqueEventList(person.getEvents());
-        events.mergeFrom(personEvents);
-
-        // Create map with values = event object references in the master list
-        // used for checking person event references
-        final Map<Event, Event> masterEventObjects = new HashMap<>();
-        events.forEach(event -> masterEventObjects.put(event, event));
-
-        // Rebuild the personal list of events to point to the relevant events in the master event list.
-        final Set<Event> correctEventReferences = new HashSet<>();
-        personEvents.forEach(event -> correctEventReferences.add(masterEventObjects.get(event)));
-        person.setEvents(correctEventReferences);
-    }
-
-    /**
-     * Ensures that every member in this event:
-     * - points to a person object in the master person list
-     */
-    private void syncMasterEventListMembers(Event event) {
-
-        // Create map with values = person object references in the master list
-        // used for checking member references
-        final Map<Person, Person> masterPersonObjects = new HashMap<>();
-        this.persons.forEach(person -> masterPersonObjects.put(person, person));
-
-        ArrayList<ReadOnlyPerson> eventMembers = new ArrayList<>();
-        this.persons.asObservableList().stream().filter(readOnlyPerson ->
-                readOnlyPerson.getEvents().contains(event)).forEach(eventMembers::add);
-
-
-        // Rebuild the list of member to point to the relevant person in the master person list.
-        final Set<Person> correctPersonReferences = new HashSet<>();
-        eventMembers.forEach(person -> correctPersonReferences.add(masterPersonObjects.get(person)));
-        event.setMemberList(new MemberList(
-                new ArrayList<>(correctPersonReferences)));
-    }
-----
-
-The two syncing process ensures the `MemberList` of each `Event` points to a `Person` in master person list and also having each element in `UniqueEventList` of `Person` points to an event in the master event list.
-
-*Removing an Event from Schedule*
-
-Similar to the adding of events, the removing of events is also done through an update and sync process. Suppose an `Event` has an empty `MemberList`, the specified `Event` will be directly removed from the master `UniqueEventList` in `AddressBook`. However, if the `Event` that is to be deleted has members involved, it will be removed through the same update and sync process.
-
-
-
-==== Design Considerations
-3 criteria for same
-Why duration
-
-
-
-
-// tag::tagadd[]
 === Adding a tag to multiple people
 
 Adding a tag to multiple people is facilitated by `TagAddCommand`, which extends `UndoableCommand`, it supports undoing and redoing of commands that modifies the state of the address book.
@@ -1266,6 +1177,115 @@ _Figure 4.13.1 : Interactions Inside the Logic Component for the `export path` C
 * The filepath should be a complete path to a specific location of a empty txt file in your computer.
 * The order of the output information is 'person', 'event';
 // end::export[]
+
+// tag::schedule[]
+=== Scheduler Feature
+The `ScheduleAddCommand` allows you to add an `Event` into address book and is stored in an ArrayList-like `UniqueEventList` in `AddressBook`. Each event may have a number of members and they are specified by their `Index` in the `PersonListPanel` during the user input phase. The `ScheduleRemoveCommand` allows you to remove an `Event` from address book by inputting the `Index` of an event in the `EventListPanel`. Note that you may input more than one `Index` to remove multiple events at a time.
+
+Since both command requires the modification of `AddressBook` contents, they implemented as an UndoableCommand.
+
+image::LogicCommandClassDiagram_ScheduleCommands.png[width="800"]
+_Figure 4.14.1 : Structure of Schedule-related Commands in the Logic Component_
+
+****
+
+*Event-Person Relationship* +
+
+Each time an `Event` is created, four other composite objects are created as well:
+
+* `EventName` contains a single variable `fullName` that is verified to only contain alphanumeric characters and spaces and should not be blank.
+* `EventTime` stores and handles the start time, end time and the duration of an event. Since the concept of start and end time involves duration, `EvenTime` has to have an instance of an event’s duration despite us having `EventDuration`. You can also check an event’s status, with the function `isUpcoming` which returns a boolean value.
+* `EventDuration` stores the duration of an event and may range from having a value of 0 to days.
+* `MemberList` stores a list of `Person` who is involved with the event and may be empty. Each element is synced to a `Person` in the master `UniquePersonList` in `AddressBook`.
+
+Each `Person` maintains its own `UniqueEventList` with each element synced to an `Event` in the master `UniqueEventList` in `AddressBook`. In otherwords, both object references each other.
+
+****
+
+`UniqueEventList` functions as a List of `Events` where every element is unique and the uniqueness of an event is defined by its name, time and duration. If two different events have the same value for the three attributes, it is considered to be a duplicate. You can also check if an `Event` clashes with any of the events in `UniqueEventList`, by running the `hasClashes` function which returns true if a clash exist.
+
+*Adding an Event to Schedule*
+
+Each time `ScheduleAddCommand` is executed, `AddressBook` first checks if there are any `Person` involved in the `Event`. Suppose no `Index` was specified in the user input, it signifies that the event has no members and is directly added into the `UniqueEventList` in `AddressBook`. However, suppose a number of `Person` has been selected as members in the input, a list of new `Person` object will be created and events will be added through a person update. Each `Person` in the new list reflects a `Person` that was selected, with the addition of the `Event`, that is to be added, in his/her `UniqueEventList`. The list of new `Person` will then be used to update its respective counterpart in `AddressBook`, where it undergoes a direct replacement followed by a two `Event`-related syncing. This sync process will result in the adding of events in the master `UniqueEventList` of `AddressBook`.
+
+*Syncing the Event-Person Relationship*
+
+The first sync checks that every event of a `Person` exist is the master `UniqueEventList` in `AddressBook`, and points each event to an event in the master list. Suppose an event does not exist in the master list, it is added to the master list before the syncing process. The second sync updates all the `Event` of each newly edited `Person` to have their `MemberList` point to a `Person` in the master person list in `AddressBook`.
+
+[source,java]
+----
+    /**
+     * Ensures that every event in this person:
+     * - exists in the master list {@link #events}
+     * - points to a Event object in the master list
+     */
+    private void syncMasterEventListWith(Person person) {
+        final UniqueEventList personEvents = new UniqueEventList(person.getEvents());
+        events.mergeFrom(personEvents);
+
+        // Create map with values = event object references in the master list
+        // used for checking person event references
+        final Map<Event, Event> masterEventObjects = new HashMap<>();
+        events.forEach(event -> masterEventObjects.put(event, event));
+
+        // Rebuild the personal list of events to point to the relevant events in the master event list.
+        final Set<Event> correctEventReferences = new HashSet<>();
+        personEvents.forEach(event -> correctEventReferences.add(masterEventObjects.get(event)));
+        person.setEvents(correctEventReferences);
+    }
+
+    /**
+     * Ensures that every member in this event:
+     * - points to a person object in the master person list
+     */
+    private void syncMasterEventListMembers(Event event) {
+
+        // Create map with values = person object references in the master list
+        // used for checking member references
+        final Map<Person, Person> masterPersonObjects = new HashMap<>();
+        this.persons.forEach(person -> masterPersonObjects.put(person, person));
+
+        ArrayList<ReadOnlyPerson> eventMembers = new ArrayList<>();
+        this.persons.asObservableList().stream().filter(readOnlyPerson ->
+                readOnlyPerson.getEvents().contains(event)).forEach(eventMembers::add);
+
+
+        // Rebuild the list of member to point to the relevant person in the master person list.
+        final Set<Person> correctPersonReferences = new HashSet<>();
+        eventMembers.forEach(person -> correctPersonReferences.add(masterPersonObjects.get(person)));
+        event.setMemberList(new MemberList(
+                new ArrayList<>(correctPersonReferences)));
+    }
+----
+
+The two syncing process ensures the `MemberList` of each `Event` points to a `Person` in master person list and also having each element in `UniqueEventList` of `Person` points to an event in the master event list.
+
+*Removing an Event from Schedule*
+
+Similar to the adding of events, the removing of events is also done through an update and sync process. Suppose an `Event` has an empty `MemberList`, the specified `Event` will be directly removed from the master `UniqueEventList` in `AddressBook`. However, if the `Event` that is to be deleted has members involved, it will be removed through the same update and sync process.
+
+==== Design Considerations
+
+**Aspect:** Keeping track of the duration of an `Event` +
+**Alternative 1 (current choice):** Create a separate object named `EventDuration`, despite having a duration stored in `EventTime` +
+**Pros:** Implementing a separate object for duration follows the OOP model and also facilitates specific operations in the `Logic` and `UI` component. Firstly, duration has its own set of parsing and validation criteria during the input phase, justifying the need for separation. Secondly, duration has to be implemented as a separate object for it to appear as a standalone UI label. Since binding of `textProperty` read the `toString` of the binded `ObjectProperty`, duration has to be stored as a separate `ObjectProperty`. +
+**Cons:** Both `EventTime` and `EventDuration` has an instance of duration. +
+**Alternative 2:** Stores duration of event in `EventTime` only +
+**Pros:** Lesser code to work with. +
+**Cons:** Unable to output duration as a standalone element on the UI due to the restrictions of `EventCard` label bindings. +
+
+---
+
+**Aspect:** Uniqueness of an `Event` +
+**Alternative 1 (current choice):** Have uniqueness defined by only `EventName`, `EventTime` and `EventDuration` +
+**Pros:** The absence of `MemberList` allows for a more straightforward update and sync process during the application's initialisation phase. All `Person` and `Event` objects are first read and create from `addressbook.xml` without any referencing to each other. Suppose `MemberList` is included as part of the uniqueness check, it has to be built before the update process. However, the correct `Person` does not exist since no event has been added to any `Person`. +
+**Cons:** Uniqueness comparison is not succinct. +
+**Alternative 2:** Include `MemberList` as part of uniqueness test +
+**Pros:** Able to create an `Event` with the the same name, time and duration as long as `MemberList` elements are different. +
+**Cons:** Uniqueness comparison is too lenient and syncing process may be unnecessarily complicated. +
+
+// end::schedule[]
+
 
 === Logging
 
