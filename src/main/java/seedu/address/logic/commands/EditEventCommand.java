@@ -1,10 +1,11 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.core.Messages.MESSAGE_REDO_ASSERTION_ERROR;
+import static seedu.address.commons.core.Messages.MESSAGE_UNDO_ASSERTION_ERROR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_TIME;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_EVENTS;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,6 +14,7 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.exceptions.DeleteOnCascadeException;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.EventDescription;
 import seedu.address.model.event.EventName;
@@ -40,9 +42,11 @@ public class EditEventCommand extends UndoableCommand {
             + PREFIX_EVENT_DESCRIPTION + "Discuss how to handle Q&A "
             + PREFIX_EVENT_TIME + "02/11/2017 ";
 
-    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Event: %1$s";
+    public static final String MESSAGE_EDIT_EVENT_SUCCESS = "Edited Event: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This event already exists in the address book.";
+    public static final String MESSAGE_DUPLICATE_EVENT = "This event already exists in the address book.";
+    public static final String MESSAGE_EVENT_BEING_PARTICIPATED_FAIL = "Some person participates this event,"
+            + "please disjoin all participated persons before editing this event";
 
     private Index index;
     private EditEventDescriptor editEventDescriptor;
@@ -66,53 +70,59 @@ public class EditEventCommand extends UndoableCommand {
         List<ReadOnlyEvent> lastShownList = model.getFilteredEventList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_EVENT_DISPLAYED_INDEX);
         }
 
-        if (eventToEdit == null && editedEvent == null) { // Distinguish with JUnit tests
-            eventToEdit = lastShownList.get(index.getZeroBased());
-            editedEvent = createEditedEvent(eventToEdit, editEventDescriptor);
-        }
+        eventToEdit = lastShownList.get(index.getZeroBased());
+        editedEvent = createEditedEvent(eventToEdit, editEventDescriptor);
 
         try {
             model.updateEvent(eventToEdit, editedEvent);
         } catch (DuplicateEventException dpe) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            throw new CommandException(MESSAGE_DUPLICATE_EVENT);
         } catch (EventNotFoundException pnfe) {
             throw new AssertionError("The target event cannot be missing");
+        } catch (DeleteOnCascadeException doce) {
+            throw new CommandException(MESSAGE_EVENT_BEING_PARTICIPATED_FAIL);
         }
-        model.updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
-        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedEvent));
+        return new CommandResult(String.format(MESSAGE_EDIT_EVENT_SUCCESS, editedEvent));
     }
 
     @Override
     protected void undo() {
         try {
             model.updateEvent(editedEvent, eventToEdit);
-        } catch (DuplicateEventException dpe) {
-            throw new AssertionError("The command has been successfully executed previously; "
-                    + "it should not fail now");
-        } catch (EventNotFoundException pnfe) {
-            throw new AssertionError("The command has been successfully executed previously; "
-                    + "it should not fail now");
+        } catch (DuplicateEventException | EventNotFoundException | DeleteOnCascadeException e) {
+            throw new AssertionError(MESSAGE_UNDO_ASSERTION_ERROR);
         }
-        model.updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
     }
 
     @Override
     protected void redo() {
         try {
             model.updateEvent(eventToEdit, editedEvent);
-        } catch (DuplicateEventException dpe) {
-            throw new AssertionError("The command has been successfully executed previously; "
-                    + "it should not fail now");
-        } catch (EventNotFoundException pnfe) {
-            throw new AssertionError("The command has been successfully executed previously; "
-                    + "it should not fail now");
+        } catch (DuplicateEventException | EventNotFoundException | DeleteOnCascadeException e) {
+            throw new AssertionError(MESSAGE_REDO_ASSERTION_ERROR);
         }
-        model.updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
     }
 
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof EditEventCommand)) {
+            return false;
+        }
+
+        // state check
+        EditEventCommand e = (EditEventCommand) other;
+        return index.equals(e.index)
+            && editEventDescriptor.equals(e.editEventDescriptor);
+    }
     /**
      * Creates and returns a {@code Event} with the details of {@code eventToEdit}
      * edited with {@code editEventDescriptor}.
@@ -194,7 +204,7 @@ public class EditEventCommand extends UndoableCommand {
 
             return getEventName().equals(e.getEventName())
                     && getEventDescription().equals(e.getEventDescription())
-                    && getEventTime().equals(e.getEventName());
+                    && getEventTime().equals(e.getEventTime());
         }
     }
 }

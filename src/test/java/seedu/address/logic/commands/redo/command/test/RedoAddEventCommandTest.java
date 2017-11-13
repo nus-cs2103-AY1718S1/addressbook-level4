@@ -1,49 +1,39 @@
 package seedu.address.logic.commands.redo.command.test;
 
-import static seedu.address.logic.UndoRedoStackUtil.prepareStack;
 import static seedu.address.logic.commands.CommandTestUtil.addEvent;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.logic.commands.UndoRedoCommandUtil.assertCommandAssertionError;
+import static seedu.address.logic.commands.UndoRedoCommandUtil.prepareRedoCommand;
 import static seedu.address.testutil.TypicalEvents.FIFTH;
 import static seedu.address.testutil.TypicalEvents.SIXTH;
 import static seedu.address.testutil.TypicalEvents.getTypicalEventList;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
-import java.util.Arrays;
-import java.util.Collections;
-
-import org.junit.Before;
 import org.junit.Test;
 
-import seedu.address.logic.CommandHistory;
-import seedu.address.logic.UndoRedoStack;
+import seedu.address.commons.core.Messages;
 import seedu.address.logic.commands.AddEventCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
+import seedu.address.model.ModelStub;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.model.event.exceptions.DuplicateEventException;
 
 //@@author Adoby7
+/**
+ * Test the redo function of AddEventCommand
+ */
 public class RedoAddEventCommandTest {
-    private static final CommandHistory EMPTY_COMMAND_HISTORY = new CommandHistory();
-    private static final UndoRedoStack EMPTY_STACK = new UndoRedoStack();
-
     private final Model model = new ModelManager(getTypicalAddressBook(), getTypicalEventList(), new UserPrefs());
     private final AddEventCommand addCommandOne = new AddEventCommand(FIFTH);
     private final AddEventCommand addCommandTwo = new AddEventCommand(SIXTH);
 
-    @Before
-    public void setUp() {
-        addCommandOne.setData(model, EMPTY_COMMAND_HISTORY, EMPTY_STACK);
-        addCommandTwo.setData(model, EMPTY_COMMAND_HISTORY, EMPTY_STACK);
-    }
-
     @Test
     public void execute() {
-        UndoRedoStack undoRedoStack = prepareStack(
-                Collections.emptyList(), Arrays.asList(addCommandTwo, addCommandOne));
-        RedoCommand redoCommand = new RedoCommand();
-        redoCommand.setData(model, EMPTY_COMMAND_HISTORY, undoRedoStack);
+        RedoCommand redoCommand = prepareRedoCommand(model, addCommandOne, addCommandTwo);
         Model expectedModel = new ModelManager(getTypicalAddressBook(), getTypicalEventList(), new UserPrefs());
 
         // multiple commands in redoStack
@@ -56,5 +46,21 @@ public class RedoAddEventCommandTest {
 
         // no command in redoStack
         assertCommandFailure(redoCommand, model, RedoCommand.MESSAGE_FAILURE);
+    }
+
+    @Test
+    public void executeWithAssertionError() throws Exception {
+        ModelStub modelStub = new ModelStubThrowException();
+        RedoCommand redoCommand = prepareRedoCommand(modelStub, addCommandOne, addCommandTwo);
+        String expectedMessage = Messages.MESSAGE_REDO_ASSERTION_ERROR;
+
+        assertCommandAssertionError(redoCommand, expectedMessage);
+    }
+
+    private class ModelStubThrowException extends ModelStub {
+        @Override
+        public void addEvent(ReadOnlyEvent event) throws DuplicateEventException {
+            throw new DuplicateEventException();
+        }
     }
 }

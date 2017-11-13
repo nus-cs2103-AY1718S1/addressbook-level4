@@ -20,10 +20,19 @@ public class EventTimeTest {
         assertFalse(EventTime.isValidEventTime("09/1994/30")); // does not follow 'DD/MM/YYYY' format
         assertFalse(EventTime.isValidEventTime("04.04.2010")); // does not user '/' as splitter
 
-        // valid birthdays
+        // valid event time
         assertTrue(EventTime.isValidEventTime("01/01/1990"));
         assertTrue(EventTime.isValidEventTime("13/05/1991"));
         assertTrue(EventTime.isValidEventTime("24/06/1992"));
         assertTrue(EventTime.isValidEventTime("17/02/1993"));
+
+        // @@author Adoby7
+        // Add more boundary tests
+        assertFalse(EventTime.isValidEventTime("29/02/2100")); // not a leap year
+        assertFalse(EventTime.isValidEventTime("30/02/2000")); // No 30th day in Feb
+
+        assertTrue(EventTime.isValidEventTime("29/02/2000"));
+        assertTrue(EventTime.isValidEventTime("29/02/2004"));
+        assertTrue(EventTime.isValidEventTime("31/12/2003"));
     }
 }

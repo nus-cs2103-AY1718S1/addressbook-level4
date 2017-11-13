@@ -1,13 +1,14 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.core.Messages.MESSAGE_REDO_ASSERTION_ERROR;
+import static seedu.address.commons.core.Messages.MESSAGE_UNDO_ASSERTION_ERROR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BIRTHDAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,6 +18,7 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.exceptions.DeleteOnCascadeException;
 import seedu.address.model.event.Event;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Birthday;
@@ -54,6 +56,8 @@ public class EditCommand extends UndoableCommand {
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
+    public static final String MESSAGE_PERSON_PARTICIPATE_EVENT_FAIL = "This person has participated some events,"
+            + "please disjoin all events before editing this person";
 
     private Index index;
     private EditPersonDescriptor editPersonDescriptor;
@@ -73,18 +77,6 @@ public class EditCommand extends UndoableCommand {
         this.editPersonDescriptor = new EditPersonDescriptor(editPersonDescriptor);
     }
 
-    /**
-     * Assign original and edited persons directly
-     * Can only be used in test
-     * @param targetPerson Original person
-     * @param updatedPerson Edited person
-     */
-    public EditCommand (ReadOnlyPerson targetPerson, ReadOnlyPerson updatedPerson) {
-        this.personToEdit = targetPerson;
-        this.editedPerson = updatedPerson;
-        index = Index.fromOneBased(1);
-    }
-
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
@@ -93,10 +85,9 @@ public class EditCommand extends UndoableCommand {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        if (personToEdit == null && editedPerson == null) { // Distinguish with JUnit tests
-            personToEdit = lastShownList.get(index.getZeroBased());
-            editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
-        }
+        personToEdit = lastShownList.get(index.getZeroBased());
+        editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
+
 
         try {
             newTags = model.extractNewTag(editedPerson);
@@ -105,8 +96,9 @@ public class EditCommand extends UndoableCommand {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
+        } catch (DeleteOnCascadeException doce) {
+            throw new CommandException(MESSAGE_PERSON_PARTICIPATE_EVENT_FAIL);
         }
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedPerson));
     }
 
@@ -137,28 +129,18 @@ public class EditCommand extends UndoableCommand {
         try {
             model.updatePerson(editedPerson, personToEdit);
             model.removeTags(newTags);
-        } catch (DuplicatePersonException dpe) {
-            throw new AssertionError("The command has been successfully executed previously; "
-                    + "it should not fail now");
-        } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("The command has been successfully executed previously; "
-                    + "it should not fail now");
+        } catch (DuplicatePersonException | PersonNotFoundException | DeleteOnCascadeException e) {
+            throw new AssertionError(MESSAGE_UNDO_ASSERTION_ERROR);
         }
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
     }
 
     @Override
     protected void redo() {
         try {
             model.updatePerson(personToEdit, editedPerson);
-        } catch (DuplicatePersonException dpe) {
-            throw new AssertionError("The command has been successfully executed previously; "
-                    + "it should not fail now");
-        } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("The command has been successfully executed previously; "
-                    + "it should not fail now");
+        } catch (DuplicatePersonException | PersonNotFoundException | DeleteOnCascadeException e) {
+            throw new AssertionError(MESSAGE_REDO_ASSERTION_ERROR);
         }
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
     }
     //@@author
 

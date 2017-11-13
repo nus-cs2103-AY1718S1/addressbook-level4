@@ -1,10 +1,10 @@
 # HuWanqing
 ###### \java\seedu\address\model\event\EventNameTest.java
 ``` java
-import org.junit.Test;
-
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
 
 public class EventNameTest {
     @Test
@@ -26,10 +26,10 @@ public class EventNameTest {
 ```
 ###### \java\seedu\address\model\event\EventTimeTest.java
 ``` java
-import org.junit.Test;
-
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
 
 public class EventTimeTest {
     @Test
@@ -46,29 +46,38 @@ public class EventTimeTest {
         assertFalse(EventTime.isValidEventTime("09/1994/30")); // does not follow 'DD/MM/YYYY' format
         assertFalse(EventTime.isValidEventTime("04.04.2010")); // does not user '/' as splitter
 
-        // valid birthdays
+        // valid event time
         assertTrue(EventTime.isValidEventTime("01/01/1990"));
         assertTrue(EventTime.isValidEventTime("13/05/1991"));
         assertTrue(EventTime.isValidEventTime("24/06/1992"));
         assertTrue(EventTime.isValidEventTime("17/02/1993"));
-    }
-}
+
 ```
 ###### \java\seedu\address\model\EventListTest.java
 ``` java
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-import seedu.address.model.event.Event;
-import seedu.address.model.event.ReadOnlyEvent;
-
-import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 import static seedu.address.testutil.TypicalEvents.FIRST;
 import static seedu.address.testutil.TypicalEvents.getTypicalEventList;
+
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import seedu.address.model.event.Event;
+import seedu.address.model.event.ReadOnlyEvent;
+
+
+
+
+
 
 public class EventListTest {
     @Rule
@@ -176,6 +185,7 @@ public class EventListTest {
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+
 import seedu.address.model.event.UniqueEventList;
 
 public class UniqueEventListTest {
@@ -187,6 +197,43 @@ public class UniqueEventListTest {
         UniqueEventList uniqueEventList = new UniqueEventList();
         thrown.expect(UnsupportedOperationException.class);
         uniqueEventList.asObservableList().remove(0);
+    }
+}
+```
+###### \java\seedu\address\testutil\EventListBuilder.java
+``` java
+import seedu.address.model.EventList;
+import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.model.event.exceptions.DuplicateEventException;
+
+/**
+ * A utility class help to build an event list
+ */
+public class EventListBuilder {
+    private EventList eventList;
+
+    public EventListBuilder() {
+        eventList = new EventList();
+    }
+
+    public EventListBuilder(EventList eventList) {
+        this.eventList = eventList;
+    }
+
+    /**
+     * Adds a new {@code Event} to the {@code EventList} that we are building.
+     */
+    public EventListBuilder withEvent(ReadOnlyEvent event) {
+        try {
+            eventList.addEvent(event);
+        } catch (DuplicateEventException dee) {
+            throw new IllegalArgumentException("event is expected to be unique.");
+        }
+        return this;
+    }
+
+    public EventList build() {
+        return eventList;
     }
 }
 ```

@@ -1,6 +1,8 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.core.Messages.MESSAGE_REDO_ASSERTION_ERROR;
+import static seedu.address.commons.core.Messages.MESSAGE_UNDO_ASSERTION_ERROR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON;
 
@@ -35,7 +37,7 @@ public class DisjoinCommand extends UndoableCommand {
             + PREFIX_EVENT + "2";
 
     public static final String MESSAGE_DISJOIN_SUCCESS = "Person \"%1$s\" does not participate Event \"%2$s\"";
-    public static final String MESSAGE_PERSON_NOT_PARTICIPATE = "This person already does not participate this event";
+    public static final String MESSAGE_PERSON_NOT_PARTICIPATE = "This person does not participate this event";
 
     private final Index personIndex;
     private final Index eventIndex;
@@ -66,9 +68,9 @@ public class DisjoinCommand extends UndoableCommand {
             return new CommandResult(String.format(MESSAGE_DISJOIN_SUCCESS, personToRemove.getName(),
                     eventToRemove.getEventName()));
         } catch (PersonNotParticipateException pnpe) {
-            return new CommandResult(MESSAGE_PERSON_NOT_PARTICIPATE);
+            throw  new CommandException(MESSAGE_PERSON_NOT_PARTICIPATE);
         } catch (NotParticipateEventException npee) {
-            return new CommandResult(MESSAGE_PERSON_NOT_PARTICIPATE);
+            throw  new CommandException(MESSAGE_PERSON_NOT_PARTICIPATE);
         }
     }
 
@@ -76,12 +78,8 @@ public class DisjoinCommand extends UndoableCommand {
     protected void undo() {
         try {
             model.joinEvent(personToRemove, eventToRemove);
-        } catch (PersonHaveParticipateException pnpe) {
-            throw new AssertionError("Undo is to revert a stage; "
-                    + "it should not fail");
-        } catch (HaveParticipateEventException hpee) {
-            throw new AssertionError("Undo is to revert a stage; "
-                    + "it should not fail now");
+        } catch (PersonHaveParticipateException | HaveParticipateEventException e) {
+            throw new AssertionError(MESSAGE_UNDO_ASSERTION_ERROR);
         }
     }
 
@@ -89,14 +87,18 @@ public class DisjoinCommand extends UndoableCommand {
     protected void redo() {
         try {
             model.quitEvent(personToRemove, eventToRemove);
-        } catch (PersonNotParticipateException pnpe) {
-            throw new AssertionError("The command has been successfully executed previously; "
-                    + "it should not fail now");
-        } catch (NotParticipateEventException npee) {
-            throw new AssertionError("The command has been successfully executed previously; "
-                    + "it should not fail now");
+        } catch (PersonNotParticipateException | NotParticipateEventException e) {
+            throw new AssertionError(MESSAGE_REDO_ASSERTION_ERROR);
         }
+    }
 
+    /**
+     * Assign the target person and event
+     * Only used for testing
+     */
+    public void assignValueForTest(Person person, Event event) {
+        this.personToRemove = person;
+        this.eventToRemove = event;
     }
 
     @Override
