@@ -6,10 +6,10 @@ import java.util.List;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.MrtMapLogic;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.ui.MrtMapUI;
+import seedu.address.ui.MrtMapUi;
 
 //@@author Yew Onn
 /**
@@ -62,7 +62,7 @@ public class MeetingLocationCommand extends Command {
         ArrayList<String> sortedStationNames = mrtMapLogic.getSortedMrtList(mrtStations);
         //the first element in the sorted list contains the best meeting location.
         String meetStation = sortedStationNames.get(0);
-        MrtMapUI mrtMapUi = new MrtMapUI();
+        MrtMapUi mrtMapUi = new MrtMapUi();
         mrtMapUi.displayUserInfo(meetStation, mrtStations);
         String userInfo = getMrtInfo(peopleNameList, mrtStations, meetStation);
         return new CommandResult(String.format(MESSAGE_MEETING_LOCATION_SUCCESS)

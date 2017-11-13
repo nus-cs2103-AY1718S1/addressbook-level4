@@ -423,7 +423,7 @@ public class MrtMapLogic {
      * Split the populateTrainTimings method into three
      * parts to avoid having "really long methods"
      */
-    private void populateTrainTimingsPartThree(){
+    private void populateTrainTimingsPartThree() {
         trainTimings.add(45);
         trainTimings.add(47);
         trainTimings.add(49);

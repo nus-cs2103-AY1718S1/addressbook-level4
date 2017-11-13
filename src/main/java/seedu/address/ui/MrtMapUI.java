@@ -1,22 +1,21 @@
 package seedu.address.ui;
 
-import seedu.address.logic.MrtMapLogic;
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import seedu.address.logic.MrtMapLogic;
 
 //@@author Yew Onn
 /**
  * The java class displays the UI.
  */
-public class MrtMapUI {
+public class MrtMapUi {
     //radius of circle use to visualise mrt stations in the graph
-    private static int DEFAULT_CIRCLE_RADIUS = 4;
-    private static int MAX_CIRCLE_RADIUS = 35;
+    private static final int DEFAULT_CIRCLE_RADIUS = 4;
+    private static final int MAX_CIRCLE_RADIUS = 35;
 
     private HashMap<String, Point> mrtToPoint = new HashMap<String, Point>();
 
@@ -42,7 +41,7 @@ public class MrtMapUI {
             this.y = y;
         }
 
-        public int getX(){
+        public int getX() {
             return x;
         }
         public int getY() {
@@ -53,16 +52,17 @@ public class MrtMapUI {
     /**
      * Initialise all relevant informations required for the running of the UI.
      */
-    public MrtMapUI(){
+    public MrtMapUi() {
         initialise();
     }
 
+    /**
+     * following values are hard coded;
+     * the info inside point specify the location of the Mrt within the screen
+     * as a percentage. e.g. new Point(20, 40) means that the point located at
+     * the 20% of the width from the left, and 40 of the height from the bottom.
+     */
     private void initialiseMrtToPointHashMap() {
-		/*following values are hard coded;
-		the info inside point specify the location of the Mrt within the screen
-		as a percentage. e.g. new Point(20, 40) means that the point located at
-		the 20% of the width from the left, and 40 of the height from the bottom. */
-
         //EW-coded (East-West line) stops
         mrtToPoint = new HashMap<String, Point>();
         mrtToPoint.put("TLK", new Point(4, 90)); //Tuas Link EW33
@@ -118,27 +118,27 @@ public class MrtMapUI {
         int y = -1; //y-coordinate
         Point point = null;
 
-        if(mrtToPoint.containsKey(mrtName)) {
+        if (mrtToPoint.containsKey(mrtName)) {
             point = mrtToPoint.get(mrtName);
-        }else{
+        } else {
             int previousIndex = index;
             boolean previousMrtFound = false;
             boolean nextMrtFound = false;
             Point previousMrtCoordinate = null;
             Point nextMrtCoordinate = null;
-            while(!previousMrtFound) {
+            while (!previousMrtFound) {
                 previousIndex--;
                 String previousMrtShortName = mrtStationShortNames.get(previousIndex);
-                if(mrtToPoint.containsKey(previousMrtShortName)) {
+                if (mrtToPoint.containsKey(previousMrtShortName)) {
                     previousMrtFound = true;
                     previousMrtCoordinate = mrtToPoint.get(previousMrtShortName);
                 }
             }
             int nextIndex = index;
-            while(!nextMrtFound) {
+            while (!nextMrtFound) {
                 nextIndex++;
                 String nextMrtShortName = mrtStationShortNames.get(nextIndex);
-                if(mrtToPoint.containsKey(nextMrtShortName)) {
+                if (mrtToPoint.containsKey(nextMrtShortName)) {
                     nextMrtFound = true;
                     nextMrtCoordinate = mrtToPoint.get(nextMrtShortName);
                 }
@@ -158,8 +158,8 @@ public class MrtMapUI {
             double xDistance = nextX - previousX;
             double yDistance = nextY - previousY;
 
-            int xCor = (int) (previousX + xDistance*numStationFromCurrToPrevious/numStation);
-            int yCor = (int) (previousY + yDistance*numStationFromCurrToPrevious/numStation);
+            int xCor = (int) (previousX + xDistance * numStationFromCurrToPrevious / numStation);
+            int yCor = (int) (previousY + yDistance * numStationFromCurrToPrevious / numStation);
             point = new Point(xCor, yCor);
         }
         x = point.getX() * canvassWidth / 100;
@@ -167,18 +167,23 @@ public class MrtMapUI {
         return new Point(x, y);
     }
 
+    /**
+     * Draw all the mrt, including connecting lines.
+     * The result will be roughly similar with the standard singapore
+     * mrt maps.
+     */
     private void drawMrtMap() {
         prepareCanvass();
         initialiseMrtToPointHashMap();
         Point currPoint = null;
         Point previousPoint = null;
-        for(int i = 0; i < mrtStationNames.size(); i++) {
+        for (int i = 0; i < mrtStationNames.size(); i++) {
             currPoint = getMrtStationCanvassCoordinate(i);
 
             int currMrtIndex = i;
             int previousMrtIndex = i - 1;
 
-            if(isNeighbour(previousMrtIndex,currMrtIndex)) {
+            if (isNeighbour(previousMrtIndex,currMrtIndex)) {
                 StdDraw.setPenColor(StdDraw.GRAY);
                 ArrayList<String> commonLines = getCommonLines(previousMrtIndex, currMrtIndex);
                 StdDraw.setPenColor(getStationColor(commonLines.get(0)));
@@ -206,51 +211,47 @@ public class MrtMapUI {
         displayMrtName(meetStation, MAX_CIRCLE_RADIUS);
     }
 
-    private void visualiseStations(ArrayList<String> mrtStations){
+    /**
+     * Visualise all the mrt stations specified by mrtStations.
+     * @param mrtStations
+     */
+    private void visualiseStations(ArrayList<String> mrtStations) {
         HashMap<String, Integer> mrtStationCount = new HashMap<String, Integer>();
-        for(int i = 0; i < mrtStations.size(); i++){
+        for (int i = 0; i < mrtStations.size(); i++) {
             String currStationName = mrtStations.get(i);
             boolean isExist = mrtStationCount.containsKey(currStationName);
             int mrtCount = 0;
-            if(isExist){
+            if (isExist) {
                 mrtCount = mrtStationCount.get(currStationName);
                 mrtCount++;
                 mrtStationCount.put(currStationName, mrtCount);
-            }else{
+            } else {
                 mrtStationCount.put(currStationName, 1);
                 mrtCount++;
             }
-            int circleRadius = DEFAULT_CIRCLE_RADIUS + mrtCount*DEFAULT_CIRCLE_RADIUS;
-            if(circleRadius > MAX_CIRCLE_RADIUS){
+            int circleRadius = DEFAULT_CIRCLE_RADIUS + mrtCount * DEFAULT_CIRCLE_RADIUS;
+            if (circleRadius > MAX_CIRCLE_RADIUS) {
                 circleRadius = MAX_CIRCLE_RADIUS;
             }
             displayMrtPoint(currStationName, circleRadius);
         }
     }
 
-    private void displayMrtPoint(String mrtStationName, int circleRadius){
-        int mrtIndex = mrtNameToIndex.get(mrtStationName);
-        displayMrtPoint(mrtIndex, circleRadius);
-    }
-
-    private void displayMrtName(String mrtStationName, int circleRadius){
-        int mrtIndex = mrtNameToIndex.get(mrtStationName);
-        displayMrtName(mrtIndex, circleRadius);
-    }
-
-    private void displayMrtName(int mrtIndex, int circleRadius){
-        Point point = getMrtStationCanvassCoordinate(mrtIndex);
-        //display the name right above the circle
-        StdDraw.text(point.getX(), point.getY() + circleRadius, mrtStationNames.get(mrtIndex));
-    }
-
-    private void displayMrtPoint(int mrtIndex, int circleRadius){
+    /**
+     * display the mrt station that is specified by the mrt index
+     * the size of the display circle is specified by circle radius.
+     * If that mrt station belong to multiple line, i.e. an interchange,
+     * the circle colour will consists of all the mrt line in that interchange.
+     * @param mrtIndex
+     * @param circleRadius
+     */
+    private void displayMrtPoint(int mrtIndex, int circleRadius) {
         Point point = getMrtStationCanvassCoordinate(mrtIndex);
         int numInterchange = mrtLineNames.get(mrtIndex).size();
-        for(int i = 0; i < numInterchange; i++) {
+        for (int i = 0; i < numInterchange; i++) {
             Color stationColor = getStationColor(mrtLineNames.get(mrtIndex).get(i));
             StdDraw.setPenColor(stationColor);
-            int currCircleRadius = circleRadius - (circleRadius/numInterchange)*i;
+            int currCircleRadius = circleRadius - (circleRadius / numInterchange) * i;
             StdDraw.filledCircle(point.getX(), point.getY(), currCircleRadius);
         }
 
@@ -259,8 +260,30 @@ public class MrtMapUI {
         StdDraw.circle(point.getX(), point.getY(), circleRadius);
     }
 
+    private void displayMrtPoint(String mrtStationName, int circleRadius) {
+        int mrtIndex = mrtNameToIndex.get(mrtStationName);
+        displayMrtPoint(mrtIndex, circleRadius);
+    }
+
+    private void displayMrtName(String mrtStationName, int circleRadius) {
+        int mrtIndex = mrtNameToIndex.get(mrtStationName);
+        displayMrtName(mrtIndex, circleRadius);
+    }
+
+    private void displayMrtName(int mrtIndex, int circleRadius) {
+        Point point = getMrtStationCanvassCoordinate(mrtIndex);
+        //display the name right above the circle
+        StdDraw.text(point.getX(), point.getY() + circleRadius, mrtStationNames.get(mrtIndex));
+    }
+
+    /**
+     * Check if the mrt stations specfied by the two indexes are neighbour
+     * @param mrtIndexOne
+     * @param mrtIndexTwo
+     * @return true if the two mrtstations are neighbour. False otherwise;
+     */
     private boolean isNeighbour(int mrtIndexOne, int mrtIndexTwo) {
-        if(mrtIndexOne < 0 || mrtIndexTwo < -1) {
+        if (mrtIndexOne < 0 || mrtIndexTwo < -1) {
             return false;
         }
 
@@ -272,16 +295,16 @@ public class MrtMapUI {
         ArrayList<Integer> mrtLineNumbersTwo = mrtLineNumbers.get(mrtIndexTwo);
         int numInterchangeTwo = mrtLineNameTwo.size();
 
-        for(int i = 0; i < numInterchangeOne; i++) {
-            for(int j = 0; j < numInterchangeTwo; j++) {
+        for (int i = 0; i < numInterchangeOne; i++) {
+            for (int j = 0; j < numInterchangeTwo; j++) {
                 String mrtLineOne = mrtLineNameOne.get(i);
                 String mrtLineTwo = mrtLineNameTwo.get(j);
-                if(mrtLineOne.equals(mrtLineTwo)) {
+                if (mrtLineOne.equals(mrtLineTwo)) {
                     int stationNumberOne = mrtLineNumbersOne.get(i);
                     int stationNumberTwo = mrtLineNumbersTwo.get(j);
                     int stationDiff = stationNumberOne - stationNumberTwo;
                     int maxMrtGap = 2; //in Singapore mrt, the maximum jump in station number observed is 2;
-                    if(Math.abs(stationDiff) <= maxMrtGap) {
+                    if (Math.abs(stationDiff) <= maxMrtGap) {
                         return true;
                     }
                 }
@@ -299,11 +322,11 @@ public class MrtMapUI {
         ArrayList<String> mrtCodesTwo = mrtLineNames.get(mrtIndexTwo);
         int numInterchangeTwo = mrtCodesTwo.size();
 
-        for(int i = 0; i < numInterchangeOne; i++) {
-            for(int j = 0; j < numInterchangeTwo; j++) {
+        for (int i = 0; i < numInterchangeOne; i++) {
+            for (int j = 0; j < numInterchangeTwo; j++) {
                 String mrtLineOne = mrtCodesOne.get(i);
                 String mrtLineTwo = mrtCodesTwo.get(j);
-                if(mrtLineOne.equals(mrtLineTwo)) {
+                if (mrtLineOne.equals(mrtLineTwo)) {
                     commonLines.add(mrtLineOne);
                 }
             }
@@ -331,34 +354,38 @@ public class MrtMapUI {
     }
 
     private Color getStationColor(String lineName) {
-        if("EW".equals(lineName) || "CG".equals(lineName)) {
+        if ("EW".equals(lineName) || "CG".equals(lineName)) {
             //East West line which is Green in color in mrt map
             return Color.GREEN;
 
-        }else if("NS".equals(lineName)) {
+        } else if ("NS".equals(lineName)) {
             //NorthSouth Line which is red in color on Mrt Map
             return Color.RED;
 
-        }else if("CC".equals(lineName) || ("CE").equals(lineName)) {
+        } else if ("CC".equals(lineName) || ("CE").equals(lineName)) {
             //Circle line, which is yellow in color in mrt map;
             return Color.YELLOW;
 
-        }else if("NE".equals(lineName)) {
+        } else if ("NE".equals(lineName)) {
             //Nourth East line which is purple in color in mrt map;
             return Color.MAGENTA;
 
-        }else if("DT".equals(lineName)){
+        } else if ("DT".equals(lineName)) {
             //Down Town line is blue in color in the mrt map;
             return Color.BLUE;
 
-        }else {
+        } else {
             //if reach here, the station lineName is wrong;
             //just return a black color anyway
             return Color.BLACK;
         }
     }
 
-    private void initialise(){
+    /**
+     * Fill up all the relevant lists with correct information.
+     * These lists are needed for the UI to run
+     */
+    private void initialise() {
         MrtMapLogic mrtMapLogic = new MrtMapLogic();
 
         mrtStationNames = mrtMapLogic.getMrtStationNames();
@@ -371,10 +398,9 @@ public class MrtMapUI {
         drawMrtMap();
     }
 
-    private void generateMrtNameToIndexHashMap(){
-        for(int i = 0; i < mrtLineNames.size(); i++){
+    private void generateMrtNameToIndexHashMap() {
+        for (int i = 0; i < mrtLineNames.size(); i++) {
             mrtNameToIndex.put(mrtStationNames.get(i), i);
         }
     }
-
 }
