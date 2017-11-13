@@ -252,4 +252,22 @@ Expected result: The person index provided is invalid
 +
 [NOTE]
 This result will be displayed if and only if there are fewer than 99999 contacts in UniCity.
+
+=== Exit
+
+Command usage: `exit` +
+
+* `exit` +
+Expected result: Type 'exit' again to confirm to exit
 +
+
+* `list` +
+`exit`
+Expected result: Type 'exit' again to confirm to exit
++
+
+* `exit` +
+UniCity shuts down.
+
+[NOTE]
+Only two consecutive `exit` will be able to quit UniCity.
