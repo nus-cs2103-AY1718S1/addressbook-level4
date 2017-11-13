@@ -84,7 +84,7 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 
 The Lady will be instantly added to the Gentleman's Guide, for the you to call another day.
 
-image::addperson.jpg[width="790"]
+image::addperson.JPG[width="790"]
 
 _Figure 3.2.1 : John Doe added to Gentleman's Guide._
 
@@ -104,7 +104,8 @@ Thus, as a Gentleman, you add a reminder to the Gentleman's Guide.*
 Adds a reminder to the Gentleman's Guide +
 Format `addReminder z/TASK p/PRIORITY d/DATE and TIME m/MESSAGE [t/TAG]...`
 
-image::addreminder.jpg[width="790"]
+
+image::addreminder.JPG[width="790"]
 
 _Figure 3.3.1 : Reminder added to Gentleman's Guide._
 
