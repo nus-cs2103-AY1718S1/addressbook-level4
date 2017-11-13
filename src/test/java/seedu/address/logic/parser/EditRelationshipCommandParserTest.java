@@ -30,8 +30,8 @@ public class EditRelationshipCommandParserTest {
         try {
             Name name = new Name("friends");
             ConfidenceEstimate confidenceEstimate = new ConfidenceEstimate(90);
-            assertParseSuccess(parser, "1 2 n/friends ce/90", new EditRelationshipCommand(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON,
-                    name, confidenceEstimate));
+            assertParseSuccess(parser, "1 2 n/friends ce/90",
+                    new EditRelationshipCommand(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON, name, confidenceEstimate));
         } catch (IllegalValueException ive) {
             fail("This is not supposed to fail");
         }

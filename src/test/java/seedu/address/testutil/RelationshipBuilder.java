@@ -17,7 +17,7 @@ public class RelationshipBuilder {
     private static final Person DEFAULT_TO_PERSON = new PersonBuilder().build();
     private static final RelationshipDirection DEFAULT_DIRECTION = RelationshipDirection.UNDIRECTED;
 
-    Relationship relationship;
+    private Relationship relationship;
 
     public RelationshipBuilder() {
         this.relationship = new Relationship(DEFAULT_FROM_PERSON, DEFAULT_TO_PERSON, DEFAULT_DIRECTION);

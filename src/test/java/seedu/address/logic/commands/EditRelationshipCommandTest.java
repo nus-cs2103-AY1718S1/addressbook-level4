@@ -40,18 +40,18 @@ public class EditRelationshipCommandTest {
             int lengthOfPersonList = model.getFilteredPersonList().size();
             Index firstPerson = Index.fromOneBased(lengthOfPersonList - 1);
             Index secondPerson = Index.fromOneBased(lengthOfPersonList);
-            
+
             Name newName = new Name("friends");
-            ConfidenceEstimate newCE = new ConfidenceEstimate(10);
+            ConfidenceEstimate newConfidenceEstimate = new ConfidenceEstimate(10);
 
             EditRelationshipCommand editRelationshipCommand = prepareCommand(firstPerson, secondPerson,
-                    newName, newCE);
+                    newName, newConfidenceEstimate);
 
             String expectedMessage = String.format(EditRelationshipCommand.MESSAGE_EDIT_RELATIONSHIP_SUCCESS,
                     firstPerson, secondPerson);
 
             ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-            expectedModel.editRelationship(firstPerson, secondPerson, newName, newCE);
+            expectedModel.editRelationship(firstPerson, secondPerson, newName, newConfidenceEstimate);
 
             assertCommandSuccess(editRelationshipCommand, model, expectedMessage, expectedModel);
         } catch (IllegalValueException ive) {
@@ -65,20 +65,20 @@ public class EditRelationshipCommandTest {
             int lengthOfPersonList = model.getFilteredPersonList().size();
             Index firstPerson = Index.fromOneBased(lengthOfPersonList - 1);
             Index secondPerson = Index.fromOneBased(lengthOfPersonList);
-            
+
             Name newName = new Name("friends");
             ReadOnlyPerson fromPerson = model.getFilteredPersonList().get(firstPerson.getZeroBased());
             Relationship relationship = fromPerson.getRelationships().iterator().next();
-            ConfidenceEstimate originalCE = relationship.getConfidenceEstimate();
+            ConfidenceEstimate originalConfidenceEstimate = relationship.getConfidenceEstimate();
 
             EditRelationshipCommand editRelationshipCommand = prepareCommand(firstPerson, secondPerson,
-                    newName, originalCE);
+                    newName, originalConfidenceEstimate);
 
             String expectedMessage = String.format(EditRelationshipCommand.MESSAGE_EDIT_RELATIONSHIP_SUCCESS,
                     firstPerson, secondPerson);
 
             ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-            expectedModel.editRelationship(firstPerson, secondPerson, newName, originalCE);
+            expectedModel.editRelationship(firstPerson, secondPerson, newName, originalConfidenceEstimate);
 
             assertCommandSuccess(editRelationshipCommand, model, expectedMessage, expectedModel);
         } catch (IllegalValueException ive) {
@@ -92,20 +92,20 @@ public class EditRelationshipCommandTest {
             int lengthOfPersonList = model.getFilteredPersonList().size();
             Index firstPerson = Index.fromOneBased(lengthOfPersonList - 1);
             Index secondPerson = Index.fromOneBased(lengthOfPersonList);
-            
-            ConfidenceEstimate newCE = new ConfidenceEstimate(90);
+
+            ConfidenceEstimate newConfidenceEstimate = new ConfidenceEstimate(90);
             ReadOnlyPerson fromPerson = model.getFilteredPersonList().get(firstPerson.getZeroBased());
             Relationship relationship = fromPerson.getRelationships().iterator().next();
             Name name = relationship.getName();
 
             EditRelationshipCommand editRelationshipCommand = prepareCommand(firstPerson, secondPerson,
-                   name, newCE);
+                   name, newConfidenceEstimate);
 
             String expectedMessage = String.format(EditRelationshipCommand.MESSAGE_EDIT_RELATIONSHIP_SUCCESS,
                     firstPerson, secondPerson);
 
             ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-            expectedModel.editRelationship(firstPerson, secondPerson, name, newCE);
+            expectedModel.editRelationship(firstPerson, secondPerson, name, newConfidenceEstimate);
 
             assertCommandSuccess(editRelationshipCommand, model, expectedMessage, expectedModel);
         } catch (IllegalValueException ive) {
@@ -119,7 +119,7 @@ public class EditRelationshipCommandTest {
             int lengthOfPersonList = model.getFilteredPersonList().size();
             Index firstPerson = Index.fromOneBased(lengthOfPersonList - 1);
             Index secondPerson = Index.fromOneBased(lengthOfPersonList);
-            
+
             ReadOnlyPerson fromPerson = model.getFilteredPersonList().get(firstPerson.getZeroBased());
             Relationship relationship = fromPerson.getRelationships().iterator().next();
             Name name = relationship.getName();
@@ -147,10 +147,10 @@ public class EditRelationshipCommandTest {
             Index firstPerson = Index.fromOneBased(lengthOfPersonList - 1);
             Index outOfBoundIndex = Index.fromOneBased(lengthOfPersonList + 1);
             Name newName = new Name("friends");
-            ConfidenceEstimate newCE = new ConfidenceEstimate(90);
+            ConfidenceEstimate newConfidenceEstimate = new ConfidenceEstimate(90);
 
             EditRelationshipCommand editRelationshipCommand = prepareCommand(firstPerson, outOfBoundIndex,
-                    newName, newCE);
+                    newName, newConfidenceEstimate);
 
             assertCommandFailure(editRelationshipCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
 
@@ -166,10 +166,10 @@ public class EditRelationshipCommandTest {
             Index outOfBoundIndex = Index.fromOneBased(lengthOfPersonList + 1);
             Index secondPerson = Index.fromOneBased(lengthOfPersonList - 1);
             Name newName = new Name("friends");
-            ConfidenceEstimate newCE = new ConfidenceEstimate(90);
+            ConfidenceEstimate newConfidenceEstimate = new ConfidenceEstimate(90);
 
             EditRelationshipCommand editRelationshipCommand = prepareCommand(outOfBoundIndex, secondPerson,
-                    newName, newCE);
+                    newName, newConfidenceEstimate);
 
             assertCommandFailure(editRelationshipCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
 
@@ -206,8 +206,8 @@ public class EditRelationshipCommandTest {
         assertTrue(editRelationshipFirstCommand.equals(editRelationshipFirstCommand));
 
         // same values -> returns true
-        EditRelationshipCommand editRelationshipFirstCommandCopy
-                = new EditRelationshipCommand(TypicalIndexes.INDEX_FIRST_PERSON, TypicalIndexes.INDEX_SECOND_PERSON,
+        EditRelationshipCommand editRelationshipFirstCommandCopy =
+                new EditRelationshipCommand(TypicalIndexes.INDEX_FIRST_PERSON, TypicalIndexes.INDEX_SECOND_PERSON,
                 Name.UNSPECIFIED, ConfidenceEstimate.UNSPECIFIED);
         assertTrue(editRelationshipFirstCommand.equals(editRelationshipFirstCommandCopy));
 
