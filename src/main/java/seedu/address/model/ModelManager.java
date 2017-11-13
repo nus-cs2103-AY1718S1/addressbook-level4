@@ -23,6 +23,8 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.logic.commands.AddTagCommand;
+import seedu.address.logic.commands.RemoveTagCommand;
 import seedu.address.model.person.Birthday;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
@@ -114,14 +116,14 @@ public class ModelManager extends ComponentManager implements Model {
      * Removes given tag from the given indexes of the target persons shown in the last person listing.
      */
     @Override
-    public synchronized void removeTag(ArrayList<Index> targetIndexes, Tag toRemove) throws PersonNotFoundException,
-            DuplicatePersonException {
+    public synchronized void removeTag(ArrayList<Index> targetIndexes, Tag toRemove, String commandWord)
+            throws PersonNotFoundException, DuplicatePersonException {
 
         for (Index index : targetIndexes) {
             int targetIndex = index.getZeroBased();
             ReadOnlyPerson oldPerson = this.getFilteredPersonList().get(targetIndex);
 
-            Person newPerson = setTagsForNewPerson(oldPerson, toRemove, false);
+            Person newPerson = setTagsForNewPerson(oldPerson, toRemove, commandWord);
 
             addressBook.updatePerson(oldPerson, newPerson);
             indicateAddressBookChanged();
@@ -132,14 +134,14 @@ public class ModelManager extends ComponentManager implements Model {
      * Adds given tag to the given indexes of the target persons shown in the last person listing.
      */
     @Override
-    public synchronized void addTag(ArrayList<Index> targetIndexes, Tag toAdd) throws PersonNotFoundException,
-            DuplicatePersonException {
+    public synchronized void addTag(ArrayList<Index> targetIndexes, Tag toAdd, String commandWord)
+            throws PersonNotFoundException, DuplicatePersonException {
 
         for (Index index : targetIndexes) {
             int targetIndex = index.getZeroBased();
             ReadOnlyPerson oldPerson = this.getFilteredPersonList().get(targetIndex);
 
-            Person newPerson = setTagsForNewPerson(oldPerson, toAdd, true);
+            Person newPerson = setTagsForNewPerson(oldPerson, toAdd, commandWord);
 
             addressBook.updatePerson(oldPerson, newPerson);
             indicateAddressBookChanged();
@@ -150,12 +152,14 @@ public class ModelManager extends ComponentManager implements Model {
      *  Returns a new person after checking if the  given tag is to be added or removed
      *  and setting the new tag for the person.
      */
-    private Person setTagsForNewPerson(ReadOnlyPerson oldPerson, Tag tagToAddOrRemove, boolean isAdd) {
+    private Person setTagsForNewPerson(ReadOnlyPerson oldPerson, Tag tagToAddOrRemove, String commandWord) {
         Person newPerson = new Person(oldPerson);
         Set<Tag> newTags = new HashSet<Tag>(newPerson.getTags());
-        if (isAdd) {
+        boolean isCommandAddTag = commandWord.equals(AddTagCommand.COMMAND_WORDVAR_1);
+        boolean isCommandRemoveTag = commandWord.equals(RemoveTagCommand.COMMAND_WORDVAR_1);
+        if (isCommandAddTag) {
             newTags.add(tagToAddOrRemove);
-        } else if (!isAdd) {
+        } else if (isCommandRemoveTag) {
             newTags.remove(tagToAddOrRemove);
         } else {
             assert false : "Tag should either be removed or added only.";

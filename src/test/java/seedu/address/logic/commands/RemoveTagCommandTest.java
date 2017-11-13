@@ -44,7 +44,7 @@ public class RemoveTagCommandTest {
         String expectedMessage = String.format(RemoveTagCommand.MESSAGE_REMOVE_TAG_SUCCESS, toRemove);
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.removeTag(indexes, toRemove);
+        expectedModel.removeTag(indexes, toRemove, RemoveTagCommand.COMMAND_WORDVAR_1);
 
         assertCommandSuccess(removeTagCommand, model, expectedMessage, expectedModel);
     }
@@ -64,7 +64,7 @@ public class RemoveTagCommandTest {
 
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         showFirstPersonOnly(expectedModel);
-        expectedModel.removeTag(indexes, toRemove);
+        expectedModel.removeTag(indexes, toRemove, RemoveTagCommand.COMMAND_WORDVAR_1);
 
         assertCommandSuccess(removeTagCommand, model, expectedMessage, expectedModel);
     }

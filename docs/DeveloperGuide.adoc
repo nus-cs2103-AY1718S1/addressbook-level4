@@ -457,24 +457,6 @@ It is important to display `Favourite` in the user interface. `PersonCard` is mo
 **Cons:** Modifying original values directly can be potentially dangerous. The safer alternative is to create a duplicate, and perform operations on it. +
 // end::favourite[]
 
-=== Logging
-
-We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
-
-* The logging level can be controlled using the `logLevel` setting in the configuration file (See link:#configuration[Configuration])
-* The `Logger` for a class can be obtained using `LogsCenter.getLogger(Class)` which will log messages according to the specified logging level
-* Currently log messages are output through: `Console` and to a `.log` file.
-
-*Logging Levels*
-
-* `SEVERE` : Critical problem detected which may possibly cause the termination of the application
-* `WARNING` : Can continue, but with caution
-* `INFO` : Information showing the noteworthy actions by the App
-* `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
-
-=== Configuration
-
-Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
 // tag::filterbytags[]
 === Filter mechanism
@@ -700,7 +682,7 @@ The user has to ensure that an internet connection is established to succeed in 
 The add/remove tag mechanism is facilitated by the `FilteredList`, which resides in the `ModelManager`. It inherits
 from the `UndoableCommand` and is similar to the add/delete person function but deals with tags instead.
 
-The mechanism performs an addition or removal of a tag using a list of target indexes that is within the range of the
+The mechanism performs an addition/removal of a tag using a list of target indexes that is within the range of the
 default list and a tag to add/remove. By using the `FilteredList`, addition and removal of tags when the list is
 unfiltered or filtered by other commands such as the find command is possible. Furthermore tags can be added to/removed
 from multiple people at once.
@@ -732,24 +714,22 @@ calling the storage component, coupling is reduced. The implementation of `addTa
 [source,java]
 ----
         /**
-         * Adds given tag to the given indexes of the target persons shown in the last person listing.
-         */
-        @Override
-        public synchronized void addTag(ArrayList<Index> targetIndexes, Tag toAdd) throws PersonNotFoundException,
-                DuplicatePersonException {
-            for (int i = 0; i < targetIndexes.size(); i++) {
-                int targetIndex = targetIndexes.get(i).getZeroBased();
-                ReadOnlyPerson oldPerson = this.getFilteredPersonList().get(targetIndex);
+             * Adds given tag to the given indexes of the target persons shown in the last person listing.
+             */
+            @Override
+            public synchronized void addTag(ArrayList<Index> targetIndexes, Tag toAdd, String commandWord) throws PersonNotFoundException,
+                    DuplicatePersonException {
 
-                Person newPerson = new Person(oldPerson);
-                Set<Tag> newTags = new HashSet<Tag>(newPerson.getTags());
-                newTags.add(toAdd);
-                newPerson.setTags(newTags);
+                for (Index index : targetIndexes) {
+                    int targetIndex = index.getZeroBased();
+                    ReadOnlyPerson oldPerson = this.getFilteredPersonList().get(targetIndex);
 
-                addressBook.updatePerson(oldPerson, newPerson);
-                indicateAddressBookChanged();
+                    Person newPerson = setTagsForNewPerson(oldPerson, toAdd, commandWord);
+
+                    addressBook.updatePerson(oldPerson, newPerson);
+                    indicateAddressBookChanged();
+                }
             }
-        }
 
 ----
 
@@ -837,6 +817,53 @@ priority.
 
 
 // end::find[]
+
+
+// tag::windowsize[]
+
+=== Change window size command mechanism
+
+The `ChangeWindowSizeCommand` is an event-driven mechanism. It is complemented by the `WindowSize` model which contains
+the data constants and functions related to the `WindowSize`. The sequence of events is as follows. When the user
+enters the command to change the window size, the logic component executes the `ChangeWindowSizeCommand`
+which in turns posts a `ChangeWindowSizeRequestEvent`. The User Interface component then handles the event
+`ChangeWindowSizeCommand`. This can be summarised by the sequence diagram below.
+
+image::SDChangeWindowSize.png[width="800"]
+
+==== Design Considerations
+
+**Aspect:** Need for `WindowSize` model. +
+**Alternative 1 (current choice):** `WindowSize` model exists. +
+**Pros:**  Better code quality and it is used by other components in place of the `ChangeWindowSizeCommand`. +
+**Cons:**  First time developer must get used to referring to the model instead of the `ChangeWindowSizeCommand` +
+**Alternative 2:** All attributes and functions associated with the `WindowSize` model is placed in the
+`ChangeWindowSizeCommand`. +
+**Pros:** Convenient for first time developers to understand. +
+**Cons:** `ChangeWindowSizeCommand` is crowded with too much information that can be abstracted away as another class.
+Furthermore, the `ChangeWindowSizeCommand` must be imported unnecessarily when in use by other components, increasing
+coupling.
+
+// end::windowsize[]
+
+=== Logging
+
+We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
+
+* The logging level can be controlled using the `logLevel` setting in the configuration file (See link:#configuration[Configuration])
+* The `Logger` for a class can be obtained using `LogsCenter.getLogger(Class)` which will log messages according to the specified logging level
+* Currently log messages are output through: `Console` and to a `.log` file.
+
+*Logging Levels*
+
+* `SEVERE` : Critical problem detected which may possibly cause the termination of the application
+* `WARNING` : Can continue, but with caution
+* `INFO` : Information showing the noteworthy actions by the App
+* `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
+
+=== Configuration
+
+Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
 // tag::reply[]
 === Duplicate-checking and reply mechanism for add command
@@ -1299,6 +1326,14 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |exit UniCity |continue using other functions in my operating system
 
+|`* * *` |forgetful user |I want a suggestion of the closest matching person when I type his name incorrectly |so that I can find that person quickly
+
+|`* *` |user |I want to undo/redo multiple commands at once |so that I can revert/restore several changes back to a certain point of my choosing
+
+|`* *` |user |As a user who can type fast, I want to be able to change the window size using the CLI |so that I can view UniCity to my liking, conveniently
+
+|`* *` |user |I want to add and remove tags from multiple people at once |so that I can add additional details conveniently
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
 |`* *` |user |access my contacts' social media account through address book |
@@ -1334,7 +1369,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`*` |fancy user |change the color scheme and theme of my address book to my preference | personalise and beautify UniCity
 |=======================================================================
 
-{More to be added}
 
 [appendix]
 == Use Cases
@@ -1412,10 +1446,10 @@ Use case ends.
 
 
 [none]
-* 3a. The given information is in an invalid format.
+* 3b. The given information is in an invalid format.
 +
 [none]
-** 3a1. UniCity shows an error message and displays a sample input.
+** 3b1. UniCity shows an error message and displays a sample input.
 +
 Use case resumes at step 1.
 
@@ -1435,7 +1469,10 @@ Use case ends.
 * 2a. The given name does not match anyone in the list.
 +
 [none]
-** 2a1. UniCity prompts a message.
+** 2a1. UniCity prompts a message that the person with that name cannot be found.
+** 2a2. UniCity then tries to find the persons that have the closest matching name to the given name.
+** 2a3. If UniCity cannot find the closest matching name, it lists all persons.
+** 2a4. Else the persons with the closest matching name will be shown.
 +
 Use case ends.
 
@@ -1460,10 +1497,10 @@ Use case ends.
 Use case ends.
 
 [none]
-* 2a. The index is out of bound.
+* 2b. The index is out of bound.
 +
 [none]
-** 2a1. UniCity displays an error message.
+** 2b1. UniCity displays an error message.
 +
 Use case ends.
 
@@ -1578,9 +1615,9 @@ Use case ends.
 Use case ends.
 +
 [none]
-* 2a. The list is already sorted in order.
+* 2b. The list is already sorted in order.
 +
-** 2a1. UniCity displays a message on about the sorted list.
+** 2b1. UniCity displays a message on about the sorted list.
 +
 Use case ends.
 
@@ -1589,8 +1626,9 @@ Use case ends.
 
 *MSS*
 
-1. User requests to undo an action.
-2. UniCity reverses the changes the last command causes and displays a success message.
+1. User requests to undo an action or multiple actions.
+2. UniCity reverses the changes of the previous commands depending on the number of commands to undo
+and displays a success message.
 +
 Use case ends.
 
@@ -1605,10 +1643,18 @@ Use case ends.
 Use case ends.
 
 [none]
-* 2a. No command was executed before.
+* 2b. No command was executed before.
 +
 [none]
-** 2a1. UniCity displays a failure message.
+** 2b1. UniCity displays a failure message.
++
+Use case ends.
+
+[none]
+* 2c. Number of commands to undo is more than the undoable commands executed.
++
+[none]
+** 2c1. UniCity displays a failure message on how many commands were undone and how many were not.
 +
 Use case ends.
 
@@ -1617,8 +1663,9 @@ Use case ends.
 
 *MSS*
 
-1. User requests to redo the previously undone action.
-2. UniCity re-execute the last command before the undo command and displays a success message.
+1. User requests to redo a single or multiple previously undone action.
+2. UniCity re-executes the previously undone commands depending on the number of commands to redo before the undo
+command and displays a success message.
 +
 Use case ends.
 
@@ -1629,6 +1676,14 @@ Use case ends.
 +
 [none]
 ** 2a1. UniCity displays a failure message.
++
+Use case ends.
+
+[none]
+* 2b. Number of commands to redo is more than the commands undone.
++
+[none]
+** 2b1. UniCity displays a failure message on how many commands were redone and how many were not.
 +
 Use case ends.
 
@@ -1660,12 +1715,60 @@ Use case ends.
 Use case resumes at step 2.
 
 [none]
-* 3a. the given birthday is invalid format.
+* 3b. the given birthday is invalid format.
 +
 [none]
-** 3a1. UniCity shows an error message and a sample input.
+** 3b1. UniCity shows an error message and a sample input.
 +
 Use case resumes at step 2.
+
+[discrete]
+=== Use case: Add tags
+
+*MSS*
+
+1. User requests to add given tags to given person indexes.
+2. UniCity processes the information adds the given tags to the given persons.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The given information is in an invalid format.
++
+[none]
+** 2a1. UniCity shows an error message and displays a sample input.
++
+Use case resumes at step 1.
+
+[none]
+* 2b. the given index is invalid.
++
+[none]
+** 2b1. UniCity shows an error message and displays a sample input.
++
+Use case resumes at step 1.
+
+[discrete]
+=== Use case: Change window size
+
+*MSS*
+
+1. User requests to change window size.
+2. UniCity changes window size.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. Window size requested is not in the predefined list of sizes.
++
+[none]
+** 2a1. UniCity displays a failure message.
++
+Use case ends.
 
 [discrete]
 === Use case: View previous commands
@@ -1747,7 +1850,7 @@ Use case ends.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be
-.  able to accomplish most of the tasks faster using commands than using the mouse.
+able to accomplish most of the tasks faster using commands than using the mouse.
 .  Should start up within 5 seconds of running the app.
 .  Every command should be documented.
 .  User interface should intuitive for a novice user.

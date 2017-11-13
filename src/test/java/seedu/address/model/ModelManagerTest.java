@@ -18,6 +18,8 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.AddTagCommand;
+import seedu.address.logic.commands.RemoveTagCommand;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -99,7 +101,7 @@ public class ModelManagerTest {
         Tag toRemove = new Tag("owesMoney");
 
         ModelManager expectedModel = new ModelManager(oldAddressBook, new UserPrefs());
-        expectedModel.removeTag(indexes, toRemove);
+        expectedModel.removeTag(indexes, toRemove, RemoveTagCommand.COMMAND_WORDVAR_1);
 
         Person newPerson1 = new PersonBuilder().withName("BOB").withTags("friends").build();
         Person newPerson2 = new PersonBuilder().withTags("classmate").build();
@@ -134,7 +136,7 @@ public class ModelManagerTest {
         Tag toAdd = new Tag("rich");
 
         ModelManager expectedModel = new ModelManager(oldAddressBook, new UserPrefs());
-        expectedModel.addTag(indexes, toAdd);
+        expectedModel.addTag(indexes, toAdd, AddTagCommand.COMMAND_WORDVAR_1);
 
         Person newPerson1 = new PersonBuilder().withName("BOB").withTags("owesMoney", "friends", "rich").build();
         Person newPerson2 = new PersonBuilder().withTags("classmate", "rich").build();

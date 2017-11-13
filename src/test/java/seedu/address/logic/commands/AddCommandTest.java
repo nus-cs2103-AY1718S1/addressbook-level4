@@ -82,12 +82,12 @@ public class AddCommandTest {
 
         //@@author vivekscl
         @Override
-        public void removeTag(ArrayList<Index> targetIndexes, Tag toRemove)  {
+        public void removeTag(ArrayList<Index> targetIndexes, Tag toRemove, String commandWord)  {
             fail("This method should not be called.");
         }
 
         @Override
-        public void addTag(ArrayList<Index> targetIndexes, Tag toAdd)  {
+        public void addTag(ArrayList<Index> targetIndexes, Tag toAdd, String commandWord)  {
             fail("This method should not be called.");
         }
 

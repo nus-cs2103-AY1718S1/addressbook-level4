@@ -251,7 +251,7 @@ Adds the birthday "21 Oct 95" to the 1st person in the address book.
 * `birthday 3 b/21/10/1995` +
 Adds the birthday "21 Oct 1995" to the 3rd person in the address book.
 
-image::birthday-command-ui.png[width="790"]
+image::birthday-command-uI.png[width="790"]
 // end::birthday[]
 
 
@@ -259,7 +259,7 @@ image::birthday-command-ui.png[width="790"]
 
 ==== Adding a tag to select persons : `addtag`
 
-Adds the given tag to the specified persons . +
+Adds the given tag to the specified persons. +
 Format: `addtag INDEX [MORE_INDEXES] [t/TAG]...`
 
 ****
@@ -280,7 +280,7 @@ Adds the tag "classmate" to the 2nd and 5th person in the results of the `find` 
 
 ==== Removing a tag from select persons : `removetag`
 
-Removes the given tag from identified person by the list of index numbers used in the last person . +
+Removes the given tag from identified persons. +
 Format: `removetag INDEX [MORE_INDEXES] [t/TAG]...`
 
 ****
