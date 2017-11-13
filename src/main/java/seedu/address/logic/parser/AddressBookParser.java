@@ -26,6 +26,7 @@ import seedu.address.logic.commands.FindByTagCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
+import seedu.address.logic.commands.MeetingLocationCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.LocateCommand;
 import seedu.address.logic.commands.LocateMrtCommand;
