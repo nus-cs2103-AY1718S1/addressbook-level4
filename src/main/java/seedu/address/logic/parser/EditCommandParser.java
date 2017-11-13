@@ -9,8 +9,10 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMOVE_TAG;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -37,10 +39,14 @@ public class EditCommandParser implements Parser<EditCommand> {
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
                         PREFIX_ADD_TAG, PREFIX_REMOVE_TAG);
 
-        Index index;
+        List<Index> indices = new ArrayList<>();
+        String[] preambles;
 
         try {
-            index = ParserUtil.parseIndex(argMultimap.getPreamble());
+            preambles = argMultimap.getPreamble().split(" ");
+            for (String preamble: preambles) {
+                indices.add(ParserUtil.parseIndex(preamble));
+            }
         } catch (IllegalValueException ive) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
         }
@@ -64,7 +70,7 @@ public class EditCommandParser implements Parser<EditCommand> {
             throw new ParseException(EditCommand.MESSAGE_NOT_EDITED);
         }
 
-        return new EditCommand(index, editPersonDescriptor);
+        return new EditCommand(indices, editPersonDescriptor);
     }
 
     /**
