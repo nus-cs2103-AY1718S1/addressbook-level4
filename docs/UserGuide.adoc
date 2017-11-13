@@ -554,7 +554,7 @@ A dialog window pops up during contact editing.
 
 Real time highlight when input command is not correct.
 
-=== `todo` command sets specified contact as a favourite.
+=== Using `todo` command sets contact as a favourite.
 
 Person with `todo` tasks automatically becomes a favourite and shifts to top of list.
 
@@ -570,7 +570,10 @@ Entering `undo all` or `redo all` now undo and redo all commands respectively.
 == Command Summary
 
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague` or +
+`add n/James Ho e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague` or +
+`add n/James Ho p/22224444 a/123, Clementi Rd, 1234665 t/friend t/colleague` or +
+`add n/James Ho` +
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` or `del NAME` +
 e.g. `delete 3`, `del john`
