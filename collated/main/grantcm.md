@@ -1,177 +1,20 @@
 # grantcm
-###### /java/seedu/address/ui/GroupListPanel.java
+###### \java\seedu\address\commons\events\ui\GroupPanelSelectionChangedEvent.java
 ``` java
-    public GroupListPanel(ObservableList<Group> groupList) {
-        super(FXML);
-        setConnections(groupList);
-        registerAsAnEventHandler(this);
-    }
-
-    private void setConnections (ObservableList<Group> groupList) {
-        ObservableList<GroupCard> groupCards = EasyBind.map(
-                groupList, (group) -> new GroupCard(group));
-        groupListView.setItems(groupCards);
-        groupListView.setCellFactory(listView -> new GroupListViewCell());
-        setEventHandlerForSelectionChangeEvent();
-    }
-
-    private void setEventHandlerForSelectionChangeEvent() {
-        groupListView.getSelectionModel().selectedItemProperty()
-                .addListener((observable, oldValue, newValue) -> {
-                    if (newValue != null) {
-                        logger.fine("Selection in person list panel changed to : '" + newValue + "'");
-                        raise(new GroupPanelSelectionChangedEvent(newValue));
-                    }
-                });
-    }
-
-    /**
-     * Custom {@code ListCell} that displays the graphics of a {@code GroupCard}.
-     */
-    class GroupListViewCell extends ListCell<GroupCard> {
-
-        @Override
-        protected void updateItem(GroupCard group, boolean empty) {
-            super.updateItem(group, empty);
-
-            if (empty || group == null) {
-                setGraphic(null);
-                setText(null);
-            } else {
-                setGraphic(group.getRoot());
-            }
-        }
-    }
-```
-###### /java/seedu/address/ui/CommandBox.java
-``` java
-    /**
-     * Handles the Tab button pressed event.
-     */
-    private void handleAutoComplete() {
-        String input = commandTextField.getText();
-        try {
-            String command = commandTrie.attemptAutoComplete(input);
-
-            if (input.equals(command)) {
-                //No command exists in trie
-                setStyleToIndicateCommandFailure();
-                logger.info("Autocomplete failed with input: " + input);
-            } else if (commandSet.contains(command)) {
-                //Able to autocomplete to a correct command
-                this.replaceText(command);
-                logger.info("Autocomplete successful with input: " + input + " to " + command);
-            } else if (commandSet.contains(input)) {
-                //Add parameters
-                this.replaceText(input + command);
-                logger.info("Autocomplete successful with input: " + input + " to " + input + command);
-            }
-        } catch (NullPointerException e) {
-            setStyleToIndicateCommandFailure();
-            logger.info("Autocomplete failed with input: " + input);
-        }
-
-
-    }
-```
-###### /java/seedu/address/ui/GroupCard.java
-``` java
-    public GroupCard (Group group) {
-        super(FXML);
-        this.group = group;
-        name.setText(group.getGroupName());
+    public GroupPanelSelectionChangedEvent(GroupCard newSelection) {
+        this.newSelection = newSelection;
     }
 
     @Override
-    public boolean equals(Object other) {
-        // short circuit if same object
-        if (other == this) {
-            return true;
-        }
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
 
-        // instanceof handles nulls
-        if (!(other instanceof PersonCard)) {
-            return false;
-        }
-
-        // state check
-        GroupCard card = (GroupCard) other;
-        return name.getText().equals(card.name.getText())
-                && group.equals(card.group);
+    public GroupCard getNewSelection() {
+        return newSelection;
     }
 ```
-###### /java/seedu/address/ui/MainWindow.java
-``` java
-    @Subscribe
-    private void handleGroupSelectedEvent (GroupPanelSelectionChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        commandBox.handleCommandInputChanged("filter " + event.getNewSelection().group.groupName);
-    }
-```
-###### /java/seedu/address/storage/XmlAdaptedGroup.java
-``` java
-    /**
-     * Converts group to into JAXB usable object
-     */
-    public XmlAdaptedGroup (Group group) {
-        this.groupName = group.getGroupName();
-    }
-
-    /**
-     * Convert from jax-b back to model's Group object
-     *
-     * @throws IllegalValueException
-     */
-    public Group toModelType() throws IllegalValueException {
-        return new Group (groupName);
-    }
-```
-###### /java/seedu/address/logic/parser/FilterGroupCommandParser.java
-``` java
-    @Override
-    public FilterGroupCommand parse (String userInput) throws ParseException {
-        String trimmedArgs = userInput.trim();
-        if (trimmedArgs.isEmpty()) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterGroupCommand.MESSAGE_USAGE));
-        }
-
-        return new FilterGroupCommand(trimmedArgs);
-    }
-```
-###### /java/seedu/address/logic/parser/GroupCommandParser.java
-``` java
-    /**
-     * Parses the given {@code String} of arguments in the context of the GroupCommand
-     * and returns an GroupCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
-     */
-    public GroupCommand parse(String userInput) throws ParseException {
-        String trimmedArgs = userInput.trim();
-        if (trimmedArgs.isEmpty()) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, GroupCommand.MESSAGE_USAGE));
-        }
-
-        String[] groupKeyWords = trimmedArgs.split("\\s+");
-
-        return new GroupCommand(makeNameList(groupKeyWords));
-    }
-
-    /**
-     *
-     * @param input array of arguments
-     * @return just a list of the names in the argument
-     */
-    private List<String> makeNameList (String[] input) {
-        List<String> nameList = new ArrayList<>();
-
-        nameList.addAll(Arrays.asList(input));
-
-        return nameList;
-    }
-```
-###### /java/seedu/address/logic/commands/CommandCollection.java
+###### \java\seedu\address\logic\commands\CommandCollection.java
 ``` java
     private static Set<String> commandSet = Stream.of(
         AddCommand.COMMAND_WORD, ClearCommand.COMMAND_WORD, DeleteCommand.COMMAND_WORD,
@@ -207,7 +50,7 @@
     }
 
 ```
-###### /java/seedu/address/logic/commands/FilterGroupCommand.java
+###### \java\seedu\address\logic\commands\FilterGroupCommand.java
 ``` java
     /**
      * Updates the filtered list to display only people with the proper group predicate
@@ -236,7 +79,7 @@
                 && predicate.equals(((FilterGroupCommand) other).predicate));
     }
 ```
-###### /java/seedu/address/logic/commands/GroupCommand.java
+###### \java\seedu\address\logic\commands\GroupCommand.java
 ``` java
     @Override
     protected CommandResult executeUndoableCommand() throws CommandException {
@@ -289,7 +132,52 @@
         }
     }
 ```
-###### /java/seedu/address/logic/trie/CommandTrie.java
+###### \java\seedu\address\logic\parser\FilterGroupCommandParser.java
+``` java
+    @Override
+    public FilterGroupCommand parse (String userInput) throws ParseException {
+        String trimmedArgs = userInput.trim();
+        if (trimmedArgs.isEmpty()) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterGroupCommand.MESSAGE_USAGE));
+        }
+
+        return new FilterGroupCommand(trimmedArgs);
+    }
+```
+###### \java\seedu\address\logic\parser\GroupCommandParser.java
+``` java
+    /**
+     * Parses the given {@code String} of arguments in the context of the GroupCommand
+     * and returns an GroupCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public GroupCommand parse(String userInput) throws ParseException {
+        String trimmedArgs = userInput.trim();
+        if (trimmedArgs.isEmpty()) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, GroupCommand.MESSAGE_USAGE));
+        }
+
+        String[] groupKeyWords = trimmedArgs.split("\\s+");
+
+        return new GroupCommand(makeNameList(groupKeyWords));
+    }
+
+    /**
+     *
+     * @param input array of arguments
+     * @return just a list of the names in the argument
+     */
+    private List<String> makeNameList (String[] input) {
+        List<String> nameList = new ArrayList<>();
+
+        nameList.addAll(Arrays.asList(input));
+
+        return nameList;
+    }
+```
+###### \java\seedu\address\logic\trie\CommandTrie.java
 ``` java
     public CommandTrie() {
         commandCollection = new CommandCollection();
@@ -446,7 +334,7 @@
     }
 
 ```
-###### /java/seedu/address/logic/trie/Node.java
+###### \java\seedu\address\logic\trie\Node.java
 ``` java
     public Node(char key , Node next, Node child) {
         requireNonNull(key);
@@ -483,7 +371,7 @@
         this.next = next;
     }
 ```
-###### /java/seedu/address/storage/XmlAdaptedGroup.java
+###### \java\seedu\address\storage\XmlAdaptedGroup.java
 ``` java
     /**
      * Converts group to into JAXB usable object
@@ -501,7 +389,7 @@
         return new Group (groupName);
     }
 ```
-###### /java/seedu/address/ui/CommandBox.java
+###### \java\seedu\address\ui\CommandBox.java
 ``` java
     /**
      * Handles the Tab button pressed event.
@@ -550,32 +438,77 @@
         autoCompleteBox.show(commandTextField, Side.BOTTOM, 0.0, 0.0);
     }
 ```
-###### /java/seedu/address/ui/GroupCard.java
+###### \java\seedu\address\ui\GroupCard.java
 ``` java
-    public GroupPanelSelectionChangedEvent(GroupCard newSelection) {
-        this.newSelection = newSelection;
+    public GroupCard (Group group) {
+        super(FXML);
+        this.group = group;
+        name.setText(group.getGroupName());
     }
 
     @Override
-    public String toString() {
-        return this.getClass().getSimpleName();
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof PersonCard)) {
+            return false;
+        }
+
+        // state check
+        GroupCard card = (GroupCard) other;
+        return name.getText().equals(card.name.getText())
+                && group.equals(card.group);
+    }
+```
+###### \java\seedu\address\ui\GroupListPanel.java
+``` java
+    public GroupListPanel(ObservableList<Group> groupList) {
+        super(FXML);
+        setConnections(groupList);
+        registerAsAnEventHandler(this);
     }
 
-    public GroupCard getNewSelection() {
-        return newSelection;
+    private void setConnections (ObservableList<Group> groupList) {
+        ObservableList<GroupCard> groupCards = EasyBind.map(
+                groupList, (group) -> new GroupCard(group));
+        groupListView.setItems(groupCards);
+        groupListView.setCellFactory(listView -> new GroupListViewCell());
+        setEventHandlerForSelectionChangeEvent();
+    }
+
+    private void setEventHandlerForSelectionChangeEvent() {
+        groupListView.getSelectionModel().selectedItemProperty()
+                .addListener((observable, oldValue, newValue) -> {
+                    if (newValue != null) {
+                        logger.fine("Selection in person list panel changed to : '" + newValue + "'");
+                        raise(new GroupPanelSelectionChangedEvent(newValue));
+                    }
+                });
+    }
+
+    /**
+     * Custom {@code ListCell} that displays the graphics of a {@code GroupCard}.
+     */
+    class GroupListViewCell extends ListCell<GroupCard> {
+
+        @Override
+        protected void updateItem(GroupCard group, boolean empty) {
+            super.updateItem(group, empty);
+
+            if (empty || group == null) {
+                setGraphic(null);
+                setText(null);
+            } else {
+                setGraphic(group.getRoot());
+            }
+        }
     }
 ```
-###### /resources/view/MainWindow.fxml
-``` fxml
-    <VBox fx:id="groupList" SplitPane.resizableWithParent="false" prefWidth="700" minWidth="700" maxWidth="700"
-          maxHeight="55" minHeight="55">
-      <padding>
-        <Insets top="10" right="10" bottom="10" left="10" />
-      </padding>
-      <StackPane fx:id="groupListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
-    </VBox>
-```
-###### /java/seedu/address/ui/MainWindow.java
+###### \java\seedu\address\ui\MainWindow.java
 ``` java
     @Subscribe
     private void handleGroupSelectedEvent (GroupPanelSelectionChangedEvent event) {
@@ -583,7 +516,7 @@
         commandBox.handleCommandInputChanged(String.format("filter ", event.getNewSelection().group.groupName));
     }
 ```
-###### /resources/view/GroupListCard.fxml
+###### \resources\view\GroupListCard.fxml
 ``` fxml
 <HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
         <padding>
@@ -592,9 +525,19 @@
         <Label fx:id="name" text="\$first" styleClass="cell_big_label" />
 </HBox>
 ```
-###### /resources/view/GroupListPanel.fxml
+###### \resources\view\GroupListPanel.fxml
 ``` fxml
 <VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <ListView fx:id="groupListView" VBox.vgrow="ALWAYS" orientation="HORIZONTAL" />
 </VBox>
+```
+###### \resources\view\MainWindow.fxml
+``` fxml
+    <VBox fx:id="groupList" SplitPane.resizableWithParent="false" prefWidth="700" minWidth="700" maxWidth="700"
+          maxHeight="55" minHeight="55">
+      <padding>
+        <Insets top="10" right="10" bottom="10" left="10" />
+      </padding>
+      <StackPane fx:id="groupListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+    </VBox>
 ```

@@ -1,51 +1,5 @@
 # aali195-reused
-###### /java/seedu/address/ui/PersonCard.java
-``` java
-    /**
-     *  Assigns URL to the image depending on the path
-     *  @param person image to be shown
-     */
-    private void assignImage(ReadOnlyPerson person) {
-
-        if (!person.getImage().getPath().equals("")) {
-
-            Image imageToSet = new Image("file:" + "data/" + person.getImage().getPath() + ".png",
-                    100, 100, false, false);
-
-            centerImage();
-            pImage.setImage(imageToSet);
-        }
-    }
-
-    /**
-     * Centre the image in ImageView
-     */
-    public void centerImage() {
-        Image img = pImage.getImage();
-        if (img != null) {
-            double w = 0;
-            double h = 0;
-
-            double ratioX = pImage.getFitWidth() / img.getWidth();
-            double ratioY = pImage.getFitHeight() / img.getHeight();
-
-            double reducCoeff = 0;
-            if (ratioX >= ratioY) {
-                reducCoeff = ratioY;
-            } else {
-                reducCoeff = ratioX;
-            }
-
-            w = img.getWidth() * reducCoeff;
-            h = img.getHeight() * reducCoeff;
-
-            pImage.setX((pImage.getFitWidth() - w) / 2);
-            pImage.setY((pImage.getFitHeight() - h) / 2);
-
-        }
-    }
-```
-###### /java/seedu/address/logic/commands/ImageCommand.java
+###### \java\seedu\address\logic\commands\ImageCommand.java
 ``` java
     /**
      * Executes the command
@@ -104,7 +58,53 @@
         return new CommandResult(generateSuccessMessage(editedPerson));
     }
 ```
-###### /resources/view/PersonListCard.fxml
+###### \java\seedu\address\ui\PersonCard.java
+``` java
+    /**
+     *  Assigns URL to the image depending on the path
+     *  @param person image to be shown
+     */
+    private void assignImage(ReadOnlyPerson person) {
+
+        if (!person.getImage().getPath().equals("")) {
+
+            Image imageToSet = new Image("file:" + "data/" + person.getImage().getPath() + ".png",
+                    100, 100, false, false);
+
+            centerImage();
+            pImage.setImage(imageToSet);
+        }
+    }
+
+    /**
+     * Centre the image in ImageView
+     */
+    public void centerImage() {
+        Image img = pImage.getImage();
+        if (img != null) {
+            double w = 0;
+            double h = 0;
+
+            double ratioX = pImage.getFitWidth() / img.getWidth();
+            double ratioY = pImage.getFitHeight() / img.getHeight();
+
+            double reducCoeff = 0;
+            if (ratioX >= ratioY) {
+                reducCoeff = ratioY;
+            } else {
+                reducCoeff = ratioX;
+            }
+
+            w = img.getWidth() * reducCoeff;
+            h = img.getHeight() * reducCoeff;
+
+            pImage.setX((pImage.getFitWidth() - w) / 2);
+            pImage.setY((pImage.getFitHeight() - h) / 2);
+
+        }
+    }
+```
+###### \resources\view\PersonListCard.fxml
 ``` fxml
   <ImageView fx:id="pImage" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
     <HBox.margin>

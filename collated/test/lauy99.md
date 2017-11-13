@@ -1,31 +1,5 @@
 # lauy99
-###### /java/seedu/address/logic/parser/ExpireCommandParserTest.java
-``` java
-public class ExpireCommandParserTest {
-
-    private ExpireCommandParser parser = new ExpireCommandParser();
-
-    @Test
-    public void parse_indexSpecified_failure() throws Exception {
-        final String dateString = "2011-01-01";
-
-        // have date
-        Index targetIndex = INDEX_FIRST_PERSON;
-        String userInput = targetIndex.getOneBased() + " " + PREFIX_EXPIRE.toString() + " " + dateString;
-        ExpireCommand expectCommand = new ExpireCommand(INDEX_FIRST_PERSON, new ExpiryDate(dateString));
-
-        assertParseSuccess(parser, userInput, expectCommand);
-    }
-
-    @Test
-    public void parse_noFieldSpecified_failure() throws Exception {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, ExpireCommand.MESSAGE_USAGE);
-
-        assertParseFailure(parser, ExpireCommand.COMMAND_WORD, expectedMessage);
-    }
-}
-```
-###### /java/seedu/address/logic/commands/ExpireCommandTest.java
+###### \java\seedu\address\logic\commands\ExpireCommandTest.java
 ``` java
 public class ExpireCommandTest {
 
@@ -64,5 +38,31 @@ public class ExpireCommandTest {
         return expireCommand;
     }
 
+}
+```
+###### \java\seedu\address\logic\parser\ExpireCommandParserTest.java
+``` java
+public class ExpireCommandParserTest {
+
+    private ExpireCommandParser parser = new ExpireCommandParser();
+
+    @Test
+    public void parse_indexSpecified_failure() throws Exception {
+        final String dateString = "2011-01-01";
+
+        // have date
+        Index targetIndex = INDEX_FIRST_PERSON;
+        String userInput = targetIndex.getOneBased() + " " + PREFIX_EXPIRE.toString() + " " + dateString;
+        ExpireCommand expectCommand = new ExpireCommand(INDEX_FIRST_PERSON, new ExpiryDate(dateString));
+
+        assertParseSuccess(parser, userInput, expectCommand);
+    }
+
+    @Test
+    public void parse_noFieldSpecified_failure() throws Exception {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, ExpireCommand.MESSAGE_USAGE);
+
+        assertParseFailure(parser, ExpireCommand.COMMAND_WORD, expectedMessage);
+    }
 }
 ```
