@@ -11,6 +11,7 @@ import org.junit.Test;
 import seedu.address.commons.core.Messages;
 import seedu.address.logic.commands.DeleteRelationshipCommand;
 
+//@@author wenmogu
 public class DeleteRelationshipParserTest {
     private DeleteRelationshipCommandParser parser = new DeleteRelationshipCommandParser();
 
