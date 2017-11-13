@@ -18,6 +18,8 @@ up and running a matter of minutes. Being able to group your contacts, and view 
 convenience like never before. Social integration to Instagram and Twitter is baked in, allowing users to view profiles
 in the application itself without having to switch to a browser or check their phone.
 // end::intro[]
+
+
 == Features
 
 ====
