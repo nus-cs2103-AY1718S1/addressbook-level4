@@ -28,7 +28,7 @@ Responsibilities: UI + Integration + Deliverables and Deadlines
 
 '''
 
-=== Ernest Ong
+=== Ernest Ong Yuheng
 image::ernestong.png[width="150", align="left"]
 {empty}[http://github.com/ErnestOYH[Github]] [<<ernestong#, Portfolio>>]
 
@@ -49,7 +49,7 @@ https://github.com/CS2103AUG2017-T17-B2/main/pull/113[Bloodtype Class Regex Enha
 
 '''
 
-=== Jeremy Long
+=== Jeremy Long Shi Wei
 image::jeremylong.JPG[width="150", align="left"]
 {empty}[https://github.com/Jeremylsw[Github]] [<<jeremylong#, Portfolio>>]
 
