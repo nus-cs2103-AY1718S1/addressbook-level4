@@ -137,7 +137,7 @@ public class CheckCommandsParser {
             finalUserCommand = "set";
         } else if (!Collections.disjoint(userInputCommand, commandsForToggleTimetable)) {
             finalUserCommand = "timetable";
-        }  else if (!Collections.disjoint(userInputCommand, commandsForRepeat)) {
+        } else if (!Collections.disjoint(userInputCommand, commandsForRepeat)) {
             finalUserCommand = "repeat";
         } else if (!Collections.disjoint(userInputCommand, commandsForListPersons)) {
             finalUserCommand = "listpersons";
