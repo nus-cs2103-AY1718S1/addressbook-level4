@@ -7,8 +7,8 @@ import java.util.List;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.logic.MrtMapLogic;
+import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.ui.MrtMapUI;
 
 //@@author Yew Onn
@@ -17,7 +17,7 @@ import seedu.address.ui.MrtMapUI;
  * of every specified individual
  */
 public class MeetingLocationCommand extends Command {
-    public static final String COMMAND_WORD = "MeetingLocation";
+    public static final String COMMAND_WORD = "meetingLocation";
     public static final String COMMAND_ALIAS = "ml";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
