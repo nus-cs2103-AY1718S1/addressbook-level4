@@ -18,6 +18,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.TodoItem;
 import seedu.address.model.tag.Tag;
 
 public class AddressBookTest {
@@ -31,6 +32,9 @@ public class AddressBookTest {
     public void constructor() {
         assertEquals(Collections.emptyList(), addressBook.getPersonList());
         assertEquals(Collections.emptyList(), addressBook.getTagList());
+        //@@author qihao27
+        assertEquals(Collections.emptyList(), addressBook.getTodoList());
+        //@@author
     }
 
     @Test
@@ -51,7 +55,10 @@ public class AddressBookTest {
         // Repeat ALICE twice
         List<Person> newPersons = Arrays.asList(new Person(ALICE), new Person(ALICE));
         List<Tag> newTags = new ArrayList<>(ALICE.getTags());
-        AddressBookStub newData = new AddressBookStub(newPersons, newTags);
+        //@@author qihao27
+        List<TodoItem> newTodo = new ArrayList<>(ALICE.getTodoItems());
+        AddressBookStub newData = new AddressBookStub(newPersons, newTags, newTodo);
+        //@@author
 
         thrown.expect(AssertionError.class);
         addressBook.resetData(newData);
@@ -69,17 +76,30 @@ public class AddressBookTest {
         addressBook.getTagList().remove(0);
     }
 
+    //@@author qihao27
+    @Test
+    public void getTodoList_modifyList_throwsUnsupportedOperationException() {
+        thrown.expect(UnsupportedOperationException.class);
+        addressBook.getTodoList().remove(0);
+    }
+    //@@author
+
     /**
-     * A stub ReadOnlyAddressBook whose persons and tags lists can violate interface constraints.
+     * A stub ReadOnlyAddressBook whose persons, tags lists and todolists can violate interface constraints.
      */
     private static class AddressBookStub implements ReadOnlyAddressBook {
         private final ObservableList<ReadOnlyPerson> persons = FXCollections.observableArrayList();
         private final ObservableList<Tag> tags = FXCollections.observableArrayList();
+        //@@author qihao27
+        private final ObservableList<TodoItem> todo = FXCollections.observableArrayList();
 
-        AddressBookStub(Collection<? extends ReadOnlyPerson> persons, Collection<? extends Tag> tags) {
+        AddressBookStub(Collection<? extends ReadOnlyPerson> persons, Collection<? extends Tag> tags,
+                        Collection<? extends TodoItem> todoItems) {
             this.persons.setAll(persons);
             this.tags.setAll(tags);
+            this.todo.setAll(todoItems);
         }
+        //@@author
 
         @Override
         public ObservableList<ReadOnlyPerson> getPersonList() {
@@ -90,6 +110,13 @@ public class AddressBookTest {
         public ObservableList<Tag> getTagList() {
             return tags;
         }
+
+        //@@author qihao27
+        @Override
+        public ObservableList<TodoItem> getTodoList() {
+            return todo;
+        }
+        //@@author
     }
 
 }

@@ -57,6 +57,9 @@ public class XmlUtilTest {
         XmlSerializableAddressBook dataFromFile = XmlUtil.getDataFromFile(VALID_FILE, XmlSerializableAddressBook.class);
         assertEquals(9, dataFromFile.getPersonList().size());
         assertEquals(0, dataFromFile.getTagList().size());
+        //@@author qihao27
+        assertEquals(0, dataFromFile.getTodoList().size());
+        //@@author
     }
 
     @Test

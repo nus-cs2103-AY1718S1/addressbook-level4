@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- @@author Hailinx -->
+
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+    <ListView fx:id="todoCardList" minWidth="450.0" style="-fx-background-color: #f3e4c6;" VBox.vgrow="ALWAYS" />
+</VBox>

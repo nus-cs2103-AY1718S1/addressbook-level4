@@ -14,18 +14,23 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.Version;
+import seedu.address.commons.events.model.ReloadAddressBookEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.ConfigUtil;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
+import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.UnlockCommand;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.util.SampleDataUtil;
+import seedu.address.security.Security;
+import seedu.address.security.SecurityManager;
 import seedu.address.storage.AddressBookStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
 import seedu.address.storage.Storage;
@@ -51,6 +56,8 @@ public class MainApp extends Application {
     protected Config config;
     protected UserPrefs userPrefs;
 
+    private Stage primaryStage;
+
 
     @Override
     public void init() throws Exception {
@@ -65,6 +72,8 @@ public class MainApp extends Application {
         storage = new StorageManager(addressBookStorage, userPrefsStorage);
 
         initLogging(config);
+
+        setUpSecurityManager(storage);
 
         model = initModelManager(storage, userPrefs);
 
@@ -82,9 +91,12 @@ public class MainApp extends Application {
 
     /**
      * Returns a {@code ModelManager} with the data from {@code storage}'s address book and {@code userPrefs}. <br>
+     * <p>
      * The data from the sample address book will be used instead if {@code storage}'s address book is not found,
+     * <p>
      * or an empty address book will be used instead if errors occur when reading {@code storage}'s address book.
      */
+
     private Model initModelManager(Storage storage, UserPrefs userPrefs) {
         Optional<ReadOnlyAddressBook> addressBookOptional;
         ReadOnlyAddressBook initialData;
@@ -101,13 +113,19 @@ public class MainApp extends Application {
             logger.warning("Problem while reading from the file. Will be starting with an empty AddressBook");
             initialData = new AddressBook();
         }
-
         return new ModelManager(initialData, userPrefs);
     }
 
     private void initLogging(Config config) {
         LogsCenter.init(config);
     }
+
+    //@@author Hailinx
+    private void setUpSecurityManager(Storage storage) {
+        Security securityManager = SecurityManager.getInstance(storage);
+        securityManager.configSecurity(UnlockCommand.COMMAND_WORD, ExitCommand.COMMAND_WORD);
+    }
+    //@@author
 
     /**
      * Returns a {@code Config} using the file at {@code configFilePath}. <br>
@@ -184,6 +202,7 @@ public class MainApp extends Application {
     @Override
     public void start(Stage primaryStage) {
         logger.info("Starting AddressBook " + MainApp.VERSION);
+        this.primaryStage = primaryStage;
         ui.start(primaryStage);
     }
 
@@ -199,6 +218,29 @@ public class MainApp extends Application {
         Platform.exit();
         System.exit(0);
     }
+
+    //@@author Hailinx
+    /**
+     * Restarts the app.
+     */
+    private void restart() {
+        logger.info("============================ [ Restarting Address Book ] =============================");
+        ui.stop();
+        try {
+            storage.saveUserPrefs(userPrefs);
+            init();
+            start(primaryStage);
+        } catch (Exception e) {
+            logger.severe("Failed to restart " + StringUtil.getDetails(e));
+        }
+    }
+
+    @Subscribe
+    public void handleReloadAddressBookEvent(ReloadAddressBookEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        restart();
+    }
+    //@@author
 
     @Subscribe
     public void handleExitAppRequestEvent(ExitAppRequestEvent event) {

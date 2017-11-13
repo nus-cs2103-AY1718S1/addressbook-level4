@@ -7,6 +7,7 @@ import com.google.common.eventbus.Subscribe;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
@@ -19,8 +20,10 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.commons.events.ui.SwitchDisplayEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
+import seedu.address.logic.commands.SwitchCommand;
 import seedu.address.model.UserPrefs;
 
 /**
@@ -29,7 +32,7 @@ import seedu.address.model.UserPrefs;
  */
 public class MainWindow extends UiPart<Region> {
 
-    private static final String ICON = "/images/address_book_32.png";
+    private static final String ICON = "/images/AcquaiNote.png";
     private static final String FXML = "MainWindow.fxml";
     private static final int MIN_HEIGHT = 600;
     private static final int MIN_WIDTH = 450;
@@ -41,12 +44,13 @@ public class MainWindow extends UiPart<Region> {
 
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
+    private TodoPanel todoPanel;
     private PersonListPanel personListPanel;
     private Config config;
     private UserPrefs prefs;
 
     @FXML
-    private StackPane browserPlaceholder;
+    private StackPane switchablePlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -62,6 +66,14 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private StackPane statusbarPlaceholder;
+
+    //@@author qihao27
+    @FXML
+    private Button todoButton;
+
+    @FXML
+    private Button browserButton;
+    //@@author
 
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
@@ -127,7 +139,11 @@ public class MainWindow extends UiPart<Region> {
      */
     void fillInnerParts() {
         browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+        //@@author Hailinx
+        todoPanel = new TodoPanel(logic.getFilteredPersonList());
+
+        switchablePlaceholder.getChildren().add(browserPanel.getRoot());
+        //@@author
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
@@ -135,11 +151,21 @@ public class MainWindow extends UiPart<Region> {
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
+        //@@author qihao27
+        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath(),
+                Integer.toString(logic.getFilteredPersonList().size()));
+        //@@author
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
+        //@@author qihao27
+        todoButton = new Button();
+        browserButton = new Button();
+        todoButton.setOnAction(event -> handleTodoButton());
+        browserButton.setOnAction(event -> handleBrowserButton());
+        //@@author
     }
 
     void hide() {
@@ -183,6 +209,26 @@ public class MainWindow extends UiPart<Region> {
                 (int) primaryStage.getX(), (int) primaryStage.getY());
     }
 
+    //@@author Hailinx
+    /**
+     * Switches the display between TodoList and browser in {@code switchablePlaceholder}.
+     */
+    private void switchPlaceholderDisplay(int mode) {
+        switchablePlaceholder.getChildren().clear();
+        switch (mode) {
+        case SwitchCommand.SWITCH_TO_TODOLIST:
+            switchablePlaceholder.getChildren().add(todoPanel.getRoot());
+            break;
+        case SwitchCommand.SWITCH_TO_BROWSER:
+            switchablePlaceholder.getChildren().add(browserPanel.getRoot());
+            break;
+        default:
+            // Only two modes, no default option here.
+            break;
+        }
+    }
+    //@@author
+
     /**
      * Opens the help window.
      */
@@ -204,6 +250,26 @@ public class MainWindow extends UiPart<Region> {
         raise(new ExitAppRequestEvent());
     }
 
+    //@@author qihao27
+    /**
+     * Toggle to todolist view.
+     */
+    @FXML
+    private void handleTodoButton() {
+        todoButton = new Button();
+        switchPlaceholderDisplay(1);
+    }
+
+    /**
+     * Toggle to browser view.
+     */
+    @FXML
+    private void handleBrowserButton() {
+        browserButton = new Button();
+        switchPlaceholderDisplay(2);
+    }
+    //@@author
+
     public PersonListPanel getPersonListPanel() {
         return this.personListPanel;
     }
@@ -216,5 +282,12 @@ public class MainWindow extends UiPart<Region> {
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
+    }
+
+    //@@author Hailinx
+    @Subscribe
+    private void handleSwitchDisplayEvent(SwitchDisplayEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        switchPlaceholderDisplay(event.mode);
     }
 }

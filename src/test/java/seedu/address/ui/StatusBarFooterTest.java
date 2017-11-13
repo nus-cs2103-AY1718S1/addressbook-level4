@@ -18,6 +18,8 @@ import org.junit.Test;
 import guitests.guihandles.StatusBarFooterHandle;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.model.AddressBook;
+import seedu.address.testutil.AddressBookBuilder;
+import seedu.address.testutil.PersonBuilder;
 
 public class StatusBarFooterTest extends GuiUnitTest {
 
@@ -25,6 +27,14 @@ public class StatusBarFooterTest extends GuiUnitTest {
     private static final String RELATIVE_PATH = "./";
 
     private static final AddressBookChangedEvent EVENT_STUB = new AddressBookChangedEvent(new AddressBook());
+    private static final AddressBookChangedEvent ADDED_PERSON_EVENT =
+        new AddressBookChangedEvent(new AddressBookBuilder().withPerson(new PersonBuilder().build()).build());
+
+    //@@author qihao27
+    private static final String STUB_ZERO_TOTAL_PERSON = "0";
+    private static final String STUB_ONE_TOTAL_PERSON = "1";
+    private static final String TOTAL_PERSONS_SUFFIX = " person(s) total";
+    //@@author
 
     private static final Clock originalClock = StatusBarFooter.getClock();
     private static final Clock injectedClock = Clock.fixed(Instant.now(), ZoneId.systemDefault());
@@ -45,7 +55,9 @@ public class StatusBarFooterTest extends GuiUnitTest {
 
     @Before
     public void setUp() {
-        StatusBarFooter statusBarFooter = new StatusBarFooter(STUB_SAVE_LOCATION);
+        //@@author qihao27
+        StatusBarFooter statusBarFooter = new StatusBarFooter(STUB_SAVE_LOCATION, STUB_ZERO_TOTAL_PERSON);
+        //@@author
         uiPartRule.setUiPart(statusBarFooter);
 
         statusBarFooterHandle = new StatusBarFooterHandle(statusBarFooter.getRoot());
@@ -54,21 +66,31 @@ public class StatusBarFooterTest extends GuiUnitTest {
     @Test
     public void display() {
         // initial state
-        assertStatusBarContent(RELATIVE_PATH + STUB_SAVE_LOCATION, SYNC_STATUS_INITIAL);
+        assertStatusBarContent(RELATIVE_PATH + STUB_SAVE_LOCATION, SYNC_STATUS_INITIAL,
+            STUB_ZERO_TOTAL_PERSON + TOTAL_PERSONS_SUFFIX);
 
-        // after address book is updated
+        // after address book is updated without changes to list
         postNow(EVENT_STUB);
         assertStatusBarContent(RELATIVE_PATH + STUB_SAVE_LOCATION,
-                String.format(SYNC_STATUS_UPDATED, new Date(injectedClock.millis()).toString()));
+                String.format(SYNC_STATUS_UPDATED, new Date(injectedClock.millis()).toString()),
+                STUB_ZERO_TOTAL_PERSON + TOTAL_PERSONS_SUFFIX);
+
+        // after address book is updated with changes to list
+        postNow(ADDED_PERSON_EVENT);
+        assertStatusBarContent(RELATIVE_PATH + STUB_SAVE_LOCATION,
+            String.format(SYNC_STATUS_UPDATED, new Date(injectedClock.millis()).toString()),
+            STUB_ONE_TOTAL_PERSON + TOTAL_PERSONS_SUFFIX);
     }
 
     /**
      * Asserts that the save location matches that of {@code expectedSaveLocation}, and the
      * sync status matches that of {@code expectedSyncStatus}.
      */
-    private void assertStatusBarContent(String expectedSaveLocation, String expectedSyncStatus) {
+    private void assertStatusBarContent(String expectedSaveLocation, String expectedSyncStatus,
+                                        String expectedTotalPerson) {
         assertEquals(expectedSaveLocation, statusBarFooterHandle.getSaveLocation());
         assertEquals(expectedSyncStatus, statusBarFooterHandle.getSyncStatus());
+        assertEquals(expectedTotalPerson, statusBarFooterHandle.getTotalPerson());
         guiRobot.pauseForHuman();
     }
 

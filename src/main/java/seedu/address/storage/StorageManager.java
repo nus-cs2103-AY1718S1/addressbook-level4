@@ -11,6 +11,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.commons.exceptions.EncryptOrDecryptException;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
 
@@ -76,6 +77,33 @@ public class StorageManager extends ComponentManager implements Storage {
         logger.fine("Attempting to write to data file: " + filePath);
         addressBookStorage.saveAddressBook(addressBook, filePath);
     }
+
+    //@@author qihao27
+    @Override
+    public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
+        addressBookStorage.saveAddressBook(addressBook,
+                addressBookStorage.getAddressBookFilePath().concat("backup.fxml"));
+    }
+    //@@author
+
+    //@@author Hailinx
+    @Override
+    public boolean isEncrypted() throws IOException {
+        return addressBookStorage.isEncrypted();
+    }
+
+    @Override
+    public void encryptAddressBook(String password)
+            throws IOException, EncryptOrDecryptException {
+        addressBookStorage.encryptAddressBook(password);
+    }
+
+    @Override
+    public void decryptAddressBook(String password)
+            throws IOException, EncryptOrDecryptException {
+        addressBookStorage.decryptAddressBook(password);
+    }
+    //@@author
 
 
     @Override

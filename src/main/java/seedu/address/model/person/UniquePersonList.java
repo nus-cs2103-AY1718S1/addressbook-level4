@@ -1,7 +1,14 @@
 package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.commands.SortCommand.PREFIX_SORT_BY_ADDRESS;
+import static seedu.address.logic.commands.SortCommand.PREFIX_SORT_BY_EMAIL;
+import static seedu.address.logic.commands.SortCommand.PREFIX_SORT_BY_NAME;
+import static seedu.address.logic.commands.SortCommand.PREFIX_SORT_BY_PHONE;
+import static seedu.address.logic.commands.SortCommand.PREFIX_SORT_BY_TAG;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -11,6 +18,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.NoPersonFoundException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
@@ -22,7 +30,6 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
  * @see CollectionUtil#elementsAreUnique(Collection)
  */
 public class UniquePersonList implements Iterable<Person> {
-
     private final ObservableList<Person> internalList = FXCollections.observableArrayList();
     // used by asObservableList()
     private final ObservableList<ReadOnlyPerson> mappedList = EasyBind.map(internalList, (person) -> person);
@@ -102,6 +109,50 @@ public class UniquePersonList implements Iterable<Person> {
     public ObservableList<ReadOnlyPerson> asObservableList() {
         return FXCollections.unmodifiableObservableList(mappedList);
     }
+
+    //@@author qihao27
+    /**
+     * Sorts persons by specified parameter.
+     *
+     * @throws NoPersonFoundException if no persons found in the list
+     */
+    public void sort(String option) throws NoPersonFoundException {
+        requireNonNull(option);
+
+        if (internalList.size() < 1) {
+            throw new NoPersonFoundException();
+        }
+
+        switch (option) {
+        case PREFIX_SORT_BY_NAME: Collections.sort(internalList, (a, b) ->
+                a.getName().toString().compareToIgnoreCase(b.getName().toString()));
+                Collections.sort(internalList, (a, b) ->
+                    String.valueOf(b.getFavourite()).compareToIgnoreCase(String.valueOf(a.getFavourite())));
+        break;
+        case PREFIX_SORT_BY_PHONE: Collections.sort(internalList, (a, b) ->
+                a.getPhone().toString().compareToIgnoreCase(b.getPhone().toString()));
+                Collections.sort(internalList, (a, b) ->
+                    String.valueOf(b.getFavourite()).compareToIgnoreCase(String.valueOf(a.getFavourite())));
+        break;
+        case PREFIX_SORT_BY_EMAIL: Collections.sort(internalList, (a, b) ->
+                a.getEmail().toString().compareToIgnoreCase(b.getEmail().toString()));
+                Collections.sort(internalList, (a, b) ->
+                    String.valueOf(b.getFavourite()).compareToIgnoreCase(String.valueOf(a.getFavourite())));
+        break;
+        case PREFIX_SORT_BY_ADDRESS: Collections.sort(internalList, (a, b) ->
+                a.getAddress().toString().compareToIgnoreCase(b.getAddress().toString()));
+                Collections.sort(internalList, (a, b) ->
+                    String.valueOf(b.getFavourite()).compareToIgnoreCase(String.valueOf(a.getFavourite())));
+        break;
+        case PREFIX_SORT_BY_TAG: Collections.sort(internalList, (a, b) ->
+                a.getTags().toString().compareToIgnoreCase(b.getTags().toString()));
+                Collections.sort(internalList, (a, b) ->
+                    String.valueOf(b.getFavourite()).compareToIgnoreCase(String.valueOf(a.getFavourite())));
+        break;
+        default: break;
+        }
+    }
+    //@@author
 
     @Override
     public Iterator<Person> iterator() {

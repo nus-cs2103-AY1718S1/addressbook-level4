@@ -1,0 +1,17 @@
+= Valensia Sebastiani - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: AcquaiNote
+The AcquaNote is a free command line program to manage your personal contact list easily and safely. Additionally, AcquaNote also helps you to manage your schedule.
+
+
+=== Enhancement Proposed: Add command `Add photo`
+
+This will allow users to add a photo to the contact, the photo will then be shown if the contact is selected.
+
+=== Other contributions
+
+* Contributed the software logo design
+* Edited and revised UG and DG
