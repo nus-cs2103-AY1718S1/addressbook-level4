@@ -216,5 +216,6 @@ include::../UserGuide.adoc[tag=findByAddress]
 
 === Other contributions
 
-*Helped resolve the storage problem in MRT
-*Helped fix the format of userguide and developerguide
+*Helped resolve the storage problem in MRT +
+*Helped fix the format of userguide and developerguide +
+*Wrote the TestScript
