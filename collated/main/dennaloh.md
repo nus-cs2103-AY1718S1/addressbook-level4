@@ -1,5 +1,5 @@
 # dennaloh
-###### \java\seedu\address\logic\commands\person\EmailCommand.java
+###### /java/seedu/address/logic/commands/person/EmailCommand.java
 ``` java
 /**
  * Emails a contact from the address book.
@@ -58,7 +58,7 @@ public class EmailCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\person\FbCommand.java
+###### /java/seedu/address/logic/commands/person/FbCommand.java
 ``` java
 /**
  * Searches for your contact on Facebook
@@ -108,7 +108,7 @@ public class FbCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\person\FindTagCommand.java
+###### /java/seedu/address/logic/commands/person/FindTagCommand.java
 ``` java
 /**
  * Finds and lists all persons in address book who has tags which contains any of the argument keywords.
@@ -144,7 +144,7 @@ public class FindTagCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\person\GMapCommand.java
+###### /java/seedu/address/logic/commands/person/GMapCommand.java
 ``` java
 /**
  * Opens Google Maps in browser with address of person identified using it's last displayed index from the address book
@@ -195,7 +195,7 @@ public class GMapCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\AddressBookParser.java
+###### /java/seedu/address/logic/parser/AddressBookParser.java
 ``` java
         case FindTagCommand.COMMAND_WORD:
         case FindTagCommand.COMMAND_ALIAS:
@@ -213,7 +213,7 @@ public class GMapCommand extends Command {
         case FbCommand.COMMAND_ALIAS:
             return new FbCommandParser().parse(arguments);
 ```
-###### \java\seedu\address\logic\parser\person\EmailCommandParser.java
+###### /java/seedu/address/logic/parser/person/EmailCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new EmailCommand object
@@ -236,7 +236,7 @@ public class EmailCommandParser implements Parser<EmailCommand> {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\person\FbCommandParser.java
+###### /java/seedu/address/logic/parser/person/FbCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new FbCommand object
@@ -260,7 +260,7 @@ public class FbCommandParser implements Parser<FbCommand> {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\person\FindTagCommandParser.java
+###### /java/seedu/address/logic/parser/person/FindTagCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new FindTagCommand object
@@ -286,7 +286,7 @@ public class FindTagCommandParser implements Parser<FindTagCommand> {
 
 }
 ```
-###### \java\seedu\address\logic\parser\person\GMapCommandParser.java
+###### /java/seedu/address/logic/parser/person/GMapCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new GMapCommand object
@@ -310,7 +310,7 @@ public class GMapCommandParser implements Parser<GMapCommand> {
     }
 }
 ```
-###### \java\seedu\address\model\AddressBook.java
+###### /java/seedu/address/model/AddressBook.java
 ``` java
     /**
      * Returns URL for google maps using the person's address
@@ -346,7 +346,7 @@ public class GMapCommandParser implements Parser<GMapCommand> {
         return fbUrl;
     }
 ```
-###### \java\seedu\address\model\Model.java
+###### /java/seedu/address/model/Model.java
 ``` java
     /** Gets URL for google maps. */
     String getGMapUrl(ReadOnlyPerson target);
@@ -357,7 +357,7 @@ public class GMapCommandParser implements Parser<GMapCommand> {
     /** Opens URL in default browser. */
     void openUrl (String url);
 ```
-###### \java\seedu\address\model\ModelManager.java
+###### /java/seedu/address/model/ModelManager.java
 ``` java
     @Override
     public synchronized String getGMapUrl(ReadOnlyPerson target) {
@@ -388,7 +388,7 @@ public class GMapCommandParser implements Parser<GMapCommand> {
         }
     }
 ```
-###### \java\seedu\address\model\person\Person.java
+###### /java/seedu/address/model/person/Person.java
 ``` java
     /**
      * Returns the set of tags joined into a string
@@ -404,7 +404,7 @@ public class GMapCommandParser implements Parser<GMapCommand> {
         return sb.toString();
     }
 ```
-###### \java\seedu\address\model\person\UniquePersonList.java
+###### /java/seedu/address/model/person/UniquePersonList.java
 ``` java
     /**
      * Sorts the persons based on name
@@ -414,7 +414,7 @@ public class GMapCommandParser implements Parser<GMapCommand> {
         internalList.sort((e1, e2) -> e1.getName().toString().compareToIgnoreCase(e2.getName().toString()));
     }
 ```
-###### \java\seedu\address\model\property\TagContainsKeywordsPredicate.java
+###### /java/seedu/address/model/property/TagContainsKeywordsPredicate.java
 ``` java
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Name} matches any of the keywords given.
@@ -443,78 +443,126 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
 ```
 ###### /java/seedu/address/ui/event/EventCalendar.java
 ``` java
+/**
+ * The panel on the right side of {@link EventListPanel}. Used to show a calendar.
+ */
 public class EventCalendar extends UiPart<Region> {
     private static final String FXML = "event/EventCalendar.fxml";
+    private static final int MAX_NUMBER_DAYS = 42;
 
     @FXML
-    private Text date1, date2, date3, date4, date5, date6, date7, date8, date9, date10, date11, date12, date13, date14,
-            date15, date16, date17, date18, date19, date20, date21, date22, date23, date24, date25, date26, date27, date28,
-            date29, date30, date31, date32, date33, date34, date35, date36, date37, date38, date39, date40, date41, date42;
+    private Label date1;
+    @FXML
+    private Label date2;
+    @FXML
+    private Label date3;
+    @FXML
+    private Label date4;
+    @FXML
+    private Label date5;
+    @FXML
+    private Label date6;
+    @FXML
+    private Label date7;
+    @FXML
+    private Label date8;
+    @FXML
+    private Label date9;
+    @FXML
+    private Label date10;
+    @FXML
+    private Label date11;
+    @FXML
+    private Label date12;
+    @FXML
+    private Label date13;
+    @FXML
+    private Label date14;
+    @FXML
+    private Label date15;
+    @FXML
+    private Label date16;
+    @FXML
+    private Label date17;
+    @FXML
+    private Label date18;
+    @FXML
+    private Label date19;
+    @FXML
+    private Label date20;
+    @FXML
+    private Label date21;
+    @FXML
+    private Label date22;
+    @FXML
+    private Label date23;
+    @FXML
+    private Label date24;
+    @FXML
+    private Label date25;
+    @FXML
+    private Label date26;
+    @FXML
+    private Label date27;
+    @FXML
+    private Label date28;
+    @FXML
+    private Label date29;
+    @FXML
+    private Label date30;
+    @FXML
+    private Label date31;
+    @FXML
+    private Label date32;
+    @FXML
+    private Label date33;
+    @FXML
+    private Label date34;
+    @FXML
+    private Label date35;
+    @FXML
+    private Label date36;
+    @FXML
+    private Label date37;
+    @FXML
+    private Label date38;
+    @FXML
+    private Label date39;
+    @FXML
+    private Label date40;
+    @FXML
+    private Label date41;
+    @FXML
+    private Label date42;
+
     @FXML
     private Label monthName;
 
-
-    private Text[] dateArray;
-
+    private Label[] dateArray;
     private MonthDateBuilder monthDateBuilder;
-
 
     public EventCalendar() {
         super(FXML);
         monthDateBuilder = new MonthDateBuilder();
-        inits(); // to put all text views into array to facilitate looping through
+        inits();
         setDates(monthDateBuilder.getMonthDateArray());
         monthName.setText(monthDateBuilder.getNameOfMonth());
     }
 
-    public void setDates(String[] _monthDateArray) {
-        dateArray[0].setText(_monthDateArray[0]);
-        dateArray[1].setText(_monthDateArray[1]);
-        dateArray[2].setText(_monthDateArray[2]);
-        dateArray[3].setText(_monthDateArray[3]);
-        dateArray[4].setText(_monthDateArray[4]);
-        dateArray[5].setText(_monthDateArray[5]);
-        dateArray[6].setText(_monthDateArray[6]);
-        dateArray[7].setText(_monthDateArray[7]);
-        dateArray[8].setText(_monthDateArray[8]);
-        dateArray[9].setText(_monthDateArray[9]);
-        dateArray[10].setText(_monthDateArray[10]);
-        dateArray[11].setText(_monthDateArray[11]);
-        dateArray[12].setText(_monthDateArray[12]);
-        dateArray[13].setText(_monthDateArray[13]);
-        dateArray[14].setText(_monthDateArray[14]);
-        dateArray[15].setText(_monthDateArray[15]);
-        dateArray[16].setText(_monthDateArray[16]);
-        dateArray[17].setText(_monthDateArray[17]);
-        dateArray[18].setText(_monthDateArray[18]);
-        dateArray[19].setText(_monthDateArray[19]);
-        dateArray[20].setText(_monthDateArray[20]);
-        dateArray[21].setText(_monthDateArray[21]);
-        dateArray[22].setText(_monthDateArray[22]);
-        dateArray[23].setText(_monthDateArray[23]);
-        dateArray[24].setText(_monthDateArray[24]);
-        dateArray[25].setText(_monthDateArray[25]);
-        dateArray[26].setText(_monthDateArray[26]);
-        dateArray[27].setText(_monthDateArray[27]);
-        dateArray[28].setText(_monthDateArray[28]);
-        dateArray[29].setText(_monthDateArray[29]);
-        dateArray[30].setText(_monthDateArray[30]);
-        dateArray[31].setText(_monthDateArray[31]);
-        dateArray[32].setText(_monthDateArray[32]);
-        dateArray[33].setText(_monthDateArray[33]);
-        dateArray[34].setText(_monthDateArray[34]);
-        dateArray[35].setText(_monthDateArray[35]);
-        dateArray[36].setText(_monthDateArray[36]);
-        dateArray[37].setText(_monthDateArray[37]);
-        dateArray[38].setText(_monthDateArray[38]);
-        dateArray[39].setText(_monthDateArray[39]);
-        dateArray[40].setText(_monthDateArray[40]);
-        dateArray[41].setText(_monthDateArray[41]);
-
+    /**
+     * Puts the dates from monthDateArray into the dateArray
+     */
+    public void setDates(String[] monthDateArray) {
+        for (int i = 0; i < MAX_NUMBER_DAYS; i++) {
+            dateArray[i].setText(monthDateArray[i]);
+        }
     }
 
+    /**
+     * Puts all text views into array to facilitate looping through
+     */
     public void inits() {
-        dateArray = new Text[42];
+        dateArray = new Label[MAX_NUMBER_DAYS];
         dateArray[0] = date1;
         dateArray[1] = date2;
         dateArray[2] = date3;
@@ -557,77 +605,111 @@ public class EventCalendar extends UiPart<Region> {
         dateArray[39] = date40;
         dateArray[40] = date41;
         dateArray[41] = date42;
-
-
     }
 }
-
-
-class MonthDateBuilder {
+```
+###### /java/seedu/address/ui/event/MonthDateBuilder.java
+``` java
+/**
+ * Creates the dates in the month and name of month
+ */
+public class MonthDateBuilder {
+    private static final int MAX_NUMBER_DAYS = 42; //Maximum number of cells every month has
     private Integer[] monthYearArray;
     private String[] monthDateArray;
     private Calendar calendar;
-    private Integer firstDayOfMonth, maxDayOfMonth;
+    private Integer firstDayOfMonth; //First day in the month
+    private Integer maxDayOfMonth;   //Number of days in the month
     private String nameOfMonth;
 
+    /**
+     * The constructor without parameter is used to get the current month;
+     * the other one is used as to get an arbitrary month and is used for testing.
+     */
     public MonthDateBuilder() {
         calendar = Calendar.getInstance();
-        firstDayOfMonth = 1; // random inits, can delete
-        maxDayOfMonth = 5; //random inits, can delete for testing purposes
 
-
-        monthDateArray = new String[42];// FOR STORING THE VALUES FOR THE DATE YOU SEE
-        monthYearArray = new Integer[2];// FOR USE IN CALENDAR IF YOU WANT TO IN THE FUTURE USE CUSTOM MONTHS MONTH/YEAR
-        monthYearArray[0] = calendar.get(Calendar.MONTH); //RETURNS YOU CURRENT MONTH
-        monthYearArray[1] = calendar.get(Calendar.YEAR); //RETURNS YOU CURRENT YEAR
+        monthDateArray = new String[MAX_NUMBER_DAYS];
+        monthYearArray = new Integer[2];
+        setMonthYearArray(calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR)); //Set current month and year
         setNameOfMonth();
+        calendar.set(Calendar.MONTH, monthYearArray[0]);   //Sets the given calendar MONTH to monthYearArray[0]
+        calendar.set(Calendar.YEAR, monthYearArray[1]);    //Sets the given calendar YEAR to monthYearArray[1]
 
-
-        calendar.set(Calendar.MONTH, monthYearArray[0]); //SETS YOUR CALENDAR OBJECT AS WHATEVER MONTH YOU WANT
-        calendar.set(Calendar.YEAR, monthYearArray[1]); //SETS YOUR CALENDAR OBJECT YEAR VALUES AS WTV YOU WANT
-
-
-        setMonthAchors(); // THIS IS TO SET THE MONTH ANCHORS, BEING THE FIRST DAY NUMBER AND THE MAx days
-        setMonthArrays(); //THIS IS TO BUILD THE ARRAY OF 42, FOR BUILDING THE VIEW OF THE MONTH
+        setMonthAnchors();
+        buildMonthArrays();
     }
 
-    private void setMonthAchors() {
-        Integer dayOfWeek;
-        maxDayOfMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH); //getting max day of month
-        calendar.set(Calendar.DAY_OF_MONTH, 1); //setting calendar to first day of month, numerical 1 to find weekday
-        dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+    public MonthDateBuilder(Integer month, Integer year) {
+        calendar = Calendar.getInstance();
+
+        monthDateArray = new String[MAX_NUMBER_DAYS];
+        monthYearArray = new Integer[2];
+        setMonthYearArray(month, year); //Sets arbitrary month and year
+        setNameOfMonth();
+        calendar.set(Calendar.MONTH, monthYearArray[0]);   //Sets the given calendar MONTH to monthYearArray[0]
+        calendar.set(Calendar.YEAR, monthYearArray[1]);    //Sets the given calendar YEAR to monthYearArray[1]
+
+        setMonthAnchors();
+        buildMonthArrays();
+    }
+
+    /**
+     * Stores desired month and year in monthYearArray
+     * @param month the value used to set the <code>MONTH</code> calendar field.
+     * Month value is 0-based. e.g., 0 for January.
+     * @param year the value used to set the <code>YEAR</code> calendar field.
+     */
+    private void setMonthYearArray(Integer month, Integer year) {
+        monthYearArray[0] = month;
+        monthYearArray[1] = year;
+    }
+
+    /**
+     * Sets the month anchors (first day and number of days in the month)
+     * by setting the calender to 1st date of the month and finding out the day of the week it falls on
+     */
+    private void setMonthAnchors() {
+        maxDayOfMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+
+        Integer dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
 
         switch (dayOfWeek) {
-            default:
-                firstDayOfMonth = 0;
-                break;
-            case Calendar.SUNDAY:
-                firstDayOfMonth = 0;
-                break;
-            case Calendar.MONDAY:
-                firstDayOfMonth = 1;
-                break;
-            case Calendar.TUESDAY:
-                firstDayOfMonth = 2;
-                break;
-            case Calendar.WEDNESDAY:
-                firstDayOfMonth = 3;
-                break;
-            case Calendar.THURSDAY:
-                firstDayOfMonth = 4;
-                break;
-            case Calendar.FRIDAY:
-                firstDayOfMonth = 5;
-                break;
-            case Calendar.SATURDAY:
-                firstDayOfMonth = 6;
-                break;
+        case Calendar.SUNDAY:
+            firstDayOfMonth = 0;
+            break;
+        case Calendar.MONDAY:
+            firstDayOfMonth = 1;
+            break;
+        case Calendar.TUESDAY:
+            firstDayOfMonth = 2;
+            break;
+        case Calendar.WEDNESDAY:
+            firstDayOfMonth = 3;
+            break;
+        case Calendar.THURSDAY:
+            firstDayOfMonth = 4;
+            break;
+        case Calendar.FRIDAY:
+            firstDayOfMonth = 5;
+            break;
+        case Calendar.SATURDAY:
+            firstDayOfMonth = 6;
+            break;
+        default:
+            firstDayOfMonth = 0;
         }
-
-
     }
 
-    public void setMonthArrays() {
+    public Integer getFirstDayOfMonth() {
+        return firstDayOfMonth;
+    }
+
+    /**
+     * Builds the monthly view with the required spaces and numbers
+     */
+    public void buildMonthArrays() {
         Integer i = 0;
         Integer j = firstDayOfMonth;
         Integer a = firstDayOfMonth + maxDayOfMonth;
@@ -639,51 +721,50 @@ class MonthDateBuilder {
             monthDateArray[j] = String.valueOf(j - firstDayOfMonth + 1);
             j++;
         }
-        while (a < 42) {
+        while (a < MAX_NUMBER_DAYS) {
             monthDateArray[a] = " ";
             a++;
         }
-
-
     }
-
 
     public String[] getMonthDateArray() {
         return monthDateArray;
     }
 
-    public void setNameOfMonth(){
-        switch(monthYearArray[0]){
-            case Calendar.JANUARY: nameOfMonth = "January";
-                break;
-            case Calendar.FEBRUARY: nameOfMonth = "February";
-                break;
-            case Calendar.MARCH: nameOfMonth = "March";
-                break;
-            case Calendar.APRIL: nameOfMonth = "April";
-                break;
-            case Calendar.MAY: nameOfMonth = "May";
-                break;
-            case Calendar.JUNE: nameOfMonth = "June";
-                break;
-            case Calendar.JULY: nameOfMonth = "July";
-                break;
-            case Calendar.AUGUST: nameOfMonth = "August";
-                break;
-            case Calendar.SEPTEMBER: nameOfMonth = "September";
-                break;
-            case Calendar.OCTOBER: nameOfMonth = "October";
-                break;
-            case Calendar.NOVEMBER: nameOfMonth = "November";
-                break;
-            case Calendar.DECEMBER: nameOfMonth = "December";
-                break;
-
+    public void setNameOfMonth() {
+        switch(monthYearArray[0]) {
+        case Calendar.JANUARY: nameOfMonth = "January";
+            break;
+        case Calendar.FEBRUARY: nameOfMonth = "February";
+            break;
+        case Calendar.MARCH: nameOfMonth = "March";
+            break;
+        case Calendar.APRIL: nameOfMonth = "April";
+            break;
+        case Calendar.MAY: nameOfMonth = "May";
+            break;
+        case Calendar.JUNE: nameOfMonth = "June";
+            break;
+        case Calendar.JULY: nameOfMonth = "July";
+            break;
+        case Calendar.AUGUST: nameOfMonth = "August";
+            break;
+        case Calendar.SEPTEMBER: nameOfMonth = "September";
+            break;
+        case Calendar.OCTOBER: nameOfMonth = "October";
+            break;
+        case Calendar.NOVEMBER: nameOfMonth = "November";
+            break;
+        case Calendar.DECEMBER: nameOfMonth = "December";
+            break;
+        default:
+            nameOfMonth = null;
         }
     }
 
-    public String getNameOfMonth(){return nameOfMonth;}
-
+    public String getNameOfMonth() {
+        return nameOfMonth;
+    }
 
 }
 ```
@@ -695,484 +776,400 @@ class MonthDateBuilder {
         dataDetailsPanelPlaceholder.getChildren().add(new EventCalendar().getRoot());
     }
 ```
+###### /resources/css/Extensions.css
+``` css
+.calender-title-property-value {
+    -fx-font-family: "Bradley Hand";
+    -fx-font-size: 40px;
+    -fx-text-fill: lightskyblue;
+    -fx-text-alignment: left;
+}
+
+.calender-property-value {
+    -fx-font-family: "Arial";
+    -fx-font-size: 30px;
+    -fx-text-fill: white;
+    -fx-text-alignment: left;
+}
+
+.calender-property1-value {
+    -fx-font-family: "Arial Black";
+    -fx-font-size: 50px;
+    -fx-text-fill: lightpink;
+    -fx-text-alignment: right;
+}
+
+.calender-property2-value {
+    -fx-font-family: "Arial Black";
+    -fx-font-size: 50px;
+    -fx-text-fill: lightgoldenrodyellow;
+    -fx-text-alignment: right;
+}
+
+.calender-property3-value {
+    -fx-font-family: "Arial Black";
+    -fx-font-size: 50px;
+    -fx-text-fill: lightsalmon;
+    -fx-text-alignment: right;
+}
+
+.calender-property4-value {
+    -fx-font-family: "Arial Black";
+    -fx-font-size: 50px;
+    -fx-text-fill: lightgreen;
+    -fx-text-alignment: right;
+}
+```
 ###### /resources/view/event/EventCalendar.fxml
 ``` fxml
+
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<?import javafx.scene.text.Text?>
-<?import javafx.scene.text.Font?>
-
 <GridPane alignment="CENTER" prefHeight="600.0" prefWidth="580.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
-    <Label fx:id="monthName" text="January" GridPane.rowIndex="0" GridPane.columnSpan="7"/>
+    <Label fx:id="monthName" text="January" styleClass="calender-title-property-value" GridPane.rowIndex="0" GridPane.columnSpan="7"/>
     <VBox prefWidth="80" prefHeight="80"
           GridPane.columnIndex="0" GridPane.rowIndex="1"
           GridPane.columnSpan="1">
-        <Label fx:id="daySun" styleClass="calender-propertyS-value" text="S" wrapText="true">
+        <Label fx:id="daySun" styleClass="calender-property1-value" text="S" wrapText="true">
         </Label>
     </VBox>
 
     <VBox prefWidth="80" prefHeight="80"
           GridPane.columnIndex="1" GridPane.rowIndex="1"
           GridPane.columnSpan="1">
-        <Label fx:id="dayM" styleClass="calender-propertyM-value" text="M" wrapText="true">
+        <Label fx:id="dayM" styleClass="calender-property2-value" text="M" wrapText="true">
         </Label>
     </VBox>
 
     <VBox prefWidth="80" prefHeight="80"
           GridPane.columnIndex="2" GridPane.rowIndex="1"
           GridPane.columnSpan="1">
-        <Label fx:id="dayT" styleClass="calender-propertyT-value" text="T" wrapText="true">
+        <Label fx:id="dayT" styleClass="calender-property3-value" text="T" wrapText="true">
         </Label>
     </VBox>
 
     <VBox prefWidth="80" prefHeight="80"
           GridPane.columnIndex="3" GridPane.rowIndex="1"
           GridPane.columnSpan="1">
-        <Label fx:id="dayW" styleClass="calender-propertyW-value" text="W" wrapText="true">
+        <Label fx:id="dayW" styleClass="calender-property4-value" text="W" wrapText="true">
         </Label>
     </VBox>
 
     <VBox prefWidth="80" prefHeight="80"
           GridPane.columnIndex="4" GridPane.rowIndex="1"
           GridPane.columnSpan="1">
-        <Label fx:id="dayTh" styleClass="calender-propertyS-value" text="T" wrapText="true">
+        <Label fx:id="dayTh" styleClass="calender-property1-value" text="T" wrapText="true">
         </Label>
     </VBox>
 
     <VBox prefWidth="80" prefHeight="80"
           GridPane.columnIndex="5" GridPane.rowIndex="1"
           GridPane.columnSpan="1">
-        <Label fx:id="dayF" styleClass="calender-propertyM-value" text="F" wrapText="true">
+        <Label fx:id="dayF" styleClass="calender-property2-value" text="F" wrapText="true">
         </Label>
     </VBox>
 
     <VBox prefWidth="80" prefHeight="80"
           GridPane.columnIndex="6" GridPane.rowIndex="1"
           GridPane.columnSpan="1">
-        <Label fx:id="daySat" styleClass="calender-propertyT-value" text="S" wrapText="true">
+        <Label fx:id="daySat" styleClass="calender-property3-value" text="S" wrapText="true">
         </Label>
     </VBox>
 
     <VBox prefWidth="50" prefHeight="50"
           GridPane.columnIndex="0" GridPane.rowIndex="2"
           GridPane.columnSpan="1">
-        <Text fx:id="date1" text="1">
-            <font>
-                <Font size="30"/>
-            </font>
-        </Text>
+        <Label fx:id="date1" styleClass="calender-property-value" text="1" wrapText="true">
+        </Label>
     </VBox>
 
     <VBox prefWidth="50" prefHeight="50"
           GridPane.columnIndex="1" GridPane.rowIndex="2"
           GridPane.columnSpan="1">
-        <Text fx:id="date2" text="2">
-            <font>
-                <Font size="30"/>
-            </font>
-        </Text>
+        <Label fx:id="date2" styleClass="calender-property-value" text="2" wrapText="true">
+        </Label>
     </VBox>
 
     <VBox prefWidth="50" prefHeight="50"
           GridPane.columnIndex="2" GridPane.rowIndex="2"
           GridPane.columnSpan="1">
-        <Text fx:id="date3" text="3">
-            <font>
-                <Font size="30"/>
-            </font>
-        </Text>
+        <Label fx:id="date3" styleClass="calender-property-value" text="3" wrapText="true">
+        </Label>
     </VBox>
 
     <VBox prefWidth="50" prefHeight="50"
           GridPane.columnIndex="3" GridPane.rowIndex="2"
           GridPane.columnSpan="1">
-        <Text fx:id="date4" text="4">
-            <font>
-                <Font size="30"/>
-            </font>
-        </Text>
+        <Label fx:id="date4" styleClass="calender-property-value" text="4" wrapText="true">
+        </Label>
     </VBox>
 
     <VBox prefWidth="50" prefHeight="50"
           GridPane.columnIndex="4" GridPane.rowIndex="2"
           GridPane.columnSpan="1">
-        <Text fx:id="date5" text="5">
-            <font>
-                <Font size="30"/>
-            </font>
-        </Text>
+        <Label fx:id="date5" styleClass="calender-property-value" text="5" wrapText="true">
+        </Label>
     </VBox>
 
     <VBox prefWidth="50" prefHeight="50"
           GridPane.columnIndex="5" GridPane.rowIndex="2"
           GridPane.columnSpan="1">
-        <Text fx:id="date6" text="6">
-            <font>
-                <Font size="30"/>
-            </font>
-        </Text>
+        <Label fx:id="date6" styleClass="calender-property-value" text="6" wrapText="true">
+        </Label>
     </VBox>
 
     <VBox prefWidth="50" prefHeight="50"
           GridPane.columnIndex="6" GridPane.rowIndex="2"
           GridPane.columnSpan="1">
-        <Text fx:id="date7" text="7">
-            <font>
-                <Font size="30"/>
-            </font>
-        </Text>
+        <Label fx:id="date7" styleClass="calender-property-value" text="7" wrapText="true">
+        </Label>
     </VBox>
 
     <VBox prefWidth="50" prefHeight="50"
           GridPane.columnIndex="0" GridPane.rowIndex="3"
           GridPane.columnSpan="1">
-        <Text fx:id="date8" text="8">
-            <font>
-                <Font size="30"/>
-            </font>
-        </Text>
+        <Label fx:id="date8" styleClass="calender-property-value" text="8" wrapText="true">
+        </Label>
     </VBox>
 
     <VBox prefWidth="50" prefHeight="50"
           GridPane.columnIndex="1" GridPane.rowIndex="3"
           GridPane.columnSpan="1">
-        <Text fx:id="date9" text="9">
-            <font>
-                <Font size="30"/>
-            </font>
-        </Text>
+        <Label fx:id="date9" styleClass="calender-property-value" text="9" wrapText="true">
+        </Label>
     </VBox>
 
     <VBox prefWidth="50" prefHeight="50"
           GridPane.columnIndex="2" GridPane.rowIndex="3"
           GridPane.columnSpan="1">
-        <Text fx:id="date10" text="10">
-            <font>
-                <Font size="30"/>
-            </font>
-        </Text>
+        <Label fx:id="date10" styleClass="calender-property-value" text="10" wrapText="true">
+        </Label>
     </VBox>
 
     <VBox prefWidth="50" prefHeight="50"
           GridPane.columnIndex="3" GridPane.rowIndex="3"
           GridPane.columnSpan="1">
-        <Text fx:id="date11" text="11">
-            <font>
-                <Font size="30"/>
-            </font>
-        </Text>
+        <Label fx:id="date11" styleClass="calender-property-value" text="11" wrapText="true">
+        </Label>
     </VBox>
 
     <VBox prefWidth="50" prefHeight="50"
           GridPane.columnIndex="4" GridPane.rowIndex="3"
           GridPane.columnSpan="1">
-        <Text fx:id="date12" text="12">
-            <font>
-                <Font size="30"/>
-            </font>
-        </Text>
+        <Label fx:id="date12" styleClass="calender-property-value" text="12" wrapText="true">
+        </Label>
     </VBox>
 
     <VBox prefWidth="50" prefHeight="50"
           GridPane.columnIndex="5" GridPane.rowIndex="3"
           GridPane.columnSpan="1">
-        <Text fx:id="date13" text="13">
-            <font>
-                <Font size="30"/>
-            </font>
-        </Text>
+        <Label fx:id="date13" styleClass="calender-property-value" text="13" wrapText="true">
+        </Label>
     </VBox>
 
     <VBox prefWidth="50" prefHeight="50"
           GridPane.columnIndex="6" GridPane.rowIndex="3"
           GridPane.columnSpan="1">
-        <Text fx:id="date14" text="14">
-            <font>
-                <Font size="30"/>
-            </font>
-        </Text>
+        <Label fx:id="date14" styleClass="calender-property-value" text="14" wrapText="true">
+        </Label>
     </VBox>
 
     <VBox prefWidth="50" prefHeight="50"
           GridPane.columnIndex="0" GridPane.rowIndex="4"
           GridPane.columnSpan="1">
-        <Text fx:id="date15" text="15">
-            <font>
-                <Font size="30"/>
-            </font>
-        </Text>
+        <Label fx:id="date15" styleClass="calender-property-value" text="15" wrapText="true">
+        </Label>
     </VBox>
 
     <VBox prefWidth="50" prefHeight="50"
           GridPane.columnIndex="1" GridPane.rowIndex="4"
           GridPane.columnSpan="1">
-        <Text fx:id="date16" text="16">
-            <font>
-                <Font size="30"/>
-            </font>
-        </Text>
+        <Label fx:id="date16" styleClass="calender-property-value" text="16" wrapText="true">
+        </Label>
     </VBox>
 
     <VBox prefWidth="50" prefHeight="50"
           GridPane.columnIndex="2" GridPane.rowIndex="4"
           GridPane.columnSpan="1">
-        <Text fx:id="date17" text="17">
-            <font>
-                <Font size="30"/>
-            </font>
-        </Text>
+        <Label fx:id="date17" styleClass="calender-property-value" text="17" wrapText="true">
+        </Label>
     </VBox>
 
     <VBox prefWidth="50" prefHeight="50"
           GridPane.columnIndex="3" GridPane.rowIndex="4"
           GridPane.columnSpan="1">
-        <Text fx:id="date18" text="18">
-            <font>
-                <Font size="30"/>
-            </font>
-        </Text>
+        <Label fx:id="date18" styleClass="calender-property-value" text="18" wrapText="true">
+        </Label>
     </VBox>
 
     <VBox prefWidth="50" prefHeight="50"
           GridPane.columnIndex="4" GridPane.rowIndex="4"
           GridPane.columnSpan="1">
-        <Text fx:id="date19" text="19">
-            <font>
-                <Font size="30"/>
-            </font>
-        </Text>
+        <Label fx:id="date19" styleClass="calender-property-value" text="19" wrapText="true">
+        </Label>
     </VBox>
 
     <VBox prefWidth="50" prefHeight="50"
           GridPane.columnIndex="5" GridPane.rowIndex="4"
           GridPane.columnSpan="1">
-        <Text fx:id="date20" text="20">
-            <font>
-                <Font size="30"/>
-            </font>
-        </Text>
+        <Label fx:id="date20" styleClass="calender-property-value" text="20" wrapText="true">
+        </Label>
     </VBox>
 
     <VBox prefWidth="50" prefHeight="50"
           GridPane.columnIndex="6" GridPane.rowIndex="4"
           GridPane.columnSpan="1">
-        <Text fx:id="date21" text="21">
-            <font>
-                <Font size="30"/>
-            </font>
-        </Text>
+        <Label fx:id="date21" styleClass="calender-property-value" text="21" wrapText="true">
+        </Label>
     </VBox>
 
     <VBox prefWidth="50" prefHeight="50"
           GridPane.columnIndex="0" GridPane.rowIndex="5"
           GridPane.columnSpan="1">
-        <Text fx:id="date22" text="22">
-            <font>
-                <Font size="30"/>
-            </font>
-        </Text>
+        <Label fx:id="date22" styleClass="calender-property-value" text="22" wrapText="true">
+        </Label>
     </VBox>
 
     <VBox prefWidth="50" prefHeight="50"
           GridPane.columnIndex="1" GridPane.rowIndex="5"
           GridPane.columnSpan="1">
-        <Text fx:id="date23" text="23">
-            <font>
-                <Font size="30"/>
-            </font>
-        </Text>
+        <Label fx:id="date23" styleClass="calender-property-value" text="23" wrapText="true">
+        </Label>
     </VBox>
 
     <VBox prefWidth="50" prefHeight="50"
           GridPane.columnIndex="2" GridPane.rowIndex="5"
           GridPane.columnSpan="1">
-        <Text fx:id="date24" text="24">
-            <font>
-                <Font size="30"/>
-            </font>
-        </Text>
+        <Label fx:id="date24" styleClass="calender-property-value" text="24" wrapText="true">
+        </Label>
     </VBox>
 
     <VBox prefWidth="50" prefHeight="50"
           GridPane.columnIndex="3" GridPane.rowIndex="5"
           GridPane.columnSpan="1">
-        <Text fx:id="date25" text="25">
-            <font>
-                <Font size="30"/>
-            </font>
-        </Text>
+        <Label fx:id="date25" styleClass="calender-property-value" text="25" wrapText="true">
+        </Label>
     </VBox>
 
     <VBox prefWidth="50" prefHeight="50"
           GridPane.columnIndex="4" GridPane.rowIndex="5"
           GridPane.columnSpan="1">
-        <Text fx:id="date26" text="26">
-            <font>
-                <Font size="30"/>
-            </font>
-        </Text>
+        <Label fx:id="date26" styleClass="calender-property-value" text="26" wrapText="true">
+        </Label>
     </VBox>
 
     <VBox prefWidth="50" prefHeight="50"
           GridPane.columnIndex="5" GridPane.rowIndex="5"
           GridPane.columnSpan="1">
-        <Text fx:id="date27" text="27">
-            <font>
-                <Font size="30"/>
-            </font>
-        </Text>
+        <Label fx:id="date27" styleClass="calender-property-value" text="27" wrapText="true">
+        </Label>
     </VBox>
 
     <VBox prefWidth="50" prefHeight="50"
           GridPane.columnIndex="6" GridPane.rowIndex="5"
           GridPane.columnSpan="1">
-        <Text fx:id="date28" text="28">
-            <font>
-                <Font size="30"/>
-            </font>
-        </Text>
+        <Label fx:id="date28" styleClass="calender-property-value" text="28" wrapText="true">
+        </Label>
     </VBox>
 
     <VBox prefWidth="50" prefHeight="50"
           GridPane.columnIndex="0" GridPane.rowIndex="6"
           GridPane.columnSpan="1">
-        <Text fx:id="date29" text="29">
-            <font>
-                <Font size="30"/>
-            </font>
-        </Text>
+        <Label fx:id="date29" styleClass="calender-property-value" text="29" wrapText="true">
+        </Label>
     </VBox>
 
     <VBox prefWidth="50" prefHeight="50"
           GridPane.columnIndex="1" GridPane.rowIndex="6"
           GridPane.columnSpan="1">
-        <Text fx:id="date30" text="30">
-            <font>
-                <Font size="30"/>
-            </font>
-        </Text>
+        <Label fx:id="date30" styleClass="calender-property-value" text="30" wrapText="true">
+        </Label>
     </VBox>
 
     <VBox prefWidth="50" prefHeight="50"
           GridPane.columnIndex="2" GridPane.rowIndex="6"
           GridPane.columnSpan="1">
-        <Text fx:id="date31" text="31">
-            <font>
-                <Font size="30"/>
-            </font>
-        </Text>
+        <Label fx:id="date31" styleClass="calender-property-value" text="31" wrapText="true">
+        </Label>
     </VBox>
 
     <VBox prefWidth="50" prefHeight="50"
           GridPane.columnIndex="3" GridPane.rowIndex="6"
           GridPane.columnSpan="1">
-        <Text fx:id="date32" text="32">
-            <font>
-                <Font size="30"/>
-            </font>
-        </Text>
+        <Label fx:id="date32" styleClass="calender-property-value" text="32" wrapText="true">
+        </Label>
     </VBox>
 
     <VBox prefWidth="50" prefHeight="50"
           GridPane.columnIndex="4" GridPane.rowIndex="6"
           GridPane.columnSpan="1">
-        <Text fx:id="date33" text="33">
-            <font>
-                <Font size="30"/>
-            </font>
-        </Text>
+        <Label fx:id="date33" styleClass="calender-property-value" text="33" wrapText="true">
+        </Label>
     </VBox>
 
     <VBox prefWidth="50" prefHeight="50"
           GridPane.columnIndex="5" GridPane.rowIndex="6"
           GridPane.columnSpan="1">
-        <Text fx:id="date34" text="34">
-            <font>
-                <Font size="30"/>
-            </font>
-        </Text>
+        <Label fx:id="date34" styleClass="calender-property-value" text="34" wrapText="true">
+        </Label>
     </VBox>
 
     <VBox prefWidth="50" prefHeight="50"
           GridPane.columnIndex="6" GridPane.rowIndex="6"
           GridPane.columnSpan="1">
-        <Text fx:id="date35" text="35">
-            <font>
-                <Font size="30"/>
-            </font>
-        </Text>
+        <Label fx:id="date35" styleClass="calender-property-value" text="35" wrapText="true">
+        </Label>
     </VBox>
 
     <VBox prefWidth="50" prefHeight="50"
           GridPane.columnIndex="0" GridPane.rowIndex="7"
           GridPane.columnSpan="1">
-        <Text fx:id="date36" text="36">
-            <font>
-                <Font size="30"/>
-            </font>
-        </Text>
+        <Label fx:id="date36" styleClass="calender-property-value" text="36" wrapText="true">
+        </Label>
     </VBox>
 
     <VBox prefWidth="50" prefHeight="50"
           GridPane.columnIndex="1" GridPane.rowIndex="7"
           GridPane.columnSpan="1">
-        <Text fx:id="date37" text="37">
-            <font>
-                <Font size="30"/>
-            </font>
-        </Text>
+        <Label fx:id="date37" styleClass="calender-property-value" text="37" wrapText="true">
+        </Label>
     </VBox>
 
     <VBox prefWidth="50" prefHeight="50"
           GridPane.columnIndex="2" GridPane.rowIndex="7"
           GridPane.columnSpan="1">
-        <Text fx:id="date38" text="38">
-            <font>
-                <Font size="30"/>
-            </font>
-        </Text>
+        <Label fx:id="date38" styleClass="calender-property-value" text="38" wrapText="true">
+        </Label>
     </VBox>
 
     <VBox prefWidth="50" prefHeight="50"
           GridPane.columnIndex="3" GridPane.rowIndex="7"
           GridPane.columnSpan="1">
-        <Text fx:id="date39" text="39">
-            <font>
-                <Font size="30"/>
-            </font>
-        </Text>
+        <Label fx:id="date39" styleClass="calender-property-value" text="39" wrapText="true">
+        </Label>
     </VBox>
 
     <VBox prefWidth="50" prefHeight="50"
           GridPane.columnIndex="4" GridPane.rowIndex="7"
           GridPane.columnSpan="1">
-        <Text fx:id="date40" text="40">
-            <font>
-                <Font size="30"/>
-            </font>
-        </Text>
+        <Label fx:id="date40" styleClass="calender-property-value" text="40" wrapText="true">
+        </Label>
     </VBox>
 
     <VBox prefWidth="50" prefHeight="50"
           GridPane.columnIndex="5" GridPane.rowIndex="7"
           GridPane.columnSpan="1">
-        <Text fx:id="date41" text="41">
-            <font>
-                <Font size="30"/>
-            </font>
-        </Text>
+        <Label fx:id="date41" styleClass="calender-property-value" text="41" wrapText="true">
+        </Label>
     </VBox>
 
     <VBox prefWidth="50" prefHeight="50"
           GridPane.columnIndex="6" GridPane.rowIndex="7"
           GridPane.columnSpan="1">
-        <Text fx:id="date42" text="42">
-            <font>
-                <Font size="30"/>
-            </font>
-        </Text>
+        <Label fx:id="date42" styleClass="calender-property-value" text="42" wrapText="true">
+        </Label>
     </VBox>
 
 </GridPane>
