@@ -1738,8 +1738,8 @@ _Figure 4.15.5: Output of `EmailCommand.java` execution_
 **Aspect:** Data structure to support `EmailCommand` +
 **Alternative 1 (current choice)**: Use Set for storing of user's input of indices.  +
 **Pros:** Prevent duplication of indices to speed up execution of `EmailCommand`. +
-**Cons:** Set provides random access.Two objects might be considred equal if they have the same hascode even though they are different.  +
-**Alternative 2:** Using ArrayList +
+**Cons:** `Set` provides random access.Two objects might be considred equal if they have the same hashcode even though they are different.  +
+**Alternative 2:** Using `ArrayList` for storing of user's input of indices. +
 **Pros:** List implementations are ordered as List stores element in the order they were added. +
 **Cons:** Unable to detect duplicate indicies. +
 
