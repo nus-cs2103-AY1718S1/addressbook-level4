@@ -657,7 +657,7 @@ public class NoUniqueImport extends Exception {
 
 The following activity diagram summarize what happens inside the `ImportCommand` when a user executes this command:
 
-image::ImportCommandActivityDiagram.png[width="300"]
+image::ImportCommandActivityDiagram.png[width="500"]
 
 
 //tage::backup
@@ -745,6 +745,11 @@ The RemoveTag command is implemented for fast removal of a tag from all entries 
 The motivation for implementing such a command is that the hostel/hotel administrator may need to mass delete a Tag from the person. For example, deleting the "RA" (Resident Assistant) +
 tag when the old batch of RA steps down from operations.
 
+The following is the Sequence Diagram for RemoveTag command. The alias is "rm".
+
+image::SDforRemoveTagCommand.png[width="800"]
+
+[NOTE]
 The difference between the RemoveTag and Delete Person by Tag is that RemoveTag does not remove any Resident from the ResidentBook. It just removes all the specified tags attached to the Resident.
 
 The following shows the implementation method, where user will specify the tagName:
