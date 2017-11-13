@@ -23,7 +23,7 @@ public class MapCommand extends UndoableCommand {
             + "identified by the index number used in the last person listing. "
             + "Parameters: INDEX "
             + "Example: " + COMMAND_WORD + " 1 ";
-    private static final String MESSAGE_MAP_SHOWN_SUCCESS = "Map Display Successful! Address of: %1$s";
+    public static final String MESSAGE_MAP_SHOWN_SUCCESS = "Map Display Successful! Address of: %1$s";
 
     public final Index index;
 
