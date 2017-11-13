@@ -82,7 +82,7 @@ include::../DeveloperGuide.adoc[tag=location]
 ---
 The iCloud import would be invoked by typing `iCloud` as the parameter for the import command instead of `Google`.
 
----
+
 
 ==== Justification
 
