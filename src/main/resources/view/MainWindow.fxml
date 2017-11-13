@@ -45,7 +45,7 @@
                   <URL value="@Extensions.css" />
                </stylesheets>
             </MenuBar>
-            <HBox fx:id="sortFindPanelPlaceholder" prefHeight="44.0" prefWidth="690.0" styleClass="pane-with-border" />
+            <HBox fx:id="sortFindPanelPlaceholder" alignment="CENTER" prefHeight="44.0" prefWidth="690.0" styleClass="pane-with-border" />
             <SplitPane id="splitPane" fx:id="splitPane" VBox.vgrow="ALWAYS">
                <items>
                   <StackPane minWidth="-Infinity" prefWidth="550.0">

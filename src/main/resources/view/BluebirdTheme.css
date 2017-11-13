@@ -9,14 +9,14 @@
 /* ========== JAVAFX ELEMENTS ==========*/
 
 .pane-with-border {
-    -fx-background-color: #222646;
+    -fx-background-color: #1a1e37;
     -fx-border-color: transparent;
     -fx-border-top-width: 1px;
 }
 
 /* ========== MENU BAR ==========*/
 .context-menu {
-    -fx-background-color: #242b51;
+    -fx-background-color: #1a1e37;
 }
 
 .context-menu .label {
@@ -24,11 +24,11 @@
 }
 
 .menu-bar {
-    -fx-background-color: #242b51;
+    -fx-background-color: #1a1e37;
 }
 
 .menu-bar .label {
-    -fx-background-color: #242b51;
+    -fx-background-color: #1a1e37;
     -fx-font-size: 12pt;
     -fx-font-family: "Old Standard TT";
     -fx-text-fill: #fffefd;
@@ -55,7 +55,7 @@
 }
 
 .menu-item:focused .label {
-    -fx-text-fill: #ffdf00;
+    -fx-text-fill: #71ffa0;
 }
 
 /* ========== COMMAND BOX ==========*/
@@ -78,5 +78,70 @@
     -fx-font-family: "Old Standard TT";
     -fx-font-size: 13pt;
     -fx-text-fill: derive(#71ffa0,-20%);
+}
+
+/* ========== STATUS BAR ==========*/
+.status-bar .label {
+    -fx-font-family: "Old Standard TT";
+    -fx-text-fill: white;
+    -fx-font-size: 10pt;
+}
+
+.status-bar-with-border {
+    -fx-background-color: derive(#1d1d1d, 30%);
+    -fx-border-color: derive(#1d1d1d, 25%);
+    -fx-border-width: 1px;
+}
+
+.status-bar-with-border .label {
+    -fx-text-fill: white;
+}
+
+.grid-pane {
+    -fx-background-color: #1a1e37;
+}
+
+.grid-pane .anchor-pane {
+    -fx-background-color: #1a1e37;
+}
+
+.anchor-pane {
+    -fx-background-color: transparent;
+}
+
+/* ========== SCROLL BAR ==========*/
+
+.status-bar {
+    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-text-fill: black;
+}
+
+
+.scroll-bar {
+    -fx-background-color: derive(#1a1e37, 20%);
+    -fx-background-radius: 10 10 10 10;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: #1a1e37;
+    -fx-background-radius: 10 10 10 10;
+    -fx-background-insets: 3;
+}
+
+.scroll-bar .increment-button, .scroll-bar .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0 0 0 0;
+}
+
+.scroll-bar .increment-arrow, .scroll-bar .decrement-arrow {
+    -fx-shape: " ";
+}
+
+.scroll-bar:vertical .increment-arrow, .scroll-bar:vertical .decrement-arrow {
+    -fx-padding: 1 8 1 8;
+}
+
+.scroll-bar:horizontal .increment-arrow, .scroll-bar:horizontal .decrement-arrow {
+    -fx-padding: 8 1 8 1;
 }
 

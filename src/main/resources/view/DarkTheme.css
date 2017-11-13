@@ -173,7 +173,7 @@
 
 .result-display {
     -fx-background-color: transparent;
-    -fx-font-family: "Segoe UI Light";
+    -fx-font-family: "Old Standard TT";
     -fx-font-size: 13pt;
     -fx-text-fill: white;
 }
@@ -247,6 +247,10 @@
 
 .menu-item:focused {
     -fx-background-color: transparent;
+}
+
+.context-menu .button {
+    -fx-background-color: #1a1e37;
 }
 
 .menu-item:focused .label {
@@ -329,11 +333,13 @@
 }
 
 .scroll-bar {
-    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-background-color: derive(#1a1e37, 20%);
+    -fx-background-radius: 10 10 10 10;
 }
 
 .scroll-bar .thumb {
-    -fx-background-color: derive(#1d1d1d, 50%);
+    -fx-background-color: #1a1e37;
+    -fx-background-radius: 10 10 10 10;
     -fx-background-insets: 3;
 }
 
@@ -388,7 +394,7 @@
 }
 
 #resultDisplay .content {
-    -fx-background-color: transparent, #383838, transparent, #383838;
+    -fx-background-color: #1a1e37;
     -fx-background-radius: 0;
 }
 
@@ -406,16 +412,53 @@
     -fx-font-size: 11;
 }
 
-#sortMenu {
-    -fx-background-color: dimgrey;
+
+
+#sortMenuBox .context.menu {
+    -fx-background-color: #1a1e37;
 }
 
-#sortMenu .label {
-    -fx-text-fill: lightgray;
+.menu-button {
+    -fx-background-color: #1a1e37;
+}
+
+.menu-button:hover .label {
+    -fx-text-fill: #71ffa0;
+}
+
+.menu-button:showing .label {
+    -fx-text-fill: #fefdff;
+}
+
+.menu-item:focused .label {
+    -fx-text-fill: #71ffa0;
+}
+
+.menu-button:hover .arrow {
+    -fx-background-color:  #71ffa0;
+}
+
+.menu-button:showing .arrow {
+    -fx-background-color:  #71ffa0;
+}
+
+
+
+#sortMenuBox .label {
+    -fx-font-size: 12pt;
+    -fx-font-family: "Old Standard TT";
 }
 
 #searchBox {
-    -fx-background-color: dimgrey;
+    -fx-background-color: #1a1e37;
+}
+
+#sortMenuBox .text-field {
+    -fx-background-color:#1a1e37;
+    -fx-font-size: 12pt;
+    -fx-font-family: "Old Standard TT";
+    -fx-text-fill: derive(#71ffa0,-20%);
+    
 }
 
 
