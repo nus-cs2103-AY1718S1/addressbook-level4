@@ -418,10 +418,10 @@ _Figure 4.1.10 : UndoRedoStack Activity Diagram_
 ---
 
 **Aspect:** Data structure to support the undo/redo commands +
-**Alternative 1 (current choice):** Use separate stack for undo and redo +
+**Alternative 1 (current choice):** Use separate stack for undo and redo. +
 **Pros:** Easy to understand for new Computer Science student undergraduates to understand, who are likely to be the new incoming developers of our project. +
 **Cons:** Logic is duplicated twice. For example, when a new command is executed, we must remember to update both `HistoryManager` and `UndoRedoStack`. +
-**Alternative 2:** Use `HistoryManager` for undo/redo +
+**Alternative 2:** Use `HistoryManager` for undo/redo. +
 **Pros:** We do not need to maintain a separate stack, and just reuse what is already in the codebase. +
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
@@ -649,10 +649,10 @@ _Figure 4.3.3: Enhanced `HelpCommand` execution_
 ==== Design Considerations
 
 **Aspect:** Enhancement of `HelpCommand` +
-**Alternative 1 (current choice)**: Allowing the `HelpCommand` to take in an optional command identifier argument +
+**Alternative 1 (current choice)**: Allowing the `HelpCommand` to take in an optional command identifier argument. +
 **Pros:** User can easily find out about the format of a specific command they want to key in. +
 **Cons:** User have to know at least the command identifier of the command they want execute. +
-**Alternative 2:** Only allowing `HelpCommand` to open help window  +
+**Alternative 2:** Only allowing `HelpCommand` to open help window.  +
 **Pros:** It is simpler and more intuitive for new users. +
 **Cons:** User have to go through the user guide every time they forget the format of a certain command.
 // end::help[]
@@ -849,7 +849,7 @@ an urgent need to be copied as the Locate command in our app already copies the 
 As such, until user feedback proves otherwise, copying email addresses is the main priority for this feature.
 
 **Aspect:** Which field(s) to copy +
-**Alternative 1 (current choice):** Email address +
+**Alternative 1 (current choice):** Email address. +
 **Pros:** Emails more widely copied than any other field. +
 **Cons:** Users who want to copy other fields cannot do so. +
 **Alternative 2:** All fields can be copied with their respective identifiers (e.g. address/, phone/) +
@@ -941,7 +941,7 @@ _Figure 4.6.5: Output of `CalendarCommand.java` execution_
 **Alternative 1 (current choice)**: Opening  `Calendar` web page in `BrowserPanel`. +
 **Pros:** To brings about greater convenience for the user as user does not need to navigate between multple webpages to find the calendar. User are able to find out about the public holidays which are not avaliable on desktop calendar. +
 **Cons:** User might bypass the `CalendarCommand` and rely on desktop calendar. +
-**Alternative 2:** Opening up of Google calendar +
+**Alternative 2:** Opening up of Google calendar. +
 **Pros:** User are able to store the events in the google calendar. +
 **Cons:** Unable to view public holidays.User also have to go through the hassle of logging in just to view the calendar. +
 
@@ -1040,7 +1040,7 @@ _Figure 4.7.4: Code section in UniqueEmailList.java_
 **Alternative 1 (current choice)**: Emails stored as `ObjectProperty` of `UniqueEmailList`. +
 **Pros:** We are able to add listeners to track changes in the object `UniqueEmailList`. +
 **Cons:** Need to call more methods to get the set of emails. +
-**Alternative 2:** Emails stored as a set +
+**Alternative 2:** Emails stored as a set. +
 **Pros:** Able to get the set of emails and use it from a simple getter method. +
 **Cons:** We are unable to track changes in the email list if we want the UI to change accordingly.
 // end::multipleemails[]
