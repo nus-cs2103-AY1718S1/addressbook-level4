@@ -315,8 +315,9 @@ public class AddCommandTest extends CommandTest {
         }
 
         @Override
-        public void removeProfilePicture(ReadOnlyPerson person) {
+        public boolean removeProfilePicture(ReadOnlyPerson person) {
             fail("This method should not be called");
+            return false;
         }
 
     }

@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
@@ -28,18 +29,40 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class DeletePictureCommandTest extends CommandTest {
 
     @Test
-    public void execute_validIndexUnfilteredList_success() {
+    public void execute_personHasDisplayPicture_success() throws Exception {
         try {
             ReadOnlyPerson personToUpdate = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+
+            SetPathCommand setPathCommand = prepareSetPathCommand("src/test/resources/TestProfilePics/");
+            setPathCommand.execute();
+
+            AddPictureCommand addPictureCommand = prepareAddPictureCommand(INDEX_FIRST_PERSON);
+            addPictureCommand.execute();
+
+            ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+
             DeletePictureCommand deletePictureCommand = prepareCommand(INDEX_FIRST_PERSON);
 
             String expectedMessage = ListObserver.MASTERLIST_NAME_DISPLAY_FORMAT
                     + String.format(DeletePictureCommand.MESSAGE_DELETE_PICTURE_SUCCESS, personToUpdate.getName());
 
-            ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-            expectedModel.removeProfilePicture(personToUpdate);
-
             assertCommandSuccess(deletePictureCommand, model, expectedMessage, expectedModel);
+            assertTrue(personToUpdate.getAsText().equals(model.getFilteredPersonList()
+                    .get(INDEX_FIRST_PERSON.getZeroBased()).getAsText()));
+        } catch (CommandException ce) {
+            ce.printStackTrace();
+        }
+    }
+
+    @Test
+    public void execute_personHasNoDisplayPicture_failure() throws Exception {
+        try {
+            ReadOnlyPerson personToUpdate = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+            DeletePictureCommand deletePictureCommand = prepareCommand(INDEX_FIRST_PERSON);
+
+            String expectedMessage = String.format(DeletePictureCommand.MESSAGE_DELETE_PICTURE_FAILURE, personToUpdate.getName());
+
+            assertCommandFailure(deletePictureCommand, model, expectedMessage);
             assertTrue(personToUpdate.getAsText().equals(model.getFilteredPersonList()
                     .get(INDEX_FIRST_PERSON.getZeroBased()).getAsText()));
         } catch (CommandException ce) {
@@ -99,5 +122,23 @@ public class DeletePictureCommandTest extends CommandTest {
         DeletePictureCommand deletePictureCommand = new DeletePictureCommand(index);
         deletePictureCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return deletePictureCommand;
+    }
+
+    /**
+     * Returns a {@code AddPictureCommand} with the parameter {@code index}.
+     */
+    private AddPictureCommand prepareAddPictureCommand(Index index) throws CommandException {
+        AddPictureCommand addPictureCommand = new AddPictureCommand(index);
+        addPictureCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return addPictureCommand;
+    }
+
+    /**
+     * Returns a {@code SetPathCommand} with no parameters.
+     */
+    private SetPathCommand prepareSetPathCommand(String path) {
+        SetPathCommand setPathCommand = new SetPathCommand(path);
+        setPathCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return setPathCommand;
     }
 }
