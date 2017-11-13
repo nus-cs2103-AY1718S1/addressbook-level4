@@ -59,7 +59,7 @@ public class ResultDisplay extends UiPart<Region> {
         resultDisplay.textProperty().bind(displayed);
         registerAsAnEventHandler(this);
     }
-
+    //@@author aziziazfar
     @Subscribe
     private void handleNewListResultAvailable(ListSizeEvent event) {
         Label listSizeLabel = new Label(event.toString());

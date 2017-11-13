@@ -252,7 +252,9 @@ An example of this can be seen below:
 
 image::LSP-CommandClass.png[width="500"]
 
-The `UndoableCommand` class follows the Liskov Substitution Principle.
+The `UndoableCommand` class follows the Liskov Substitution Principle because it fulfills `Command` 's
+expectation of `UndoableCommand` objects. Substituting `DeleteCommand` 's objects for `UndoableCommand` 's objects
+will not break the `Command` class functionality.
 
 
 ==== Dependency Inversion Principle (DIP)

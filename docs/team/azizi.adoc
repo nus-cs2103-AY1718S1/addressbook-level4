@@ -69,16 +69,29 @@ include::../DeveloperGuide.adoc[tag=add]
 
 ---
 
-////
-=== Enhancement Proposed: Add command `remark`
+=== Enhancement Proposed: Add multiple fields
 
-{Explain similar to the Undo/Redo feature above.}
-////
+Users may add multiple instances for any of the Person fields in Bluebird. For example, users can now add multiple
+phone numbers for any of their contacts, and thus make it much more convenient for them to update their friends
+particulars.
 
+=== Enhancement Proposed: Deleting persons by their tags
+
+Users may delete multiple persons in one go by selecting a tag to be deleted.
+Thus, users will be able to delete anyone associated with that tag when the need arises.
 
 === Other contributions
 
+==== For Bluebird:
 * Added colors for persons' tags (Pull request https://github.com/CS2103AUG2017-T15-B4/main/pull/184[#184])
+* Added label in UI to display size of list displayed (Pull request https://github.com/CS2103AUG2017-T15-B4/main/pull/263[#263],
+https://github.com/CS2103AUG2017-T15-B4/main/pull/253[#253])
+
+==== For OurAb (https://github.com/CS2103AUG2017-F09-B4/main[F09-B4]):
+* Reported bugs for UI's responsiveness (Pull request https://github.com/CS2103AUG2017-F09-B4/main/issues/78[#78])
+* Reported bug for the feature, `listByMostSearched` (Pull request https://github.com/CS2103AUG2017-F09-B4/main/issues/78[#78])
+* Suggested to elaborate more regarding meeting feature (Pull request https://github.com/CS2103AUG2017-F09-B4/main/issues/77[#77])
+* Suggested feature for toggling between different themes (Pull request https://github.com/CS2103AUG2017-F09-B4/main/issues/77[#77])
 
 == Project: External
 
