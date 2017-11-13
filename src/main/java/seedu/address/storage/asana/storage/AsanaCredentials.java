@@ -14,9 +14,6 @@ public class AsanaCredentials {
     private static boolean isAsanaConfigured = false;
     private static String hashedToken;
 
-    public AsanaCredentials() {
-        hashedToken = null;
-    }
 
     /**
      * Getter method for Access token
