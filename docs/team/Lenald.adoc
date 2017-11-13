@@ -123,9 +123,9 @@ We decided to come out with multiple numbers (Parent and Student number)
 as many educators believe that there needs to be good communication between not only the students, but their parents too.
 
 This enhancement is especially useful for those who are in charge of younger students
-in primary school. Educators in institution with younger students
-will find having parents numbers more important than the student's number as there tends to be more communication
-between the teachers and the parent of the students.
+in primary school. Educators in institutions with younger students
+will find having parents numbers more important than the student's number, as there tends to be more communication
+between the teachers and the parents of the students.
 
 ==== Implementation
 
