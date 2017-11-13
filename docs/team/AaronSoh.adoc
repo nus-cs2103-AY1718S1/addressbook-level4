@@ -96,6 +96,10 @@ include::../DeveloperGuide.adoc[tag=unredo]
 
 This will allow users to delete more than 1 contacts at the same time. Users will not need to type the delete command multiple times.
 
+=== Enhancement Proposed: Enhance command `todo`
+
+This enhancement will automatically favourite contacts with tasks assigned and shift them to the top of the contact list. This prevents user from overlooking tasks.
+
 === Other contributions
 
 * Changed tag colour in PersonCard (Pull request #85)
