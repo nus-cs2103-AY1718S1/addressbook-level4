@@ -11,8 +11,6 @@ import seedu.address.commons.events.ui.JumpToTabRequestEvent;
 import seedu.address.model.parcel.ReadOnlyParcel;
 import seedu.address.model.parcel.exceptions.DuplicateParcelException;
 import seedu.address.model.parcel.exceptions.ParcelNotFoundException;
-import seedu.address.model.tag.Tag;
-import seedu.address.model.tag.exceptions.TagNotFoundException;
 
 /**
  * A default model stub that have all of the methods failing.
@@ -49,11 +47,6 @@ public class ModelStub implements Model {
 
     @Override
     public void deleteParcel(ReadOnlyParcel target) throws ParcelNotFoundException {
-        fail("This method should not be called.");
-    }
-
-    @Override
-    public void deleteTag(Tag target) throws TagNotFoundException {
         fail("This method should not be called.");
     }
 

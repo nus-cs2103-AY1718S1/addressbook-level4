@@ -17,28 +17,6 @@ to automatically test the features I've implemented.
 
 *Code contributed*: [https://github.com/CS2103AUG2017-T16-B1/main/blob/master/collated/main/fustilio.md[Functional code]][https://github.com/CS2103AUG2017-T16-B1/main/blob/master/collated/test/fustilio.md[Test code]]
 
-=== Enhancement Added: deleteTagCommand
-
-==== External behavior
-
----
-
-include::../UserGuide.adoc[tags=deleteTag]
-
----
-
-==== Justification
-
-The deleteTag command is useful to have when dealing with large numbers of parcels.
-
-==== Implementation
-
----
-
-include::../DeveloperGuide.adoc[tags=deleteTag]
-
----
-
 === Enhancement Added: Delivery Dates field
 
 ==== External behavior

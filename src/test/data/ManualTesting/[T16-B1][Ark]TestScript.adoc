@@ -15,17 +15,21 @@ endif::[]
 By: `Team T16-B1`      Since: `Sept 2017`      Licence: `MIT`
 
 == Introduction
+
 Ark is a parcel delivery management system to help delivery companies manage their parcels and their
 deliveries. This test script is used help testers perform manual testing of Ark.
 
-== Quick Start
-
-
-
 == Features to Test
 
+*Test Format*
+
+*Description* - Description of the feature you are testing. +
+*Input* - Action to perform i.e. if `undo` -> `import ark_save`, this means enter `undo`, then enter `import ark_save` +
+*Output* - Expected output description. +
+
 === Startup Tests
-We have implemented some features that triggered automatically on startup.
+
+We have implemented some features that triggered automatically on startup. + 
 
 ==== Manual Testing
 
@@ -60,14 +64,70 @@ as the new storage file that you had downloaded previously.
 *Input:* (Copy your Ark.jar into an empty folder (without any save files). +
 *Expected output:* No backup is created. +
 
+=== Add Command
+
+*Command format:* `add #/TRACKING_NUMBER n/NAME [p/PHONE_NUMBER] [e/EMAIL] a/ADDRESS d/DELIVERYDATE [s/STATUS] [t/TAG]...` +
+*Description:* This command allows you to add a single parcel into Ark. e.g. `add #/RR000000000SG n/John Hoe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 S123121 d/01-01-2001 s/DELIVERING` +
+
+==== Manual Testing
+
+*Description:* Regular add command +
+*Input:* `add #/RR000000000SG n/John Aoe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 S123121 d/12-12-2019 s/DELIVERING` +
+*Expected output:* Ark should add `John Aoe` to the parcel list. +
+
+*Description:* Regular add command with updated status from OVERDUE to PENDING since today's date <= 12-12-2018  +
+*Input:* `add #/RR000000000SG n/John Boe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 S123121 d/12-12-2018 s/OVERDUE` +
+*Expected output:* Ark will add a 'John Boe' with Status `PENDING`, not `OVERDUE` (Updated if you can observe) +
+
+*Description:* Regular add command with updated status from PENDING to OVERDUE since today's date > 10-12-2016 +
+*Input:* `add #/RR000000000SG n/John Coe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 S123121 d/10-12-2016 s/PENDING` +
+*Expected output:* Ark should add a `John Coe` with Status `OVERDUE`, not `PENDING` (Updated if as you can observe) +
+
+*Description:* Regular add command, DELIVERING Status not updated +
+*Input:* `add #/RR000000000SG n/John Foe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 S123121 d/12-12-2018 s/DELIVERING` +
+*Expected output:* Ark should add a `John Foe` with Status `DELIVERING` +
+
+*Description:* Regular add command, DELIVERING Status not updated +
+*Input:* `add #/RR000000000SG n/John Goe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 S123121 d/10-12-2016 s/DELIVERING` +
+*Expected output:* Ark should add a `John Goe` with Status `DELIVERING` +
+
+*Description:* Regular add command, COMPLETED Status not updated +
+*Input:* `add #/RR000000000SG n/John Hoe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 S123121 d/12-12-2018 s/COMPLETED` +
+*Expected output:* Ark should add a `John Hoe` with Status `COMPLETED`. +
+
+*Description:* Regular add command, COMPLETED Status not updated +
+*Input:* `add #/RR000000000SG n/John Ioe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 S123121 d/10-12-2016 s/COMPLETED` +
+*Expected output:* Ark should add a `John Ioe` with Status `COMPLETED` +
+
+*Description:* Regular add command, PENDING Status is correct, not updated since today's date <= 12-12-2018. +
+*Input:* `add #/RR000000000SG n/John Boe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 S123121 d/12-12-2018 s/PENDING` +
+*Expected output:* Ark will add a 'John Boe' with Status `PENDING`. +
+
+*Description:* Regular add command, OVERDUE Status is correct, not updated since today's date > 10-12-2016. +
+*Input:* `add #/RR000000000SG n/John Coe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 S123121 d/10-12-2016 s/OVERDUE` +
+*Expected output:* Ark should add a `John Coe` with Status `OVERDUE` +
+
+=== Edit Command
+
+*Command format:* `edit INDEX #/TRACKING_NUMBER n/NAME [p/PHONE_NUMBER] [e/EMAIL] a/ADDRESS d/DELIVERYDATE [s/STATUS] [t/TAG]...` +
+*Description:* This command allows you to edit  parcel into Ark. e.g. `edit 1 p/91234567 e/johndoe@example.com`
+
+==== Manual Testing
+
+*Description:* Regular edit command +
+*Input:* `edit 5 p/9123 e/johntoe@example.com s/DELIVERING` +
+*Expected output:* Ark should edit the fifth parcel in the list to have an email of `johntoe@email.com` and phone `9123` +
+
+
 === Import Command
 
-Command format: `import (FILE_NAME)`. e.g. `import ark_save` +
-Description: This command allows you to add multiple parcels from a valid Ark storage file that is stored
+*Command format:* `import (FILE_NAME)`. e.g. `import ark_save` +
+*Description:* This command allows you to add multiple parcels from a valid Ark storage file that is stored
  in the `./data/import/` directory. e.g. `import ark_save` will import `./data/import/ark_save.xml`. +
 Presently, Ark only supports `.xml` storage files in format. +
 
-Before you use test command, copy the following sample `.xml` files into Ark: +
+Before you use test command, copy the following sample `.xml` files into Ark the directory
+`./data/import/` : +
 
 * [T16-B1][Ark]ark_save.xml
 * [T16-B1][Ark]empty.xml
