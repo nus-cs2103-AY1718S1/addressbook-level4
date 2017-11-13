@@ -7,14 +7,15 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 == image:engsheng_projectheader.png[width="900"]
 `UNIFY` is a Command Line Interface AddressBook that helps users manage your contacts efficiently. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 12 kLoC.
 
-*Code contributed*: [https://github.com/CS2103AUG2017-W11-B4/main/blob/master/collated/main/nicholaschuayunzhi.md[Functional code]] [https://github.com/CS2103AUG2017-W11-B4/main/blob/master/collated/test/nicholaschuayunzhi.md[Test code]] {give links to collated code files}
+*Code contributed*: [https://github.com/CS2103AUG2017-W11-B4/main/blob/master/collated/main/nicholaschuayunzhi.md[Functional code]] [https://github.com/CS2103AUG2017-W11-B4/main/blob/master/collated/test/nicholaschuayunzhi.md[Test code]]
 
 === image:engsheng_header_enhancementadded.png[width="900"]
+
 === Enhancement Added: Find by Details
 
+---
 ==== External behavior
 
----
 #Start of Extract [from: User Guide]#
 
 include::../UserGuide.adoc[tag=find]
@@ -22,7 +23,6 @@ include::../UserGuide.adoc[tag=find]
 #End of Extract#
 
 ---
-
 ==== Justification
 
 Find by details offers a natural solution for users to search for their contacts. Most of the time, a user would not have the name of the contact
@@ -31,28 +31,157 @@ allows users to filter through the address book based on any person's details to
 
 At the same time, this feature saves time for the user. It is not uncommon to see people with the same name. By allowing an additional search field,
 users are able to narrow down their search more quickly. For example, to find John who is tagged as a classmate, he can just type `find John t/classmate`
-instead of searching through each and every `John` in his addressbook.
-
-==== Implementation
+instead of searching through each and every `John` in his address book.
 
 ---
+==== Implementation
+
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=undoredo]
+include::../DeveloperGuide.adoc[tag=find]
 
 #End of Extract#
 
 ---
 
-=== Enhancement Proposed: Add command `remark`
+=== image:engsheng_header_enhancementadded.png[width="900"]
 
-{Explain similar to the Undo/Redo feature above.}
+=== Enhancement Added: Inline Hints
+
+---
+==== External behavior
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=inline-hints]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Unify's command line interface (CLI) may be daunting to new users who are not familiar with the command line.
+Users may also be unsure of the different command formats that Unify has. As such we need a way to provide suggestions to the user on what to type next.
+
+Inline hints offers this suggestion in a non obstructive way. There won't be any overlays, drop down menus, or pop ups that would block other components
+in Unify. Having the suggestion directly next to the caret is an intuitive way of telling users what to type next.
+
+Additionally, many new users are afraid to make mistakes when learning the command format. Inline hints assures new users that they will be guided through
+until the end while they type their command.
+
+---
+==== Implementation
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=inline-hints]
+
+#End of Extract#
+
+---
+
+=== image:engsheng_header_enhancementadded.png[width="900"]
+
+=== Enhancement Added: Avatar
+
+---
+==== External behavior
+An `Avatar` is a picture you wish to associate a contact by. Most of the time, this will be his/her profile picture.
+The `add` command allows users to indicate an `Avatar` they wish to save for the user. The command format is indicated below.
+
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=addcommand]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Users are more likely to recognize a contact's face than a contact's name. At the same time, people are likely to have similar names
+but different faces.
+
+Pairing an `Avatar` to a contact is an almost mandatory feature of an Address Book as it helps users better identify the contact they have selected.
+
+By having an additional non compulsory field in the `add` command for `Avatar` we have made it easy for users to remember how to add an
+`Avatar` to a contact.
+---
+==== Implementation
+
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=avatar]
+
+#End of Extract#
+
+---
+
+=== image:engsheng_header_enhancementadded.png[width="900"]
+
+=== Enhancement Added: Person Panel
+
+---
+==== External behavior
+Details of a person (address, phone, email etc.) has been removed from a `PersonCard` in the `PersonListPanel`.
+We only show name and tags.
+
+These details are displayed in a `PersonPanel`.
+
+image:nicholas_personpanel.png[width="900"]
+
+The `PersonPanel` will display when a person is selected.
+
+---
+==== Justification
+
+We want Unify's UI to be simple, clean and focused.
+
+Having a `PersonPanel` directs the attention of the user to the details of a person. The larger text also
+improves readability of a person's details.
+
+Additionally, by only showing tags and name in the `PersonListPanel` we are able to show more users in the list.
+
+image:nicholas_personlist.png[width="900"]
+
+---
+=== Enhancement Proposed: Index Tab Cycle Improvement
+
+Currently, when tabbing through index, the index only increases.
+For example, for given input `delete 10|`, clicking kbd:[Tab] will increase the index to 11 (`delete 11|`) even if there are only 10 people displayed.
+
+The enhancement proposed is cycle through index based on the number of people displayed in the the person list. This type of index cycling
+makes more sense for the user (we do not want to offer an invalid index).
+
+---
+==== Implementation
+
+We need to bring an instance of the `Model` into `ArgumentsHint` and get the number of displayed people from `getFilteredPersonList()`.
+After which we simply use modulo arithmetic to determine the next index to display. The methods that need to be modified are `handleOfferIndex()` and
+`handleIndexTabbing()`. They have been labelled with a TODO in their header comment.
+
+---
+
+=== Enhancement Proposed: Avatar Improvement
+
+We improve `Avatar` by allowing users to put a URL for online images.
+Like the current implementation, the file will be saved in the data folder.
+
+This allows users to easily add profile pictures from social media sites as `Avatars` without saving the image before hand.
+
+---
+==== Implementation
+
+When saving an `Avatar` in `ImageStorage`, we add an additional check to see if the argument given is a valid URL.
+After which we save the image as per current implementation.
+
+
+---
 
 === Other contributions
 
-* Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
-* Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
-
-== Project: PowerPointLabs
-
-{Optionally (not graded), you may include other projects in your portfolio.}
+* Created 2 UI Designs (Pull requests https://github.com/CS2103AUG2017-W11-B4/main/pull/10, https://github.com/CS2103AUG2017-W11-B4/main/pull/14)
+* Refactored Hints (Pull request: https://github.com/CS2103AUG2017-W11-B4/main/pull/98, Implementation: link:https://github.com/CS2103AUG2017-W11-B4/main/blob/master/docs/DeveloperGuide.adoc#hints-and-autocomplete-parsing[4.11. Hints and AutoComplete Parsing])
+* Added CommandInputChangedEvent (Pull request: https://github.com/CS2103AUG2017-W11-B4/main/pull/11, Implementation: link:https://github.com/CS2103AUG2017-W11-B4/main/blob/master/docs/DeveloperGuide.adoc#listening-for-input-change[4.9. Listening for Input Change])
+* Wrote prefaces for commands in User Guide (Pull request: https://github.com/CS2103AUG2017-W11-B4/main/pull/85)
+* Wrote Introduction for User and Developer Guide (Pull requests: https://github.com/CS2103AUG2017-W11-B4/main/pull/64, https://github.com/CS2103AUG2017-W11-B4/main/pull/48)
+* Follow rebase then merge workflow with guidance from link:https://github.com/goweiwen[Goh Wei Wen] for linear commit history

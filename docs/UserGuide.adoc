@@ -29,7 +29,7 @@ Now you can spend less time in your Address Book, and more time on what matters 
 
 
 === First Time CLI User?
-
+// tag::inline-hints[]
 * Don't fret! Unify offers inline hints to prompt you what to type next,
 +
 image::UG_Hints.png[width="300"]
@@ -37,6 +37,8 @@ image::UG_Hints.png[width="300"]
 and will validate your input as you type. +
 +
 image::UG_Validation.png[width="300"]
+// end::inline-hints[]
+
 +
 * Afraid you will accidentally delete your girlfriend's details? We've got you covered! The `undo` command lets you revert any important changes to prevent any future embarrassment/pain. +
 * Still lost? You can type `help` to access the User Guide whenever you need. +
