@@ -1,0 +1,307 @@
+= LISA Test Script
+:toc:
+:sectnums:
+
+== Load Sample data
+
+** Please follow the instructions given below to load the sample data:- +
+** 1) Download the SampleData.xml file from here[] and rename it to addressbook.xml. +
+** 2) Click on the LISA.jar file to run the application. +
+** 3) Type in a dummy command eg. "add n/LISA"
+** 4) Close the app. You will notice that the `data` folder is created. +
+** 5) Open the data folder. Drag/Copy and replace the new addressbook.xml file into the data folder. +
+** 6) Close the folder. Run the App again. +
+** 7) The app opens with the data. +
+
+[TIP]
+ 	If at any point the app stops responding, close the app and restart again. +
+
+
+** IMPORTANT NOTE - The outputs provided in this sheet are according to the inputs we have put. Please note if you put different inputs, the output will be different. +
+
+== Features for testing
+****
+* Add Command only requires name
+* Short form for commands
+* Autofill
+* Add Insurance (with prefix autofill)
+* Date Parser
+* Improved Tag management
+* ‘Why’ Easter Egg
+* Print Command
+* Sorted Contact list
+* Improved Undo/Redo
+* Search box with partial search command
+* Save and load contract pdf file
+* Switching middle panel between Insurance and Profile
+* Restricting 'Tab' only to Textfields
+* Reading and Storing Life Insurances
+* 'addli' command for adding life insurances
+****
+
+=== LISA is alphabetically sorted. Add Command places newly add persons alphabetically in the list
+*Notice that once LISA is loaded, the contact list is already sorted alphabetically*
+Input: +
+`add n/Aaron` +
+`add n/Mandy` +
+`add n/Zachery` +
+*Notice how Aaron, Mandy and Zachery are well placed in alphabetical order in the list* +
+
+=== Add Command only requires name
+
+Input: `add n/Obama` +
+Expected output: Obama contact is added to contacts list in alphabetical order with empty details.
+
+Input: `add n/Police p/999` +
+Expected output: Police contact is added with a phone number.
+
+Input: `add n/Harvey Dent p/4350 e/harvey@example.com a/123 Harvey Road d/11 Dec 1986 g/M` +
+Expected output: Harvey Dent contact is input with full details
+
+Input: `add p/123` +
+Expected output: Error returned since name is not provided
+
+Input: `add n/Whitney p/1234 b/12 Oct 1993` +
+Expected output: Error since `b/` is not recognised and taken to be part of `p/` which makes an invalid phone number
+
+=== Short form for commands
+
+Input: `a n/Madonna` +
+Expected output: Madonna contact is added with no details.
+
+Input: `f Madonna` +
+Expected output: Madonna contact is filtered.
+
+Input: `e 1` +
+Expected output:
+
+Input: `sos` +
+Expected output: Help window is called
+
+Input: `s 1` +
+Expected output: Person with index 1 is selected
+
+Input: `d 1` +
+Expected output: Person with index 1 is deleted
+
+Input: `x` +
+Expected output: Program exits
+
+Input: `hist` +
+Expected output: History is displayed in results box
+
+=== Autofill
+
+Input: `e 1 p/` +
+Expected output: `p/` prefix should be autofilled with the phone number of the person in the 1st index
+
+Input: `e 1 p/ a/` +
+Expected output: All fields are autofilled with the details of the person
+
+Input: `a n/Aaron Agant p/9871202` +
+`e 1 n/Aaron Agant p/` +
+Expected output: `p/` should be autofilled
+
+=== Date parser
+
+Input: `e 1 d/1 1 12` +
+Expected output: Date of birth is changed to `01 Jan 2012`
+
+Input: `e 1 d/1 Feb 12` +
+Expected output: Date of birth is changed to `01 Feb 2012`
+
+Input: `e 1 d/12 1 1812` +
+Expected output: Date of birth is changed to `12 Jan 1812`
+
+=== Improved Tag Management
+
+Input: `e 1 t/cute t/awesome` +
+Expected output: `cute` and `awesome` tags are added and not overwriting all current tags
+
+Input: `e 1 t/happy dt/cute` +
+Expected output: `cute` tag is removed and `happy` tag is added
+
+Input: `e 1 dt/all t/fancy` +
+Expected output: All tags are cleared and a `fancy` tag is added
+
+Input: `e 1 dt/cute t/cute` +
+Expected output: Nothing changes
+
+=== Add insurance (with prefix autofill)
+
+Input: `ali` +
+Expected output: the command line should be autofilled with all required prefixes. (n/ o/ i/ b/ pr/ sd/ ed/ c/)
+Cursor should also be placed at the next empty prefix.
+
+Input: `ali n/Life Insurance o/ i/ b/ pr/ sd/ ed/ c/`
+Expected output: Cursor should be placed at the next empty field.
+
+Input: `ali n/Term Life o/Madonna i/Madonna b/Aaron Agant pr/1000 sd/17 11 2017 ed/17 11 2018 c/MadonnaTermLife` +
+Expected output: Term Life insurance is added with all the details filled
+
+Input: `find Madonna` +
+Expected output: Madonna is found in the person list
+
+Input: `select Madonna` +
+Expected output: Madonna's profile is displayed in the middle. Notice it contains one insurance called "Term Life"
+
+Input: Use the mouse to click on "Term Life" +
+Expected output: The life insurance Term Life is displayed in the middle. Notice it contains three person names who is involved in the insurance.
+
+Input: Use the mouse to click on "Aaron Agant" +
+Expected output: Aaron's profile is displayed in the middle. Notice it contains one insurance called "Term Life"
+
+
+=== Why
+
+Input: `why 1` +
+Possible output 1: Because John Doe is born on 27 July 1987 +
+Possible output 2: Because John Doe Appreciates you +
+Possible output 3: Because John Doe does not have an address. +
+*Why command is a random easter egg generator. Keep inserting why 1 (or a different index) to see the different possible messages* +
+
+Input: `why 0` +
+Expected output: Invalid command format!
+
+Input: `why` +
+Expected output: Invalid command format!
+
+=== Print
+Input: `Print |:\`+
+Expected Output: Filepath cannot contain illegal characters: ^\\/:*?"<>|
+
+Input: `print *^.` +
+Expected output: Filepath cannot contain illegal characters: ^\\/:*?"<>|
+
+Input: `print` +
+Expected output: Invalid command format!
+
+Input: `Print fileName` +
+Expected output: +
+LISA has been saved! +
+Find your LISA contacts in the fileName.txt file you created in the same directory as the application file path! +
+*After executing the command, go to the same directory as the .jar file and find your fileName.txt file alongside the application in the same directory*
+
+=== Undo/Redo Enhancement
+Input:
+`add n/aaa123` +
+`delete 1` +
+ `undo`
+Expected output:
+Undo success! +
+Undone Command: delete 1
+
+Input:
+ `redo`
+Expected output:
+Redo success! +
+Redone Command: delete 1
+
+Input:
+ `add n/aaa123`
+`undo` +
+Expected output:
+Undo success!
+Undone Command: add aaa123 Phone: Email: Address: DateOfBirth: Gender:  Tags:
+
+Input:
+`clear`
+`undo` +
+Expected output:
+Undo success!
+Undone Command: clear
+
+=== ‘addli’ command for adding life insurances
+
+Input: `e 1 d/1 1 12` +
+Expected output: Date of birth is changed to `01 Jan 2012`
+
+
+
+=== Tab between commandbox and searchbox
+
+Input:
+Unfocus from commandbox textfield by clicking on any other ui parts (you should not see cursor blinking). Press Tab once +
+Expected output:
+The commandbox textfield should be focused and ready for typing
+
+Input:
+Have the focus on the commandbox textfield, either by clicking on it or follow the instruction immediately above. Press Tab once +
+Expected output:
+The searchbox textfield should be focused and ready for typing
+
+Input:
+Have the focus on the searchbox textfield, either by clicking on it or follow the instruction immediately above. Press Tab once +
+Expected output:
+The commandbox textfield should once again be focused
+
+=== Partial Find + Searchbox (The small textfield on the left, below result message and right above person list panel)
+
+Input:
+`pfind Har` +
+Expected output:
+Only contacts with name starting with “Har” will be displayed on the person list panel
+eg. Harry Potter, Harvey Dent
+
+Input:
+`pfind Doe` +
+Expected output:
+0 matches (since no contact has the name starting with “Doe”). Since “John Doe” only contains and does not begin with “Doe”, his contact will not be matched.
+
+The pfind command can be triggered automatically by typing the keywords into the searchbox, omitting the `pfind`
+
+Input:
+`Har Jo` +
+Expected output:
+Contacts with name starting with “Har” and “Jo” will be displayed on the person list panel +
+Eg. Harry Potter, Harvey Dent, John Doe
+
+=== Select
+
+Input: `s 1`
+Expected output: Person in first index is selected
+
+Input: `s 2 left`
+Expected output: Person in second index is selected
+
+Input: `s 1 r`
+Expected output: Insurance in 1st index is selected
+
+Input: `s 0 r`
+Expected output: Invalid index!
+
+=== Ui
+Insurance List Panel (Right)
+
+Input:
+Click on any insurance card on insurance list panel +
+Expected: The middle panel will changed to reflect details of the insurance selected
+
+Input:
+Click on any entries under insurance list on profile page +
+Expected: The middle panel will changed to reflect details of the insurance selected
+
+Input:
+Click on any person (owner / beneficiary / insured) on insurance profile panel +
+Expected: The middle panel will changed to reflect details of the person selected
+
+
+=== Add/Load contract pdf file
+
+Input:
+Hover on a contract file name on insurance profile panel +
+Expected:
+If file does not exist, the file name will turn grey on hover (Case A). Else it should turn orange (Case B).
+
+Case A: Pdf file has not been added and does not exist inside LISA +
+Input:
+Click on contract file name on insurance profile panel  +
+Expected:
+Upon clicking, Filechooser will pop up with pdf file extension filter enabled. Selecting a pdf file would add it to data/<specified contract file name>, after which the link should turned orange, going into Case B. If the adding of file is incomplete (eg. closing of Filechooser without adding file), then the link will remain greyed.
+
+Case B: Pdf file has been successfully added before, and already exist inside LISA +
+Input: Click on contract file name on insurance profile panel  +
+Expected: Upon clicking, the pdf file will be opened. +
+
+
+
