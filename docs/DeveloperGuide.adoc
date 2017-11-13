@@ -545,15 +545,17 @@ public ObservableList<ReadOnlyPerson> asObservableBlacklist() {
 
 Although this way of implementation seems inefficient, it supports robust synchronisation among the various other lists. For example, if a person is deleted from the masterlist, he will also be deleted from the blacklist. Likewise for various other commands that changes the `ReadOnlyPerson` object. Thus, it is efficient in this aspect. Moreover, this implementation sets the groundwork for future implementations of various other lists.
 
-One other important aspect to this implementation is that commands now have exclusive control over the list. If the user wishes to only work with blacklist, it is very much possible and all the current commands will only work on blacklisted persons. The persons not in this list will not be affected. For example, find command will only search among the blacklisted persons. This applies to all other commands. Nonetheless, if a person object is modified, the modification will be reflected across all other lists, given that the person exists in these various lists.
+One other important aspect to this implementation is that commands now have exclusive control over the list. This means that commands will only work on the persons in the current displayed list. For example, `find` command will only search and find persons in the current displayed list. It will not try to search in the masterlist, where all the contacts are stored. `sort` command will only sort the persons in the current displayed list. If the current displayed list is the blacklist, the output of the `sort` command will just be a list of sorted blacklisted persons.
+
+However, if a `Person` is modified by a command, the modification will be reflected across all other lists. For example, if a person exists in both the blacklist and the overdue list, modifications done by an `edit` command in the blacklist will also update the overdue list. These changes can be observed when the user switches to the overdue list using the `overduelist` command.
 
 ==== Design Considerations:
 
-**Aspect:** Other commands still work in Blacklist mode(`Add`, `Delete` command). +
-**Alternative 1 (current choice):** Inform user in user guide to use only specific commands for that list. +
+**Aspect:** Other commands still work in Blacklist mode(`Add`, `Delete` command) +
+**Alternative 1 (current choice):** Inform user in user guide to use only specific commands for that list +
 **Pros:** Easy to implement. +
 **Cons:** Performance issues as users are bound to make a mistake. +
-**Alternative 2:** Restrict other command usages in certain lists. +
+**Alternative 2:** Restrict other command usages in certain lists +
 **Pros:** Users will never make a mistake sending the wrong person to the wrong list. +
 **Cons:** Implementation is complicated and thus implementation has to revisited whenever new commands are introduced.
 // end::list[]
@@ -1076,13 +1078,13 @@ public ReadOnlyPerson addWhitelistedPerson(ReadOnlyPerson p) {
 
 `ModelManager` will then return the updated `ReadOnlyPerson` `Object` back to `LogicManager`.
 
-**Aspect:** Three-step process in one `Command`. +
-**Alternative 1 (current choice):** All three methods internally change the `Person` `Object`. Thus, each method will output the updated `ReadOnlyPerson` Object. The other methods will use obtain this and further update the `ReadOnlyPerson` `Object` +
-**Pros:** Straightforward and simple to implement. +
+**Aspect:** Three-step process in one `Command` +
+**Alternative 1 (current choice):** The three-step process happens in a single method +
+**Pros:** Faster and simpler to implement the method. +
 **Cons:** Some methods will fail to update the person as intended. If the person is blacklisted, he/she will not be added into the whitelist. +
-**Alternative 2:** Include three separate methods in model interface to execute the three-step process +
-**Pros:** Easy to observe the methods that will fail +
-**Cons:** Methods in Model Interface will seem to have less abstraction than intended +
+**Alternative 2:** Include three separate methods in `Model` interface to execute the three-step process +
+**Pros:** Easy to observe the methods that will fail. +
+**Cons:** Methods in `Model` interface will seem to have less abstraction than intended. +
 // end::repaid[]
 
 // tag::setpath/addpic/delpic[]
@@ -1202,12 +1204,12 @@ public ReadOnlyPerson removeProfilePic(ReadOnlyPerson person) {
     }
 ----
 
-**Aspect:** Storage of profile pictures in Codii. +
-**Alternative 1 (current choice):** Pictures are not stored in Codii. Images are read from the path directory provided by the user
+**Aspect:** Storage of profile pictures in Codii +
+**Alternative 1 (current choice):** Images are not stored in Codii as they are read from the path directory provided by the user +
 **Pros:** Straightforward and simpler to implement. +
 **Cons:** Application cannot be easily transferred from one workstation to another. +
 **Alternative 2:** Store images in Codii similar to how XML files are stored +
-**Pros:** Far lesser hassle in transferring application content to another workstation +
+**Pros:** Far less hassle in transferring application content to another workstation. +
 **Cons:** The result of both implementations are very similar. However, this implementation is harder to execute. +
 // end::setpath/addpic/delpic[]
 
