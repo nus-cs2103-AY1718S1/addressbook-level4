@@ -846,6 +846,76 @@ the username and password.
 
 // end::Calendar[]
 
+
+// tag::styling[]
+=== UI Styling
+
+The main styling for the `UI` can be found in `DarkTheme.css`. The document has been divided into the following sections:
+
+* `Base Styling`
+* `Tab and Tab Pane Styling`
+* `Split Pane and list CSS`
+* `Button Styling`
+* `Button Styling in Person Panel`
+* `Dialog Pane Styling`
+* `Scroll bar Styling`
+* `Card Pane Styling`
+* `Command Pane Styling`
+* `Person Panel Styling`
+
+Here, we look at a specific section of `DarkTheme.css`:
+
+[source,css]
+----
+/*PERSON PANEL STYLING*/
+#personPanel {
+    -fx-background-color: #232A34;
+    -fx-padding: 61 35 50 35;
+}
+
+#personDetailsBox {
+    -fx-padding: 20 20 20 20;
+    -fx-background-color: #404040;
+    -fx-text-color: white;
+}
+
+#personDetailsBox #name {
+    -fx-padding: 7, 0, 0, 0;
+}
+
+#name, #phone, #address, #email {
+    -fx-text-fill: white;
+}
+----
+
+We prefer modifying individual ids instead of an entire class of elements to keep the CSS modular. However, do note that for `.tab` and `.button`, class selectors have been used instead of id selectors to enforce a uniform looks for all buttons and tabs throughout the application.
+
+It is important to note that not all the styling properties are defined in `DarkTheme.css`. For example, the colors for the tags are defined in `PersonCard.java`:
+[source,java]
+----
+private static ArrayList<String> colors = new ArrayList<String>(Arrays.asList(
+        "#cc6600", "#cc0000", "#d11141", "#00b159", "#00aedb",
+        "#f37735", "#ffc425", "#a200ff", "#742323", "#757a25", "#237629",
+        "#2c2972", "#732474"));
+
+private static String getColorForTag(String tag) {
+    if (!tagColor.containsKey(tag)) {
+        String chosenColor = colors.get(random.nextInt(colors.size()));
+        tagColor.put(tag, chosenColor);
+    }
+    return tagColor.get(tag);
+}
+----
+
+==== Notes on changing styling:
+* Please refrain from using `!important` because it induces ambiguity and reduces modularity in the codebase
+* Use `ids` instead of `classes` as css selectors.
+* If the new UI Styling is drastically different from the current version, consider putting it in a new file and changing the loaded css to that instead of the current `DarkTheme.css`
+* Do not use `element.setStyle()` unless there is no way using CSS to achieve the same. Using such methods induces difficulty in tracking the source of the styling making it cumbersome to edit later.
+// end::styling[]
+
+
+
 == Documentation
 
 We use asciidoc for writing documentation.
