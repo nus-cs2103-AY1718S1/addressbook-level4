@@ -302,6 +302,16 @@ public class MrtMapLogic {
      * This method acts as data storage.
      */
     private void populateTrainTimings() {
+        populateTrainTimingsPartOne();
+        populateTrainTimingsPartTwo();
+        populateTrainTimingsPartThree();
+    }
+
+    /**
+     * Split the populateTrainTimings method into three
+     * parts to avoid having "really long methods"
+     */
+    private void populateTrainTimingsPartOne() {
         trainTimings.add(0);
         trainTimings.add(3);
         trainTimings.add(5);
@@ -353,6 +363,13 @@ public class MrtMapLogic {
         trainTimings.add(52);
         trainTimings.add(57);
         trainTimings.add(60);
+    }
+
+    /**
+     * Split the populateTrainTimings method into three
+     * parts to avoid having "really long methods"
+     */
+    private void populateTrainTimingsPartTwo() {
         trainTimings.add(62);
         trainTimings.add(65);
         trainTimings.add(67);
@@ -400,6 +417,13 @@ public class MrtMapLogic {
         trainTimings.add(38);
         trainTimings.add(40);
         trainTimings.add(43);
+    }
+
+    /**
+     * Split the populateTrainTimings method into three
+     * parts to avoid having "really long methods"
+     */
+    private void populateTrainTimingsPartThree(){
         trainTimings.add(45);
         trainTimings.add(47);
         trainTimings.add(49);

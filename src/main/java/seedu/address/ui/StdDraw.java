@@ -525,14 +525,14 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
         String suffix = filename.substring(filename.lastIndexOf('.') + 1);
 
         // png files
-        if (suffix.toLowerCase().equals("png")) {
+        if (suffix.equalsIgnoreCase("png")) {
             try { ImageIO.write(onscreenImage, suffix, file); }
             catch (IOException e) { e.printStackTrace(); }
         }
 
         // need to change from ARGB to RGB for jpeg
         // reference: http://archives.java.sun.com/cgi-bin/wa?A2=ind0404&L=java2d-interest&D=0&P=2727
-        else if (suffix.toLowerCase().equals("jpg")) {
+        else if (suffix.equalsIgnoreCase("jpg")) {
             WritableRaster raster = onscreenImage.getRaster();
             WritableRaster newRaster;
             newRaster = raster.createWritableChild(0, 0, width, height, 0, 0, new int[] {0, 1, 2});
@@ -603,17 +603,23 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
     /**
      * This method cannot be called directly.
      */
-    public void mouseClicked(MouseEvent e) { }
+    public void mouseClicked(MouseEvent e) {
+        System.out.print("");
+    }
 
     /**
      * This method cannot be called directly.
      */
-    public void mouseEntered(MouseEvent e) { }
+    public void mouseEntered(MouseEvent e) {
+        return;
+    }
 
     /**
      * This method cannot be called directly.
      */
-    public void mouseExited(MouseEvent e) { }
+    public void mouseExited(MouseEvent e) {
+        return;
+    }
 
     /**
      * This method cannot be called directly.
