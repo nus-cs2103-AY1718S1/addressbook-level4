@@ -9,7 +9,6 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
  */
 public class ListCommand extends Command {
 
-    public static final String COMMAND_WORD = "listall";
     public static final String COMMAND_WORD_ALL = "listall";
     public static final String COMMAND_WORD_PERSONS = "listpersons";
     public static final String COMMAND_WORD_EVENTS = "listevents";
