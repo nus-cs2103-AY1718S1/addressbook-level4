@@ -536,9 +536,9 @@ The function below is the code to create default values for empty fields.
 // end::add[]
 
 // tag::colortag[]
-=== Persisting coloured tags
+=== Persisting colored tags
 
-Enhanced feature to allow unique coloured tags to persist after the program exits without having to save color data on external files.
+Enhanced feature to allow unique colored tags to persist after the program exits without having to save color data on external files.
 
 Full Code:
 [source,java]
