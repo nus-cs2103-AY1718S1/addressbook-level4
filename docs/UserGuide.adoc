@@ -768,7 +768,8 @@ Command format: `[red]#unsync#`
 To change the theme of the application, use the `theme` command.
 
 ====
-*Command format*: `[red]#theme# [blue]#[OPTION]#`
+*Command format*: `[red]#theme# [blue]#[OPTION]#` +
+*Alias*: `t`
 ====
 
 *Options*:
