@@ -30,6 +30,16 @@ public class Phone {
         this.value = trimmedPhone;
     }
 
+    public Phone() throws IllegalValueException {
+        //requireNonNull(phone);
+        String trimmedPhone = "000";
+        /*if (!isValidPhone(trimmedPhone)) {
+            throw new IllegalValueException(MESSAGE_PHONE_CONSTRAINTS);
+        }*/
+        this.value = trimmedPhone;
+    }
+
+
     /**
      * Returns true if a given string is a valid person phone number.
      */

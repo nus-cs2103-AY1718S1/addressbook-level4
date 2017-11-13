@@ -1,11 +1,16 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_BIRTHDAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_GROUP;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PROFILEPAGE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.List;
@@ -17,14 +22,19 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Favorite;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.ProfilePage;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
+
+
 
 /**
  * Edits the details of an existing person in the address book.
@@ -40,15 +50,20 @@ public class EditCommand extends UndoableCommand {
             + "[" + PREFIX_NAME + "NAME] "
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
+            + "[" + PREFIX_BIRTHDAY + "BIRTHDAY]"
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
+            //@@author quangtdn
+            + "[" + PREFIX_PROFILEPAGE + "PROFILE PAGE] "
+            //@@author
             + "[" + PREFIX_TAG + "TAG]...\n"
+            + "[" + PREFIX_GROUP + "GROUP]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com";
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
 
     private final Index index;
     private final EditPersonDescriptor editPersonDescriptor;
@@ -98,10 +113,13 @@ public class EditCommand extends UndoableCommand {
         Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
+        Birthday updateBirthday = editPersonDescriptor.getBirthday().orElse(personToEdit.getBirthday());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
+        ProfilePage updatedProfile = editPersonDescriptor.getProfilePage().orElse(personToEdit.getProfilePage());
+        Favorite updatedFavorite = editPersonDescriptor.getFavorite().orElse(personToEdit.getFavorite());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
-
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
+        return new Person(updatedName, updatedPhone, updatedEmail, updateBirthday, updatedAddress, updatedProfile,
+                updatedFavorite, updatedTags);
     }
 
     @Override
@@ -130,24 +148,35 @@ public class EditCommand extends UndoableCommand {
         private Name name;
         private Phone phone;
         private Email email;
+        private Birthday birthday;
         private Address address;
+        //@@author quangtdn
+        private ProfilePage profile;
+        //@@author
+        //@@author hxy0229
+        private Favorite favorite;
+        //@@author
         private Set<Tag> tags;
 
         public EditPersonDescriptor() {}
-
+        //@@author yanji1221
         public EditPersonDescriptor(EditPersonDescriptor toCopy) {
             this.name = toCopy.name;
             this.phone = toCopy.phone;
             this.email = toCopy.email;
+            this.birthday = toCopy.birthday;
             this.address = toCopy.address;
+            this.profile = toCopy.profile;
+            this.favorite = toCopy.favorite;
             this.tags = toCopy.tags;
         }
-
+        //@@author
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.tags);
+            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email,
+                    this.birthday, this.address, this.profile,  this.favorite, this.tags);
         }
 
         public void setName(Name name) {
@@ -173,7 +202,15 @@ public class EditCommand extends UndoableCommand {
         public Optional<Email> getEmail() {
             return Optional.ofNullable(email);
         }
+        //@@author yanji1221
+        public void setBirthday(Birthday birthday) {
+            this.birthday = birthday;
+        }
 
+        public Optional<Birthday> getBirthday() {
+            return Optional.ofNullable(birthday);
+        }
+        //@@author
         public void setAddress(Address address) {
             this.address = address;
         }
@@ -181,7 +218,26 @@ public class EditCommand extends UndoableCommand {
         public Optional<Address> getAddress() {
             return Optional.ofNullable(address);
         }
+        //@@author quangtdn
+        public void setProfilePage(ProfilePage profile) {
+            this.profile = profile;
+        }
 
+        public Optional<ProfilePage> getProfilePage() {
+            return Optional.ofNullable(profile);
+        }
+        //@@author
+
+        //@@author hxy0229
+        public void setFavorite(Favorite favorite) {
+            this.favorite = favorite;
+        }
+
+        public Optional<Favorite> getFavorite() {
+            return Optional.ofNullable(favorite);
+        }
+
+        //@@author
         public void setTags(Set<Tag> tags) {
             this.tags = tags;
         }
@@ -208,7 +264,10 @@ public class EditCommand extends UndoableCommand {
             return getName().equals(e.getName())
                     && getPhone().equals(e.getPhone())
                     && getEmail().equals(e.getEmail())
+                    && getBirthday().equals(e.getBirthday())
                     && getAddress().equals(e.getAddress())
+                    && getProfilePage().equals(e.getProfilePage())
+                    && getFavorite().equals(e.getFavorite())
                     && getTags().equals(e.getTags());
         }
     }

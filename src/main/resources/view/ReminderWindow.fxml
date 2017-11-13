@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- @@author erik0704 -->
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<VBox fx:id="reminder" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label fx:id="name" styleClass="cell_big_label" text="\$name">
+         <font>
+            <Font size="28.0" />
+         </font>
+      </Label>
+      <Label fx:id="date" text="\$date">
+         <font>
+            <Font size="28.0" />
+         </font>
+      </Label>
+      <Label fx:id="description" graphicTextGap="10.0" text="\$description">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+   </children>
+</VBox>

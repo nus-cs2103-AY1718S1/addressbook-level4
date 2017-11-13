@@ -27,6 +27,9 @@ public class Name {
      * @throws IllegalValueException if given name string is invalid.
      */
     public Name(String name) throws IllegalValueException {
+        if (name == null) {
+            name = "haha";
+        }
         requireNonNull(name);
         String trimmedName = name.trim();
         if (!isValidName(trimmedName)) {

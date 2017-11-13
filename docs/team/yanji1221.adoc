@@ -1,0 +1,160 @@
+= Yan Ji - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: AddressBook - NeoxPro
+AddressBook - NeoxPro is a desktop address book application used for teaching Software Engineering principles.
+The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+NeoXPro not only allows users to keep track of the personal information of their friends and acquaintances, it helps users
+to manage their everyday tasks too.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-W10-B4/main/blob/master/collated/main/yanji1221.md[Functional code]] [https://github.com/CS2103AUG2017-W10-B4/main/blob/master/collated/test/yanji1221.md[Test code]] [https://github.com/CS2103AUG2017-W10-B4/main/blob/master/collated/unused/yanji1221.md[Unused code]] {give links to collated code files}
+
+=== Enhancement Added
+
+==== 1. New Parameter: Birthday
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=addpara]
+
+#End of Extract#
+
+---
+==== Justification
+
+Having a birthday parameter, users are able to keep track of their friends birthday.
+
+==== Implementation
+
+---
+
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=addbirthday]
+
+#End of Extract#
+
+---
+
+==== 2. Coming Birthday List
+
+==== External behavior
+
+---
+
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=comingbirthdaylist]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Having a coming birthday list, users will notice who are the next person(s) who are having their birthday soon. This reduce
+the chances of miss those birthday accidentally.
+
+==== Implementation
+
+---
+
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=comingbirthdaylist]
+
+#End of Extract#
+
+---
+
+==== 3. Colored Tags
+
+==== External behavior
+
+---
+#Start of Description#
+
+Different colours will be distributed to different tags. The colours will not be repeated
+until all colours in the database of NeoxPro(around 30 types of colours) had been used up.
+
+image::ColoredTags.png[width="300"]
+
+
+#End of Description#
+
+---
+
+==== Justification
+
+Tags are colored so that users can see how many different tags each person have and differentiate between different tags easily.
+
+==== 4. Modified Elements in Status Bar Footer
+
+==== External behavior
+
+---
+#Start of Description#
+
+Added number of persons in the address book and the current date to the status bar footer.
+
+image::StatusBarFooter.png[width="500"]
+
+#End of Description#
+
+---
+
+==== Justification
+Number of persons allow users to know how many people are in the address book now. +
+Current date are for users who auto-hiding their task bar to check date quickly for birthday feature.
+
+==== 5. Modified Colours in Result Display
+
+==== External behavior
+
+---
+#Start of Description#
+
+Red colour text will show if command succeeds, +
+
+image::SuccessResult.png[width="300"]
+
+Blue colour text will show if command fails. +
+
+image::FailResult.png[width="300"]
+
+#End of Description#
+
+---
+
+==== Justification
+
+Colored result allow users to distinguish between success command and fail command easily and quickly.
+
+
+=== Enhancement Proposed:
+
+
+=== Other contributions
+
+* Updated the GUI color scheme and font (Commits https://github.com/CS2103AUG2017-W10-B4/main/commit/93b87abc63ea0b24f35911c6c07847e3e0139edd[commit on 4/11/2017],
+https://github.com/CS2103AUG2017-W10-B4/main/commit/3ba89364dfc3f83e977d8866dad8a38b3c5fc554[commit on 28/10/2017])
+* Add introduction section to Developer Guide
+
+---
+
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=intro]
+
+#End of Extract#
+
+---
+* Help other group to find bugs or make suggestion(Issue https://github.com/CS2103AUG2017-W10-B3/main/issues/76[#76], https://github.com/CS2103AUG2017-W10-B3/main/issues/75[#75])
+* When adding a new parameter: Birthday, a lot of the codes are just a small portion of the entire class(both main and test).
+Those codes are mostly not collated, however they can be a huge portion as a total.
+

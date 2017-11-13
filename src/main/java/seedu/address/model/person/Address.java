@@ -33,6 +33,13 @@ public class Address {
         }
         this.value = address;
     }
+    public Address() throws IllegalValueException {
+        //requireNonNull(address);
+        this.value = "unknwon_address";
+        /* if (!isValidAddress(this.value)) {
+            throw new IllegalValueException(MESSAGE_ADDRESS_CONSTRAINTS);
+        }*/
+    }
 
     /**
      * Returns true if a given string is a valid person email.

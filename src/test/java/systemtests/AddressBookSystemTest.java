@@ -160,7 +160,6 @@ public abstract class AddressBookSystemTest {
     private void rememberStates() {
         StatusBarFooterHandle statusBarFooterHandle = getStatusBarFooter();
         getBrowserPanel().rememberUrl();
-        statusBarFooterHandle.rememberSaveLocation();
         statusBarFooterHandle.rememberSyncStatus();
         getPersonListPanel().rememberSelectedPersonCard();
     }
@@ -174,7 +173,7 @@ public abstract class AddressBookSystemTest {
         assertFalse(getBrowserPanel().isUrlChanged());
         assertFalse(getPersonListPanel().isAnyCardSelected());
     }
-
+    //@@author quangtdn
     /**
      * Asserts that the browser's url is changed to display the details of the person in the person list panel at
      * {@code expectedSelectedCardIndex}, and only the card at {@code expectedSelectedCardIndex} is selected.
@@ -183,18 +182,25 @@ public abstract class AddressBookSystemTest {
      */
     protected void assertSelectedCardChanged(Index expectedSelectedCardIndex) {
         String selectedCardName = getPersonListPanel().getHandleToSelectedCard().getName();
+        String selectedCardProfile = getPersonListPanel().getHandleToSelectedCard().getProfilePage();
         URL expectedUrl;
         try {
-            expectedUrl = new URL(GOOGLE_SEARCH_URL_PREFIX + selectedCardName.replaceAll(" ", "+")
-                    + GOOGLE_SEARCH_URL_SUFFIX);
+            if (selectedCardProfile.equals("")) {
+                expectedUrl = new URL(GOOGLE_SEARCH_URL_PREFIX + selectedCardName.replaceAll(" ", "+")
+                        + GOOGLE_SEARCH_URL_SUFFIX);
+            } else if (selectedCardProfile.contains("facebook")) {
+                //Facebook will link to the login page
+                expectedUrl = new URL("https://m.facebook.com/?refsrc=https%3A%2F%2Fwww.facebook.com%2F&_rdr");
+            } else {
+                expectedUrl = new URL("http://" + selectedCardProfile);
+            }
         } catch (MalformedURLException mue) {
             throw new AssertionError("URL expected to be valid.");
         }
         assertEquals(expectedUrl, getBrowserPanel().getLoadedUrl());
-
         assertEquals(expectedSelectedCardIndex.getZeroBased(), getPersonListPanel().getSelectedCardIndex());
     }
-
+    //@@author
     /**
      * Asserts that the browser's url and the selected card in the person list panel remain unchanged.
      * @see BrowserPanelHandle#isUrlChanged()
@@ -224,7 +230,6 @@ public abstract class AddressBookSystemTest {
      */
     protected void assertStatusBarUnchanged() {
         StatusBarFooterHandle handle = getStatusBarFooter();
-        assertFalse(handle.isSaveLocationChanged());
         assertFalse(handle.isSyncStatusChanged());
     }
 
@@ -237,7 +242,6 @@ public abstract class AddressBookSystemTest {
         String timestamp = new Date(clockRule.getInjectedClock().millis()).toString();
         String expectedSyncStatus = String.format(SYNC_STATUS_UPDATED, timestamp);
         assertEquals(expectedSyncStatus, handle.getSyncStatus());
-        assertFalse(handle.isSaveLocationChanged());
     }
 
     /**
@@ -249,7 +253,6 @@ public abstract class AddressBookSystemTest {
             assertEquals("", getResultDisplay().getText());
             assertListMatching(getPersonListPanel(), getModel().getFilteredPersonList());
             assertEquals(MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE), getBrowserPanel().getLoadedUrl());
-            assertEquals("./" + testApp.getStorageSaveLocation(), getStatusBarFooter().getSaveLocation());
             assertEquals(SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
         } catch (Exception e) {
             throw new AssertionError("Starting state is wrong.", e);

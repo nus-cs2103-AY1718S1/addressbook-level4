@@ -4,54 +4,74 @@
         <name>Hans Muster</name>
         <phone isPrivate="false">9482424</phone>
         <email isPrivate="false">hans@example.com</email>
+        <birthday isPrivate="false">1993/12/21</birthday>
         <address isPrivate="false">4th street</address>
+        <profile isPrivate="false">www.facebook.com</profile>
+        <favorite isPrivate="false">true</favorite>
     </persons>
     <persons>
         <name>Ruth Mueller</name>
         <phone isPrivate="false">87249245</phone>
         <email isPrivate="false">ruth@example.com</email>
+        <birthday isPrivate="false">1996/01/04</birthday>
         <address isPrivate="false">81th street</address>
+        <profile isPrivate="false">www.facebook.com</profile>
+        <favorite isPrivate="false">true</favorite>
     </persons>
     <persons>
         <name>Heinz Kurz</name>
         <phone isPrivate="false">95352563</phone>
         <email isPrivate="false">heinz@example.com</email>
+        <birthday isPrivate="false">1999/11/19</birthday>
         <address isPrivate="false">wall street</address>
+        <profile isPrivate="false">www.facebook.com</profile>
     </persons>
     <persons>
         <name>Cornelia Meier</name>
         <phone isPrivate="false">87652533</phone>
         <email isPrivate="false">cornelia@example.com</email>
+        <birthday isPrivate="false">1998/05/18</birthday>
         <address isPrivate="false">10th street</address>
+        <profile isPrivate="false">www.facebook.com</profile>
     </persons>
     <persons>
         <name>Werner Meyer</name>
         <phone isPrivate="false">9482224</phone>
         <email isPrivate="false">werner@example.com</email>
+        <birthday isPrivate="false">1987/09/18</birthday>
         <address isPrivate="false">michegan ave</address>
+        <profile isPrivate="false">www.facebook.com</profile>
     </persons>
     <persons>
         <name>Lydia Kunz</name>
         <phone isPrivate="false">9482427</phone>
         <email isPrivate="false">lydia@example.com</email>
+        <birthday isPrivate="false">1978/12/30</birthday>
         <address isPrivate="false">little tokyo</address>
+        <profile isPrivate="false">www.facebook.com</profile>
     </persons>
     <persons>
         <name>Anna Best</name>
         <phone isPrivate="false">9482442</phone>
         <email isPrivate="false">anna@example.com</email>
+        <birthday isPrivate="false">1989/11/30</birthday>
         <address isPrivate="false">4th street</address>
+        <profile isPrivate="false">www.facebook.com</profile>
     </persons>
     <persons>
         <name>Stefan Meier</name>
         <phone isPrivate="false">8482424</phone>
         <email isPrivate="false">stefan@example.com</email>
+        <birthday isPrivate="false">1991/11/20</birthday>
         <address isPrivate="false">little india</address>
+        <profile isPrivate="false">www.facebook.com</profile>
     </persons>
     <persons>
         <name>Martin Mueller</name>
         <phone isPrivate="false">8482131</phone>
         <email isPrivate="false">hans@example.com</email>
+        <birthday isPrivate="false">1995/08/18</birthday>
         <address isPrivate="false">chicago ave</address>
+        <profile isPrivate="false">www.facebook.com</profile>
     </persons>
 </addressbook>

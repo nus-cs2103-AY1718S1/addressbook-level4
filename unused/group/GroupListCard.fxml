@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- @@author hxy0229 -->
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<HBox fx:id="cardPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <GridPane prefHeight="135.0" prefWidth="144.0" HBox.hgrow="ALWAYS">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+                <VBox alignment="CENTER_LEFT" minHeight="105.0" prefHeight="152.0" prefWidth="148.0">
+                    <padding>
+                        <Insets bottom="5.0" left="15.0" right="5.0" top="5.0" />
+                    </padding>
+                    <children>
+                  <HBox>
+                     <children>
+                        <Label fx:id="id" />
+                        <Label fx:id="name" layoutX="10.0" layoutY="10.0" styleClass="cell_small_label" text="\$name" />
+                     </children>
+                  </HBox>
+                  <FlowPane fx:id="persons" prefHeight="20.0" prefWidth="200.0" />
+                    </children>
+                </VBox>
+            </children>
+        </GridPane>
+    </children>
+</HBox>

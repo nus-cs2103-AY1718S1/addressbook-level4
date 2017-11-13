@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_EVENT;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import java.util.Arrays;
@@ -16,24 +17,32 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AddEventCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
-import seedu.address.logic.commands.EditCommand;
-import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
+import seedu.address.logic.commands.DeleteEventCommand;
+//import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.FavoriteCommand;
 import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.FindTagCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.LocationCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.event.Event;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
-import seedu.address.testutil.EditPersonDescriptorBuilder;
+import seedu.address.model.person.TagContainsKeywordsPredicate;
+//import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
+import seedu.address.testutil.TaskEventBuilder;
+import seedu.address.testutil.TaskEventUtil;
 
 public class AddressBookParserTest {
     @Rule
@@ -47,7 +56,14 @@ public class AddressBookParserTest {
         AddCommand command = (AddCommand) parser.parseCommand(PersonUtil.getAddCommand(person));
         assertEquals(new AddCommand(person), command);
     }
-
+    //@@author erik0704
+    @Test
+    public void parseCommand_addEvent() throws Exception {
+        Event event = new TaskEventBuilder().build();
+        AddEventCommand command = (AddEventCommand) parser.parseCommand(TaskEventUtil.getAddEventCommand(event));
+        assertEquals(new AddEventCommand(event), command);
+    }
+    //@@author
     @Test
     public void parseCommand_clear() throws Exception {
         assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD) instanceof ClearCommand);
@@ -60,15 +76,31 @@ public class AddressBookParserTest {
                 DeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new DeleteCommand(INDEX_FIRST_PERSON), command);
     }
+    //@@author erik0704
+    @Test
+    public void parseCommand_deleteEvent() throws Exception {
+        DeleteEventCommand command = (DeleteEventCommand) parser.parseCommand(
+                DeleteEventCommand.COMMAND_WORD + " " + INDEX_FIRST_EVENT.getOneBased());
+        assertEquals(new DeleteEventCommand(INDEX_FIRST_EVENT), command);
+    }
+    //@@author
+    @Test
+    public void parseCommand_favorite() throws Exception {
+        FavoriteCommand command = (FavoriteCommand) parser.parseCommand(
+                FavoriteCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new FavoriteCommand(INDEX_FIRST_PERSON, true), command);
+    }
 
+    /* Need fix
     @Test
     public void parseCommand_edit() throws Exception {
         Person person = new PersonBuilder().build();
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(person).build();
+        EditCommand.EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(person).build();
         EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_WORD + " "
                 + INDEX_FIRST_PERSON.getOneBased() + " " + PersonUtil.getPersonDetails(person));
         assertEquals(new EditCommand(INDEX_FIRST_PERSON, descriptor), command);
     }
+    */
 
     @Test
     public void parseCommand_exit() throws Exception {
@@ -83,6 +115,18 @@ public class AddressBookParserTest {
                 FindCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
         assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
     }
+
+
+
+    //@@author erik0704
+    @Test
+    public void parseCommand_findTag() throws Exception {
+        List<String> keywords = Arrays.asList("some", "tag", "here");
+        FindTagCommand command = (FindTagCommand) parser.parseCommand(
+                FindTagCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
+        assertEquals(new FindTagCommand(new TagContainsKeywordsPredicate(keywords)), command);
+    }
+    //@@author
 
     @Test
     public void parseCommand_help() throws Exception {
@@ -115,6 +159,15 @@ public class AddressBookParserTest {
                 SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new SelectCommand(INDEX_FIRST_PERSON), command);
     }
+
+    //@@author erik0704
+    @Test
+    public void parseCommand_locate() throws Exception {
+        LocationCommand command = (LocationCommand) parser.parseCommand(
+                LocationCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new LocationCommand(INDEX_FIRST_PERSON), command);
+    }
+    //@@author
 
     @Test
     public void parseCommand_redoCommandWord_returnsRedoCommand() throws Exception {

@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= NeoXPro Manager - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,11 +10,34 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-W10-B4/main/tree/master/
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team W10-B4`      Since: `Jun 2016`      Licence: `MIT`
 
-== Setting up
+// tag::intro[]
+== Introduction
+
+=== Software Information
+NeoXPro is a command line interface(CLI) address book. NeoXPro not only allows users to keep track of the personal
+information of their friends and acquaintances, it helps users to manage their everyday tasks too. The software consists
+of four components: UI, Logic, Model, Storage. The language used in implementing this software is JAVA.
+
+=== Purpose of Developer Guide
+Do not worry if you have no idea about how to start. This developer guide will help new team members like you to understand
+how NeoXPro works. You will definitely find clues about how to contribute to NeoXPro after thorough reading of this document.
+You can always refer to this document if you have any doubts when implementing new features to NeoXPro.
+
+=== Content Preview
+This developer guide will first bring you through the design and internal structure of NeoXPro. You will be able to understand
+the how four components are linked and inter-related. There will be explanation on the enhancements implemented too. You can
+study on those implemented features and at the same time, try to understand the logic behind every implementation. This will
+help when you are implementing your own new features. After implementing, you will need to update relevant documentations and
+running various tests to check that your codes work fine. The documentation and testing section will guide you through those
+processes. Read this document now to understand the best address book, NeoXPro.
+
+// end::intro[]
+
+== Setting Up
 
 === Prerequisites
 
@@ -32,7 +55,7 @@ IntelliJ by default has Gradle and JavaFx plugins installed. +
 Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plugins` to re-enable them.
 
 
-=== Setting up the project in your computer
+=== Setting Up the Project in Your Computer
 
 . Fork this repo, and clone the fork to your computer
 . Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
@@ -46,14 +69,14 @@ Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plu
 . Open a console and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message. +
 This will generate all resources required by the application and tests.
 
-=== Verifying the setup
+=== Verifying the Setup
 
 . Run the `seedu.address.MainApp` and try a few commands
 . link:#testing[Run the tests] to ensure they all pass.
 
-=== Configurations to do before writing code
+=== Configurations to do Before Writing Code
 
-==== Configuring the coding style
+==== Configuring the Coding Style
 
 This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.md[oss-generic coding standards]. IntelliJ's default style is mostly compliant with ours but it uses a different import order from ours. To rectify,
 
@@ -66,11 +89,11 @@ This project follows https://github.com/oss-generic/process/blob/master/docs/Cod
 
 Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure Intellij to check style-compliance as you write code.
 
-==== Updating documentation to match your fork
+==== Updating Documentation to Match Your Fork
 
 After forking the repo, links in the documentation will still point to the `se-edu/addressbook-level4` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `se-edu/addressbook-level4`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
 
-==== Setting up CI
+==== Setting Up CI
 
 Set up Travis to perform Continuous Integration (CI) for your fork. See <<UsingTravis#, UsingTravis.adoc>> to learn how to set it up.
 
@@ -79,7 +102,7 @@ Optionally, you can set up AppVeyor as a second CI (see <<UsingAppVeyor#, UsingA
 [NOTE]
 Having both Travis and AppVeyor ensures your App works on both Unix-based platforms and Windows-based platforms (Travis is Unix-based and AppVeyor is Windows-based)
 
-==== Getting started with coding
+==== Getting Started with Coding
 
 When you are ready to start coding,
 
@@ -126,7 +149,7 @@ image::LogicClassDiagram.png[width="800"]
 _Figure 2.1.2 : Class Diagram of the Logic Component_
 
 [discrete]
-==== Events-Driven nature of the design
+==== Events-Driven Nature of the Design
 
 The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
 
@@ -146,7 +169,7 @@ Note how the event is propagated through the `EventsCenter` to the `Storage` and
 
 The sections below give more details of each component.
 
-=== UI component
+=== UI Component
 
 image::UiClassDiagram.png[width="800"]
 _Figure 2.2.1 : Structure of the UI Component_
@@ -163,7 +186,7 @@ The `UI` component,
 * Binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change.
 * Responds to events raised from various parts of the App and updates the UI accordingly.
 
-=== Logic component
+=== Logic Component
 
 image::LogicClassDiagram.png[width="800"]
 _Figure 2.3.1 : Structure of the Logic Component_
@@ -184,7 +207,7 @@ Given below is the Sequence Diagram for interactions within the `Logic` componen
 image::DeletePersonSdForLogic.png[width="800"]
 _Figure 2.3.1 : Interactions Inside the Logic Component for the `delete 1` Command_
 
-=== Model component
+=== Model Component
 
 image::ModelClassDiagram.png[width="800"]
 _Figure 2.4.1 : Structure of the Model Component_
@@ -198,7 +221,7 @@ The `Model`,
 * exposes an unmodifiable `ObservableList<ReadOnlyPerson>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
-=== Storage component
+=== Storage Component
 
 image::StorageClassDiagram.png[width="800"]
 _Figure 2.5.1 : Structure of the Storage Component_
@@ -210,7 +233,7 @@ The `Storage` component,
 * can save `UserPref` objects in json format and read it back.
 * can save the Address Book data in xml format and read it back.
 
-=== Common classes
+=== Common Classes
 
 Classes used by multiple components are in the `seedu.addressbook.commons` package.
 
@@ -219,7 +242,7 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 This section describes some noteworthy details on how certain features are implemented.
 
 // tag::undoredo[]
-=== Undo/Redo mechanism
+=== Undo/Redo Mechanism
 
 The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the address book (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
 
@@ -345,6 +368,98 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+// tag::addbirthday[]
+=== Adding a Parameter in Add Command
+
+==== Add Birthday
+To add a new birthday in AddCommand, UI, Logic, Model and Storage components are to be modified accordingly. +
+Be aware of the inheritance between each component when implementing.
+Refer to Section 3 to observe the relationship between those components.
+
+* `UI Component:` +
+PersonCard uses ReadOnlyPerson to create labels of most parameters. New parameter: Birthday, should be added to be included
+so that it can be shown in the information of person when showing person card in UI.
+
+* `Logic Component:` +
+To include birthday parameter, several files in logic components should be modified accordingly. E.g. AddCommand, EditCommand,
+AddCommandParser, CliSyntax etc. Commands allows users to input the information, provides an interaction between user and the software.
+Parser is to parse the new parameter information, making sure that information is present before the real add command
+is created. Information being added should be parse to model to create persons if command format is correct.
+
+* `Model Component:` +
+Create a new class for birthday so that it can be used under Person class. Person class uses ReadOnlyPerson interface.
+Person Class is to collect and set all information about a particular person. If all parameters is parsed correctly, a person with
+collected information will be created. +
+The following diagram shows the relationship of different classes in model component:
+
+image::ModelClassForBirthday.png[width="300"]
+
+* `Storage Component:` +
+To make sure that birthday can be stored in the xml format for future usage, xmlAdaptedPerson is used to save information of a person in xml format.
+// end::addbirthday[]
+
+// tag::addprofile[]
+==== Add Profile Page
+The profile page parameter is facilitated by the class `ProfilePage`. +
+In order to add this parameter profile page, we make modifications to UI, Logic, Model and Storage components.
+
+* `UI Component:` +
+`PersonCard`, which resides in UI component, frist creates a label for profile page parameter: +
+[source, java]
+----
+@FXML
+    private Label profile;
+----
+Then `PersonCard` binds the label with the value of `ProfilePage` object. If the input value for `ProfilePage` object is null, it make the label dissapear from UI by setting its visibility to FALSE: +
+[source, java]
+----
+private void bindListeners(ReadOnlyPerson person) {
+    //... binding other labels ...
+
+    if (!person.profilepageProperty().toString().equals("")) {
+        profile.textProperty().bind(Bindings.convert(person.profilepageProperty()));
+        profile.setVisible(true);
+    } else {
+        profile.setVisible(false);
+    }
+    //... binding other labels ...
+}
+----
+
+In order to make `select` command load a person's `ProfilePage` object if it exists, we modify method `handlePersonPanelSelectionChangedEvent()` in `BrowserPanel` that is in charge of updating a person panel: +
+[source, java]
+----
+ private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+     //...
+     if (person.getProfilePage().hasProfilePage()) {
+         loadProfilePage(person);
+     } else {
+         loadPersonPage(person);
+     }
+ }
+----
+
+* `Logic Component:` +
+The prefix for profile page `pr/` is added to `CliSyntax`. Then the following files `AddCommand`, `EditCommand`, `AddCommandParser` and `EditCommandParser` are modified so that `add` and `edit` commands accept the new parameter profile page. +
+`AddCommandParser` does not check for profile page prefix `pr/` as this is an optional parameter.
+
+* `Model Component:` +
+Class `ProfilePage` is used to store profile page property of class `Person`. Class `Person`, which resides in model component and implements `ReadOnlyPerson` interface, form a composition association with `ProfilePage` . +
+As profile page is an optional parameter, a `Person` can be linked to 0 or 1 `ProfilePage` object. +
+The relationship is illustrated in the following diagram:
+
+image::profilePage.png[width="300"]
+
+* `Storage Component:` +
+`xmlAdaptedPerson` file is used to save information of a person in xml format. +
+The `required` parameter of `@XmlElement` element which stores profile page information is set to false to make this property optional: +
+[source, fxml]
+----
+@XmlElement(required = false)
+    private String profile = "";
+----
+// end::addprofile[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
@@ -359,6 +474,190 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 * `WARNING` : Can continue, but with caution
 * `INFO` : Information showing the noteworthy actions by the App
 * `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
+
+// tag::delete[]
+=== Delete command
+
+`delete` command supports modifying the state of address book by deleting all persons whose indices are specified in the input. It inherits from `UndoableCommand`.
+
+image::delete.png[width="300"]
+
+The implementation of `delete` contains 2 classes: `DeleteCommand` and `DeleteCommandParser` inside the logic component. +
+`DeleteCommandParser`, the parser of `delete`, parses user's input into the variable `input: List<Index>` that store a list of `Index`.
+`DeleteCommand`, which handles the logic of `delete` command, then iteratively remove any `Person` object with `Index` specified in `input`.
+
+[source, java]
+----
+public class DeleteCommandParser implements Parser<DeleteCommand> {
+    public DeleteCommand parse(String args) throws ParseException {
+        try {
+            List<Index> input= new ArrayList<Index>();
+            // ... Parser logic ...
+            return new DeleteCommand(input);
+        } catch (IllegalValueException ive) {
+            // throw exception here
+        }
+    }
+}
+----
+
+And finally, we add the `delete` command to the class 'AddressBookParser' so that `delete` command is recognized whenever invoked.
+// end::delete[]
+
+// tag::phone[]
+=== Phone command
+The `phone` command utilize the same implementation as the `Find` command for name. Instead of logic execute search via `Name` attribute of `Person`, the command search for the `phone` attribute.
+
+The `phone` command is handled by the class `FindPhoneCommand` that inherits from `Command` class. +
+`Name` and `Phone` API structure is roughly similar that they allow to extract value of the object. The search algorithm utilizes a class `NameContainsPhonesPredicate implements Predicate<ReadOnlyPerson>`
+which allows the algorithm to use Java `Predicate` class method. +
+The diagram demonstrating `phone` command structure is illustrated here:
+
+image::findPhone.png[width="300"]
+
+
+// end::phone[]
+
+// tag::findtag[]
+=== FindTag Command
+
+The findTag command utilize the same implementation as the Find command for name. Instead of logic execute search via `Name` attribute of Person, the command search in the `TagList` attribute.
+
+Tag component in model already had API methods for searching, which is similar to `Name` which allows extracting value of the object.
+The search algorithm utilize a class `TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson>` which allows the algorithm to use Java `Predicate` class method.
+
+// end::findtag[]
+
+// tag::taskevent[]
+=== (Task) event management
+
+The model for task event is implemented similar to `person` class.
+
+image::EventModelClassDiagram.png[width="300"]
+
+The `EventList` is then linked up to the `AddressBook` which is monitored by `ModelManager` to reflect any change to the `Addressbook` model.
+The Ui components `EventCard` and `EventListPanel` are also hooked up to the model and reflect any changes made to `filterEvents`.
+
+=== Event auto-reminder
+
+When the `UiManager` component got initialized at the start of the application, a new `ShowReminderRequestEvent` gets posted.
+This is then handle by the `MainWindow` which initialized one or more `ReminderWindow` from the `upcomingEvents` in the model.
+// end::taskevent[]
+
+// tag::comingbirthdaylist[]
+=== Coming Birthday List
+Basically, adding a list of upcoming birthday is only related to UI component. A new class should be implemented to hold the list.
+In this case, ComingBirthdayListPanel is implemented. ComingBirthdayListPanel should process all contacts in the person list
+and decide which persons to include in the coming birthday list. +
+To get the list of upcoming birthdays, the ComingBirthdayListPanel should have a method comingBirthdayListGetter
+which is implemented in this way:
+
+[source, java]
+----
+private ObservableList<ReadOnlyPerson> comingBirthdayListGetter(ObservableList<ReadOnlyPerson> personList) {
+        List<ReadOnlyPerson> comingBirthdayList = personList.stream().collect(Collectors.toList());
+        boolean isRemoved = false;
+        Calendar cal = Calendar.getInstance();
+        int month = cal.get(Calendar.MONTH)+1;
+        int date = cal.get(Calendar.DATE);
+        //...
+        for (int i = 0; i < comingBirthdayList.size(); i++) {
+            if (!(Integer.parseInt(comingBirthdayList.get(i).getBirthday().toString()
+                    .substring(5, 7)) == month)) {
+                comingBirthdayList.remove(i);
+                isRemoved = true;
+            }
+            else if((Integer.parseInt(comingBirthdayList.get(i).getBirthday().toString()
+                    .substring(5, 7)) == month) &&
+                    Integer.parseInt(comingBirthdayList.get(i).getBirthday().toString()
+                    .substring(8)) < date) {
+                comingBirthdayList.remove(i);
+                isRemoved = true;
+            }
+            //...
+        }
+        return FXCollections.observableArrayList(comingBirthdayList);
+}
+----
+
+Main window should include the newly added ComingBirthdayListPanel class so that the panel will be shown in the main window.
+A fxml file, in this case is ComingBirthdayListPanel.fxml for coming birthday list should be present to reserve a section
+for the list in the main window UI. MainWindow.fxml should modified accordingly to include the ComingBirthdayListPanel.fxml.
+
+// end::comingbirthdaylist[]
+
+
+// tag::Favorite[]
+=== Favorite/Unfavorite a person using FavoriteCommand.
+
+==== FavoriteCommand/Unfavorite Command
+To Favorite/Unfavorite a person, UI, Logic, Model and Storage components are to be modified
+accordingly. +
+Be aware of the inheritance between each component when implementing.
+Refer to Section 3 to observe the relationship between those components.
+
+* `UI Component:` +
+PersonCard uses ReadOnlyPerson to create labels of most parameters, and it uses an imageView to record the "Favorite" parameter. +
+When a person is favorited, a star would appear next to the person name, and it would disappear if he/she is unfavorited. +
+Different from other parameters, since 'favorite' is based on a boolean value, instead of using bindListener,
+A new 'star' image is set inside the ImageView if it is meant to appear and it is set to null when it is
+meant to disappear.
+
+This uniqueness is demonstrated as below:
+
+[source,java]
+----
+        if (person.getFavorite().value == true) {
+            Image image = new Image("/images/star.png");
+            favorite.setImage(image);
+        } else {
+            favorite = null;
+        }
+----
+
+* `Logic Component:` +
+To include the Favorite parameter, several files in logic components should be modified accordingly.
+E.g. AddCommand, EditCommand, AddCommandParser, etc.
+Parser is to parse the new parameter information, making sure that information is present before the real add command
+is created. Information being added should be parse to model to create persons if command format is correct.
+
+* `Model Component:` +
+Create a new class for Favorite so that it can be used under Person class. Person class uses ReadOnlyPerson interface.
+Person Class is to collect and set all information about a particular person. If all parameters is parsed correctly,
+a person with collected information will be created. +
+The following diagram shows the relationship of different classes in model component:
+
+image::ModelClassForFavorite1.png[width="300"]
+
+* `Storage Component:` +
+To make sure that favorite value can be stored in the xml format for future usage, xmlAdaptedPerson is used to save
+information of a person in xml format.
+// end::Favorite[]
+
+
+// tag::Listfavorite[]
+List all your favorite persons using ListFavoriteCommand.
+
+==== ListFavoriteCommand
+To list all your favorite persons in AddressBook, UI, Model, and Logic Components are involved.
+Logic Component includes `ListFavoriteCommand` and `ListFavoriteCommandParser`, and they call `FavoritePredicate` in Model Component
+to check whether a person is favorited or not, UI component then decide which persons to include in the PersonListPanel.
+
+// end::Listfavorite[]
+
+
+
+// tag::export[]
+
+=== Export Command
+
+`export` access the file `addressbook.xml` to retrieve each person and his/her properties and write it on the file at the specified input.
+Its implementation contains 2 classes: `ExportCommand` and `ExportCommandParser`. +
+The parser `ExportCommandParser` of `export` parses the file path input as a `String` to `ExportCommand`. +
+`ExportCommand`, which handles the logic of `export` command, then writes the exported file on the specified input file path.
+
+// end::export[]
+
 
 === Configuration
 
@@ -380,7 +679,7 @@ Alternatively, you can download the AsciiDoc plugin for IntelliJ, which allows y
 
 See <<UsingTravis#deploying-github-pages, UsingTravis.adoc>> to learn how to deploy GitHub Pages using Travis.
 
-=== Converting Documentation to PDF format
+=== Converting Documentation to PDF Format
 
 We use https://www.google.com/chrome/browser/desktop/[Google Chrome] for converting documentation to PDF format, as Chrome's PDF engine preserves hyperlinks used in webpages.
 
@@ -421,7 +720,7 @@ Thanks to the https://github.com/TestFX/TestFX[TestFX] library we use, our GUI t
 
 To run tests in headless mode, open a console and run the command `gradlew clean headless allTests` (Mac/Linux: `./gradlew clean headless allTests`)
 
-=== Types of tests
+=== Types of Tests
 
 We have two types of tests:
 
@@ -477,12 +776,12 @@ Suggested path for new programmers:
 
 2. Next, add a feature that touches multiple components to learn how to implement an end-to-end feature across all components. The section link:#creating-a-new-command-code-remark-code[Creating a new command: `remark`] explains how to go about adding such a feature.
 
-=== Improving each component
+=== Improving Each Component
 
 Each individual exercise in this section is component-based (i.e. you would not need to modify the other components to get it to work).
 
 [discrete]
-==== `Logic` component
+==== `Logic` Component
 
 [TIP]
 Do take a look at the link:#logic-component[Design: Logic Component] section before attempting to modify the `Logic` component.
@@ -499,7 +798,7 @@ Do take a look at the link:#logic-component[Design: Logic Component] section bef
 ****
 
 [discrete]
-==== `Model` component
+==== `Model` Component
 
 [TIP]
 Do take a look at the link:#model-component[Design: Model Component] section before attempting to modify the `Model` component.
@@ -516,7 +815,7 @@ Do take a look at the link:#model-component[Design: Model Component] section bef
 ****
 
 [discrete]
-==== `Ui` component
+==== `Ui` Component
 
 [TIP]
 Do take a look at the link:#ui-component[Design: UI Component] section before attempting to modify the `UI` component.
@@ -580,7 +879,7 @@ image::getting-started-ui-status-after.png[width="500"]
 ****
 
 [discrete]
-==== `Storage` component
+==== `Storage` Component
 
 [TIP]
 Do take a look at the link:#storage-component[Design: Storage Component] section before attempting to modify the `Storage` component.
@@ -595,7 +894,7 @@ Do take a look at the link:#storage-component[Design: Storage Component] section
 ** See this https://github.com/se-edu/addressbook-level4/pull/594/files[PR] for the full solution.
 ****
 
-=== Creating a new command: `remark`
+=== Creating a New Command: `remark`
 
 By creating this command, you will get a chance to learn how to implement a feature end-to-end, touching all major components of the app.
 
@@ -612,7 +911,7 @@ Removes the remark for the first person.
 
 ==== Step-by-step Instructions
 
-===== [Step 1] Logic: Teach the app to accept 'remark' which does nothing
+===== [Step 1] Logic: Teach the App to Accept 'remark' which Does Nothing
 Let's start by teaching the application how to parse a `remark` command. We will add the logic of `remark` later.
 
 **Main:**
@@ -625,7 +924,7 @@ Let's start by teaching the application how to parse a `remark` command. We will
 . Add `RemarkCommandTest` that tests that `executeUndoableCommand()` throws an Exception.
 . Add new test method to link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`], which tests that typing "remark" returns an instance of `RemarkCommand`.
 
-===== [Step 2] Logic: Teach the app to accept 'remark' arguments
+===== [Step 2] Logic: Teach the App to Accept 'remark' Arguments
 Let's teach the application to parse arguments that our `remark` command will accept. E.g. `1 r/Likes to drink coffee.`
 
 **Main:**
@@ -641,7 +940,7 @@ Let's teach the application to parse arguments that our `remark` command will ac
 for `RemarkCommandParser`.
 . Modify link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`] to test that the correct command is generated according to the user input.
 
-===== [Step 3] Ui: Add a placeholder for remark in `PersonCard`
+===== [Step 3] Ui: Add a Placeholder for Remark in `PersonCard`
 Let's add a placeholder on all our link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] s to display a remark for each person later.
 
 **Main:**
@@ -653,7 +952,7 @@ Let's add a placeholder on all our link:{repoURL}/src/main/java/seedu/address/ui
 
 . Modify link:{repoURL}/src/test/java/guitests/guihandles/PersonCardHandle.java[`PersonCardHandle`] so that future tests can read the contents of the remark label.
 
-===== [Step 4] Model: Add `Remark` class
+===== [Step 4] Model: Add `Remark` Class
 We have to properly encapsulate the remark in our link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`] class. Instead of just using a `String`, let's follow the conventional class structure that the codebase already uses by adding a `Remark` class.
 
 **Main:**
@@ -665,7 +964,7 @@ We have to properly encapsulate the remark in our link:{repoURL}/src/main/java/s
 
 . Add test for `Remark`, to test the `Remark#equals()` method.
 
-===== [Step 5] Model: Modify `ReadOnlyPerson` to support a `Remark` field
+===== [Step 5] Model: Modify `ReadOnlyPerson` to Support a `Remark` Field
 Now we have the `Remark` class, we need to actually use it inside link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`].
 
 **Main:**
@@ -674,7 +973,7 @@ Now we have the `Remark` class, we need to actually use it inside link:{repoURL}
 . You may assume that the user will not be able to use the `add` and `edit` commands to modify the remarks field (i.e. the person will be created without a remark).
 . Modify link:{repoURL}/src/main/java/seedu/address/model/util/SampleDataUtil.java/[`SampleDataUtil`] to add remarks for the sample data (delete your `addressBook.xml` so that the application will load the sample data when you launch it.)
 
-===== [Step 6] Storage: Add `Remark` field to `XmlAdaptedPerson` class
+===== [Step 6] Storage: Add `Remark` Field to `XmlAdaptedPerson` Class
 We now have `Remark` s for `Person` s, but they will be gone when we exit the application. Let's modify link:{repoURL}/src/main/java/seedu/address/storage/XmlAdaptedPerson.java[`XmlAdaptedPerson`] to include a `Remark` field so that it will be saved.
 
 **Main:**
@@ -686,7 +985,7 @@ We now have `Remark` s for `Person` s, but they will be gone when we exit the ap
 
 . Fix `validAddressBook.xml` such that the XML tests will not fail due to a missing `<remark>` element.
 
-===== [Step 7] Ui: Connect `Remark` field to `PersonCard`
+===== [Step 7] Ui: Connect `Remark` Field to `PersonCard`
 Our remark label in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] is still a placeholder. Let's bring it to life by binding it with the actual `remark` field.
 
 **Main:**
@@ -698,7 +997,7 @@ Our remark label in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.jav
 . Modify link:{repoURL}/src/test/java/seedu/address/ui/testutil/GuiTestAssert.java[`GuiTestAssert#assertCardDisplaysPerson(...)`] so that it will compare the remark label.
 . In link:{repoURL}/src/test/java/seedu/address/ui/PersonCardTest.java[`PersonCardTest`], call `personWithTags.setRemark(ALICE.getRemark())` to test that changes in the link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`Person`] 's remark correctly updates the corresponding link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`].
 
-===== [Step 8] Logic: Implement `RemarkCommand#execute()` logic
+===== [Step 8] Logic: Implement `RemarkCommand#execute()` Logic
 We now have everything set up... but we still can't modify the remarks. Let's finish it up by adding in actual logic for our `remark` command.
 
 **Main:**
@@ -716,6 +1015,9 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 [appendix]
 == User Stories
 
+*User Profile:* John is an undergraduate student in a local university. He has an active social life with many friend circles.
+John wants a way to manage his contacts and a way to remind him tasks and responsibilities in related to these contacts.
+
 Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
 
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
@@ -729,12 +1031,38 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |user |check upcoming birthdays |keep track of all people who are having their birthday soon
+
+|`* * *` |user |edit contact information |make changes if needed
+
+|`* * *` |user |add birthday information |remember and keep track of my family members/friends birthday
+
+|`* * *` |user |favorite a person |keep track of the person I'm interested in recently.
+
+|`* * *` |user |find persons whose names contain a partial string |locate person whose name I forgot how to spell
+
+|`* * *` |user |find persons by tags |identify a group of people with common attributes
+
+|`* * *` |undergraduate student user |add events related to one or multiple contacts such as birthday or meetings |keep track tasks I need to do
+
+|`* *` |user |add or remove some tags of a contact |quickly update contact information
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
+|`* *` |user |add profile photo |can double check the identity if there are persons with the same name
+
+|`* *` |user |add multiple phone number to one person |store different contact number as one person may have more than one phone number
+
+|`* *` |user |have some important contacts |reach to my close friends easily at a click
+
+|`* *` |undergraduate student user |find persons by their address |identify which friends stay in the same campus
+
+|`* *` |undergraduate student user |have a reminder pop up when an event is coming up |remember to prepare and fulfill my responsibility
+
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
 |=======================================================================
 
-{More to be added}
 
 [appendix]
 == Use Cases
@@ -742,7 +1070,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
-=== Use case: Delete person
+=== Use Case: Delete Person
 
 *MSS*
 
@@ -767,7 +1095,113 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-{More to be added}
+[discrete]
+=== Use Case: Edit Person
+
+*MSS*
+
+1.  User request to edit contact information
+2.  AddressBook shows old and new information stored
+
+*Extensions*
+
+[none]
+* 2a. No such person.
++
+[none]
+** 2a1. AddressBook shows an error message.
++
+Use case ends.
+
+* 2b. Incorrect format of new information.
++
+[none]
+** 2b1. AddressBook shows an error message and request for new information again.
++
+Use case resumes at step 1.
+
+[discrete]
+=== Use Case: List All Persons
+
+*MSS*
+
+1.  User request to have a list of all persons
+2.  AddressBook shows a list of all persons in the contact list
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+[discrete]
+=== Use Case: Find Persons by Tags
+
+*MSS*
+
+1.  User request to list keywords
+2.  Application shows a list of persons who has those keywords as tags
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+[discrete]
+=== Use Case: Find Persons by Name String
+
+*MSS*
+
+1.  User request to key in a name string
+2.  Application shows a list of persons whose names contain the full or partial string
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+[discrete]
+=== Use Case: Find Persons by Phone Number
+
+*MSS*
+
+1.  User request key in a phone number
+2.  Application shows a list of persons associated with the phone number
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+[discrete]
+=== Use Case: Add an Event Reminder
+
+*MSS*
+
+1.  User requests to add an event associated with a future date.
+2.  Application adds the event
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3. User start the application on the date associated with the added event.
+* 4. Application shows the user popup reminder for the event upon the start.
++
+Use case ends.
+
 
 [appendix]
 == Non Functional Requirements
@@ -775,8 +1209,6 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-{More to be added}
 
 [appendix]
 == Glossary
@@ -796,18 +1228,4 @@ A contact detail that is not meant to be shared with others
 ....
 
 [appendix]
-== Product Survey
 
-*Product Name*
-
-Author: ...
-
-Pros:
-
-* ...
-* ...
-
-Cons:
-
-* ...
-* ...

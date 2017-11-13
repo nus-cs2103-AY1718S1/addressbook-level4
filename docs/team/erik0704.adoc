@@ -1,0 +1,107 @@
+= Dao Quoc Cuong - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: NeoXPro Manager
+NeoXPro 4 is a desktop address book application extends from an existing stock application which was used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-W10-B4/main/blob/master/collated/main/erik0704.md[Functional code]] [https://github.com/CS2103AUG2017-W10-B4/main/blob/master/collated/test/erik0704.md[Test code]]
+
+=== Enhancement Added: Find a person via the contact tags
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=findtag]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+The address book had tags for each contact, however there was no way to search for contact with certain tags.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=findtag]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Locate a person
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=locate]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+May help the user finding the contact address quickly and perhaps direction if the user want to go there.
+
+==== Implementation
+
+Similar to select command but load a google map page instead.
+
+=== Enhancement Added: Event functionality
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=event]
+
+include::../UserGuide.adoc[tag=reminder]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+The application is also meant to be a task manager. Thus there is a need to implement task/event functionality.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=taskevent]
+
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Change application css theme
+
+==== Justification
+
+Original DarkTheme color looked dull and uninspired for a user end product.
+
+=== Other contributions
+
+* Modified add command to accept partial string.
+* Updated the GUI part to display events.
+* Managed the team repository and progress as team lead.
+* Checked pull requests code quality. Resolved conflict and fix bugs from pull requests of other members.
+* Fixed all checkstyle errors of every team member.
+* Add tests to increase coverage by 5% (Pull requests https://github.com/CS2103AUG2017-W10-B4/main/pull/81[#81],
+ https://github.com/CS2103AUG2017-W10-B4/main/pull/82[#82], https://github.com/CS2103AUG2017-W10-B4/main/pull/84[#84],
+ https://github.com/CS2103AUG2017-W10-B4/main/pull/85[#85], https://github.com/CS2103AUG2017-W10-B4/main/pull/92[#92])
+

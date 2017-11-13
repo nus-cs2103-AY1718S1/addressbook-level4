@@ -1,0 +1,129 @@
+= NeoXPro Manager - Test Script
+
+:sectnums:
+
+== Run the application with sample data
+. Download all necessary files (i.e. jar file, user guide, developer guide, sample data, test script,
+ project portfolio pages) into an empty folder.
+. Change the sample data file name to addressbook.xml
+. Run the jar file for the first time. If there is any popup close it before proceed.
+. Type `add n/John Doe p/98765432 e/johnd@example.com b/1995/11/03 a/311, Clementi Ave 2, #02-25 pr/www.facebook.com t/friends t/owesMoney` (or type `add` and copy the example)
+. A folder name `data` will appear in the same directory as the jar file.
+. Exit the application
+. Copy the renamed sample data file above into the data folder, replacing the addressbook.xml exists inside.
+. Start the application again. (and again close any popup)
+
+== Run through basic features
+
+When needs to type anything it is always typing in the command box unless states otherwise.
+
+Moving the divider to change the size of middle panel however you see fit.
+
+=== Viewing help
+. Type `help`
+. A help box should pop out.
+. Quickly compare it to the user guide pdf file to see if match.
+. Then close the help box and use the pdf file instead. (As there is a bug with address book level 4 when the help box is active.)
+
+=== Adding a person
+. Type `add n/John Chew b/1993/11/29`
+. A person whose name John Chew with birthday 1993/11/29 will be shown in the person list at the bottom.
+
+=== Delete one or multiple contacts
+. Type `delete 1 2 21`
+. Alex Yeoh, Bernice Yu & John Chew will be removed from the person list.
+. Type `undo`
+. Type `delete 21`
+. Only John Chew will be removed from the list.
+
+=== Edit a contact
+. Type `edit 1 a/LaLa Land pr/`
+. The address of Alex Yeoh will be changed and his profile page will be removed
+
+=== Find a person through various means
+
+==== Find a person via name
+. Type `find ee`
+. Persons whose names contain the string `ee` will be displayed. In this case, only HeeJun Lee shows up.
+. Type `find al`
+. Persons whose names contain the string `al` will be displayed. In this case, there should be 4.
+. Type `find ee all`
+. All 5 persons previous will be displayed
+
+==== Find a person via tag
+. Type `findTag ChelseaFC`
+. 2 footballers with ChelseaFC tags will be displayed.
+. Type `find CS2103T EML`
+. Neil Brian who has both tags will be displayed.
+
+==== Find a person via phone
+. Type `phone 492`
+. One person whose phone contain the string of digits 492 will be displayed.
+. Type `phone 315`
+. 2 persons will be displayed.
+
+=== Favorite a person
+. Type `fav 19`
+. Type `fav 20`
+
+=== List all favorite contacts
+. Type `listfav`
+
+=== List all contacts
+. Type `list`
+
+=== Locate a person's address
+. Type `locate 1`
+. A google page load up which shows where `LaLa Land` is.
+
+=== Select a person
+This either load their profile page in the browser panel, or google search their name if there's no profile page
+
+. Type `select 1`
+. A Google search for the string `Alex Yeoh` is displayed.
+. Type `select 13`
+. Eden Hazard's twitter page is shown.
+
+=== Event management
+For keeping track of your plans or deadlines. The list event panel is on the top right.
+The events in the list is sorted chronically.
+
+==== Delete an event
+. Type `deleteEvent 1`
+. Event `IS1103` quiz will be removed from the list.
+
+==== Adding an event
+Type take note of current date, i.e. the current date is 17th Nov 2017, then
+. Type `addEvent n/Testhalon d/2017-11-17 de/Come on time`
+. The event will show on the list accordingly (might need to scroll down to see).
+
+==== Auto-reminder
+. Close the application and restart it.
+. Upon starting, events whose dates are on the current date will be shown as a popup, including the `Testhalon` event.
+
+=== Keeping track of upcoming birthdays
+. Check that all people in the list are having their birthday in current month(November) and do not include people that are before current date.
+. Type `add n/Sharon Chiew b/1990/11/27`
+. Close the application and restart it.
+. Sharon Chiew will be shown in the bottom right list along with others who were there previously.
+. (Current version has limitation in which the birthday panel list is only update at the application start/restart).
+
+=== Show typed-command history
+. Type `history`
+. Alternately using the up/down arrow key.
+
+=== Undo/Redo a command
+Does not work with command type finding/listing, locating, selecting or misc (i.e. `export`)
+
+. Type `undo` to undo the previous command. Type `redo` if you have second thought.
+
+=== Export the application data
+. Type `export`
+. A `exportFile.txt` file will appears in the folder where the application jar file resides.
+
+=== Erase all application data
+. Type `clear`
+. Everything is wiped. Type `undo` to get it back.
+
+=== Exit the application
+. Type `Exit`. Alternately you can use your mouse.

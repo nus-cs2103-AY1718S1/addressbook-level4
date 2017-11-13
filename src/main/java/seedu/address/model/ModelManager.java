@@ -12,9 +12,15 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.model.event.Event;
+import seedu.address.model.event.UpcomingEventPredicate;
+import seedu.address.model.event.exceptions.DuplicateEventException;
+import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+
+
 
 /**
  * Represents the in-memory model of the address book data.
@@ -25,6 +31,9 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
+    private final FilteredList<Event> filteredEvents;
+    private final FilteredList<Event> upcomingEvents;
+
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -37,6 +46,8 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        filteredEvents = new FilteredList<>(this.addressBook.getEventList());
+        upcomingEvents = new FilteredList<>(this.addressBook.getEventList());
     }
 
     public ModelManager() {
@@ -72,6 +83,16 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author hxy0229
+    @Override
+    public synchronized void favoritePerson(ReadOnlyPerson person) throws PersonNotFoundException {
+        addressBook.favoritePerson(person);
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        indicateAddressBookChanged();
+    }
+    //@@author
+
+
     @Override
     public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException {
@@ -81,7 +102,24 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author erik0704
+    @Override
+    public synchronized void addEvent(Event event) throws DuplicateEventException {
+        addressBook.addEvent(event);
+        updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public synchronized void deleteEvent(Event target) throws EventNotFoundException {
+        addressBook.removeEvent(target);
+        indicateAddressBookChanged();
+    }
+    //@@author
+
+
     //=========== Filtered Person List Accessors =============================================================
+
 
     /**
      * Returns an unmodifiable view of the list of {@code ReadOnlyPerson} backed by the internal list of
@@ -97,6 +135,31 @@ public class ModelManager extends ComponentManager implements Model {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
     }
+
+
+    //@@author erik0704
+    /**
+     * Returns a view of the list of {@code Event} backed by the internal list of
+     * {@code addressBook}
+     */
+    @Override
+    public ObservableList<Event> getFilteredEventList() {
+        return FXCollections.unmodifiableObservableList(filteredEvents);
+    }
+
+    @Override
+    public ObservableList<Event> getUpcomingEventList() throws java.text.ParseException {
+        UpcomingEventPredicate predicate = new UpcomingEventPredicate();
+        upcomingEvents.setPredicate(predicate);
+        return FXCollections.unmodifiableObservableList(upcomingEvents);
+    }
+
+    @Override
+    public void updateFilteredEventList(Predicate<Event> predicate) {
+        requireNonNull(predicate);
+        filteredEvents.setPredicate(predicate);
+    }
+    //@@author
 
     @Override
     public boolean equals(Object obj) {

@@ -12,6 +12,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.web.WebView;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.PersonPanelLocationChangedEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -23,6 +24,7 @@ public class BrowserPanel extends UiPart<Region> {
     public static final String DEFAULT_PAGE = "default.html";
     public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/search?safe=off&q=";
     public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
+    public static final String GOOGLE_MAP_URL_PREFIX = "https://www.google.com.sg/maps/place/";
 
     private static final String FXML = "BrowserPanel.fxml";
 
@@ -45,6 +47,17 @@ public class BrowserPanel extends UiPart<Region> {
         loadPage(GOOGLE_SEARCH_URL_PREFIX + person.getName().fullName.replaceAll(" ", "+")
                 + GOOGLE_SEARCH_URL_SUFFIX);
     }
+    //@@author quangtdn
+    private void loadProfilePage(ReadOnlyPerson person) {
+        loadPage("https://" + person.getProfilePage().toString());
+    }
+    //@@author
+
+    //@@author erik0704
+    private void loadPersonAddressPage(ReadOnlyPerson person) {
+        loadPage(GOOGLE_MAP_URL_PREFIX + person.getAddress().value.replaceAll(" ", "+"));
+    }
+    //@@author
 
     public void loadPage(String url) {
         Platform.runLater(() -> browser.getEngine().load(url));
@@ -65,9 +78,22 @@ public class BrowserPanel extends UiPart<Region> {
         browser = null;
     }
 
+    //@@author quangtdn
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadPersonPage(event.getNewSelection().person);
+        ReadOnlyPerson person = event.getNewSelection().person;
+        if (person.getProfilePage().hasProfilePage()) {
+            loadProfilePage(person);
+        } else {
+            loadPersonPage(person);
+        }
     }
+    //@@author erik0704
+    @Subscribe
+    private void handlePersonPanelLocationChangedEvent(PersonPanelLocationChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadPersonAddressPage(event.getNewSelection());
+    }
+    //@@author
 }

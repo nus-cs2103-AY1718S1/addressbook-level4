@@ -2,8 +2,11 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.fxmisc.easybind.EasyBind;
 
@@ -19,7 +22,6 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
  * Supports a minimal set of list operations.
  *
  * @see Person#equals(Object)
- * @see CollectionUtil#elementsAreUnique(Collection)
  */
 public class UniquePersonList implements Iterable<Person> {
 
@@ -27,6 +29,17 @@ public class UniquePersonList implements Iterable<Person> {
     // used by asObservableList()
     private final ObservableList<ReadOnlyPerson> mappedList = EasyBind.map(internalList, (person) -> person);
 
+    public UniquePersonList(Set<ReadOnlyPerson> persons) {
+        requireNonNull(persons);
+        ArrayList<ReadOnlyPerson> personList = new ArrayList<ReadOnlyPerson>(persons);
+        for (int i = 0; i < personList.size(); i++) {
+            Person p = new Person(personList.get(i));
+            internalList.add(p);
+        }
+        assert CollectionUtil.elementsAreUnique(mappedList);
+    }
+
+    public UniquePersonList(){}
     /**
      * Returns true if the list contains an equivalent person as the given argument.
      */
@@ -48,6 +61,15 @@ public class UniquePersonList implements Iterable<Person> {
         internalList.add(new Person(toAdd));
     }
 
+    /** checkstyle comment, @TODO: David collate this please */
+    public void mergeFrom(UniquePersonList from) {
+        final Set<ReadOnlyPerson> alreadyInside = this.toSet();
+        from.internalList.stream()
+                .filter(tag -> !alreadyInside.contains(tag))
+                .forEach(internalList::add);
+
+        assert CollectionUtil.elementsAreUnique(internalList);
+    }
     /**
      * Replaces the person {@code target} in the list with {@code editedPerson}.
      *
@@ -84,6 +106,23 @@ public class UniquePersonList implements Iterable<Person> {
         return personFoundAndDeleted;
     }
 
+    //@@author hxy0229
+    /**
+     * Favorites the equivalent person from the list.
+     *
+     * @throws PersonNotFoundException if no such person could be found in the list.
+     */
+    public boolean favorite(ReadOnlyPerson toFavorite) throws PersonNotFoundException {
+        requireNonNull(toFavorite);
+        final boolean personFoundAndDeleted = internalList.contains(toFavorite);
+        if (!personFoundAndDeleted) {
+            throw new PersonNotFoundException();
+        }
+        return personFoundAndDeleted;
+    }
+    //@@author
+
+
     public void setPersons(UniquePersonList replacement) {
         this.internalList.setAll(replacement.internalList);
     }
@@ -101,6 +140,12 @@ public class UniquePersonList implements Iterable<Person> {
      */
     public ObservableList<ReadOnlyPerson> asObservableList() {
         return FXCollections.unmodifiableObservableList(mappedList);
+    }
+
+    /** checkstyle comment, @TODO: David collate this please */
+    public Set<ReadOnlyPerson> toSet() {
+        assert CollectionUtil.elementsAreUnique(internalList);
+        return new HashSet<>(internalList);
     }
 
     @Override

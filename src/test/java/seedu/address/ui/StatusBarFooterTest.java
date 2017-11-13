@@ -21,11 +21,10 @@ import seedu.address.model.AddressBook;
 
 public class StatusBarFooterTest extends GuiUnitTest {
 
-    private static final String STUB_SAVE_LOCATION = "Stub";
-    private static final String RELATIVE_PATH = "./";
-
     private static final AddressBookChangedEvent EVENT_STUB = new AddressBookChangedEvent(new AddressBook());
-
+    //@@author yanji1221
+    private static final int numberOfPerson = EVENT_STUB.data.getPersonList().size();
+    //@@author
     private static final Clock originalClock = StatusBarFooter.getClock();
     private static final Clock injectedClock = Clock.fixed(Instant.now(), ZoneId.systemDefault());
 
@@ -42,23 +41,23 @@ public class StatusBarFooterTest extends GuiUnitTest {
         // restore original clock
         StatusBarFooter.setClock(originalClock);
     }
-
+    //@@author yanji1221
     @Before
     public void setUp() {
-        StatusBarFooter statusBarFooter = new StatusBarFooter(STUB_SAVE_LOCATION);
+        StatusBarFooter statusBarFooter = new StatusBarFooter(numberOfPerson);
         uiPartRule.setUiPart(statusBarFooter);
 
         statusBarFooterHandle = new StatusBarFooterHandle(statusBarFooter.getRoot());
     }
-
+    //@@author
     @Test
     public void display() {
         // initial state
-        assertStatusBarContent(RELATIVE_PATH + STUB_SAVE_LOCATION, SYNC_STATUS_INITIAL);
+        assertStatusBarContent(SYNC_STATUS_INITIAL);
 
         // after address book is updated
         postNow(EVENT_STUB);
-        assertStatusBarContent(RELATIVE_PATH + STUB_SAVE_LOCATION,
+        assertStatusBarContent(
                 String.format(SYNC_STATUS_UPDATED, new Date(injectedClock.millis()).toString()));
     }
 
@@ -66,8 +65,7 @@ public class StatusBarFooterTest extends GuiUnitTest {
      * Asserts that the save location matches that of {@code expectedSaveLocation}, and the
      * sync status matches that of {@code expectedSyncStatus}.
      */
-    private void assertStatusBarContent(String expectedSaveLocation, String expectedSyncStatus) {
-        assertEquals(expectedSaveLocation, statusBarFooterHandle.getSaveLocation());
+    private void assertStatusBarContent(String expectedSyncStatus) {
         assertEquals(expectedSyncStatus, statusBarFooterHandle.getSyncStatus());
         guiRobot.pauseForHuman();
     }

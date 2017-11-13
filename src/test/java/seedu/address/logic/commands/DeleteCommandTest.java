@@ -1,3 +1,4 @@
+//@@author quangtdn
 package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertFalse;
@@ -8,6 +9,9 @@ import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Test;
 
@@ -20,19 +24,21 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.ReadOnlyPerson;
 
+
+
 /**
  * Contains integration tests (interaction with the Model) and unit tests for {@code DeleteCommand}.
  */
 public class DeleteCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-
     @Test
     public void execute_validIndexUnfilteredList_success() throws Exception {
         ReadOnlyPerson personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_PERSON);
-
-        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, personToDelete);
+        List<ReadOnlyPerson> listPersonsToDelete = new ArrayList<ReadOnlyPerson>();
+        listPersonsToDelete.add(personToDelete);
+        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, listPersonsToDelete);
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.deletePerson(personToDelete);
@@ -54,8 +60,10 @@ public class DeleteCommandTest {
 
         ReadOnlyPerson personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_PERSON);
+        List<ReadOnlyPerson> listPersonsToDelete = new ArrayList<ReadOnlyPerson>();
+        listPersonsToDelete.add(personToDelete);
+        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, listPersonsToDelete);
 
-        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, personToDelete);
 
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.deletePerson(personToDelete);
@@ -63,6 +71,7 @@ public class DeleteCommandTest {
 
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
     }
+
 
     @Test
     public void execute_invalidIndexFilteredList_throwsCommandException() {
@@ -74,29 +83,43 @@ public class DeleteCommandTest {
 
         DeleteCommand deleteCommand = prepareCommand(outOfBoundIndex);
 
-        assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(deleteCommand, model,
+                Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
     @Test
     public void equals() {
         DeleteCommand deleteFirstCommand = new DeleteCommand(INDEX_FIRST_PERSON);
         DeleteCommand deleteSecondCommand = new DeleteCommand(INDEX_SECOND_PERSON);
+        List<Index> deleteList = new ArrayList<>();
+        deleteList.add(INDEX_FIRST_PERSON);
+        deleteList.add(INDEX_SECOND_PERSON);
+        DeleteCommand deleteListCommand = new DeleteCommand(deleteList);
 
         // same object -> returns true
         assertTrue(deleteFirstCommand.equals(deleteFirstCommand));
+        assertTrue(deleteListCommand.equals(deleteListCommand));
 
         // same values -> returns true
         DeleteCommand deleteFirstCommandCopy = new DeleteCommand(INDEX_FIRST_PERSON);
         assertTrue(deleteFirstCommand.equals(deleteFirstCommandCopy));
 
+        DeleteCommand deleteListCommandCopy = new DeleteCommand(deleteList);
+        assertTrue(deleteListCommand.equals(deleteListCommandCopy));
+
         // different types -> returns false
         assertFalse(deleteFirstCommand.equals(1));
+        assertFalse(deleteListCommand.equals(1));
 
         // null -> returns false
         assertFalse(deleteFirstCommand.equals(null));
+        assertFalse(deleteListCommand.equals(null));
 
         // different person -> returns false
         assertFalse(deleteFirstCommand.equals(deleteSecondCommand));
+
+        // different number of input arguments -> return false
+        assertFalse(deleteFirstCommand.equals(deleteListCommand));
     }
 
     /**
@@ -117,3 +140,4 @@ public class DeleteCommandTest {
         assert model.getFilteredPersonList().isEmpty();
     }
 }
+//@@author

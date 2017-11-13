@@ -1,0 +1,169 @@
+= Quang Minh Nguyen - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: NeoXPro Manager
+NeoXPro is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-W10-B4/main/blob/master/collated/main/yanji1221.md[Functional code]] [https://github.com/CS2103AUG2017-W10-B4/main/blob/master/collated/test/quangtdn.md[Test code]] [https://github.com/CS2103AUG2017-W10-B4/main/blob/master/collated/unused/quangtdn.md[Unused code]] {give links to collated code files}
+
+=== Enhancement Added: `phone`
+
+==== External behavior
+Locating persons by phone number.
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=phone]
+
+Finds person whose phone numbers partially match with at least a phone number in the specified list
+Format: `phone NUMBER [MORE_NUMBERS]`
+
+****
+* The order of numbers being queried does not matter.
+* Only the phone number is searched.
+* Partial numbers will be matched e.b. '12345' will match '123456'
+****
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Searching a contact by phone number is extremely convenient for searching a person in NeoXPro when searching a contact by name is inefficient in a large contact list.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=phone]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Profile Page
+
+==== External behavior
+Allow user to optionally store the profile page of each person in contact list.
+The profile page for a person will appear in UI as long as it is stored.
+When a person is selected, his/her profile page will be loaded in UI.
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=addpara]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+With the profile page stored for each person, NeoXPRO enhances the user's experience.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=addprofile]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Improve `delete` command
+
+==== External behavior
+Using 'delete' command, user can now delete multiple persons from the contact list at a time.
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=delete]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Users now don't have to manually delete each contact at a time.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=delete]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: `export`
+
+==== External behavior
+Export the contact list of NeoXPRO into a text file.
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=export]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+With this feature, user can easily make use of the data in contact list.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=export]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Improve `Select` command
+
+==== External behavior
+When a person is selected, his/her profile page is displayed (if it's stored)
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=select]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Let users easily access social media and improve experience. Employers can also make use of this feature to quickly access candidates' CVs or profile pages.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=addprofile]
+
+#End of Extract#
+
+---
+=== Other contributions
+
+* Fix bugs due to merge conflicts for team (Pull requests https://github.com/CS2103AUG2017-W10-B4/main/pull/70[#70], https://github.com/CS2103AUG2017-W10-B4/main/pull/45[#45])
+* Write additional tests to increase coverage by 1.4% (Pull requests https://github.com/CS2103AUG2017-W10-B4/main/pull/89[#89], https://github.com/CS2103AUG2017-W10-B4/main/pull/99[#99])

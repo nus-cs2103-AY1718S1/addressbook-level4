@@ -1,0 +1,148 @@
+= Huang Xiangyuan - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: AddressBook - NeoxPro
+AddressBook - NeoxPro is a desktop address book application used for teaching Software Engineering principles.
+The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about
+6 kLoC.NeoXPro not only allows users to keep track of the personal information of their friends and acquaintances,
+it helps users to manage their everyday tasks too.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-W10-B4/main/blob/master/collated/main/hxy0229.md [Functional code]][https://github.com/CS2103AUG2017-W10-B4/main/blob/master/collated/test/hxy0229.md[Test code]][https://github.com/CS2103AUG2017-W10-B4/main/blob/master/collated/unused/hxy0229.md[Unused code]] {give links to collated code files}
+
+
+=== Enhancement Added: Make most `add` fields optional
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=addpara]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+When you try to add a person into a contact book, it is quite impossible to know his birthday, phone, email, etc. at once.
+Therefore, this feature is improved for accepting part of the information.
+
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=addpara]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Favorite a person
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=Favorite]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Help users to favorite a person so that they can find their favorite persons by 'listfav'.
+
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=Favorite]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Unfavorite a person
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=Unfavorite]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+When you need to stop keep track of someone, you can simply unfavorite him/her.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=Favorite]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: List all your favorite persons
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=Listfavorite]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+You could list all your favorite persons so you can easily find out who you are dealing with/interested in recently.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=Listfavorite]
+
+#End of Extract#
+
+---
+=== Enhancement Proposed:
+1. Group several people.
+2. Make event corresponding to a group.
+3. Add a person into a group.
+4. Remove a person from a group.
+5. Add password into the group.
+6. Add several different levels of favorite.
+7. Can favorite/unfavorite a group and list favorite groups.
+
+See [https://github.com/CS2103AUG2017-W10-B4/main/blob/master/collated/unused/hxy0229.md[Unused code]] for unfinished
+buggy enhancement...
+
+=== Other contributions
+Fix the help window problems that can happen to some computers.
+
+* Help other group to find bugs or make suggestion(Issue https://github.com/CS2103AUG2017-F11-B4/main/issues/50[#50])
+
+== Project: PowerPointLabs
+
+{Optionally (not graded), you may include other projects in your portfolio.}

@@ -111,7 +111,7 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
         int preExecutionSelectedCardIndex = getPersonListPanel().getSelectedCardIndex();
 
         executeCommand(command);
-        assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
+        assertApplicationDisplaysExpected("" + "" , expectedResultMessage, expectedModel);
 
         if (preExecutionSelectedCardIndex == expectedSelectedCardIndex.getZeroBased()) {
             assertSelectedCardUnchanged();

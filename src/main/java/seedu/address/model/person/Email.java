@@ -30,6 +30,15 @@ public class Email {
         this.value = trimmedEmail;
     }
 
+    public Email() throws IllegalValueException {
+        //requireNonNull(email);
+        String trimmedEmail = "unknown@email";
+        /*if (!isValidEmail(trimmedEmail)) {
+            throw new IllegalValueException(MESSAGE_EMAIL_CONSTRAINTS);
+        }*/
+        this.value = trimmedEmail;
+    }
+
     /**
      * Returns if a given string is a valid person email.
      */

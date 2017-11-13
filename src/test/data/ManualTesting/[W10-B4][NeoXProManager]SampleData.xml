@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addressbook>
+    <persons>
+        <name>Alex Yeoh</name>
+        <phone>87438807</phone>
+        <email>alexyeoh@example.com</email>
+        <birthday>1996/12/15</birthday>
+        <address>Blk 30 Geylang Street 29, #06-40</address>
+        <profile>twitter.com/alexyeoh84/</profile>
+        <tagged>friends</tagged>
+        <favorite>false</favorite>
+    </persons>
+    <persons>
+        <name>Bernice Yu</name>
+        <phone>99272758</phone>
+        <email>berniceyu@example.com</email>
+        <birthday>1997/11/09</birthday>
+        <address>Blk 30 Lorong 3 Serangoon Gardens, #07-18</address>
+        <profile>www.facebook.com/bernice.yu/</profile>
+        <tagged>colleagues</tagged>
+        <tagged>friends</tagged>
+        <favorite>false</favorite>
+    </persons>
+    <persons>
+        <name>Charlotte Oliveiro</name>
+        <phone>93210283</phone>
+        <email>charlotte@example.com</email>
+        <birthday>1996/04/13</birthday>
+        <address>Blk 11 Ang Mo Kio Street 74, #11-04</address>
+        <profile></profile>
+        <tagged>neighbours</tagged>
+        <favorite>false</favorite>
+    </persons>
+    <persons>
+        <name>David Li</name>
+        <phone>91031282</phone>
+        <email>lidavid@example.com</email>
+        <birthday>1995/06/03</birthday>
+        <address>Blk 436 Serangoon Gardens Street 26, #16-43</address>
+        <profile>twitter.com/davidlee/</profile>
+        <tagged>family</tagged>
+        <favorite>false</favorite>
+    </persons>
+    <persons>
+        <name>Irfan Ibrahim</name>
+        <phone>92492021</phone>
+        <email>irfan@example.com</email>
+        <birthday>1994/02/22</birthday>
+        <address>Blk 47 Tampines Street 20, #17-35</address>
+        <profile>soundcloud.com/jinsangbeats/</profile>
+        <tagged>classmates</tagged>
+        <favorite>false</favorite>
+    </persons>
+    <persons>
+        <name>Roy Balakrishnan</name>
+        <phone>92624417</phone>
+        <email>royb@example.com</email>
+        <birthday>1996/11/21</birthday>
+        <address>Blk 45 Aljunied Street 85, #11-31</address>
+        <profile>instagram.com/roy/</profile>
+        <tagged>colleagues</tagged>
+        <favorite>false</favorite>
+    </persons>
+    <persons>
+        <name>Chris Boo</name>
+        <phone>22446868</phone>
+        <email>chrisd@example.com</email>
+        <birthday>1996/12/03</birthday>
+        <address>35 Prince's George Park Residence, #26-02</address>
+        <profile>twitter.com/chrisboo/</profile>
+        <tagged>CS2103T</tagged>
+        <favorite>false</favorite>
+    </persons>
+    <persons>
+        <name>Neil Brian</name>
+        <phone>15428679</phone>
+        <email>nbrian@example.com</email>
+        <birthday>1995/01/24</birthday>
+        <address>608, Orchard Road, #01-11</address>
+        <profile>instargram.com/emusiclab/</profile>
+        <tagged>EML</tagged>
+        <tagged>CS2103T</tagged>
+        <favorite>false</favorite>
+    </persons>
+    <persons>
+        <name>Benz Koh</name>
+        <phone>54651818</phone>
+        <email>bk@example.com</email>
+        <birthday>1997/02/03</birthday>
+        <address>20 Clementi Ave 1</address>
+        <profile></profile>
+        <tagged>NUSHigh</tagged>
+        <favorite>false</favorite>
+    </persons>
+    <persons>
+        <name>Mai Duy Anh</name>
+        <phone>79724346</phone>
+        <email>mda@example.com</email>
+        <birthday>1995/11/25</birthday>
+        <address>26 College Ave E, Tembusu College, UTown</address>
+        <profile>twitter.com/mda/</profile>
+        <tagged>senior</tagged>
+        <tagged>NUSHigh</tagged>
+        <favorite>false</favorite>
+    </persons>
+    <persons>
+        <name>Shannon Tan</name>
+        <phone>79833432</phone>
+        <email>shatan@example.com</email>
+        <birthday>1997/03/13</birthday>
+        <address>2 Jurong East Central 1, #06-14</address>
+        <profile></profile>
+        <favorite>false</favorite>
+    </persons>
+    <persons>
+        <name>Kobe Bryant</name>
+        <phone>21313654</phone>
+        <email>kb@example.com</email>
+        <birthday>1978/08/23</birthday>
+        <address>1 Stadium Place</address>
+        <profile>www.facebook.com/lakers/</profile>
+        <tagged>BlackMamba</tagged>
+        <favorite>false</favorite>
+    </persons>
+    <persons>
+        <name>Edan Hazard</name>
+        <phone>84654657</phone>
+        <email>edchelsea@example.com</email>
+        <birthday>1990/11/26</birthday>
+        <address>Airport Blvd</address>
+        <profile>twitter.com/hazardeden10/</profile>
+        <tagged>ChelseaFC</tagged>
+        <favorite>false</favorite>
+    </persons>
+    <persons>
+        <name>Lewis Hamilton</name>
+        <phone>78465939</phone>
+        <email>lhmerc@example.com</email>
+        <birthday>1985/07/01</birthday>
+        <address>10 Bayfront Avenue</address>
+        <profile>www.instagram.com/lewishamilton/</profile>
+        <tagged>blessed</tagged>
+        <tagged>F1</tagged>
+        <tagged>Mercesdes</tagged>
+        <favorite>false</favorite>
+    </persons>
+    <persons>
+        <name>Frank Lampard</name>
+        <phone>45643842</phone>
+        <email>superfrank@example.com</email>
+        <birthday>1978/06/20</birthday>
+        <address>1 Stadium Dr</address>
+        <profile>www.facebook.com/franklampard/</profile>
+        <tagged>ChelseaFC</tagged>
+        <favorite>false</favorite>
+    </persons>
+    <persons>
+        <name>Mitch Advent</name>
+        <phone>13547978</phone>
+        <email>mitchy@example.com</email>
+        <birthday>1995/05/22</birthday>
+        <address>17 Kent Ridge Cres, Centre for the Arts Studio</address>
+        <profile>soundcloud.com/mitchadvent/</profile>
+        <tagged>EML</tagged>
+        <favorite>false</favorite>
+    </persons>
+    <persons>
+        <name>Lonzo Ball</name>
+        <phone>45618479</phone>
+        <email>bbb@example.com</email>
+        <birthday>1997/10/27</birthday>
+        <address>37 Queensway</address>
+        <profile>twitter.com/ZO2_/</profile>
+        <tagged>BigBaller</tagged>
+        <tagged>Lakers</tagged>
+        <favorite>false</favorite>
+    </persons>
+    <persons>
+        <name>Lasse Urpalainen</name>
+        <phone>32231547</phone>
+        <email>matumbaman@example.com</email>
+        <birthday>1995/03/03</birthday>
+        <address>6 Raffles Boulevard, #02-237/247 Marina Square</address>
+        <profile>twitch.tv/matumbaman/</profile>
+        <tagged>TeamLiquid</tagged>
+        <tagged>Dota</tagged>
+        <tagged>TIWinner</tagged>
+        <favorite>false</favorite>
+    </persons>
+    <persons>
+        <name>Maroun Merhej</name>
+        <phone>31576442</phone>
+        <email>gh@example.com</email>
+        <birthday>1995/02/17</birthday>
+        <address>6 Raffles Boulevard, #02-237/247 Marina Square</address>
+        <profile>dotabuff.com/esports/players/101356886/</profile>
+        <tagged>TI7MVP</tagged>
+        <tagged>TeamLiquid</tagged>
+        <tagged>Dota</tagged>
+        <favorite>false</favorite>
+    </persons>
+    <persons>
+        <name>HeeJun Lee</name>
+        <phone>98333875</phone>
+        <email>hjl@example.com</email>
+        <birthday>1996/03/16</birthday>
+        <address>45 Clementi Ave 3, #04-04</address>
+        <profile></profile>
+        <tagged>friends</tagged>
+        <favorite>false</favorite>
+    </persons>
+    <tags>EML</tags>
+    <tags>ChelseaFC</tags>
+    <tags>blessed</tags>
+    <tags>neighbours</tags>
+    <tags>NUSHigh</tags>
+    <tags>F1</tags>
+    <tags>friends</tags>
+    <tags>senior</tags>
+    <tags>BlackMamba</tags>
+    <tags>colleagues</tags>
+    <tags>classmates</tags>
+    <tags>CS2103T</tags>
+    <tags>family</tags>
+    <tags>Mercesdes</tags>
+    <tags>BigBaller</tags>
+    <tags>Lakers</tags>
+    <tags>TeamLiquid</tags>
+    <tags>Dota</tags>
+    <tags>TIWinner</tags>
+    <tags>TI7MVP</tags>
+    <events>
+        <name>IS1103 quiz</name>
+        <date>2017-11-15</date>
+        <description>Check with Hien</description>
+    </events>
+    <events>
+        <name>Last CS2101 class</name>
+        <date>2017-11-16</date>
+        <description></description>
+    </events>
+    <events>
+        <name>Dinner with HJ</name>
+        <date>2017-11-17</date>
+        <description>Book a table</description>
+    </events>
+    <events>
+        <name>last EML session</name>
+        <date>2017-12-18</date>
+        <description>return Bryan equipment</description>
+    </events>
+</addressbook>
