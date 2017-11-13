@@ -306,7 +306,7 @@ public class ExportCommandParser implements Parser<ExportCommand> {
         String[] splitArgs = userInput.trim().split(regex, 2);
 
         String path;
-        if (splitArgs.length > 0) {
+        if (splitArgs.length > 1) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ExportCommand.MESSAGE_USAGE));
         } else {
             path = splitArgs[0];

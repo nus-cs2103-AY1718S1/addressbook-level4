@@ -220,7 +220,7 @@
         <expiryDate></expiryDate>
         <tagged>classmates</tagged>
         <group>none</group>
-    </persons>    
+    </persons>
     <persons>
         <name>David Sanders</name>
         <phone>38473628</phone>
@@ -242,5 +242,5 @@
         <expiryDate></expiryDate>
         <tagged>classmates</tagged>
         <group>none</group>
-    </persons>    
+    </persons>
 </addressbook>
