@@ -468,10 +468,12 @@ public boolean equals(Object other) {
 ----
 
 The method above is defined in `SwaproomCommand.java`. It is important to note that two swaproom commands with their residents' indexes swapped are still equal to each other. For example the following commands are equal:
+
 * `swaproom 3 4`
 * `swaproom 4 3`
 
 The command has a alias `sr`. So, the following commands are equivalent:
+
 * `swaproom 3 4`
 * `sr 3 4`
 
@@ -914,6 +916,104 @@ private static String getColorForTag(String tag) {
 * Do not use `element.setStyle()` unless there is no way using CSS to achieve the same. Using such methods induces difficulty in tracking the source of the styling making it cumbersome to edit later.
 // end::styling[]
 
+
+// tag::eventsbook[]
+=== Events and EventBook
+In version 1.4 and above, the application has been expanded to allow not only list of `Residents` but also of `Events`. The rationale behind is to allow the hostel management staff be aware of the events taking place in the hostel and make necessary preparations for the same. This section breifly explains the implementation of `Events` and the `EventBook` at four different levels: `Model` `Logic` `UI` and `Storage`
+
+==== Model
+At the model level, the `Event` class describes the behavior of an `Event` object. It has the following fields:
+
+* `Title`
+* `Location`
+* `Datetime`
+* `Description`
+
+Each of these fields have a class of their own within `seedu/room/model/event` and these classes contain the definitions and validations for each field. For example lets look at a snippet from `Datetime.java`:
+
+[source,java]
+----
+/**
+ * Returns true if a given string is a valid datetime in the format dd/mm/yyyy hhmm k or dd/mm/yyyy hhmm to hhmm.
+ */
+public static boolean isValidDatetime(String test) {
+    String[] components = test.split(" ");
+    String date = components[0];
+    String startTime = components[1];
+
+    //If the format is dd/mm/yyyy hhmm k
+    if (components.length == 3) {
+        String duration = components[2];
+        return isValidDate(date) && isValidTime(startTime) && isValidDuration(duration);
+    //If the format is dd/mm/yyyy hhmm to hhmm
+    } else if (components.length == 4) {
+        String endtime = components[3];
+        return isValidDate(date) && isValidTime(startTime) && isValidTime(endtime);
+    } else {
+        return false;
+    }
+}
+----
+
+This snippet shows how the application checks for invalid an `Datetime` when a user tries to add an event to the EventBook. Note that currently, the current implementation of `Datetime` disallows multi-day Events.
+
+It is important to note that two Event objects are considered equivalent (i.e .equals returns true) if their `Title`, `Location` and `Datetime` are the equivalent irregardless of whether the `Description` is the same or not. This is because a user may try to add an Event again if he/see forgets that it has already been added before. In such a senario, it is very unlikely that the `Description` for both the attempts to add the events will be the same but the `Title`, `Location` and `Datetime` would probably be the same.
+
+If an event is being added to the `EventBook` when an equivalent event already exists, a `DuplicateEventException` will be thrown by the `Model`
+
+
+`EventBook` implements a `ReadOnlyEventBook` and is responsible for maintaining the list of Events for the Logic and UI to query and update. The notable methods defined for `EventBook` are:
+
+* `setEvents(List<? extends ReadOnlyEvent> events)`
+* `resetData(ReadOnlyEventBook newData)`
+* `addEvent(ReadOnlyEvent e)`
+* `updateEvent(ReadOnlyEvent target, ReadOnlyEvent editedReadOnlyEvent)`
+* `removeEvent(ReadOnlyEvent key)`
+* `sortBy(String sortCriteria)`
+* `getEventList()`
+
+Some important things to note about `EventBook`:
+
+* By default, the events are sorted by `Title`
+* Querying for events may throw a `EventNotFoundException` and adding events may throw a `DuplicateEventException`
+
+Possible Future Implementations:
+
+* Implement a better sort for `Events`. Although they can be sorted by * `Title`, `Location`, `Datetime` and `Description`, a user would like to see upcoming events first. So, a possible sort criteria would be `Number of days until the Event`. So, the upcoming events would be at the top of the list and the past ones and others much later in the future would be further down.
+
+
+==== Logic
+At the logic level, there are two commands which allow addition and deletion of events:
+
+* Add Event Command: `addevent` or `ae`
+* Delete Event Command: `deleteevent` or `de`
+
+Both these commands follow the general implementations of an `Undoable Command`. For more details look at their respective sections in the Developer Guide: link:DeveloperGuide.adoc[addEvent] link:DeveloperGuide.adoc[deleteEvent]
+
+==== Storage
+The implementation of EventBook storage follows the ResidentBook storage closely. The main methods defined by the `EventBookStorage` interface are:
+
+* `getEventBookFilePath()`
+* `readEventBook()`
+* `readEventBook(String filePath)`
+* `saveEventBook(ReadOnlyEventBook eventBook)`
+* `saveEventBook(ReadOnlyEventBook eventBook, String filePath)`
+* `backupEventBook(ReadOnlyEventBook eventBook)`
+
+The EventBook is stored in an xml file at `data/eventbook.xml` using a `XmlSerializableEventBook` object. When the application is started, the contents of this xml file are read and passed to the Model. If there is no such file found, sample data is read from `SampleDataUtil` and the xml file is only created if any events are added or deleted from this sample data.
+
+==== UI
+The `EventBook` is displayed to the user as an `EventCard` in an `EventListPanel`. The `EventCard` displays all the necessary information about the event such as the title, date, time, location and description.
+
+To display this data in presentable manner and not clutter the UI of the application, a `TabPane` is used. A `TabPane` allows users to switch between the Residents List and the Events List. To switch between the tabs, a user can either use the `Switch Tab` command or a mouse click on either of the `Tabs`
+
+Possible Future Implementations:
+
+* Remove unnecessary details such as `Description` from the `EventCard`.
+* Allow `EventCards` to be selectable so that when selected, a Panel with all the details about the events is displayed
+* Allow the Calendar to be clickable and selectable so that when a day is selected, the Events for the day are displayed.
+
+// end::eventsbook[]
 
 
 == Documentation

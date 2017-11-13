@@ -91,7 +91,7 @@ public class Datetime {
     }
 
     /**
-     * Returns true if a given string is a valid datetime in the format dd/mm/yyyy hhmm k.
+     * Returns true if a given string is a valid datetime in the format dd/mm/yyyy hhmm k or dd/mm/yyyy hhmm to hhmm.
      */
     public static boolean isValidDatetime(String test) {
         String[] components = test.split(" ");

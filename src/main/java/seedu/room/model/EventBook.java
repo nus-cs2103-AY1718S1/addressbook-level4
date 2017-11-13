@@ -100,9 +100,9 @@ public class EventBook implements ReadOnlyEventBook {
         }
     }
 
-    //// sort resident book
+    //// sort event book
     /**
-     * Sorts the UniquePersonList, persons.
+     * Sorts the UniqueEventList, Events.
      *
      * @throws AlreadySortedException if the list is already sorted by given criteria.
      */
