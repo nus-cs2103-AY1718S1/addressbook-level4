@@ -87,10 +87,10 @@ public class CalendarView extends UiPart<Region> {
                         if (eventsByDate.containsKey(item)) {
                             setTooltip(new Tooltip(
                                     StringUtil.multiStringPrint(eventsByDate.get(item), "\n")));
-                            if (!item.isEqual(LocalDate.now())) {
-                                setStyle("-fx-background-color: #a7a7a7; -fx-text-fill: #ffffff;");
 
-                            }
+                            setStyle("-fx-background-color: #a7a7a7; -fx-text-fill: #ffffff;");
+
+
                         }
                     }
                 };

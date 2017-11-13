@@ -15,7 +15,7 @@ import seedu.address.model.event.Event;
 //@@author eldriclim
 
 /**
- * Utility methods for checking event overlaps
+ * Utility class for handling DateTime operations.
  */
 public class DateTimeUtil {
 
@@ -30,9 +30,14 @@ public class DateTimeUtil {
         return LocalDateTime.parse(input, EVENT_DATETIME_FORMAT);
     }
 
+    
+
     /**
-     * Extracts duration of event if exist.
-     * See header comment of this class regarding the use of {@code Optional} parameters.
+     * Returns a Duration object based on the durationInput.
+     *
+     * @param durationInput user input for duration
+     * @return the parsed Duration object
+     * @throws IllegalValueException if time does not conform to the proper standards
      */
     public static Duration parseDuration(String durationInput) throws IllegalValueException {
 
@@ -75,37 +80,37 @@ public class DateTimeUtil {
 
 
     /**
-     * Checks if two events on a timeline overlaps
+     * Returns true if there is an overlap between the given events.
      *
-     * @param e1 event to compare
-     * @param e2 event to compare against
-     * @return true if overlap is detected; else return false
+     * @param event1 event to compare
+     * @param event2 event to compare against
+     * @return true if overlap is detected
      */
-    public static boolean checkEventClash(Event e1, Event e2) {
+    public static boolean checkEventClash(Event event1, Event event2) {
 
-        if (e1.getEventTime().getStart().isEqual(e2.getEventTime().getStart())) {
+        if (event1.getEventTime().getStart().isEqual(event2.getEventTime().getStart())) {
             return true;
         }
 
-        if (e1.getEventTime().getEnd().isEqual(e2.getEventTime().getEnd())) {
+        if (event1.getEventTime().getEnd().isEqual(event2.getEventTime().getEnd())) {
             return true;
         }
 
-        if (isBetween(e1.getEventTime().getEnd(), e2)) {
+        if (isBetween(event1.getEventTime().getEnd(), event2)) {
             return true;
         }
 
-        if (isBetween(e1.getEventTime().getStart(), e2)) {
+        if (isBetween(event1.getEventTime().getStart(), event2)) {
             return true;
         }
 
-        if (e1.getEventTime().getStart().isAfter(e2.getEventTime().getStart())
-                && e1.getEventTime().getEnd().isBefore(e2.getEventTime().getEnd())) {
+        if (event1.getEventTime().getStart().isAfter(event2.getEventTime().getStart())
+                && event1.getEventTime().getEnd().isBefore(event2.getEventTime().getEnd())) {
             return true;
         }
 
-        if (e2.getEventTime().getStart().isAfter(e1.getEventTime().getStart())
-                && e2.getEventTime().getEnd().isBefore(e1.getEventTime().getEnd())) {
+        if (event2.getEventTime().getStart().isAfter(event1.getEventTime().getStart())
+                && event2.getEventTime().getEnd().isBefore(event1.getEventTime().getEnd())) {
             return true;
         }
 
@@ -114,14 +119,15 @@ public class DateTimeUtil {
     }
 
     /**
-     * Checks if a given time lines between an event
+     * Returns true if given time lies within the duration of an event.
      *
-     * @param t1 a given time
-     * @param e1 an event with a specified duration (start time & end time)
-     * @return true if t1 lines within e1; else returns false
+     * @param time to check against
+     * @param event with a specified duration (start time & end time)
+     * @return true if time is within event duration
+     * @see Event
      */
-    public static boolean isBetween(LocalDateTime t1, Event e1) {
-        if (t1.isAfter(e1.getEventTime().getStart()) && t1.isBefore(e1.getEventTime().getEnd())) {
+    public static boolean isBetween(LocalDateTime time, Event event) {
+        if (time.isAfter(event.getEventTime().getStart()) && time.isBefore(event.getEventTime().getEnd())) {
             return true;
         } else {
             return false;
@@ -129,20 +135,20 @@ public class DateTimeUtil {
     }
 
     /**
-     * Checks to see if date lies in between Event start time and end time.
+     * Returns true if duration of an event consist of given date.
      *
-     * @param event
-     * @param refDate
-     * @return
+     * @param event the event to check
+     * @param referenceDate the date to check against
+     * @return true if date is within event duration
      */
-    public static boolean containsReferenceDate(Event event, LocalDate refDate) {
+    public static boolean containsReferenceDate(Event event, LocalDate referenceDate) {
         LocalDate startDate = event.getEventTime().getStart().toLocalDate();
         LocalDate endDate = event.getEventTime().getEnd().toLocalDate();
 
         return
-                startDate.isEqual(refDate)
-                        || endDate.isEqual(refDate)
-                        || (startDate.isBefore(refDate) && endDate.isAfter(refDate));
+                startDate.isEqual(referenceDate)
+                        || endDate.isEqual(referenceDate)
+                        || (startDate.isBefore(referenceDate) && endDate.isAfter(referenceDate));
     }
 
 }

@@ -8,7 +8,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author eldriclim
 /**
- * When a selection is made in the EventListPanel
+ * Represents a selection change in the Event List Panel
  */
 public class EventPanelSelectionChangedEvent extends BaseEvent {
 

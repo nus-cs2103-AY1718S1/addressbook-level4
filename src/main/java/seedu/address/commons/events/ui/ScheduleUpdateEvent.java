@@ -6,7 +6,7 @@ import seedu.address.model.event.Event;
 
 //@@author eldriclim
 /**
- * When schedule is being updated
+ * Represents an update in address book master event list
  */
 public class ScheduleUpdateEvent extends BaseEvent {
 

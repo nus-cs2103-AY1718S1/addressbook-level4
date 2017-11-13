@@ -80,6 +80,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.events.setEvents(events);
     }
 
+    //@@author eldriclim
     /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
@@ -103,6 +104,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         syncMasterEventListWith(persons);
         syncMasterEventListMembers(events);
     }
+    //@@author
 
     //// person-level operations
 
@@ -123,9 +125,11 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.add(newPerson);
     }
 
+    //@@author eldriclim
     public void sortPerson(Comparator<ReadOnlyPerson> sortType, boolean isDescending) throws EmptyListException {
         persons.sort(sortType, isDescending);
     }
+    //@@author
 
     /**
      * Replaces the given person {@code target} in the list with {@code editedReadOnlyPerson}.
@@ -207,9 +211,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         tags.add(t);
     }
 
-    //// event-level operations
+
 
     //@@author eldriclim
+    //// event-level operations
 
     /**
      * Replaces the given person {@code target} in the list with {@code editedReadOnlyPerson}.

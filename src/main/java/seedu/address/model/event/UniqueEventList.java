@@ -188,15 +188,15 @@ public class UniqueEventList implements Iterable<Event> {
                 }
                 //End of Priority 1
 
-                //Priority 2: This section pushes events on selected date to top
-                if (o1.getEventTime().getStart().toLocalDate().equals(selectedDate)
-                        && !o2.getEventTime().getStart().toLocalDate().equals(selectedDate)) {
+                //Priority 2: This section pushes ongoing events to top of list (with reference to today)
+                if (DateTimeUtil.containsReferenceDate(o1, today.toLocalDate())
+                        && !DateTimeUtil.containsReferenceDate(o2, today.toLocalDate())) {
                     return -1;
-                } else if (o2.getEventTime().getStart().toLocalDate().equals(selectedDate)
-                        && !o1.getEventTime().getStart().toLocalDate().equals(selectedDate)) {
+                } else if (!DateTimeUtil.containsReferenceDate(o1, today.toLocalDate())
+                        && DateTimeUtil.containsReferenceDate(o2, today.toLocalDate())) {
                     return 1;
-                } else if (o1.getEventTime().getStart().toLocalDate().equals(selectedDate)
-                        && o2.getEventTime().getStart().toLocalDate().equals(selectedDate)) {
+                } else if (DateTimeUtil.containsReferenceDate(o1, today.toLocalDate())
+                        && DateTimeUtil.containsReferenceDate(o2, today.toLocalDate())) {
                     if (o1.getEventTime().getStart().isBefore(o2.getEventTime().getStart())) {
                         return -1;
                     } else if (o2.getEventTime().getStart().isBefore(o1.getEventTime().getStart())) {
