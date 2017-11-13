@@ -27,14 +27,14 @@ Here are three extra-special features Intelli offers that may convince you why:
 
 * Add named relationships between your contacts
 
-Intelli enables you to easily keep track of who's who in vast and complicated social networks
+Intelli enables you to easily keep track of who's who in vast and complicated social networks.
 
 * Add and edit confidence estimates to relationships between contacts
 
 Worried about getting the relationship between A and B wrong? Not quite sure
 that A and B are indeed longstanding nemeses? As your relationship tracker, Intelli
 will help to remind you of the uncertainty surrounding a particular relationship,
-so that you can update it in the future when you gain more valuable information
+so that you can update it in the future when you gain more valuable information.
 
 * Visualise detailed relationships in a graph
 
@@ -42,7 +42,7 @@ Sometimes, even the best private investigators can get entangled in the complex 
 of relationships which they are investigating. However, with Intelli you can obtain a graphic
 overview of these relationships, allowing you to see named relationships coupled with
 confidence estimates so that you no longer have to fear keeping track of the messy networks
-among your contacts
+among your contacts.
 
 Still doubting why? Feel free to browse the full catalogue of features in Intelli by
 visiting the <<UserGuide#, user guide>>!
