@@ -14,7 +14,7 @@ image::LenPortfolioIntroduction.png[width="800"]
 _Figure 1.1 : Illustration of cherBook_
 
 The user can interact with it using a `command line interface`, and it has a `graphical user interface` created with `JavaFX`.
-The application is written in `Java`, and has about 8 thousand lines of code (kLoC).
+The application is written in `Java`.
 
 *Code contributed*: [https://github.com/Lenaldnwj/main/blob/master/collated/main/Lenaldnwj.md[Functional code]] [https://github.com/Lenaldnwj/main/blob/master/collated/test/Lenaldnwj.md[Test code]]
 
