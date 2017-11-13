@@ -17,9 +17,15 @@ image:CoverPage.png[width="350"]
 
 == Introduction
 
-At the Heart of our Design is the idea that every man wants to be a Gentleman. Encompassing that idea is a system that respects you as you respect it. It provides the gentleman with exactly what he needed, when he needs it. Nothing more, nothing less.
+At the Heart of our Design is the idea that every man wants to be a Gentleman.
+Encompassing that idea is a system that respects you as you respect it.
+It provides the gentleman with exactly what he needed, when he needs it.
+Nothing more, nothing less.
 
-Gentleman's Guide is a contact book for the elite. It is a command line based programming with a GUI.
+Gentleman's Guide is a contact book for the elite.
+It is a command line based programming with a GUI. It it targeted to work for the sophisticated gentleman,
+with every aspect of it built to cater to them. The UI captures a Gentleman's eyes from the first moment their eyes gaze upon it.
+With rule 18 of the Gentleman staring straight at them, they will forever remember who they are, a Gentleman.
 
 This developer guide will describe the design and implementation of Gentleman's Guide. It will help you understand how Gentleman's Guide works and how you can further contribute to its development. We have organised this guide in a top-down manner so that you can understand the big picture before moving on to the more detailed sections.
 
