@@ -183,7 +183,9 @@ public class SyncCommand extends Command {
                 String id = person.getResourceName();
                 if (!syncedIDs.contains(id)) {
                     seedu.address.model.person.Person key = convertGooglePerson(person);
-                    if (key == null) continue;
+                    if (key == null) {
+                        continue;
+                    }
                     if (!hashAbc.containsKey(key)) {
                         addAContact(person);
                     } else {
@@ -554,8 +556,8 @@ public class SyncCommand extends Command {
      * @return
      */
 
-    protected HashMap<seedu.address.model.person.Person, ReadOnlyPerson> constructHashAbc
-    (List<ReadOnlyPerson> personList) {
+    protected HashMap<seedu.address.model.person.Person, ReadOnlyPerson> constructHashAbc(
+            List<ReadOnlyPerson> personList) {
         HashMap<seedu.address.model.person.Person, ReadOnlyPerson> result = new HashMap<>();
 
         personList.forEach(e -> {
@@ -565,7 +567,6 @@ public class SyncCommand extends Command {
             } catch (Exception ex) {
                 logger.severe("Hashing error in constructHashAbc");
             }
-            
         });
 
         return result;
@@ -618,8 +619,6 @@ public class SyncCommand extends Command {
             } catch (Exception ex) {
                 logger.severe("Error in constructHashGoogle");
             }
-            
-
         });
 
         return result;
