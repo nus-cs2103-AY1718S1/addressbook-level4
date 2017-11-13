@@ -30,6 +30,9 @@ public class EventTimeTest {
         // Add more boundary tests
         assertFalse(EventTime.isValidEventTime("29/02/2100")); // not a leap year
         assertFalse(EventTime.isValidEventTime("30/02/2000")); // No 30th day in Feb
+        assertFalse(EventTime.isValidEventTime("3/02/2000")); // should be 03 instead of 3
+        assertFalse(EventTime.isValidEventTime("30/2/2000")); // should be 02 instead of 2
+        assertFalse(EventTime.isValidEventTime("30/02/1899")); //Before year 1900
 
         assertTrue(EventTime.isValidEventTime("29/02/2000"));
         assertTrue(EventTime.isValidEventTime("29/02/2004"));

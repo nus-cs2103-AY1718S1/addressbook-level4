@@ -54,7 +54,8 @@ public class DisjoinCommandTest {
     public void testNotParticipantFail() {
         String expectedMessage = DisjoinCommand.MESSAGE_PERSON_NOT_PARTICIPATE;
         final Index validIndex = INDEX_FIRST_EVENT;
-        final Index invalidIndex = Index.fromOneBased(6);
+        // last person does not join any event
+        final Index invalidIndex = Index.fromOneBased(model.getFilteredPersonList().size());
         Model actualModel = new ModelManager(model.getAddressBook(), model.getEventList(), new UserPrefs());
         DisjoinCommand noParticipantCommand = prepareCommand(invalidIndex, validIndex, actualModel);
 

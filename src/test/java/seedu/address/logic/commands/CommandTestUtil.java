@@ -286,7 +286,7 @@ public class CommandTestUtil {
         Person person = (Person) model.getFilteredPersonList().get(personIndex.getZeroBased());
         Event event = (Event) model.getFilteredEventList().get(eventIndex.getZeroBased());
         try {
-            model.joinEvent(person,event);
+            model.joinEvent(person, event);
         } catch (PersonHaveParticipateException e) {
             throw new AssertionError("Impossible", e);
         } catch (HaveParticipateEventException e) {

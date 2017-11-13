@@ -4,7 +4,8 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 = Jiang Chunhui - Project Portfolio
 
 == Project: Planno
-Planno is a desktop address book application used for managing events and persons. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java.
+Planno is a desktop application used for managing multiple events and contacts at the same time.
+The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java.
 
 *Code contributed*: [https://github.com/CS2103AUG2017-W14-B4/main/tree/master/collated/main/Adoby7.md[Functional code]] [https://github.com/CS2103AUG2017-W14-B4/main/blob/master/collated/test/Adoby7.md[Test code]]
 
@@ -23,8 +24,11 @@ include::../UserGuide.adoc[tag=undoredo]
 
 ==== Justification
 
-The current design is that each Undoable command knows how to undo and redo individually.
-Compare to the original design: saving whole address book for undoing, my design will save a lot of memory.
+The current design is that each Undoable command knows how to undo and redo individually. +
+Compare to the original design: saving whole address book for undoing, my design will save a lot of memory. +
+Since different UndoableCommand have different behaviors of undo/ redo, we need to implement and test them individually. +
+The tests for undo/ redo commands are similar, because the procedure to test them are similar: create two commands,
+put them into UndoRedoStack, and test whether it works when there are two/one/zero commands in the stack.
 
 ==== Implementation
 
@@ -53,6 +57,7 @@ include::../UserGuide.adoc[tag=editE]
 ==== Justification
 
 This allows the user to modify an existing event.
+Currently the command will create a new event, with attributes modified, and replace the original event in the list.
 
 ==== Implementation
 
@@ -81,8 +86,8 @@ include::../UserGuide.adoc[tag=disjoin]
 
 ==== Justification
 
-Persons and events should interact with each other. +
-It makes no sense to create two separate lists.
+Persons and events should interact with each other, otherwise it makes no sense to create two separate lists. +
+Current design is: Person and Event references to each other to indicate whether a person is join / not join that event. +
 
 ==== Implementation
 
@@ -110,7 +115,9 @@ include::../UserGuide.adoc[tag=portrait]
 
 ==== Justification
 
-User can attach a portrait to the person to identify him easily
+User can attach a portrait to the person to identify him easily.
+Current design is: the model only know the portrait path, and it only loads the image in UI stage.
+This can avoid storing images, and save memory.
 
 ==== Implementation
 
@@ -123,10 +130,20 @@ include::../DeveloperGuide.adoc[tag=portrait]
 
 ---
 
-=== Enhancement Proposed: Add command `remark`
+=== Enhancement Proposed for v2.0: Log in Facebook: Login
 
-{Explain similar to the Undo/Redo feature above.}
+==== External behavior
+User can type the command `login`, then a Facebook login page will pop up.
+User can then enter his Facebook account and password, and import his friends' contact into Planno.
+
+==== Justification
+User can use it to import many contacts at the same time.
+
+==== Implementation
+We should connect to Facebook API to access Facebook login page and import the contacts. +
+With the API, all Planno needs to do is to pop up the login page.
 
 === Other contributions
 Setting up the Gradlew tool, maintain the dependencies
+Refactoring model & logic codes
 
