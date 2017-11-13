@@ -385,6 +385,7 @@ Tips
 * You can use the favourite command together with the todo command so that you do not miss out on any tasks assigned.
 * Using the sort command will still place your favourite contacts at the top of your contact list, but your favourite contacts will be sorted as a separate list.
 ****
+// end::favourite[]
 
 // tag::export[]
 === Exporting address book : `export`
