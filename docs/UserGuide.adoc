@@ -520,6 +520,7 @@ What is better then starting off a day right feeling good.
 These quotes changes every time the home page displayed through either calling then `home` command or starting the application.
 //end::homepanel[]
 
+//tag::home[]
 ===== Switching to home screen: `home` `Since v1.5`
 
 Switch all panels on the right to the home page. +
@@ -535,6 +536,7 @@ Examples:
 
 image::HomeImage.png[width="800"]
 _Figure 5.3.1.1 : Returns to the home page of cherBook_
+//end::home[]
 
 // tag::studentdetailspanel[]
 ==== Student Details Panel `Since v1.3`
