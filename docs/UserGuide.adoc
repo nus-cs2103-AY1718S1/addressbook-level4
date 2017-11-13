@@ -299,7 +299,7 @@ Resets the debt of the 1st person to zero and sets the date of repayment in his/
 * `select 2` +
 `repaid` +
 Resets the debt of the 2nd person to zero and sets the date of repayment in his/her record.
-// tag::repaid[]
+// end::repaid[]
 
 === Deleting a person : `delete`
 

@@ -518,44 +518,44 @@ The List mechanism is facilitated by commands which use `Logic` interface to obt
 
 [source,java]
 ----
+@Override
 public CommandResult execute() {
-        model.changeListTo(COMMAND_WORD);
-        model.updateFilteredBlacklistedPersonList(PREDICATE_SHOW_ALL_BLACKLISTED_PERSONS);
-        return new CommandResult(MESSAGE_SUCCESS);
+    requireNonNull(model);
+    model.deselectPerson();
+    model.changeListTo(COMMAND_WORD);
+    model.updateFilteredBlacklistedPersonList(PREDICATE_SHOW_ALL_BLACKLISTED_PERSONS);
+    String currentList = ListObserver.getCurrentListName();
+    return new CommandResult(currentList + MESSAGE_SUCCESS);
 }
 ----
 
 Specifically for `blacklist` command, it calls the `getFiltererdBlacklistedPersons()` method residing in the `Logic` interface. `LogicManager` subsequently calls `Model` interface. `Model` uses `ModelManager` class to handle the command and thereafter calls `ReadOnlyAddressBook` interface to handle the request. `ReadOnlyAddressBook` uses `AddressBook` class to handle this request.
 
-In the `AddressBook` class, there is only one `persons` variable that stores all `ReadOnlyPerson` class objects. The blacklisted persons are obtained by running a check on all debtors residing in this variable. The check is executed using the `ReadOnlyPerson#getIsBlacklisted()` method, as shown below:
+In the `AddressBook` class, there is only one `persons` variable that stores all `ReadOnlyPerson` class objects. The blacklisted persons are obtained by running a check on all debtors residing in this variable. The check is executed using the `asObservableBlacklist()` method, as shown below:
+
 [source,java]
 ----
-public UniquePersonList getBlacklistedPersons() {
-    UniquePersonList blacklistedPersons = new UniquePersonList();
-    for (Person person : persons.getInternalList()) {
-        if (person.getIsBlacklisted()) {
-            try {
-                blacklistedPersons.add(person);
-            } catch (DuplicatePersonException e) {
-                assert false : "This is not possible as prior checks have been done";
-            }
-        }
-    }
-    return blacklistedPersons;
+public ObservableList<ReadOnlyPerson> asObservableBlacklist() {
+    return FXCollections.unmodifiableObservableList(mappedList.stream()
+            .filter(person -> person.isBlacklisted()).collect(toCollection(FXCollections::observableArrayList)));
 }
 ----
 
 Although this way of implementation seems inefficient, it supports robust synchronisation among the various other lists. For example, if a person is deleted from the masterlist, he will also be deleted from the blacklist. Likewise for various other commands that changes the `ReadOnlyPerson` object. Thus, it is efficient in this aspect. Moreover, this implementation sets the groundwork for future implementations of various other lists.
 
+One other important aspect to this implementation is that commands now have exclusive control over the list. This means that commands will only work on the persons in the current displayed list. For example, `find` command will only search and find persons in the current displayed list. It will not try to search in the masterlist, where all the contacts are stored. `sort` command will only sort the persons in the current displayed list. If the current displayed list is the blacklist, the output of the `sort` command will just be a list of sorted blacklisted persons.
+
+However, if a `Person` is modified by a command, the modification will be reflected across all other lists. For example, if a person exists in both the blacklist and the overdue list, modifications done by an `edit` command in the blacklist will also update the overdue list. These changes can be observed when the user switches to the overdue list using the `overduelist` command.
+
 ==== Design Considerations:
 
-**Aspect:** Other commands still work in Blacklist mode(`Add`, `Delete` command) +
-**Alternative 1 (current choice):** Inform user in user guide to use only specific commands for that list +
-**Pros:** Easy to implement. +
-**Cons:** Performance issues as users are bound to make a mistake. +
-**Alternative 2:** Restrict other command usages in certain lists +
-**Pros:** Users will never make a mistake sending the wrong person to the wrong list. +
-**Cons:** Implementation is complicated and thus implementation has to revisited whenever new commands are introduced.
+**Aspect:** Syncing of lists +
+**Alternative 1 (current choice):** Use manual syncing methods to ensure lists are in sync +
+**Pros:** Easy to extend for future implementations. +
+**Cons:** Methods used for syncing are less intuitive and difficult to comprehend. +
+**Alternative 2:** Create new `persons` variable for each list in `Addressbook` class +
+**Pros:** Implementation is easier to comprehend. +
+**Cons:** Waste of memory compared to current implementation which only has 1 `persons` variable in `Addressbook` class.
 // end::list[]
 
 // tag::cluster[]
@@ -1007,6 +1007,223 @@ to cycle through the themes +
 **Pros:** Easy to extend. +
 **Cons:** Troublesome to implement considering that we intend to use only two themes.
 // end::theme[]
+
+// tag::repaid[]
+=== Repaid command mechanism
+
+The `repaid` command allow users to indicate that the specified debtor has completely repaid all of his/her debt. The `RepaidCommand` extends `UndoableCommand` so that it can be undone and redone if necessary.
+
+The command executes using the index of the person the user wishes to update. However, indicating the index is optional if the person is the current selected person in the person list panel, as the index is internally provided by the selected person card.
+
+The `RepaidCommand` is executed in `LogicManager`. It checks if the person selected has already repaid all his/her debt. If the person has done so, the command will then throw an `Exception` indicating that he/she has already repaid his/her debt.
+
+If the person has not completely repaid his/her debt, `LogicManager` will then call the `Model` interface to execute a three-step process on that person, using a single method. `ModelManager` will firstly reset the person's debt to zero.
+
+[source, java]
+----
+public ReadOnlyPerson resetPersonDebt(ReadOnlyPerson p) throws PersonNotFoundException {
+    int index;
+    index = persons.getIndexOf(p);
+
+    Person existingPerson = new Person(p);
+    try {
+        existingPerson.setDebt(new Debt(Debt.DEBT_ZER0_VALUE));
+    } catch (IllegalValueException e) {
+        assert false : "The target value cannot be of illegal value";
+    }
+
+    persons.remove(p);
+
+    try {
+        persons.add(index, existingPerson);
+    } catch (DuplicatePersonException dpe) {
+        assert false : "There should be no duplicate when resetting the debt of a person";
+    }
+
+    return persons.getReadOnlyPerson(index);
+}
+----
+
+Secondly, it will set the `dateRepaid` field of the person to the date the command was called.
+
+[source, java]
+----
+public ReadOnlyPerson setDateRepaid(ReadOnlyPerson p) throws PersonNotFoundException {
+    int index;
+    index = persons.getIndexOf(p);
+
+    Person existingPerson = new Person(p);
+    existingPerson.setDateRepaid(new DateRepaid(formatDate(new Date())));
+
+    persons.remove(p);
+
+    try {
+        persons.add(index, existingPerson);
+    } catch (DuplicatePersonException dpe) {
+        assert false : "There should be no duplicate when resetting the date repaid field of a person";
+    }
+
+    return persons.getReadOnlyPerson(index);
+}
+----
+
+Finally, the person will be added into a list called `Whitelist`, given that he was not initially blacklisted.
+
+[source, java]
+----
+public ReadOnlyPerson addWhitelistedPerson(ReadOnlyPerson p) {
+    int index;
+    index = persons.getIndexOf(p);
+
+    Person newWhitelistedPerson = new Person(p);
+    newWhitelistedPerson.setIsWhitelisted(true);
+    try {
+        updatePerson(p, newWhitelistedPerson);
+    } catch (DuplicatePersonException e) {
+        throw new AssertionError("The target person cannot be a duplicate");
+    } catch (PersonNotFoundException e) {
+        throw new AssertionError("This is not possible as prior checks have been done");
+    }
+    return persons.getReadOnlyPerson(index);
+}
+----
+
+`ModelManager` will then return the updated `ReadOnlyPerson` `Object` back to `LogicManager`.
+
+**Aspect:** Three-step process in one `Command` +
+**Alternative 1 (current choice):** The three-step process happens in a single method +
+**Pros:** Faster and simpler to implement the method. +
+**Cons:** Some methods will fail to update the person as intended. If the person is blacklisted, he/she will not be added into the whitelist. +
+**Alternative 2:** Include three separate methods in `Model` interface to execute the three-step process +
+**Pros:** Easy to observe the methods that will fail. +
+**Cons:** Methods in `Model` interface will seem to have less abstraction than intended. +
+// end::repaid[]
+
+// tag::setpath/addpic/delpic[]
+=== Setpath/Addpic/Delpic command mechanism
+
+`Setpath`, `Addpic` and `Delpic` commands facilitate updating a debtor's display picture. `Setpath` command sets the `path` to a folder that contains `JPG` format images of the debtors. This folder resides in the user's workspace.
+
+The images in the folder must initially be named after the debtors themselves. For example, a debtor named Alex Yeoh should have an image titled `AlexYeoh.jpg` in this folder.
+
+`Setpath` command modifies the destined `path` in the `ProfilePicturesFolder` `class`:
+
+[source, java]
+----
+public CommandResult executeUndoableCommand() throws CommandException {
+    ProfilePicturesFolder.setPath(reformatPath(path));
+    return new CommandResult(MESSAGE_SUCCESS);
+}
+----
+
+`Addpic` command takes in an index as the input and uses `Logic` interface to execute a two-step process to update the person's display picture status. `LogicManager` calls `Model` interface to first search for the image in the path directory set by the `SetPath` command. This is done by first establishing the name of the image, and then searching for it in the required folder.
+
+[source, java]
+----
+@Override
+    public boolean addProfilePicture(ReadOnlyPerson person) throws ProfilePictureNotFoundException {
+        String imageName = person.getName().toString().replaceAll("\\s+", "");
+        File imageFile = new File(ProfilePicturesFolder.getPath() + imageName + JPG_EXTENSION);
+
+        if (imageFile.exists()) {
+            addressBook.addProfilePic(person);
+            indicateAddressBookChanged();
+            return true;
+        } else {
+            throw new ProfilePictureNotFoundException();
+        }
+    }
+----
+
+`ModelManager` checks if the image exists in the path directory. If it does, it will then set the boolean value of the person's `hasDisplayPicture` variable to true.
+
+[source, java]
+----
+public ReadOnlyPerson addProfilePic(ReadOnlyPerson person) {
+        int index;
+        index = persons.getIndexOf(person);
+
+        Person newUpdatedPerson = new Person(person);
+        newUpdatedPerson.setHasDisplayPicture(true);
+        try {
+            updatePerson(person, newUpdatedPerson);
+        } catch (DuplicatePersonException e) {
+            throw new AssertionError("The target person cannot be a duplicate");
+        } catch (PersonNotFoundException e) {
+            throw new AssertionError("This is not possible as prior checks have been done");
+        }
+
+        return persons.getReadOnlyPerson(index);
+    }
+----
+
+When the `PersonCard` corresponding to the person is selected, `hasDisplayPicture` boolean value is obtained. If the value is `true`, the image will be retrieved from the previously set `path`. If it does not exist, a default image will be displayed.
+
+[source, java]
+----
+public DebtorProfilePicture(ReadOnlyPerson person) {
+        super(FXML);
+        String imageName = person.getName().toString().replaceAll("\\s+", "");
+        String imagePath = DEFAULT_PROFILEPIC_PATH;
+        Image image = new Image(getClass().getResource(imagePath).toExternalForm());
+
+        if (person.hasDisplayPicture()) {
+
+            imagePath = ProfilePicturesFolder.getPath() + imageName + JPG_EXTENSION;
+            File imageFile = new File(imagePath);
+
+            if (!imageFile.exists()) {
+                person.setHasDisplayPicture(false);
+                raise(new MissingDisplayPictureEvent(person));
+            } else {
+                try {
+                    image = new Image(imageFile.toURI().toURL().toExternalForm());
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        profilePic.setImage(image);
+        profilePic.setFitWidth(450);
+        profilePic.setFitHeight(450);
+        profilePicPlaceHolder.setTopAnchor(this.getImageView(), 20.0);
+        profilePicPlaceHolder.setRightAnchor(this.getImageView(), 50.0);
+        registerAsAnEventHandler(this);
+    }
+----
+
+`Delpic` command, similarly, resets the person's `hasDisplayPicture` boolean value to false.
+
+[source, java]
+----
+
+public ReadOnlyPerson removeProfilePic(ReadOnlyPerson person) {
+        int index;
+        index = persons.getIndexOf(person);
+
+        Person newUpdatedPerson = new Person(person);
+        newUpdatedPerson.setHasDisplayPicture(false);
+        try {
+            updatePerson(person, newUpdatedPerson);
+        } catch (DuplicatePersonException e) {
+            throw new AssertionError("The target person cannot be a duplicate");
+        } catch (PersonNotFoundException e) {
+            throw new AssertionError("This is not possible as prior checks have been done");
+        }
+
+        return persons.getReadOnlyPerson(index);
+    }
+----
+
+**Aspect:** Storage of profile pictures in Codii +
+**Alternative 1 (current choice):** Images are not stored in Codii as they are read from the path directory provided by the user +
+**Pros:** Straightforward and simpler to implement. +
+**Cons:** Application cannot be easily transferred from one workstation to another. +
+**Alternative 2:** Store images in Codii similar to how XML files are stored +
+**Pros:** Far less hassle in transferring application content to another workstation. +
+**Cons:** The result of both implementations are very similar. However, this implementation is harder to execute. +
+// end::setpath/addpic/delpic[]
 
 === Logging
 
