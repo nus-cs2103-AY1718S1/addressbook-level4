@@ -1,0 +1,138 @@
+= Manual Testing Script
+
+== Testing : Sort feature
+
+=== Sorting the whole address book.
+
+_Test:_ +
+Enter `sort name asc` and then press `ENTER`.
+
+_Result_ +
+Success Message Shown : "List has been sorted". +
+AddressBook should now be sorted based on name in ascending order.
+
+=== Sorting a list of contact after a findtag command.
+
+_Test:_ +
+Enter `findtag prospective` and press `ENTER`
+Enter `sort phone dsc` and press `ENTER`
+
+_Result_ +
+Success Message Shown : "List has been sorted". +
+AddressBook should now show a list of person with prospective tags sorted based on their phone numbers in descending order.
+
+=== Sorting a list of contact after a find command
+
+_Test:_ +
+Enter `find John` and press `ENTER`
+Enter `sort email asc` and press `ENTER`
+
+_Result:_ +
+Success Message Shown : "List has been sorted." +
+AddressBook should now show a list of person named John, sorted based on their email in ascending order.
+
+=== Sorting a list does not change the original order
+
+_Test:_ +
+Enter `sort phone asd`
+Enter `list`
+
+_Result:_ +
+Success Message Shown : "Listed all persons" +
+AddressBook should now show the original ordering of the contacts in addressbook.
+
+=== Invalid sort commands
+
+_Test:_ +
+Enter `sort phone asd`
+
+_Result:_ +
+Failure Message Shown : "Invalid command format." +
+AddressBook should not change.
+
+_Test:_ +
+Enter `sort qwe asc`
+
+_Result:_ +
+Failure Message Shown : "Invalid command format." +
+AddressBook should not change.
+
+== Testing : Removetag feature
+
+=== Remove tag from specific person.
+_Test:_ +
+Enter `find Lydia` +
+Enter `removetag 1 Plan4`
+
+_Result:_ +
+Failure Message Shown : "Tag Removed" +
+Plan4 Tag has been removed from Lydia Bunz.
+
+=== Undo Remove tag from specific person.
+_Test:_ +
+Enter `undo`
+
+_Result:_ +
+Failure Message Shown : "Undo Success" +
+AddressBook shows full list again +
+Plan4 Tag has been returned to Lydia Bunz.
+
+=== Remove tag from whole addressbook.
+
+_Test:_ +
+Enter `removetag all important`
+
+_Result:_ +
+Failure Message Shown : "Tag Removed" +
+`important` tag has been removed from addressbook.
+
+=== Undo Remove tag from all person.
+_Test:_ +
+Enter `undo`
+
+_Result:_ +
+Failure Message Shown : "Undo Success" +
+AddressBook shows full list again +
+`important` tag has been returned to all its original owners.
+
+=== Incorrect RemoveTag Commands
+
+==== Invalid Index
+_Test:_ +
+Enter `removetag 99 important`
+
+_Result_ +
+Failure Message Shown : "The person index provided is invalid" +
+Addressbook unchanged.
+
+==== Negative Index
+
+_Test:_ +
+Enter `removetag -5 important`
+
+_Result_ +
+Failure Message Shown : "Invalid command format!" +
+Addressbook unchanged.
+
+==== Non-existant tags
+_Test:_ +
+Enter `list`
+Enter `removetag 1 friends`
+
+_Result_ +
+Failure Message Shown : "Index 1 does not have the given tag." +
+Addressbook unchanged.
+
+_Test:_ +
+Enter `list`
+Enter `removetag all friends`
+
+_Result_ +
+Failure Message Shown : "Tag given does not exist in address book." +
+Addressbook unchanged.
+
+====
+
+
+
+== Testing : Import/Export feature
