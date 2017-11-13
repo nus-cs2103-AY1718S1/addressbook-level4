@@ -16,6 +16,91 @@
     }
 }
 ```
+###### \java\seedu\address\logic\parser\AddCommandParserTest.java
+``` java
+    @Test
+    public void parse_optionalFieldsMissing_success() {
+        // zero tags
+        Person expectedPerson = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
+                .withBirthday(VALID_BIRTHDAY_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
+                .withOrganisation(VALID_ORGANISATION_AMY).withRemark(VALID_REMARK_AMY).withTags().build();
+        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
+                + BIRTHDAY_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + ORGANISATION_DESC_AMY + REMARK_DESC_AMY,
+                new AddCommand(expectedPerson));
+
+        //missing phone field -> accepted
+        Person expectedPersonWithoutPhone = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(null)
+                .withBirthday(VALID_BIRTHDAY_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
+                .withOrganisation(VALID_ORGANISATION_AMY).withRemark(VALID_REMARK_AMY)
+                .withTags(VALID_TAG_FRIEND).build();
+        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_NULL
+                + BIRTHDAY_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + ORGANISATION_DESC_AMY
+                + REMARK_DESC_AMY + TAG_DESC_FRIEND, new AddCommand(expectedPersonWithoutPhone));
+
+        //missing birthday field -> accepted
+        Person expectedPersonWithoutBirthday = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
+                .withBirthday(null).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
+                .withOrganisation(VALID_ORGANISATION_AMY).withRemark(VALID_REMARK_AMY)
+                .withTags(VALID_TAG_FRIEND).build();
+        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
+                + BIRTHDAY_DESC_NULL + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + ORGANISATION_DESC_AMY
+                + REMARK_DESC_AMY + TAG_DESC_FRIEND, new AddCommand(expectedPersonWithoutBirthday));
+
+        //missing email field -> accepted
+        Person expectedPersonWithoutEmail = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
+                .withBirthday(VALID_BIRTHDAY_AMY).withEmail(null).withAddress(VALID_ADDRESS_AMY)
+                .withOrganisation(VALID_ORGANISATION_AMY).withRemark(VALID_REMARK_AMY)
+                .withTags(VALID_TAG_FRIEND).build();
+        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
+                + BIRTHDAY_DESC_AMY + EMAIL_DESC_NULL + ADDRESS_DESC_AMY + ORGANISATION_DESC_AMY
+                + REMARK_DESC_AMY + TAG_DESC_FRIEND, new AddCommand(expectedPersonWithoutEmail));
+
+        //missing address field -> accepted
+        Person expectedPersonWithoutAddress = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
+                .withBirthday(VALID_BIRTHDAY_AMY).withEmail(VALID_EMAIL_AMY).withAddress(null)
+                .withOrganisation(VALID_ORGANISATION_AMY).withRemark(VALID_REMARK_AMY)
+                .withTags(VALID_TAG_FRIEND).build();
+        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
+                + BIRTHDAY_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_NULL + ORGANISATION_DESC_AMY
+                + REMARK_DESC_AMY + TAG_DESC_FRIEND, new AddCommand(expectedPersonWithoutAddress));
+
+        //missing organisation field -> accepted
+        Person expectedPersonWithoutOrganisation = new PersonBuilder().withName(VALID_NAME_AMY)
+                .withPhone(VALID_PHONE_AMY).withBirthday(VALID_BIRTHDAY_AMY).withEmail(VALID_EMAIL_AMY)
+                .withAddress(VALID_ADDRESS_AMY).withOrganisation(null).withRemark(VALID_REMARK_AMY)
+                .withTags(VALID_TAG_FRIEND).build();
+        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
+                + BIRTHDAY_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + ORGANISATION_DESC_NULL
+                + REMARK_DESC_AMY + TAG_DESC_FRIEND, new AddCommand(expectedPersonWithoutOrganisation));
+
+        //missing remark field -> accepted
+        Person expectedPersonWithoutRemark = new PersonBuilder().withName(VALID_NAME_AMY)
+                .withPhone(VALID_PHONE_AMY).withBirthday(VALID_BIRTHDAY_AMY).withEmail(VALID_EMAIL_AMY)
+                .withAddress(VALID_ADDRESS_AMY).withOrganisation(VALID_ORGANISATION_AMY).withRemark(null)
+                .withTags(VALID_TAG_FRIEND).build();
+        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
+                + BIRTHDAY_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + ORGANISATION_DESC_AMY
+                + REMARK_DESC_NULL + TAG_DESC_FRIEND, new AddCommand(expectedPersonWithoutRemark));
+
+    }
+
+    @Test
+    public void parse_compulsoryFieldMissing_failure() {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE);
+
+        // missing name prefix
+        assertParseFailure(parser, AddCommand.COMMAND_WORD + VALID_NAME_BOB + PHONE_DESC_BOB
+                + BIRTHDAY_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + ORGANISATION_DESC_BOB
+                + REMARK_DESC_BOB, expectedMessage);
+
+
+        // all prefixes missing
+        assertParseFailure(parser, AddCommand.COMMAND_WORD + VALID_NAME_BOB + VALID_PHONE_BOB
+                + VALID_BIRTHDAY_BOB + VALID_EMAIL_BOB + VALID_ADDRESS_BOB + VALID_ORGANISATION_BOB
+                + VALID_ADDRESS_BOB, expectedMessage);
+
+    }
+```
 ###### \java\seedu\address\storage\StorageManagerTest.java
 ``` java
     @Test
@@ -25,83 +110,12 @@
 ```
 ###### \java\seedu\address\storage\StorageManagerTest.java
 ``` java
-
-    @Test
-    public void prefsReadSave() throws Exception {
-        /*
-         * Note: This is an integration test that verifies the StorageManager is properly wired to the
-         * {@link JsonUserPrefsStorage} class.
-         * More extensive testing of UserPref saving/reading is done in {@link JsonUserPrefsStorageTest} class.
-         */
-        UserPrefs original = new UserPrefs();
-        original.setGuiSettings(300, 600, 4, 6);
-        storageManager.saveUserPrefs(original);
-        UserPrefs retrieved = storageManager.readUserPrefs().get();
-        assertEquals(original, retrieved);
-    }
-
-    @Test
-    public void addressBookReadSave() throws Exception {
-        /*
-         * Note: This is an integration test that verifies the StorageManager is properly wired to the
-         * {@link XmlAddressBookStorage} class.
-         * More extensive testing of UserPref saving/reading is done in {@link XmlAddressBookStorageTest} class.
-         */
-        AddressBook original = getTypicalAddressBook();
-        RecycleBin bin = getTypicalRecycleBin();
-        storageManager.saveAddressBook(new AddressBookData(original, bin));
-        ReadOnlyAddressBook retrieved = storageManager.readAddressBook().get().getAddressBook();
-        ReadOnlyAddressBook retrievedBin = storageManager.readAddressBook().get().getRecycleBin();
-        assertEquals(original, new AddressBook(retrieved));
-        assertEquals(bin, new RecycleBin(retrievedBin));
-    }
-
-```
-###### \java\seedu\address\storage\StorageManagerTest.java
-``` java
     @Test
     public void backupAddressBookUrlTest() {
         String expectedUrl = storageManager.getAddressBookFilePath() + "-backup.xml";
         String actualUrl = storageManager.getBackUpAddressBookFilePath();
         assertEquals(expectedUrl, actualUrl);
     }
-```
-###### \java\seedu\address\storage\StorageManagerTest.java
-``` java
-
-    @Test
-    public void getAddressBookFilePath() {
-        assertNotNull(storageManager.getAddressBookFilePath());
-    }
-
-    @Test
-    public void handleAddressBookChangedEvent_exceptionThrown_eventRaised() {
-        // Create a StorageManager while injecting a stub that  throws an exception when the save method is called
-        Storage storage = new StorageManager(new XmlAddressBookStorageExceptionThrowingStub("dummy"),
-                                             new JsonUserPrefsStorage("dummy"));
-        storage.handleAddressBookChangedEvent(new AddressBookChangedEvent(new AddressBookData(new AddressBook(),
-                                                                                              new RecycleBin())));
-        assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof DataSavingExceptionEvent);
-    }
-
-
-    /**
-     * A Stub class to throw an exception when the save method is called
-     */
-    class XmlAddressBookStorageExceptionThrowingStub extends XmlAddressBookStorage {
-
-        public XmlAddressBookStorageExceptionThrowingStub(String filePath) {
-            super(filePath);
-        }
-
-        @Override
-        public void saveAddressBook(AddressBookData addressBook, String filePath) throws IOException {
-            throw new IOException("dummy exception");
-        }
-    }
-
-
-}
 ```
 ###### \java\seedu\address\ui\ModeChangeTest.java
 ``` java
