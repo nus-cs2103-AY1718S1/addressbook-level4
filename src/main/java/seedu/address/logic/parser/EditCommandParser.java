@@ -3,11 +3,15 @@ package seedu.address.logic.parser;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_AVATAR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NOK_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NOK_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Optional;
@@ -18,6 +22,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.Avatar;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -33,7 +38,8 @@ public class EditCommandParser implements Parser<EditCommand> {
     public EditCommand parse(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
+                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_AVATAR,
+                                           PREFIX_NOK_NAME, PREFIX_NOK_PHONE, PREFIX_TAG);
 
         Index index;
 
@@ -42,15 +48,18 @@ public class EditCommandParser implements Parser<EditCommand> {
         } catch (IllegalValueException ive) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
         }
-
         EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
         try {
             ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).ifPresent(editPersonDescriptor::setName);
             ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).ifPresent(editPersonDescriptor::setPhone);
             ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).ifPresent(editPersonDescriptor::setEmail);
             ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).ifPresent(editPersonDescriptor::setAddress);
+            parseAvatarForEdit(argMultimap.getAvatarValue(PREFIX_AVATAR)).ifPresent(editPersonDescriptor::setAvatar);
+            ParserUtil.parseNokName(argMultimap.getValue(PREFIX_NOK_NAME)).ifPresent(editPersonDescriptor::setNokName);
+            ParserUtil.parseNokPhone(argMultimap.getValue(PREFIX_NOK_PHONE))
+                    .ifPresent(editPersonDescriptor::setNokPhone);
             parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
-        } catch (IllegalValueException ive) {
+        } catch (IllegalValueException | IOException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
 
@@ -60,6 +69,22 @@ public class EditCommandParser implements Parser<EditCommand> {
 
         return new EditCommand(index, editPersonDescriptor);
     }
+
+    //@@author yuheng222
+    /**
+     * Parses {@code String avatar} into a {@code String<Avatar>} if {@code avatar} is non-empty.
+     * If {@code tags} contain only one element which is an empty string, it will be parsed into a
+     * {@code String<Avatar>} containing zero tags.
+     */
+    private Optional<Avatar> parseAvatarForEdit(String avatar) throws IllegalValueException, IOException {
+        assert avatar != null;
+
+        if (avatar.isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of(ParserUtil.parseAvatar(avatar));
+    }
+    //@@author
 
     /**
      * Parses {@code Collection<String> tags} into a {@code Set<Tag>} if {@code tags} is non-empty.

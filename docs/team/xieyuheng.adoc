@@ -1,0 +1,86 @@
+= Xie Yu Heng - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: Address Book and Booklets (AB&B)
+AB&B is a desktop Address Book application created by Team T10-B3 in AY2017/8 Semester 1 as a CS2103T Software Engineering project. It is written in Java, and has about 6 kLoC.
+
+This application has a GUI but most user interactions happen using a CLI (Command Line Interface), making it ideal for users who can type fast. The current features are selectively implemented to cater to administrative users.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T10-B3/main/blob/master/collated/main/yuheng222.md[Functional code]] [https://github.com/CS2103AUG2017-T10-B3/main/blob/master/collated/test/yuheng222.md[Test code]]
+
+=== Enhancement Added: Sort contacts by name
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=sort]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Sorting serves as an alternative way to easily search for a contact in the Address Book without the need to use the `find` command.
+Once the Address Book is sorted, the user can simply scroll through the contacts list panel to locate a specific person quickly.
+It also keeps the contacts list panel neater and more organised for the more fussy users.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=sort]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Select theme
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=theme]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Some users may find the default GUI to be to dull for their liking and want to change it to a different colour scheme.
+
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=theme]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Import contacts
+
+==== External behavior
+
+Entering the `import` command will open a file chooser window that allows the user to import a .csv file containing contacts data.
+
+==== Justification
+
+This enhancement complements our existing `export` feature very well for data keeping purposes. Some users have hundreds or even thousands of contacts, and it is troublesome for them to add their contacts into the Address Book one by one.
+An import feature saves time and work for the users, especially so for administrators who can generate .csv files from their databases.
+
+=== Other contributions
+* Implemented `Avatar` feature and resolved merge conflicts in more than 10+ files (Pull request https://github.com/CS2103AUG2017-T10-B3/main/pull/58[#58])
+* Added Google Maps search by address (Pull request https://github.com/CS2103AUG2017-T10-B3/main/pull/32[#32])
+

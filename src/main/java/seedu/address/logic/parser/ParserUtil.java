@@ -2,6 +2,7 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
@@ -11,8 +12,11 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Avatar;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.NokName;
+import seedu.address.model.person.NokPhone;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
 
@@ -66,7 +70,6 @@ public class ParserUtil {
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Address> parseAddress(Optional<String> address) throws IllegalValueException {
-        requireNonNull(address);
         return address.isPresent() ? Optional.of(new Address(address.get())) : Optional.empty();
     }
 
@@ -75,8 +78,34 @@ public class ParserUtil {
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Email> parseEmail(Optional<String> email) throws IllegalValueException {
-        requireNonNull(email);
         return email.isPresent() ? Optional.of(new Email(email.get())) : Optional.empty();
+    }
+
+    //@@author yuheng222
+    /**
+     * Parses a {@code Optional<String> avatar} into an {@code Optional<Avatar>} if {@code avatar} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Avatar parseAvatar(String avatar) throws IllegalValueException, IOException {
+        requireNonNull(avatar);
+        return new Avatar(avatar);
+    }
+    //@@author
+
+    /**
+     * Parses a {@code Optional<String> nokName} into an {@code Optional<NokName>} if {@code nokName} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<NokName> parseNokName(Optional<String> nokName) throws IllegalValueException {
+        return nokName.isPresent() ? Optional.of(new NokName(nokName.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> nokPhone} into an {@code Optional<NokPhone>} if {@code nokPhone} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<NokPhone> parseNokPhone(Optional<String> nokPhone) throws IllegalValueException {
+        return nokPhone.isPresent() ? Optional.of(new NokPhone(nokPhone.get())) : Optional.empty();
     }
 
     /**

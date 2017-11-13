@@ -13,6 +13,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import javafx.beans.property.ObjectProperty;
 import javafx.collections.ObservableList;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
@@ -24,6 +25,8 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.UniqueTagList;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandTest {
@@ -130,9 +133,35 @@ public class AddCommandTest {
         }
 
         @Override
+        public ObservableList<Tag> getTagList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        //@@author WangJieee
+        @Override
+        public ObjectProperty<UniqueTagList> getRealTagList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
         public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
             fail("This method should not be called.");
         }
+
+        //@@author yuheng222
+        @Override
+        public void sort() {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public ArrayList<String> getThemesList() {
+            fail("This method should not be called");
+            return null;
+        }
+        //@@author
     }
 
     /**

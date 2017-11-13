@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addressbook>
+    <persons>
+        <name>Alex Yeoh</name>
+        <phone>87438807</phone>
+        <email>alexyeoh@example.com</email>
+        <address>Blk 30 Geylang Street 29, #06-40</address>
+        <avatar>default.png</avatar>
+        <nokName>Peter Yeoh</nokName>
+        <nokPhone>91516545</nokPhone>
+        <tagged>Year1</tagged>
+    </persons>
+    <persons>
+        <name>Bernice Yu</name>
+        <phone>99272758</phone>
+        <email>berniceyu@example.com</email>
+        <address>Blk 30 Lorong 3 Serangoon Gardens, #07-18</address>
+        <avatar>default.png</avatar>
+        <nokName>Denise Yu</nokName>
+        <nokPhone>94894182</nokPhone>
+        <tagged>Tutor</tagged>
+        <tagged>Year4</tagged>
+        <tagged>CS2103</tagged>
+        <tagged>CS2010</tagged>
+        <tagged>neighbour</tagged>
+        <tagged>sameBirthday</tagged>
+    </persons>
+    <persons>
+        <name>Charlotte Oliveiro</name>
+        <phone>93210283</phone>
+        <email>charlotte@example.com</email>
+        <address>Blk 11 Ang Mo Kio Street 74, #11-04</address>
+        <avatar>default.png</avatar>
+        <nokName>Charlie Oliveiro</nokName>
+        <nokPhone>81454165</nokPhone>
+        <tagged>Professor</tagged>
+    </persons>
+    <persons>
+        <name>David Li</name>
+        <phone>91031282</phone>
+        <email>lidavid@example.com</email>
+        <address>Blk 436 Serangoon Gardens Street 26, #16-43</address>
+        <avatar>default.png</avatar>
+        <nokName>Elliot Li</nokName>
+        <nokPhone>94156418</nokPhone>
+        <tagged>Employee</tagged>
+    </persons>
+    <persons>
+        <name>Irfan Ibrahim</name>
+        <phone>92492021</phone>
+        <email>irfan@example.com</email>
+        <address>Blk 47 Tampines Street 20, #17-35</address>
+        <avatar>default.png</avatar>
+        <nokName>Juliet Ibrahim</nokName>
+        <nokPhone>91854185</nokPhone>
+        <tagged>Year2</tagged>
+    </persons>
+    <persons>
+        <name>Roy Balakrishnan</name>
+        <phone>92624417</phone>
+        <email>royb@example.com</email>
+        <address>Blk 45 Aljunied Street 85, #11-31</address>
+        <avatar>default.png</avatar>
+        <nokName>Sakthiar Balakrishnan</nokName>
+        <nokPhone>85648965</nokPhone>
+        <tagged>Professor</tagged>
+    </persons>
+    <persons>
+        <name>Mary Lim</name>
+        <phone>97222313</phone>
+        <email>maryyyy1998@gmail.com</email>
+        <address>Blk 868 Choa Chu Kang Crescent, #08-212</address>
+        <avatar>default.png</avatar>
+        <nokName>John Lim</nokName>
+        <nokPhone>96335671</nokPhone>
+        <tagged>Year2</tagged>
+        <tagged>Tutor</tagged>
+    </persons>
+    <persons>
+        <name>Jerene Soh</name>
+        <phone>87169110</phone>
+        <email>jerjerjer123321@hotmail.com</email>
+        <address>31 Sixth Avenue</address>
+        <avatar>default.png</avatar>
+        <nokName>Melissa Soh</nokName>
+        <nokPhone>81113121</nokPhone>
+        <tagged>Employee</tagged>
+    </persons>
+    <persons>
+        <name>Chris Ang</name>
+        <phone>97145123</phone>
+        <email>chris@example.com</email>
+        <address>Blk 657 Red Hill Avenue 2, #09-12</address>
+        <avatar>default.png</avatar>
+        <nokName>Cherie Ang</nokName>
+        <nokPhone>972878212</nokPhone>
+        <tagged>Year2</tagged>
+    </persons>
+    <persons>
+        <name>Romeo Ong</name>
+        <phone>81123112</phone>
+        <email>romeo@example.com</email>
+        <address>5 Sentosa Cove</address>
+        <avatar>default.png</avatar>
+        <nokName>Sam Ong</nokName>
+        <nokPhone>97123112</nokPhone>
+        <tagged>Employee</tagged>
+    </persons>
+    <persons>
+        <name>Sally Tan</name>
+        <phone>97231123</phone>
+        <email>sally@example.com</email>
+        <address>31 West Coast Road, #12-01</address>
+        <avatar>default.png</avatar>
+        <nokName>Alan Tan</nokName>
+        <nokPhone>98172312</nokPhone>
+        <tagged>Year1</tagged>
+    </persons>
+    <persons>
+        <name>Michael Low</name>
+        <phone>81213712</phone>
+        <email>lowlowlow@example.com</email>
+        <address>Blk 751 Bukit Batok Avenue 3, #07-22</address>
+        <avatar>default.png</avatar>
+        <nokName>Jason Low</nokName>
+        <nokPhone>81231221</nokPhone>
+        <tagged>Employee</tagged>
+    </persons>
+    <persons>
+        <name>Alexander Lee</name>
+        <phone>91112301</phone>
+        <email>alexlee@example.com</email>
+        <address>Blk 681 Clementi Avenue 1, #11-08</address>
+        <avatar>default.png</avatar>
+        <nokName>Lee Kok Leong</nokName>
+        <nokPhone>81717231</nokPhone>
+        <tagged>Professor</tagged>
+    </persons>
+    <persons>
+        <name>Leon Tan</name>
+        <phone>98671230</phone>
+        <email>leon@example.com</email>
+        <address>Blk 889 Jurong East Street 32, #04-08</address>
+        <avatar>default.png</avatar>
+        <nokName>Tan Ah Kow</nokName>
+        <nokPhone>87896711</nokPhone>
+        <tagged>Year2</tagged>
+    </persons>
+    <persons>
+        <name>Anna Ong</name>
+        <phone>98889754</phone>
+        <email>anna@example.com</email>
+        <address>4 Pasir Panjang Road, #03-04</address>
+        <avatar>default.png</avatar>
+        <nokName>Ong Jia Hui</nokName>
+        <nokPhone>98412561</nokPhone>
+        <tagged>Year3</tagged>
+    </persons>
+    <persons>
+        <name>Bruce Neo</name>
+        <phone>97771234</phone>
+        <email>bruce@example.com</email>
+        <address>Blk 751 Alexandra Road, #02-16</address>
+        <avatar>default.png</avatar>
+        <nokName>Brenda Neo</nokName>
+        <nokPhone>86151668</nokPhone>
+        <tagged>Year1</tagged>
+    </persons>
+    <persons>
+        <name>Renee Sim</name>
+        <phone>98161231</phone>
+        <email>renee@example.com</email>
+        <address>Blk 124 Petir Road, #08-13</address>
+        <avatar>default.png</avatar>
+        <nokName>Rena Sim</nokName>
+        <nokPhone>92828722</nokPhone>
+        <tagged>Year3</tagged>
+    </persons>
+    <persons>
+        <name>Mason Montana</name>
+        <phone>97211312</phone>
+        <email>mmmmmm12131@example.com</email>
+        <address>3 Tanglin Road</address>
+        <avatar>default.png</avatar>
+        <nokName>Marilyn Montana</nokName>
+        <nokPhone>91827341</nokPhone>
+        <tagged>Tutor</tagged>
+        <tagged>Year4</tagged>
+    </persons>
+    <persons>
+        <name>Ken Yeo</name>
+        <phone>97819231</phone>
+        <email>yeolo@example.com</email>
+        <address>Blk 415 Tampines street 31, #15-12</address>
+        <avatar>default.png</avatar>
+        <nokName>Yeo Zong Han</nokName>
+        <nokPhone>81817171</nokPhone>
+        <tagged>Year2</tagged>
+    </persons>
+    <persons>
+        <name>Pauline Aoki</name>
+        <phone>85127121</phone>
+        <email>pauline@example.com</email>
+        <address>111 Emerald Hill</address>
+        <avatar>default.png</avatar>
+        <nokName>Peter Aoki</nokName>
+        <nokPhone>97615123</nokPhone>
+        <tagged>Year4</tagged>
+    </persons>
+    <tags>Tutor</tags>
+    <tags>Professor</tags>
+    <tags>Year2</tags>
+    <tags>Year1</tags>
+    <tags>Year4</tags>
+    <tags>Employee</tags>
+    <tags>Year3</tags>
+    <tags>CS2103</tags>
+    <tags>CS2010</tags>
+    <tags>neighbour</tags>
+    <tags>sameBirthday</tags>
+</addressbook>

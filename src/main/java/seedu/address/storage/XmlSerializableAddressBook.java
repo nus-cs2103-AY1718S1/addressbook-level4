@@ -1,5 +1,6 @@
 package seedu.address.storage;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -48,7 +49,7 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
         final ObservableList<ReadOnlyPerson> persons = this.persons.stream().map(p -> {
             try {
                 return p.toModelType();
-            } catch (IllegalValueException e) {
+            } catch (IllegalValueException | IOException e) {
                 e.printStackTrace();
                 //TODO: better error handling
                 return null;

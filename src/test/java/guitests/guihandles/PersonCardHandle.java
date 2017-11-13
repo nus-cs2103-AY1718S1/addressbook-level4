@@ -5,6 +5,8 @@ import java.util.stream.Collectors;
 
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
 
 /**
@@ -16,6 +18,7 @@ public class PersonCardHandle extends NodeHandle<Node> {
     private static final String ADDRESS_FIELD_ID = "#address";
     private static final String PHONE_FIELD_ID = "#phone";
     private static final String EMAIL_FIELD_ID = "#email";
+    private static final String AVATAR_FIELD_ID = "#avatarDisplay";
     private static final String TAGS_FIELD_ID = "#tags";
 
     private final Label idLabel;
@@ -23,6 +26,7 @@ public class PersonCardHandle extends NodeHandle<Node> {
     private final Label addressLabel;
     private final Label phoneLabel;
     private final Label emailLabel;
+    private final ImageView avatarImageView;
     private final List<Label> tagLabels;
 
     public PersonCardHandle(Node cardNode) {
@@ -33,6 +37,7 @@ public class PersonCardHandle extends NodeHandle<Node> {
         this.addressLabel = getChildNode(ADDRESS_FIELD_ID);
         this.phoneLabel = getChildNode(PHONE_FIELD_ID);
         this.emailLabel = getChildNode(EMAIL_FIELD_ID);
+        this.avatarImageView = getChildNode(AVATAR_FIELD_ID);
 
         Region tagsContainer = getChildNode(TAGS_FIELD_ID);
         this.tagLabels = tagsContainer
@@ -60,6 +65,10 @@ public class PersonCardHandle extends NodeHandle<Node> {
 
     public String getEmail() {
         return emailLabel.getText();
+    }
+
+    public Image getAvatarImageView() {
+        return avatarImageView.getImage();
     }
 
     public List<String> getTags() {

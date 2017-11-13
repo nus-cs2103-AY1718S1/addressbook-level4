@@ -1,0 +1,107 @@
+= Wang Jie - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: AB&B
+AB&B is a desktop address book application for users to manage their personal contacts. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T10-B3/main/blob/master/collated/main/WangJieee.md[Functional code]] [https://github.com/CS2103AUG2017-T10-B3/main/blob/master/collated/test/WangJieee.md[Test code]]
+
+=== Enhancement Added: Filter by Tag
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=filter]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+This enhancement enables the user to view a list of contacts who have the specific tag entered and helps the user to narrow down the scope of their search to locate the contact more efficiently.
+It also serves as a complement to the `find` command in case the user forgets the contact's name.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=filter]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Add tag/ Remove tag
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=addtagremovetag]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+The original AddressBook - Level 4 only allows the user to edit his contact's tag list through the `edit` command, in which the new tags entered will overwrite all the original tags.
+If the user wants to make minor changes to a contact's tag list, such as adding or removing a tag, but the contact has a large number of tags, the user would have to enter all the tags that he wants to keep.
+Therefore, to avoid such inconvenience, the `addtag` and `removetag` commands are introduced to allow the user to tag or un-tag a person easily.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=addtag]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Tag pane in main window
+
+==== External behavior
+
+A tag pane is added to the main window to display all the existing tags in AB&B. At any time a contact's tag list is edited, the tag pane will be refreshed to show the latest existing tags.
+
+image::TagPane.png[width="500"]
+
+==== Justification
+
+The tag pane allows the user to know at a glance what are the available tags in the address book, so that they can perform a `filter` function with the right tag name,
+and/or avoid adding duplicate tags or removing tags that do not exist.
+
+=== Enhancement Proposed: Auto-suggestion of command word
+
+==== External behavior
+
+When the user starts typing the command word, a list of possible command words will be suggested below the cursor.
+
+Example:
+
+* When the user types `d`, `delete` and `deletebyname` will be suggested.
+
+==== Justification
+
+This feature facilitates typing of commands and helps users who are not able to remember all the command words.
+
+=== Other contributions
+
+* Added welcome page and enhanced GUI (Pull requests https://github.com/CS2103AUG2017-T10-B3/main/pull/25[#25], https://github.com/CS2103AUG2017-T10-B3/main/pull/44[#44])
+
+== Contribution to other team's project
+
+* Submitted bug report and suggestion during Acceptance Testing session (Issues https://github.com/CS2103AUG2017-W09-B1/main/issues/116[#116], https://github.com/CS2103AUG2017-W09-B1/main/issues/125[#125])
+
+== Project: UniFind
+
+*NUS Orbital 2017 Project*: [https://github.com/kexiaowen/orbital-2017[UniFind]]

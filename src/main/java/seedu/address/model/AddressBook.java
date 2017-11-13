@@ -2,13 +2,17 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -26,6 +30,9 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
     private final UniqueTagList tags;
+    private final ArrayList<String> themes;
+    private HashMap<Tag, ArrayList<Person>> tagPersonMap;
+    private final ObjectProperty<UniqueTagList> realTags;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -37,9 +44,14 @@ public class AddressBook implements ReadOnlyAddressBook {
     {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
+        themes = new ArrayList<>();
+        tagPersonMap = new HashMap<>();
+        realTags = new SimpleObjectProperty<>(new UniqueTagList());
     }
 
-    public AddressBook() {}
+    public AddressBook() {
+        initialiseThemes();
+    }
 
     /**
      * Creates an AddressBook using the Persons and Tags in the {@code toBeCopied}
@@ -48,6 +60,23 @@ public class AddressBook implements ReadOnlyAddressBook {
         this();
         resetData(toBeCopied);
     }
+
+    //@@author yuheng222
+    /**
+     * Initialises the themes in this {@code AddressBook}.
+     */
+
+    private void initialiseThemes() {
+        themes.add("MidnightTheme.css");
+        themes.add("SummerTheme.css");
+        themes.add("CoffeeTheme.css");
+        themes.add("CrayonTheme.css");
+    }
+
+    public ArrayList<String> getThemesList() {
+        return themes;
+    }
+    //@@author
 
     //// list overwrite operations
 
@@ -86,6 +115,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void addPerson(ReadOnlyPerson p) throws DuplicatePersonException {
         Person newPerson = new Person(p);
         syncMasterTagListWith(newPerson);
+
         // TODO: the tags master list will be updated even though the below line fails.
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
@@ -108,11 +138,69 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         Person editedPerson = new Person(editedReadOnlyPerson);
         syncMasterTagListWith(editedPerson);
+        System.out.println(tagPersonMap.size());
         // TODO: the tags master list will be updated even though the below line fails.
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
         persons.setPerson(target, editedPerson);
     }
+
+    //@@author WangJieee
+    /**
+     * Updates the {@code tagPersonMap} with {@code updatedPerson}.
+     */
+    private void updateTagPersonMap(Person updatedPerson) {
+        final UniqueTagList personTags = new UniqueTagList(updatedPerson.getTags());
+        Set<Tag> tagSet = tagPersonMap.keySet();
+        for (Tag tag: personTags) {
+            if (!tagSet.contains(tag)) {
+                //add a new key to the tagPersonMap if a new tag is introduced
+                ArrayList<Person> newPersonList = new ArrayList<>();
+                newPersonList.add(updatedPerson);
+                tagPersonMap.put(tag, newPersonList);
+            } else {
+                //add the person to the tagPersonMap for the tag
+                if (!tagPersonMap.get(tag).contains(updatedPerson)) {
+                    tagPersonMap.get(tag).add(updatedPerson);
+                }
+            }
+        }
+
+        for (Tag tag: tagSet) {
+            if (tagPersonMap.get(tag).contains(updatedPerson) && !personTags.contains(tag)) {
+                //remove the person from the tagPersonMap for the tag
+                tagPersonMap.get(tag).remove(updatedPerson);
+            }
+        }
+
+        for (Iterator<Map.Entry<Tag, ArrayList<Person>>> itr = tagPersonMap.entrySet().iterator(); itr.hasNext();) {
+            Map.Entry<Tag, ArrayList<Person>> entry = itr.next();
+            if (entry.getValue().isEmpty()) {
+                itr.remove();
+            }
+        }
+    }
+
+    /**
+     * Updates the {@code tagPersonMap} with {@code removedPerson}.
+     */
+    private void updateTagPersonMapRemovePerson(ReadOnlyPerson removedPerson) {
+        Set<Tag> tagSet = tagPersonMap.keySet();
+        for (Tag tag: tagSet) {
+            if (tagPersonMap.get(tag).contains(removedPerson)) {
+                //remove the person from the tagPersonMap for the tag
+                tagPersonMap.get(tag).remove(removedPerson);
+            }
+        }
+
+        for (Iterator<Map.Entry<Tag, ArrayList<Person>>> itr = tagPersonMap.entrySet().iterator(); itr.hasNext();) {
+            Map.Entry<Tag, ArrayList<Person>> entry = itr.next();
+            if (entry.getValue().isEmpty()) {
+                itr.remove();
+            }
+        }
+    }
+    //@@author
 
     /**
      * Ensures that every tag in this person:
@@ -122,6 +210,8 @@ public class AddressBook implements ReadOnlyAddressBook {
     private void syncMasterTagListWith(Person person) {
         final UniqueTagList personTags = new UniqueTagList(person.getTags());
         tags.mergeFrom(personTags);
+        updateTagPersonMap(person);
+        realTags.set(new UniqueTagList(tagPersonMap.keySet()));
 
         // Create map with values = tag object references in the master list
         // used for checking person tag references
@@ -144,17 +234,30 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.forEach(this::syncMasterTagListWith);
     }
 
+    //@@author WangJieee
     /**
      * Removes {@code key} from this {@code AddressBook}.
+     * Update {@code tagPersonMap}
      * @throws PersonNotFoundException if the {@code key} is not in this {@code AddressBook}.
      */
     public boolean removePerson(ReadOnlyPerson key) throws PersonNotFoundException {
         if (persons.remove(key)) {
+            updateTagPersonMapRemovePerson(key);
+            realTags.set(new UniqueTagList(tagPersonMap.keySet()));
             return true;
         } else {
             throw new PersonNotFoundException();
         }
     }
+    //@@author
+
+    //@@author yuheng222
+    /** Sorts the persons in this {@code AddressBook} lexicographically */
+
+    public void sort() {
+        persons.sort();
+    }
+    //@@author
 
     //// tag-level operations
 
@@ -180,6 +283,15 @@ public class AddressBook implements ReadOnlyAddressBook {
         return tags.asObservableList();
     }
 
+    //@@author WangJieee
+    /**
+     * Returns a tag list containing the existing tags
+     */
+    public ObjectProperty<UniqueTagList> getRealTagList() {
+        return realTags;
+    }
+    //@@author
+
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
@@ -191,6 +303,6 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(persons, tags);
+        return Objects.hash(persons, tags, themes, realTags, tagPersonMap);
     }
 }

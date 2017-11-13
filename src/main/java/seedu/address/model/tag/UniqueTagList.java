@@ -139,4 +139,10 @@ public class UniqueTagList implements Iterable<Tag> {
         }
     }
 
+    /**
+     * Removes a tag
+     */
+    public void remove(Tag t) {
+        internalList.remove(t);
+    }
 }
