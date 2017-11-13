@@ -275,11 +275,9 @@ Returns `john` and `John Doe`
 * `findByName Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
-<<<<<<< HEAD
 // tag::findByAddress[]
-=======
+
 // end::find1[]
->>>>>>> 56cf6ff83cd5ce3e2016315f65ce749fe377e916
 
 === Locating persons by address: `findByAddress`
 
@@ -529,24 +527,41 @@ e.g.`select 2`
 * *Redo* : `redo`
 * *Change Password* : `changepw username old_password new_password`
 
+== Release Notes
+
+=== What's new in v1.1
+* Google Maps Support
+* Invalid Command now shows red
+* Sort Command
+
+=== What's new in v1.2
+* Password Support
+* Change Password
+* Search by Address
+* Add Closest MRT to Contacts
+* Search by Phone Number
+
+=== What's new in v1.3
+* User-Friendly Login
+* Search by Email
+* Search by Phone Number
+
+=== What's new in v1.4
+* Search Contact's Location on Google Maps
+* Create Default Login Account
+* Remove Login Account
+* Arrange Schedule
+* Visualize Schedule
+
+=== What's new in v1.5 rc
+* New UI to show contact's details
+* Select search contacts on Facebook
+* Improve Find Command
+* Autocompletion for commands
+
 == Coming Soon in v2.0
-Customizable Toolbar +
-Password Support (Available in v1.2) +
-More User-Friendly Login (Available in v1.3) +
-Change Password (Available in v1.2) +
+Customizable Toolbar
 More User-Friendly Change Password +
-Google Maps Support (Available in v1.1) +
 Contact's photo support +
-Search by Address (Available in v1.2) +
-Add Closest MRT Station to Contacts (Available in v1.2) +
-Search Contacts by Phone Number(Available in v1.2) +
-Scheduling (Available in v1.4) +
 Closest Meet-up Point +
-Search by Email (Available in v1.3) +
-Search by Phone Number (Available in v1.3) +
-Search Contact's Location on Google Maps (Available in v1.4) +
-Create Default Account for new users (Available in v1.4) +
-Remove Login Account (Available in v1.4) +
-Arrange Schedule (Available in v1.4) +
-Visualize Schedule (Available in v1.4)
 
