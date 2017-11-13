@@ -34,6 +34,13 @@ public class EventCalendarTest {
     }
 
     @Test
+    public void testMar() throws Exception {
+        MonthDateBuilder monthDateBuilderMar = new MonthDateBuilder(2, 2018);
+        assertEquals(monthDateBuilderMar.getNameOfMonth(), "March");
+        assertEquals(monthDateBuilderMar.getFirstDayOfMonth().toString(), "4");
+    }
+
+    @Test
     public void testApr() throws Exception {
         MonthDateBuilder monthDateBuilderApr = new MonthDateBuilder(3, 2018);
         String[] monthDateArrayApr = monthDateBuilderApr.getMonthDateArray();
@@ -54,6 +61,20 @@ public class EventCalendarTest {
         assertEquals(monthDateArrayJune[5], "1");
         assertEquals(monthDateArrayJune[34], "30");
         assertEquals(monthDateArrayJune[35], " ");
+    }
+
+    @Test
+    public void testJuly() throws Exception {
+        MonthDateBuilder monthDateBuilderJuly = new MonthDateBuilder(6, 2017);
+        assertEquals(monthDateBuilderJuly.getNameOfMonth(), "July");
+        assertEquals(monthDateBuilderJuly.getFirstDayOfMonth().toString(), "6");
+    }
+
+    @Test
+    public void testAug() throws Exception {
+        MonthDateBuilder monthDateBuilderAug = new MonthDateBuilder(7, 2017);
+        assertEquals(monthDateBuilderAug.getNameOfMonth(), "August");
+        assertEquals(monthDateBuilderAug.getFirstDayOfMonth().toString(), "2");
     }
 
     @Test
