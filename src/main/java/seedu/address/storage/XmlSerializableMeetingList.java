@@ -9,6 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.ReadOnlyMeeting;
 import seedu.address.model.ReadOnlyMeetingList;
@@ -45,8 +46,7 @@ public class XmlSerializableMeetingList extends XmlSerializableData implements R
             try {
                 return m.toModelType();
             } catch (IllegalValueException e) {
-                e.printStackTrace();
-                //TODO: better error handling
+                LogsCenter.getLogger("").warning("Convert ReadOnlyMeeting to model type failed.");
                 return null;
             }
         }).collect(Collectors.toCollection(FXCollections::observableArrayList));
@@ -55,10 +55,10 @@ public class XmlSerializableMeetingList extends XmlSerializableData implements R
 
     /**
      * Should not be reached since the list should be immutable and cannot be sorted
-     * @return
      */
     @Override
     public ReadOnlyMeeting getUpcomingMeeting() {
+        assert false : "This method should not be called from an XmlSerializableMeetingList";
         return null;
     }
 }

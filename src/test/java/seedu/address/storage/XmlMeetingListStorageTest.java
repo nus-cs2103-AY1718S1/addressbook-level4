@@ -50,13 +50,8 @@ public class XmlMeetingListStorageTest {
 
     @Test
     public void read_notXmlFormat_exceptionThrown() throws Exception {
-
         thrown.expect(DataConversionException.class);
         readMeetingList("NotXmlFormatMeetingList.xml");
-
-        /* IMPORTANT: Any code below an exception-throwing line (like the one above) will be ignored.
-         * That means you should not have more than one exception test in one method
-         */
     }
 
     @Test
@@ -70,15 +65,7 @@ public class XmlMeetingListStorageTest {
         ReadOnlyMeetingList readBack = xmlMeetingListStorage.readMeetingList(filePath).get();
         assertEquals(original, new UniqueMeetingList(readBack));
 
-        /*
-        //Modify data, overwrite exiting file, and read back
-        xmlMeetingListStorage.saveMeetingList(original, filePath);
-        readBack = xmlMeetingListStorage.readMeetingList(filePath).get();
-        assertEquals(original, new UniqueMeetingList(readBack));
-        */
-
         //Save and read without specifying file path
-        //original.add(new Meeting());
         xmlMeetingListStorage.saveMeetingList(original); //file path not specified
         readBack = xmlMeetingListStorage.readMeetingList().get(); //file path not specified
         assertEquals(original, new UniqueMeetingList(readBack));

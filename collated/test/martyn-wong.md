@@ -1,5 +1,111 @@
 # martyn-wong
-###### \java\seedu\address\logic\commands\MapCommandTest.java
+###### /java/seedu/address/logic/parser/MapCommandParserTest.java
+``` java
+
+public class MapCommandParserTest {
+
+    private MapCommandParser parser = new MapCommandParser();
+
+    @Test
+    public void parse_validArgs_returnsMapCommand() throws Exception {
+        assertParseSuccess(parser, "1", new MapCommand(INDEX_FIRST_PERSON));
+    }
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() throws Exception {
+        assertParseFailure(parser, "alex", String.format(MESSAGE_INVALID_COMMAND_FORMAT, MapCommand.MESSAGE_USAGE));
+    }
+
+}
+```
+###### /java/seedu/address/logic/commands/SearchCommandTest.java
+``` java
+
+/**
+ * Contains integration tests (interaction with the Model) for {@code SearchCommand}.
+ */
+public class SearchCommandTest {
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    private Model model = new ModelManager(getTypicalAddressBook(), new UniqueMeetingList(), new UserPrefs());
+
+
+    @Test
+    public void equals() {
+        PersonContainsKeywordsPredicate firstPredicate =
+                new PersonContainsKeywordsPredicate(Collections.singletonList("first"));
+        PersonContainsKeywordsPredicate secondPredicate =
+                new PersonContainsKeywordsPredicate(Collections.singletonList("second"));
+
+        SearchCommand searchFirstCommand = new SearchCommand(firstPredicate);
+        SearchCommand searchSecondCommand = new SearchCommand(secondPredicate);
+
+        // same object -> returns true
+        assertTrue(searchFirstCommand.equals(searchFirstCommand));
+
+        // same values -> returns true
+        SearchCommand searchFirstCommandCopy = new SearchCommand(firstPredicate);
+        assertTrue(searchFirstCommand.equals(searchFirstCommandCopy));
+
+        // different types -> returns false
+        assertFalse(searchFirstCommand.equals(1));
+
+        // null -> returns false
+        assertFalse(searchFirstCommand.equals(null));
+
+        // different person -> returns false
+        assertFalse(searchFirstCommand.equals(searchSecondCommand));
+    }
+
+    @Test
+    public void execute_zeroKeywords_noPersonFound() {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
+        SearchCommand command = prepareCommand(" ");
+        assertCommandSuccess(command, expectedMessage, Collections.emptyList());
+    }
+
+    @Test
+    public void execute_multipleKeywords_multiplePersonsFound() {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
+        SearchCommand command = prepareCommand("Kurz Elle Kunz");
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, ELLE, FIONA));
+    }
+
+    /**
+     * Parses {@code userInput} into a {@code SearchCommand}.
+     */
+    private SearchCommand prepareCommand(String userInput) {
+        SearchCommand command =
+                new SearchCommand(new PersonContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
+        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        return command;
+    }
+
+    /**
+     * Asserts that Search command is successfully executed, and
+     * the command feedback is equal to expectedMessage
+     * the FilteredList is equal to expectedList
+     * the AddressBook in model remains the same after executing the Search command
+     */
+    private void assertCommandSuccess(SearchCommand command, String expectedMessage,
+                                      List<ReadOnlyPerson> expectedList) {
+        AddressBook expectedAddressBook = new AddressBook(model.getAddressBook());
+        CommandResult commandResult = null;
+        try {
+            commandResult = command.execute();
+        } catch (CommandException e) {
+            e.printStackTrace();
+        }
+
+        assertEquals(expectedMessage, commandResult.feedbackToUser);
+        assertEquals(expectedList, model.getFilteredPersonList());
+        assertEquals(expectedAddressBook, model.getAddressBook());
+    }
+}
+```
+###### /java/seedu/address/logic/commands/MapCommandTest.java
 ``` java
 
 /**
@@ -71,7 +177,6 @@ public class MapCommandTest {
 
     /**
      * Executes a {@code MapCommand} with the given {@code arguments},
-     * @param index
      */
     private void assertExecutionSuccess(Index index) {
         MapCommand mapCommand = prepareCommand(index);
@@ -110,111 +215,5 @@ public class MapCommandTest {
         mapCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return mapCommand;
     }
-}
-```
-###### \java\seedu\address\logic\commands\SearchCommandTest.java
-``` java
-
-/**
- * Contains integration tests (interaction with the Model) for {@code SearchCommand}.
- */
-public class SearchCommandTest {
-
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
-
-    private Model model = new ModelManager(getTypicalAddressBook(), new UniqueMeetingList(), new UserPrefs());
-
-
-    @Test
-    public void equals() {
-        PersonContainsKeywordsPredicate firstPredicate =
-                new PersonContainsKeywordsPredicate(Collections.singletonList("first"));
-        PersonContainsKeywordsPredicate secondPredicate =
-                new PersonContainsKeywordsPredicate(Collections.singletonList("second"));
-
-        SearchCommand searchFirstCommand = new SearchCommand(firstPredicate);
-        SearchCommand searchSecondCommand = new SearchCommand(secondPredicate);
-
-        // same object -> returns true
-        assertTrue(searchFirstCommand.equals(searchFirstCommand));
-
-        // same values -> returns true
-        SearchCommand searchFirstCommandCopy = new SearchCommand(firstPredicate);
-        assertTrue(searchFirstCommand.equals(searchFirstCommandCopy));
-
-        // different types -> returns false
-        assertFalse(searchFirstCommand.equals(1));
-
-        // null -> returns false
-        assertFalse(searchFirstCommand.equals(null));
-
-        // different person -> returns false
-        assertFalse(searchFirstCommand.equals(searchSecondCommand));
-    }
-
-    @Test
-    public void execute_zeroKeywords_noPersonFound() {
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
-        SearchCommand command = prepareCommand(" ");
-        assertCommandSuccess(command, expectedMessage, Collections.emptyList());
-    }
-
-    @Test
-    public void execute_multipleKeywords_multiplePersonsFound() {
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
-        SearchCommand command = prepareCommand("Kurz Elle Kunz");
-        assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, ELLE, FIONA));
-    }
-
-    /**
-     * Parses {@code userInput} into a {@code SearchCommand}.
-     */
-    private SearchCommand prepareCommand(String userInput) {
-        SearchCommand command =
-                new SearchCommand(new PersonContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
-        command.setData(model, new CommandHistory(), new UndoRedoStack());
-        return command;
-    }
-
-    /**
-     * Asserts that {@code command} is successfully executed, and<br>
-     *     - the command feedback is equal to {@code expectedMessage}<br>
-     *     - the {@code FilteredList<ReadOnlyPerson>} is equal to {@code expectedList}<br>
-     *     - the {@code AddressBook} in model remains the same after executing the {@code command}
-     */
-    private void assertCommandSuccess(SearchCommand command, String expectedMessage, List<ReadOnlyPerson> expectedList) {
-        AddressBook expectedAddressBook = new AddressBook(model.getAddressBook());
-        CommandResult commandResult = null;
-        try {
-            commandResult = command.execute();
-        } catch (CommandException e) {
-            e.printStackTrace();
-        }
-
-        assertEquals(expectedMessage, commandResult.feedbackToUser);
-        assertEquals(expectedList, model.getFilteredPersonList());
-        assertEquals(expectedAddressBook, model.getAddressBook());
-    }
-
-}
-```
-###### \java\seedu\address\logic\parser\MapCommandParserTest.java
-``` java
-
-public class MapCommandParserTest {
-
-    private MapCommandParser parser = new MapCommandParser();
-
-    @Test
-    public void parse_validArgs_returnsMapCommand() throws Exception {
-        assertParseSuccess(parser, "1", new MapCommand(INDEX_FIRST_PERSON));
-    }
-
-    @Test
-    public void parse_invalidArgs_throwsParseException() throws Exception {
-        assertParseFailure(parser, "alex", String.format(MESSAGE_INVALID_COMMAND_FORMAT, MapCommand.MESSAGE_USAGE));
-    }
-
 }
 ```

@@ -42,7 +42,6 @@ import seedu.address.ui.PersonCard;
 public class StorageManager extends ComponentManager implements Storage {
 
     public static final String CACHE_DIR = "cache/";
-    public static final String IMAGE_RESOURCE_DIR = "src/main/resources/images/";
     public static final String INCOMPLETE_DOWNLOAD_SUFFIX = ".part";
     private static final Logger logger = LogsCenter.getLogger(StorageManager.class);
     private static final String READ_FILE_MESSAGE = "Attempting to read to data file: ";
@@ -205,6 +204,7 @@ public class StorageManager extends ComponentManager implements Storage {
 
     /**
      * Returns a cache file in the local folder
+     *
      * @param filename of file to be opened
      * @throws IOException if file with given filename is not found
      */
