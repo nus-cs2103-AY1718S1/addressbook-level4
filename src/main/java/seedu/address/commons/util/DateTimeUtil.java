@@ -30,7 +30,6 @@ public class DateTimeUtil {
         return LocalDateTime.parse(input, EVENT_DATETIME_FORMAT);
     }
 
-    
 
     /**
      * Returns a Duration object based on the durationInput.
@@ -121,7 +120,7 @@ public class DateTimeUtil {
     /**
      * Returns true if given time lies within the duration of an event.
      *
-     * @param time to check against
+     * @param time  to check against
      * @param event with a specified duration (start time & end time)
      * @return true if time is within event duration
      * @see Event
@@ -137,7 +136,7 @@ public class DateTimeUtil {
     /**
      * Returns true if duration of an event consist of given date.
      *
-     * @param event the event to check
+     * @param event         the event to check
      * @param referenceDate the date to check against
      * @return true if date is within event duration
      */

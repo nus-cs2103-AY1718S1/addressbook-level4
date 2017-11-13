@@ -22,6 +22,7 @@ import seedu.address.model.event.exceptions.EventNotFoundException;
 
 
 //@@author eldriclim
+
 /**
  * A list of events that enforces no nulls and uniqueness between its elements.
  * Ensures that there is no overlap of events in the list
@@ -160,7 +161,6 @@ public class UniqueEventList implements Iterable<Event> {
      * namely selected date, upcoming events and past events, the events will
      * be sorted by their starting time in ascending order, and suppose Events
      * share same starting time shorter events will appear first.
-     * 
      */
     public void sort(LocalDate selectedDate) {
         requireNonNull(selectedDate);
