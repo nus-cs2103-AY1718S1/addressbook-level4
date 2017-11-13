@@ -10,11 +10,12 @@ public class AddMeetingCommand extends UndoableCommand {
     public static final String COMMAND_ALIAS = "am";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a meeting to the address book. \n"
-            + "Parameters: INDEX (must be a positive integer) "
+            + "Parameters: "
+            + PREFIX_INDEX + "INDEX (must be a positive integer) "
             + PREFIX_NAME + "NAME_OF_MEETING "
             + PREFIX_DATE + "DATE_TIME "
             + PREFIX_LOCATION + "LOCATION "
-            + PREFIX_TAG + "0-2 \n"
+            + PREFIX_TAG + "IMPORTANCE \n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_NAME + "Project Meeting "
             + PREFIX_DATE + "31-10-2017 21:30 "
@@ -26,7 +27,7 @@ public class AddMeetingCommand extends UndoableCommand {
     public static final String MESSAGE_OVERDUE_MEETING = "Meeting's date and time is before log in date and time";
     public static final String MESSAGE_MEETING_CLASH = "Meeting Clashes! Please choose another date and time.";
 
-    private final Index index;
+    private List<Index> indexes;
     private Meeting toAdd;
     private final NameMeeting name;
     private final DateTime date;
@@ -42,8 +43,6 @@ public class AddMeetingCommand extends UndoableCommand {
                 || (other instanceof AddMeetingCommand // instanceof handles nulls
                 && toAdd.equals(((AddMeetingCommand) other).toAdd));
     }
-
-
 
 }
 ```
@@ -103,7 +102,7 @@ public class SelectMeetingCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_MEETING_DISPLAYED_INDEX);
         }
 
-        EventsCenter.getInstance().post(new JumpToListRequestEvent(targetMeetingIndex));
+        EventsCenter.getInstance().post(new JumpToMeetingListRequestEvent(targetMeetingIndex));
         return new CommandResult(String.format(MESSAGE_SELECT_MEETING_SUCCESS, targetMeetingIndex.getOneBased()));
 
     }
@@ -187,27 +186,20 @@ public class AddMeetingCommandParser implements Parser<AddMeetingCommand> {
      */
     public AddMeetingCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_DATE, PREFIX_LOCATION, PREFIX_TAG);
+                ArgumentTokenizer.tokenize(args, PREFIX_INDEX, PREFIX_NAME, PREFIX_DATE, PREFIX_LOCATION, PREFIX_TAG);
 
-        Index index;
-
-        try {
-            index = ParserUtil.parseIndex(argMultimap.getPreamble());
-        } catch (IllegalValueException ive) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddMeetingCommand.MESSAGE_USAGE));
-        }
-
-        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_DATE, PREFIX_LOCATION, PREFIX_TAG)) {
+        if (!arePrefixesPresent(argMultimap, PREFIX_INDEX, PREFIX_NAME, PREFIX_DATE, PREFIX_LOCATION, PREFIX_TAG)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddMeetingCommand.MESSAGE_USAGE));
         }
 
         try {
+            List<Index> indexList = ParserUtil.parseIndexes(argMultimap.getValue(PREFIX_INDEX).get());
             NameMeeting name = ParserUtil.parseNameMeeting(argMultimap.getValue(PREFIX_NAME)).get();
             DateTime date = ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE)).get();
             Place place = ParserUtil.parsePlace(argMultimap.getValue(PREFIX_LOCATION)).get();
             MeetingTag meetingTag = ParserUtil.parseMeetTag(argMultimap.getValue(PREFIX_TAG)).get();
 
-            return new AddMeetingCommand(name, date, place, index, meetingTag);
+            return new AddMeetingCommand(name, date, place, indexList, meetingTag);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
@@ -239,6 +231,7 @@ public class CliSyntax {
     public static final Prefix PREFIX_TAG = new Prefix("t/");
     public static final Prefix PREFIX_LOCATION = new Prefix("l/");
     public static final Prefix PREFIX_DATE = new Prefix("d/");
+    public static final Prefix PREFIX_INDEX = new Prefix("i/");
 
 }
 ```
@@ -303,7 +296,44 @@ public class CliSyntax {
         requireNonNull(email);
         return email.isPresent() ? Optional.of(new Email(email.get())) : Optional.empty();
     }
+    /**
+     * Parses a {@code Optional<String> tagname} into an {@code Optional<MeetingTag>} if {@code ntagame} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<MeetingTag> parseMeetTag(Optional<String> meetingTag) throws IllegalValueException {
+        requireNonNull(meetingTag);
+        return meetingTag.isPresent() ? Optional.of(new MeetingTag(meetingTag.get())) : Optional.empty();
+    }
 
+    /**
+     * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
+     */
+    public static Set<Tag> parseTags(Collection<String> tags) throws IllegalValueException {
+        requireNonNull(tags);
+        final Set<Tag> tagSet = new HashSet<>();
+        for (String tagName : tags) {
+            tagSet.add(new Tag(tagName));
+        }
+        return tagSet;
+    }
+    /**
+     * Parses {@code oneBasedIndex} into an {@code Index} and returns it.
+     * @throws IllegalValueException if the specified index is invalid (not non-zero unsigned integer).
+     */
+    public static ArrayList<Index> parseIndexes(String indexes) throws IllegalValueException {
+        ArrayList<Index> listOfIndex = new ArrayList<>();
+        String trimmedIndex = indexes.trim();
+        String[] indexs = trimmedIndex.split("\\s+");
+        for (String index : indexs) {
+            if (!StringUtil.isNonZeroUnsignedInteger(index)) {
+                throw new IllegalValueException(MESSAGE_INVALID_INDEX);
+            }
+            listOfIndex.add(Index.fromOneBased(Integer.parseInt(index)));
+        }
+        return listOfIndex;
+    }
+
+}
 ```
 ###### \java\seedu\address\logic\parser\SelectMeetingCommandParser.java
 ``` java
@@ -381,6 +411,21 @@ public class UniqueMeetingList implements Iterable<Meeting> {
         }
         return false;
     }
+    /**
+     * Returns true if the list contains a clashing meeting that has a different name of meeting as the given argument.
+     */
+    public boolean diffNameOfMeeting(ReadOnlyMeeting toCheck, ReadOnlyMeeting target) {
+        for (Meeting meeting : internalMeetingList) {
+            if (meeting != target) {
+                if (toCheck.getDate().equals(meeting.getDate())) {
+                    if (!toCheck.getName().equals(meeting.getName())) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
 
     /**
      * Returns true if the list contains a clashing meeting that has a different meeting location as the given argument.
@@ -390,6 +435,21 @@ public class UniqueMeetingList implements Iterable<Meeting> {
             if (toCheck.getDate().equals(meeting.getDate())) {
                 if (!toCheck.getPlace().equals(meeting.getPlace())) {
                     return true;
+                }
+            }
+        }
+        return false;
+    }
+    /**
+     * Returns true if the list contains a clashing meeting that has a different meeting location as the given argument.
+     */
+    public boolean diffLocationOfMeeting(ReadOnlyMeeting toCheck, ReadOnlyMeeting target) {
+        for (Meeting meeting : internalMeetingList) {
+            if (target != meeting) {
+                if (toCheck.getDate().equals(meeting.getDate())) {
+                    if (!toCheck.getPlace().equals(meeting.getPlace())) {
+                        return true;
+                    }
                 }
             }
         }
@@ -420,7 +480,6 @@ public class UniqueMeetingList implements Iterable<Meeting> {
 ```
 ###### \java\seedu\address\model\meeting\UniqueMeetingList.java
 ``` java
-
     /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.
      */
@@ -460,10 +519,8 @@ public class XmlAdaptedMeeting {
     private String place;
     @XmlElement(required = true)
     private String date;
-    @XmlElement(required = true)
-    private String personToMeet;
-    @XmlElement(required = true)
-    private String phoneNum;
+    @XmlElement
+    private List<XmlAdaptedPerson> persons = new ArrayList<>();
     @XmlElement(required = true)
     private String meetTag;
 
@@ -490,11 +547,13 @@ public class XmlAdaptedMeeting {
         final NameMeeting name = new NameMeeting(this.name);
         final DateTime dateTime = new DateTime(this.date);
         final Place place = new Place(this.place);
-        final PersonToMeet personToMeet = new PersonToMeet(this.personToMeet);
-        final PhoneNum phoneNum = new PhoneNum(this.phoneNum);
+        final List<ReadOnlyPerson> personsMeet = new ArrayList<>();
+        for (XmlAdaptedPerson person: this.persons) {
+            personsMeet.add(person.toModelType());
+        }
         final MeetingTag meetTag = new MeetingTag(this.meetTag);
 
-        return new Meeting(name, dateTime, place, personToMeet, phoneNum, meetTag);
+        return new Meeting(name, dateTime, place, personsMeet, meetTag);
     }
 
 }
@@ -530,6 +589,109 @@ public class XmlAdaptedMeeting {
         loadMeetingPage(event.getNewSelection().meeting);
     }
 ```
+###### \java\seedu\address\ui\PersonCard.java
+``` java
+    public int getZeroBasedIndex() {
+        return index - 1; //to ensure the index is zero-based
+    }
+```
+###### \java\seedu\address\ui\PersonListPanel.java
+``` java
+    /**
+     * Opens the person window.
+     */
+    @FXML
+    public void handlePersonWindow(PersonCard personCard) {
+        PersonWindow personWindow = new PersonWindow(personList, personCard);
+        personWindow.show();
+    }
+```
+###### \java\seedu\address\ui\PersonListPanel.java
+``` java
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handlePersonWindow(event.getNewSelection());
+    }
+```
+###### \java\seedu\address\ui\PersonWindow.java
+``` java
+/**
+ * Pop-up to show a contact's detail
+ */
+public class PersonWindow extends UiPart<Region> {
+
+    private static final Logger logger = LogsCenter.getLogger(PersonWindow.class);
+    private static final String ICON = "/images/contacts_icon.png";
+    private static final String FXML = "PersonWindow.fxml";
+    private static final String TITLE = "Contact Details";
+
+    private final Stage dialogStage;
+
+    @FXML
+    private Label name;
+
+    @FXML
+    private Label phone;
+
+    @FXML
+    private Label address;
+
+    @FXML
+    private Label email;
+
+
+
+    public PersonWindow(ObservableList<ReadOnlyPerson> list, PersonCard personCard) {
+        super(FXML);
+        Scene scene = new Scene(getRoot());
+        //Null passed as the parent stage to make it non-modal.
+        dialogStage = createDialogStage(TITLE, null, scene);
+        dialogStage.setMaxHeight(600);
+        dialogStage.setMaxWidth(1000);
+        dialogStage.setX(475);
+        dialogStage.setY(300);
+        FxViewUtil.setStageIcon(dialogStage, ICON);
+        name.setText("Name: " + list.get(personCard.getZeroBasedIndex()).getName().toString());
+        phone.setText("Phone Number: " + list.get(personCard.getZeroBasedIndex()).getPhone().toString());
+        address.setText("Address: " + list.get(personCard.getZeroBasedIndex()).getAddress().toString());
+        email.setText("Email: " + list.get(personCard.getZeroBasedIndex()).getEmail().toString());
+    }
+
+    /**
+     * Shows the Person window.
+     * @throws IllegalStateException
+     * <ul>
+     *     <li>
+     *         if this method is called on a thread other than the JavaFX Application Thread.
+     *     </li>
+     *     <li>
+     *         if this method is called during animation or layout processing.
+     *     </li>
+     *     <li>
+     *         if this method is called on the primary stage.
+     *     </li>
+     *     <li>
+     *         if {@code dialogStage} is already showing.
+     *     </li>
+     * </ul>
+     */
+    public void show() {
+        logger.fine("Showing person page about the application.");
+        dialogStage.showAndWait();
+    }
+
+    public void close() {
+        dialogStage.close();
+    }
+
+    @FXML
+    private void handleExit () {
+        dialogStage.close();
+    }
+
+}
+```
 ###### \resources\view\DarkTheme.css
 ``` css
 .label {
@@ -538,14 +700,9 @@ public class XmlAdaptedMeeting {
     -fx-text-fill: #ffffff;
     -fx-opacity: 0.9;
 }
-
-.label-warning {
-    -fx-font-size: 30pt;
-    -fx-font-family: "Segoe UI Semibold";
-    -fx-text-fill: white;
-    -fx-opacity: 0.9;
-}
-
+```
+###### \resources\view\DarkTheme.css
+``` css
 .label-bright {
     -fx-font-size: 11pt;
     -fx-font-family: "Segoe UI Semibold";
@@ -629,11 +786,17 @@ public class XmlAdaptedMeeting {
     -fx-padding: 0;
     -fx-background-color: derive(#3d4691, 20%);
 }
+#listViewCard, #listViewCard .list-cell{
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+    -fx-background-color: transparent;
+}
 
 .list-cell {
     -fx-label-padding: 0 0 0 0;
     -fx-graphic-text-gap : 0;
     -fx-padding: 0 0 0 0;
+    -fx-background-color: derive(#3d4691, 20%);
 }
 
 .list-cell:filled:even {
@@ -888,4 +1051,43 @@ public class XmlAdaptedMeeting {
     -fx-background-radius: 2;
     -fx-font-size: 11;
 }
+```
+###### \resources\view\PersonWindow.fxml
+``` fxml
+
+<TitledPane animated="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="335.0" prefWidth="440.0" text="Contact Details" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+  <content>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="190.0" prefWidth="398.0" style="-fx-background-color: paleturquoise;">
+         <children>
+            <Label fx:id="email" layoutX="7.0" layoutY="236.0" text="\$email">
+               <font>
+                  <Font name="Noteworthy Bold" size="17.0" />
+               </font></Label>
+            <Label fx:id="address" layoutX="7.0" layoutY="206.0" text="\$address">
+               <font>
+                  <Font name="Noteworthy Bold" size="17.0" />
+               </font></Label>
+            <Label fx:id="name" layoutX="7.0" layoutY="146.0" text="\$name">
+               <font>
+                  <Font name="Noteworthy Bold" size="17.0" />
+               </font></Label>
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="3.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/red_contacts_icon.png" />
+               </image>
+            </ImageView>
+            <Button layoutX="383.0" layoutY="263.0" mnemonicParsing="false" onKeyPressed="#handleExit" onMouseClicked="#handleExit" style="-fx-background-color: palevioletred;" text="Done">
+               <font>
+                  <Font name="Noteworthy Bold" size="13.0" />
+               </font></Button>
+            <Label fx:id="phone" layoutX="7.0" layoutY="176.0" text="\$number">
+               <font>
+                  <Font name="Noteworthy Bold" size="17.0" />
+               </font></Label>
+         </children></AnchorPane>
+  </content>
+   <font>
+      <Font name="Noteworthy Bold" size="13.0" />
+   </font>
+</TitledPane>
 ```

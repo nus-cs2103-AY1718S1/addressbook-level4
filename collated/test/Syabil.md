@@ -10,7 +10,7 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showFirstMeetingOnly;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_MEETING;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_MEETING;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalMeetings.getTypicalAddressBook;
 
 import org.junit.Test;
 
@@ -191,8 +191,8 @@ public class FindMeetingCommandTest {
      * Parses {@code userInput} into a {@code FindMeetingCommand}.
      */
     private FindMeetingCommand prepareCommand(String userInput) {
-        FindMeetingCommand command =
-                new FindMeetingCommand(new MeetingContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
+        FindMeetingCommand command = new FindMeetingCommand(
+                new MeetingContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }

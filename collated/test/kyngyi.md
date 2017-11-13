@@ -186,8 +186,7 @@ public class EditMeetingDescriptorBuilder {
         descriptor.setNameMeeting(meeting.getName());
         descriptor.setDate(meeting.getDate());
         descriptor.setPlace(meeting.getPlace());
-        descriptor.setPhoneNum(meeting.getPersonPhone());
-        descriptor.setPersonToMeet(meeting.getPersonName());
+        descriptor.setPersonsMeet(meeting.getPersonsMeet());
     }
 
     /**
@@ -215,18 +214,6 @@ public class EditMeetingDescriptorBuilder {
     }
 
     /**
-     * Sets the {@code PersonToMeet} of the {@code EditMeetingDescriptor} that we are building.
-     */
-    public EditMeetingDescriptorBuilder withPersonToMeet(String personToMeet) {
-        try {
-            ParserUtil.parsePersonToMeet(Optional.of(personToMeet)).ifPresent(descriptor::setPersonToMeet);
-        } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("person name is expected to be unique.");
-        }
-        return this;
-    }
-
-    /**
      * Sets the {@code Place} of the {@code EditMeetingDescriptor} that we are building.
      */
     public EditMeetingDescriptorBuilder withPlace(String place) {
@@ -239,16 +226,19 @@ public class EditMeetingDescriptorBuilder {
     }
 
     /**
-     * Sets the {@code PhoneNum} of the {@code EditMeetingDescriptor} that we are building.
+     * Sets the {@code Place} of the {@code EditMeetingDescriptor} that we are building.
      */
-    public EditMeetingDescriptorBuilder withPhoneNum(String phoneNum) {
+    /**
+    public EditMeetingDescriptorBuilder withPersons(String index) {
         try {
-            ParserUtil.parsePhoneNum(Optional.of(phoneNum)).ifPresent(descriptor::setPhoneNum);
+            ParserUtil.parse(Optional.of(index)).ifPresent(descriptor::setPersonsMeet);
         } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("phone number is expected to be unique.");
+            throw new IllegalArgumentException("place is expected to be unique.");
         }
         return this;
     }
+     */
+
 
 
 
@@ -297,21 +287,19 @@ public class EditMeetingDescriptorBuilder {
     }
 
     /**
-     * Sets the {@code PersonName} of the {@code Meeting} that we are building.
+     * Sets the {@code Place} of the {@code Meeting} that we are building.
      */
-    public MeetingBuilder withPersonToMeet(String personToMeet) {
-        this.meeting.setPersonName(new PersonToMeet(personToMeet));
+    public MeetingBuilder withIndex(Index index) {
+        try {
+            List<ReadOnlyPerson> persons = new ArrayList<>();
+            ReadOnlyPerson person = getTypicalPersons().get(0);
+            persons.add(person);
+            this.meeting.setPersonsMeet(persons);
+        } catch (IndexOutOfBoundsException e) {
+            throw new IllegalArgumentException("Index must be smaller than the size of person list");
+        }
         return this;
     }
-
-    /**
-     * Sets the {@code PhoneNum} of the {@code Meeting} that we are building.
-     */
-    public MeetingBuilder withPhoneNum(String phoneNum) {
-        this.meeting.setPhoneNum(new PhoneNum(phoneNum));
-        return this;
-    }
-
 
     public Meeting build() {
         return this.meeting;
@@ -326,42 +314,35 @@ public class EditMeetingDescriptorBuilder {
  */
 public class TypicalMeetings {
     public static final ReadOnlyMeeting AGEING = new MeetingBuilder().withNameMeeting("Ageing")
-            .withDateTime("31-01-2019 00:00").withPersonToMeet("Alice Tan")
-            .withPhoneNum("85355255").withPlace("Vivocity").build();
+            .withDateTime("31-01-2019 00:00").withIndex(Index.fromOneBased(1)).withPlace("Vivocity").build();
     public static final ReadOnlyMeeting BREEDING = new MeetingBuilder().withNameMeeting("Breeding")
-            .withDateTime("31-01-2019 00:01").withPersonToMeet("John Tan")
-            .withPhoneNum("97788542").withPlace("West Coast Park").build();
+            .withDateTime("31-01-2019 00:01").withIndex(Index.fromOneBased(2)).withPlace("West Coast Park").build();
     public static final ReadOnlyMeeting CYCLING = new MeetingBuilder().withNameMeeting("Cycling")
-            .withDateTime("01-01-2019 00:02").withPersonToMeet("Bob Ng")
-            .withPhoneNum("97452541").withPlace("East Coast Park").build();
+            .withDateTime("01-01-2019 00:02").withIndex(Index.fromOneBased(3)).withPlace("East Coast Park").build();
     public static final ReadOnlyMeeting DIVING = new MeetingBuilder().withNameMeeting("Diving Lesson")
-            .withDateTime("01-01-2019 00:03").withPersonToMeet("Charles Wong")
-            .withPhoneNum("84562351").withPlace("Jurong Swimming Complex").build();
+            .withDateTime("01-01-2019 00:03").withIndex(Index.fromOneBased(4))
+            .withPlace("Jurong Swimming Complex").build();
     public static final ReadOnlyMeeting EATING = new MeetingBuilder().withNameMeeting("Eating")
-            .withDateTime("01-01-2019 00:04").withPersonToMeet("Eaton Lo")
-            .withPhoneNum("97745253").withPlace("TechnoEdge").build();
+            .withDateTime("01-01-2019 00:04").withIndex(Index.fromOneBased(5)).withPlace("TechnoEdge").build();
     public static final ReadOnlyMeeting FENCING = new MeetingBuilder().withNameMeeting("Fencing Class")
-            .withDateTime("01-01-2019 00:05").withPersonToMeet("Tristan Lim")
-            .withPhoneNum("97745256").withPlace("NUS").build();
+            .withDateTime("01-01-2019 00:05").withIndex(Index.fromOneBased(6)).withPlace("NUS").build();
     public static final ReadOnlyMeeting GARDENING = new MeetingBuilder().withNameMeeting("Gardening")
-            .withDateTime("01-01-2019 00:06").withPersonToMeet("Trist Gardener")
-            .withPhoneNum("97745253").withPlace("My Backyard").build();
+            .withDateTime("01-01-2019 00:06").withIndex(Index.fromOneBased(7)).withPlace("My Backyard").build();
 
     // Manually added
-    public static final ReadOnlyMeeting HIKING = new MeetingBuilder().withNameMeeting("Hiking")
-            .withDateTime("01-01-2019 00:07").withPersonToMeet("Hiker Lo")
-            .withPhoneNum("97745668").withPlace("Macritchie Reservoir").build();
-    public static final ReadOnlyMeeting ICESKATING = new MeetingBuilder().withNameMeeting("Ice Skating")
-            .withDateTime("01-01-2019 00:08").withPersonToMeet("Elsa Koh")
-            .withPhoneNum("81234567").withPlace("JEM").build();
-
+    //    public static final ReadOnlyMeeting HIKING = new MeetingBuilder().withNameMeeting("Hiking")
+    //            .withDateTime("01-01-2019 00:07").withPersonToMeet("Hiker Lo")
+    //            .withPhoneNum("97745668").withPlace("Macritchie Reservoir").build();
+    //    public static final ReadOnlyMeeting ICESKATING = new MeetingBuilder().withNameMeeting("Ice Skating")
+    //            .withDateTime("01-01-2019 00:08").withPersonToMeet("Elsa Koh")
+    //            .withPhoneNum("81234567").withPlace("JEM").build();
+    //
     // Manually added - Meeting's details found in {@code CommandTestUtil}
     public static final ReadOnlyMeeting ACTIVITY = new MeetingBuilder().withNameMeeting(VALID_NAME_ACTIVITY)
-            .withPhoneNum(VALID_PHONENUM_ACTIVITY).withPlace(VALID_PLACE_ACTIVITY).withDateTime(VALID_DATE_ACTIVITY)
-            .withPersonToMeet(VALID_PERSONTOMEET_ACTIVITY).build();
+            .withPlace(VALID_PLACE_ACTIVITY).withDateTime(VALID_DATE_ACTIVITY)
+            .build();
     public static final ReadOnlyMeeting BIKING = new MeetingBuilder().withNameMeeting(VALID_NAME_BIKING)
-            .withPhoneNum(VALID_PHONENUM_BIKING).withPlace(VALID_PLACE_BIKING).withDateTime(VALID_DATE_BIKING)
-            .withPersonToMeet(VALID_PERSONTOMEET_BIKING).build();
+            .withPlace(VALID_PLACE_BIKING).withDateTime(VALID_DATE_BIKING).build();
 
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
@@ -371,9 +352,15 @@ public class TypicalMeetings {
     /**
      * Returns an {@code AddressBook} with all the typical meetings.
      */
-    /**
     public static AddressBook getTypicalAddressBook() {
         AddressBook ab = new AddressBook();
+        for (ReadOnlyPerson person : getTypicalPersons()) {
+            try {
+                ab.addPerson(person);
+            } catch (DuplicatePersonException e) {
+                assert false : "not possible";
+            }
+        }
         for (ReadOnlyMeeting meeting : getTypicalMeetings()) {
             try {
                 ab.addMeeting(meeting);
@@ -387,7 +374,6 @@ public class TypicalMeetings {
         }
         return ab;
     }
-    */
 
     public static List<ReadOnlyMeeting> getTypicalMeetings() {
         return new ArrayList<>(Arrays.asList(AGEING, BREEDING, CYCLING, DIVING, EATING, FENCING, GARDENING));
