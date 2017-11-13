@@ -1930,6 +1930,14 @@ less responsive and possibly less user oriented.
 . CloudRail did not officially support our application's use of Gradle, and integration may not be completely stable
 across all devices.
 
+**Aspect:** Where to back up the address book +
+**Alternative 1 (current choice):** In a local directory on user's PC. +
+**Pros:** Easy to implement, easy for the user to understand. +
+**Cons:** The address book may still be lost in the event of local catastrophic failure, such as a house fire or power surge. +
+**Alternative 2:** On a cloud service +
+**Pros:** Information is safe as long as user has credentials to their cloud accounts. +
+**Cons:** Not all users have cloud service accounts, or know how to operate one. More difficult to implement.
+
 As such, this idea was postponed. If these challenges are addressed, it remains a highly viable and useful alternative
 that can also be used in conjunction with the current implementation.
 
