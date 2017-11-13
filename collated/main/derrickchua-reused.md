@@ -12,7 +12,6 @@
 public class OAuth extends Observable {
 
     private static final OAuth oauth = new OAuth();
-    private Model model;
 
     /**
      * Be sure to specify the name of your application. If the application name is {@code null} or
@@ -20,9 +19,16 @@ public class OAuth extends Observable {
      */
     private final String appName = "W13B3-ABC/1.5RC";
 
+    private final String clientSecretsString = "{\"installed\":{\"client_id\":\"1072257683954-e46sbkdshfmv651ggk7h"
+            + "jjk2qub8obss.apps.googleusercontent.com\",\"project_id\":\"cs2103-183113\",\"auth_uri\":\"https://acc"
+            + "ounts.google.com/o/oauth2/auth\",\"token_uri\":\"https://accounts.google.com/o/oauth2/token\",\"auth_p"
+            + "rovider_x509_cert_url\":\"https://www.googleapis.com/oauth2/v1/certs\",\"client_secret\":\"8c7_QmKYt2h"
+            + "dSPiCBDzcSyHP\",\"redirect_uris\":[\"urn:ietf:wg:oauth:2.0:oob\",\"http://localhost\"]}}";
+
+
     /** Directory to store user credentials. */
     private final java.io.File dataStoreDir =
-            new java.io.File(System.getProperty("user.home"), ".store/addressbook");
+            new java.io.File("data/");
 
     /**
      * Global instance of the {@link DataStoreFactory}. The best practice is to make it a single
@@ -38,24 +44,19 @@ public class OAuth extends Observable {
 
     private com.google.api.services.people.v1.PeopleService client;
 
-    private OAuth() {
-        registerAsAnEventHandler(this);
-    }
-
-    protected void registerAsAnEventHandler(Object handler) {
-        EventsCenter.getInstance().registerHandler(handler);
-    }
+    private OAuth () { }
 
     /** Authorizes the installed application to access user's protected data. */
     private Credential authorize() throws Exception {
+        StringReader reader = new StringReader(clientSecretsString);
+
         // load client secrets
-        GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(jsonFactory,
-                new InputStreamReader(OAuth.class.getResourceAsStream("/client_secrets.json")));
+        GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(jsonFactory, reader);
         if (clientSecrets.getDetails().getClientId().startsWith("Enter")
                 || clientSecrets.getDetails().getClientSecret().startsWith("Enter ")) {
             System.out.println(
                     "Enter Client ID and Secret from https://code.google.com/apis/console/?api=people "
-                            + "into seedu/address/src/main/resources/client_secrets.json");
+                            + "into data/client_secrets.json");
             System.exit(1);
         }
 
@@ -66,7 +67,6 @@ public class OAuth extends Observable {
                 .build();
 
         // authorize
-
         return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize("user");
     }
 
@@ -100,14 +100,6 @@ public class OAuth extends Observable {
 
     }
 
-    public void setModel (Model newModel) {
-        model = newModel;
-    }
-
-    public Model getModel () {
-        return model;
-    }
-
     public static OAuth getInstance () {
         return oauth;
     }
@@ -120,7 +112,7 @@ public class OAuth extends Observable {
     * Enumerate fixed colours for tags
     * */
     private static enum Colour {
-        MAROON, DARKCYAN, FIREBRICK, LIGHTSLATEGREY, DEEPSKYBLUE, OLIVEDRAB, LIGHTPINK, DARKOLIVEGREEN;
+        MAROON, DARKCYAN, NAVY, PALEVIOLETRED, PERU, FIREBRICK, MEDIUMSEAGREEN, STEELBLUE, DARKORCHID, OLIVEDRAB;
 
         private static final List<Colour> VALUES =
                 Collections.unmodifiableList(Arrays.asList(values()));

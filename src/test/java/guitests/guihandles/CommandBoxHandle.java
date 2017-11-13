@@ -2,17 +2,17 @@ package guitests.guihandles;
 
 import javafx.collections.ObservableList;
 import javafx.scene.input.KeyCode;
+import seedu.address.ui.AutoCompleteTextField;
 import seedu.address.ui.CommandBox;
-import seedu.address.ui.TabCompleteTextField;
 
 /**
  * A handle to the {@code CommandBox} in the GUI.
  */
-public class CommandBoxHandle extends NodeHandle<TabCompleteTextField> {
+public class CommandBoxHandle extends NodeHandle<AutoCompleteTextField> {
 
     public static final String COMMAND_INPUT_FIELD_ID = "#commandTextField";
 
-    public CommandBoxHandle(TabCompleteTextField commandBoxNode) {
+    public CommandBoxHandle(AutoCompleteTextField commandBoxNode) {
         super(commandBoxNode);
     }
 

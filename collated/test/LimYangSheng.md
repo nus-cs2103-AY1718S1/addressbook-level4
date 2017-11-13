@@ -1,4 +1,47 @@
 # LimYangSheng
+###### \java\guitests\guihandles\MeetingCardHandle.java
+``` java
+/**
+ * Provides a handle to a meeting card in the meeting list panel.
+ */
+public class MeetingCardHandle extends NodeHandle<Node>  {
+    private static final String ID_FIELD_ID = "#id";
+    private static final String NAME_FIELD_ID = "#name";
+    private static final String MEETING_NAME_FIELD_ID = "#meetingName";
+    private static final String MEETING_TIME_FIELD_ID = "#meetingTime";
+
+    private final Label idLabel;
+    private final Label nameLabel;
+    private final Label meetingNameLabel;
+    private final Label meetingTimeLabel;
+
+    public MeetingCardHandle(Node cardNode) {
+        super(cardNode);
+
+        this.idLabel = getChildNode(ID_FIELD_ID);
+        this.nameLabel = getChildNode(NAME_FIELD_ID);
+        this.meetingNameLabel = getChildNode(MEETING_NAME_FIELD_ID);
+        this.meetingTimeLabel = getChildNode(MEETING_TIME_FIELD_ID);
+    }
+
+    public String getId() {
+        return idLabel.getText();
+    }
+
+    public String getName() {
+        return nameLabel.getText();
+    }
+
+    public String getMeetingName() {
+        return meetingNameLabel.getText();
+    }
+
+    public String getMeetingTime() {
+        return meetingTimeLabel.getText();
+    }
+
+}
+```
 ###### \java\guitests\guihandles\MeetingListPanelHandle.java
 ``` java
 /**
@@ -149,6 +192,113 @@ public class RestoreBackupCommandTest {
                                              new JsonUserPrefsStorage("dummy"));
         storage.handleAddressBookChangedEvent(new AddressBookChangedEvent(new AddressBook()));
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof DataSavingExceptionEvent);
+    }
+
+```
+###### \java\seedu\address\ui\MeetingCardTest.java
+``` java
+public class MeetingCardTest extends GuiUnitTest {
+    @Test
+    public void display() {
+        String meetingName = "dummy";
+        String meetingTime = "dummy";
+        Person person = new PersonBuilder().withMeeting("dinner", "2017-12-30 18:00").build();
+        for (Meeting meeting : person.getMeetings()) {
+            meetingName = meeting.meetingName;
+            meetingTime = meeting.value;
+        }
+        try {
+            Meeting expectedMeeting = new Meeting(person, meetingName, meetingTime);
+            MeetingCard meetingCard = new MeetingCard(expectedMeeting, 1);
+            uiPartRule.setUiPart(meetingCard);
+            assertMeetingDisplay(meetingCard, expectedMeeting, 1);
+
+            // changes made to Meeting reflects on card
+            guiRobot.interact(() -> {
+                person.setName(ALICE.getName());
+                person.setAddress(ALICE.getAddress());
+                person.setEmail(ALICE.getEmail());
+                person.setPhone(ALICE.getPhone());
+                person.setTags(ALICE.getTags());
+                person.setNote(ALICE.getNote());
+                person.setMeetings(ALICE.getMeetings());
+                expectedMeeting.setPerson(person);
+            });
+            assertMeetingDisplay(meetingCard, expectedMeeting, 1);
+
+        } catch (IllegalValueException e) {
+            throw new AssertionError("Time format should be correct");
+        }
+    }
+
+    @Test
+    public void equals() {
+        String meetingName = "dummy";
+        String meetingTime = "dummy";
+        Person person = new PersonBuilder().withMeeting("dinner", "2017-12-30 18:00").build();
+        for (Meeting meeting : person.getMeetings()) {
+            meetingName = meeting.meetingName;
+            meetingTime = meeting.value;
+        }
+        try {
+            Meeting expectedMeeting = new Meeting(person, meetingName, meetingTime);
+            MeetingCard meetingCard = new MeetingCard(expectedMeeting, 0);
+
+            // same meeting, same index -> returns true
+            MeetingCard copy = new MeetingCard(expectedMeeting, 0);
+            assertTrue(meetingCard.equals(copy));
+
+            // same object -> returns true
+            assertTrue(meetingCard.equals(meetingCard));
+
+            // null -> returns false
+            assertFalse(meetingCard.equals(null));
+
+            // different types -> returns false
+            assertFalse(meetingCard.equals(0));
+
+            // different meeting, same index -> returns false
+            Person differentPerson = new PersonBuilder().withMeeting("differentName", "2018-01-01 00:00").build();
+            for (Meeting meeting : differentPerson.getMeetings()) {
+                meetingName = meeting.meetingName;
+                meetingTime = meeting.value;
+            }
+            Meeting differentMeeting = new Meeting(differentPerson, meetingName, meetingTime);
+            assertFalse(meetingCard.equals(new MeetingCard(differentMeeting, 0)));
+
+            // same meeting, different index -> returns false
+            assertFalse(meetingCard.equals(new MeetingCard(expectedMeeting, 1)));
+        } catch (IllegalValueException e) {
+            throw new AssertionError("Time format should be correct");
+        }
+    }
+
+    /**
+     * Asserts that {@code meetingCard} displays the details of {@code expectedMeeting} correctly and matches
+     * {@code expectedId}.
+     */
+    private void assertMeetingDisplay(MeetingCard meetingCard, Meeting expectedMeeting, int expectedId) {
+        guiRobot.pauseForHuman();
+
+        MeetingCardHandle meetingCardHandle = new MeetingCardHandle(meetingCard.getRoot());
+
+        // verify id is displayed correctly
+        assertEquals(Integer.toString(expectedId) + ". ", meetingCardHandle.getId());
+
+        // verify meeting details are displayed correctly
+        assertCardDisplaysMeeting(expectedMeeting, meetingCardHandle);
+    }
+}
+```
+###### \java\seedu\address\ui\testutil\GuiTestAssert.java
+``` java
+    /**
+     * Asserts that {@code actualCard} displays the details of {@code expectedMeeting}.
+     */
+    public static void assertCardDisplaysMeeting(Meeting expectedMeeting, MeetingCardHandle actualCard) {
+        assertEquals(expectedMeeting.getPerson().getName().fullName, actualCard.getName());
+        assertEquals(expectedMeeting.meetingName, actualCard.getMeetingName());
+        assertEquals(expectedMeeting.value, actualCard.getMeetingTime());
     }
 
 ```

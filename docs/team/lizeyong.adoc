@@ -124,4 +124,4 @@ If a certain keyword is frequently used, it would show up first in the suggestio
 * Discovered a bug that causes the app to crash and provided a solution. (https://github.com/nus-cs2103-AY1718S1/forum/issues/137[Issue #137])
 * Discovered bugs during acceptance testing. (Issues https://github.com/CS2103AUG2017-W14-B4/main/issues/116[#116], https://github.com/CS2103AUG2017-W14-B4/main/issues/117[#117], https://github.com/CS2103AUG2017-W14-B4/main/issues/118[#118])
 * Proposed wildcard symbol feature for reuse. (https://github.com/nus-cs2103-AY1718S1/forum/issues/132[Issue #132])
-
+* Fix a bug on undo/redo. (https://github.com/CS2103AUG2017-W13-B3/main/pull/172[Pull Request #172])

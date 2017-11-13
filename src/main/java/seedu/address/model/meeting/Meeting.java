@@ -54,6 +54,7 @@ public class Meeting {
         }
     }
 
+    //@@author LimYangSheng
     /**
      * Overloaded constructor for creating meeting objects with no proper reference to their person object
      */
@@ -124,7 +125,7 @@ public class Meeting {
         return displayValue;
     }
 
-
+    //@@author alexanderleegs
     @Override
     public boolean equals(Object other) {
         /* Only happens for testing as name attribute will be set for the main app*/

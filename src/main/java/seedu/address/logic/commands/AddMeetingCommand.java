@@ -32,7 +32,7 @@ public class AddMeetingCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD + " 1 "
             + "business " + "/ " + "2017-12-20 10:00";
 
-    public static final String MESSAGE_ADD_TAG_SUCCESS = "Added Meeting: %1$s";
+    public static final String MESSAGE_ADD_MEETING_SUCCESS = "Added Meeting: %1$s";
     public static final String MESSAGE_DUPLICATE_MEETING = "This person already has this meeting.";
     public static final String MESSAGE_TIME_CONSTRAINTS = "Time format should be YYYY-MM-DD HH:MM";
 
@@ -85,7 +85,7 @@ public class AddMeetingCommand extends UndoableCommand {
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
         }
-        return new CommandResult(String.format(MESSAGE_ADD_TAG_SUCCESS, newMeeting.meetingName));
+        return new CommandResult(String.format(MESSAGE_ADD_MEETING_SUCCESS, newMeeting.meetingName));
     }
 
     @Override

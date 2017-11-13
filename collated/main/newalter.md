@@ -65,7 +65,7 @@ public class CommandWordList {
             LoginCommand.COMMAND_WORD, NoteCommand.COMMAND_WORD, RedoCommand.COMMAND_WORD,
             ResizeCommand.COMMAND_WORD, RestoreBackupCommand.COMMAND_WORD, SelectCommand.COMMAND_WORD,
             SortCommand.COMMAND_WORD, SyncCommand.COMMAND_WORD, UndoCommand.COMMAND_WORD,
-            DeleteMeetingCommand.COMMAND_WORD);
+            DeleteMeetingCommand.COMMAND_WORD, LogoutCommand.COMMAND_WORD);
 }
 ```
 ###### \java\seedu\address\logic\commands\FindCommand.java
@@ -98,19 +98,28 @@ public class CommandWordList {
 
     @Override
     public CommandResult execute() {
-        Predicate<ReadOnlyPerson> finalPredicate = FALSE;
-        for (Predicate predicate : predicates) {
-            finalPredicate = finalPredicate.or(predicate);
-        }
+        Predicate<ReadOnlyPerson> predicate = combinePredicates();
 
         Predicate<? super ReadOnlyPerson>  currentPredicate = model.getPersonListPredicate();
         if (currentPredicate == null) {
-            model.updateFilteredPersonList(finalPredicate);
+            model.updateFilteredPersonList(predicate);
         } else {
-            model.updateFilteredPersonList(finalPredicate.and(currentPredicate));
+            model.updateFilteredPersonList(predicate.and(currentPredicate));
         }
         model.updateFilteredMeetingList(new MeetingContainPersonPredicate(model.getFilteredPersonList()));
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
+    }
+
+    /**
+     * combines the list of predicates into a single predicate for execution
+     * by taking OR operations
+     */
+    private Predicate<ReadOnlyPerson> combinePredicates() {
+        Predicate<ReadOnlyPerson> combinedPredicate = FALSE;
+        for (Predicate predicate : predicates) {
+            combinedPredicate = combinedPredicate.or(predicate);
+        }
+        return combinedPredicate;
     }
 ```
 ###### \java\seedu\address\logic\commands\ResizeCommand.java
@@ -125,7 +134,8 @@ public class ResizeCommand extends Command {
     public static final String COMMAND_WORD = "resize";
     public static final String COMMAND_ALIAS = "rs";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Resize the MainWindows to "
-            + String.format("the specified WIDTH(<=%d) and HEIGHT(<=%d) \n", MAX_WIDTH, MAX_HEIGHT)
+            + String.format("the specified (%d<=)WIDTH(<=%d) and (%d<=)HEIGHT(<=%d) \n",
+            MainWindow.getMinWidth(), MAX_WIDTH, MainWindow.getMinHeight(), MAX_HEIGHT)
             + "Parameters: WIDTH HEIGHT\n"
             + String.format("Example: " + COMMAND_WORD + " %d %d", MAX_WIDTH, MAX_HEIGHT);
     public static final String MESSAGE_SUCCESS = "Resize successfully to %d*%d";
@@ -141,7 +151,8 @@ public class ResizeCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
-        if (width > MAX_WIDTH || height > MAX_HEIGHT) {
+        if (width > MAX_WIDTH || height > MAX_HEIGHT
+            || width < MainWindow.getMinWidth() || height < MainWindow.getMinHeight()) {
             throw new CommandException(MESSAGE_INVALID_COMMAND_PARAMETERS);
         }
         EventsCenter.getInstance().post(new ResizeMainWindowEvent(width, height));
@@ -166,12 +177,13 @@ public class ResizeCommand extends Command {
 public class ArgumentWildcardMatcher {
 
     /**
-     * Convert arguments string of keywords with wildcard symbol "*" and "?"
+     * Convert a list of keywords with wildcard symbol "*" and "?"
      * into a list of lowercase regular expression matching the keywords.
      * @param keywords List of String containing unprocessed keywords
      * @return A lists of string regular expression in lowercase matching the keywords.
      */
     public static List<String> processKeywords(List<String> keywords) {
+        requireNonNull(keywords);
         ArrayList<String> processedKeywords = new ArrayList<>();
         for (String keyword : keywords) {
             processedKeywords.add(keyword.toLowerCase().replace("*", "\\S*").replace("?", "\\S"));
@@ -277,7 +289,8 @@ public class ResizeCommandParser implements Parser<ResizeCommand> {
         String[] sizeParameters = trimmedArgs.split("\\s+");
         int width = Integer.parseInt(sizeParameters[0]);
         int height = Integer.parseInt(sizeParameters[1]);
-        if (width > ResizeCommand.MAX_WIDTH || height > ResizeCommand.MAX_HEIGHT) {
+        if (width > ResizeCommand.MAX_WIDTH || height > ResizeCommand.MAX_HEIGHT
+            || width < MainWindow.getMinWidth() || height < MainWindow.getMinHeight()) {
             throwParserException();
         }
 
@@ -290,16 +303,14 @@ public class ResizeCommandParser implements Parser<ResizeCommand> {
 
 }
 ```
-###### \java\seedu\address\model\Model.java
-``` java
-    /** Returns the predicate of the current filtered person list */
-    Predicate<? super ReadOnlyPerson> getPersonListPredicate();
-```
 ###### \java\seedu\address\model\ModelManager.java
 ``` java
-    @Override
-    public Predicate<? super ReadOnlyPerson> getPersonListPredicate() {
-        return filteredPersons.getPredicate();
+    /**
+     * raise a new NewPersonInfoEvent whenever a person is added or edited
+     * @param person the person added or edited
+     */
+    private void indicateNewPersonInfoAvailable(ReadOnlyPerson person) {
+        raise(new NewPersonInfoEvent(person));
     }
 ```
 ###### \java\seedu\address\model\person\Name.java
@@ -505,208 +516,12 @@ public interface XmlAdaptedClass<E> {
         return FXCollections.unmodifiableObservableList(FXCollections.observableArrayList(modelTypeList));
     }
 ```
-###### \java\seedu\address\ui\CommandBox.java
-``` java
-        case TAB:
-            // Auto-complete using the first entry of the drop down menu
-            keyEvent.consume();;
-            commandTextField.completeFirst();
-            break;
-```
-###### \java\seedu\address\ui\MainWindow.java
-``` java
-    @Subscribe
-    private void handleResizeMainWindowEvent(ResizeMainWindowEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        primaryStage.setWidth(event.getWidth());
-        primaryStage.setHeight(event.getHeight());
-    }
-```
-###### \java\seedu\address\ui\ScreenDimension.java
-``` java
-/**
- * Provides the dimension of the current screen
- */
-public class ScreenDimension {
-
-    private static Dimension dimension;
-
-    public static Dimension getDimension() {
-        if (dimension != null) {
-            return dimension;
-        }
-        // Handle exceptions in Travis-CI environment
-        try {
-            dimension = Toolkit.getDefaultToolkit().getScreenSize();
-        } catch (Exception e) {
-            dimension = new Dimension();
-        }
-        return dimension;
-    }
-}
-```
-###### \java\seedu\address\ui\SuggestionHeuristic.java
-``` java
-/**
- * This class provides the relevant suggestions for Auto-Completion in TabCompleTextField
- */
-public class SuggestionHeuristic {
-
-    private final String[] sortFieldsList = {"name", "phone", "email", "address", "tag", "meeting"};
-
-    private SortedSet<String> empty = new TreeSet<>();
-    private SortedSet<String> commands = new TreeSet<>();
-    private SortedSet<String> sortFields = new TreeSet<>();
-    private SortedSet<String> tags = new TreeSet<>();
-    private SortedSet<String> names = new TreeSet<>();
-    private SortedSet<String> phones = new TreeSet<>();
-    private SortedSet<String> emails = new TreeSet<>();
-    private SortedSet<String> addresses = new TreeSet<>();
-    private SortedSet<String> windowSizes = new TreeSet<>();
-
-    public SuggestionHeuristic() {
-        EventsCenter.getInstance().registerHandler(this);
-        commands.addAll(CommandWordList.COMMAND_WORD_LIST);
-        sortFields.addAll(Arrays.asList(sortFieldsList));
-    }
-
-    /**
-     * Generates heuristics using information of a list of person
-     * @param persons the list of person to extract information from
-     */
-    public void initialise(List<ReadOnlyPerson> persons) {
-        persons.forEach(this::extractInfoFromPerson);
-    }
-
-    /**
-     * Extracts the relevant information from a person
-     * and put them into respective heuristics
-     * @param person
-     */
-    private void extractInfoFromPerson(ReadOnlyPerson person) {
-        names.addAll(Arrays.asList(person.getName().fullName.toLowerCase().split("\\s+")));
-        phones.add(person.getPhone().value);
-        emails.add(person.getEmail().value.toLowerCase());
-        person.getTags().stream().map(tag -> tag.tagName.toLowerCase()).forEachOrdered(tags::add);
-        addresses.addAll(Arrays.asList(person.getAddress().value.toLowerCase().split("\\s+")));
-    }
-
-    /**
-     * Generates a SortedSet containing suggestions from the inputted text
-     * @param prefixWords the prefix words in the inputted text
-     * @param lastWord the last (partial) word the the inputted text
-     * @return a SortedSet that contains suggestions for Auto-Completion
-     */
-    public SortedSet<String> getSuggestions(String prefixWords, String lastWord) {
-        if (lastWord.equals("")) {
-            return empty;
-        }
-        SortedSet<String> suggestionsSet = parseCommandWord(prefixWords);
-        return suggestionsSet.subSet(lastWord + Character.MIN_VALUE, lastWord + Character.MAX_VALUE);
-    }
-
-    /**
-     * According to the command word
-     * two parts by the last occurrence of space.
-     * Store them into prefixWords and lastWord respectively.
-     */
-    private SortedSet<String> parseCommandWord(String prefixWords) {
-        String commandWord = prefixWords.trim().split("\\s+")[0];
-
-        switch (commandWord) {
-
-        // commands that uses prefixes for arguments
-        case AddCommand.COMMAND_WORD: case AddCommand.COMMAND_ALIAS:
-        case EditCommand.COMMAND_WORD: case EditCommand.COMMAND_ALIAS:
-        case FindCommand.COMMAND_WORD: case FindCommand.COMMAND_ALIAS:
-            int lastSlash = prefixWords.lastIndexOf("/");
-            if (lastSlash - 1 <= 0) {
-                return empty;
-            }
-            switch (prefixWords.substring(lastSlash - 1, lastSlash)) {
-            case "n":
-                return names;
-            case "p":
-                return phones;
-            case "e":
-                return emails;
-            case "a":
-                return addresses;
-            case "t":
-                return tags;
-            default:
-                return empty;
-            }
-
-        // commands specifying meeting
-        case AddMeetingCommand.COMMAND_WORD: case AddMeetingCommand.COMMAND_ALIAS:
-        case DeleteMeetingCommand.COMMAND_WORD: case DeleteMeetingCommand.COMMAND_ALIAS:
-            //TODO: BETTER SUGGESTIONS FOR MEETINGS
-            return empty;
-
-        // commands specifying tag in argument
-        case AddTagCommand.COMMAND_WORD: case AddTagCommand.COMMAND_ALIAS:
-        case DeleteTagCommand.COMMAND_WORD: case DeleteTagCommand.COMMAND_ALIAS:
-            return tags;
-
-        // commands with no argument or single number argument
-        case BackupCommand.COMMAND_WORD: case BackupCommand.COMMAND_ALIAS:
-        case ClearCommand.COMMAND_WORD: case ClearCommand.COMMAND_ALIAS:
-        case DeleteCommand.COMMAND_WORD: case DeleteCommand.COMMAND_ALIAS:
-        case ExitCommand.COMMAND_WORD: case ExitCommand.COMMAND_ALIAS:
-        case HelpCommand.COMMAND_WORD: case HelpCommand.COMMAND_ALIAS:
-        case HistoryCommand.COMMAND_WORD: case HistoryCommand.COMMAND_ALIAS:
-        case LoginCommand.COMMAND_WORD: case LoginCommand.COMMAND_ALIAS:
-        case ListCommand.COMMAND_WORD: case ListCommand.COMMAND_ALIAS:
-        case SyncCommand.COMMAND_WORD: case SyncCommand.COMMAND_ALIAS:
-        case UndoCommand.COMMAND_WORD: case UndoCommand.COMMAND_ALIAS:
-        case RedoCommand.COMMAND_WORD: case RedoCommand.COMMAND_ALIAS:
-        case RestoreBackupCommand.COMMAND_WORD: case RestoreBackupCommand.COMMAND_ALIAS:
-        case SelectCommand.COMMAND_WORD: case SelectCommand.COMMAND_ALIAS:
-            return empty;
-
-        // stand alone special commands
-        case NoteCommand.COMMAND_WORD: case NoteCommand.COMMAND_ALIAS:
-            //TODO: BETTER SUGGESTIONS FOR NOTES
-            return empty;
-
-        case ResizeCommand.COMMAND_WORD: case ResizeCommand.COMMAND_ALIAS:
-            return windowSizes;
-
-        case SortCommand.COMMAND_WORD: case SortCommand.COMMAND_ALIAS:
-            return sortFields;
-
-        // incomplete or wrong command word
-        default:
-            return commands;
-        }
-    }
-
-
-    /**
-     * Updates heuristic for resize command from ResizeMainWindowEvent
-     */
-    @Subscribe
-    private void handleResizeMainWindowEvent(ResizeMainWindowEvent event) {
-        windowSizes.add(Integer.toString(event.getHeight()));
-        windowSizes.add(Integer.toString(event.getWidth()));
-    }
-
-    /**
-     * Updates heuristic using information from a person
-     */
-    @Subscribe
-    private void handleNewPersonInfoEvent(NewPersonInfoEvent event) {
-        extractInfoFromPerson(event.getPerson());
-    }
-}
-```
-###### \java\seedu\address\ui\TabCompleteTextField.java
+###### \java\seedu\address\ui\AutoCompleteTextField.java
 ``` java
 /**
  * This class enables auto-completion feature as a drop down menu from the command box.
  */
-public class TabCompleteTextField extends TextField {
+public class AutoCompleteTextField extends TextField {
 
     private static final int MAX_ENTRIES = 5;
 
@@ -715,11 +530,11 @@ public class TabCompleteTextField extends TextField {
     private String prefixWords;
     private String lastWord;
 
-    public TabCompleteTextField() {
+    public AutoCompleteTextField() {
         super();
-        // calls updateHeuristic() whenever there is a change to the text of the command box.
+        // calls generateSuggestions() whenever there is a change to the text of the command box.
         textProperty().addListener((unused1, unused2, unused3) -> generateSuggestions());
-        // hides the drop down menu whenever the focus in not on the command box
+        // hides the drop down menu when the focus changes
         focusedProperty().addListener((unused1, unused2, unused3) -> dropDownMenu.hide());
     }
 
@@ -731,13 +546,14 @@ public class TabCompleteTextField extends TextField {
     private void generateSuggestions() {
         splitWords();
         SortedSet<String> matchedWords = heuristic.getSuggestions(prefixWords, lastWord);
-        if (matchedWords.size() > 0) {
-            fillDropDown(matchedWords);
-            if (!dropDownMenu.isShowing()) {
-                dropDownMenu.show(TabCompleteTextField.this, Side.BOTTOM, 0, 0);
-            }
-        } else {
+        if (matchedWords.size() <= 0) {
             dropDownMenu.hide();
+            return;
+        }
+
+        fillDropDown(matchedWords);
+        if (!dropDownMenu.isShowing()) {
+            dropDownMenu.show(AutoCompleteTextField.this, Side.BOTTOM, 0, 0);
         }
     }
 
@@ -813,6 +629,204 @@ public class TabCompleteTextField extends TextField {
 
     public ContextMenu getDropDownMenu() {
         return dropDownMenu;
+    }
+}
+```
+###### \java\seedu\address\ui\CommandBox.java
+``` java
+        case TAB:
+            // Auto-complete using the first entry of the drop down menu
+            keyEvent.consume();;
+            commandTextField.completeFirst();
+            break;
+```
+###### \java\seedu\address\ui\MainWindow.java
+``` java
+    @Subscribe
+    private void handleResizeMainWindowEvent(ResizeMainWindowEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        primaryStage.setWidth(event.getWidth());
+        primaryStage.setHeight(event.getHeight());
+    }
+```
+###### \java\seedu\address\ui\ScreenDimension.java
+``` java
+/**
+ * Provides the dimension of the current screen
+ */
+public class ScreenDimension {
+
+    private static Dimension dimension;
+
+    public static Dimension getDimension() {
+        if (dimension != null) {
+            return dimension;
+        }
+        // Handle exceptions in Travis-CI environment
+        try {
+            dimension = Toolkit.getDefaultToolkit().getScreenSize();
+        } catch (Exception e) {
+            dimension = new Dimension(1366, 768);
+        }
+        return dimension;
+    }
+}
+```
+###### \java\seedu\address\ui\SuggestionHeuristic.java
+``` java
+/**
+ * This class provides the relevant suggestions for Auto-Completion in TabCompleTextField
+ */
+public class SuggestionHeuristic {
+
+    private final String[] sortFieldsList = {"name", "phone", "email", "address", "tag", "meeting"};
+
+    private SortedSet<String> empty = new TreeSet<>();
+    private SortedSet<String> commands = new TreeSet<>();
+    private SortedSet<String> sortFields = new TreeSet<>();
+    private SortedSet<String> tags = new TreeSet<>();
+    private SortedSet<String> names = new TreeSet<>();
+    private SortedSet<String> phones = new TreeSet<>();
+    private SortedSet<String> emails = new TreeSet<>();
+    private SortedSet<String> addresses = new TreeSet<>();
+    private SortedSet<String> windowSizes = new TreeSet<>();
+
+    public SuggestionHeuristic() {
+        EventsCenter.getInstance().registerHandler(this);
+        commands.addAll(CommandWordList.COMMAND_WORD_LIST);
+        sortFields.addAll(Arrays.asList(sortFieldsList));
+    }
+
+    /**
+     * Generates heuristics using information of a list of person
+     * @param persons the list of person to extract information from
+     */
+    public void initialise(List<ReadOnlyPerson> persons) {
+        persons.forEach(this::extractInfoFromPerson);
+    }
+
+    /**
+     * Extracts the relevant information from a person
+     * and put them into respective heuristics
+     * @param person
+     */
+    private void extractInfoFromPerson(ReadOnlyPerson person) {
+        names.addAll(Arrays.asList(person.getName().fullName.toLowerCase().split("\\s+")));
+        phones.add(person.getPhone().value);
+        emails.add(person.getEmail().value.toLowerCase());
+        person.getTags().stream().map(tag -> tag.tagName.toLowerCase()).forEachOrdered(tags::add);
+        addresses.addAll(Arrays.asList(person.getAddress().value.toLowerCase().split("\\s+")));
+    }
+
+    /**
+     * Generates a SortedSet containing suggestions from the inputted text
+     * @param prefixWords the prefix words in the inputted text
+     * @param lastWord the last (partial) word the the inputted text
+     * @return a SortedSet that contains suggestions for Auto-Completion
+     */
+    public SortedSet<String> getSuggestions(String prefixWords, String lastWord) {
+        if (lastWord.equals("")) {
+            return empty;
+        }
+        SortedSet<String> suggestionSet = getSuggestionSet(prefixWords);
+        return suggestionSet.subSet(lastWord + Character.MIN_VALUE, lastWord + Character.MAX_VALUE);
+    }
+
+    /**
+     * Returns the relevant SortedSet to generate suggestions from
+     * according to the context in the prefixWords
+     * @param prefixWords words that have been keyed in before the last word
+     * @return a SortedSet for generating suggestions
+     */
+    private SortedSet<String> getSuggestionSet(String prefixWords) {
+        String commandWord = prefixWords.trim().split("\\s+")[0];
+
+        switch (commandWord) {
+
+        // commands that uses prefixes for arguments
+        case AddCommand.COMMAND_WORD: case AddCommand.COMMAND_ALIAS:
+        case EditCommand.COMMAND_WORD: case EditCommand.COMMAND_ALIAS:
+        case FindCommand.COMMAND_WORD: case FindCommand.COMMAND_ALIAS:
+            int lastSlash = prefixWords.lastIndexOf("/");
+            if (lastSlash - 1 <= 0) {
+                return empty;
+            }
+            switch (prefixWords.substring(lastSlash - 1, lastSlash)) {
+            case "n":
+                return names;
+            case "p":
+                return phones;
+            case "e":
+                return emails;
+            case "a":
+                return addresses;
+            case "t":
+                return tags;
+            default:
+                return empty;
+            }
+
+        // commands specifying meeting
+        case AddMeetingCommand.COMMAND_WORD: case AddMeetingCommand.COMMAND_ALIAS:
+        case DeleteMeetingCommand.COMMAND_WORD: case DeleteMeetingCommand.COMMAND_ALIAS:
+            //TODO: BETTER SUGGESTIONS FOR MEETINGS
+            return empty;
+
+        // commands specifying tag in argument
+        case AddTagCommand.COMMAND_WORD: case AddTagCommand.COMMAND_ALIAS:
+        case DeleteTagCommand.COMMAND_WORD: case DeleteTagCommand.COMMAND_ALIAS:
+            return tags;
+
+        // commands with no argument or single number argument
+        case BackupCommand.COMMAND_WORD: case BackupCommand.COMMAND_ALIAS:
+        case ClearCommand.COMMAND_WORD: case ClearCommand.COMMAND_ALIAS:
+        case DeleteCommand.COMMAND_WORD: case DeleteCommand.COMMAND_ALIAS:
+        case ExitCommand.COMMAND_WORD: case ExitCommand.COMMAND_ALIAS:
+        case HelpCommand.COMMAND_WORD: case HelpCommand.COMMAND_ALIAS:
+        case HistoryCommand.COMMAND_WORD: case HistoryCommand.COMMAND_ALIAS:
+        case LoginCommand.COMMAND_WORD: case LoginCommand.COMMAND_ALIAS:
+        case LogoutCommand.COMMAND_WORD: case LogoutCommand.COMMAND_ALIAS:
+        case ListCommand.COMMAND_WORD: case ListCommand.COMMAND_ALIAS:
+        case SyncCommand.COMMAND_WORD: case SyncCommand.COMMAND_ALIAS:
+        case UndoCommand.COMMAND_WORD: case UndoCommand.COMMAND_ALIAS:
+        case RedoCommand.COMMAND_WORD: case RedoCommand.COMMAND_ALIAS:
+        case RestoreBackupCommand.COMMAND_WORD: case RestoreBackupCommand.COMMAND_ALIAS:
+        case SelectCommand.COMMAND_WORD: case SelectCommand.COMMAND_ALIAS:
+            return empty;
+
+        // stand alone special commands
+        case NoteCommand.COMMAND_WORD: case NoteCommand.COMMAND_ALIAS:
+            //TODO: BETTER SUGGESTIONS FOR NOTES
+            return empty;
+
+        case ResizeCommand.COMMAND_WORD: case ResizeCommand.COMMAND_ALIAS:
+            return windowSizes;
+
+        case SortCommand.COMMAND_WORD: case SortCommand.COMMAND_ALIAS:
+            return sortFields;
+
+        // incomplete or wrong command word
+        default:
+            return commands;
+        }
+    }
+
+
+    /**
+     * Updates heuristic for resize command from ResizeMainWindowEvent
+     */
+    @Subscribe
+    private void handleResizeMainWindowEvent(ResizeMainWindowEvent event) {
+        windowSizes.add(Integer.toString(event.getHeight()));
+        windowSizes.add(Integer.toString(event.getWidth()));
+    }
+
+    /**
+     * Updates heuristic using information from a person
+     */
+    @Subscribe
+    private void handleNewPersonInfoEvent(NewPersonInfoEvent event) {
+        extractInfoFromPerson(event.getPerson());
     }
 }
 ```

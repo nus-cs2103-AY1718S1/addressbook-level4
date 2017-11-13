@@ -82,7 +82,7 @@ public abstract class AddressBookSystemTest {
         return mainWindowHandle.getMainMenu();
     }
 
-    public MeetingListPanelHandle getBrowserPanel() {
+    public MeetingListPanelHandle getMeetingListPanel() {
         return mainWindowHandle.getMeetingListPanel();
     }
 
@@ -109,7 +109,7 @@ public abstract class AddressBookSystemTest {
 
     //@@author newalter
     /**
-     * Presses Tab and executes {@code command} in the application's {@code CommandBox}.
+     * Presses {@code keyPresses} and executes {@code command} in the application's {@code CommandBox}.
      * Method returns after UI components have been updated.
      */
     protected void pressAndExecuteCommand(String command, KeyCode... keyPresses) {

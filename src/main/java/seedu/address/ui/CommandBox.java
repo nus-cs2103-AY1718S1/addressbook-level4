@@ -27,7 +27,7 @@ public class CommandBox extends UiPart<Region> {
     private ListElementPointer historySnapshot;
 
     @FXML
-    private TabCompleteTextField commandTextField;
+    private AutoCompleteTextField commandTextField;
 
     public CommandBox(Logic logic) {
         super(FXML);

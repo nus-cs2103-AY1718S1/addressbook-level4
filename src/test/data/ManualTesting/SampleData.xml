@@ -1,0 +1,474 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addressbook>
+    <persons>
+        <name>Abraham Lionel</name>
+        <phone>No Phone Number</phone>
+        <email>abraham@lionel.com</email>
+        <address>No Address</address>
+        <note>Has 3 children</note>
+        <id></id>
+        <lastUpdated>2017-11-07T13:28:54.600001Z</lastUpdated>
+        <tagged>colleagues</tagged>
+        <tagged>friend</tagged>
+        <tagged>male</tagged>
+        <meetings>
+            <meetingName>Car insurance</meetingName>
+            <meetingTime>2017-11-20 11:00</meetingTime>
+        </meetings>
+        <meetings>
+            <meetingName>Health insurance</meetingName>
+            <meetingTime>2017-11-30 13:00</meetingTime>
+        </meetings>
+        <meetings>
+            <meetingName>Car insurance</meetingName>
+            <meetingTime>2017-12-20 11:00</meetingTime>
+        </meetings>
+    </persons>
+    <persons>
+        <name>Alex Lim</name>
+        <phone>81427313</phone>
+        <email>No Email</email>
+        <address>No Address</address>
+        <note>Owes me $10</note>
+        <id></id>
+        <lastUpdated>2017-11-07T13:34:53.794003Z</lastUpdated>
+        <tagged>acquaintance</tagged>
+        <tagged>male</tagged>
+        <meetings>
+            <meetingName>Health insurance</meetingName>
+            <meetingTime>2017-12-01 13:00</meetingTime>
+        </meetings>
+    </persons>
+    <persons>
+        <name>Ballack Ohana</name>
+        <phone>84124131</phone>
+        <email>ballack@gmail.com</email>
+        <address>No Address</address>
+        <note>Was referred to me via his wife</note>
+        <id></id>
+        <lastUpdated>2017-11-07T13:37:30.311001Z</lastUpdated>
+        <tagged>VIP</tagged>
+        <meetings>
+            <meetingName>Dinner</meetingName>
+            <meetingTime>2017-12-10 19:00</meetingTime>
+        </meetings>
+    </persons>
+    <persons>
+        <name>Bernice Yu</name>
+        <phone>99272758</phone>
+        <email>berniceyu@example.com</email>
+        <address>Blk 30 Lorong 3 Serangoon Gardens, #07-18</address>
+        <note>Single</note>
+        <id></id>
+        <lastUpdated>2016-07-08T14:30:00.121Z</lastUpdated>
+        <tagged>friend</tagged>
+        <meetings>
+            <meetingName>Health insurance</meetingName>
+            <meetingTime>2017-11-28 10:00</meetingTime>
+        </meetings>
+        <meetings>
+            <meetingName>Dinner</meetingName>
+            <meetingTime>2017-12-30 18:00</meetingTime>
+        </meetings>
+    </persons>
+    <persons>
+        <name>Betsy Crowe</name>
+        <phone>1234567</phone>
+        <email>betsycrowe@example.com</email>
+        <address>Newgate Prison</address>
+        <note>Remember to buy eggs</note>
+        <id></id>
+        <lastUpdated>2017-11-06T13:24:29.417002Z</lastUpdated>
+        <tagged>wife</tagged>
+        <tagged>female</tagged>
+        <meetings>
+            <meetingName>Health insurance</meetingName>
+            <meetingTime>2017-12-15 20:00</meetingTime>
+        </meetings>
+        <meetings>
+            <meetingName>Car insurance</meetingName>
+            <meetingTime>2017-12-18 20:00</meetingTime>
+        </meetings>
+    </persons>
+    <persons>
+        <name>Billy Jones</name>
+        <phone>91234567</phone>
+        <email>billy@example.com</email>
+        <address>No Address</address>
+        <note>Buy his new album</note>
+        <id></id>
+        <lastUpdated>2017-11-07T13:28:35.632001Z</lastUpdated>
+        <tagged>singer</tagged>
+        <tagged>male</tagged>
+    </persons>
+    <persons>
+        <name>Christopher Combus</name>
+        <phone>319219391</phone>
+        <email>chris@example.com</email>
+        <address>No Address</address>
+        <note>Amazing discoverer</note>
+        <id></id>
+        <lastUpdated>2017-11-07T13:30:51.791001Z</lastUpdated>
+        <tagged>friend</tagged>
+        <meetings>
+            <meetingName>Lunch</meetingName>
+            <meetingTime>2017-12-28 12:00</meetingTime>
+        </meetings>
+    </persons>
+    <persons>
+        <name>David Li</name>
+        <phone>91031282</phone>
+        <email>lidavid@example.com</email>
+        <address>Blk 436 Serangoon Gardens Street 26, #16-43</address>
+        <note>Divorced</note>
+        <id></id>
+        <lastUpdated>2015-12-02T18:46:23.121Z</lastUpdated>
+        <tagged>family</tagged>
+        <meetings>
+            <meetingName>Family gathering</meetingName>
+            <meetingTime>2017-12-31 19:00</meetingTime>
+        </meetings>
+        <meetings>
+            <meetingName>Lunch</meetingName>
+            <meetingTime>2017-12-25 10:30</meetingTime>
+        </meetings>
+    </persons>
+    <persons>
+        <name>Derek Lim</name>
+        <phone>61312181</phone>
+        <email>derek@example.com</email>
+        <address>No Address</address>
+        <note>Arrange for coffee sometime</note>
+        <id></id>
+        <lastUpdated>2017-11-09T16:27:26.846007Z</lastUpdated>
+        <tagged>friend</tagged>
+    </persons>
+    <persons>
+        <name>Donald Tan</name>
+        <phone>93167313</phone>
+        <email>donald@example.com</email>
+        <address>BLK 123 Donald Ave, #01-01</address>
+        <note></note>
+        <id></id>
+        <lastUpdated>2017-11-09T17:23:37.162001Z</lastUpdated>
+        <tagged>family</tagged>
+    </persons>
+    <persons>
+        <name>Elizabeth Ross</name>
+        <phone>38121313</phone>
+        <email>eliz@example.com</email>
+        <address>Blk 123, Harper Avenue</address>
+        <note>High school friend</note>
+        <id></id>
+        <lastUpdated>2017-11-09T17:31:54.834001Z</lastUpdated>
+        <tagged>friend</tagged>
+        <meetings>
+            <meetingName>Investment policy</meetingName>
+            <meetingTime>2017-12-07 14:00</meetingTime>
+        </meetings>
+    </persons>
+    <persons>
+        <name>Hope Ng</name>
+        <phone>63814132</phone>
+        <email>hope@hope.com</email>
+        <address>No Address</address>
+        <note>Chairperson of non-profit org Hope for Hope</note>
+        <id></id>
+        <lastUpdated>2017-11-09T17:29:12.071001Z</lastUpdated>
+        <tagged>wife</tagged>
+        <tagged>female</tagged>
+        <meetings>
+            <meetingName>Investment policy</meetingName>
+            <meetingTime>2017-12-08 10:00</meetingTime>
+        </meetings>
+    </persons>
+    <persons>
+        <name>Irfan Ibrahim</name>
+        <phone>92492021</phone>
+        <email>irfan@example.com</email>
+        <address>Blk 47 Tampines Street 20, #17-35</address>
+        <note></note>
+        <id></id>
+        <lastUpdated>2017-11-08T09:22:09.178003Z</lastUpdated>
+        <tagged>classmates</tagged>
+        <meetings>
+            <meetingName>Investment policy</meetingName>
+            <meetingTime>2017-12-05 13:00</meetingTime>
+        </meetings>
+        <meetings>
+            <meetingName>Investment policy</meetingName>
+            <meetingTime>2017-12-08 17:00</meetingTime>
+        </meetings>
+    </persons>
+    <persons>
+        <name>Jack Daniels</name>
+        <phone>31031311</phone>
+        <email>No Email</email>
+        <address>10 Whiskey Avenue</address>
+        <note>Likes to drink alcohol</note>
+        <id></id>
+        <lastUpdated>2017-11-09T17:30:46.907001Z</lastUpdated>
+        <meetings>
+            <meetingName>Health insurance</meetingName>
+            <meetingTime>2017-12-10 09:00</meetingTime>
+        </meetings>
+    </persons>
+    <persons>
+        <name>John Doe</name>
+        <phone>98765432</phone>
+        <email>johnd@example.com</email>
+        <address>John street, block 123, #01-01</address>
+        <note>Not exactly sure who this is</note>
+        <id></id>
+        <lastUpdated>2017-11-06T13:24:31.011001Z</lastUpdated>
+        <tagged>VIP</tagged>
+    </persons>
+    <persons>
+        <name>John Watson</name>
+        <phone>83331122</phone>
+        <email>johnw@example.com</email>
+        <address>John Avenue, block 2, #01-01</address>
+        <note></note>
+        <id></id>
+        <lastUpdated>2017-11-06T13:24:33.472Z</lastUpdated>
+        <tagged>friend</tagged>
+        <tagged>Doctor</tagged>
+        <meetings>
+            <meetingName>Health insurance</meetingName>
+            <meetingTime>2018-01-03 09:00</meetingTime>
+        </meetings>
+    </persons>
+    <persons>
+        <name>Lee Zhen Yong</name>
+        <phone>90213165</phone>
+        <email>No Email</email>
+        <address>No Address</address>
+        <note></note>
+        <id></id>
+        <lastUpdated>2017-11-07T13:36:00.367001Z</lastUpdated>
+        <tagged>friend</tagged>
+    </persons>
+    <persons>
+        <name>Li Sheng Yang</name>
+        <phone>91318213</phone>
+        <email>sy@example.com</email>
+        <address>No Address</address>
+        <note></note>
+        <id></id>
+        <lastUpdated>2017-11-07T13:35:13.435001Z</lastUpdated>
+        <tagged>acquaintance</tagged>
+    </persons>
+    <persons>
+        <name>Lisa Basil</name>
+        <phone>96133169</phone>
+        <email>lisabasil@example.com</email>
+        <address>101, Palindrome Road, #02-20</address>
+        <note>High risk client, should promote premium insurance plans</note>
+        <id></id>
+        <lastUpdated>2017-11-08T05:47:57.755001Z</lastUpdated>
+        <tagged>racecar</tagged>
+        <meetings>
+            <meetingName>Racecar insurance</meetingName>
+            <meetingTime>2017-12-21 12:00</meetingTime>
+        </meetings>
+    </persons>
+    <persons>
+        <name>Stephan Black</name>
+        <phone>82430154</phone>
+        <email>stephan@example.com</email>
+        <address>No Address</address>
+        <note></note>
+        <id></id>
+        <lastUpdated>2017-11-12T07:26:21.236Z</lastUpdated>
+    </persons>
+    <persons>
+        <name>Teddy Brundy</name>
+        <phone>911999</phone>
+        <email>ted@example.com</email>
+        <address>No Address</address>
+        <note>A rather weird person. Minimise contact</note>
+        <id></id>
+        <lastUpdated>2017-11-07T13:34:16.191001Z</lastUpdated>
+        <tagged>male</tagged>
+    </persons>
+    <persons>
+        <name>Tobe Frank</name>
+        <phone>139113132</phone>
+        <email>tobe@frank.com</email>
+        <address>No Address</address>
+        <note></note>
+        <id></id>
+        <lastUpdated>2017-11-07T13:31:50.702001Z</lastUpdated>
+        <meetings>
+            <meetingName>Dinner</meetingName>
+            <meetingTime>2018-01-07 18:00</meetingTime>
+        </meetings>
+    </persons>
+    <persons>
+        <name>Will Powers</name>
+        <phone>91483523</phone>
+        <email>willp@example.com</email>
+        <address>621, Global Lane 3, #02-20</address>
+        <note></note>
+        <id></id>
+        <lastUpdated>2017-11-08T05:48:02.761003Z</lastUpdated>
+        <tagged>colleagues</tagged>
+        <tagged>friend</tagged>
+        <meetings>
+            <meetingName>Health insurance</meetingName>
+            <meetingTime>2017-12-26 18:00</meetingTime>
+        </meetings>
+        <meetings>
+            <meetingName>Dinner</meetingName>
+            <meetingTime>2018-01-05 18:00</meetingTime>
+        </meetings>
+    </persons>
+    <persons>
+        <name>Wong Li Feng</name>
+        <phone>51241411</phone>
+        <email>wong@example.com</email>
+        <address>No Address</address>
+        <note>Interested in investments</note>
+        <id></id>
+        <lastUpdated>2017-11-07T13:33:43.186003Z</lastUpdated>
+        <tagged>colleagues</tagged>
+        <tagged>friend</tagged>
+        <meetings>
+            <meetingName>Health insurance</meetingName>
+            <meetingTime>2017-12-28 09:00</meetingTime>
+        </meetings>
+        <meetings>
+            <meetingName>Investment policy</meetingName>
+            <meetingTime>2017-12-29 18:00</meetingTime>
+        </meetings>
+        <meetings>
+            <meetingName>Health insurance</meetingName>
+            <meetingTime>2017-12-27 09:00</meetingTime>
+        </meetings>
+    </persons>
+    <persons>
+        <name>Stephen White</name>
+        <phone>88234126</phone>
+        <email>stephen.w@example.com</email>
+        <address>No Address</address>
+        <note></note>
+        <id></id>
+        <lastUpdated>2017-11-12T07:26:02.688Z</lastUpdated>
+    </persons>
+    <tags>singer</tags>
+    <tags>wife</tags>
+    <tags>neighbours</tags>
+    <tags>Doctor</tags>
+    <tags>racecar</tags>
+    <tags>friends</tags>
+    <tags>life</tags>
+    <tags>colleagues</tags>
+    <tags>friend</tags>
+    <tags>classmates</tags>
+    <tags>acquaintance</tags>
+    <tags>family</tags>
+    <tags>kayak</tags>
+    <tags>VIP</tags>
+    <tags>female</tags>
+    <tags>male</tags>
+    <meetings>
+        <meetingName>Car insurance</meetingName>
+        <meetingTime>2017-11-20 11:00</meetingTime>
+    </meetings>
+    <meetings>
+        <meetingName>Health insurance</meetingName>
+        <meetingTime>2017-11-28 10:00</meetingTime>
+    </meetings>
+    <meetings>
+        <meetingName>Health insurance</meetingName>
+        <meetingTime>2017-11-30 13:00</meetingTime>
+    </meetings>
+    <meetings>
+        <meetingName>Health insurance</meetingName>
+        <meetingTime>2017-12-01 13:00</meetingTime>
+    </meetings>
+    <meetings>
+        <meetingName>Investment policy</meetingName>
+        <meetingTime>2017-12-05 13:00</meetingTime>
+    </meetings>
+    <meetings>
+        <meetingName>Investment policy</meetingName>
+        <meetingTime>2017-12-07 14:00</meetingTime>
+    </meetings>
+    <meetings>
+        <meetingName>Investment policy</meetingName>
+        <meetingTime>2017-12-08 10:00</meetingTime>
+    </meetings>
+    <meetings>
+        <meetingName>Investment policy</meetingName>
+        <meetingTime>2017-12-08 17:00</meetingTime>
+    </meetings>
+    <meetings>
+        <meetingName>Health insurance</meetingName>
+        <meetingTime>2017-12-10 09:00</meetingTime>
+    </meetings>
+    <meetings>
+        <meetingName>Dinner</meetingName>
+        <meetingTime>2017-12-10 19:00</meetingTime>
+    </meetings>
+    <meetings>
+        <meetingName>Health insurance</meetingName>
+        <meetingTime>2017-12-15 20:00</meetingTime>
+    </meetings>
+    <meetings>
+        <meetingName>Car insurance</meetingName>
+        <meetingTime>2017-12-18 20:00</meetingTime>
+    </meetings>
+    <meetings>
+        <meetingName>Car insurance</meetingName>
+        <meetingTime>2017-12-20 11:00</meetingTime>
+    </meetings>
+    <meetings>
+        <meetingName>Racecar insurance</meetingName>
+        <meetingTime>2017-12-21 12:00</meetingTime>
+    </meetings>
+    <meetings>
+        <meetingName>Lunch</meetingName>
+        <meetingTime>2017-12-25 10:30</meetingTime>
+    </meetings>
+    <meetings>
+        <meetingName>Health insurance</meetingName>
+        <meetingTime>2017-12-26 18:00</meetingTime>
+    </meetings>
+    <meetings>
+        <meetingName>Health insurance</meetingName>
+        <meetingTime>2017-12-27 09:00</meetingTime>
+    </meetings>
+    <meetings>
+        <meetingName>Health insurance</meetingName>
+        <meetingTime>2017-12-28 09:00</meetingTime>
+    </meetings>
+    <meetings>
+        <meetingName>Lunch</meetingName>
+        <meetingTime>2017-12-28 12:00</meetingTime>
+    </meetings>
+    <meetings>
+        <meetingName>Investment policy</meetingName>
+        <meetingTime>2017-12-29 18:00</meetingTime>
+    </meetings>
+    <meetings>
+        <meetingName>Dinner</meetingName>
+        <meetingTime>2017-12-30 18:00</meetingTime>
+    </meetings>
+    <meetings>
+        <meetingName>Family gathering</meetingName>
+        <meetingTime>2017-12-31 19:00</meetingTime>
+    </meetings>
+    <meetings>
+        <meetingName>Health insurance</meetingName>
+        <meetingTime>2018-01-03 09:00</meetingTime>
+    </meetings>
+    <meetings>
+        <meetingName>Dinner</meetingName>
+        <meetingTime>2018-01-05 18:00</meetingTime>
+    </meetings>
+    <meetings>
+        <meetingName>Dinner</meetingName>
+        <meetingTime>2018-01-07 18:00</meetingTime>
+    </meetings>
+</addressbook>
