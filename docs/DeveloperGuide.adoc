@@ -913,7 +913,7 @@ SetRelCommmandParser ensures that:
 3. the indexes are an unsigned integer.
 4. there are 2 indexes present.
 5. only one add relationship or delete relationship prefix present.
-5. the relationships are not empty strings or null for adding and deleting.
+6. the relationships are not empty strings or null for adding and deleting.
 
 `SetRelCommandParser` returns a new instance of `SetRelCommand` that takes in two indexes, an editedPerson
 and a boolean value that states whether the add relationship prefix is present.
