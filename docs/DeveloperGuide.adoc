@@ -579,7 +579,7 @@ image::ImportSequenceDiagram.png[width="1000"]
 The import mechanism is built upon an `UndoableCommand`, which means that any changes made by the command can be easily reversed by calling the
 `undo` command.
 
-==== Design Considerations
+===== Design Considerations
 
 **Aspect:** How import executes +
 **Alternative 1 (current choice):** Individually adds each contact. +
@@ -807,7 +807,7 @@ This method will copy the chosen image into the designated display picture stora
 The returned path will be stored as the display picture value of a person.
 
 ===== Design Considerations
-**Aspect:** Where to implement this feature +
+**Aspect:** How to implement this feature +
 **Alternative 1 (current choice):** Prompts for display picture when parser detects `dp/` in `add` or `edit` commands +
 **Pros:** It is easier for users to add display picture as they can add a display picture while adding the person. +
 **Cons:** It is much more complex to implement is needed as we have to intercept the parsing of `add` or `edit` commands to add information for display picture. +
