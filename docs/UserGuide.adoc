@@ -770,6 +770,9 @@ a populated cherBook looks like, you can remove the list of the sample students 
 *Q*: Why does clicking on the contacts not changes the home page to the statistic and graph panels? +
 *A*: There is a 'soft lock' that can only be unlock when the select command is entered. e.g. select 1. Everything can be done normally after that.
 
+*Q*: Is there any way I can delete more than one schedule or contact at a time? +
+*A*: For now, cherBook does not support deleting more than one schedule or contact, but make sure to keep a lookout for our v2.0 release because these features are currently undergoing development.
+
 *Q*: Where can I ask for more support or drop a feedback? +
 *A*: You can drop us an email at cherbook@gmail.com.
 
