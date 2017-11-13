@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addressbook>
+    <persons>
+        <name>Alex Yeoh</name>
+        <phone>87438807</phone>
+        <email>alexyeoh@example.com</email>
+        <address>Blk 30 Geylang Street 29, #06-40</address>
+        <birthday>01/01/1991</birthday>
+        <tagged>All</tagged>
+        <tagged>enemies</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Bernice Yu</name>
+        <phone>99272758</phone>
+        <email>berniceyu@example.com</email>
+        <address>Blk 30 Lorong 3 Serangoon Gardens, #07-18</address>
+        <birthday>02/02/1992</birthday>
+        <tagged>All</tagged>
+        <tagged>colleagues</tagged>
+        <tagged>enemies</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Charlotte Oliveiro</name>
+        <phone>93210283</phone>
+        <email>charlotte@example.com</email>
+        <address>Blk 11 Ang Mo Kio Street 74, #11-04</address>
+        <birthday>03/03/1993</birthday>
+        <tagged>All</tagged>
+        <tagged>neighbours</tagged>
+        <tagged>enemies</tagged>
+    </persons>
+    <persons>
+        <name>David Li</name>
+        <phone>91031282</phone>
+        <email>lidavid@example.com</email>
+        <address>Blk 436 Serangoon Gardens Street 26, #16-43</address>
+        <birthday>04/04/1994</birthday>
+        <tagged>All</tagged>
+        <tagged>family</tagged>
+    </persons>
+    <persons>
+        <name>Irfan Ibrahim</name>
+        <phone>92492021</phone>
+        <email>irfan@example.com</email>
+        <address>Blk 47 Tampines Street 20, #17-35</address>
+        <birthday>05/05/1995</birthday>
+        <tagged>All</tagged>
+        <tagged>classmates</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Roy Balakrishnan</name>
+        <phone>92624417</phone>
+        <email>royb@example.com</email>
+        <address>Blk 45 Aljunied Street 85, #11-31</address>
+        <birthday>06/06/1996</birthday>
+        <tagged>All</tagged>
+        <tagged>colleagues</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>John Doe</name>
+        <phone>98765432</phone>
+        <email>johnd@example.com</email>
+        <address>311, Clementi Ave 2, #02-25</address>
+        <birthday></birthday>
+        <tagged>All</tagged>
+        <tagged>owesMoney</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Jane Noe</name>
+        <phone>91233423</phone>
+        <email>janen@example.com</email>
+        <address>212, Clementi Ave 6, #02-25</address>
+        <birthday></birthday>
+        <tagged>All</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Zack Fair</name>
+        <phone>12356790</phone>
+        <email>ff7@example.com</email>
+        <address>Shinra #02-25</address>
+        <birthday></birthday>
+        <tagged>All</tagged>
+        <tagged>soldier</tagged>
+    </persons>
+    <persons>
+        <name>Conchobhar Yushua</name>
+        <phone>1233489</phone>
+        <email>jhoai@example.com</email>
+        <address>Homeless</address>
+        <birthday></birthday>
+        <tagged>All</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Konrad Forest</name>
+        <phone>1275899</phone>
+        <email>hqong@example.com</email>
+        <address>Nowhere</address>
+        <birthday></birthday>
+        <tagged>All</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Levin Moe</name>
+        <phone>1767234</phone>
+        <email>levino@example.com</email>
+        <address>Cannot be found</address>
+        <birthday></birthday>
+        <tagged>All</tagged>
+        <tagged>classmates</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Johnson Hughes</name>
+        <phone>15453557</phone>
+        <email>johnson@example.com</email>
+        <address>NUS</address>
+        <birthday></birthday>
+        <tagged>All</tagged>
+        <tagged>lecturers</tagged>
+    </persons>
+    <persons>
+        <name>Jeanna Quinn</name>
+        <phone>7863452</phone>
+        <email>quinn@example.com</email>
+        <address>NUS</address>
+        <birthday></birthday>
+        <tagged>All</tagged>
+        <tagged>students</tagged>
+    </persons>
+    <persons>
+        <name>Narayana Nithya</name>
+        <phone>34987589</phone>
+        <email>nithyaaa@example.com</email>
+        <address>Blk 55 Lorong 4 Serangoon Gardens, #06-9918</address>
+        <birthday></birthday>
+        <tagged>All</tagged>
+        <tagged>workers</tagged>
+    </persons>
+    <persons>
+        <name>Anita Loh</name>
+        <phone>4681356</phone>
+        <email>anita@example.com</email>
+        <address>Blk 87 Lorong 45 Serangoon Gardens</address>
+        <birthday></birthday>
+        <tagged>All</tagged>
+        <tagged>teachers</tagged>
+    </persons>
+    <persons>
+        <name>Tyson M Alfonso</name>
+        <phone>1485267</phone>
+        <email>tyson@example.com</email>
+        <address>Clementi Ave 9</address>
+        <birthday></birthday>
+        <tagged>All</tagged>
+        <tagged>beggar</tagged>
+    </persons>
+    <persons>
+        <name>Josip Juda</name>
+        <phone>4582698</phone>
+        <email>josep@example.com</email>
+        <address>Highway</address>
+        <birthday></birthday>
+        <tagged>All</tagged>
+        <tagged>randomguys</tagged>
+    </persons>
+    <persons>
+        <name>Orabela Lara</name>
+        <phone>1563895</phone>
+        <email>lara@example.com</email>
+        <address>467, Clementi Ave 10, #03-34</address>
+        <birthday></birthday>
+        <tagged>All</tagged>
+        <tagged>owesMoney</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Damith</name>
+        <phone>0000000</phone>
+        <email>damith@example.com</email>
+        <address>No idea</address>
+        <birthday></birthday>
+        <tagged>All</tagged>
+        <tagged>lecturers</tagged>
+        <tagged>CS2103T</tagged>
+    </persons>
+    <reminders>
+        <taskName>Proposal submission</taskName>
+        <priority>High</priority>
+        <date>25/12/2017 15:00</date>
+        <message>Submit to manager</message>
+        <tagged>Work</tagged>
+        <tagged>John</tagged>
+    </reminders>
+    <reminders>
+        <taskName>Project meeting</taskName>
+        <priority>High</priority>
+        <date>14/11/2017 15:00</date>
+        <message>Discuss about progress</message>
+        <tagged>colleagues</tagged>
+        <tagged>Work</tagged>
+    </reminders>
+    <reminders>
+        <taskName>Progress Report</taskName>
+        <priority>Medium</priority>
+        <date>10/11/2017 23:59</date>
+        <message>Submit to boss</message>
+        <tagged>Van</tagged>
+    </reminders>
+    <reminders>
+        <taskName>Birthday party</taskName>
+        <priority>Medium</priority>
+        <date>18/11/2017 18:00</date>
+        <message>Go to Zack's birthday party</message>
+        <tagged>Zack</tagged>
+    </reminders>
+    <reminders>
+        <taskName>Collecting suit</taskName>
+        <priority>Low</priority>
+        <date>16/11/2017 12:00</date>
+        <message>Collecting my new suit</message>
+        <tagged>Suit</tagged>
+    </reminders>
+    <reminders>
+        <taskName>Proposal submission 2</taskName>
+        <priority>High</priority>
+        <date>09/01/2018 23:59</date>
+        <message>Submit to manager</message>
+        <tagged>Work</tagged>
+        <tagged>John</tagged>
+    </reminders>
+    <reminders>
+        <taskName>Sleep</taskName>
+        <priority>High</priority>
+        <date>16/11/2017 00:00</date>
+        <message>On bed, of course</message>
+        <tagged>Myself</tagged>
+    </reminders>
+    <reminders>
+        <taskName>Buy food</taskName>
+        <priority>Low</priority>
+        <date>20/11/2017 16:00</date>
+        <message>Go to the supermarket</message>
+        <tagged>Clementi</tagged>
+    </reminders>
+    <reminders>
+        <taskName>Life submission</taskName>
+        <priority>High</priority>
+        <date>25/12/9999 15:00</date>
+        <message>Submit to heaven</message>
+        <tagged>Heaven</tagged>
+        <tagged>Rip</tagged>
+    </reminders>
+    <reminders>
+        <taskName>The beginning</taskName>
+        <priority>Low</priority>
+        <date>01/01/0001 00:01</date>
+        <message>Of everything</message>
+        <tagged>Humanity</tagged>
+    </reminders>
+    <reminders>
+        <taskName>Proposal submission 3</taskName>
+        <priority>Low</priority>
+        <date>28/02/2018 15:00</date>
+        <message>Submit to manager</message>
+        <tagged>Work</tagged>
+        <tagged>John</tagged>
+    </reminders>
+    <reminders>
+        <taskName>Buy books</taskName>
+        <priority>Low</priority>
+        <date>25/12/2017 15:00</date>
+        <message>To the bookstore</message>
+        <tagged>Book</tagged>
+    </reminders>
+    <reminders>
+        <taskName>Class reunion</taskName>
+        <priority>High</priority>
+        <date>30/12/2017 15:00</date>
+        <message>Ignore</message>
+        <tagged>home</tagged>
+    </reminders>
+    <reminders>
+        <taskName>Project presentation</taskName>
+        <priority>Medium</priority>
+        <date>20/11/2017 15:00</date>
+        <message>Present before class</message>
+        <tagged>David</tagged>
+    </reminders>
+    <reminders>
+        <taskName>Travel oveseas</taskName>
+        <priority>High</priority>
+        <date>31/12/2017 15:00</date>
+        <message>To USA</message>
+        <tagged>Work</tagged>
+    </reminders>
+    <reminders>
+        <taskName>Homework</taskName>
+        <priority>Low</priority>
+        <date>15/12/2017 15:00</date>
+        <message>Submit after lecture</message>
+        <tagged>Lazy</tagged>
+    </reminders>
+    <reminders>
+        <taskName>Sleep 2</taskName>
+        <priority>High</priority>
+        <date>16/12/2017 23:59</date>
+        <message>...</message>
+        <tagged>zzz</tagged>
+    </reminders>
+    <reminders>
+        <taskName>Play</taskName>
+        <priority>High</priority>
+        <date>10/12/2017 23:59</date>
+        <message>Even though tomorrow has finals</message>
+        <tagged>thuglife</tagged>
+    </reminders>
+    <reminders>
+        <taskName>Payback money</taskName>
+        <priority>Low</priority>
+        <date>20/11/2017 18:00</date>
+        <message>Should I?</message>
+        <tagged>John</tagged>
+    </reminders>
+    <reminders>
+        <taskName>Apocalypse</taskName>
+        <priority>Medium</priority>
+        <date>31/12/2018 23:59</date>
+        <message>What to do?</message>
+        <tagged>World</tagged>
+    </reminders>
+    <tags>Van</tags>
+    <tags>Zack</tags>
+    <tags>John</tags>
+    <tags>students</tags>
+    <tags>Suit</tags>
+    <tags>bullshit</tags>
+    <tags>World</tags>
+    <tags>sleep</tags>
+    <tags>owesMoney</tags>
+    <tags>teachers</tags>
+    <tags>Book</tags>
+    <tags>Clementi</tags>
+    <tags>thuglife</tags>
+    <tags>Work</tags>
+    <tags>CS2103T</tags>
+    <tags>Humanity</tags>
+    <tags>Myself</tags>
+    <tags>workers</tags>
+    <tags>Heaven</tags>
+    <tags>randomguys</tags>
+    <tags>lecturers</tags>
+    <tags>neighbours</tags>
+    <tags>friends</tags>
+    <tags>beggar</tags>
+    <tags>home</tags>
+    <tags>Lazy</tags>
+    <tags>soldier</tags>
+    <tags>colleagues</tags>
+    <tags>Rip</tags>
+    <tags>David</tags>
+    <tags>classmates</tags>
+    <tags>zzz</tags>
+    <tags>family</tags>
+    <tags>All</tags>
+    <tags>enemies</tags>
+</addressbook>
