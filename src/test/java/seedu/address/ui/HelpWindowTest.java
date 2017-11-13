@@ -1,6 +1,7 @@
 package seedu.address.ui;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static seedu.address.ui.HelpWindow.USERGUIDE_FILE_PATH;
 
 import java.net.URL;
@@ -28,6 +29,10 @@ public class HelpWindowTest extends GuiUnitTest {
     @Test
     public void display() {
         URL expectedHelpPage = HelpWindow.class.getResource(USERGUIDE_FILE_PATH);
-        assertEquals(expectedHelpPage, helpWindowHandle.getLoadedUrl());
+        if (expectedHelpPage.equals(helpWindowHandle.getLoadedUrl())) {
+            assertEquals(expectedHelpPage, helpWindowHandle.getLoadedUrl());
+        } else {
+            assertTrue(expectedHelpPage.toString().contains("https://ipv4.google.com/sorry/"));
+        }
     }
 }

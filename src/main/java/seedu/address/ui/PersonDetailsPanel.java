@@ -31,6 +31,13 @@ import seedu.address.model.person.ReadOnlyPerson;
  * The Contact Details Panel of the App.
  */
 public class PersonDetailsPanel extends UiPart<Region> {
+
+    public static final String TWITTER_DEFAULT_URL = "https://twitter.com/search?q=news&src=typd";
+    public static final String FACEBOOK_DEFAULT_URL = "https://www.facebook.com/people-search.php";
+    public static final String NUSMODS_DEFAULT_URL = "https://nusmods.com/timetable/2017-2018/sem1";
+    public static final String INSTAGRAM_DEFAULT_URL = "https://www.instagram.com/instagram/";
+    public static final String GITHUB_DEFAULT_URL = "https://github.com/github";
+
     private static final String FXML = "PersonDetailsPanel.fxml";
 
     private ObservableList<ReadOnlyPerson> personList;
@@ -81,7 +88,7 @@ public class PersonDetailsPanel extends UiPart<Region> {
         tab.setText("twitter");
         tab.setClosable(true);
         WebView webView = new WebView();
-        webView.getEngine().load("https://twitter.com/search?q=news&src=typd");
+        webView.getEngine().load(TWITTER_DEFAULT_URL);
         tab.setContent(webView);
         tabPane.getTabs().add(tab);
     }
@@ -95,7 +102,7 @@ public class PersonDetailsPanel extends UiPart<Region> {
         tab.setText("nusmods");
         tab.setClosable(true);
         WebView webView = new WebView();
-        webView.getEngine().load("https://nusmods.com/timetable/2017-2018/sem1");
+        webView.getEngine().load(NUSMODS_DEFAULT_URL);
         tab.setContent(webView);
         tabPane.getTabs().add(tab);
     }
@@ -109,7 +116,7 @@ public class PersonDetailsPanel extends UiPart<Region> {
         tab.setText("facebook");
         tab.setClosable(true);
         WebView webView = new WebView();
-        webView.getEngine().load("https://www.facebook.com/people-search.php");
+        webView.getEngine().load(FACEBOOK_DEFAULT_URL);
         tab.setContent(webView);
         tabPane.getTabs().add(tab);
     }
@@ -123,7 +130,7 @@ public class PersonDetailsPanel extends UiPart<Region> {
         tab.setText("instagram");
         tab.setClosable(true);
         WebView webView = new WebView();
-        webView.getEngine().load("https://www.instagram.com/instagram/");
+        webView.getEngine().load(INSTAGRAM_DEFAULT_URL);
         tab.setContent(webView);
         tabPane.getTabs().add(tab);
     }
@@ -137,7 +144,7 @@ public class PersonDetailsPanel extends UiPart<Region> {
         tab.setText("github");
         tab.setClosable(true);
         WebView webView = new WebView();
-        webView.getEngine().load("https://github.com/github");
+        webView.getEngine().load(GITHUB_DEFAULT_URL);
         tab.setContent(webView);
         tabPane.getTabs().add(tab);
     }
