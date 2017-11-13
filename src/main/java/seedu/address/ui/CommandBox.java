@@ -127,6 +127,7 @@ public class CommandBox extends UiPart<Region> {
             int unfilledPrefixPosition = filledCommand.indexOf("/ ") + 1;
             commandTextField.setText(filledCommand.trim());
             commandTextField.positionCaret(unfilledPrefixPosition);
+            raise(new NewResultAvailableEvent(mpe.getMessage(), true));
         } catch (CommandException | ParseException e) {
             initHistory();
             // handle command failure
