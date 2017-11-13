@@ -12,7 +12,7 @@ ifndef::env-github[]
 image::images/Ui.png[width="600"]
 endif::[]
 
-* This is a desktop address book application. This application allows users to store important information about the people they care about. It is meant for people who have plenty of contacts and who want to conveniently store them and find information. It is capable of storing different types of information such as name, phone number and address of a person. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
+* This is a desktop address book application. This application is targeted to businessmen who would like to store information of their clients and navigate themselves to the location of their client. This would better aid businessmen in finding the contact details which are all stored in one location as it is capable of storing information such as name, phone number and address of a person. It has a GUI but most of the user interactions happens using a CLI (Command Line Interface).
 
 
 == Site Map
