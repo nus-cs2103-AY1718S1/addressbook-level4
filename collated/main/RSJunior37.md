@@ -331,7 +331,6 @@ public class InsuranceIdLabel extends UiPart<Region> {
         private void initializeContractFile(ReadOnlyInsurance insurance) {
                 insuranceFile =  new File(PDF_FOLDER_PATH + insurance.getContractFileName()
                         + (insurance.getContractFileName().toString().endsWith(PDF_EXTENSION) ? "" : PDF_EXTENSION));
-        
         if (isFileExists(insuranceFile)) {
             activateLinkToInsuranceFile();
         } else {

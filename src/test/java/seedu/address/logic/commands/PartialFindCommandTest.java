@@ -85,7 +85,8 @@ public class PartialFindCommandTest {
      */
     private PartialFindCommand prepareCommand(String userInput) {
         PartialFindCommand command =
-                new PartialFindCommand(new NameContainsPartialKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
+                new PartialFindCommand(new NameContainsPartialKeywordsPredicate(
+                        Arrays.asList(userInput.split("\\s+"))));
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
