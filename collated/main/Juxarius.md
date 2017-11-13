@@ -121,9 +121,9 @@ public class InsuranceClickedEvent extends BaseEvent {
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
-        DateOfBirth updatedDateOfBirth = editPersonDescriptor.getDateOfBirth().orElse(personToEdit.getDateOfBirth());
-        Gender updatedGender = editPersonDescriptor.getGender().orElse(personToEdit.getGender());
-
+```
+###### \java\seedu\address\logic\commands\EditCommand.java
+``` java
         Set<Tag> updatedTags = personToEdit.getTags();
 
         if (editPersonDescriptor.getTagsToDel().isPresent()) {
@@ -222,10 +222,10 @@ public class InsuranceClickedEvent extends BaseEvent {
      */
     private String getCommandWithFilledPrefixes(String commandText) {
         String filledText = commandText + " ";
-        Set<Prefix> missingPrefixes = PREFIXES_INSURANCE.stream().filter(prefix ->
-                !commandText.contains(prefix.getPrefix())).collect(Collectors.toSet());
-        for (Prefix missingPrefix : missingPrefixes) {
-            filledText += missingPrefix.getPrefix() + " ";
+        for (Prefix prefix : PREFIXES_INSURANCE) {
+            if (!commandText.contains(prefix.getPrefix())) {
+                filledText += prefix.getPrefix() + " ";
+            }
         }
         return filledText;
     }
@@ -419,9 +419,9 @@ public class InsuranceClickedEvent extends BaseEvent {
 ``` java
     public static final Set<Prefix> PREFIXES_PERSON = new HashSet<>(Arrays.asList(
             PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_DOB, PREFIX_GENDER));
-    public static final Set<Prefix> PREFIXES_INSURANCE = new HashSet<>(Arrays.asList(
-            PREFIX_NAME, PREFIX_OWNER, PREFIX_INSURED, PREFIX_BENEFICIARY, PREFIX_PREMIUM, PREFIX_CONTRACT_NAME,
-            PREFIX_SIGNING_DATE, PREFIX_EXPIRY_DATE));
+    public static final Set<Prefix> PREFIXES_INSURANCE = new LinkedHashSet<>(Arrays.asList(
+            PREFIX_NAME, PREFIX_OWNER, PREFIX_INSURED, PREFIX_BENEFICIARY,
+            PREFIX_PREMIUM, PREFIX_CONTRACT_FILE_NAME, PREFIX_SIGNING_DATE, PREFIX_EXPIRY_DATE));
 }
 ```
 ###### \java\seedu\address\logic\parser\DateParser.java
@@ -746,7 +746,6 @@ public class MissingPrefixException extends ParseException {
 ```
 ###### \java\seedu\address\model\AddressBook.java
 ``` java
-
     /**
      * @param target insurance to be deleted
      * @throws InsuranceNotFoundException
@@ -765,9 +764,9 @@ public class MissingPrefixException extends ParseException {
      * Function to update the overall links between insurances and persons after a change in LISA
      */
     private void syncWithUpdate() {
-        syncMasterLifeInsuranceMap();
+        syncMasterLifeInsuranceMapWith(persons);
         try {
-            syncMasterPersonList();
+            syncMasterPersonListWith(lifeInsuranceMap);
         } catch (InsuranceNotFoundException infe) {
             assert false : "AddressBooks should not have duplicate insurances";
         }
@@ -779,9 +778,17 @@ public class MissingPrefixException extends ParseException {
 ```
 ###### \java\seedu\address\model\insurance\LifeInsurance.java
 ``` java
-    private StringProperty insuranceName;
     private LocalDate signingDate;
     private LocalDate expiryDate;
+    private StringProperty signingDateString;
+    private StringProperty expiryDateString;
+```
+###### \java\seedu\address\model\insurance\Premium.java
+``` java
+    @Override
+    public String toString() {
+        return "S$ " + String.format("%.2f", value);
+    }
 ```
 ###### \java\seedu\address\model\insurance\UniqueLifeInsuranceList.java
 ``` java
@@ -795,7 +802,7 @@ public class MissingPrefixException extends ParseException {
             if (insurance1.getPremium().equals(insurance2.getPremium())) {
                 return 0;
             } else {
-                return insurance1.getPremium() < insurance2.getPremium() ? 1 : -1;
+                return insurance1.getPremium().toDouble() < insurance2.getPremium().toDouble() ? 1 : -1;
             }
         });
     }
@@ -826,6 +833,7 @@ public class MissingPrefixException extends ParseException {
     public static final String MESSAGE_DOB_CONSTRAINTS =
             "Please enter in Day Month Year format where the month can be a number or the name"
                     + " and the year can be input in 2-digit or 4-digit format.";
+
     /*
      * The first character of the address must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
@@ -843,30 +851,15 @@ public class MissingPrefixException extends ParseException {
         this.dateOfBirth = LocalDate.now();
         this.dateSet = false;
     }
-
-    /**
-     * Validates given Date of Birth.
-     *
-     * @throws IllegalValueException if given date of birth string is invalid.
-     */
-    public DateOfBirth(String dob) throws IllegalValueException {
-        requireNonNull(dob);
-        if (dob.isEmpty()) {
-            throw new EmptyFieldException(PREFIX_DOB);
-        }
-        if (!isValidDateOfBirth(dob)) {
-            throw new IllegalValueException(MESSAGE_DOB_CONSTRAINTS);
-        }
+```
+###### \java\seedu\address\model\person\DateOfBirth.java
+``` java
         this.dateOfBirth = new DateParser().parse(dob);
         this.dateSet = true;
     }
-
-    /**
-     * Returns true if a given string is a valid person date of birth.
-     */
-    public static boolean isValidDateOfBirth(String test) {
-        return test.matches(DOB_VALIDATION_REGEX);
-    }
+```
+###### \java\seedu\address\model\person\DateOfBirth.java
+``` java
     @Override
     public String toString() {
         return dateSet ? dateOfBirth.format(DateParser.DATE_FORMAT) : "";
@@ -904,6 +897,7 @@ public class MissingPrefixException extends ParseException {
             int unfilledPrefixPosition = filledCommand.indexOf("/ ") + 1;
             commandTextField.setText(filledCommand.trim());
             commandTextField.positionCaret(unfilledPrefixPosition);
+            raise(new NewResultAvailableEvent(mpe.getMessage(), true));
         } catch (CommandException | ParseException e) {
             initHistory();
             // handle command failure
@@ -1019,7 +1013,7 @@ public class InsuranceProfilePanel extends UiPart<Region> {
         insuranceScrollPane.setFitToWidth(true);
         insuranceProfilePanel.prefWidthProperty().bind(insuranceScrollPane.widthProperty());
         insuranceProfilePanel.prefHeightProperty().bind(insuranceScrollPane.heightProperty());
-        enableNameToProfileLink(insurance);
+        setAllToNull();
         registerAsAnEventHandler(this);
     }
 
@@ -1044,7 +1038,7 @@ public class InsuranceProfilePanel extends UiPart<Region> {
         enableNameToProfileLink(event.getInsurance());
         initializeContractFile(event.getInsurance());
         bindListeners(event.getInsurance());
-        setPremiumLevel(event.getInsurance().getPremium());
+        setPremiumLevel(event.getInsurance().getPremium().toDouble());
         raise(new SwitchToInsurancePanelRequestEvent());
     }
 ```
