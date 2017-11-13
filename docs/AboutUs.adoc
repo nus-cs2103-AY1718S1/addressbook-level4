@@ -38,7 +38,7 @@ Responsibilities: Model
 
 === Jiang Chunhui
 image::adoby7.png[width="150", align="left"]
-{empty}[https://github.com/Adoby7[github]] [<<JiangChunhui#, portfolio>>]
+{empty}[https://github.com/Adoby7[github]] [<<jiangchunhui#, portfolio>>]
 
 Role: Developer +
 Responsibilities: Logic
@@ -47,7 +47,7 @@ Responsibilities: Logic
 
 === Hou Denghao
 image::houdenghao.png[width="150", align="left"]
-{empty}[http://github.com/HouDenghao[github]] [<<johndoe#, portfolio>>]
+{empty}[http://github.com/HouDenghao[github]] [<<houdenghao#, portfolio>>]
 
 Role: Developer +
 Responsibilities: UI

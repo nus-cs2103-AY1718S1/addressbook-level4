@@ -277,7 +277,8 @@ public class DisjoinCommandTest {
     public void testNotParticipantFail() {
         String expectedMessage = DisjoinCommand.MESSAGE_PERSON_NOT_PARTICIPATE;
         final Index validIndex = INDEX_FIRST_EVENT;
-        final Index invalidIndex = Index.fromOneBased(6);
+        // last person does not join any event
+        final Index invalidIndex = Index.fromOneBased(model.getFilteredPersonList().size());
         Model actualModel = new ModelManager(model.getAddressBook(), model.getEventList(), new UserPrefs());
         DisjoinCommand noParticipantCommand = prepareCommand(invalidIndex, validIndex, actualModel);
 
@@ -429,9 +430,6 @@ public class EditEventCommandTest {
         // same object -> returns true
         assertTrue(standardCommand.equals(standardCommand));
 
-        // null -> returns false
-        assertFalse(standardCommand.equals(null));
-
         // different types -> returns false
         assertFalse(standardCommand.equals(new ClearCommand()));
 
@@ -466,9 +464,6 @@ public class EditEventDescriptorTest {
 
         // same object -> returns true
         assertTrue(DESC_EVENT_FIRST.equals(DESC_EVENT_FIRST));
-
-        // null -> returns false
-        assertFalse(DESC_EVENT_FIRST.equals(null));
 
         // different types -> returns false
         assertFalse(DESC_EVENT_FIRST.equals(1));
@@ -1908,6 +1903,9 @@ public class PortraitCommandParserTest {
         // Add more boundary tests
         assertFalse(EventTime.isValidEventTime("29/02/2100")); // not a leap year
         assertFalse(EventTime.isValidEventTime("30/02/2000")); // No 30th day in Feb
+        assertFalse(EventTime.isValidEventTime("3/02/2000")); // should be 03 instead of 3
+        assertFalse(EventTime.isValidEventTime("30/2/2000")); // should be 02 instead of 2
+        assertFalse(EventTime.isValidEventTime("30/02/1899")); //Before year 1900
 
         assertTrue(EventTime.isValidEventTime("29/02/2000"));
         assertTrue(EventTime.isValidEventTime("29/02/2004"));
@@ -1945,6 +1943,62 @@ public class PortraitPathTest {
         assertTrue(PortraitPath.isValidPortraitPath("E:/very/very/deep/path/name_with_underscore.jpg"));
         assertTrue(PortraitPath.isValidPortraitPath("F:/name with space.png"));
         assertTrue(PortraitPath.isValidPortraitPath("G:/Name_mixed/ with -every\thi-ng 1234.png"));
+    }
+}
+```
+###### \java\seedu\address\storage\PersonEventInteractionStorageTest.java
+``` java
+/**
+ * Test the XmlAdaptedEventNoParticipant and XmlAdaptedPersonNoParticipation
+ * Only test the save and read behavior
+ * Integrate with model
+ */
+public class PersonEventInteractionStorageTest {
+    @Rule
+    public TemporaryFolder testFolder = new TemporaryFolder();
+
+    private Model model = new ModelManager(getTypicalAddressBook(), getTypicalEventList(), new UserPrefs());
+    private XmlAddressBookStorage xmlAddressBookStorage;
+    private XmlEventStorage xmlEventListStorage;
+    private String addressBookPath;
+    private String eventListPath;
+
+    @Before
+    public void setUp() {
+        joinEvents(model);
+        addressBookPath = testFolder.getRoot().getPath() + "TempAddressBook.xml";
+        eventListPath = testFolder.getRoot().getPath() + "TempEventList.xml";
+        xmlAddressBookStorage = new XmlAddressBookStorage(addressBookPath);
+        xmlEventListStorage = new XmlEventStorage(eventListPath);
+    }
+
+    @Test
+    public void testSaveAndRead() throws Exception {
+        assertsaveAndReadSuccess();
+
+        // Disjoin an event
+        Person person = new Person(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()));
+        Event event = new Event(model.getFilteredEventList().get(INDEX_SECOND_EVENT.getZeroBased()));
+        model.quitEvent(person, event);
+        assertsaveAndReadSuccess();
+
+        // Join an event
+        person = new Person(model.getFilteredPersonList().get(INDEX_THIRD_PERSON.getZeroBased()));
+        event = new Event(model.getFilteredEventList().get(INDEX_THIRD_EVENT.getZeroBased()));
+        model.joinEvent(person, event);
+        assertsaveAndReadSuccess();
+    }
+
+    /**
+     * Save and read back the model, and check whether they are the same
+     */
+    private void assertsaveAndReadSuccess() throws Exception {
+        xmlAddressBookStorage.saveAddressBook(model.getAddressBook(), addressBookPath);
+        xmlEventListStorage.saveEventStorage(model.getEventList(), eventListPath);
+        ReadOnlyAddressBook readBackPerson = xmlAddressBookStorage.readAddressBook(addressBookPath).get();
+        ReadOnlyEventList readBackEvent = xmlEventListStorage.readEventStorage(eventListPath).get();
+        assertEquals(model.getAddressBook(), new AddressBook(readBackPerson));
+        assertEquals(model.getEventList(), new EventList(readBackEvent));
     }
 }
 ```
