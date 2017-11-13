@@ -2,6 +2,7 @@ package seedu.address.commons.util;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,6 +26,12 @@ public class ConfigUtilTest {
 
     @Rule
     public TemporaryFolder testFolder = new TemporaryFolder();
+
+    @Test
+    public void defaultConstructor_checkCorrectness() {
+        ConfigUtil util = new ConfigUtil();
+        assertNotNull(util);
+    }
 
     @Test
     public void read_null_throwsNullPointerException() throws DataConversionException {
@@ -125,6 +132,4 @@ public class ConfigUtilTest {
                                   ? TEST_DATA_FOLDER + configFileInTestDataFolder
                                   : null;
     }
-
-
 }

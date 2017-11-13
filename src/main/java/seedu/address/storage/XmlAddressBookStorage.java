@@ -10,16 +10,19 @@ import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.commons.exceptions.InvalidFileExtensionException;
+import seedu.address.commons.exceptions.InvalidFilePathException;
+import seedu.address.commons.exceptions.InvalidNameException;
+import seedu.address.commons.exceptions.InvalidNameSeparatorException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.storage.elements.XmlSerializableAddressBook;
 
 /**
  * A class to access AddressBook data stored as an xml file on the hard disk.
  */
 public class XmlAddressBookStorage implements AddressBookStorage {
-
     private static final Logger logger = LogsCenter.getLogger(XmlAddressBookStorage.class);
-
     private String filePath;
 
     public XmlAddressBookStorage(String filePath) {
@@ -31,7 +34,8 @@ public class XmlAddressBookStorage implements AddressBookStorage {
     }
 
     @Override
-    public Optional<ReadOnlyAddressBook> readAddressBook() throws DataConversionException, IOException {
+    public Optional<ReadOnlyAddressBook> readAddressBook() throws DataConversionException, IOException,
+            InvalidFilePathException {
         return readAddressBook(filePath);
     }
 
@@ -41,9 +45,11 @@ public class XmlAddressBookStorage implements AddressBookStorage {
      * @throws DataConversionException if the file is not in the correct format.
      */
     public Optional<ReadOnlyAddressBook> readAddressBook(String filePath) throws DataConversionException,
-                                                                                 FileNotFoundException {
+                                                                                 FileNotFoundException,
+                                                                                 InvalidFilePathException {
         requireNonNull(filePath);
 
+        validateFilePath(filePath);
         File addressBookFile = new File(filePath);
 
         if (!addressBookFile.exists()) {
@@ -51,13 +57,14 @@ public class XmlAddressBookStorage implements AddressBookStorage {
             return Optional.empty();
         }
 
-        ReadOnlyAddressBook addressBookOptional = XmlFileStorage.loadDataFromSaveFile(new File(filePath));
+        XmlSerializableAddressBook addressBookOptional = XmlFileStorage.loadDataFromSaveFile(new File(filePath));
+        addressBookOptional.initializePropertyManager();
 
         return Optional.of(addressBookOptional);
     }
 
     @Override
-    public void saveAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
+    public void saveAddressBook(ReadOnlyAddressBook addressBook) throws IOException, InvalidFilePathException {
         saveAddressBook(addressBook, filePath);
     }
 
@@ -65,13 +72,40 @@ public class XmlAddressBookStorage implements AddressBookStorage {
      * Similar to {@link #saveAddressBook(ReadOnlyAddressBook)}
      * @param filePath location of the data. Cannot be null
      */
-    public void saveAddressBook(ReadOnlyAddressBook addressBook, String filePath) throws IOException {
+    public void saveAddressBook(ReadOnlyAddressBook addressBook, String filePath) throws IOException,
+            InvalidFilePathException {
         requireNonNull(addressBook);
         requireNonNull(filePath);
 
+        validateFilePath(filePath);
         File file = new File(filePath);
         FileUtil.createIfMissing(file);
         XmlFileStorage.saveDataToFile(file, new XmlSerializableAddressBook(addressBook));
     }
 
+    /**
+     * Makes a local backup of the addressBook storage file by appending the filename with {@code backup}.
+     */
+    @Override
+    public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException, InvalidFilePathException {
+        String newFilePath = removeFileExtension(filePath) + "-backup.xml";
+        saveAddressBook(addressBook, newFilePath);
+    }
+
+    //@@author low5545
+    /**
+     * Helper method to check the validity of an address book data file path
+     */
+    private void validateFilePath(String filePath) throws InvalidFilePathException {
+        if (!FileUtil.isValidXmlFile(filePath)) {
+            throw new InvalidFileExtensionException();
+        } else if (FileUtil.hasInvalidNames(filePath) || FileUtil.hasMissingFileName(filePath)) {
+            throw new InvalidNameException();
+        } else if (FileUtil.hasInvalidNameSeparators(filePath)) {
+            throw new InvalidNameSeparatorException();
+        } else if (FileUtil.hasConsecutiveNameSeparators(filePath)
+                || FileUtil.hasConsecutiveExtensionSeparators(filePath)) {
+            throw new InvalidFilePathException();
+        }
+    }
 }

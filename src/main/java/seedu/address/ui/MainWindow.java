@@ -18,50 +18,61 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.commons.events.ui.SwitchThemeEvent;
+import seedu.address.commons.events.ui.SwitchToContactsListEvent;
+import seedu.address.commons.events.ui.SwitchToEventsListEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.ui.event.EventCalendar;
+import seedu.address.ui.event.EventListPanel;
+import seedu.address.ui.person.PersonDetailsPanel;
+import seedu.address.ui.person.PersonListPanel;
 
 /**
  * The Main Window. Provides the basic application layout containing
  * a menu bar and space where other JavaFX elements can be placed.
  */
 public class MainWindow extends UiPart<Region> {
-
+    private static final String darkTheme = "/css/DarkTheme.css";
+    private static final String brightTheme = "/css/BrightTheme.css";
+    private static final String darkExtension = "/css/Extensions.css";
+    private static final String brightExtension = "/css/ExtensionsBright.css";
     private static final String ICON = "/images/address_book_32.png";
     private static final String FXML = "MainWindow.fxml";
     private static final int MIN_HEIGHT = 600;
-    private static final int MIN_WIDTH = 450;
+    private static final int MIN_WIDTH = 600;
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     private Stage primaryStage;
     private Logic logic;
-
-    // Independent Ui parts residing in this Ui container
-    private BrowserPanel browserPanel;
-    private PersonListPanel personListPanel;
     private Config config;
     private UserPrefs prefs;
 
-    @FXML
-    private StackPane browserPlaceholder;
-
-    @FXML
-    private StackPane commandBoxPlaceholder;
+    // Independent Ui parts residing in this Ui container
+    private PersonListPanel personListPanel;
+    private EventListPanel eventListPanel;
+    private BrowserPanel browserPanel;
 
     @FXML
     private MenuItem helpMenuItem;
 
     @FXML
-    private StackPane personListPanelPlaceholder;
-
+    private StackPane commandBoxPlaceholder;
     @FXML
     private StackPane resultDisplayPlaceholder;
 
     @FXML
-    private StackPane statusbarPlaceholder;
+    private StackPane dataListPanelPlaceholder;
+    @FXML
+    private StackPane dataDetailsPanelPlaceholder;
+
+    @FXML
+    private StackPane statusBarPlaceholder;
 
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
@@ -79,6 +90,7 @@ public class MainWindow extends UiPart<Region> {
         setWindowDefaultSize(prefs);
         Scene scene = new Scene(getRoot());
         primaryStage.setScene(scene);
+        initializeThemes();
 
         setAccelerators();
         registerAsAnEventHandler(this);
@@ -110,7 +122,7 @@ public class MainWindow extends UiPart<Region> {
          * not work when the focus is in them because the key event is consumed by
          * the TextInputControl(s).
          *
-         * For now, we add following event filter to capture such key events and open
+         * For now, we add the following event filter to capture such key events and open
          * help window purposely so to support accelerators even when focus is
          * in CommandBox or ResultDisplay.
          */
@@ -121,25 +133,26 @@ public class MainWindow extends UiPart<Region> {
             }
         });
     }
-
     /**
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
-
-        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
-        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+        CommandBox commandBox = new CommandBox(logic);
+        commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
-        statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
+        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
+        eventListPanel = new EventListPanel(logic.getFilteredEventList());
+        dataListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
-        CommandBox commandBox = new CommandBox(logic);
-        commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+        browserPanel = new BrowserPanel();
+
+        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath(),
+                                                              logic.getFilteredPersonList().size(),
+                                                              logic.getFilteredEventList().size());
+        statusBarPlaceholder.getChildren().add(statusBarFooter.getRoot());
     }
 
     void hide() {
@@ -183,6 +196,79 @@ public class MainWindow extends UiPart<Region> {
                 (int) primaryStage.getX(), (int) primaryStage.getY());
     }
 
+    void show() {
+        primaryStage.show();
+    }
+
+    public PersonListPanel getPersonListPanel() {
+        return this.personListPanel;
+    }
+
+    public EventListPanel getEventListPanel() {
+        return this.eventListPanel;
+    }
+
+    void releaseResources() {
+        browserPanel.freeResources();
+    }
+
+    //@@author yunpengn
+    /**
+     * Take note of the following two methods, which overload each other. The one without parameter is used as the
+     * callback when the user clicks on the sidebar button; the other one is used as the subscriber when the user
+     * enters some command(s) that raise(s) the corresponding event(s).
+     */
+    @FXML
+    private void handleSwitchToContacts() {
+        dataDetailsPanelPlaceholder.getChildren().clear();
+        dataListPanelPlaceholder.getChildren().clear();
+        dataListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+    }
+
+    @Subscribe
+    public void handleSwitchToContacts(SwitchToContactsListEvent event) {
+        dataDetailsPanelPlaceholder.getChildren().clear();
+        dataListPanelPlaceholder.getChildren().clear();
+        dataListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+    }
+
+    /**
+     * Similar to methods for contacts except with EventCalendar.
+     */
+    @FXML
+    private void handleSwitchToEvents() {
+        dataDetailsPanelPlaceholder.getChildren().clear();
+        dataListPanelPlaceholder.getChildren().clear();
+        dataListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
+        dataDetailsPanelPlaceholder.getChildren().add(new EventCalendar().getRoot());
+    }
+
+    @Subscribe
+    public void handleSwitchToEvents(SwitchToEventsListEvent event) {
+        dataListPanelPlaceholder.getChildren().clear();
+        dataListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
+        dataDetailsPanelPlaceholder.getChildren().clear();
+        dataDetailsPanelPlaceholder.getChildren().add(new EventCalendar().getRoot());
+    }
+
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        ReadOnlyPerson person = event.getNewSelection().person;
+
+        dataDetailsPanelPlaceholder.getChildren().clear();
+        dataDetailsPanelPlaceholder.getChildren().add(new PersonDetailsPanel(person).getRoot());
+    }
+    //@@author
+
+    //@@author dennaloh
+    @FXML
+    private void handleEventCalendar() {
+        dataDetailsPanelPlaceholder.getChildren().clear();
+        dataDetailsPanelPlaceholder.getChildren().add(new EventCalendar().getRoot());
+    }
+    //@@author
+
     /**
      * Opens the help window.
      */
@@ -192,9 +278,48 @@ public class MainWindow extends UiPart<Region> {
         helpWindow.show();
     }
 
-    void show() {
-        primaryStage.show();
+    @Subscribe
+    private void handleShowHelpEvent(ShowHelpRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleHelp();
     }
+
+    //@@author junyango
+    /**
+     * Initializes theme upon start up according to preferences.json file (last saved)
+     */
+    private void initializeThemes() {
+        getRoot().getStylesheets().clear();
+        if (prefs.getAddressBookTheme().equals(darkTheme)) {
+            getRoot().getStylesheets().add(darkTheme);
+            getRoot().getStylesheets().add(darkExtension);
+            prefs.setAddressBookTheme(darkTheme);
+        } else {
+            getRoot().getStylesheets().add(brightTheme);
+            getRoot().getStylesheets().add(brightExtension);
+            prefs.setAddressBookTheme(brightTheme);
+        }
+    }
+
+    /**
+     * Handles the event for theme changing
+     * @param event
+     */
+    @Subscribe
+    private void handleThemeChanged(SwitchThemeEvent event) {
+        if (prefs.getAddressBookTheme().equals(darkTheme)) {
+            getRoot().getStylesheets().clear();
+            getRoot().getStylesheets().add(brightTheme);
+            getRoot().getStylesheets().add(brightExtension);
+            prefs.setAddressBookTheme(brightTheme);
+        } else {
+            getRoot().getStylesheets().clear();
+            getRoot().getStylesheets().add(darkTheme);
+            getRoot().getStylesheets().add(darkExtension);
+            prefs.setAddressBookTheme(darkTheme);
+        }
+    }
+    //@@author
 
     /**
      * Closes the application.
@@ -202,19 +327,5 @@ public class MainWindow extends UiPart<Region> {
     @FXML
     private void handleExit() {
         raise(new ExitAppRequestEvent());
-    }
-
-    public PersonListPanel getPersonListPanel() {
-        return this.personListPanel;
-    }
-
-    void releaseResources() {
-        browserPanel.freeResources();
-    }
-
-    @Subscribe
-    private void handleShowHelpEvent(ShowHelpRequestEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        handleHelp();
     }
 }

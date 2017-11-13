@@ -2,6 +2,7 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -48,6 +49,16 @@ public class UniquePersonList implements Iterable<Person> {
         internalList.add(new Person(toAdd));
     }
 
+    //@@author dennaloh
+    /**
+     * Sorts the persons based on name
+     *
+     */
+    public void sortPersons() {
+        internalList.sort((e1, e2) -> e1.getName().toString().compareToIgnoreCase(e2.getName().toString()));
+    }
+    //@@author
+
     /**
      * Replaces the person {@code target} in the list with {@code editedPerson}.
      *
@@ -83,6 +94,21 @@ public class UniquePersonList implements Iterable<Person> {
         }
         return personFoundAndDeleted;
     }
+
+    //@@author low5545
+    /**
+     * Adds all persons in the argument person list to this list.
+     */
+    public void addPersons(List<? extends ReadOnlyPerson> persons) {
+        for (final ReadOnlyPerson person : persons) {
+            try {
+                this.add(new Person(person));
+            } catch (DuplicatePersonException e) {
+                // skip person if it exists
+            }
+        }
+    }
+    //@@author
 
     public void setPersons(UniquePersonList replacement) {
         this.internalList.setAll(replacement.internalList);

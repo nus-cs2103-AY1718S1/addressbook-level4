@@ -1,0 +1,1053 @@
+= BoNUS - Developer Guide
+:toc:
+:toc-title:
+:toc-placement: preamble
+:sectnums:
+:imagesDir: images
+:stylesDir: stylesheets
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+endif::[]
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:repoURL: https://github.com/CS2103AUG2017-T09-B3/main/tree/master
+
+By: `CS2103T T09-B3 Team`      Since: `Sep 2017`      Licence: `MIT`
+
+== Introduction
+
+**BoNUS** is an Address Book application written in Java. This _Developer Guide_ aims to act as a comprehensive guide
+for fellow developers to understand the methodologies and environment behind the developmental process of this application.
+With the support of UML(Unified Modelling Language) diagrams, we hope to illustrate the architectural structure and design
+methodology in this application.
+
+Should you encounter any problems, do refer to the FAQs section to troubleshoot common issues.
+
+If the problem still persists, do <<ContactUs#, Contact Us>> to troubleshoot your issues.
+
+**BoNUS** is an open-source project, should any developers be interested, see <<ContactUs#, Contact Us>> page for more information.
+
+== Setting up
+
+Here are some steps to help you set up your computer to begin the development for **boNUS**.
+
+=== Prerequisites
+
+. *JDK `1.8.0_60`* or later
++
+[NOTE]
+Having any Java 8 version is not enough. +
+This app will not work with earlier versions of Java 8.
++
+
++
+[NOTE]
+We do have the plan to upgrade to http://openjdk.java.net/projects/jdk9/[Java 9] in the foreseeable future. +
+Please pay close attention to this document.
++
+
+. *IntelliJ* IDE
++
+[NOTE]
+IntelliJ by default has Gradle and JavaFx plugins installed. +
+Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plugins` to re-enable them.
+
+
+=== Setting up the project in your computer
+
+. Fork this repo, and clone the fork to your computer (we use https://git-scm.com/[Git] as our version control system)
+. Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
+. Set up the correct JDK version for Gradle
+.. Click `Configure` > `Project Defaults` > `Project Structure`
+.. Click `New...` and find the directory of the JDK
+. Click `Import Project`
+. Locate the `build.gradle` file and select it. Click `OK`
+. Click `Open as Project`
+. Click `OK` to accept the default settings
+. Open a console and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message. +
+This will generate all resources required by the application and tests.
+
+=== Verifying the setup
+
+. Run the `seedu.address.MainApp` and try a few commands
+. link:#testing[Run the tests] to ensure they all pass.
+
+=== Configurations to do before writing code
+
+==== Configuring the coding style
+
+This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.md[oss-generic coding standards]. IntelliJ's default style is mostly compliant with ours but it uses a different import order from ours. To rectify,
+
+. Go to `File` > `Settings...` (Windows/Linux), or `IntelliJ IDEA` > `Preferences...` (macOS)
+. Select `Editor` > `Code Style` > `Java`
+. Click on the `Imports` tab to set the order
+
+* For `Class count to use import with '\*'` and `Names count to use static import with '*'`: Set to `999` to prevent IntelliJ from contracting the import statements
+* For `Import Layout`: The order is `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, `import all other imports`. Add a `<blank line>` between each `import`
+
+Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure Intellij to check style-compliance as you write code.
+
+==== Updating documentation to match your fork
+
+After forking the repo, links in the documentation will still point to the `se-edu/addressbook-level4` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `se-edu/addressbook-level4`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
+
+==== Setting up CI
+
+Set up Travis to perform Continuous Integration (CI) for your fork. See <<UsingTravis#, UsingTravis.adoc>> to learn how to set it up.
+
+Optionally, you can set up AppVeyor as a second CI (see <<UsingAppVeyor#, UsingAppVeyor.adoc>>).
+
+[NOTE]
+Having both Travis and AppVeyor ensures your App works on both Unix-based platforms and Windows-based platforms
+(Travis is Unix-based and AppVeyor is Windows-based). Thus, we strongly encourage you to set up both.
+
+==== Getting started with coding
+
+When you are ready to start coding,
+
+1. Get some sense of the overall design by reading the link:#architecture[Architecture] section.
+2. Take a look at the section link:#suggested-programming-tasks-to-get-started[Suggested Programming Tasks to Get Started].
+
+==== Using Git
+
+We use https://git-scm.com/[Git] as our version control software (VCS). See <<UsingGit#, UsingGit.adoc>> if you find any difficulty when using Git.
+
+== Design
+
+=== Architecture
+
+image::Architecture.png[width="600"]
+_Figure 3.1.1 : Architecture Diagram_
+
+The *_Architecture Diagram_* given above explains the high-level design of the App. Given below is a quick overview of each component.
+
+[TIP]
+The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
+
+`Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for,
+
+* At app launch: Initializes the components in the correct sequence, and connects them up with each other.
+* At shut down: Shuts down the components and invokes cleanup method where necessary.
+
+link:#common-classes[*`Commons`*] represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level.
+
+* `EventsCenter` : This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design)
+* `LogsCenter` : Used by many classes to write log messages to the App's log file.
+
+The rest of the App consists of four components.
+
+* link:#ui-component[*`UI`*] : The UI of the App.
+* link:#logic-component[*`Logic`*] : The command executor.
+* link:#model-component[*`Model`*] : Holds the data of the App in-memory.
+* link:#storage-component[*`Storage`*] : Reads data from, and writes data to, the hard disk.
+
+Each of the four components
+
+* Defines its _API_ in an `interface` with the same name as the Component.
+* Exposes its functionality using a `{Component Name}Manager` class.
+
+For example, the `Logic` component (see the class diagram given below) defines its API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
+
+image::LogicClassDiagram.png[width="800"]
+_Figure 3.1.2 : Class Diagram of the Logic Component_
+
+[discrete]
+==== Events-Driven nature of the design
+
+The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
+
+image::SDforDeletePerson.png[width="800"]
+_Figure 3.1.3a : Component interactions for `delete 1` command (part 1)_
+
+[NOTE]
+Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
+
+The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
+
+image::SDforDeletePersonEventHandling.png[width="800"]
+_Figure 3.1.3b : Component interactions for `delete 1` command (part 2)_
+
+[NOTE]
+Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
+
+The sections below give more details of each component.
+
+=== UI component
+
+image::UiClassDiagram.png[width="800"]
+_Figure 3.2.1 : Structure of the UI Component_
+
+*API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
+
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+
+The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
+
+The `UI` component,
+
+* Executes user commands using the `Logic` component.
+* Binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change.
+* Responds to events raised from various parts of the App and updates the UI accordingly.
+
+=== Logic component
+
+image::LogicClassDiagram.png[width="800"]
+_Figure 3.3.1 : Structure of the Logic Component_
+
+image::LogicCommandClassDiagram.png[width="800"]
+_Figure 3.3.2 : Structure of Commands in the Logic Component._
+
+_The diagram above shows finer details concerning `XYZCommand` and `Command` in Figure 2.3.1_
+
+*API* :
+link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
+
+.  `Logic` uses the `AddressBookParser` class to parse the user command.
+.  This results in a `Command` object which is executed by the `LogicManager`.
+.  The command execution can affect the `Model` (e.g. adding a person) and/or raise events.
+.  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
+
+Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
+
+image::DeletePersonSdForLogic.png[width="800"]
+_Figure 2.3.1 : Interactions Inside the Logic Component for the `delete 1` Command_
+
+=== Model component
+
+image::ModelClassDiagram.png[width="800"]
+_Figure 3.4.1 : Structure of the Model Component_
+
+*API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
+
+The `Model`,
+
+* stores a `UserPref` object that represents the user's preferences.
+* stores the Address Book data.
+* exposes an unmodifiable `ObservableList<ReadOnlyPerson>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* exposes an unmodifiable `ObservableList<ReadOnlyEvent>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* does not depend on any of the other three components.
+
+=== Storage component
+
+image::StorageClassDiagram.png[width="800"]
+_Figure 3.5.1 : Structure of the Storage Component_
+
+*API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
+
+The `Storage` component,
+
+* can save `UserPref` objects in json format and read it back.
+* can save the Address Book data in xml format and read it back.
+
+=== Common classes
+
+Classes used by multiple components are in the `seedu.addressbook.commons` package.
+
+== Implementation
+
+This section describes some noteworthy details on how certain features are implemented.
+
+// tag::undoredo[]
+=== Undo/Redo mechanism
+
+The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the address book (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
+
+`UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
+
+image::LogicCommandClassDiagram.png[width="800"]
+_Figure 4.1.1 : Logic Component Class Diagram_
+
+As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
+
+Commands that are not undoable are implemented this way:
+[source,java]
+----
+public class ListCommand extends Command {
+    @Override
+    public CommandResult execute() {
+        // ... list logic ...
+    }
+}
+----
+
+With the extra layer, the commands that are undoable are implemented this way:
+[source,java]
+----
+public abstract class UndoableCommand extends Command {
+    @Override
+    public CommandResult execute() {
+        // ... undo logic ...
+
+        executeUndoableCommand();
+    }
+}
+
+public class DeleteCommand extends UndoableCommand {
+    @Override
+    public CommandResult executeUndoableCommand() {
+        // ... delete logic ...
+    }
+}
+----
+
+Suppose that the user has just launched the application. The `UndoRedoStack` will be empty at the beginning.
+
+The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
+
+image::UndoRedoStartingStackDiagram.png[width="800"]
+_Figure 4.1.2(a) : Undo Stack_
+
+As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person.
+
+image::UndoRedoNewCommand1StackDiagram.png[width="800"]
+_Figure 4.1.2(b) : Undo Stack_
+
+[NOTE]
+If a command fails its execution, it will not be pushed to the `UndoRedoStack` at all.
+
+The user now decides that adding the person was a mistake, and decides to undo that action using `undo`.
+
+We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed.
+
+image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
+_Figure 4.1.2(c) : Undo Stack_
+
+[NOTE]
+If the `undoStack` is empty, then there are no other commands left to be undone, and an `Exception` will be thrown when popping the `undoStack`.
+
+The following sequence diagram shows how the undo operation works:
+
+image::UndoRedoSequenceDiagram.png[width="800"]
+_Figure 4.1.3 : Undo Command Sequence Diagram_
+
+The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
+
+[NOTE]
+If the `redoStack` is empty, then there are no other commands left to be redone, and an `Exception` will be thrown when popping the `redoStack`.
+
+The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow).
+
+image::UndoRedoNewCommand2StackDiagram.png[width="800"]
+_Figure 4.1.4(a) : Redo Stack_
+
+Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution:
+
+image::UndoRedoNewCommand3StackDiagram.png[width="800"]
+_Figure 4.1.4(b) : Redo Stack_
+
+The following activity diagram summarize what happens inside the `UndoRedoStack` when a user executes a new command:
+
+image::UndoRedoActivityDiagram.png[width="200"]
+_Figure 4.1.5 : Redo Command Activity Diagram_
+
+==== Design Considerations
+
+**Aspect:** Implementation of `UndoableCommand` +
+**Alternative 1 (current choice):** Add a new abstract method `executeUndoableCommand()` +
+**Pros:** We will not lose any undone/redone functionality as it is now part of the default behaviour. Classes that deal with `Command` do not have to know that `executeUndoableCommand()` exist. +
+**Cons:** Hard for new developers to understand the template pattern. +
+**Alternative 2:** Just override `execute()` +
+**Pros:** Does not involve the template pattern, easier for new developers to understand. +
+**Cons:** Classes that inherit from `UndoableCommand` must remember to call `super.execute()`, or lose the ability to undo/redo.
+
+---
+
+**Aspect:** How undo & redo executes +
+**Alternative 1 (current choice):** Saves the entire address book. +
+**Pros:** Easy to implement. +
+**Cons:** May have performance issues in terms of memory usage. +
+**Alternative 2:** Individual command knows how to undo/redo by itself. +
+**Pros:** Will use less memory (e.g. for `delete`, just save the person being deleted). +
+**Cons:** We must ensure that the implementation of each individual command are correct.
+
+---
+
+**Aspect:** Type of commands that can be undone/redone +
+**Alternative 1 (current choice):** Only include commands that modifies the address book (`add`, `clear`, `edit`). +
+**Pros:** We only revert changes that are hard to change back (the view can easily be re-modified as no data are lost). +
+**Cons:** User might think that undo also applies when the list is modified (undoing filtering for example), only to realize that it does not do that, after executing `undo`. +
+**Alternative 2:** Include all commands. +
+**Pros:** Might be more intuitive for the user. +
+**Cons:** User have no way of skipping such commands if he or she just want to reset the state of the address book and not the view. +
+**Additional Info:** See our discussion  https://github.com/se-edu/addressbook-level4/issues/390#issuecomment-298936672[here].
+
+---
+
+**Aspect:** Data structure to support the undo/redo commands +
+**Alternative 1 (current choice):** Use separate stack for undo and redo +
+**Pros:** Easy to understand for new Computer Science student undergraduates to understand, who are likely to be the new incoming developers of our project. +
+**Cons:** Logic is duplicated twice. For example, when a new command is executed, we must remember to update both `HistoryManager` and `UndoRedoStack`. +
+**Alternative 2:** Use `HistoryManager` for undo/redo +
+**Pros:** We do not need to maintain a separate stack, and just reuse what is already in the codebase. +
+**Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
+// end::undoredo[]
+
+=== Logging
+
+We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
+
+* The logging level can be controlled using the `logLevel` setting in the configuration file (See link:#configuration[Configuration])
+* The `Logger` for a class can be obtained using `LogsCenter.getLogger(Class)` which will log messages according to the specified logging level
+* Currently log messages are output through: `Console` and to a `.log` file.
+
+*Logging Levels*
+
+* `SEVERE` : Critical problem detected which may possibly cause the termination of the application
+* `WARNING` : Can continue, but with caution
+* `INFO` : Information showing the noteworthy actions by the App
+* `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
+
+=== Generic Property
+
+We are using a generic `Property` class to support **arbitrary field** feature.
+
+==== Inspiration
+
+Users should not be limited to the provided four fields, i.e. `Name`, `Email`, `Phone`, `Address` (we are talking about
+the contact component here, of course one more `DateTime` for event component). They should have the freedom to enter all
+kinds of information about their contacts apart from the pre-defined ones.
+
+Through a brief product survey on other existing similar software in the market, we found that they usually ask users to
+type all other information in the _so-called_ `Description` or `Details` field. This is not a good design because doing
+so will make the information stored messy. The application is used to organize personal information conveniently. It is
+a major drawback if the data are not stored (and thus presented) to users in a well-organized way.
+
+Learning from many modern database implementations, we should think of the data as two tables: one for *contacts* and the
+other one for *events*. Each table is composed of many rows and many columns. A single contact/event is one row, while
+all their different properties/fields are the columns.
+
+image::phpmyadminTableView.png[width="700"]
+_Figure 4.3.1.1 : Data Table View of phpMyAdmin (a MySQL visualization tool)_
+
+image::phpmyadminAddColumn.png[width="700"]
+_Figure 4.3.1.2 : Add New Column in phpMyAdmin_
+
+==== Design Consideration
+
+**Aspect:** Where to store the "_metadata_" of different properties (short name, full name, regular expression, etc.) +
+**Alternative 1 (current choice):** Create a new class `PropertyManager` +
+**Pros:** Efficient (there is only one copy) and easy for future development since it is centralized. +
+**Cons:** Requires major change to `Model` component and `Storage` component. +
+**Alternative 2:** Store these data along with each specific property class, like `Name`, `Email` +
+**Pros:** Able to adapt the current implementation of `Model` component. +
+**Cons:** Hard to implement `AddPropertyCommand`, and difficult to manage as the project grows larger.
+
+image::PropertyManagerClassDiagram.png[width="200"]
+_Figure 4.3.2.1 : Class Diagram for `PropertyManager`_
+
+==== Implementation Outline
+
+1. Create a more general class to capture the common patterns among all columns (all different fields/properties): according to
+the basic OOP concept, a more generic class should become the superclass `Property`; then, other more specific classes
+(like `Name`, `Email`, `Phone`, etc.) can inherit from it. It is shown that such design decreases code duplicate a lot.
+
+2. Find a way to store the metadata of all columns (fields/properties): in popular SQL database implementation, they
+usually have a separate database reserved for the database server system itself. We must store similar information somewhere
+as well. Thus, we create a `PropertyManager` to store these "metadata", including short names, full names, constraint
+messages and regular expressions used for input validation. They are all `static` variables because there should only be
+one copy of these "metadata". We will waste a lot of resources if we store these "metadata" with each instance of the
+`Property` class.
+
+3. _Pre-loaded properties_: Things like `Name`, `Email` and `Phone` are widely used. They should ship with the application
+and users do not need any additional setup steps to use them.
+
+4. Add new customize properties: advanced users should be provided with a command (`config --add-property`) to add their
+own customize fields. They should have the freedom to arbitrarily choose things like short name, full name, etc. They can
+easily add/edit these properties of each contact stored in the application, just like the _pre-loaded_ ones.
+
+image::PropertyManagerSequenceDiagram.png[width="800"]
+_Figure 4.3.3.1 : Sequence Diagram for Adding a Customize Property_
+
+=== Auto Reminders
+
+We are adding a reminder to the event whenever an event is added. Reminders will notify users 3 days in advance before
+event itself.
+
+As we are targeting NUS students, in view of the busy schedules of students, students should be able to set reminders
+for events that they have to attend to. In the case that students forget to set reminders themselves, we automatically
+preset a reminder that will trigger from 3 days before the event such that students have ample time to be aware and be
+prepared for the event itself.
+
+Learning from many modern applications, the logic behind the applications are usually efficient and is able to handle
+multiple tasks at once. By automatically adding reminders alongside the addition of events, it makes it more
+convenient for the users themselves. We have set a default reminder to trigger 3 days before the actual event
+to remind users of their upcoming events via different colour schemes.
+
+As shown in the _Figure 4.4.1_
+
+1. The red bell indicates the day of the event
+2. The orange bell indicates one day to event.
+3. The green bell indicates two days to event.
+
+image::ReminderColorScheme.png[width="300"]
+_Figure 4.4.1 : Reminders via different colour schemes to indicate urgency_
+
+
+==== Design consideration
+**Aspect:**  How to implement the idea of reminders into Events +
+**Alternative 1 (current choice):** Create a new reminder class that contains an event parameter to it. Events have a +
+list of reminders within them (Figure 4.4.1.1). +
+**Pros:** Independent. Reminder class is on its own and easy for future usage since it is already a class by itself. +
+Each reminder is tagged to an event, such that if we want to access the reminders in an event, it is easy to do so. +
+**Cons:** Require major changes to Logic and Model components for Event +
+**Alternative 2:** Add a new parameter for Event called Reminders to display time till event. +
+**Pros:** Less changes as it is just an implementation of a new parameter. +
+**Cons:** Less versatile and reminders cannot be applied anywhere else if needed. +
+
+image::ReminderClassDiagram.png[width="200"]
+_Figure 4.4.1.1 : Class Diagram for `Reminder`_
+
+Therefore we have decided to adopt alternative 1 of creating a Reminder class as it is more versatile for future usage.
+
+==== Implementation outline
+
+1. Create a ReadOnlyReminder class such that it only contains immutable instances of Reminders.
+
+2. Create a general class such that Reminder that implements ReadOnlyReminder. It can inherit properties
+such as `DateTime` from PropertyClass as well. In the event that a new property needs to be added, it can be done.
+Such a design makes Reminder class more adaptable to changes and ready for future code usage.
+
+3. `Reminder` is now more open to changes if needed and can easily add parameters and methods now that it is a class
+on its own.
+
+4. Have a list of reminders in `Event` class (Figure 4.4.2.1). Since `Event` can have multiple reminders, each reminder is
+instantiated with an `Event` parameter in it such that a `Reminder` is tagged to an Event itself. Figure 4.4.2.2 depicts the
+relationship between `Event` and `Reminder`.
+
+image::EventClassDiagram.png[width="200"]
+_Figure 4.4.2.1 : Class Diagram for `Event`_
+
+image::EventReminderRS.png[width="300"]
+_Figure 4.4.2.2 : Relationship of Event and Reminder_
+
+The following sequence diagram (Figure 4.4.2.3) shows how reminders are automatically added upon the addition of events.
+
+image::SDaddEventLogicReminder.png[width="700"]
+_Figure 4.4.2.3 : Sequence Diagram for Adding an event (reminders are automatically added)_
+
+// tag::importExportXml[]
+=== Import & Export mechanism
+
+In order to open up more possibilities to **BoNUS**, we have introduced the `import` and `export` commands. We are using
+`ImportXmlCommand` and `ExportCommand` to support importing and exporting of address book data through XML files.
+
+In the following sections, we will focus on how these commands depend on the `Storage` component to retrieve external
+data, as well as the file path validation mechanism adopted on a high-level basis.
+
+==== Implementation
+
+===== External Data Access
+
+In order to achieve their tasks, both `import` and `export` commands natively require access to the external
+environment, unlike other commands. Hence, these commands are designed to depend directly on the `Storage` component.
+
+The dependence of `Storage` in `import` and `export` is achieved through the `Command.setStorage(Storage)` method. This
+method mimics the existing `Command.setData(Model, CommandHistory, UndoRedoStack)` method, where only commands that make
+use of the relevant data will override this method to gain access to the dependencies.
+
+The following shows the implementation of `Command.setStorage(Storage)`, which is not overridden commands other than
+`ImportXmlCommand` and `ExportCommand`:
+
+[source,java]
+----
+public void setStorage(Storage storage) {
+    // intentionally left empty
+}
+----
+
+In `ImportXmlCommand` and `ExportCommand`, the overridden method is implemented in this way:
+
+[source,java]
+----
+@Override
+public void setStorage(Storage storage) {
+    this.storage = storage;
+}
+----
+
+Through this implementation, commands that depend directly on the `Storage` component (ie. `import` and `export`) are
+able to gain full access to `Storage`, while commands that do not rely on `Storage` remain weakly coupled to it. The
+following class diagram of the `Logic` component reflects the overall implementation on an architectural-level point of
+view:
+
+image::LogicClassDiagramStorageEmphasis.png[width="800"]
+_Figure 4.5.1.1 : Structure of the Logic Component_
+
+===== File Path Validation
+
+File paths, as required by `import` and `export` commands, are validated during the execution of the corresponding
+command. The following sequence diagram shows an example of how file path validation is performed prior exporting the
+address book data:
+
+image::ExportCommandSequenceDiagram.png[width="800"]
+_Figure 4.5.1.2 : Sequence Diagram for Export Command_
+
+To facilitate better handling of invalid file paths and to provide appropriate feedback to the user, several exception
+classes, all of which are derived from the `InvalidFilePathException` class, have been implemented. The following shows
+the inheritance diagram of the above-mentioned exception classes:
+
+image::CommonsComponentExceptionClassDiagram.png[width="800"]
+_Figure 4.5.1.3 : Structure of Exception Classes related to File Path Validation_
+
+With that, we are able to ensure that data would be exported to or imported from a truly valid file path as specified by
+the user, while being able to inform users on the mistakes that they have made.
+
+==== Design Considerations
+
+**Aspect:** Implementation of `Storage` dependency for `ImportXmlCommand` and `ExportCommand` +
+**Alternative 1 (current choice):** Add a new `setStorage(Storage)` method in `Command` +
+**Pros:** Provides direct access to `Storage` for commands that only requires it. +
+**Cons:** There is an inherent dependency on `Storage` for all commands, although the coupling is weak. +
+**Alternative 2:** Raise a `BaseEvent` in the `EventsCenter` through `Model` +
+**Pros:** Completely decouples `Command` from `Storage`. +
+**Cons:** The need for access to `Storage` is not a side-effect as with other commands that mutate the address book +
+(eg. `add`, `delete` etc.). The dependency of `Storage` is part of their native behaviour.
+
+---
+
+**Aspect:** Location for Implementation of File Path Validation +
+**Alternative 1 (current choice):** In `Storage` +
+**Pros:** Validation is not just done for user input file paths (ie. via `import` and `export` commands), but also for the address book file path as defined in the user's preferences (ie. `preferences.json`). +
+**Cons:** Validation is performed after every execution of an `UndoableCommand` due to the saving of the address book. +
+**Alternative 2:** In `CommandParser` +
+**Pros:** Validation will not be done after every execution of an `UndoableCommand` unnecessarily. +
+**Cons:** File path validation may also be required for other purposes.
+// end::importExportXml[]
+
+=== Contacts/Event listing order by name/date time mechanism
+
+Whenever there is a command that triggers the "_refresh_" of link:{repoURL}/src/main/java/seedu/address/ui/person/PersonListPanel.java[`PersonListPanel`]
+or link:{repoURL}/src/main/java/seedu/address/ui/event/EventListPanel.java[`EventListPanel`], like when adding a new contact
+(i.e. `add` command), all the cards will be loaded in the incremental order by name or date time respectively. The sorting
+mechanism uses the `sort` method which resides inside `List` interface to sort the contacts by name.
+
+
+=== Configuration
+
+Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
+
+== Documentation
+
+We use asciidoc for writing documentation.
+
+[NOTE]
+We chose asciidoc over Markdown because asciidoc, although a bit more complex than Markdown, provides more flexibility in formatting.
+
+=== Editing Documentation
+
+See <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> to learn how to render `.adoc` files locally to preview the end result of your edits.
+Alternatively, you can download the AsciiDoc plugin for IntelliJ, which allows you to preview the changes you have made to your `.adoc` files in real-time.
+
+=== Publishing Documentation
+
+See <<UsingTravis#deploying-github-pages, UsingTravis.adoc>> to learn how to deploy GitHub Pages using Travis.
+
+=== Converting Documentation to PDF format
+
+We use https://www.google.com/chrome/browser/desktop/[Google Chrome] for converting documentation to PDF format, as Chrome's PDF engine preserves hyperlinks used in webpages.
+
+Here are the steps to convert the project documentation files to PDF format.
+
+.  Follow the instructions in <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> to convert the AsciiDoc files in the `docs/` directory to HTML format.
+.  Go to your generated HTML files in the `build/docs` folder, right click on them and select `Open with` -> `Google Chrome`.
+.  Within Chrome, click on the `Print` option in Chrome's menu.
+.  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For best results, use the settings indicated in the screenshot below.
+
+image::chrome_save_as_pdf.png[width="300"]
+_Figure 5.3.1 : Saving documentation as PDF files in Chrome_
+
+== Testing
+
+=== Running Tests
+
+There are three ways to run tests.
+
+[TIP]
+The most reliable way to run tests is the 3rd one. The first two methods might fail some GUI tests due to platform/resolution-specific idiosyncrasies.
+
+*Method 1: Using IntelliJ JUnit test runner*
+
+* To run all tests, right-click on the `src/test/java` folder and choose `Run 'All Tests'`
+* To run a subset of tests, you can right-click on a test package, test class, or a test and choose `Run 'ABC'`
+
+*Method 2: Using Gradle*
+
+* Open a console and run the command `gradlew clean allTests` (Mac/Linux: `./gradlew clean allTests`)
+
+[NOTE]
+See <<UsingGradle#, UsingGradle.adoc>> for more info on how to run tests using Gradle.
+
+*Method 3: Using Gradle (headless)*
+
+Thanks to the https://github.com/TestFX/TestFX[TestFX] library we use, our GUI tests can be run in the _headless_ mode. In the headless mode, GUI tests do not show up on the screen. That means the developer can do other things on the Computer while the tests are running.
+
+To run tests in headless mode, open a console and run the command `gradlew clean headless allTests` (Mac/Linux: `./gradlew clean headless allTests`)
+
+=== Types of tests
+
+We have two types of tests:
+
+.  *GUI Tests* - These are tests involving the GUI. They include,
+.. _System Tests_ that test the entire App by simulating user actions on the GUI. These are in the `systemtests` package.
+.. _Unit tests_ that test the individual components. These are in `seedu.address.ui` package.
+.  *Non-GUI Tests* - These are tests not involving the GUI. They include,
+..  _Unit tests_ targeting the lowest level methods/classes. +
+e.g. `seedu.address.commons.StringUtilTest`
+..  _Integration tests_ that are checking the integration of multiple code units (those code units are assumed to be working). +
+e.g. `seedu.address.storage.StorageManagerTest`
+..  Hybrids of unit and integration tests. These test are checking multiple code units as well as how the are connected together. +
+e.g. `seedu.address.logic.LogicManagerTest`
+
+
+=== Troubleshooting Testing
+**Problem: `HelpWindowTest` fails with a `NullPointerException`.**
+
+* Reason: One of its dependencies, `UserGuide.html` in `src/main/resources/docs` is missing.
+* Solution: Execute Gradle task `processResources`.
+
+== Dev Ops
+
+=== Build Automation
+
+See <<UsingGradle#, UsingGradle.adoc>> to learn how to use Gradle for build automation.
+
+=== Continuous Integration
+
+We use https://travis-ci.org/[Travis CI] and https://www.appveyor.com/[AppVeyor] to perform _Continuous Integration_ on our projects. See <<UsingTravis#, UsingTravis.adoc>> and <<UsingAppVeyor#, UsingAppVeyor.adoc>> for more details.
+
+=== Making a Release
+
+Here are the steps to create a new release.
+
+.  Update the version number in link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp.java`].
+.  Generate a JAR file <<UsingGradle#creating-the-jar-file, using Gradle>>.
+.  Tag the repo with the version number. e.g. `v0.1`
+.  https://help.github.com/articles/creating-releases/[Create a new release using GitHub] and upload the JAR file you created.
+
+=== Managing Dependencies
+
+A project often depends on third-party libraries. For example, Address Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
+a. Include those libraries in the repo (this bloats the repo size) +
+b. Require developers to download those libraries manually (this creates extra work for developers)
+
+[appendix]
+== Suggested Ways to Get Started
+
+Suggested path for new programmers:
+
+1. First, add small local-impact (i.e. the impact of the change does not go beyond the component) enhancements to one component at a time.
+2. Next, add a feature that touches multiple components to learn how to implement an end-to-end feature across all components.
+
+=== Example Programming Task - Creating a new command: `remark`
+
+The section below _walks_ you on how to create a new command called `remark`. By creating this command, you will get a chance
+to learn how to implement a feature end-to-end, touching all major components of the app.
+
+==== Description
+Edits the remark for a person specified in the `INDEX`. +
+Format: `remark INDEX r/[REMARK]`
+
+Examples:
+
+* `remark 1 r/Likes to drink coffee.` +
+Edits the remark for the first person to `Likes to drink coffee.`
+* `remark 1 r/` +
+Removes the remark for the first person.
+
+==== Step-by-step Instructions
+
+===== [Step 1] Logic: Teach the app to accept 'remark' which does nothing
+Let's start by teaching the application how to parse a `remark` command. We will add the logic of `remark` later.
+
+**Main:**
+
+. Add a `RemarkCommand` that extends link:{repoURL}/src/main/java/seedu/address/logic/commands/UndoableCommand.java[`UndoableCommand`]. Upon execution, it should just throw an `Exception`.
+. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to accept a `RemarkCommand`.
+
+**Tests:**
+
+. Add `RemarkCommandTest` that tests that `executeUndoableCommand()` throws an Exception.
+. Add new test method to link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`], which tests that typing "remark" returns an instance of `RemarkCommand`.
+
+===== [Step 2] Logic: Teach the app to accept 'remark' arguments
+Let's teach the application to parse arguments that our `remark` command will accept. E.g. `1 r/Likes to drink coffee.`
+
+**Main:**
+
+. Modify `RemarkCommand` to take in an `Index` and `String` and print those two parameters as the error message.
+. Add `RemarkCommandParser` that knows how to parse two arguments, one index and one with prefix 'r/'.
+. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to use the newly implemented `RemarkCommandParser`.
+
+**Tests:**
+
+. Modify `RemarkCommandTest` to test the `RemarkCommand#equals()` method.
+. Add `RemarkCommandParserTest` that tests different boundary values
+for `RemarkCommandParser`.
+. Modify link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`] to test that the correct command is generated according to the user input.
+
+===== [Step 3] Ui: Add a placeholder for remark in `PersonCard`
+Let's add a placeholder on all our link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] s to display a remark for each person later.
+
+**Main:**
+
+. Add a `Label` with any random text inside link:{repoURL}/src/main/resources/view/PersonListCard.fxml[`PersonListCard.fxml`].
+. Add FXML annotation in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] to tie the variable to the actual label.
+
+**Tests:**
+
+. Modify link:{repoURL}/src/test/java/guitests/guihandles/PersonCardHandle.java[`PersonCardHandle`] so that future tests can read the contents of the remark label.
+
+===== [Step 4] Model: Add `Remark` class
+We have to properly encapsulate the remark in our link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`] class. Instead of just using a `String`, let's follow the conventional class structure that the codebase already uses by adding a `Remark` class.
+
+**Main:**
+
+. Add `Remark` to model component (you can copy from link:{repoURL}/src/main/java/seedu/address/model/person/Address.java[`Address`], remove the regex and change the names accordingly).
+. Modify `RemarkCommand` to now take in a `Remark` instead of a `String`.
+
+**Tests:**
+
+. Add test for `Remark`, to test the `Remark#equals()` method.
+
+===== [Step 5] Model: Modify `ReadOnlyPerson` to support a `Remark` field
+Now we have the `Remark` class, we need to actually use it inside link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`].
+
+**Main:**
+
+. Add three methods `setRemark(Remark)`, `getRemark()` and `remarkProperty()`. Be sure to implement these newly created methods in link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`Person`], which implements the link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`] interface.
+. You may assume that the user will not be able to use the `add` and `edit` commands to modify the remarks field (i.e. the person will be created without a remark).
+. Modify link:{repoURL}/src/main/java/seedu/address/model/util/SampleDataUtil.java/[`SampleDataUtil`] to add remarks for the sample data (delete your `addressBook.xml` so that the application will load the sample data when you launch it.)
+
+===== [Step 6] Storage: Add `Remark` field to `XmlAdaptedPerson` class
+We now have `Remark` s for `Person` s, but they will be gone when we exit the application. Let's modify link:{repoURL}/src/main/java/seedu/address/storage/XmlAdaptedPerson.java[`XmlAdaptedPerson`] to include a `Remark` field so that it will be saved.
+
+**Main:**
+
+. Add a new Xml field for `Remark`.
+. Be sure to modify the logic of the constructor and `toModelType()`, which handles the conversion to/from  link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`].
+
+**Tests:**
+
+. Fix `validAddressBook.xml` such that the XML tests will not fail due to a missing `<remark>` element.
+
+===== [Step 7] Ui: Connect `Remark` field to `PersonCard`
+Our remark label in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] is still a placeholder. Let's bring it to life by binding it with the actual `remark` field.
+
+**Main:**
+
+. Modify link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard#bindListeners()`] to add the binding for `remark`.
+
+**Tests:**
+
+. Modify link:{repoURL}/src/test/java/seedu/address/ui/testutil/GuiTestAssert.java[`GuiTestAssert#assertCardDisplaysPerson(...)`] so that it will compare the remark label.
+. In link:{repoURL}/src/test/java/seedu/address/ui/PersonCardTest.java[`PersonCardTest`], call `personWithTags.setRemark(ALICE.getRemark())` to test that changes in the link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`Person`] 's remark correctly updates the corresponding link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`].
+
+===== [Step 8] Logic: Implement `RemarkCommand#execute()` logic
+We now have everything set up... but we still can't modify the remarks. Let's finish it up by adding in actual logic for our `remark` command.
+
+**Main:**
+
+. Replace the logic in `RemarkCommand#execute()` (that currently just throws an `Exception`), with the actual logic to modify the remarks of a person.
+
+**Tests:**
+
+. Update `RemarkCommandTest` to test that the `execute()` logic works.
+
+=== Full Solution
+
+See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for one possible step-by-step solution.
+
+[appendix]
+== User Stories
+
+Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
+
+[width="59%",cols="22%,<23%,<25%,<30%",options="header",]
+|=======================================================================
+|Priority |As a ... |I want to ... |So that I can...
+|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+
+|`* * *` |user |add a new person/event | save my contacts in the App / plan my schedule in the App
+
+|`* * *` |user |delete a person/event |remove entries that I no longer need
+
+|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+
+|`* *` |NUS student |import schedule from NUSMods |automatically generate my school timetable
+
+|`* *` |frequent user |import contacts from iCloud, Google+, Facebook,etc. |sync all my contacts
+
+|`* *` |busy user |set notification before an event starts/ends |avoid missing important issues
+
+|`* *` |busy user |auto-sort my events by date/time |be clear of possible clashes in scheduling in school
+
+|`* *` |careful user |_soft delete_ my contacts/events |get them back manually if it is a mistake
+
+|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+
+|`* *` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`* *` |user |change the UI theme |customize my App
+
+|`*` |loyal user |send feedback to developers |help further improve this App
+
+|`*` |admin user |check the `audit_log` of the application |control how everyone in my organization uses the application
+
+|`*` |advance user |export all contacts/events to excel |view them on a device without this application
+
+|`*` |user |save my contacts on the cloud |sync between different devices
+|=======================================================================
+
+[appendix]
+== Use Cases
+
+(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+
+[discrete]
+=== Use case: Add person / event
+
+*MSS*
+
+1. User inputs text to console to add person/event.
+2. Address Book acknowledges and adds person/event to the list.
+3. Address Book is updated with a latest list of persons/events.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The format of parameters entered are invalid.
++
+[none]
+** 1a1. AddressBook shows an error message.
++
+Use case resumes at step 1.
+
+[discrete]
+=== Use case: Select person
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to select a specific person in the list
+4.  AddressBook selects the person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Edit person/event
+
+*MSS*
+
+1.  User requests to edit a specific person/event in the list.
+2.  AddressBook updates itself.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The list is empty.
++
+[none]
+** 1a1. AddressBook shows an error message.
++
+Use case ends.
+
+* 1b. The arguments for edit command are invalid.
++
+** 1b1. AddressBook shows an error message.
++
+Use case resumes at step 1.
+
+[discrete]
+=== Use case: Delete person/event
+
+*MSS*
+
+1.  User requests to list persons/events
+2.  AddressBook shows a list of persons/events
+3.  User requests to delete a specific person/event in the list
+4.  AddressBook deletes the person/event
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[appendix]
+== Non Functional Requirements
+
+.  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
+.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
+.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Should be a portable application (ie. there is no need for an installer to use it).
+.  JAR file should not exceed 50 MB.
+.  Test coverage should reach 85% at any time.
+.  Should always favour security over efficiency in development.
+.  Any user who understands English should be able to use the application with the help of the <<UserGuide#, User Guide>>.
+.  Internet connection is required if users want to sync their contacts/events in all devices and store in the cloud.
+
+[appendix]
+== Glossary
+
+[[mainstream-os]]
+Mainstream OS
+
+....
+Windows, Linux, Unix, OS-X
+....
+
+[[private-contact-detail]]
+Private contact detail
+
+....
+A contact detail that is not meant to be shared with others
+....
+
+[appendix]
+== Product Survey
+
+*Contacts^TM^*
+
+_(renamed from https://support.apple.com/en-us/HT201728[Address Book] since  Mac OS X 10.8)_
+
+Author: Apple Inc.
+
+Pros:
+
+* Able to import contacts from other softwares/websites, like Facebook, LinkedIn, Google+, etc.
+* Able to send an email, start a call or text someone directly in the application thanks to integration with other applications.
+* Able to organize contacts into different groups.
+
+Cons:
+
+* Data is not stored in a human editable text file (advanced users cannot manipulate the data manually).
+* Only works on Mac OS, no corresponding version on Windows and Linux.

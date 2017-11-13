@@ -2,31 +2,38 @@ package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.util.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.util.CliSyntax.PREFIX_DATE_TIME;
+import static seedu.address.logic.parser.util.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.util.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.util.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.util.CliSyntax.PREFIX_TAG;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import seedu.address.logic.commands.event.EditEventCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.person.EditCommand;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.property.EventNameContainsKeywordsPredicate;
+import seedu.address.model.property.NameContainsKeywordsPredicate;
+import seedu.address.model.property.PropertyManager;
+import seedu.address.testutil.EditEventDescriptorBuilder;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 
 /**
  * Contains helper methods for testing commands.
  */
 public class CommandTestUtil {
-
     public static final String VALID_NAME_AMY = "Amy Bee";
-    public static final String VALID_NAME_BOB = "Bob Choo";
+    public static final String VALID_NAME_BOB = "Bob Chou";
     public static final String VALID_PHONE_AMY = "11111111";
     public static final String VALID_PHONE_BOB = "22222222";
     public static final String VALID_EMAIL_AMY = "amy@example.com";
@@ -35,6 +42,16 @@ public class CommandTestUtil {
     public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
+
+    public static final String VALID_NAME_EVENT1 = "Mel Birthday";
+    public static final String VALID_NAME_EVENT2 = "Bobs Birthday";
+    public static final String VALID_DATE_EVENT1 = "25122017 08:30";
+    public static final String VALID_DATE_EVENT2 = "25022018 08:45";
+    public static final String VALID_NATURAL_DATE_EVENT1 = "25 Dec 2017 08:30";
+    public static final String VALID_NATURAL_DATE_EVENT2 = "Feb 25th 2018 08:45am";
+    public static final String VALID_DISPLAY_DATE_EVENT1 = "25 Dec, 2017 08:30";
+    public static final String VALID_VENUE_EVENT1 = "Mels crib";
+    public static final String VALID_VENUE_EVENT2 = "Bobs crib";
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
@@ -46,23 +63,79 @@ public class CommandTestUtil {
     public static final String ADDRESS_DESC_BOB = " " + PREFIX_ADDRESS + VALID_ADDRESS_BOB;
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
+    public static final String NAME_DESC_EVENT1 = " " + PREFIX_NAME + VALID_NAME_EVENT1;
+    public static final String DATE_DESC_EVENT1 = " " + PREFIX_DATE_TIME + VALID_DATE_EVENT1;
+    public static final String VENUE_DESC_EVENT1 = " " + PREFIX_ADDRESS + VALID_VENUE_EVENT1;
+    public static final String NAME_DESC_EVENT2 = " " + PREFIX_NAME + VALID_NAME_EVENT2;
+    public static final String DATE_DESC_EVENT2 = " " + PREFIX_DATE_TIME + VALID_DATE_EVENT2;
+    public static final String VENUE_DESC_EVENT2 = " " + PREFIX_ADDRESS + VALID_VENUE_EVENT2;
 
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
     public static final String INVALID_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
-    public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
+    public static final String INVALID_TAG = "hubby*"; // '*' not allowed in tags
+    public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + INVALID_TAG; // '*' not allowed in tags
+    public static final String INVALID_DATE_DESC = " " + PREFIX_DATE_TIME + "some random string"; // "pm/am not allowed"
 
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;
+    public static final EditEventCommand.EditEventDescriptor DESC_EVENT1;
+    public static final EditEventCommand.EditEventDescriptor DESC_EVENT2;
+
+    public static final String VALID_CONFIG_TAG_COLOR = " --set-tag-color ";
+    public static final String VALID_TAG_COLOR = " #7db9a1";
+    public static final String VALID_PREDEFINED_COLOR = " red";
+    public static final String VALID_CONFIG_ADD_PROPERTY = " --add-property ";
+    public static final String VALID_NEW_PROPERTY = " s/b f/birthday m/something r/[^\\s].*";
+    public static final String VALID_NEW_PROPERTY_NO_REGEX = " s/m f/major";
+
+    public static final String INVALID_CONFIG_TYPE = " --some-config-type-unknown ";
+    public static final String INVALID_CONFIG_VALUE = " unknown value(s)";
+    public static final String INVALID_TAG_COLOR = " bee1";
+    public static final String INVALID_NEW_PROPERTY = " s/b r/[^\\s].*";
+
+    public static final String INVALID_IMPORT_TYPE = " --some-import-type-unknown ";
+    public static final String INVALID_IMPORT_PATH = " unknown path";
+
+    public static final String VALID_URL = "https://www.google.com.sg/contacts?day=monday";
+    public static final String VALID_URL_ENCODED = "https%3A%2F%2Fwww.google.com.sg%2Fcontacts%3Fday%3Dmonday";
+    public static final String INVALID_URL_COMMA = " https://123,tg/";
+    public static final String INVALID_URL_MALFORMED = " https,://ww/";
+    public static final String IMPORT_NO_PATH = "--nusmods ";
+
+    public static final String VALID_IMPORT_XML_PATH = "something.xml";
+    public static final String VALID_IMPORT_SCRIPT_PATH = "something.bo";
+    public static final String VALID_EXPORT_PATH = "something.xml";
+
+    public static final String NUSMODS_VALID_URL =
+            " https://nusmods.com/timetable/2017-2018/sem1?CS2103T[TUT]=C01";
+    public static final String NUSMODS_INVALID_URL =
+            " https://nusmods.com/timetable/2017-2018//sem?CS2103T[TUT]=C01";
+    public static final String NUSMODS_INVALID_URL_YEAR_START =
+            " https://nusmods.com/timetable/1999-2000/sem1?CS2103T[TUT]=C01";
+    public static final String NUSMODS_INVALID_URL_YEAR_OFFSET =
+            " https://nusmods.com/timetable/2017-2019/sem1?CS2103T[TUT]=C01";
+    public static final String NUSMODS_VALID_IMPORT = "--nusmods " + NUSMODS_VALID_URL;
+    public static final String NUSMODS_INVALID_IMPORT = "--nusmods " + NUSMODS_INVALID_URL;
+    public static final String NUSMODS_MALFORMED_URL = "--nusmods " + INVALID_URL_MALFORMED;
+    public static final String NOT_FROM_NUSMODS_IMPORT = "--nusmods " + VALID_URL;
+    public static final String XML_VALID_IMPORT = "--xml " + VALID_IMPORT_XML_PATH;
+    public static final String SCRIPT_VALID_IMPORT = "--script " + VALID_IMPORT_SCRIPT_PATH;
 
     static {
+        PropertyManager.initializePropertyManager();
+
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
                 .withTags(VALID_TAG_FRIEND).build();
         DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
                 .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
+        DESC_EVENT1 = new EditEventDescriptorBuilder().withName(VALID_NAME_EVENT1).withTime(VALID_DATE_EVENT1)
+               .withAddress(VALID_VENUE_EVENT1).build();
+        DESC_EVENT2 = new EditEventDescriptorBuilder().withName(VALID_NAME_EVENT2).withTime(VALID_DATE_EVENT2)
+                .withAddress(VALID_VENUE_EVENT2).build();
     }
 
     /**
@@ -92,6 +165,7 @@ public class CommandTestUtil {
         // only do so by copying its components.
         AddressBook expectedAddressBook = new AddressBook(actualModel.getAddressBook());
         List<ReadOnlyPerson> expectedFilteredList = new ArrayList<>(actualModel.getFilteredPersonList());
+        List<ReadOnlyEvent> expectedFilteredEventList = new ArrayList<>(actualModel.getFilteredEventList());
 
         try {
             command.execute();
@@ -100,6 +174,7 @@ public class CommandTestUtil {
             assertEquals(expectedMessage, e.getMessage());
             assertEquals(expectedAddressBook, actualModel.getAddressBook());
             assertEquals(expectedFilteredList, actualModel.getFilteredPersonList());
+            assertEquals(expectedFilteredEventList, actualModel.getFilteredEventList());
         }
     }
 
@@ -108,12 +183,23 @@ public class CommandTestUtil {
      */
     public static void showFirstPersonOnly(Model model) {
         ReadOnlyPerson person = model.getAddressBook().getPersonList().get(0);
-        final String[] splitName = person.getName().fullName.split("\\s+");
+        final String[] splitName = person.getName().getValue().split("\\s+");
         model.updateFilteredPersonList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
 
         assert model.getFilteredPersonList().size() == 1;
     }
+    //@@author junyango
+    /**
+     * Updates {@code model}'s filtered list to show only the first person in the {@code model}'s address book.
+     */
+    public static void showFirstEventOnly(Model model) {
+        ReadOnlyEvent event = model.getAddressBook().getEventList().get(0);
+        final String[] splitName = event.getName().getValue().split("\\s+");
+        model.updateFilteredEventsList(new EventNameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
 
+        assert model.getFilteredEventList().size() == 1;
+    }
+    //@@author
     /**
      * Deletes the first person in {@code model}'s filtered list from {@code model}'s address book.
      */
@@ -123,6 +209,17 @@ public class CommandTestUtil {
             model.deletePerson(firstPerson);
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("Person in filtered list must exist in model.", pnfe);
+        }
+    }
+    /**
+     * Deletes the first event in {@code model}'s filtered list from {@code model}'s address book.
+     */
+    public static void deleteFirstEvent(Model model) {
+        ReadOnlyEvent firstEvent = model.getFilteredEventList().get(0);
+        try {
+            model.deleteEvent(firstEvent);
+        } catch (EventNotFoundException enfe) {
+            throw new AssertionError("Event in filtered list must exist in model.", enfe);
         }
     }
 }

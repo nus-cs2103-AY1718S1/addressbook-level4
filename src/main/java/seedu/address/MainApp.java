@@ -16,6 +16,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.Version;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.commons.exceptions.InvalidFilePathException;
 import seedu.address.commons.util.ConfigUtil;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
@@ -39,8 +40,8 @@ import seedu.address.ui.UiManager;
  * The main entry point to the application.
  */
 public class MainApp extends Application {
-
-    public static final Version VERSION = new Version(0, 6, 0, true);
+    // TODO: Update the version information whenever going to make a release.
+    public static final Version VERSION = new Version(1, 5, 0, true);
 
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
 
@@ -51,7 +52,6 @@ public class MainApp extends Application {
     protected Config config;
     protected UserPrefs userPrefs;
 
-
     @Override
     public void init() throws Exception {
         logger.info("=============================[ Initializing AddressBook ]===========================");
@@ -59,7 +59,8 @@ public class MainApp extends Application {
 
         config = initConfig(getApplicationParameter("config"));
 
-        UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
+        UserPrefsStorage userPrefsStorage =
+                new JsonUserPrefsStorage(config.getUserPrefsFilePath(), config.getAddressBookTheme());
         userPrefs = initPrefs(userPrefsStorage);
         AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
         storage = new StorageManager(addressBookStorage, userPrefsStorage);
@@ -68,9 +69,10 @@ public class MainApp extends Application {
 
         model = initModelManager(storage, userPrefs);
 
-        logic = new LogicManager(model);
+        logic = new LogicManager(model, storage);
 
         ui = new UiManager(logic, config, userPrefs);
+
 
         initEventsCenter();
     }
@@ -99,6 +101,10 @@ public class MainApp extends Application {
             initialData = new AddressBook();
         } catch (IOException e) {
             logger.warning("Problem while reading from the file. Will be starting with an empty AddressBook");
+            initialData = new AddressBook();
+        } catch (InvalidFilePathException e) {
+            logger.warning("File path of data file not in the correct format. Will be starting with an empty"
+                    + " AddressBook");
             initialData = new AddressBook();
         }
 

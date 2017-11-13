@@ -1,13 +1,20 @@
 package seedu.address.model.person;
 
+import java.util.List;
 import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
+import seedu.address.model.property.Address;
+import seedu.address.model.property.Email;
+import seedu.address.model.property.Name;
+import seedu.address.model.property.Phone;
+import seedu.address.model.property.Property;
+import seedu.address.model.property.UniquePropertyMap;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
 /**
- * A read-only immutable interface for a Person in the addressbook.
+ * A read-only immutable interface for a Person in the addressBook.
  * Implementations should guarantee: details are present and not null, field values are validated.
  */
 public interface ReadOnlyPerson {
@@ -20,11 +27,21 @@ public interface ReadOnlyPerson {
     Email getEmail();
     ObjectProperty<Address> addressProperty();
     Address getAddress();
+    ObjectProperty<Avatar> avatarProperty();
+    Avatar getAvatar();
+    void setAvatar(Avatar avatar);
+    ObjectProperty<UniquePropertyMap> properties();
+    Set<Property> getProperties();
+    List<Property> getSortedProperties();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
 
+    String joinTagsToString();
+
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
+     *
+     * TODO: Should we include comparision of {@code getProperties} here?
      */
     default boolean isSameStateAs(ReadOnlyPerson other) {
         return other == this // short circuit if same object

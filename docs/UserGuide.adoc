@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= BoNUS - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,23 +10,49 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-T09-B3/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+// Workaround for asciidoctor-pdf compatibility issues.
+:up-arrow-key: &#8593;
+:down-arrow-key: &#8595;
+
+By: `CS2103T T09-B3 Team`      Since: `Sep 2017`      Licence: `MIT`
+
+== Introduction
+
+As the name implies, link:{repoURL}[**BoNUS**] helps you _better(B) organize(o) your NUS life_.
+
+* As an NUS student, do you feel like your schedules are all over the place and your contacts are too messy making searching through it a pain?
+* Sounds like you need a "Bonus"!
+* Our **BoNUS** is a desktop personal organizer application dedicated to NUS students to carry out various tasks such as storing
+contacts, scheduling for upcoming events, timetable planning as well as a calendar to better organise your campus life.
+* Apart from storing essential information such as name, email, address and phone number, you have _infinite freedom_
+to customize your own fields!
+* **BoNUS** is convenient, fast, secured, integrated, solely with the motivation of giving you a bonus for your student
+life in NUS. It is also oriented for typist users (most operations should be done using keyboard rather than mouse), which makes it all the more simple!
+
+Let's begin!
+
+=== Purpose
+This user guide will provide you with a comprehensive step-by-step guide on how to better utilise **BoNUS**
+to make your NUS life a breeze.
 
 == Quick Start
 
-.  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
+.  Start by ensuring you have Java version `1.8.0_60` or later installed in your Computer.
 +
 [NOTE]
 Having any Java 8 version is not enough. +
-This app will not work with earlier versions of Java 8.
+If you only have earlier versions of Java 8, this app will not work.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
+.  Download the latest `bonus.jar` release from link:{repoURL}/releases[here].
+.  Create a folder you want to use as home folder for **BoNUS** and copy the `jar` you have downloaded there.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
+
 image::Ui.png[width="790"]
+_Figure 2.1 : User Interface Demo_
+
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
@@ -37,52 +63,220 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
-.  Refer to the link:#features[Features] section below for details of each command.
+.  Refer to the link:#commands[commands] section below for details of each command.
 
-== Features
+== Components
+
+**BoNUS** consists of three main components: *contacts*, *events* and *calendar* which you can select using the sidebar on the left-hand side.
+
+image::UiSideBarHighlight.png[width="500"]
+_Figure 3.1 : Sidebar for Switching between Different Components_
+
+They are described in details as follows:
+
+=== Contacts
+
+Time to deal with the many contacts you have accumulated while studying in NUS.
+
+* By default, you can store and update names, phone numbers, email and mailing addresses. (`add`
+and `edit` command)
+* Additionally, you can customize an additional field to a contact that is not in the default. (`config add-property`
+command)
+* Now, let's organize all your contacts by adding one or more tags to them. Those with the same tag will be classified
+under the same group. You can even customize the colour of the tags to your liking. (`config --set-tag-color` command)
+
+=== Events
+
+Got a meeting with professor or an assignment deadline you need to remember?
+
+* By default, you can store and update the title, interval (starting time and end time), venue and description of the event. (`addE` and `editE` command)
+* Similar to link:#contacts[contacts], you can add customize properties and add tags to events as well.
+* Setting a starting and/or end time for an event, will be reflected accordingly on the link:#calendar[calendar] component.
+* Reminders will automatically be added upon addition of event and start to notify you from 2 days before the actual event.
+* If one or more of your link:#contacts[contacts] are attending the event with you, you can link them to the event too.
+
+=== Calendar
+
+_(Current calendar is static, dynamic calendar coming in v2.0)_
+
+Calender provides a clearer image for you to view your upcoming link:#events[events]. All events are displayed
+based on their time interval for you to be able to attend to them one by one. However, events without time intervals will not be displayed here.
+
+* You can choose the style to display the upcoming events (weekly/monthly/yearly view).
+* You can add/update/delete events here, but the actual operation will be handled by the link:#events[events] component.
+
+== Key features
+
+=== Convenient
+
+**BoNUS** is the ultimate application as it will provide you with the utmost convenience and gives you more time to focus on your more important tasks.
+
+* Import contacts from _iCloud_, _Google+_, _Facebook_, etc.
+* Import events from _Google_ _Calendar_, _Outlook_ _Calendar_, etc.
+* Export data (contacts and events) to `.xml` file (default storage format for **BoNUS**), Excel Worksheet, etc.
+* Sync between all your devices.
+* (**Exclusive**) automatically generate your school schedule by simply entering your timetable URL from _https://nusmods.com/[NUSMods]_.
+
+=== Fast
+
+As long as the number of records stored is less than 50,000 and the size of the storage file is smaller than 20MB, **BoNUS**
+will be able to
+
+* Start the application in 5 seconds.
+* Return the result of all link:#commands[commands] available with _human-invisible_ delay.
+* Update things displayed on the GUI (graphic user interface) smoothly.
+
+=== Secured
+
+The **BoNUS** developers understand that you will be storing personal data in the application. The following are features of our application that ensures
+you will have privacy and security.
+
+* All data saved to the storage file will be encrypted using the state-of-the-art encryption scheme (AES-256).
+* You will be prompted to enter their password whenever they open the application (if you has decided to lock your application
+the last time before you exited).
+* You can set up 2FA (two-factor authentication) to fulfill extra security requirement(s).
+
+== Commands
+
+The following is a list of commands that you can use in the application.
 
 ====
 *Command Format*
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
-* Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
-* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+* Words in parentheses represent the command shortcut e.g. in `(a)add n/NAME`, `a` is the shorthand-equivalent notation for the `add` command.
+* Words in `UPPER_CASE` is information to be supplied by you e.g. in `add n/NAME`, `NAME` is to be filled in by you.
+e.g `add n/John Doe`.
+* Words in square brackets are optional e.g `n/NAME [t/TAG]`, `t/TAG` is optional.
+e.g `n/John Doe t/friend` or as `n/John Doe`.
+* Items with `…`​ after them can be used from zero times to as many times as you like e.g. `[t/TAG]...` can be used as `{nbsp}`
+(i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+* You can type the information in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME`
+works too.
+* If parameters with the same prefix are typed multiple times, only the last one will be taken. For example,
+`n/John Doe n/Martin Henz`, then only `Martin Henz` will be taken into actual consideration.
 ====
 
-=== Viewing help : `help`
+====
+*Command in different components*
 
-Format: `help`
+* Most commands can be applied to either a person or an event, whose result will depend on the context e.g. `add` will add
+a person if the user is currently in the link:#contacts[contacts] component, otherwise `addE` will add a new link:#events[event].
+* All commands entered in the link:#calendar[calendar] component will actually be handled by either link:#contacts[contacts]
+component or link:#events[events] component.
+====
 
-=== Adding a person: `add`
+=== Viewing help : `(h)help`
 
-Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Have a query? Use the `help` command! +
+Format: `(h)help` (or press `F1` on the keyboard)
+
+=== Adding a person : `(a)add`
+
+You just met someone and want to add their contact information into your contact list. +
+Format: `(a)add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+
+This adds the person to your contact list.
 
 [TIP]
-A person can have any number of tags (including 0)
+Your contact can have any number of tags (including 0).
 
 Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
-=== Listing all persons : `list`
+[TIP]
+In a similar format, you can also add customize properties when adding a new person, just use `config --add-property`
+command before to define that property. +
+Notice all pre-defined properties (name, phone, email, address) are compulsory when adding a new person, while customize
+properties are optional.
 
-Shows a list of all persons in the address book. +
-Format: `list`
+Example:
 
-=== Editing a person : `edit`
+If you want to add birthday as a field for a contact and use `b` as the short name,
 
-Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+* `config --add-property s/b f/birthday`
+
+Then, you can set a contact's `birthday` when you add a new contact (_see `b/12091191` below_)
+
+* `add n/Chris Lee p/98765432 e/johnd@example.com a/23 Chinatown b/12091991 t/friends`
+
+//tag::autoReminders[]
+=== Adding an event : `(aE)addE`
+
+You want to record your friend's birthday party coming up. +
+Format: `(aE)addE n/NAME dt/DATE_TIME a/EMAIL a/ADDRESS`
+
+This will add a new event to your list of events.
+
+Examples:
+
+* `addE n/Does Birthday dt/25122015 20:30 a/12 Kent Ridge Drive`
+* `addE n/Betsy Birthday dt/25122016 21:30 a/23 Marina Road`
+
+[NOTE]
+====
+* The standard format for time should be `DDMMYYYY HH:MM` in 24-hour format.
+* However, the application may sometimes be _smart_ enough to interpret what you typed. For example, if you type `this afternoon`
+or `tomorrow evening`, it will be automatically converted to the standard format.
+* Do NOT try to _challenge_ the application, it is not promised to produce an expected result if you use non-standard format
+or if the expression is not simple or clear enough.
+* Avoid putting the year first when using the non-standard format.
+====
+
+
+[TIP]
+====
+* Reminders will automatically be added and start to notify you from 2 days before the actual event.
+* Reminders in the form of a bell image will be displayed on the event card itself.
+* Red Bell : Day of event +
+  Orange Bell: One day before event +
+  Green Bell: Two days before event
+====
+//end::autoReminders[]
+
+// tag::sortByName[]
+=== Listing all persons : `(l)list`
+
+
+You want to view all your contacts in your contact list. +
+Format: `(l)list`
+
+This will list out all of your contacts in alphabetical order.
+
+Example:
+
+* `list`
+
+[TIP]
+Contacts will be sorted by their names (increment).
+// end::sortByName[]
+
+=== Listing all events : `(lE)listE`
+
+Shows a list of all events in the application. +
+Format: `(lE)listE`
+
+This will list out all of your events by date/time.
+
+Example:
+
+* `listE`
+
+=== Editing a person : `(e)edit`
+
+_(Editing of customize properties coming in v2.0)_
+
+Edits an existing person in the application. +
+Format: `(e)edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
 ****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last listing.
+The index *must be a positive integer* like 1, 2, 3, ...
 * At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
+* Existing values of the selected data item will be updated to the input values.
+* When editing tags, the existing tags of that data item will be removed i.e adding of tags is not cumulative.
+* You can remove all existing tags by typing `t/` without specifying any tags after it.
 ****
 
 Examples:
@@ -92,17 +286,43 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Locating persons by name: `find`
+=== Editing an event : `(eE)editE`
 
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Edits an existing event in the application. +
+Format: `(eE)editE INDEX [n/NAME] [dt/DATE_TIME] [a/ADDRESS]`
+
+****
+* Edits the event at the specified `INDEX`. The index refers to the index number shown in the last listing.
+The index *must be a positive integer* like 1, 2, 3, ...
+* At least one of the optional fields must be provided.
+* Existing values of the selected data item will be updated to the input values.
+****
+
+Examples:
+
+* `editE 1 dt/18052013 03:30` +
+Edits the date/time the 1st event to be `18052013 03:30`.
+* `editE 2 n/Lunch with Betsy`  +
+Edits the name of the 2nd event to be `Lunch with Betsy`.
+
+=== Locating persons/events by any property : `(f)find`
+
+_(`AND` and `OR` search coming in v2.0)_
+
+Finds persons/events whose corresponding field(s) contain any of the given keywords. +
+Format: `(f)find KEYWORD [MORE_KEYWORDS] [p/KEYWORD [MORE_KEYWORDS]]...`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* The search can be based on one or multiple properties. The short name of the property `n/` can be omitted if the searching
+criteria is for the `name` property.
+* Apply `OR` search for keywords of the same property, i.e. persons/events matching at least one keyword will be returned.
+e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`. Thus, the order of the keywords for the same property does not matter.
+ e.g. `Hans Bo` will match `Bo Hans`.
+* Apply `AND` search for keywords of the different property, i.e. only persons/events matching all of the required properties
+will be returned. e.g. `Hans Bo p/84651943` will only return persons whose name contains either `Hans` or `Bo`, as well as,
+whose phone number is the same as `84651943`.
+* Only full word matching will be returned. e.g. `Han` will not match `Hans`
 ****
 
 Examples:
@@ -112,15 +332,34 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
-=== Deleting a person : `delete`
+// tag::findtag[]
+=== Locating persons by their tag : `(ft)findtag`
 
-Deletes the specified person from the address book. +
-Format: `delete INDEX`
+Finds persons whose corresponding tags contain any of the given keywords and lists them out. +
+Format: `(ft)findtag KEYWORD [MORE_KEYWORDS]...`
+
+****
+* The search is not case insensitive. e.g `friends` will match `Friends`
+* Only full word matching will be returned. e.g. `friend` will not match `friends`
+****
+
+Examples:
+
+* `findtag family` +
+Returns any person that contains a `family` tag
+* `findtag family colleagues` +
+Returns any person that contains the tags `family` and `colleagues`
+// end::findtag[]
+
+=== Deleting a person : `(d)delete`
+
+Deletes the specified person from the application. +
+Format: `(d)delete INDEX`
 
 ****
 * Deletes the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
+* The index *must be a positive integer* like 1, 2, 3, ...
 ****
 
 Examples:
@@ -132,15 +371,33 @@ Deletes the 2nd person in the address book.
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
-=== Selecting a person : `select`
+=== Deleting an event : `(dE)deleteE`
 
-Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
+Deletes the specified event from the application. +
+Format: `(dE)deleteE INDEX`
 
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
+* Deletes the event at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
+* The index *must be a positive integer* like 1, 2, 3, ...
+****
+
+Examples:
+
+* `list` +
+`deleteE 2` +
+Deletes the 2nd event in the address book.
+
+=== Selecting a person: `(s)select`
+
+Selects a person (identified by the index number used in the last listing) to view the details of that person. +
+Format: `(s)select INDEX`
+
+****
+* Selects the person/event and loads the details of this data item.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* like `1, 2, 3, ...`
+* All properties of this person/event will be displayed at the right side of the interface (ordered by the name of the property).
 ****
 
 Examples:
@@ -152,25 +409,140 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
-=== Listing entered commands : `history`
+// tag::emailCommand[]
+=== Emailing a person : `(em)email`
 
-Lists all the commands that you have entered in reverse chronological order. +
-Format: `history`
+Emails a person (identified by the index number used in the last listing) to email that person. +
+Format: `(em)email INDEX`
+
+****
+* Emails the person by opening your default mail app with the "To: " field filled up with the person's email.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* like `1, 2, 3, ...`
+****
+
+Examples:
+
+* `list` +
+`email 2` +
+Emails the 2nd person in the address book.
+// end::emailCommand[]
+
+// tag::gmCommand[]
+=== Directions to a person's address : `(gm)gmap`
+
+Opens Google Maps in default browser with a person's (identified by the index number used in the last
+listing) address in the Destination. +
+Format: `(gm)gmap INDEX`
+
+****
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* like `1, 2, 3, ...`
+****
+
+Examples:
+
+* `list` +
+`gmap 2` +
+The address of the 2nd person in the address book will be in the Destination field in Google Maps.
+// end::gmCommand[]
+
+// tag::fbCommand[]
+=== Finding a contact on Facebook : `(fb)facebook`
+
+Searches for a person's (identified by the index number used in the last listing) name on Facebook. +
+Format: `(fb)facebook INDEX`
+
+****
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* like `1, 2, 3, ...`
+****
+
+Examples:
+
+* `list` +
+`facebook 2` +
+The name of the 2nd person in the address book will be searched on Facebook.
+// end::fbCommand[]
+
+=== Adding avatar to a person : `(avr)avatar`
+
+_(Better checking for file type coming in v2.0)_
+
+Adds avatar to a person (identified by the index number used in the last listing). +
+Format: `(avr)avatar INDEX IMAGE_PATH`
+
+****
+* The given path must be pointed to a valid image in `png`, `jp(e)g` and `svg` format.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* like `1, 2, 3, ...`
+* The path should not be empty, nor should it contain any prohibited characters `?!%*+:|"<>`.
+* The application will infer the path as from a location relative to the *BoNUS* home folder if the given path
+is not complete (or an absolute path).
+****
+
+Examples:
+
+* `list` +
+`avatar 2 linda.jpg` +
+Adds avatar to the 2nd person in the address book.
 
 [NOTE]
 ====
-Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
+* Do not move, rename or delete the image you use as an avatar; otherwise, it will not be shown in *BoNUS*.
+* You are suggested to move the image into the home folder where you use *BoNUS*.
+* Do not be _nasty_ about the input file. If you provide an invalid file that looks like an image but is not an actual image,
+the area reserved for avatar will simply become transparent.
+====
+
+// tag::themeSwitch[]
+=== Switching themes : `(t)theme`
+
+Switches between Dark Theme and Bright Theme. +
+Format: `(t)theme`
+
+Examples:
+
+* `theme`
+
+[NOTE]
+====
+Theme will be saved upon exit.
+When **BoNUS** is opened again, theme will be initialized to the theme that was saved previously.
+====
+
+As shown in Figure 5.15.1 and Figure 5.15.2, Figures depict the Bright Theme and Dark Theme respectively.
+
+image::BrightTheme.png[width="400"]
+_Figure 5.15.1 : Bright Theme_
+
+image::DarkTheme.png[width="400"]
+_Figure 5.15.2 : Dark Theme_
+// end::themeSwitch[]
+
+=== Listing entered commands : `(his)history`
+
+Lists all the commands that you have entered in reverse chronological order. +
+Format: `(his)history`
+
+Example:
+
+* `history`
+
+[NOTE]
+====
+Pressing the kbd:[{up-arrow-key}] and kbd:[{down-arrow-key}] arrows will display the previous and next input respectively in the command box.
 ====
 
 // tag::undoredo[]
-=== Undoing previous command : `undo`
+=== Undoing previous command : `(u)undo`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
-Format: `undo`
+Restores the application to the state before the previous _undoable_ command was executed. +
+Format: `(u)undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify the application's content (`add`, `addE`, `edit`, `editE`, `delete`, `deleteE`, and `clear`).
 ====
 
 Examples:
@@ -189,10 +561,13 @@ The `undo` command fails as there are no undoable commands executed previously.
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
 
-=== Redoing the previously undone command : `redo`
+[TIP]
+You can view what command you have undone from the user feedback message.
+
+=== Redoing the previously undone command : `(r)redo`
 
 Reverses the most recent `undo` command. +
-Format: `redo`
+Format: `(r)redo`
 
 Examples:
 
@@ -210,43 +585,360 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `undo` (reverses the `delete 1` command) +
 `redo` (reapplies the `delete 1` command) +
 `redo` (reapplies the `clear` command) +
+
+[TIP]
+You can view what command you have redone from the user feedback message.
 // end::undoredo[]
 
-=== Clearing all entries : `clear`
+=== Clearing all entries : `(c)clear`
 
-Clears all entries from the address book. +
-Format: `clear`
+Clears all entries from all components (both contacts and events). +
+Format: `(c)clear`
 
-=== Exiting the program : `exit`
+Example:
+
+* `clear`
+
+// tag::importXml[]
+=== Importing data : `(i)import`
+
+==== From `.xml` format
+
+Imports the data in an external XML file, including data from all three components: *Contacts*, *Events* and *Calendar*,
+into the current address book of *BoNUS*. +
+Format: `(i)import FILEPATH`
+
+[NOTE]
+====
+The default data format is `.xml` file. Without explicit parameters, the application will treat the given path as a file
+in `.xml` format. It is unnecessary to explicitly state `import --xml FILEPATH`, although you are allowed to do so.
+====
+
+****
+* Imports data from the location and file name specified by `FILEPATH`.
+* `FILEPATH` must end with an extension of `.xml`.
+* The file name in `FILEPATH` should not be empty, nor should it contain any prohibited characters `?!%*+:|"<>`.
+* If a relative path is provided, the data will be imported from a location relative to the *BoNUS* installation directory.
+* Persons and events that exist in *BoNUS* and the specified file will not be imported.
+* Data in the specified XML file must be in the format as recognized by *BoNUS*.
+****
+
+Examples:
+
+* For `Windows` users: +
+`import C:\Users\John Doe\Documents\bonus.xml`
+
+* For `macOS` and `Linux` users: +
+`import /Users/John Doe/Documents/bonus.xml`
+
+[NOTE]
+====
+For `Windows` users, use `\` as the name-separator in your `FILEPATH`. +
+For `macOS` and `Linux` users, use `/` instead.
+====
+// end::importXml[]
+
+// tag::importScript[]
+==== From `.bo` format
+
+_(Coming in v2.0)_
+
+Imports the data in an external BoNUS script file (which ends with `.bo`), including data from all three components:
+*Contacts*, *Events* and *Calendar*, into the application. +
+Format: `(i)import --script FILEPATH`
+
+****
+* You must explicitly provide the `--script` parameter.
+* `FILEPATH` must end with an extension of `.bo`.
+* The file name in `FILEPATH` should not be empty, nor should it contain any prohibited characters `?!%*+:|"<>`.
+* If a relative path is provided, the data will be imported from a location relative to the *BoNUS* installation directory.
+* The provided script file should include one or multiple lines of valid *BoNUS* command(s). Each line can only have **at
+most one** command.
+* The *command* here refers to any command mentioned in this guide.
+****
+
+Examples:
+
+* For `Windows` users: +
+`import --script C:\Users\John Doe\Documents\bonus.bo`
+
+* For `macOS` and `Linux` users: +
+`import --script /Users/John Doe/Documents/bonus.bo`
+
+[NOTE]
+====
+For `Windows` users, use `\` as the name-separator in your `FILEPATH`. +
+For `macOS` and `Linux` users, use `/` instead.
+====
+// end::importScript[]
+
+// tag::importNusmods[]
+==== From NUSMods URL
+
+_(Exclusive feature for NUS students)_
+
+The **BoNUS** team understands that https://nusmods.com/[NUSMods] has become an indispensable school timetable builder
+for almost all students at NUS. Thus, you are definitely allowed to import your timetable from NUSMods to the *BoNUS*
+application. +
+Format: `(i)import --nusmods YOUR_NUSMODS_URL`
+
+****
+* The URL provided must be complete and should begin with `http(s)://nusmods.com/timetable/`.
+* Directly copy from the address bar of your browser. Do *NOT* use the short URL generated by the _Sharing Timetable_ feature
+provided by NUSMods.
+* Final examinations for all modules in your NUSMods timetable will be automatically added as events to the application.
+****
+
+Example:
+
+* `import --nusmods +++https://nusmods.com/timetable/2017-2018/sem1?CS2103T[TUT]=C01+++`
+
+[NOTE]
+====
+* Make sure you have stable Internet connection when using this command.
+* You may need to wait for a while as the application is retrieving information from NUSMods.
+====
+// end::importNusmods[]
+
+//tag::importGoogle[]
+==== From Google Accounts
+
+_(Coming in v2.0)_
+
+Imports your contacts and events from Google Contacts and Google Calender respectively. +
+Format: `(i)import --google https://myaccount.google.com/`
+
+****
+* Upon execution of the command, you will be brought to Google's login page for authentication.
+* Upon successful authentication, data from Google contacts and calendar will automatically be imported into **BoNUS**'s contact list and event list.
+****
+
+Example:
+`import --google https://myaccount.google.com/`
+
+[NOTE]
+====
+* URL as shown in example is the default URL that will be opened for you
+* You would have to enter your login credentials on Google's sign in page before data from Google Contacts and Google Calendar gets imported.
+* In the case of you not entering proper login credentials after three tries, **BoNUS** will cancel the request for importing from Google.
+====
+//end::importGoogle[]
+
+// tag::exportXml[]
+=== Exporting data : `(p)export`
+
+==== To `.xml` format
+
+Exports the current data in the application, including data from all three components: *Contacts*, *Events* and
+*Calendar*, to an external location. +
+Format: `(p)export FILEPATH`
+
+****
+* Exports data to the location and file name specified by `FILEPATH`.
+* `FILEPATH` must end with an extension of `.xml`.
+* The file name in `FILEPATH` should not be empty.
+* The file name and any non-existent folder names in `FILEPATH` should not contain any prohibited characters `?!%*+:|"<>`.
+* If a relative path is provided, the data will be exported to a location relative to the *BoNUS* installation directory.
+* Existing data file at `FILEPATH` will be overwritten.
+* Parent directories, if specified in `FILEPATH`, will be created if they do not exist.
+****
+
+Examples:
+
+* For `Windows` users: +
+`export C:\Users\John Doe\Documents\bonus.xml`
+
+* For `macOS` and `Linux` users: +
+`export /Users/John Doe/Documents/bonus.xml`
+
+[NOTE]
+====
+For `Windows` users, use `\` as the name-separator in your `FILEPATH`. +
+For `macOS` and `Linux` users, use `/` instead.
+====
+// end::exportXml[]
+
+// tag::exportExcel[]
+==== To Microsoft Excel^TM^ Worksheet
+
+_(Coming in v2.0)_
+
+Exports the current data in the application to an external file of Microsoft Excel^TM^ format. +
+Format: `(p)export --excel FILEPATH`
+
+****
+* The file name should follow similar rules to the section above.
+* However, it must end with an extension of `.xls` (`.xlsx` is currently not supported).
+****
+
+Examples:
+
+* For `Windows` users: +
+`export --excel C:\Users\John Doe\Documents\bonus.xls`
+
+* For `macOS` and `Linux` users: +
+`export --excel /Users/John Doe/Documents/bonus.xls`
+
+[NOTE]
+====
+For `Windows` users, use `\` as the name-separator in your `FILEPATH`. +
+For `macOS` and `Linux` users, use `/` instead.
+====
+// end::exportExcel[]
+
+=== Advance setting : `(cfg)config`
+
+Changes the configuration of the application or applies some advance settings to the data. Make sure you know what you
+are doing before using any of the following commands. These commands are intended for advance users.
+
+// tag::genericProperty[]
+==== Adding a customize property : `(cfg)config --add-property`
+
+Adds a new customize property field available to all persons or events. +
+Format: `(cfg)config --add-property s/SHORT_NAME f/FULL_NAME [m/MESSAGE r/REGULAR_EXPRESSION]`
+
+****
+* This command does not add a new property to a specific person. Instead, it defines a property that will be available to
+all persons/events.
+* The short name `s/` and full name `f/` of the new property are compulsory, while the constraint message `m/` and regular
+expression for validation `r/` are optional. However, `m/` and `r/` must come together, i.e. a regular expression must be
+accompanied by a constraint message, which will be shown when the validation fails.
+* If constraint message and regular expression are not specified, the default would be `[^\s].*`, which mean the value of
+this property cannot be blank.
+* Short name is the identity (primary key) of all properties. Thus, the short name must be unique. The command will fail
+if there is an existing property with the same short name.
+* The given regular expression must use legal syntax. It will be checked by the
+https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html#compile-java.lang.String-[Pattern.compile] method.
+****
+
+Example:
+
+* `config --add-property s/ag f/age`
+* `config --add-property s/b f/birthday m/Birthday should be in the format of DD/MM/YYYY r/[^\s].*`
+
+[NOTE]
+====
+* Short name is used as the prefix for `add`/`addE` and `edit`/`editE` commands.
+* Full name is used to display the name of each property on the right panel (to show details of the selected person, use `select` command).
+* Constraint message is the string that will be shown in result display box when the input value for this property is invalid.
+* Regular expression is used to check whether the input value for this property is valid.
+====
+// end::genericProperty[]
+
+==== Setting the tag color : `(cfg)config --set-tag-color`
+
+_(Tag feature for events coming in v2.0)_
+
+Sets the displayed color of a certain tag (for persons/events). +
+Format: `(cfg)config --set-tag-color TAG_NAME COLOR`
+
+****
+* By default, the application will use a random color to display each tag. The same tags are displayed using the same
+color, different tags are _usually_ displayed using different colors.
+* The value of the parameter `COLOR` should be either one of the 140 pre-defined color names or a valid RGB value (a 3-bit
+or 6-bit hexadecimal number starting with a `#`).
+* You can pick the RGB value of your favorite color from https://www.w3schools.com/colors/colors_rgb.asp[here].
+* All legal pre-defined color names can be found from https://docs.oracle.com/javafx/2/api/javafx/scene/doc-files/cssref.html#typecolor[here].
+****
+
+Example:
+
+* `config --set-tag-color friends red`
+
+[NOTE]
+====
+If you enter an invalid color name, the background for that tag will be set to transparent temporarily. You can use this
+again to set it to a legal color.
+====
+
+// tag::bookingNUS[]
+=== Booking of NUS facilities: `(book)bookNUS`
+
+_(Exclusive feature for NUS students)_ +
+_(Coming in v2.0)_
+
+The **BoNUS** team understands that booking of facilities in NUS may be troublesome. Therefore, we have decided to integrate
+the facility booking website with **BoNUS** such that upon successful booking of a specific facility, your Events List will
+be updated accordingly with the Date, Time and Venue of booking.
+
+Format: `(book)bookNUS`
+
+* Upon execution the command, you will be brought the the NUS facility booking website on a separate browser.
+* Upon successful booking of the facility, Event with date, time and venue will automatically be added as events to the application.
+
+Example:
+
+* `bookNUS`
+
+[NOTE]
+====
+* Make sure you have stable Internet connection when using this command.
+* There may be some waiting time involved due to the retrieval of information from the website to update **BoNUS**.
+====
+// end::bookingNUS[]
+
+=== Exiting the program : `(x)exit`
 
 Exits the program. +
-Format: `exit`
+Format: `(x)exit`
+
+Example:
+
+* `exit`
 
 === Saving the data
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
-There is no need to save manually.
+* Address book data are saved in the hard disk automatically after any command that changes the data.
+* These commands are also called undoable commands.
+* There is no need to save manually.
 
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the
+data of your previous Address Book folder.
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
+* *Add* : `(a)add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX` +
+* *Add event* : `(aE)addE n/NAME dt/DATE_TIME a/ADDRESS` +
+e.g. `addE n/James birthday dt/18022017 13:30 a/123, Clementi Rd, 1234665`
+* *Clear* : `(c)clear`
+* *Delete* : `(d)delete INDEX` +
 e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+* *Delete event* : `(dE)deleteE INDEX` +
+e.g. `deleteE 3`
+* *Edit* : `(e)edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
+* *Edit event* : `(eE)editE INDEX [n/NAME] [dt/DATE_TIME] [a/ADDRESS]` +
+e.g. `editE 2 n/Lees Day`
+* *Find* : `(f)find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
-* *List* : `list`
-* *Help* : `help`
-* *Select* : `select INDEX` +
+* *List* : `(l)list`
+* *List event* : `(lE)listE`
+* *Switch Themes* : `(t)theme`
+* *Help* : `(h)help`
+* *Select* : `(s)select INDEX` +
 e.g.`select 2`
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
+* *History* : `(i)history`
+* *Undo* : `(u)undo`
+* *Redo* : `(r)redo`
+* *Exit* : `(x)exit`
+* *Import* : +
+(i) From `.xml` file: `import FILEPATH` +
+eg. For `Windows` users: `import C:\Users\John Doe\Documents\bonus.xml` +
+eg. For `macOS` and `Linux` users: `import /Users/John Doe/Documents/bonus.xml` +
+(ii) From script file: `import --script FILEPATH` +
+eg. For `Windows` users: `import C:\Users\John Doe\Documents\bonus.bo` +
+eg. For `macOS` and `Linux` users: `import /Users/John Doe/Documents/bonus.bo` +
+(iii) From NUSMods timetable: `import --nusmods URL` +
+eg. `import --nusmods +++https://nusmods.com/timetable/2017-2018/sem1?CS2103T[TUT]=C01+++`
+* *Export* : `(p)export [--excel] FILEPATH` +
+eg. For `Windows` users: `export C:\Users\John Doe\Documents\bonus.xml` +
+eg. For `macOS` and `Linux` users: `export /Users/John Doe/Documents/bonus.xml`
+* *Config* : +
+(i) Add customize property `(cfg)config --add-property` +
+eg. `config --add-property s/b f/birthday` +
+(ii) Change tag color `(cfg)config --set-tag-color` +
+eg. `config --set-tag-color friends blue`

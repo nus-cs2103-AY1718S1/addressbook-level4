@@ -8,12 +8,14 @@ import javafx.scene.Node;
  * A handle for the {@code StatusBarFooter} at the footer of the application.
  */
 public class StatusBarFooterHandle extends NodeHandle<Node> {
-    public static final String STATUS_BAR_PLACEHOLDER = "#statusbarPlaceholder";
+    public static final String STATUS_BAR_PLACEHOLDER = "#statusBarPlaceholder";
 
     private static final String SYNC_STATUS_ID = "#syncStatus";
+    private static final String SYNC_TOTAL_PERSONS_ID = "#totalCount";
     private static final String SAVE_LOCATION_STATUS_ID = "#saveLocationStatus";
 
     private final StatusBar syncStatusNode;
+    private final StatusBar totalPersonsNode;
     private final StatusBar saveLocationNode;
 
     private String lastRememberedSyncStatus;
@@ -23,6 +25,7 @@ public class StatusBarFooterHandle extends NodeHandle<Node> {
         super(statusBarFooterNode);
 
         this.syncStatusNode = getChildNode(SYNC_STATUS_ID);
+        this.totalPersonsNode = getChildNode(SYNC_TOTAL_PERSONS_ID);
         this.saveLocationNode = getChildNode(SAVE_LOCATION_STATUS_ID);
     }
 
@@ -31,6 +34,13 @@ public class StatusBarFooterHandle extends NodeHandle<Node> {
      */
     public String getSyncStatus() {
         return syncStatusNode.getText();
+    }
+
+    /**
+     * Returns the text of the person count portion of the status bar.
+     */
+    public String getTotalCount() {
+        return totalPersonsNode.getText();
     }
 
     /**

@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.commons.exceptions.InvalidFilePathException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.commons.util.XmlUtil;
 import seedu.address.model.AddressBook;
@@ -17,9 +18,9 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
 import seedu.address.storage.UserPrefsStorage;
-import seedu.address.storage.XmlSerializableAddressBook;
+import seedu.address.storage.elements.XmlSerializableAddressBook;
 import seedu.address.testutil.TestUtil;
-import systemtests.ModelHelper;
+import systemtests.util.ModelHelper;
 
 /**
  * This class is meant to override some properties of MainApp so that it will be suited for
@@ -34,6 +35,7 @@ public class TestApp extends MainApp {
             TestUtil.getFilePathInSandboxFolder("pref_testing.json");
     protected static final String ADDRESS_BOOK_NAME = "Test";
     protected Supplier<ReadOnlyAddressBook> initialDataSupplier = () -> null;
+    protected Supplier<ReadOnlyAddressBook> initialEventSupplier = () -> null;
     protected String saveFileLocation = SAVE_LOCATION_FOR_TESTING;
 
     public TestApp() {
@@ -42,6 +44,21 @@ public class TestApp extends MainApp {
     public TestApp(Supplier<ReadOnlyAddressBook> initialDataSupplier, String saveFileLocation) {
         super();
         this.initialDataSupplier = initialDataSupplier;
+        this.saveFileLocation = saveFileLocation;
+
+        // If some initial local data has been provided, write those to the file
+        if (initialDataSupplier.get() != null) {
+            createDataFileWithData(new XmlSerializableAddressBook(this.initialDataSupplier.get()),
+                    this.saveFileLocation);
+        }
+
+    }
+
+    public TestApp(Supplier<ReadOnlyAddressBook> initialDataSupplier,
+                   Supplier<ReadOnlyAddressBook> initialEventSupplier, String saveFileLocation) {
+        super();
+        this.initialDataSupplier = initialDataSupplier;
+        this.initialEventSupplier = initialEventSupplier;
         this.saveFileLocation = saveFileLocation;
 
         // If some initial local data has been provided, write those to the file
@@ -80,6 +97,8 @@ public class TestApp extends MainApp {
             throw new AssertionError("Data is not in the AddressBook format.");
         } catch (IOException ioe) {
             throw new AssertionError("Storage file cannot be found.");
+        } catch (InvalidFilePathException ifpe) {
+            throw new AssertionError("File path of storage file is not in the correct format.");
         }
     }
 
@@ -96,6 +115,7 @@ public class TestApp extends MainApp {
     public Model getModel() {
         Model copy = new ModelManager((model.getAddressBook()), new UserPrefs());
         ModelHelper.setFilteredList(copy, model.getFilteredPersonList());
+        ModelHelper.setFilteredEventsList(copy, model.getFilteredEventList());
         return copy;
     }
 

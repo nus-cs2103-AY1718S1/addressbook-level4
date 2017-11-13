@@ -2,6 +2,9 @@ package seedu.address.storage;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static seedu.address.testutil.TypicalEvents.EVENT1;
+import static seedu.address.testutil.TypicalEvents.EVENT2;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.HOON;
 import static seedu.address.testutil.TypicalPersons.IDA;
@@ -18,7 +21,11 @@ import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.event.Event;
 import seedu.address.model.person.Person;
+import seedu.address.model.property.PropertyManager;
+import seedu.address.model.reminder.Reminder;
+import seedu.address.storage.elements.XmlSerializableAddressBook;
 
 public class XmlAddressBookStorageTest {
     private static final String TEST_DATA_FOLDER = FileUtil.getPath("./src/test/data/XmlAddressBookStorageTest/");
@@ -75,12 +82,17 @@ public class XmlAddressBookStorageTest {
         //Modify data, overwrite exiting file, and read back
         original.addPerson(new Person(HOON));
         original.removePerson(new Person(ALICE));
+        original.addEvent(new Event(EVENT1));
+        original.getEventList().get(0).addReminder(new Reminder((Event) EVENT1, "You have an event!"));
+        original.removeEvent(new Event(EVENT1));
         xmlAddressBookStorage.saveAddressBook(original, filePath);
         readBack = xmlAddressBookStorage.readAddressBook(filePath).get();
         assertEquals(original, new AddressBook(readBack));
 
         //Save and read without specifying file path
         original.addPerson(new Person(IDA));
+        original.addEvent(new Event(EVENT2));
+        original.getEventList().get(0).addReminder(new Reminder((Event) EVENT2, "You have an event!"));
         xmlAddressBookStorage.saveAddressBook(original); //file path not specified
         readBack = xmlAddressBookStorage.readAddressBook().get(); //file path not specified
         assertEquals(original, new AddressBook(readBack));
@@ -88,7 +100,16 @@ public class XmlAddressBookStorageTest {
     }
 
     @Test
-    public void saveAddressBook_nullAddressBook_throwsNullPointerException() {
+    public void readAddressBook_checkPropertyManager_successfulLoaded() throws Exception {
+        String fileName = "SampleAddressBookCustomizeProperty.xml";
+        ReadOnlyAddressBook readBack = readAddressBook(fileName).get();
+
+        assertNotNull(readBack);
+        assertEquals(5, PropertyManager.getAllShortNames().size());
+    }
+
+    @Test
+    public void saveAddressBook_nullAddressBook_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
         saveAddressBook(null, "SomeFile.xml");
     }
@@ -101,16 +122,22 @@ public class XmlAddressBookStorageTest {
     }
 
     @Test
+    public void getEventList_modifyList_throwsUnsupportedOperationException() {
+        XmlSerializableAddressBook addressBook = new XmlSerializableAddressBook();
+        thrown.expect(UnsupportedOperationException.class);
+        addressBook.getEventList().remove(0);
+    }
+
+    @Test
     public void getTagList_modifyList_throwsUnsupportedOperationException() {
         XmlSerializableAddressBook addressBook = new XmlSerializableAddressBook();
         thrown.expect(UnsupportedOperationException.class);
         addressBook.getTagList().remove(0);
     }
-
     /**
      * Saves {@code addressBook} at the specified {@code filePath}.
      */
-    private void saveAddressBook(ReadOnlyAddressBook addressBook, String filePath) {
+    private void saveAddressBook(ReadOnlyAddressBook addressBook, String filePath) throws Exception {
         try {
             new XmlAddressBookStorage(filePath).saveAddressBook(addressBook, addToTestDataPathIfNotNull(filePath));
         } catch (IOException ioe) {
@@ -119,10 +146,8 @@ public class XmlAddressBookStorageTest {
     }
 
     @Test
-    public void saveAddressBook_nullFilePath_throwsNullPointerException() throws IOException {
+    public void saveAddressBook_nullFilePath_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
         saveAddressBook(new AddressBook(), null);
     }
-
-
 }

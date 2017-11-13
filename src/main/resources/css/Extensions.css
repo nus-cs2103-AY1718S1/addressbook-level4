@@ -1,0 +1,92 @@
+
+.error {
+    /* The error class should always override the default text-fill style */
+    -fx-text-fill: #d06651 !important;
+}
+
+.list-cell:empty {
+    /* Empty cells will not have alternating colours */
+    -fx-background: #383838;
+}
+
+.tag-selector {
+    -fx-border-width: 1;
+    -fx-border-color: white;
+    -fx-border-radius: 3;
+    -fx-background-radius: 3;
+}
+
+.tooltip-text {
+    -fx-text-fill: white;
+}
+
+/* @@author yunpengn */
+.sidebar-button {
+    -fx-background-insets: 0,1,2;
+    -fx-background-radius: 3,2,1;
+    -fx-text-fill: black;
+    -fx-font-size: 14px;
+}
+
+.details-name-huge-label {
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-font-size: 40px;
+    -fx-text-fill: #fffde7;
+}
+
+.details-property-key {
+    -fx-font-family: "Segoe UI Light";
+    -fx-font-size: 25px;
+    -fx-text-fill: white;
+    -fx-text-alignment: left;
+}
+
+.details-property-value {
+    -fx-font-size: 25px;
+    -fx-text-fill: white;
+    -fx-text-alignment: left;
+}
+/* @@author */
+
+/* @@author dennaloh */
+.calender-title-property-value {
+    -fx-font-family: "Bradley Hand";
+    -fx-font-size: 40px;
+    -fx-text-fill: lightskyblue;
+    -fx-text-alignment: left;
+}
+
+.calender-property-value {
+    -fx-font-family: "Arial";
+    -fx-font-size: 30px;
+    -fx-text-fill: white;
+    -fx-text-alignment: left;
+}
+
+.calender-property1-value {
+    -fx-font-family: "Arial Black";
+    -fx-font-size: 50px;
+    -fx-text-fill: lightpink;
+    -fx-text-alignment: right;
+}
+
+.calender-property2-value {
+    -fx-font-family: "Arial Black";
+    -fx-font-size: 50px;
+    -fx-text-fill: lightgoldenrodyellow;
+    -fx-text-alignment: right;
+}
+
+.calender-property3-value {
+    -fx-font-family: "Arial Black";
+    -fx-font-size: 50px;
+    -fx-text-fill: lightsalmon;
+    -fx-text-alignment: right;
+}
+
+.calender-property4-value {
+    -fx-font-family: "Arial Black";
+    -fx-font-size: 50px;
+    -fx-text-fill: lightgreen;
+    -fx-text-alignment: right;
+}

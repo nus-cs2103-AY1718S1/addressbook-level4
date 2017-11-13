@@ -1,0 +1,165 @@
+= Niu Yunpeng - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: BoNUS
+
+**BoNUS** is a desktop personal organizer application dedicated to NUS students to carry out various tasks such as storing
+contacts, scheduling for upcoming events, timetable planning as well as a calendar to better organise their campus life.
+
+This project is the result of a semester-long software engineering https://nus-cs2103.github.io/website/[module] at
+http://www.nus.edu.sg/[NUS]. It is built my teammates and me, as listed https://cs2103aug2017-t09-b3.github.io/main/AboutUs.html[here].
+Most of the backend codes are written in Java, while https://docs.oracle.com/javase/8/javafx/get-started-tutorial/jfx-overview.htm#JFXST784[JavaFX]
+is adapted as the frontend framework.
+
+*Code contributed*:
+
+* https://github.com/CS2103AUG2017-T09-B3/main/blob/master/collated/main/yunpengn.md[Functional code]
+* https://github.com/CS2103AUG2017-T09-B3/main/blob/master/collated/test/yunpengn.md[Test code]
+
+=== Enhancement Added: Generic Property
+
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[tag=genericProperty]
+
+==== Justification
+
+---
+
+Our application **BoNUS** will not be able to stand out from all the similar https://nus-cs2103.github.io/website/admin/projectList.html[products]
+if we simply provide users with a few additional fields to store the information of their contacts. Instead, to suit the
+various needs from users, we have to provide the flexibility to allow users to define customize properties on their own.
+
+Users can use the `config --add-property` command to define as many new properties as they want, after which they could
+set these properties when they use the `add` command to add a new contact.
+
+In the current design and implementation, the `PropertyManager` class is used to store and manage the meta-data of all
+properties. Default properties like `Name`, `Phone`, `Email` and `Address` are pre-loaded into `PropertyManager`, while
+user-defined properties will be added into `PropertyManager` by `config --add-property` command.
+
+==== Implementation
+
+---
+
+include::../DeveloperGuide.adoc[tag=genericProperty]
+
+=== Enhancement Added: Import NUSMods Timetable
+
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[tag=importNusmods]
+
+==== Justification
+
+---
+
+This feature addresses a specific need of NUS students, since they are our target users.
+
+For university students, the lessons and exams reflected on their school timetable account for a large part of their
+schedule. When they are using *BoNUS*, it is very likely they want to put all these activities into the application as
+upcoming events. However, it becomes very tedious to do so manually.
+
+Most of the NUS students are currently using NUSMods as their school timetable builder. Their NUSMods timetable contains
+information about all their lessons and exams. Thus, it would be very convenient if users could directly import their
+NUSMods timetable into *BoNUS* in one step.
+
+==== Implementation
+
+---
+
+include::../DeveloperGuide.adoc[tag=importNusmods]
+
+---
+
+=== Enhancement Proposed: Import From BoNUS-specified Script file
+
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[tag=importScript]
+
+==== Justification
+
+---
+
+This feature is meant for advanced users. To build an **epic** application, we need to essentially build an _ecosystem_ for
+this software. According to the _Unix_ philosophy, providing a shell scripting and command language is the minimum requirement
+for a complete system.
+
+With the support for scripting file, advance users (or system administers if **BoNUS** is used as an enterprise application)
+can generate a scripting file and import it into **BoNUS**. Data management and frequent operations can be done easily in
+one step. Otherwise, they have to type one command each time in the GUI interface, which becomes a very tedious work.
+
+=== Enhancement Proposed: Export Data to Microsoft Excel^TM^ Worksheet
+
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[tag=exportExcel]
+
+==== Justification
+
+---
+
+We already support `ExportCommand` so that users can save data to a separate location as a backup. However, `.xml` files
+are not considered to be user-friendly (except for programmers and geeks).
+
+Thus, it becomes essential for us to natively support exporting data to a format with better visuals. As stated before,
+data stored in **BoNUS** can be considered as _tables_. Naturally, it comes to my mind that Microsoft Excel^TM^ would
+be a perfect format to present data to users.
+
+=== Other contributions
+
+* Repository setup, CI setup and Slack automatic notification using WebHook (Pull requests https://github.com/CS2103AUG2017-T09-B3/main/pull/1[#1],
+https://github.com/CS2103AUG2017-T09-B3/main/pull/6[#6], https://github.com/CS2103AUG2017-T09-B3/main/pull/7[#7])
+* Design and refine multiple parts of UI (Pull requests https://github.com/CS2103AUG2017-T09-B3/main/pull/41[#41],
+https://github.com/CS2103AUG2017-T09-B3/main/pull/43[#43], https://github.com/CS2103AUG2017-T09-B3/main/pull/44[#44],
+https://github.com/CS2103AUG2017-T09-B3/main/pull/82[#82], https://github.com/CS2103AUG2017-T09-B3/main/pull/106[#106])
+* Support setting customize colors for tags (Pull requests https://github.com/CS2103AUG2017-T09-B3/main/pull/83[#83],
+https://github.com/CS2103AUG2017-T09-B3/main/pull/101[#101], https://github.com/CS2103AUG2017-T09-B3/main/pull/147[#147])
+* Support natural language parsing (Pull request https://github.com/CS2103AUG2017-T09-B3/main/pull/148[#148])
+* Support adding avatar to contacts (Pull request https://github.com/CS2103AUG2017-T09-B3/main/pull/162[#162])
+* Write unit tests for various classes
+* Update various sections in `AboutUs`, `ContactUs`, `UserGuide` and `DeveloperGuide`, etc.
+
+=== Reuse offer
+
+* Generic property: Issue https://github.com/nus-cs2103-AY1718S1/forum/issues/180[#180]
+* Set customize color for tags: Issue https://github.com/nus-cs2103-AY1718S1/forum/issues/199[#199]
+
+=== Helping others
+
+* On the forum: Issue https://github.com/nus-cs2103-AY1718S1/forum/issues/195[#195],
+https://github.com/nus-cs2103-AY1718S1/forum/issues/197[#197], https://github.com/nus-cs2103-AY1718S1/forum/issues/200[#200]
+* Report bug for https://github.com/CS2103AUG2017-T13-B2/main[UniBook]: Issue https://github.com/CS2103AUG2017-T13-B2/main/issues/72[#72]
+* Report bug for https://nus-cs2103.github.io/website/[module website]: Issue https://github.com/nus-cs2103/website/issues/18[#18],
+https://github.com/nus-cs2103/website/issues/28[#28], https://github.com/nus-cs2103/website/issues/29[#29],
+https://github.com/nus-cs2103/website/issues/34[#34], https://github.com/nus-cs2103/website/issues/39[#39],
+https://github.com/nus-cs2103/website/issues/41[#41], https://github.com/nus-cs2103/website/issues/43[#43]
+
+== Project: Lions Befrienders Management System
+
+I worked at http://www.comp.nus.edu.sg/~vwo/[CVWO (Computing for Voluntary Welfare Organisations)] as a web developer during the
+Year 1 summer vacation.
+
+My team at CVWO rewrote, upgraded and deployed the http://www.comp.nus.edu.sg/~vwo/projects/2017-lbsa.html[management
+system] for https://www.lionsbefrienders.org.sg/[Lions Befrienders (Singapore)], which was formed in 1995 and served thousands
+of senior citizens. This system saves a lot of time for staff at Lions Befrienders to manage their growing enormous clients
+across the country, while ensuring high service quality.
+
+== Project: A Multi-User 3D Game Environment for CS1101S
+
+This project aims at building a 3D game environment to assist http://www.comp.nus.edu.sg/~cs1101s/[CS1101S] students in
+learning programming. The game is built using https://unity3d.com/[Unity3D] game engine. It provides vivid visualization
+to help students have a deeper understanding of the related data structure and algorithms used.
+
+CS1101S is a module taught in the Department of Computer Science at the NUS School of Computing. It serves as a rigorous
+and thorough introduction to programming methodology.

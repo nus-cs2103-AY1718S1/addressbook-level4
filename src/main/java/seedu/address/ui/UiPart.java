@@ -18,9 +18,13 @@ import seedu.address.commons.events.BaseEvent;
  * It contains a scene graph with a root node of type {@code T}.
  */
 public abstract class UiPart<T> {
-
     /** Resource folder where FXML files are stored. */
     public static final String FXML_FILE_FOLDER = "/view/";
+
+    /**
+     * The CSS style class for displaying errors.
+     */
+    public static final String ERROR_STYLE_CLASS = "error";
 
     private FXMLLoader fxmlLoader;
 
@@ -37,6 +41,8 @@ public abstract class UiPart<T> {
         } catch (IOException e) {
             throw new AssertionError(e);
         }
+    }
+    public UiPart(){
     }
 
     /**
@@ -85,5 +91,4 @@ public abstract class UiPart<T> {
         dialogStage.setScene(scene);
         return dialogStage;
     }
-
 }

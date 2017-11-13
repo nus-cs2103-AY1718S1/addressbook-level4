@@ -7,15 +7,26 @@ import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.JsonUtil;
 import seedu.address.model.UserPrefs;
 
+//@@author junyango
 /**
  * A class to access UserPrefs stored in the hard disk as a json file
  */
 public class JsonUserPrefsStorage implements UserPrefsStorage {
-
     private String filePath;
+    private String addressBookTheme;
+
+    public JsonUserPrefsStorage(String filePath, String theme) {
+        this.filePath = filePath;
+        this.addressBookTheme = theme;
+    }
 
     public JsonUserPrefsStorage(String filePath) {
         this.filePath = filePath;
+    }
+
+    @Override
+    public String getAddressBookTheme() {
+        return addressBookTheme;
     }
 
     @Override

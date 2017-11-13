@@ -15,6 +15,7 @@ import org.junit.Test;
 
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.commands.person.DeleteCommand;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -30,7 +31,9 @@ public class UndoCommandTest {
     @Before
     public void setUp() {
         deleteCommandOne.setData(model, EMPTY_COMMAND_HISTORY, EMPTY_STACK);
+        deleteCommandOne.setCommandText("delete 1");
         deleteCommandTwo.setData(model, EMPTY_COMMAND_HISTORY, EMPTY_STACK);
+        deleteCommandTwo.setCommandText("delete 1");
     }
 
     @Test
@@ -45,11 +48,11 @@ public class UndoCommandTest {
         // multiple commands in undoStack
         Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         deleteFirstPerson(expectedModel);
-        assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
+        assertCommandSuccess(undoCommand, model, String.format(UndoCommand.MESSAGE_SUCCESS, "delete 1"), expectedModel);
 
         // single command in undoStack
         expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
+        assertCommandSuccess(undoCommand, model, String.format(UndoCommand.MESSAGE_SUCCESS, "delete 1"), expectedModel);
 
         // no command in undoStack
         assertCommandFailure(undoCommand, model, UndoCommand.MESSAGE_FAILURE);

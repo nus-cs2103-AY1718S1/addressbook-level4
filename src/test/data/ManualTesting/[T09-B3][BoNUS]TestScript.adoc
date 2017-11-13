@@ -1,0 +1,672 @@
+= BoNUS - Test Script
+:toc:
+:toc-title:
+:toc-placement: preamble
+:sectnums:
+:imagesDir: ../../../../docs/images
+:stylesDir: ../../../../docs/stylesheets
+:experimental:
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+endif::[]
+:repoURL: https://github.com/CS2103AUG2017-T09-B3/main
+
+// Workaround for asciidoctor-pdf compatibility issues.
+:keyboard-icon: &#9000;
+
+By: `CS2103T T09-B3 Team`      Since: `Sep 2017`      Licence: `MIT`
+
+== Setting up
+
+This test script will guide you on how to test the various features of **BoNUS**.
+
+image::Ui.png[width="700"]
+_Figure 1 : User Interface Demo_
+
+=== Prerequisites
+
+. Have Java (JRE) version `1.8.0_60` or later installed in your Computer.
+. Download the latest release `[T09-B3][BoNUS].jar`, the sample data `[T09-B3][BoNUS]SampleData.xml` and test instructions
+`[T09-B3][BoNUS]TestScript.pdf` (this document itself).
+. A folder you want to use as home folder for testing **BoNUS** and copy the `.jar` you have downloaded there.
+
+=== Importing the Sample Data
+
+. Rename the downloaded `[T09-B3][BoNUS]SampleData.xml` to `addressbook.xml`.
+. Create a folder called `data` under the home folder used for testing **BoNUS**.
+. Move `addressbook.xml` into the `data` folder created just now.
+
+=== Troubleshooting
+
+If you have any doubt or need further clarification, you may want to visit our https://cs2103aug2017-t09-b3.github.io/main/[project website]
+for more information.
+
+== Testing
+
+=== Add/view/edit/delete contacts
+
+==== Add a new contact
+
+To add a new contact, we need to use the `add` command.
+
+*Positive test case*
+
+Let's add a new person called `Martin` into *BoNUS* +
+_Command:_ +
+`add n/Martin Smith p/85930167 e/martin.smith@example.com a/25 Scene Road, 119587 t/friends` +
+_Result:_ +
+`New person added: Martin Smith Phone: 85930167 Email: martin.smith@example.com Address: 25 Scene Road, 119587 Tags: [friends]`
+
+*Negative test cases*
+
+. The value for one property is invalid +
+_Command:_ +
+`add n/Den Smith p/85930167 e/www.smith.com a/25 New York City` +
+_Result:_ +
+`Person emails should be 2 alphanumeric/period strings separated by '@'.`
+
+. The person already exists +
+_Command:_ +
+`add n/Martin Smith p/85930167 e/martin.smith@example.com a/25 Scene Road, 119587 t/friends` +
+_Result:_ +
+`This person already exists in the application.`
+
+==== Edit an existing contact
+
+To edit an existing contact, we need to use the `edit` command.
+
+*Positive test case*
+
+. First, let's list all the contacts in *BoNUS* +
+_Command:_ +
+`list` +
+_Result:_ +
+`Listed all persons`
+
+. Let's edit the person called `Martin` we added just now (assume the index is `8`) +
+_Command:_ +
+`edit 8 p/86129854` +
+_Result:_ +
+`Edited Person: Martin Smith Phone: 86129854 Email: martin.smith@example.com Address: 25 Scene Road, 119587 Tags: [friends]`
+
+*Negative test cases*
+
+. The index is invalid (assume there are fewer than 100 contacts in the application) +
+_Command:_ +
+`edit 100 a/Beijing, China` +
+_Result:_ +
+`The person index provided is invalid.`
+
+==== View the details of a person
+
+To view the details of an existing contact, we need to use the `select` command.
+
+. First, let's list all the contacts in *BoNUS* +
+_Command:_ +
+`list` +
+_Result:_ +
+`Listed all persons`
+
+. Then, select the person we want to view (assume there is at least 1 contact in the application) +
+_Command:_ +
+`select 1` +
+_Result:_ +
+The person's details will be shown on the right-hand side of the interface.
+
+==== Delete an existing person
+
+To delete an existing contact, we need to use the `delete` command.
+
+. First, let's list all the contacts in *BoNUS* +
+_Command:_ +
+`list` +
+_Result:_ +
+`Listed all persons`
+
+. Then, delete the first person (assume there is at least 1 contact in the application) +
+_Command:_ +
+`delete 1` +
+_Result:_ +
+`Deleted Person: Alex Yeoh Phone: 87438807 Email: alexyeoh@example.com Address: Blk 30 Geylang Street 29, #06-40 Tags: [friends]`
+
+==== Add avatar to an existing person
+
+*Positive test case*
+
+To add avatar to a contact, we need to use the `avatar` command.
+
+. First, let's list all the contacts in *BoNUS* +
+_Command:_ +
+`list` +
+_Result:_ +
+`Listed all persons`
+
+. Then move an image file (`.jpg` or `.png`) into the home folder where you use *BoNUS*. Maybe you want to use the
+logo of Java from https://www.hostingireland.ie/images/java-logo.png[here] as a sample.
+
+. Add avatar to the third person in the listing (assume there are at least three contacts) +
+_Command:_ +
+`avatar 3 java-logo.png`
+
+[NOTE]
+====
+* Do not move, rename or delete the image you use as an avatar; otherwise, it will not be shown in *BoNUS*.
+* You are suggested to move the image into the home folder where you use *BoNUS*.
+* Do not be _nasty_ about the input file. If you provide an invalid file that looks like an image but is not an actual image,
+the area reserved for avatar will simply become transparent.
+====
+
+*Negative test cases*
+
+. Use an invalid index +
+_Command:_ +
+`avatar -1 java-logo.png` +
+_Result:_ +
+`Invalid command format!` +
+`Index is not a non-zero unsigned integer.`
+
+. Use a non-existing file +
+_Command:_ +
+`avatar 1 no-java.png` +
+_Result:_ +
+`Invalid command format!` +
+`The provided image path does not exist.`
+
+=== Add/view/edit/delete events
+
+==== Listing of events
+. First, let's start by listing all the events in **BoNUS** +
+*Positive test case* +
+_Command:_ +
+`listE` +
+_Result:_ +
+`Listed all events`
+
+You should see that the application automatically switches from contact list to event list after the command listE.
+
+*Negative test case* +
+
+. Incorrect capitalization of command +
+_Command:_ +
+`ListE` +
+_Result:_ +
+`Unknown command` +
+. Invalid spelling +
+_Command:_ +
+`listEE` +
+_Result:_ +
+`Unknown command`
+
+Commands are case sensitive.
+
+
+==== Adding of events
+
+[NOTE]
+====
+* The standard format for time should be `DDMMYYYY HH:MM` in 24-hour format.
+* However, the application may sometimes be _smart_ enough to interpret what you typed. For example, if you type `this afternoon`
+or `tomorrow evening`, it will be automatically converted to the standard format.
+* Do NOT try to _challenge_ the application, it is not promised to produce an expected result if you use non-standard format
+or if the expression is not simple or clear enough.
+* Avoid putting the year first when using the non-standard format.
+====
+
+. Let's start by adding an Event called `CS3201 Project Meeting` into **BoNUS**. +
+_Command:_ +
+`addE n/CS3201 Project Meeting dt/17112017 15:30 a/School Of Computing, SR09, NUS` +
+_Result:_ +
+`New event added:  Event: CS3201 Project Meeting |  Date/Time: 17 Nov, 2017 15:30 |  Address: School Of Computing, SR09, NUS` +
+You should see a new Event Card with the name CS3201 Project Meeting added into **BoNUS**.
+
+
+==== Deleting of Events +
+
+*Positive Test Case*
+
+. Deletes an Event with index 8 on the Event List +
+_Command:_ +
+`deleteE 8` +
+_Result:_ +
+`Deleted Event:  Event: Project Meeting for CS2101 |  Date/Time: 01 Dec, 2017 09:00 |  Address: SR09, School of Computing`
+
+*Negative Test Cases*
+
+. Invalid index +
+_Command:_ +
+`deleteE -1` +
+_Result:_ +
+`Invalid command format!`
+`deleteE: Deletes the event identified by the index number used in the last event listing.`
+`Parameters: INDEX (must be a positive integer)`
+
+. Person with the index not exist +
+2) Deletes an Event with index 11 on the Event List +
+_Command:_ +
+`deleteE 300` +
+_Result:_ +
+`The event index provided is invalid`
+
+
+
+==== Editing of Events
+
+*Positive test case*
+
+. First, let's list all the events in *BoNUS* +
+_Command:_ +
+`listE` +
+_Result:_ +
+`Listed all events`
+
+. Let's try to edit an event from index 6 of Event list.
+_Command:_ +
+editE 6 n/Movie Date with Bro +
+_Result:_ +
+`Edited Event:  Event: Movie Date with Bro |  Date/Time: 22 Nov, 2017 22:00 |  Address: Golden Village Yishun` +
+
+At this point in time, you should see an event with name `Movie Date with Bro` at index 6 of Event List.
+
+=== Import/export data
+
+==== Import data from `.xml` format
+
+To import data from a `.xml` file, we need to use the `import` command
+
+*Positive test cases*
+
+. If the XML file at `<BoNUS home folder>/bonus.xml` contains data recognizable by *BoNUS*, this command imports data
+that does not exist in *BoNUS* +
+_Command:_ +
+`import bonus.xml` +
+_Result:_ +
+`Imported data from: bonus.xml`
+
+*Negative test cases*
+
+. If the specified file is not found +
+_Command:_ +
+`import bonus.xml` +
+_Result:_ +
+`The specified file does not exist.`
+
+. If the specified file does not end with an extension of `.xml` +
+_Command:_ +
+`import bonus.notxml` +
+_Result:_ +
+`The file path does not point to an XML file.`
+
+. If a file name is not provided +
+_Command:_ +
+`import .xml` +
+_Result:_ +
+`The file path contains a file name or folder names with prohibited characters (?!%*+:|"<>), or a file name is not provided.`
+
+. If the specified file name and any non-existent folder names contain any prohibited characters +
+_Command:_ +
+`import b%nus.xml` +
+_Result:_ +
+`The file path contains a file name or folder names with prohibited characters (?!%*+:|"<>), or a file name is not provided.`
+
+. For `Windows` users, if the specified file path contains `/` as a name-separator +
+_Command:_ +
+`import folder/bonus.xml` +
+_Result:_ +
+`The file path contains name-separators (/ or \) that are not defined in your operating system.`
+
+. For `maxOS` and `Linux` users, if the specified file path contains `\` as a name-separator +
+_Command:_ +
+`import folder\bonus.xml` +
+_Result:_ +
+`The file path contains name-separators (/ or \) that are not defined in your operating system.`
+
+. For `Windows` users, if the specified file path contains consecutive name-separators `\\` +
+_Command:_ +
+`import folder\\bonus.xml` +
+_Result:_ +
+`The file path contains consecutive name-separators (/ or \) or extension-separators (.).`
+
+. For `maxOS` and `Linux` users, if the specified file path contains consecutive name-separators `//` +
+_Command:_ +
+`import folder//bonus.xml` +
+_Result:_ +
+`The file path contains consecutive name-separators (/ or \) or extension-separators (.).`
+
+. If the specified file path contains consecutive extension-separators `..` +
+_Command:_ +
+`import bonus..xml` +
+_Result:_ +
+`The file path contains consecutive name-separators (/ or \) or extension-separators (.).`
+
+. If the data in the specified file is not recognizable by *BoNUS* +
+_Command:_ +
+`import bonus.xml` +
+_Result:_ +
+`The data in the specified XML file is not in the correct format as recognized by BoNUS.` +
+`Please try to import from another XML file.`
+
+==== Import timetable from NUSMods website
+
+To import timetable from NUSMods website, we need to use the `import --nusmods` command.
+
+
+[NOTE]
+====
+Make sure you have stable Internet connection when you are going to test this command.
+====
+
+*Positive test cases*
+
+. Open your browser, and copy-paste your NUSMods timetable URL +
+_Result:_ +
+It should look like +++https://nusmods.com/timetable/2017-2018/sem1?CS2103T[TUT]=C01+++.
+
+. Let's display the event listing first +
+_Command:_ +
+`listE` +
+_Result:_ +
+You should see the event listing interface.
+
+. Use the import command +
+_Command:_ +
+`import --nusmods +++https://nusmods.com/timetable/2017-2018/sem1?CS2103T[TUT]=C01+++` +
+_Result:_ +
+You should see `CS2103T examination` has been added as an event into *BoNUS*.
+
+*Negative test case*
+
+Try to import the same NUSMods timetable into *BoNUS* again +
+_Command:_ +
+`import --nusmods +++https://nusmods.com/timetable/2017-2018/sem1?CS2103T[TUT]=C01+++` +
+_Result:_ +
+`0 examinations have been added as events.` +
+`However, some examination were not added since they already exist in the application.`
+
+==== Export data to `.xml` format
+
+To export data to a `.xml` file, we need to use the `export` command
+
+[NOTE]
+====
+Existing files will be overwritten.
+====
+
+*Positive test cases*
+
+. Exports the current data in *BoNUS* to `<BoNUS home folder>/bonus.xml` +
+_Command:_ +
+`export bonus.xml` +
+_Result:_ +
+`Exported address book data to: bonus.xml`
+
+. For `Windows` users, this command exports the current data in *BoNUS* to `<BoNUS home folder>\new_folder\bonus.xml`,
+after creating the non-existing folder `<BoNUS home folder>\new_folder` +
+_Command:_ +
+`export new_folder\bonus.xml` +
+_Result:_ +
+`Exported address book data to: new_folder\bonus.xml`
+
+. For `macOS` and `Linux` users, this command exports the current data in *BoNUS* to `<BoNUS home folder>/new_folder/bonus.xml`,
+after creating the non-existing folder `<BoNUS home folder>/new_folder` +
+_Command:_ +
+`export new_folder/bonus.xml` +
+_Result:_ +
+`Exported address book data to: new_folder/bonus.xml`
+
+*Negative test cases*
+
+. If the specified file does not end with an extension of `.xml` +
+_Command:_ +
+`export bonus.notxml` +
+_Result:_ +
+`The file path does not point to an XML file.`
+
+. If a file name is not provided +
+_Command:_ +
+`export .xml` +
+_Result:_ +
+`The file path contains a file name or folder names with prohibited characters (?!%*+:|"<>), or a file name is not provided.`
+
+. If the specified file name and any non-existent folder names contain any prohibited characters +
+_Command:_ +
+`export b%nus.xml` +
+_Result:_ +
+`The file path contains a file name or folder names with prohibited characters (?!%*+:|"<>), or a file name is not provided.`
+
+. For `Windows` users, if the specified file path contains `/` as a name-separator +
+_Command:_ +
+`export folder/bonus.xml` +
+_Result:_ +
+`The file path contains name-separators (/ or \) that are not defined in your operating system.`
+
+. For `maxOS` and `Linux` users, if the specified file path contains `\` as a name-separator +
+_Command:_ +
+`export folder\bonus.xml` +
+_Result:_ +
+`The file path contains name-separators (/ or \) that are not defined in your operating system.`
+
+. For `Windows` users, if the specified file path contains consecutive name-separators `\\` +
+_Command:_ +
+`export folder\\bonus.xml` +
+_Result:_ +
+`The file path contains consecutive name-separators (/ or \) or extension-separators (.).`
+
+. For `maxOS` and `Linux` users, if the specified file path contains consecutive name-separators `//` +
+_Command:_ +
+`export folder//bonus.xml` +
+_Result:_ +
+`The file path contains consecutive name-separators (/ or \) or extension-separators (.).`
+
+. If the specified file path contains consecutive extension-separators `..` +
+_Command:_ +
+`export bonus..xml` +
+_Result:_ +
+`The file path contains consecutive name-separators (/ or \) or extension-separators (.).`
+
+=== Email a contact on your contact list
+
+To email anyone on your contact list, you can use the `email` command.
+
+*Positive test case*
+
+. First, let's list all the contacts in *BoNUS* +
+_Command:_ +
+`list` +
+_Result:_ +
+`Listed all persons`
+
+. Emailing Alex Yeoh +
+_Command:_ +
+`email 1` +
+_Result:_ +
+`Opened email to Alex Yeoh Phone: 87438807 Email: alexyeoh@example.com Address: Blk 30 Geylang Street 29, #06-40 Tags: [friends]` +
+
+At this point in time, you should see the default email application of your OS to be opened with the email of Alex already input at To:
+
+*Negative test cases*
+
+. Invalid command and Invalid index +
+_Command:_ +
+`email -1` +
+_Result:_ +
+`Invalid command format!
+The person index provided is invalid`.
+
+. Invalid index
+_Command:_ +
+`email 300000` +
+_Result:_ +
+`The person index provided is invalid`.
+
+=== Searching up a contact on Google Maps
+
+To search up a person's address on Google Maps, you can use the `gmap` command
+
+*Positive test case*
+
+. First, let's list all the contacts in *BoNUS* +
+_Command:_ +
+`list` +
+_Result:_ +
+`Listed all persons`
+
+. Next, let's try to search up a person's address on Google Maps! +
+_Command:_ +
+`gmap 1`  +
+_Result:_ +
+`Opened Google Maps to get to Alex Yeoh Phone: 87438807 Email: alexyeoh@example.com Address: Blk 30 Geylang Street 29, #06-40 Tags: [friends]`
+
+At this point in time, you should see a browser opening Google Maps with `Alex Yeoh` 's address.
+
+*Negative test cases*
+
+. Invalid command and invalid index +
+_Command:_ +
+`gmap -1` +
+_Result:_ +
+`gmap: Opens Google Maps in default browser with the address of the person identified by the index number used in the last person listing being the Destination.
+Parameters: INDEX (must be a positive integer)`
+
+. Invalid index
+_Command:_ +
+`gmap 300000` +
+_Result:_ +
+`The person index provided is invalid`
+
+=== Switch themes
+
+To switch themes, we need to use the `theme` command.
+
+*Positive test case*
+
+. Let's try to switch themes
+_Command:_ +
+`theme` +
+_Result:_ +
+`Theme switched!`
+
+At this point in time, you should see the theme being switched from dark to bright theme.
+
+=== Advance setting
+
+==== Add a new property
+
+To add a new property, we need to use the `config --add-property` command.
+
+*Positive test cases*
+
+. Add a new property with the short name of `h` and full name of `hobby` +
+_Command:_ +
+`config --add-property s/h f/hobby` +
+_Result:_ +
+`Added a new property: s/h f/hobby`
+
+. Adds a new property with the short name of `m`, full name of `major` and specify the regular expression constraint. +
+_Command:_ +
+`config --add-property s/m f/major m/Major should only contain letters and it should not be blank r/[{Alpha}]+` +
+_Result:_ +
+`Added a new property: s/m f/major m/Major should only contain letters and it should not be blank r/[{Alpha}]+`
+
+. Set the value of customize property added just now in `AddCommand` +
+_Command:_ +
+`add n/Linda p/89658712 e/linda@example.com a/School of Computing h/Programming` +
+_Result:_ +
+`New person added: Linda Phone: 89658712 Email: linda@example.com Address: School of Computing Tags:` +
+In the meantime, a new person card belonging to Linda should appear in the person listing panel.
+
+. Verify the value of hobby has been set correctly +
+_Command:_ +
+`find Linda` +
+`select 1` +
+_Result:_ +
+Linda's personal details are shown on the right-hand side of the interface. Properties are ordered by their full names and
+each property takes one line. You should see the value of the row `Hobby` is `Programming`.
+
+*Negative test cases*
+
+. If there already exists a property with the same short name +
+_Command:_ +
+`config --add-property s/a f/attitude` +
+_Result:_ +
+`Another property with the same short name already exists in the application.`
+
+. If the regular expression provided is invalid +
+_Command:_ +
+`config --add-property s/w f/weight m/Weight must be a positive integer. r/*asf` +
+_Result:_ +
+`The regular expression you provided is invalid.`
+
+==== Change the color of an existing tag
+
+To change the color of an existing tag, we need to use the `config --set-tag-color` command.
+
+*Positive test cases*
+
+. First, let's list all the contacts to see what tags exist now +
+_Command:_ +
+`list` +
+_Result:_ +
+You should see all contacts stored in *BoNUS* are listed. Let's assume there is a tag called `friends`.
+
+. Change the color of `friends` tag to a pre-defined color name +
+_Command:_ +
+`config --set-tag-color friends BurlyWood` +
+_Result:_ +
+You should notice the color of `friends` tag has been changed to BurlyWood.
+
+. Change the color of `friends` tag to a valid RGB value +
+_Command:_ +
+`config --set-tag-color friends #FF6347` +
+_Result:_ +
+You should notice the color of `friends` tag has been changed to a color similar to red (its legal name is tomato).
+
+*Negative test cases*
+
+. If the tag does not exist in *BoNUS* yet +
+_Command:_ +
+`config --set-tag-color somethingNotExists blue` +
+_Result:_ +
+`There is no such tag.`
+
+. If the provided color name is neither a valid color name defined in CSS standard nor a valid RGB value +
+_Command:_ +
+`config --set-tag-color friends someNonExistColor` +
+_Result:_ +
+The background color of `friends` tag becomes transparent. You may want to use a valid name to change it back.
+
+=== Miscellaneous
+
+==== View the help window
+
+. Via command-line input +
+_Command:_ +
+`help` +
+_Result:_ +
+The help window should appear and display user guide to you.
+
+. Via F1 +
+_Command:_ +
+{keyboard-icon} Press the `F1` key on your keyboard.
+_Result:_ +
+The help window should appear and display user guide to you.
+
+. Via mouse +
+_Command:_ +
+Click `Help` -> `Help` on the menu bar at the top of the interface. +
+_Result:_ +
+The help window should appear and display user guide to you.
+
+==== View the command input history
+
+Use the history command to view the history of all input commands +
+_Command:_ +
+`history` +
+_Result:_ +
+`Entered commands (from most recent to earliest):` +
+`...` +
+_(All commands will be listed below.)_
+
+==== Undo/redo previous commands
+
+Use `undo` or `redo` to undo/redo the last command entered.

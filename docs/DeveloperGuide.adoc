@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= BoNUS - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,9 +10,20 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-T09-B3/main/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `CS2103T T09-B3 Team`      Since: `Sep 2017`      Licence: `MIT`
+
+== Introduction
+
+This _Developer Guide_ is written by the **BoNUS v1.5** team for the benefits of future developers and maintainers of the
+application.
+
+* This guide includes instructions for setting up the development environment.
+* This guide provides sufficient UMLs (unified model diagrams) to illustrate the architectural structure and design methodology.
+* This guide offers advice for troubleshooting some common issues.
+
+**BoNUS** is an open-source project, should any developers be interested, see <<ContactUs#, Contact Us>> page for more information.
 
 == Setting up
 
@@ -25,6 +36,12 @@ Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
 
++
+[NOTE]
+We do have the plan to upgrade to http://openjdk.java.net/projects/jdk9/[Java 9] in the foreseeable future. +
+Please pay close attention to this document.
++
+
 . *IntelliJ* IDE
 +
 [NOTE]
@@ -34,7 +51,7 @@ Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plu
 
 === Setting up the project in your computer
 
-. Fork this repo, and clone the fork to your computer
+. Fork this repo, and clone the fork to your computer (we use https://git-scm.com/[Git] as our version control system)
 . Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
 . Set up the correct JDK version for Gradle
 .. Click `Configure` > `Project Defaults` > `Project Structure`
@@ -77,7 +94,8 @@ Set up Travis to perform Continuous Integration (CI) for your fork. See <<UsingT
 Optionally, you can set up AppVeyor as a second CI (see <<UsingAppVeyor#, UsingAppVeyor.adoc>>).
 
 [NOTE]
-Having both Travis and AppVeyor ensures your App works on both Unix-based platforms and Windows-based platforms (Travis is Unix-based and AppVeyor is Windows-based)
+Having both Travis and AppVeyor ensures your App works on both Unix-based platforms and Windows-based platforms
+(Travis is Unix-based and AppVeyor is Windows-based). Thus, we strongly encourage you to set up both.
 
 ==== Getting started with coding
 
@@ -86,12 +104,16 @@ When you are ready to start coding,
 1. Get some sense of the overall design by reading the link:#architecture[Architecture] section.
 2. Take a look at the section link:#suggested-programming-tasks-to-get-started[Suggested Programming Tasks to Get Started].
 
+==== Using Git
+
+We use https://git-scm.com/[Git] as our version control software (VCS). See <<UsingGit#, UsingGit.adoc>> if you find any difficulty when using Git.
+
 == Design
 
 === Architecture
 
 image::Architecture.png[width="600"]
-_Figure 2.1.1 : Architecture Diagram_
+_Figure 3.1.1 : Architecture Diagram_
 
 The *_Architecture Diagram_* given above explains the high-level design of the App. Given below is a quick overview of each component.
 
@@ -120,10 +142,10 @@ Each of the four components
 * Defines its _API_ in an `interface` with the same name as the Component.
 * Exposes its functionality using a `{Component Name}Manager` class.
 
-For example, the `Logic` component (see the class diagram given below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
+For example, the `Logic` component (see the class diagram given below) defines its API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
 
 image::LogicClassDiagram.png[width="800"]
-_Figure 2.1.2 : Class Diagram of the Logic Component_
+_Figure 3.1.2 : Class Diagram of the Logic Component_
 
 [discrete]
 ==== Events-Driven nature of the design
@@ -131,7 +153,7 @@ _Figure 2.1.2 : Class Diagram of the Logic Component_
 The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
 
 image::SDforDeletePerson.png[width="800"]
-_Figure 2.1.3a : Component interactions for `delete 1` command (part 1)_
+_Figure 3.1.3a : Component interactions for `delete 1` command (part 1)_
 
 [NOTE]
 Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
@@ -139,7 +161,7 @@ Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address 
 The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
 image::SDforDeletePersonEventHandling.png[width="800"]
-_Figure 2.1.3b : Component interactions for `delete 1` command (part 2)_
+_Figure 3.1.3b : Component interactions for `delete 1` command (part 2)_
 
 [NOTE]
 Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
@@ -149,7 +171,7 @@ The sections below give more details of each component.
 === UI component
 
 image::UiClassDiagram.png[width="800"]
-_Figure 2.2.1 : Structure of the UI Component_
+_Figure 3.2.1 : Structure of the UI Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
@@ -166,10 +188,12 @@ The `UI` component,
 === Logic component
 
 image::LogicClassDiagram.png[width="800"]
-_Figure 2.3.1 : Structure of the Logic Component_
+_Figure 3.3.1 : Structure of the Logic Component_
 
 image::LogicCommandClassDiagram.png[width="800"]
-_Figure 2.3.2 : Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in Figure 2.3.1_
+_Figure 3.3.2 : Structure of Commands in the Logic Component._
+
+_The diagram above shows finer details concerning `XYZCommand` and `Command` in Figure 2.3.1_
 
 *API* :
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
@@ -187,7 +211,7 @@ _Figure 2.3.1 : Interactions Inside the Logic Component for the `delete 1` Comma
 === Model component
 
 image::ModelClassDiagram.png[width="800"]
-_Figure 2.4.1 : Structure of the Model Component_
+_Figure 3.4.1 : Structure of the Model Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
@@ -196,12 +220,13 @@ The `Model`,
 * stores a `UserPref` object that represents the user's preferences.
 * stores the Address Book data.
 * exposes an unmodifiable `ObservableList<ReadOnlyPerson>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* exposes an unmodifiable `ObservableList<ReadOnlyEvent>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
 === Storage component
 
 image::StorageClassDiagram.png[width="800"]
-_Figure 2.5.1 : Structure of the Storage Component_
+_Figure 3.5.1 : Structure of the Storage Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 
@@ -226,6 +251,7 @@ The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides insi
 `UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
 
 image::LogicCommandClassDiagram.png[width="800"]
+_Figure 4.1.1 : Logic Component Class Diagram_
 
 As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
 
@@ -265,10 +291,12 @@ Suppose that the user has just launched the application. The `UndoRedoStack` wil
 The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
 
 image::UndoRedoStartingStackDiagram.png[width="800"]
+_Figure 4.1.2(a) : Undo Stack_
 
 As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person.
 
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
+_Figure 4.1.2(b) : Undo Stack_
 
 [NOTE]
 If a command fails its execution, it will not be pushed to the `UndoRedoStack` at all.
@@ -278,6 +306,7 @@ The user now decides that adding the person was a mistake, and decides to undo t
 We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed.
 
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
+_Figure 4.1.2(c) : Undo Stack_
 
 [NOTE]
 If the `undoStack` is empty, then there are no other commands left to be undone, and an `Exception` will be thrown when popping the `undoStack`.
@@ -285,6 +314,7 @@ If the `undoStack` is empty, then there are no other commands left to be undone,
 The following sequence diagram shows how the undo operation works:
 
 image::UndoRedoSequenceDiagram.png[width="800"]
+_Figure 4.1.3 : Undo Command Sequence Diagram_
 
 The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
 
@@ -294,14 +324,17 @@ If the `redoStack` is empty, then there are no other commands left to be redone,
 The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow).
 
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
+_Figure 4.1.4(a) : Redo Stack_
 
 Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution:
 
 image::UndoRedoNewCommand3StackDiagram.png[width="800"]
+_Figure 4.1.4(b) : Redo Stack_
 
 The following activity diagram summarize what happens inside the `UndoRedoStack` when a user executes a new command:
 
 image::UndoRedoActivityDiagram.png[width="200"]
+_Figure 4.1.5 : Redo Command Activity Diagram_
 
 ==== Design Considerations
 
@@ -360,27 +393,525 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 * `INFO` : Information showing the noteworthy actions by the App
 * `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
 
+// tag::genericProperty[]
+=== Generic property
+
+We are using a generic `Property` class to support **arbitrary field** feature.
+
+==== Inspiration
+
+Users should not be limited to the provided four fields, i.e. `Name`, `Email`, `Phone`, `Address` (we are talking about
+the contact component here, of course one more `DateTime` for event component). They should have the freedom to enter all
+kinds of information about their contacts apart from the pre-defined ones.
+
+Through a brief product survey on other existing similar software in the market, we found that they usually ask users to
+type all other information in the _so-called_ `Description` or `Details` field. This is not a good design because doing
+so will make the information stored messy. The application is used to organize personal information conveniently. It is
+a major drawback if the data are not stored (and thus presented to users) in a well-organized way.
+
+Learning from many modern database implementations, we should think of the data as two tables: one for *contacts* and the
+other one for *events*. Each table is composed of many rows and many columns. A single contact/event is one row, while
+all their different properties/fields are the columns (as can be seen from Figure 4.3.1.1 and 4.3.1.2).
+
+image::phpmyadminTableView.png[width="700"]
+_Figure 4.3.1.1 : Data Table View of phpMyAdmin (a MySQL visualization tool)_
+
+image::phpmyadminAddColumn.png[width="700"]
+_Figure 4.3.1.2 : Add New Column in phpMyAdmin_
+
+==== Design Consideration
+
+**Aspect:** Where to store the "_metadata_" of different properties (short name, full name, regular expression, etc.) +
+**Alternative 1 (current choice):** Create a new class `PropertyManager` in Figure 4.3.2.1 +
+**Pros:** Efficient (there is only one copy) and easy for future development since it is centralized. +
+**Cons:** Requires major change to `Model` component and `Storage` component. +
+**Alternative 2:** Store these data along with each specific property class, like `Name`, `Email` +
+**Pros:** Able to adapt the current implementation of `Model` component. +
+**Cons:** Hard to implement `AddPropertyCommand`, and difficult to manage as the project grows larger.
+
+image::PropertyManagerClassDiagram.png[width="200"]
+_Figure 4.3.2.1 : Class Diagram for_ `PropertyManager`
+
+==== Implementation Outline
+
+. Create a more general class to capture the common patterns among all columns (all different fields/properties): according to
+the basic OOP concept, a more generic class should become the superclass `Property`; then, other more specific classes
+(like `Name`, `Email`, `Phone`, etc.) can inherit from it. This design reduces a lot of code duplicates.
+
+. Find a way to store the metadata of all columns (fields/properties): in popular SQL database implementation, they
+usually have a separate database reserved for the database server system itself. We must store similar information somewhere
+as well. Thus, we create a `PropertyManager` to store these "metadata", including short names, full names, constraint
+messages and regular expressions used for input validation. They are all `static` variables because there should only be
+one copy of these "metadata". It will waste a lot of resources if we store these "metadata" with each instance of the
+`Property` class.
+
+. _Pre-loaded properties_: Things like `Name`, `Email` and `Phone` are widely used. They should ship with the application
+and users do not need any additional setup steps to use them.
+
+. Add new customize properties: advanced users should be provided with a command (`config --add-property`) to add their
+own customize fields (as shown in Figure 4.3.3.1). They should have the freedom to arbitrarily choose things like short
+name, full name, etc. They can easily add/edit these properties of each contact stored in the application, just like the
+_pre-loaded_ ones.
+
+image::PropertyManagerSequenceDiagram.png[width="800"]
+_Figure 4.3.3.1 : Sequence Diagram for Adding a Customize Property_
+// end::genericProperty[]
+
+//tag::autoReminders[]
+=== Auto reminders
+
+We are adding a reminder to the event whenever an event is added. Reminders will notify users 2 days in advance before
+event itself.
+
+As we are targeting NUS students, in view of the busy schedules of students, students should be able to set reminders
+for events that they have to attend to. In the case that students forget to set reminders themselves, we automatically
+preset a reminder that will trigger from 2 days before the event such that students have ample time to be aware and be
+prepared for the event itself.
+
+Learning from many modern applications, the logic behind the applications are usually efficient and is able to handle
+multiple tasks at once. By automatically adding reminders alongside the addition of events, it makes it more
+convenient for the users themselves. We have set a default reminder to trigger 2 days before the actual event
+to remind users of their upcoming events via different colour schemes.
+
+As shown in the _Figure 4.4.1_
+
+1. The red bell indicates the day of the event
+2. The orange bell indicates one day before event.
+3. The green bell indicates two days before event.
+
+image::ReminderColorScheme.png[width="300"]
+_Figure 4.4.1 : Reminders via different colour schemes to indicate urgency_
+
+
+==== Design Consideration
+**Aspect:**  How to implement the idea of reminders into Events +
+**Alternative 1 (current choice):** Create a new reminder class that contains an event parameter to it. Events have a +
+list of reminders within them (Figure 4.4.1.1). +
+**Pros:** Independent. Reminder class is on its own and easy for future usage since it is already a class by itself. +
+Each reminder is tagged to an event, such that if we want to access the reminders in an event, it is easy to do so. +
+**Cons:** Require major changes to Logic and Model components for Event +
+**Alternative 2:** Add a new parameter for Event called Reminders to display time till event. +
+**Pros:** Less changes as it is just an implementation of a new parameter. +
+**Cons:** Less versatile and reminders cannot be applied anywhere else if needed. +
+
+image::ReminderClassDiagram.png[width="200"]
+_Figure 4.4.1.1 : Class Diagram for `Reminder`_
+
+Therefore we have decided to adopt alternative 1 of creating a Reminder class as it is more versatile for future usage.
+
+==== Implementation Outline
+
+1. Create a ReadOnlyReminder class such that it only contains immutable instances of Reminders.
+
+2. Create a general class such that Reminder that implements ReadOnlyReminder. It can inherit properties
+such as `DateTime` from PropertyClass as well. In the event that a new property needs to be added, it can be done.
+Such a design makes Reminder class more adaptable to changes and ready for future code usage.
+
+3. `Reminder` is now more open to changes if needed and can easily add parameters and methods now that it is a class
+on its own.
+
+4. Have a list of reminders in `Event` class (Figure 4.4.2.1). Since `Event` can have multiple reminders, each reminder is
+instantiated with an `Event` parameter in it such that a `Reminder` is tagged to an Event itself. Figure 4.4.2.2 depicts the
+relationship between `Event` and `Reminder`.
+
+image::EventClassDiagram.png[width="200"]
+_Figure 4.4.2.1 : Class Diagram for `Event`_
+
+image::EventReminderRS.png[width="300"]
+_Figure 4.4.2.2 : Relationship of Event and Reminder_
+
+The following sequence diagram (Figure 4.4.2.3) shows how reminders are automatically added upon the addition of events.
+
+image::SDaddEventLogicReminder.png[width="700"]
+_Figure 4.4.2.3 : Sequence Diagram for Adding an event (reminders are automatically added)_
+//end::autoReminders[]
+
+//tag::themeSwitch[]
+=== Switch themes mechanism
+
+As BoNUS is targeted at students, we want to allow students to personalise BoNUS. To open up such a
+possibility, we decided to introduce the `SwitchThemeCommand` to support bright and dark
+themes.
+
+In the following sections below, the Switch Themes mechanism will be elaborated with the aid of
+illustrated diagrams to depict the interactions between the components in BoNUS.
+
+The _Sequence Diagram_ in _Figure 4.5.1_ illustrates how the components interact for the scenario where the user issues the command
+`theme`. Also, the _Sequence Diagram_ illustrates the events-driven architectural style in BoNUS.
+
+image::SDforSwitchTheme.png[width="500", height="300"]
+_Figure 4.5.1 : Events-Driven nature of Switch Theme_
+
+image::SDforSwitchThemesEmphasis.png[width="500", height="300"]
+_Figure 4.5.2 : Sequence diagram for Switch Theme mechanism_
+
+
+As can be seen from _Figure 4.5.2_, upon the execution of `theme` command, SwitchThemeEvent
+is then raised :
+[source,java]
+----
+public class SwitchThemeCommand extends Command {
+
+    public static final String COMMAND_WORD = "theme";
+    public static final String COMMAND_ALIAS = "t";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Toggles between bright and dark theme.\n"
+            + "Example: " + COMMAND_WORD;
+
+    public static final String MESSAGE_SUCCESS = "Theme switched!";
+
+    @Override
+    public CommandResult execute() {
+        raise(new SwitchThemeEvent());
+        return new CommandResult(MESSAGE_SUCCESS);
+    }
+}
+----
+
+It is from there that the event will be handled by `MainWindow` where the change of theme occurs as shown below:
+[source,java]
+
+----
+ @Subscribe
+    private void handleThemeChanged(SwitchThemeEvent event) {
+        if (prefs.getAddressBookTheme() == darkTheme) {
+            getRoot().getStylesheets().clear();
+            getRoot().getStylesheets().add(brightTheme);
+            getRoot().getStylesheets().add(brightExtension);
+            prefs.setAddressBookTheme(brightTheme);
+        } else {
+            getRoot().getStylesheets().clear();
+            getRoot().getStylesheets().add(darkTheme);
+            getRoot().getStylesheets().add(darkExtension);
+            prefs.setAddressBookTheme(darkTheme);
+        }
+
+    }
+----
+
+==== Design Consideration
+**Aspect:**  How to implement the `theme` command  +
+**Alternative 1 (current choice):** Create a `SwitchThemeCommand` command under `Logic` component.
+Create an event for it to handle +
+the switching of themes in `MainWindow`. Implement the switch theme process in `MainWindow`. No parsing is involved since +
+it is switching between two themes. +
+**Pros:** Simple interaction between `UI` and `Logic` by raising an event to handle the changing of themes in `MainWindow` +
+from `SwitchThemeCommand` under the `Logic` component. +
+**Cons:** Without parsing, only two themes can be set. +
+**Alternative 2:** Handle theme switch by directly accessing `MainWindow` from `SwitchThemeCommand` +
+**Pros:** Shortcut to make the `theme` command work. +
+**Cons:** `Logic` and `UI` component should not be easily interchangeably accessed in this manner. Also, it violates
+ Single Responsibility Principle (SRP). `Logic` is only supposed to handle logic components such as commands, it should
+ not be able to openly access `UI` components such as `MainWindow`.  +
+
+==== Implementation Outline
+
+1. Create a `SwitchThemeCommand` under logic component. Create a `SwitchThemeEvent` for `EventBus` to handle the event
+accordingly whenever `SwitchThemeCommand` is executed.
+
+2. Create a CSS file for BrightTheme which include its main CSS file as well as its extension files. Remove the default
+CSS styles from the `FXML` files in BoNUS.
+
+3. Implement the switching of themes in `MainWindow`. Create a method in `MainWindow` to subscribe it to the event change.
+Raise the event whenever `SwitchThemeCommand` is executed such that the theme will change accordingly in `MainWindow`.
+//end::themeSwitch[]
+
+// tag::importExportXml[]
+=== Import & export XML mechanism
+
+In order to open up more possibilities to BoNUS, we have introduced the `import` and `export` commands. We are using
+`ImportXmlCommand` and `ExportCommand` to support importing and exporting of address book data through XML files.
+
+In the following sections, we will focus on how these commands depend on the `Storage` component to retrieve external
+data, as well as the file path validation mechanism adopted on a high-level basis.
+
+==== Implementation
+
+===== External Data Access
+
+In order to achieve their tasks, both `import` and `export` commands natively require access to the external
+environment, unlike other commands. Hence, these commands are designed to depend directly on the `Storage` component.
+
+The dependence of `Storage` in `import` and `export` is achieved through the `Command.setStorage(Storage)` method. This
+method mimics the existing `Command.setData(Model, CommandHistory, UndoRedoStack)` method, where only commands that make
+use of the relevant data will override this method to gain access to the dependencies.
+
+The following shows the implementation of `Command.setStorage(Storage)`, which is not overridden commands other than
+`ImportXmlCommand` and `ExportCommand`:
+
+[source,java]
+----
+public void setStorage(Storage storage) {
+    // intentionally left empty
+}
+----
+
+In `ImportXmlCommand` and `ExportCommand`, the overridden method is implemented in this way:
+
+[source,java]
+----
+@Override
+public void setStorage(Storage storage) {
+    this.storage = storage;
+}
+----
+
+Through this implementation, commands that depend directly on the `Storage` component (ie. `import` and `export`) are
+able to gain full access to `Storage`, while commands that do not rely on `Storage` remain weakly coupled to it. The
+following class diagram of the `Logic` component reflects the overall implementation on an architectural-level point of
+view:
+
+image::LogicClassDiagramStorageEmphasis.png[width="800"]
+_Figure 4.5.1.1 : Structure of the Logic Component_
+
+===== File Path Validation
+
+File paths, as required by `import` and `export` commands, are validated during the execution of the corresponding
+command. The following sequence diagram shows an example of how file path validation is performed prior exporting the
+address book data:
+
+image::ExportCommandSequenceDiagram.png[width="800"]
+_Figure 4.5.1.2 : Sequence Diagram for Export Command_
+
+To facilitate better handling of invalid file paths and to provide appropriate feedback to the user, several exception
+classes, all of which are derived from the `InvalidFilePathException` class, have been implemented. The following shows
+the inheritance diagram of the above-mentioned exception classes:
+
+image::CommonsComponentExceptionClassDiagram.png[width="800"]
+_Figure 4.5.1.3 : Structure of Exception Classes related to File Path Validation_
+
+With that, we are able to ensure that data would be exported to or imported from a truly valid file path as specified by
+the user, while being able to inform users on the mistakes that they have made.
+
+==== Design Considerations
+
+**Aspect:** Implementation of `Storage` dependency for `ImportXmlCommand` and `ExportCommand` +
+**Alternative 1 (current choice):** Add a new `setStorage(Storage)` method in `Command` +
+**Pros:** Provides direct access to `Storage` for commands that only requires it. +
+**Cons:** There is an inherent dependency on `Storage` for all commands, although the coupling is weak. +
+**Alternative 2:** Raise a `BaseEvent` in the `EventsCenter` through `Model` +
+**Pros:** Completely decouples `Command` from `Storage`. +
+**Cons:** The need for access to `Storage` is not a side-effect as with other commands that mutate the address book +
+(eg. `add`, `delete` etc.). The dependency of `Storage` is part of their native behaviour.
+
+---
+
+**Aspect:** Location for Implementation of File Path Validation +
+**Alternative 1 (current choice):** In `Storage` +
+**Pros:** Validation is not just done for user input file paths (ie. via `import` and `export` commands), but also for the address book file path as defined in the user's preferences (ie. `preferences.json`). +
+**Cons:** Validation is performed after every execution of an `UndoableCommand` due to the saving of the address book. +
+**Alternative 2:** In `CommandParser` +
+**Pros:** Validation will not be done after every execution of an `UndoableCommand` unnecessarily. +
+**Cons:** File path validation may also be required for other purposes.
+// end::importExportXml[]
+
+// tag::importNusmods[]
+=== Import timetable from NUSMods
+
+We implement an  `ImportNusmodsCommand` to help users directly import their NUSMods timetable to *BoNUS* by simply copy-paste
+the URL.
+
+==== Inspiration
+
+As stated in <<UserGuide#, User Guide>>, *BoNUS* helps you _better(B) organize(o) your NUS life_. Thus, we want to make
+the application an integrated personal manager for NUS students. The main activities for most students are study-related and
+most NUS students are currently using https://nusmods.com/[NUSMods] to build their school timetable (as shown in Figure 4.7.1.1).
+
+image::NusmodsWebsite.png[width="750"]
+_Figure 4.7.1.1 : NUSMods Website Interface_
+
+Let's imagine some of our users want to use the event feature in *BoNUS*. They want to input final examinations for all
+the modules they are taking as upcoming events. It would be very inconvenient and tedious if they have to do this manually.
+Even worse, it is very likely they are already using NUSMods and thus are not willing to add these events again. They may
+end up not using the event feature at all.
+
+However, users may find it very useful if they can import their NUSMods timetable using a simple command. Eventually, they
+would choose *BoNUS* because they can manage both contacts and events in one application conveniently and the migration
+from NUSMods to *BoNUS* is not troublesome.
+
+==== Design Considerations
+
+**Aspect:** Relationship between `ImportXmlCommand` and `ImportNusmodsCommand` +
+**Alternative 1 (current choice):** Add a new abstract `ImportCommand` class and let both of them become its sub-commands
+(inherit from it). +
+**Pros:** This is inspired by many popular command-line tools (like Git). `import` is called the actual command, while
+`--xml` and `--script` is called the options. Most Unix/Linux users would be used to this approach. This is important for
+us because we assume our users are typists and they are very likely to frequently use these command-line tools. +
+**Cons:** Need to write extra codes and parsing also becomes more complicated. +
+**Alternative 2:** Implement these two commands separately. +
+**Pros:** Easy to implement and similar to other commands. +
+**Cons:** Our users may not be used to it. The command word will become longer. It is not a good OOP practice as well
+because common details are not abstracted into a parent class and this produces duplicate codes.
+
+_(Similar strategy has been adopted in `ConfigCommand`)_
+
+---
+
+**Aspect:** How to obtain user's NUSMods timetable +
+**Alternative 1 (current choice):** Let users copy-paste the URL as a parameter of `ImportNusmodsCommand`. +
+**Pros:** Simple to use and easy to implement as well +
+**Cons:** Need to check whether the URL is valid and from NUSMods (currently using regular expression). +
+**Alternative 2:** Implement a built-in browser and render the NUSMods page +
+**Pros:** Users are more used to this interface. +
+**Cons:** Need much extra work to implement the built-in browser. The page may not be rendered well since the built-in
+browser is typically smaller than OS browser and NUSMods does not fully adopt link:#mainstream-os[responsive UI framework]
+and may not work well on a small browser window.
+
+==== Implementation Outline
+
+===== `ImportCommand` abstract class
+
+Create an `ImportCommand` abstract class and let `ImportXmlCommand` and `ImportNusmodsCommand` inherit from it (as in
+Figure 4.7.3.1). It is also a good practice to use an enumeration `ImportType` because the possible types of the import
+are within a fixed set of values. This leads to better modularity in `ImportCommandParser` as well.
+
+image::ImportNusmodsClassDiagram.png[width="600"]
+_Figure 4.7.3.1 : Class Diagram for Related Import Commands_ +
+
+===== Parsing of NUSMods Timetable URL
+
+Implement utility method to validate a given URL and parse the `GET` parameters. Although it is possible to utilize
+external library like https://hc.apache.org/[Apache HttpComponents], we decide to implement on our own because it is relative
+simple to do so and using external library comes with extra expenses (such as licence, etc).
+
+[source,java]
+----
+public static Map<String, String> fetchUrlParameters(URL url) throws UnsupportedEncodingException {
+    String query = urlDecode(url.getQuery());
+
+    if (Strings.isNullOrEmpty(query)) {
+        return Collections.emptyMap();
+    }
+
+    Map<String, String> pairs = new HashMap<>();
+    for (String pair: query.split("&")) {
+        int index = pair.indexOf("=");
+        pairs.put(pair.substring(0, index), pair.substring(index + 1));
+    }
+
+    return pairs;
+}
+----
+
+===== Fetch information from NUSMods API
+
+The URL parsed just now only contains the module codes and grouping for each module. In order to add upcoming events, we
+need more information such as module names, examination dates, etc. We decide to use API provided by NUSMods to fetch the
+information we need. NUSMods API is in JSON format, which would be very simple for us as we already use
+https://github.com/FasterXML/jackson[Jackson] library in our project.
+
+[source,java]
+----
+/**
+ * Read JSON data from a given URL and convert the data to an instance of the given class.
+ * @param url is the URL to the remote JSON data.
+ */
+public static <T> T fromJsonUrl(URL url, Class<T> instanceClass) throws IOException {
+    return objectMapper.readValue(url, instanceClass);
+}
+----
+
+===== Add upcoming events
+
+After obtaining all the information we need, we can simply use the `addEvent` method in `ModelManager` class to add the
+final examinations as upcoming events into *BoNUS*. This should be a similar process as `AddEventCommand`.
+// end::importNusmods[]
+
+=== Contacts/event listing order by name/date time mechanism
+
+Whenever there is a command that triggers the "_refresh_" of link:{repoURL}/src/main/java/seedu/address/ui/person/PersonListPanel.java[`PersonListPanel`]
+or link:{repoURL}/src/main/java/seedu/address/ui/event/EventListPanel.java[`EventListPanel`], like when adding a new contact
+(i.e. `add` command), all the cards will be loaded in the incremental order by name or date time respectively. The sorting
+mechanism uses the `sort` method which resides inside `List` interface to sort the contacts by name.
+
+// tag::emailMech[]
+=== Emailing mechanism
+
+The automatic opening of email on the user's desktop is facilitated mainly by the `Desktop` class which allows the Java
+application to launch the default mail application registered inside the user's native desktop to handle the email `URI`.
+// end::emailMech[]
+
+// tag::calendarMech[]
+=== Calendar mechanism
+
+An in-built calendar is added to the panel beside the list of events. This calendar shows a monthly view of the
+current month.
+
+image::Calendar.png[width="600"]
+_Figure 4.10.1 : Calendar for month of November 2017_
+
+This is useful for users to be able to compare their list of events in the calendar. It can help users to check what
+day of the week their event is happening on. This is especially useful for NUS students as there is a fixed daily
+schedule and it would be easy to check what day it falls on to ensure their availability for the event. Other usages
+include having to see what dates lie on a particular day for students to plan weekly events. All in all, it provides a
+convenient way for students to have access to a calendar without having to open any external applications.
+
+==== Design Considerations
+
+*Aspect*: How to display the individual dates. +
+*Alternative 1 (current choice):* Use a GridPane to design the table in XML. Include a class to calculate dates to be
+shown, before populating individual cells in GridPane using data from class. +
+*Pros:* This method makes use of JavaFX, possibly allowing us to improve the aesthetic design in the future. It also
+allows individual objects to be created for individual cells. This could allow us to write more functionality such
+as showing number of events per day to dynamic colour changes in the future. The `monthDateBuilder` method provides an
+accurate graphical representation of the days in a monthly calendar. +
+*Cons:* The 42 cell design is fairly cumbersome, requiring the initialization of at least 42 cells. The class is limited
+in a way that it must have 42 cells, thus sometimes many cells are left unused, and there is a wastage of memory. +
+*Alternative 2:* Use JTable to display individual dates. +
+*Pros:* A ready to use API that can allow  easy building of table showing dates. It is also a powerful tool with many
+functions. +
+*Cons:* JTable is a UI element from a different UI design model, and cannot make use of advantages brought about by the
+new advantages from JavaFX, such as the node capability of JavaFX and certain aesthetic modifications. Many of the
+JTable functions might not be used.
+
+==== Implementation Outline
+
+1. Create a `EventCalendar` class that contains the month that will be shown, containing all the necessary information
+required for a monthly calendar (i.e. dates, name of month).
+
+2. Create a `monthDateBuilder` class that will be used to set the current month and year of the calendar. It will also be
+arranging the dates in a way that will correspond to which day of the week it belongs to.
+
+3. Use `Calendar` class to set the current year and month and store in an array (i.e.`monthYearArray`) in
+`monthDateBuilder`. Also, use `Calendar` class to set the number of days in the current month and the day that the first
+date of the month falls on (i.e. set using `setMonthAnchors` method). These details are required to build the monthly
+view.
+
+4. There are a maximum of 42 cells to fill up in every month. Create a method (i.e. `buildMonthArray` method) to
+store the position of the dates in. Use an algorithm to store all the dates before the first date of the month as a
+blank, fill up the subsequent dates using the value of the first day of the month and their cell number, and the
+leftover dates will continue to be blanks until the 42nd cell.
+
+image::EventCalendarClassDiagram.png[width="300"]
+_Figure 4.10.1.1 : Class Diagram for `EventCalendar`_
+
+image::MonthDateBuilderClassDiagram.png[width="300"]
+_Figure 4.10.1.2 : Class Diagram for `MonthDateBuilder`_
+// end::calendarMech[]
+
 === Configuration
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
 == Documentation
 
-We use asciidoc for writing documentation.
+We use AsciiDoc for writing documentation.
 
 [NOTE]
-We chose asciidoc over Markdown because asciidoc, although a bit more complex than Markdown, provides more flexibility in formatting.
+We chose AsciiDoc over Markdown because AsciiDoc, although a bit more complex than Markdown, provides more flexibility in formatting.
 
-=== Editing Documentation
+=== Editing documentation
 
 See <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> to learn how to render `.adoc` files locally to preview the end result of your edits.
 Alternatively, you can download the AsciiDoc plugin for IntelliJ, which allows you to preview the changes you have made to your `.adoc` files in real-time.
 
-=== Publishing Documentation
+=== Publishing documentation
 
 See <<UsingTravis#deploying-github-pages, UsingTravis.adoc>> to learn how to deploy GitHub Pages using Travis.
 
-=== Converting Documentation to PDF format
+=== Converting documentation to PDF format
+
+==== Using Google Chrome PDF printer
 
 We use https://www.google.com/chrome/browser/desktop/[Google Chrome] for converting documentation to PDF format, as Chrome's PDF engine preserves hyperlinks used in webpages.
 
@@ -392,7 +923,15 @@ Here are the steps to convert the project documentation files to PDF format.
 .  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For best results, use the settings indicated in the screenshot below.
 
 image::chrome_save_as_pdf.png[width="300"]
-_Figure 5.6.1 : Saving documentation as PDF files in Chrome_
+_Figure 5.3.1 : Saving documentation as PDF files in Chrome_
+
+==== Using `asciidoc-pdf` Ruby gem
+
+If you have Ruby installed on your development machine, we suggest you using a useful gem `asciidoc-pdf` to automatically
+convert the documentation into PDF format.
+
+You can find more information about `asciidoc-pdf` from their https://github.com/asciidoctor/asciidoctor-pdf[GitHub repository].
+Instructions on how to use it can also be found on AsciiDoctor website at http://asciidoctor.org/docs/convert-asciidoc-to-pdf/[here].
 
 == Testing
 
@@ -469,135 +1008,17 @@ a. Include those libraries in the repo (this bloats the repo size) +
 b. Require developers to download those libraries manually (this creates extra work for developers)
 
 [appendix]
-== Suggested Programming Tasks to Get Started
+== Suggested Ways to Get Started
 
 Suggested path for new programmers:
 
-1. First, add small local-impact (i.e. the impact of the change does not go beyond the component) enhancements to one component at a time. Some suggestions are given in this section link:#improving-each-component[Improving a Component].
+1. First, add small local-impact (i.e. the impact of the change does not go beyond the component) enhancements to one component at a time.
+2. Next, add a feature that touches multiple components to learn how to implement an end-to-end feature across all components.
 
-2. Next, add a feature that touches multiple components to learn how to implement an end-to-end feature across all components. The section link:#creating-a-new-command-code-remark-code[Creating a new command: `remark`] explains how to go about adding such a feature.
+=== Example Programming Task - Creating a new command: `remark`
 
-=== Improving each component
-
-Each individual exercise in this section is component-based (i.e. you would not need to modify the other components to get it to work).
-
-[discrete]
-==== `Logic` component
-
-[TIP]
-Do take a look at the link:#logic-component[Design: Logic Component] section before attempting to modify the `Logic` component.
-
-. Add a shorthand equivalent alias for each of the individual commands. For example, besides typing `clear`, the user can also type `c` to remove all persons in the list.
-+
-****
-* Hints
-** Just like we store each individual command word constant `COMMAND_WORD` inside `*Command.java` (e.g.  link:{repoURL}/src/main/java/seedu/address/logic/commands/FindCommand.java[`FindCommand#COMMAND_WORD`], link:{repoURL}/src/main/java/seedu/address/logic/commands/DeleteCommand.java[`DeleteCommand#COMMAND_WORD`]), you need a new constant for aliases as well (e.g. `FindCommand#COMMAND_ALIAS`).
-** link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] is responsible for analyzing command words.
-* Solution
-** Modify the switch statement in link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser#parseCommand(String)`] such that both the proper command word and alias can be used to execute the same intended command.
-** See this https://github.com/se-edu/addressbook-level4/pull/590/files[PR] for the full solution.
-****
-
-[discrete]
-==== `Model` component
-
-[TIP]
-Do take a look at the link:#model-component[Design: Model Component] section before attempting to modify the `Model` component.
-
-. Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in the address book.
-+
-****
-* Hints
-** The link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model`] API needs to be updated.
-**  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] classes can be used to implement the tag removal logic. link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] allows you to update a person, and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] allows you to update the tags.
-* Solution
-** Add the implementation of `deleteTag(Tag)` method in link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`]. Loop through each person, and remove the `tag` from each person.
-** See this https://github.com/se-edu/addressbook-level4/pull/591/files[PR] for the full solution.
-****
-
-[discrete]
-==== `Ui` component
-
-[TIP]
-Do take a look at the link:#ui-component[Design: UI Component] section before attempting to modify the `UI` component.
-
-. Use different colors for different tags inside person cards. For example, `friends` tags can be all in grey, and `colleagues` tags can be all in red.
-+
-**Before**
-+
-image::getting-started-ui-tag-before.png[width="300"]
-+
-**After**
-+
-image::getting-started-ui-tag-after.png[width="300"]
-+
-****
-* Hints
-** The tag labels are created inside link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard#initTags(ReadOnlyPerson)`] (`new Label(tag.tagName)`). https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html[JavaFX's `Label` class] allows you to modify the style of each Label, such as changing its color.
-** Use the .css attribute `-fx-background-color` to add a color.
-* Solution
-** See this https://github.com/se-edu/addressbook-level4/pull/592/files[PR] for the full solution.
-****
-
-. Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] such that link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] can show a different style on error (currently it shows the same regardless of errors).
-+
-**Before**
-+
-image::getting-started-ui-result-before.png[width="200"]
-+
-**After**
-+
-image::getting-started-ui-result-after.png[width="200"]
-+
-****
-* Hints
-** link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] is raised by link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] which also knows whether the result is a success or failure, and is caught by link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] which is where we want to change the style to.
-** Refer to link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] for an example on how to display an error.
-* Solution
-** Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] 's constructor so that users of the event can indicate whether an error has occurred.
-** Modify link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay#handleNewResultAvailableEvent(event)`] to react to this event appropriately.
-** See this https://github.com/se-edu/addressbook-level4/pull/593/files[PR] for the full solution.
-****
-
-. Modify the link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to show the total number of people in the address book.
-+
-**Before**
-+
-image::getting-started-ui-status-before.png[width="500"]
-+
-**After**
-+
-image::getting-started-ui-status-after.png[width="500"]
-+
-****
-* Hints
-** link:{repoURL}/src/main/resources/view/StatusBarFooter.fxml[`StatusBarFooter.fxml`] will need a new `StatusBar`. Be sure to set the `GridPane.columnIndex` properly for each `StatusBar` to avoid misalignment!
-** link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] needs to initialize the status bar on application start, and to update it accordingly whenever the address book is updated.
-* Solution
-** Modify the constructor of link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to take in the number of persons when the application just started.
-** Use link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter#handleAddressBookChangedEvent(AddressBookChangedEvent)`] to update the number of persons whenever there are new changes to the addressbook.
-** See this https://github.com/se-edu/addressbook-level4/pull/596/files[PR] for the full solution.
-****
-
-[discrete]
-==== `Storage` component
-
-[TIP]
-Do take a look at the link:#storage-component[Design: Storage Component] section before attempting to modify the `Storage` component.
-
-. Add a new method `backupAddressBook(ReadOnlyAddressBook)`, so that the address book can be saved in a fixed temporary location.
-+
-****
-* Hint
-** Add the API method in link:{repoURL}/src/main/java/seedu/address/storage/AddressBookStorage.java[`AddressBookStorage`] interface.
-** Implement the logic in link:{repoURL}/src/main/java/seedu/address/storage/StorageManager.java[`StorageManager`] class.
-* Solution
-** See this https://github.com/se-edu/addressbook-level4/pull/594/files[PR] for the full solution.
-****
-
-=== Creating a new command: `remark`
-
-By creating this command, you will get a chance to learn how to implement a feature end-to-end, touching all major components of the app.
+The section below _walks_ you on how to create a new command called `remark`. By creating this command, you will get a chance
+to learn how to implement a feature end-to-end, touching all major components of the app.
 
 ==== Description
 Edits the remark for a person specified in the `INDEX`. +
@@ -709,9 +1130,9 @@ We now have everything set up... but we still can't modify the remarks. Let's fi
 
 . Update `RemarkCommandTest` to test that the `execute()` logic works.
 
-==== Full Solution
+=== Full Solution
 
-See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-by-step solution.
+See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for one possible step-by-step solution.
 
 [appendix]
 == User Stories
@@ -723,18 +1144,36 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *` |user |add a new person/event | save my contacts in the App / plan my schedule in the App
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |user |delete a person/event |remove entries that I no longer need
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* *` |NUS student |import schedule from NUSMods |automatically generate my school timetable
+
+|`* *` |frequent user |import contacts from iCloud, Google+, Facebook,etc. |sync all my contacts
+
+|`* *` |busy user |set notification before an event starts/ends |avoid missing important issues
+
+|`* *` |busy user |auto-sort my events by date/time |be clear of possible clashes in scheduling in school
+
+|`* *` |careful user |_soft delete_ my contacts/events |get them back manually if it is a mistake
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
-|=======================================================================
+|`* *` |user with many persons in the address book |sort persons by name |locate a person easily
 
-{More to be added}
+|`* *` |user |change the UI theme |customize my App
+
+|`*` |loyal user |send feedback to developers |help further improve this App
+
+|`*` |admin user |check the `audit_log` of the application |control how everyone in my organization uses the application
+
+|`*` |advance user |export all contacts/events to excel |view them on a device without this application
+
+|`*` |user |save my contacts on the cloud |sync between different devices
+|=======================================================================
 
 [appendix]
 == Use Cases
@@ -742,14 +1181,35 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
-=== Use case: Delete person
+=== Use case: Add person / event
+
+*MSS*
+
+1. User inputs text to console to add person/event.
+2. Address Book acknowledges and adds person/event to the list.
+3. Address Book is updated with a latest list of persons/events.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The format of parameters entered are invalid.
++
+[none]
+** 1a1. AddressBook shows an error message.
++
+Use case resumes at step 1.
+
+[discrete]
+=== Use case: Select person
 
 *MSS*
 
 1.  User requests to list persons
 2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+3.  User requests to select a specific person in the list
+4.  AddressBook selects the person
 +
 Use case ends.
 
@@ -767,7 +1227,57 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-{More to be added}
+[discrete]
+=== Use case: Edit person/event
+
+*MSS*
+
+1.  User requests to edit a specific person/event in the list.
+2.  AddressBook updates itself.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The list is empty.
++
+[none]
+** 1a1. AddressBook shows an error message.
++
+Use case ends.
+
+* 1b. The arguments for edit command are invalid.
++
+** 1b1. AddressBook shows an error message.
++
+Use case resumes at step 1.
+
+[discrete]
+=== Use case: Delete person/event
+
+*MSS*
+
+1.  User requests to list persons/events
+2.  AddressBook shows a list of persons/events
+3.  User requests to delete a specific person/event in the list
+4.  AddressBook deletes the person/event
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
 
 [appendix]
 == Non Functional Requirements
@@ -775,8 +1285,12 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-{More to be added}
+.  Should be a portable application (ie. there is no need for an installer to use it).
+.  JAR file should not exceed 50 MB.
+.  Test coverage should reach 85% at any time.
+.  Should always favour security over efficiency in development.
+.  Any user who understands English should be able to use the application with the help of the <<UserGuide#, User Guide>>.
+.  Internet connection is required if users want to sync their contacts/events in all devices and import timetable from NUSMods.
 
 [appendix]
 == Glossary
@@ -786,6 +1300,13 @@ Mainstream OS
 
 ....
 Windows, Linux, Unix, OS-X
+....
+
+[[responsive-ui-framework]]
+Responsive UI Framework
+
+....
+A front-end framework for web design that makes your web page looks good and easy to use regardless of the size of the browser window, like Bootstrap.
 ....
 
 [[private-contact-detail]]
@@ -798,16 +1319,19 @@ A contact detail that is not meant to be shared with others
 [appendix]
 == Product Survey
 
-*Product Name*
+*Contacts^TM^*
 
-Author: ...
+_(renamed from https://support.apple.com/en-us/HT201728[Address Book] since  Mac OS X 10.8)_
+
+Author: Apple Inc.
 
 Pros:
 
-* ...
-* ...
+* Able to import contacts from other softwares/websites, like Facebook, LinkedIn, Google+, etc.
+* Able to send an email, start a call or text someone directly in the application thanks to integration with other applications.
+* Able to organize contacts into different groups.
 
 Cons:
 
-* ...
-* ...
+* Data is not stored in a human editable text file (advanced users cannot manipulate the data manually).
+* Only works on Mac OS, no corresponding version on Windows and Linux.

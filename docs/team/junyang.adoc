@@ -1,0 +1,134 @@
+= Ng Jun Yang - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: BoNUS
+BoNUS is a desktop personal organizer application created for National University of Singapore (NUS) students, by NUS students.
+The application aims to better organize the lives of NUS students. This is accomplished through having a contacts list
+for students to keep up with their social lives and a planner for students to keep abreast of their upcoming events in school.
+BoNUS uses a Command Line Interface (CLI) where users input their commands to a console.
+
+This project is the result of a semester-long Software Engineering module, https://nus-cs2103.github.io/website/[CS2103T],
+in NUS. BoNUS is developed alongside my teammates  based on https://github.com/se-edu/addressbook-level4[Address Book (Level 4)], an initiative from the
+https://se-edu.github.io/[SE-EDU team], the current codebase has expanded to around 10 kLoC. The backend of the application
+is done in Java. The frontend of the application is mostly done up with JavaFX.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T09-B3/main/blob/master/collated/main/junyango.md[Functional code]] [https://github.com/CS2103AUG2017-T09-B3/main/blob/master/collated/test/junyango.md[Test code]]
+
+=== Purpose
+This Project Portfolio page aims to show the contributions made by Ng Jun Yang to Project BoNUS. This Project Portfolio
+provides an outline of the contributions which includes the enhancements added, enhancements proposed followed by
+other additional contributions towards Project BoNUS.
+
+=== Enhancement Added: Auto Reminders
+
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[tag=autoReminders]
+
+
+---
+
+==== Justification
+
+The support for auto reminders in BoNUS is pivotal. Taking into consideration the busy schedules of students, having an auto reminder
+function allows students to be more in line with their upcoming events.
+
+As for the latest BoNUS v1.5 official release, reminders only come in the form of additional icons at the side of their events.
+We seek to further improve the auto reminders function to allow students to be notified of upcoming events in a better manner.
+
+==== Realization
+
+---
+
+include::../DeveloperGuide.adoc[tag=autoReminders]
+
+---
+
+=== Enhancement Added: Switch Themes
+
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[tag=themeSwitch]
+
+
+---
+
+==== Justification
+
+As the target audience for BoNUS are students, we aim to allow students to personalize their own BoNUS. Therefore,
+to kick start such an initiative, we decided to allow the switching of themes between Dark and Bright Themes. Also, this adds
+to the aesthetic aspect of our product, attracting more students to start using BoNUS.
+
+To further develop on this aspect of personalisation, we seek to add more themes for students to personalize their own
+BoNUS in future releases.
+
+==== Realization
+
+---
+
+include::../DeveloperGuide.adoc[tag=themeSwitch]
+
+---
+
+=== Enhancement proposed: Booking of facilities from NUS
+
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[tag=bookingNUS]
+
+---
+
+==== Justification
+
+Since NUSMods is already being integrated with BoNUS, what is another factor that NUS students are largely concerned with in terms of school resources?
+The idea of integrating the booking of facilities in NUS with BoNUS then came about.
+
+BoNUS is an organizer for NUS students. In view of the busy schedules of students in school, BoNUS not only aims to make lives for students more
+convenient, but also allow students to be updated of their personal upcoming events. As such, we took into consideration the booking of facilities for consultation, group meetings or even study groups. To facilitate this
+, we decided to integrate the booking of facilities with the `Event` component from BoNUS such that upon successful booking of facilities,
+the `Event` list in BoNUS would automatically be updated with your latest booking.
+
+=== Enhancement proposed: Importing of contacts / events from Google
+
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[tag=importGoogle]
+
+---
+
+==== Justification
+
+Since majority of students often use Google for multiple purposes, GMail, Google Docs or even Google slides. It is no wonder that
+most students have Google Accounts and have important information stored within. +
+
+Therefore, to facilitate your transition to BoNUS, we have decided to include the import of contacts / events from Google itself,
+making the transition to BoNUS a comfortable one. Furthermore, as Google acts as a back up for Contact Storage, with BoNUS,
+it can act as a secondary storage/backup for each of your contacts and events stored in calendar.
+
+With facilitated transition towards BoNUS, your life can now be better organized with BoNUS.
+
+=== Other contributions
+
+* Introduced Events component in BoNUS
+(Pull request https://github.com/CS2103AUG2017-T09-B3/main/pull/55[#55], https://github.com/CS2103AUG2017-T09-B3/main/pull/73[#73], https://github.com/CS2103AUG2017-T09-B3/main/pull/76[#76])
+* Modified small parts of the UI
+(Pull request https://github.com/CS2103AUG2017-T09-B3/main/pull/90[#90], https://github.com/CS2103AUG2017-T09-B3/main/pull/68[#68])
+* Wrote JUnit tests in various classes
+(Pull request https://github.com/CS2103AUG2017-T09-B3/main/pull/140[#140], https://github.com/CS2103AUG2017-T09-B3/main/pull/55[#55], https://github.com/CS2103AUG2017-T09-B3/main/pull/182[#182],
+https://github.com/CS2103AUG2017-T09-B3/main/pull/206[#206], https://github.com/CS2103AUG2017-T09-B3/main/pull/207[#207])
+* Assisted Project UNIBOOK in bug reporting
+(Issues https://github.com/CS2103AUG2017-T13-B2/main/issues/73[#73])
+* Assisted Project BlueBird in bug reporting
+(Issues https://github.com/CS2103AUG2017-T15-B4/main/issues/268[#268])
+
+
