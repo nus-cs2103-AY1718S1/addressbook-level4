@@ -57,7 +57,7 @@ include::../DeveloperGuide.adoc[tag=profilepicture]
 === External behavior
 
 ---
-#Start of Extract https://github.com/CS2103AUG2017-W10-B3/DeathNote/blob/master/docs/UserGuide.adoc[from: User Guide]#
+#Start of Extract https://github.com/CS2103AUG2017-W10-B3/DeathNote/blob/master/docs/UserGuide.adoc[from: User Guide] written by Jeremy Chan#
 
 include::../UserGuide.adoc[tag=theme]
 
@@ -83,11 +83,9 @@ include::../DeveloperGuide.adoc[tag=theme]
 === External behavior
 
 ---
-#Start of Extract https://github.com/CS2103AUG2017-W10-B3/DeathNote/blob/master/docs/UserGuide.adoc[from: User Guide]#
 
-include::../UserGuide.adoc[tag=website]
-
-#End of Extract#
+Using the `select` command on a contact will load the browser to the contact's website. If the contact has no website,
+the browser will google the contact's name.
 
 === Justification
 
