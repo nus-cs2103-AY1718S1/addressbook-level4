@@ -4,11 +4,10 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :stylesDir: ../stylesheets
 
 == Project Configuration
-1. Run *humanDEX.jar* to generate default files and folder. +
-2. Exit the application. +
-3. Copy *[F11-B01][humanDEX]SampleData.xml* to the generated *data* folder.
-4. Rename *[F11-B01][humanDEX]SampleData.xml* to *addressbook.xml*.
-5. Run *humanDEX.jar* application to begin usage.
+1. Create folder call *data* +
+2. Copy *[F11-B01][humanDEX]SampleData.xml* to *data* folder.
+3. Rename *[F11-B01][humanDEX]SampleData.xml* to *addressbook.xml*.
+4. Run *humanDEX.jar* application to begin usage.
 
 == Testing instruction
 
@@ -77,7 +76,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 3. User sort again +
 
 *Command input* +
-1. sort g/ +
+1. sort p/ +
 2. find g/Saving +
 3. sort +
 
@@ -107,7 +106,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 *Command input* +
 1. list all +
-2. delete index 22 +
+2. delete 22 +
 
 *Command output* +
 1. 22 persons listed! +
