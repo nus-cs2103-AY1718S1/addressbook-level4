@@ -6,9 +6,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DELTAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.Arrays;
-import java.util.Set;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.ComponentManager;
