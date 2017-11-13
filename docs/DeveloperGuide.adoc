@@ -741,7 +741,7 @@ image::SDforDisplayPic.png[width="800"]
 _Figure 5.5.2a shows the interaction between components for `edit 1 dp/` command (part 1)_
 
 The above diagrams shows the series of event when `ArgumentTokenizer` detects the prefix `dp/`. +
-The following code snippets will show how the events are posted within each methods.
+The following code snippets will show how the events are posted within each methods:
 [source, java]
 ---------------
 private static String getCurrentImgPath() {
@@ -840,6 +840,29 @@ The returned path will be stored as the display picture value of a person.
 ---
 // end::displayPic[]
 
+// tag::tagdelete[]
+=== Tag Delete
+This feature is implemented to provide users the ability to delete tags without having to update each person at a time.
+
+The following sequence diagram shows how the tag delete operation works:
+
+image::TagDeleteSequenceDiagram.png[width="800"]
+
+The user will have to provide the command `tagdelete friends` to delete the tag `friends` from all persons in HitMeUp.
+`TagDeleteCommandParser` will parse the argument given after `tagdelete` provided by the user and it will return
+ `TagDeleteCommand`. Next, `TagDeleteCommand` will call its method `executeUndoableCommand()` and ensure that the tag
+ `friends` specified is valid.
+
+==== Design Considerations
+**Aspect:** implementation of `TagDeleteCommand` +
+**Alternative 1 (current choice):** implement it by extending `UndoableCommand` +
+**Pros:** Deleting tags is undoable/redoable +
+**Cons:** May be difficult for new developers to understand the flow +
+**Alternative 2:** just override `execute()` +
+**Pros:** Does not involve template pattern, easier to understand +
+**Cons:** Cannot undo/redo unless `super.execute()` is called
+// end::tagdelete[]
+
 // tag::tagedit[]
 === Tag Edit
 This feature is implemented to provide users the ability to edit tags without having to update each person one at a time.
@@ -873,11 +896,13 @@ features.
 When using the find feature, there are 2 possible cases: +
 
 **Case 1: User input contains only 1 argument** +
+
 In this case there would be 4 possibilities: +
 1) The user is searching for the keyword in the name, +
 2) The user is searching for the keyword in the tags, +
-4) The user is searching for a particular birthday month, +
-3) OR the user is searching for an initial in the names. +
+3) The user is searching for a particular birthday month, +
+4) OR the user is searching for an initial in the names. +
+
 Contacts with the matching name, tag, birthday month or initial will be listed.
 
 
@@ -945,7 +970,7 @@ provided that they have their usernames stored. Currently, HitMeUp supports Twit
 
 The diagram below shows the sequence diagram of a typical social command:
 
-image::SocialSequenceDiagram.png[width="800]
+image::SocialSequenceDiagram.png[width="800"]
 pass:[<div align="center"><b>Figure 3.8.1 Social Command Implementation</b></div>]
 
 As shown above, when the user enters the command `social 1 ig`, `SocialCommandParser` will parse the arguments which
@@ -962,10 +987,9 @@ load the Instagram page of the person at index 1.
 this command the same way +
 *Cons:* New users might instinctively type in the full name Instagram and Twitter instead of using the aliases +
 *Alternative 2:* Use the full name of the social media platform +
-*Pros:* Might be natural for some people to type in the full name +
+*Pros:* Might be natural for some people to type in the full name and is convenient since users type less into the CLI +
 *Cons:* Might not make sense since you add people's social media into their details based on shortcuts and yet in this
-command the full name of the chosen social media is required. Moreover, it might be more user-friendly to allow them to
-type less into the CLI +
+command the full name of the chosen social media is required. +
 // end::social[]
 
 // tag::location[]

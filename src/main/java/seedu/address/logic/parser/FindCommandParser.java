@@ -2,6 +2,7 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.model.person.Birthday.BIRTHDAY_MONTH_REGEX;
 
 import java.util.Arrays;
 
@@ -29,9 +30,18 @@ public class FindCommandParser implements Parser<FindCommand> {
         }
 
         String[] nameKeywords = trimmedArgs.split("\\s+");
-        // Single keyword that contains an non-zero integer
-        if (nameKeywords.length == 1 && StringUtil.isNonZeroUnsignedInteger(nameKeywords[0])) {
-            return new FindCommand(new PersonContainsBirthdayPredicate(nameKeywords[0]));
+        // Single keyword as argument and check that it contains an non-zero integer
+        if (nameKeywords.length == 1) {
+            System.out.println(Character.isLetter(nameKeywords[0].charAt(0)));
+            if (Character.isLetter(nameKeywords[0].charAt(0))) {
+                return new FindCommand(new PersonContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
+            } else if (StringUtil.isNonZeroUnsignedInteger(nameKeywords[0])
+                    && nameKeywords[0].matches(BIRTHDAY_MONTH_REGEX)) {
+                return new FindCommand(new PersonContainsBirthdayPredicate(nameKeywords[0]));
+            } else {
+                throw new ParseException(
+                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+            }
         }
 
         return new FindCommand(new PersonContainsKeywordsPredicate(Arrays.asList(nameKeywords)));

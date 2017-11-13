@@ -67,6 +67,14 @@ Birthday search cannot be used with other keywords.
 The list of contacts should display no contacts. +
 CommandResult should display that 0 person is listed because there is no such birthday month represented by 00.
 
+<<<<<<< HEAD
+[NOTE]
+The find feature is case-insensitive. [Name] will match [name], [Tag] will match [tag], and [Initial] will
+match [initial]
+
+. `find [Initial]` +
+The list of contacts should display [Names] starting with the letter [Initial] in either their last or first name.
+=======
 . `find jessica friends` +
 The list of contacts should display Jessica Jung with the tag friends.
 
@@ -76,9 +84,16 @@ Example jessica will match Jessica but Friends will not match friends.
 
 . `find friends colleagues` +
 The list of contacts should display Tiffany Hwang with both tags friends and colleagues.
+>>>>>>> bd7f7c248711b469ccd96ffcda72d62ab2bae828
 
 . `find friends` +
 The list of contacts should display Jessica Jung and Tiffany Hwang with the same tag friends.
+
+. `find [Name] [Tag1]` +
+The list of contacts should display [Name] with the tag [Tag].
+
+. `find [Tag1] [Tag2]` +
+The list of contacts should display [Name] with both tags [Tag1] [Tag2].
 
 . `find Superman` +
 The list of contacts should display no contacts. +
@@ -88,8 +103,17 @@ CommandResult should display that 0 person is listed because this person does no
 The list of contacts should display no contacts. +
 CommandResult should display that 0 person is listed because birthday search cannot be used with other keywords.
 
+<<<<<<< HEAD
+. `find [Initial] [Name]` +
+The list of contacts should display no contacts. +
+CommandResult should display that 0 person is listed because initial search cannot be used with other keywords.
+
+. Click on the Group List Panel.
+The list of contacts should display [Names] with the same tag [SelectedTag].
+=======
 . Click on the Group labelled friends on the Group List Panel.
 The list of contacts should display Jessica Jung and Tiffany Hwang with the same tag friends.
+>>>>>>> bd7f7c248711b469ccd96ffcda72d62ab2bae828
 
 [NOTE]
 The Group List Panel is located at the leftmost panel. You should click on the tag name to find people who has that tag.

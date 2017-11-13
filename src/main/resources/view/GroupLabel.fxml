@@ -1,18 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
 <!--@@author JunQuann-->
-<HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+
+<HBox id="cardPane" fx:id="cardPane" alignment="CENTER" minHeight="40.0" minWidth="50.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
    <Label fx:id="groupName" alignment="CENTER" minHeight="30.0" minWidth="30.0" style="-fx-alignment: center;" textAlignment="CENTER" HBox.hgrow="ALWAYS">
       <font>
          <Font name="Material Design Icons" size="13.0" />
       </font>
    </Label>
-   <padding>
-      <Insets left="30.0" />
-   </padding>
 </HBox>

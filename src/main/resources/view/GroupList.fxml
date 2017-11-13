@@ -8,11 +8,12 @@
 <?import javafx.scene.text.Font?>
 
 <!--@@author JunQuann-->
-<VBox minWidth="150.0" prefHeight="445.0" prefWidth="150.0" style="-fx-background-radius: 10; -fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+
+<VBox minWidth="180.0" prefHeight="445.0" prefWidth="180.0" style="-fx-background-radius: 10; -fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Pane minHeight="30.0" minWidth="150.0" VBox.vgrow="NEVER">
+      <Pane minHeight="30.0" minWidth="170.0" VBox.vgrow="NEVER">
          <children>
-            <Label alignment="CENTER" layoutX="25.0" layoutY="-3.0" prefHeight="30.0" prefWidth="87.0" text="Groups">
+            <Label alignment="CENTER" layoutX="43.0" layoutY="-3.0" prefHeight="30.0" prefWidth="87.0" text="Groups">
                <font>
                   <Font name="Apple Chancery" size="18.0" />
                </font>

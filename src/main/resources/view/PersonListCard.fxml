@@ -12,9 +12,10 @@
 <?import javafx.scene.text.Font?>
 
 <!--@@author JunQuann-->
+
 <VBox xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <HBox id="cardPane" fx:id="cardPane" prefHeight="90.0" prefWidth="230.0" style="-fx-background-color: transparent;">
+      <HBox id="cardPane" fx:id="cardPane" prefHeight="90.0" prefWidth="230.0" style="-fx-background-color: transparent;" VBox.vgrow="ALWAYS">
          <children>
             <Pane minHeight="25.0" minWidth="70.0" prefHeight="25.0" prefWidth="30.0" HBox.hgrow="NEVER">
                <children>
@@ -37,7 +38,7 @@
                         </Label>
                      </children>
                   </HBox>
-                  <FlowPane fx:id="tags" />
+                  <FlowPane fx:id="tags" maxHeight="50.0" prefWrapLength="600.0" />
                   <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" textFill="#797777">
                      <font>
                         <Font name="Material Design Icons" size="13.0" />
@@ -48,6 +49,12 @@
                   <Insets left="10.0" />
                </padding>
             </VBox>
+            <Pane minHeight="25.0" minWidth="70.0" prefHeight="25.0" prefWidth="30.0">
+               <children>
+                  <Circle fx:id="instaIcon" fill="#f5f9fa" layoutX="15.0" layoutY="45.0" radius="12.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+                  <Circle fx:id="twitterIcon" fill="#f5f9fa" layoutX="51.0" layoutY="45.0" radius="12.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" />
+               </children>
+            </Pane>
          </children>
       </HBox>
       <Separator prefWidth="200.0">

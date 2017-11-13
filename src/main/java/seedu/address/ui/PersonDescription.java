@@ -33,9 +33,6 @@ public class PersonDescription extends UiPart<StackPane> {
     private Label name;
 
     @FXML
-    private Label group;
-
-    @FXML
     private Label mobile;
 
     @FXML
