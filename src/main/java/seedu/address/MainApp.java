@@ -1,6 +1,10 @@
 package seedu.address;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -18,6 +22,8 @@ import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.ConfigUtil;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.email.Email;
+import seedu.address.email.EmailManager;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
 import seedu.address.model.AddressBook;
@@ -40,9 +46,12 @@ import seedu.address.ui.UiManager;
  */
 public class MainApp extends Application {
 
-    public static final Version VERSION = new Version(0, 6, 0, true);
+    public static final Version VERSION = new Version(1, 3, 0, true);
 
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
+    private static final String DEFAULT_PHOTO = "data/images/default.jpeg";
+    private static final String PHOTO_FOLDER = "data/images";
+    private static final String EDITED_FOLDER = "data/edited";
 
     protected Ui ui;
     protected Logic logic;
@@ -50,7 +59,7 @@ public class MainApp extends Application {
     protected Model model;
     protected Config config;
     protected UserPrefs userPrefs;
-
+    protected Email email;
 
     @Override
     public void init() throws Exception {
@@ -66,7 +75,9 @@ public class MainApp extends Application {
 
         initLogging(config);
 
-        model = initModelManager(storage, userPrefs);
+        email = new EmailManager();
+
+        model = initModelManager(storage, userPrefs, email);
 
         logic = new LogicManager(model);
 
@@ -81,14 +92,18 @@ public class MainApp extends Application {
     }
 
     /**
-     * Returns a {@code ModelManager} with the data from {@code storage}'s address book and {@code userPrefs}. <br>
-     * The data from the sample address book will be used instead if {@code storage}'s address book is not found,
-     * or an empty address book will be used instead if errors occur when reading {@code storage}'s address book.
+     * Returns a {@code ModelManager} with the data from {@code storage}'s address book, {@code userPrefs}
+     * and {@code email} <br> The data from the sample address book will be used instead if {@code storage}'s
+     * address book is not found, or an empty address book will be used instead if errors occur when reading
+     * {@code storage}'s address book.
      */
-    private Model initModelManager(Storage storage, UserPrefs userPrefs) {
+    private Model initModelManager(Storage storage, UserPrefs userPrefs, Email email) {
         Optional<ReadOnlyAddressBook> addressBookOptional;
         ReadOnlyAddressBook initialData;
         try {
+            checkIfFilesExist();
+            checkDefaultImage(config);
+
             addressBookOptional = storage.readAddressBook();
             if (!addressBookOptional.isPresent()) {
                 logger.info("Data file not found. Will be starting with a sample AddressBook");
@@ -102,7 +117,7 @@ public class MainApp extends Application {
             initialData = new AddressBook();
         }
 
-        return new ModelManager(initialData, userPrefs);
+        return new ModelManager(initialData, userPrefs, email);
     }
 
     private void initLogging(Config config) {
@@ -189,6 +204,8 @@ public class MainApp extends Application {
 
     @Override
     public void stop() {
+        logger.info("Removing edited folder");
+        removeFiles();
         logger.info("============================ [ Stopping Address Book ] =============================");
         ui.stop();
         try {
@@ -208,5 +225,64 @@ public class MainApp extends Application {
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    //@@author wenzongteo
+    /**
+     * Check if data/images and data/edited folders exist. If they do not exist, create them.
+     */
+    private void checkIfFilesExist() {
+        File imagesFolder = new File(PHOTO_FOLDER);
+        File editedFolder = new File(EDITED_FOLDER);
+
+        if (!imagesFolder.exists()) {
+            imagesFolder.mkdirs();
+            logger.info("Image storage location does not exist. Will be creating 'data/images' folder");
+        } else {
+
+        }
+
+        if (!editedFolder.exists()) {
+            editedFolder.mkdirs();
+            logger.info("Temporary image storage does not exist. Will be creating 'data/edited' folder");
+        } else {
+
+        }
+    }
+
+    /**
+     * Deletes all existing images in data/edited folder first before deleting the folder itself.
+     */
+    private void removeFiles() {
+        File toBeDeletedFolder = new File(EDITED_FOLDER);
+        File[] toBeDeletedImages = toBeDeletedFolder.listFiles();
+        if (toBeDeletedImages != null) {
+            for (File f : toBeDeletedImages) {
+                f.delete();
+            }
+        }
+        toBeDeletedFolder.delete();
+    }
+
+    /**
+     * Copy default photo used in Augustine from the build resource.
+     * @param config Configurations Augustine is using.
+     */
+    private void checkDefaultImage(Config config) {
+        try {
+            InputStream is = this.getClass().getResourceAsStream(config.getDefaultPhoto());
+            byte[] buffer = new byte[is.available()];
+            is.read(buffer);
+
+            File targetFile = new File(DEFAULT_PHOTO);
+            OutputStream outStream = new FileOutputStream(targetFile);
+            outStream.write(buffer);
+            logger.info("Copying default photo over to " + DEFAULT_PHOTO);
+
+        } catch (IOException ioe) {
+            throw new AssertionError("Impossible");
+        } catch (Exception e) {
+            throw new AssertionError("No other exceptions possible");
+        }
     }
 }

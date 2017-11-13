@@ -1,8 +1,9 @@
-= AddressBook Level 4 - User Guide
+= Augustine - User Guide
 :toc:
-:toc-title:
-:toc-placement: preamble
+:toc-title: Contents Page
+:toc-placement: macro
 :sectnums:
+:pagenums:
 :imagesDir: images
 :stylesDir: stylesheets
 :experimental:
@@ -10,243 +11,998 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:repoURL: https://github.com/CS2103AUG2017-W14-B2/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `W14-B2`      Since: `Oct 2017`      Licence: `MIT` +
+Credits: `Team SE-EDU` https://github.com/se-edu/addressbook-level4
 
-== Quick Start
+<<<
+toc::[]
+<<<
 
-.  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
+== Product overview
+
+Every August, a new chapter of your school life begins. You will meet new friends and establish new connections in school,
+and it will be difficult to keep track of them all.
+Let Augustine help you keep track of your friends’ contact numbers, addresses, timetables and birthdays!
+
+== About
+
+This user guide is an overview of the features available in Augustine and how to use them.
+
+
+== Getting started
+
+Follow the steps below to set up Augustine:
+
+. Ensure that you have Java version *`1.8.0_60 or later`* installed on your computer.
 +
 [NOTE]
-Having any Java 8 version is not enough. +
-This app will not work with earlier versions of Java 8.
-+
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
-+
-image::Ui.png[width="790"]
-+
-.  Type the command in the command box and press kbd:[Enter] to execute it. +
-e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
-.  Some example commands you can try:
+Augustine will *not work* with any earlier version of java.
 
-* *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
-* *`exit`* : exits the app
++
+.  Download the latest `augustine.jar` link:https://github.com/CS2103AUG2017-W14-B2/main/releases[here].
+.  Copy the `.jar` file to the folder you want to use as the home folder for Augustine.
+.  Double-click the `.jar` file to start Augustine (see Figure 1).
 
-.  Refer to the link:#features[Features] section below for details of each command.
++
+[caption="Figure 1. "]
+.Augustine at a glance
+image::atAGlance.png[width="790"]
+
++
+
+.  Augustine works through typing commands into the command box and pressing kbd:[Enter] to run them. +
+e.g. typing *`help`* in the command box and pressing kbd:[Enter] will open the help window.
+.  Here are some commands you can try out:
+
+* *`list`*: lists all contacts within Augustine.
+* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`: adds a contact named `John Doe`
+with phone number `98765432`, email address `johnd@example.com` and address `John street, block 123, #01-01` into Augustine.
+* **`delete`**`3`: deletes the third contact *shown in the current list*.
+* *`exit`*: exits Augustine.
+
+.  Refer to the link:#features[Features] section below to learn all of Augustine's commands and their details.
+
+<<<
 
 == Features
+
+Before you continue with this section, do take note of the following:
 
 ====
 *Command Format*
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
-* Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
-* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+* Words in `UPPER_CASE` are *compulsory parameters* that requires your input.
+** For example, if you see `add n/NAME`, `NAME` is a compulsory parameter you have to include in the command.
+** E.g.  `add n/John Doe`
+
+* Words in `square brackets` [ ] are *optional parameters* that can be left unfilled by you.
+** For example, if you see `n/NAME [t/TAG]`, `TAG` is an optional parameter you could choose whether or not to include.
+** E.g. `n/John Doe t/friend`
+
+* Words in `angle brackets` < > separated by a bar `|` requires you to fill up one of the parameters.
+** For example, `< name | tag >` means to input either name or tag, but not both, in your command.
+
+* Words with `…`​ after them are parameters that can be used *multiple times*.
+** For example, `[t/TAG]...` can be left unfilled, but can also be inputted multiple times.
+** E.g. `t/friend`
+** E.g. `t/friend t/family t/brother`
 ====
 
-=== Viewing help : `help`
+[NOTE]
+Augustine accepts parameters in any order. +
+E.g. `n/NAME p/PHONE_NUMBER` and `p/PHONE_NUMBER n/NAME` are interchangeable.
 
-Format: `help`
+=== Viewing help
 
-=== Adding a person: `add`
+The [fuchsia]`help` command will enable you to view this User Guide within Augustine.
 
-Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+===== Format
+
+The format of the [fuchsia]`help` command is as follows:
+
+====
+[fuchsia]#help#
+====
 
 [TIP]
-A person can have any number of tags (including 0)
+You can also press kbd:[F1] on your keyboard instead of typing [fuchsia]`help` to display the User Guide.
 
-Examples:
+===== Example
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+Here is an example of what happens when you type the [fuchsia]`help` command (see Figure 2).
 
-=== Listing all persons : `list`
+[caption="Figure 2. "]
+.User Guide is shown after typing the help command in Augustine
+image::helpCommand.png[width="940px"]
 
-Shows a list of all persons in the address book. +
-Format: `list`
+'''
 
-=== Editing a person : `edit`
+// tag::add[]
+=== Adding a contact: [fuchsia]`add`
 
-Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+The [fuchsia]`add` command will enable you to populate Augustine.
+
+===== Format
+
+The format of the [fuchsia]`add` command is as follows:
+
+====
+[fuchsia]#add n/NAME e/EMAIL [p/PHONE_NUMBER] [a/ADDRESS] [b/BIRTHDATE] [dp/DISPLAY_PICTURE] [insta/USER_ID] [t/TAG]...#
+====
+****
+*Things to take note:* +
+
+* `NAME` of the contact can only contain alphabets
+* `PHONE_NUMBER` of the contact must contain exactly *8 numbers* and start with '6','8' or '9'
+* `DISPLAY_PICTURE` of the contact must be a valid *.jpg* image existing in on your computer.
+* `BIRTHDATE` must contain valid date entries separated in a `dd/mm/yyyy` format
+****
+
+[TIP]
+You can also use the alias `a` instead of typing out `add`.
+[WARNING]
+Augustine will not allow multiple contacts to have the same email address.
+
+===== Examples
+Here are some examples of adding contacts into Augustine:
+
+. [red]*Adding contacts with all the fields filled*
++
+--
+You can add a new contact into Augustine with all the optional fields filled using the command below (see Figure 3).
+
+[horizontal]
+*Command:* :: [fuchsia]`add n/John Wick p/97488235 e/johnw@example.com +
+a/John street, block 123, #01-01 b/01/02/1995`
+
+[caption="Figure 3. "]
+.Executing the add command with all parameters filled
+image::addAll.png[width="940px"]
+--
+
+. [red]*Adding contacts with some optional fields unfilled*
++
+--
+You can also add a new contact into Augustine without filling up all the fields (see Figure 4).
+
+[horizontal]
+*Command:* :: [fuchsia]`add n/Sally Ong e/sally@example.com`
+
+[caption="Figure 4. "]
+.Executing the add command with some optional parameters unfilled
+image::addSome.png[width="840px"]
+
+[NOTE]
+Note that the fields that are unfilled are represented with a '-'.
+--
+
+. [red]*Adding a contact that already exists in Augustine*
++
+--
+You cannot add a new contact that has the same email address as an existing contact in Augustine (see Figure 5).
+
+[horizontal]
+*Command:* :: [fuchsia]`add n/John Wick p/97488235 e/johnw@example.com a/John street, block 123, #01-01 b/01/02/1995`
+
+[caption="Figure 5. "]
+.Executing the add command with a duplicate email address
+image::addFail.png[width="840px"]
+
+--
+'''
+// end::add[]
+
+<<<
+
+=== Listing all contacts: [fuchsia]`list`
+
+The [fuchsia]`list` command displays a list of all your contacts in Augustine. There is also an optional sort command
+that sorts the list by name, tag, email address, or address in alphabetical order.
+
+===== Format
+The format of the [fuchsia]`list` command is as follows:
+
+====
+[fuchsia]#list [ s/<name|tag|email|address> ]#
+====
+
+[TIP]
+You can also use the alias `l` instead of typing out `list`.
+
+'''
+
+// tag::edit[]
+=== Editing a contact: [fuchsia]`edit`
+
+The [fuchsia]`edit` command modifies a contact in Augustine.
+
+===== Format
+The format of the [fuchsia]`edit` command is as follows:
+====
+[fuchsia]#edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BIRTHDATE] [insta/USER_ID] [t/TAG]...#
+====
+****
+*Things to take note:* +
+
+* The command edits the contact at the specified `INDEX`.
+** `INDEX` refers to the index number shown in the list of contacts.
+** The index must be a whole number (1, 2, 3, ...).
+* At least one of the optional fields must be filled.
+* When editing tags, new tags will be added to the contact and existing tags will be removed. (See Example 1)
+* For the rest of the fields, existing values will be replaced by the new ones.
+* NAME and TAG must only consist of alphabets and/or numbers.
+* You can remove all of the contact's tags by typing just `t/` without specifying the tags.
+
+* `PHONE_NUMBER` of the contact must contain exactly *8 numbers* and start with '6','8' or '9'.
+****
+
+[TIP]
+You can also use the alias `e` instead of typing out `edit`.
+
+[WARNING]
+You cannot edit someone to have the exact same details as another contact.
+
+===== Examples
+Here are some examples to guide you with editing contacts in Augustine:
+
+. [red]*Adding and removing tags*
++
+--
+You can add or remove the tags to/from a particular contact using the [fuchsia]`edit` command below (see Figure 6).
+
+[horizontal]
+*Command:* :: [fuchsia]`edit 2 t/colleagues t/friends`
+[]
+
+* Since Bernice was already tagged under "colleagues", this command removes the tag "colleagues" from Bernice.
+* Since Bernice was not already tagged under "friends", this command adds the "friends" tag to Bernice.
+
+[caption="Figure 6. "]
+.Before and after the command's execution
+image::editChangeTag.png[width="940px"]
+
+
+
+--
+
+. [red]*Changing phone number and email*
++
+--
+You can change the phone number and email of a particular contact using [fuchsia]`edit` command below (see Figure 7).
+
+[horizontal]
+*Command:* :: [fuchsia]`edit 2 p/87921929 e/bernice@example.com`
+[]
+
+* The command will change the phone number of Bernice to `87921929` and her email to `bernice@example.com`.
+
+[caption="Figure 7. "]
+.Before and after the command's execution
+image::editChangePhone.png[width="940px"]
+
+
+--
+'''
+// end::edit[]
+
+// tag::find[]
+=== Searching for contacts: [fuchsia]`find`
+
+The [fuchsia]`find` command searches for contacts in Augustine using names or tags as keywords.
+
+===== Format
+The format of the [fuchsia]`find` command is as follows:
+====
+[fuchsia]#find [ n/KEYWORD [MORE_KEYWORDS] ] [ t/KEYWORD [MORE_KEYWORDS] ] [ s/<name | tag | email | address> ]#
+====
 
 ****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
-****
+*Things to take note:* +
 
-Examples:
-
-* `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
-
-=== Locating persons by name: `find`
-
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
-
-****
-* The search is case insensitive. e.g `hans` will match `Hans`
+* The find command requires at least one *tag* or *name* keyword..
+** Find by **tag**: [fuchsia]`find t/tag1 tag2`
+** Find by **name**: [fuchsia]`find n/adam eunice`
+** Find by *name* and **tag**: [fuchsia]`find n/adam eunice t/tag1 tag2`
+* The keywords are **case-insensitive**. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* Contacts matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* The find command results can be be *sorted* by the alphabetic order of *name*, *tag*, *email* or *address*.
+** Find with *sort by name*: [fuchsia]`find n/adam eunice s/name`
+** Find with *sort by tag*: [fuchsia]`find n/adam eunice s/tag`
+** Find with *sort by email*: [fuchsia]`find n/adam eunice s/email`
+** Find with *sort by address*: [fuchsia]`find n/adam eunice s/address`
+* The sort options < name | tag | email | address > are *case-sensitive*.
 ****
 
-Examples:
+[TIP]
+You can also use the alias `f` instead of typing out `find`.
 
-* `find John` +
-Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
+[WARNING]
+You cannot run the find command without typing any keywords.
 
-=== Deleting a person : `delete`
+===== Example
 
-Deletes the specified person from the address book. +
-Format: `delete INDEX`
+Here are some examples of using the find command in Augustine.
+
+. [red]*Finding by name*
++
+--
+You can find contacts by their names (see Figure 8).
+
+[horizontal]
+*Command:* :: [fuchsia]`find n/alex roy`
+
+[caption="Figure 8. "]
+.Results after searching by name
+image::findByName.png[]
+--
+
+. [red]*Finding by tags*
++
+--
+You can find contacts by their tags (see Figure 9).
+
+[horizontal]
+*Command:* :: [fuchsia]`find t/frie colleagues`
+
+[caption="Figure 9. "]
+.Results after searching by tags
+image::findByTag.png[]
+--
+
+. [red]*Finding by name and tag*
++
+--
+You can find contacts by both their names and tags (see Figure 10).
+
+[horizontal]
+*Command:* :: [fuchsia]`find n/adam t/Colleague`
+
+[caption="Figure 10. "]
+.Results after searching by names and tags
+image::findByNameTag.png[]
+--
+
+. [red]*Finding by name with sort option*
++
+--
+You can find contacts and sort the resulting contact list by name, tag, email or address in alphabetical order. Type the command below to
+find users by their names and then sort the resulting contact list by the tags (see Figure 11).
+
+[NOTE]
+Note that the sort option "name", "tag", "email" and "address" are *case-sensitive*.
+
+[horizontal]
+*Command:* :: [fuchsia]`find n/alex roy s/tag`
+
+[caption="Figure 11. "]
+.Result of find contacts by name with the list displayed sorted by tags
+image::findByNameSorted.png[]
+--
+// end::find[]
+'''
+
+=== Deleting a contact: [fuchsia]`delete`
+
+The [fuchsia]`delete` command deletes a specified contact from Augustine.
+
+===== Format
+The format of the [fuchsia]`delete` command is as follows:
+====
+[fuchsia]#delete INDEX#
+====
+****
+*Things to take note:* +
+
+* Deletes the contact at the specified `INDEX`.
+* `INDEX` refers to the index number shown in the the list of contacts.
+* The index must be a whole number (1, 2, 3, ...).
+****
+
+[TIP]
+You can also use the alias `d` instead of typing out `delete`.
+
+===== Example
+
+Here are some examples on using the command to delete contacts:
+
+. [red]*Deleting contact from list*
++
+--
+You can list all the contacts in Augustine and delete the contact by the contact's index.
+The command below deletes the second contact on the list (see Figure 12).
+
+[horizontal]
+*Command:* ::
+. `list` +
+. [fuchsia]`delete 2`
+
+[caption="Figure 12. "]
+.Before and after deleting the second contact on the list
+image::deleteFromList.png[]
+
+--
+
+. [red]*Deleting contact from find results*
++
+--
+You can use the `find` command to first get a list of filtered contacts and then delete a
+contact by its new index. The command below deletes the first contact in the results displayed after
+the `find` command (see Figure 13).
+
+[horizontal]
+*Command:* ::
+. `find Betsy` +
+. [fuchsia]`delete 1`
+
+[caption="Figure 13. "]
+.Before and after deleting the first contact on the list
+image::deleteFromFind.png[]
+
+--
+
+'''
+
+<<<
+
+// tag::nusmods[]
+=== Using NUSmods: [fuchsia]`nusmods`
+
+Augustine is integrated with https://nusmods.com.
+You can use the [fuchsia]`nusmods` command to add, edit or delete modules from a contact's timetable.
+
+Before adding modules to contacts, you will need to open `config.json` and enter the current academic year.
+The config file can be found in the same folder as Augustine.
+
+===== Format
+The format of the [fuchsia]`nusmods` command is as follows:
+====
+[fuchsia]#nusmods INDEX t/<add|delete|url> m/<MODULE_CODE|URL> [LESSON_TYPE/LESSON_SLOT]...#
+====
+****
+*Things to take note:* +
+
+* This command changes the modules of the contact at the specified `INDEX`.
+* `INDEX` refers to the index number shown in the the list of contacts.
+* The index must be a whole number (1, 2, 3, ...).
+* t/ is followed by "add", "delete" or "url".
+** "t/add" will require `m/MODULE_CODE` and at least one `LESSON_TYPE/LESSON_SLOT`
+*** `LESSON_TYPE` refers to the lesson type. Here is a list of possible lesson types:
+**** Dlec
+**** Lec
+**** Lab
+**** Plec
+**** Ptut
+**** Rec
+**** Sec
+**** Sem
+**** Tut
+**** Tut2
+**** Tut3
+*** `LESSON_SLOT` is to indicate which slot the contact is allocated to. For example, "tut/5" means that he belongs in tutorial group 5.
+*** You can use "t/add" to update lesson slots too.
+** "t/delete" will require `m/MODULE_CODE` only.
+** "t/url" will require `m/URL`.
+*** `URL` is a NUSmods URL which already contains all the modules. This will make it easy to share entire timetables instead of manually inserting modules one by one.
+*** This will overwrite all existing modules the contact had.
+****
+
+[TIP]
+You can also use the alias `nm` instead of typing out `nusmods`.
+
+[TIP]
+Most students in NUS use NUSmods, ask them for their timetable URL to save time populating Augustine!
+
+===== Example
+
+Here are some examples of using the [fuchsia]`nusmods` command:
+
+. [red]*Inputting timetable with URL*
++
+--
+The following command will overwrite the timetable of the contact listed at index 1 with the timetable given in the URL.
+You can copy the URL from your friend and paste it into Augustine.
+
+[horizontal]
+*Command:* ::
+`nusmods 1 t/url m/https://nusmods.com/timetable/2017-2018/sem1?cs2101[SEC]=5&CS2103T[TUT]=T5&MA1101R[LAB]=B01&MA1101R[LEC]=SL2&MA1101R[TUT]=T13&CS2010[LEC]=1&CS2010[LAB]=6&CS2010[TUT]=5&GET1020[LEC]=L1` +
+
+--
+
+. [red]*Adding or updating a module and its time slots*
++
+--
+The following command will add the module `MA1101R` 's tutorial group `T13` and lecture slot `SL2` to the timetable of the contact listed at index 2.
+[horizontal]
+*Command:* ::
+`nusmods 2 t/add m/MA1101R lec/SL2 tut/T13` +
+--
+
+. [red]*Removing a module from a contact*
++
+--
+The following command will remove the module `CS2010` from the timetable of the contact listed at index 2.
+
+[horizontal]
+*Command:* ::
+`nusmods 2 t/remove m/CS2010` +
+
+--
+
+// end::nusmods[]
+
+'''
+
+=== Displaying a contact's timetable: [fuchsia]`select`
+
+After you have set a timetable to a contact with the [fuchsia]`nusmods` command, you can
+use the [fuchsia]`select` command to display the timetable of a contact through the NUSmods website.
+
+===== Format
+The format of the [fuchsia]`select` command is as follows:
+====
+[fuchsia]#select INDEX#
+====
+****
+*Things to take note:* +
+
+* This command selects the contact specified at `INDEX` and loads the NUSmods webpage with the timetable belonging to the contact.
+* `INDEX` refers to the index number shown in the the list of contacts.
+* The index must be a whole number (1, 2, 3, ...).
+****
+
+[TIP]
+You can also use the alias `s` instead of typing out `select`.
+
+===== Example
+
+Here are some examples of using the [fuchsia]`select` command:
+
+. [red]*Selecting a contact from list results*
++
+--
+You can list all the contacts in Augustine and select the contact by the contact's index (see Figure 14).
+
+[horizontal]
+*Command:* ::
+. `list` +
+. [fuchsia]`select 2`
+
+[caption="Figure 14. "]
+.After contact is selected
+image::select2after.png[width="940px"]
+
+--
+
+. [red]*Selecting a contact from find results*
++
+--
+You can first use the `find` command to get a list of filtered contacts and then select the
+contact by its new index. The command below selects the first contact on the results displayed after the `find` command.
+
+[horizontal]
+*Command:* ::
+. `find Betsy` +
+. [fuchsia]`select 1`
+--
+
+'''
+
+// tag::email[]
+=== Emailing contacts: [fuchsia]`email`
+
+The [fuchsia]`email` command sends an email to all contacts from the last displayed contact list in Augustine.
+
+===== Format
+The format of the [fuchsia]`email` command is as follows:
+====
+[fuchsia]#email [ em/MESSAGE ] [ es/SUBJECT ] [ el/adam@gmail.com:password ] [et/<clear|send> ]#
+====
+****
+*Things to take note:* +
+
+* This command requires the *message* (em/), *subject* (es/), *Gmail address/password* (el/) fields to be filled
+and at least one contact displayed on the contact list before an email can be sent out.
+* The email account used in the command must be a *Gmail* account.
+* The setting *"Allow less secure apps"* must be enabled for the Gmail account.
+** Go to your Google account -> Your Account -> Sign in and Security -> Allow Less Secure App:OFF
+** Change it to "Allow less secure app:ON"
+* This command will create an email draft if the command does not include `et/send`.
+* To create an email draft:
+** Add *message* to email draft: [fuchsia]`email em/message to send`
+** Add *subject* to email draft: [fuchsia]`email es/subject of email`
+** *Login* to Gmail: [fuchsia]`email el/adam@gmail.com:password`
+* To send an email:
+** Send the current email draft: [fuchsia]`email et/send`
+** Create a new email draft and *send*: [fuchsia]`email em/message es/subject
+el/adam@gmail.com:password et/send`
+* The email will be sent to all contacts currently displayed in Augustine contact list tab (see Example 1).
+****
+
+===== Example
+Here are some examples of using the email command:
+
+. [red]*Composing an email draft*
++
+--
+You can compose an email draft in Augustine (see Figure 15).
+
+[NOTE]
+Note that the email draft is stored until Augustine exits or after it is sent.
+
+[horizontal]
+*Command:* :: [fuchsia]`email em/message es/subject`
+
+[caption="Figure 15. "]
+.Result of email command
+image::emailStep1.png[]
+
+--
+
+. [red]*Logging in to email*
++
+--
+You have to login to your Gmail account before you can send an email (see Figure 16).
+
+[WARNING]
+The email you login with *must be a Gmail account*.
+
+[NOTE]
+The setting *"Allow less secure apps"* must be enabled for the Google account used.
+
+[horizontal]
+*Command:* :: [fuchsia]`email el/adam@gmail.com:password`
+
+[caption="Figure 16. "]
+.Result of email command
+image::emailStep2.png[]
+
+--
+
+. [red]*Sending the draft email*
++
+--
+After following the above examples, you would have successfully composed a draft email
+and logged onto to your Gmail account. To send out that email, simply use the command below: (see Figure 17).
+
+[NOTE]
+Note that you must have *at least 1 contact* in your current displayed contact list.
+
+[horizontal]
+*Command:* :: [fuchsia]`email et/send`
+
+[caption="Figure 17. "]
+.Result of email command
+image::emailStep3.png[width="780px"]
+
+--
+
+. [red]*Composing and sending the email draft in one single command*
++
+--
+You can compose an email and send it to all contacts displayed in your current contact list
+in one single command (see Figure 18).
+
+[horizontal]
+*Command:* ::
+. `list` +
+. [fuchsia]`email em/message es/subject el/adam@gmail.com:password et/send`
+
+[caption="Figure 18. "]
+.Result of email command
+image::emailSingleCommand.png[]
+
+--
+
+. [red]*Clearing the current email draft in Augustine*
++
+--
+You can clear the email draft stored in Augustine (see Figure 19).
+
+[NOTE]
+Email drafts are only stored in Augustine until Augustine exits.
+
+[horizontal]
+*Command:* :: [fuchsia]`email et/clear`
+
+[caption="Figure 19. "]
+.Result of email command.
+image::emailClear.png[]
+--
+// end::email[]
+
+'''
+
+<<<
+
+// tag::birthday[]
+=== Displaying birthday tab
+
+The Birthdays tab lists all your existing contacts starting from the contact with the closest upcoming birthday.
 
 ****
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
+*Things to take note:* +
+
+* You cannot edit Augustine data using the contacts' ordering in the Birthdays tab. You should be referring to the main Contact List tab
+to make changes to the data.
+* You do not need to manually update the Birthdays tab, any changes made to the data will be reflected in both the Contact List
+and Birthdays tab automatically.
 ****
 
-Examples:
+[TIP]
+The contact whose birthday is today (according to system time) will be highlighted in blue. Send him your well wishes!
+(see Figure 20)
 
-* `list` +
-`delete 2` +
-Deletes the 2nd person in the address book.
-* `find Betsy` +
-`delete 1` +
-Deletes the 1st person in the results of the `find` command.
+[caption="Figure 20. "]
+.Birthdays tab with highlighted contact
+image::happyBirthdayJohnCena.png[width="440px"]
+--
+--
+// end::birthday[]
+'''
 
-=== Selecting a person : `select`
+<<<
 
-Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
+// tag::insta[]
+=== Displaying Instagram tab: [fuchsia]`insta`
+
+The Instagram tab allows you to view the Instagram profile of the selected contact.
+
+===== Format
+
+The format of the [fuchsia]`insta` command is as follows:
+
+====
+[fuchsia]#insta INDEX#
+====
+
+[TIP]
+You can also use the alias `i` instead of typing out `insta`.
 
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
+*Things to take note:* +
+
+* You could log on to Instagram like you would on a normal web browser to be able to view the private accounts you follow.
+* If you do not manually log out, you will stay logged on until Augustine is closed. Augustine will not store any of your
+personal information.
+* If you do not have a contact's Instagram account ID, this tab will redirect you to the Instagram home page.
+* You could also manually click on the tab and contact card if you prefer that to using the command.
 ****
 
-Examples:
+===== Example
+Here is an example of the Instagram command: (see Figure 21)
 
-* `list` +
-`select 2` +
-Selects the 2nd person in the address book.
-* `find Betsy` +
-`select 1` +
-Selects the 1st person in the results of the `find` command.
+[caption="Figure 21. "]
+.Instagram tab in action
+image::instagram.png[width="1425px"]
+--
+--
+// end::insta[]
+'''
 
-=== Listing entered commands : `history`
+<<<
 
-Lists all the commands that you have entered in reverse chronological order. +
-Format: `history`
+// tag::backup[]
+=== Backing up Augustine data: [fuchsia]`backup`
+
+The [fuchsia]`backup` saves the current contacts data in a separate file, found at `/data/addressbook-backup.xml`.
+
+===== Format
+The format of the [fuchsia]`backup` command is as follows:
+====
+[fuchsia]#backup#
+====
+[TIP]
+You can also use the alias `b` instead of typing out `backup`.
+
+// end::backup[]
+'''
+
+=== Listing entered commands: [fuchsia]`history`
+
+The [fuchsia]`history` command lists all the commands that you have entered in
+reverse chronological order.
+
+===== Format
+The format of the [fuchsia]`history` command is as follows:
+====
+[fuchsia]#history#
+====
 
 [NOTE]
 ====
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
 
-// tag::undoredo[]
-=== Undoing previous command : `undo`
+'''
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
-Format: `undo`
+// tag::undoredo[]
+=== Undoing previous command: [fuchsia]`undo`
+
+The [fuchsia]`undo` command restores Augustine to the state before the previous _undoable_ command was executed.
+
+===== Format
+The format of the [fuchsia]`undo` command is as follows:
+====
+[fuchsia]#undo#
+====
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: the commands that modify Augustine's contents (`add`, `delete`, `edit` and `clear`).
+====
+[TIP]
+====
+You can press kbd:[Ctrl+Z] to undo quickly.
 ====
 
-Examples:
+===== Example
 
-* `delete 1` +
-`list` +
-`undo` (reverses the `delete 1` command) +
+Here are some examples of undoing commands in Augustine:
 
-* `select 1` +
-`list` +
-`undo` +
-The `undo` command fails as there are no undoable commands executed previously.
+. [red]*Undoing delete command*
++
+--
+You can use the [fuchsia]`undo` command to reverse the `delete 1` command.
 
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
+[horizontal]
+*Command:* ::
+. `delete 1` +
+. `list` +
+. [fuchsia]`undo` (reverse the `delete 1` command)
+--
 
-=== Redoing the previously undone command : `redo`
+. [red]*Running an invalid undo command*
++
+--
+You cannot use the [fuchsia]`undo` command if there were no prior _undoable_ commands executed.
+The following [fuchsia]`undo` command will fail.
 
-Reverses the most recent `undo` command. +
-Format: `redo`
+[horizontal]
+*Command:* ::
+. `select 1` +
+. `list` +
+. [fuchsia]`undo` (fails)
 
-Examples:
+--
 
-* `delete 1` +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
+. [red]*Undoing multiple commands*
++
+--
+You can use the [fuchsia]`undo` command more than once to undo multiple commands.
 
-* `delete 1` +
-`redo` +
-The `redo` command fails as there are no `undo` commands executed previously.
+[horizontal]
+*Command:* ::
+. `delete 1` +
+. `clear` +
+. [fuchsia]`undo` (reverses the `clear` command) +
+. [fuchsia]`undo` (reverse the `delete 1` command)
 
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
-`redo` (reapplies the `clear` command) +
-// end::undoredo[]
+--
 
-=== Clearing all entries : `clear`
+'''
 
-Clears all entries from the address book. +
-Format: `clear`
+=== Redoing the previously undone command: [fuchsia]`redo`
 
-=== Exiting the program : `exit`
+The [fuchsia]`redo` command reverses the most recent `undo` command.
 
-Exits the program. +
-Format: `exit`
+===== Format
+The format of the [fuchsia]`redo` command is as follows:
+====
+[fuchsia]#redo#
+====
+
+[TIP]
+====
+You can press kbd:[Ctrl+Y] to redo quickly.
+====
+
+===== Example
+
+. [red]*Redoing the last undo command*
++
+--
+You can use the [fuchsia]`redo` command to reverse the `undo` command.
+
+[horizontal]
+*Command:* ::
+. `delete 1` +
+. `undo` (reverse the `delete 1` command) +
+. [fuchsia]`redo` (reapplies the `delete 1` command)
+--
+
+. [red]*Running an invalid redo command*
++
+--
+You cannot use the [fuchsia]`redo` command if there were no prior `undo` commands executed.
+
+[horizontal]
+*Command:* ::
+. `delete 1` +
+. [fuchsia]`redo` (fails)
+--
+
+. [red]*Running multiple redo commands*
++
+--
+You can use the [fuchsia]`redo` command more than once to reverse multiple `undo` commands.
+
+[horizontal]
+*Command:* ::
+. `delete 1` +
+. `clear` +
+. `undo` (reverse the `clear` command) +
+. `undo` (reverse the `delete 1` command) +
+. [fuchsia]`redo` (reapplies the `delete 1` command) +
+. [fuchsia]`redo` (reapplies the `clear` command)
+--
+
+'''
+
+=== Clearing all entries: [fuchsia]`clear`
+
+The [fuchsia]`clear` command clears all entries from Augustine.
+
+===== Format
+The format of the [fuchsia]`clear` command is as follows:
+====
+[fuchsia]#clear#
+====
+
+=== Exiting the program: [fuchsia]`exit`
+
+The [fuchsia]`exit` command exits Augustine.
+
+===== Format
+The format of the [fuchsia]`exit` command is as follows:
+====
+[fuchsia]#exit#
+====
 
 === Saving the data
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
+Augustine data is automatically saved to your hard disk whenever a command changes it. +
 There is no need to save manually.
 
 == FAQ
 
-*Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+*Q*: How do I transfer my data to another computer? +
+*A*: Install Augustine on that other computer and overwrite the `addressbook.xml` file generated there
+(located at `/data/addressbook.xml` from the program's root directory) with the one from your original.
+
+<<<
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX` +
-e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *List* : `list`
-* *Help* : `help`
-* *Select* : `select INDEX` +
-e.g.`select 2`
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
+|===
+|Feature|Command|Alias|Example
+|*Add*|`add n/NAME e/EMAIL [p/PHONE_NUMBER] [a/ADDRESS] [dp/DISPLAY_PICTURE] [b/BIRTHDATE] [insta/USER_ID] [t/TAG]...` +|a|`add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague` +
+|*Clear*|`clear`|c|`clear` +
+|*Delete*|`delete INDEX` +|d|`delete 3` +
+|*Edit*|`edit INDEX [n/NAME] [e/EMAIL] [p/PHONE_NUMBER] [a/ADDRESS] [dp/DISPLAY_PICTURE] [b/BIRTHDATE] [insta/USER_ID] [t/TAG]...` +|e|`edit 2 n/James Lee e/jameslee@example.com` +
+|*Find*|`find KEYWORD [n/KEYWORD [MORE_KEYWORDS]] [t/KEYWORD [MORE_KEYWORDS]] [s/<name\|tag\|email\|address>]` +|f|`find n/James Jake` +
+|*List*|`list [s/<name\|tag\|email\|address>]` +|l|`list`  +
+|*Help*|`help` +|h|`help` +
+|*Select*|`select INDEX` +|s|`select 2` +
+|*Email*|`email [em/MESSAGE] [es/SUBJECT] [el/user@gmail.com:password] [et/<send\|clear>]` +|em|`email em/message es/subject el/adam@gmail.com:password et/send`
+|*Instagram*|`insta INDEX`|i|`insta 3` +
+|*NUSmods*|`nusmods INDEX t/<add\|delete\|url> m/<MODULE_CODE\|URL> [LESSON_TYPE/LESSON_SLOT]...`|nm|`nusmods 2 t/add m/CS2103T tut/T5` +
+|*Exit*|`exit`|-|`exit` +
+|*Backup*|`backup`|b|`backup` +
+|*History*|`history`|h|`history` +
+|*Undo*|`undo`|u|`undo` +
+|*Redo*|`redo`|r|`redo` +
+|===
+
+<<<
+
+== Glossary
+
+NUSmods
+
+....
+A website which can create and display NUS timetables.
+....

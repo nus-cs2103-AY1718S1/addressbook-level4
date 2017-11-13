@@ -5,31 +5,57 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.function.Predicate;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import javafx.collections.ObservableList;
+import seedu.address.email.Email;
+import seedu.address.email.message.MessageDraft;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.person.EmailAddress;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Photo;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
+import seedu.address.testutil.ImageInit;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
+
+    @Before
+    public void setUp() {
+        ImageInit.checkDirectories();
+        ImageInit.initPictures();
+    }
+
+    @After
+    public void recovery() {
+        ImageInit.deleteEditedFiles();
+        ImageInit.deleteImagesFiles();
+    }
 
     @Test
     public void constructor_nullPerson_throwsNullPointerException() {
@@ -62,7 +88,7 @@ public class AddCommandTest {
     @Test
     public void equals() {
         Person alice = new PersonBuilder().withName("Alice").build();
-        Person bob = new PersonBuilder().withName("Bob").build();
+        Person bob = new PersonBuilder().withName("Bob").withEmailAddress("bob@email.com").build();
         AddCommand addAliceCommand = new AddCommand(alice);
         AddCommand addBobCommand = new AddCommand(bob);
 
@@ -113,6 +139,35 @@ public class AddCommandTest {
         }
 
         @Override
+        public void backupAddressBook() {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public Email getEmailManager() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public String addImage(EmailAddress emailAddress, Photo photo) throws IOException {
+            String folder = "data/images/";
+            File imageFolder = new File(folder);
+
+            if (!imageFolder.exists()) {
+                imageFolder.mkdir();
+            } else {
+
+            }
+
+            String destination = folder + emailAddress.toString() + ".jpg";
+            Path sourcePath = Paths.get(photo.toString());
+            Path destPath = Paths.get(destination);
+            Files.copy(sourcePath, destPath, StandardCopyOption.REPLACE_EXISTING);
+            return folder + emailAddress.toString() + ".jpg";
+        }
+
+        @Override
         public void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
             fail("This method should not be called.");
         }
@@ -130,7 +185,49 @@ public class AddCommandTest {
         }
 
         @Override
+        public ObservableList<ReadOnlyPerson> getFilteredPersonListBirthdate() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public void sortFilteredPersons(int sortOrder) {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void deleteTag(Tag tag) {
+            fail("This method should not not be called.");
+        }
+
+        @Override
+        public void loginEmail(String [] loginDetails) {
+            fail("This method sould not be called.");
+        }
+
+        @Override
+        public void sendEmail(MessageDraft message) {
+            fail("This method sould not be called.");
+        }
+
+        @Override
+        public String getEmailStatus() {
+            fail("This method sould not be called.");
+            return "";
+        }
+
+        @Override
+        public void clearEmailDraft() {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void draftEmail(MessageDraft message) {
             fail("This method should not be called.");
         }
     }

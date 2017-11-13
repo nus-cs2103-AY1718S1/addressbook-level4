@@ -11,6 +11,7 @@ import org.testfx.api.FxToolkit;
 
 import guitests.guihandles.BrowserPanelHandle;
 import guitests.guihandles.CommandBoxHandle;
+import guitests.guihandles.LeftDisplayPanelHandle;
 import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.MainWindowHandle;
 import guitests.guihandles.PersonListPanelHandle;
@@ -20,6 +21,7 @@ import javafx.stage.Stage;
 import seedu.address.TestApp;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.model.AddressBook;
+import seedu.address.testutil.ImageInit;
 import seedu.address.testutil.TypicalPersons;
 
 /**
@@ -49,6 +51,9 @@ public abstract class AddressBookGuiTest {
 
     @Before
     public void setup() throws Exception {
+        ImageInit.checkDirectories();
+        ImageInit.initPictures();
+
         FxToolkit.setupStage((stage) -> {
             this.stage = stage;
         });
@@ -57,6 +62,12 @@ public abstract class AddressBookGuiTest {
 
         mainWindowHandle = new MainWindowHandle(stage);
         mainWindowHandle.focus();
+    }
+
+    @After
+    public void recovery() throws Exception {
+        ImageInit.deleteEditedFiles();
+        ImageInit.deleteImagesFiles();
     }
 
     /**
@@ -91,6 +102,10 @@ public abstract class AddressBookGuiTest {
         return mainWindowHandle.getResultDisplay();
     }
 
+    protected LeftDisplayPanelHandle getLeftDisplayPanel() {
+        return mainWindowHandle.getLeftDisplayPanel();
+    }
+
     /**
      * Runs {@code command} in the application's {@code CommandBox}.
      * @return true if the command was executed successfully.
@@ -111,5 +126,4 @@ public abstract class AddressBookGuiTest {
         EventsCenter.clearSubscribers();
         FxToolkit.cleanupStages();
     }
-
 }

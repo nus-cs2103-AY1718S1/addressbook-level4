@@ -1,5 +1,7 @@
 package seedu.address.testutil;
 
+import java.io.IOException;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -31,6 +33,8 @@ public class AddressBookBuilder {
             addressBook.addPerson(person);
         } catch (DuplicatePersonException dpe) {
             throw new IllegalArgumentException("person is expected to be unique.");
+        } catch (IOException ioe) {
+            throw new IllegalArgumentException("photo is expected to exist");
         }
         return this;
     }

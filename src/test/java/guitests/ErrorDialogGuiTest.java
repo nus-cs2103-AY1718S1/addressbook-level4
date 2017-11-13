@@ -8,14 +8,29 @@ import static seedu.address.ui.UiManager.FILE_OPS_ERROR_DIALOG_STAGE_TITLE;
 
 import java.io.IOException;
 
+import org.junit.After;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import guitests.guihandles.AlertDialogHandle;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
+import seedu.address.testutil.ImageInit;
 
 public class ErrorDialogGuiTest extends AddressBookGuiTest {
 
     private static final IOException IO_EXCEPTION_STUB = new IOException("Stub");
+
+    @BeforeClass
+    public static void init() {
+        ImageInit.checkDirectories();
+        ImageInit.initPictures();
+    }
+
+    @After
+    public void recovery() {
+        ImageInit.deleteEditedFiles();
+        ImageInit.deleteImagesFiles();
+    }
 
     @Test
     public void showErrorDialogs() {
@@ -28,5 +43,4 @@ public class ErrorDialogGuiTest extends AddressBookGuiTest {
         assertEquals(FILE_OPS_ERROR_DIALOG_CONTENT_MESSAGE + ":\n" + IO_EXCEPTION_STUB.toString(),
                 alertDialog.getContentText());
     }
-
 }

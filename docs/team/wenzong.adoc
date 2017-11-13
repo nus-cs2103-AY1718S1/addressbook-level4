@@ -1,0 +1,97 @@
+= Teo Wen Zong - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Introduction
+
+Thank you for visiting my Project Portfolio. I am Wen Zong, a year 2 Computer Science undergraduate at the
+National University of Singapore, School of Computing and I am expected to graduate in December 2019.
+
+== Purpose
+
+This Project Portfolio page is created to showcase my experiences in Software Engineering to potential employers,
+academic programs and other interested people my experiences in Software Engineering thus far. If you are keen on
+contacting me further for possible collaborations, please email me at wenzongteo[at]hotmail[dot]com.
+
+== Project: Augustine
+
+*Code contributed*: +
+Functional Code: [https://github.com/CS2103AUG2017-W14-B2/main/blob/master/collated/main/wenzongteo.md[Main file]] +
+Test Code: [https://github.com/CS2103AUG2017-W14-B2/main/blob/master/collated/test/wenzongteo.md[Main file]]
+
+---
+
+=== Software Overview
+
+Augustine is a virtual Address Book that is created to help NUS students in managing their contacts.
+Command Line Interface (CLI) is the primary mean of interaction between the user and Augustine. A Graphical User
+Interface (GUI) component is also present in Augustine to provide the user, visual feedback to commands that are
+performed.
+
+---
+
+=== Enhancement Added: Alias for all Commands in Augustine
+
+==== Justification
+
+The previous implementation requires the user to type out the command word for a command in the command box to
+execute the corresponding command. However, this hinders the user experience of an experienced user as an experienced
+user will find it a hassle to type out the command word of a command. Therefore, I have implemented the alias
+enhancement for all the commands in Augustine so that users are able to execute a command without the need to type out
+the entire command word in the command box.
+
+---
+
+=== Enhancement Added: Optional Fields within Augustine
+
+include::../UserGuide.adoc[tag=add]
+
+---
+
+==== Justification
+
+The previous implementation only allow an user to add a contact into Augustine when the user inputs data for all of
+the attributes of a contact in Augustine. However, it is unlikely that a user will know all the particulars of their
+contacts. Therefore, I have implemented the optional fields enhancement onto Augustine so that a user only need to
+input the name and email address of a contact to add the contact into Augustine. The name and email address of each
+contact are compulsory as these are the two fields for a contact the user will definitely.
+
+<<<
+
+==== Implementation
+
+include::../DeveloperGuide.adoc[tag=optionalfields]
+
+<<<
+
+=== Enhancement Added: Photo for a Contact
+
+==== Implementation
+
+include::../DeveloperGuide.adoc[tag=imagestorage]
+
+==== Justification
+
+There could be different contacts with the same name in Augustine. While the email of a contact can also act as an
+identifier for a user, it's hard for the user to associate an email address to a contact. A photo for a contact can
+help an user to easily identify a contact in Augustine. Therefore, I have implemented a photo field in Augustine to
+enable the user to assign a photo to each contact in Augustine.
+
+---
+
+=== Other contributions
+
+I have also contributed to the project in the following ways:
+
+* Documentations
+** Created the Front Page and Contents Page for both the Developer and User Guides.
+** Wrote the Software Overview, About, Getting Started sections in the Developer Guide.
+** Edited the Logic Component section in the Developer Guide.
+
+* User Interface (UI)
+** Added icons into PersonCard to aid users in identifying the different fields of a contact.
+
+* Testing
+** Collated and contributed to TestScript.adoc.
+** Conducted Acceptance Testing for another Team (W10-B4) and have successfully reported several bugs.

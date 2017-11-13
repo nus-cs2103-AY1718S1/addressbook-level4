@@ -7,6 +7,8 @@ import java.io.FileNotFoundException;
 
 import javax.xml.bind.JAXBException;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -14,6 +16,7 @@ import org.junit.rules.ExpectedException;
 import seedu.address.model.AddressBook;
 import seedu.address.storage.XmlSerializableAddressBook;
 import seedu.address.testutil.AddressBookBuilder;
+import seedu.address.testutil.ImageInit;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.TestUtil;
 
@@ -28,6 +31,18 @@ public class XmlUtilTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
+    @Before
+    public void init() {
+        ImageInit.checkDirectories();
+        ImageInit.initPictures();
+        ImageInit.initDefault();
+    }
+
+    @After
+    public void recovery() {
+        ImageInit.deleteEditedFiles();
+        ImageInit.deleteImagesFiles();
+    }
     @Test
     public void getDataFromFile_nullFile_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);

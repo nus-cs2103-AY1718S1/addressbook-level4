@@ -8,9 +8,9 @@ import seedu.address.commons.exceptions.IllegalValueException;
  * Represents a Tag in the address book.
  * Guarantees: immutable; name is valid as declared in {@link #isValidTagName(String)}
  */
-public class Tag {
+public class Tag implements Comparable<Tag> {
 
-    public static final String MESSAGE_TAG_CONSTRAINTS = "Tags names should be alphanumeric";
+    public static final String MESSAGE_TAG_CONSTRAINTS = "Tags names should be only contain letters and digits";
     public static final String TAG_VALIDATION_REGEX = "\\p{Alnum}+";
 
     public final String tagName;
@@ -54,5 +54,12 @@ public class Tag {
     public String toString() {
         return '[' + tagName + ']';
     }
+
+    //@@author awarenessxz
+    @Override
+    public int compareTo(Tag o) {
+        return this.tagName.compareTo(o.tagName);
+    }
+    //@@author
 
 }

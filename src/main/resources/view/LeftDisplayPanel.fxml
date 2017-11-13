@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- @@author awarenessxz -->
+
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<TabPane fx:id="leftDisplayPanel" minWidth="450" prefWidth="450" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+  <tabs>
+    <Tab fx:id="personListTab" text="Contact List">
+         <content>
+            <VBox fx:id="personList" minWidth="450" prefWidth="450">
+               <children>
+                  <StackPane fx:id="personListPanelPlaceholder" prefHeight="150.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+               </children>
+            </VBox>
+         </content>
+    </Tab>
+    <Tab fx:id="emailDraftTab" text="Email Draft">
+         <content>
+            <StackPane fx:id="messageDraftPanelPlaceholder" prefHeight="150.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+         </content>
+    </Tab>
+      <Tab fx:id="birthdateTab" text="Birthdays">
+          <content>
+              <VBox fx:id="birthdayList" minWidth="450" prefWidth="450">
+                  <children>
+                      <StackPane fx:id="birthdatePanelPlaceholder" prefHeight="150.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+                  </children>
+              </VBox>
+          </content>
+      </Tab>
+  </tabs>
+</TabPane>

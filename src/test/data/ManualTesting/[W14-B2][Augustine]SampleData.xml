@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addressbook>
+    <persons>
+        <name>Baby</name>
+        <phone>-</phone>
+        <emailAddress>baby@example.com</emailAddress>
+        <photo>baby@example.com.jpg</photo>
+        <address>Singapore</address>
+        <birthdate>01/01/2016</birthdate>
+        <id>-</id>
+        <tagged>niece</tagged>
+        <tagged>baby</tagged>
+    </persons>
+    <persons>
+        <name>Black Widow</name>
+        <phone>98761247</phone>
+        <emailAddress>black@example.com</emailAddress>
+        <photo>black@example.com.jpg</photo>
+        <address>Tampinese Avenue 2, #09-111</address>
+        <birthdate>16/03/1988</birthdate>
+        <id>-</id>
+        <tagged>avengers</tagged>
+    </persons>
+    <persons>
+        <name>Captain America</name>
+        <phone>98761246</phone>
+        <emailAddress>captain@example.com</emailAddress>
+        <photo>captain@example.com.jpg</photo>
+        <address>Blk 686 Hougang St 23</address>
+        <birthdate>25/09/1950</birthdate>
+        <id>-</id>
+        <tagged>avengers</tagged>
+    </persons>
+    <persons>
+        <name>Dwayne Johnson</name>
+        <phone>98761232</phone>
+        <emailAddress>dwayne@example.com</emailAddress>
+        <photo>dwayne@example.com.jpg</photo>
+        <address>514 S. Magnolia St. Orlando, FL 32806</address>
+        <birthdate>26/04/1985</birthdate>
+        <id>-</id>
+        <tagged>muscles</tagged>
+        <tagged>gym</tagged>
+        <tagged>coach</tagged>
+    </persons>
+    <persons>
+        <name>Emma Watson</name>
+        <phone>98761236</phone>
+        <emailAddress>emma@example.com</emailAddress>
+        <photo>emma@example.com.jpg</photo>
+        <address>blk 145 Ang mo kio ave 6</address>
+        <birthdate>11/07/1990</birthdate>
+        <id>-</id>
+        <tagged>actress</tagged>
+        <tagged>wizard</tagged>
+    </persons>
+    <persons>
+        <name>Gary</name>
+        <phone>98761239</phone>
+        <emailAddress>gary@example.com</emailAddress>
+        <photo>gary@example.com.jpg</photo>
+        <address>Running State, #02-11</address>
+        <birthdate>15/11/1981</birthdate>
+        <id>-</id>
+        <tagged>korean</tagged>
+        <tagged>runningman</tagged>
+        <tagged>peaceful</tagged>
+    </persons>
+    <persons>
+        <name>Gwen Stacy</name>
+        <phone>98761234</phone>
+        <emailAddress>gwen@example.com</emailAddress>
+        <photo>gwen@example.com.jpg</photo>
+        <address>Buried under ground</address>
+        <birthdate>18/11/1983</birthdate>
+        <id>-</id>
+        <tagged>actress</tagged>
+        <tagged>dead</tagged>
+        <tagged>spiderman</tagged>
+    </persons>
+    <persons>
+        <name>Haha</name>
+        <phone>98761241</phone>
+        <emailAddress>haha@example.com</emailAddress>
+        <photo>haha@example.com.jpg</photo>
+        <address>Running State, #02-13</address>
+        <birthdate>19/08/1982</birthdate>
+        <id>-</id>
+        <tagged>korean</tagged>
+        <tagged>married</tagged>
+        <tagged>runningman</tagged>
+    </persons>
+    <persons>
+        <name>Harry Potter</name>
+        <phone>98761235</phone>
+        <emailAddress>harry@example.com</emailAddress>
+        <photo>harry@example.com.jpg</photo>
+        <address>blk 144 Ang mo kio ave 6</address>
+        <birthdate>15/11/1990</birthdate>
+        <id>-</id>
+        <tagged>wizard</tagged>
+    </persons>
+    <persons>
+        <name>Hulk</name>
+        <phone>98761248</phone>
+        <emailAddress>hulk@example.com</emailAddress>
+        <photo>hulk@example.com.jpg</photo>
+        <address>Tampinese Avenue 2, #09-120</address>
+        <birthdate>17/04/1980</birthdate>
+        <id>-</id>
+        <tagged>green</tagged>
+        <tagged>avengers</tagged>
+        <tagged>rage</tagged>
+    </persons>
+    <persons>
+        <name>Ironman</name>
+        <phone>98761245</phone>
+        <emailAddress>iron@example.com</emailAddress>
+        <photo>iron@example.com.jpg</photo>
+        <address>Stark Towers</address>
+        <birthdate>02/11/1980</birthdate>
+        <id>-</id>
+        <tagged>professor</tagged>
+        <tagged>avengers</tagged>
+    </persons>
+    <persons>
+        <name>IU</name>
+        <phone>98761237</phone>
+        <emailAddress>iu@example.com</emailAddress>
+        <photo>iu@example.com.jpg</photo>
+        <address>blk 146 Ang mo kio ave 6</address>
+        <birthdate>22/09/1991</birthdate>
+        <id>-</id>
+        <tagged>singer</tagged>
+        <tagged>korean</tagged>
+    </persons>
+    <persons>
+        <name>Jack Sparrow</name>
+        <phone>98761233</phone>
+        <emailAddress>jack@example.com</emailAddress>
+        <photo>jack@example.com.jpg</photo>
+        <address>Black Pearl out in the sea</address>
+        <birthdate>17/08/1860</birthdate>
+        <id>-</id>
+        <tagged>pirate</tagged>
+    </persons>
+    <persons>
+        <name>Kim Jongkuk</name>
+        <phone>98761242</phone>
+        <emailAddress>kim@example.com</emailAddress>
+        <photo>kim@example.com.jpg</photo>
+        <address>Running State, #02-14</address>
+        <birthdate>28/01/1980</birthdate>
+        <id>-</id>
+        <tagged>korean</tagged>
+        <tagged>runningman</tagged>
+        <tagged>sparta</tagged>
+    </persons>
+    <persons>
+        <name>Lee Kwangsoo</name>
+        <phone>98761243</phone>
+        <emailAddress>lee@example.com</emailAddress>
+        <photo>lee@example.com.jpg</photo>
+        <address>Running State, #02-15</address>
+        <birthdate>16/09/1985</birthdate>
+        <id>-</id>
+        <tagged>korean</tagged>
+        <tagged>runningman</tagged>
+    </persons>
+    <persons>
+        <name>Park Shinhye</name>
+        <phone>98761244</phone>
+        <emailAddress>park@example.com</emailAddress>
+        <photo>park@example.com.jpg</photo>
+        <address>Blk 682 Hougang Street 52</address>
+        <birthdate>11/10/1987</birthdate>
+        <id>-</id>
+        <tagged>actress</tagged>
+        <tagged>korean</tagged>
+    </persons>
+    <persons>
+        <name>Rihanna</name>
+        <phone>98761231</phone>
+        <emailAddress>rihanna@example.com</emailAddress>
+        <photo>rihanna@example.com.jpg</photo>
+        <address>70 Bowman St. South Windsor, CT 06074</address>
+        <birthdate>20/02/1988</birthdate>
+        <id>-</id>
+        <tagged>singer</tagged>
+    </persons>
+    <persons>
+        <name>Song Jihyo</name>
+        <phone>98761238</phone>
+        <emailAddress>jihyo@example.com</emailAddress>
+        <photo>jihyo@example.com.jpg</photo>
+        <address>Running State, #02-10</address>
+        <birthdate>11/04/1983</birthdate>
+        <id>-</id>
+        <tagged>korean</tagged>
+        <tagged>runningman</tagged>
+    </persons>
+    <persons>
+        <name>Tim Karsliyev</name>
+        <phone>98761230</phone>
+        <emailAddress>tim@example.com</emailAddress>
+        <photo>tim@example.com.jpg</photo>
+        <address>123 6th St. Melbourne, FL 32904</address>
+        <birthdate>12/06/1975</birthdate>
+        <id>dailydose</id>
+        <tagged>founder</tagged>
+        <tagged>motivation</tagged>
+    </persons>
+    <persons>
+        <name>Yoo Jaesuk</name>
+        <phone>98761240</phone>
+        <emailAddress>yoo@example.com</emailAddress>
+        <photo>yoo@example.com.jpg</photo>
+        <address>Running State, #02-12</address>
+        <birthdate>15/08/1978</birthdate>
+        <id>-</id>
+        <tagged>korean</tagged>
+        <tagged>runningman</tagged>
+    </persons>
+    <tags>actress</tags>
+    <tags>pirate</tags>
+    <tags>green</tags>
+    <tags>singer</tags>
+    <tags>founder</tags>
+    <tags>motivation</tags>
+    <tags>dead</tags>
+    <tags>spiderman</tags>
+    <tags>runningman</tags>
+    <tags>peaceful</tags>
+    <tags>sparta</tags>
+    <tags>professor</tags>
+    <tags>niece</tags>
+    <tags>muscles</tags>
+    <tags>avengers</tags>
+    <tags>baby</tags>
+    <tags>gym</tags>
+    <tags>wizard</tags>
+    <tags>coach</tags>
+    <tags>married</tags>
+    <tags>korean</tags>
+</addressbook>

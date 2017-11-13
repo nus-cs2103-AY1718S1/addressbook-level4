@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.function.Supplier;
 
+import javafx.application.Platform;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
@@ -18,6 +19,7 @@ import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
 import seedu.address.storage.UserPrefsStorage;
 import seedu.address.storage.XmlSerializableAddressBook;
+import seedu.address.testutil.ImageInit;
 import seedu.address.testutil.TestUtil;
 import systemtests.ModelHelper;
 
@@ -43,7 +45,8 @@ public class TestApp extends MainApp {
         super();
         this.initialDataSupplier = initialDataSupplier;
         this.saveFileLocation = saveFileLocation;
-
+        ImageInit.checkDirectories();
+        ImageInit.initPictures();
         // If some initial local data has been provided, write those to the file
         if (initialDataSupplier.get() != null) {
             createDataFileWithData(new XmlSerializableAddressBook(this.initialDataSupplier.get()),
@@ -94,7 +97,7 @@ public class TestApp extends MainApp {
      * Returns a defensive copy of the model.
      */
     public Model getModel() {
-        Model copy = new ModelManager((model.getAddressBook()), new UserPrefs());
+        Model copy = new ModelManager((model.getAddressBook()), new UserPrefs(), model.getEmailManager());
         ModelHelper.setFilteredList(copy, model.getFilteredPersonList());
         return copy;
     }
@@ -102,6 +105,15 @@ public class TestApp extends MainApp {
     @Override
     public void start(Stage primaryStage) {
         ui.start(primaryStage);
+    }
+
+    @Override
+    public void stop() {
+        ImageInit.deleteEditedFiles();
+        ImageInit.deleteImagesFiles();
+        ui.stop();
+        Platform.exit();
+        System.exit(0);
     }
 
     public static void main(String[] args) {

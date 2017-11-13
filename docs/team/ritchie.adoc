@@ -1,0 +1,77 @@
+= Ritchie Lam Qiaowei - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: Augustine
+
+*Code contributed*::
+Functional Code: [https://github.com/CS2103AUG2017-W14-B2/main/blob/master/collated/main/ritchielq.md[Main file]] [https://github.com/CS2103AUG2017-W14-B2/main/blob/master/collated/main/ritchielq-reuse.md[Reused Code]] +
+Test Code: [https://github.com/CS2103AUG2017-W14-B2/main/blob/master/collated/test/ritchielq.md[Main file]] [https://github.com/CS2103AUG2017-W14-B2/main/blob/master/collated/test/ritchielq-reuse.md[Reused Code]] +
+
+
+=== Enhancement Added: Modified How Edit Command Due With Tags
+
+Tags now get toggled instead of being overwritten with what the user wrote.
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=edit]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+The user will not need to re-type all the existing tags when adding or removing just one.
+
+
+---
+
+=== Enhancement Added: Nusmods Command
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=nusmods]
+
+#End of Extract#
+
+---
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=nusmods]
+
+#End of Extract#
+
+
+==== Justification
+
+This will allow augustine users to view their friends timetable so it is easy for them to find out when they are free to meet up.
+It is a separate command from edit because it will need many fields and it will cause too much confusion to the user to overload the edit command.
+The type of command (add/delete/url) is taken in as a parameter so that the user only needs to remember one command.
+
+
+
+=== Enhancement Added: Shortcut menu
+
+
+==== External behavior
+
+Users can press Ctrl-Z and Ctrl-Y to undo and redo respectively. +
+Users can press Page up and Page down to scroll through the contact list.
+
+
+==== Justification
+Ctrl-Z and Ctrl-Y are common across many applications. +
+Augustine did not have a good way of going through the contact list without using the mouse previously. +

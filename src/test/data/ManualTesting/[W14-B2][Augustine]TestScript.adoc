@@ -1,0 +1,753 @@
+= Test Script
+:stylesDir: stylesheets
+
+== Introduction
+
+This is a manual test script to help you with testing Augustine.
+
+== Getting started
+
+. Create an empty folder.
+. Download "Augustine.jar" and "[W14-B2][Augustine]SampleData.xml" from IVLE and place it into the empty folder.
+. Rename "[W14-B2][Augustine]SampleData.xml" to *"addressbook.xml"*.
+. Create a new folder "data" in the empty folder and place addressbook.xml into the "data folder".
+. Create a new folder "images" in the "data folder".
+The empty folder should now contain the following files:
+* /<Empty Folder Name>/Augustine.jar
+* /<Empty Folder Name>/data/addressbook.xml
+* /<Empty Folder Nmae/data/images
+. Double click on Augustine.jar to start the program.
+. The sample data in addressbook.xml should now be populated in Augustine.
+* If the sample data of 20 contacts are not populated, repeat step 2-5 and ensure that you have name the files correctly and also placed the files in the correct folder.
+. Refer to the instructions below for more testing.
+
+== Tips for GUI navigation
+
+. Press ctrl + t to toggle the tabs on the left panel.
+. Press ctrl + z as a shortcut for the undo command.
+. Press ctrl + y as a shortcut for the redo command.
+. Press pageup button to scroll up the contact list.
+. Press pagedown button to scroll down the contact list.
+. Type the command "insta INDEX" to display the insta tab.
+* Eg. insta 1
+. Type the command "select INDEX" to display the nusmods tab.
+* Eg select 1
+. Press F1 or type the command "help" to display the help menu.
+
+[NOTE]
+For mac users, you have to press fn + up for pageup and fn + down for pagedown.
+
+== Testing
+
+=== Using the Contact List
+
+This segment covers how to find contacts in Augustine's contact list tab.
+
+'''
+
+--
+*Command*: [red]`list` +
+*Expected*: GUI will be on contact list tab, with 20 contacts listed.
+--
+'''
+
+--
+*Command*: [red]`list s/tag` +
+*Expected*: GUI will be on contact list tab, with 20 contacts listed sorted by the alphabetic order of each contact's first tag.
+--
+'''
+
+--
+*Command*: [red]`list s/email` +
+*Expected*: GUI will be on contact list tab, with 20 contacts listed sorted by the alphanumeric order of the contact's email.
+--
+'''
+
+--
+*Command*: [red]`list s/address` +
+*Expected*: GUI will be on contact list tab, with 20 contacts listed sorted by the alphanumeric order of the contact's email.
+--
+'''
+
+--
+*Command*: [red]`list` +
+*Expected*: GUI will be on contact list tab, with 20 contacts listed sorted by the alphabetic order of the contact's name.
+--
+'''
+
+--
+*Command*: [red]`find n/Baby` +
+*Expected*: Contact List tab will only have 1 contact: "baby"
+--
+'''
+
+--
+*Command*: [red]`find n/B` +
+*Expected*: Contact List tab will only have 2 contact: "baby", "Black Widow"
+--
+'''
+
+--
+*Command*: [red]`find n/gary park` +
+*Expected*: Contact List tab will only have 2 contact: "Gary", "Park Shinhye"
+--
+'''
+
+--
+*Command*: [red]`find n/gary park t/runningman` +
+*Expected*: Contact List tab will only have 2 contact: "Gary"
+--
+'''
+
+--
+*Command*: [red]`find t/runningman` +
+*Expected*: Contact List tab will only have 6 contact: "Gary", "Haha", "Kim Jongkuk", "Lee Kwangsoo", "Song Jihyo", "Yoo Jaesuk"
+--
+'''
+
+--
+*Command*: [red]`find t/running man` +
+*Expected*: Contact List tab will only have 7 contact: "Gary", "Gwen Stact", "Haha", "Kim Jongkuk", "Lee Kwangsoo", "Song Jihyo", "Yoo Jaesuk"
+--
+
+'''
+--
+*Command*: [red]`find t/wiz` +
+*Expected*: Contact List tab will only have 2 contact: "Emma Watson", "Harry Potter"
+--
+'''
+
+=== Adding/Editing/Deleting contacts
+
+This section cover commands add, edit, delete, undo, redo and clear.
+
+'''
+--
+*Command*: [red]`clear` +
+*Expected*: Addressbook will be cleared. Contact List tab display will be empty and white.
+--
+
+'''
+--
+*Command*: [red]`undo` +
+*Expected*: Contact List tab should have 20 contacts.
+--
+
+'''
+--
+*Command*: [red]`undo` +
+*Expected*: No more commands to undo!
+--
+
+'''
+--
+*Command*: [red]`redo` +
+*Expected*: Addressbook will be cleared. Contact List tab display will be empty and white.
+--
+
+'''
+--
+*Command*: [red]`redo` +
+*Expected*: Command fails.
+The display message is: + No more commands to redo!
+--
+
+'''
+--
+*Command*: [red]`undo` +
+*Expected*: Contact List tab should have 20 contacts.
+--
+
+'''
+--
+*Command*: [red]`add n/Ji SukJin` +
+*Expected*: Add command fails.
+The display message is: +
+Invalid command format! add: Adds a person to the address book. Parameters (Both name and email address are compulsory): +
+n/NAME p/PHONE e/EMAIL a/ADDRESS b/BIRTHDATE insta/INSTAGRAM ID [t/TAG]... +
+Example: add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 b/25/12/1980 dp//data/photo.jpeg t/friends t/owesMoney insta/johndoe80
+--
+
+'''
+--
+*Command*: [red]`add e/tester@example.com` +
+*Expected*: Add command fails.
+The display message is: +
+Invalid command format! add: Adds a person to the address book. Parameters (Both name and email address are compulsory): +
+n/NAME p/PHONE e/EMAIL a/ADDRESS b/BIRTHDATE insta/INSTAGRAM ID [t/TAG]... +
+Example: add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 b/25/12/1980 dp//data/photo.jpeg t/friends t/owesMoney insta/johndoe80
+--
+
+'''
+--
+*Command*: [red]`add n/tester e/tester@example.com` +
+*Expected*: Command succeeds. The display message is +
+New person added: tester Phone: - Email: tester@example.com Address: - Image: data/images/default.jpeg Birthdate: - User ID: - Tags:
+--
+
+'''
+--
+*Command*: [red]`add n/tester e/tester@example.com` +
+*Expected*: Command fails. The display message is +
+This email is already used by a contact in Augustine.
+--
+
+'''
+--
+*Command*: [red]`add n/tester e/tester2@example.com` +
+*Expected*: Command succeeds. The display message is +
+New person added: tester Phone: - Email: tester2@example.com Address: - Image: data/images/default.jpeg Birthdate: - User ID: - Tags:
+--
+
+'''
+--
+*Command*: [red]`add n/tester e/tester3@example.com b/12-12-1995` +
+*Expected*: Command fails. Invalid date entry error will be shown.
+--
+
+'''
+--
+*Command*: [red]`add n/tester e/tester3@example.com b/12-12-1995` +
+*Expected*: Command fails. The display message is +
+A valid date entry is in the form of dd/mm/yyyy
+--
+
+'''
+--
+*Command*: [red]`add n/tester e/tester3@example.com b/12/12/1995` +
+*Expected*: Command succeeds. The display message is +
+New person added: tester Phone: - Email: tester3@example.com Address: - Image: data/images/default.jpeg Birthdate: 12/12/1995 User ID: - Tags:
+--
+
+'''
+--
+*Command*: [red]`add n/tester e/tester4@example.com b/12/13/1995` +
+*Expected*: Command fails. The display message is +
+A valid date entry is in the form of dd/mm/yyyy
+--
+
+'''
+--
+*Command*: [red]`add n/tester e/tester4@example.com b/32/12/1995` +
+*Expected*: Command fails. The display message is +
+A valid date entry is in the form of dd/mm/yyyy
+--
+
+'''
+--
+*Command*: [red]`add n/tester e/tester4@example.com b/31/11/1995` +
+*Expected*: Command fails. The display message is +
+A valid date entry is in the form of dd/mm/yyyy
+--
+
+'''
+--
+*Command*: [red]`add n/tester e/tester4@example.com b/28/2/2017` +
+*Expected*: Command fails. The display message is +
+A valid date entry is in the form of dd/mm/yyyy
+--
+
+'''
+--
+*Command*: [red]`add n/tester e/tester4@example.com b/29/02/2017` +
+*Expected*: Command fails. The display message is +
+A valid date entry is in the form of dd/mm/yyyy
+--
+
+'''
+--
+*Command*: [red]`add n/tester e/tester4@example.com b/-01/02/2017` +
+*Expected*: Command fails. The display message is +
+A valid date entry is in the form of dd/mm/yyyy
+--
+
+'''
+--
+*Command*: [red]`add n/tester e/tester4@example.com b/29/02/2016` +
+*Expected*: Command succeeds. The display message is +
+New person added: tester Phone: - Email: tester4@example.com Address: - Image: data/images/default.jpeg Birthdate: 29/02/2016 User ID: - Tags:
+--
+
+'''
+--
+*Command*: [red]`add n/tester e/tester5@example.com p/12345678` +
+*Expected*: Command fails. The display message is +
+Phone numbers can only contain numbers, start from either 6, 8 or 9 and should be at only 8 digits long
+--
+
+'''
+--
+*Command*: [red]`add n/tester e/tester5@example.com p/6127` +
+*Expected*: Command fails. The display message is +
+Phone numbers can only contain numbers, start from either 6, 8 or 9 and should be at only 8 digits long
+--
+
+'''
+--
+*Command*: [red]`add n/tester e/tester5@example.com p/888888888` +
+*Expected*: Command fails. The display message is +
+Phone numbers can only contain numbers, start from either 6, 8 or 9 and should be at only 8 digits long
+--
+
+'''
+--
+*Command*: [red]`add n/tester e/tester5@example.com p/988888888` +
+*Expected*: Command fails. The display message is +
+Phone numbers can only contain numbers, start from either 6, 8 or 9 and should be at only 8 digits long
+--
+
+'''
+--
+*Command*: [red]`add n/tester e/tester5@example.com p/688888888` +
+*Expected*: Command fails. The display message is +
+Phone numbers can only contain numbers, start from either 6, 8 or 9 and should be at only 8 digits long
+--
+
+'''
+--
+*Command*: [red]`add n/tester e/tester5@example.com p/6123 4567` +
+*Expected*: Command fails. The display message is +
+Phone numbers can only contain numbers, start from either 6, 8 or 9 and should be at only 8 digits long
+--
+
+'''
+--
+*Command*: [red]`add n/tester e/tester5@example.com p/61234567` +
+*Expected*: Command succeeds. The display message is +
+New person added: tester Phone: 61234567 Email: tester5@example.com Address: - Image: data/images/default.jpeg Birthdate: - User ID: - Tags:
+--
+
+'''
+--
+*Command*: [red]`add n/tester e/tester5@example.com p/61234567` +
+*Expected*: Command succeeds. The display message is +
+New person added: tester Phone: 61234567 Email: tester5@example.com Address: - Image: data/images/default.jpeg Birthdate: - User ID: - Tags:
+--
+
+'''
+--
+*Command*: [red]`add n/tester e/tester6@example.com dp/invalidimage.png` +
+*Expected*: Command fails. The display message is +
+Person's photo should be in .jpg or .jpeg and preferred to be of 340px x 453px dimension. If the photo is on the local system, please provide the
+absolute file path. If the photo is from the internet, ensure that the link starts with http or https and ends with .jpg or .jpeg
+--
+
+'''
+--
+*Command*: [red]`add n/tester e/tester6@example.com dp/invalidimage.jpg` +
+*Expected*: Command fails. The display message is +
+Error! Photo does not exist!
+--
+
+'''
+--
+*Command*: [red]`add n/tester e/tester6@example.com dp/data/images/default.jpeg` +
+*Expected*: Command succeeds. The display message is +
+New person added: tester Phone: - Email: tester6@example.com Address: - Image: data/images/default.jpeg Birthdate: - User ID: - Tags:
+--
+
+'''
+--
+*Command*: [red]`add n/tester e/tester7@example.com dp/http://www.comp.nus.edu.sg/~anarayan/files/me.jpg` +
+*Expected*: Command succeeds. The display message is +
+New person added: tester Phone: - Email: tester7@example.com Address: - Image: data/download.jpg Birthdate: - User ID: - Tags:
+--
+
+'''
+--
+*Command*: [red]`add n/tester e/tester9@example.com insta/` +
+*Expected*: Command succeeds. The display message is +
+New person added: tester Phone: - Email: tester9@example.com Address: - Image: data/images/default.jpeg Birthdate: - User ID:  Tags:
+--
+
+'''
+--
+*Command*: [red]`add n/tester e/tester10@example.com insta/nba` +
+*Expected*: Command succeeds. The display message is +
+New person added: tester Phone: - Email: tester10@example.com Address: - Image: data/images/default.jpeg Birthdate: - User ID: nba Tags:
+--
+
+'''
+--
+*Command*: [red]`edit` +
+*Expected*: Command fails. The display message is +
+Invalid command format! +
+edit: Edits the details of the person identified by the index number used in the last person listing. +
+Apart from tags, existing values will be overwritten by the input values. +
+Tags will be added if person does not have the tag and deleted otherwise. +
+You can remove all the person's tags by typing `t/` without specifying any tags after it. +
+Parameters: INDEX (must be a positive integer) [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [dp/PHOTO] [b/BIRTHDATE] [t/TAG]... +
+[insta/INSTAGRAM ID]... +
+Example: edit 1 p/91234567 e/johndoe@example.com +
+--
+
+'''
+--
+*Command*: [red]`edit -1` +
+*Expected*: Command fails. The display message is +
+Invalid command format! +
+edit: Edits the details of the person identified by the index number used in the last person listing. +
+Apart from tags, existing values will be overwritten by the input values. +
+Tags will be added if person does not have the tag and deleted otherwise. +
+You can remove all the person's tags by typing `t/` without specifying any tags after it. +
+Parameters: INDEX (must be a positive integer) [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [dp/PHOTO] [b/BIRTHDATE] [t/TAG]... +
+[insta/INSTAGRAM ID]... +
+Example: edit 1 p/91234567 e/johndoe@example.com +
+--
+
+'''
+--
+*Command*: [red]`edit 1` +
+*Expected*: Command fails. The display message is +
+At least one field to edit must be provided.
+--
+
+'''
+--
+*Command*: [red]`edit 100` +
+*Expected*: Command fails. The display message is +
+At least one field to edit must be provided.
+--
+
+'''
+--
+*Command*: [red]`edit 1 e/tester@example.com` +
+*Expected*: Command fails. The display message is +
+This person already exists in the address book.
+--
+
+'''
+--
+*Command*: [red]`edit 100 e/tester@example.com` +
+*Expected*: Command fails. The display message is +
+The person index provided is invalid
+--
+
+'''
+--
+*Command*: [red]`edit 1 e/tester` +
+*Expected*: Command fails. The display message is +
+Person emails should be 2 alphanumeric/period strings separated by '@'
+--
+
+'''
+--
+*Command*: [red]`edit 1 e/tester8@example.com` +
+*Expected*: Command succeeds. The display message is +
+Edited Person: Baby Phone: - Email: tester8@example.com Address: Singapore Image: data/images/baby@example.com.jpg Birthdate: 01/01/2016 User ID: - Tags: [niece][baby]
+--
+
+'''
+--
+*Command*: [red]`edit 1 dp/http://www.comp.nus.edu.sg/~anarayan/files/me.jpg` +
+*Expected*: Command succeeds. Photo is now the downloaded photo. The display message is +
+Edited Person: Baby Phone: - Email: tester8@example.com Address: Singapore Image: data/download.jpg Birthdate: 01/01/2016 User ID: - Tags: [niece][baby]
+--
+
+'''
+--
+*Command*: [red]`undo` +
+*Expected*: Command succeeds. Photo is now the default photo. The display message is +
+Undo success!
+--
+
+'''
+--
+*Command*: [red]`redo` +
+*Expected*: Command succeeds. Photo is now the downloaded photo. The display message is +
+Redo success!
+--
+
+'''
+--
+*Command*: [red]`edit 1 dp/-` +
+*Expected*: Command succeeds. Photo is now the default photo. The display message is +
+Edited Person: Baby Phone: - Email: tester8@example.com Address: Singapore Image: data/images/default.jpeg Birthdate: 01/01/2016 User ID: - Tags: [niece][baby]
+--
+
+'''
+--
+*Command*: [red]`edit 1 n/-` +
+*Expected*: Command fails. The display message is +
+Person name should not be blank and should consist of letters and spaces
+--
+
+'''
+--
+*Command*: [red]`edit 1 e/-` +
+*Expected*: Command fails. The display message is +
+Person emails should be 2 alphanumeric/period strings separated by '@'
+--
+
+'''
+--
+*Command*: [red]`delete` +
+*Expected*: Command fails. The display message is +
+Invalid command format! +
+delete: Deletes the person identified by the index number used in the last person listing. +
+Parameters: INDEX (must be a positive integer) +
+Example: delete 1
+--
+
+'''
+--
+*Command*: [red]`delete -1` +
+*Expected*: Command fails. The display message is +
+Invalid command format! +
+delete: Deletes the person identified by the index number used in the last person listing. +
+Parameters: INDEX (must be a positive integer) +
+Example: delete 1
+--
+
+'''
+--
+*Command*: [red]`delete 100` +
+*Expected*: Command fails. The display message is +
+The person index provided is invalid
+--
+
+'''
+--
+*Command*: [red]`delete 1` +
+*Expected*: Command succeeds. The display message is +
+Deleted Person: Baby Phone: - Email: tester8@example.com Address: Singapore Image: data/images/tester8@example.com.jpg Birthdate: 01/01/2016 User ID: - Tags: [niece][baby]
+--
+
+'''
+--
+*Command*: [red]`undo` +
+*Expected*: Command succeeds. The display message is +
+Undo success!
+--
+
+'''
+--
+*Command*: [red]`redo` +
+*Expected*: Command succeeds. The display message is +
+Redo success!
+--
+
+=== Displaying a contact's Instagram profile page
+
+This section covers the command `insta` which displays the contact's Instagram profile on the right browser of Augustine.
+
+'''
+--
+*Command*: [red]`edit 1 insta/arsenal` +
+*Expected*: The first contact's Instagram ID will be set to `arsenal`.
+--
+
+'''
+--
+*Command*: [red]`insta 1` +
+*Expected*: Right browser will switch to the Instagram tab and load the Instagram page of `arsenal`.
+--
+
+'''
+--
+*Command*: [red]`undo` +
+*Expected*: The first contact's Instagram ID will revert back to `-`, but the browser will not automatically update
+until refreshed.
+--
+
+'''
+--
+*Command*: [red]`insta 1` +
+*Expected*: Right browser will remain at the Instagram tab and load the Instagram homepage.
+--
+
+'''
+--
+*Command*: [red]`e 1 insta/johncena` +
+*Expected*: The first contact's Instagram ID will be set to `johncena`, but the browser will not automatically update
+until refreshed.
+--
+
+'''
+--
+*Command*: [red]`Left-click contact 1` +
+*Expected*: Right browser will switch to the Instagram tab and load the Instagram page of `johncena`.
+--
+
+'''
+--
+*Command*: [red]`delete 1` +
+*Expected*: The first contact will be deleted, but the browser will remain at `johncena` 's page and not automatically
+update until refreshed.
+--
+'''
+--
+
+--
+=== Editing and Displaying timetable with nusmods
+
+This section covers nusmods command.
+
+'''
+--
+*Command*: [red]`nusmods 1 t/url m/https://nusmods.com/timetable/2017-2018/sem1?CS2101[SEC]=5&CS2103T[TUT]=T5&MA1101R[LAB]=B01&MA1101R[LEC]=SL2&MA1101R[TUT]=T13&CS2010[LEC]=1&CS2010[LAB]=6&CS2010[TUT]=5&GET1020[LEC]=L1` +
+*Expected*: Person at index 1 will be given the timetable in the url. Browser panel will switch to nusmods tab and display the timetable.
+
+
+'''
+--
+*Command*: [red]`nm 1 t/delete m/randomString` +
+*Excepted*: The timetable of person will remain the same. The browser tab will refresh to show table the same timetable.
+
+'''
+--
+*Command*: [red]`nm 1 t/d m/get1020` +
+*Excepted*: The nusmods browser tab will refresh and the module "GET1020" will be removed (for person at index 1).
+
+'''
+--
+*Command*: [red]`undo` +
+*Excepted*: The contact will be deselected (browser will show a blank page) and "GET1020" will be added back (for person at index 1).
+
+'''
+--
+*Command*: [red]`redo` +
+*Excepted*: The browser tab will show the timetable. Note that "GET1020" has returned (for person at index 1).
+
+'''
+--
+*Command*: [red]`nm 1 t/add m/cs2010 lab/7` +
+*Excepted*: The nusmods browser tab will refresh and the LAB slot of module "CS2010" will be changed from 6 to 7 (for person at index 1).
+
+'''
+--
+*Command*: [red]`select 2` +
+*Excepted*: As the person at index 2 does not have a timetable yet the browser tab will tell you that you can add one.
+
+'''
+--
+*Command*: [red]`nm 2 t/add m/cs1231` +
+*Excepted*: The nusmods browser tab will refresh and show the person at index 2. The module "CS1231" will be added. The lessons slots will be randomly placed as they are not specified.
+
+'''
+--
+*Command*: [red]`nm 2 t/add m/cs1231 sec/2 tut/28` +
+*Excepted*: The nusmods browser tab will refresh and the sectional group and tutorial slot of "CS1231" will be fixed to "2" and "28" respectively (for person at index 2).
+
+'''
+--
+*Command*: [red]`nm 2 t/add m/CS2100 lec/1 lab/8 tut/8` +
+*Excepted*: The nusmods browser tab will refresh and the lecture, lab and tutorial of "CS2100" will be fixed to "1", "8" and "8" respectively (for person at index 1).
+
+'''
+--
+*Command*: [red]`undo` +
+*Excepted*: The contact will be deselected (browser will show a blank page). The module "CS2100" will be removed.
+
+'''
+--
+*Command*: [red]`select 2` +
+*Excepted*: The nusmods browser tab will show the timetable of the person at 2. It should contain CS1231 with the lesson slots previously set. And without CS2100 as an 'undo' was done.
+
+'''
+--
+*Command*: [red]`select 1` +
+*Excepted*: The nusmods browser tab will switch to the timetable of the person at 1.
+
+
+=== Email contacts
+
+This section covers email command.
+
+'''
+--
+*Command*: [red]`email em/message es/subject` +
+*Expected*: GUI will be on Email Draft Tab. The subject field should be "subject", the message field should be "message", the recipients field should be "baby@example.com, black@example.com, captain@example.com, dwayne@example.com, emma@example.com, gary@example.com, gwen@example.com, haha@example.com, harry@example.com, hulk@example.com, iron@example.com, iu@example.com, jack@example.com, kim@example.com, lee@example.com, park@example.com, rihanna@example.com, jihyo@example.com, tim@example.com, yoo@example.com".
+The display message is "Email have been drafted. You are not logged in to any Gmail account"
+
+
+'''
+--
+*Command*: [red]`email em/message es/subject` +
+*Expected*: GUI will be on Email Draft Tab. The subject field should be "subject", the message field should be "message", the recipients field should be "baby@example.com, black@example.com, captain@example.com, dwayne@example.com, emma@example.com, gary@example.com, gwen@example.com, haha@example.com, harry@example.com, hulk@example.com, iron@example.com, iu@example.com, jack@example.com, kim@example.com, lee@example.com, park@example.com, rihanna@example.com, jihyo@example.com, tim@example.com, yoo@example.com".
+The display message is "Email have been drafted. You are not logged in to any Gmail account"
+
+'''
+--
+*Command*: [red]`email et/clear` +
+*Expected*: GUI will be on Email Draft Tab. The subject field, message field, recipients field should be empty.
+The display message is "Email have been cleared"
+
+'''
+--
+*Command*: [red]`email et/clear` +
+*Expected*: email command fails.
+The display message is "You must fill in the message and subject before you can send an email. Command: email em/<messages> es/<subjects>"
+
+'''
+--
+*Command*: [red]`email em/message es/subject` +
+*Expected*: GUI will be on Email Draft Tab. The subject field should be "subject", the message field should be "message", the recipients field should be "baby@example.com, black@example.com, captain@example.com, dwayne@example.com, emma@example.com, gary@example.com, gwen@example.com, haha@example.com, harry@example.com, hulk@example.com, iron@example.com, iu@example.com, jack@example.com, kim@example.com, lee@example.com, park@example.com, rihanna@example.com, jihyo@example.com, tim@example.com, yoo@example.com".
+The display message is "Email have been drafted. You are not logged in to any Gmail account"
+
+'''
+--
+*Command*: [red]`email et/send` +
+*Expected*: email command fails.
+The display message is "You must log in with a gmail email account before you can send an email. Command: email el/<username@gmail.com>:<password>""
+
+'''
+--
+*Command*: [red]`email el/adam@gmail.com:password` +
+*Expected*: The display message is "Email have been drafted. You are logged in to adam@gmail.com
+
+'''
+--
+*Command*: [red]`email el/zoe@gmail.com:password` +
+*Expected*: The display message is "Email have been drafted. You are logged in to zoe@gmail.com
+
+'''
+--
+*Command*: [red]`email el/zoe@yahoo.com:password` +
+*Expected*: email command fails.
+The display message is "You must log in with a gmail email account before you can send an email. Command: email el/<username@gmail.com>:<password>"
+
+'''
+--
+*Command*: [red]`email et/send` +
+*Expected*: email command fails.
+The display message is "You are unable to log in to your gmail account. Please check the following: +
+1) You have entered the correct email address and password. +
+2) You have enabled 'Allow less secure app' to sign in to your gmail account settings"
+
+'''
+--
+*Command*: [red]`email el/<your own gmail account>:<your own password> et/send` +
+*Expected*: Email have been sent. The Email Draft will have empty fields.
+
+[NOTE]
+If email still fails to send after you use your own gmail account and password, please ensure that you have enable "allow less secure app to sign in" in your gmail account settings.
+Go to Google. Your Account -> Sign in and Security -> scroll down and ensure "allow less secure app:ON" is enabled.
+
+=== Backup contacts
+This section covers how to backup your data.
+
+'''
+--
+*Command*: [red]`backup` +
+*Expected*: The display message is "Data backed up at "/data/addressbook-backup.xml". There will be a addressbook-backup.xml created in the data folder."
+--
+
+=== Misc.
+
+This section covers history and exit commands.
+
+'''
+--
+*Command*: [red]`history` +
+*Expected*: A list of all commands you have typed.
+
+'''
+--
+*Command*: [red]`clear` +
+*Expected*: Addressbook will be cleared. Contact List tab display will be empty and white. Check addressbook.xml. All data should be gone.
+
+'''
+--
+*Command*: [red]`exit` +
+*Expected*: Augustine closes.

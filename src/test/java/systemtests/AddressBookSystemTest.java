@@ -3,16 +3,13 @@ package systemtests;
 import static guitests.guihandles.WebViewUtil.waitUntilBrowserLoaded;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.ui.BrowserPanel.DEFAULT_PAGE;
-import static seedu.address.ui.BrowserPanel.GOOGLE_SEARCH_URL_PREFIX;
-import static seedu.address.ui.BrowserPanel.GOOGLE_SEARCH_URL_SUFFIX;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
 import static seedu.address.ui.UiPart.FXML_FILE_FOLDER;
 import static seedu.address.ui.testutil.GuiTestAssert.assertListMatching;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -24,6 +21,10 @@ import org.junit.ClassRule;
 
 import guitests.guihandles.BrowserPanelHandle;
 import guitests.guihandles.CommandBoxHandle;
+import guitests.guihandles.EmailMessageDisplayHandle;
+import guitests.guihandles.EmailRecipientsDisplayHandle;
+import guitests.guihandles.EmailSubjectDisplayHandle;
+import guitests.guihandles.LeftDisplayPanelHandle;
 import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.MainWindowHandle;
 import guitests.guihandles.PersonListPanelHandle;
@@ -100,6 +101,22 @@ public abstract class AddressBookSystemTest {
         return mainWindowHandle.getResultDisplay();
     }
 
+    public EmailMessageDisplayHandle getEmailMessageDisplay() {
+        return mainWindowHandle.getEmailMessageDisplay();
+    }
+
+    public EmailRecipientsDisplayHandle getEmailRecipientsDisplay() {
+        return mainWindowHandle.getEmailRecipientsDisplay();
+    }
+
+    public EmailSubjectDisplayHandle getEmailSubjectDisplay() {
+        return mainWindowHandle.getEmailSubjectDisplay();
+    }
+
+    public LeftDisplayPanelHandle getLeftDisplayPanel() {
+        return mainWindowHandle.getLeftDisplayPanel();
+    }
+
     /**
      * Executes {@code command} in the application's {@code CommandBox}.
      * Method returns after UI components have been updated.
@@ -111,6 +128,8 @@ public abstract class AddressBookSystemTest {
         clockRule.setInjectedClockToCurrentTime();
 
         mainWindowHandle.getCommandBox().run(command);
+
+        rememberStates();
 
         waitUntilBrowserLoaded(getBrowserPanel());
     }
@@ -127,7 +146,7 @@ public abstract class AddressBookSystemTest {
      * Displays all persons with any parts of their names matching {@code keyword} (case-insensitive).
      */
     protected void showPersonsWithName(String keyword) {
-        executeCommand(FindCommand.COMMAND_WORD + " " + keyword);
+        executeCommand(FindCommand.COMMAND_WORD + " " + PREFIX_NAME + keyword);
         assert getModel().getFilteredPersonList().size() < getModel().getAddressBook().getPersonList().size();
     }
 
@@ -153,6 +172,21 @@ public abstract class AddressBookSystemTest {
         assertListMatching(getPersonListPanel(), expectedModel.getFilteredPersonList());
     }
 
+    //@@author awarenessxz
+    /**
+     * Asserts that the {@code messageDisplay} display {@code expectedMessage}, the {@code subjectDisplay} display
+     * {@code expectedSubject}, the {@code RecipientsDisplay} displays {@code expectedRecipients} and the
+     * {@LeftDisplayPanelTab} display {@code expectedTabIndex}
+     */
+    protected void assertEmailDisplayExpected(String expectedMessage, String expectedSubject,
+                                              String expectedRecipients, int expectedTabIndex) {
+        assertEquals(expectedMessage, getEmailMessageDisplay().getText());
+        assertEquals(expectedSubject, getEmailSubjectDisplay().getText());
+        assertEquals(expectedRecipients, getEmailRecipientsDisplay().getText());
+        assertEquals(expectedTabIndex, getLeftDisplayPanel().getSelectedTabIndex());
+    }
+    //@@author
+
     /**
      * Calls {@code BrowserPanelHandle}, {@code PersonListPanelHandle} and {@code StatusBarFooterHandle} to remember
      * their current state.
@@ -176,22 +210,11 @@ public abstract class AddressBookSystemTest {
     }
 
     /**
-     * Asserts that the browser's url is changed to display the details of the person in the person list panel at
+     * Asserts that the selectedCard is same as expectedSelectedCard
      * {@code expectedSelectedCardIndex}, and only the card at {@code expectedSelectedCardIndex} is selected.
-     * @see BrowserPanelHandle#isUrlChanged()
      * @see PersonListPanelHandle#isSelectedPersonCardChanged()
      */
     protected void assertSelectedCardChanged(Index expectedSelectedCardIndex) {
-        String selectedCardName = getPersonListPanel().getHandleToSelectedCard().getName();
-        URL expectedUrl;
-        try {
-            expectedUrl = new URL(GOOGLE_SEARCH_URL_PREFIX + selectedCardName.replaceAll(" ", "+")
-                    + GOOGLE_SEARCH_URL_SUFFIX);
-        } catch (MalformedURLException mue) {
-            throw new AssertionError("URL expected to be valid.");
-        }
-        assertEquals(expectedUrl, getBrowserPanel().getLoadedUrl());
-
         assertEquals(expectedSelectedCardIndex.getZeroBased(), getPersonListPanel().getSelectedCardIndex());
     }
 

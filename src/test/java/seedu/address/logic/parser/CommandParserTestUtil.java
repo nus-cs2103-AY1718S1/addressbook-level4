@@ -3,6 +3,8 @@ package seedu.address.logic.parser;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
+import java.io.IOException;
+
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -19,7 +21,7 @@ public class CommandParserTestUtil {
         try {
             Command command = parser.parse(userInput);
             assertEquals(expectedCommand, command);
-        } catch (ParseException pe) {
+        } catch (ParseException | IOException pe) {
             throw new IllegalArgumentException("Invalid userInput.", pe);
         }
     }
@@ -32,7 +34,7 @@ public class CommandParserTestUtil {
         try {
             parser.parse(userInput);
             fail("The expected ParseException was not thrown.");
-        } catch (ParseException pe) {
+        } catch (ParseException | IOException pe) {
             assertEquals(expectedMessage, pe.getMessage());
         }
     }

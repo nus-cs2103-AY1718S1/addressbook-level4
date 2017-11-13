@@ -65,6 +65,9 @@ allprojects {
         compile "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
         compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jacksonDataTypeVersion"
         compile "com.google.guava:guava:$guavaVersion"
+        compile fileTree(dir: 'lib', include: 'javax.mail.jar')
+        compile 'de.jensd:fontawesomefx-commons:8.15'
+        compile 'de.jensd:fontawesomefx-materialdesignfont:1.7.22-4'
 
         testCompile "junit:junit:$junitVersion"
         testCompile "org.testfx:testfx-core:$testFxVersion"

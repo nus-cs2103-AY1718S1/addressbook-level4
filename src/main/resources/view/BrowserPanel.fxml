@@ -3,6 +3,36 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.web.WebView?>
 
-<StackPane xmlns:fx="http://javafx.com/fxml/1">
-  <WebView fx:id="browser"/>
-</StackPane>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.layout.VBox?>
+
+
+<!--@@author hengyu95-->
+
+<TabPane fx:id="browserPanel" minWidth="450" prefWidth="450" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+    <tabs>
+        <Tab fx:id="nusModsTab" text="NUSMods">
+            <content>
+                <VBox fx:id="personList" minWidth="450" prefWidth="450">
+                    <children>
+                        <StackPane xmlns:fx="http://javafx.com/fxml/1">
+                            <WebView fx:id="browser"/>
+                        </StackPane>
+                    </children>
+                </VBox>
+            </content>
+        </Tab>
+        <Tab fx:id="instaTab" text="Instagram">
+            <content>
+                <VBox fx:id="personList" minWidth="450" prefWidth="450">
+                    <children>
+                        <StackPane xmlns:fx="http://javafx.com/fxml/1">
+                            <WebView fx:id="instaBrowser"/>
+                        </StackPane>
+                    </children>
+                </VBox>
+            </content>
+        </Tab>
+    </tabs>
+</TabPane>

@@ -6,9 +6,9 @@ import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
  * Represents a Person's phone number in the address book.
- * Guarantees: immutable; is valid as declared in {@link #isValidEmail(String)}
+ * Guarantees: immutable; is valid as declared in {@link #isValidEmailAddress(String)}
  */
-public class Email {
+public class EmailAddress {
 
     public static final String MESSAGE_EMAIL_CONSTRAINTS =
             "Person emails should be 2 alphanumeric/period strings separated by '@'";
@@ -21,19 +21,19 @@ public class Email {
      *
      * @throws IllegalValueException if given email address string is invalid.
      */
-    public Email(String email) throws IllegalValueException {
-        requireNonNull(email);
-        String trimmedEmail = email.trim();
-        if (!isValidEmail(trimmedEmail)) {
+    public EmailAddress(String emailAddress) throws IllegalValueException {
+        requireNonNull(emailAddress);
+        String trimmedEmailAddress = emailAddress.trim();
+        if (!isValidEmailAddress(trimmedEmailAddress)) {
             throw new IllegalValueException(MESSAGE_EMAIL_CONSTRAINTS);
         }
-        this.value = trimmedEmail;
+        this.value = trimmedEmailAddress;
     }
 
     /**
      * Returns if a given string is a valid person email.
      */
-    public static boolean isValidEmail(String test) {
+    public static boolean isValidEmailAddress(String test) {
         return test.matches(EMAIL_VALIDATION_REGEX);
     }
 
@@ -45,8 +45,8 @@ public class Email {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof Email // instanceof handles nulls
-                && this.value.equals(((Email) other).value)); // state check
+                || (other instanceof EmailAddress // instanceof handles nulls
+                && this.value.equals(((EmailAddress) other).value)); // state check
     }
 
     @Override

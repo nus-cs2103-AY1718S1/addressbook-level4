@@ -1,9 +1,11 @@
 package seedu.address.ui;
 
+import java.io.IOException;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -18,9 +20,14 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.commons.events.ui.ToggleTabEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
+import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.UserPrefs;
 
 /**
@@ -41,8 +48,8 @@ public class MainWindow extends UiPart<Region> {
 
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
-    private PersonListPanel personListPanel;
     private Config config;
+    private LeftDisplayPanel leftDisplayPanel;
     private UserPrefs prefs;
 
     @FXML
@@ -55,7 +62,22 @@ public class MainWindow extends UiPart<Region> {
     private MenuItem helpMenuItem;
 
     @FXML
-    private StackPane personListPanelPlaceholder;
+    private MenuItem shortcutMenuUndo;
+
+    @FXML
+    private MenuItem shortcutMenuRedo;
+
+    @FXML
+    private MenuItem shortcutMenuScrollDown;
+
+    @FXML
+    private MenuItem shortcutMenuScrollUp;
+
+    @FXML
+    private MenuItem shortcutMenuToggleTab;
+
+    @FXML
+    private StackPane leftDisplayPanelPlacedholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -88,10 +110,17 @@ public class MainWindow extends UiPart<Region> {
         return primaryStage;
     }
 
+    //@@author ritchielq
     private void setAccelerators() {
         setAccelerator(helpMenuItem, KeyCombination.valueOf("F1"));
+        setAccelerator(shortcutMenuUndo, KeyCombination.valueOf("Ctrl+z"));
+        setAccelerator(shortcutMenuRedo, KeyCombination.valueOf("Ctrl+y"));
+        setAccelerator(shortcutMenuScrollUp, KeyCombination.valueOf("Page Up"));
+        setAccelerator(shortcutMenuScrollDown, KeyCombination.valueOf("Page Down"));
+        setAccelerator(shortcutMenuToggleTab, KeyCombination.valueOf("Ctrl+t"));
     }
 
+    //@@author
     /**
      * Sets the accelerator of a MenuItem.
      * @param keyCombination the KeyCombination value of the accelerator
@@ -126,16 +155,19 @@ public class MainWindow extends UiPart<Region> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
+        browserPanel = new BrowserPanel(config);
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
-        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
-        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+        //@@author hengyu95
+        leftDisplayPanel = new LeftDisplayPanel(logic.getFilteredPersonList(), logic.getFilteredPersonListBirthdate());
+        leftDisplayPanelPlacedholder.getChildren().add(leftDisplayPanel.getRoot());
+        //@@author
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
+        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath(),
+                logic.getFilteredPersonList().size());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
         CommandBox commandBox = new CommandBox(logic);
@@ -183,6 +215,66 @@ public class MainWindow extends UiPart<Region> {
                 (int) primaryStage.getX(), (int) primaryStage.getY());
     }
 
+    //@@author ritchielq
+    /**
+     * Calls PersonListPanel to scrolls up personListView
+     */
+    @FXML
+    private void handleScrollDown() {
+        leftDisplayPanel.scrollDown();
+    }
+
+    /**
+     * Calls PersonListPanel to scroll up personListView
+     */
+    @FXML
+    private void handleScrollUp() {
+        leftDisplayPanel.scrollUp();
+    }
+
+    //@@author awarenessxz
+    /**
+     * Calls UI to toggle Tabs
+     */
+    @FXML
+    private void handleToggleTabs() {
+        leftDisplayPanel.toggleTabs(-1);
+    }
+
+    //@@author ritchielq
+    /**
+     * Calls Logic to execute "redo"
+     */
+    @FXML
+    private void handleRedo() {
+        try {
+            CommandResult commandResult = logic.execute("redo");
+
+            // process result of the command
+            logger.info("Result: " + commandResult.feedbackToUser);
+            raise(new NewResultAvailableEvent(commandResult.feedbackToUser, false));
+        } catch (CommandException | ParseException | IOException e) {
+            raise(new NewResultAvailableEvent(e.getMessage(), true));
+        }
+    }
+
+    /**
+     * Calls Logic to execute "undo"
+     */
+    @FXML
+    private void handleUndo() {
+        try {
+            CommandResult commandResult = logic.execute("undo");
+
+            // process result of the command
+            logger.info("Result: " + commandResult.feedbackToUser);
+            raise(new NewResultAvailableEvent(commandResult.feedbackToUser, false));
+        } catch (CommandException | ParseException | IOException e) {
+            raise(new NewResultAvailableEvent(e.getMessage(), true));
+        }
+    }
+
+    //@@author
     /**
      * Opens the help window.
      */
@@ -205,7 +297,7 @@ public class MainWindow extends UiPart<Region> {
     }
 
     public PersonListPanel getPersonListPanel() {
-        return this.personListPanel;
+        return this.leftDisplayPanel.getPersonListPanel();
     }
 
     void releaseResources() {
@@ -216,5 +308,16 @@ public class MainWindow extends UiPart<Region> {
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
+    }
+
+    @Subscribe
+    private void handleToggleTabEvent(ToggleTabEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                leftDisplayPanel.toggleTabs(event.leftTabIndex);
+            }
+        });
     }
 }

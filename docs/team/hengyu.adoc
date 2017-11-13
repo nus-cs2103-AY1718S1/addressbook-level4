@@ -1,0 +1,100 @@
+= Lim Heng Yu - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: Augustine
+
+*Code contributed*: [https://github.com/CS2103AUG2017-W14-B2/main/blob/master/collated/main/hengyu95.md[Functional code]] [https://github.com/CS2103AUG2017-W14-B2/main/blob/master/collated/test/hengyu95.md[Test code]]
+
+=== Enhancement Added: Birthdate Field/Tab
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=birthday]
+
+#End of Extract#
+
+---
+
+==== Justification
+It is extremely useful and intuitive for an address book application to keep track of a contact's birthday information.
+After all, birthday celebrations are one of the most significant reasons why people gather together and socialise.
+
+By displaying contacts sorted by upcoming birthdays, the user can see at one glance which friend has an upcoming
+birthday celebration which may require his attention.
+
+By highlighting a contact whose birthday is today, this further brings the immediacy of this event to the user's attention,
+prompting him to take necessary action.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=birthday]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Instagram Tab
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=insta]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Instagram is arguably the most used social media platform today, at least in the student community. Students are a
+big part of our target audience, and a quick means for our user to access a friend's Instagram profile page is extremely
+beneficial to his social needs.
+
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=insta]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Backup Command
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=backup]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+A user might want to save their current data as a backup before making further changes.
+
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=backup]
+
+#End of Extract#
+
+---
+
+==== Other contributions
+
+* Proofreader of the user and developer guides.

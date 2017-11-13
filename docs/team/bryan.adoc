@@ -1,0 +1,67 @@
+= Bryan Koh Wei Xian - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Introduction
+Hello. My name is Bryan Koh, and I am a year 2 Computer Science student at National University of Singapore. This portfolio is designed to outline my software development project experiences to supplement my resume. If you are interested in contacting me for possible collaborations, do drop me an email at kohwxb@u.nus.edu. Thank you for taking some time off to read my works.
+
+== Project: Augustine
+Augustine is a desktop address book application that aims to help students to manage the contacts of their newly made friends in school. It is a project for my CS2103T module which builds on an existing desktop address book application, https://github.com/nus-cs2103-AY1718S1/addressbook-level4[addressbook-level4].
+
+The user interacts with Augustine using a command line interface (CLI) and a graphical user interface (GUI) created with JavaFX. It is developed in Java and runs in both Windows and Unix environment.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-W14-B2/main/tree/master/collated/main/awarenessxz.md[Function Code]] [https://github.com/CS2103AUG2017-W14-B2/main/tree/master/collated/test/awarenessxz.md[Test code]]
+
+=== Augustine Enhancement: Find Command
+
+---
+
+include::../UserGuide.adoc[tag=find]
+
+=== Justification For Enhancing Find Command
+
+The original find command only allows full name search of contacts. There was a need for users to be able to search by contact’s tag and name for more control for the search. Also, case insensitive and non-full word search have been added to give users more flexibility over the search results of find command.
+
+A simple sort feature was also incorporated into the find command which gives users the option to sort the search results by name, tag, email or address.
+
+These enhancements provide users with more flexibility and control over the find command to search for contacts in Augustine.
+
+include::../DeveloperGuide.adoc[tag=findMechanism]
+
+=== Augustine Enhancement: Email Command
+
+---
+
+include::../UserGuide.adoc[tag=email]
+
+=== Justification for Enhancing Email Command
+
+There was a lack of communication means between user and their contacts. Since email address are a compulsory field in Augustine, the user will be able to contact all contacts in Augustine via email. Hence, the email command was added into Augustine.
+
+include::../DeveloperGuide.adoc[tag=emailComponent]
+
+include::../DeveloperGuide.adoc[tag=emailMechanism]
+
+=== Augustine: Future Enhancement
+
+Augustine is software that is on continuous delivery. There are still a lot of features that can be added to Augustine to enhanced the functionality and usability. Refer to the issues below on some of the possible enhancement for Augustine:
+
+* Enhancement to email feature [https://github.com/CS2103AUG2017-W14-B2/main/issues/61[Issue #61]]
+** Using User config to store user's login details [https://github.com/CS2103AUG2017-W14-B2/main/issues/64[Issue #64]]
+** Sending attachment emails [https://github.com/CS2103AUG2017-W14-B2/main/issues/66[Issue #66]]
+** Storing multiple email drafts [https://github.com/CS2103AUG2017-W14-B2/main/issues/76[Issue #76]]
+** Enhance app security [https://github.com/CS2103AUG2017-W14-B2/main/issues/77[Issue #77]]
+
+=== Augustine: Other contributions
+
+Below are some of the other contributions to the project:
+
+* User Interface (UI)
+** Added email draft tab [https://github.com/CS2103AUG2017-W14-B2/main/pull/93[Pull Request #93]]
+** Added keyboard shortcut for toggling tab [https://github.com/CS2103AUG2017-W14-B2/main/pull/93[Pull Request #93]]
+** Enabled auto tab toggling on command [https://github.com/CS2103AUG2017-W14-B2/main/pull/152[Pull Request #152]]
+
+* Commands enhancement
+** Update result display for select command [https://github.com/CS2103AUG2017-W14-B2/main/pull/163[Pull Request #163]]
+** Sort new contacts added by name before storing in xml file [https://github.com/CS2103AUG2017-W14-B2/main/pull/29[Pull Request #29]]

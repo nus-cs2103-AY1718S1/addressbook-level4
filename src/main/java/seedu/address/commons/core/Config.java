@@ -11,9 +11,12 @@ public class Config {
     public static final String DEFAULT_CONFIG_FILE = "config.json";
 
     // Config values customizable through config file
-    private String appTitle = "Address App";
+    private String appTitle = "Augustine";
     private Level logLevel = Level.INFO;
     private String userPrefsFilePath = "preferences.json";
+    private String academicYear = "2017-2018";
+    private String semester = "1";
+    private String photo = "/images/default.jpeg";
 
     public String getAppTitle() {
         return appTitle;
@@ -37,6 +40,18 @@ public class Config {
 
     public void setUserPrefsFilePath(String userPrefsFilePath) {
         this.userPrefsFilePath = userPrefsFilePath;
+    }
+
+    public String getAcademicYear() {
+        return academicYear;
+    }
+
+    public String getSemester() {
+        return semester;
+    }
+
+    public String getDefaultPhoto() {
+        return photo;
     }
 
     @Override

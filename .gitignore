@@ -3,7 +3,6 @@ build/
 .checkstyle
 .settings/
 .idea/
-lib/*
 *.iml
 *.log
 *.log.*
@@ -18,3 +17,5 @@ classes/
 /bin/
 src/main/resources/docs/
 out/
+collate.bat
+Collate-TUI.jar

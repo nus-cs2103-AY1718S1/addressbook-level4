@@ -2,56 +2,102 @@
 <addressbook>
     <persons>
         <name>Hans Muster</name>
-        <phone isPrivate="false">9482424</phone>
-        <email isPrivate="false">hans@example.com</email>
+        <phone isPrivate="false">94823424</phone>
+        <emailAddress isPrivate="false">hans@example.com</emailAddress>
         <address isPrivate="false">4th street</address>
+		<photo>default.jpeg</photo>
+		<birthdate>02/03/1995</birthdate>
+		<id>-</id>
+        <nusModule moduleCode="CS2010">
+            <lesson lessonType="TUT">5</lesson>
+            <lesson lessonType="LEC">1</lesson>
+            <lesson lessonType="LAB">6</lesson>
+        </nusModule>
+        <nusModule moduleCode="CS2103T">
+            <lesson lessonType="TUT">T5</lesson>
+        </nusModule>
+        <nusModule moduleCode="MA1101R">
+            <lesson lessonType="TUT">T13</lesson>
+            <lesson lessonType="LEC">SL2</lesson>
+            <lesson lessonType="LAB">B01</lesson>
+        </nusModule>
+        <nusModule moduleCode="GET1020">
+            <lesson lessonType="LEC">L1</lesson>
+        </nusModule>
+        <nusModule moduleCode="CS2101">
+            <lesson lessonType="SEC">5</lesson>
+        </nusModule>
     </persons>
     <persons>
         <name>Ruth Mueller</name>
         <phone isPrivate="false">87249245</phone>
-        <email isPrivate="false">ruth@example.com</email>
+        <emailAddress isPrivate="false">ruth@example.com</emailAddress>
         <address isPrivate="false">81th street</address>
+		<photo>default.jpeg</photo>
+		<birthdate>02/04/1993</birthdate>
+		<id>-</id>
     </persons>
     <persons>
         <name>Heinz Kurz</name>
         <phone isPrivate="false">95352563</phone>
-        <email isPrivate="false">heinz@example.com</email>
+        <emailAddress isPrivate="false">heinz@example.com</emailAddress>
         <address isPrivate="false">wall street</address>
+		<photo>default.jpeg</photo>
+		<birthdate>02/05/1980</birthdate>
+		<id>-</id>
     </persons>
     <persons>
         <name>Cornelia Meier</name>
         <phone isPrivate="false">87652533</phone>
-        <email isPrivate="false">cornelia@example.com</email>
+        <emailAddress isPrivate="false">cornelia@example.com</emailAddress>
         <address isPrivate="false">10th street</address>
+		<photo>default.jpeg</photo>
+		<birthdate>02/03/1980</birthdate>
+		<id>-</id>
     </persons>
     <persons>
         <name>Werner Meyer</name>
-        <phone isPrivate="false">9482224</phone>
-        <email isPrivate="false">werner@example.com</email>
+        <phone isPrivate="false">94823224</phone>
+        <emailAddress isPrivate="false">werner@example.com</emailAddress>
         <address isPrivate="false">michegan ave</address>
+		<photo>default.jpeg</photo>
+		<birthdate>02/03/1990</birthdate>
+		<id>-</id>
     </persons>
     <persons>
         <name>Lydia Kunz</name>
-        <phone isPrivate="false">9482427</phone>
-        <email isPrivate="false">lydia@example.com</email>
+        <phone isPrivate="false">94842427</phone>
+        <emailAddress isPrivate="false">lydia@example.com</emailAddress>
         <address isPrivate="false">little tokyo</address>
+		<photo>default.jpeg</photo>
+		<birthdate>02/03/1983</birthdate>
+		<id>-</id>
     </persons>
     <persons>
         <name>Anna Best</name>
-        <phone isPrivate="false">9482442</phone>
-        <email isPrivate="false">anna@example.com</email>
+        <phone isPrivate="false">94824442</phone>
+        <emailAddress isPrivate="false">anna@example.com</emailAddress>
         <address isPrivate="false">4th street</address>
+		<photo>default.jpeg</photo>
+		<birthdate>02/04/1990</birthdate>
+		<id>-</id>
     </persons>
     <persons>
         <name>Stefan Meier</name>
-        <phone isPrivate="false">8482424</phone>
-        <email isPrivate="false">stefan@example.com</email>
+        <phone isPrivate="false">84823424</phone>
+        <emailAddress isPrivate="false">stefan@example.com</emailAddress>
         <address isPrivate="false">little india</address>
+		<photo>default.jpeg</photo>
+		<birthdate>-</birthdate>
+		<id>-</id>
     </persons>
     <persons>
         <name>Martin Mueller</name>
-        <phone isPrivate="false">8482131</phone>
-        <email isPrivate="false">hans@example.com</email>
+        <phone isPrivate="false">84823131</phone>
+        <emailAddress isPrivate="false">hans@example.com</emailAddress>
         <address isPrivate="false">chicago ave</address>
+		<photo>default.jpeg</photo>
+		<birthdate>02/03/1999</birthdate>
+		<id>-</id>
     </persons>
 </addressbook>

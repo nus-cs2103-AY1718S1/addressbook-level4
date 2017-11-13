@@ -9,6 +9,7 @@ import com.google.common.eventbus.Subscribe;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.BackupAddressBookEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.ReadOnlyAddressBook;
@@ -77,6 +78,13 @@ public class StorageManager extends ComponentManager implements Storage {
         addressBookStorage.saveAddressBook(addressBook, filePath);
     }
 
+    //@@author hengyu95
+    @Override
+    public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
+        String path = addressBookStorage.getAddressBookFilePath();
+        saveAddressBook(addressBook, path.substring(0, path.indexOf(".xml")) + "-backup.xml");
+    }
+    //@@author
 
     @Override
     @Subscribe
@@ -84,6 +92,18 @@ public class StorageManager extends ComponentManager implements Storage {
         logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local data changed, saving to file"));
         try {
             saveAddressBook(event.data);
+        } catch (IOException e) {
+            raise(new DataSavingExceptionEvent(e));
+        }
+    }
+
+    //@@author hengyu95
+    @Override
+    @Subscribe
+    public void handleBackupAddressBookEvent(BackupAddressBookEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event, "Backup requested, saving to file"));
+        try {
+            backupAddressBook(event.data);
         } catch (IOException e) {
             raise(new DataSavingExceptionEvent(e));
         }

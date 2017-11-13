@@ -1,5 +1,6 @@
 package seedu.address.model.person;
 
+import java.util.List;
 import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
@@ -16,23 +17,47 @@ public interface ReadOnlyPerson {
     Name getName();
     ObjectProperty<Phone> phoneProperty();
     Phone getPhone();
-    ObjectProperty<Email> emailProperty();
-    Email getEmail();
+    ObjectProperty<EmailAddress> emailAddressProperty();
+    EmailAddress getEmailAddress();
     ObjectProperty<Address> addressProperty();
     Address getAddress();
+    ObjectProperty<Photo> photoProperty();
+    Photo getPhoto();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
+    ObjectProperty<Birthdate> birthdateProperty();
+    Birthdate getBirthdate();
+    ObjectProperty<NusModules> nusModulesProperty();
+    NusModules getNusModules();
+    UserId getUserId();
+    ObjectProperty<UserId> userIdProperty();
+    boolean containsTags(List<String> tags);
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
      */
     default boolean isSameStateAs(ReadOnlyPerson other) {
+
         return other == this // short circuit if same object
                 || (other != null // this is first to avoid NPE below
                 && other.getName().equals(this.getName()) // state checks here onwards
                 && other.getPhone().equals(this.getPhone())
-                && other.getEmail().equals(this.getEmail())
-                && other.getAddress().equals(this.getAddress()));
+                && other.getEmailAddress().equals(this.getEmailAddress())
+                && other.getAddress().equals(this.getAddress())
+                && other.getBirthdate().equals(this.getBirthdate())
+                && other.getNusModules().equals(this.getNusModules())
+                && other.getUserId().equals(this.getUserId()));
+    }
+
+    /**
+     * Returns true if both have the same email. (interfaces cannot override .equals)
+     */
+    default boolean isSameEmail(ReadOnlyPerson other) {
+
+        return other == this // short circuit if same object
+                || (other != null // this is first to avoid NPE below
+                && other.getEmailAddress().toString().toLowerCase()
+                .equals(this.getEmailAddress().toString().toLowerCase()));
     }
 
     /**
@@ -44,9 +69,15 @@ public interface ReadOnlyPerson {
                 .append(" Phone: ")
                 .append(getPhone())
                 .append(" Email: ")
-                .append(getEmail())
+                .append(getEmailAddress())
                 .append(" Address: ")
                 .append(getAddress())
+                .append(" Image: ")
+                .append(getPhoto())
+                .append(" Birthdate: ")
+                .append(getBirthdate())
+                .append(" User ID: ")
+                .append(getUserId())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();

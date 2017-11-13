@@ -1,5 +1,6 @@
 package systemtests;
 
+import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
@@ -9,6 +10,11 @@ import static seedu.address.testutil.TestUtil.getMidIndex;
 import static seedu.address.testutil.TestUtil.getPerson;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 import org.junit.Test;
 
@@ -20,6 +26,7 @@ import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.testutil.ImageInit;
 
 public class DeleteCommandSystemTest extends AddressBookSystemTest {
 
@@ -27,15 +34,16 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
             String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE);
 
     @Test
-    public void delete() {
+    public void delete() throws Exception {
         /* ----------------- Performing delete operation while an unfiltered list is being shown -------------------- */
 
         /* Case: delete the first person in the list, command with leading spaces and trailing spaces -> deleted */
         Model expectedModel = getModel();
-        String command = "     " + DeleteCommand.COMMAND_WORD + "      " + INDEX_FIRST_PERSON.getOneBased() + "       ";
+        String command = DeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased();
         ReadOnlyPerson deletedPerson = removePerson(expectedModel, INDEX_FIRST_PERSON);
         String expectedResultMessage = String.format(MESSAGE_DELETE_PERSON_SUCCESS, deletedPerson);
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
+        assertFalse(ImageInit.checkAlicePhoto()); //Check if alice photo is deleted.
 
         /* Case: delete the last person in the list -> deleted */
         Model modelBeforeDeletingLast = getModel();
@@ -46,16 +54,19 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         command = UndoCommand.COMMAND_WORD;
         expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, modelBeforeDeletingLast, expectedResultMessage);
+        assertTrue(ImageInit.checkAnnaPhoto()); //Anna photo should be restored.
 
         /* Case: redo deleting the last person in the list -> last person deleted again */
         command = RedoCommand.COMMAND_WORD;
         removePerson(modelBeforeDeletingLast, lastPersonIndex);
         expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, modelBeforeDeletingLast, expectedResultMessage);
+        assertFalse(ImageInit.checkAnnaPhoto()); //Anna photo should deleted again.
 
         /* Case: delete the middle person in the list -> deleted */
         Index middlePersonIndex = getMidIndex(getModel());
         assertCommandSuccess(middlePersonIndex);
+        assertFalse(ImageInit.checkHeinzPhoto()); // Heinz photo should be deleted.
 
         /* ------------------ Performing delete operation while a filtered list is being shown ---------------------- */
 
@@ -64,6 +75,7 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         Index index = INDEX_FIRST_PERSON;
         assertTrue(index.getZeroBased() < getModel().getFilteredPersonList().size());
         assertCommandSuccess(index);
+        assertFalse(ImageInit.checkJohnPhoto()); //John photo should be deleted.
 
         /* Case: filtered person list, delete index within bounds of address book but out of bounds of person list
          * -> rejected
@@ -84,7 +96,8 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         command = DeleteCommand.COMMAND_WORD + " " + selectedIndex.getOneBased();
         deletedPerson = removePerson(expectedModel, selectedIndex);
         expectedResultMessage = String.format(MESSAGE_DELETE_PERSON_SUCCESS, deletedPerson);
-        assertCommandSuccess(command, expectedModel, expectedResultMessage, expectedIndex);
+        assertCommandSuccess(command, expectedModel, expectedResultMessage, null);
+        assertFalse(ImageInit.checkLydiaPhoto()); //Lydia photo should be deleted.
 
         /* --------------------------------- Performing invalid delete operation ------------------------------------ */
 
@@ -120,8 +133,12 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         ReadOnlyPerson targetPerson = getPerson(model, index);
         try {
             model.deletePerson(targetPerson);
+            Files.copy(Paths.get("default.jpeg"), Paths.get("data/images/" + targetPerson.getEmailAddress()
+                    .toString() + ".jpg"), StandardCopyOption.REPLACE_EXISTING);
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("targetPerson is retrieved from model.");
+        } catch (IOException ioe) {
+            throw new AssertionError("Image must exist");
         }
         return targetPerson;
     }
@@ -131,13 +148,14 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
      * performs the same verification as {@code assertCommandSuccess(String, Model, String)}.
      * @see DeleteCommandSystemTest#assertCommandSuccess(String, Model, String)
      */
-    private void assertCommandSuccess(Index toDelete) {
+    private void assertCommandSuccess(Index toDelete) throws Exception {
         Model expectedModel = getModel();
         ReadOnlyPerson deletedPerson = removePerson(expectedModel, toDelete);
         String expectedResultMessage = String.format(MESSAGE_DELETE_PERSON_SUCCESS, deletedPerson);
-
-        assertCommandSuccess(
-                DeleteCommand.COMMAND_WORD + " " + toDelete.getOneBased(), expectedModel, expectedResultMessage);
+        Files.copy(Paths.get("default.jpeg"), Paths.get("data/images/" + deletedPerson.getEmailAddress()
+                        .toString() + ".jpg"), StandardCopyOption.REPLACE_EXISTING);
+        assertCommandSuccess(DeleteCommand.COMMAND_WORD + " " + toDelete.getOneBased(), expectedModel,
+                expectedResultMessage);
     }
 
     /**

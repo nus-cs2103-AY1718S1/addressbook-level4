@@ -18,6 +18,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.testutil.ImageInit;
 import seedu.address.testutil.PersonUtil;
 import seedu.address.ui.StatusBarFooter;
 
@@ -39,6 +40,8 @@ public class StatusBarFooterTest extends AddressBookGuiTest {
     @After
     public void restoreOriginalClock() {
         StatusBarFooter.setClock(originalClock);
+        ImageInit.deleteEditedFiles();
+        ImageInit.deleteImagesFiles();
     }
 
     @Test
