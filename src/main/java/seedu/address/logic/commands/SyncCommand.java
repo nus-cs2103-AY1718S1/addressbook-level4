@@ -692,6 +692,14 @@ public class SyncCommand extends Command {
         return equalName && equalPhone && equalAddress && equalEmail;
     }
 
+    /**Used for tests
+     *
+     * @param syncedId
+     */
+    protected void setSyncedId (HashSet<String> syncedId) {
+        syncedIDs = syncedId;
+    }
+
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
