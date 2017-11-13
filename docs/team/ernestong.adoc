@@ -13,47 +13,27 @@ It is written in Java, and has about 6 kLoC.
 link:{collatedDir}/main/Ernest.md[Functional code] +
 link:{collatedDir}/test/Ernest.md[Test code] +
 
-=== Enhancement Added
-Shorthand Command Alias +
-Update consistency of results displayed:
-Regardless of inputs, Name and Address are stored/shown with first letter +
-of the word capitalized and the rest in small letters. +
-Email will all be in small letters. +
-Bloodtype will all be capitalized.
+=== Purpose
 
-==== External behavior
+This portfolio page is a documentation of my contributions to the project.
+Details of each section includes:
 
----
-#Start of Extract [from: User Guide]#
+* External behavior from User Guide
+* Justification for each feature
+* Details of Implementation from Developer Guide
++
+The portfolio ends with:
 
+* Proposed enhancements for v2.0
+* Other Contributions
 
-
-#End of Extract#
-
----
-
-==== Justification
-
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
-
-==== Implementation
-
----
-#Start of Extract [from: Developer Guide]#
-
-#End of Extract#
-
----
+<<<
 
 === Enhancement Added: Add class Bloodtype
 
-#Start of Extract [from: Developer Guide]#
+---
 
-include::../DeveloperGuide.adoc[tag=bloodtype]
-
-#End of Extract#
-
-=== Enhancement Added: Add List Bloodtype Command
+=== External Behaviour
 
 #Start of Extract [from: User Guide]#
 
@@ -61,11 +41,56 @@ include::../UserGuide.adoc[tag=bloodtype]
 
 #End of Extract#
 
+---
+
+=== Justification
+
+Blood type is one of important details of a patient that a doctor would require. +
+The restriction of 12 inputs (case insensitive) is to limit incorrect inputs for blood type.
+
+---
+
+=== Implementation
+
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=bloodtype]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Add List Bloodtype Command
+
+---
+
+=== External behaviour
+
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=listbloodtype]
+
+#End of Extract#
+
+---
+
+=== Justification
+
+This feature is to help doctors filter the blood types of the patients in their contact list. +
+In times of emergency, being able to know which patients have which blood type can be critical +
+such as when blood infusion is needed.
+
+---
+
+=== Implementation
+
 #Start of Extract [from: Developer Guide]#
 
 include::../DeveloperGuide.adoc[tag=listbloodtype]
 
 #End of Extract#
+
+---
 
 === Enhancement Added: Add Relationship Command
 
@@ -75,6 +100,35 @@ include::../UserGuide.adoc[tag=relationship]
 
 #End of Extract#
 
+---
+
+=== Justification
+
+Knowing the family and relatives of a patient is important in times of emergency. +
+There is almost always a need to find a way to contact people close to a patient.
+
+---
+
+=== Implementation
+
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=relationship]
+
+#End of Extract#
+
+---
+
+<<<
+
+=== Enhancement Proposed for Version 2.0
+
+* Command to store specific details of a condition tag (fracture, cancer) associated with a patient.
+* This is to know specifically what condition is associated with a patient instead of a general condition.
+* A medication field to know what a medication or treatment a patient currently have.
+* This is to keep track if the current medication or treatment is effective for a patient.
+
 === Other contributions
 
 * UI command output changes
+* User Guide in collaboration with Jeremy
