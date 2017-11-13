@@ -646,6 +646,14 @@ public class UniqueTodoList implements Iterable<TodoItem> {
 ```
 ###### \java\seedu\address\ui\MainWindow.java
 ``` java
+    @FXML
+    private Button todoButton;
+
+    @FXML
+    private Button browserButton;
+```
+###### \java\seedu\address\ui\MainWindow.java
+``` java
         StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath(),
                 Integer.toString(logic.getFilteredPersonList().size()));
 ```
