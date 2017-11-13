@@ -694,14 +694,168 @@ Example: theme white`
 
 == Clear logfile
 
+=== Valid Clear Logfile
+[NOTE]
+
+Action is irreversible
+
+1. Copy the following command onto the command line input: +
+`clearlog`
+
+****
+*Result:* +
+
+*  A message will be displayed at the bottom of the input line indicating that `ConnectUs.txt log has been cleared!`
+
+****
+
+=== Invalid Clear Logfile
+
+1. Copy the following command onto the command line input: +
+`Clearlog`
+
+****
+*Result:* +
+
+* An error message will be displayed at the bottom of the input line indicating that `Unknown command`.
+
+****
+
 == Genering QR Code
+
+[NOTE]
+Internet Access is required for this feature. +
+Smartphone with QRScanner Application Installed.
+
 
 === QRCode to call a person
 
-=== QRCode to send a message to a person
+1. Copy the following command onto the command line input: +
+`qrcall 1`
 
-=== QRCOde to save a contact
+****
+*Result:* +
+
+* A message will be displayed at the bottom of the input line indicating that `Generated SMS Qr for Selected Person: 1`
+
+****
+
+2. Scan the QRCode on the browser panel with your smartphone to verify if information is correct
+
+=== Invalid QRCode to call a person
+
+1. Copy the following command onto the command line input: +
+`Qrcall 1`
+
+****
+*Result:* +
+
+* An error message will be displayed at the bottom of the input line indicating that `Unknown command`.
+
+****
+
+=== QRCode to send SMS(Short Message Services) message to a person
+
+1. Copy the following command onto the command line input: +
+`qrsms 1`
+
+****
+*Result:* +
+
+* A message will be displayed at the bottom of the input line indicating that `Generated SMS Qr for Selected Person: 1`
+
+****
+
+2. Scan the QRCode on the browser panel with your smartphone to verify if information is correct
+
+=== Invalid QRCode to send SMS message to a person
+
+1. Copy the following command onto the command line input: +
+`Qrsms 1`
+
+****
+*Result:* +
+
+* An error message will be displayed at the bottom of the input line indicating that `Unknown command`.
+
+****
+
+=== QRCode to save a person's contact to phone
+[NOTE]
+Currently supported devices are only Android
+
+1. Copy the following command onto the command line input: +
+`qrsave 1`
+
+****
+*Result:* +
+
+* A message will be displayed at the bottom of the input line indicating that `Generated Contact Saving Qr for Selected Person: 1`
+
+****
+
+2. Scan the QRCode on the browser panel with your smartphone to verify if information is correct
+
+=== Invalid QRCode to save a person's contact to phone
+
+1. Copy the following command onto the command line input: +
+`Qrsave 1`
+
+****
+*Result:* +
+
+* An error message will be displayed at the bottom of the input line indicating that `Unknown command`.
+
+****
 
 == Clear all entries in the contact list
 
+=== Clear all entries in contact list
+
+1. Copy the following command onto the command line input: +
+`clear`
+
+****
+*Result:* +
+
+* A message will be displayed at the bottom of the input line indicating that `Address book has been cleared!`
+
+****
+
+=== Invalid Clear all entries in contact list
+
+1. Copy the following command onto the command line input: +
+`Clear`
+
+****
+*Result:* +
+
+* An error message will be displayed at the bottom of the input line indicating that `Unknown command`.
+
+****
+
 == Exit the application
+
+=== Invalid Exit Command
+
+1. Copy the following command onto the command line input: +
+`Exit`
+
+****
+*Result:* +
+
+* An error message will be displayed at the bottom of the input line indicating that `Unknown command`.
+
+****
+
+=== Valid Exit Command
+
+1. Copy the following command onto the command line input: +
+`exit`
+
+****
+*Result:* +
+
+* The Application will close.
+
+****

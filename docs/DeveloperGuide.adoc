@@ -1097,6 +1097,7 @@ is specifically concerned in deleting a person's photo while `DeletesAllPhotosCo
 === LoggingCommand Function
 (added in v1.2)
 // tag::loggingcom[]
+
 In this section, we explain how logging is done in the application whenever an important action is taken by user.
 
 Whenever an action such as "Add", "Clear", "Delete", "Edit", "Email", "Import", "List", "Redo", "RemoveTag", "Undo", "UploadPhoto", "DeletePhoto" & "DeletesAllPhotos" is executed, the LoggingCommand method will be called and information of the action is recorded in ConnectUsLog.txt with a timestamp.
@@ -1107,6 +1108,7 @@ image::LogCommandClassDia.png[]
 _Figure 4.15.1 : Class Diagram of LoggingCommand function_
 
 The sequence diagram uses delete command as an example on how LoggingCommand is implemented.
+
 image::loggingcommandseq.png[]
 _Figure 4.15.2 : An example of Sequence Diagram for LoggingCommand function used for delete_
 
@@ -1167,6 +1169,7 @@ The ClearLog Method implementation for commandline with the following codes.
 === QrCall Function
 (added in v1.4)
 // tag::qrcall[]
+
 In this section, we explain how users can generation Quick Response(QR) Code for calling with any contact number available in the addressbook.
 
 To make user experience more convenience, QR Code can make calling easy through the use of Smartphone with QR Scanner application installed.
@@ -1281,6 +1284,7 @@ The QrGenCallCommand to retrieve QrCode with the following codes.
 === QrSms Function
 (added in v1.4)
 // tag::qrsms[]
+
 In this section, we explain how users can generation Quick Response(QR) Code for Sms(Short Message Services) with any contact number available in the addressbook.
 
 To make user experience more convenience, QR Code can make sms easy through the use of Smartphone with QR Scanner application installed.
