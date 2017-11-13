@@ -18,6 +18,7 @@ import org.junit.rules.ExpectedException;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UniqueMeetingList;
@@ -60,9 +61,10 @@ public class DeleteTagCommandTest {
     @Test
     public void execute_deleteSingleTag_tagDoesNotExist() throws Exception {
 
-        CommandResult commandResult = getDeleteTagCommand(TAG_DOES_NOT_EXIST, model).executeUndoableCommand();
+        thrown.expect(CommandException.class);
+        thrown.expectMessage(DeleteTagCommand.MESSAGE_NO_TAGS_DELETED);
 
-        assertEquals(String.format(DeleteTagCommand.MESSAGE_NO_TAGS_DELETED), commandResult.feedbackToUser);
+        getDeleteTagCommand(TAG_DOES_NOT_EXIST, model).executeUndoableCommand();
     }
 
     /**
