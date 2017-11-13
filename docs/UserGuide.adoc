@@ -541,7 +541,7 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 
 [TIP]
 A person can have any number of tags (including 0) +
-If email, phone number and/or address is not entered, it will appear as a dash.
+If email, phone number and/or address is not entered, it will appear as a dash. +
 Name *cannot* be empty.
 
 Examples:
