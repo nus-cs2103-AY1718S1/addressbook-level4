@@ -84,6 +84,7 @@ include::../DeveloperGuide.adoc[tag=addevent]
 === Enhancement Added: Calendar
 
 This section includes the behaviour and justification of the Calendar enhancement and how it is implemented.
+
 Code on GitHub: Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/89[#89]
 
 ==== External behavior
@@ -146,4 +147,4 @@ the application can then simply use their laptop's web camera feature to scan th
 * Storage
 - Included ability to readBackUpAddressBook (Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/48[#45])
 * Test coverages
-- Increased test coverages (Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/151[#151], https://github.com/CS2103AUG2017-T15-B3/main/pull/158[#158])
+- Increased test coverages (Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/151[#151], https://github.com/CS2103AUG2017-T15-B3/main/pull/158[#158], https://github.com/CS2103AUG2017-T15-B3/main/pull/167[#167])
