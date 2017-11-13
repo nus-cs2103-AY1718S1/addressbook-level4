@@ -283,4 +283,5 @@ Restores the DeathNote to the state before the previous _undoable_ command was e
 Reverses the most recent `undo` command. +
 
   Format: redo
-  
+
+* `redo`
