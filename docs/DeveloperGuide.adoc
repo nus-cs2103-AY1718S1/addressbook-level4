@@ -275,7 +275,7 @@ The `Storage` component,
 * can save `UserPref` objects in json format and read it back.
 * can save the Address Book data in xml format and read it back.
 
-image::NewStorageComponentClassDiagram.png[width="800"]
+image::NewStorageComponentClassDiagram.PNG[width="800"]
 _Figure 3.5.1 : Structure of the Storage Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
