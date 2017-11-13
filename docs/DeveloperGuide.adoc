@@ -646,6 +646,64 @@ image::ImportCommandActivityDiagram.png[width="300"]
 
 Future enhancements may include a selection option from the UI and allowing the users to specify if they would like to overwrite contacts with identical names.
 
+
+// tag::addEvent[]
+=== Add Event Command
+
+The `addevent` command adds an `Event` to the `EventBook`. The format for the current command is:
+
+`addevent ti/TITLE des/DESCRIPTION loc/LOCATION [time/STARTTIME TO ENDTIME or STARTTIME DURATION (in hours)]`
+
+If the event being added already exists in the EventBook, executing the `add event` command raises a `DuplicateEventException`:
+
+[source, java]
+----
+@Override
+public CommandResult executeUndoableCommand() throws CommandException {
+    requireNonNull(model);
+    try {
+        model.addEvent(toAdd);
+        return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
+    } catch (DuplicateEventException e) {
+        throw new CommandException(MESSAGE_DUPLICATE_EVENT);
+    }
+}
+----
+
+
+Possible Future Implementations:
+
+* Allow tentative events for which the `Location` or `Datetime have not yet been finalised.
+* Allow adding events which span more than one day.
+
+// end::addEvent[]
+
+
+// tag::deleteEvent[]
+=== Delete Event Command
+
+The `deleteEvent` command deletes an `Event` from the `EventBook`. The format for the current command is:
+`deleteEvent INDEX (must be a positive integer)`
+
+If the index passed to the deleteEvent command as argument is greater than the number of events in the EventBook, a CommandException is raised on execution (in DeleteEventCommand.executeUndoableCommand()):
+
+[source, java]
+----
+    List<ReadOnlyEvent> lastShownList = model.getFilteredEventList();
+
+    if (targetIndex.getZeroBased() >= lastShownList.size()) {
+        throw new CommandException(Messages.MESSAGE_INVALID_EVENT_DISPLAYED_INDEX);
+    }
+----
+
+Possible Future Implementations:
+
+* Allow deleting events by `Title` or `Datetime`.
+* Allow batch deleting of events to clear old events with a single command.
+
+// end::deleteEvent[]
+
+
 // tag::switchtab[]
 === Switch Tab Command
 
