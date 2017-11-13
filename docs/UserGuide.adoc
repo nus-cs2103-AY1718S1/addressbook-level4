@@ -424,7 +424,9 @@ There is no need to save manually.
 // tag::backup[]
 === Back up of data : `backup` (since v1.3)
 
-Resident book data can be stored in a back up file when necessary. This is good in case any the existing resident book is corrupted, or when the semester is over. +
+Resident book data can be stored in a back up file when necessary. This function is not undoable. Please ensure that previous backups are truly deprecated.
+
+This command is good in case any the existing resident book is corrupted, or when the semester is over. +
 Format: `backup`
 
 image::backup.png[width='800']
