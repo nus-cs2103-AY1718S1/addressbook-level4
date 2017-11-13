@@ -53,9 +53,6 @@ public class FindTaskCommandTest {
         // different types -> returns false
         assertFalse(findFirstCommand.equals(1));
 
-        // null -> returns false
-        assertFalse(findFirstCommand.equals(null));
-
         // different person -> returns false
         assertFalse(findFirstCommand.equals(findSecondCommand));
     }
