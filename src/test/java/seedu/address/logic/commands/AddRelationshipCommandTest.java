@@ -2,8 +2,6 @@ package seedu.address.logic.commands;
 
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.testutil.TypicalPersons.CARL;
-import static seedu.address.testutil.TypicalPersons.FIONA;
 import static seedu.address.testutil.TypicalPersons.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalPersons.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
@@ -65,26 +63,21 @@ public class AddRelationshipCommandTest {
     }
 
     @Test
-    public void execute_addRelationshipOfaDifferentDirection_success() throws Exception {
-        int indexOfFiona = model.getFilteredPersonList().indexOf(FIONA);
-        int indexOfCarl = model.getFilteredPersonList().indexOf(CARL);
+    public void execute_addRelationshipOfaDifferentDirection_throwsCommandException() throws Exception {
+        AddRelationshipCommand addRelationshipCommand = prepareCommand(INDEX_FIRST_PERSON,
+                INDEX_SECOND_PERSON, RelationshipDirection.DIRECTED);
+        addRelationshipCommand.execute();
 
-        Index carlIndex = Index.fromOneBased(indexOfCarl);
-        Index fionaIndex = Index.fromOneBased(indexOfFiona);
-        RelationshipDirection  direction = RelationshipDirection.DIRECTED;
-        AddRelationshipCommand priorRelationshipCommand = prepareCommand(carlIndex, fionaIndex,
-                RelationshipDirection.UNDIRECTED);
-        priorRelationshipCommand.execute();
+        AddRelationshipCommand addRelationshipCommand1 = prepareCommand(INDEX_SECOND_PERSON,
+                INDEX_FIRST_PERSON, RelationshipDirection.DIRECTED);
+        AddRelationshipCommand addRelationshipCommand2 = prepareCommand(INDEX_FIRST_PERSON,
+                INDEX_SECOND_PERSON, RelationshipDirection.UNDIRECTED);
+        AddRelationshipCommand addRelationshipCommand3 = prepareCommand(INDEX_SECOND_PERSON,
+                INDEX_FIRST_PERSON, RelationshipDirection.UNDIRECTED);
 
-        AddRelationshipCommand addRelationshipCommand = prepareCommand(carlIndex, fionaIndex, direction);
-
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.addRelationship(carlIndex, fionaIndex, direction, DEFAULT_NAME, DEFAULT_CE);
-
-        String expectedMessage = String.format(addRelationshipCommand.MESSAGE_ADD_RELATIONSHIP_SUCCESS,
-                fionaIndex.toString(), carlIndex.toString(), direction.toString());
-
-        assertCommandSuccess(addRelationshipCommand, model, expectedMessage, expectedModel);
+        assertCommandFailure(addRelationshipCommand1, model, AddRelationshipCommand.MESSAGE_DUPLICATED_RELATIONSHIP);
+        assertCommandFailure(addRelationshipCommand2, model, AddRelationshipCommand.MESSAGE_DUPLICATED_RELATIONSHIP);
+        assertCommandFailure(addRelationshipCommand3, model, AddRelationshipCommand.MESSAGE_DUPLICATED_RELATIONSHIP);
     }
 
 

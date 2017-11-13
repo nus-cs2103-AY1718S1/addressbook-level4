@@ -179,21 +179,23 @@ public class Person implements ReadOnlyPerson, Comparable<Person> {
     /**
      * Add a relationship to a person's relationships
      */
-    public boolean addRelationship(Relationship re) throws DuplicateRelationshipException {
+    public void addRelationship(Relationship re) throws DuplicateRelationshipException {
         UniqueRelationshipList reList = relationships.get();
         ArrayList<Relationship> oppoRelationships = re.oppositeRelationships();
         for (Relationship oppoRe: oppoRelationships) {
-            removeRelationship(oppoRe);
+            if (reList.contains(oppoRe)) {
+                throw new DuplicateRelationshipException();
+            }
         }
 
         if (!re.isUndirected()) {
             Relationship directlyOppoRelationship = new Relationship(re.getToPerson(), re.getFromPerson(),
                     RelationshipDirection.DIRECTED);
-            removeRelationship(directlyOppoRelationship);
+            if (reList.contains(directlyOppoRelationship)) {
+                throw new DuplicateRelationshipException();
+            }
         }
         reList.add(re);
-
-        return true;
     }
 
     //@@author wenmogu
