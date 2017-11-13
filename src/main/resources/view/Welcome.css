@@ -1,0 +1,25 @@
+/*@@author CT15*/
+.button {
+    -fx-padding: 5 22 5 22;
+    -fx-border-color: white;
+    -fx-border-width: 2;
+    -fx-background-radius: 0;
+    -fx-background-color: #a74f8b;
+    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-size: 13pt;
+    -fx-text-fill: #d8d8d8;
+    -fx-background-insets: 0 0 0 0, 0, 1, 2;
+}
+
+.button:hover {
+    -fx-background-color: #7d1a36;
+}
+
+#welcomeWindow {
+    -fx-background-color: derive(#1d1d1d, 20%);
+}
+
+#textPlaceHolder {
+     -fx-font-family: "sans-serif";
+     -fx-font-size: 20px;
+}

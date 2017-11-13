@@ -16,6 +16,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
+import seedu.address.model.Model;
 import seedu.address.model.UserPrefs;
 
 /**
@@ -33,13 +34,16 @@ public class UiManager extends ComponentManager implements Ui {
     private static final String ICON_APPLICATION = "/images/address_book_32.png";
 
     private Logic logic;
+    private Model model;
     private Config config;
     private UserPrefs prefs;
+    private WelcomeScreen welcomeScreen;
     private MainWindow mainWindow;
 
-    public UiManager(Logic logic, Config config, UserPrefs prefs) {
+    public UiManager(Logic logic, Model model, Config config, UserPrefs prefs) {
         super();
         this.logic = logic;
+        this.model = model;
         this.config = config;
         this.prefs = prefs;
     }
@@ -52,11 +56,16 @@ public class UiManager extends ComponentManager implements Ui {
         //Set the application icon.
         primaryStage.getIcons().add(getImage(ICON_APPLICATION));
 
+        //@@author CT15
         try {
-            mainWindow = new MainWindow(primaryStage, config, prefs, logic);
-            mainWindow.show(); //This should be called before creating other UI parts
-            mainWindow.fillInnerParts();
+            welcomeScreen = new WelcomeScreen(primaryStage, config, prefs, logic, model);
 
+            if (prefs.getWelcomeScreenEnabledInfo()) {
+                welcomeScreen.show(); //This should be called before creating other UI parts
+                welcomeScreen.fillInnerParts();
+            } else {
+                welcomeScreen.loadMainWindow();
+            }
         } catch (Throwable e) {
             logger.severe(StringUtil.getDetails(e));
             showFatalErrorDialogAndShutdown("Fatal error during initializing", e);
@@ -65,9 +74,7 @@ public class UiManager extends ComponentManager implements Ui {
 
     @Override
     public void stop() {
-        prefs.updateLastUsedGuiSetting(mainWindow.getCurrentGuiSetting());
-        mainWindow.hide();
-        mainWindow.releaseResources();
+        welcomeScreen.stop();
     }
 
     private void showFileOperationAlertAndWait(String description, String details, Throwable cause) {
@@ -80,7 +87,7 @@ public class UiManager extends ComponentManager implements Ui {
     }
 
     void showAlertDialogAndWait(Alert.AlertType type, String title, String headerText, String contentText) {
-        showAlertDialogAndWait(mainWindow.getPrimaryStage(), type, title, headerText, contentText);
+        showAlertDialogAndWait(welcomeScreen.getMainWindow().getPrimaryStage(), type, title, headerText, contentText);
     }
 
     /**

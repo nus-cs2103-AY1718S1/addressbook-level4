@@ -35,7 +35,8 @@ import seedu.address.testutil.PersonBuilder;
  */
 public class EditCommandTest {
 
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private UserPrefs prefs = new UserPrefs();
+    private Model model = new ModelManager(getTypicalAddressBook(), prefs);
 
     @Test
     public void execute_allFieldsSpecifiedUnfilteredList_success() throws Exception {
@@ -178,7 +179,7 @@ public class EditCommandTest {
      */
     private EditCommand prepareCommand(Index index, EditPersonDescriptor descriptor) {
         EditCommand editCommand = new EditCommand(index, descriptor);
-        editCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        editCommand.setData(model, prefs, new CommandHistory(), new UndoRedoStack());
         return editCommand;
     }
 }

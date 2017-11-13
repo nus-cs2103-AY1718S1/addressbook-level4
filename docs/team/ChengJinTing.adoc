@@ -1,0 +1,103 @@
+= Cheng Jin Ting- Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== ConTag
+ConTag is an efficient and feature-packed desktop address book application for the most demanding business users and busiest frequent travellers. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T15-B2/main/blob/master/collated/main/jin-ting.md[Functional code]] [https://github.com/CS2103AUG2017-T15-B2/main/blob/master/collated/test/jin-ting.md[Test code]] {give links to collated code files}
+
+=== Enhancement Added: Expansion of existing find function
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=find]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+To provide a more convenient way of allowing users to search for a contact via any attributes, enhancing productivity for the users.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=find]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Opening up calendar
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=calendar]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+
+To allow user to open a calendar so that users are able to keep track of important days and event.The addition of calendar feature further enhance the existing schedule feature in Contag as users are able to check for he dates before scheduling an activity.The calendar platform also allows user to navigate to other website that will inform user of the weather and time zone ,catering to the needs of freqeunt travellers.
+
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=calendar]
+
+#End of Extract#
+
+---
+
+
+=== Enhancement Added: Emailing persons
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=email]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+To allow a faster way of sending emails to multiple contacts for business communication directly at ConTag, reducing the need to open a new website to send email.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=email]
+
+#End of Extract#
+
+---
+
+=== Other contributions
+
+* Updated the UI of ConTag
+(Pull requests https://github.com/CS2103AUG2017-T15-B2/main/pull/99[#99])
+* Backup ConTag
+(Pull requests https://github.com/CS2103AUG2017-T15-B2/main/pull/107[#107])

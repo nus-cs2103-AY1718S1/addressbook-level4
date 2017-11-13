@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- @@author 17navasaw -->
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <Label fx:id="agendaHeader" alignment="CENTER" contentDisplay="TOP" text="My Agenda" textFill="#f7d0af">
+      <font>
+         <Font name="Calibri Bold Italic" size="25.0" />
+      </font>
+      <VBox.margin>
+         <Insets left="60.0" />
+      </VBox.margin>
+   </Label>
+  <ListView fx:id="scheduleCardListView" VBox.vgrow="ALWAYS" />
+</VBox>

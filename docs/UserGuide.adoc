@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= ConTag - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,20 +10,64 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-T15-B2/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+{empty} +
 
-== Quick Start
+image::contag_logo_ugdg.png[align="center"]
+
+{empty} +
+
+By: `T15-B2`      `Aw Wen Hao`      `Calvin Tantio`      `Cheng Jin Ting`      `Chung Tin Long`       Since: `Aug 2017`      Licence: `MIT`
+
+
+== Introduction
+
+=== Welcome to ConTag!
+
+ConTag is an efficient and feature-packed address book desktop application, capable of organizing contacts for even the most demanding business users and busiest frequent travellers.
+
+=== The ConTag Help System
+
+Our help system is designed to progressively provide all the necessary information to help you navigate through ConTag with ease.
+
+Apart from the comprehensive help coverage in this user guide. You can also choose to get help on demand inside the ConTag application by pressing the `F1` key or utilising ConTag's `help` feature (refer to link:#viewing-help-code-help-code[Help]).
+
+=== Features and Capabilities Overview
+Key features you can expect:
+
+* Saving comprehensive details of contacts in the address book to make each contact more meaningful
+
+* Locating contact's address via the integrated Google Maps
+
+* Creating a new schedule/activity with a contact
+
+* Sending email to multiple contacts easily
+
+* Find contacts by any attributes
+
+=== Authors and Contributors
+The initial version of the user guide was written by Team SE-EDU.
+
+The current releases for ConTag are currently being orchestrated by a team of four:
+
+ * Aw Wen Hao
+
+ * Calvin Tantio
+
+ * Cheng Jin Ting
+
+ * Chung Tin Long
+
+== Getting Started
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
 +
 [NOTE]
-Having any Java 8 version is not enough. +
-This app will not work with earlier versions of Java 8.
+This app will not work with earlier versions of Java 8 and below.
 +
 .  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
+.  Copy the file to your home folder of choice.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
 image::Ui.png[width="790"]
@@ -33,7 +77,8 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
 * *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
+* **`add`**`n/John p/987654 e/john@e.com a/Blk 1, John St, #01-01, S407989` : +
+adds a contact named `John Doe` to the Address Book.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
@@ -41,47 +86,107 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 == Features
 
-====
-*Command Format*
+=== Command Format
 
 * Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
-* Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+* Items in *square brackets* are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
+* Items with `…`​ after them can be optionally used multiple times or not at all:
+
+_e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc._
+
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
-====
+* Command words can be replaced by their specified aliases e.g. `delete INDEX` is the same as `d INDEX`.
 
-=== Viewing help : `help`
-
-Format: `help`
-
-=== Adding a person: `add`
-
-Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 
 [TIP]
-A person can have any number of tags (including 0)
+Once you have familiarized yourself with the application, try typing a command's alias in place of the full command keyword to save more time!
+
+=== Quick Help
+
+// tag::help[]
+==== Viewing help : `help`
+
+=> Alias: `h` <=
+
+Shows the usage of the specific command identified. If no command is specified, opens help window. +
+Format: `help [COMMAND_IDENTIFIER]`
+
+[NOTE]
+A valid command identifier includes all existing commands and their aliases.
+
+// tag::quick_start[]
+[TIP]
+You can count on the quick-start help list of commands in the result display upon application start
+if you need a quick reminder of the function you need to enter!
+// end::quick_start[]
+[NOTE]
+Close all help windows before executing `help [COMMAND_IDENTIFIER]`.
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `help` (without command identifier)
+* `help add` (using command word)
+* `help a` (using alias)
 
-=== Listing all persons : `list`
+image::HelpEnhancementScreenShot.PNG[width="800"]
+_Figure 3.2.1: UI display for HelpCommand_
 
-Shows a list of all persons in the address book. +
-Format: `list`
+// end::help[]
 
-=== Editing a person : `edit`
+=== Modifying Contacts
+
+// tag::multipleemails[]
+==== Adding a Person: `add`
+
+=> Alias: `a` <=
+
+Adds a person to the address book +
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL [e/UNIQUE EMAIL]... a/ADDRESS [t/TAG]...`
+
+[TIP]
+A person can have any number of tags (including 0).
+
+[NOTE]
+A person must have at least 1 email. *[v1.3 update]*
+
+[NOTE]
+ADDRESS needs to follow the format: `BLOCK, STREET, [UNIT,] POSTAL CODE` with `UNIT` being an optional parameter. *[v1.3 update]*
+// tag::country_code[]
+[NOTE]
+Phone numbers may optionally include country codes, beginning with '+' and with a white space between the code and the rest of the phone number.
+
+
+Examples:
+
+* `add n/John Doe p/+1 98765432 e/johnd@example.com a/123, John street, #01-01, Singapore 407989`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/12, Newgate Prison, IL 043 p/12345678 t/criminal`
+// end::country_code[]
+
+==== Editing a Person : `edit`
+
+=> Alias: `e` <=
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL]... [a/ADDRESS] [t/TAG]...`
+
+[NOTE]
+Ensure that you have input the correct prefix [n/NAME] , [p/PHONE] , [e/EMAIL]  , [a/ADDRESS] ,  [t/TAG]
+
+[NOTE]
+ADDRESS needs to follow the format: `BLOCK, STREET, [UNIT,] POSTAL CODE` with `UNIT` being an optional parameter. *[v1.3 update]*
+
+// tag::country_code2[]
+
+[NOTE]
+Can't figure how to change a contact's country?
+Country name is automatically inferred from any country code input in the phone number.
+// end::country_code2[]
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
+* When editing tags or emails, the existing related fields of the person will be removed i.e adding of tags and emails is not cumulative.
 * You can remove all the person's tags by typing `t/` without specifying any tags after it.
 ****
 
@@ -92,67 +197,354 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Locating persons by name: `find`
+// end::multipleemails[]
 
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+// tag::deletemultiple[]
+==== Deleting Person(s) : `delete`
 
-****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-****
+=> Alias: `d` <=
 
-Examples:
-
-* `find John` +
-Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
-
-=== Deleting a person : `delete`
-
-Deletes the specified person from the address book. +
-Format: `delete INDEX`
+Deletes the specified person(s) from the address book. +
+Format: `delete INDEX [UNIQUE INDEX]...`
 
 ****
-* Deletes the person at the specified `INDEX`.
+* Deletes the people at the specified index or indices.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
+* If there is more than one index, the indices indicated must be different from each other.
 ****
+
+*v1.1 update:* This feature allows the deleting of more than 1 person.
 
 Examples:
 
 * `list` +
-`delete 2` +
-Deletes the 2nd person in the address book.
-* `find Betsy` +
+`delete 1 2` +
+Deletes the 1st and 2nd person in the address book.
+* `find n/Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
+// end::deletemultiple[]
 
-=== Selecting a person : `select`
+==== Clearing All Entries : `clear`
 
-Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
+=> Alias: `c` <=
+
+Clears all entries from the address book. +
+Format: `clear`
+
+=== Key Features
+
+// tag::welcomeScreen[]
+==== Enabling and disabling the welcome screen: `welcome`
+
+=> Alias: `w` <=
+
+Enables or disables the welcome screen.
+Format: `welcome ENABLING_KEYWORD`
+
+Examples:
+
+* `welcome enable`
+
+* `welcome disable` +
+
+[NOTE]
+The welcome screen is disabled by default.
+
+[TIP]
+Try enabling the welcome screen, close and rerun ConTag.
+
+If the welcome screen is successfully enabled, you should be able to see a the following screen, as shown in _Figure 3.5.5.1_ every time ConTag is run. The welcome screen displays 1 out of the 15 default productivity quotes at random to keep you motivated throughout the day.
+
+image::WelcomeScreen.png[width="400"]
+_Figure 3.4.1: The welcome screen_
+// end::welcomeScreen[]
+
+// tag::find[]
+==== Finding persons by any field : `find`
+
+=> Alias: `f` <=
+
+Finds person based on the searched  field. +
+Format: `find KEYWORD based on [n/NAME] or  [p/PHONE]  or [c/COUNTRY] or [e/EMAIL] or [a/ADDRESS] or  [t/TAG] or [act/ACTIVTY]`
+
 
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
+* The search is case insensitive. e.g `[e/google]` will match person with email of `[google.com]` domain
+* Only full words will be matched e.g. `[e/goo]` will not match person with email with `[google.com]` domain
+* Phone search must be of either 4 or 8 digits only e.g `[p/98989898 9227]`
+****
+
+Examples:
+* `find n/John` +
+Returns `john` and `John Doe`
+* `find n/Betsy Tim John` +
+Returns any person having names `Betsy`, `Tim`, or `John`
+
+
+* `find e/yahoo` +
+Returns person with email of `yahoo.com` domain
+* `find e/yahoo hotmail` +
+Returns person with email of `yahoo.com` and `hotmail.com` domain
+
+
+* `find p/98989898` +
+Returns person with phone of `98989898`
+
+* `find p/9898` +
+Returns person with phone of `98989898`
+
+* `find p/9898 7888` +
+Returns person with phone of `98989898` and `99997888`
+
+* `find a/Geylang` +
+Returns person with address `30, Geylang Street 29 , #10-08, Singapore 705678`
+* `find a/#10-08` +
+Returns person with address `30, Geylang Street 29 , #10-08, Singapore 705678`
+
+* `find t/boss` +
+Returns all persons with tag `boss`
+* `find t/CEO boss` +
+Returns all persons with tag `CEO` and `boss`
+
+* `find act/Interview` +
+Returns all persons with scheduled activity `Interview`
+* `find t/Party Presentation` +
+Returns all persons with tag `Party` and `Presentation`
+
+* `find c/Singapore` +
+Returns all persons of country code `Singapore`
+
+image::FindCommand_Name.PNG[width="400"]
+_Figure 3.4.2a : Find by name [n/NAME]_
+
+image::FindCommand_Phone.PNG[width="400"]
+_Figure 3.4.2b : Find by phone [p/PHONE]_
+
+image::FindCommand_Email.PNG[width="400"]
+_Figure 3.4.2c : Find by email [e/EMAIL]_
+
+image::FindCommand_Address.PNG[width="400"]
+_Figure 3.4.2d : Find by address [a/ADDRESS]_
+
+image::FindCommand_Activity.PNG[width="400"]
+_Figure 3.4.2e : Find by activity [act/ACTIVITY]_
+
+image::FindCommand_Tag.PNG[width="400"]
+_Figure 3.4.2f : Find by tag [t/TAG]_
+
+image::FindCommand_Country.PNG[width="400"]
+_Figure 3.4.2g : Find by country [c/COUNTRY]_
+
+// end::find[]
+
+// tag::locate[]
+==== Locating a Person's Address : `locate`
+
+=> Alias: `lc` <=
+
+Locates the address of the person identified by the index number used in the last person listing. +
+Format: `locate INDEX`
+
+****
+* Selects the person and loads the Google Maps web page of the address at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
 
+[NOTE]
+Web page may show garbled characters for Mac OS users.
+
+* `list` +
+`locate 2` +
+Locates the 2nd person's address in the address book.
+* `find n/Betsy` +
+`locate 1` +
+Locates the 1st person's address in the results of the `find` command.
+
+image::Full UI outcome for LocateCommand.png[width="800"]
+_Figure 3.4.3 :  UI display of LocateCommand_
+
+// end::locate[]
+
+// tag::schedule[]
+==== Scheduling an Activity: `schedule`
+
+=> Alias: `sc` <=
+
+Schedules an activity with person(s) specified by the index number(s). +
+Format: `schedule INDEX [UNIQUE INDEX]... d/DATE act/ACTIVITY`
+
+[NOTE]
+DATE must follow DD-MM-YYYY format.
+
+
 Examples:
 
 * `list` +
-`select 2` +
-Selects the 2nd person in the address book.
-* `find Betsy` +
-`select 1` +
-Selects the 1st person in the results of the `find` command.
+`schedule 1 3 d/15-01-2018 act/Play basketball` +
+Associates the specified schedule with the 1st and 3rd persons in the address book.
+* `find n/Betsy` +
+`schedule 1 d/25-12-2017 act/Christmas dinner` +
+Associates the specified schedule with the 1st person in the results of the `find` command.
+// end::schedule[]
 
-=== Listing entered commands : `history`
+// tag::agenda[]
+===== Viewing of user's agenda
+
+A list of all scheduled activities by the user is displayed in the 'My Agenda' section of the application, as shown below in _Figure 3.4.4.1_.
+
+image::AgendaPanelUI.png[width="300"]
+_Figure 3.4.4.1: UI display for user's agenda_
+
+When an activity is scheduled, the agenda list will be immediately updated, with the list being arranged from earliest to latest date with the earliest being at the top.
+// end::agenda[]
+
+// tag::reminder[]
+===== Pop-up reminder window on startup
+
+A pop-up reminder will be appear after the main application window has opened, if there exists scheduled activities by the user which are due the day after the current date. The display of the reminder window can be seen in _Figure 3.4.3.2_ below:
+
+image::ReminderWindowUI.png[width="700"]
+_Figure 3.4.4.2: UI display for pop-up reminder window_
+// end::reminder[]
+
+// tag::copy[]
+==== Getting Email Addresses : `copy`
+
+=> Alias: `y` <=
+
+Outputs to console the email addresses of all person(s) selected by index number(s). +
+Format: `copy INDEX [UNIQUE INDEX]...`
+
+****
+* Copies email addresses of people at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+* If there is more than one index, the indices indicated must be different from each other.
+****
+
+Examples:
+
+* `copy 1` +
+Outputs the 1st person's email address in console: `johndoe@example.com`
+* `copy 1 4 5` +
+Outputs email addresses of people at index 1, 4 and 5, with a semi-colon between each: `a@a.com; d@d.com; e@e.com`
+
+image::CopyCommand_browser_result.PNG[width="600"]
+_Figures 3.4.5: UI display of CopyCommand_
+
+// end::copy[]
+
+//tag::calendar[]
+==== Opening Calendar : `calendar`
+
+=> Alias: `cl` <=
+
+Open a calendar browser that display the current events. +
+Format: `calendar`
+
+Examples:
+
+Opens up calendar browser in the address book. +
+* `calendar` (using command word) +
+* `cl` (using alias) +
+Opens up calendar browser in the address book.
+
+image::CalendarCommand.png[width="800"]
+
+_Figure 3.4.6: UI display of CalendarCommand_
+// end::calendar[]
+
+//tag::email[]
+==== Emailing persons : `email`
+
+=> Alias: `m` <=
+
+Open a email platform for sending of email. +
+Format: `email INDEX [UNIQUE INDEX]...`
+
+****
+* Emails the people at the specified index or indices.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+* If there is more than one index, the indices indicated must be different from each other.
+****
+
+Examples:
+
+* `list` +
+`email 1 2` +
+Emails the 1st and 2nd person in the address book.
+* `find n/Betsy` +
+`email 1` +
+Emails the 1st person in the results of the `find` command.
+
+image::EmailCommand.PNG[width="700"]
+_Figure 3.4.7: UI display of EmailCommand_
+
+// end::email[]
+
+
+//tag::backup[]
+==== Back up ConTag : `backup`
+
+=> Alias: `b` <=
+
+Create an exact copy of your address book in another directory anywhere on your PC.
+Format: `backup TARGET_DIRECTORY`
+
+[NOTE]
+====
+This feature has only currently been tested working on *Windows machines*. Other operating systems are not yet officially supported,
+and may induce unexpected results due to differences in file system.
+====
+
+****
+* Result of command will only display as either successful or unsuccessful.
+* If unsuccessful, check for the following:
+* Does the directory folder exist? Folders are not created by the application, only the file is.
+* Does a backup file `addressbook.xml` already exist in your specified folder? Rename or remove it
+to solve unsuccessful attempt, as the application will protect and not overwrite your data.
+****
+
+Examples:
+
+* `backup F:\Folder` +
+Backs up `addressbook.xml` at the location `F:\Folder\addressbook.xml`.
+* `b C:\Folder 2\addressbook.xml` +
+Backs up `addressbook.xml` at the above-specified location.
+
+Note:
+
+1. Entering `addressbook.xml` at the end of your target path is optional, as the application
+can take in either format.
+
+2. The path can include white spaces such as `\Folder 2\`, so do not replace spaces with other characters.
+
+
+image::backup demo 1.PNG[width="700"]
+_Figure 3.4.8 : UI display for BackupCommand1_
+
+image::backup demo 2.PNG[width="700"]
+_Figure 3.4.8 : UI display for BackupCommand2_
+
+//end::backup[]
+
+=== Other Navigation Commands
+
+==== Listing All Persons : `list`
+
+=> Alias: `l` <=
+
+Shows a list of all persons in the address book. +
+Format: `list`
+
+
+==== Listing Entered Commands : `history`
+
+=> Alias: `his` <=
 
 Lists all the commands that you have entered in reverse chronological order. +
 Format: `history`
@@ -163,7 +555,9 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 ====
 
 // tag::undoredo[]
-=== Undoing previous command : `undo`
+==== Undoing Previous Command : `undo`
+
+=> Alias: `u` <=
 
 Restores the address book to the state before the previous _undoable_ command was executed. +
 Format: `undo`
@@ -189,7 +583,9 @@ The `undo` command fails as there are no undoable commands executed previously.
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
 
-=== Redoing the previously undone command : `redo`
+==== Redoing the Previously Undone Command : `redo`
+
+=> Alias: `r` <=
 
 Reverses the most recent `undo` command. +
 Format: `redo`
@@ -212,41 +608,59 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
-=== Clearing all entries : `clear`
+==== Exiting the Program : `exit`
 
-Clears all entries from the address book. +
-Format: `clear`
-
-=== Exiting the program : `exit`
+=> Alias: `q` <=
 
 Exits the program. +
 Format: `exit`
 
-=== Saving the data
+=== Saving and Transferring Data
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
+Address book data is *saved in the hard disk automatically* after any command that modifies data. +
 There is no need to save manually.
 
-== FAQ
-
-*Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+To *transfer data* to another Computer, install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX` +
-e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *List* : `list`
-* *Help* : `help`
-* *Select* : `select INDEX` +
-e.g.`select 2`
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
+[width="59%",cols="5%,<2%,<50%,<42%",options="header",]
+|=======================================================================
+|Commands Words |Commands Alias |Format|Example
+|link:#adding-a-person-code-add-code-last-updated-in-v1-3[Add] | `a`  |`add n/NAME p/PHONE_NUMBER e/EMAIL [e/UNIQUE EMAIL] a/ADDRESS [t/TAG]` |  `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend`
+
+|link:#back-up-contag-code-backup-code[Backup] |`b` |`backup TARGET_DIRECTORY` | backup F:\myFiles\
+
+|link:#opening-calendar-code-calendar-code[Calendar] |`cl` |`calendar` |
+
+|link:#clearing-all-entries-code-clear-code[Clear] | `c`| `clear` |
+
+|link:#getting-email-addresses-code-copy-code[Copy] |`cp` |`copy INDEX [UNIQUE INDEX]...`| `copy 1 2`
+
+|link:#deleting-person-s-code-delete-code[Delete] |`d`|`delete INDEX [UNIQUE INDEX]...`| `delete 3`
+
+|link:#editing-a-person-code-edit-code[Edit] | `e` |`edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]` |`edit 2 n/James Lee e/jameslee@example.com`
+
+|link:#emailing-persons-code-email-code[Email] |`m` |`delete INDEX [UNIQUE INDEX]...`| `email 2`
+
+|link:#exiting-the-program-code-exit-code[Exit] |  | `exit` |
+
+|link:#finding-persons-by-any-field-code-find-code[Find]|`f` |`find KEYWORD based on [n/NAME] or  [p/PHONE]  or [c/COUNTRY] or [e/EMAIL] or [a/ADDRESS] or  [t/TAG] or [act/ACTIVTY]` |`find n/James Jake`
+
+|link:#viewing-help-code-help-code[Help] | `h` | `help COMMAND WORD` | `help add`
+
+|link:#listing-entered-commands-code-history-code[History]|`his`|`history`|
+
+|link:#listing-entered-commands-code-history-code[List] |`l` |`list` |
+
+|link:#locating-a-person-s-address-code-locate-code[Locate]|`lc` |`locate INDEX` | `locate 2`
+
+|link:#redoing-the-previously-undone-command-code-redo-code[Redo] |`r` |`redo` |
+
+|link:#scheduling-an-activity-code-schedule-code[Schedule] |`sc` |`schedule INDEX [INDEX]... d/DATE act/ACTIVITY` | `schedule 1 d/25-12-2017 act/Christmas dinner`
+
+|link:#undoing-previous-command-code-undo-code[Undo] |`u`| `undo` |
+
+|link:#enabling-and-disabling-the-welcome-screen-code-welcome-code[Welcome] | `w` | `welcome ENABLING_KEYWORD` | `welcome enable`
+
+|=======================================================================

@@ -1,5 +1,7 @@
 package seedu.address.commons.core.index;
 
+import java.util.Objects;
+
 /**
  * Represents a zero-based or one-based index.
  *
@@ -8,7 +10,7 @@ package seedu.address.commons.core.index;
  * base the other component is using for its index. However, after receiving the {@code Index}, that component can
  * convert it back to an int if the index will not be passed to a different component again.
  */
-public class Index {
+public class Index implements Comparable {
     private int zeroBasedIndex;
 
     /**
@@ -50,5 +52,19 @@ public class Index {
         return other == this // short circuit if same object
                 || (other instanceof Index // instanceof handles nulls
                 && this.zeroBasedIndex == ((Index) other).zeroBasedIndex); // state check
+    }
+
+    //@@author CT15
+    @Override
+    public int hashCode() {
+        return Objects.hash(zeroBasedIndex);
+    }
+
+    //@@author 17navasaw
+    @Override
+    public int compareTo(Object o) {
+        Index compareIndex = (Index) o;
+
+        return (compareIndex).getZeroBased() - this.zeroBasedIndex;
     }
 }

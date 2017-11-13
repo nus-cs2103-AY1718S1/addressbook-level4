@@ -4,53 +4,48 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: images
 :stylesDir: stylesheets
 
-AddressBook - Level 4 was developed by the https://se-edu.github.io/docs/Team.html[se-edu] team. +
-The dummy content given below serves as a placeholder to be used by future forks of the project. +
+ConTag is developed by a team of 4 based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore]. +
 {empty} +
-We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
+ConTag is adapted from https://github.com/se-edu/addressbook-level4[Address Book (Level 4)], which was developed by the https://se-edu.github.io/docs/Team.html[se-edu] team.
 
 == Project Team
 
-=== John Doe
-image::damithc.jpg[width="150", align="left"]
-{empty}[http://www.comp.nus.edu.sg/~damithch[homepage]] [https://github.com/damithc[github]] [<<johndoe#, portfolio>>]
+=== Aw Wen Hao
+image::17navasaw.png[width="150", align="left"]
+{empty}[https://github.com/17navasaw[github]] [<<awwenhao#, portfolio>>]
 
-Role: Project Advisor
+Role: Developer Guide + Integration
 
-'''
-
-=== John Roe
-image::lejolly.jpg[width="150", align="left"]
-{empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
-
-Role: Team Lead +
 Responsibilities: UI
 
 '''
 
-=== Johnny Doe
-image::yijinl.jpg[width="150", align="left"]
-{empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
+=== Cheng Jin Ting
+image::JT.jpg[width="150", align="left"]
+{empty}[http://github.com/jin-ting[github]] [<<ChengJinTing#, portfolio>>]
 
-Role: Developer +
-Responsibilities: Data
+Role: User Guide + Scheduling
 
-'''
-
-=== Johnny Roe
-image::m133225.jpg[width="150", align="left"]
-{empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]
-
-Role: Developer +
-Responsibilities: Dev Ops + Threading
+Responsibilities: Model
 
 '''
 
-=== Benson Meier
-image::yl_coder.jpg[width="150", align="left"]
-{empty}[http://github.com/yl-coder[github]] [<<johndoe#, portfolio>>]
+=== Calvin Tantio
+image::ct15.png[width="150", align="left"]
+{empty}[https://github.com/ct15[github]] [<<calvintantio#, portfolio>>]
 
-Role: Developer +
-Responsibilities: UI
+Role: Developer Guide + Code Quality
+
+Responsibilities: Logic
+
+'''
+
+=== Chung Tin Long
+image::icehawk.jpg[width="150", align="left"]
+{empty}[https://github.com/icehawker[github]] [<<chungtinlong#, portfolio>>]
+
+Role: Developer Guide
+
+Responsibilities: Storage
 
 '''

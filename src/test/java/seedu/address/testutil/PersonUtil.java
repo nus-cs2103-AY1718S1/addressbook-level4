@@ -22,13 +22,22 @@ public class PersonUtil {
     }
 
     /**
+     * Returns an add command string for adding the {@code person} using add command's alias.
+     */
+    public static String getAddCommandUsingAlias(ReadOnlyPerson person) {
+        return AddCommand.COMMAND_ALIAS + " " + getPersonDetails(person);
+    }
+
+    /**
      * Returns the part of command string for the given {@code person}'s details.
      */
     public static String getPersonDetails(ReadOnlyPerson person) {
         StringBuilder sb = new StringBuilder();
         sb.append(PREFIX_NAME + person.getName().fullName + " ");
         sb.append(PREFIX_PHONE + person.getPhone().value + " ");
-        sb.append(PREFIX_EMAIL + person.getEmail().value + " ");
+        person.getEmails().stream().forEach(
+            s -> sb.append(PREFIX_EMAIL + s.value + " ")
+        );
         sb.append(PREFIX_ADDRESS + person.getAddress().value + " ");
         person.getTags().stream().forEach(
             s -> sb.append(PREFIX_TAG + s.tagName + " ")

@@ -18,17 +18,19 @@ import seedu.address.model.UserPrefs;
  */
 public class ListCommandTest {
 
+    private UserPrefs prefs;
     private Model model;
     private Model expectedModel;
     private ListCommand listCommand;
 
     @Before
     public void setUp() {
-        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        prefs = new UserPrefs();
+        model = new ModelManager(getTypicalAddressBook(), prefs);
+        expectedModel = new ModelManager(model.getAddressBook(), prefs);
 
         listCommand = new ListCommand();
-        listCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        listCommand.setData(model, prefs, new CommandHistory(), new UndoRedoStack());
     }
 
     @Test

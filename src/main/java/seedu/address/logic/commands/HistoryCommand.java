@@ -8,6 +8,7 @@ import java.util.List;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
+import seedu.address.model.UserPrefs;
 
 /**
  * Lists all the commands entered by user from the start of app launch.
@@ -15,6 +16,11 @@ import seedu.address.model.Model;
 public class HistoryCommand extends Command {
 
     public static final String COMMAND_WORD = "history";
+    public static final String COMMAND_ALIAS = "his";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " (alias: " + COMMAND_ALIAS + ")"
+            + ": Lists all the commands that you have entered in reverse chronological order.\n"
+            + "Parameters: None\n"
+            + MESSAGE_GET_MORE_HELP;
     public static final String MESSAGE_SUCCESS = "Entered commands (from most recent to earliest):\n%1$s";
     public static final String MESSAGE_NO_HISTORY = "You have not yet entered any commands.";
 
@@ -31,7 +37,7 @@ public class HistoryCommand extends Command {
     }
 
     @Override
-    public void setData(Model model, CommandHistory history, UndoRedoStack undoRedoStack) {
+    public void setData(Model model, UserPrefs prefs, CommandHistory history, UndoRedoStack undoRedoStack) {
         requireNonNull(history);
         this.history = history;
     }

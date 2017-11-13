@@ -1,0 +1,161 @@
+= Aw Wen Hao - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== About Portfolio
+
+This portfolio shows the contributions Aw Wen Hao has done for the development of ConTag.
+
+== ConTag
+ConTag is an efficient and feature-packed desktop address book application for the most demanding business users and busiest frequent travellers. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T15-B2/main/blob/master/collated/main/17navasaw.md[Functional code]][https://github.com/CS2103AUG2017-T15-B2/main/blob/master/collated/test/17navasaw.md[Test code]] +
+
+=== Enhancement Added: Locating a person’s address
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=locate]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+In this feature, a pinned location of a contact's address will be shown on Google Maps immediately upon inputting a valid command. This may be useful for a busy business man who has a few upcoming meetings at unfamiliar addresses.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=locate]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Showing the agenda of the user based on schedule
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=agenda]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+A new activity will be displayed in the `AgendaPanel` after the user schedules one. The activities are displayed from earliest to latest date, with the earliest being at the most top. The user will be able to scroll through and view all his planned activities at once. This is especially useful for a typical busy business man as he will be able to view his agenda for the upcoming days and prepare for his activities in advance.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=agenda]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Pop-up reminder window
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=reminder]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Upon starting the ConTag application, a separate pop-up window will appear after the main window, if the user has activities scheduled 1 day from the current date. These activities are shown in the pop-up to remind the user that they are around the corner, in case the user does not pay attention to them in the agenda in the main window.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=reminder]
+
+#End of Extract#
+
+---
+
+=== Enhancement of existing feature: Deleting multiple persons
+
+==== External behavior (enhancement added in v1.1 update)
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=deletemultiple]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+It is troublesome for the user to be only able to delete contacts 1 by 1. This enhancement allows the user to be able to input all unique indices from the displayed list and delete them all at once.
+
+==== Implementation: Deleting multiple persons
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=deletemultiple]
+
+#End of Extract#
+
+---
+
+=== Enhancement of existing feature: Adding or editing a person's details with multiple emails
+
+==== External behavior (enhancement added in v1.3 update)
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=multipleemails]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+People in the workplace usually have an email for work and another for informal purposes, hence the implementation of allowing the adding of more than 1 email for a person. The introduced restrictions for adding a person's address is an attempt to prevent the user from inputting characters that do not usually appear in addresses. This also ensures that the google maps in the locate feature will not attempt to locate invalid addresses which contain unorthodox characters.
+
+==== Implementation: Adding or editing a person's details with multiple emails
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=multipleemails]
+
+#End of Extract#
+
+---
+
+=== Other contributions
+
+* Set up TravisCI and Coveralls for the team repo
+* Set the styles for the user agenda and reminder window.
+* Prepared the team's sample data and test script for manual testing.
+* Imposed new restriction for address field by splitting it into block, street, unit and postal code. (Pull request https://github.com/CS2103AUG2017-T15-B2/main/pull/68[#68]) This is an attempt to prevent the user from inputting characters that do not usually appear in addresses.
+* Provided support for scheduling an activity for multiple contacts to appear as one schedule in user agenda. (Pull request https://github.com/CS2103AUG2017-T15-B2/main/pull/123[#123])

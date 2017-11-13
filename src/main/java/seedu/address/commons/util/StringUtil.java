@@ -1,45 +1,16 @@
 package seedu.address.commons.util;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.util.AppUtil.checkArgument;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.List;
 
 /**
  * Helper functions for handling strings.
  */
 public class StringUtil {
 
-    /**
-     * Returns true if the {@code sentence} contains the {@code word}.
-     *   Ignores case, but a full word match is required.
-     *   <br>examples:<pre>
-     *       containsWordIgnoreCase("ABc def", "abc") == true
-     *       containsWordIgnoreCase("ABc def", "DEF") == true
-     *       containsWordIgnoreCase("ABc def", "AB") == false //not a full word match
-     *       </pre>
-     * @param sentence cannot be null
-     * @param word cannot be null, cannot be empty, must be a single word
-     */
-    public static boolean containsWordIgnoreCase(String sentence, String word) {
-        requireNonNull(sentence);
-        requireNonNull(word);
-
-        String preppedWord = word.trim();
-        checkArgument(!preppedWord.isEmpty(), "Word parameter cannot be empty");
-        checkArgument(preppedWord.split("\\s+").length == 1, "Word parameter should be a single word");
-
-        String preppedSentence = sentence;
-        String[] wordsInPreppedSentence = preppedSentence.split("\\s+");
-
-        for (String wordInSentence: wordsInPreppedSentence) {
-            if (wordInSentence.equalsIgnoreCase(preppedWord)) {
-                return true;
-            }
-        }
-        return false;
-    }
 
     /**
      * Returns a detailed message of the t, including the stack trace.
@@ -67,5 +38,22 @@ public class StringUtil {
         } catch (NumberFormatException nfe) {
             return false;
         }
+    }
+
+    //@@author 17navasaw
+    /**
+     * Returns a {@code String} consisting of each object in a list separated by a semicolon
+     * @param list The list of objects
+     * @param <E> The data type of the object involved in the list
+     * @return The {@code String} consisting of each object in the list
+     */
+    public static <E> String convertListToString(List<E> list) {
+        StringBuilder listStringBuilder = new StringBuilder();
+
+        for (E obj: list) {
+            listStringBuilder.append(obj.toString()).append("; ");
+        }
+
+        return listStringBuilder.toString();
     }
 }

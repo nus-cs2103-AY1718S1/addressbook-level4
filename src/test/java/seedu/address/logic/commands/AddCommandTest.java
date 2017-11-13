@@ -20,6 +20,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -87,8 +88,9 @@ public class AddCommandTest {
      * Generates a new AddCommand with the details of the given person.
      */
     private AddCommand getAddCommandForPerson(Person person, Model model) {
+        UserPrefs prefs = new UserPrefs();
         AddCommand command = new AddCommand(person);
-        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        command.setData(model, prefs, new CommandHistory(), new UndoRedoStack());
         return command;
     }
 

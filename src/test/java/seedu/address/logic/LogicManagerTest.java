@@ -23,7 +23,8 @@ public class LogicManagerTest {
     public ExpectedException thrown = ExpectedException.none();
 
     private Model model = new ModelManager();
-    private Logic logic = new LogicManager(model);
+    private UserPrefs prefs = new UserPrefs();
+    private Logic logic = new LogicManager(model, prefs);
 
     @Test
     public void execute_invalidCommandFormat_throwsParseException() {

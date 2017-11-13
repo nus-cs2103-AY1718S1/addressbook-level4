@@ -9,6 +9,8 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
+import java.util.ArrayList;
+
 import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
@@ -77,16 +79,21 @@ public class DeleteCommandTest {
         assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
+    //@@author 17navasaw
     @Test
     public void equals() {
-        DeleteCommand deleteFirstCommand = new DeleteCommand(INDEX_FIRST_PERSON);
-        DeleteCommand deleteSecondCommand = new DeleteCommand(INDEX_SECOND_PERSON);
+        ArrayList<Index> indices = new ArrayList<>();
+        indices.add(INDEX_FIRST_PERSON);
+        DeleteCommand deleteFirstCommand = new DeleteCommand(indices);
+        ArrayList<Index> indices2 = new ArrayList<>();
+        indices2.add(INDEX_SECOND_PERSON);
+        DeleteCommand deleteSecondCommand = new DeleteCommand(indices2);
 
         // same object -> returns true
         assertTrue(deleteFirstCommand.equals(deleteFirstCommand));
 
         // same values -> returns true
-        DeleteCommand deleteFirstCommandCopy = new DeleteCommand(INDEX_FIRST_PERSON);
+        DeleteCommand deleteFirstCommandCopy = new DeleteCommand(indices);
         assertTrue(deleteFirstCommand.equals(deleteFirstCommandCopy));
 
         // different types -> returns false
@@ -103,11 +110,16 @@ public class DeleteCommandTest {
      * Returns a {@code DeleteCommand} with the parameter {@code index}.
      */
     private DeleteCommand prepareCommand(Index index) {
-        DeleteCommand deleteCommand = new DeleteCommand(index);
-        deleteCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        ArrayList<Index> indices = new ArrayList<>();
+        indices.add(index);
+
+        UserPrefs prefs = new UserPrefs();
+        DeleteCommand deleteCommand = new DeleteCommand(indices);
+        deleteCommand.setData(model, prefs, new CommandHistory(), new UndoRedoStack());
         return deleteCommand;
     }
 
+    //@@author
     /**
      * Updates {@code model}'s filtered list to show no one.
      */

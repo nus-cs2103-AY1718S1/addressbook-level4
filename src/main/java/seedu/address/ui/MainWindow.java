@@ -4,6 +4,7 @@ import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -21,7 +22,10 @@ import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
+import seedu.address.model.Model;
+import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.schedule.Schedule;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -29,7 +33,7 @@ import seedu.address.model.UserPrefs;
  */
 public class MainWindow extends UiPart<Region> {
 
-    private static final String ICON = "/images/address_book_32.png";
+    private static final String ICON = "/images/contag_logo.png";
     private static final String FXML = "MainWindow.fxml";
     private static final int MIN_HEIGHT = 600;
     private static final int MIN_WIDTH = 450;
@@ -38,10 +42,12 @@ public class MainWindow extends UiPart<Region> {
 
     private Stage primaryStage;
     private Logic logic;
+    private Model model;
 
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
     private PersonListPanel personListPanel;
+    private AgendaPanel agendaPanel;
     private Config config;
     private UserPrefs prefs;
 
@@ -55,7 +61,16 @@ public class MainWindow extends UiPart<Region> {
     private MenuItem helpMenuItem;
 
     @FXML
+    private MenuItem calendarItem;
+
+    @FXML
+    private MenuItem emailItem;
+
+    @FXML
     private StackPane personListPanelPlaceholder;
+
+    @FXML
+    private StackPane agendaPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -63,12 +78,13 @@ public class MainWindow extends UiPart<Region> {
     @FXML
     private StackPane statusbarPlaceholder;
 
-    public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
+    public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic, Model model) {
         super(FXML);
 
         // Set dependencies
         this.primaryStage = primaryStage;
         this.logic = logic;
+        this.model = model;
         this.config = config;
         this.prefs = prefs;
 
@@ -78,6 +94,7 @@ public class MainWindow extends UiPart<Region> {
         setWindowMinSize();
         setWindowDefaultSize(prefs);
         Scene scene = new Scene(getRoot());
+        primaryStage.setResizable(true);
         primaryStage.setScene(scene);
 
         setAccelerators();
@@ -90,10 +107,12 @@ public class MainWindow extends UiPart<Region> {
 
     private void setAccelerators() {
         setAccelerator(helpMenuItem, KeyCombination.valueOf("F1"));
+        setAccelerator(calendarItem, KeyCombination.valueOf("F2"));
     }
 
     /**
      * Sets the accelerator of a MenuItem.
+     *
      * @param keyCombination the KeyCombination value of the accelerator
      */
     private void setAccelerator(MenuItem menuItem, KeyCombination keyCombination) {
@@ -132,6 +151,10 @@ public class MainWindow extends UiPart<Region> {
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
+        agendaPanel = new AgendaPanel(model.getAddressBook().getScheduleList());
+        agendaPanelPlaceholder.getChildren().add(agendaPanel.getRoot());
+        agendaPanelPlaceholder.setPrefWidth(285);
+
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
@@ -152,6 +175,7 @@ public class MainWindow extends UiPart<Region> {
 
     /**
      * Sets the given image as the icon of the main window.
+     *
      * @param iconSource e.g. {@code "/images/help_icon.png"}
      */
     private void setIcon(String iconSource) {
@@ -183,6 +207,23 @@ public class MainWindow extends UiPart<Region> {
                 (int) primaryStage.getX(), (int) primaryStage.getY());
     }
 
+    //@@author 17navasaw
+    /**
+     * Shows reminder pop-up if there exists upcoming activities the next day.
+     */
+    public void openReminderWindowIfRequired() {
+        ReadOnlyAddressBook addressBook = model.getAddressBook();
+        ObservableList<Schedule> schedulesToRemindList = addressBook.getScheduleToRemindList();
+        for (Schedule schedule : schedulesToRemindList) {
+            logger.info("Schedules for reminder: " + schedule);
+        }
+        if (!schedulesToRemindList.isEmpty()) {
+            ReminderWindow reminderWindow = new ReminderWindow(schedulesToRemindList);
+            reminderWindow.show();
+        }
+    }
+
+    //@@author
     /**
      * Opens the help window.
      */
@@ -190,6 +231,15 @@ public class MainWindow extends UiPart<Region> {
     public void handleHelp() {
         HelpWindow helpWindow = new HelpWindow();
         helpWindow.show();
+    }
+
+
+    /**
+     * Opens the Calendar window via accelerator.
+     */
+    @FXML
+    public void handleCalendar() {
+        browserPanel.loadCalendar();
     }
 
     void show() {
@@ -218,3 +268,4 @@ public class MainWindow extends UiPart<Region> {
         handleHelp();
     }
 }
+

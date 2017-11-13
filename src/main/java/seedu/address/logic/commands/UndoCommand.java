@@ -6,6 +6,7 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.UserPrefs;
 
 /**
  * Undo the previous {@code UndoableCommand}.
@@ -13,6 +14,12 @@ import seedu.address.model.Model;
 public class UndoCommand extends Command {
 
     public static final String COMMAND_WORD = "undo";
+    public static final String COMMAND_ALIAS = "u";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " (alias: " + COMMAND_ALIAS + ")"
+            + ": Restores the address book to the state before the previous undoable command was executed.\n"
+            + "Parameters: None"
+            + MESSAGE_GET_MORE_HELP;
+
     public static final String MESSAGE_SUCCESS = "Undo success!";
     public static final String MESSAGE_FAILURE = "No more commands to undo!";
 
@@ -29,7 +36,7 @@ public class UndoCommand extends Command {
     }
 
     @Override
-    public void setData(Model model, CommandHistory commandHistory, UndoRedoStack undoRedoStack) {
+    public void setData(Model model, UserPrefs prefs, CommandHistory commandHistory, UndoRedoStack undoRedoStack) {
         this.model = model;
         this.undoRedoStack = undoRedoStack;
     }

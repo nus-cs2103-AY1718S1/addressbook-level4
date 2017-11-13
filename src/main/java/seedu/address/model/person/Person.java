@@ -4,11 +4,18 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+
+import seedu.address.model.person.address.Address;
+import seedu.address.model.person.email.Email;
+import seedu.address.model.person.email.UniqueEmailList;
+import seedu.address.model.schedule.Schedule;
+import seedu.address.model.schedule.UniqueScheduleList;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -20,20 +27,24 @@ public class Person implements ReadOnlyPerson {
 
     private ObjectProperty<Name> name;
     private ObjectProperty<Phone> phone;
-    private ObjectProperty<Email> email;
+    private ObjectProperty<Country> country;
+    private ObjectProperty<UniqueEmailList> emails;
     private ObjectProperty<Address> address;
-
+    private ObjectProperty<UniqueScheduleList> schedules;
     private ObjectProperty<UniqueTagList> tags;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
+    public Person(Name name, Phone phone, Country country, Set<Email> emails, Address address, List<Schedule> schedules,
+                  Set<Tag> tags) {
+        requireAllNonNull(name, phone, country, emails, address, schedules, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
-        this.email = new SimpleObjectProperty<>(email);
+        this.country = new SimpleObjectProperty<>(country);
+        this.emails = new SimpleObjectProperty<>(new UniqueEmailList(emails));
         this.address = new SimpleObjectProperty<>(address);
+        this.schedules = new SimpleObjectProperty<>(new UniqueScheduleList(schedules));
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
     }
@@ -42,8 +53,8 @@ public class Person implements ReadOnlyPerson {
      * Creates a copy of the given ReadOnlyPerson.
      */
     public Person(ReadOnlyPerson source) {
-        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
-                source.getTags());
+        this(source.getName(), source.getPhone(), source.getCountry(), source.getEmails(), source.getAddress(),
+                source.getSchedules(), source.getTags());
     }
 
     public void setName(Name name) {
@@ -74,20 +85,47 @@ public class Person implements ReadOnlyPerson {
         return phone.get();
     }
 
-    public void setEmail(Email email) {
-        this.email.set(requireNonNull(email));
+    //@@author icehawker
+    /**
+     * Replaces this person's emails with the emails in the argument tag set.
+     */
+    public void setCountry(Country country) {
+        this.country.set(requireNonNull(country));
     }
 
     @Override
-    public ObjectProperty<Email> emailProperty() {
-        return email;
+    public ObjectProperty<Country> countryProperty() {
+        return country;
     }
 
     @Override
-    public Email getEmail() {
-        return email.get();
+    public Country getCountry() {
+        return country.get();
     }
 
+    //@@author 17navasaw
+    /**
+    * Replaces this person's emails with the emails in the argument tag set.
+    */
+    public void setEmails(Set<Email> replacement) {
+        emails.set(new UniqueEmailList(replacement));
+    }
+
+    @Override
+    public ObjectProperty<UniqueEmailList> emailProperty() {
+        return emails;
+    }
+
+    /**
+     * Returns an immutable email set, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
+    @Override
+    public Set<Email> getEmails() {
+        return Collections.unmodifiableSet(emails.get().toSet());
+    }
+
+    //@@author
     public void setAddress(Address address) {
         this.address.set(requireNonNull(address));
     }
@@ -102,6 +140,29 @@ public class Person implements ReadOnlyPerson {
         return address.get();
     }
 
+    //@@author CT15
+    /**
+     * Replaces this person's schedules with the schedules in the argument schedule set.
+     */
+    public void setSchedules(List<Schedule> replacement) {
+        schedules.set(new UniqueScheduleList(replacement));
+    }
+
+    @Override
+    public ObjectProperty<UniqueScheduleList> scheduleProperty() {
+        return schedules;
+    }
+
+    /**
+     * Returns an immutable schedule set, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
+    @Override
+    public List<Schedule> getSchedules() {
+        return schedules.get().asObservableList();
+    }
+
+    //@@author
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -132,7 +193,7 @@ public class Person implements ReadOnlyPerson {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(name, phone, emails, address, schedules, tags);
     }
 
     @Override
