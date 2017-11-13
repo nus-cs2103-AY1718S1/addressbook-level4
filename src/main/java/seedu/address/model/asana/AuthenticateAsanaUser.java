@@ -1,5 +1,7 @@
 package seedu.address.model.asana;
 
+import static seedu.address.logic.commands.SetupAsanaCommand.CONFIGURED;
+
 import java.awt.Desktop;
 
 import java.io.IOException;
@@ -13,8 +15,6 @@ import com.asana.Client;
 import com.asana.OAuthApp;
 
 import seedu.address.storage.asana.storage.AsanaCredentials;
-
-import static seedu.address.logic.commands.SetupAsanaCommand.CONFIGURED;
 
 //@@author Sri-vatsa
 /**
