@@ -169,6 +169,10 @@ Format: `whitelist`
 // tag::overduelist[]
 === Listing all persons with overdue debt: `overduelist`
 
+[NOTE]
+It should be noted that each time the user logs into `Codii`, it checks through the address book for debtors
+whose deadlines have been passed and automatically adds them into the overdue list. +
+
 shows a list of all persons with overdue debt in the address book. +
 Format: `overduelist`
 // end::overduelist[]
