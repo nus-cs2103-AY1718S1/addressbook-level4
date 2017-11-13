@@ -1195,7 +1195,7 @@ If the input command word after 'help' can not be identified, then you will see 
 
 We design a recycle bin in the iConnect to store the person removed from address book. In this way, users can restore the people they wrongly deleted. You may think that it can be done by udno/redo command. Actually, if users want to restore a person they deleted long time ago, then the undo/redo command would not hlep.
 
-The users can interact with bin using four commands:'bin-list', 'bin-delete', 'bin-clear', 'bin-restore';
+The users can interact with bin using four commands: 'bin-delete', 'bin-fresh', 'bin-restore';
 
 The way we deal with recycle bin storage is the same as we deal with addressbook storage. We store the recycle bin as a xml file and read and save it in the same way as address book storage. Then we put the addressbook and recycleibn into model.
 
@@ -1206,7 +1206,7 @@ The way we deal with recycle bin storage is the same as we deal with addressbook
 * `bin-restore` : Restores the people in the recycle bin to address book by given index.
 
 [NOTE]
-If we find duplicate people when restoring a person to recyclebin or moving a person to addressbook, then this person will be omitted and directly remove.
+If we find duplicate people (A') when deleting a person (A) to recyclebin or restoring a person (A) to addressbook, then this person (A') will be omitted and directly removed and the person (A) will remain.
 
 ==== Design Considerations
 
