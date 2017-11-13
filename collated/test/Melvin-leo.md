@@ -8,15 +8,12 @@ public class MeetingCardHandle extends NodeHandle<Node> {
     private static final String ID_FIELD_ID = "#id";
     private static final String NAME_FIELD_ID = "#name";
     private static final String PLACE_FIELD_ID = "#place";
-    private static final String PHONENUM_FIELD_ID = "#phoneNum";
     private static final String PERSONTOMEET_FIELD_ID = "#person";
     private static final String DATETIME_FIELD_ID = "#date";
 
     private final Label idLabel;
     private final Label nameMeetingLabel;
     private final Label dateTimeLabel;
-    private final Label phoneNumLabel;
-    private final Label personToMeetLabel;
     private final Label placeLabel;
 
     public MeetingCardHandle(Node cardNode) {
@@ -25,9 +22,8 @@ public class MeetingCardHandle extends NodeHandle<Node> {
         this.idLabel = getChildNode(ID_FIELD_ID);
         this.nameMeetingLabel = getChildNode(NAME_FIELD_ID);
         this.placeLabel = getChildNode(PLACE_FIELD_ID);
-        this.phoneNumLabel = getChildNode(PHONENUM_FIELD_ID);
-        this.personToMeetLabel = getChildNode(PERSONTOMEET_FIELD_ID);
         this.dateTimeLabel = getChildNode(DATETIME_FIELD_ID);
+
 
     }
 
@@ -43,18 +39,9 @@ public class MeetingCardHandle extends NodeHandle<Node> {
         return placeLabel.getText();
     }
 
-    public String getPhoneNum() {
-        return phoneNumLabel.getText();
-    }
-
     public String getDateTime() {
         return dateTimeLabel.getText();
     }
-
-    public String getPersonToMeet() {
-        return personToMeetLabel.getText();
-    }
-
 }
 ```
 ###### \java\guitests\guihandles\MeetingListPanelHandle.java
@@ -191,26 +178,165 @@ public class MeetingListPanelHandle extends NodeHandle<ListView<MeetingCard>> {
 public class ListMeetingCommandTest {
     private Model model;
     private Model expectedModel;
-    private ListCommand listCommand;
+    private ListMeetingCommand listMeetingCommand;
 
     @Before
     public void setUp() {
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
 
-        listCommand = new ListCommand();
-        listCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        listMeetingCommand = new ListMeetingCommand();
+        listMeetingCommand.setData(model, new CommandHistory(), new UndoRedoStack());
     }
 
     @Test
     public void execute_listIsNotFiltered_showsSameList() {
-        assertCommandSuccess(listCommand, model, ListCommand.MESSAGE_SUCCESS, expectedModel);
+        assertCommandSuccess(listMeetingCommand, model, ListMeetingCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
     @Test
     public void execute_listIsFiltered_showsEverything() {
-        showFirstPersonOnly(model);
-        assertCommandSuccess(listCommand, model, ListCommand.MESSAGE_SUCCESS, expectedModel);
+        showFirstMeetingOnly(model);
+        assertCommandSuccess(listMeetingCommand, model, ListMeetingCommand.MESSAGE_SUCCESS, expectedModel);
+    }
+}
+```
+###### \java\seedu\address\logic\commands\SelectMeetingCommandTest.java
+``` java
+/**
+ * Contains integration tests (interaction with the Model) for {@code SelectCommand}.
+ */
+public class SelectMeetingCommandTest {
+    @Rule
+    public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
+
+    private Model model;
+
+    @Before
+    public void setUp() {
+        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    }
+
+    @Test
+    public void execute_validIndexUnfilteredList_success() {
+        Index lastPersonIndex = Index.fromOneBased(model.getFilteredMeetingList().size());
+
+        assertExecutionSuccess(INDEX_FIRST_MEETING);
+        assertExecutionSuccess(INDEX_THIRD_MEETING);
+        assertExecutionSuccess(lastPersonIndex);
+    }
+
+    @Test
+    public void execute_invalidIndexUnfilteredList_failure() {
+        Index outOfBoundsIndex = Index.fromOneBased(model.getFilteredMeetingList().size() + 1);
+
+        assertExecutionFailure(outOfBoundsIndex, Messages.MESSAGE_INVALID_MEETING_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void execute_validIndexFilteredList_success() {
+        showFirstMeetingOnly(model);
+
+        assertExecutionSuccess(INDEX_FIRST_MEETING);
+    }
+
+    @Test
+    public void execute_invalidIndexFilteredList_failure() {
+        showFirstMeetingOnly(model);
+
+        Index outOfBoundsIndex = INDEX_SECOND_MEETING;
+        // ensures that outOfBoundIndex is still in bounds of address book list
+        assertTrue(outOfBoundsIndex.getZeroBased() < model.getAddressBook().getMeetingList().size());
+
+        assertExecutionFailure(outOfBoundsIndex, Messages.MESSAGE_INVALID_MEETING_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void equals() {
+        SelectMeetingCommand selectFirstCommand = new SelectMeetingCommand(INDEX_FIRST_MEETING);
+        SelectMeetingCommand selectSecondCommand = new SelectMeetingCommand(INDEX_SECOND_MEETING);
+
+        // same object -> returns true
+        assertTrue(selectFirstCommand.equals(selectFirstCommand));
+
+        // same values -> returns true
+        SelectMeetingCommand selectFirstCommandCopy = new SelectMeetingCommand(INDEX_FIRST_MEETING);
+        assertTrue(selectFirstCommand.equals(selectFirstCommandCopy));
+
+        // different types -> returns false
+        assertFalse(selectFirstCommand.equals(1));
+
+        // null -> returns false
+        assertFalse(selectFirstCommand.equals(null));
+
+        // different person -> returns false
+        assertFalse(selectFirstCommand.equals(selectSecondCommand));
+    }
+
+    /**
+     * Executes a {@code SelectMeetingCommand} with the given {@code index}, and checks that
+     * {@code JumpToMeetingListRequestEvent}
+     * is raised with the correct index.
+     */
+    private void assertExecutionSuccess(Index index) {
+        SelectMeetingCommand selectMeetingCommand = prepareCommand(index);
+
+        try {
+            CommandResult commandResult = selectMeetingCommand.execute();
+            assertEquals(String.format(SelectMeetingCommand.MESSAGE_SELECT_MEETING_SUCCESS, index.getOneBased()),
+                    commandResult.feedbackToUser);
+        } catch (CommandException ce) {
+            throw new IllegalArgumentException("Execution of command should not fail.", ce);
+        }
+        JumpToMeetingListRequestEvent lastEvent =
+                (JumpToMeetingListRequestEvent) eventsCollectorRule.eventsCollector.getMostRecent();
+        assertEquals(index, Index.fromZeroBased(lastEvent.targetIndex));
+    }
+
+    /**
+     * Executes a {@code SelectMeetingCommand} with the given {@code index}, and checks that a {@code CommandException}
+     * is thrown with the {@code expectedMessage}.
+     */
+    private void assertExecutionFailure(Index index, String expectedMessage) {
+        SelectMeetingCommand selectMeetingCommand = prepareCommand(index);
+
+        try {
+            selectMeetingCommand.execute();
+            fail("The expected CommandException was not thrown.");
+        } catch (CommandException ce) {
+            assertEquals(expectedMessage, ce.getMessage());
+            assertTrue(eventsCollectorRule.eventsCollector.isEmpty());
+        }
+    }
+
+    /**
+     * Returns a {@code SelectMeetingCommand} with parameters {@code index}.
+     */
+    private SelectMeetingCommand prepareCommand(Index index) {
+        SelectMeetingCommand selectMeetingCommand = new SelectMeetingCommand(index);
+        selectMeetingCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return selectMeetingCommand;
+    }
+}
+```
+###### \java\seedu\address\logic\parser\SelectMeetingCommandParserTest.java
+``` java
+/**
+ * Test scope: similar to {@code DeleteCommandParserTest}.
+ * @see DeleteCommandParserTest
+ */
+public class SelectMeetingCommandParserTest {
+    private SelectMeetingCommandParser parser = new SelectMeetingCommandParser();
+
+    @Test
+    public void parse_validArgs_returnsSelectCommand() {
+        assertParseSuccess(parser, "1", new SelectMeetingCommand(INDEX_FIRST_MEETING));
+    }
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                SelectMeetingCommand.MESSAGE_USAGE));
     }
 }
 ```
@@ -236,6 +362,8 @@ public class DateTimeTest {
         // invalid DateTime
         assertFalse(DateTime.isValidDateTime("")); // empty string
         assertFalse(DateTime.isValidDateTime(" ")); // spaces only
+        assertFalse(DateTime.isValidDateTime("31-02-2018 15:00")); //leap year non existent date
+        assertFalse(DateTime.isValidDateTime("31022018 15:00")); // wrong date structure
 
         // valid DateTime
         assertTrue(DateTime.isValidDateTime("21-12-2018 16:00"));
@@ -279,19 +407,23 @@ public class MeetingContainsFullwordPredicateTest {
         // One keyword
         MeetingContainsKeywordsPredicate predicate =
                 new MeetingContainsKeywordsPredicate(Collections.singletonList("Alice"));
-        assertTrue(predicate.test(new MeetingBuilder().withNameMeeting("Shopping Date").build()));
+        assertTrue(predicate.test(new MeetingBuilder().withNameMeeting("Shopping Date")
+                .withIndex(Index.fromOneBased(1)).build()));
 
         // Multiple keywords
-        predicate = new MeetingContainsKeywordsPredicate(Arrays.asList("Alice", "Bob"));
-        assertTrue(predicate.test(new MeetingBuilder().withNameMeeting("Shopping Date").build()));
+        predicate = new MeetingContainsKeywordsPredicate(Arrays.asList("Alice", "Shopping"));
+        assertTrue(predicate.test(new MeetingBuilder().withNameMeeting("Shopping Date")
+                .withIndex(Index.fromOneBased(1)).build()));
 
         // Only one matching keyword
-        predicate = new MeetingContainsKeywordsPredicate(Arrays.asList("Date", "Alice"));
-        assertTrue(predicate.test(new MeetingBuilder().withNameMeeting("Date Study").build()));
+        predicate = new MeetingContainsKeywordsPredicate(Arrays.asList("Date", "Benson"));
+        assertTrue(predicate.test(new MeetingBuilder().withNameMeeting("Date Study")
+                .withIndex(Index.fromOneBased(1)).build()));
 
         // Mixed-case keywords
         predicate = new MeetingContainsKeywordsPredicate(Arrays.asList("AliCe", "DaTe"));
-        assertTrue(predicate.test(new MeetingBuilder().withNameMeeting("Shopping Date").build()));
+        assertTrue(predicate.test(new MeetingBuilder().withNameMeeting("Shopping Date")
+                .withIndex(Index.fromOneBased(1)).build()));
     }
 
     @Test
@@ -302,7 +434,8 @@ public class MeetingContainsFullwordPredicateTest {
 
         // Non-matching keyword
         predicate = new MeetingContainsKeywordsPredicate(Arrays.asList("Melvin"));
-        assertFalse(predicate.test(new MeetingBuilder().withNameMeeting("Shopping Date").build()));
+        assertFalse(predicate.test(new MeetingBuilder().withNameMeeting("Shopping Date")
+                .withIndex(Index.fromOneBased(1)).build()));
 
         // Keywords match DateTime, Place, but does not match name
         predicate = new MeetingContainsKeywordsPredicate(Arrays.asList("30-10-2018", "NUS"));
@@ -428,9 +561,28 @@ public class UniqueMeetingListTest {
     }
 }
 ```
+###### \java\seedu\address\ui\BrowserPanelTest.java
+``` java
+    @Test
+    public void display() throws Exception {
+        // default web page
+        URL expectedDefaultPageUrl = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
+        assertEquals(expectedDefaultPageUrl, browserPanelHandle.getLoadedUrl());
+
+        // associated web page of a person
+        postNow(selectionChangedEventStub);
+        URL expectedPersonUrl = new URL(GOOGLE_MAP_SEARCH_URL_PREFIX
+                + AGEING.getPlace().value.replaceAll(" ", "+") + GOOGLE_MAP_SEARCH_URL_SUFFIX);
+
+        waitUntilBrowserLoaded(browserPanelHandle);
+        assertEquals(expectedPersonUrl, browserPanelHandle.getLoadedUrl());
+    }
+}
+```
 ###### \java\seedu\address\ui\MeetingCardTest.java
 ``` java
 public class MeetingCardTest extends GuiUnitTest {
+
 
     @Test
     public void display() {
@@ -445,8 +597,7 @@ public class MeetingCardTest extends GuiUnitTest {
             meeting.setName(DIVING.getName());
             meeting.setPlace(DIVING.getPlace());
             meeting.setDateTime(DIVING.getDate());
-            meeting.setPhoneNum(DIVING.getPersonPhone());
-            meeting.setPersonName(DIVING.getPersonName());
+            meeting.setPersonsMeet(DIVING.getPersonsMeet());
         });
         assertCardDisplay(meetingCard, meeting, 1);
     }
@@ -501,7 +652,8 @@ public class MeetingListPanelTest extends GuiUnitTest {
     private static final ObservableList<ReadOnlyMeeting> TYPICAL_MEETINGS =
             FXCollections.observableList(getTypicalMeetings());
 
-    private static final JumpToListRequestEvent JUMP_TO_SECOND_EVENT = new JumpToListRequestEvent(INDEX_SECOND_MEETING);
+    private static final JumpToMeetingListRequestEvent JUMP_TO_SECOND_EVENT =
+            new JumpToMeetingListRequestEvent(INDEX_SECOND_MEETING);
 
     private MeetingListPanelHandle meetingListPanelHandle;
 
@@ -527,7 +679,7 @@ public class MeetingListPanelTest extends GuiUnitTest {
     }
 
     @Test
-    public void handleJumpToListRequestEvent() {
+    public void handleJumpToMeetingListRequestEvent() {
         postNow(JUMP_TO_SECOND_EVENT);
         guiRobot.pauseForHuman();
 
@@ -547,8 +699,6 @@ public class MeetingListPanelTest extends GuiUnitTest {
         assertEquals(expectedCard.getId(), actualCard.getId());
         assertEquals(expectedCard.getNameMeeting(), actualCard.getNameMeeting());
         assertEquals(expectedCard.getPlace(), actualCard.getPlace());
-        assertEquals(expectedCard.getPersonToMeet(), actualCard.getPersonToMeet());
-        assertEquals(expectedCard.getPhoneNum(), actualCard.getPhoneNum());
         assertEquals(expectedCard.getDateTime(), actualCard.getDateTime());
     }
 ```
@@ -559,10 +709,8 @@ public class MeetingListPanelTest extends GuiUnitTest {
      */
     public static void assertCardDisplaysMeeting(ReadOnlyMeeting expectedMeeting, MeetingCardHandle actualCard) {
         assertEquals(expectedMeeting.getName().fullName, actualCard.getNameMeeting());
-        assertEquals(expectedMeeting.getPersonPhone().phone, actualCard.getPhoneNum());
         assertEquals(expectedMeeting.getPlace().value, actualCard.getPlace());
         assertEquals(expectedMeeting.getDate().value, actualCard.getDateTime());
-        assertEquals(expectedMeeting.getPersonName().fullName, actualCard.getPersonToMeet());
     }
 ```
 ###### \java\seedu\address\ui\testutil\GuiTestAssert.java

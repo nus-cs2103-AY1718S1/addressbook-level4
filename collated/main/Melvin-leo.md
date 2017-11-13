@@ -1,11 +1,53 @@
 # Melvin-leo
+###### \java\seedu\address\commons\events\ui\JumpToMeetingListRequestEvent.java
+``` java
+/**
+ * Indicates a request to jump to the list of meetings
+ */
+public class JumpToMeetingListRequestEvent extends BaseEvent {
+
+    public final int targetIndex;
+
+    public JumpToMeetingListRequestEvent(Index targetIndex) {
+        this.targetIndex = targetIndex.getZeroBased();
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+}
+```
+###### \java\seedu\address\commons\events\ui\MeetingPanelSelectionChangedEvent.java
+``` java
+/**
+ * Represents a selection change in the Meeting List Panel
+ */
+public class MeetingPanelSelectionChangedEvent extends BaseEvent {
+    private final MeetingCard newSelection;
+
+    public MeetingPanelSelectionChangedEvent(MeetingCard newSelection) {
+        this.newSelection = newSelection;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+
+    public MeetingCard getNewSelection() {
+        return newSelection;
+    }
+}
+```
 ###### \java\seedu\address\logic\commands\AddMeetingCommand.java
 ``` java
     /**
      * Creates an AddMeetingCommand to add the specified {@code ReadOnlyMeeting}
      */
-    public AddMeetingCommand (NameMeeting name, DateTime date, Place location, Index index, MeetingTag meetTag) {
-        this.index = index;
+    public AddMeetingCommand (NameMeeting name, DateTime date, Place location,
+                              List<Index> indexes, MeetingTag meetTag) {
+        this.indexes = indexes;
         this.name = name;
         this.date = date;
         this.location = location;
@@ -16,16 +58,20 @@
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+        List<ReadOnlyPerson> personsMeet = new ArrayList<>();
 
-        if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        for (Index index: indexes) {
+            if (index.getZeroBased() >= lastShownList.size()) {
+                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            }
+
+            ReadOnlyPerson personToAdd = lastShownList.get(index.getZeroBased());
+            if (!personsMeet.contains(personToAdd)) {
+                personsMeet.add(personToAdd);
+            }
         }
 
-        ReadOnlyPerson personToAdd = lastShownList.get(index.getZeroBased());
-        PersonToMeet personName = new PersonToMeet(personToAdd.getName().toString());
-        PhoneNum phoneNum = new PhoneNum(personToAdd.getPhone().toString());
-
-        toAdd = new Meeting(name, date, location, personName, phoneNum, meetTag);
+        toAdd = new Meeting(name, date, location, personsMeet, meetTag);
         try {
             model.addMeeting(toAdd);
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
@@ -37,6 +83,8 @@
             throw new CommandException(MESSAGE_MEETING_CLASH);
         }
     }
+
+
 ```
 ###### \java\seedu\address\logic\commands\ListMeetingCommand.java
 ``` java
@@ -57,51 +105,6 @@ public class ListMeetingCommand extends Command {
         model.updateFilteredMeetingList(PREDICATE_SHOW_ALL_MEETINGS);
         return new CommandResult(MESSAGE_SUCCESS);
     }
-}
-```
-###### \java\seedu\address\logic\parser\ParserUtil.java
-``` java
-    /**
-     * Parses a {@code Optional<String> name} into an {@code Optional<PersonToMeet>} if {@code name} is present.
-     * See header comment of this class regarding the use of {@code Optional} parameters.
-     */
-    public static Optional<PersonToMeet> parsePersonToMeet(Optional<String> personName) throws IllegalValueException {
-        requireNonNull(personName);
-        return personName.isPresent() ? Optional.of(new PersonToMeet(personName.get())) : Optional.empty();
-    }
-
-```
-###### \java\seedu\address\logic\parser\ParserUtil.java
-``` java
-    /**
-     * Parses a {@code Optional<String> phonenum} into an {@code Optional<PhoneNum>} if {@code phonenum} is present.
-     * See header comment of this class regarding the use of {@code Optional} parameters.
-     */
-    public static Optional<PhoneNum> parsePhoneNum(Optional<String> phoneNum) throws IllegalValueException {
-        requireNonNull(phoneNum);
-        return phoneNum.isPresent() ? Optional.of(new PhoneNum(phoneNum.get())) : Optional.empty();
-    }
-    /**
-     * Parses a {@code Optional<String> tagname} into an {@code Optional<MeetingTag>} if {@code ntagame} is present.
-     * See header comment of this class regarding the use of {@code Optional} parameters.
-     */
-    public static Optional<MeetingTag> parseMeetTag(Optional<String> meetingTag) throws IllegalValueException {
-        requireNonNull(meetingTag);
-        return meetingTag.isPresent() ? Optional.of(new MeetingTag(meetingTag.get())) : Optional.empty();
-    }
-
-    /**
-     * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
-     */
-    public static Set<Tag> parseTags(Collection<String> tags) throws IllegalValueException {
-        requireNonNull(tags);
-        final Set<Tag> tagSet = new HashSet<>();
-        for (String tagName : tags) {
-            tagSet.add(new Tag(tagName));
-        }
-        return tagSet;
-    }
-
 }
 ```
 ###### \java\seedu\address\model\AddressBook.java
@@ -228,18 +231,15 @@ public class Meeting implements ReadOnlyMeeting {
     private ObjectProperty<NameMeeting> name;
     private ObjectProperty<DateTime> date;
     private ObjectProperty<Place> place;
-    private ObjectProperty<PersonToMeet> personMeet;
-    private ObjectProperty<PhoneNum> phoneMeet;
+    private ObjectProperty<List<ReadOnlyPerson>> personsMeet;
     private ObjectProperty<MeetingTag> tag;
 
-    public Meeting (NameMeeting name, DateTime date, Place place, PersonToMeet personMeet,
-                   PhoneNum phoneMeet, MeetingTag tag) {
+    public Meeting (NameMeeting name, DateTime date, Place place, List<ReadOnlyPerson> listPerson, MeetingTag tag) {
         requireAllNonNull(name, date, place);
         this.name = new SimpleObjectProperty<>(name);
         this.date = new SimpleObjectProperty<>(date);
         this.place = new SimpleObjectProperty<>(place);
-        this.personMeet = new SimpleObjectProperty<>(personMeet);
-        this.phoneMeet = new SimpleObjectProperty<>(phoneMeet);
+        this.personsMeet = new SimpleObjectProperty<>(listPerson);
         this.tag = new SimpleObjectProperty<>(tag);
     }
 
@@ -247,7 +247,7 @@ public class Meeting implements ReadOnlyMeeting {
      * Creates a copy of the given ReadOnlyMeeting.
      */
     public Meeting(ReadOnlyMeeting source) {
-        this(source.getName(), source.getDate(), source.getPlace(), source.getPersonName(), source.getPersonPhone(),
+        this(source.getName(), source.getDate(), source.getPlace(), source.getPersonsMeet(),
                 source.getMeetTag());
     }
 
@@ -290,6 +290,9 @@ public class Meeting implements ReadOnlyMeeting {
         this.place.set(requireNonNull(place));
     }
 
+    public void setPersonsMeet(List<ReadOnlyPerson> personsMeet) {
+        this.personsMeet.set(personsMeet); }
+
     @Override
     public ObjectProperty<Place> placeProperty() {
         return place;
@@ -300,32 +303,14 @@ public class Meeting implements ReadOnlyMeeting {
         return place.get();
     }
 
-    public void setPersonName(PersonToMeet person) {
-        this.personMeet.set(requireNonNull(person));
+    @Override
+    public ObjectProperty<List<ReadOnlyPerson>> personsMeetProperty() {
+        return personsMeet;
     }
 
     @Override
-    public ObjectProperty<PersonToMeet> personMeetProperty() {
-        return personMeet;
-    }
-
-    @Override
-    public PersonToMeet getPersonName() {
-        return personMeet.get();
-    }
-
-    public void setPhoneNum(PhoneNum num) {
-        this.phoneMeet.set(requireNonNull(num));
-    }
-
-    @Override
-    public ObjectProperty<PhoneNum> phoneMeetProperty() {
-        return phoneMeet;
-    }
-
-    @Override
-    public PhoneNum getPersonPhone() {
-        return phoneMeet.get();
+    public List<ReadOnlyPerson> getPersonsMeet() {
+        return personsMeet.get();
     }
 
     @Override
@@ -352,6 +337,9 @@ public class Meeting implements ReadOnlyMeeting {
 
     @Override
     public String toString() {
+        if (personsMeet.get().size() > 1) {
+            return getGroupText();
+        }
         return getAsText();
     }
 
@@ -459,66 +447,6 @@ public class NameMeeting {
 
 }
 ```
-###### \java\seedu\address\model\meeting\PersonToMeet.java
-``` java
-/**
- * Store the person who user is meeting in Meeting class
- */
-public class PersonToMeet {
-    public final String fullName;
-
-    public PersonToMeet(String name) {
-        this.fullName = name;
-    }
-
-    @Override
-    public String toString() {
-        return fullName;
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof PersonToMeet // instanceof handles nulls
-                && this.fullName.equals(((PersonToMeet) other).fullName)); // state check
-    }
-
-    @Override
-    public int hashCode() {
-        return fullName.hashCode();
-    }
-}
-```
-###### \java\seedu\address\model\meeting\PhoneNum.java
-``` java
-/**
- * Store phonenumber of Person so that user can easily contact him/her for meeting
- */
-public class PhoneNum {
-    public final String phone;
-
-    public PhoneNum(String num) {
-        this.phone = num;
-    }
-
-    @Override
-    public String toString() {
-        return phone;
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof PhoneNum // instanceof handles nulls
-                && this.phone.equals(((PhoneNum) other).phone)); // state check
-    }
-
-    @Override
-    public int hashCode() {
-        return phone.hashCode();
-    }
-}
-```
 ###### \java\seedu\address\model\meeting\Place.java
 ``` java
 /**
@@ -590,10 +518,8 @@ public interface ReadOnlyMeeting {
     DateTime getDate();
     ObjectProperty<Place> placeProperty();
     Place getPlace();
-    ObjectProperty<PersonToMeet> personMeetProperty();
-    PersonToMeet getPersonName();
-    ObjectProperty<PhoneNum> phoneMeetProperty();
-    PhoneNum getPersonPhone();
+    ObjectProperty<List<ReadOnlyPerson>> personsMeetProperty();
+    List<ReadOnlyPerson> getPersonsMeet();
     ObjectProperty<MeetingTag> meetTagProperty();
     MeetingTag getMeetTag();
 
@@ -605,21 +531,33 @@ public interface ReadOnlyMeeting {
                 || (other != null // this is first to avoid NPE below
                 && other.getName().equals(this.getName()) // state checks here onwards
                 && other.getDate().equals(this.getDate())
-                && other.getPersonName().equals(this.getPersonName())
-                && other.getPersonPhone().equals(this.getPersonPhone())
                 && other.getPlace().equals(this.getPlace()));
     }
 
     /**
-     * Formats the person as text, showing all contact details.
+     * Formats the meeting as text, showing all meeting details.
      */
     default String getAsText() {
         final StringBuilder builder = new StringBuilder();
         builder.append(getName())
                 .append("\nMeeting with: ")
-                .append(getPersonName())
+                .append(getPersonsMeet().get(0).getName())
                 .append("\nContact Number: ")
-                .append(getPersonPhone())
+                .append(getPersonsMeet().get(0).getPhone())
+                .append("\nDate and Time: ")
+                .append(getDate())
+                .append("\nLocation: ")
+                .append(getPlace());
+        return builder.toString();
+    }
+
+    /**
+     * Formats the meeting as text, showing all meeting details.
+     */
+    default String getGroupText() {
+        final StringBuilder builder = new StringBuilder();
+        builder.append(getName())
+                .append("\nMeeting with: Group")
                 .append("\nDate and Time: ")
                 .append(getDate())
                 .append("\nLocation: ")
@@ -645,10 +583,21 @@ public interface ReadOnlyMeeting {
             throw new MeetingClashException();
         }
         internalMeetingList.add(new Meeting(toAdd));
-        internalMeetingList.sort((m1, m2) -> m1.getActualDate(m1.getDate().toString())
-                .compareTo(m2.getActualDate(m2.getDate().toString())));
+        sort(internalMeetingList);
+
     }
 
+    /**
+     *  Sorts the meeting list in chronological order
+     * @param list
+     * @return MeetingList
+     */
+    private ObservableList<Meeting> sort(ObservableList<Meeting> list) {
+        list.sort((m1, m2) -> m1.getActualDate(m1.getDate().toString())
+                .compareTo(m2.getActualDate(m2.getDate().toString())));
+
+        return list;
+    }
     /**
      * Replaces the meeting {@code target} in the list with {@code editedMeeting}.
      *
@@ -665,17 +614,13 @@ public interface ReadOnlyMeeting {
         }
         if (!target.equals(editedMeeting) && internalMeetingList.contains(editedMeeting)) {
             throw new DuplicateMeetingException();
-        } else if (diffNameOfMeeting(editedMeeting)) {
-            throw new MeetingClashException();
-        } else if (diffLocationOfMeeting(editedMeeting)) {
+        } else if (diffNameOfMeeting(editedMeeting, target) || diffLocationOfMeeting(editedMeeting, target)) {
             throw new MeetingClashException();
         }
 
         internalMeetingList.set(index, new Meeting(editedMeeting));
-        internalMeetingList.sort((m1, m2)-> m1.getActualDate(m1.getDate().toString())
-                .compareTo(m2.getActualDate(m2.getDate().toString())));
+        sort(internalMeetingList);
     }
-
 ```
 ###### \java\seedu\address\model\meeting\UniqueMeetingList.java
 ``` java
@@ -683,14 +628,24 @@ public interface ReadOnlyMeeting {
                                 MeetingClashException {
         final UniqueMeetingList replacement = new UniqueMeetingList();
         for (final ReadOnlyMeeting meeting : meetings) {
-            DateTimeFormatter formatter  = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
-            LocalDateTime currDate = LocalDateTime.now();
-            LocalDateTime meetDate = LocalDateTime.parse(meeting.getDate().toString(), formatter);
-            if (meetDate.isAfter((currDate))) {
+            if (dateIsAfter((meeting.getDate().toString()))) { //to delete meetings that have passed automatically
                 replacement.add(new Meeting(meeting));
             }
         }
         setMeetings(replacement);
+    }
+    /**
+     * To check if date is after log in (current) date and time
+     * @return true if meet date is after current date and time
+     */
+    private boolean dateIsAfter (String date) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        LocalDateTime currDate = LocalDateTime.now();
+        LocalDateTime meetDate = LocalDateTime.parse(date, formatter);
+        if (meetDate.isAfter((currDate))) {
+            return true;
+        }
+        return false;
     }
 ```
 ###### \java\seedu\address\storage\XmlAdaptedMeeting.java
@@ -704,8 +659,10 @@ public interface ReadOnlyMeeting {
         name = source.getName().fullName;
         place = source.getPlace().value;
         date = source.getDate().toString();
-        personToMeet = source.getPersonName().toString();
-        phoneNum = source.getPersonPhone().toString();
+        persons = new ArrayList<>();
+        for (ReadOnlyPerson person: source.getPersonsMeet()) {
+            persons.add(new XmlAdaptedPerson(person));
+        }
         meetTag = source.getMeetTag().toString();
     }
 
@@ -748,12 +705,12 @@ public class MeetingAlert extends UiPart<Region> {
         warningMessage.setText(MESSAGE);
         if (isGroupMeeting(list)) {
             int indexDate = list.get(0).getDate().toString().indexOf(' ');
-            firstMeeting.setText("Group Meeting with " + list.get(0).getPersonName().toString()
-                    + " at " + list.get(0).getDate().toString().substring(indexDate + 1) + " for");
+            firstMeeting.setText("Group Meeting at "
+                    + list.get(0).getDate().toString().substring(indexDate + 1) + " for");
             nameMeeting.setText(list.get(0).getName().toString());
         } else {
             int indexDate = list.get(0).getDate().toString().indexOf(' ');
-            firstMeeting.setText("Meeting with " + list.get(0).getPersonName().toString()
+            firstMeeting.setText("Meeting with " + list.get(0).getPersonsMeet().get(0).getName().toString()
                     + " at " + list.get(0).getDate().toString().substring(indexDate + 1) + " for");
             nameMeeting.setText(list.get(0).getName().toString());
         }
@@ -784,28 +741,7 @@ public class MeetingAlert extends UiPart<Region> {
     *Get the number of individual meetings to be shown to user
      */
     private boolean isGroupMeeting(ObservableList<ReadOnlyMeeting> list) {
-        int numMeet = 0;
-        for (int i = 0; i < list.size(); i++) {
-            DateTimeFormatter formatter  = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
-            LocalDateTime currDate = LocalDateTime.now();
-            LocalDateTime meetDate = LocalDateTime.parse(list.get(i).getDate().toString(), formatter);
-            long daysBet = ChronoUnit.DAYS.between(currDate, meetDate);
-            if (daysBet == 0) {
-                int j = i + 1;
-                if (j >= list.size()) {
-                    break;
-                }
-                while (list.get(i).getDate().equals(list.get(j).getDate())) {
-                    numMeet++;
-                    j++;
-                    if (j >= list.size()) {
-                        break;
-                    }
-                }
-
-            }
-        }
-        if (numMeet > 0) {
+        if (list.get(0).getPersonsMeet().size() > 1) {
             return true;
         }
         return false;
@@ -841,9 +777,7 @@ public class MeetingCard extends UiPart<Region> {
     @FXML
     private Label place;
     @FXML
-    private Label person;
-    @FXML
-    private Label phoneNum;
+    private ListView<Label> person;
     @FXML
     private ImageView icon;
 
@@ -863,8 +797,13 @@ public class MeetingCard extends UiPart<Region> {
         name.textProperty().bind(Bindings.convert(meeting.nameProperty()));
         date.textProperty().bind(Bindings.convert(meeting.dateProperty()));
         place.textProperty().bind(Bindings.convert(meeting.placeProperty()));
-        person.textProperty().bind(Bindings.convert(meeting.personMeetProperty()));
-        phoneNum.textProperty().bind(Bindings.convert(meeting.phoneMeetProperty()));
+        List<Label> labels = new ArrayList<>();
+        meeting.getPersonsMeet().forEach(person -> {
+            Label newPersonLabel = new PersonLabel(person.getName().toString() + "\n"
+                    + person.getPhone().toString());
+            labels.add(newPersonLabel);
+        });
+        person.setItems(FXCollections.observableList(labels));
         DateTimeFormatter formatter  = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
         LocalDateTime meetingDate = LocalDateTime.parse(meeting.getDate().toString(), formatter);
         LocalDateTime currDate = LocalDateTime.now();
@@ -959,7 +898,7 @@ public class MeetingListPanel extends UiPart<Region> {
     }
 
     @Subscribe
-    private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
+    private void handleJumpToMeetingListRequestEvent(JumpToMeetingListRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         scrollTo(event.targetIndex);
     }
@@ -983,6 +922,17 @@ public class MeetingListPanel extends UiPart<Region> {
     }
 }
 ```
+###### \java\seedu\address\ui\PersonLabel.java
+``` java
+/**
+ * A custom label for each person's name and phone in group meeting by using (@link Label) class
+ */
+public class PersonLabel extends Label {
+    public PersonLabel(String text) {
+        super(text);
+    }
+}
+```
 ###### \java\seedu\address\ui\UiManager.java
 ``` java
     /**
@@ -1002,6 +952,15 @@ public class MeetingListPanel extends UiPart<Region> {
         }
         return false;
     }
+```
+###### \resources\view\DarkTheme.css
+``` css
+.label-warning {
+    -fx-font-size: 30pt;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-text-fill: white;
+    -fx-opacity: 0.9;
+}
 ```
 ###### \resources\view\MeetingAlert.fxml
 ``` fxml
@@ -1062,8 +1021,7 @@ public class MeetingListPanel extends UiPart<Region> {
             </HBox>
             <FlowPane fx:id="tags" />
             <Label fx:id="date" text="\$date" />
-         <Label fx:id="person" text="\$person" />
-         <Label fx:id="phoneNum" styleClass="cell_small_label" text="\$phoneNum" />
+         <ListView id="listViewCard" fx:id="person" prefHeight="42.0" prefWidth="200.0" />
             <Label fx:id="place" styleClass="cell_small_label" text="\$place" />
         </VBox>
       <rowConstraints>
@@ -1074,6 +1032,7 @@ public class MeetingListPanel extends UiPart<Region> {
 ```
 ###### \resources\view\MeetingListPanel.fxml
 ``` fxml
+
 <VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <Label stylesheets="@DarkTheme.css" text="                   MEETINGS" />
     <ListView fx:id="meetingListView" VBox.vgrow="ALWAYS" />

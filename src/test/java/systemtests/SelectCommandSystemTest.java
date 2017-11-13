@@ -74,10 +74,12 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
         */
 
         /* Case: filtered person list, select index within bounds of address book and person list -> selected */
+        /*
         Index validIndex = Index.fromOneBased(1);
         assert validIndex.getZeroBased() < getModel().getFilteredPersonList().size();
         command = SelectCommand.COMMAND_WORD + " " + validIndex.getOneBased();
         assertCommandSuccess(command, validIndex);
+        */
 
         /* Case: invalid index (0) -> rejected */
         /*

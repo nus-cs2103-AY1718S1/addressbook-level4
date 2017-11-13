@@ -7,7 +7,6 @@
 public class AddMeetingCommandIntegrationTest {
 
     private Model model;
-    private Index index;
 
     @Before
     public void setUp() {
@@ -42,9 +41,11 @@ public class AddMeetingCommandIntegrationTest {
      * Generates a new {@code AddMeetingCommand} which upon execution, adds {@code meeting} into the {@code model}.
      */
     private AddMeetingCommand prepareCommand(Meeting meeting, Model model) {
-        this.index = Index.fromOneBased(1);
+        List<Index> indexes = new ArrayList<>();
+        indexes.add(Index.fromOneBased(1));
         AddMeetingCommand command =
-                new AddMeetingCommand(meeting.getName(), meeting.getDate(), meeting.getPlace(), index);
+                new AddMeetingCommand(meeting.getName(), meeting.getDate(), meeting.getPlace(), indexes,
+                        meeting.getMeetTag());
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
@@ -58,7 +59,7 @@ public class AddMeetingCommandTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    private Index index;
+    private List<Index> indexes;
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
     @Test
     public void constructor_nullPerson_throwsNullPointerException() {
@@ -91,13 +92,14 @@ public class AddMeetingCommandTest {
 
     @Test
     public void equals() {
-        this.index = Index.fromOneBased(1);
+        List<Index> indexes = new ArrayList<>();
+        indexes.add(Index.fromOneBased(1));
         Meeting project = new MeetingBuilder().withNameMeeting("Project").build();
         Meeting meeting = new MeetingBuilder().withNameMeeting("Meeting").build();
         AddMeetingCommand addProjectCommand = new AddMeetingCommand(project.getName(), project.getDate(),
-                project.getPlace(), index);
+                project.getPlace(), indexes, project.getMeetTag());
         AddMeetingCommand addMeetingCommand = new AddMeetingCommand(meeting.getName(), meeting.getDate(),
-                meeting.getPlace(), index);
+                meeting.getPlace(), indexes, meeting.getMeetTag());
 
         // same object -> returns true
         assertTrue(addProjectCommand.equals(addProjectCommand));
@@ -123,9 +125,10 @@ public class AddMeetingCommandTest {
      * Generates a new AddMeetingCommand with the details of the given meeting.
      */
     private AddMeetingCommand getAddMeetingCommandForMeeting(Meeting meeting, Model model) {
-        this.index = Index.fromOneBased(1);
+        List<Index> indexes = new ArrayList<>();
+        indexes.add(Index.fromOneBased(1));
         AddMeetingCommand command = new AddMeetingCommand(meeting.getName(), meeting.getDate(),
-                meeting.getPlace(), index);
+                meeting.getPlace(), indexes, meeting.getMeetTag());
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
@@ -248,21 +251,23 @@ public class MeetingBuilder {
     public static final String DEFAULT_NAMEMEETING = "Project Meeting";
     public static final String DEFAULT_DATETIME = "27-01-2018 21:30";
     public static final String DEFAULT_PLACE = "School of Computing";
-    public static final String DEFAULT_PERSONTOMEET = "Alice Pauline";
-    public static final String DEFAULT_PHONENUM = "85355255";
+    public static final String DEFAULT_TAG = "1";
 
     private Meeting meeting;
 
     public MeetingBuilder() {
         try {
+            List<Index> indexes = new ArrayList<>();
+            indexes.add(Index.fromOneBased(1));
             NameMeeting defaultNameMeeting = new NameMeeting(DEFAULT_NAMEMEETING);
             DateTime defaultDateTime = new DateTime(DEFAULT_DATETIME);
             Place defaultPlace = new Place(DEFAULT_PLACE);
-            PersonToMeet defaultPersonToMeet = new PersonToMeet(DEFAULT_PERSONTOMEET);
-            PhoneNum defaultPhoneNum = new PhoneNum(DEFAULT_PHONENUM);
+            List<ReadOnlyPerson> defaultPersonsMeet = new ArrayList<>();
+            defaultPersonsMeet.add(getTypicalPersons().get(indexes.get(0).getZeroBased()));
+            MeetingTag defaultMeetingTag = new MeetingTag(DEFAULT_TAG);
 
-            this.meeting = new Meeting(defaultNameMeeting, defaultDateTime, defaultPlace, defaultPersonToMeet,
-                    defaultPhoneNum);
+            this.meeting = new Meeting(defaultNameMeeting, defaultDateTime, defaultPlace,
+                    defaultPersonsMeet, defaultMeetingTag);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default meeting's values are invalid.");
         }

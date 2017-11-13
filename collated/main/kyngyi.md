@@ -7,7 +7,8 @@
         model.updateFilteredMeetingList(new MeetingContainsFullWordPredicate(Arrays.asList(nameArray)));
         List<ReadOnlyMeeting> lastShownMeetingList = model.getFilteredMeetingList();
 
-        while (true) {
+        while (!lastShownMeetingList.isEmpty()) {
+            int initialListSize = lastShownMeetingList.size();
             try {
                 Index firstIndex = ParserUtil.parseIndex("1");
                 ReadOnlyMeeting meetingToDelete = lastShownMeetingList.get(firstIndex.getZeroBased());
@@ -17,7 +18,72 @@
             } catch (MeetingNotFoundException mnfe) {
                 assert false : "The target meeting cannot be missing";
             } catch (IndexOutOfBoundsException ioobe) {
+                assert false : "Index out of bounds";
+            }
+            int endListSize = lastShownMeetingList.size();
+            if (initialListSize == endListSize) {
                 break;
+            }
+        }
+
+        model.updateFilteredMeetingList(PREDICATE_SHOW_ALL_MEETINGS);
+```
+###### \java\seedu\address\logic\commands\EditCommand.java
+``` java
+        String personToEditName = personToEdit.getName().toString();
+        String[] nameArray = {personToEditName};
+        model.updateFilteredMeetingList(new MeetingContainsFullWordPredicate(Arrays.asList(nameArray)));
+        List<ReadOnlyMeeting> lastShownMeetingList = model.getFilteredMeetingList();
+
+        if (!editedPerson.getName().toString().equalsIgnoreCase(personToEditName)) {
+            while (!lastShownMeetingList.isEmpty()) {
+                int initialListSize = lastShownMeetingList.size();
+                EditMeetingCommand.EditMeetingDescriptor editedMeetingDescriptor =
+                        new EditMeetingCommand.EditMeetingDescriptor();
+
+                try {
+                    Index firstIndex = ParserUtil.parseIndex("1");
+                    ReadOnlyMeeting meetingToEdit = lastShownMeetingList.get(firstIndex.getZeroBased());
+
+                    Meeting editedMeeting = createEditedMeeting(meetingToEdit, editedMeetingDescriptor,
+                            personToEdit, editedPerson);
+
+                    model.updateMeeting(meetingToEdit, editedMeeting);
+                } catch (DuplicateMeetingException dpe) {
+                    throw new CommandException(MESSAGE_DUPLICATE_MEETING);
+                } catch (MeetingNotFoundException pnfe) {
+                    throw new AssertionError("The target meeting cannot be missing");
+                } catch (MeetingBeforeCurrDateException mde) {
+                    throw new CommandException(MESSAGE_OVERDUE_MEETING);
+                } catch (MeetingClashException mce) {
+                    throw new CommandException(MESSAGE_MEETING_CLASH);
+                } catch (IllegalValueException ive) {
+                    assert false : "Error in deleting first item";
+                }
+                int endListSize = lastShownMeetingList.size();
+                if (initialListSize == endListSize) {
+                    break;
+                }
+            }
+        } else {
+            for (ReadOnlyMeeting meeting : lastShownMeetingList) {
+                EditMeetingCommand.EditMeetingDescriptor editedMeetingDescriptor =
+                        new EditMeetingCommand.EditMeetingDescriptor();
+
+                Meeting editedMeeting = createEditedMeeting(meeting, editedMeetingDescriptor,
+                        personToEdit, editedPerson);
+
+                try {
+                    model.updateMeeting(meeting, editedMeeting);
+                } catch (DuplicateMeetingException dpe) {
+                    throw new CommandException(MESSAGE_DUPLICATE_MEETING);
+                } catch (MeetingNotFoundException pnfe) {
+                    throw new AssertionError("The target meeting cannot be missing");
+                } catch (MeetingBeforeCurrDateException mde) {
+                    throw new CommandException(MESSAGE_OVERDUE_MEETING);
+                } catch (MeetingClashException mce) {
+                    throw new CommandException(MESSAGE_MEETING_CLASH);
+                }
             }
         }
 
@@ -73,7 +139,7 @@ public class EditMeetingCommand extends UndoableCommand {
 
         ReadOnlyMeeting meetingToEdit = lastShownList.get(index.getZeroBased());
         Meeting editedMeeting = createEditedMeeting(meetingToEdit, editMeetingDescriptor,
-                meetingToEdit.getPersonName(), meetingToEdit.getPersonPhone());
+                meetingToEdit.getPersonsMeet());
 
         try {
             model.updateMeeting(meetingToEdit, editedMeeting);
@@ -89,14 +155,13 @@ public class EditMeetingCommand extends UndoableCommand {
         model.updateFilteredMeetingList(PREDICATE_SHOW_ALL_MEETINGS);
         return new CommandResult(String.format(MESSAGE_EDIT_MEETING_SUCCESS, editedMeeting));
     }
-
     /**
      * Creates and returns a {@code Meeting} with the details of {@code meetingToEdit}
      * edited with {@code editMeetingDescriptor}.
      */
     private static Meeting createEditedMeeting(ReadOnlyMeeting meetingToEdit,
-                                               EditMeetingDescriptor editMeetingDescriptor, PersonToMeet person,
-                                               PhoneNum phone) {
+                                               EditMeetingDescriptor editMeetingDescriptor,
+                                               List<ReadOnlyPerson> persons) {
         assert meetingToEdit != null;
 
         NameMeeting updatedName = editMeetingDescriptor.getName().orElse(meetingToEdit.getName());
@@ -104,7 +169,7 @@ public class EditMeetingCommand extends UndoableCommand {
         Place updatedPlace = editMeetingDescriptor.getPlace().orElse(meetingToEdit.getPlace());
         MeetingTag updatedTag = editMeetingDescriptor.getMeetTag().orElse(meetingToEdit.getMeetTag());
 
-        return new Meeting(updatedName, updatedDate, updatedPlace, person, phone, updatedTag);
+        return new Meeting(updatedName, updatedDate, updatedPlace, persons, updatedTag);
     }
 
     @Override
@@ -133,8 +198,7 @@ public class EditMeetingCommand extends UndoableCommand {
         private NameMeeting name;
         private DateTime date;
         private Place place;
-        private PersonToMeet personName;
-        private PhoneNum phoneNum;
+        private List<ReadOnlyPerson> personsMeet;
         private MeetingTag meetTag;
 
         public EditMeetingDescriptor() {
@@ -144,6 +208,7 @@ public class EditMeetingCommand extends UndoableCommand {
             this.name = toCopy.name;
             this.date = toCopy.date;
             this.place = toCopy.place;
+            this.meetTag = toCopy.meetTag;
         }
 
         /**
@@ -180,14 +245,13 @@ public class EditMeetingCommand extends UndoableCommand {
             return Optional.ofNullable(meetTag);
         }
 
-        public void setPersonToMeet(PersonToMeet name) {
-            this.personName = name; }
+        public void setPersonsMeet(List<ReadOnlyPerson> persons) {
+            this.personsMeet = persons;
+        }
 
-        public void setPhoneNum (PhoneNum phoneNum) {
-            this.phoneNum = phoneNum; }
-
-        public void setMeetTag (MeetingTag meetTag) {
-            this.meetTag = meetTag; }
+        public Optional<List<ReadOnlyPerson>> getPersonsMeet() {
+            return Optional.ofNullable(personsMeet);
+        }
 
         @Override
         public boolean equals(Object other) {
@@ -206,7 +270,8 @@ public class EditMeetingCommand extends UndoableCommand {
 
             return getName().equals(e.getName())
                     && getDate().equals(e.getDate())
-                    && getPlace().equals(e.getPlace());
+                    && getPlace().equals(e.getPlace())
+                    && getMeetTag().equals(e.getMeetTag());
         }
     }
 }
@@ -325,11 +390,22 @@ public class MeetingContainsFullWordPredicate implements Predicate<ReadOnlyMeeti
         this.keywords = keywords;
     }
 
+    /**
+     * Tests if a {@code ReadOnlyMeeting}'s {@code List<ReadOnlyPerson>} contains any persons with name
+     * matching any of the keywords given.
+     */
+    private boolean personListContainsFullWord(String phrase, List<ReadOnlyPerson> target) {
+        for (int indexTarget = 0; indexTarget < target.size(); indexTarget++) {
+            if (StringUtil.containsFullWordIgnoreCase(target.get(indexTarget).getName().fullName, phrase)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public boolean test(ReadOnlyMeeting meeting) {
-        return (keywords.stream()
-                .anyMatch(keyword ->
-                        StringUtil.containsFullWordIgnoreCase(meeting.getPersonName().fullName, keyword)));
+        return (personListContainsFullWord(keywords.get(0), meeting.getPersonsMeet()));
     }
 
     @Override
@@ -339,4 +415,22 @@ public class MeetingContainsFullWordPredicate implements Predicate<ReadOnlyMeeti
                 && this.keywords.equals(((MeetingContainsFullWordPredicate) other).keywords)); // state check
     }
 }
+```
+###### \java\seedu\address\model\meeting\MeetingContainsKeywordsPredicate.java
+``` java
+    /**
+     * Tests if a {@code ReadOnlyMeeting}'s {@code List<ReadOnlyPerson>} contains any persons with name
+     * matching any of the keywords given.
+     */
+    private boolean personListContainsKeyword(List<String> keywords, List<ReadOnlyPerson> target) {
+        for (int indexKeyword = 0; indexKeyword < keywords.size(); indexKeyword++) {
+            for (int indexTarget = 0; indexTarget < target.size(); indexTarget++) {
+                if (StringUtil.containsWordIgnoreCase(target.get(indexTarget).getName().fullName, (
+                        keywords.get(indexKeyword)))) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 ```

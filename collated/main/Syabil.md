@@ -176,6 +176,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 import seedu.address.commons.util.StringUtil;
+import seedu.address.model.person.ReadOnlyPerson;
 
 /**
  * Tests that a {@code ReadOnlyMeeting}'s {@code Meeting} matches any of the keywords given.
@@ -187,13 +188,20 @@ public class MeetingContainsKeywordsPredicate implements Predicate<ReadOnlyMeeti
         this.keywords = keywords;
     }
 
+
+```
+###### \java\seedu\address\model\meeting\MeetingContainsKeywordsPredicate.java
+``` java
     @Override
     public boolean test(ReadOnlyMeeting meeting) {
-        return (keywords.stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(meeting.getName().fullName, keyword))
-                || keywords.stream()
-                        .anyMatch(keyword ->
-                                StringUtil.containsWordIgnoreCase(meeting.getPersonName().fullName, keyword)));
+        for (int index = 0; index < meeting.getPersonsMeet().size(); index++) {
+            if (keywords.stream()
+                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(meeting.getName().fullName, keyword))
+                    || personListContainsKeyword(keywords, meeting.getPersonsMeet())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
