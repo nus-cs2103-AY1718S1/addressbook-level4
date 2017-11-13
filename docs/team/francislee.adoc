@@ -3,10 +3,19 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
-== Project: AddressBook - Level 4
-AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+== Project: Ark
+Ark is a parcel management software which users can interact with using a Command Line Interface, and it has a GUI
+created with JavaFX. It is written in Java, and has about 14 kLoC.
+You may access the Ark repository link:https://github.com/CS2103AUG2017-T16-B1/main[here].
 
-*Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
+Ark was built on top of link::https://github.com/nus-cs2103-AY1718S1/addressbook-level4[Addressbook - Level 4], an
+addressbook application.
+
+Below you can take a look at the segments of Ark that I've written. Functional code refers to code that
+directly affects the performance and usability of Ark. Whereas test code refers to code written
+to automatically test the features I've implemented.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T16-B1/main/blob/master/collated/main/fustilio.md[Functional code]][https://github.com/CS2103AUG2017-T16-B1/main/blob/master/collated/test/fustilio.md[Test code]]
 
 === Enhancement Added: deleteTagCommand
 
@@ -14,7 +23,7 @@ AddressBook - Level 4 is a desktop address book application used for teaching So
 
 ---
 
-include::../UserGuide.adoc[tag=deleteTag]
+include::../UserGuide.adoc[tags=deleteTag]
 
 ---
 
@@ -26,7 +35,7 @@ The deleteTag command is useful to have when dealing with large numbers of parce
 
 ---
 
-include::../DeveloperGuide.adoc[tag=deleteTag]
+include::../DeveloperGuide.adoc[tags=deleteTag]
 
 ---
 
@@ -36,7 +45,7 @@ include::../DeveloperGuide.adoc[tag=deleteTag]
 
 ---
 
-include::../UserGuide.adoc[tag=deliveryDate]
+include::../UserGuide.adoc[tags=deliveryDate]
 
 ---
 
@@ -50,7 +59,7 @@ immediately on start up.
 
 ---
 
-include::../DeveloperGuide.adoc[tag=deliveryDate]
+include::../DeveloperGuide.adoc[tags=deliveryDate]
 
 ---
 
@@ -60,7 +69,7 @@ include::../DeveloperGuide.adoc[tag=deliveryDate]
 
 ---
 
-include::../UserGuide.adoc[tag=sortedList]
+include::../UserGuide.adoc[tags=sortedList]
 
 ---
 
@@ -73,13 +82,42 @@ more easily.
 
 ---
 
-include::../DeveloperGuide.adoc[tag=sortedList]
+include::../DeveloperGuide.adoc[tags=sortedList]
+
+---
+
+=== Enhancement Added: ArkBot: A Telegram Bot Interface for Ark
+
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[tags=ArkBot]
+
+---
+
+==== Justification
+
+Practically speaking, a delivery man would not be able to use Ark on the go since it is a desktop application.
+As such, I developed a https://core.telegram.org/bots[Telegram Bot] interface, enabling Ark to be accessed from
+a mobile phone.
+
+==== Implementation
+
+---
+
+include::../DeveloperGuide.adoc[tags=ArkBot]
 
 ---
 
 === Other contributions
 
 
-== Project: PowerPointLabs
+== Project: GooBot
 
-{Optionally (not graded), you may include other projects in your portfolio.}
+Over the summer of 2017, my partner and I developed a Telegram Bot generating framework using Node.js.
+Our framework allows users without programming experience to create their own Finite State Machine style Telegram bots.
+I specifically worked on data manipulation and created a simple HTML to allow users to manage their bots.
+
+Goobot, which was created during the NUS Orbital Programme, won 1st prize in Gemini (Intermediate) category during the
+course's project showcase.
