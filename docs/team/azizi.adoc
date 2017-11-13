@@ -75,6 +75,11 @@ Users may add multiple instances for any of the Person fields in Bluebird. For e
 phone numbers for any of their contacts, and thus make it much more convenient for them to update their friends
 particulars.
 
+=== Enhancement Proposed: Deleting persons by their tags
+
+Users may delete multiple persons in one go by selecting a tag to be deleted.
+Thus, users will be able to delete anyone associated with that tag when the need arises.
+
 === Other contributions
 
 ==== For Bluebird:
