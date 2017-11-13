@@ -310,7 +310,7 @@ e.g. `-1`, `0.1`, `abc`
 |===
 // end::editperson[]
 
-// tag::favoriteunfavoriteperson[]
+// tag::favorite[]
 ==== Labelling Favorite Contacts [Since v1.2]: `fav`
 KayPoh helps you to keep track of the people that matter most to you. Label important people as a favorite contacts using
 the `fav` command so that you never miss out on a moment in their lives.
@@ -377,7 +377,7 @@ image::unfavorite-after-find-command-result.png[width="800"]
 e.g. `-1`, `0.1`, `abc`
 |Ensure that the specified `INDEX` is a *positive integer* that is *smaller or equal to the total number of contacts in the contacts list*.
 |===
-// end::favoriteunfavoriteperson[]
+// end::favorite[]
 
 // tag::deletebyindex[]
 ==== Deleting a Person: `delete`
@@ -441,6 +441,7 @@ image::clear-command-result.png[width="350"]
 
 === Navigating KayPoh
 
+// tag::list-favorite[]
 ==== Listing Persons: `list`
 To have all your contacts displayed in your contacts list, use the `list` command.
 
@@ -458,6 +459,7 @@ You should see your contacts list populated with your contacts after executing t
 
 .Contacts list populated with all contacts
 image::list-command-result.png[width="350"]
+// end::list-favorite[]
 
 // tag::select[]
 ==== Selecting a Person: `select`
@@ -804,7 +806,7 @@ There is no need to synchronize your contacts manually.
 
 ===== Removing Your Cloud Account: `unsync`
 
-To stops synchronizing your contact information with the previously configured cloud account, use the `unsync` command.
+To stop synchronizing your contact information with the previously configured cloud account, use the `unsync` command.
 
 ====
 *Command format*: `[red]#unsync#` +
@@ -812,6 +814,7 @@ To stops synchronizing your contact information with the previously configured c
 
 === Miscellaneous
 
+// tag::theme[]
 ==== Changing Themes: `theme` [Since v1.4]
 Variety is the spice of life! To change the theme of the application, use the `theme` command.
 
@@ -832,6 +835,7 @@ image::Ui-day.png[width="800"]
 
 .User interface after applying the night theme
 image::Ui-night.png[width="800"]
+// end::theme[]
 
 ==== Listing Entered Commands: `history`
 Forgot what you just did? Use the `history` command to list all the commands that you have entered in reverse chronological order.

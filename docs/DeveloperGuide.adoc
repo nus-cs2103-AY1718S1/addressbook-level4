@@ -1,4 +1,4 @@
-= KayPoh! - Developer Guide
+= KayPoh - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -16,7 +16,7 @@ By: `Team W10-B2`      Since: `Aug 2017`      Licence: `MIT`
 
 == About
 
-This developer guide provides developers working on the KayPoh! application an in-depth explanation
+This developer guide provides developers working on the KayPoh application an in-depth explanation
 of how the application works. A working knowledge of UML diagram notation and familiarity with the Java programming
 language will be helpful in understanding the implementation details discussed in this guide.
 
@@ -225,7 +225,7 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 This section describes some noteworthy details on how certain features are implemented.
 
 // tag::undoredo[]
-=== Undo/Redo mechanism
+=== Undo/Redo Mechanism
 
 The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the address book (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
 
@@ -406,7 +406,7 @@ The `parsePhone` method in the `ParserUtil` class calls the `getMultipleValues` 
 // end::multiplephonenumbers[]
 
 // tag::facebook[]
-=== Facebook mechanism
+=== Facebook Post Mechanism
 
 The Facebook Commands are facilitated by the Facebook Graph API and utilised through the Facebook4j unofficial public API.
 Facebook4j supports all facebook related features such as `facebookconnect` and `facebookpost`.
@@ -646,10 +646,14 @@ that this approach was less intuitive to them compared to the approach described
 
 // end::command-syntax[]
 
-=== Favorite Contacts
+// tag::favorite[]
+=== Favoriting Contacts
 
 The favorite status of each contact is stored as a `boolean`, encapsulated within the `Favorite` class. +
 There are several ways to toggle this `boolean` to change the favorite status of a contact.
+
+.Favorite is one of the members in the Person class
+image::person-class-diagram-favorite.png[width="800"]
 
 ==== Toggle favorites using `add` and/or `edit` command +
 For user's convenience, we are allowing just the input of prefixes i.e. `f/` in `add` command and either `f/` or `uf/` in `edit` command to make a change to a contact's favorite status.
@@ -694,6 +698,9 @@ For both adding and editing person, there is a similar validation for disallowin
     }
 ----
 
+// end::favorite[]
+
+// tag::favorite-command[]
 ==== Toggle favorites using `fav` and/or `unfav` command
 
 To enhance contact management, we implemented these commands to perform batch favoriting or unfavoriting of multiple contacts. They are also capable of performing the operations on a single contact. The implementation involves two major steps.
@@ -738,6 +745,7 @@ After getting the copy of the person e.g. `personToFavorite`, it is easy to call
 **Alternative 2:** Just rely on `fav` and `unfav` commands +
 **Pros:** Easier implementation +
 **Cons:** User would have to remember more commands and their usages
+// end::favorite-command[]
 
 // tag::sort[]
 === Sorting Contacts
@@ -790,6 +798,341 @@ allow the inheriting classes to define the `Comparator<ReadOnlyPerson>` to be us
 **Pros:** More flexibility in how each `sort` command is implemented should requirements change in the future. +
 **Cons:** If `sort` commands have similar behavior, then there will be significant amounts of code duplication. +
 // end::sort[]
+
+// tag::enhance-ui[]
+=== Enhancing User Interface
+
+==== Removing Window Decorations
+
+To enhance our user's satisfaction with KayPoh, we improved the user interface by redesigning the color scheme and allowed theming for user to switch between two available themes.
+
+The first step to adding a better look was to remove the standard platform window decorations. This will shift the application's user interface from classic to a fancier look that is self-contained, without wasting extra pixels just for the default window decorations. This is done by the following code:
+
+----
+primaryStage.initStyle(StageStyle.TRANSPARENT);
+----
+
+Do note that this line of code has to be placed in the `start()` method of `MainApp.java` instead of `MainWindow.java` or `UiManager.java` so as to specify the removal of window decorations immediately upon the launch of the application. Otherwise, there will be an `exception` thrown: `Cannot set style once stage has been set visible`.
+
+This immediately removes the window's title bar. However, this also removes the default window functionalities such as being able to resize the window, move the window's position, minimise, maximise and exit the application proper.
+
+Hence, the second step is to rebuild these functionalities. The design considered was to bake these functionalities along with the minimise, maximise and exit button into the existing menu bar. The three aforementioned buttons are added in Scene Builder, using the same height as the menu bar so that it would look coherent.
+
+Now that we have added the buttons, we can make use of the buttons' event handlers to trigger the window functionalities.
+
+Moving of window is implemented by setting the menu bar to listen on the events such as `onMousePressed` and `onMouseDragged`:
+
+----
+private void enableMovableWindow() {
+    menuBar.setOnMousePressed((event) -> {
+        xOffset = event.getSceneX();
+        yOffset = event.getSceneY();
+    });
+
+    menuBar.setOnMouseDragged((event) -> {
+        primaryStage.setX(event.getScreenX() - xOffset);
+        primaryStage.setY(event.getScreenY() - yOffset);
+    });
+}
+----
+
+Similarly, minimising of window is implemented by setting the minimise button to listen on `onMouseClicked` event and uses the following method that was found from the JavaFX Stage API.
+
+----
+primaryStage.setIconified(true)
+----
+
+Maximising of window is also implemented in the same way.
+
+----
+maximiseButton.setOnMouseClicked((event) -> {
+    primaryStage.setMaximized(true);
+    maximiseButton.setId("restoreButton");
+});
+----
+
+However, the default behavior of maximising a window is made in a way such that the first time the maximise button is clicked, the window maximises fully (the code above works), but when the second time the button is clicked, it should restore the previous unmaximised state and window size. Hence, we have to utilise `onMousePressed` this time.
+
+----
+maximiseButton.setOnMousePressed((event) -> {
+    primaryStage.setMaximized(false);
+    maximiseButton.setId("maximiseButton");
+});
+----
+
+Exiting the window could make use of the existing `handleExit` method in `MainWindow.java`, hence we just have to set the event handler for exit button in `MainWindow.fxml` itself.
+
+----
+<Button fx:id="closeButton" mnemonicParsing="false" prefHeight="45" prefWidth="60" onAction="#handleExit" />
+----
+
+The last functionality we have to rebuild is resizing of the window. We make use of a helper class called `UiResize` whose methods were adapted from StackOverflow. It is important to note that the `minWidth` and `minHeight` parameters for `enableResizableWindow` window should be the same as the `MIN_WIDTH` and `MIN_HEIGHT` specified in `MainWindow.java` so that the resizing mechanism does not exceed the allowable minimum widths and heights of the window i.e. we disallow window resizing to the point that there is no more pixels to resize which would otherwise become a bug itself.
+
+==== Rounding Borders
+
+The second step was to create rounded borders for the application. Since the entire window is encapsulated within a JavaFX `VBox` container, we can simply style it using its `fx:id` called `rootVBox` in the Cascading Style Sheet (CSS) as follows.
+
+----
+#rootVBox {
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+}
+----
+
+==== Resizing Components
+
+The third step was to resize each component to give priority to each of them, especially enlarging the space of contacts list to make it stand out since it is the one of the most important aspects of our application.
+
+----
+<padding>
+    <Insets bottom="10" left="20" right="20" top="0" />
+</padding>
+----
+
+==== Using Custom Fonts
+
+The fourth step is to ensure the consistency of fonts displayed across different platforms e.g. Windows, macOS and to allow usage of custom fonts e.g. `Open Sans`.
+
+All custom fonts are stored in `/resources/fonts` directory and a singleton class `UiFont` is used to embed and load all the fonts into the application at runtime.
+
+The following method in the `UiFont` class has to be called in the `start()` method of `UiManager` class as during that instance, most of the other UI components have not been created.
+
+----
+public void embedFonts() {
+    for (String font : fontList) {
+        Font.loadFont(getClass().getResourceAsStream(FONTS_FILE_FOLDER + font), 10);
+    }
+}
+----
+
+==== Enhancing Color Scheme
+
+The last step to enhancing the user interface would be to use subtle colors that would highlight visual controls that users would often interact with such as command box and contacts list. The key is also to use as little colors as possible for the majority background space so as to create a minimalistic interface as well.
+
+The main colors used are full white for the background (`#ffffff`) and a slightly gray tone for command box and contacts list (`#f4f4f4`). This light color scheme is used for the "Day" theme.
+
+Since we allow the user to switch between two themes, we would have to create two CSS with different color schemes.
+
+The main colors used for the "Night" theme dark-greenish black (`#272822`) and a slightly brighter gray tone that matches the aforementioned black (`#4a4b40`).
+
+To maintain consistency between two themes, static (non-changing) components such as the menu bar, footer, scroll bar, favorite icons maintain the same red (`#d13438`) and black (`#2c2c2c`) color combination.
+
+Finally, to increase the overall contrast and to provide an easier way to identify contacts via tags, tag labels are brightly colored. A random color generator is implemented to give each tag a different color. To ensure even distribution of colors are generated, we also make use of the golden ratio conjugate `0.618033988749895`.
+
+----
+private String generateRandomColor() {
+    float randomHue = random.nextFloat();
+    randomHue += GOLDEN_RATIO;
+    randomHue = randomHue % 1;
+
+    Color result = Color.getHSBColor(randomHue, 0.5f, 0.85f);
+    return String.format("#%02x%02x%02x", result.getRed(), result.getGreen(), result.getBlue());
+}
+----
+
+==== Setting Focus on Command Box
+
+To allow user to begin typing immediately upon application launch, we have to set the focus to the command box text field as such.
+
+----
+Platform.runLater(() -> commandTextField.requestFocus());
+----
+
+// end::enhance-ui[]
+
+// tag::theme[]
+=== Theming Mechanism
+
+The theme mechanism is facilitated by a singleton class `UiTheme` which will be called inside the `MainWindow` constructor where it passes its `scene` into the `UiTheme` class.
+
+The `scene` is necessary for changing the CSS at runtime e.g.:
+
+----
+scene.getStylesheets().setAll("PATH_TO_CSS_FILE");
+----
+
+When a user executes the `theme` command to change the theme, `ThemeCommand` class will pass the option `String` specified by the user into the following method in `UiTheme` class.
+
+----
+public void changeTheme(String option) {
+    scene.getStylesheets().clear();
+
+    if (option.equals(PREFIX_OPTION + ThemeCommand.COMMAND_OPTION_DAY)) {
+        scene.getStylesheets().setAll(THEME_DAY, THEME_DAY_EXTENSIONS);
+        browserPanel.loadDefaultPage(scene);
+    } else {
+        scene.getStylesheets().setAll(THEME_NIGHT, THEME_NIGHT_EXTENSIONS);
+        browserPanel.loadDefaultPage(scene);
+    }
+}
+----
+
+.Sequence Diagram for Changing Theme
+image::changing-theme-sequence-diagram.png[width="600"]
+
+To ensure that the user does not have to change their preferred theme every time the application starts, we will save their choice as a user preference. The user preference is stored as a variable of class `ThemeSettings` inside `UserPrefs` class. Essentially, we will store the CSS file path e.g. `view/ThemeDay.css` in `preferences.json`.
+
+Finally, when the application starts, user's theme preference will be read in the `MainWindow` class.
+
+----
+private void setDefaultTheme(UserPrefs prefs, Scene scene) {
+    scene.getStylesheets().addAll(prefs.getThemeSettings().getTheme(),
+            prefs.getThemeSettings().getThemeExtensions());
+}
+----
+
+.Sequence Diagram for Saving Theme as User Preference
+image::saving-theme-preference-seq-diagram.png[width="800"]
+
+==== Design Considerations
+
+**Aspect:** Ways to change the application theme +
+**Alternative 1 (current choice):** Use of singleton class `UiTheme` to change the theme +
+**Pros:** Declutters the `MainWindow` class and provide a dedicated class that manages all the changing of themes. This ensures scalability since `UiTheme` can contain a lot more CSS file paths to more themes for future add-ons. It also dedicates storing of CSS file paths in public `String` which can be called by other many classes. Last but not least, it is easier for `ThemeCommand` class to call its instance and use the `changeTheme` method directly. +
+**Cons:** Causes tighter coupling, and violates the single responsibility principle since `UiTheme` controls its own creation and lifecycle +
+**Alternative 2:** Change the themes in `MainWindow` class directly +
+**Pros:** Decreases coupling +
+**Cons:** Clutters the `MainWindow` class and makes it harder for `ThemeCommand` class to access the methods from `MainWindow`.
+// end::theme[]
+
+// tag::display-photo[]
+=== Display Photo Mechanism
+
+To allow user to find their contacts more easily, we implemented the adding of display photo feature. This would be especially helpful to those users who are visual learners so that they can remember their contacts more easily as well.
+
+.DisplayPhoto is one of the members in the Person class
+image::person-class-diagram-displayphoto.png[width="800"]
+
+==== Contacts without Display Photo
+
+We took into consideration that there ought to be some contacts that would not have any display photo, hence instead of display a static default display photo, we decided to make it more intuitive since our goal is to enhance the our user's collective memory of their contacts.
+
+For these contacts, they will have a colored display photo thumbnail with their initials in it.
+
+All display photos will be rounded by setting a circle-shaped clip to the `displayPhotoImageView`.
+
+----
+double value = displayPhotoImageView.getFitWidth() / 2;
+Circle clip = new Circle(value, value, value);
+displayPhotoImageView.setClip(clip);
+----
+
+After which, we will color the rounded thumbnails with random pastel colors. We use yet another random color generator (another was used for coloring tag labels as previously mentioned) as opposed to having one is because we decided that the display photo should use a lighter color so as not to steal the attention away from the main contact details. Pastel colors in this case blends in well with the UI.
+
+----
+private String generateRandomPastelColor() {
+    int red = random.nextInt(256);
+    int green = random.nextInt(256);
+    int blue = random.nextInt(256);
+
+    Color mixer = new Color(235, 235, 235);
+    red = (red + mixer.getRed()) / 2;
+    green = (green + mixer.getGreen()) / 2;
+    blue = (blue + mixer.getBlue()) / 2;
+
+    Color result = new Color(red, green, blue);
+    return String.format("#%02x%02x%02x", result.getRed(), result.getGreen(), result.getBlue());
+}
+----
+
+We will color the rounded thumbnail by using `setFill`.
+
+----
+Circle backgroundCircle = new Circle(value);
+backgroundCircle.setFill(Paint.valueOf(getColorForPerson(nameOfPerson)));
+----
+
+Lastly, to add the contact's initials into the rounded thumbnail, we have to extract their name and use regular expression i.e. `?<=\\w)\\w+(?=\\s)\\s+` to derive only their initials.
+We also limit the number of initials to two.
+
+----
+private String extractInitials (String name) {
+    int noOfInitials = 1;
+    if (name.split("\\s+").length > 1) {
+        noOfInitials = 2;
+    }
+    return name.replaceAll("(?<=\\w)\\w+(?=\\s)\\s+", "").substring(0, noOfInitials);
+}
+----
+
+The text for contact's initials is added programmatically.
+
+----
+Text personInitialsText = new Text(extractInitials(nameOfPerson));
+personInitialsText.setFill(Paint.valueOf("white"));
+----
+
+It is to be noted that instead of adding the coloring and text to display photo's `Image View`, we add it directly into its parent i.e. `Stack Pane`.
+
+----
+displayPhotoStackPane.getChildren().addAll(backgroundCircle, personInitialsText);
+----
+
+==== Contacts with Display Photo
+
+For contacts whom users have added a display photo, the mechanism is pretty straight forward in that we simply point the display photo's `Image View` to the path user has specified to import the dislay photo from.
+
+----
+displayPhotoImageView.setImage(new Image(person.getDisplayPhoto().getAbsoluteFilePath()));
+----
+
+There are a few restrictions to the display photo we have set. The display photo specified by the user has to be:
+
+* Of a legitimate file path
+* Within 1MB of size
+* Of type `jpg` or `jpeg` or `png` only
+
+Failing which, the display photo will not be added. The above restrictions are checked by the `isValidPhoto` method in `DisplayPhoto` class itself.
+
+----
+private static boolean isValidPhoto(String test) {
+    File file = new File(test);
+    return file.exists()
+            && file.length() <= MAX_SIZE
+            && (test.endsWith(ALLOWED_TYPE_JPG)
+            || test.endsWith(ALLOWED_TYPE_JPEG)
+            || test.endsWith(ALLOWED_TYPE_PNG));
+}
+----
+
+If the display photo specified by the user is valid, we will go ahead to:
+
+1. Update the `DisplayPhoto` field of the contact,
+2. Copy the photo into the application's `data` directory,
+3. Set the display photo `Image View` to the file path of the photo in our `data` directory
+
+Before copying the photo to the application's `data` directory, it is important to note that in the instance when the user just launched KayPoh for the first time, and tries to add a display photo to a contact, there will be an `IOException` thrown. This is because `data` directory is not yet created; it will only be created when a user executes a command that will trigger `AddressBookChanged` event. Although changing of `DisplayPhoto` through add or edit commands can trigger the event, the copying of file in `DisplayPhoto` class precedes the event.
+
+Hence, we have to check whether `data` directory exists first. We can simply use `createDirectories` from `java.nio.Files`. This method kills two birds with one stone since it will not re-create the directory and neither will it throw an `exception` even if the directory already exists.
+
+----
+Files.createDirectories(Paths.get(DEFAULT_SAVE_DIR));
+----
+
+Then, we copy the display photo file into the `data` directory using `Files.copy` also from the same package `java.nio.Files`.
+
+----
+// REPLACAE_EXITING: If the target file exists, then the target file is replaced if it is not a non-empty directory.
+Files.copy(from, to, REPLACE_EXISTING);
+----
+
+Finally, the last thing to note would be that for JavaFX's `ImageView` to load an image, it has to be set with a file path that contains `file://` at the beginning of a file path.
+
+----
+"file://" + Paths.get(value).toAbsolutePath().toUri().getPath();
+----
+
+==== Design Considerations
+
+**Aspect:** Copying of display photo image file into application's `data` directory +
+**Alternative 1 (current choice):** Using `Files.copy` from Java's NIO package +
+**Pros:** Does not require adding of third party libraries +
+**Cons:** Has to add an additional check for the existence of the `data` directory first before copying to prevent an `exception` +
+**Alternative 2:** Using `FileUtils.copyFileToDirectory` from a third party library - Apache Commons IO +
+**Pros:** One-liner implementation that checks for both file and directory's existence +
+**Cons:** Require importing of third party libraries into Gradle
+
+// end::display-photo[]
 
 === Logging
 
