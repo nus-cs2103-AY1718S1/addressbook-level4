@@ -33,27 +33,21 @@ public interface ReadOnlyAddressBook {
     /**
      * Returns an unmodifiable view of the schedule.
      */
-    ObservableList<ReadOnlyEvent> getTimetable(Date currentDate);
+    ObservableList<ReadOnlyEvent> getSchedule(Date currentDate);
 
     //@@author
 
-    //@@author huiyiiih
     /**
-     * Returns an unmodifiable view of the relationships list.
-     * This list will not contain any duplicate relationships.
+     * Returns an unmodifiable view of the tags list.
+     * This list will not contain any duplicate tags.
      */
+    //@@author huiyiiih
     ObservableList<Relationship> getRelList();
-    //@@author
-    //@@author shuang-yang
+    //author
     /**
      * Returns the last changed event.
      */
     ReadOnlyEvent getLastChangedEvent();
-
-    /**
-     * Returns the last changed event.
-     */
-    ReadOnlyEvent getNewlyAddedEvent();
 
     Date getCurrentDate();
 }

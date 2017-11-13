@@ -1,3 +1,4 @@
+//@@author reginleiff
 package seedu.address.logic.commands.event;
 
 import java.util.List;
@@ -10,7 +11,6 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.exceptions.EventNotFoundException;
 
-//@@author reginleiff
 /**
  * Deletes a event identified using it's last displayed index from the address book.
  */

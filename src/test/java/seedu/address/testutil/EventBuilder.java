@@ -4,7 +4,6 @@ package seedu.address.testutil;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.event.Description;
 import seedu.address.model.event.Event;
-import seedu.address.model.event.Period;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.Title;
 import seedu.address.model.event.timeslot.Timeslot;
@@ -17,7 +16,6 @@ public class EventBuilder {
     public static final String DEFAULT_TITLE = "Jack's Birthday";
     public static final String DEFAULT_TIMESLOT = "23/10/2017 1900-2100";
     public static final String DEFAULT_DESCRIPTION = "Celebrating Jack's 21st, party all night";
-    public static final String DEFAULT_PERIOD = "14";
 
     private Event event;
 
@@ -26,8 +24,7 @@ public class EventBuilder {
             Title defaultTitle = new Title(DEFAULT_TITLE);
             Timeslot defaultTimeslot = new Timeslot(DEFAULT_TIMESLOT);
             Description defaultDescription = new Description(DEFAULT_DESCRIPTION);
-            Period defaultPeriod = new Period(DEFAULT_PERIOD);
-            this.event = new Event(defaultTitle, defaultTimeslot, defaultDescription, defaultPeriod);
+            this.event = new Event(defaultTitle, defaultTimeslot, defaultDescription);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default event's values are invalid.");
         }
@@ -77,20 +74,6 @@ public class EventBuilder {
         }
         return this;
     }
-
-    //@@author shuang-yang
-    /**
-     * Sets the {@code Period} of the {@code Event} that we are building.
-     */
-    public EventBuilder withPeriod(String period) {
-        try {
-            this.event.setPeriod(new Period(period));
-        } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("Period is expected to be unique.");
-        }
-        return this;
-    }
-    //@@author
 
     public Event build() {
         return this.event;

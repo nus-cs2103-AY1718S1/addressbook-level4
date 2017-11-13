@@ -31,7 +31,6 @@ public class EditEventDescriptorBuilder {
         descriptor.setTitle(event.getTitle());
         descriptor.setTimeslot(event.getTimeslot());
         descriptor.setDescription(event.getDescription());
-        descriptor.setPeriod(event.getPeriod());
     }
 
     /**
@@ -69,20 +68,6 @@ public class EditEventDescriptorBuilder {
         }
         return this;
     }
-
-    //@@author shuang-yang
-    /**
-     * Sets the {@code Period} of the {@code EditEventDescriptor} that we are building.
-     */
-    public EditEventDescriptorBuilder withPeriod(String period) {
-        try {
-            ParserUtil.parsePeriod(Optional.of(period)).ifPresent(descriptor::setPeriod);
-        } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("Period is expected to be unique.");
-        }
-        return this;
-    }
-    //@@author
 
     public EditEventCommand.EditEventDescriptor build() {
         return descriptor;

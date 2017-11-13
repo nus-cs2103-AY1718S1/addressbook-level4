@@ -118,12 +118,7 @@ public class AddressBookTest {
         }
 
         @Override
-        public ReadOnlyEvent getNewlyAddedEvent() {
-            return null;
-        }
-
-        @Override
-        public ObservableList<ReadOnlyEvent> getTimetable(Date date) {
+        public ObservableList<ReadOnlyEvent> getSchedule(Date date) {
             return null;
         }
 

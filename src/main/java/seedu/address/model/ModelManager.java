@@ -3,7 +3,6 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.Timer;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -14,7 +13,6 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.model.event.ReadOnlyEvent;
-import seedu.address.model.event.RepeatEventTimerTask;
 import seedu.address.model.event.exceptions.EventNotFoundException;
 import seedu.address.model.event.exceptions.EventTimeClashException;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -33,10 +31,8 @@ public class ModelManager extends ComponentManager implements Model {
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
     //@@author reginleiff
-    private final FilteredList<ReadOnlyEvent> filteredEvents;
+    private FilteredList<ReadOnlyEvent> filteredEvents;
     private FilteredList<ReadOnlyEvent> scheduledEvents;
-    private FilteredList<ReadOnlyEvent> timetableEvents;
-
     //@@author
 
     /**
@@ -51,7 +47,7 @@ public class ModelManager extends ComponentManager implements Model {
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         filteredEvents = new FilteredList<>(this.addressBook.getEventList());
-        timetableEvents = new FilteredList<>(this.addressBook.getTimetable(this.addressBook.getCurrentDate()));
+        scheduledEvents = new FilteredList<>(this.addressBook.getSchedule(this.addressBook.getCurrentDate()));
     }
 
     public ModelManager() {
@@ -140,8 +136,8 @@ public class ModelManager extends ComponentManager implements Model {
     //=========== Schedule Accessors  =========================================================================
 
     @Override
-    public ObservableList<ReadOnlyEvent> getTimetable() {
-        return FXCollections.unmodifiableObservableList(timetableEvents);
+    public ObservableList<ReadOnlyEvent> getSchedule() {
+        return FXCollections.unmodifiableObservableList(scheduledEvents);
     }
 
     //=========== Filtered Event List Accessors  ==============================================================
@@ -154,6 +150,9 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public ObservableList<ReadOnlyEvent> getFilteredEventList() {
+        Predicate<? super ReadOnlyEvent> predicate = filteredEvents.getPredicate();
+        filteredEvents = new FilteredList<>(this.addressBook.getEventList());
+        filteredEvents.setPredicate(predicate);
         ObservableList<ReadOnlyEvent> list = FXCollections.unmodifiableObservableList(filteredEvents);
         return list;
     }
@@ -164,7 +163,6 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void addEvent(ReadOnlyEvent event) throws EventTimeClashException {
         addressBook.addEvent(event);
         updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
-        scheduleRepeatedEvent(event);
         indicateAddressBookChanged();
     }
 
@@ -178,7 +176,6 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void updateEvent(ReadOnlyEvent target, ReadOnlyEvent editedEvent)
             throws EventNotFoundException, EventTimeClashException {
         addressBook.updateEvent(target, editedEvent);
-        scheduleRepeatedEvent(editedEvent);
         indicateAddressBookChanged();
     }
     //@@author
@@ -202,16 +199,4 @@ public class ModelManager extends ComponentManager implements Model {
         return addressBook.equals(other.addressBook)
                 && filteredPersons.equals(other.filteredPersons);
     }
-
-    /**
-     * Schedule repeated event if period is not 0.
-     */
-    public void scheduleRepeatedEvent(ReadOnlyEvent addedEvent) {
-        int repeatPeriod = Integer.parseInt(addedEvent.getPeriod().toString());
-        if (repeatPeriod != 0) {
-            Timer timer = new Timer();
-            timer.schedule(new RepeatEventTimerTask(this, addedEvent, repeatPeriod), addedEvent.getEndDateTime());
-        }
-    }
-
 }

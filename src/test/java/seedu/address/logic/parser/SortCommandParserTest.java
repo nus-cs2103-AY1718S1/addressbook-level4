@@ -22,7 +22,6 @@ public class SortCommandParserTest {
     public void parse_validArg_returnsSortCommand() {
         //SortCommand exp
         assertParseSuccess(parser, "name", new SortCommand("name"));
-        assertParseSuccess(parser, "tag", new SortCommand("tag"));
     }
 }
 //@@author

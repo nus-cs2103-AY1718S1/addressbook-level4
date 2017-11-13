@@ -3,15 +3,13 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.Comparator;
-
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
  * Represents a Person's status in the address book.
  */
 
-public class Status implements Comparator<Status> {
+public class Status {
     public static final String MESSAGE_STATUS_CONSTRAINTS =
             "Person status can take any values, and it should not be blank";
 
@@ -20,8 +18,6 @@ public class Status implements Comparator<Status> {
      * otherwise " " (a blank string) becomes a valid input.
      */
     public static final String STATUS_VALIDATION_REGEX = "[^\\s].*";
-
-    private static final String ORDERED_ENTRIES = "NIL";
 
     public final String value;
 
@@ -61,25 +57,5 @@ public class Status implements Comparator<Status> {
     public int hashCode() {
         return value.hashCode();
     }
-    //@@author huiyiiih
-    /**
-     * Comparator to compare the statuses to sort them with NIL all the way at the bottom.
-     */
-    public int compareTo(Status statusOne) {
-        if (ORDERED_ENTRIES.contains(statusOne.toString()) && ORDERED_ENTRIES.contains(this.toString())) {
-            return ORDERED_ENTRIES.indexOf(statusOne.toString()) - ORDERED_ENTRIES.indexOf(this.toString());
-        }
-        if (ORDERED_ENTRIES.contains(statusOne.toString())) {
-            return -1;
-        }
-        if (ORDERED_ENTRIES.contains(this.toString())) {
-            return 1;
-        }
-        return statusOne.toString().compareTo(this.toString());
-    }
-    @Override
-    public int compare(Status statusOne, Status statusTwo) {
-        return statusOne.compareTo(statusTwo);
-    }
-    //@@author
+
 }

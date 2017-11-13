@@ -1,20 +1,21 @@
 # reginleiff
-###### \java\seedu\address\commons\events\ui\ToggleTimetableEvent.java
-``` java
-/**
- * An event requesting to toggle the timetable view.
- */
-public class ToggleTimetableEvent extends BaseEvent {
-
-    @Override
-    public String toString() {
-        return this.getClass().getSimpleName();
-    }
-
-}
-```
 ###### \java\seedu\address\logic\commands\event\AddEventCommand.java
 ``` java
+package seedu.address.logic.commands.event;
+
+import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TIMESLOT;
+
+import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.UndoableCommand;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.event.Event;
+import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.model.event.exceptions.EventTimeClashException;
+
 /**
  * Adds an event to the address book.
  */
@@ -27,13 +28,11 @@ public class AddEventCommand extends UndoableCommand {
             + PREFIX_NAME + "TITLE "
             + PREFIX_TIMESLOT + "TIMING "
             + PREFIX_DESCRIPTION + "DESCRIPTION "
-            + "[" + PREFIX_PERIOD + "PERIOD]"
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John's 21st Birthday "
             + PREFIX_TIMESLOT + "22/10/2017 1900-2200 "
-            + PREFIX_DESCRIPTION + "johnd@example.com "
-            + PREFIX_PERIOD + "14";
+            + PREFIX_DESCRIPTION + "johnd@example.com ";
 
     public static final String MESSAGE_SUCCESS = "New event added: %1$s";
     public static final String MESSAGE_TIME_CLASH = "This event has time clash with an existing event";
@@ -68,6 +67,18 @@ public class AddEventCommand extends UndoableCommand {
 ```
 ###### \java\seedu\address\logic\commands\event\DeleteEventCommand.java
 ``` java
+package seedu.address.logic.commands.event;
+
+import java.util.List;
+
+import seedu.address.commons.core.Messages;
+import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.UndoableCommand;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.model.event.exceptions.EventNotFoundException;
+
 /**
  * Deletes a event identified using it's last displayed index from the address book.
  */
@@ -124,7 +135,6 @@ package seedu.address.logic.commands.event;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PERIOD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TIMESLOT;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_EVENTS;
 
@@ -139,7 +149,6 @@ import seedu.address.logic.commands.UndoableCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.event.Description;
 import seedu.address.model.event.Event;
-import seedu.address.model.event.Period;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.Title;
 import seedu.address.model.event.exceptions.EventNotFoundException;
@@ -150,7 +159,6 @@ import seedu.address.model.event.timeslot.Timeslot;
  * Edits the details of an existing event in the address book.
  */
 public class EditEventCommand extends UndoableCommand {
-
     public static final String COMMAND_WORD = "eventedit";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the event identified "
@@ -160,11 +168,9 @@ public class EditEventCommand extends UndoableCommand {
             + "[" + PREFIX_NAME + "TITLE] "
             + "[" + PREFIX_TIMESLOT + "TIMING] "
             + "[" + PREFIX_DESCRIPTION + "DESCRIPTION] "
-            + "[" + PREFIX_PERIOD + "PERIOD] "
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_TIMESLOT + "1300-1500 "
-            + PREFIX_DESCRIPTION + "New description for event x "
-            + PREFIX_PERIOD + " 14.";
+            + PREFIX_DESCRIPTION + "New description for event x";
 
     public static final String MESSAGE_EDIT_EVENT_SUCCESS = "Edited Event: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
@@ -196,9 +202,8 @@ public class EditEventCommand extends UndoableCommand {
         Title updatedTitle = editEventDescriptor.getTitle().orElse(eventToEdit.getTitle());
         Timeslot updatedTimeslot = editEventDescriptor.getTimeslot().orElse(eventToEdit.getTimeslot());
         Description updatedDescription = editEventDescriptor.getDescription().orElse(eventToEdit.getDescription());
-        Period updatedPeriod = editEventDescriptor.getPeriod().orElse(eventToEdit.getPeriod());
 
-        return new Event(updatedTitle, updatedTimeslot, updatedDescription, updatedPeriod);
+        return new Event(updatedTitle, updatedTimeslot, updatedDescription);
     }
 
     @Override
@@ -249,7 +254,6 @@ public class EditEventCommand extends UndoableCommand {
         private Title title;
         private Timeslot timeslot;
         private Description description;
-        private Period period;
 
         public EditEventDescriptor() {
         }
@@ -258,14 +262,13 @@ public class EditEventCommand extends UndoableCommand {
             this.title = toCopy.title;
             this.timeslot = toCopy.timeslot;
             this.description = toCopy.description;
-            this.period = toCopy.period;
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.title, this.timeslot, this.description, this.period);
+            return CollectionUtil.isAnyNonNull(this.title, this.timeslot, this.description);
         }
 
         public Optional<Title> getTitle() {
@@ -292,14 +295,6 @@ public class EditEventCommand extends UndoableCommand {
             this.description = description;
         }
 
-        public Optional<Period> getPeriod() {
-            return Optional.ofNullable(period);
-        }
-
-        public void setPeriod(Period period) {
-            this.period = period;
-        }
-
         @Override
         public boolean equals(Object other) {
             // short circuit if same object
@@ -317,8 +312,7 @@ public class EditEventCommand extends UndoableCommand {
 
             return getTitle().equals(e.getTitle())
                     && getTimeslot().equals(e.getTimeslot())
-                    && getDescription().equals(e.getDescription())
-                    && getPeriod().equals(e.getPeriod());
+                    && getDescription().equals(e.getDescription());
         }
     }
 }
@@ -364,24 +358,6 @@ public class FindEventCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\event\ToggleTimetableCommand.java
-``` java
-/**
- * Toggles the view of the timetable.
- */
-public class ToggleTimetableCommand extends Command {
-
-    public static final String COMMAND_WORD = "timetable";
-
-    public static final String MESSAGE_SUCCESS = "Timetable toggled!";
-
-    @Override
-    public CommandResult execute() {
-        EventsCenter.getInstance().post(new ToggleTimetableEvent());
-        return new CommandResult(MESSAGE_SUCCESS);
-    }
-}
-```
 ###### \java\seedu\address\logic\Logic.java
 ``` java
     /**
@@ -390,9 +366,9 @@ public class ToggleTimetableCommand extends Command {
     ObservableList<ReadOnlyEvent> getFilteredEventList();
 
     /**
-     * Returns an unmodifiable view of the timetable.
+     * Returns an unmodifiable view of the schedule.
      */
-    ObservableList<ReadOnlyEvent> getTimetable();
+    ObservableList<ReadOnlyEvent> getSchedule();
 
 ```
 ###### \java\seedu\address\logic\LogicManager.java
@@ -403,8 +379,8 @@ public class ToggleTimetableCommand extends Command {
     }
 
     @Override
-    public ObservableList<ReadOnlyEvent> getTimetable() {
-        return model.getTimetable();
+    public ObservableList<ReadOnlyEvent> getSchedule() {
+        return model.getSchedule();
     }
 ```
 ###### \java\seedu\address\logic\parser\event\DateParser.java
@@ -473,8 +449,6 @@ public class DateParser {
     public void addEvent(ReadOnlyEvent e) throws EventTimeClashException {
         Event newEvent = new Event(e);
         events.add(newEvent);
-        lastChangedEvent = null;
-        newlyAddedEvent = newEvent;
     }
 
     /**
@@ -484,7 +458,6 @@ public class DateParser {
      */
     public boolean removeEvent(ReadOnlyEvent key) throws EventNotFoundException {
         lastChangedEvent = key;
-        newlyAddedEvent = null;
         if (events.remove(key)) {
             return true;
         } else {
@@ -505,18 +478,11 @@ public class DateParser {
         Event editedEvent = new Event(editedReadOnlyEvent);
         events.setEvent(target, editedEvent);
         lastChangedEvent = target;
-        newlyAddedEvent = editedEvent;
     }
 
     @Override
     public ReadOnlyEvent getLastChangedEvent() {
         return this.lastChangedEvent;
-    }
-
-
-    @Override
-    public ReadOnlyEvent getNewlyAddedEvent() {
-        return this.newlyAddedEvent;
     }
 ```
 ###### \java\seedu\address\model\AddressBook.java
@@ -527,7 +493,7 @@ public class DateParser {
     }
 
     @Override
-    public ObservableList<ReadOnlyEvent> getTimetable(Date currentDate) {
+    public ObservableList<ReadOnlyEvent> getSchedule(Date currentDate) {
         return events.getObservableSubList(currentDate);
     }
 ```
@@ -551,7 +517,6 @@ public class DateParser {
             return null;
         }
     }
-
 }
 ```
 ###### \java\seedu\address\model\event\Description.java
@@ -618,41 +583,31 @@ public class Description {
  * Represents an Event in the address book.
  * Guarantees: details are present and not null, field values are validated.
  */
-public class Event implements ReadOnlyEvent, Comparable<Event> {
-
-    private static final Logger logger = LogsCenter.getLogger(Event.class);
-
+public class Event implements ReadOnlyEvent {
     private ObjectProperty<Title> title;
-    private ObjectProperty<seedu.address.model.event.timeslot.Date> date;
+    private ObjectProperty<Date> date;
     private ObjectProperty<Timing> timing;
     private ObjectProperty<Timeslot> timeslot;
     private ObjectProperty<Description> description;
-    private ObjectProperty<Period> period;
-
-    //The template event that this event is created from
-    private Optional<ReadOnlyEvent> templateEvent;
 
 
     /**
      * Every field must be present and not null.
      */
-    public Event(Title title, Timeslot timeslot, Description description, Period period) {
-        requireAllNonNull(title, timeslot, description, period);
+    public Event(Title title, Timeslot timeslot, Description description) {
+        requireAllNonNull(title, timeslot, description);
         this.title = new SimpleObjectProperty<>(title);
         this.date = new SimpleObjectProperty<>(timeslot.getDate());
         this.timing = new SimpleObjectProperty<>(timeslot.getTiming());
         this.timeslot = new SimpleObjectProperty<>(timeslot);
         this.description = new SimpleObjectProperty<>(description);
-        this.period = new SimpleObjectProperty<>(period);
-        this.templateEvent = Optional.empty();
-
     }
 
     /**
      * Creates a copy of the given ReadOnlyEvent.
      */
     public Event(ReadOnlyEvent source) {
-        this(source.getTitle(), source.getTimeslot(), source.getDescription(), source.getPeriod());
+        this(source.getTitle(), source.getTimeslot(), source.getDescription());
     }
 
     @Override
@@ -670,16 +625,16 @@ public class Event implements ReadOnlyEvent, Comparable<Event> {
     }
 
     @Override
-    public ObjectProperty<seedu.address.model.event.timeslot.Date> dateProperty() {
+    public ObjectProperty<Date> dateProperty() {
         return date;
     }
 
     @Override
-    public seedu.address.model.event.timeslot.Date getDate() {
+    public Date getDate() {
         return date.get();
     }
 
-    public void setDate(seedu.address.model.event.timeslot.Date date) {
+    public void setDate(Date date) {
         this.date.set(requireNonNull(date));
     }
 
@@ -725,6 +680,86 @@ public class Event implements ReadOnlyEvent, Comparable<Event> {
         this.description.set(requireNonNull(description));
     }
 
+    /**
+     * Check if this event happens at an earlier time than the given timeslot.
+     * @return true if indeed earlier.
+     */
+    public boolean happensBefore(Timeslot slot) {
+        int comparison = this.getTimeslot().compareTo(slot);
+        return comparison < 0;
+    }
+
+    /**
+     * Check if this event happens at a later time than the given timeslot.
+     * @return true if indeed earlier.
+     */
+    public boolean happensAfter(Timeslot slot) {
+        int comparison = this.getTimeslot().compareTo(slot);
+        return comparison > 0;
+    }
+
+    /**
+     * Obtain the duration of the event.
+     * @return a Duration object.
+     */
+    public Duration getDuration() {
+        return Duration.ofMinutes(MINUTES.between(this.getStartTime(), this.getEndTime()));
+    }
+
+    /**
+     * Obtain the start time of the event.
+     * @return a LocalTime object.
+     */
+    public LocalTime getStartTime() {
+        int start = this.getTiming().getStart();
+        return LocalTime.of(start / 100, start % 100);
+    }
+
+    /**
+     * Obtain the end time of the event.
+     * @return a LocalTime object.
+     */
+    public LocalTime getEndTime() {
+        int end = this.getTiming().getEnd();
+        return LocalTime.of(end / 100, end % 100);
+    }
+
+    /**
+     * Check if two events have time clash.
+     * @param other Event to compare with
+     * @return true if clashes.
+     */
+    public boolean clashesWith(Event other) {
+        int ts = this.getTiming().getStart();
+        int te = this.getTiming().getEnd();
+        int os = other.getTiming().getStart();
+        int oe = other.getTiming().getEnd();
+
+        if (this.getDate().equals(other.getDate()) && !(ts >= oe) && !(te <= os)) {
+            return true;
+        }
+        return false;
+    }
+
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ReadOnlyEvent // instanceof handles nulls
+                && this.isSameStateAs((ReadOnlyEvent) other));
+    }
+
+    @Override
+    public int hashCode() {
+        // use this method for custom fields hashing instead of implementing your own
+        return Objects.hash(title, timeslot, description);
+    }
+
+    @Override
+    public String toString() {
+        return getAsText();
+    }
+}
 ```
 ###### \java\seedu\address\model\event\EventList.java
 ``` java
@@ -742,26 +777,20 @@ public class EventList implements Iterable<Event> {
     private static final Logger logger = LogsCenter.getLogger(EventList.class);
 
     private final ObservableTreeMap<Timeslot, Event> internalMap = new
-            ObservableTreeMap<>(new TreeMap<Timeslot, Event>());
-
+            ObservableTreeMap<>();
     // used by asObservableList()
     private final ObservableList<ReadOnlyEvent> mappedList = FXCollections.observableArrayList(new
             ArrayList<>(internalMap.values()));
 
     public EventList() {
-        internalMap.addListener(new MapChangeListener<Timeslot, Event>() {
-            @Override
-            public void onChanged(Change<? extends Timeslot, ? extends Event> change) {
-                logger.info("Heard change.");
-                boolean removed = change.wasRemoved();
-                if (removed != change.wasAdded()) {
-                    if (removed) {
-                        mappedList.remove(change.getValueRemoved());
-                    } else {
-                        ArrayList<Event> currentList = new ArrayList<>(internalMap.values());
-                        int index = currentList.indexOf(change.getValueAdded());
-                        mappedList.add(index, change.getValueAdded());
-                    }
+        internalMap.addListener((MapChangeListener.Change<? extends Timeslot, ? extends Event> change) -> {
+            logger.info("Change heard.");
+            boolean removed = change.wasRemoved();
+            if (removed != change.wasAdded()) {
+                if (removed) {
+                    mappedList.remove(change.getValueRemoved());
+                } else {
+                    mappedList.add(change.getValueAdded());
                 }
             }
         });
@@ -774,19 +803,17 @@ public class EventList implements Iterable<Event> {
         if (hasClashWith(new Event(toAdd))) {
             throw new EventTimeClashException();
         }
-        Event addedEvent = new Event(toAdd);
-        internalMap.put(toAdd.getTimeslot(), addedEvent);
+        internalMap.put(toAdd.getTimeslot(), new Event(toAdd));
     }
-
 
     /**
      * Replaces the event {@code target} in the tree map with {@code editedEvent}.
      *
      * @throws EventNotFoundException if {@code target} could not be found in the tree map.
      */
-    public void setEvent(ReadOnlyEvent target, ReadOnlyEvent edited)
+    public void setEvent(ReadOnlyEvent target, ReadOnlyEvent editedEvent)
             throws EventNotFoundException, EventTimeClashException {
-        requireNonNull(edited);
+        requireNonNull(editedEvent);
 
 ```
 ###### \java\seedu\address\model\event\exceptions\EventNotFoundException.java
@@ -808,7 +835,6 @@ package seedu.address.model.event;
 
 import java.time.Duration;
 import java.time.LocalTime;
-import java.util.Optional;
 
 import javafx.beans.property.ObjectProperty;
 import seedu.address.model.event.timeslot.Date;
@@ -843,6 +869,38 @@ public interface ReadOnlyEvent {
 
     Description getDescription();
 
+    boolean happensBefore(Timeslot slot);
+
+    boolean happensAfter(Timeslot slot);
+
+    Duration getDuration();
+
+    LocalTime getStartTime();
+
+    /**
+     * Returns true if both have the same state. (interfaces cannot override .equals)
+     */
+    default boolean isSameStateAs(ReadOnlyEvent other) {
+        return other == this // short circuit if same object
+                || (other != null // this is first to avoid NPE below
+                && other.getTitle().equals(this.getTitle()) // state checks here onwards
+                && other.getTimeslot().equals(this.getTimeslot())
+                && other.getDescription().equals(this.getDescription()));
+    }
+
+    /**
+     * Formats the event as text, showing all its details.
+     */
+    default String getAsText() {
+        final StringBuilder builder = new StringBuilder();
+        builder.append(getTitle())
+                .append(" Timeslot: ")
+                .append(getTimeslot())
+                .append(" Description: ")
+                .append(getDescription());
+        return builder.toString();
+    }
+}
 ```
 ###### \java\seedu\address\model\event\timeslot\Date.java
 ``` java
@@ -884,6 +942,124 @@ public class Date implements Comparable<Date> {
 
     }
 
+    /**
+     * Checks if the given arguments for a date is valid in the gregorian calendar.
+     */
+    public boolean isValidDate(int year, int month, int day) {
+        try {
+            LocalDate.of(year, month, day);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    @Override
+    public String toString() {
+        return date;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof Date // instanceof handles nulls
+                && this.date.equals(((Date) other).date)); // state check
+    }
+
+    @Override
+    public int hashCode() {
+        return date.hashCode();
+    }
+
+    @Override
+    public int compareTo(Date other) {
+        int thisYear = this.getYear();
+        int comparingYear = other.getYear();
+        int thisMonth = this.getMonth();
+        int comparingMonth = other.getMonth();
+        int thisDay = this.getDay();
+        int comparingDay = other.getDay();
+
+        if (thisYear != comparingYear) {
+            return thisYear - comparingYear;
+        } else if (thisMonth != comparingMonth) {
+            return thisMonth - comparingMonth;
+        } else {
+            return thisDay - comparingDay;
+        }
+    }
+
+    public LocalDate toLocalDate() {
+        return LocalDate.of(year, month, day);
+    }
+
+    /**
+     * Sets date after {@code days} have elapsed. Works for negative numbers.
+     */
+    public Date addDays(int days) {
+        Calendar cal = Calendar.getInstance();
+        cal.set(this.year, this.month, this.day);
+        cal.add(Calendar.DATE, days);
+
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+
+        try {
+            return new Date(dateBuilder(day, month, year));
+        } catch (IllegalValueException e) {
+            return null;
+        }
+    }
+
+    /**
+     * Builds a string in the format of a correct date.
+     */
+    private String dateBuilder(int day, int month, int year) {
+        String date = "";
+        if (day < 10) {
+            date += "0" + String.valueOf(day) + "/";
+        } else {
+            date += String.valueOf(day) + "/";
+        }
+
+        if (month < 10) {
+            date += "0" + String.valueOf(month) + "/";
+        } else {
+            date += String.valueOf(month) + "/";
+        }
+
+        date += String.valueOf(year);
+
+        return date;
+    }
+
+    public int getDay() {
+        return day;
+    }
+
+    public void setDay(int day) {
+        this.day = day;
+    }
+
+    public int getMonth() {
+        return month;
+    }
+
+    //================================= Setter methods for testing ==========================================
+
+    public void setMonth(int month) {
+        this.month = month;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+}
 ```
 ###### \java\seedu\address\model\event\timeslot\Timeslot.java
 ``` java
@@ -930,14 +1106,6 @@ public class Timeslot implements Comparable<Timeslot> {
     }
 
     /**
-     * Constructs a new Timeslot object with given date and time.
-     */
-    public Timeslot(Date date, Timing timing) {
-        this.date = date;
-        this.timing = timing;
-    }
-
-    /**
      * Returns true if a given string is a valid event's Timing.
      */
     public static boolean isValidTiming(String test) {
@@ -946,10 +1114,6 @@ public class Timeslot implements Comparable<Timeslot> {
 
     public Date getDate() {
         return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
     }
 
     public Timing getTiming() {
@@ -977,6 +1141,27 @@ public class Timeslot implements Comparable<Timeslot> {
         }
     }
 
+    //================================= Setter methods for testing ==========================================
+    public void withDay(int day) {
+        this.date.setDay(day);
+    }
+
+    public void withMonth(int month) {
+        this.date.setMonth(month);
+    }
+
+    public void withYear(int year) {
+        this.date.setYear(year);
+    }
+
+    public void withStartTime(int start) {
+        this.timing.setStart(start);
+    }
+
+    public void withEndTime(int end) {
+        this.timing.setEnd(end);
+    }
+}
 ```
 ###### \java\seedu\address\model\event\timeslot\Timing.java
 ``` java
@@ -995,7 +1180,6 @@ public class Timing implements Comparable<Timing> {
     private String timing;
     private int start;
     private int end;
-    private double duration;
 
     /**
      * Validates given Timing.
@@ -1016,37 +1200,9 @@ public class Timing implements Comparable<Timing> {
         if (!isValidTiming(trimmedTiming) || !isValidTimingInterval(startTiming, endTiming)) {
             throw new IllegalValueException(MESSAGE_TIMING_CONSTRAINTS);
         }
-
         this.timing = trimmedTiming;
         this.start = startTiming;
         this.end = endTiming;
-        this.duration = getDurationInHours(startTiming, endTiming);
-    }
-
-    /**
-     * Construct a Timing with a localtime.
-     */
-    public Timing(LocalTime localTime) {
-        this.start = localTime.getHour() * 100 + localTime.getMinute();
-        this.end = this.start;
-    }
-
-    /**
-     * Returns the approximate duration of a given timeslot in terms of hours (one decimal place).
-     */
-    public static double getDurationInHours(int startTime, int endTime) {
-        double differenceInTiming = endTime - startTime;
-        double duration = Math.floor(differenceInTiming / 100) + ((differenceInTiming % 100) / 60);
-        return oneDecimalPlace(duration);
-    }
-
-
-    /**
-     * Returns the value in one decimal place.
-     * @return a double value.
-     */
-    public static double oneDecimalPlace(double value) {
-        return Math.round(value * 10) / 10.0;
     }
 
     /**
@@ -1082,10 +1238,6 @@ public class Timing implements Comparable<Timing> {
 
     public int getEnd() {
         return end;
-    }
-
-    public double getDuration() {
-        return duration;
     }
 
     @Override
@@ -1227,14 +1379,14 @@ public class TitleContainsKeywordsPredicate implements Predicate<ReadOnlyEvent> 
             EventTimeClashException;
 
     /**
-     * Returns an unmodifiable view of the filtered event list.
+     * Returns an unmodifiable view of the filtered event list
      */
     ObservableList<ReadOnlyEvent> getFilteredEventList();
 
     /**
-     * Returns an unmodifiable view of the timetable.
+     * Returns an unmodifiable view of the schedule
      */
-    ObservableList<ReadOnlyEvent> getTimetable();
+    ObservableList<ReadOnlyEvent> getSchedule();
 
     /**
      * @throws NullPointerException if {@code predicate} is null.
@@ -1242,21 +1394,20 @@ public class TitleContainsKeywordsPredicate implements Predicate<ReadOnlyEvent> 
      */
     void updateFilteredEventList(Predicate<ReadOnlyEvent> predicate);
 
+
 ```
 ###### \java\seedu\address\model\ModelManager.java
 ``` java
-    private final FilteredList<ReadOnlyEvent> filteredEvents;
+    private FilteredList<ReadOnlyEvent> filteredEvents;
     private FilteredList<ReadOnlyEvent> scheduledEvents;
-    private FilteredList<ReadOnlyEvent> timetableEvents;
-
 ```
 ###### \java\seedu\address\model\ModelManager.java
 ``` java
     //=========== Schedule Accessors  =========================================================================
 
     @Override
-    public ObservableList<ReadOnlyEvent> getTimetable() {
-        return FXCollections.unmodifiableObservableList(timetableEvents);
+    public ObservableList<ReadOnlyEvent> getSchedule() {
+        return FXCollections.unmodifiableObservableList(scheduledEvents);
     }
 
     //=========== Filtered Event List Accessors  ==============================================================
@@ -1269,6 +1420,9 @@ public class TitleContainsKeywordsPredicate implements Predicate<ReadOnlyEvent> 
 
     @Override
     public ObservableList<ReadOnlyEvent> getFilteredEventList() {
+        Predicate<? super ReadOnlyEvent> predicate = filteredEvents.getPredicate();
+        filteredEvents = new FilteredList<>(this.addressBook.getEventList());
+        filteredEvents.setPredicate(predicate);
         ObservableList<ReadOnlyEvent> list = FXCollections.unmodifiableObservableList(filteredEvents);
         return list;
     }
@@ -1279,7 +1433,6 @@ public class TitleContainsKeywordsPredicate implements Predicate<ReadOnlyEvent> 
     public synchronized void addEvent(ReadOnlyEvent event) throws EventTimeClashException {
         addressBook.addEvent(event);
         updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
-        scheduleRepeatedEvent(event);
         indicateAddressBookChanged();
     }
 
@@ -1293,7 +1446,6 @@ public class TitleContainsKeywordsPredicate implements Predicate<ReadOnlyEvent> 
     public synchronized void updateEvent(ReadOnlyEvent target, ReadOnlyEvent editedEvent)
             throws EventNotFoundException, EventTimeClashException {
         addressBook.updateEvent(target, editedEvent);
-        scheduleRepeatedEvent(editedEvent);
         indicateAddressBookChanged();
     }
 ```
@@ -1307,7 +1459,7 @@ public class TitleContainsKeywordsPredicate implements Predicate<ReadOnlyEvent> 
     /**
      * Returns an unmodifiable view of the schedule.
      */
-    ObservableList<ReadOnlyEvent> getTimetable(Date currentDate);
+    ObservableList<ReadOnlyEvent> getSchedule(Date currentDate);
 
 ```
 ###### \java\seedu\address\storage\XmlAdaptedEvent.java
@@ -1323,8 +1475,6 @@ public class XmlAdaptedEvent {
     private String timeslot;
     @XmlElement(required = true)
     private String description;
-    @XmlElement(required = true)
-    private String period;
 
     /**
      * Constructs an XmlAdaptedEvent.
@@ -1343,7 +1493,6 @@ public class XmlAdaptedEvent {
         title = source.getTitle().toString();
         timeslot = source.getTimeslot().toString();
         description = source.getDescription().toString();
-        period = source.getPeriod().toString();
     }
 
     /**
@@ -1355,6 +1504,10 @@ public class XmlAdaptedEvent {
         final Title title = new Title(this.title);
         final Timeslot timeslot = new Timeslot(this.timeslot);
         final Description description = new Description(this.description);
+        return new Event(title, timeslot, description);
+    }
+}
+
 ```
 ###### \java\seedu\address\storage\XmlSerializableAddressBook.java
 ``` java
@@ -1386,65 +1539,25 @@ public class XmlAdaptedEvent {
     }
 
     @Override
-    public ObservableList<ReadOnlyEvent> getTimetable(Date currentDate) {
+    public ObservableList<ReadOnlyEvent> getSchedule(Date currentDate) {
         return null;
     }
 ```
 ###### \java\seedu\address\ui\MainWindow.java
 ``` java
-    private EventPanel timetablePanel;
-    private TimetableListPanel timetableListPanel;
+    private EventPanel schedulePanel;
+    private ScheduleListPanel scheduleListPanel;
 ```
-###### \java\seedu\address\ui\MainWindow.java
-``` java
-    @FXML
-    private StackPane eventListPanelPlaceholder;
-
-    @FXML
-    private StackPane timetableListPanelPlaceholder;
-
-    @FXML
-    private SplitPane timetable;
-```
-###### \java\seedu\address\ui\MainWindow.java
-``` java
-    @Subscribe
-    public void handleToggleTimetableEvent(ToggleTimetableEvent event) {
-        boolean timetableIsVisible = timetable.visibleProperty().getValue();
-        if (timetableIsVisible) {
-            hideTimetable();
-        } else {
-            showTimeTable();
-        }
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-    }
-
-    /**
-     * Hides the timetable view.
-     */
-    void hideTimetable() {
-        timetable.setVisible(false);
-    }
-
-    /**
-     * Shows the timetable view.
-     */
-    void showTimeTable() {
-        timetable.setVisible(true);
-    }
-```
-###### \java\seedu\address\ui\TimetableListCard.java
+###### \java\seedu\address\ui\ScheduleListCard.java
 ``` java
 
 /**
  * An UI component that displays information of a {@code Event} on the schedule.
  *
  */
-public class TimetableListCard extends UiPart<Region> {
+public class ScheduleListCard extends UiPart<Region> {
 
-    private static final String FXML = "TimetableListCard.fxml";
-    private static final int BASE_WIDTH = 150;
-    private static final int WIDTH_CONST = 50;
+    private static final String FXML = "ScheduleListCard.fxml";
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -1463,7 +1576,7 @@ public class TimetableListCard extends UiPart<Region> {
     @FXML
     private Label timing;
 
-    public TimetableListCard(ReadOnlyEvent event) {
+    public ScheduleListCard(ReadOnlyEvent event) {
         super(FXML);
         this.event = event;
         bindListeners(event);
@@ -1478,16 +1591,6 @@ public class TimetableListCard extends UiPart<Region> {
         timing.textProperty().bind(Bindings.convert(event.timingProperty()));
     }
 
-    /**
-     * Corrects width of TimetableListCard with respect to duration of event.
-     */
-    public TimetableListCard setWidth() {
-        double widthMultiplier = event.getTimeslot().getTiming().getDuration();
-        double newWidth = BASE_WIDTH + WIDTH_CONST * widthMultiplier;
-        cardPane.setPrefWidth(newWidth);
-        return this;
-    }
-
     @Override
     public boolean equals(Object other) {
         // short circuit if same object
@@ -1496,62 +1599,69 @@ public class TimetableListCard extends UiPart<Region> {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof TimetableListCard)) {
+        if (!(other instanceof ScheduleListCard)) {
             return false;
         }
 
         // state check
-        TimetableListCard card = (TimetableListCard) other;
+        ScheduleListCard card = (ScheduleListCard) other;
         return event.equals(card.event);
     }
 }
 ```
-###### \java\seedu\address\ui\TimetableListPanel.java
+###### \java\seedu\address\ui\ScheduleListPanel.java
 ``` java
 /**
- * Panel containing the list of events in the timetable.
+ * Panel containing the list of events in the schedule.
  *
  */
-public class TimetableListPanel extends UiPart<Region> {
-    private static final String FXML = "TimetableListPanel.fxml";
-    private final Logger logger = LogsCenter.getLogger(TimetableListPanel.class);
+public class ScheduleListPanel extends UiPart<Region> {
+    private static final String FXML = "ScheduleListPanel.fxml";
+    private final Logger logger = LogsCenter.getLogger(ScheduleListPanel.class);
 
     @FXML
-    private ListView<TimetableListCard> timetableListView;
+    private ListView<ScheduleListCard> scheduleListView;
 
-    public TimetableListPanel(ObservableList<ReadOnlyEvent> eventList) {
+    public ScheduleListPanel(ObservableList<ReadOnlyEvent> eventList) {
         super(FXML);
         setConnections(eventList);
         registerAsAnEventHandler(this);
     }
 
     private void setConnections(ObservableList<ReadOnlyEvent> eventList) {
-        ObservableList<TimetableListCard> mappedList = EasyBind.map(eventList, (event)
-            -> new TimetableListCard(event).setWidth());
-        timetableListView.setItems(mappedList);
-        timetableListView.setCellFactory(listView -> new TimetableListViewCell());
-        timetableListView.setOrientation(Orientation.HORIZONTAL);
-        logger.info("UI ------ Got timetable with " + eventList.size() + " events.");
+        ObservableList<ScheduleListCard> mappedList = EasyBind.map(eventList, (event) -> new ScheduleListCard(event));
+        scheduleListView.setItems(mappedList);
+        scheduleListView.setCellFactory(listView -> new ScheduleListViewCell());
+        scheduleListView.setOrientation(Orientation.HORIZONTAL);
+        logger.info("UI ------ Got eventList with " + eventList.size() + " events.");
     }
 
     /**
-     * Upon receiving an AddressBookChangedEvent, update the timetable accordingly.
+     * Upon receiving an AddressBookChangedEvent, update the event list accordingly.
      */
     @Subscribe
     public void handleAddressBookChangedEvent(AddressBookChangedEvent abce) {
-        ObservableList<ReadOnlyEvent> eventList = abce.data.getTimetable(abce.data.getCurrentDate());
-        ObservableList<TimetableListCard> mappedList = EasyBind.map(eventList, (event)
-            -> new TimetableListCard(event).setWidth());
-        timetableListView.setItems(mappedList);
+        ObservableList<ReadOnlyEvent> eventList = abce.data.getSchedule(abce.data.getCurrentDate());
+        ObservableList<ScheduleListCard> mappedList = EasyBind.map(eventList, (event) -> new ScheduleListCard(event));
+        scheduleListView.setItems(mappedList);
     }
 
     /**
-     * Custom {@code ListCell} that displays the graphics of a {@code TimetableListCard}.
+     * Scrolls to the {@code ScheduleListCard} at the {@code index} and selects it.
      */
-    class TimetableListViewCell extends ListCell<TimetableListCard> {
+    private void scrollTo(int index) {
+        Platform.runLater(() -> {
+            scheduleListView.scrollTo(index);
+            scheduleListView.getSelectionModel().clearAndSelect(index);
+        });
+    }
+    /**
+     * Custom {@code ListCell} that displays the graphics of a {@code ScheduleListCard}.
+     */
+    class ScheduleListViewCell extends ListCell<ScheduleListCard> {
 
         @Override
-        protected void updateItem(TimetableListCard event, boolean empty) {
+        protected void updateItem(ScheduleListCard event, boolean empty) {
             super.updateItem(event, empty);
 
             if (empty || event == null) {
@@ -1566,9 +1676,9 @@ public class TimetableListPanel extends UiPart<Region> {
 ```
 ###### \resources\view\MainWindow.fxml
 ``` fxml
-    <SplitPane fx:id="timetable" dividerPositions="0.15" minHeight="85.0" prefHeight="85.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+    <SplitPane id="schedule" dividerPositions="0.15" minHeight="70.0" prefHeight="70.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
         <StackPane maxHeight="60.0" maxWidth="85.0" minHeight="60.0" minWidth="85.0" prefHeight="60.0" prefWidth="85.0">
-            <Label fx:id="timetableTitle" text="Schedule: " StackPane.alignment="CENTER_LEFT">
+            <Label fx:id="scheduleTitle" text="Schedule: " StackPane.alignment="CENTER_LEFT">
                <StackPane.margin>
                   <Insets />
                </StackPane.margin>
@@ -1576,7 +1686,7 @@ public class TimetableListPanel extends UiPart<Region> {
                   <Insets left="10.0" />
                </padding></Label>
         </StackPane>
-        <StackPane fx:id="timetableListPanelPlaceholder" styleClass="background" HBox.hgrow="ALWAYS">
+        <StackPane fx:id="scheduleListPanelPlaceholder" styleClass="background" HBox.hgrow="ALWAYS">
             <padding>
                <Insets left="10.0" />
             </padding></StackPane>
@@ -1588,26 +1698,25 @@ public class TimetableListPanel extends UiPart<Region> {
          </padding>
     </SplitPane>
 ```
-###### \resources\view\TimetableListCard.fxml
+###### \resources\view\ScheduleListCard.fxml
 ``` fxml
 <HBox fx:id="cardPane" minHeight="60.0" mouseTransparent="true" prefHeight="60.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
-    <padding>
-        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-    </padding>
-    <children>
-        <VBox prefHeight="200.0" prefWidth="100.0">
-            <children>
-                <Label fx:id="title" text="title" />
-                <Label fx:id="timing" text="timing" />
-            </children>
-        </VBox>
-    </children>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+   <children>
+      <VBox prefHeight="200.0" prefWidth="100.0">
+         <children>
+            <Label fx:id="title" text="title" />
+            <Label fx:id="timing" text="timing" />
+         </children>
+      </VBox>
+   </children>
 </HBox>
 ```
-###### \resources\view\TimetableListPanel.fxml
+###### \resources\view\ScheduleListPanel.fxml
 ``` fxml
-
 <HBox HBox.hgrow="ALWAYS" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
-    <ListView fx:id="timetableListView" prefHeight="60.0" stylesheets="@BrightTheme.css" HBox.hgrow="ALWAYS" />
+    <ListView fx:id="scheduleListView" mouseTransparent="true" prefHeight="60.0" stylesheets="@BrightTheme.css" HBox.hgrow="ALWAYS" />
 </HBox>
 ```

@@ -13,11 +13,9 @@ import seedu.address.model.event.ReadOnlyEvent;
  * An UI component that displays information of a {@code Event} on the schedule.
  *
  */
-public class TimetableListCard extends UiPart<Region> {
+public class ScheduleListCard extends UiPart<Region> {
 
-    private static final String FXML = "TimetableListCard.fxml";
-    private static final int BASE_WIDTH = 150;
-    private static final int WIDTH_CONST = 50;
+    private static final String FXML = "ScheduleListCard.fxml";
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -36,7 +34,7 @@ public class TimetableListCard extends UiPart<Region> {
     @FXML
     private Label timing;
 
-    public TimetableListCard(ReadOnlyEvent event) {
+    public ScheduleListCard(ReadOnlyEvent event) {
         super(FXML);
         this.event = event;
         bindListeners(event);
@@ -51,16 +49,6 @@ public class TimetableListCard extends UiPart<Region> {
         timing.textProperty().bind(Bindings.convert(event.timingProperty()));
     }
 
-    /**
-     * Corrects width of TimetableListCard with respect to duration of event.
-     */
-    public TimetableListCard setWidth() {
-        double widthMultiplier = event.getTimeslot().getTiming().getDuration();
-        double newWidth = BASE_WIDTH + WIDTH_CONST * widthMultiplier;
-        cardPane.setPrefWidth(newWidth);
-        return this;
-    }
-
     @Override
     public boolean equals(Object other) {
         // short circuit if same object
@@ -69,12 +57,12 @@ public class TimetableListCard extends UiPart<Region> {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof TimetableListCard)) {
+        if (!(other instanceof ScheduleListCard)) {
             return false;
         }
 
         // state check
-        TimetableListCard card = (TimetableListCard) other;
+        ScheduleListCard card = (ScheduleListCard) other;
         return event.equals(card.event);
     }
 }

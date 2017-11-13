@@ -38,6 +38,7 @@ public class PersonBuilder {
     public static final String DEFAULT_NOTE = "NIL";
     //@@author
     public static final String DEFAULT_TAGS = "friends";
+    public static final String DEFAULT_RELATIONSHIP = "";
 
     public static final String FILE_SEPERATOR = File.separator;
 
@@ -60,7 +61,7 @@ public class PersonBuilder {
             Note defaultNote = new Note(DEFAULT_NOTE);
             Photo defaultPhoto = new Photo(DEFAULT_PHOTO);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
-            Set<Relationship> defaultRel = SampleDataUtil.getRelSet();
+            Set<Relationship> defaultRel = SampleDataUtil.getRelSet(DEFAULT_RELATIONSHIP);
             this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress, defaultCompany,
                     defaultPosition, defaultStatus, defaultPriority,
                     defaultNote, defaultPhoto, defaultTags, defaultRel);
@@ -101,7 +102,6 @@ public class PersonBuilder {
         return this;
     }
 
-    //@@author huiyiiih
     /**
      * Parses the {@code relation} into a {@code Set<Relationship>} and set it to the {@code Person} that we are
      * building.
@@ -110,11 +110,10 @@ public class PersonBuilder {
         try {
             this.person.setRel(SampleDataUtil.getRelSet(relation));
         } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("relationships are expected to be unique." + ive.getMessage());
+            throw new IllegalArgumentException("relationships are expected to be unique.");
         }
         return this;
     }
-    //@@author
 
     /**
      * Sets the {@code Address} of the {@code Person} that we are building.

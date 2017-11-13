@@ -1,7 +1,6 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.core.Messages.MESSAGE_ADDREL_PREFIX_NOT_ALLOWED;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADD_RELATIONSHIP;
@@ -20,26 +19,20 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Stream;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.relationship.Relationship;
 import seedu.address.model.tag.Tag;
 
 /**
  * Parses input arguments and creates a new EditCommand object
  */
 public class EditCommandParser implements Parser<EditCommand> {
-    /**
-     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
-     * {@code ArgumentMultimap}.
-     */
-    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
-        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
-    }
+
     //@@author sebtsh
     /**
      * Parses the given {@code String} of arguments in the context of the EditCommand
@@ -56,9 +49,7 @@ public class EditCommandParser implements Parser<EditCommand> {
                         PREFIX_TAG, PREFIX_ADD_RELATIONSHIP);
 
         Index index;
-        if (arePrefixesPresent(argMultimap, PREFIX_ADD_RELATIONSHIP)) {
-            throw new ParseException(MESSAGE_ADDREL_PREFIX_NOT_ALLOWED);
-        }
+
         try {
             index = ParserUtil.parseIndex(argMultimap.getPreamble());
         } catch (IllegalValueException ive) {
@@ -80,6 +71,8 @@ public class EditCommandParser implements Parser<EditCommand> {
             ParserUtil.parseNote(argMultimap.getValue(PREFIX_NOTE)).ifPresent(editPersonDescriptor::setNote);
             ParserUtil.parsePhoto(argMultimap.getValue(PREFIX_PHOTO)).ifPresent(editPersonDescriptor::setPhoto);
             parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
+            parseRelForEdit(argMultimap.getAllValues(PREFIX_ADD_RELATIONSHIP)).ifPresent
+                (editPersonDescriptor::setRelation);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
@@ -106,11 +99,21 @@ public class EditCommandParser implements Parser<EditCommand> {
         Collection<String> tagSet = tags.size() == 1 && tags.contains("") ? Collections.emptySet() : tags;
         return Optional.of(ParserUtil.parseTags(tagSet));
     }
-    //@@author huiyiiih
     /**
-     * Parses {@code Collection<String> rel} into a {@code Set<Relationship>} if {@code rel} is non-empty.
-     * If {@code rel} contain only one element which is an empty string, it will be parsed into a
-     * {@code Set<Relationship>} containing zero rel.
+     * @@A0160452N
+     * Parses {@code Collection<String> tags} into a {@code Set<Tag>} if {@code tags} is non-empty.
+     * If {@code tags} contain only one element which is an empty string, it will be parsed into a
+     * {@code Set<Tag>} containing zero tags.
      */
-    //@@author
+    private Optional<Set<Relationship>> parseRelForEdit(Collection<String> rel) throws IllegalValueException {
+        assert rel != null;
+
+        if (rel.isEmpty()) {
+            return Optional.empty();
+        }
+        Collection<String> tagSet = rel.size() == 1 && rel.contains("") ? Collections.emptySet() : rel;
+        return Optional.of(ParserUtil.parseRel(tagSet));
+    }
+
+
 }

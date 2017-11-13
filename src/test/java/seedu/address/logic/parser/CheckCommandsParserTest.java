@@ -8,176 +8,176 @@ import org.junit.Test;
 
 public class CheckCommandsParserTest {
 
-    private final CheckCommandsParser parser = new CheckCommandsParser();
+    private final CheckCommandsParser parser1 = new CheckCommandsParser();
 
     @Test
     public void checkCommand_add() {
         // Check if the synonyms  is equals to add
-        assertEquals(parser.matchCommand("input"), "add");
-        assertEquals(parser.matchCommand("insert"), "add");
-        assertEquals(parser.matchCommand("a"), "add");
-        assertEquals(parser.matchCommand("create"), "add");
-        assertEquals(parser.matchCommand("add"), "add");
-        assertNotEquals(parser.matchCommand("plus"), "add");
+        assertEquals(parser1.matchCommand("input"), "add");
+        assertEquals(parser1.matchCommand("insert"), "add");
+        assertEquals(parser1.matchCommand("a"), "add");
+        assertEquals(parser1.matchCommand("create"), "add");
+        assertEquals(parser1.matchCommand("add"), "add");
+        assertNotEquals(parser1.matchCommand("plus"), "add");
     }
 
     @Test
     public void checkCommand_clear() {
         // Check if the synonyms  is equals to clear
-        assertEquals(parser.matchCommand("c"), "clear");
-        assertEquals(parser.matchCommand("empty"), "clear");
-        assertEquals(parser.matchCommand("clean"), "clear");
-        assertEquals(parser.matchCommand("clear"), "clear");
-        assertNotEquals(parser.matchCommand("cl"), "clear");
+        assertEquals(parser1.matchCommand("c"), "clear");
+        assertEquals(parser1.matchCommand("empty"), "clear");
+        assertEquals(parser1.matchCommand("clean"), "clear");
+        assertEquals(parser1.matchCommand("clear"), "clear");
+        assertNotEquals(parser1.matchCommand("cl"), "clear");
     }
 
     @Test
     public void checkCommand_edit() {
         // Check if the synonyms  is equals to edit
-        assertEquals(parser.matchCommand("e"), "edit");
-        assertEquals(parser.matchCommand("modify"), "edit");
-        assertEquals(parser.matchCommand("change"), "edit");
-        assertEquals(parser.matchCommand("revise"), "edit");
-        assertEquals(parser.matchCommand("edit"), "edit");
-        assertNotEquals(parser.matchCommand("ed"), "edit");
+        assertEquals(parser1.matchCommand("e"), "edit");
+        assertEquals(parser1.matchCommand("modify"), "edit");
+        assertEquals(parser1.matchCommand("change"), "edit");
+        assertEquals(parser1.matchCommand("revise"), "edit");
+        assertEquals(parser1.matchCommand("edit"), "edit");
+        assertNotEquals(parser1.matchCommand("ed"), "edit");
     }
 
     @Test
     public void checkCommand_delete() {
         // Check if the synonyms  is equals to delete
-        assertEquals(parser.matchCommand("d"), "delete");
-        assertEquals(parser.matchCommand("remove"), "delete");
-        assertEquals(parser.matchCommand("throw"), "delete");
-        assertEquals(parser.matchCommand("erase"), "delete");
-        assertEquals(parser.matchCommand("delete"), "delete");
-        assertNotEquals(parser.matchCommand("away"), "delete");
+        assertEquals(parser1.matchCommand("d"), "delete");
+        assertEquals(parser1.matchCommand("remove"), "delete");
+        assertEquals(parser1.matchCommand("throw"), "delete");
+        assertEquals(parser1.matchCommand("erase"), "delete");
+        assertEquals(parser1.matchCommand("delete"), "delete");
+        assertNotEquals(parser1.matchCommand("away"), "delete");
     }
 
     @Test
     public void checkCommand_exit() {
         // Check if the synonyms  is equals to exit
-        assertEquals(parser.matchCommand("quit"), "exit");
-        assertEquals(parser.matchCommand("exit"), "exit");
-        assertNotEquals(parser.matchCommand("out"), "exit");
+        assertEquals(parser1.matchCommand("quit"), "exit");
+        assertEquals(parser1.matchCommand("exit"), "exit");
+        assertNotEquals(parser1.matchCommand("out"), "exit");
     }
 
     @Test
     public void checkCommand_find() {
         // Check if the synonyms  is equals to find
-        assertEquals(parser.matchCommand("search"), "find");
-        assertEquals(parser.matchCommand("look"), "find");
-        assertEquals(parser.matchCommand("check"), "find");
-        assertEquals(parser.matchCommand("f"), "find");
-        assertEquals(parser.matchCommand("find"), "find");
-        assertNotEquals(parser.matchCommand("looked"), "find");
+        assertEquals(parser1.matchCommand("search"), "find");
+        assertEquals(parser1.matchCommand("look"), "find");
+        assertEquals(parser1.matchCommand("check"), "find");
+        assertEquals(parser1.matchCommand("f"), "find");
+        assertEquals(parser1.matchCommand("find"), "find");
+        assertNotEquals(parser1.matchCommand("looked"), "find");
     }
 
     @Test
     public void checkCommand_help() {
         // Check if the synonyms  is equals to help
-        assertEquals(parser.matchCommand("info"), "help");
-        assertEquals(parser.matchCommand("help"), "help");
-        assertNotEquals(parser.matchCommand("helps"), "help");
+        assertEquals(parser1.matchCommand("info"), "help");
+        assertEquals(parser1.matchCommand("help"), "help");
+        assertNotEquals(parser1.matchCommand("helps"), "help");
     }
 
     @Test
     public void checkCommand_history() throws Exception {
         // Check if the synonyms  is equals to history
-        assertEquals(parser.matchCommand("past"), "history");
-        assertEquals(parser.matchCommand("history"), "history");
-        assertEquals(parser.matchCommand("h"), "history");
-        assertNotEquals(parser.matchCommand("his"), "history");
+        assertEquals(parser1.matchCommand("past"), "history");
+        assertEquals(parser1.matchCommand("history"), "history");
+        assertEquals(parser1.matchCommand("h"), "history");
+        assertNotEquals(parser1.matchCommand("his"), "history");
     }
 
     @Test
     public void checkCommand_list() {
         // Check if the synonyms  is equals to list
-        assertEquals(parser.matchCommand("display"), "list");
-        assertEquals(parser.matchCommand("l"), "list");
-        assertEquals(parser.matchCommand("show"), "list");
-        assertEquals(parser.matchCommand("list"), "list");
-        assertNotEquals(parser.matchCommand("showme"), "list");
+        assertEquals(parser1.matchCommand("display"), "list");
+        assertEquals(parser1.matchCommand("l"), "list");
+        assertEquals(parser1.matchCommand("show"), "list");
+        assertEquals(parser1.matchCommand("list"), "list");
+        assertNotEquals(parser1.matchCommand("showme"), "list");
     }
 
     @Test
     public void checkCommand_redo() {
         // Check if the synonyms  is equals to redo
-        assertEquals(parser.matchCommand("r"), "redo");
-        assertEquals(parser.matchCommand("redo"), "redo");
-        assertNotEquals(parser.matchCommand("again"), "redo");
+        assertEquals(parser1.matchCommand("r"), "redo");
+        assertEquals(parser1.matchCommand("redo"), "redo");
+        assertNotEquals(parser1.matchCommand("again"), "redo");
     }
 
     @Test
     public void checkCommand_select() {
         // Check if the synonyms  is equals to select
-        assertEquals(parser.matchCommand("s"), "select");
-        assertEquals(parser.matchCommand("pick"), "select");
-        assertEquals(parser.matchCommand("choose"), "select");
-        assertEquals(parser.matchCommand("select"), "select");
-        assertNotEquals(parser.matchCommand("pickthis"), "select");
+        assertEquals(parser1.matchCommand("s"), "select");
+        assertEquals(parser1.matchCommand("pick"), "select");
+        assertEquals(parser1.matchCommand("choose"), "select");
+        assertEquals(parser1.matchCommand("select"), "select");
+        assertNotEquals(parser1.matchCommand("pickthis"), "select");
     }
 
     @Test
     public void checkCommand_undo() {
         // Check if the synonyms  is equals to redo
-        assertEquals(parser.matchCommand("u"), "undo");
-        assertEquals(parser.matchCommand("undo"), "undo");
-        assertNotEquals(parser.matchCommand("repeat"), "undo");
+        assertEquals(parser1.matchCommand("u"), "undo");
+        assertEquals(parser1.matchCommand("undo"), "undo");
+        assertNotEquals(parser1.matchCommand("repeat"), "undo");
     }
     @Test
     public void checkCommand_checkschedule() {
         // Check if the synonyms  is equals to check schedule
-        assertEquals(parser.matchCommand("thisweek"), "thisweek");
-        assertEquals(parser.matchCommand("checkschedule"), "thisweek");
-        assertEquals(parser.matchCommand("schedule"), "thisweek");
-        assertEquals(parser.matchCommand("tw"), "thisweek");
-        assertEquals(parser.matchCommand("cs"), "thisweek");
-        assertNotEquals(parser.matchCommand("s"), "thisweek");
+        assertEquals(parser1.matchCommand("thisweek"), "thisweek");
+        assertEquals(parser1.matchCommand("checkschedule"), "thisweek");
+        assertEquals(parser1.matchCommand("schedule"), "thisweek");
+        assertEquals(parser1.matchCommand("tw"), "thisweek");
+        assertEquals(parser1.matchCommand("cs"), "thisweek");
+        assertNotEquals(parser1.matchCommand("s"), "thisweek");
     }
     @Test
     public void checkCommand_addevents() {
         // Check if the synonyms  is equals to add events
-        assertEquals(parser.matchCommand("eventadd"), "eventadd");
-        assertEquals(parser.matchCommand("addevent"), "eventadd");
-        assertEquals(parser.matchCommand("ae"), "eventadd");
-        assertEquals(parser.matchCommand("ea"), "eventadd");
-        assertNotEquals(parser.matchCommand("adde"), "eventadd");
+        assertEquals(parser1.matchCommand("eventadd"), "eventadd");
+        assertEquals(parser1.matchCommand("addevent"), "eventadd");
+        assertEquals(parser1.matchCommand("ae"), "eventadd");
+        assertEquals(parser1.matchCommand("ea"), "eventadd");
+        assertNotEquals(parser1.matchCommand("adde"), "eventadd");
     }
     @Test
     public void checkCommand_deleteevents() {
         // Check if the synonyms  is equals to find delete events
-        assertEquals(parser.matchCommand("eventdel"), "eventdel");
-        assertEquals(parser.matchCommand("delevent"), "eventdel");
-        assertEquals(parser.matchCommand("deleteevent"), "eventdel");
-        assertEquals(parser.matchCommand("eventdelete"), "eventdel");
-        assertEquals(parser.matchCommand("de"), "eventdel");
-        assertEquals(parser.matchCommand("ed"), "eventdel");
-        assertNotEquals(parser.matchCommand("deletee"), "eventdel");
+        assertEquals(parser1.matchCommand("eventdel"), "eventdel");
+        assertEquals(parser1.matchCommand("delevent"), "eventdel");
+        assertEquals(parser1.matchCommand("deleteevent"), "eventdel");
+        assertEquals(parser1.matchCommand("eventdelete"), "eventdel");
+        assertEquals(parser1.matchCommand("de"), "eventdel");
+        assertEquals(parser1.matchCommand("ed"), "eventdel");
+        assertNotEquals(parser1.matchCommand("deletee"), "eventdel");
     }
     @Test
     public void checkCommand_editevents() {
         // Check if the synonyms  is equals to edit events
-        assertEquals(parser.matchCommand("eventedit"), "eventedit");
-        assertEquals(parser.matchCommand("editevent"), "eventedit");
-        assertEquals(parser.matchCommand("ee"), "eventedit");
-        assertNotEquals(parser.matchCommand("edite"), "eventedit");
+        assertEquals(parser1.matchCommand("eventedit"), "eventedit");
+        assertEquals(parser1.matchCommand("editevent"), "eventedit");
+        assertEquals(parser1.matchCommand("ee"), "eventedit");
+        assertNotEquals(parser1.matchCommand("edite"), "eventedit");
     }
     @Test
     public void checkCommand_findevents() {
         // Check if the synonyms  is equals to find events
-        assertEquals(parser.matchCommand("eventfind"), "eventfind");
-        assertEquals(parser.matchCommand("findevent"), "eventfind");
-        assertEquals(parser.matchCommand("fe"), "eventfind");
-        assertEquals(parser.matchCommand("ef"), "eventfind");
-        assertNotEquals(parser.matchCommand("finde"), "eventfind");
+        assertEquals(parser1.matchCommand("eventfind"), "eventfind");
+        assertEquals(parser1.matchCommand("findevent"), "eventfind");
+        assertEquals(parser1.matchCommand("fe"), "eventfind");
+        assertEquals(parser1.matchCommand("ef"), "eventfind");
+        assertNotEquals(parser1.matchCommand("finde"), "eventfind");
     }
     @Test
     public void checkCommand_setrelationships() {
         // Check if the synonyms  is equals to set relationship
-        assertEquals(parser.matchCommand("set"), "set");
-        assertEquals(parser.matchCommand("rel"), "set");
-        assertEquals(parser.matchCommand("setrel"), "set");
-        assertNotEquals(parser.matchCommand("s"), "set");
+        assertEquals(parser1.matchCommand("set"), "set");
+        assertEquals(parser1.matchCommand("rel"), "set");
+        assertEquals(parser1.matchCommand("setrel"), "set");
+        assertNotEquals(parser1.matchCommand("s"), "set");
     }
 }
 //@@author

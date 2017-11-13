@@ -25,7 +25,7 @@ import static seedu.address.logic.commands.CommandTestUtil.PHOTO_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.PHOTO_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.POSITION_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.PRIORITY_DESC_AMY;
-//import static seedu.address.logic.commands.CommandTestUtil.REL_DESC_COLLEAGUE;
+import static seedu.address.logic.commands.CommandTestUtil.REL_DESC_COLLEAGUE;
 import static seedu.address.logic.commands.CommandTestUtil.STATUS_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
@@ -41,6 +41,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHOTO_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_POSITION_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PRIORITY_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_REL_COLLEAGUE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_STATUS_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
@@ -207,10 +208,10 @@ public class EditCommandParserTest {
         assertParseSuccess(parser, userInput, expectedCommand);
 
         // relationship
-        /*userInput = targetIndex.getOneBased() + REL_DESC_COLLEAGUE;
+        userInput = targetIndex.getOneBased() + REL_DESC_COLLEAGUE;
         descriptor = new EditPersonDescriptorBuilder().withRelation(VALID_REL_COLLEAGUE).build();
         expectedCommand = new EditCommand(targetIndex, descriptor);
-        assertParseSuccess(parser, userInput, expectedCommand);*/
+        assertParseSuccess(parser, userInput, expectedCommand);
     }
 
     //@@author sebtsh
@@ -222,14 +223,14 @@ public class EditCommandParserTest {
                 + PHONE_DESC_BOB + ADDRESS_DESC_BOB + EMAIL_DESC_BOB + TAG_DESC_HUSBAND + COMPANY_DESC_BOB
                 + POSITION_DESC_BOB + STATUS_DESC_AMY + PRIORITY_DESC_AMY + NOTE_DESC_BOB + COMPANY_DESC_BOB
                 + POSITION_DESC_BOB + STATUS_DESC_AMY + PRIORITY_DESC_AMY
-                + NOTE_DESC_BOB + PHOTO_DESC_AMY + PHOTO_DESC_BOB;
+                + NOTE_DESC_BOB + PHOTO_DESC_AMY + PHOTO_DESC_BOB + REL_DESC_COLLEAGUE;
 
 
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withPhone(VALID_PHONE_BOB)
                 .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withCompany(VALID_COMPANY_BOB)
                 .withPosition(VALID_POSITION_BOB).withStatus(VALID_STATUS_AMY).withPriority(VALID_PRIORITY_AMY)
                 .withNote(VALID_NOTE_BOB).withPhoto(VALID_PHOTO_BOB).withTags
-                (VALID_TAG_FRIEND, VALID_TAG_HUSBAND).withRelation().build();
+                (VALID_TAG_FRIEND, VALID_TAG_HUSBAND).withRelation(VALID_REL_COLLEAGUE).build();
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);

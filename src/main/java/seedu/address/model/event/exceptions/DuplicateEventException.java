@@ -2,7 +2,7 @@ package seedu.address.model.event.exceptions;
 
 import seedu.address.commons.exceptions.DuplicateDataException;
 
-// @@author shuang-yang
+// @@author yangshuang
 
 /**
  * Signals that the operation will result in duplicate Event objects.

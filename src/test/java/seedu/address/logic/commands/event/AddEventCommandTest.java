@@ -157,14 +157,9 @@ public class AddEventCommandTest {
         }
 
         @Override
-        public ObservableList<ReadOnlyEvent> getTimetable() {
+        public ObservableList<ReadOnlyEvent> getSchedule() {
             fail("This method should not be called.");
             return null;
-        }
-
-        @Override
-        public void scheduleRepeatedEvent(ReadOnlyEvent addedEvent) {
-            fail("This method should not be called.");
         }
     }
 

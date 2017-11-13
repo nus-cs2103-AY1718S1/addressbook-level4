@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.ui.EventPanelSelectionChangedEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.event.ReadOnlyEvent;
@@ -33,8 +34,6 @@ public class EventPanel extends UiPart<Region> {
     @FXML
     private Label descriptionLabel;
 
-    @FXML
-    private Label periodLabel;
 
     public EventPanel(Logic logic) {
         super(FXML);
@@ -51,11 +50,6 @@ public class EventPanel extends UiPart<Region> {
         nameLabel.setText(event.getTitle().toString());
         timeslotLabel.setText(event.getTimeslot().toString());
         descriptionLabel.setText(event.getDescription().toString());
-
-        int period = Integer.parseInt(event.getPeriod().toString());
-        if (period != 0) {
-            periodLabel.setText("Repeat: Every " + event.getPeriod().toString() + " days.");
-        }
     }
 
     /**
@@ -81,17 +75,16 @@ public class EventPanel extends UiPart<Region> {
      * Calls showEventDetails when the address book is changed. This results in any edits to the currently displayed
      * event being refreshed immediately, instead of the user having to click away and click back to see the changes.
      * @param event
-
+     */
     @Subscribe
     private void handleAddressBookChangedEvent(AddressBookChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         for (ReadOnlyEvent dataEvent : event.data.getEventList()) {
-            if (storedEvent != null && storedEvent.getTitle().equals(dataEvent.getTitle())) {
+            if (storedEvent.getTitle().equals(dataEvent.getTitle())) {
                 showEventDetails(storedEventIndex, dataEvent);
                 storedEvent = dataEvent;
                 break;
             }
         }
     }
-    */
 }

@@ -7,9 +7,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
 import java.util.SortedMap;
-import java.util.TreeMap;
 import java.util.logging.Logger;
 
 import javafx.collections.FXCollections;
@@ -37,25 +35,20 @@ public class EventList implements Iterable<Event> {
     private static final Logger logger = LogsCenter.getLogger(EventList.class);
 
     private final ObservableTreeMap<Timeslot, Event> internalMap = new
-            ObservableTreeMap<>(new TreeMap<Timeslot, Event>());
-
+            ObservableTreeMap<>();
     // used by asObservableList()
     private final ObservableList<ReadOnlyEvent> mappedList = FXCollections.observableArrayList(new
             ArrayList<>(internalMap.values()));
 
     public EventList() {
-        internalMap.addListener(new MapChangeListener<Timeslot, Event>() {
-            @Override
-            public void onChanged(Change<? extends Timeslot, ? extends Event> change) {
-                boolean removed = change.wasRemoved();
-                if (removed != change.wasAdded()) {
-                    if (removed) {
-                        mappedList.remove(change.getValueRemoved());
-                    } else {
-                        ArrayList<Event> currentList = new ArrayList<>(internalMap.values());
-                        int index = currentList.indexOf(change.getValueAdded());
-                        mappedList.add(index, change.getValueAdded());
-                    }
+        internalMap.addListener((MapChangeListener.Change<? extends Timeslot, ? extends Event> change) -> {
+            logger.info("Change heard.");
+            boolean removed = change.wasRemoved();
+            if (removed != change.wasAdded()) {
+                if (removed) {
+                    mappedList.remove(change.getValueRemoved());
+                } else {
+                    mappedList.add(change.getValueAdded());
                 }
             }
         });
@@ -68,35 +61,30 @@ public class EventList implements Iterable<Event> {
         if (hasClashWith(new Event(toAdd))) {
             throw new EventTimeClashException();
         }
-        Event addedEvent = new Event(toAdd);
-        internalMap.put(toAdd.getTimeslot(), addedEvent);
+        internalMap.put(toAdd.getTimeslot(), new Event(toAdd));
     }
-
 
     /**
      * Replaces the event {@code target} in the tree map with {@code editedEvent}.
      *
      * @throws EventNotFoundException if {@code target} could not be found in the tree map.
      */
-    public void setEvent(ReadOnlyEvent target, ReadOnlyEvent edited)
+    public void setEvent(ReadOnlyEvent target, ReadOnlyEvent editedEvent)
             throws EventNotFoundException, EventTimeClashException {
-        requireNonNull(edited);
+        requireNonNull(editedEvent);
 
-        //@@author shuang-yang
+        //@@author a0107442n
         Event targetEvent = new Event(target);
         if (!internalMap.containsValue(targetEvent)) {
             throw new EventNotFoundException();
         }
 
-        Event editedEvent = new Event(edited);
-        editedEvent.setTemplateEvent(Optional.of(target));
 
-        if (hasClashWith(editedEvent)) {
+        if (hasClashWith(new Event(editedEvent))) {
             throw new EventTimeClashException();
         }
         internalMap.remove(targetEvent.getTimeslot());
-        internalMap.put(editedEvent.getTimeslot(), editedEvent);
-
+        internalMap.put(editedEvent.getTimeslot(), new Event(editedEvent));
         //@@author
     }
 
@@ -107,13 +95,12 @@ public class EventList implements Iterable<Event> {
      */
     public boolean remove(ReadOnlyEvent toRemove) throws EventNotFoundException {
         requireNonNull(toRemove);
-        //@@author shuang-yang
+        //@@author a0107442
         final boolean eventFound = internalMap.containsValue(toRemove);
         if (!eventFound) {
             throw new EventNotFoundException();
         }
         internalMap.remove(toRemove.getTimeslot());
-
         return eventFound;
         //@@author
     }
@@ -134,7 +121,7 @@ public class EventList implements Iterable<Event> {
         setEvents(replacement);
     }
 
-    //@@author shuang-yang
+    //@@author a0107442n
     /**
      * Check if a given event has any time clash with any event in the EventList.
      * @param event for checking
@@ -142,11 +129,11 @@ public class EventList implements Iterable<Event> {
      */
     private boolean hasClashWith(Event event) {
         Iterator<Event> iterator = this.iterator();
-        Optional<ReadOnlyEvent> templateEvent = event.getTemplateEvent();
         while (iterator.hasNext()) {
             Event e = iterator.next();
-            boolean isSameEvent = templateEvent.isPresent() && templateEvent.get().equals(e);
-            if (e.clashesWith(event) && !isSameEvent) {
+            if (e.clashesWith(event)
+                    && (!e.getTitle().equals(event.getTitle())
+                    || !e.getDescription().equals(event.getDescription()))) {
                 return true;
             }
         }
@@ -157,7 +144,9 @@ public class EventList implements Iterable<Event> {
      * Returns the backing tree map as an {@code ObservableList}.
      */
     public ObservableList<ReadOnlyEvent> asObservableList() {
-        return FXCollections.unmodifiableObservableList(mappedList);
+        ObservableList<ReadOnlyEvent> list = FXCollections.observableList(new ArrayList<>(internalMap.values()));
+        //logger.info("EventList ------------- got " + mappedList.size() + " list.");
+        return FXCollections.unmodifiableObservableList(list);
     }
 
     @Override
@@ -198,5 +187,4 @@ public class EventList implements Iterable<Event> {
     public int hashCode() {
         return internalMap.hashCode();
     }
-
 }

@@ -130,14 +130,9 @@ public class AddEventCommandTest {
         }
 
         @Override
-        public ObservableList<ReadOnlyEvent> getTimetable() {
+        public ObservableList<ReadOnlyEvent> getSchedule() {
             fail("This method should not be called.");
             return null;
-        }
-
-        @Override
-        public void scheduleRepeatedEvent(ReadOnlyEvent addedEvent) {
-            fail("This method should not be called.");
         }
     }
 
@@ -495,7 +490,41 @@ public class AddEventCommandParserTest {
         // multiple descriptions - last description accepted
         assertParseSuccess(parser, AddEventCommand.COMMAND_WORD + TITLE_SOCCER + TIMESLOT_SOCCER + DESCRIPTION_MIDTERM
                 + DESCRIPTION_SOCCER, new AddEventCommand(expectedEvent));
+    }
 
+    @Test
+    public void parse_compulsoryFieldMissing_failure() {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddEventCommand.MESSAGE_USAGE);
+        // missing title prefix
+        assertParseFailure(parser, AddEventCommand.COMMAND_WORD + VALID_TITLE_SOCCER + TIMESLOT_SOCCER
+                + DESCRIPTION_SOCCER, expectedMessage);
+        // missing timing prefix
+        assertParseFailure(parser, AddEventCommand.COMMAND_WORD + TITLE_SOCCER + VALID_TIMESLOT_SOCCER
+                + VALID_TIMESLOT_MIDTERM, expectedMessage);
+        // missing email prefix
+        assertParseFailure(parser, AddEventCommand.COMMAND_WORD + TITLE_SOCCER + TIMESLOT_SOCCER
+                + VALID_DESCRIPTION_SOCCER, expectedMessage);
+        // all prefixes missing
+        assertParseFailure(parser, AddEventCommand.COMMAND_WORD + VALID_TITLE_SOCCER + VALID_TIMESLOT_SOCCER
+                + VALID_DESCRIPTION_SOCCER, expectedMessage);
+    }
+
+    @Test
+    public void parse_invalidValue_failure() {
+
+        // invalid title
+        assertParseFailure(parser, AddEventCommand.COMMAND_WORD + INVALID_TITLE + TIMESLOT_SOCCER + DESCRIPTION_SOCCER,
+                Title.MESSAGE_TITLE_CONSTRAINTS);
+
+        // invalid timing
+        assertParseFailure(parser, AddEventCommand.COMMAND_WORD + TITLE_SOCCER + INVALID_TIMESLOT + DESCRIPTION_SOCCER,
+                Timeslot.MESSAGE_TIMESLOT_CONSTRAINTS);
+
+        // two invalid values, only first invalid value reported
+        assertParseFailure(parser, AddEventCommand.COMMAND_WORD + INVALID_TITLE + INVALID_TIMESLOT + DESCRIPTION_SOCCER,
+                Title.MESSAGE_TITLE_CONSTRAINTS);
+    }
+}
 ```
 ###### \java\seedu\address\logic\parser\event\DateParserTest.java
 ``` java
@@ -896,45 +925,26 @@ public class TimeslotTest {
 ```
 ###### \java\seedu\address\model\event\timeslot\TimingTest.java
 ``` java
+package seedu.address.model.event.timeslot;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
 public class TimingTest {
-    private Timing timeOne;
-    private Timing timeTwo;
-    private Timing timeThree;
-    private Timing timeFour;
-    private Timing timeFive;
-    private Timing timeSix;
-
-    public TimingTest() {
-        try {
-            timeOne = new Timing("0000-1300");
-            timeTwo = new Timing("1300-1400");
-            timeThree = new Timing("1300-1500");
-            timeFour = new Timing("1900-2100");
-            timeFive = new Timing("1329-1937");
-            timeSix = new Timing("1329-1950");
-        } catch (IllegalValueException e) {
-            assert false : "not possible";
-        }
-    }
-
     @Test
-    public void getDurationInHours_correctness() {
-        assertEquals(Timing.getDurationInHours(timeOne.getStart(), timeOne.getEnd()), 13.0);
-        assertEquals(Timing.getDurationInHours(timeFive.getStart(), timeFive.getEnd()), 6.1);
-        assertEquals(Timing.getDurationInHours(timeSix.getStart(), timeSix.getEnd()), 6.4);
-    }
+    public void compareTo() throws Exception {
+        Timing timeOne = new Timing("0000-1300");
+        Timing timeTwo = new Timing("1300-1400");
+        Timing timeThree = new Timing("1300-1500");
+        Timing timeFour = new Timing("1900-2100");
 
-    @Test
-    public void compareTo_correctness() {
         assertTrue(timeOne.compareTo(timeTwo) < 0);
         assertTrue(timeTwo.compareTo(timeThree) == 0);
         assertTrue(timeThree.compareTo(timeFour) < 0);
         assertTrue(timeFour.compareTo(timeOne) > 0);
-    }
 
-    @Test
-    public void compareTo_invalid() {
-        // Wrong formats
         assertFalse(Timing.isValidTiming(""));
         assertFalse(Timing.isValidTiming(" "));
         assertFalse(Timing.isValidTiming("1"));
@@ -943,14 +953,9 @@ public class TimingTest {
         assertFalse(Timing.isValidTiming("12-12"));
         assertFalse(Timing.isValidTiming("123-123"));
         assertFalse(Timing.isValidTiming("12345-12345"));
-
-        // Impossible timings
         assertFalse(Timing.isValidTiming("2500-2600")); // cannot accept non-24 hour times
         assertFalse(Timing.isValidTiming("1200-2400")); // 2400 hrs does not exist
-    }
 
-    @Test
-    public void compareTo_valid() {
         assertTrue(Timing.isValidTiming("0000-2359"));
         assertTrue(Timing.isValidTiming("1900-2100"));
     }
@@ -1043,7 +1048,6 @@ public class EditEventDescriptorBuilder {
         descriptor.setTitle(event.getTitle());
         descriptor.setTimeslot(event.getTimeslot());
         descriptor.setDescription(event.getDescription());
-        descriptor.setPeriod(event.getPeriod());
     }
 
     /**
@@ -1082,6 +1086,10 @@ public class EditEventDescriptorBuilder {
         return this;
     }
 
+    public EditEventCommand.EditEventDescriptor build() {
+        return descriptor;
+    }
+}
 ```
 ###### \java\seedu\address\testutil\EventBuilder.java
 ``` java
@@ -1090,7 +1098,6 @@ package seedu.address.testutil;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.event.Description;
 import seedu.address.model.event.Event;
-import seedu.address.model.event.Period;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.Title;
 import seedu.address.model.event.timeslot.Timeslot;
@@ -1103,7 +1110,6 @@ public class EventBuilder {
     public static final String DEFAULT_TITLE = "Jack's Birthday";
     public static final String DEFAULT_TIMESLOT = "23/10/2017 1900-2100";
     public static final String DEFAULT_DESCRIPTION = "Celebrating Jack's 21st, party all night";
-    public static final String DEFAULT_PERIOD = "14";
 
     private Event event;
 
@@ -1112,8 +1118,7 @@ public class EventBuilder {
             Title defaultTitle = new Title(DEFAULT_TITLE);
             Timeslot defaultTimeslot = new Timeslot(DEFAULT_TIMESLOT);
             Description defaultDescription = new Description(DEFAULT_DESCRIPTION);
-            Period defaultPeriod = new Period(DEFAULT_PERIOD);
-            this.event = new Event(defaultTitle, defaultTimeslot, defaultDescription, defaultPeriod);
+            this.event = new Event(defaultTitle, defaultTimeslot, defaultDescription);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default event's values are invalid.");
         }
@@ -1164,6 +1169,11 @@ public class EventBuilder {
         return this;
     }
 
+    public Event build() {
+        return this.event;
+    }
+
+}
 ```
 ###### \java\seedu\address\testutil\EventsUtil.java
 ``` java
@@ -1212,15 +1222,15 @@ import seedu.address.model.event.exceptions.EventTimeClashException;
 public class TypicalEvents {
 
     public static final ReadOnlyEvent BIRTHDAY = new EventBuilder().withTitle("Jack's Birthday")
-            .withTimeslot("23/10/2017 1900-2300").withDescription("Celebrating Jack's 21st").withPeriod("365").build();
+            .withTimeslot("23/10/2017 1900-2300").withDescription("Celebrating Jack's 21st").build();
     public static final ReadOnlyEvent ANNIVERSARY = new EventBuilder().withTitle("Wedding Anniversary")
-            .withTimeslot("29/12/2018 0000-2359").withDescription("2nd Wedding Anniversary").withPeriod("365").build();
+            .withTimeslot("29/12/2018 0000-2359").withDescription("2nd Wedding Anniversary").build();
     public static final ReadOnlyEvent EXAM = new EventBuilder().withTitle("CS2103 Final Exam")
-            .withTimeslot("09/12/2017 1300-1500").withDescription("We are screwed").withPeriod("30").build();
+            .withTimeslot("09/12/2017 1300-1500").withDescription("We are screwed").build();
     public static final ReadOnlyEvent MOURN = new EventBuilder().withTitle("Bai Ah Gong")
-            .withTimeslot("10/12/2017 1900-2300").withDescription("@ CCK Cemetery").withPeriod("100").build();
+            .withTimeslot("10/12/2017 1900-2300").withDescription("@ CCK Cemetery").build();
     public static final ReadOnlyEvent DEADLINE = new EventBuilder().withTitle("Paper Submission")
-            .withTimeslot("10/12/2017 2359-2359").withDescription("Submit on IVLE").withPeriod("0").build();
+            .withTimeslot("10/12/2017 2359-2359").withDescription("Submit on IVLE").build();
 
     private TypicalEvents() {
     } // prevents instantiation

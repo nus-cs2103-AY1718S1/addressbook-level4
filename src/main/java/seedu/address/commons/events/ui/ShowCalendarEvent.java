@@ -1,4 +1,3 @@
-//@@author shuang-yang
 package seedu.address.commons.events.ui;
 
 import seedu.address.commons.events.BaseEvent;
@@ -7,7 +6,6 @@ import seedu.address.commons.events.BaseEvent;
  * An event requesting to view the help page.
  */
 public class ShowCalendarEvent extends BaseEvent {
-
 
     @Override
     public String toString() {

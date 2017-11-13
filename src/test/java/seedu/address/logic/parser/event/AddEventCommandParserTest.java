@@ -5,7 +5,6 @@ import static seedu.address.logic.commands.CommandTestUtil.DESCRIPTION_MIDTERM;
 import static seedu.address.logic.commands.CommandTestUtil.DESCRIPTION_SOCCER;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TIMESLOT;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TITLE;
-import static seedu.address.logic.commands.CommandTestUtil.PERIOD_SOCCER;
 import static seedu.address.logic.commands.CommandTestUtil.TIMESLOT_MIDTERM;
 import static seedu.address.logic.commands.CommandTestUtil.TIMESLOT_SOCCER;
 import static seedu.address.logic.commands.CommandTestUtil.TITLE_MIDTERM;
@@ -46,11 +45,6 @@ public class AddEventCommandParserTest {
         // multiple descriptions - last description accepted
         assertParseSuccess(parser, AddEventCommand.COMMAND_WORD + TITLE_SOCCER + TIMESLOT_SOCCER + DESCRIPTION_MIDTERM
                 + DESCRIPTION_SOCCER, new AddEventCommand(expectedEvent));
-
-        //@@author shuang-yang
-        // multiple period - last period accepted
-        assertParseSuccess(parser, AddEventCommand.COMMAND_WORD + TITLE_SOCCER + TIMESLOT_SOCCER + DESCRIPTION_SOCCER
-                + PERIOD_SOCCER, new AddEventCommand(expectedEvent));
     }
 
     @Test

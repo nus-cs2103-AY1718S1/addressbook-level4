@@ -1,36 +1,4 @@
 # sebtsh
-###### \java\guitests\guihandles\PersonCardHandle.java
-``` java
-    private static final String COMPANY_FIELD_ID = "#company";
-    private static final String POSITION_FIELD_ID = "#position";
-    private static final String PRIORITY_FIELD_ID = "#priority";
-```
-###### \java\guitests\guihandles\PersonCardHandle.java
-``` java
-    private final Label companyLabel;
-    private final Label positionLabel;
-    private final Label priorityLabel;
-```
-###### \java\guitests\guihandles\PersonCardHandle.java
-``` java
-        this.companyLabel = getChildNode(COMPANY_FIELD_ID);
-        this.positionLabel = getChildNode(POSITION_FIELD_ID);
-        this.priorityLabel = getChildNode(PRIORITY_FIELD_ID);
-```
-###### \java\guitests\guihandles\PersonCardHandle.java
-``` java
-    public String getCompany() {
-        return companyLabel.getText();
-    }
-
-    public String getPosition() {
-        return positionLabel.getText();
-    }
-
-    public String getPriority() {
-        return priorityLabel.getText();
-    }
-```
 ###### \java\seedu\address\logic\commands\CommandTestUtil.java
 ``` java
     public static final String VALID_COMPANY_AMY = "Microsoft";
@@ -263,14 +231,14 @@
                 + PHONE_DESC_BOB + ADDRESS_DESC_BOB + EMAIL_DESC_BOB + TAG_DESC_HUSBAND + COMPANY_DESC_BOB
                 + POSITION_DESC_BOB + STATUS_DESC_AMY + PRIORITY_DESC_AMY + NOTE_DESC_BOB + COMPANY_DESC_BOB
                 + POSITION_DESC_BOB + STATUS_DESC_AMY + PRIORITY_DESC_AMY
-                + NOTE_DESC_BOB + PHOTO_DESC_AMY + PHOTO_DESC_BOB;
+                + NOTE_DESC_BOB + PHOTO_DESC_AMY + PHOTO_DESC_BOB + REL_DESC_COLLEAGUE;
 
 
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withPhone(VALID_PHONE_BOB)
                 .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withCompany(VALID_COMPANY_BOB)
                 .withPosition(VALID_POSITION_BOB).withStatus(VALID_STATUS_AMY).withPriority(VALID_PRIORITY_AMY)
                 .withNote(VALID_NOTE_BOB).withPhoto(VALID_PHOTO_BOB).withTags
-                (VALID_TAG_FRIEND, VALID_TAG_HUSBAND).withRelation().build();
+                (VALID_TAG_FRIEND, VALID_TAG_HUSBAND).withRelation(VALID_REL_COLLEAGUE).build();
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);
@@ -398,68 +366,6 @@ public class StatusTest {
     }
 }
 ```
-###### \java\seedu\address\testutil\EditPersonBuilder.java
-``` java
-    /**
-     * Sets the {@code Company} of the {@code EditPerson} that we are building.
-     */
-    public EditPersonBuilder withCompany(String company) {
-        try {
-            ParserUtil.parseCompany(Optional.of(company)).ifPresent(editPerson::setCompany);
-        } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("company is expected to be unique.");
-        }
-        return this;
-    }
-
-    /**
-     * Sets the {@code Position} of the {@code EditPerson} that we are building.
-     */
-    public EditPersonBuilder withPosition(String position) {
-        try {
-            ParserUtil.parsePosition(Optional.of(position)).ifPresent(editPerson::setPosition);
-        } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("position is expected to be unique.");
-        }
-        return this;
-    }
-
-    /**
-     * Sets the {@code Status} of the {@code EditPerson} that we are building.
-     */
-    public EditPersonBuilder withStatus(String status) {
-        try {
-            ParserUtil.parseStatus(Optional.of(status)).ifPresent(editPerson::setStatus);
-        } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("status is expected to be unique.");
-        }
-        return this;
-    }
-
-    /**
-     * Sets the {@code Priority} of the {@code EditPerson} that we are building.
-     */
-    public EditPersonBuilder withPriority(String priority) {
-        try {
-            ParserUtil.parsePriority(Optional.of(priority)).ifPresent(editPerson::setPriority);
-        } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("priority is expected to be unique.");
-        }
-        return this;
-    }
-
-    /**
-     * Sets the {@code Note} of the {@code EditPerson} that we are building.
-     */
-    public EditPersonBuilder withNote(String note) {
-        try {
-            ParserUtil.parseNote(Optional.of(note)).ifPresent(editPerson::setNote);
-        } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("note is expected to be unique.");
-        }
-        return this;
-    }
-```
 ###### \java\seedu\address\testutil\EditPersonDescriptorBuilder.java
 ``` java
     /**
@@ -566,7 +472,7 @@ public class StatusTest {
             Note defaultNote = new Note(DEFAULT_NOTE);
             Photo defaultPhoto = new Photo(DEFAULT_PHOTO);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
-            Set<Relationship> defaultRel = SampleDataUtil.getRelSet();
+            Set<Relationship> defaultRel = SampleDataUtil.getRelSet(DEFAULT_RELATIONSHIP);
             this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress, defaultCompany,
                     defaultPosition, defaultStatus, defaultPriority,
                     defaultNote, defaultPhoto, defaultTags, defaultRel);
@@ -663,16 +569,4 @@ public class StatusTest {
         return sb.toString();
     }
 }
-```
-###### \java\seedu\address\ui\testutil\GuiTestAssert.java
-``` java
-        assertEquals(expectedCard.getCompany(), actualCard.getCompany());
-        assertEquals(expectedCard.getPosition(), actualCard.getPosition());
-        assertEquals(expectedCard.getPriority(), actualCard.getPriority());
-```
-###### \java\seedu\address\ui\testutil\GuiTestAssert.java
-``` java
-        assertEquals(expectedPerson.getPosition().value, actualCard.getPosition());
-        assertEquals(expectedPerson.getCompany().value, actualCard.getCompany());
-        assertEquals(expectedPerson.getPriority().value, actualCard.getPriority());
 ```

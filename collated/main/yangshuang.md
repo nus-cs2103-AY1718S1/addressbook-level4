@@ -1,6 +1,18 @@
-<?xml version="1.0" encoding="UTF-8"?>
+# yangshuang
+###### \java\seedu\address\model\event\exceptions\DuplicateEventException.java
+``` java
 
-<!-- @@author yangshuang -->
+/**
+ * Signals that the operation will result in duplicate Event objects.
+ */
+public class DuplicateEventException extends DuplicateDataException {
+    public DuplicateEventException() {
+        super("Operation would result in duplicate events");
+    }
+}
+```
+###### \resources\view\MainWindow.fxml
+``` fxml
 
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
@@ -70,61 +82,4 @@
         </items>
     </SplitPane>
 
-    <!-- @@author reginleiff -->
-    <SplitPane id="schedule" dividerPositions="0.15" minHeight="70.0" prefHeight="70.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
-        <StackPane maxHeight="60.0" maxWidth="85.0" minHeight="60.0" minWidth="85.0" prefHeight="60.0" prefWidth="85.0">
-            <Label fx:id="scheduleTitle" text="Schedule: " StackPane.alignment="CENTER_LEFT">
-               <StackPane.margin>
-                  <Insets />
-               </StackPane.margin>
-               <padding>
-                  <Insets left="10.0" />
-               </padding></Label>
-        </StackPane>
-        <StackPane fx:id="scheduleListPanelPlaceholder" styleClass="background" HBox.hgrow="ALWAYS">
-            <padding>
-               <Insets left="10.0" />
-            </padding></StackPane>
-         <VBox.margin>
-            <Insets />
-         </VBox.margin>
-         <padding>
-            <Insets bottom="5.0" top="5.0" />
-         </padding>
-    </SplitPane>
-    <!-- @@author -->
-
-    <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
-        <VBox fx:id="personList" minWidth="200" prefWidth="200" SplitPane.resizableWithParent="false">
-            <padding>
-                <Insets bottom="5" left="5" right="5" top="5" />
-            </padding>
-            <TabPane fx:id="tabPane" minHeight="80" prefHeight="500.0" prefWidth="200.0" styleClass="tabPane" tabClosingPolicy="UNAVAILABLE" tabMinWidth="120.0" VBox.vgrow="ALWAYS">
-                <tabs>
-                    <Tab fx:id="contactTab" styleClass="contactsTab" text="Contacts">
-                        <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS" />
-                    </Tab>
-                    <Tab fx:id="eventTab" closable="false" styleClass="eventsTab" text="Events">
-                        <StackPane fx:id="eventListPanelPlaceholder" VBox.vgrow="ALWAYS" />
-                    </Tab>
-                </tabs>
-            </TabPane>
-        </VBox>
-
-        <StackPane fx:id="browserPlaceholder" minWidth="200" prefWidth="500" styleClass="webView">
-            <padding>
-                <Insets bottom="10" left="10" right="10" top="10" />
-            </padding>
-        </StackPane>
-    </SplitPane>
-    <StackPane fx:id="resultDisplayPlaceholder" maxHeight="100" minHeight="100" prefHeight="100" styleClass="pane-with-border" VBox.vgrow="NEVER">
-        <padding>
-            <Insets bottom="5" left="10" right="10" top="5" />
-        </padding>
-    </StackPane>
-
-    <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
-
-</VBox>
-
-</VBox>
+```

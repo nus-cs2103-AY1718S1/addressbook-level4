@@ -13,7 +13,7 @@ import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.testutil.EventBuilder;
 
-//@@author shuang-yang
+//@@author a0107442n
 
 public class EventCardTest extends GuiUnitTest {
 

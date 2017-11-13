@@ -5,17 +5,12 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.time.Duration;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.ZoneId;
 import java.util.Objects;
-import java.util.Optional;
-import java.util.logging.Logger;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import seedu.address.commons.core.LogsCenter;
+import seedu.address.model.event.timeslot.Date;
 import seedu.address.model.event.timeslot.Timeslot;
 import seedu.address.model.event.timeslot.Timing;
 
@@ -24,41 +19,31 @@ import seedu.address.model.event.timeslot.Timing;
  * Represents an Event in the address book.
  * Guarantees: details are present and not null, field values are validated.
  */
-public class Event implements ReadOnlyEvent, Comparable<Event> {
-
-    private static final Logger logger = LogsCenter.getLogger(Event.class);
-
+public class Event implements ReadOnlyEvent {
     private ObjectProperty<Title> title;
-    private ObjectProperty<seedu.address.model.event.timeslot.Date> date;
+    private ObjectProperty<Date> date;
     private ObjectProperty<Timing> timing;
     private ObjectProperty<Timeslot> timeslot;
     private ObjectProperty<Description> description;
-    private ObjectProperty<Period> period;
-
-    //The template event that this event is created from
-    private Optional<ReadOnlyEvent> templateEvent;
 
 
     /**
      * Every field must be present and not null.
      */
-    public Event(Title title, Timeslot timeslot, Description description, Period period) {
-        requireAllNonNull(title, timeslot, description, period);
+    public Event(Title title, Timeslot timeslot, Description description) {
+        requireAllNonNull(title, timeslot, description);
         this.title = new SimpleObjectProperty<>(title);
         this.date = new SimpleObjectProperty<>(timeslot.getDate());
         this.timing = new SimpleObjectProperty<>(timeslot.getTiming());
         this.timeslot = new SimpleObjectProperty<>(timeslot);
         this.description = new SimpleObjectProperty<>(description);
-        this.period = new SimpleObjectProperty<>(period);
-        this.templateEvent = Optional.empty();
-
     }
 
     /**
      * Creates a copy of the given ReadOnlyEvent.
      */
     public Event(ReadOnlyEvent source) {
-        this(source.getTitle(), source.getTimeslot(), source.getDescription(), source.getPeriod());
+        this(source.getTitle(), source.getTimeslot(), source.getDescription());
     }
 
     @Override
@@ -76,16 +61,16 @@ public class Event implements ReadOnlyEvent, Comparable<Event> {
     }
 
     @Override
-    public ObjectProperty<seedu.address.model.event.timeslot.Date> dateProperty() {
+    public ObjectProperty<Date> dateProperty() {
         return date;
     }
 
     @Override
-    public seedu.address.model.event.timeslot.Date getDate() {
+    public Date getDate() {
         return date.get();
     }
 
-    public void setDate(seedu.address.model.event.timeslot.Date date) {
+    public void setDate(Date date) {
         this.date.set(requireNonNull(date));
     }
 
@@ -131,31 +116,6 @@ public class Event implements ReadOnlyEvent, Comparable<Event> {
         this.description.set(requireNonNull(description));
     }
 
-    //@@author shuang-yang
-    @Override
-    public ObjectProperty<Period> periodProperty() {
-        return period;
-    }
-
-    @Override
-    public Period getPeriod() {
-        return period.get();
-    }
-
-    @Override
-    public void setPeriod(Period period) {
-        this.period.set(requireNonNull(period));
-    }
-
-    @Override
-    public Optional<ReadOnlyEvent> getTemplateEvent() {
-        return this.templateEvent;
-    }
-
-    @Override
-    public void setTemplateEvent(Optional<ReadOnlyEvent> templateEvent) {
-        this.templateEvent = templateEvent;
-    }
     /**
      * Check if this event happens at an earlier time than the given timeslot.
      * @return true if indeed earlier.
@@ -201,17 +161,6 @@ public class Event implements ReadOnlyEvent, Comparable<Event> {
     }
 
     /**
-     * Obtain the end time of the event.
-     * @return a Date object.
-     */
-    public java.util.Date getEndDateTime() {
-        LocalDate date = this.getDate().toLocalDate();
-        LocalTime endTime = this.getEndTime();
-        LocalDateTime endDateTime = LocalDateTime.of(date, endTime);
-        return java.util.Date.from(endDateTime.atZone(ZoneId.systemDefault()).toInstant());
-    }
-
-    /**
      * Check if two events have time clash.
      * @param other Event to compare with
      * @return true if clashes.
@@ -228,11 +177,6 @@ public class Event implements ReadOnlyEvent, Comparable<Event> {
         return false;
     }
 
-    @Override
-    public int compareTo(Event other) {
-        return this.getTimeslot().compareTo(other.getTimeslot());
-    }
-    //@@author
 
     @Override
     public boolean equals(Object other) {

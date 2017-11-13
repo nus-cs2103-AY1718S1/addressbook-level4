@@ -33,9 +33,9 @@ public interface Logic {
     ObservableList<ReadOnlyEvent> getFilteredEventList();
 
     /**
-     * Returns an unmodifiable view of the timetable.
+     * Returns an unmodifiable view of the schedule.
      */
-    ObservableList<ReadOnlyEvent> getTimetable();
+    ObservableList<ReadOnlyEvent> getSchedule();
 
     //@@author
 

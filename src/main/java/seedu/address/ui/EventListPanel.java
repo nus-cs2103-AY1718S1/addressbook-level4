@@ -20,7 +20,7 @@ import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.ShowCalendarEvent;
 import seedu.address.model.event.ReadOnlyEvent;
 
-//@@author shuang-yang
+//@@author a0107442n
 /**
  * Panel containing the list of events.
  *

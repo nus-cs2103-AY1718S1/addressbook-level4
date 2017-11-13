@@ -4,7 +4,6 @@
 <?import javafx.scene.layout.HBox?>
 
 <!-- @@author reginleiff -->
-
 <HBox HBox.hgrow="ALWAYS" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
-    <ListView fx:id="timetableListView" prefHeight="60.0" stylesheets="@BrightTheme.css" HBox.hgrow="ALWAYS" />
+    <ListView fx:id="scheduleListView" mouseTransparent="true" prefHeight="60.0" stylesheets="@BrightTheme.css" HBox.hgrow="ALWAYS" />
 </HBox>

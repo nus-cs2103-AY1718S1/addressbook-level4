@@ -21,13 +21,10 @@ public class GuiTestAssert {
      */
     public static void assertCardEquals(PersonCardHandle expectedCard, PersonCardHandle actualCard) {
         assertEquals(expectedCard.getId(), actualCard.getId());
+        assertEquals(expectedCard.getAddress(), actualCard.getAddress());
+        assertEquals(expectedCard.getEmail(), actualCard.getEmail());
         assertEquals(expectedCard.getName(), actualCard.getName());
         assertEquals(expectedCard.getPhone(), actualCard.getPhone());
-        //@@author sebtsh
-        assertEquals(expectedCard.getCompany(), actualCard.getCompany());
-        assertEquals(expectedCard.getPosition(), actualCard.getPosition());
-        assertEquals(expectedCard.getPriority(), actualCard.getPriority());
-        //@@author
         assertEquals(expectedCard.getTags(), actualCard.getTags());
     }
 
@@ -37,11 +34,8 @@ public class GuiTestAssert {
     public static void assertCardDisplaysPerson(ReadOnlyPerson expectedPerson, PersonCardHandle actualCard) {
         assertEquals(expectedPerson.getName().fullName, actualCard.getName());
         assertEquals(expectedPerson.getPhone().value, actualCard.getPhone());
-        //@@author sebtsh
-        assertEquals(expectedPerson.getPosition().value, actualCard.getPosition());
-        assertEquals(expectedPerson.getCompany().value, actualCard.getCompany());
-        assertEquals(expectedPerson.getPriority().value, actualCard.getPriority());
-        //@@author
+        assertEquals(expectedPerson.getEmail().value, actualCard.getEmail());
+        assertEquals(expectedPerson.getAddress().value, actualCard.getAddress());
         assertEquals(expectedPerson.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
                 actualCard.getTags());
     }

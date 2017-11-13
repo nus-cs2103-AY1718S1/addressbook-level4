@@ -1,4 +1,3 @@
-//@@author huiyiiih
 package seedu.address.model;
 
 import org.junit.Rule;
@@ -18,4 +17,3 @@ public class UniqueRelListTest {
         uniqueRelList.asObservableList().remove(0);
     }
 }
-//@@author

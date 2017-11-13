@@ -15,15 +15,15 @@ import seedu.address.model.event.exceptions.EventTimeClashException;
 public class TypicalEvents {
 
     public static final ReadOnlyEvent BIRTHDAY = new EventBuilder().withTitle("Jack's Birthday")
-            .withTimeslot("23/10/2017 1900-2300").withDescription("Celebrating Jack's 21st").withPeriod("365").build();
+            .withTimeslot("23/10/2017 1900-2300").withDescription("Celebrating Jack's 21st").build();
     public static final ReadOnlyEvent ANNIVERSARY = new EventBuilder().withTitle("Wedding Anniversary")
-            .withTimeslot("29/12/2018 0000-2359").withDescription("2nd Wedding Anniversary").withPeriod("365").build();
+            .withTimeslot("29/12/2018 0000-2359").withDescription("2nd Wedding Anniversary").build();
     public static final ReadOnlyEvent EXAM = new EventBuilder().withTitle("CS2103 Final Exam")
-            .withTimeslot("09/12/2017 1300-1500").withDescription("We are screwed").withPeriod("30").build();
+            .withTimeslot("09/12/2017 1300-1500").withDescription("We are screwed").build();
     public static final ReadOnlyEvent MOURN = new EventBuilder().withTitle("Bai Ah Gong")
-            .withTimeslot("10/12/2017 1900-2300").withDescription("@ CCK Cemetery").withPeriod("100").build();
+            .withTimeslot("10/12/2017 1900-2300").withDescription("@ CCK Cemetery").build();
     public static final ReadOnlyEvent DEADLINE = new EventBuilder().withTitle("Paper Submission")
-            .withTimeslot("10/12/2017 2359-2359").withDescription("Submit on IVLE").withPeriod("0").build();
+            .withTimeslot("10/12/2017 2359-2359").withDescription("Submit on IVLE").build();
 
     private TypicalEvents() {
     } // prevents instantiation

@@ -5,7 +5,6 @@ import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_MIDTERM;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_SOCCER;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_SOCCER;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PERIOD_SOCCER;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TIMESLOT_MIDTERM;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_MIDTERM;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_SOCCER;
@@ -41,7 +40,7 @@ public class EditEventCommandTest {
     @Test
     public void execute_allFieldsSpecifiedUnfilteredList_success() throws Exception {
         Event editedEvent = new EventBuilder().withTitle(VALID_TITLE_SOCCER).withTimeslot(VALID_TIMESLOT_MIDTERM)
-                .withDescription(VALID_DESCRIPTION_SOCCER).withPeriod(VALID_PERIOD_SOCCER).build();
+                .withDescription(VALID_DESCRIPTION_SOCCER).build();
         EditEventCommand.EditEventDescriptor descriptor = new EditEventDescriptorBuilder(editedEvent).build();
         EditEventCommand editCommand = prepareCommand(INDEX_FIRST_EVENT, descriptor);
 
@@ -165,7 +164,7 @@ public class EditEventCommandTest {
         return editCommand;
     }
 
-    //@@author shuang-yang
+    //@@author a0107442n
 
     @Test
     public void execute_eventTimeClashUnfilteredList_failure() {

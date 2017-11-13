@@ -3,7 +3,6 @@ package seedu.address.logic.parser.event;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PERIOD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TIMESLOT;
 
 import java.util.stream.Stream;
@@ -18,7 +17,6 @@ import seedu.address.logic.parser.Prefix;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.event.Description;
 import seedu.address.model.event.Event;
-import seedu.address.model.event.Period;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.Title;
 import seedu.address.model.event.timeslot.Timeslot;
@@ -45,7 +43,7 @@ public class AddEventCommandParser implements Parser<AddEventCommand> {
      */
     public AddEventCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_TIMESLOT, PREFIX_DESCRIPTION, PREFIX_PERIOD);
+                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_TIMESLOT, PREFIX_DESCRIPTION);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_TIMESLOT, PREFIX_DESCRIPTION)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddEventCommand.MESSAGE_USAGE));
@@ -56,17 +54,7 @@ public class AddEventCommandParser implements Parser<AddEventCommand> {
             Timeslot timeslot = ParserUtil.parseTimeslot(argMultimap.getValue(PREFIX_TIMESLOT)).get();
             Description description = ParserUtil.parseDescription(argMultimap.getValue(PREFIX_DESCRIPTION)).get();
 
-            //@@author shuang-yang
-
-            //Initialize period to "0"
-            Period period = new Period("0");
-
-            //Since period is optional, set it if it's present
-            if (arePrefixesPresent(argMultimap, PREFIX_PERIOD)) {
-                period = ParserUtil.parsePeriod(argMultimap.getValue(PREFIX_PERIOD)).get();
-            }
-
-            ReadOnlyEvent event = new Event(title, timeslot, description, period);
+            ReadOnlyEvent event = new Event(title, timeslot, description);
 
             return new AddEventCommand(event);
         } catch (IllegalValueException ive) {

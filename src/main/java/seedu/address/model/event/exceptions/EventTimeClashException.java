@@ -1,4 +1,4 @@
-//@@author shuang-yang
+//@@author a0107442n
 package seedu.address.model.event.exceptions;
 
 /**

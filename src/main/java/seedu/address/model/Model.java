@@ -56,7 +56,7 @@ public interface Model {
             throws DuplicatePersonException, PersonNotFoundException;
     //@@author huiyiiih
     /**
-     * Sorts person list according to user input option
+     * Sorts person according to user input option
      */
     void sortPerson(String type) throws InvalidSortTypeException;
     //@author
@@ -91,14 +91,14 @@ public interface Model {
             EventTimeClashException;
 
     /**
-     * Returns an unmodifiable view of the filtered event list.
+     * Returns an unmodifiable view of the filtered event list
      */
     ObservableList<ReadOnlyEvent> getFilteredEventList();
 
     /**
-     * Returns an unmodifiable view of the timetable.
+     * Returns an unmodifiable view of the schedule
      */
-    ObservableList<ReadOnlyEvent> getTimetable();
+    ObservableList<ReadOnlyEvent> getSchedule();
 
     /**
      * @throws NullPointerException if {@code predicate} is null.
@@ -106,9 +106,6 @@ public interface Model {
      */
     void updateFilteredEventList(Predicate<ReadOnlyEvent> predicate);
 
-    //@@author shuang-yang
-    /**
-     * Schedule a repeated event.
-     */
-    void scheduleRepeatedEvent(ReadOnlyEvent event);
+
+    //@@author
 }
