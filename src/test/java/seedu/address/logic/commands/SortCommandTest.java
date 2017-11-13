@@ -1,4 +1,3 @@
-//author huiyiiih
 package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertEquals;
@@ -27,6 +26,11 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.ReadOnlyPerson;
 
+//author huiyiiih
+
+/**
+ * Contains integration tests (interaction with the Model) and unit tests for SortCommand.
+ */
 public class SortCommandTest {
     private Model model;
     private Model expectedModel;
@@ -88,11 +92,6 @@ public class SortCommandTest {
         assertSortSuccess(command, SortCommand.MESSAGE_SUCCESS + company, Arrays.asList(GEORGE, ELLE, DANIEL, ALICE,
             BENSON, CARL, FIONA));
     }
-
-
-
-
-
 
     @Test
     public void equals() {

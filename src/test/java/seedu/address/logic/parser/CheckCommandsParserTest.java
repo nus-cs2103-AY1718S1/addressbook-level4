@@ -1,10 +1,11 @@
-//@@author huiyiiih
 package seedu.address.logic.parser;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 import org.junit.Test;
+
+//@@author huiyiiih
 
 public class CheckCommandsParserTest {
 
@@ -79,8 +80,6 @@ public class CheckCommandsParserTest {
         // Check if the synonyms  is equals to list
         assertEquals(parser.matchCommand("display all"), "listall");
         assertEquals(parser.matchCommand("list"), "listall");
-        assertEquals(parser.matchCommand("show all"), "listall");
-        assertEquals(parser.matchCommand("list all"), "listall");
         assertNotEquals(parser.matchCommand("showme"), "listall");
     }
 

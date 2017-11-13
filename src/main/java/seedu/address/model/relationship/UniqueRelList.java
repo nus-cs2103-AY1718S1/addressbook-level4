@@ -152,6 +152,5 @@ public class UniqueRelList implements Iterable<Relationship> {
             super("Operation would result in duplicate relationship");
         }
     }
-
 }
 //@@author

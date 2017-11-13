@@ -33,10 +33,9 @@ public class SetRelCommandSystemTest extends AddressBookSystemTest {
     public void set() throws Exception {
         Model model = getModel();
 
-        /* ----------------- Performing edit operation while an unfiltered list is being shown ---------------------- */
+        /* ------------- Performing set relationship operation while an unfiltered list is being shown ------------- */
 
-        /* Case: edit all fields, command with leading spaces, trailing spaces and multiple spaces between each field
-         * -> edited
+        /* Case: add relationship between two persons -> added
          */
         Index indexOne = INDEX_FIRST_PERSON;
         Index indexTwo = INDEX_SECOND_PERSON;
@@ -53,7 +52,7 @@ public class SetRelCommandSystemTest extends AddressBookSystemTest {
         String expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, model, expectedResultMessage);
 
-        /* Case: redo adding of the relationship of the two persons in the list -> relationship added edited again */
+        /* Case: redo adding of the relationship of the two persons in the list -> relationship added again */
         command = RedoCommand.COMMAND_WORD;
         expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
         model.updatePerson(
@@ -81,7 +80,7 @@ public class SetRelCommandSystemTest extends AddressBookSystemTest {
         personTwo = new PersonBuilder(personInFilteredListTwo).withRelation().build();
         assertCommandSuccess(command, indexOne, indexTwo, personOne, personTwo);
 
-        /* --------------------------------- Performing invalid edit operation -------------------------------------- */
+        /* -------------------------- Performing invalid set relationship operation -------------------------- */
 
         /* Case: invalid index(0) and index(1) -> rejected */
         assertCommandFailure(SetRelCommand.COMMAND_WORD + " 0 1 " + REL_DESC_SIBLINGS,

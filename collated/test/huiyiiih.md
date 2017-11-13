@@ -7,10 +7,9 @@ public class SetRelCommandSystemTest extends AddressBookSystemTest {
     public void set() throws Exception {
         Model model = getModel();
 
-        /* ----------------- Performing edit operation while an unfiltered list is being shown ---------------------- */
+        /* ------------- Performing set relationship operation while an unfiltered list is being shown ------------- */
 
-        /* Case: edit all fields, command with leading spaces, trailing spaces and multiple spaces between each field
-         * -> edited
+        /* Case: add relationship between two persons -> added
          */
         Index indexOne = INDEX_FIRST_PERSON;
         Index indexTwo = INDEX_SECOND_PERSON;
@@ -27,7 +26,7 @@ public class SetRelCommandSystemTest extends AddressBookSystemTest {
         String expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, model, expectedResultMessage);
 
-        /* Case: redo adding of the relationship of the two persons in the list -> relationship added edited again */
+        /* Case: redo adding of the relationship of the two persons in the list -> relationship added again */
         command = RedoCommand.COMMAND_WORD;
         expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
         model.updatePerson(
@@ -50,12 +49,12 @@ public class SetRelCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: clearing the relationship between the two persons -> relationship cleared */
         command = SetRelCommand.COMMAND_WORD + " " + indexOne.getOneBased() + " " + indexTwo.getOneBased()
-            + " " + PREFIX_CLEAR_RELATIONSHIP + VALID_REL_SIBLINGS;
+            + " " + PREFIX_CLEAR_RELATIONSHIP;
         personOne = new PersonBuilder(personInFilteredListOne).withRelation().build();
         personTwo = new PersonBuilder(personInFilteredListTwo).withRelation().build();
         assertCommandSuccess(command, indexOne, indexTwo, personOne, personTwo);
 
-        /* --------------------------------- Performing invalid edit operation -------------------------------------- */
+        /* -------------------------- Performing invalid set relationship operation -------------------------- */
 
         /* Case: invalid index(0) and index(1) -> rejected */
         assertCommandFailure(SetRelCommand.COMMAND_WORD + " 0 1 " + REL_DESC_SIBLINGS,
@@ -77,11 +76,15 @@ public class SetRelCommandSystemTest extends AddressBookSystemTest {
         assertCommandFailure(SetRelCommand.COMMAND_WORD + " 1 2" + REL_DESC_SIBLINGS + REL_DESC_COLLEAGUE,
             String.format(SetRelCommandParser.ONE_RELATIONSHIP_ALLOWED));
 
-        /* Case: setting another relationship to the same two persons -> rejected*/
+        /* Case: setting another relationship to the same two persons -> rejected */
         executeCommand(SetRelCommand.COMMAND_WORD + " 1 2" + REL_DESC_COLLEAGUE);
         assertCommandFailure(SetRelCommand.COMMAND_WORD + " 1 2 " + REL_DESC_COLLEAGUE,
             SetRelCommand.MESSAGE_NO_MULTIPLE_REL);
 
+        /* Case: only one index is present -> rejected */
+        executeCommand(SetRelCommand.COMMAND_WORD + " 1" + REL_DESC_SIBLINGS);
+        assertCommandFailure(SetRelCommand.COMMAND_WORD + " 1" + REL_DESC_SIBLINGS,
+            SetRelCommandParser.INVALID_INDEX);
     }
 
     /**
@@ -205,15 +208,6 @@ public class SetRelCommandSystemTest extends AddressBookSystemTest {
 ```
 ###### /java/seedu/address/logic/parser/SortCommandParserTest.java
 ``` java
-package seedu.address.logic.parser;
-
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
-
-import org.junit.Test;
-
-import seedu.address.logic.commands.SortCommand;
 
 public class SortCommandParserTest {
     private SortCommandParser parser = new SortCommandParser();
@@ -237,30 +231,6 @@ public class SortCommandParserTest {
 ```
 ###### /java/seedu/address/logic/parser/relationship/SetRelCommandParserTest.java
 ``` java
-package seedu.address.logic.parser.relationship;
-
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_REL_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.REL_DESC_COLLEAGUE;
-import static seedu.address.logic.commands.CommandTestUtil.REL_DESC_JANE_SIBLINGS;
-import static seedu.address.logic.commands.CommandTestUtil.REL_DESC_SIBLINGS;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_REL_COLLEAGUE;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_REL_SIBLINGS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ADD_RELATIONSHIP;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_DELETE_RELATIONSHIP;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-
-import org.junit.Test;
-
-import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.relationship.SetRelCommand;
-import seedu.address.logic.commands.relationship.SetRelCommand.EditPerson;
-import seedu.address.model.relationship.Relationship;
-import seedu.address.testutil.EditPersonBuilder;
 
 public class SetRelCommandParserTest {
 
@@ -293,6 +263,9 @@ public class SetRelCommandParserTest {
 
         // invalid prefix being parsed as preamble
         assertParseFailure(parser, "1 i/ string", MESSAGE_INVALID_FORMAT);
+
+        // one index present
+        assertParseFailure(parser, "1" + REL_DESC_SIBLINGS, SetRelCommandParser.INVALID_INDEX);
     }
     @Test
     public void parse_invalidValueFollowedByValidValue_success() {
@@ -325,7 +298,7 @@ public class SetRelCommandParserTest {
     }
     @Test
     public void parse_invalidPrefix_failure() {
-        assertParseFailure(parser, "1 2" + WRONG_REL_PREFIX + VALID_REL_SIBLINGS,
+        assertParseFailure(parser, "1 2 " + WRONG_REL_PREFIX + VALID_REL_SIBLINGS,
             MESSAGE_INVALID_FORMAT);
     }
     @Test
@@ -371,12 +344,6 @@ public class SetRelCommandParserTest {
 ```
 ###### /java/seedu/address/logic/parser/CheckCommandsParserTest.java
 ``` java
-package seedu.address.logic.parser;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-
-import org.junit.Test;
 
 public class CheckCommandsParserTest {
 
@@ -449,9 +416,9 @@ public class CheckCommandsParserTest {
     @Test
     public void checkCommand_list() {
         // Check if the synonyms  is equals to list
-        assertEquals(parser.matchCommand("display"), "list");
-        assertEquals(parser.matchCommand("l"), "list");
-        assertNotEquals(parser.matchCommand("showme"), "list");
+        assertEquals(parser.matchCommand("display all"), "listall");
+        assertEquals(parser.matchCommand("list"), "listall");
+        assertNotEquals(parser.matchCommand("showme"), "listall");
     }
 
     @Test
@@ -589,42 +556,6 @@ public class CheckCommandsParserTest {
 ```
 ###### /java/seedu/address/logic/commands/relationship/SetRelCommandTest.java
 ``` java
-package seedu.address.logic.commands.relationship;
-
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.DESC_JANE;
-import static seedu.address.logic.commands.CommandTestUtil.DESC_JOE;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ALICE_REL;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_BENSON_REL;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_JOE;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_REL_COLLEAGUE;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_REL_SIBLINGS;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FOURTH_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
-
-import org.junit.Test;
-
-import seedu.address.commons.core.Messages;
-import seedu.address.commons.core.index.Index;
-import seedu.address.logic.CommandHistory;
-import seedu.address.logic.UndoRedoStack;
-import seedu.address.logic.commands.ClearCommand;
-import seedu.address.logic.commands.relationship.SetRelCommand.EditPerson;
-import seedu.address.model.AddressBook;
-import seedu.address.model.Model;
-import seedu.address.model.ModelManager;
-import seedu.address.model.UserPrefs;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.testutil.EditPersonBuilder;
-import seedu.address.testutil.PersonBuilder;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for SetRelCommand.
@@ -788,13 +719,6 @@ public class SetRelCommandTest {
 ```
 ###### /java/seedu/address/model/UniqueRelListTest.java
 ``` java
-package seedu.address.model;
-
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-
-import seedu.address.model.relationship.UniqueRelList;
 
 public class UniqueRelListTest {
     @Rule
@@ -810,12 +734,6 @@ public class UniqueRelListTest {
 ```
 ###### /java/seedu/address/model/relationship/RelationshipTest.java
 ``` java
-package seedu.address.model.relationship;
-
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import org.junit.Test;
 
 public class RelationshipTest {
 
@@ -833,6 +751,44 @@ public class RelationshipTest {
         assertTrue(Relationship.isValidRelType("ex-colleague"));
     }
 }
+```
+###### /java/seedu/address/testutil/EditPersonBuilder.java
+``` java
+
+    /**
+     * Parses the {@code relation} into a {@code Set<Realtionship>} and set it to the {@code EditPerson}
+     * that we are building.
+     */
+    public EditPersonBuilder withToAddRel(String... relation) {
+        try {
+            editPerson.setToAdd(ParserUtil.parseRels(Arrays.asList(relation)));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("relationships are expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
+     * Parses the {@code relation} into a {@code Set<Relationship>} and set it to the {@code EditPerson}
+     * that we are building.
+     */
+    public EditPersonBuilder withToDeleteRel(String... relation) {
+        try {
+            editPerson.setToDelete(ParserUtil.parseRels(Arrays.asList(relation)));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("relationships are expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
+     * Parses the {@code shouldClear} into a {@code Set<Relationship>} and set it to the {@code EditPerson}
+     * that we are building.
+     */
+    public EditPersonBuilder withToClearRels(boolean shouldClear) {
+        editPerson.setClearRels(shouldClear);
+        return this;
+    }
 ```
 ###### /java/seedu/address/testutil/PersonBuilder.java
 ``` java

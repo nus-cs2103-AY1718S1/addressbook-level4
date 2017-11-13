@@ -1,4 +1,3 @@
-//@@author huiyiiih
 package seedu.address.logic.parser.relationship;
 
 import static java.util.Objects.requireNonNull;
@@ -25,6 +24,8 @@ import seedu.address.logic.parser.Prefix;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.relationship.Relationship;
 
+//@@author huiyiiih
+
 /**
  * Parses all input arguments and create a new SetRelCommand object
  */
@@ -34,7 +35,7 @@ public class SetRelCommandParser implements Parser<SetRelCommand> {
         + "relationship between two persons.";
     public static final String NULL_RELATION_INPUT = "Relationship entered should not be empty.";
     public static final String SAME_INDEX_ERROR = "Index of the two persons must be different.";
-    public static final String INVALID_INDEX = "Indexes entered is invalid or there must be at least two indexes";
+    public static final String INVALID_INDEX = "There must be at least two indexes";
     private static final int size = 3;
     /**
      * Parses the given {@code String} of arguments in the context of the SetRelCommand
@@ -80,7 +81,7 @@ public class SetRelCommandParser implements Parser<SetRelCommand> {
             || addPrefixPresent) {
             try {
                 emptyInputArg(addPrefixPresent, argMultimap, PREFIX_ADD_RELATIONSHIP,
-                    PREFIX_DELETE_RELATIONSHIP, PREFIX_CLEAR_RELATIONSHIP);
+                    PREFIX_DELETE_RELATIONSHIP);
             } catch (ParseException pe) {
                 throw new ParseException(NULL_RELATION_INPUT);
             }
@@ -133,7 +134,7 @@ public class SetRelCommandParser implements Parser<SetRelCommand> {
      * @param prefixDelete          delete relationship prefix
      */
     private void emptyInputArg(boolean addPrefixPresent, ArgumentMultimap argumentMultimap, Prefix prefixAdd,
-                                        Prefix prefixDelete, Prefix prefixClear) throws ParseException {
+                                        Prefix prefixDelete) throws ParseException {
         String addRelString;
 
         if (addPrefixPresent) {

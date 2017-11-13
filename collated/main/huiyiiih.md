@@ -70,34 +70,9 @@
 ```
 ###### /java/seedu/address/logic/parser/relationship/SetRelCommandParser.java
 ``` java
-package seedu.address.logic.parser.relationship;
-
-import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ADD_RELATIONSHIP;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_CLEAR_RELATIONSHIP;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_DELETE_RELATIONSHIP;
-
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Stream;
-
-import seedu.address.commons.core.index.Index;
-import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.commands.relationship.SetRelCommand.EditPerson;
-import seedu.address.logic.commands.relationship.SetRelCommand;
-import seedu.address.logic.parser.ArgumentMultimap;
-import seedu.address.logic.parser.ArgumentTokenizer;
-import seedu.address.logic.parser.Parser;
-import seedu.address.logic.parser.ParserUtil;
-import seedu.address.logic.parser.Prefix;
-import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.relationship.Relationship;
 
 /**
- * Parses all input arguments and create a new AddRelCommand object
+ * Parses all input arguments and create a new SetRelCommand object
  */
 public class SetRelCommandParser implements Parser<SetRelCommand> {
 
@@ -105,6 +80,8 @@ public class SetRelCommandParser implements Parser<SetRelCommand> {
         + "relationship between two persons.";
     public static final String NULL_RELATION_INPUT = "Relationship entered should not be empty.";
     public static final String SAME_INDEX_ERROR = "Index of the two persons must be different.";
+    public static final String INVALID_INDEX = "Indexes entered is invalid or there must be at least two indexes";
+    private static final int size = 3;
     /**
      * Parses the given {@code String} of arguments in the context of the SetRelCommand
      * and returns an SetRelCommand object for execution.
@@ -117,14 +94,21 @@ public class SetRelCommandParser implements Parser<SetRelCommand> {
             PREFIX_DELETE_RELATIONSHIP, PREFIX_CLEAR_RELATIONSHIP);
         Index indexOne;
         Index indexTwo;
+        String value;
+        String[] indexes;
         boolean addPrefixPresent = false;
+        value = argMultimap.getPreamble();
         if (!areAnyPrefixesPresent(argMultimap, PREFIX_ADD_RELATIONSHIP, PREFIX_DELETE_RELATIONSHIP,
             PREFIX_CLEAR_RELATIONSHIP)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SetRelCommand.MESSAGE_USAGE));
         }
+        if (value.length() < size && !value.isEmpty()) {
+            throw new ParseException(INVALID_INDEX);
+        }
         try {
-            indexOne = ParserUtil.parseIndex(argMultimap.getPreamble().split("\\s+")[0]);
-            indexTwo = ParserUtil.parseIndex(argMultimap.getPreamble().split("\\s+")[1]);
+            indexes = value.split("\\s+");
+            indexOne = ParserUtil.parseIndex(indexes[0]);
+            indexTwo = ParserUtil.parseIndex(indexes[1]);
         } catch (IllegalValueException ive) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SetRelCommand.MESSAGE_USAGE));
         }
@@ -137,16 +121,13 @@ public class SetRelCommandParser implements Parser<SetRelCommand> {
         }
         if (areAnyPrefixesPresent(argMultimap, PREFIX_ADD_RELATIONSHIP)) {
             addPrefixPresent = true;
-            String addRelString = argMultimap.getValue(PREFIX_ADD_RELATIONSHIP).get();
-            requireNonNull(addRelString);
-            if (addRelString.length() == 0) {
-                throw new ParseException(NULL_RELATION_INPUT);
-            }
         }
-        if (areAnyPrefixesPresent(argMultimap, PREFIX_DELETE_RELATIONSHIP)) {
-            String addRelString = argMultimap.getValue(PREFIX_DELETE_RELATIONSHIP).get();
-            requireNonNull(addRelString);
-            if (addRelString.length() == 0) {
+        if (areAnyPrefixesPresent(argMultimap, PREFIX_ADD_RELATIONSHIP, PREFIX_DELETE_RELATIONSHIP)
+            || addPrefixPresent) {
+            try {
+                emptyInputArg(addPrefixPresent, argMultimap, PREFIX_ADD_RELATIONSHIP,
+                    PREFIX_DELETE_RELATIONSHIP);
+            } catch (ParseException pe) {
                 throw new ParseException(NULL_RELATION_INPUT);
             }
         }
@@ -181,24 +162,40 @@ public class SetRelCommandParser implements Parser<SetRelCommand> {
     /**
      * Checks if any of the prefixes are present
      * return true if the certain prefix is present and false if the certain prefix is not present
-     * @param argumentMultimap
-     * @param prefixes
+     * @param argumentMultimap      argumentMultiMap of the input string
+     * @param prefixes              any of the set relationship prefix(es)
      * @return true || false
      */
     private static boolean areAnyPrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
         return Stream.of(prefixes).anyMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
+
+    /**
+     * Checks if the argumentMultimap is empty for either the add relationship prefix if present
+     * and the delete relationship prefix
+     * @param addPrefixPresent      to indicate if add prefix is present
+     * @param argumentMultimap      input string
+     * @param prefixAdd             add relationship prefix
+     * @param prefixDelete          delete relationship prefix
+     */
+    private void emptyInputArg(boolean addPrefixPresent, ArgumentMultimap argumentMultimap, Prefix prefixAdd,
+                                        Prefix prefixDelete) throws ParseException {
+        String addRelString;
+
+        if (addPrefixPresent) {
+            addRelString = argumentMultimap.getValue(prefixAdd).get();
+        } else {
+            addRelString = argumentMultimap.getValue(prefixDelete).get();
+        }
+        requireNonNull(addRelString);
+        if (addRelString.length() == 0) {
+            throw new ParseException(NULL_RELATION_INPUT);
+        }
+    }
 }
 ```
 ###### /java/seedu/address/logic/parser/SortCommandParser.java
 ``` java
-package seedu.address.logic.parser;
-
-import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-
-import seedu.address.logic.commands.SortCommand;
-import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
  * Parses input arguments and creates a new SortCommand object
@@ -224,12 +221,6 @@ public class SortCommandParser implements Parser<SortCommand> {
 ```
 ###### /java/seedu/address/logic/parser/CheckCommandsParser.java
 ``` java
-package seedu.address.logic.parser;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Parses the command entered by the user
@@ -266,20 +257,25 @@ public class CheckCommandsParser {
         final String[] subFindCommands = new String[] { "find", "f", "look", "search", "check" };
         final String[] subHelpCommands = new String[] { "help", "info" };
         final String[] subHistoryCommands = new String[] { "history", "h", "past" };
-        final String[] subListCommands = new String[] { "list", "l", "show", "display" };
+        final String[] subListAllCommands =
+                new String[] { "listall", "list all", "la", "show all", "display all", "list", "refresh" };
+        final String[] subListPersonsCommands =
+                new String[] { "listpersons", "list persons", "lp", "show persons", "display persons" };
+        final String[] subListEventsCommands =
+                new String[] { "listevents", "list events", "le", "show events", "display events" };
         final String[] subRedoCommands = new String[] { "redo", "r" };
         final String[] subSelectCommands = new String[] { "select", "s", "choose", "pick" };
         final String[] subSortCommands = new String[] { "sort", "arrange", "organise" };
         final String[] subUndoCommands = new String[] { "undo", "u" };
-        final String[] subCheckScheduleCommands = new String[] {"thisweek",
-            "schedule", "checkschedule", "tw", "cs"};
+        final String[] subCheckScheduleCommands = new String[] {"thisweek", "schedule", "checkschedule", "tw", "cs"};
         final String[] subAddEventsCommands = new String[] { "eventadd", "addevent", "ae", "ea" };
-        final String[] subDeleteEventsCommands = new String[] { "eventdel",
-            "delevent", "deleteevent", "eventdelete", "de", "ed" };
+        final String[] subDeleteEventsCommands =
+                new String[] { "eventdel", "delevent", "deleteevent", "eventdelete", "de", "ed" };
         final String[] subEditEventsCommands = new String[] { "eventedit", "editevent", "ee" };
         final String[] subFindEventsCommands = new String[] { "eventfind", "findevent", "fe", "ef" };
         final String[] subUpdatePhotoCommands = new String[] { "updatephoto", "up" };
         final String[] subSetRelCommands = new String[] { "set", "rel", "setrel" };
+        final String[] subRepeatCommands = new String[] {"repeat", "rp"};
         final String[] subToggleTimetableCommands = new String[] { "timetable", "tt" };
 
 
@@ -294,7 +290,9 @@ public class CheckCommandsParser {
         final Set<String> commandsForFind = new HashSet<>(Arrays.asList(subFindCommands));
         final Set<String> commandsForHelp = new HashSet<>(Arrays.asList(subHelpCommands));
         final Set<String> commandsForHistory = new HashSet<>(Arrays.asList(subHistoryCommands));
-        final Set<String> commandsForList = new HashSet<>(Arrays.asList(subListCommands));
+        final Set<String> commandsForListAll = new HashSet<>(Arrays.asList(subListAllCommands));
+        final Set<String> commandsForListPersons = new HashSet<>(Arrays.asList(subListPersonsCommands));
+        final Set<String> commandsForListEvents = new HashSet<>(Arrays.asList(subListEventsCommands));
         final Set<String> commandsForRedo = new HashSet<>(Arrays.asList(subRedoCommands));
         final Set<String> commandsForSelect = new HashSet<>(Arrays.asList(subSelectCommands));
         final Set<String> commandsForSort = new HashSet<>(Arrays.asList(subSortCommands));
@@ -307,6 +305,7 @@ public class CheckCommandsParser {
         final Set<String> commandsForFindEvent = new HashSet<>(Arrays.asList(subFindEventsCommands));
         final Set<String> commandsForUpdatePhoto = new HashSet<>(Arrays.asList(subUpdatePhotoCommands));
         final Set<String> commandsForSetRel = new HashSet<>(Arrays.asList(subSetRelCommands));
+        final Set<String> commandsForRepeat = new HashSet<>(Arrays.asList(subRepeatCommands));
         final Set<String> commandsForToggleTimetable = new HashSet<>(Arrays.asList(subToggleTimetableCommands));
 
         /**
@@ -328,8 +327,8 @@ public class CheckCommandsParser {
             finalUserCommand = "help";
         } else if (!Collections.disjoint(userInputCommand, commandsForHistory)) {
             finalUserCommand = "history";
-        } else if (!Collections.disjoint(userInputCommand, commandsForList)) {
-            finalUserCommand = "list";
+        } else if (!Collections.disjoint(userInputCommand, commandsForListAll)) {
+            finalUserCommand = "listall";
         } else if (!Collections.disjoint(userInputCommand, commandsForRedo)) {
             finalUserCommand = "redo";
         } else if (!Collections.disjoint(userInputCommand, commandsForSelect)) {
@@ -354,6 +353,12 @@ public class CheckCommandsParser {
             finalUserCommand = "set";
         } else if (!Collections.disjoint(userInputCommand, commandsForToggleTimetable)) {
             finalUserCommand = "timetable";
+        } else if (!Collections.disjoint(userInputCommand, commandsForRepeat)) {
+            finalUserCommand = "repeat";
+        } else if (!Collections.disjoint(userInputCommand, commandsForListPersons)) {
+            finalUserCommand = "listpersons";
+        } else if (!Collections.disjoint(userInputCommand, commandsForListEvents)) {
+            finalUserCommand = "listevents";
         }
         return finalUserCommand;
     }
@@ -361,9 +366,6 @@ public class CheckCommandsParser {
 ```
 ###### /java/seedu/address/logic/commands/SortCommand.java
 ``` java
-package seedu.address.logic.commands;
-
-import seedu.address.model.person.exceptions.InvalidSortTypeException;
 
 /**
  * Lists all persons in the address book to the user.
@@ -384,12 +386,12 @@ public class SortCommand extends UndoableCommand {
     }
 
     @Override
-    public CommandResult executeUndoableCommand() {
+    public CommandResult executeUndoableCommand() throws CommandException {
         try {
             model.sortPersonList(type);
             return new CommandResult(MESSAGE_SUCCESS + type);
         } catch (InvalidSortTypeException iste) {
-            return new CommandResult(MESSAGE_UNKNOWN_SORT_TYPE);
+            throw new CommandException(MESSAGE_UNKNOWN_SORT_TYPE);
         }
     }
 
@@ -409,7 +411,7 @@ public class SortCommand extends UndoableCommand {
 public class SetRelCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "set";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sets the relationship between two persons."
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sets the relationship between two persons "
         + "by the index number used in the last person listing.\n"
         + "For adding of relationship, only one relationship is allowed. This command is able to add and delete\n "
         + "specifc relationship between two persons and clear deletes all relationships the two persons have.\n"
@@ -665,7 +667,7 @@ public class InvalidSortTypeException extends IllegalValueException {
         if (ORDERED_ENTRIES.contains(this.toString())) {
             return -1;
         }
-        return position.toString().compareTo(this.toString());
+        return position.toString().compareToIgnoreCase(this.toString());
     }
     @Override
     public int compare(Position positionOne, Position positionTwo) {
@@ -706,7 +708,7 @@ public class InvalidSortTypeException extends IllegalValueException {
         if (ORDERED_ENTRIES.contains(this.toString())) {
             return -1;
         }
-        return company.toString().compareTo(this.toString());
+        return company.toString().compareToIgnoreCase(this.toString());
     }
     @Override
     public int compare(Company companyOne, Company companyTwo) {
@@ -963,18 +965,10 @@ public class UniqueRelList implements Iterable<Relationship> {
             super("Operation would result in duplicate relationship");
         }
     }
-
 }
 ```
 ###### /java/seedu/address/model/relationship/Relationship.java
 ``` java
-package seedu.address.model.relationship;
-
-import static java.util.Objects.requireNonNull;
-
-import java.util.Set;
-
-import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
  * Represents a Relationship in the address book.

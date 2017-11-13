@@ -51,13 +51,12 @@ include::../UserGuide.adoc[tag=sort]
 
 ---
 This feature is essential for the Sales Navigator as it allows the user to view his/her person list with ease by
-arranging/sorting the list by different ways. It is required as this functional allows the user to sort the priority
-of his/her clients so that the user will know which client(s) is of a higher priority etc. Sorting by priority is one
-of the way the user can sort.
+arranging/sorting the list by different ways. It is required as this function allows the user to sort the person
+list by name, tag, company, position and the priority. Sorting by priority is one of the way the user can sort.
 
-The implementation is done creating different comparators to sort in the different ways. Sorting by priority and
-status requires specific ways to be sorted. Therefore a custom comparator would e needed to sort and display the list
-in a way that is most suited for the user.
+The implementation is done creating different comparators to sort in the different ways. Sorting by company, priority and
+position requires specific ways to be sorted. Therefore, a custom comparator would be needed to sort the list in a
+way that is most suited for the user.
 
 *Before sorting by _Priority_*
 
@@ -93,10 +92,10 @@ include::../UserGuide.adoc[tag=setrelationship]
 This feature is essential for the Sales Navigator as it lets the user make connection or set-up relationship among
 his/her clients. As a sales executive, the user may come across situations where the clients are related to one
 another. The connection/relationship may be siblings, colleagues, etc. Therefore, this enhancement allows the user to
-set connections among his/her clients.
+set the connections among his/her clients.
 
-The implementation is done very similarly to have the field *Tag* is created. The key differences between them is
-them is that adding, deleting and clearing of relationships are not allowed to be executed in the *Add* and *Edit*
+The implementation is done very similarly to how the field *Tag* is created. The key differences between them is
+that the adding, deleting and clearing of relationships are not allowed to be executed in the *Add* and *Edit*
 command.
 
 *Setting relationship between indexes 1 and 2*
@@ -121,7 +120,9 @@ include::../DeveloperGuide.adoc[tag=SettingRelationship]
 === Enhancement Proposed:
 
 ** Enhance Set Relationship command to be able to edit relationship between two persons.
-** Add specific relationship groups that groups specific relationships together to enable easier viewing
+** Enhance Delete Command to be able to delete all the corresponding relationship that person has with other people,
+so that when one person is being deleted all relationships other person has with him/her will be deleted.
+** Add specific relationship groups that group specific relationships together to enable easier viewing
  for user when the person card is selected.
 
 === Issue Reported:
@@ -133,7 +134,8 @@ include::../DeveloperGuide.adoc[tag=SettingRelationship]
 === Other Contributions
 
 ** Updated architecture diagram for Model, Storage Component
-(Pull request: [https://github.com/CS2103AUG2017-T14-B3/main/pull/108[#108]])
+(Pull request: [https://github.com/CS2103AUG2017-T14-B3/main/pull/108[#108]],
+ Pull request: [https://github.com/CS2103AUG2017-T14-B3/main/pull/119[#119])
 ** Updated the person panel with relationship information
 (Pull request: [https://github.com/CS2103AUG2017-T14-B3/main/pull/93[#93]])
 

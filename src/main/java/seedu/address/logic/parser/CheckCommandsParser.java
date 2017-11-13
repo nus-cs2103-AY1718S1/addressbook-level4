@@ -1,10 +1,11 @@
-//@@author huiyiiih
 package seedu.address.logic.parser;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+
+//@@author huiyiiih
 
 /**
  * Parses the command entered by the user
