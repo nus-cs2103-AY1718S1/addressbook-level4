@@ -79,7 +79,7 @@ _Figure 4.1: Home Page_
 The meeting card provides you the information of the meetings that you have scheduled. As you can see from the Figure 2, the `NameMeeting`, `DateTime`, `PersonToMeet`, `PhoneNum` and `Location` are all shown to remind you of your certain meeting.
 
 image::MeetingCard.png[width="200"]
-_Figure 4.1.1: Meeting Card_
+_Figure 4.2.1: Meeting Card_
 
 === Meeting Card Colours
 
@@ -90,19 +90,19 @@ To show you the nearing of upcoming meetings, colours are assigned to the card b
 +
 image::MeetingCard1.png[width="200"]
 +
-_Figure 4.2.1: Dark red Meeting Card_
+_Figure 4.3.1: Dark red Meeting Card_
 +
     * `red` : Meeting is in next 48 hours.
 +
 image::MeetingCard2.png[width="200"]
 +
-_Figure 4.2.2: Red Meeting Card_
+_Figure 4.3.2: Red Meeting Card_
 +
     * `orangeRed` : Meeting is in next 72 hours.
 +
 image::MeetingCard3.png[width="200"]
 +
-_Figure 4.2.3: Orange Meeting Card_
+_Figure 4.3.3: Orange Meeting Card_
 
 // end::meetingCard[]
 
@@ -111,7 +111,7 @@ _Figure 4.2.3: Orange Meeting Card_
 
 
 image::Reminder.png[width="600"]
-_Figure 4.3.1: Pop-up Notification_
+_Figure 4.4.1: Pop-up Notification_
 
 . Upon opening up the application, if there is a meeting(s) on the same day, you will be reminded via a pop-up message.
 . As shown to you in the figure above, the information regarding the next upcoming meeting is displayed in the message.
@@ -131,7 +131,7 @@ Upon selecting a meeting, the location of meeting will be automatically entered 
 The screenshot below shows the loaded Google Maps upon entering the `selectmeeting` command.
 
 image::googlemaps.png[width="800"]
-_Figure 4.5.1: GoogleMaps_
+_Figure 4.6.1: GoogleMaps_
 
 // end::googlemaps[]
 
@@ -342,7 +342,7 @@ Selects the meeting identified by the index number used in the last meeting list
 Format: `(sm)selectmeeting INDEX`
 
 image::googlemaps.png[width="790"]
-_Figure 7: Google Map_
+_Figure 5.10.1: Google Map_
 
 ****
 * Selects the meeting at the specified `INDEX` and loads the GoogleMaps with the location of meeting as the destination.
@@ -390,11 +390,8 @@ Format: `(em)editmeeting INDEX [n/NAME] [d/DATETIME] [l/LOCATION]`
 +
 image::EditMeetingSuccess.png[width="500"]
 +
-<<<<<<< HEAD
+
 _Figure 5.12.1: Successful edited Meeting_
-=======
-_Figure 8: Successful edited Meeting_
->>>>>>> 5d8f76556fa8149fc7685051be83154dad2da591
 
 ****
 
