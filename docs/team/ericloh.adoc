@@ -11,7 +11,7 @@ It is written in Java, and has about 6 kLoC.
 
 *Code contributed*: +
 link:https://github.com/CS2103AUG2017-T17-B2/main/blob/master/collated/main/Eric.md[Functional code] +
-link:{https://github.com/CS2103AUG2017-T17-B2/main/blob/master/collated/test/Eric.md[Test code] +
+link:https://github.com/CS2103AUG2017-T17-B2/main/blob/master/collated/test/Eric.md[Test code] +
 
 === Enhancement Added: Setting Tag Color
 
@@ -69,9 +69,26 @@ include::../DeveloperGuide.adoc[tag=appointmentimplementation]
 
 ---
 
+=== Enhancement Added: Change calendar view
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=calendar]
+
+#End of Extract#
+
+---
+
 === Enhancement Proposed (for Version 2.0)
 * More CLI for calendar view. Allow users to go to a selected date.
+** Currently there is no way for the user to navigate through the calendar without using the mouse. It would be useful
+for the doctors if they have the access to such shortcuts.
 * Make deletion of appointments easier. Remove the need to type in the whole description to delete.
+** Current deletion is too verbose and takes too much effort. This implementation has to be reworked in order to use
+the index for deletion instead of the name.
 
 === Other Contributions
 * https://github.com/CS2103AUG2017-T17-B2/main/pull/101[Revamped Developer Guide content] with Ru Shan

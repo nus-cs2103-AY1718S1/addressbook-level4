@@ -403,6 +403,8 @@ image::aptexamplecancel.png[width="800"]
 
 // end::appointment[]
 
+
+// tag::calendar[]
 === Changing Calendar View: `calendar`
 
 You can change the calendar view to daily, monthly, weekly, or yearly mode.
@@ -445,6 +447,8 @@ Year View +
 
 image::calendaryexample.PNG[width="800"]
     Figure 17: Appointment Calendar Year View
+
+// end::calendar[]
 
 // tag::remark[]
 === Adding/Removing Remarks to a person : `remark`
