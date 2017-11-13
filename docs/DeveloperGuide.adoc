@@ -1259,7 +1259,7 @@ The importance of a task in the taskBook. Integer values of 1 to 5 are used to r
 ....
 [NOTE]
 ====
-The value correspondence: 1 (super important), 2 (important), 3 (normal), 4 (trivial), and 5 (super trivial).
+The correspondence between interger value and the priority of the tasks is as follows: 1 (super important), 2 (important), 3 (normal), 4 (trivial), and 5 (super trivial).
 ====
 
 [appendix]
@@ -1271,15 +1271,15 @@ Author: Dong Shaocong
 
 Pros:
 
-* Beautiful interfaces
-* Notes easy to remove, add, edit and move
-* Have attachments and update history for an event
-* Able to sync with different device for same account
-* Have a lot of power ups to choose including github
+* Beautiful interfaces.
+* Notes which are easy to be removed, added, edited and moved.
+* Attachments and update history for an event.
+* Sync with different device for same account.
+* Power ups to choose including github and Slack.
 
 Cons:
 
-* Not command line software, so not very friendly for developers and command line lovers
+* It's not a command line software, and therefore not very friendly for developers and command line lovers
 * Unable to work offline and often clash with not so stable Internet connections
 
 // end::shaocong2[]
