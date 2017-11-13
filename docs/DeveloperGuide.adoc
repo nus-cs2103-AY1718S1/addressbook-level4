@@ -956,6 +956,22 @@ There are eight compulsory fields required for the user to input in the add life
 They are: name, owner, insured, beneficiary, premium, signing date, expiry date, and contract file name.
 
 
+
+[source,java]
+----
+private void isAnyPersonInList(List<ReadOnlyPerson> list, LifeInsurance lifeInsurance) {
+    String ownerName = lifeInsurance.getOwner().getName();
+    // ... similar logic for insured and beneficiary...
+    for (ReadOnlyPerson person: list) {
+        String lowerCaseName = person.getName().toString().toLowerCase();
+        if (lowerCaseName.equals(ownerName)) {
+            lifeInsurance.setOwner(new InsurancePerson(person));
+        }
+        // ... similar logic for insured and beneficiary...
+    }
+}
+----
+
 ==== Design Considerations
 
 **Aspect:** Number of fields required from the user input: +
@@ -1691,11 +1707,20 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
+
+|`* * *` |insurance agent | add an insurance | manage my clients according to the insurances they purchased
+
+|`* * *` |insurance agent | delete an insurance | remove entries that I no longer needed
+
+|`* * *` |insurance agent | link an insurance to a digital contract file| have a digital copy reference
+
+|`* * *` |user | export my contacts as a printable file| have a hard copy reference
+
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
 |`* * *` |user |Include date of birth as a field in record entry|
 
-|`* * *` |user |add a new person by providing only his/her name|
+|`* * *` |user |add a new person by providing only his/her name| edit and provide the details later on
 
 |`* * *` |user |delete a person |remove entries that I no longer need
 
