@@ -25,8 +25,10 @@ import seedu.address.model.person.PhoneContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
+ *
  * Contains integration tests (interaction with the Model) for {@code FindCommand}.
  */
+//@@author YewOnn
 public class FindByPhoneCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 

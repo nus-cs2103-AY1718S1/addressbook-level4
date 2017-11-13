@@ -6,6 +6,11 @@ import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
+//@@author YewOnn
+
+/**
+ * Test the MrtMapLogic file to make sure it works well.
+ */
 public class MrtMapLogicTest {
     @Test
     /**
