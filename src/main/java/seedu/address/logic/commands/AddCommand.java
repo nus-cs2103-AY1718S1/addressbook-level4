@@ -1,6 +1,8 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.core.Messages.MESSAGE_REDO_ASSERTION_ERROR;
+import static seedu.address.commons.core.Messages.MESSAGE_UNDO_ASSERTION_ERROR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BIRTHDAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
@@ -84,12 +86,8 @@ public class AddCommand extends UndoableCommand {
         try {
             model.deletePerson(toAdd);
             model.removeTags(newTags);
-        } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("The command has been successfully executed previously; "
-                    + "it should not fail now");
-        } catch (DeleteOnCascadeException doce) {
-            throw new AssertionError("The command has been successfully executed previously; "
-                    + "it should not fail now");
+        } catch (PersonNotFoundException | DeleteOnCascadeException pnfe) {
+            throw new AssertionError(MESSAGE_UNDO_ASSERTION_ERROR);
         }
     }
 
@@ -99,8 +97,7 @@ public class AddCommand extends UndoableCommand {
         try {
             model.addPerson(toAdd);
         } catch (DuplicatePersonException e) {
-            throw new AssertionError("The command has been successfully executed previously; "
-                    + "it should not fail now");
+            throw new AssertionError(MESSAGE_REDO_ASSERTION_ERROR);
         }
     }
 }

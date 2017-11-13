@@ -17,9 +17,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.commands.exceptions.DeleteOnCascadeException;
 import seedu.address.model.AddressBook;
+import seedu.address.model.EventList;
 import seedu.address.model.Model;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.EventNameContainsKeywordsPredicate;
@@ -36,6 +38,7 @@ import seedu.address.model.person.exceptions.HaveParticipateEventException;
 import seedu.address.model.person.exceptions.NotParticipateEventException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
+import seedu.address.testutil.EventDescriptorBuilder;
 
 /**
  * Contains helper methods for testing commands.
@@ -52,18 +55,17 @@ public class CommandTestUtil {
     public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3";
     public static final String VALID_BIRTHDAY_AMY = "01/01/1990";
     public static final String VALID_BIRTHDAY_BOB = "10-10-1991";
-    public static final String VALID_PORTRAIT_PATH_FIRST = "C:/sample1.png";
-    public static final String VALID_PORTRAIT_PATH_SECOND = "D:/sample2.jpg";
+    public static final String VALID_PORTRAIT_PATH_FIRST = "C:/sample folder/sample1.png";
+    public static final String VALID_PORTRAIT_PATH_SECOND = "D:/my pictures/sample2.jpg";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
     public static final String VALID_EVENT_NAME_FIRST = "First";
     public static final String VALID_EVENT_NAME_SECOND = "Second Meeting";
     public static final String VALID_EVENT_DESC_FIRST = "Discuss A & B 12354 ?";
     public static final String VALID_EVENT_DESC_SECOND = "??2Discuss A & B 12**354 ?";
-    //@@author Adoby7
-    public static final String VALID_EVENT_TIME_FIRST = "03/11/2018";
+    public static final String VALID_EVENT_TIME_FIRST = "31/12/2018";
     public static final String VALID_EVENT_TIME_SECOND = "29/02/2020"; //leap year
-    //@@author
+    public static final String VALID_EVENT_TIME_THIRD = "29/02/2000";
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
@@ -95,15 +97,13 @@ public class CommandTestUtil {
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
     public static final String INVALID_EVENT_NAME = " " + PREFIX_EVENT_NAME + "Meeting & "; // '&' not allowed in names
     public static final String INVALID_EVENT_DESC = " " + PREFIX_EVENT_DESCRIPTION + " "; //Empty description
-    //@@author Adoby7
     public static final String INVALID_EVENT_TIME_FIRST = " " + PREFIX_EVENT_TIME + "03/15/2017";
-    public static final String INVALID_EVENT_TIME_SECOND = " " + PREFIX_EVENT_TIME + "31/11/2017"; // 30 days in Nov
-    public static final String INVALID_EVENT_TIME_THIRD = " " + PREFIX_EVENT_TIME + "29/02/2017";
-    public static final String INVALID_EVENT_TIME_FORTH = " " + PREFIX_EVENT_TIME + "29/02/2100"; //Not a leap year
-    //@@author
+    public static final String INVALID_EVENT_TIME_SECOND = " " + PREFIX_EVENT_TIME + "29/02/2100"; //Not a leap year
 
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;
+    public static final EditEventCommand.EditEventDescriptor DESC_EVENT_FIRST;
+    public static final EditEventCommand.EditEventDescriptor DESC_EVENT_SECOND;
 
     static {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
@@ -112,6 +112,10 @@ public class CommandTestUtil {
         DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
                 .withBirthday(VALID_BIRTHDAY_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
+        DESC_EVENT_FIRST = new EventDescriptorBuilder().withName(VALID_EVENT_NAME_FIRST)
+            .withDescription(VALID_EVENT_DESC_FIRST).withTime(VALID_EVENT_TIME_FIRST).build();
+        DESC_EVENT_SECOND = new EventDescriptorBuilder().withName(VALID_EVENT_NAME_SECOND)
+            .withDescription(VALID_EVENT_DESC_SECOND).withTime(VALID_EVENT_TIME_SECOND).build();
     }
 
     /**
@@ -140,7 +144,9 @@ public class CommandTestUtil {
         // we are unable to defensively copy the model for comparison later, so we can
         // only do so by copying its components.
         AddressBook expectedAddressBook = new AddressBook(actualModel.getAddressBook());
+        EventList expectedEventList = new EventList(actualModel.getEventList());
         List<ReadOnlyPerson> expectedFilteredList = new ArrayList<>(actualModel.getFilteredPersonList());
+        List<ReadOnlyEvent> expectedFilteredEventList = new ArrayList<>(actualModel.getFilteredEventList());
 
         try {
             command.execute();
@@ -148,7 +154,9 @@ public class CommandTestUtil {
         } catch (CommandException e) {
             assertEquals(expectedMessage, e.getMessage());
             assertEquals(expectedAddressBook, actualModel.getAddressBook());
+            assertEquals(expectedEventList, actualModel.getEventList());
             assertEquals(expectedFilteredList, actualModel.getFilteredPersonList());
+            assertEquals(expectedFilteredEventList, actualModel.getFilteredEventList());
         }
     }
 
@@ -227,26 +235,61 @@ public class CommandTestUtil {
     /**
      * Modify target person's details to be editedPerson's
      */
-    public static void modifyPerson(Model model, ReadOnlyPerson targetPerson, ReadOnlyPerson editedPerson) {
+    public static void modifyPerson(Model model, Index targetIndex, ReadOnlyPerson editedPerson) {
         try {
+            ReadOnlyPerson targetPerson = model.getFilteredPersonList().get(targetIndex.getZeroBased());
             model.updatePerson(targetPerson, editedPerson);
         } catch (DuplicatePersonException dpe) {
             throw new AssertionError("Impossible.", dpe);
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("Person in filtered list must exist in model.", pnfe);
+        } catch (DeleteOnCascadeException doce) {
+            throw new AssertionError("Impossible", doce);
         }
     }
 
+    /**
+     * Modify target person's details to be editedEvent's
+     */
+    public static void modifyEvent(Model model, Index targetIndex, ReadOnlyEvent editedEvent) {
+        try {
+            ReadOnlyEvent targetEvent = model.getFilteredEventList().get(targetIndex.getZeroBased());
+            model.updateEvent(targetEvent, editedEvent);
+        } catch (DuplicateEventException e) {
+            throw new AssertionError("Impossible.", e);
+        } catch (EventNotFoundException e) {
+            throw new AssertionError("Event in filtered list must exist in model.", e);
+        } catch (DeleteOnCascadeException doce) {
+            throw new AssertionError("Impossible", doce);
+        }
+    }
 
     /**
      * Let a specific person quit a specific event
      */
-    public static void quitEvent(Model model, Person person, Event event) {
+    public static void quitEvent(Model model, Index personIndex, Index eventIndex) {
+        Person person = (Person) model.getFilteredPersonList().get(personIndex.getZeroBased());
+        Event event = (Event) model.getFilteredEventList().get(eventIndex.getZeroBased());
         try {
             model.quitEvent(person, event);
         } catch (PersonNotParticipateException e) {
             throw new AssertionError("Impossible", e);
         } catch (NotParticipateEventException e) {
+            throw new AssertionError("Impossible", e);
+        }
+    }
+
+    /**
+     *  Let a specific person join a specific event
+     */
+    public static void joinEvent(Model model, Index personIndex, Index eventIndex) {
+        Person person = (Person) model.getFilteredPersonList().get(personIndex.getZeroBased());
+        Event event = (Event) model.getFilteredEventList().get(eventIndex.getZeroBased());
+        try {
+            model.joinEvent(person, event);
+        } catch (PersonHaveParticipateException e) {
+            throw new AssertionError("Impossible", e);
+        } catch (HaveParticipateEventException e) {
             throw new AssertionError("Impossible", e);
         }
     }

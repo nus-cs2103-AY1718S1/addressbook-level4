@@ -5,7 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_EVENTS_LISTED_OVERVIEW;
 import static seedu.address.testutil.TypicalEvents.FIRST;
-import static seedu.address.testutil.TypicalEvents.FORTH;
+import static seedu.address.testutil.TypicalEvents.FOURTH;
 import static seedu.address.testutil.TypicalEvents.SECOND;
 import static seedu.address.testutil.TypicalEvents.THIRD;
 import static seedu.address.testutil.TypicalEvents.getTypicalEventList;
@@ -72,7 +72,7 @@ public class FindEventCommandTest {
         String expectedMessage = String.format
                 (MESSAGE_EVENTS_LISTED_OVERVIEW, 4);
         FindEventCommand command = prepareCommand("meeting");
-        assertCommandSuccess(command, expectedMessage, Arrays.asList(FIRST, SECOND, THIRD, FORTH));
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(FIRST, SECOND, THIRD, FOURTH));
     }
 
     /**

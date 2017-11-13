@@ -16,8 +16,6 @@ import seedu.address.model.event.exceptions.PersonHaveParticipateException;
 import seedu.address.model.event.exceptions.PersonNotParticipateException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 //@@author Adoby7
 /**
@@ -31,7 +29,7 @@ public class EventList implements ReadOnlyEventList {
     }
 
     /**
-     * Creates an EventList using the Persons and Tags and events in the {@code toBeCopied}
+     * Creates an EventList using the events in the {@code toBeCopied}
      */
     public EventList(ReadOnlyEventList toBeCopied) {
         this();
@@ -56,10 +54,10 @@ public class EventList implements ReadOnlyEventList {
 
     /**
      * Adds a event to the event list.
-     * Also checks the new event's participants and updates {@link #events} with any new persons found,
-     * and updates the Person objects in the event to point to those in {@link #events}.
+     * Also checks the new event's participants and updates {@link #events} with any new events found,
+     * and updates the Event objects in the event to point to those in {@link #events}.
      *
-     * @throws DuplicateEventException if an equivalent person already exists.
+     * @throws DuplicateEventException if an equivalent event already exists.
      */
     public void addEvent(ReadOnlyEvent e) throws DuplicateEventException {
         Event newEvent = new Event(e);
@@ -76,15 +74,15 @@ public class EventList implements ReadOnlyEventList {
     }
 
     /**
-     * Replaces the given person {@code target} in the list with {@code editedReadOnlyPerson}.
-     * {@code AddressBook}'s tag list will be updated with the tags of {@code editedReadOnlyPerson}.
+     * Replaces the given event {@code target} in the list with {@code editedReadOnlyEvent}.
+     * {@code AddressBook}'s tag list will be updated with the tags of {@code editedReadOnlyEvent}.
      *
-     * @throws DuplicatePersonException if updating the person's details causes the person to be equivalent to
-     *                                  another existing person in the list.
-     * @throws PersonNotFoundException  if {@code target} could not be found in the list.
+     * @throws DuplicateEventException if updating the event's details causes the event to be equivalent to
+     *                                  another existing event in the list.
+     * @throws EventNotFoundException  if {@code target} could not be found in the list.
      */
     public void updateEvent(ReadOnlyEvent target, ReadOnlyEvent editedReadOnlyEvent)
-            throws DuplicateEventException, EventNotFoundException {
+            throws DuplicateEventException, EventNotFoundException, DeleteOnCascadeException {
         requireNonNull(editedReadOnlyEvent);
 
         Event editedEvent = new Event(editedReadOnlyEvent);
@@ -110,7 +108,6 @@ public class EventList implements ReadOnlyEventList {
      */
     public void removeParticipant(ReadOnlyPerson person, Event targetEvent)
             throws PersonNotParticipateException {
-
         events.removeParticipant(person, targetEvent);
     }
 

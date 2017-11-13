@@ -23,13 +23,10 @@
             model.deletePerson(toAdd);
             model.removeTags(newTags);
         } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("The command has been successfully executed previously; "
-                    + "it should not fail now");
+            throw new AssertionError(MESSAGE_UNDO_ASSERTION_ERROR);
         } catch (DeleteOnCascadeException doce) {
-            throw new AssertionError("The command has been successfully executed previously; "
-                    + "it should not fail now");
+            throw new AssertionError(MESSAGE_UNDO_ASSERTION_ERROR);
         }
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
     }
 
     @Override
@@ -38,8 +35,7 @@
         try {
             model.addPerson(toAdd);
         } catch (DuplicatePersonException e) {
-            throw new AssertionError("The command has been successfully executed previously; "
-                    + "it should not fail now");
+            throw new AssertionError(MESSAGE_REDO_ASSERTION_ERROR);
         }
     }
 }
@@ -63,8 +59,6 @@ public class ClearCommand extends UndoableCommand {
         this.previousAddressBook = new AddressBook(model.getAddressBook());
         this.previousEventList = new EventList(model.getEventList());
         model.resetData(new AddressBook(), new EventList());
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        model.updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
         return new CommandResult(MESSAGE_SUCCESS);
     }
 
@@ -72,16 +66,12 @@ public class ClearCommand extends UndoableCommand {
     protected void undo() {
         requireAllNonNull(model, previousAddressBook);
         model.resetData(previousAddressBook, previousEventList);
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        model.updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
     }
 
     @Override
     protected void redo() {
         requireNonNull(model);
         model.resetData(new AddressBook(), new EventList());
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        model.updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
     }
 }
 ```
@@ -91,7 +81,6 @@ public class ClearCommand extends UndoableCommand {
     protected void undo() {
         requireAllNonNull(model, personToDelete);
         model.addPerson(targetIndex.getZeroBased(), personToDelete);
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
     }
 
     @Override
@@ -100,22 +89,12 @@ public class ClearCommand extends UndoableCommand {
         try {
             model.deletePerson(personToDelete);
         } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("The command has been successfully executed previously; "
-                    + "it should not fail now");
+            throw new AssertionError(MESSAGE_REDO_ASSERTION_ERROR);
         } catch (DeleteOnCascadeException doce) {
-            throw new AssertionError("The command has been successfully executed previously; "
-                    + "it should not fail now");
+            throw new AssertionError(MESSAGE_REDO_ASSERTION_ERROR);
         }
     }
 
-    /**
-     * Assign a typical person to delete
-     * Can only be used for JUnit test
-     * @param p the person used to test
-     */
-    public void assignPerson(ReadOnlyPerson p) {
-        personToDelete = p;
-    }
 }
 ```
 ###### \java\seedu\address\logic\commands\DisjoinCommand.java
@@ -136,7 +115,7 @@ public class DisjoinCommand extends UndoableCommand {
             + PREFIX_EVENT + "2";
 
     public static final String MESSAGE_DISJOIN_SUCCESS = "Person \"%1$s\" does not participate Event \"%2$s\"";
-    public static final String MESSAGE_PERSON_NOT_PARTICIPATE = "This person already does not participate this event";
+    public static final String MESSAGE_PERSON_NOT_PARTICIPATE = "This person does not participate this event";
 
     private final Index personIndex;
     private final Index eventIndex;
@@ -160,16 +139,16 @@ public class DisjoinCommand extends UndoableCommand {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        personToRemove = (Person) lastShownPersonList.get(personIndex.getZeroBased());
-        eventToRemove = (Event) lastShownEventList.get(eventIndex.getZeroBased());
+        personToRemove = new Person (lastShownPersonList.get(personIndex.getZeroBased()));
+        eventToRemove = new Event (lastShownEventList.get(eventIndex.getZeroBased()));
         try {
             model.quitEvent(personToRemove, eventToRemove);
             return new CommandResult(String.format(MESSAGE_DISJOIN_SUCCESS, personToRemove.getName(),
                     eventToRemove.getEventName()));
         } catch (PersonNotParticipateException pnpe) {
-            return new CommandResult(MESSAGE_PERSON_NOT_PARTICIPATE);
+            throw  new CommandException(MESSAGE_PERSON_NOT_PARTICIPATE);
         } catch (NotParticipateEventException npee) {
-            return new CommandResult(MESSAGE_PERSON_NOT_PARTICIPATE);
+            throw  new CommandException(MESSAGE_PERSON_NOT_PARTICIPATE);
         }
     }
 
@@ -178,11 +157,9 @@ public class DisjoinCommand extends UndoableCommand {
         try {
             model.joinEvent(personToRemove, eventToRemove);
         } catch (PersonHaveParticipateException pnpe) {
-            throw new AssertionError("Undo is to revert a stage; "
-                    + "it should not fail");
+            throw new AssertionError(MESSAGE_UNDO_ASSERTION_ERROR);
         } catch (HaveParticipateEventException hpee) {
-            throw new AssertionError("Undo is to revert a stage; "
-                    + "it should not fail now");
+            throw new AssertionError(MESSAGE_UNDO_ASSERTION_ERROR);
         }
     }
 
@@ -191,13 +168,20 @@ public class DisjoinCommand extends UndoableCommand {
         try {
             model.quitEvent(personToRemove, eventToRemove);
         } catch (PersonNotParticipateException pnpe) {
-            throw new AssertionError("The command has been successfully executed previously; "
-                    + "it should not fail now");
+            throw new AssertionError(MESSAGE_REDO_ASSERTION_ERROR);
         } catch (NotParticipateEventException npee) {
-            throw new AssertionError("The command has been successfully executed previously; "
-                    + "it should not fail now");
+            throw new AssertionError(MESSAGE_REDO_ASSERTION_ERROR);
         }
 
+    }
+
+    /**
+     * Assign the target person and event
+     * Only used for testing
+     */
+    public void assignValueForTest(Person person, Event event) {
+        this.personToRemove = person;
+        this.eventToRemove = event;
     }
 
     @Override
@@ -217,13 +201,10 @@ public class DisjoinCommand extends UndoableCommand {
             model.updatePerson(editedPerson, personToEdit);
             model.removeTags(newTags);
         } catch (DuplicatePersonException dpe) {
-            throw new AssertionError("The command has been successfully executed previously; "
-                    + "it should not fail now");
+            throw new AssertionError(MESSAGE_UNDO_ASSERTION_ERROR);
         } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("The command has been successfully executed previously; "
-                    + "it should not fail now");
+            throw new AssertionError(MESSAGE_UNDO_ASSERTION_ERROR);
         }
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
     }
 
     @Override
@@ -231,13 +212,10 @@ public class DisjoinCommand extends UndoableCommand {
         try {
             model.updatePerson(personToEdit, editedPerson);
         } catch (DuplicatePersonException dpe) {
-            throw new AssertionError("The command has been successfully executed previously; "
-                    + "it should not fail now");
+            throw new AssertionError(MESSAGE_REDO_ASSERTION_ERROR);
         } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("The command has been successfully executed previously; "
-                    + "it should not fail now");
+            throw new AssertionError(MESSAGE_REDO_ASSERTION_ERROR);
         }
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
     }
 ```
 ###### \java\seedu\address\logic\commands\EditEventCommand.java
@@ -260,9 +238,9 @@ public class EditEventCommand extends UndoableCommand {
             + PREFIX_EVENT_DESCRIPTION + "Discuss how to handle Q&A "
             + PREFIX_EVENT_TIME + "02/11/2017 ";
 
-    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Event: %1$s";
+    public static final String MESSAGE_EDIT_EVENT_SUCCESS = "Edited Event: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This event already exists in the address book.";
+    public static final String MESSAGE_DUPLICATE_EVENT = "This event already exists in the address book.";
 
     private Index index;
     private EditEventDescriptor editEventDescriptor;
@@ -286,23 +264,20 @@ public class EditEventCommand extends UndoableCommand {
         List<ReadOnlyEvent> lastShownList = model.getFilteredEventList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_EVENT_DISPLAYED_INDEX);
         }
 
-        if (eventToEdit == null && editedEvent == null) { // Distinguish with JUnit tests
-            eventToEdit = lastShownList.get(index.getZeroBased());
-            editedEvent = createEditedEvent(eventToEdit, editEventDescriptor);
-        }
+        eventToEdit = lastShownList.get(index.getZeroBased());
+        editedEvent = createEditedEvent(eventToEdit, editEventDescriptor);
 
         try {
             model.updateEvent(eventToEdit, editedEvent);
         } catch (DuplicateEventException dpe) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            throw new CommandException(MESSAGE_DUPLICATE_EVENT);
         } catch (EventNotFoundException pnfe) {
             throw new AssertionError("The target event cannot be missing");
         }
-        model.updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
-        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedEvent));
+        return new CommandResult(String.format(MESSAGE_EDIT_EVENT_SUCCESS, editedEvent));
     }
 
     @Override
@@ -310,13 +285,10 @@ public class EditEventCommand extends UndoableCommand {
         try {
             model.updateEvent(editedEvent, eventToEdit);
         } catch (DuplicateEventException dpe) {
-            throw new AssertionError("The command has been successfully executed previously; "
-                    + "it should not fail now");
+            throw new AssertionError(MESSAGE_UNDO_ASSERTION_ERROR);
         } catch (EventNotFoundException pnfe) {
-            throw new AssertionError("The command has been successfully executed previously; "
-                    + "it should not fail now");
+            throw new AssertionError(MESSAGE_UNDO_ASSERTION_ERROR);
         }
-        model.updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
     }
 
     @Override
@@ -324,15 +296,29 @@ public class EditEventCommand extends UndoableCommand {
         try {
             model.updateEvent(eventToEdit, editedEvent);
         } catch (DuplicateEventException dpe) {
-            throw new AssertionError("The command has been successfully executed previously; "
-                    + "it should not fail now");
+            throw new AssertionError(MESSAGE_REDO_ASSERTION_ERROR);
         } catch (EventNotFoundException pnfe) {
-            throw new AssertionError("The command has been successfully executed previously; "
-                    + "it should not fail now");
+            throw new AssertionError(MESSAGE_REDO_ASSERTION_ERROR);
         }
-        model.updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
     }
 
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof EditEventCommand)) {
+            return false;
+        }
+
+        // state check
+        EditEventCommand e = (EditEventCommand) other;
+        return index.equals(e.index)
+            && editEventDescriptor.equals(e.editEventDescriptor);
+    }
     /**
      * Creates and returns a {@code Event} with the details of {@code eventToEdit}
      * edited with {@code editEventDescriptor}.
@@ -414,7 +400,7 @@ public class EditEventCommand extends UndoableCommand {
 
             return getEventName().equals(e.getEventName())
                     && getEventDescription().equals(e.getEventDescription())
-                    && getEventTime().equals(e.getEventName());
+                    && getEventTime().equals(e.getEventTime());
         }
     }
 }
@@ -435,8 +421,6 @@ public class PortraitCommand extends UndoableCommand {
             + PREFIX_PORTRAIT + "C:/user/images/sample.png";
     public static final String MESSAGE_ADD_PORTRAIT_SUCCESS = "Attached a head portrait to Person: %1$s";
     public static final String MESSAGE_DELETE_PORTRAIT_SUCCESS = "Removed head portrait from Person: %1$s";
-    public static final String MESSAGE_INVALID_URL = "The file path does not locate the image. "
-        + "Please make sure you enter the correct path.";
 
     private Index index;
     private PortraitPath filePath;
@@ -450,10 +434,6 @@ public class PortraitCommand extends UndoableCommand {
 
     @Override
     protected CommandResult executeUndoableCommand() throws CommandException {
-        if (!filePath.toString().isEmpty() && !PortraitPath.isValidUrl(filePath.toString())) {
-            throw new CommandException(MESSAGE_INVALID_URL);
-        }
-
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
@@ -484,9 +464,9 @@ public class PortraitCommand extends UndoableCommand {
         try {
             model.updatePerson(editedPerson, personToEdit);
         } catch (DuplicatePersonException dpe) {
-            throw new AssertionError("The person cannot cause duplicate");
+            throw new AssertionError(MESSAGE_UNDO_ASSERTION_ERROR);
         } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("The target person cannot be missing");
+            throw new AssertionError(MESSAGE_UNDO_ASSERTION_ERROR);
         }
     }
 
@@ -495,11 +475,9 @@ public class PortraitCommand extends UndoableCommand {
         try {
             model.updatePerson(personToEdit, editedPerson);
         } catch (DuplicatePersonException dpe) {
-            throw new AssertionError("The command has been successfully executed previously; "
-                + "it should not fail now");
+            throw new AssertionError(MESSAGE_REDO_ASSERTION_ERROR);
         } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("The command has been successfully executed previously; "
-                + "it should not fail now");
+            throw new AssertionError(MESSAGE_REDO_ASSERTION_ERROR);
         }
     }
 
@@ -652,6 +630,35 @@ public class PortraitCommandParser implements Parser<PortraitCommand> {
 ```
 ###### \java\seedu\address\model\AddressBook.java
 ``` java
+    /**
+     * Remove tags that only in this deleted person
+     * Used for undo Add & Edit Command
+     */
+    public void separateMasterTagListWith(Set<Tag> tagsToRemove) {
+        for (Tag tag : tagsToRemove) {
+            tags.remove(tag);
+        }
+    }
+
+
+    /**
+     * Get the tags in the new-added person, but not in the list
+     */
+    public Set<Tag> extractNewTags(ReadOnlyPerson person) {
+        Set<Tag> personTags = person.getTags();
+        Set<Tag> newTags = new HashSet<Tag>();
+
+        for (Tag tag : personTags) {
+            if (!tags.contains(tag)) {
+                newTags.add(tag);
+            }
+        }
+
+        return newTags;
+    }
+```
+###### \java\seedu\address\model\AddressBook.java
+``` java
     public void removeParticipation(Person person, ReadOnlyEvent event) throws NotParticipateEventException {
         persons.removeParticipateEvent(person, event);
     }
@@ -699,6 +706,9 @@ public class PortraitCommandParser implements Parser<PortraitCommand> {
                 && isValidDay(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day));
     }
 
+    /**
+     * Returns true if a given string is a valid time
+     */
     public static boolean isValidEventTime(String eventTime) {
         String trimmedTime = eventTime.trim();
         if (!isValidFormat(trimmedTime)) {
@@ -853,12 +863,25 @@ public class EventList implements ReadOnlyEventList {
 ###### \java\seedu\address\model\ModelManager.java
 ``` java
     @Override
+    public Set<Tag> extractNewTag(ReadOnlyPerson person) {
+        return addressBook.extractNewTags(person);
+    }
+
+    @Override
+    public void removeTags(Set<Tag> tagList) {
+        addressBook.separateMasterTagListWith(tagList);
+        indicateAddressBookChanged();
+    }
+```
+###### \java\seedu\address\model\ModelManager.java
+``` java
+    @Override
     public void updateEvent(ReadOnlyEvent target, ReadOnlyEvent editedEvent)
             throws DuplicateEventException, EventNotFoundException {
         requireAllNonNull(target, editedEvent);
 
         eventList.updateEvent(target, editedEvent);
-        indicateAddressBookChanged();
+        updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
         indicateEventListChanged();
     }
 
@@ -997,7 +1020,7 @@ public class XmlAdaptedPersonNoParticipation {
      */
     private void loadPortrait(String filePath) {
         String url;
-        if (filePath.isEmpty()) {
+        if (filePath.isEmpty() || !new File(filePath).exists()) { // In case user deletes the image file
             url = PortraitPath.DEFAULT_PORTRAIT_PATH;
         } else {
             url = PortraitPath.FILE_PREFIX + filePath;

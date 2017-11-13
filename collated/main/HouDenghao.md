@@ -67,7 +67,7 @@ public class ShowParticipantsCommand extends Command {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_SHOW_PARTICIPANTS_SUCCESS = "Show Participants Successfully!";
+    public static final String MESSAGE_SHOW_PARTICIPANTS_SUCCESS = "Show all the participants of %1$s";
 
     private final Index targetIndex;
     private ReadOnlyEvent eventToShow;
@@ -93,7 +93,7 @@ public class ShowParticipantsCommand extends Command {
 
         model.updateFilteredPersonList(predicate);
 
-        return new CommandResult(String.format(MESSAGE_SHOW_PARTICIPANTS_SUCCESS));
+        return new CommandResult(String.format(MESSAGE_SHOW_PARTICIPANTS_SUCCESS, eventToShow.getEventName()));
     }
 
     @Override
@@ -120,8 +120,6 @@ public class SortCommand extends Command {
     public CommandResult execute() {
         model.sortPersons();
         model.sortEvents();
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        model.updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }
@@ -360,8 +358,7 @@ public class EventCard extends UiPart<Region> {
         time.textProperty().bind(Bindings.convert(event.timeProperty()));
         if (event.getEventTime().getDays() == 0) {
             timer.textProperty().bind(Bindings.convert(new SimpleObjectProperty<>("Today!")));
-        }
-        else {
+        } else {
             timer.textProperty().bind(Bindings.convert(event.daysProperty()));
         }
     }
@@ -475,6 +472,7 @@ public class InformationBoard extends UiPart<Region> {
 
     @FXML
     private TextArea informationBoard;
+
     @FXML
     private Label title;
 
@@ -498,13 +496,11 @@ public class InformationBoard extends UiPart<Region> {
 ###### \java\seedu\address\ui\MainWindow.java
 ``` java
         InformationBoard informationBoard = new InformationBoard();
-        informationBoardPlaceholder.getChildren().add(informationBoard.getRoot());
 
 ```
 ###### \java\seedu\address\ui\MainWindow.java
 ``` java
         eventListPanel = new EventListPanel(logic.getFilteredEventList());
-        eventListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
 
 ```
 ###### \resources\view\DarkTheme.css
@@ -539,6 +535,7 @@ public class InformationBoard extends UiPart<Region> {
 .list-view {
     -fx-background-insets: 0;
     -fx-padding: 0;
+    -fx-background-color: transparent;
 }
 
 .list-cell {

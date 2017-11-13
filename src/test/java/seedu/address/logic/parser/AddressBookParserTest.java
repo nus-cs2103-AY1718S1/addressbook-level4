@@ -7,8 +7,11 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.CommandTestUtil.PORTRAIT_DESC_FIRST;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PORTRAIT_PATH_FIRST;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_EVENT;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 
 import java.util.Arrays;
 import java.util.List;
@@ -18,11 +21,16 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AddEventCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.DisjoinCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
+import seedu.address.logic.commands.EditEventCommand;
+import seedu.address.logic.commands.EditEventCommand.EditEventDescriptor;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.FindEventCommand;
@@ -33,13 +41,19 @@ import seedu.address.logic.commands.PortraitCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.ShowParticipantsCommand;
+import seedu.address.logic.commands.SortCommand;
+import seedu.address.logic.commands.SortEventCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.event.Event;
 import seedu.address.model.event.EventNameContainsKeywordsPredicate;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.PortraitPath;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
+import seedu.address.testutil.EventBuilder;
+import seedu.address.testutil.EventDescriptorBuilder;
+import seedu.address.testutil.EventsUtil;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
 
@@ -80,10 +94,36 @@ public class AddressBookParserTest {
 
     //@@author Adoby7
     @Test
+    public void parseCommandAddEvent() throws Exception {
+        Event event = new EventBuilder().build();
+        AddEventCommand command = (AddEventCommand) parser.parseCommand(AddEventCommand.COMMAND_WORD + " "
+                + EventsUtil.getEventDetails(event));
+        assertEquals(new AddEventCommand(event), command);
+    }
+
+    @Test
+    public void parseCommandDisjoin() throws Exception {
+        Index personIndex = INDEX_SECOND_PERSON;
+        Index eventIndex = INDEX_FIRST_EVENT;
+        DisjoinCommand command = (DisjoinCommand) parser.parseCommand(DisjoinCommand.COMMAND_WORD + " "
+                + PREFIX_EVENT + eventIndex.getOneBased() + " " + PREFIX_PERSON + personIndex.getOneBased());
+        assertEquals(new DisjoinCommand(personIndex, eventIndex), command);
+    }
+
+    @Test
     public void parseCommandPortrait() throws Exception {
         PortraitCommand command = (PortraitCommand) parser.parseCommand(PortraitCommand.COMMAND_WORD + " "
                 + INDEX_FIRST_PERSON.getOneBased() + " " + PORTRAIT_DESC_FIRST);
         assertEquals(new PortraitCommand(INDEX_FIRST_PERSON, new PortraitPath(VALID_PORTRAIT_PATH_FIRST)), command);
+    }
+
+    @Test
+    public void parseCommandEditEvent() throws Exception {
+        Event event = new EventBuilder().build();
+        EditEventDescriptor descriptor = new EventDescriptorBuilder(event).build();
+        EditEventCommand command = (EditEventCommand) parser.parseCommand(EditEventCommand.COMMAND_WORD + " "
+                + INDEX_FIRST_PERSON.getOneBased() + " " + EventsUtil.getEventDetails(event));
+        assertEquals(new EditEventCommand(INDEX_FIRST_PERSON, descriptor), command);
     }
     //@@author
 
@@ -115,6 +155,18 @@ public class AddressBookParserTest {
         ShowParticipantsCommand command = (ShowParticipantsCommand) parser.parseCommand(
                 ShowParticipantsCommand.COMMAND_WORD + " " + INDEX_FIRST_EVENT.getOneBased());
         assertEquals(new ShowParticipantsCommand(INDEX_FIRST_EVENT), command);
+    }
+
+    @Test
+    public void parseCommandSort() throws Exception {
+        assertTrue(parser.parseCommand(SortCommand.COMMAND_WORD) instanceof SortCommand);
+        assertTrue(parser.parseCommand(SortCommand.COMMAND_WORD + " 3") instanceof SortCommand);
+    }
+
+    @Test
+    public void parseCommandSortE() throws Exception {
+        assertTrue(parser.parseCommand(SortEventCommand.COMMAND_WORD) instanceof SortEventCommand);
+        assertTrue(parser.parseCommand(SortEventCommand.COMMAND_WORD + " 3") instanceof SortEventCommand);
     }
 
     // @@author

@@ -2,7 +2,7 @@ package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertEquals;
 import static seedu.address.testutil.TypicalEvents.FIRST;
-import static seedu.address.testutil.TypicalEvents.FORTH;
+import static seedu.address.testutil.TypicalEvents.FOURTH;
 import static seedu.address.testutil.TypicalEvents.SECOND;
 import static seedu.address.testutil.TypicalEvents.THIRD;
 import static seedu.address.testutil.TypicalEvents.getEmptyEventList;
@@ -38,28 +38,27 @@ public class SortCommandTest {
     private Model filledModel;
     private Model emptyModel;
     private Model personModel;
-    private Model eventModel;
+
 
     @Before
     public void setUp() {
         filledModel = new ModelManager(getUnsortedAddressBook(), getUnsortedEventList(), new UserPrefs());
         emptyModel = new ModelManager(getEmptyAddressBook(), getEmptyEventList(), new UserPrefs());
         personModel = new ModelManager(getUnsortedAddressBook(), getEmptyEventList(), new UserPrefs());
-        eventModel = new ModelManager(getEmptyAddressBook(), getUnsortedEventList(), new UserPrefs());
     }
 
     @Test
     public void executeEmptyListShowEmptylist() {
         SortCommand command = prepareCommand(emptyModel);
         assertSuccess(command, SortCommand.MESSAGE_SUCCESS, Collections.emptyList(),
-               Collections.emptyList(), emptyModel);
+                Collections.emptyList(), emptyModel);
     }
 
     @Test
     public void executeAllFilledListShowSortedList() {
         SortCommand command = prepareCommand(filledModel);
         assertSuccess(command, SortCommand.MESSAGE_SUCCESS, Arrays.asList(ALICE, BENSON, CARL, DANIEL),
-                Arrays.asList(FIRST, SECOND, THIRD, FORTH), filledModel);
+                Arrays.asList(FOURTH, SECOND, FIRST, THIRD), filledModel);
     }
 
     @Test
@@ -67,10 +66,6 @@ public class SortCommandTest {
         SortCommand commandOne = prepareCommand(personModel);
         assertSuccess(commandOne, SortCommand.MESSAGE_SUCCESS, Arrays.asList(ALICE, BENSON, CARL, DANIEL),
                 Collections.emptyList(), personModel);
-
-        SortCommand commandTwo = prepareCommand(eventModel);
-        assertSuccess(commandTwo, SortCommand.MESSAGE_SUCCESS, Collections.emptyList(),
-                Arrays.asList(FIRST, SECOND, THIRD, FORTH), eventModel);
     }
 
     /**

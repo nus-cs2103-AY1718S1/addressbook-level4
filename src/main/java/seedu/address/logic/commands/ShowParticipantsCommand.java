@@ -22,7 +22,7 @@ public class ShowParticipantsCommand extends Command {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_SHOW_PARTICIPANTS_SUCCESS = "Show all the participants of %1$s";
+    public static final String MESSAGE_SHOW_PARTICIPANTS_SUCCESS = "Show all the participants of \"%1$s\"";
 
     private final Index targetIndex;
     private ReadOnlyEvent eventToShow;

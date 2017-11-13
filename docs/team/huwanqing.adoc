@@ -60,7 +60,7 @@ The feature will be extremely helpful if the event involve a large number of peo
 ---
 #Start of Extract [from: Developer Guide] written by Adoby7#
 
-include::../DeveloperGuide.adoc[tag=interaction]
+include::../DeveloperGuide.adoc[tag=join]
 
 #End of Extract#
 
@@ -83,6 +83,34 @@ include::../DeveloperGuide.adoc[tag=model]
 
 ---
 
+=== Enhancement Added: addE
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=addE]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+For the event list, the basic operations: adding, deleting, listing and editing is necessary. Each of the team member did one part of the four operations above.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide] written by Adoby7#
+
+include::../DeveloperGuide.adoc[tag=addE]
+
+#End of Extract#
+
+---
+
 === Other contributions
 
 * Code refinement in Model and Logic component.
@@ -93,10 +121,3 @@ include::../DeveloperGuide.adoc[tag=model]
 * Wrote tests for Model component. +
     (pull request: [https://github.com/CS2103AUG2017-W14-B4/main/pull/126[#126]])
 
-=== Enhancement Proposed:
-
-Users can send messages through this app.
-
-== Project: PowerPointLabs
-
-{Optionally (not graded), you may include other projects in your portfolio.}

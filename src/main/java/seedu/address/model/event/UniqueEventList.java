@@ -78,12 +78,16 @@ public class UniqueEventList implements Iterable<Event> {
      * @throws EventNotFoundException if {@code target} could not be found in the list.
      */
     public void setEvent(ReadOnlyEvent target, ReadOnlyEvent editedEvent)
-            throws DuplicateEventException, EventNotFoundException {
+            throws DuplicateEventException, EventNotFoundException, DeleteOnCascadeException {
         requireNonNull(editedEvent);
 
         int index = internalList.indexOf(target);
         if (index == -1) {
             throw new EventNotFoundException();
+        }
+
+        if (!target.getParticipants().isEmpty()) {
+            throw new DeleteOnCascadeException();
         }
 
         if (!target.equals(editedEvent) && internalList.contains(editedEvent)) {
