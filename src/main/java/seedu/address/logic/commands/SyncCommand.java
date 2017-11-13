@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
 import java.util.logging.Logger;
 
 import com.google.api.services.people.v1.PeopleService;
@@ -131,13 +130,15 @@ public class SyncCommand extends Command {
         for (ReadOnlyPerson person : personList) {
             String id = person.getId().getValue();
 
-            if (!id.equals("") && !hashGoogleId.containsKey(id)) {
-                logger.info("Deleting local contact");
-                toDelete.add(person);
-                syncedIDs.remove(id);
-                continue;
-            } else if (!id.equals("") && !syncedIDs.contains(id)) {
-                syncedIDs.add(id);
+            if (!id.equals("")) {
+                if (!hashGoogleId.containsKey(id)) {
+                    logger.info("Deleting local contact");
+                    toDelete.add(person);
+                    syncedIDs.remove(id);
+                    continue;
+                } else if (!syncedIDs.contains(id)) {
+                    syncedIDs.add(id);
+                }
             }
 
         }
@@ -156,11 +157,12 @@ public class SyncCommand extends Command {
     private void exportContacts (List<ReadOnlyPerson> personList) throws Exception {
         for (ReadOnlyPerson person : personList) {
             if (person.getId().getValue().equals("")) {
-                if (!hashGoogle.containsKey(person.getName().fullName)) {
+                seedu.address.model.person.Person key = getHashKey(person);
+                if (!hashGoogle.containsKey(key)) {
                     addGoogleContact(person);
                 } else {
                     // We check if the person is identical, and link them if they are
-                    Person gPerson = hashGoogle.get(person.getName().fullName);
+                    Person gPerson = hashGoogle.get(key);
                     if (equalPerson(person, gPerson)) {
                         linkContacts(person, gPerson);
                     } else {
@@ -179,12 +181,15 @@ public class SyncCommand extends Command {
         for (Person person : connections) {
             try {
                 String id = person.getResourceName();
-                String gName = retrieveFullGName(person);
                 if (!syncedIDs.contains(id)) {
-                    if (!hashAbc.containsKey(gName)) {
+                    seedu.address.model.person.Person key = convertGooglePerson(person);
+                    if (key == null) continue;
+                    if (!hashAbc.containsKey(key)) {
+                        System.out.println("WAD");
+                        System.out.println("Inserting: " + key.toString() + "\n Hash: " + key.hashCode());
                         addAContact(person);
                     } else {
-                        seedu.address.model.person.ReadOnlyPerson aPerson = hashAbc.get(gName);
+                        seedu.address.model.person.ReadOnlyPerson aPerson = hashAbc.get(key);
                         if (equalPerson(aPerson, person)) {
                             linkContacts(aPerson, person);
                         } else {
@@ -311,8 +316,11 @@ public class SyncCommand extends Command {
     protected void addAContact (Person person) throws Exception {
         String id = person.getResourceName();
         seedu.address.model.person.Person convertedAPerson = convertGooglePerson(person);
-        model.addPerson(convertedAPerson);
-        syncedIDs.add(id);
+        if (convertedAPerson != null) {
+            model.addPerson(convertedAPerson);
+            syncedIDs.add(id);
+        }
+
     }
 
     /**Ensures that we do not override a Google Contact with null fields when updating
@@ -359,6 +367,7 @@ public class SyncCommand extends Command {
 
         if (name == null) {
             logger.warning("Google Contact has no retrievable name");
+            return null;
         } else {
             seedu.address.model.person.Name aName = new seedu.address.model.person.Name(retrieveFullGName(person));
             Phone aPhone = (phone == null || !Phone.isValidPhone(phone.getValue().replaceAll("\\s+", "")))
@@ -538,20 +547,20 @@ public class SyncCommand extends Command {
         return result;
     }
 
-    /**Constructs a HashMap of a Person's Name and itself
+    /**Constructs a HashMap of a Person with synchronised fields and itself
      *
      * @param personList
      * @return
      */
 
-    protected HashMap<seedu.address.model.person.Person, ReadOnlyPerson> constructHashAbc (List<ReadOnlyPerson> personList) {
+    protected HashMap<seedu.address.model.person.Person, ReadOnlyPerson> constructHashAbc
+    (List<ReadOnlyPerson> personList) {
         HashMap<seedu.address.model.person.Person, ReadOnlyPerson> result = new HashMap<>();
 
         personList.forEach(e -> {
             try {
-                seedu.address.model.person.Person key = new seedu.address.model.person.Person(e.getName(), e.getPhone(), e.getEmail(), e.getAddress(),
-                        new Note(""), e.getId(), new LastUpdated(Instant.now().toString()),
-                        new HashSet<Tag>(), new HashSet<Meeting>());
+                seedu.address.model.person.Person key = getHashKey(e);
+                System.out.println("Inserting: " + key.toString() + "\n Hash: " + key.hashCode());
                 result.put(key, e);
             } catch (Exception ex) {
                 logger.severe("Hashing error in constructHashAbc");
@@ -560,6 +569,20 @@ public class SyncCommand extends Command {
         });
 
         return result;
+    }
+
+    /**Constructs a key for a provided ReadOnlyPerson that is comparable to a Google person
+     *
+     * @param person
+     * @return
+     * @throws Exception
+     */
+    protected seedu.address.model.person.Person getHashKey(ReadOnlyPerson person) throws Exception {
+        seedu.address.model.person.Person key = new seedu.address.model.person.Person(
+                person.getName(), person.getPhone(), person.getEmail(), person.getAddress(),
+                new Note(""), person.getId(), new LastUpdated(Instant.now().toString()),
+                new HashSet<Tag>(), new HashSet<Meeting>());
+        return key;
     }
 
 
@@ -589,7 +612,9 @@ public class SyncCommand extends Command {
         connections.forEach(e -> {
             try {
                 seedu.address.model.person.Person key = convertGooglePerson(e);
-                result.put(key, e);
+                if (key != null) {
+                    result.put(key, e);
+                }
             } catch (Exception ex) {
                 logger.severe("Error in constructHashGoogle");
             }

@@ -131,7 +131,18 @@ public class SyncCommandTest {
         assertTrue(expected.size() == 1 && expected.contains("test"));
     }
 
+    @Test
+    public void for_hashing() throws Exception {
+        showFirstPersonOnly(model);
+        SyncCommand syncCommand = prepareCommand();
 
+        Person alice = prepareAliceGoogle();
+        seedu.address.model.person.Person aliceAbc = syncCommand.convertGooglePerson(alice);
+        seedu.address.model.person.ReadOnlyPerson actualAlice = syncCommand.getHashKey(model.getFilteredPersonList().get(0));
+
+        assertTrue(syncCommand.equalPerson(actualAlice, alice));
+        assertTrue(actualAlice.equals(aliceAbc));
+    }
 
     @Test
     public void equals() {
