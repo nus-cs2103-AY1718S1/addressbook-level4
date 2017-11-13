@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+﻿= Sales Navigator- Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -12,7 +12,7 @@ endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :repoURL: https://github.com/se-edu/addressbook-level4/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team CS2103 AUG-2017 B3`      Since: `Aug 2017`      Licence: `MIT`
 
 == Setting up
 
@@ -345,6 +345,116 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+// tag::eventcrud[]
+=== Events CRUD Mechanism
+The events CRUD (Create, Read, Update, Delete) mechanism is very similar to the persons CRUD system.  Four commands `AddEventCommand`, `FindEventCommand`, `DeleteEventCommand`, `EditEventCommand` are used to execute their respective functions through the `LogicManager`. +
+
+Commands are first read from `CommandBox` which then calls upon the `LogicManager` to detect the type of command. `LogicManager` then creates a `AddressBookParser` which uses `CheckCommandsParser` to detect any synonymous alternatives for their respective commands and returns the specific command type if available. +
+
+The specific command type is passed through its specific parser along with its arguments (E.g. `AddEventCommand` is parsed via `AddEventCommandParser`). The specific parser creates a specific command to return to `LogicManager` (E.g. `AddEventCommandParser` returns `AddEventCommand` with the `Event` to be be added once executed). +
+
+`LogicManager` proceeds to execute the received command. In this implementation, the Command will call upon `ModelManager` to do complete the CRUD operations onto its internal database. (E.g. `AddEventCommand` calls `model.addEvent(event)` to add the event created by `AddEventCommandParser` to the event list in `AddressBook`. +
+
+Once this is complete, an update is sent to the the `filteredEventList` which updates the `UI` Component. +
+
+Additionally, an `AddressBookChangedEvent` is also raised to the `EventsCenter` to indicate a change into so that `XmlAddressBookStorage` can begin saving the new information. It calls on `XmlSerializableAddressBook` to serialize the new event information and saves it to the data file via `XmlFileStorage`.
+
+==== Design Considerations
+
+**Aspect:** Implementation of Storage +
+**Alternative 1 (current choice):** Saving to a single data file shared with Person Data +
+**Pros:** We do not need a separate data file to save event information. Additionally, reading data is only done once. +
+**Cons:** Not very modular and intuitive. +
+**Alternative 2:** Create new data file to record events. +
+**Pros:** Modular and intuitive to new developers. Manual additions to the data file will also be easier. +
+**Cons:** Separate files are harder to manage.
+
+---
+// end::eventcrud[]
+
+// tag::timetable[]
+// end::timetable[]
+
+// tag::scheduling[]
+=== Event Scheduling
+
+Whenever an event is created, it will be added into an
+`ObservableTreeMap` of events, ranked by the scheduled date and time. This
+will enable us to implement the event scheduling feature comprised of two
+essential sub-features：
+
+* A GUI displaying all the events scheduled
+* A drag-and-drop action listener for quick and convenient rescheduling of
+events
+
+==== Event Scheduling
+
+When a `CheckSchedule` command is typed into the command box, or when the
+`Calendar` button on the main window is clicked, a
+`ShowCalendarEvent` will be sent to the EventsCenter. In response, a calendar
+GUI will appear in the main window, and events with a scheduled timing
+within the current week will be extracted from the eventList and
+reflected in the corresponding time slots on the calendar GUI. Each event is
+a draggable pane with event titles indicated.
+
+==== Reschedule event through drag-and-drop
+
+When the calendar view is loaded, all the time slots will be registered for
+dropping action. When the event panes are loaded, they will be registered for
+dragging action. When a user drag an event and drop to a specific time slot,
+the 'old' event will be removed and a 'new' event will be added at the
+dropped time slot, with the sames duration. If there is a time clash between
+the 'new' event and an existing event, or if the 'new' event's timing
+exceeds pre-set constraints (eg. extends out of the 24-hour period) the
+'dropping' action cannot be completed.
+
+==== Avoid time clash
+
+When a new event is added to the TreeMap, if the `timing` of the event has
+any overlap with an existing event, this will generate a
+`EventTimeClashException` that prevents the event from being added.
+
+==== Design Considerations
+
+**Aspect:** Date structure implementation of saved events +
+**Alternative 1:** use `ObservableList` +
+****
+**Pros:**
+
+* Easy to implement with default FXCollection observableList
+* Easy to iterate and access individual element +
+
+**Cons:**  +
+
+* Will be very slow for sorting and searching for urgent events. +
+****
+
+**Alternative 2:** use a `PriorityQueue` +
+****
+**Pros:**
+
+* Able to retrieve and remove the most urgent events in O(1) time +
+
+**Cons:**
+
+* Troublesome to update event's timeslot information
+* Does not automatically sort the events in chronological order
+****
+**Alternative 3 (current choice):** use a customised `ObservableTreeMap` +
+****
+**Pros:**
+
+* Easy to retrieve, update and remove, all in O(logN) time +
+* Automatically sort events in chronological order +
+
+**Cons:**
+
+* Need to implement own custmised `ObservableTreeMap` as the existing
+`ObservableMap` only supports `HashMap`.
+****
+
+// end::scheduling[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
@@ -363,6 +473,529 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 === Configuration
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
+
+// tag::optionalfields[]
+=== Adding optional fields: Company, Position, Status, Priority, and Note
+
+When adding a new person, the basic fields `Name`, `Phone`, `Email`, and `Address` (not including `Tags`) are compulsory fields as they apply to everyone. However, for extended sales functionality, we have included additional optional fields, namely `Company`, `Position`, `Status`, `Priority`, and `Note`.
+
+These fields are not necessarily applicable to everyone, as persons in a non-business context do not need to have these information included. Hence when adding a person, any number of these fields can be excluded and the person will still be able to be added.
+
+The primary logic that deals with these optional fields appears in the `parse` function of the `AddCommandParser` class:
+[source,java]
+----
+if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL)) {
+    throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+}
+
+try {
+    Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME)).get();
+    Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).get();
+    Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get();
+    Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
+    //Initialize company, position, status, and note to NIL, priority to L
+    Company company = new Company("NIL");
+    Position position = new Position("NIL");
+    Status status = new Status("NIL");
+    Priority priority = new Priority("L");
+    Note note = new Note("NIL");
+
+    Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
+
+    //Since Company, Position, Status and Priority are optional parameters, set them if they are present
+    if (arePrefixesPresent(argMultimap, PREFIX_COMPANY)) {
+        company = ParserUtil.parseCompany(argMultimap.getValue(PREFIX_COMPANY)).get();
+    }
+
+    if (arePrefixesPresent(argMultimap, PREFIX_POSITION)) {
+        position = ParserUtil.parsePosition(argMultimap.getValue(PREFIX_POSITION)).get();
+    }
+
+    if (arePrefixesPresent(argMultimap, PREFIX_STATUS)) {
+        status = ParserUtil.parseStatus(argMultimap.getValue(PREFIX_STATUS)).get();
+    }
+
+    if (arePrefixesPresent(argMultimap, PREFIX_PRIORITY)) {
+        priority = ParserUtil.parsePriority(argMultimap.getValue(PREFIX_PRIORITY)).get();
+    }
+
+    if (arePrefixesPresent(argMultimap, PREFIX_NOTE)) {
+        note = ParserUtil.parseNote(argMultimap.getValue(PREFIX_NOTE)).get();
+    }
+
+    ReadOnlyPerson person = new Person(name, phone, email, address, company, position, status, priority,
+            note, tagList);
+----
+The 4 required fields are checked to see if they are present. If any of them are missing, a `ParseException` is thrown and the add command is invalid.
+
+The 5 optional fields are handled differently. They are first initialized to a placeholder value ("NIL" for Company, Position, Status and Note, "L" for Priority, indicating the lowest priority). Each field is then checked to see if it has been entered in the user command through its prefix. If it has, the placeholder value is replaced by the entered string. This way, the user is able to selectively enter any of these fields (or none at all) and the `ReadOnlyPerson` object created will still have all fields initialized properly.
+
+==== Design Considerations:
+*Aspect*: Implementation of Company, Position, Status, Priority, and Note
+
+*Alternative 1*: Make these fields compulsory like Name, Address, Phone and Email
+
+*Pros*: Code and tests can be easily duplicated from existing fields.
+
+*Cons*: User may not always need to enter these fields and will become burdensome.
+
+*Alternative 2 (current choice)*: Make these fields optional
+
+*Pros*: Users have flexibility to omit any fields they do not think is necessary. Current tests do not have to be
+completely changed, instead can be extended to include additional fields.
+
+*Cons*: New logic required to handle fields that may not be input by the user.
+
+// tag::autoupdate[]
+=== Automatic update of Person card and Person panel details when edits are made
+The Person cards and Person panel are automatically updated when the user makes any edits to the fields. This is done
+by registering the PersonCard and PersonPanel classes as event handlers, and subscribing to the AddressBookChangedEvent
+that the EventsCenter sends out when the address book is altered. The Person card has an additional feature
+of changing the colour of the priority tag depending on what the priority is. The described behaviour is illustrated in
+the sequence diagram below:
+
+image::AutoUpdateSequenceDiagram.png[width=800]
+
+==== Design Considerations:
+*Aspect*: Implementation of binding card and panel fields to fields
+
+*Alternative 1*: Bind variables to listen for observables
+
+*Pros*: Person card fields already use this method, code can be easily duplicated.
+
+*Cons*: Priority field will not change colour just by changing the text value. Also, Person panel will need to
+change the person its variables are listening to every time a different selection is made.
+
+*Alternative 2 (current choice)*: Register PersonCard and PersonPanel as event handlers and subscribe to
+AddressBookChangedEvent
+
+*Pros*: Priority field can change colour this way, by setting the JavaFX id of the pane the priority label is in to
+different values and hence different CSS settings. Person panel will also be able to reuse the code for
+handlePersonPanelSelectionChangedEvent() as they both require the reloading of person details
+
+*Cons*: Computationally more expensive as the functions will be called whenever the address book is changed, even if
+the change does not affect that particular panel or card.
+// end::autoupdate[]
+
+// tag::photo[]
+=== Attaching photo to a contact
+
+Another optional field that can be added to a contact is the photo field. It
+can be added either:
+
+* through the `add` or `edit` command; OR
+
+* through the GUI
+
+==== Command-line implementation
+
+When the image file location is specified in the `add` or `edit` command, the
+ `AddCommandParser` and `EditCommandParser` parses the command and copy the
+ file specified from the local file system to the
+ `/src/main/resources/images` directory. The URL string of the copied image
+ file is then stored as the `photoURL` String in the `Photo` field of a
+ `Person`.
+
+When the person's details are loaded in the `PersonPanel`, the `photoURL`
+stored in the person is then loaded as an image and displayed in the graphic
+UI.
+
+==== GUI implementation
+
+For every `PersonPanel`, there is an `Import Image` button which allows the
+user to select a file from the local file system to import. Similar to the
+command-line implementation, this file is then copied to the
+`/src/main/resources/images` directory and then loaded in the graphic UI.
+
+//tag::photo[]
+
+// tag::Sorting[]
+=== Sorting of persons list
+
+The sorting mechanism achieved by creating a new `SortCommand` and `SortCommandParser`. It is also facilitated by
+`UniquePersonList`, which resides in `AddressBook`. It supports
+ the rearrangement of the person list which modifies the current arrangement. This command inherits the
+`UndoableCommand` which allows the user to undo/redo the sorting.
+
+The implementation of the `SortCommand` is as follows:
+
+[source, java]
+----
+public SortCommand(String sortType) {
+        this.sortType = sortType;
+    }
+----
+
+As you can see from the implementation, the command requires the input to be passed as a *String* parameter. Before
+the new instance of `SortCommand` is being created, the `SortCommandParser` will ensure that the input is not an
+empty string.
+
+The execution of the command is done in the following method:
+
+[source, java]
+----
+public CommandResult executeUndoableCommand() {
+    try {
+        model.sortPerson(sortType);
+        return new CommandResult(MESSAGE_SUCCESS + sortType);
+    } catch (InvalidSortTypeException iste) {
+            return new CommandResult(MESSAGE_UNKNOWN_SORT_TYPE);
+        }
+    }
+----
+
+After a series of method calls, the *model.sortPerson()* will eventually call the *sortPerson()* method in
+`UniquePersonList`.
+
+
+The implementation of the *sortPerson()* method:
+
+[source, java]
+----
+public void sortPerson(String type) throws InvalidSortTypeException {
+    final Comparator<Person> sortByName = (Person a, Person b) -> a.getName().toString()
+        .compareToIgnoreCase(b.getName().toString())
+    final Comparator<Person> sortByTags = (Person a, Person b) -> a.getTags().toString()
+        .compareToIgnoreCase((b.getTags().toString()));
+    final Comparator<Person> sortByCompany = (Person a, Person b) -> b.getCompany().compareTo(a
+        .getCompany());
+    final Comparator<Person> sortByPriority = (Person a, Person b) -> a.getPriority()
+        .compareTo(b.getPriority());
+    final Comparator<Person> sortByPosition = (Person a, Person b) -> b.getPosition().compareTo(a
+        .getPosition());
+    switch (type) {
+    case "name":
+        internalList.sort(sortByName);
+        break;
+    case "tag":
+        internalList.sort(sortByTags.thenComparing(sortByName));
+        break;
+    case "company":
+        internalList.sort(sortByCompany.thenComparing(sortByName));
+        break;
+    case "priority":
+        internalList.sort(sortByPriority.thenComparing(sortByName));
+        break;
+    case "position":
+        internalList.sort(sortByPosition.thenComparing(sortByName));
+        break;
+    default:
+        throw new InvalidSortTypeException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
+        }
+    }
+----
+As you can see from the above, there are 5 comparators that will perform different comparing method of the chosen the
+sorting type. The list of person will be rearranged after the *sortPerson()* method is executed.
+
+[NOTE]
+If sorting type is not found, an error message will to shown in the result display to notfiy the user of an unknown
+sorting
+type.
+
+Comparators for sorting *Name* and *Tag* are the same, they do not have a custom comparator.
+
+
+*Company* and *Position* have a default input, _"NIL"_, if it is not specified during the adding of the person,
+they should be sorted to the bottom of the list.
+
+*Priority* has the default input of priority is "L". They can be categorise into *three* different types, _H_, _M_
+and _L_. Priorities with the type as _"L"_ has to be at the bottom of the list with _"M"_ in the middle and _"H"_ at
+the top.
+
+Since *Company*, *Position* and *Priority* have specific way of sorting, a custom comparator would be needed in order
+ to get the arrangement that is most suited for the user.
+
+The *_ORDERED_ENTRIES_* indicates how should it should be sorted in both the comparator for *Company*, *Position* and
+ *Priority*.
+
+The implementation of the comparator for *Company* and *Position* are the same. For *Position* simply change all the
+variables and data type to be *Position*.
+
+An example of the implementation for *Company* is as follows:
+
+[source, java]
+----
+private static final String ORDERED_ENTRIES = "NIL";
+
+public int compareTo(Company company) {
+    if (ORDERED_ENTRIES.contains(company.toString()) && ORDERED_ENTRIES.contains(this.toString())) {
+        return ORDERED_ENTRIES.indexOf(this.toString()) - ORDERED_ENTRIES.indexOf(company.toString());
+    }
+    if (ORDERED_ENTRIES.contains(company.toString())) {
+        return 1;
+    }
+    if (ORDERED_ENTRIES.contains(this.toString())) {
+        return -1;
+    }
+    return company.toString().compareToIgnoreCase(this.toString());
+}
+public int compare(Company companyOne, Company companyTwo) {
+    return companyOne.compareTo(companyTwo);
+}
+----
+
+The implementation of the comparator for *Priority* is as follows:
+
+[source, java]
+----
+private static final String ORDERED_ENTRIES = "L, M, H";
+
+public int compareTo(Priority priority) {
+    if (ORDERED_ENTRIES.contains(priority.toString()) && ORDERED_ENTRIES.contains(this.toString())) {
+        return ORDERED_ENTRIES.indexOf(priority.toString()) - ORDERED_ENTRIES.indexOf(this.toString());
+    }
+    if (ORDERED_ENTRIES.contains(priority.toString())) {
+        return -1;
+    }
+    if (ORDERED_ENTRIES.contains(this.toString())) {
+        return 1;
+    }
+        return priority.toString().compareTo(this.toString());
+    }
+    @Override
+    public int compare(Priority priorityOne, Priority priorityTwo) {
+        return priorityOne.compareTo(priorityTwo);
+    }
+----
+
+The following sequence diagram shows how the sort operation works:
+
+image::SortCommandSequenceDiagram.png[width="800"]
+
+==== Design Considerations:
+*Aspect*: Implementation of Sorting
+
+*Alternative 1*: Just sort all the different methods alphabetically.
+
+*Pros*: The user is able to see the person list sorted alphabetically for each sorting method
+
+*Cons*: User may not want to sort them just alphabetically, the user may want a certain specific format of how the
+list should be sorted for example priority should be sorted with *H* and the top, *M* in the middle and *L* at the
+bottom.
+
+*Alternative 2 (current choice)*: Have the sorting method to deal with such specificaitions.
+
+*Pros*: Users is able to sort alphabetically automatically for all the sorting method provided.
+
+*Cons*: Custom comparator will be required to compare the the sorting types that have a specific format.
+
+// end::Sorting[]
+
+// tag::SettingRelationship[]
+=== Setting relationship between two persons
+
+The setting of relationship mechanism achieved by creating a new `SetRelCommand`, `SetRelCommandParser`
+, `UniqueRelList` and `Relationship` classes. `SetRelCommand` and `SetRelCommandParser` classes resides in the `Logic
+Component` facilitated by `UniqueRelList` and `Relationship` classes resides in the `Model Component`.
+It supports the adding, deleting and clearing of relationship between two different persons. This command inherits the
+`UndoableCommand` which allows the user to undo/redo the adding/deleting/clearing of relationship between two persons.
+
+The implementation of `Relationship` is as follows:
+
+[source, java]
+----
+public Relationship(String name) throws IllegalValueException {
+    requireNonNull(name);
+    String trimmedName = name.trim();
+    if (!isValidRelType(trimmedName)) {
+        throw new IllegalValueException(MESSAGE_REL_CONSTRAINTS);
+    }
+    this.relType = name;
+}
+
+public Relationship(String name, Set<Relationship> relation) {
+    this.relType = name + " " +  relation;
+}
+----
+
+As you can see from the code above, the relationship name has to be validated to make sure it fits the a certain
+format by checking if it matches the regular expression for it. The overloaded constructor forms the relationship
+the string of the other person's name and the relationship.
+
+Before a new instance of `SetRelCommand` is created,
+
+SetRelCommmandParser ensures that:
+
+1. the relationship prefix is present.
+2. the indexes are the same.
+3. the indexes are an unsigned integer.
+4. the relationships are not empty strings or null for adding and deleting.
+
+`SetRelCommandParser` returns a new instance of `SetRelCommand` that takes in two different indexes, an editedPerson
+and a boolean value that states whether the add relationship prefix is present.
+
+The implementation of `SetRelCommand` constructor is as follows:
+
+[source, java]
+----
+public SetRelCommand(Index indexOne, Index indexTwo, EditPerson editPerson, boolean addPrefixPresent) {
+    requireNonNull(indexOne);
+    requireNonNull(indexTwo);
+
+    this.indexOne = indexOne;
+    this.indexTwo = indexTwo;
+    this.editPerson = editPerson;
+    this.addPrefixPresent = addPrefixPresent;
+}
+----
+
+The execution of the command is done in the following method:
+
+[source, java]
+----
+public CommandResult executeUndoableCommand() throws CommandException {
+    List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+
+    if ((indexOne.getZeroBased() >= lastShownList.size()) || (indexTwo.getZeroBased() >= lastShownList.size())) {
+        throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+
+    ReadOnlyPerson personToEditOne = lastShownList.get(indexOne.getZeroBased());
+    ReadOnlyPerson personToEditTwo = lastShownList.get(indexTwo.getZeroBased());
+    Person editedPersonOne = createEditedPerson(personToEditOne, editPerson, personToEditTwo);
+    Person editedPersonTwo = createEditedPerson(personToEditTwo, editPerson, personToEditOne);
+
+    if (addPrefixPresent && (personToEditOne.getRelation().toString().contains(personToEditTwo.getName().toString())
+        || personToEditTwo.getRelation().toString().contains(personToEditOne.getName().toString()))) {
+        throw new CommandException(MESSAGE_NO_MULTIPLE_REL);
+    }
+    try {
+        model.updatePerson(personToEditOne, editedPersonOne);
+        model.updatePerson(personToEditTwo, editedPersonTwo);
+    } catch (DuplicatePersonException dpe) {
+        throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+    } catch (PersonNotFoundException pnfe) {
+        throw new AssertionError("The target person cannot be missing");
+    }
+    model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+    return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedPersonOne, editedPersonTwo));
+}
+----
+
+The implementation of the adding/deleting and clearing was inspired to be by my course mate, Sim Yan Yu
+(syy94). However, the implementations are modified significantly to fit this feature.
+
+The implementations of adding/deleting are as follows:
+
+[source, java]
+----
+public Optional<Set<Relationship>> getToAddRel(ReadOnlyPerson person) {
+    Set<Relationship> relWithName = new HashSet<>();
+    if ((addRel == null)) {
+        return Optional.ofNullable(null);
+    }
+    relWithName.add(new Relationship(person.getName().toString(), addRel));
+
+    return Optional.of(relWithName);
+}
+
+public Optional<Set<Relationship>> getToDeleteRel(ReadOnlyPerson person) {
+    Set<Relationship> relWithName = new HashSet<>();
+    relWithName.add(new Relationship(person.getName().toString(), deleteRel));
+    return Optional.of(relWithName);
+}
+----
+
+After a series of method calls, the *model.updatePerson()* will eventually call the *setPerson()* method in
+UniquePersonList.
+
+The following sequence diagram shows how the set relationship operation works:
+
+image::SetRelCommandSequenceDiagram.png[width="800"]
+
+==== Design Considerations:
+*Aspect*: Settng relationships for contacts
+
+*Alternative 1*: Manually setting the relationship for each person.
+
+*Pros*: Able to delete relationship for a specific person.
+
+*Cons*: Double work needed to set relationship between 2 persons.
+
+*Alternative 2 (current choice)*: Make a new command that allows two persons to be added together.
+
+*Pros*: Less work needed for the user has the command requires two person indexes.
+
+*Cons*: New logic required to accept two indexes instead of one.
+
+// end::SettingRelationship[]
+
+// tag::Aliases[]
+=== Command: Aliases
+
+The checking of commands mechanism is achieved by creating a new `CheckCommandsParser` class that checks if the
+command entered by the user can be found as aliases/synonyms of other commands.
+
+This class returns the relevant command name back to `AddressBookParser` which returns an instance of the command
+based on the command name that was returned.
+
+An example of the implementation of how the checking of command checks is as follows:
+
+In `AddressBookParser`:
+[source, java]
+----
+private static CheckCommandsParser checkCommand = new CheckCommandsParser();
+
+String commandWord = matcher.group("commandWord");
+commandWord = checkCommand.matchCommand(commandWord);
+final String arguments = matcher.group("arguments");
+
+switch (commandWord) {
+    case AddCommand.COMMAND_WORD:
+    return new AddCommandParser().parse(arguments);
+----
+
+An example of the implementation checking the *add* command in `CheckCommandsParser` is as follows:
+[source, java]
+----
+/**
+ * used to store the userCommand in a set
+ */
+Set<String> userInputCommand = new HashSet<>();
+userInputCommand.add(userCommand);
+
+/**
+ * All the synonyms/aliases of the different commands
+ */
+final String[] subAddCommands = new String[] { "add", "a", "input", "create", "insert" };
+
+/**
+ * Sets all the strings in each command into a HashSet
+ */
+final Set<String> commandsForAdd = new HashSet<>(Arrays.asList(subAddCommands));
+
+/**
+ * Compares the userInputCommand with the different commands set
+ */
+if (!Collections.disjoint(userInputCommand, commandsForAdd)) {
+    finalUserCommand = "add";
+}
+----
+
+The code for the other commands will be the same except for the aliases/synonyms.
+
+[NOTE]
+If the input command does not match with any of the *aliases/synonyms*, an exception will be thrown to notify the
+user that the command entered is *invalid*.
+
+==== Design Considerations:
+*Aspect*: Implementation of aliases/synonyms for each command
+
+*Alternative 1*: Adding many aliases case to the `AddressBookParser` switch cases.
+
+*Pros*: Checks immediately at the `AddressBookParser` class
+
+*Cons*: Required to add all the aliases/synonyms to each command class and adding all of them to the switch cases in
+`AddressBookParser`.
+
+*Alternative 2 (current choice)*: Create a class that checks the command entered
+
+*Pros*: There is no need to add all the aliases/synonyms to each command class.
+
+*Cons*: Required to pass the command to the other class to check instead of being able to check directly at
+`AddressBookParser`.
+
+// end::Aliases[]
 
 == Documentation
 
@@ -533,7 +1166,7 @@ image::getting-started-ui-tag-after.png[width="300"]
 +
 ****
 * Hints
-** The tag labels are created inside link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard#initTags(ReadOnlyPerson)`] (`new Label(tag.tagName)`). https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html[JavaFX's `Label` class] allows you to modify the style of each Label, such as changing its color.
+** The tag labels ar created inside link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard#initTags(ReadOnlyPerson)`] (`new Label(tag.tagName)`). https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html[JavaFX's `Label` class] allows you to modify the style of each Label, such as changing its color.
 ** Use the .css attribute `-fx-background-color` to add a color.
 * Solution
 ** See this https://github.com/se-edu/addressbook-level4/pull/592/files[PR] for the full solution.
@@ -729,9 +1362,105 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
-|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+|`* * *` |user with many persons in the address book |sort persons by name
+|locate a person easily
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* * *` |sales executive |save client's company, position and work contact
+information
+ |do proper follow up
+
+|`* * *` |sales executive |be able to label clients with level of priority
+ |I know better which one to prioritise
+
+|`* * *` |sales executive |be able to set the status of my client |I can better
+manage them
+
+|`* * *` |sales executive |add note to a client's contact |remember key details
+about this client
+
+|`* * *` |user who is prone to making mistakes |be able to undo any command that I
+previously made
+ |correct my own mistake
+
+|`* * *` |user who is prone to making mistakes |be able to redo any command that I
+previously undid
+ |correct my own mistake
+
+|`* * *` |sales executive |be able to add events |better manage my client
+meetings and events
+
+|`* * *` |sales executive |be able to edit events |better manage my client
+meetings and events
+
+|`* * *` |sales executive |be able to delete events |better manage my client
+meetings and events
+
+|`* * *` |sales executive |be able to query all my events |better manage my
+client
+meetings and events
+
+|`* * *` |sales executive |be reminded to follow up on clients after events
+|follow up on time
+
+|`* * *` |sales executive |receive notifications and reminders on upcoming
+events
+|can prepare in advance
+
+|`* * *` |sales executive |be warned when adding events that clash with my
+schedule |don't schedule clashing events
+
+|`* *` |sales executive |be able to associate events with clients
+|can better manage events related to specific clients
+
+|`* *` |sales executive |be able to disassociate events with clients
+|can update event relations with specific clients
+
+|`* *` |user who is particular about aesthetics|be able to change the font of
+the app
+|
+
+|`* *` |user who is particular about aesthetics|be able to change the color
+scheme of the app
+|
+
+|`* *` |user who has bad eyesight |be able to change the font size of the app
+|can see better
+
+|`* *` |sales executive |be able to check my schedule for the day|know what I
+need to do for the day
+
+|`* *` |sales executive |be able to view a list of my contacts with a specific
+tag
+ |can better manage my client information
+
+|`* *` |sales executive |be able to view a list of my contacts from a specific
+company|can better manage my client information
+
+|`* *` |sales executive |be able to view client's address on Google Maps in
+the app |I don't have to manually search for it in the browser
+
+|`* *` |sales executive |be able to directly send an email on clicking the
+email address in the app|can send email faster and more easily
+
+|`*` |sales executive |be able to upload images of my client |can remember how
+they look like
+
+|`*` |lazy user |the app to open on startup of my OS |
+
+|`*` |sales executive |be able to mass export client data |can share it with
+others
+
+|`*` |sales executive |be able to mass import client data |can quickly add
+contact into the app
+
+|`*` |forgetful user |be able to type shorter commands |
+
+|`*` |sales executive |be able to indicate the relationship between my contacts
+ |I can manage the clients better
+
+|`*` |sales executive |be able to see the relationship between my clients in a
+relationship diagram
+ |I can manage the clients better
 |=======================================================================
 
 {More to be added}
@@ -740,6 +1469,26 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 == Use Cases
 
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+
+[discrete]
+=== Use case: Add person
+
+*MSS*
+
+1.  User requests to add person with information
+2.  AddressBook adds the person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The information inputted is in the wrong format.
++
+[none]
+** 2a1. AddressBook shows an error message.
++
+Use case ends.
 
 [discrete]
 === Use case: Delete person
@@ -767,6 +1516,245 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+[discrete]
+=== Use case: Edit person
+
+*MSS*
+
+1.  User requests to edit person
+2.  AddressBook shows a list of information field to change
+3.  User requests to edit a specific information field
+4.  User enters new information for chosen field
+5.  AddressBook changes the information field for person to new information
++
+Use case ends.
+
+*Extensions*
+[none]
+* 1a. The person requested to be edit does not exist.
++
+[none]
+** 1a1. AddressBook shows an error message.
++
+Use case ends.
+
+[none]
+* 1b. The AddressBook is empty.
++
+[none]
+** 1b1. AddressBook shows an error message.
++
+Use case ends.
+
+[none]
+* 3a. The information field selected is not on the list.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 3.
+
+[none]
+* 4a. The information entered is of incorrect format.
++
+[none]
+** 4a1. AddressBook shows an error message.
++
+Use case resumes at step 4.
+
+[discrete]
+=== Use case: Query person
+
+*MSS*
+
+1.  User requests to query person
+2.  AddressBook displays the person's information
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The person requested to be queried does not exist in AddressBook
++
+[none]
+** 1a1. AddressBook shows an error message.
++
+Use case ends.
+
+[none]
+* 1b. The AddressBook is empty.
++
+[none]
+** 1b1. AddressBook shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Undo
+
+*MSS*
+
+1.  User enters a command that modifies the list of people (e.g. add, delete, edit)
+2.  AddressBook performs the command
+3.  User enters the undo command
+4.  AddressBook reverses the modifying command
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. No previous modifying command.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Redo
+
+*MSS*
+
+1.  User enters undo command
+2.  AddressBook reverses the last modifying command
+3.  User enters the redo command
+4.  AddressBook redoes the last modifying command that was undone
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. Last command entered was not undo.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Add an event
+
+*MSS*
+
+1.  User requests to add an event
+2.  User enters event name, date, time, location
+3.  AddressBook adds event
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. User enters the wrong input format.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Edit an event
+
+*MSS*
+
+1.  User requests to edit an event
+2.  AddressBook shows all event
+3.  User choose on the specific event that he/she wants to edit
+4.  User edits the event either by name, date or time
+5.  AddressBook edits event
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 4a. User enters the wrong input format for edited part
++
+[none]
+** 4a1. AddressBook shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Delete event
+
+*MSS*
+
+1.  User requests to delete an event
+2.  AddressBook shows all events
+3.  User types specific event name
+4.  AddressBook deletes event
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 4a. User enters wrong input format.
++
+[none]
+** 4a1. AddressBook shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Query an event
+
+*MSS*
+
+1.  User requests to list all events
+2.  User enters the event name that he/she wants to query
+3.  AddressBook display all information of the chosen event
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. User enters wrong input format.
++
+[none]
+** 2a1. AddressBook shows an error message.
++
+Use case ends.
+
+[discrete]
+== Use case: Warnings when adding event
+
+*MSS*
+
+1.  User requests to add an event
+2.  User enters event name, time, date and location
+3.  AddressBook pops out a warning
+4.  AddressBook prevents user from adding
++
+Use case ends.
+
+[discrete]
+== Use case: Reminders to follow-up on clients after events
+
+*MSS*
+
+1.  AddressBook pops out a reminder after event has passed
+2.  AddressBook shows which event and client the user has to follow up
+3.  User enters 'yes' or 'no' to indicate whether it has been done or not
+4.  AddressBook stops reminder once user enters 'yes'
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. User enters wrong input format.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case ends.
+
 {More to be added}
 
 [appendix]
@@ -775,11 +1763,21 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
+.  Should perform any command within 0.1 second
+.  Program size should not exceed 100 MB
 {More to be added}
 
 [appendix]
 == Glossary
+
+.  Events: Meetings and scheduled activities with clients
+.  Reminder: Pop-up message that reminds the user of an event or a need to
+follow up
+.  Priority: A special label applied to clients to differentiate clients with
+highest, medium and low priority
+.  Status: A special label applied to clients to differentiate clients that are
+ potential leads, booked meeting, finished meeting and signed contract
+
 
 [[mainstream-os]]
 Mainstream OS
@@ -795,19 +1793,3 @@ Private contact detail
 A contact detail that is not meant to be shared with others
 ....
 
-[appendix]
-== Product Survey
-
-*Product Name*
-
-Author: ...
-
-Pros:
-
-* ...
-* ...
-
-Cons:
-
-* ...
-* ...

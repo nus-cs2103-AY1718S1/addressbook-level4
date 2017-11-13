@@ -1,3 +1,4 @@
+//@@author reginleiff
 package seedu.address.testutil;
 
 import guitests.GuiRobot;

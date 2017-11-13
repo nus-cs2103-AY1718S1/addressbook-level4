@@ -2,10 +2,14 @@ package seedu.address.testutil;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.model.Model;
+import seedu.address.model.event.timeslot.Date;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -51,4 +55,22 @@ public class TestUtil {
     public static ReadOnlyPerson getPerson(Model model, Index index) {
         return model.getAddressBook().getPersonList().get(index.getZeroBased());
     }
+
+    /**
+     *
+     * Gets the current date and returns the local implementation of date.
+     *
+     * @return the current date
+     */
+    public Date getCurrentDate() {
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        java.util.Date currentDate = new java.util.Date();
+
+        try {
+            return new Date(dateFormat.format(currentDate));
+        } catch (IllegalValueException e) {
+            return null;
+        }
+    }
+
 }

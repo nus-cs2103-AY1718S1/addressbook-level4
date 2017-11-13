@@ -1,4 +1,4 @@
-= Address Book (Level 4)
+= Sales Navigator
 ifdef::env-github,env-browser[:relfileprefix: docs/]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
@@ -15,25 +15,30 @@ ifndef::env-github[]
 image::images/Ui.png[width="600"]
 endif::[]
 
-* This is a desktop Address Book application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
-* It is a Java sample application intended for students learning Software Engineering while using Java as the main programming language.
-* It is *written in OOP fashion*. It provides a *reasonably well-written* code example that is *significantly bigger* (around 6 KLoC)than what students usually write in beginner-level SE modules.
-* What's different from https://github.com/se-edu/addressbook-level3[level 3]:
-** A more sophisticated GUI that includes a list  panel and an in-built Browser.
-** More test cases, including automated GUI testing.
-** Support for _Build Automation_ using Gradle and for _Continuous Integration_ using Travis CI.
+* This is a desktop Sales Navigator application. It has a GUI but most of the
+user interactions happen using a CLI (Command Line Interface).
+* It is a Java application intended for professional sales executives who may
+want to use it for:
+** Storing clients information (contact, tags and special notes) and managing
+relationship with clients better
+** Scheduling and managing events (such as meeting with clients, call with
+potential leads)
+** Get timely reminders for upcoming scheduled events
+* What's new in v1.4:
+** A fresh look with the updated event panel and calendar UI
+** Added features and enhancement:
+*** Use a calendar interface to check scheduled events, and edit event's
+timing through drag-and-drop interactions
+*** Viewing of today's schedule via a timetable view
+*** Add relationship between multiple clients
+*** Check event details in an event panel
 
 == Site Map
 
 * <<UserGuide#, User Guide>>
 * <<DeveloperGuide#, Developer Guide>>
-* <<LearningOutcomes#, Learning Outcomes>>
 * <<AboutUs#, About Us>>
 * <<ContactUs#, Contact Us>>
 
 == Acknowledgements
-
-* Some parts of this sample application were inspired by the excellent http://code.makery.ch/library/javafx-8-tutorial/[Java FX tutorial] by
-_Marco Jakob_.
-
-== Licence : link:LICENSE[MIT]
+* Inspired by AddressBook-Level4 project created by SE-EDU initiative at https://github.com/se-edu/

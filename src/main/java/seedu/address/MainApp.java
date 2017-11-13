@@ -40,7 +40,7 @@ import seedu.address.ui.UiManager;
  */
 public class MainApp extends Application {
 
-    public static final Version VERSION = new Version(0, 6, 0, true);
+    public static final Version VERSION = new Version(1, 5, 0, false);
 
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
 
@@ -51,6 +51,9 @@ public class MainApp extends Application {
     protected Config config;
     protected UserPrefs userPrefs;
 
+    public static void main(String[] args) {
+        launch(args);
+    }
 
     @Override
     public void init() throws Exception {
@@ -65,7 +68,6 @@ public class MainApp extends Application {
         storage = new StorageManager(addressBookStorage, userPrefsStorage);
 
         initLogging(config);
-
         model = initModelManager(storage, userPrefs);
 
         logic = new LogicManager(model);
@@ -204,9 +206,5 @@ public class MainApp extends Application {
     public void handleExitAppRequestEvent(ExitAppRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         this.stop();
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 }

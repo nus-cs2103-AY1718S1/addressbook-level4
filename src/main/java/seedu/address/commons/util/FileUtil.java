@@ -3,7 +3,10 @@ package seedu.address.commons.util;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.channels.FileChannel;
 import java.nio.file.Files;
 
 /**
@@ -19,6 +22,7 @@ public class FileUtil {
 
     /**
      * Creates a file if it does not exist along with its missing parent directories.
+     *
      * @throws IOException if the file or directory cannot be created.
      */
     public static void createIfMissing(File file) throws IOException {
@@ -82,12 +86,38 @@ public class FileUtil {
 
     /**
      * Converts a string to a platform-specific file path
+     *
      * @param pathWithForwardSlash A String representing a file path but using '/' as the separator
      * @return {@code pathWithForwardSlash} but '/' replaced with {@code File.separator}
      */
     public static String getPath(String pathWithForwardSlash) {
         checkArgument(pathWithForwardSlash.contains("/"));
         return pathWithForwardSlash.replace("/", File.separator);
+    }
+
+    // @@ author a0107442n
+    /**
+     * Copy a file from its source position to a new destination.
+     *
+     * @return true if file is copied, false if file already exists
+     */
+    public static boolean copyFile(File source, File destination) throws
+            IOException {
+        if (destination.exists()) {
+            return false;
+        }
+        FileChannel inputChannel = null;
+        FileChannel outputChannel = null;
+        try {
+            inputChannel = new FileInputStream(source).getChannel();
+            outputChannel = new FileOutputStream(destination).getChannel();
+            outputChannel.transferFrom(inputChannel, 0, inputChannel.size());
+        } finally {
+            inputChannel.close();
+            outputChannel.close();
+        }
+
+        return true;
     }
 
 }

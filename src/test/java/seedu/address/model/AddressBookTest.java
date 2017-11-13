@@ -16,21 +16,23 @@ import org.junit.rules.ExpectedException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.model.event.timeslot.Date;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.relationship.Relationship;
 import seedu.address.model.tag.Tag;
 
 public class AddressBookTest {
-
     @Rule
     public ExpectedException thrown = ExpectedException.none();
-
     private final AddressBook addressBook = new AddressBook();
 
     @Test
     public void constructor() {
         assertEquals(Collections.emptyList(), addressBook.getPersonList());
         assertEquals(Collections.emptyList(), addressBook.getTagList());
+        assertEquals(Collections.emptyList(), addressBook.getRelList());
     }
 
     @Test
@@ -51,7 +53,8 @@ public class AddressBookTest {
         // Repeat ALICE twice
         List<Person> newPersons = Arrays.asList(new Person(ALICE), new Person(ALICE));
         List<Tag> newTags = new ArrayList<>(ALICE.getTags());
-        AddressBookStub newData = new AddressBookStub(newPersons, newTags);
+        List<Relationship> newRel = new ArrayList<>(ALICE.getRelation());
+        AddressBookStub newData = new AddressBookStub(newPersons, newTags, newRel);;
 
         thrown.expect(AssertionError.class);
         addressBook.resetData(newData);
@@ -68,6 +71,14 @@ public class AddressBookTest {
         thrown.expect(UnsupportedOperationException.class);
         addressBook.getTagList().remove(0);
     }
+    //@@author huiyiiih
+    @Test
+    public void getRelList_modifyList_throwsUnsupportedOperationException() {
+        thrown.expect(UnsupportedOperationException.class);
+        addressBook.getRelList().remove(0);
+    }
+    //@@author
+
 
     /**
      * A stub ReadOnlyAddressBook whose persons and tags lists can violate interface constraints.
@@ -75,10 +86,13 @@ public class AddressBookTest {
     private static class AddressBookStub implements ReadOnlyAddressBook {
         private final ObservableList<ReadOnlyPerson> persons = FXCollections.observableArrayList();
         private final ObservableList<Tag> tags = FXCollections.observableArrayList();
-
-        AddressBookStub(Collection<? extends ReadOnlyPerson> persons, Collection<? extends Tag> tags) {
+        private final ObservableList<ReadOnlyEvent> events = FXCollections.observableArrayList();
+        private final ObservableList<Relationship> relation = FXCollections.observableArrayList();
+        AddressBookStub(Collection<? extends ReadOnlyPerson> persons, Collection<? extends Tag> tags, Collection<?
+            extends Relationship> relation) {
             this.persons.setAll(persons);
             this.tags.setAll(tags);
+            this.relation.setAll(relation);
         }
 
         @Override
@@ -89,6 +103,35 @@ public class AddressBookTest {
         @Override
         public ObservableList<Tag> getTagList() {
             return tags;
+        }
+        @Override
+        public ObservableList<Relationship> getRelList() {
+            return relation;
+        }
+
+        @Override
+        public ObservableList<ReadOnlyEvent> getEventList() {
+            return events;
+        }
+
+        @Override
+        public ReadOnlyEvent getLastChangedEvent() {
+            return null;
+        }
+
+        @Override
+        public ReadOnlyEvent getNewlyAddedEvent() {
+            return null;
+        }
+
+        @Override
+        public ObservableList<ReadOnlyEvent> getTimetable(Date date) {
+            return null;
+        }
+
+        @Override
+        public Date getCurrentDate() {
+            return null;
         }
     }
 

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--@@author sebtsh generated-->
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.StackPane?>
+
+<StackPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="330.0" prefWidth="800.0" stylesheets="@BrightTheme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fitHeight="507.0" fitWidth="1085.0" opacity="0.15" StackPane.alignment="CENTER_LEFT">
+         <image>
+            <Image url="/images/eventpanelbackground.png" />
+         </image>
+      </ImageView>
+      <StackPane id="eventPeriod" prefHeight="150.0" prefWidth="200.0">
+         <children>
+            <Label id="eventPeriod" fx:id="periodLabel" prefHeight="200.0" prefWidth="281.0" wrapText="true" StackPane.alignment="BOTTOM_LEFT">
+               <padding>
+                  <Insets top="50.0" />
+               </padding>
+            </Label>
+         </children>
+      </StackPane>
+      <StackPane id="eventName" prefHeight="150.0" prefWidth="200.0">
+         <children>
+            <Label id="eventName" fx:id="nameLabel" prefHeight="105.0" prefWidth="800.0" text="Event Name Placeholder" StackPane.alignment="TOP_LEFT" />
+         </children>
+      </StackPane>
+      <StackPane id="eventTime" prefHeight="150.0" prefWidth="200.0">
+         <children>
+            <Label id="eventTime" fx:id="timeslotLabel" prefHeight="187.0" prefWidth="449.0" text="Event Timeslot Placeholder" StackPane.alignment="CENTER_LEFT">
+               <padding>
+                  <Insets bottom="130.0" />
+               </padding></Label>
+         </children>
+      </StackPane>
+      <StackPane id="eventDescription" prefHeight="150.0" prefWidth="200.0">
+         <children>
+            <Label id="eventDescription" fx:id="descriptionLabel" prefHeight="181.0" prefWidth="802.0" text="Event Description Placeholder" wrapText="true" StackPane.alignment="BOTTOM_LEFT">
+               <padding>
+                  <Insets bottom="150.0" />
+               </padding>
+            </Label>
+         </children>
+      </StackPane>
+   </children>
+</StackPane>

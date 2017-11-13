@@ -21,39 +21,31 @@ public class StatusBarFooter extends UiPart<Region> {
 
     public static final String SYNC_STATUS_INITIAL = "Not updated yet in this session";
     public static final String SYNC_STATUS_UPDATED = "Last Updated: %s";
-
+    private static final Logger logger = LogsCenter.getLogger(StatusBarFooter.class);
+    private static final String FXML = "StatusBarFooter.fxml";
     /**
      * Used to generate time stamps.
-     *
+     * <p>
      * TODO: change clock to an instance variable.
      * We leave it as a static variable because manual dependency injection
      * will require passing down the clock reference all the way from MainApp,
      * but it should be easier once we have factories/DI frameworks.
      */
     private static Clock clock = Clock.systemDefaultZone();
-
-    private static final Logger logger = LogsCenter.getLogger(StatusBarFooter.class);
-
-    private static final String FXML = "StatusBarFooter.fxml";
-
     @FXML
     private StatusBar syncStatus;
     @FXML
     private StatusBar saveLocationStatus;
+    @FXML
+    private StatusBar numofPersonsAndEvents;
 
 
-    public StatusBarFooter(String saveLocation) {
+    public StatusBarFooter(String saveLocation, int numOfPersons, int numOfEvents) {
         super(FXML);
         setSyncStatus(SYNC_STATUS_INITIAL);
         setSaveLocation("./" + saveLocation);
+        setNumOfPersonsAndEvents(numOfPersons, numOfEvents);
         registerAsAnEventHandler(this);
-    }
-
-    /**
-     * Sets the clock used to determine the current time.
-     */
-    public static void setClock(Clock clock) {
-        StatusBarFooter.clock = clock;
     }
 
     /**
@@ -61,6 +53,13 @@ public class StatusBarFooter extends UiPart<Region> {
      */
     public static Clock getClock() {
         return clock;
+    }
+
+    /**
+     * Sets the clock used to determine the current time.
+     */
+    public static void setClock(Clock clock) {
+        StatusBarFooter.clock = clock;
     }
 
     private void setSaveLocation(String location) {
@@ -71,11 +70,16 @@ public class StatusBarFooter extends UiPart<Region> {
         Platform.runLater(() -> this.syncStatus.setText(status));
     }
 
+    private void setNumOfPersonsAndEvents(int numOfPersons, int numOfEvents) {
+        this.numofPersonsAndEvents.setText(numOfPersons + " contact(s) and " + numOfEvents + " event(s)");
+    }
+
     @Subscribe
     public void handleAddressBookChangedEvent(AddressBookChangedEvent abce) {
         long now = clock.millis();
         String lastUpdated = new Date(now).toString();
-        logger.info(LogsCenter.getEventHandlingLogMessage(abce, "Setting last updated status to " + lastUpdated));
+        logger.fine(LogsCenter.getEventHandlingLogMessage(abce, "Setting last updated status to " + lastUpdated));
         setSyncStatus(String.format(SYNC_STATUS_UPDATED, lastUpdated));
+        setNumOfPersonsAndEvents(abce.data.getPersonList().size(), abce.data.getEventList().size());
     }
 }

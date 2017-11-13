@@ -15,7 +15,9 @@ import java.util.Optional;
  */
 public class ArgumentMultimap {
 
-    /** Prefixes mapped to their respective arguments**/
+    /**
+     * Prefixes mapped to their respective arguments
+     **/
     private final Map<Prefix, List<String>> argMultimap = new HashMap<>();
 
     /**
@@ -50,7 +52,28 @@ public class ArgumentMultimap {
         }
         return new ArrayList<>(argMultimap.get(prefix));
     }
-
+    //@@author huiyiiih
+    /**
+     * Returns true if there is only one prefix present
+     * and false if there are more.
+     */
+    public boolean containsOnePrefix(Prefix prefix) {
+        List<String> values = getAllValues(prefix);
+        if (values.size() > 1) {
+            return false;
+        }
+        return true;
+    }
+    /**
+     * Checks if the arguMultimap contains a specfic prefix
+     * if it contains, it will return a true, if it does not it returns a false
+     * @param prefix            Prefix key
+     * @return true || false
+     */
+    public boolean containsPrefix(Prefix prefix) {
+        return argMultimap.containsKey(prefix);
+    }
+    //@@author
     /**
      * Returns the preamble (text before the first valid prefix). Trims any leading/trailing spaces.
      */

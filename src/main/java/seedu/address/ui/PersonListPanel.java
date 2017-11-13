@@ -13,8 +13,11 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.EventPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.HideCalendarEvent;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.ShowCalendarEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -38,6 +41,7 @@ public class PersonListPanel extends UiPart<Region> {
                 personList, (person) -> new PersonCard(person, personList.indexOf(person) + 1));
         personListView.setItems(mappedList);
         personListView.setCellFactory(listView -> new PersonListViewCell());
+        logger.info("UI ------ Got personList with " + personList.size() + " persons.");
         setEventHandlerForSelectionChangeEvent();
     }
 
@@ -45,8 +49,10 @@ public class PersonListPanel extends UiPart<Region> {
         personListView.getSelectionModel().selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> {
                     if (newValue != null) {
-                        logger.fine("Selection in person list panel changed to : '" + newValue + "'");
+                        logger.info("Selection in person list panel changed "
+                                + "to : '" + newValue + "'");
                         raise(new PersonPanelSelectionChangedEvent(newValue));
+                        raise(new HideCalendarEvent());
                     }
                 });
     }
@@ -66,6 +72,24 @@ public class PersonListPanel extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         scrollTo(event.targetIndex);
     }
+
+    //@@author sebtsh
+    @Subscribe
+    /**
+     *Clears the person card selection when an event is selected.
+     */
+    private void handleEventPanelSelectionChangedEvent(EventPanelSelectionChangedEvent event) {
+        personListView.getSelectionModel().clearSelection();
+    }
+
+    @Subscribe
+    /**
+     *Clears the person card selection when the calendar is opened.
+     */
+    private void handleShowCalendarEvent(ShowCalendarEvent event) {
+        personListView.getSelectionModel().clearSelection();
+    }
+    //@@author
 
     /**
      * Custom {@code ListCell} that displays the graphics of a {@code PersonCard}.

@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+﻿= Sales Navigator - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,9 +10,9 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-T14-B3/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `CS2103-T14-B3`      Since: `Oct 2017`
 
 == Quick Start
 
@@ -26,7 +26,7 @@ This app will not work with earlier versions of Java 8.
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
-image::Ui.png[width="790"]
+image::v15ui.PNG[width="790"]
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
@@ -40,24 +40,33 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Refer to the link:#features[Features] section below for details of each command.
 
 == Features
+*Information on each of the commands*
 
-====
+* 22 different types of commands available for a more user-friendly environment.
+* Each of the command has at least one synonyms/aliases.
+** This allows the user to have a variety of choices of commands instead of having to remember or to execute the `help`
+window every time one forgets it.
+* In the examples given below for each command, note that all commands written there are interchangeable with its synonyms/aliases
+* Most commands are interchangeable with the relevant substitute command listed below.
+
 *Command Format*
 
 * Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
-====
 
 === Viewing help : `help`
 
-Format: `help`
+Synonyms/Aliases for the command: `help`
+Displays the help window on command.
 
 === Adding a person: `add`
 
+`Since v1.3` +
+Synonyms/Aliases for the command: `a`, `create`, `input`, `insert` +
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [c/COMPANY] [po/POSITION] [s/STATUS] [pr/PRIORITY] [t/TAG]...`
 
 [TIP]
 A person can have any number of tags (including 0)
@@ -65,17 +74,15 @@ A person can have any number of tags (including 0)
 Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison c/ABC Foods po/Manager s/Requires follow up pr/L p/1234567 t/criminal`
 
-=== Listing all persons : `list`
-
-Shows a list of all persons in the address book. +
-Format: `list`
 
 === Editing a person : `edit`
 
+`Since v1.3` +
+Synonyms/Aliases for the command: `e`, `change`, `modify`, `revise` +
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [c/COMPANY] [po/POSITION] [s/STATUS] [pr/PRIORITY] [no/NOTE] [t/TAG]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -91,9 +98,13 @@ Examples:
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+* `edit 3 no/Hates western food. Can only take him out to Chinese and Japanese restaurants.` +
+Edits the note of the 3rd person to be the string displayed above. This is the only way to add a note to a person
+as notes cannot be initialized when adding the person.
 
 === Locating persons by name: `find`
 
+Synonyms/Aliases for the command: `f`, `look`, `search`, `check` +
 Finds persons whose names contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
@@ -114,6 +125,7 @@ Returns any person having names `Betsy`, `Tim`, or `John`
 
 === Deleting a person : `delete`
 
+Synonyms/Aliases for the command: `d`, `remove`, `throw`, `erase` +
 Deletes the specified person from the address book. +
 Format: `delete INDEX`
 
@@ -134,6 +146,7 @@ Deletes the 1st person in the results of the `find` command.
 
 === Selecting a person : `select`
 
+Synonyms/Aliases for the command: `s`, `choose`, `pick` +
 Selects the person identified by the index number used in the last person listing. +
 Format: `select INDEX`
 
@@ -152,16 +165,6 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
-=== Listing entered commands : `history`
-
-Lists all the commands that you have entered in reverse chronological order. +
-Format: `history`
-
-[NOTE]
-====
-Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
-====
-
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
@@ -175,52 +178,436 @@ Undoable commands: those commands that modify the address book's content (`add`,
 
 Examples:
 
-* `delete 1` +
-`list` +
-`undo` (reverses the `delete 1` command) +
+//tag::photo[]
+=== Attaching photos to persons :
 
-* `select 1` +
-`list` +
-`undo` +
-The `undo` command fails as there are no undoable commands executed previously.
+`Since v1.3` +
+Adds a photo to a person by importing an image file, with
+allowed file format jpg, jpeg and png.
 
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
+Photo can be added or edited in two ways:
 
-=== Redoing the previously undone command : `redo`
+* Through Command Line Interface:
 
-Reverses the most recent `undo` command. +
-Format: `redo`
+Photos can be imported either at the creation
+of a client contact (with `add` command) or when updating a client's
+information (with `edit` command), by specifying the file path of image file
+to be imported
 
 Examples:
 
-* `delete 1` +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
+** `add n/Jon ... ph/Users/username/Images/Photo.jpg`
 
-* `delete 1` +
-`redo` +
-The `redo` command fails as there are no `undo` commands executed previously.
+** `edit 1 ph/Users/username/Images/Photo.jpg`
 
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
-`redo` (reapplies the `clear` command) +
-// end::undoredo[]
+****
+Restrictions on input:
 
-=== Clearing all entries : `clear`
+* Must be a valid local file path for the respective operating system
+* File must of of jpg, jpeg or png format
+* Can be either relative or absolute file path
+* File path is case-insensitive, but file extension should be lower case
+* Support all UTF-8 characters
 
-Clears all entries from the address book. +
-Format: `clear`
+****
 
-=== Exiting the program : `exit`
+* Through Graphic User Interface
 
-Exits the program. +
-Format: `exit`
+1. In the `person detail` panel, user can use the `import photo` button to
+add/edit photo of the client. Upon clicking the button, a file-chooser window
+ will pop up, enabling the easy choosing of image files with GUI.
+2. A file-chooser window can also be opened with the command: `updatephoto`
+
+** Example command: `updatephoto 1` -> this will open a file-chooser window
+for the user to update photo of the person identified by index `1` in the
+last shown list.
+
+//end::photo[]
+
+// tag::sort[]
+=== Sorting all entries : `sort`
+
+Synonyms/Aliases for the command: `arrange`, `organise` +
+Sorts list by different types +
+such as `name`, `tag`, `company`, `priority` or `position`. +
+
+Format: `sort [TYPE]`
+
+[NOTE]
+====
+1. Sorting by *position* sorts the list according the person's position and it will sort all the NIL to be at the
+bottom. After doing it that, it will sort them alphabetically.
+
+2. Sorting by *priority* sorts the list by *_H, M and L_* repsectively. After sorting by H, M and L, they will then
+sort them
+alphabetically by their names.
+
+3. Sorting by *company* sorts the list by making all the *_NIL_* status to be at the bottom of the list. After doing
+that it will then also sort them alphabetically.
+====
+
+Examples:
+
+* `sort name`
+
+* `sort tag`
+
+* `sort company`
+
+* `sort priority`
+
+* `sort position`
+// end::sort[]
+
+// tag::setrelationship[]
+=== Setting relationship between 2 persons: `set`
+
+Synonyms/Aliases for the command: `rel`, `setrel` +
+Sets the relationship between 2 person. +
+User is *ONLY ALLOWED* to add only one relationship between the two indexes.
+
+Format: `set [INDEX] [INDEX] [PREFIX]RELATIONSHIP` +
+
+****
+* This command has three prefixes that performs different functions.
+** *ar/RELATIONSHIP* -> sets *ONLY ONE* relationship between 2 persons
+** *dr/RELATIONSHIP* -> deletes the relationship between 2 persons
+** *cr/* -> clears all the relationship of the two persons
+* This command is executed by specifying the two `INDEX` of the person the user wants to add the relationship.
+* The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2,
+3, ...
+* The command will not be executed if the relationship already exist or if the relationship is not found.
+* The command will not execute if the two indexes provided already have a relationship.
+* You can remove all the person's relationships by typing `cr/` without specifying any relationship after it.
+****
+
+Examples:
+
+* `set 1 2 ar/siblings` +
+sets the relationship between the two indexes of the last shown list if it does not exist
+
+* `set 1 2 dr/siblings` +
+deletes the relationship between the two indexes of the last shown list if it exists
+
+* `set 1 2 cr/` +
+clears the all the relationships of the two indexes.
+// end::setrelationship[]
+
+// tag::eventcrud[]
+=== Adding an event: `eventadd`
+
+`Since v1.1` +
+Synonyms/Aliases for the command: `addevent`, `ea`, `ae` +
+Adds an event to Sales Navigator +
+Format: `eventadd n/TITLE t/TIMING d/DESCRIPTION`
+
+Examples:
+
+* `eventadd n/Alice's Birthday t/08/11/2017 1300-1830 d/Bestie's 21st, bring drinks!`
+* `eventadd n/CS2103 Final Exam t/04/12/2017 1700-1900 d/Doomsday`
+
+=== Editing an event : `eventedit`
+
+`Since v1.2` +
+Synonyms/Aliases for the command: `editevent`, `ee` +
+Edits an existing event in Sales Navigator. +
+Format: `eventedit INDEX [n/TITLE] [t/TIMING] [d/DESCRIPTION]`
+
+****
+* Edits the event at the specified `INDEX`. The index refers to the index number shown in the last event listing. The index *must be a positive integer* 1, 2, 3, ...
+* At least one of the optional fields must be provided.
+* Existing values will be updated to the input values.
+****
+
+Example:
+
+* `edit 1 t/08/11/2017 1400-1830 d/Bring drinks and buy cake!` +
+Edits the timing and description of the 1st event to be `08/11/2017 1400-1830` and `Bring drinks and buy cake!` respectively.
+
+=== Deleting an event : `eventdel`
+
+`Since v1.1` +
+Synonyms/Aliases for the command: `delevent`, `eventdelete`, `deleteevent`, `ed`, `de` +
+Deletes the specified event from Sales Navigator. +
+Format: `delete INDEX`
+
+****
+* Deletes the event at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `de 2` +
+Deletes the 2nd event in Sales Navigator.
+* `find Bob's Birthday` +
+`de 1` +
+Deletes the 1st event in the results of the `find` command.
+
+=== Locating events by name: `eventfind`
+
+`Since v1.2` +
+Synonyms/Aliases for the command: `findevent`, `fe`, `ef` +
+Finds events whose titles contain any of the given keywords. +
+Format: `eventfind KEYWORD [MORE_KEYWORDS]`
+
+****
+* The search is case insensitive. e.g `hans` will match `Hans`
+* The search will not account for apostrophes. e.g searching `Bob` will not match `Bob's birthday`
+* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* Only the title is searched.
+* Only full words will be matched e.g. `Han` will not match `Hans`
+* Events matching at least one keyword will be returned (i.e. `OR` search). e.g. `cs2103 midterm` will
+return `Submission for CS2103 Week 9`, `CS2106 Midterm`
+****
+
+Examples:
+
+* `ef Bob's` +
+Returns `Bob's Birthday` and `Party at Bob's`
+* `ef Birthday` +
+Returns any event having titles that contain `Birthday`
+
+[NOTE]
+====
+Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
+====
+
+=== Listing all persons : `listpersons`
+
+`Updated in v1.5` +
+Synonyms/Aliases for the command: `lp`, `list persons`, `show persons`, `display persons` +
+Shows a list of all persons in the sales navigator via contacts tab. +
+Format: `listpersons` / `show` / `display`
+
+=== Listing all events : `listevents`
+
+`Updated in v1.5` +
+Synonyms/Aliases for the command: `le`, `list events`, `show events`, `display events` +
+Shows a list of all events in the sales navigator via events tab. +
+Format: `listevents` / `list events` / `show events` / `display events`
+
+=== Listing all persons : `listall`
+
+`Updated in v1.5` +
+Synonyms/Aliases for the command: `la`, `list all`, `list`, `refresh`, `show all`, `display all` +
+Shows a list of all persons and all events in the address book. +
+Format: `list all` / `list` / `refresh` / `show all` / `display all`
+
+// tag::schedule[]
+=== Displaying user's schedule: `checkschedule`
+
+`Since v1.4` +
+Synonyms/Aliases for the command: `checkschedule` / `thisweek`/`cs`/`tw` +
+
+Displays user's schedule for the current week upon executing the command. +
+After execution of the command, a calendar GUI will appear in the main +
+window, with events displayed in the corresponding time slots. Each time slot
+ is 30 minutes, starting from 7:00 am and ending with 11:59 pm +
+
+With the calendar GUI, the user can:
+
+* Have an overview of all scheduled events in the current week
+** All changes to events will be reflected on the calendar UI in real time
+* Check the detail of a specific event by clicking on the event block in the
+calendar UI
+** This will direct user to the event's detail page
+* Reschedule events through drag-and-drop
+** Dragging and dropping an event, if successful, will change the event's
+starting time to the dropped timeslot in the calendar, while maintaining the
+duration of the event
+****
+Conditions for successful drag-and-drop:
+
+* There should not be any time clash with existing events (eg. if a timeslot
+is already occupied by an event, cannot drop at this time slot) +
+* The dropped event block should be entirely contained within the calendar
+(eg. cannot drop at the last time slot, if event's duration is longer than 30
+minutes) +
+****
+// end::schedule[]
+
+=== Schedule recurring event through `recurrence period` field
+
+User can schedule events with a regular period of recurrence through the
+`recurrence period` field, identified by prefix `re/` when adding or editing
+events. Values put for `recurrence period` can only be positive integers
+indicating interval between two scheduled occurrence of the event.
+
+For example, if an event is added with a  `repeat period` of 7 days, when the
+ event is finished, a new instance of the event will be scheduled with the same
+ time slot 7 days later. If this instance will clash with an existing event, it
+ will be skipped and a new instance will be created for the next period.
+
+When an event is added without specifying the `recurrence period`, the
+default vlaue is 0, which means it will not be repeated. Event recurrence can
+ also be removed by setting the value of the period to be 0.
+
+
+// tag::timetable[]
+=== Displaying user's timetable: `timetable`
+
+`Since v1.5` +
+Synonyms/Aliases for this command: `timetable`/ `tt`/`today` +
+Displays the user's timetable, showing a list of events that are scheduled today. Timetable is enabled upon first use
+of the application and can be closed/reopened upon the command. Timetable will be empty if there are no events
+scheduled today. +
+
+With the timetable UI, the user can:
+
+* View all events that are schedules as of the local machine's current date
+** Length of event cards reflect the duration of the event
+** Changes to events via CLI commands and Schedule drag-and-drop will reflect immediately
+* Open and close the timetable via clicking the button
+// end::timetable[]
+
+=== Adding notes to persons : `note`
+
+`Coming in v2.0` +
+Adds a note to a person. Notes are strings of any length that represent information about the person that cannot be adequately described with tags +
+Format: `note [PERSON] [STRING]`
+
+Examples:
+* `note John Doe Remember to call him once every day otherwise he will question your commitment.`
+
+
+=== View all persons with a specific tag : `tag`
+
+`Coming in v2.0` +
+Displays a list of all persons with a specific tag. +
+Format: `tag [TAG]`
+
+Examples:
+* `tag friend`
+
+=== View all persons from a specific company : `company`
+
+`Coming in v2.0` +
+Displays a list of all persons from a specific company. +
+Format: `company [COMPANY]`
+
+Examples:
+* `company ABC Foods`
+
+// tag::eventtag[]
+=== Tagging contacts in events: `addeventtag`
+
+`Coming in v2.0` +
+Synonyms/Aliases for the command: `addeventtag` /`aet` +
+
+Tags a contact that is involved in a specific event. +
+Format: `addeventtag [INDEX_OF_EVENT] [INDEX_OF_CONTACT]`
+
+****
+* Adds contact at `INDEX_OF_CONTACT` to the particpants of event at `INDEX_OF_EVENT`. The indexes refers to the index
+numbers shown in the last contact listing and event listing. The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Example:
+
+* `aet 1 1` +
+Tags the first contact in the contact listing to the first event in te event listing.
+
+=== Removing tags of contacts in events: `removeeventtag`
+
+`Coming in v2.0` +
+Synonyms/Aliases for the command: `removeeventtag` /`ret` +
+
+Remove a contact that is involved in a specific event. +
+Format:
+
+****
+* Work in Progress.
+****
+// end::eventtag[]
+
+
+// tag::timetablesettings[]
+=== Setting default settings for timetable: `ett`/ `dtt`
+
+`Coming in v2.0` +
+Synonyms/Aliases for this command: `enabletimetable`/ `disabletimetable`/ `ett`/ `dtt` +
+
+Timetable will be opened upon the start of the application by default depending on the setting last set here. +
+
+If the setting is last set to enabled/disabled:
+
+* Timetable will be/not be displayed upon restart of the application by default.
+* Attempt to change the default setting to disabled will remind the user that it is already the default setting.
+
+// end::timetablesettings[]
+
+=== Listing entered commands : `history`
+
+Synonyms/Aliases for the command: `h`, `past` +
+Lists all the commands that you have entered in reverse chronological order. +
+Format: `history` / `h` / `past
+
+=== App opens at startup of user's OS command: `startup`
+
+`Coming in v2.0` +
+Set the app to open at the startup of user's OS by typing yes/no after the command +
+Format: `startup` ANSWER
+
+Example:
+
+* `startup` ANSWER +
+Checks if ANSWER is yes/no and perform the relevant answer choice. +
+* `startup` yes +
+Sets opening app at startup of user's OS yes.
+
+=== Exporting of person's data command: `export`
+
+`Coming in v2.0` +
+Synonyms/Aliases: `ex` +
+Exports the data into an excel file. +
+Format: `export` / `ex`
+
+****
+* Export persons data
+* Client(s) data will be stored in an excel format
+****
+
+Examples:
+
+* `export` +
+Exports the data of everyone in the list in an excel file.
+
+
+=== Mass import of person's data command: `import`
+
+`Coming in v2.0` +
+Imports the data into a ... +
+Format: `import`
+
+****
+* Import persons data
+****
+
+Examples:
+
+* `import` [filename] +
+Imports the file and store it in [app].
+
+
+=== View a person's address on Google Maps within the app : `address`
+
+`Coming in v2.0` +
+Searches for the person's address on Google Maps and displays the result within the app. +
+Format: `address [PERSON]`
+
+Examples:
+* `address John Doe`
+
+=== Send an email to a person : `email`
+
+`Coming in v2.0` +
+Opens the user's default email client loaded with the person's email in the To: field. +
+Format: `email [PERSON]`
+
+Examples:
+* `email John Doe`
 
 === Saving the data
 
@@ -233,20 +620,39 @@ There is no need to save manually.
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
 
 == Command Summary
+[NOTE]
+====
+Most commands are interchangeable with the relevant substitute command listed above.
+====
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [c/COMPANY] [po/POSITION] [s/STATUS] [pr/PRIORITY] [t/TAG]...` +
+e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 c/ABC Foods po/CEO pr/HIGH t/friend t/colleague`
+* *Add Event* `eventadd n/TITLE time/TIMING d/DESCRIPTION` +
+e.g. `eventadd n/Alice's Birthday time/1300-1830 d/Bestie's 21st, bring drinks!`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+* *Delete Event* : `eventdel INDEX` +
+e.g. `delete 1`
+* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [c/COMPANY] [po/POSITION] [s/STATUS] [pr/PRIORITY] [no/NOTE] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
+* *Edit Event* : `eventedit INDEX [n/TITLE] [time/TIMING] [d/DESCRIPTION]` +
+e.g. `edit 1 time/1400-1830 d/Bring drinks and buy cake!`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
-* *List* : `list`
+* *Find Event* : `eventfind KEYWORD [MORE_KEYWORDS]` +
+e.g. `find Bob's`
+* *Show/Hide Timetable* : `timetable` +
+* *List* : `list all`, `list persons`, `list events`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Sort* : `sort`
+* *Note* : `note`
+* *View tag* : `tag`
+* *View company* : `company`
+* *View address* : `address`
+* *Email* : `email`
