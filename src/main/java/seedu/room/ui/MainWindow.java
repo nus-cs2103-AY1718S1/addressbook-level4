@@ -1,7 +1,6 @@
 package seedu.room.ui;
 
 import java.io.File;
-import java.time.YearMonth;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -24,6 +23,7 @@ import seedu.room.commons.core.GuiSettings;
 import seedu.room.commons.core.LogsCenter;
 import seedu.room.commons.events.model.EventBookChangedEvent;
 import seedu.room.commons.events.model.ResidentBookChangedEvent;
+import seedu.room.commons.events.ui.ChangeMonthRequestEvent;
 import seedu.room.commons.events.ui.ExitAppRequestEvent;
 import seedu.room.commons.events.ui.NewResultAvailableEvent;
 import seedu.room.commons.events.ui.PersonPanelSelectionChangedEvent;
@@ -285,13 +285,25 @@ public class MainWindow extends UiPart<Region> {
         handleHelp();
     }
 
+    //@@author Haozhe321
     @Subscribe
     public void handleCalenderBoxPanelChange(EventBookChangedEvent event) {
         switchTab(1);
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        calandarBoxPanel.getCalendarBox().populateCalendar(YearMonth.now(), this.logic.getFilteredEventList());
+        calandarBoxPanel.getCalendarBox().refreshCalendar(this.logic);
     }
 
+    @Subscribe
+    public void handleChangeMonthCommand(ChangeMonthRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        if (event.getTargetIndex() == 0) {
+            calandarBoxPanel.getCalendarBox().previousMonth();
+        } else if (event.getTargetIndex() == 1) {
+            calandarBoxPanel.getCalendarBox().nextMonth();
+        }
+    }
+
+    //@@author
 
     //@@author sushinoya
     public void switchTab(int index) {

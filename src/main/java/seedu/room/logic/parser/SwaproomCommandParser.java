@@ -9,19 +9,18 @@ import seedu.room.logic.parser.exceptions.ParseException;
 
 //@@author sushinoya
 /**
- * Parses input arguments and creates a new DeleteCommand object
+ * Parses input arguments and creates a new SwaproomCommand object
  */
 public class SwaproomCommandParser implements Parser<SwaproomCommand> {
 
     /**
-     * Parses the given {@code String} of arguments in the context of the DeleteCommand
-     * and returns an DeleteCommand object for execution.
+     * Parses the given {@code String} of arguments in the context of the SwaproomCommand
+     * and returns an SwaproomCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
     public SwaproomCommand parse(String args) throws ParseException {
         try {
             String[] indexes = args.split("\\s+");
-
             if (indexes.length != 3) {
                 throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, SwaproomCommand.MESSAGE_USAGE));
@@ -35,5 +34,4 @@ public class SwaproomCommandParser implements Parser<SwaproomCommand> {
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, SwaproomCommand.MESSAGE_USAGE));
         }
     }
-
 }

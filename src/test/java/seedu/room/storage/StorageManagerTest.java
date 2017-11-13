@@ -32,7 +32,6 @@ public class StorageManagerTest {
     public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
 
     private StorageManager storageManager;
-    private File imageFolder;
 
     @Before
     public void setUp() {
@@ -119,7 +118,6 @@ public class StorageManagerTest {
     }
 
     //@@author sushinoya
-
     /**
      * A Stub class to throw an exception when the save method is called
      */

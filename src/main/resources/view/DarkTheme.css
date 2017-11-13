@@ -70,54 +70,6 @@
 }
 
 
-/*TAB AND TAB PANE STYLING*/
-.tab-pane {
-    -fx-padding: 0 0 0 1;
-    -fx-background-color: #232A34;
-}
-
-.tab-pane .tab-header-area {
-    -fx-background-color: #232A34;
-    -fx-padding: 0 0 0 0;
-    -fx-min-height: 0;
-    -fx-max-height: 0;
-}
-
-.tab-pane .tab-header-area .tab-header-background {
-    -fx-opacity: 0;
-}
-
-.tab-pane {
-    -fx-tab-min-width:115px;
-}
-
-.tab {
-    -fx-background-insets: 0 1 0 1,0,0;
-}
-
-.tab-pane .tab {
-    -fx-background-color: #404040;
-
-}
-
-.tab-pane .tab:selected {
-    -fx.border-color: transparent !important;
-    -fx-background-color: #336D1C;
-}
-
-.tab .tab-label {
-    -fx-alignment: CENTER;
-    -fx-text-fill: #f3f3f3;
-    -fx-font-size: 12px;
-    -fx-font-weight: bold;
-}
-
-.tab:selected .tab-label {
-    -fx.border-color: transparent !important;
-    -fx-text-fill: white;
-}
-
-
 /*SPLIT PANE AND LIST CSS*/
 .pane-with-border {
      -fx-background-color: #232A34;
@@ -321,6 +273,54 @@
     -fx-fill: white;
     -fx-text-fill: white;
 }
+/*TAB AND TAB PANE STYLING*/
+
+.tab-pane {
+    -fx-padding: 0 0 0 1;
+    -fx-background-color: #232A34;
+}
+
+.tab-pane .tab-header-area {
+    -fx-background-color: #232A34;
+    -fx-padding: 0 0 0 0;
+    -fx-min-height: 0;
+    -fx-max-height: 0;
+}
+
+.tab-pane .tab-header-area .tab-header-background {
+    -fx-opacity: 0;
+}
+
+.tab-pane {
+    -fx-tab-min-width:115px;
+}
+
+.tab {
+    -fx-background-insets: 0 1 0 1,0,0;
+}
+
+.tab-pane .tab {
+    -fx-background-color: #404040;
+
+}
+
+.tab-pane .tab:selected {
+    -fx.border-color: transparent !important;
+    -fx-background-color: #336D1C;
+}
+
+.tab .tab-label {
+    -fx-alignment: CENTER;
+    -fx-text-fill: #f3f3f3;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+
+.tab:selected .tab-label {
+    -fx.border-color: transparent !important;
+    -fx-text-fill: white;
+}
+
 
 
 /*SCROLL BAR STYLING*/
@@ -406,19 +406,6 @@
     -fx-text-fill: #A6A6A6;
 }
 
-/* //@@author shitian007 */
-.auto-complete-popup .list-cell {
-    -fx-background-color: transparent;
-    -fx-font-size: 11pt;
-}
-
-.auto-complete-popup .clipped-container {
-    -fx-font-family: "Verdana";
-    -fx-background-color: grey;
-    -fx-background-radius: 2px;
-}
-/* //@@author */
-
 #filterField, #personListPanel, #personWebpage {
     -fx-effect: innershadow(gaussian, black, 10, 0, 0, 0);
 }
@@ -467,3 +454,16 @@
 .label {
     -fx-text-fill: #C99733;
 }
+
+/* //@@author shitian007 */
+.auto-complete-popup .list-cell {
+    -fx-background-color: transparent;
+    -fx-font-size: 11pt;
+}
+
+.auto-complete-popup .clipped-container {
+    -fx-font-family: "Verdana";
+    -fx-background-color: grey;
+    -fx-background-radius: 2px;
+}
+/* //@@author */

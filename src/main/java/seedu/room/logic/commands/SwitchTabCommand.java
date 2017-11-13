@@ -4,6 +4,7 @@ import seedu.room.commons.core.EventsCenter;
 import seedu.room.commons.events.ui.SwitchTabRequestEvent;
 import seedu.room.logic.commands.exceptions.CommandException;
 
+//@@author sushinoya
 /**
  * Switches between Residents tab and Events tab.
  */

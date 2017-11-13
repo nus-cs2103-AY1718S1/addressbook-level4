@@ -43,7 +43,7 @@ public class EventBook implements ReadOnlyEventBook {
         resetData(toBeCopied);
     }
 
-    //// list overwrite operations
+    //// List Overwrite Operations
 
     public void setEvents(List<? extends ReadOnlyEvent> events) throws DuplicateEventException {
         this.events.setEvents(events);
@@ -61,7 +61,7 @@ public class EventBook implements ReadOnlyEventBook {
         }
     }
 
-    //// event-level operations
+    //// Event-Level Operations
 
     /**
      * Adds an event to the event book.
@@ -100,9 +100,9 @@ public class EventBook implements ReadOnlyEventBook {
         }
     }
 
-    //// sort event book
+    //// Sort Event Book
     /**
-     * Sorts the UniqueEventList, Events.
+     * Sorts the UniqueEventList, events.
      *
      * @throws AlreadySortedException if the list is already sorted by given criteria.
      */
@@ -116,7 +116,7 @@ public class EventBook implements ReadOnlyEventBook {
     }
 
 
-    //// util methods
+    //// Util Methods
 
     @Override
     public String toString() {

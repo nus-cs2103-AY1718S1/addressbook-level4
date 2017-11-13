@@ -14,7 +14,8 @@ import seedu.room.logic.parser.exceptions.ParseException;
 /**
  * Parses the given {@code String} of arguments in the context of the AddImageCommand
  * and returns an AddImageCommand object for execution.
- * @throws ParseException if the user input does not conform the expected format
+ * @throws InvalidImageFormatException if user input url does not specify a valid image format
+ * @throws ParseException if the user input does not conform to the expected command format
  */
 public class AddImageCommandParser implements Parser<AddImageCommand> {
     @Override

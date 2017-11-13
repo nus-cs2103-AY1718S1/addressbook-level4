@@ -1,6 +1,7 @@
-//@@author shitian007
 package seedu.room.logic.commands;
 
+import static junit.framework.TestCase.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static seedu.room.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.room.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.room.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
@@ -19,6 +20,7 @@ import seedu.room.model.UserPrefs;
 import seedu.room.model.person.Person;
 import seedu.room.model.person.Picture;
 
+//@@author shitian007
 public class DeleteImageCommandTest {
 
     private Model model = new ModelManager(getTypicalResidentBook(), new UserPrefs());
@@ -49,6 +51,30 @@ public class DeleteImageCommandTest {
                 editedPerson.getName().toString());
 
         assertCommandFailure(deleteImageCommand, model, expectedMessage);
+    }
+
+    @Test
+    public void equals() {
+        Index index1 = Index.fromOneBased(1);
+        Index index2 = Index.fromOneBased(2);
+        DeleteImageCommand deleteImageIndex1 = new DeleteImageCommand(index1);
+        DeleteImageCommand deleteImageIndex1Duplicate = new DeleteImageCommand(index1);
+        DeleteImageCommand deleteImageIndex2 = new DeleteImageCommand(index2);
+
+        // same object -> returns true
+        assertTrue(deleteImageIndex1.equals(deleteImageIndex1));
+
+        // different object same values -> returns true
+        assertTrue(deleteImageIndex1.equals(deleteImageIndex1Duplicate));
+
+        // different argument -> returns false
+        assertFalse(deleteImageIndex1.equals(deleteImageIndex2));
+
+        // different object type -> returns false
+        assertFalse(deleteImageIndex1.equals(index1));
+
+        // null -> returns false
+        assertFalse(deleteImageIndex1.equals(null));
     }
 
     private DeleteImageCommand prepareCommand(Index index) {

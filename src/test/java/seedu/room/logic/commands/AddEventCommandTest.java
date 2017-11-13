@@ -224,7 +224,6 @@ public class AddEventCommandTest {
         }
     }
 
-    //@@author
     /**
      * A Model stub that always throw a DuplicateEventException when trying to add a event.
      */

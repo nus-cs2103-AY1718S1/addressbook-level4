@@ -28,6 +28,9 @@ import seedu.room.model.person.Picture;
 public class StorageManager extends ComponentManager implements Storage {
 
     private static final Logger logger = LogsCenter.getLogger(StorageManager.class);
+    private static final String backup_location = "/backup.xml";
+    private static final String backup = "_backup";
+    private static final String xml = ".xml";
     private ResidentBookStorage residentBookStorage;
     private EventBookStorage eventBookStorage;
     private UserPrefsStorage userPrefsStorage;
@@ -102,12 +105,12 @@ public class StorageManager extends ComponentManager implements Storage {
     //@@author blackroxs
     @Override
     public void backupResidentBook(ReadOnlyResidentBook residentBook) throws IOException {
-        saveResidentBook(residentBook, getDirAbsolutePath() + "/backup.xml");
+        saveResidentBook(residentBook, getDirAbsolutePath() + backup_location);
         backupImages();
     }
 
     public Optional<ReadOnlyResidentBook> readBackupResidentBook() throws DataConversionException, IOException {
-        return readResidentBook(getDirAbsolutePath() + "/backup.xml");
+        return readResidentBook(getDirAbsolutePath() + backup_location);
     }
 
     /**
@@ -128,7 +131,7 @@ public class StorageManager extends ComponentManager implements Storage {
      * @throws IOException if unable to read or write in the folder
      */
     public void backupImages() throws IOException {
-        String backupFolder = getDirAbsolutePath() + File.separator + Picture.FOLDER_NAME + "_backup";
+        String backupFolder = getDirAbsolutePath() + File.separator + Picture.FOLDER_NAME + backup;
         String originalFolder = getDirAbsolutePath() + File.separator + Picture.FOLDER_NAME;
 
         handleImageBackupFolder(backupFolder, originalFolder);
@@ -244,10 +247,10 @@ public class StorageManager extends ComponentManager implements Storage {
 
     @Override
     public void backupEventBook(ReadOnlyEventBook residentBook) throws IOException {
-        saveEventBook(residentBook, eventBookStorage.getEventBookFilePath() + "-backup.xml");
+        saveEventBook(residentBook, eventBookStorage.getEventBookFilePath() + backup + xml);
     }
 
     public Optional<ReadOnlyEventBook> readBackupEventBook() throws DataConversionException, IOException {
-        return readEventBook(eventBookStorage.getEventBookFilePath() + "-backup.xml");
+        return readEventBook(eventBookStorage.getEventBookFilePath() + backup + xml);
     }
 }

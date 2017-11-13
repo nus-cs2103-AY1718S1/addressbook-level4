@@ -36,7 +36,7 @@ image::Ui_help.png[width="790"]
 .  Some example commands you can try:
 
 * *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Resident Book.
+* **`add`**`n/John Doe p/98765432 e/johnd@example.com r/01-108` : adds a contact named `John Doe` to the Resident Book.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 .  The following is an example of a successful execution of commands.
@@ -67,13 +67,17 @@ image::Ui_short_error.PNG[width="790"]
 Format: `help`
 
 // tag::autocomplete[]
-=== Autocomplete CLI
+=== Autocomplete CLI (since v1.3)
 
 Command Line Interface autocomplete feature which auto-generates list of resident names on commands such as find.
 
 Examples:
 * typing `a` returns a list of commands starting with `add`.
 * typing `find ` returns a list of resident names autocompleted.
+* typing `edit ` returns a list of possible indexes
+
+image::autocomplete.png[width="400"]
+
 // end::autocomplete[]
 
 // tag::addevent[]
@@ -112,37 +116,53 @@ A person can have any number of tags (including 0)
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/John Doe p/98765432 e/johnd@example.com r/01-100`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com r/02-109 p/1234567 t/guest`
 
 // tag::temporaryperson[]
 === Adding a temporary resident:
 
 Adds a temporary resident to the resident book which will be deleted when the number of days specified has elapsed +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ROOM [temp/NUMBER_OF_DAYS] [t/TAG]...`
-
-[TIP]
-Deletion of temporary resident is done at the start up of the addressbook, so restarting your addressbook may help if you
-realised a certain temporary resident stills remains in your address book after its expiry date.
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL r/ROOM [temp/NUMBER_OF_DAYS] [t/TAG]...`
 
 
-Examples:
+[NOTE]
+===============
+. This feature is optional. If you do not wish to add a temporary person, simply do not add in "temp/" when adding a person. +
+. Deletion of temporary resident is done at the start up of the addressbook, so restarting your addressbook may help if you
+realised a certain temporary resident stills remains in your address book after its expiry date. +
+===============
 
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 temp/2 t/criminal`
+
+Example of temporary resident that stays for 1 days:
+
+* `add n/James Bond e/Jamesbond@example.com r/09-100 p/98765432 temp/1 t/hero` +
+
+image::TempPersonMessage.png[width="800"]
+
 // end::temporaryperson[]
 
 // tag::picture[]
 === Adding a picture: addImage
 
 Adds an image to a resident in the resident book as specified by the current index +
-Format: `addImage INDEX IMAGE_URL`
+Format: `addImage INDEX url/IMAGE_URL`
 
 [TIP]
-The url to the image must start from the root folder
+This is NOT an undoable command
+
+[NOTE]
+===============
+. Only the formats: `JPG`/`JPEG`/`PNG`/`BMP` are allowed
+. Addition of an image can only occur once a resident has been added, there is no image urll field in person creation +
+. Each resident can only have 1 image, specifying a image url replaces the current image with the new one.
+===============
 
 Examples:
 
-* `addImage 1 /Users/username/Downloads/placeholder.jpg`
+* `addImage 7 url//Users/username/Downloads/image.jpg`
+
+image::add_person.png[width="400"]
 
 === Deleting a picture: deleteImage
 
@@ -150,46 +170,44 @@ Deletes an image to a resident in the resident book as specified by the current 
 Format: `deleteImage INDEX`
 
 [TIP]
-Deletes the Image of the resident in the current list of displayed residents
+This is NOT an undoable command
 
 Examples:
 
 * `deleteImage 1`
 
-=== Adding a picture: `GUI image`
+image::delete_person.png[width="400"]
 
-Adds a picture of a person to the resident book +
-Format: `click on the placeholder image after adding the person into the addressbook`
+=== Adding a picture: `GUI image` (since v1.2)
 
-Adds a person to the resident book
-Format: `click on 'Add Image' button after adding the person into the residentbook`
+Adds a picture of a resident in the resident book +
+Format: `click on the +image button after selecting a resident in the current list of displayed residents`
 
 [TIP]
-One person can only have 1 picture, adding additional images replaces the current one
+Similar to the CLI version of add image, this action is NOT undoable
 
-Example:
-
-image::add_person.png[width="400"]
-
-=== Deleting a picture: `GUI button`
+=== Deleting a picture: `GUI button` (since v1.2)
 
 Deletes a person's picture from the address book +
-Format: `click on the placeholder image after adding the person into the addressbook`
+Format: `click on the -image button after selecting a resident in the displayed list`
 
-Example:
+[TIP]
+Similar to the CLI version of add image, this action is NOT undoable
 
-image::delete_person.png[width="400"]
 // end::picture[]
 
 // tag::highlight[]
-=== Highlighting by tag : `highlight`
+=== Highlighting by tag : `highlight` (since v1.4)
 
 Highlights all residents with specified tag / Removes highlighting when residents highlighted
 Format: `highlight TAG_NAME` / `highlight '-'"
 
+[TIP]
+Only `highlight -` will remove highlighting, highlighting invalid tags would only give an +
+error message in the message box
+
 Examples:
-* `highlight colleague`
-* `highlight owes money`
+* `highlight owesmoney`
 * `highlight -` - Clears current highlighting
 // end::highlight[]
 
@@ -230,7 +248,7 @@ Examples:
 === Editing a person : `edit`
 
 Edits an existing person in the resident book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ROOM] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [r/ROOM] [t/TAG]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -291,14 +309,14 @@ Deletes the 1st person in the results of the `find` command.
 === Deleting persons by tag: `deletebytag`
 
 Deletes all persons in the address book who has the supplied tag. +
-Format: `deletebytag TAG`
+Format: `deletebytag TAG` +
+Command Alias: `dbt`
 
 
 ****
 * The addressbook automatically updates as the deletion happens.
 * `TAG` supplied is case-sensitive i.e. friends is different from Friends. This is to allow more freedom for users in the
 creation of tags. Please take note of this when using this command.
-* The alias for this command is dbt
 * This command will delete all persons who have the supplied `TAG`, even if they contain tags other than the tag supplied (Refer to example below).
 ****
 
@@ -306,7 +324,9 @@ Examples:
 
 * `deletebytag friend` will delete all persons who have a tag of `friend`
 
-* If Alice has tags "friends" and "bestie", `deletebytag friends` will erase Alice from the ResidentBook.
+* If Alice has tags "RA" and "CollegeMaster", `deletebytag RA` will erase Alice from the ResidentBook.
+
+image::deletebytagMessage.png[width='800']
 
 // end::deletebytag[]
 
@@ -405,14 +425,22 @@ Format: `exit`
 Resident book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
-=== Back up of data : `backup`
+// tag::backup[]
+=== Back up of data : `backup` (since v1.3)
 
-Resident book data can be stored in a back up file when necessary. This is good in case any the existing resident book is corrupted. +
+Resident book data can be stored in a back up file when necessary. This function is not undoable. Please ensure that previous backups are truly deprecated.
+
+This command is good in case any the existing resident book is corrupted, or when the semester is over. +
 Format: `backup`
 
-=== Import data : `import` (Since v1.2)
+image::backup.png[width='800']
 
-Add contact details from external xml file into current resident book. This can be done through typing commands or selecting from the UI.+
+// end::backup[]
+
+// tag::import[]
+=== Import data : `import` (Since v1.4)
+
+The import command helps to integerate Resident details from an external XML file with the current ResidenkBook details. This function can be done through typing through CLI or selecting from the UI. It is an undoable function. +
 Format: import FILE_PATH
 
 ****
@@ -423,33 +451,98 @@ Format: import FILE_PATH
 Examples:
 
 * `import C:\Desktop\exchangeStudents.xml` +
-Imports colleagues.xml into current resident book.
+Imports exchangeStudents.xml into current resident book.
 
-Through the UI:
-image::ui_import.png[width="400"]
+It can be done through the Ui as well.
 
+image::import_file_Ui.png[width='800']
+
+// end::import[]
+
+// tag::removeTag[]
 === Remove all Tags with specified name : `rm` (Since v1.3)
 
 This function is useful to remove all deprecated tags. For example, when all residents have moved in, all the tags can be removed as "Pending". +
-Format: rm TAG_NAME
+Format: `removeTag TAG` +
+Command Alias: `rm`
 
-****
-* The TAG_NAME must be present in the Resident Book.
-****
+[NOTE]
+The TAG_NAME specified must exist in the current ResidentBook. If it does not exist, exception will be thrown and user will be notified that not such tag exist.
+The following shows an example when invalid tag is provided.
 
 Examples:
 
 * `rm pending` +
 Remove all "pending" tags from list of residents.
 
+* If Amy has tags "RA" and "CollegeMaster", `removeTag RA` will remove tag from Amy, retaining her other details in the ResidentBook.
+
+
+image::removeTagCommand_error.png[width='800']
+
+// end::removeTag[]
+
+// tag::personPanel[]
+
 === Person Panel (since v1.4)
 
-Clicking on a person now displays additional information in the side pane
+Person Panel has been introduced to allow additional information of residents to be displayed.
 
+image::personPanel.png[width="500"]
+
+* Panel includes GUI add and delete image buttons to update pictures of residents
+
+// end::personPanel[]
+
+// tag::Calendar[]
 === Calendar Interface (Since v1.4)
 
-Calendar has been introduced to allow the hostel administrator to view events.
-Events can be seen on calendar interface for clearer view since v1.5
+Calendar has been introduced to allow the hostel administrator to view events happening in the hostel.
+Events can be seen on calendar interface since v1.5
+
+image::Calendar_UI.png[width="790"]
+
+[NOTE]
+
+To go to previous or next month, type
+`prev` or `next`. +
+Refer to the next section for details of each command.
+
+* User can also click on the "PREV" or "NEXT" button to navigate to the previous or next month.
+
+* Event names are truncated on the calendar to allow uniform calendar grid size. +
+
+* Calendar is dynamically updated when events are added or deleted.
+
+* Calendar will stay at the month you are at when events are added or deleted.
+
+* The current date will be appear in grey colour on the calendar(i.e. 12th Nov in the picture).
+
+* Users can also click on individual dates. Selected date will turn green(i.e. 29th Nov in the picture). In v2.0, users can
+click on any day on the calendar and a list of events on that day can be displayed in greater detail.
+
+[TIP]
+When there are three of more events on the same day, calendar only shows two of those events
+and let you know that they are more events happening on the same day.
+
+Example:
+
+image::Day_Events.png[width="300"]
+
+
+=== View previous or next month on calendar: `prev` or `next`
+Format: `prev` +
+Format: `next`
+
+This command allows users to view events taking place in the previous month, or in the next month. +
+If the current month is November and a user types `prev`, calendar will show October's events. Typing `prev` will bring
+the user to September; otherwise if the user types `next`, calendar will show December's events.
+
+An example of navigating to the previous month (from November) is shown below.
+
+image::PrevCommand.png[width="800"]
+
+// end::Calendar[]
 
 === Events (Since v1.4)
 
@@ -462,12 +555,12 @@ Events can be managed through the Resident book. It supports add and delete func
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ROOM [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL r/ROOM [t/TAG]...` +
+e.g. `add n/James Ho p/22224444 e/jamesho@example.com r/12-100 t/friend t/colleague`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ROOM] [t/TAG]...` +
+* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [r/ROOM] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
@@ -479,3 +572,12 @@ e.g.`select 2`
 * *Undo* : `undo`
 * *Redo* : `redo`
 * *Backup* : `backup`
+* *Import* : `import FILE_PATH` +
+e.g. `import C:\Documents\exchangeStudent.xml`
+* *RemoveTag : `removeTag TAG` or `rm TAG` +
+e.g. `removeTag RA`
+* *Delete by tag*: `deletebytag TAG` +
+e.g. `deletebytag RA`
+* *Switch panel* : `switch`
+* *Previous Month*: `prev`
+* *Next Month*: `next`
