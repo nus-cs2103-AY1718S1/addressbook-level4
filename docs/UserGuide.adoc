@@ -168,7 +168,7 @@ Returns any name starting with Jo, eg: `John`, `Joe` or `Joy`
 
 Alternatively, this command can perform by directly inputting `PARTIALNAME` into the search box right above the contact panel.
 
-image::searchbox.png[width="380"]
+image::searchBox.png[width="380"]
 
 // end::pfind[]
 === Deleting a person : `delete`
