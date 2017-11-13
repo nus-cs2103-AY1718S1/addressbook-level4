@@ -81,6 +81,7 @@ public class AddressBookParser {
         case EditTaskCommand.COMMAND_WORD:
         case EditTaskCommand.COMMAND_ALIAS:
             return new EditTaskCommandParser().parse(arguments);
+        //@@author
 
         case SelectCommand.COMMAND_WORD:
         case SelectCommand.COMMAND_ALIAS:
@@ -131,6 +132,7 @@ public class AddressBookParser {
         case FindTaskCommand.COMMAND_WORD:
         case FindTaskCommand.COMMAND_ALIAS:
             return new FindTaskCommandParser().parse(arguments);
+        //@@author
 
         case RemarkCommand.COMMAND_WORD:
             return new RemarkCommandParser().parse(arguments);
@@ -152,6 +154,7 @@ public class AddressBookParser {
         case ExportCommand.COMMAND_WORD:
         case ExportCommand.COMMAND_ALIAS:
             return new ExportCommandParser().parse(arguments);
+        //@@author
 
         case TaskByEndCommand.COMMAND_WORD:
         case TaskByEndCommand.COMMAND_ALIAS:
@@ -165,6 +168,7 @@ public class AddressBookParser {
         case ExportTaskCommand.COMMAND_WORD:
         case ExportTaskCommand.COMMAND_ALIAS:
             return new ExportTaskCommandParser().parse(arguments);
+        //@@author
 
         case HistoryCommand.COMMAND_WORD:
         case HistoryCommand.COMMAND_ALIAS:

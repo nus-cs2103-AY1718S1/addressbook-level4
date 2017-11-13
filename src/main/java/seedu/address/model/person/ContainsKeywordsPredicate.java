@@ -15,6 +15,7 @@ public class ContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
         this.keywords = keywords;
     }
 
+    //@@author 1moresec
     @Override
     public boolean test(ReadOnlyPerson person) {
         boolean hasName = keywords.stream()
@@ -25,6 +26,7 @@ public class ContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
                 .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getAddress().toString(), keyword));
         return hasName || hasEmail || hasAddress;
     }
+    //@@author
 
     @Override
     public boolean equals(Object other) {
