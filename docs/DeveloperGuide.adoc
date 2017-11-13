@@ -735,7 +735,7 @@ convenient way for students to have access to a calendar without having to open 
 *Aspect*: How to display the individual dates. +
 *Alternative 1 (current choice):* Use a GridPane to design the table in XML. Include a class to calculate dates to be
 shown, before populating individual cells in GridPane using data from class. +
-*Pros:* This method makes use of javafx, possibly allowing us to improve the aesthetic design in the future. It also
+*Pros:* This method makes use of JavaFX, possibly allowing us to improve the aesthetic design in the future. It also
 allows individual objects to be created for individual cells. This could allow us to write more functionality such
 as showing number of events per day to dynamic colour changes in the future. The `monthDateBuilder` method provides an
 accurate graphical representation of the days in a monthly calendar. +
@@ -751,13 +751,13 @@ JTable functions might not be used.
 ==== Implementation Outline
 
 1. Create a `EventCalendar` class that contains the month that will be shown, containing all the necessary information
-required for a monthly calender (i.e. dates, name of month).
+required for a monthly calendar (i.e. dates, name of month).
 
 2. Create a `monthDateBuilder` class that will be used to set the current month and year of the calendar. It will also be
 arranging the dates in a way that will correspond to which day of the week it belongs to.
 
 3. Use `Calendar` class to set the current year and month and store in an array (i.e.`monthYearArray`) in
-`monthDateBuilder`. Also, use `Calender` class to set the number of days in the current month and the day that the first
+`monthDateBuilder`. Also, use `Calendar` class to set the number of days in the current month and the day that the first
 date of the month falls on (i.e. set using `setMonthAnchors` method). These details are required to build the monthly
 view.
 
