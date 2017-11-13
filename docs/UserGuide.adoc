@@ -121,7 +121,6 @@ Some example commands you can try:
 
 .  Refer to the link:#features[Features] section below for details of each command.
 
-[[features]]
 == Features Format
 
 Unify is jam-packed with features and it may be daunting for new users.
@@ -153,7 +152,7 @@ Tags should only contain letters and numbers, and cannot contain any spaces.
 A common way to utilise tags is grouping your contacts with tags. For example, you can tag your family members with a `family` tag.
 Next time if you want to search for your family members, you can execute the link:#find[`find` command] to list your family members.
 
-
+[[features]]
 == Basic Features
 image::UG_mainheader_basicfeatures.png[width="900"]
 //-
@@ -171,6 +170,11 @@ image::UG_header_format.png[width="400"]
 {sp}+
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [r/REMARK] [i/AVATAR_FILE_PATH] [t/TAG]...`
 
+image::header_note.png[width="400"]
+
+Remark, avatar and tag fields are optional! You do not have to fill them if you do not have any remarks, avatar picture, or tags to add currently. +
+Don't worry! You are still able to add these later using the link:#editcommand[Edit] command.
+
 [TIP]
 Still unsure of what fields are required? Not to worry! Unify's in-line hints will prompt you on the fields required.
 Simply press kbd:[Tab] to auto-complete to the next required prefix!
@@ -179,9 +183,6 @@ image::UG_header_alias.png[width="400"]
 {sp}+
 Alias: `new`, `create`
 
-[TIP]
-A person can have any number of tags (including 0)
-
 image::UG_header_examples.png[width="400"]
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 r/Loves Tea`
@@ -189,11 +190,11 @@ image::UG_header_examples.png[width="400"]
 
 image::UG_header_stepbystep.png[width="400"]
 {sp}+
-image:step1.png[width="70"] Type `add` into the command box first, then follow the format as shown above, after which press kbd:[Enter] to execute it.
+image:step1.png[width="70"] Simply type `add` into the command box first, then follow the format as shown above, after which press kbd:[Enter] to execute it.
 
 image::UG_add1.png[width="590"]
 
-image:step2.png[width="70"] The result box will display "New person added:" with the contact details.
+image:step2.png[width="70"] The result box will display "New person added:" with the contact details that you have just input.
 
 image:step3.png[width="70"] The contact list will be displayed with the newly added contact at the bottom of the list.
 
@@ -296,6 +297,7 @@ image::UG_delete2.png[width="590"]
 image::divider.png[width="900"]
 
 // tag::editcommand[]
+[[editcommand]]
 === Editing a person : `edit`
 
 image::UG_commandheader_edit.png[width="500"]
