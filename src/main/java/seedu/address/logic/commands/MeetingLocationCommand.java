@@ -49,19 +49,25 @@ public class MeetingLocationCommand extends Command {
             }
         }
         ArrayList<String> mrtStations = new ArrayList<String>();
+        ArrayList<String> peopleNameList = new ArrayList<String>();
         for (int i = 0; i < listOfIndex.length; i++) {
             String mrtStation = model.getAddressBook().getPersonList().
                     get(listOfIndex[i].getZeroBased()).getMrt().value;
+            String peopleName = model.getAddressBook().getPersonList().
+                    get(listOfIndex[i].getZeroBased()).getName().fullName;
             mrtStations.add(mrtStation);
+            peopleNameList.add(peopleName);
         }
 
         MrtMapLogic mrtMapLogic = new MrtMapLogic();
         ArrayList<String> sortedStationNames = mrtMapLogic.getSortedMrtList(mrtStations);
+        //the first element in the sorted list contains the best meeting location.
+        String meetStation = sortedStationNames.get(0);
         MrtMapUI mrtMapUI = new MrtMapUI();
-        mrtMapUI.displayConvenientPoints(sortedStationNames, NUM_DISPLAY_STATION);
-        String showMrtInfoToUser = getMrtInfos(sortedStationNames, NUM_DISPLAY_STATION);
+        mrtMapUI.displayUserInfo(meetStation, mrtStations);
+        String userInfo = getMrtInfo(peopleNameList, mrtStations, meetStation);
         return new CommandResult(String.format(MESSAGE_MEETING_LOCATION_SUCCESS)
-                + showMrtInfoToUser);
+                + userInfo);
 
     }
 
@@ -77,16 +83,21 @@ public class MeetingLocationCommand extends Command {
     /**
      * Returns the info of schedule to be shown to the user later.
      */
-    public String getMrtInfos(ArrayList<String> stationNames, int numStationToDisplay) {
-        String toShow = "\nTop Metting Location: ";
-        System.out.println("toShow = "+toShow);
-        for (int i = 0; i < stationNames.size() && i < numStationToDisplay; i++) {
+    public String getMrtInfo(ArrayList<String> peopleNames, ArrayList<String> mrtStations,
+                              String meetStation) {
+
+        MrtMapLogic mrtMapLogic = new MrtMapLogic();
+
+        String toShow = "\nTop Meeting Location: " +meetStation;
+        for (int i = 0; i < peopleNames.size() && i < mrtStations.size(); i++) {
             toShow += "\n";
-            String currLine = Integer.toString(i + 1);
-            currLine += ") ";
-            currLine += stationNames.get(i);
+            String mrtStationName = mrtStations.get(i);
+            int travelTime = mrtMapLogic.getTravelTime(mrtStationName, meetStation);
+            String stringTime = Integer.toString(travelTime);
+            String personName = peopleNames.get(i);
+            String currLine = personName +" (from "+mrtStationName+") requires "
+                    + stringTime +" minutes.";
             toShow += currLine;
-            System.out.println("currLine = "+currLine);
         }
         return toShow;
     }
