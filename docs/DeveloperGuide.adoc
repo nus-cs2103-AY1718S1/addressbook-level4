@@ -684,7 +684,7 @@ The backup command saves the current ResidentBook into backup.xml located in the
 **Pros:** Flexible level of precision according to the needs of the user +
 **Cons:** May result in unnecessary backup with different names
 
-One consideration for the choosen mechanism is that backup should only happen when necessary, as it will take up a lot of space. 
+One consideration for the choosen mechanism is that backup should only happen when necessary, as it will take up a lot of space.
 
 [source,java]
 ----
@@ -767,8 +767,20 @@ Also, by default, the list is sorted by name.
 === RemoveTag Command
 
 The RemoveTag command is implemented for fast removal of a tag from all entries in the address book. It is implemented by updating the tag list of Residents. +
-The motivation for implementing such a command is that the hostel/hotel administrator may need to mass delete a Tag from the person. For example, deleting the "RA" (Resident Assistant) +
-tag when the old batch of RA steps down from operations.
+The motivation for implementing such a command is that the hostel/hotel administrator may need to mass delete a Tag from the person. For example, deleting the "RA" (Resident Assistant) tag when the old batch of RA steps down from operations.
+
+==== Design Considerations
+
+**Aspect:** Implementation of RemoveTag +
+**Alternative 1 (current choice):** Removes all tag from Residents holding it, by looking through the current ResidentBook  +
+**Pros:** Effective way, as it ensures that no one holds the tag after going through all Residents  +
+**Cons:** May take a longer time when running through all Residents if the ResidentBook has large amount of data +
+**Alternative 2:** Keep a list of Residents holding the Tag, and update it when necessary  +
+**Pros:** Efficient way, O(1) time in retrieving all Residents holding the Tag.  +
+**Cons:** Redundancy and overhead in keeping another list of Residents. Edit, Add, Delete will require additional checks to prevent outdated data.
+
+The current choice of design prevents unnecessary overhead in implementation, and is straightforward. While it may take a longer time in operation when handlinng large amount of data,
+it is understood that Residents population does not vary a lot. Since the number of rooms are fixed due to building design, it is safe to assume that all operations are able to complete within a reasonable amount of time.
 
 The following is the Sequence Diagram for RemoveTag command. The alias is "rm".
 
@@ -785,6 +797,43 @@ public RemoveTagCommand(String tagName) {
 }
 ----
 
+The following shows the core of RemoveTag command. It is essentially editing all Residents which holds the Tag specified by the user.
+[source,java]
+----
+private void updateTagList(List<ReadOnlyPerson> lastShownList, int i) throws CommandException {
+        ReadOnlyPerson personToEdit = lastShownList.get(i);
+        Person editedPerson = removedTagFromPerson(personToEdit);
+
+        try {
+            model.updatePerson(personToEdit, editedPerson);
+        } catch (PersonNotFoundException e) {
+            throw new CommandException(MESSAGE_REMOVE_TAG_ERROR);
+        } catch (DuplicatePersonException e) {
+            throw new CommandException(MESSAGE_REMOVE_TAG_ERROR);
+        }
+    }
+----
+
+This following section shows how the Tag specified is removed. It loops through the TagList each person has, and creates another set of Tags. While there will not be a duplication of tag, this defensive code ensures that indeed all specified tag is removed.
+[source,java]
+----
+private Person removedTagFromPerson(ReadOnlyPerson personToEdit) {
+        assert personToEdit != null;
+
+        Set<Tag> updatedTags = new HashSet<>();
+
+        for (Tag t : personToEdit.getTags()) {
+            if (t.tagName.equals(this.tagName)) {
+                continue;
+            } else {
+                updatedTags.add(t);
+            }
+        }
+
+        return new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
+                personToEdit.getRoom(), personToEdit.getTimestamp(), updatedTags);
+    }
+----
 [NOTE]
 If the tagName is invalid, the TagNotFoundException will be raised.
 
