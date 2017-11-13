@@ -1,5 +1,39 @@
 # nahtanojmil
-###### \java\seedu\address\logic\commands\RemarkCommand.java
+###### /java/seedu/address/commons/events/ui/HomeRequestEvent.java
+``` java
+/**
+ * Indicates a request to display home page
+ */
+public class HomeRequestEvent extends BaseEvent {
+
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+}
+
+```
+###### /java/seedu/address/logic/commands/HomeCommand.java
+``` java
+public class HomeCommand extends Command {
+
+    public static final String COMMAND_WORD = "home";
+
+    public static final String MESSAGE_SELECT_HOME_SUCCESS = "Welcome Home";
+
+
+    public HomeCommand() {}
+
+    @Override
+    public CommandResult execute() throws CommandException {
+        EventsCenter.getInstance().post(new HomeRequestEvent());
+        return new CommandResult(MESSAGE_SELECT_HOME_SUCCESS);
+    }
+
+}
+```
+###### /java/seedu/address/logic/commands/RemarkCommand.java
 ``` java
 /**
  * Changes the remark of an existing person in the address book.
@@ -79,7 +113,7 @@ public class RemarkCommand extends UndoableCommand {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\ParserUtil.java
+###### /java/seedu/address/logic/parser/ParserUtil.java
 ``` java
     /**
      * Parses a {@code Optional<String> remark} into an {@code Optional<Remark>} if {@code remark}
@@ -115,7 +149,7 @@ public class RemarkCommand extends UndoableCommand {
 
 }
 ```
-###### \java\seedu\address\logic\parser\RemarkCommandParser.java
+###### /java/seedu/address/logic/parser/RemarkCommandParser.java
 ``` java
 /**
  * Remark command parser
@@ -146,7 +180,7 @@ public class RemarkCommandParser implements Parser<RemarkCommand> {
     }
 }
 ```
-###### \java\seedu\address\model\person\Remark.java
+###### /java/seedu/address/model/person/Remark.java
 ``` java
 /**
  * Represents a Person's remark in the address book.
@@ -191,7 +225,7 @@ public class Remark {
 }
 
 ```
-###### \java\seedu\address\ui\GraphPanel.java
+###### /java/seedu/address/ui/GraphPanel.java
 ``` java
 /**
  * Displays the specified graphs that the user wants
@@ -308,8 +342,210 @@ public class GraphPanel extends UiPart<Region> {
     }
 }
 ```
-###### \resources\view\GraphPanel.fxml
+###### /java/seedu/address/ui/HomePanel.java
+``` java
+/**
+ * Displays the home page on startup on when called upon
+ */
+public class HomePanel extends UiPart<Region> {
+
+    private static final String FXML = "HomePanel.fxml";
+    private InputStream is = this.getClass().getResourceAsStream("/images/Wallpaper/img9.jpg");
+    private final Logger logger = LogsCenter.getLogger(this.getClass());
+
+    @FXML
+    private ImageView homePage;
+
+    @FXML
+    private Label quotesLabel;
+
+    private UserPrefs pref;
+
+    private String[] quotes = {
+        "What we want is to see the child in pursuit of knowledge, and not knowledge in pursuit of the child.",
+        "Good teaching is one-fourth preparation and three-fourths theatre.",
+        "A teacher is a compass that activates the magnets of curiosity, knowledge, and wisdom in the pupils.",
+        "I cannot teach anybody anything, I can only make them think.",
+        "What sculpture is to a block of marble, education is to a human soul.",
+        "Education breeds confidence. Confidence breeds hope. Hope breeds peace.",
+        "Teach the children so it will not be necessary to teach the adults.",
+        "Tell me and I forget. Teach me and I remember. Involve me and I learn.",
+        "Education is not preparation for life; education is life itself.",
+        "A mind when stretched by a new idea never regains its original dimensions.",
+        "Education is not filling of a pail but the lighting of a fire.",
+        "The best way to predict your future is to create it."
+    };
+
+    public HomePanel(UserPrefs preferences) {
+        super(FXML);
+        this.pref = preferences;
+    }
+
+    public HomePanel getHomePanel() {
+        return this;
+    }
+
+    /**
+     * Changes both images and quotes when home command is parsed
+     */
+    public void refreshPage() {
+        Random random = new Random();
+        Image image = new Image(is);
+        homePage.setImage(image);
+        homePage.setFitWidth(1650);
+        quotesLabel.setMinWidth(500);
+        quotesLabel.setStyle("-fx-font: 30 system;");
+        quotesLabel.setText(quotes[random.nextInt(quotes.length)]);
+    }
+
+}
+```
+###### /java/seedu/address/ui/MainWindow.java
+``` java
+    /**
+     * Fills up all the placeholders of this window.
+     */
+    void fillInnerParts() {
+        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
+        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+
+        extendedPersonCard = new ExtendedPersonCard();
+
+        GraphPanel graphPanel = new GraphPanel(logic);
+
+        StatisticsPanel statisticsPanel = new StatisticsPanel(logic.getFilteredPersonList());
+
+        ResultDisplay resultDisplay = new ResultDisplay();
+        resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
+
+        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
+        statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
+
+        CommandBox commandBox = new CommandBox(logic);
+        commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
+        detailsStatsPlaceHolder.getItems().set(0, extendedPersonCard.getRoot());
+        detailsStatsPlaceHolder.getItems().set(1, statisticsPanel.getRoot());
+        statsGraphPlaceHolder.getItems().set(0, detailsStatsPlaceHolder);
+        statsGraphPlaceHolder.getItems().set(1, graphPanel.getRoot());
+    }
+
+```
+###### /java/seedu/address/ui/MainWindow.java
+``` java
+    /**
+     * change to home display page when the home command is parsed. @param valid
+     */
+    public void setScreenDisplay(boolean valid) {
+        HomePanel homePanel = new HomePanel(prefs);
+        if (valid) {
+            extendedScreenPlaceHolder.getChildren().removeAll();
+            extendedScreenPlaceHolder.getChildren().setAll(homePanel.getRoot());
+            homePanel.refreshPage();
+        } else {
+            extendedScreenPlaceHolder.getChildren().removeAll();
+            extendedScreenPlaceHolder.getChildren().setAll(statsGraphPlaceHolder);
+        }
+    }
+    void hide() {
+        primaryStage.hide();
+    }
+
+    private void setTitle(String appTitle) {
+        primaryStage.setTitle(appTitle);
+    }
+
+    /**
+     * Sets the given image as the icon of the main window.
+     *
+     * @param iconSource e.g. {@code "/images/help_icon.png"}
+     */
+    private void setIcon(String iconSource) {
+        FxViewUtil.setStageIcon(primaryStage, iconSource);
+    }
+
+    /**
+     * Sets the default size based on user preferences.
+     */
+    private void setWindowDefaultSize(UserPrefs prefs) {
+        primaryStage.setHeight(prefs.getGuiSettings().getWindowHeight());
+        primaryStage.setWidth(prefs.getGuiSettings().getWindowWidth());
+        if (prefs.getGuiSettings().getWindowCoordinates() != null) {
+            primaryStage.setX(prefs.getGuiSettings().getWindowCoordinates().getX());
+            primaryStage.setY(prefs.getGuiSettings().getWindowCoordinates().getY());
+        }
+    }
+
+    public void setWindowMinSize() {
+        primaryStage.setMinHeight(MIN_HEIGHT);
+        primaryStage.setMinWidth(MIN_WIDTH);
+    }
+
+    /**
+     * Returns the current size and the position of the main Window.
+     */
+    GuiSettings getCurrentGuiSetting() {
+        return new GuiSettings(primaryStage.getWidth(), primaryStage.getHeight(),
+                (int) primaryStage.getX(), (int) primaryStage.getY());
+    }
+
+    /**
+     * Opens the help window.
+     */
+    @FXML
+    public void handleHelp() {
+        HelpWindow helpWindow = new HelpWindow();
+        helpWindow.show();
+    }
+
+    void show() {
+        primaryStage.show();
+    }
+
+    /**
+     * Closes the application.
+     */
+    @FXML
+    private void handleExit() {
+        raise(new ExitAppRequestEvent());
+    }
+
+    public PersonListPanel getPersonListPanel() {
+        return this.personListPanel;
+    }
+
+    public ExtendedPersonCard getExtendedPersonCard() {
+        return this.extendedPersonCard;
+    }
+
+    public GraphPanel getGraphPanel() {
+        return this.graphPanel;
+    }
+
+    public StatisticsPanel getStatisticsPanel() {
+        return this.statisticsPanel;
+    }
+
+    @Subscribe
+    private void handleShowHelpEvent(ShowHelpRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleHelp();
+    }
+
+    @Subscribe
+    private void handleJumpRequestEvent(JumpToListRequestEvent event) {
+        setScreenDisplay(false);
+    }
+
+    @Subscribe
+    private void handleHomeRequest (HomeRequestEvent event) {
+        setScreenDisplay(true);
+    }
+}
+```
+###### /resources/view/GraphPanel.fxml
 ``` fxml
+
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
@@ -322,7 +558,7 @@ public class GraphPanel extends UiPart<Region> {
    <children>
       <TabPane fx:id="tabPaneGraphs" layoutX="10.0" layoutY="10.0" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <tabs>
-            <Tab closable="false" text="Line Chart">
+            <Tab closable="false" text="1. Line Chart">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -338,7 +574,7 @@ public class GraphPanel extends UiPart<Region> {
                   </AnchorPane>
                </content>
             </Tab>
-            <Tab closable="false" text="Bar Chart">
+            <Tab closable="false" text="2. Bar Chart">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>

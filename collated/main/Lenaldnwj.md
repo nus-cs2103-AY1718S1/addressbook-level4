@@ -1,5 +1,5 @@
 # Lenaldnwj
-###### \java\seedu\address\logic\parser\AddCommandParser.java
+###### /java/seedu/address/logic/parser/AddCommandParser.java
 ``` java
     /**
      * Returns a appended String message stating that specific optional inputs are not recorded if user decides
@@ -22,7 +22,7 @@
     }
 }
 ```
-###### \java\seedu\address\logic\parser\ParserUtil.java
+###### /java/seedu/address/logic/parser/ParserUtil.java
 ``` java
     /**
      * Parses a {@code Optional<String> parentPhone} into an {@code Optional<ParentPhone>} if {@code parentPhone}
@@ -34,7 +34,7 @@
         return parentPhone.isPresent() ? Optional.of(new ParentPhone(parentPhone.get())) : Optional.empty();
     }
 ```
-###### \java\seedu\address\model\person\Email.java
+###### /java/seedu/address/model/person/Email.java
 ``` java
 
     public static final String MESSAGE_EMAIL_CONSTRAINTS =
@@ -63,7 +63,7 @@
         return test.matches(EMAIL_VALIDATION_REGEX);
     }
 ```
-###### \java\seedu\address\model\person\ParentPhone.java
+###### /java/seedu/address/model/person/ParentPhone.java
 ``` java
 package seedu.address.model.person;
 
@@ -123,7 +123,7 @@ public class ParentPhone {
 
 }
 ```
-###### \java\seedu\address\model\person\Person.java
+###### /java/seedu/address/model/person/Person.java
 ``` java
     public void setParentPhone(ParentPhone parentPhone) {
         this.parentPhone.set(requireNonNull(parentPhone));
@@ -139,7 +139,7 @@ public class ParentPhone {
         return parentPhone.get();
     }
 ```
-###### \java\seedu\address\model\person\Phone.java
+###### /java/seedu/address/model/person/Phone.java
 ``` java
 package seedu.address.model.person;
 
@@ -200,7 +200,25 @@ public class Phone {
 
 }
 ```
-###### \java\seedu\address\ui\PersonCard.java
+###### /java/seedu/address/ui/ExtendedPersonCard.java
+``` java
+    /**
+     * Displays text description of the icons when cherBook starts up
+     */
+    protected void loadIconDescriptionOnStartUp() {
+        name.setText("Name of student");
+        phone.setText("Phone number of student");
+        parentPhone.setText("Phone number of parent");
+        address.setText("Address of student");
+        formClass.setText("Form class of student");
+        grades.setText("Grades of student");
+        postalCode.setText("Postal code of student");
+        email.setText("Email of student");
+        remark.setText("Remark of student");
+    }
+
+```
+###### /java/seedu/address/ui/PersonCard.java
 ``` java
     private static final String FXML = "PersonListCard.fxml";
 
@@ -333,4 +351,61 @@ public class Phone {
     }
 
 }
+```
+###### /resources/view/PersonListCard.fxml
+``` fxml
+      <Label fx:id="phone" lineSpacing="10.0" styleClass="cell_small_label" text="\$phone">
+        <graphic>
+          <ImageView>
+            <image>
+              <Image url="@../images/studentPhone.png" />
+            </image>
+          </ImageView>
+        </graphic>
+        <padding>
+          <Insets bottom="5.0" />
+        </padding>
+        <font>
+          <Font size="14.0" />
+        </font>
+      </Label>
+
+      <Label fx:id="parentPhone" lineSpacing="10.0" styleClass="cell_small_label" text="\$parentPhone">
+        <graphic>
+          <ImageView>
+            <image>
+              <Image url="@../images/parentPhone.png" />
+            </image>
+          </ImageView>
+        </graphic>
+        <padding>
+          <Insets bottom="5.0" />
+        </padding>
+        <font>
+          <Font size="14.0" />
+        </font>
+      </Label>
+
+      <Label fx:id="formClass" lineSpacing="10.0" styleClass="cell_small_label" text="\$formClass">
+        <graphic>
+          <ImageView>
+            <image>
+              <Image url="@../images/formClass.png" />
+            </image>
+          </ImageView>
+        </graphic>
+        <padding>
+          <Insets bottom="5.0" />
+        </padding>
+        <font>
+          <Font size="14.0" />
+        </font>
+      </Label>
+
+    </VBox>
+      <rowConstraints>
+         <RowConstraints />
+      </rowConstraints>
+  </GridPane>
+</HBox>
 ```
