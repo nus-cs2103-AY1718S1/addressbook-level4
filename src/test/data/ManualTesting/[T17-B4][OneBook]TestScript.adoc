@@ -1,4 +1,5 @@
 = Test Script for Manual Testing
+:stylesDir: stylesheets
 
 == Loading the SampleData.xml file
 1. Locate the file directory of your `OneBook.jar`.
