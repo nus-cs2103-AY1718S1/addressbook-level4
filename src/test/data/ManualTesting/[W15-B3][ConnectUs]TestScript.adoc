@@ -490,7 +490,7 @@ Example: theme white`
 
 ****
 
-=== Upload an image using the command line with an invalid file
+=== Upload an image using the command line with an non-existent file
 . Copy the following command onto the command line input: +
 `photo 2 ./SampleImages/nothing.jpeg`
 
@@ -502,6 +502,7 @@ Example: theme white`
 
 ****
 
+=== Upload an image using the command line with an invalid file
 . Copy the following command onto the command line input: +
 `photo 2 ./SampleImages/nothing.txt`
 
@@ -582,8 +583,7 @@ Example: theme white`
 == Deletes all images for all people
 
 === Deletes all images for all people successfully
-
-. To see the full effect of the function, upload an image to person with index 3 first.
+. To see the full effect of the function, you can upload an image to person with index 3 first.
 . Copy the following commands onto the command line input in sequence: +
 `photo 3 ./SampleImages/beautiful.jpg` +
 `daphotos`
@@ -596,7 +596,6 @@ Example: theme white`
 ****
 
 === No photos to delete
-
 . Copy the following command onto the command line input: +
 `daphotos`
 
