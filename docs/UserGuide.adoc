@@ -54,7 +54,6 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 Format: `help`
 
-// tag::add[]
 === Adding a person: `add`
 
 Adds a person to the address book +
@@ -62,14 +61,11 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 
 [TIP]
 A person can have any number of tags (including 0) +
-If email, phone number and/or address is not entered, it will appear as a dash.
 
 Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
-* `add n/Betsy Crowe t/friend a/Newgate Prison p/1234567 t/criminal` +
-// end::add[]
 
 === Listing all persons : `list`
 
