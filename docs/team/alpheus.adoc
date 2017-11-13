@@ -8,8 +8,9 @@ Written in Java language, Bluebird is a desktop based organisational tool for th
 for a variety of day-to-day management tasks, including managing appointments for both yourself and your
 child, and also organising the contact information from your Address Book. +
 
-Included in this portfolio are all the enhancements, features and tests that Alpheus Lim Wei Xiang has contributed to the project.
-
+== Purpose
+This project portfolio serves to provide an insight into how Alpheus Lim Wei Xiang has contributed to project Bluebird. Included
+in this portfolio are the enhancements, features, tests and proposed enhancements that Alpheus Lim Wei Xiang has contribued to the project.
 
 *Code contributed*: [https://github.com/CS2103AUG2017-T15-B4/main/blob/master/collated/main/Alim95.md[Functional code]] [https://github.com/CS2103AUG2017-T15-B4/main/blob/master/collated/test/Alim95.md[Test code]]
 
@@ -176,7 +177,7 @@ Acceptance Testing for other applications
 
 * Found a bug for switch theme (Issue https://github.com/CS2103AUG2017-T09-B3/main/issues/194[#194])
 
-Contribution to Bluebird
+Contribution to Project Bluebird
 
 * Updated the UI of Bluebird
 (Pull requests https://github.com/CS2103AUG2017-T15-B4/main/pull/14[#14], https://github.com/CS2103AUG2017-T15-B4/main/pull/58[#58],
@@ -192,3 +193,4 @@ https://github.com/CS2103AUG2017-T15-B4/main/pull/245[#245])
 * Added toggling of Ui between Person, Task, Alias, Pinned, and All lists (Pull requests https://github.com/CS2103AUG2017-T15-B4/main/pull/205[#205],
 https://github.com/CS2103AUG2017-T15-B4/main/pull/208[#208], https://github.com/CS2103AUG2017-T15-B4/main/pull/216[#216],
 https://github.com/CS2103AUG2017-T15-B4/main/pull/257[#257])
+* Proposed Parent Child Mode for Bluebird
