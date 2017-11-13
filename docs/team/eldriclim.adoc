@@ -17,13 +17,13 @@ AddressBook - Level 4 is a desktop address book application used for teaching So
 
 include::../UserGuide.adoc[tag=sort]
 
+include::../UserGuide.adoc[tag=sadd]
+
+include::../UserGuide.adoc[tag=sremove]
+
 #End of Extract#
 
 ---
-
-==== Justification
-
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
 
 ==== Implementation
 
@@ -31,6 +31,8 @@ include::../UserGuide.adoc[tag=sort]
 #Start of Extract [from: Developer Guide]#
 
 include::../DeveloperGuide.adoc[tag=sortmech]
+
+include::../DeveloperGuide.adoc[tag=schedule]
 
 #End of Extract#
 

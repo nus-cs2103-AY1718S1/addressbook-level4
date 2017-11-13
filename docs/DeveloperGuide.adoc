@@ -757,7 +757,7 @@ If the list is found to be empty, an `EmptyListException` will be thrown from `U
 **Alternative 2:** Not implementing sorting by time added +
 **Pros:** Can be achieved by restarting app. +
 **Cons:** Requires restarting of app which waste time and processing resources when list is long. +
-//end::sortmech[]
+// end::sortmech[]
 
 === Adding a tag to multiple people
 

@@ -435,6 +435,7 @@ Shows the route from `Clementi Street` to the address of person with index numbe
 Shows the route from `John street, block 123, #01-01` to the address of person with index number `7`
 // end::map[]
 
+// tag::sadd[]
 === Adding an Event to Schedule: `s-add` _[Since v1.4]_
 
 With many commitments at hand, it is easy to overlook an event in your schedule. `s-add` allows you to add an event to your calendar and include persons from your addressbook as members of the event.
@@ -466,7 +467,9 @@ Adds a two-hour long event called ‘iConnect Conference’ on 4th of December 2
 Adds a two-hour long event called ‘Exam Date’ on 4th of December 2017 at 2:30PM into the addressbook calendar.+
 * `s-add n/Email Reminder t/2017-12-04 14:30` +
 Adds an event called ‘Email Reminder’ on 4th of December 2017 at 2:30PM into the addressbook calendar.
+// end::sadd[]
 
+// tag::sremove[]
 === Removing an Event from Schedule: `s-remove` _[Since v1.4]_
 
 Suppose you want to remove multiple events from your calendar, you can use the `s-remove` command with the indexes of events to be deleted.
@@ -488,6 +491,8 @@ Examples:
 Removes a single event with the index 1.
 * `s-remove I/1 2 3` +
 Removes 3 events with the index 1, 2 and 3.
+// end::sremove[]
+
 
 // tag::export[]
 === Making a backup address book: `export` _[Since v1.4]_
