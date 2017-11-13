@@ -1,5 +1,5 @@
 # JunQuann
-###### /java/seedu/address/commons/events/model/FileChooserEvent.java
+###### \java\seedu\address\commons\events\model\FileChooserEvent.java
 ``` java
 /**
  * Indicates that the file chooser needs to pop up
@@ -23,7 +23,7 @@ public class FileChooserEvent extends BaseEvent {
 
 }
 ```
-###### /java/seedu/address/commons/events/model/NewImageEvent.java
+###### \java\seedu\address\commons\events\model\NewImageEvent.java
 ``` java
 /**
  * Indicate that a new image is available to be copied to designated folder
@@ -54,7 +54,7 @@ public class NewImageEvent extends BaseEvent {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/ArgumentTokenizer.java
+###### \java\seedu\address\logic\parser\ArgumentTokenizer.java
 ``` java
     public static ArgumentMultimap tokenize(String argsString, Prefix... prefixes) {
         List<PrefixPosition> positions = findAllPrefixPositions(argsString, prefixes);
@@ -62,7 +62,7 @@ public class NewImageEvent extends BaseEvent {
         return inputDisplayPicPath(argsMultimap, prefixes);
     }
 ```
-###### /java/seedu/address/logic/parser/ArgumentTokenizer.java
+###### \java\seedu\address\logic\parser\ArgumentTokenizer.java
 ``` java
     /***
      * Input the path of the display pic that is copied into the preferred image file directory
@@ -106,7 +106,7 @@ public class NewImageEvent extends BaseEvent {
         return String.valueOf(displayPicName.hashCode());
     }
 ```
-###### /java/seedu/address/logic/parser/ParserUtil.java
+###### \java\seedu\address\logic\parser\ParserUtil.java
 ``` java
     /**
      * Parses a {@code Optional<String> displayPic} into an {@code Optional<DisplayPic>}
@@ -118,7 +118,7 @@ public class NewImageEvent extends BaseEvent {
         return displayPic.isPresent() ? Optional.of(new DisplayPic(displayPic.get())) : Optional.empty();
     }
 ```
-###### /java/seedu/address/model/person/DisplayPic.java
+###### \java\seedu\address\model\person\DisplayPic.java
 ``` java
 /**
  * Represents a Person's display picture path in a addressbook
@@ -174,7 +174,7 @@ public class DisplayPic {
     }
 }
 ```
-###### /java/seedu/address/storage/ImageFileStorage.java
+###### \java\seedu\address\storage\ImageFileStorage.java
 ``` java
 /**
  */
@@ -221,7 +221,7 @@ public class ImageFileStorage {
 }
 
 ```
-###### /java/seedu/address/storage/Storage.java
+###### \java\seedu\address\storage\Storage.java
 ``` java
     /**
      * Copy the chosen image from filechooser into the hard disk.
@@ -232,7 +232,7 @@ public class ImageFileStorage {
 }
 
 ```
-###### /java/seedu/address/storage/StorageManager.java
+###### \java\seedu\address\storage\StorageManager.java
 ``` java
     public void copyImageFile(String currentImageFile, String imageName) throws IOException {
         imageFileStorage.copyImage(currentImageFile, imageName);
@@ -243,7 +243,7 @@ public class ImageFileStorage {
     }
 
 ```
-###### /java/seedu/address/storage/StorageManager.java
+###### \java\seedu\address\storage\StorageManager.java
 ``` java
     @Override
     @Subscribe
@@ -257,7 +257,7 @@ public class ImageFileStorage {
         }
     }
 ```
-###### /java/seedu/address/ui/MainWindow.java
+###### \java\seedu\address\ui\MainWindow.java
 ``` java
     private String getDisplayPicPath() {
         FileChooser fileChooser = new FileChooser();
@@ -278,7 +278,7 @@ public class ImageFileStorage {
         event.setImgPath(currentImgPath);
     }
 ```
-###### /java/seedu/address/ui/PersonCard.java
+###### \java\seedu\address\ui\PersonCard.java
 ``` java
         person.displayPicProperty().addListener((observable, oldValue, newValue) -> {
             initDisplayPic(person);
@@ -341,7 +341,7 @@ public class ImageFileStorage {
         });
     }
 ```
-###### /java/seedu/address/ui/PersonDescription.java
+###### \java\seedu\address\ui\PersonDescription.java
 ``` java
 /**
  * An UI component that displays the detailed information of a selected person
@@ -425,7 +425,7 @@ public class PersonDescription extends UiPart<StackPane> {
 
 }
 ```
-###### /resources/view/BrowserPanel.fxml
+###### \resources\view\BrowserPanel.fxml
 ``` fxml
 <StackPane prefHeight="400.0" prefWidth="300.0" style="-fx-background-radius: 5; -fx-background-insets: 0; -fx-background-color: #fff;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
   <WebView fx:id="browser" minHeight="-Infinity" minWidth="-Infinity" prefHeight="-1.0" prefWidth="-1.0" />
@@ -434,7 +434,7 @@ public class PersonDescription extends UiPart<StackPane> {
    </padding>
 </StackPane>
 ```
-###### /resources/view/CommandBox.fxml
+###### \resources\view\CommandBox.fxml
 ``` fxml
 <StackPane styleClass="anchor-pane" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
    <JFXTextField fx:id="commandTextField" labelFloat="true" onAction="#handleCommandInputChanged" onKeyPressed="#handleKeyPress" promptText="Enter command here..." unFocusColor="BLACK">
@@ -444,7 +444,7 @@ public class PersonDescription extends UiPart<StackPane> {
    </JFXTextField>
 </StackPane>
 ```
-###### /resources/view/default.css
+###### \resources\view\default.css
 ``` css
 .list-cell {
     -fx-label-padding: 0 0 0 0;
@@ -493,7 +493,7 @@ public class PersonDescription extends UiPart<StackPane> {
     -fx-font-size: 11;
 }
 ```
-###### /resources/view/GroupLabel.fxml
+###### \resources\view\GroupLabel.fxml
 ``` fxml
 <HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
    <Label fx:id="groupName" alignment="CENTER" minHeight="30.0" minWidth="30.0" style="-fx-alignment: center;" textAlignment="CENTER" HBox.hgrow="ALWAYS">
@@ -506,7 +506,7 @@ public class PersonDescription extends UiPart<StackPane> {
    </padding>
 </HBox>
 ```
-###### /resources/view/GroupList.fxml
+###### \resources\view\GroupList.fxml
 ``` fxml
 <VBox minWidth="150.0" prefHeight="445.0" prefWidth="150.0" style="-fx-background-radius: 10; -fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
    <children>
@@ -526,13 +526,13 @@ public class PersonDescription extends UiPart<StackPane> {
    </padding>
 </VBox>
 ```
-###### /resources/view/HelpWindow.fxml
+###### \resources\view\HelpWindow.fxml
 ``` fxml
 <StackPane fx:id="helpWindowRoot" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
   <WebView fx:id="browser" />
 </StackPane>
 ```
-###### /resources/view/MainWindow.fxml
+###### \resources\view\MainWindow.fxml
 ``` fxml
 <VBox stylesheets="@default.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
 
@@ -584,7 +584,7 @@ public class PersonDescription extends UiPart<StackPane> {
   <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
 </VBox>
 ```
-###### /resources/view/PersonDescription.fxml
+###### \resources\view\PersonDescription.fxml
 ``` fxml
 <AnchorPane prefHeight="503.0" prefWidth="269.0" style="-fx-background-color: #FDFDFD; -fx-background-radius: 5;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
    <children>
@@ -650,7 +650,7 @@ public class PersonDescription extends UiPart<StackPane> {
    </effect>
 </AnchorPane>
 ```
-###### /resources/view/PersonListCard.fxml
+###### \resources\view\PersonListCard.fxml
 ``` fxml
 
 <VBox xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
@@ -708,11 +708,11 @@ public class PersonDescription extends UiPart<StackPane> {
    </children>
 </VBox>
 ```
-###### /resources/view/PersonListPanel.fxml
+###### \resources\view\PersonListPanel.fxml
 ``` fxml
 <JFXListView fx:id="personListView" depth="10" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="400.0" prefWidth="250.0" style="-fx-background-color: #F5F9FA;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" />
 ```
-###### /resources/view/ResultDisplay.fxml
+###### \resources\view\ResultDisplay.fxml
 ``` fxml
 <StackPane fx:id="placeHolder" style="-fx-background-color: TRANSPARENT;" styleClass="pane-with-border" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
   <TextArea fx:id="resultDisplay" editable="false" opacity="0.55" style="-fx-background-color: transparent;">
@@ -727,7 +727,7 @@ public class PersonDescription extends UiPart<StackPane> {
       </font></TextArea>
 </StackPane>
 ```
-###### /resources/view/StatusBarFooter.fxml
+###### \resources\view\StatusBarFooter.fxml
 ``` fxml
 <GridPane styleClass="grid-pane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
   <columnConstraints>

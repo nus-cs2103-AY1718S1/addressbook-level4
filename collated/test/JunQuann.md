@@ -1,12 +1,12 @@
 # JunQuann
-###### /java/guitests/guihandles/PersonCardHandle.java
+###### \java\guitests\guihandles\PersonCardHandle.java
 ``` java
     public Image getDisplayPic() {
         ImagePattern displayPicImage = (ImagePattern) displayPicPanel.getFill();
         return displayPicImage.getImage();
     }
 ```
-###### /java/guitests/guihandles/PersonDescriptionHandle.java
+###### \java\guitests\guihandles\PersonDescriptionHandle.java
 ``` java
 /**
  * Provides a handle to the person description panel.
@@ -79,7 +79,7 @@ public class PersonDescriptionHandle extends NodeHandle<Node> {
 
 }
 ```
-###### /java/seedu/address/logic/parser/ArgumentTokenizerTest.java
+###### \java\seedu\address\logic\parser\ArgumentTokenizerTest.java
 ``` java
     private static String getFinalImgPathName = "getFinalImgPath";
 
@@ -124,7 +124,7 @@ public class PersonDescriptionHandle extends NodeHandle<Node> {
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof NewImageEvent);
     }
 ```
-###### /java/seedu/address/logic/parser/ArgumentTokenizerTest.java
+###### \java\seedu\address\logic\parser\ArgumentTokenizerTest.java
 ``` java
     @Test
     public void tokenize_multipleArgumentsJoined() {
@@ -146,7 +146,7 @@ public class PersonDescriptionHandle extends NodeHandle<Node> {
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof FileChooserEvent);
     }
 ```
-###### /java/seedu/address/model/person/DisplayPicTest.java
+###### \java\seedu\address\model\person\DisplayPicTest.java
 ``` java
 public class DisplayPicTest {
 
@@ -171,7 +171,7 @@ public class DisplayPicTest {
     }
 }
 ```
-###### /java/seedu/address/storage/ImageFileStorageTest.java
+###### \java\seedu\address\storage\ImageFileStorageTest.java
 ``` java
 public class ImageFileStorageTest {
     private static final String TEST_DATA_FOLDER = "./src/test/data/ImageFileStorageTest/";
@@ -221,13 +221,13 @@ public class ImageFileStorageTest {
     }
 }
 ```
-###### /java/seedu/address/storage/StorageManagerTest.java
+###### \java\seedu\address\storage\StorageManagerTest.java
 ``` java
     private static final String INVALID_IMG_PATH = "/invalid/test.png";
     private static final String IMG_NAME = "testImage";
     private static final NewImageEvent EVENT_STUB = new NewImageEvent(IMG_NAME, INVALID_IMG_PATH);
 ```
-###### /java/seedu/address/storage/StorageManagerTest.java
+###### \java\seedu\address\storage\StorageManagerTest.java
 ``` java
     @Test
     public void handleNewImageEvent_exceptionThrown_eventRaised() {
@@ -262,7 +262,7 @@ public class ImageFileStorageTest {
         assertTrue(equal);
     }
 ```
-###### /java/seedu/address/testutil/EditPersonDescriptorBuilder.java
+###### \java\seedu\address\testutil\EditPersonDescriptorBuilder.java
 ``` java
     /**
      * Sets the {@code DisplayPic} of the {@code EditPersonDescriptor} that we are building.
@@ -276,7 +276,7 @@ public class ImageFileStorageTest {
         return this;
     }
 ```
-###### /java/seedu/address/testutil/PersonBuilder.java
+###### \java\seedu\address\testutil\PersonBuilder.java
 ``` java
     /**
      * Sets the {@code Address} of the {@code Person} that we are building.
@@ -290,7 +290,7 @@ public class ImageFileStorageTest {
         return this;
     }
 ```
-###### /java/seedu/address/ui/PersonCardTest.java
+###### \java\seedu\address\ui\PersonCardTest.java
 ``` java
         // changes made to Person reflects on card
         guiRobot.interact(() -> {
@@ -301,7 +301,7 @@ public class ImageFileStorageTest {
         });
         assertCardDisplay(personCard, personWithTags, 2);
 ```
-###### /java/seedu/address/ui/testutil/GuiTestAssert.java
+###### \java\seedu\address\ui\testutil\GuiTestAssert.java
 ``` java
     /**
      * Asserts that {@code actualCard} displays the same values as {@code expectedCard}.
@@ -356,7 +356,7 @@ public class ImageFileStorageTest {
         assertEquals(expectedPerson.getTwitterName().value, actualDescription.getTwitter());
     }
 ```
-###### /java/seedu/address/ui/testutil/GuiTestAssert.java
+###### \java\seedu\address\ui\testutil\GuiTestAssert.java
 ``` java
     /**
      * Asserts that the image {@code expected} equals to {@code actual}
@@ -374,7 +374,7 @@ public class ImageFileStorageTest {
     }
 }
 ```
-###### /java/systemtests/AddressBookSystemTest.java
+###### \java\systemtests\AddressBookSystemTest.java
 ``` java
     private static final List<String> COMMAND_BOX_DEFAULT_STYLE = Arrays.asList("text-input", "text-field",
             "jfx-text-field");

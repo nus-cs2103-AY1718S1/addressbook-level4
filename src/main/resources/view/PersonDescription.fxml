@@ -12,22 +12,18 @@
 <?import javafx.scene.text.Font?>
 
 <!--@@author JunQuann-->
+
 <AnchorPane prefHeight="503.0" prefWidth="269.0" style="-fx-background-color: #FDFDFD; -fx-background-radius: 5;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ImageView fitHeight="186.0" fitWidth="297.0" pickOnBounds="true" style="-fx-opacity: 0.8;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <ImageView fitHeight="186.0" fitWidth="320.0" pickOnBounds="true" style="-fx-opacity: 0.8;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <image>
             <Image url="@../images/Avatar.jpg" />
          </image>
       </ImageView>
-      <Circle fx:id="displayPic" fill="WHITE" layoutX="149.0" layoutY="186.0" radius="41.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="2.0" />
-      <Label fx:id="name" alignment="CENTER" layoutX="83.0" layoutY="226.0" prefHeight="25.0" prefWidth="132.0" text="Name" textAlignment="CENTER">
+      <Circle fx:id="displayPic" fill="WHITE" layoutX="149.0" layoutY="191.0" radius="41.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="2.0" />
+      <Label fx:id="name" alignment="CENTER" layoutX="83.0" layoutY="232.0" prefHeight="25.0" prefWidth="132.0" text="Name" textAlignment="CENTER">
          <font>
             <Font name="Helvetica Bold" size="20.0" />
-         </font>
-      </Label>
-      <Label fx:id="group" layoutX="130.0" layoutY="251.0" prefHeight="16.0" prefWidth="38.0" text="Group" textAlignment="CENTER">
-         <font>
-            <Font name="YuGothic Medium" size="12.0" />
          </font>
       </Label>
       <VBox alignment="CENTER_LEFT" layoutY="275.0" prefHeight="228.0" prefWidth="297.0" spacing="15.0">

@@ -57,7 +57,7 @@ public class TagEditCommand extends UndoableCommand {
             }
             model.editTag(tagToEdit, newTag);
         } catch (IllegalValueException ive) {
-            assert false : "The provided tag does not exist";
+            throw new CommandException(Tag.MESSAGE_TAG_CONSTRAINTS);
         } catch (PersonNotFoundException pnfe) {
             assert false : "The target person cannot be missing";
         }

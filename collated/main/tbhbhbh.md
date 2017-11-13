@@ -1,5 +1,5 @@
 # tbhbhbh
-###### /java/seedu/address/commons/events/ui/SocialRequestEvent.java
+###### \java\seedu\address\commons\events\ui\SocialRequestEvent.java
 ``` java
 package seedu.address.commons.events.ui;
 
@@ -33,15 +33,23 @@ public class SocialRequestEvent extends BaseEvent {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/FindCommand.java
+###### \java\seedu\address\logic\commands\FindCommand.java
 ``` java
     public static final String COMMAND_WORD = "find";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": finds all persons whose information contain "
             + "any of the specified keywords and displays them as a list with index numbers.\n"
-            + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
-            + "(HitMeUp only supports finding 1 keyword for name. Finding multiple tags is supported)\n"
+            + "Parameters: names (eg. Tan, Alex, Abdullah), tags (eg. colleagues, friends), initials (eg. A, b, x), "
+            + "birthday month (eg. 05, 12)"
+            + "Format: KEYWORD [MORE_KEYWORDS]...\n"
+            + "(The format for entering this command differs depending on what you are searching for. Go into our "
+            + "help window for more information)"
             + "Example: " + COMMAND_WORD + " alice colleagues";
+
+    public static final String BIRTHDAY_USAGE = COMMAND_WORD + ": Search for persons whose birthday month is "
+            + "represented by [01-12] for [January to December].\n"
+            + "Parameters: MM (must be a non-zero integer 01 to 12)\n"
+            + "Example: " + COMMAND_WORD + " 09";
 
     private final Predicate<ReadOnlyPerson> searchPredicate;
 
@@ -49,7 +57,7 @@ public class SocialRequestEvent extends BaseEvent {
         this.searchPredicate = searchPredicate;
     }
 ```
-###### /java/seedu/address/logic/commands/FindCommand.java
+###### \java\seedu\address\logic\commands\FindCommand.java
 ``` java
     @Override
     public CommandResult execute() {
@@ -65,7 +73,7 @@ public class SocialRequestEvent extends BaseEvent {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/SocialCommand.java
+###### \java\seedu\address\logic\commands\SocialCommand.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -170,7 +178,7 @@ public class SocialCommand extends Command {
 
 }
 ```
-###### /java/seedu/address/logic/commands/TagDeleteCommand.java
+###### \java\seedu\address\logic\commands\TagDeleteCommand.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -212,13 +220,14 @@ public class TagDeleteCommand extends UndoableCommand {
         List<Tag> tagList = model.getAddressBook().getTagList();
 
         try {
+            System.out.println("" + Tag.MESSAGE_TAG_CONSTRAINTS);
             tagToDelete = new Tag(tagName);
             if (!tagList.contains(tagToDelete)) {
                 throw new CommandException(Messages.MESSAGE_INVALID_TAG_NAME);
             }
             model.deleteTag(tagToDelete);
         } catch (IllegalValueException ive) {
-            assert false : "The target tag is invalid";
+            throw new CommandException(Tag.MESSAGE_TAG_CONSTRAINTS);
         } catch (PersonNotFoundException pnfe) {
             assert false : "The target person cannot be missing";
         }
@@ -234,7 +243,7 @@ public class TagDeleteCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/TagEditCommand.java
+###### \java\seedu\address\logic\commands\TagEditCommand.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -294,7 +303,7 @@ public class TagEditCommand extends UndoableCommand {
             }
             model.editTag(tagToEdit, newTag);
         } catch (IllegalValueException ive) {
-            assert false : "The provided tag does not exist";
+            throw new CommandException(Tag.MESSAGE_TAG_CONSTRAINTS);
         } catch (PersonNotFoundException pnfe) {
             assert false : "The target person cannot be missing";
         }
@@ -316,11 +325,12 @@ public class TagEditCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/FindCommandParser.java
+###### \java\seedu\address\logic\parser\FindCommandParser.java
 ``` java
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.model.person.Birthday.BIRTHDAY_MONTH_REGEX;
 
 import java.util.Arrays;
 
@@ -348,9 +358,18 @@ public class FindCommandParser implements Parser<FindCommand> {
         }
 
         String[] nameKeywords = trimmedArgs.split("\\s+");
-        // Single keyword that contains an non-zero integer
-        if (nameKeywords.length == 1 && StringUtil.isNonZeroUnsignedInteger(nameKeywords[0])) {
-            return new FindCommand(new PersonContainsBirthdayPredicate(nameKeywords[0]));
+        // Single keyword as argument and check that it contains an non-zero integer
+        if (nameKeywords.length == 1) {
+            System.out.println(Character.isLetter(nameKeywords[0].charAt(0)));
+            if (Character.isLetter(nameKeywords[0].charAt(0))) {
+                return new FindCommand(new PersonContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
+            } else if (StringUtil.isNonZeroUnsignedInteger(nameKeywords[0])
+                    && nameKeywords[0].matches(BIRTHDAY_MONTH_REGEX)) {
+                return new FindCommand(new PersonContainsBirthdayPredicate(nameKeywords[0]));
+            } else {
+                throw new ParseException(
+                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+            }
         }
 
         return new FindCommand(new PersonContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
@@ -358,7 +377,7 @@ public class FindCommandParser implements Parser<FindCommand> {
 
 }
 ```
-###### /java/seedu/address/logic/parser/SocialCommandParser.java
+###### \java\seedu\address\logic\parser\SocialCommandParser.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -402,7 +421,7 @@ public class SocialCommandParser implements Parser<SocialCommand> {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/TagDeleteCommandParser.java
+###### \java\seedu\address\logic\parser\TagDeleteCommandParser.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -433,7 +452,7 @@ public class TagDeleteCommandParser implements Parser<TagDeleteCommand> {
 
 }
 ```
-###### /java/seedu/address/logic/parser/TagEditCommandParser.java
+###### \java\seedu\address\logic\parser\TagEditCommandParser.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -472,7 +491,7 @@ public class TagEditCommandParser {
     }
 }
 ```
-###### /java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\model\ModelManager.java
 ``` java
     @Override
     public void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException {
@@ -504,7 +523,7 @@ public class TagEditCommandParser {
         }
     }
 ```
-###### /java/seedu/address/model/person/PersonContainsKeywordsPredicate.java
+###### \java\seedu\address\model\person\PersonContainsKeywordsPredicate.java
 ``` java
 package seedu.address.model.person;
 
@@ -512,7 +531,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
-import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.tag.Tag;
 
@@ -525,6 +543,7 @@ import seedu.address.model.tag.Tag;
 public class PersonContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     private final List<String> keywords;
     private List<String> keywordsLower;
+    private List<String> personTagsLower;
     private String[] nameArr;
     private List<Tag> tagList = new ArrayList<>();
     private List<String> masterList = new ArrayList<>();
@@ -532,6 +551,7 @@ public class PersonContainsKeywordsPredicate implements Predicate<ReadOnlyPerson
     public PersonContainsKeywordsPredicate(List<String> keywords) {
         this.keywords = keywords;
         keywordsLower = new ArrayList<>();
+        personTagsLower = new ArrayList<>();
         setUpCaseInsensitiveKeywords();
     }
 
@@ -543,8 +563,6 @@ public class PersonContainsKeywordsPredicate implements Predicate<ReadOnlyPerson
 
         if (keywords.size() == 1) {
 
-            setUpTagList(); // prepares the keyword in tag form to compare with persons
-
             /* Case 1: keyword is a character (aka initial)
              * searches for people with names (Both first and last names) that start with the character
              */
@@ -555,10 +573,9 @@ public class PersonContainsKeywordsPredicate implements Predicate<ReadOnlyPerson
             /* Case 2: keyword can either be a name or a tag
              * searches for the keyword in the person's name or tags
              */
-            return keywords.stream()
+            return keywordsLower.stream()
                     .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword))
-                    || tagList.stream().anyMatch(tag -> person.getTags().contains(tag));
-
+                    || personTagsLower.contains(keywordsLower.get(0));
         }
 
         /* Case 3: more than 1 keyword
@@ -578,7 +595,6 @@ public class PersonContainsKeywordsPredicate implements Predicate<ReadOnlyPerson
 
     private boolean findNamesWithFirstChar(char firstChar) {
         return (nameStartsWith(firstChar));
-
     }
 
     /**
@@ -609,37 +625,37 @@ public class PersonContainsKeywordsPredicate implements Predicate<ReadOnlyPerson
     }
 
     private void setUpCaseInsensitiveKeywords() {
+        keywordsLower.clear();
         for (int i = 0; i < keywords.size(); i++) {
             keywordsLower.add(keywords.get(i).toLowerCase());
         }
     }
 
-    private void setUpTagList() {
+    private void setUpTagList(ReadOnlyPerson person) {
         tagList.clear();
-        try {
-            tagList.add(new Tag(keywords.get(0)));
-        } catch (IllegalValueException ive) {
-            assert false : "target tag cannot exist";
-        }
-    }
-
-    private void setUpMasterList(ReadOnlyPerson person) {
-
+        personTagsLower.clear();
         tagList.addAll(person.getTags());
         for (int i = 0; i < tagList.size(); i++) {
             String tagNameToAdd = tagList.get(i).toString().substring(1, tagList.get(i).toString().length() - 1);
+            personTagsLower.add(tagNameToAdd.toLowerCase());
             masterList.add(tagNameToAdd.toLowerCase());
         }
+    }
 
+    private void setUpNameList(ReadOnlyPerson person) {
         nameArr = person.getName().toString().split("\\s+");
         for (int i = 0; i < nameArr.length; i++) {
             masterList.add(nameArr[i].toLowerCase());
         }
     }
 
+    private void setUpMasterList(ReadOnlyPerson person) {
+        setUpTagList(person);
+        setUpNameList(person);
+    }
 }
 ```
-###### /java/seedu/address/model/person/UniquePersonList.java
+###### \java\seedu\address\model\person\UniquePersonList.java
 ``` java
     /**
      * Sorts AddressBook by name.
@@ -648,28 +664,27 @@ public class PersonContainsKeywordsPredicate implements Predicate<ReadOnlyPerson
         FXCollections.sort(internalList, comparator);
     }
 ```
-###### /java/seedu/address/ui/BrowserPanel.java
+###### \java\seedu\address\ui\BrowserPanel.java
 ``` java
     /**
-     * Loads the person's Instagram or Twitter
-     * depending on if the person has the social media fields filled in.
+     * Loads the person's Instagram or Twitter depending on if the person has his/her social media fields filled in.
      */
     private void loadPersonPage(ReadOnlyPerson person) {
         if (!person.getInstagramName().toString().isEmpty()) {
-            loadPage(INSTAGRAM_URL_PREFIX +  person.getInstagramName());
+            loadPage(INSTAGRAM_URL_PREFIX + person.getInstagramName());
         } else if (!person.getTwitterName().toString().isEmpty()) {
             loadPage(TWITTER_URL_PREFIX + person.getTwitterName());
         }
     }
 ```
-###### /java/seedu/address/ui/MainWindow.java
+###### \java\seedu\address\ui\MainWindow.java
 ``` java
     /**
      * This method will use the built-in browser to open the selected index's social media profile (either Twitter
      * or Instagram).
      * @param userName is a UserName of the person
      */
-    public void handleSocial(UserName userName, String socialMediaLink) {
+    private void handleSocial(UserName userName, String socialMediaLink) {
         browserPanel.loadPage(socialMediaLink + userName);
     }
 
