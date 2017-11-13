@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
@@ -156,6 +157,20 @@ public class Person implements ReadOnlyPerson {
      */
     public void setTags(Set<Tag> replacement) {
         tags.set(new UniqueTagList(replacement));
+    }
+
+    /**
+     * adds an eventTag to the person
+     * @param event
+     */
+    public void addEventTag(Tag event) {
+        Set<Tag> tags = getTags();
+        Set<Tag> tagSet = new HashSet<Tag>();
+        for (Tag t : tags) {
+            tagSet.add(t);
+        }
+        tagSet.add(event);
+        setTags(tagSet);
     }
 
     //@@author YuchenHe98
