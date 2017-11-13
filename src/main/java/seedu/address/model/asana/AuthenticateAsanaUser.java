@@ -14,6 +14,8 @@ import com.asana.OAuthApp;
 
 import seedu.address.storage.asana.storage.AsanaCredentials;
 
+import static seedu.address.logic.commands.SetupAsanaCommand.CONFIGURED;
+
 //@@author Sri-vatsa
 /**
  * Authenticates Asana user by redirecting user to Asana's webpage
@@ -32,6 +34,6 @@ public class AuthenticateAsanaUser {
 
         //open browser on desktop for authentication purpose --> Asana to show authorisation key
         Desktop.getDesktop().browse(new URI(url));
-
+        asanaCredentials.setIsAsanaConfigured(CONFIGURED);
     }
 }
