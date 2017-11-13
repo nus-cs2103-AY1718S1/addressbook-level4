@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= Blast! - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -1045,9 +1045,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |export all saved contacts and print out  |refer to when I can't use the software
 
-|`* * *` |user |add and create tags and add them to contacts |quickly find related personnels when needs be
-
-|`* * *` |user |add and create tags and add them to contacts |quickly find related personnels when needs be
+|`* * *` |user |add and create tags and add them to contacts |quickly find related personnel when needs be
 
 |`* * *` |user |be able to edit the contact details |update when my contacts change their particulars
 
