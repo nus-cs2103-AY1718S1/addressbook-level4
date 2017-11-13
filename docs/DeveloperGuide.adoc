@@ -708,9 +708,9 @@ _Figure 4.4.5 : UndoRedoStack Entering New Commands_
 
 The sorting mechanism is facilitated by `SortCommandParser` and `SortCommand`, with both classes residing in the `Logic` component of the address book. Since the address book state will be modified during the sorting process, the `sort` has to be undoable.
 
-`SortCommandParser` takes in an argument in the form of `[PREFIX]/[ORDER]` that defines how `UniquePersonList` should be sorted, with `PREFIX` specifying the sort type and `ORDER` specifying the sort order. It first checks for validity against a regular expression. Once verified, the argument will be tokenized to identify the sort order and sort type. A `SortCommand` object is then created with the identified sort type and sort order.
+`SortCommandParser` takes in an argument in the form of `[PREFIX]/[ORDER]` that defines how `UniquePersonList` should be sorted. You may customise the sort operation, with `PREFIX` specifying the sort type and `ORDER` specifying the sort order. It first checks for validity against a regular expression. Once verified, the argument will be tokenized to identify your specified sort order and sort type. A `SortCommand` object is then created with the identified sort type and sort order.
 
-The `PREFIX` can be any of the following: `n/` for sorting persons by name, `p/` for sorting persons by phone number, `e/` for sorting persons by email, `a/` for sorting persons by address and `t/` for sorting persons by the time they was first added into the address book. The `ORDER` can be either `asc` for sorting in ascending order or `dsc` for sorting in descending order. Suppose both `PREFIX` and `ORDER` are not specified, the argument will be defaulted to name in ascending order. Alternatively, suppose the `ORDER` is not specified, it will be defaulted to ascending.
+The `PREFIX` can be any of the following: `n/` for sorting persons by name, `p/` for sorting persons by phone number, `e/` for sorting persons by email, `a/` for sorting persons by address and `t/` for sorting persons by the time they was first added into the address book. The `ORDER` can be either `asc` for sorting in ascending order or `dsc` for sorting in descending order. Suppose both `PREFIX` and `ORDER` are not specified, your sort operation will be defaulted to name in ascending order. Alternatively, suppose the `ORDER` is not specified, it will be defaulted to ascending.
 
 Upon execution of `SortCommand`, a `Comparator<ReadOnlyPerson>` will be initialised based on the sort type and sort order it receives. A `sortPerson` function call will be made to `Model`, which propagates down to `UniquePersonList`, where the sorting of the `internalList` occurs. Since sorting of `internalList` results in the change of state to address book, `SortCommand` is to be implemented as an `UndoableCommand`.
 
@@ -1258,7 +1258,7 @@ Similar to the adding of events, the removing of events is also done through an 
 **Cons:** Uniqueness comparison is not succinct. +
 **Alternative 2:** Include `MemberList` as part of uniqueness test +
 **Pros:** Able to create an `Event` with the the same name, time and duration as long as `MemberList` elements are different. +
-**Cons:** Uniqueness comparison is too lenient and syncing process may be unnecessarily complicated +
+**Cons:** Uniqueness comparison is too lenient and syncing process may be unnecessarily complicated. +
 
 // end::schedule[]
 
