@@ -8,6 +8,7 @@ import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import org.junit.Test;
@@ -55,7 +56,7 @@ public class SyncCommandTest {
     }
 
     @Test
-    public void check_convertAPerson() {
+    public void test_convertAPerson() {
         showFirstPersonOnly(model);
 
         SyncCommand syncCommand = prepareCommand();
@@ -66,7 +67,7 @@ public class SyncCommandTest {
     }
 
     @Test
-    public void check_convertGPerson() throws Exception {
+    public void test_convertGPerson() throws Exception {
         showFirstPersonOnly(model);
 
         SyncCommand syncCommand = prepareCommand();
@@ -88,7 +89,7 @@ public class SyncCommandTest {
     }
 
     @Test
-    public void check_linkedContact() throws Exception {
+    public void test_linkedContact() throws Exception {
         showFirstPersonOnly(model);
 
         SyncCommand syncCommand = prepareCommand();
@@ -102,6 +103,35 @@ public class SyncCommandTest {
         assertTrue(aliceAbc.getId().getValue().equals("alice")
                 && aliceAbc.getLastUpdated().getValue().equals("2017-11-12T16:29:49.398001Z"));
     }
+
+    @Test
+    public void test_addAContact() throws Exception {
+        SyncCommand syncCommand = prepareCommand();
+        Person aliceGoogle = prepareAliceGoogle();
+
+        // Delete Alice from address book
+        model.deletePerson(model.getFilteredPersonList().get(0));
+
+        syncCommand.addAContact(aliceGoogle);
+        seedu.address.model.person.Person aliceAbc = syncCommand.convertGooglePerson(aliceGoogle);
+        model.sort("name");
+
+        assertEquals(model.getFilteredPersonList().get(0), aliceAbc);
+    }
+
+    @Test
+    public void save_load_success() throws Exception {
+        SyncCommand syncCommand = prepareCommand();
+        HashSet<String> syncedId = new HashSet<String>();
+        syncedId.add("test");
+        syncCommand.setSyncedId(syncedId);
+        syncCommand.saveStatus(syncedId);
+        HashSet<String> expected = (HashSet<String>) syncCommand.loadStatus();
+
+        assertTrue(expected.size() == 1 && expected.contains("test"));
+    }
+
+
 
     @Test
     public void equals() {
@@ -127,6 +157,7 @@ public class SyncCommandTest {
     private SyncCommand prepareCommand() {
         SyncCommand synccommand = new SyncCommand();
         synccommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        synccommand.setSyncedId(new HashSet<String>());
         return synccommand;
     }
 
