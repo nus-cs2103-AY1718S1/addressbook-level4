@@ -22,9 +22,11 @@ public class CommandList {
         commandList.add(HistoryCommand.COMMAND_WORD);
         commandList.add(ListCommand.COMMAND_WORD);
         commandList.add(ListAlphabetCommand.COMMAND_WORD);
+        commandList.add(LocateCommand.COMMAND_WORD);
         commandList.add(RedoCommand.COMMAND_WORD);
         commandList.add(RemarkCommand.COMMAND_WORD);
         commandList.add(SelectCommand.COMMAND_WORD);
+        commandList.add(SortCommand.COMMAND_WORD);
         commandList.add(UndoCommand.COMMAND_WORD);
         commandList.add(GroupingCommand.COMMAND_WORD);
         commandList.add(ListGroupsCommand.COMMAND_WORD);

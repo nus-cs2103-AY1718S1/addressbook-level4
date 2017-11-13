@@ -368,6 +368,11 @@ ListAlphabetCommand reads the predicate and update filtered person list accordin
 **Cons:** User might need to repeatedly type the same command if the input format is different from preset regex.
 // end::listalp[]
 
+// tag::locate[]
+=== Locate a person from the address entered
+
+Locate function is
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
@@ -465,6 +470,60 @@ public CommandResult executeUndoableCommand() throws CommandException {
 
 // end::group[]
 
+// tag::locate[]
+
+=== Locate: Navigate to a person's address
+
+Locate function allows the user to find the route from the address entered to a person's address, and the route displayed is the recommended by the Google Maps. The parameters to be entered by the user are the index of the person to be located, and the starting address with the address prefix in the front.
+
+During the implementation, the LocateCommandParser parses the input argument and extracts the index of the person and the starting address, and passes these values to a new LocateCommand object. The LocateCommand object obtains the address based on the index, and raises an event called `BrowserPanelLocateEvent` with the 2 addresses.
+
+Below shows the implementation of `BrowserPanelLocateEvent`:
+[source,java]
+----
+public class BrowserPanelLocateEvent extends BaseEvent {
+
+    private final String start;
+    private final String end;
+
+    public BrowserPanelLocateEvent(String start, String end) {
+        this.start = start;
+        this.end = end;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+
+    public String getEndAddress() {
+        return end;
+    }
+
+    public String getStartAddress() {
+        return start;
+    }
+}
+----
+
+The sequence diagram shown below shows how locate command works with input `locate 1 a/clementi`:
+
+image::LocateCommandSequenceDiagram.png[width="800"]
+
+[NOTE]
+Only one index and one address with address prefix are accepted. If input format is different, an invalid input message will be prompted. If the index given is wrong, an invalid person displayed index message will be prompted.
+
+==== Design Considerations
+
+**Aspect:** what the start and end addresses should be +
+**Alternative 1 (current choice):** The address input by the user is regarded as starting address by default, the address of the person in Contact+ Pro is set to end address. +
+**Pros:** Easier implementation +
+Command usage is more straight forward for the user. +
+**Cons:** User is not able to navigate from a person's address to a new location. +
+**Alternative 2:** The user decides which address is the start address and which is the end address.
+**Pros:** User has more freedom when using this locate command. +
+**Cons:** More inputs are expected from the user, causing the command to be more complicated.
+// end::locate[]
 
 // tag::favorite[]
 === Favorite
@@ -546,7 +605,7 @@ Edit a person, Add a person or Favorite a person.
 
 ==== Design Considerations
 
-**Aspect:** Where sorting should occurs +
+**Aspect:** Where sorting should occur +
 **Alternative 1 (current choice):** On the lowest layer of `Model`, which is `UniquePersonList` +
 **Pros:** No need to have sorting in upper layer. +
 **Cons:** Permanently mutate the data list. +
@@ -578,7 +637,8 @@ See this http://github.com/NgSuli/main[PR] for the full solution.
 **Alternative 2:** Make the birthday attribute optional.
 **Pros:** Allows the user freedom to decide what they want in the addressbook.
 **Cons:** Slightly more tedious to implement.
-//end::birthday[]
+
+// end::birthday[]
 
 == Documentation
 
