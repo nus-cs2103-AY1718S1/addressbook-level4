@@ -432,22 +432,29 @@ public class MrtMapLogic {
      * i.e., populateMrtStations() must already be called;
      */
     private void populateStationCodeToIndex() {
-        for(int i=0; i<mrtStations.size(); i++) {
+        for (int i = 0; i < mrtStations.size(); i++) {
             MrtStation mrtStation = mrtStations.get(i);
             String stationCode = mrtStation.getStationCode(0);
             stationCodeToIndex.put(stationCode, i);
         }
     }
-    
-    private void populateNameToIndex(){
-        for(int i = 0; i<mrtStations.size(); i++){
+
+    /**
+     * Populate the hashmap nameToIndex with relevant info.
+     * This method only works properly after populatMrtStations() method
+     */
+    private void populateNameToIndex() {
+        for (int i = 0; i < mrtStations.size(); i++) {
             MrtStation mrtStation = mrtStations.get(i);
             String name = mrtStation.getName();
             nameToIndex.put(name, i);
         }
     }
 
-    private void populateAdjList(){
+    /**
+     * Generate the adjacency list to be used by Dijkstra's Algorithm
+     */
+    private void populateAdjList() {
         for(int i = 0; i<mrtStations.size(); i++){
             addEdgeList(i);
         }
