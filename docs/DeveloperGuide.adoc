@@ -477,6 +477,13 @@ public class NameComparator implements Comparator <ReadOnlyPerson> {
 
 The NameComparator compares two names and ignore their case.
 
+The following sequence diagram shows how the add and sort operations work together:
+
+image::AddSortSequenceDiagram.png[width="800"]
+
+[NOTE]
+Executing `list` command calls sortAllPersons() and filterImportantTag().
+
 ==== Design Considerations
 
 **Aspect:** Sort the persons in the list fast. +
