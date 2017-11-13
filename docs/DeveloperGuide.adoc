@@ -739,6 +739,7 @@ public int compareTo(Object otherPerson) {
 The main things to note in this method is that the value "Not Set" will always be sorted away to the bottom of the list.
 Also, by default, the list is sorted by name.
 
+// tag::removeTag[]
 === RemoveTag Command
 
 The RemoveTag command is implemented for fast removal of a tag from all entries in the address book. It is implemented by updating the tag list of Residents. +
@@ -777,7 +778,7 @@ The sequence of steps carried out by this command is shown in the activity diagr
 image::deleteByTagAD.png[width="800"]
 
 [NOTE]
-Deletebytag command and Removetag command may sound similar, but they serve totally different purpose.
+Deletebytag command and RemoveTag command may sound similar, but they serve totally different purpose.
 
 
 The function to actually delete the persons who have the `TAG` supplied is done in the UniquePersonList class.
