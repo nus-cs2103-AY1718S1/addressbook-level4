@@ -14,6 +14,7 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.Version;
+import seedu.address.commons.events.ui.ChangeThemeRequestEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.ConfigUtil;
@@ -25,13 +26,21 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.reminders.ReadOnlyUniqueReminderList;
+import seedu.address.model.reminders.UniqueReminderList;
 import seedu.address.model.util.SampleDataUtil;
+import seedu.address.storage.AddressBookPictureStorage;
 import seedu.address.storage.AddressBookStorage;
+import seedu.address.storage.DisplayPictureStorage;
+import seedu.address.storage.ImageDisplayPictureStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
+import seedu.address.storage.RemindersStorage;
 import seedu.address.storage.Storage;
 import seedu.address.storage.StorageManager;
 import seedu.address.storage.UserPrefsStorage;
 import seedu.address.storage.XmlAddressBookStorage;
+import seedu.address.storage.XmlRemindersStorage;
+import seedu.address.storage.XmlSerializableReminders;
 import seedu.address.ui.Ui;
 import seedu.address.ui.UiManager;
 
@@ -40,7 +49,7 @@ import seedu.address.ui.UiManager;
  */
 public class MainApp extends Application {
 
-    public static final Version VERSION = new Version(0, 6, 0, true);
+    public static final Version VERSION = new Version(1, 5, 0, true);
 
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
 
@@ -62,7 +71,12 @@ public class MainApp extends Application {
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         userPrefs = initPrefs(userPrefsStorage);
         AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
-        storage = new StorageManager(addressBookStorage, userPrefsStorage);
+        RemindersStorage reminderStorage = new XmlRemindersStorage(userPrefs.getRemindersFilePath());
+        DisplayPictureStorage displayPictureStorage = new ImageDisplayPictureStorage();
+        storage = new StorageManager(addressBookStorage, reminderStorage, userPrefsStorage, displayPictureStorage);
+        AddressBookPictureStorage addressBookPictureStorage =
+                new AddressBookPictureStorage(userPrefs.getAddressBookPicturesPath());
+        addressBookPictureStorage.createPictureStorageFolder();
 
         initLogging(config);
 
@@ -80,6 +94,7 @@ public class MainApp extends Application {
         return applicationParameters.get(parameterName);
     }
 
+
     /**
      * Returns a {@code ModelManager} with the data from {@code storage}'s address book and {@code userPrefs}. <br>
      * The data from the sample address book will be used instead if {@code storage}'s address book is not found,
@@ -88,6 +103,8 @@ public class MainApp extends Application {
     private Model initModelManager(Storage storage, UserPrefs userPrefs) {
         Optional<ReadOnlyAddressBook> addressBookOptional;
         ReadOnlyAddressBook initialData;
+        Optional<ReadOnlyUniqueReminderList> remindersOptional;
+        ReadOnlyUniqueReminderList initialReminders;
         try {
             addressBookOptional = storage.readAddressBook();
             if (!addressBookOptional.isPresent()) {
@@ -102,7 +119,21 @@ public class MainApp extends Application {
             initialData = new AddressBook();
         }
 
-        return new ModelManager(initialData, userPrefs);
+        try {
+            remindersOptional = storage.readReminders();
+            if (!remindersOptional.isPresent()) {
+                logger.info("Data file not found. Will be starting with no reminders");
+            }
+            initialReminders = remindersOptional.orElseGet(SampleDataUtil::getSampleReminderList);
+        } catch (DataConversionException e) {
+            logger.warning("Data file not in the correct format. Will be starting with no reminders");
+            initialReminders = new XmlSerializableReminders();
+        } catch (IOException e) {
+            logger.warning("Problem while reading from the file. Will be starting with no reminders");
+            initialReminders = new XmlSerializableReminders();
+        }
+
+        return new ModelManager(initialData, new UniqueReminderList(initialReminders), userPrefs);
     }
 
     private void initLogging(Config config) {
@@ -205,6 +236,14 @@ public class MainApp extends Application {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         this.stop();
     }
+
+    //@@author chuaweiwen
+    @Subscribe
+    public void handleChangeThemeRequestEvent(ChangeThemeRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        userPrefs.setThemeFilePath(event.theme.getFilePath());
+    }
+    //@@author
 
     public static void main(String[] args) {
         launch(args);

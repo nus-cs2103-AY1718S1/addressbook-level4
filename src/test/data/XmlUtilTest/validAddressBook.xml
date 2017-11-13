@@ -5,53 +5,97 @@
         <phone isPrivate="false">9482424</phone>
         <email isPrivate="false">hans@example.com</email>
         <address isPrivate="false">4th street</address>
+        <nickname isPrivate="false">Hans</nickname>
+        <birthday isPrivate="false">21/10/1995</birthday>
+        <displayPicture></displayPicture>
+        <popularityCounter>0</popularityCounter>
     </persons>
     <persons>
         <name>Ruth Mueller</name>
         <phone isPrivate="false">87249245</phone>
         <email isPrivate="false">ruth@example.com</email>
         <address isPrivate="false">81th street</address>
+        <nickname isPrivate="false">Rue</nickname>
+        <birthday isPrivate="false">22/10/1995</birthday>
+        <displayPicture></displayPicture>
+        <popularityCounter>0</popularityCounter>
+
     </persons>
     <persons>
         <name>Heinz Kurz</name>
         <phone isPrivate="false">95352563</phone>
         <email isPrivate="false">heinz@example.com</email>
         <address isPrivate="false">wall street</address>
+        <nickname isPrivate="false"></nickname>
+        <birthday isPrivate="false">23/10/1995</birthday>
+        <displayPicture></displayPicture>
+        <popularityCounter>0</popularityCounter>
+
     </persons>
     <persons>
         <name>Cornelia Meier</name>
         <phone isPrivate="false">87652533</phone>
         <email isPrivate="false">cornelia@example.com</email>
         <address isPrivate="false">10th street</address>
+        <nickname isPrivate="false">Corleen</nickname>
+        <birthday isPrivate="false">24/10/1995</birthday>
+        <displayPicture></displayPicture>
+        <popularityCounter>0</popularityCounter>
+
     </persons>
     <persons>
         <name>Werner Meyer</name>
         <phone isPrivate="false">9482224</phone>
         <email isPrivate="false">werner@example.com</email>
         <address isPrivate="false">michegan ave</address>
+        <nickname isPrivate="false">Weiner</nickname>
+        <birthday isPrivate="false">25/10/1995</birthday>
+        <displayPicture></displayPicture>
+        <popularityCounter>0</popularityCounter>
+
     </persons>
     <persons>
         <name>Lydia Kunz</name>
         <phone isPrivate="false">9482427</phone>
         <email isPrivate="false">lydia@example.com</email>
         <address isPrivate="false">little tokyo</address>
+        <nickname isPrivate="false">Linda</nickname>
+        <birthday isPrivate="false">26/10/1995</birthday>
+        <displayPicture></displayPicture>
+        <popularityCounter>0</popularityCounter>
+
     </persons>
     <persons>
         <name>Anna Best</name>
         <phone isPrivate="false">9482442</phone>
         <email isPrivate="false">anna@example.com</email>
         <address isPrivate="false">4th street</address>
+        <nickname isPrivate="false">Ann</nickname>
+        <birthday isPrivate="false">27/10/1995</birthday>
+        <displayPicture></displayPicture>
+        <popularityCounter>0</popularityCounter>
+
     </persons>
     <persons>
         <name>Stefan Meier</name>
         <phone isPrivate="false">8482424</phone>
         <email isPrivate="false">stefan@example.com</email>
         <address isPrivate="false">little india</address>
+        <nickname isPrivate="false">Stef</nickname>
+        <birthday isPrivate="false">28/10/1995</birthday>
+        <displayPicture></displayPicture>
+        <popularityCounter>0</popularityCounter>
+
     </persons>
     <persons>
         <name>Martin Mueller</name>
         <phone isPrivate="false">8482131</phone>
         <email isPrivate="false">hans@example.com</email>
         <address isPrivate="false">chicago ave</address>
+        <nickname isPrivate="false">Mart</nickname>
+        <birthday isPrivate="false">29/10/1995</birthday>
+        <displayPicture></displayPicture>
+        <popularityCounter>0</popularityCounter>
+
     </persons>
 </addressbook>

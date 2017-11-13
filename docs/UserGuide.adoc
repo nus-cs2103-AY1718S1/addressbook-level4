@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= iContacts - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,9 +10,33 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-W14-B1/main/
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team W14-B1`      Since: `Jun 2016`      Licence: `MIT`
+
+
+== Introduction
+
+iContacts is a Command Line Interface (CLI) application that helps you manage your contacts easily. You can use iContacts to add, edit and delete contacts. It has an easy-to-use search function to find specific contacts quickly. It also provides reminders for upcoming birthdays of contacts within the application and allows you to create your own reminders for upcoming events.
+It is designed for university students to effectively manage their university life by using one single app through which they can manage reminders, details of contacts, email, and maps.
+
+== Who should use our application
+
+This application is targeted towards University students, aiming to meet their needs throughout their university life, and hopefully beyond. University students meet many people in the university, such as project group members, tutors, lecturers, friends and other connections. Nowadays it is important for students to build connections with other people, as connections may also help students for their future career after graduation. Since the students meet a lot of people, they may not be able to remember all the information about the people they met. Therefore, iContacts aims to help students to store and manage their contacts easily.
+Not only that, a student can also keep in track of the deadlines through the reminders features. They will also be able to easily share their contacts with other people just by typing a simple command. Hence, through iContacts university students can make their university life easier to manage with all the various features.
+
+*  User Profile
+
+**  University Students
+**  Students part of many CCA clubs and committees
+**  Students taking role of Teaching Assistant/Tutor
+**  Students who is interning and has colleagues
+**  Students having close friends and family
+
+== About
+
+This User Guide aims to help you get started with iContacts. It explains the features of iContacts in detail, and will teach you how to use it effectively and efficiently. You will be able to understand this User Guide without the need to have any technical knowledge.
+
 
 == Quick Start
 
@@ -22,11 +46,12 @@ By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
+.  Download the latest `iContacts.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
+.  Double-click the file to start the app. The GUI should appear in a few seconds (Refer to Figure 1).
 +
 image::Ui.png[width="790"]
+_Figure 1: iContacts GUI._
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
@@ -38,6 +63,45 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * *`exit`* : exits the app
 
 .  Refer to the link:#features[Features] section below for details of each command.
+
+
+== The User Interface of iContacts
+
+=== The Three Lists
+
+* Contacts List +
++
+It allows user to see the list of off contacts, and refer to them while adding, deleting or updating any contact. The list of contacts can be changed by searching, filtering and sorting the contacts.
+In the list one can view the most unique details about the contact, like their name, personalised nickname, tags and phone number.
+
+* Birthdays List +
++
+With this list right on the home screen it will be impossible to forget the birthday of your contacts. This list shows the birthday of all contacts in this month and a special icon for those whose birthday is today or tomorrow.
+
+* Reminder List +
++
+Find all your reminders in sorted manner here. The ones with `Red` indicate the due date is today, `Yellow` having due date in 3 days and `Green` for the rest. The passed events have no colour.
+
+
+=== The Two Panels
+
+* Browser Panel +
++
+It allows you to see the webpage of a contact or the location in Google maps.
+
+* Details Panel +
++
+View more details of a contact by selecting him in this panel. It shows other details like, email, birthday and address.
+
+=== The One Command Box +
+
+This is where the Magic happens, type in the command and get instant results for the various commands in result box.
+
+== Why iContacts?
+
+* Convenient
+* Fast
+* One stop place to manage all university related activities
 
 == Features
 
@@ -57,25 +121,153 @@ Format: `help`
 === Adding a person: `add`
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [b/BIRTHDAY] [t/TAG]...`
 
 [TIP]
-A person can have any number of tags (including 0)
+====
+* A person can have no birthday entry, or at most 1.
+* A person can have any number of tags (including 0).
+====
 
 Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 b/21/10/1995 t/criminal`
+
+// tag::addReminder[]
+=== Adding a reminder: `addreminder`
+
+Adds a reminder to iContacts. +
+Format: `addreminder rd/REMINDER d/DATE ti/TIME`
+
+****
+* All three parameters REMINDER, DATE and TIME must be filled. +
+* DATE must be in the format dd/mm/yyyy. `'-'`, `'/'` or `'.'` can be used to separate the day, month and year field of the date,
+ and they need not be paired up (i.e. 24.03/2017 is acceptable as well). Only values from 1900 to 2099 are allowed for the year field. +
+* TIME must be in 24-hr format, with a colon separating the hour and minute values. Example: 08:00, 16:00, 23:59. +
+* REMINDER can be of any value, as long as it is not empty.
+****
+
+Examples:
+
+* `addreminder rd/Dinner with family d/10/10/2017 ti/18:00` (Refer to Figure 2)
+* `addreminder rd/CS2105 Assignment d/26.10-2017 ti/23:59`
+
+image::ReminderPast.png[width=500]
+_Figure 2: Reminder for a dinner with family on 10/10/2017 at 18:00._
+
+The reminder cells are colored differently according to the urgency of the event:
+
+****
+* If the event has passed, the reminder cell is colored in dark grey (Refer to Figure 2). +
+* If the event is happening today, the reminder cell is colored in red (Refer to Figure 3). +
+* If the event is happening within three days, the reminder cell is colored in orange (Refer Figure 4). +
+* If the event is happening more than three days later, the reminder cell is colored in green (Refer to Figure 5).
+****
+
+image::ReminderToday.png[width=500]
+_Figure 3: A reminder of an event happening today._
+
+image::ReminderThreeDays.png[width=500]
+_Figure 4: A reminder of an event happening within three days._
+
+image::ReminderNormal.png[width=500]
+_Figure 5: A reminder of an event happening more than three days later._
+
+[NOTE]
+====
+* The countdown to the event, as well as the color of the reminder cells, *are not dynamic*. A new count and update
+only takes place when the program is started up, and when an edit is made to a reminder.
+* The `undo` and `redo` commands do not work for commands that affect the reminders.
+====
+// end::addReminder[]
+
+//tag::details[]
+=== Viewing details of a contact: `details`
+
+Shows the full contact information of a person in the address book. +
+Format: `details INDEX`
+
+****
+* Shows the full contact information of the person at the specified `INDEX`.
+* The index refers to the index number shown in the list of reminders. The index *must be a positive integer* 1, 2, 3...
+****
+
+Examples:
+
+* `details 1` +
+Show the full contact information of the person at index 1 (Refer to Figure 6).
+
+image::details.png[width=790]
+_Figure 6: The full contact information of the person at index 1._
+//end::details[]
 
 === Listing all persons : `list`
 
 Shows a list of all persons in the address book. +
 Format: `list`
 
+// tag::sort[]
+=== Sorting all persons : `sort`
+
+Sorts and shows a list of all contacts in the iContacts alphabetically. +
+Format: `sort`
+// end::sort[]
+
+// tag::export[]
+=== Exporting selected contacts : `export`
+
+Exports selected contacts in iContacts. +
+Format: `export r/RANGE p/PATH`
+
+****
+* Exports the contact/s from a specified `RANGE` to a specified `PATH`.
+* The range refers to any index number shown in the most recent listing.
+* The range *must be a positive integer and must not be larger than the last index of the list* 1, 2, 3, 4-7, ...
+* The path *must include the file name without the file extension* c:\exports\classmates
+****
+
+Types of range inputs:
+****
+* Specific contacts - 1, 2, 3, 4
+* Range of contacts - 1-4, 6-9
+* All contacts - all
+****
+
+Examples:
+
+* `list` +
+`export r/all p/c:\exports\classmates` +
+Exports all the contacts to the file *classmates.xml* in path *c:\exports*.
+
+* `export r/1-4 p/c:\exports\classmates` +
+Exports the contacts from index 1 to index 4 to the file *classmates.xml* in path *c:\exports*.
+
+* `export r/1-4,6,8 p/c:\exports\classmates` +
+Exports the contacts at index 1 to index 4 with index 6 and index 8 to the file *classmates.xml* in path *c:\exports*.
+// end::export[]
+
+// tag::import[]
+=== Importing contacts from file : `import`
+
+Imports contacts into iContacts. +
+Format: `import p/PATH`
+
+****
+* Imports all contacts from a specified file `PATH`.
+* The path *must include the file name with the file extension* c:\exports\classmates.xml
+****
+
+Example:
+
+* `import p/c:\exports\classmates.xml` +
+Imports all the contacts stored in the file classmates.xml* into iContacts.
+// end::import[]
+
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [t/TAG]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -83,6 +275,7 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 * Existing values will be updated to the input values.
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
 * You can remove all the person's tags by typing `t/` without specifying any tags after it.
+* You can remove a person's birthday entry by typing `b/` without specifying a birthday after it.
 ****
 
 Examples:
@@ -91,16 +284,163 @@ Examples:
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+* `edit 3 b/` +
+Clear the birthday of the 3rd person.
 
+// tag::editReminder[]
+=== Editing a reminder: `editreminder`
+
+Edits an existing reminder in iContacts. +
+Format: `editreminder INDEX [rd/REMINDER] [d/DATE] [ti/TIME]`
+
+****
+* Edits the reminder at the specified `INDEX`. The index refers to the index number shown in the list of reminders. The index *must be a positive integer* 1, 2, 3...
+* At least one of the optional fields must be provided.
+* Existing values will be updated to the given input values. If the field is not specified, the original value will be used instead.
+****
+
+Examples:
+
+* `editreminder 1 rd/Drink coffee` +
+Edits the content of the 1st reminder to be `Drink coffee`.
+* `editreminder 3 d/25/12/2017 ti/19:00` +
+Edits the date and time of the 3rd reminder to be `25/12/2017` and `19:00` respectively.
+// end::editReminder[]
+
+// tag::fvc[]
+=== Frequently Viewed Contacts
+
+Shows the user a list of top five contacts which the user has viewed the most +
+
+
+****
+* The top five users are decided based on these commands : `select`, `viewtag`, `email`, `location`.
+* The more the user is being searched or viewed, his Popularity Counter increases making him move on the top of the Favourites
+* The list keeps automatically updating after each of the four mentioned commands are executed.
+* Any new contacts will have a Popularity Counter of 0 initially.
+* If two people have same popularity then the person who was added earlier is shown before in the Top 5 list
+* The following commands increase the popularity counter of the person viewed/searched:
+** `select`
+** `details` [special case when counter increases by 2 as it is a stronger indicator of who could be a frequently visited contact]
+** `viewtag`
+** `email`
+** `location`
+****
+
+Examples:
+
+If the contact `Roy Balakrishnan` is `selected` once, he will be moved to the top of the list as his popularity counter is more than the rest of the contacts.
+This can be seen in the image below:
+
+image::frequentlyVisited.PNG[width="790"]
+_Figure 7: `Roy Balakrishnan` is moved to the top of the list._
+//end::fvc[]
+
+// tag::nickname[]
+=== Adding a nickname to a person : `nickname`
+
+Adds a nickname to an existing person in the address book. +
+Format: `nickname INDEX [NICKNAME]`
+
+****
+* Adds a nickname to the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* Existing values will be updated to the input values.
+* You can remove the person's nickname without specifying anything after the `INDEX`.
+****
+
+Examples:
+
+* `nickname 1 Eddie` +
+Adds a nickname `Eddie` to the 1st person.
+* `nickname 1` +
+Removes the nickname from the the 1st person.
+// end::nickname[]
+
+// tag::displaypic[]
+
+=== Adding Display picture for each person : `displaypic`
+
+Adds a Display Picture to an existing person in the address book. +
+Format: `displaypic INDEX [PATHOFIMAGE]`
+
+****
+* The picture at the path address will be added to the person at the specified `INDEX` of current list
+* The person can have either 0 or 1 display picture
+* Existing picture will be updated to with the new input path
+* Picture can be removed by leaving the PATHOFIMAGE empty
+* The image should be on the local computer and the PATHOFIMAGE must be valid although it can bedeleted from local device after command is executed
+* If no image is given then the default picture will be shown
+****
+
+Examples:
+
+* `displaypic 1 C:\Users\Admin\Desktop\Sem 3 Mods\CS2103T\mypic.jpg` +
+Adds the `mypic.jpg` at the given path to the person at `INDEX` 1 as his display picture (Refer to Figure 8)
+* `displaypic 2` +
+Removes the existing display picture for the person at `INDEX` 2
+
+image::displaypic.png[width="790"]
+_Figure 8: Adds a picture to the first person._
+
+// end::displaypic[]
+
+// tag::location[]
+
+=== Displaying location to a contact's address: `location`
+
+Uses Google Maps to show location of the address of the selected `INDEX` +
+Format: `location INDEX`
+
+****
+* The location is shown in browser panel using Google Maps
+* The current location is the location of device from where the command is executed
+* The command is only valid for INDEX which have an valid address
+* The application let's Google Maps handle the case when invalid address is specified for a person
+****
+
+Examples:
+
+* `location 2`
+Returns location of the address of person at `INDEX` 2 (Refer to Figure 9)
+
+image::location.png[width="790"]
+_Figure 9: Displays the location of the second person._
+
+// end::location[]
+
+// tag::email[]
+
+=== Emailing to a group of people having a particular tag: `email`
+
+Opens up the link to send email to all people of having a particular tag. A drafter email with subject, body and recipients is opened in default browser +
+Format: `email s/SERVICE to/KEYWORD [sub/SUBJECT] [b/BODY]`
+
+****
+* The `KEYWORD` should be a tag which has atleast 1 person associated with it
+* The `SERVICE` supported are only `gmail` and `outlook`
+* The `SUBJECT` and `BODY` prefix are optional and can be skipped
+* The email drafting will open up in the default browser of your local device
+* The command will add all people with the `KEYWORD` tag as the recepeints, subject as `SUBJECT` and body as `BODY`
+****
+
+Examples:
+
+* `email s/gmail to/cs2103 sub/Meeting body/Morning 10 am `
+Allows to send email after drafting message to everyone with the tag `cs2103` in the default browser
+
+//image::email.PNG[width="790"]
+// end::email[]
+
+// tag::find[]
 === Locating persons by name: `find`
 
-Finds persons whose names contain any of the given keywords. +
+Finds persons whose names or nicknames contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
+* Only the name and nickname is searched.
 * Only full words will be matched e.g. `Han` will not match `Hans`
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ****
@@ -110,7 +450,64 @@ Examples:
 * `find John` +
 Returns `john` and `John Doe`
 * `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
+
+Returns any person having names or nicknames `Betsy`, `Tim`, or `John`
+// end::find[]
+
+// tag::viewtag[]
+=== Finding all people associated with a particular Tag: `viewtag`
+
+Finds all people who have the tag given in the keyword. +
+Format: `viewtag KEYWORD`
+
+****
+* The search is case insensitive. e.g `friends` tag matches with `Friends`
+* There should only be exactly 1 keyword
+* Only tags of people are searched
+* The entire keyword should match with the tag
+* Even if one of the many tags of a person exactly matches the keywords, the person will be listed. e.g `Betty` having `friends` and `classmate` will be matched with keyword `friend`
+****
+
+Examples:
+
+* `viewtag cs2103` +
+Returns all people who have the tag `cs2103` associated with them
+* `viewtag friends` +
+Returns `Alex` and `Bernice1 as they are having the tag `friends` (Refer to Figure 10)
+
+image::viewtag.PNG[width="790"]
+_Figure 10: Listing all contacts with the tag `friends`._
+//end::viewtag[]
+
+// tag::filter[]
+=== Finding all people by name and associated with one or more tags: `filter`
+
+Finds persons whose names and/or tag(s) contain any of the given keywords. +
+Format: `filter [n/NAME] [t/TAG]`
+
+****
+* To search by name, type the keywords after the `n/`.
+* To search by tag, type the keywords after the `t/`.
+* The search is case insensitive. e.g `hans` will match `Hans`
+* Only full words will be matched e.g. `Han` will not match `Hans`
+* Persons matching all keywords will be returned (i.e. `AND` search). e.g. `Hans Bo` will return `Hans Bo` but not `Hans Yang`
+****
+
+Examples:
+
+* `filter n/John` +
+Returns `john` and `John Doe`
+* `filter n/John n/Doe` or +
+`filter n/John Doe` +
+Returns any person with both `John` and `Doe` in his name.
+* `filter t/friends` +
+Returns any persons with the tag `friends`.
+* `filter t/friends t/colleagues` or +
+`filter t/friends colleagues` +
+Returns any person with the tag `friends` and `colleagues`.
+* `filter n/John t/friends` +
+Returns any person having the name `John` and with the tag `friends`.
+// end::filter[]
 
 === Deleting a person : `delete`
 
@@ -131,6 +528,26 @@ Deletes the 2nd person in the address book.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
+
+// tag::deleteReminder[]
+=== Deleting a reminder: `deletereminder`
+
+Deletes a specified reminder from iContacts. +
+Format: `deletereminder INDEX`
+
+****
+* Deletes the reminder at the specified `INDEX`.
+* The index refers to the index number shown in the list of reminders.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `deletereminder 1` +
+Deletes the 1st reminder in iContacts.
+* `deletereminder 20` +
+Deletes the 20th reminder in iContacts.
+// end::deleteReminder[]
 
 === Selecting a person : `select`
 
@@ -170,7 +587,7 @@ Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit`, `clear` and `nickname`).
 ====
 
 Examples:
@@ -217,6 +634,26 @@ The `redo` command fails as there are no `undo` commands executed previously.
 Clears all entries from the address book. +
 Format: `clear`
 
+// tag::theme[]
+=== Changing the theme : `theme`
+
+Changes the theme of the address book to a specific theme. +
+Format: `theme THEME`
+
+****
+* The search is case insensitive. e.g `night` will match `Night`.
+* Only full theme names will be matched e.g. `night` will not match `nigh`.
+****
+
+Examples:
+
+* `theme day` +
+Changes the theme to `day` (Refer to Figure 11).
+
+image::themeDisplay.png[width="790"]
+_Figure 11: Theme changed to `day`._
+// end::theme[]
+
 === Exiting the program : `exit`
 
 Exits the program. +
@@ -227,6 +664,34 @@ Format: `exit`
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
+// tag::toggle[]
+=== Toggling between reminders panel and browser: `toggle`
+
+Toggle between the reminders panel (Refer to Figure 12 below) and the browser (Refer to Figure 13 below) as needed. +
+The reminders panel would display reminders for upcoming birthdays amongst the contacts in the current month and
+also reminders that users can set for themselves. The birthday reminders and reminders are
+displayed chronologically. +
+Format: `toggle`
+
+****
+* iContacts would display the reminders panel at start up.
+* Executing the `select` command would always bring the browser to the front.
+* Toggling to the browser without first executing a `select` command would display a default background (Refer to Figure 14).
+* Executing this `toggle` command when the application is showing the details of a contact would always bring the reminders panel to the front, and then
+alternate between the reminders panel and the browser on further execution of the `toggle` command.
+****
+
+
+image::RemindersPanel.png[width="790"]
+_Figure 12 : The reminders panel._
+
+image::BrowserPanel.png[width="790"]
+_Figure 13 : The browser panel._
+
+image::DefaultBackground.png[width="790"]
+_Figure 14 : The default background._
+// end::toggle[]
+
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
@@ -234,19 +699,111 @@ There is no need to save manually.
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [b/BIRTHDAY] [t/TAG]...` +
+e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 b/21/10/1995 t/friend t/colleague`
+* *Add Reminders* : `addreminder rd/REMINDER d/DATE ti/TIME` +
+e.g. `addreminder rd/Dinner with family d/25/12/2017 ti/18:00`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+* *Delete Reminders* : `deletereminder INDEX` +
+e.g. `deletereminder 3`
+* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
+* *Edit Reminders* : `editreminder INDEX [rd/REMINDER] [d/DATE] [ti/TIME]`  +
+e.g. `editreminder 2 rd/Change reminder d/01-01-2017 ti/09:00`
+* *Nickname* : `nickname INDEX [NICKNAME]` +
+e.g. `nickname 1 Jamie`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
+* *ViewTag* : `viewtag KEYWORD` +
+e.g. `viewtag enemy`
+* *Display Picture* : `displaypic INDEX [PATHOFIMAGE]` +
+e.g. `displaypic 2 C:\Users\Admin\Desktop\Sem 3 Mods\CS2103T\mypic.jpg`
+* *Email Command* : `email s/SERVICE to/TAG [sub/SUBJECT] [body/BODY]` +
+e.g. `email s/gmail to/cs2103 sub/Submission body/Monday Deadline`
+* *Filter* : `filter [n/NAME] [t/TAG]` +
+e.g. `filter n/John t/friends`
 * *List* : `list`
+* *Sort* : `sort`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
+* *Details* : `details INDEX` +
+e.g.`details 2`
+* *Location* : `location INDEX` +
+e.g.`location 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Toggle* : `toggle`
+* *Theme* : `theme THEME` +
+e.g. `theme day`
+
+
+== Coming in V2.0
+
+=== Search Command +
+Users will be able to search for persons fulfilling *all* keywords provided by the users. +
+This allow a more focused and efficient search for users. +
+Format: `search KEYWORD [MORE KEYWORDS]` +
+`KEYWORD` is either `n/PHONE` or `t/TAG`
+
+****
+* The search is case insensitive. e.g `hans` will match `Hans`.
+* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`.
+* Both name and tags are searched.
+* Only full words and tags will be matched e.g. `Han` will not match `Hans`, `volleyball` will not match `vball`.
+* Persons matching *all* the keywords will be returned.
+****
+
+Examples:
+
+* `search n/Dickson t/volleyball` +
+Returns all persons with name matching `Dickson` (case-insensitive) *and* tag matching `volleyball` (case-insensitive).
+* `search t/friend t/NUS t/Computing` +
+Returns all persons having tags `friend`, `NUS`, and `Computing` (all case-insensitive).
+
+=== List Themes command +
+Users will be able to switch to different color themes. They will be able to choose from a list of themes. +
+This allows users to better customise their address book.
+
+==== List Theme +
+Format: `listTheme` +
+A window will pop up displaying the list of available themes. Users need only take note of the theme name of the theme they are interested in for the next step.
+
+=== Find by similar keywords +
+Users would be able to obtain a list of contacts by entering similar keywords that is not identical. +
+This is an enhancement to the existing `find` command, so format of command would remain the same. +
+
+Examples:
+
+* `find john` +
+Returns `john` and `John Doe` and `Jon` +
+* `find delylah justin`
+One possible list of contacts returned might be `delilah`, `justinn` and `Justin Lim`.
+
+=== Authentication +
+Users would be required to provide authentication to access the application. This is so as to ensure the privacy of the contact information within the application. +
+Users would be prompted to sign up when they use the application for the first time. +
+To change the password, users need only type the command `reset`. Users would then be prompted for the new password.
+
+=== Integration with online Cloud Storage services +
+Users would be able to store and synchronize their contacts in the application within popular Cloud Storage services such as Google Drive. +
+Users would be required to provide authentication for the Cloud Storage services of their choice, and then any changes to the contacts of the application
+would be synchronized with the copy within the Cloud service. +
+This way, users would have a backup copy of their contacts. Users would also be able to access their contacts from other devices, bringing about portability.
+
+
+=== Enhance UI
+
+The current User Interface (UI) doesn’t seem visually appealing to the user, which is why I plan to improve the design of the product. I aim to make it in the form of a chatbot where each command typed is a message sent by us and the result of command is the message sent by the product to us.
+This will make the user feel more connected to the product as it adds a personal touch where user feels like he is interacting directly with a person. This enhancement will be perfectly suitable for the target audience which is the university students as they will be more comfortable using an application which works similar to a messaging platform.
+
+
+=== Flexibility in Commands
+
+Currently, iContacts is limited in terms of the command keyword that needs to be typed in for executing a command. For e.g. in order to view the location of a contact the `LOCATION` keyword needs to be used and using any other keyword instead of that will cause failure of the command.
+
+To make the product more user friendly and provide more flexibility to the user, I aim to integrate the Natural Language Processing(NLP) library which will allow the successful execution of the command even when keywords similar to `LOCATION` are typed, for e.g. `MAP`, `DIRECTION`, `LOCATE`.
+

@@ -31,6 +31,20 @@ public class ModelHelper {
     }
 
     /**
+     * Updates {@code model}'s popular contact list list to display only {@code toDisplay}.
+     */
+    public static void setFilteredListPopularContacts(Model model, List<ReadOnlyPerson> toDisplay) {
+        model.updatePopularContactList();
+    }
+
+    /**
+     * @see ModelHelper#setFilteredListPopularContacts(Model, List) (Model, List)
+     */
+    public static void setFilteredListPopularContacts(Model model, ReadOnlyPerson... toDisplay) {
+        setFilteredListPopularContacts(model, Arrays.asList(toDisplay));
+    }
+
+    /**
      * Returns a predicate that evaluates to true if this {@code ReadOnlyPerson} equals to {@code other}.
      */
     private static Predicate<ReadOnlyPerson> getPredicateMatching(ReadOnlyPerson other) {

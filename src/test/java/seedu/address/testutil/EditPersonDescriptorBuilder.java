@@ -32,6 +32,10 @@ public class EditPersonDescriptorBuilder {
         descriptor.setPhone(person.getPhone());
         descriptor.setEmail(person.getEmail());
         descriptor.setAddress(person.getAddress());
+        descriptor.setNickname(person.getNickname());
+        descriptor.setBirthday(person.getBirthday());
+        descriptor.setDisplayPicture(person.getDisplayPicture());
+        descriptor.setPopularityCounter(person.getPopularityCounter());
         descriptor.setTags(person.getTags());
     }
 
@@ -79,6 +83,42 @@ public class EditPersonDescriptorBuilder {
             ParserUtil.parseAddress(Optional.of(address)).ifPresent(descriptor::setAddress);
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("address is expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
+     * Sets the {@code nickname} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withNickname(String nickname) {
+        try {
+            ParserUtil.parseNickname(Optional.of(nickname)).ifPresent(descriptor::setNickname);
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("nickname cannot be null");
+        }
+        return this;
+    }
+
+    /**
+     * Sets the {@code path} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withDisplayPicture(String path) {
+        try {
+            ParserUtil.parseDisplayPicture(Optional.of(path)).ifPresent(descriptor::setDisplayPicture);
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("nickname cannot be null");
+        }
+        return this;
+    }
+
+    /**
+     * Sets the {@code Birthday} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withBirthday(String birthday) {
+        try {
+            ParserUtil.parseBirthday(Optional.of(birthday)).ifPresent(descriptor::setBirthday);
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("birthday is expected to be unique");
         }
         return this;
     }

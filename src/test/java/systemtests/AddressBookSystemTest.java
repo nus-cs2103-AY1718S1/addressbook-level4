@@ -3,9 +3,9 @@ package systemtests;
 import static guitests.guihandles.WebViewUtil.waitUntilBrowserLoaded;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static seedu.address.ui.BrowserPanel.DEFAULT_PAGE;
-import static seedu.address.ui.BrowserPanel.GOOGLE_SEARCH_URL_PREFIX;
-import static seedu.address.ui.BrowserPanel.GOOGLE_SEARCH_URL_SUFFIX;
+import static seedu.address.ui.BrowserAndRemindersPanel.DEFAULT_PAGE;
+import static seedu.address.ui.BrowserAndRemindersPanel.GOOGLE_SEARCH_URL_PREFIX;
+import static seedu.address.ui.BrowserAndRemindersPanel.GOOGLE_SEARCH_URL_SUFFIX;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
 import static seedu.address.ui.UiPart.FXML_FILE_FOLDER;
@@ -22,7 +22,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 
-import guitests.guihandles.BrowserPanelHandle;
+import guitests.guihandles.BrowserAndRemindersPanelHandle;
 import guitests.guihandles.CommandBoxHandle;
 import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.MainWindowHandle;
@@ -33,6 +33,7 @@ import seedu.address.MainApp;
 import seedu.address.TestApp;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.DetailsCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.SelectCommand;
@@ -88,7 +89,7 @@ public abstract class AddressBookSystemTest {
         return mainWindowHandle.getMainMenu();
     }
 
-    public BrowserPanelHandle getBrowserPanel() {
+    public BrowserAndRemindersPanelHandle getBrowserPanel() {
         return mainWindowHandle.getBrowserPanel();
     }
 
@@ -140,6 +141,14 @@ public abstract class AddressBookSystemTest {
     }
 
     /**
+     * Selects the person at {@code index} of the displayed list by details command
+     */
+    protected void selectPersonThroughDetails(Index index) {
+        executeCommand(DetailsCommand.COMMAND_WORD + " " + index.getOneBased());
+        assert getPersonListPanel().getSelectedCardIndex() == index.getZeroBased();
+    }
+
+    /**
      * Asserts that the {@code CommandBox} displays {@code expectedCommandInput}, the {@code ResultDisplay} displays
      * {@code expectedResultMessage}, the model and storage contains the same person objects as {@code expectedModel}
      * and the person list panel displays the persons in the model correctly.
@@ -154,8 +163,18 @@ public abstract class AddressBookSystemTest {
     }
 
     /**
-     * Calls {@code BrowserPanelHandle}, {@code PersonListPanelHandle} and {@code StatusBarFooterHandle} to remember
-     * their current state.
+     * @<code> assertApplicationDisplaysExpected(</code> for Edit Command Test
+     */
+    protected void assertApplicationDisplaysExpectedForEdit(String expectedCommandInput, String expectedResultMessage,
+                                                     Model expectedModel) {
+        assertEquals(expectedCommandInput, getCommandBox().getInput());
+        assertEquals(expectedResultMessage, getResultDisplay().getText());
+        assertListMatching(getPersonListPanel(), expectedModel.getFilteredPersonList());
+    }
+
+    /**
+     * Calls {@code BrowserAndRemindersPanelHandle},
+     * {@code PersonListPanelHandle} and {@code StatusBarFooterHandle} to remember their current state.
      */
     private void rememberStates() {
         StatusBarFooterHandle statusBarFooterHandle = getStatusBarFooter();
@@ -168,7 +187,7 @@ public abstract class AddressBookSystemTest {
     /**
      * Asserts that the previously selected card is now deselected and the browser's url remains displaying the details
      * of the previously selected person.
-     * @see BrowserPanelHandle#isUrlChanged()
+     * @see BrowserAndRemindersPanelHandle#isUrlChanged()
      */
     protected void assertSelectedCardDeselected() {
         assertFalse(getBrowserPanel().isUrlChanged());
@@ -178,7 +197,7 @@ public abstract class AddressBookSystemTest {
     /**
      * Asserts that the browser's url is changed to display the details of the person in the person list panel at
      * {@code expectedSelectedCardIndex}, and only the card at {@code expectedSelectedCardIndex} is selected.
-     * @see BrowserPanelHandle#isUrlChanged()
+     * @see BrowserAndRemindersPanelHandle#isUrlChanged()
      * @see PersonListPanelHandle#isSelectedPersonCardChanged()
      */
     protected void assertSelectedCardChanged(Index expectedSelectedCardIndex) {
@@ -196,12 +215,29 @@ public abstract class AddressBookSystemTest {
     }
 
     /**
+     * Asserts that details panel children is changed to display the details of the person in the person list panel at
+     * {@code expectedSelectedCardIndex}, and only the card at {@code expectedSelectedCardIndex} is selected.
+     * @see PersonListPanelHandle#isSelectedPersonCardChanged()
+     */
+    protected void assertSelectedCardChangedForDetails(Index expectedSelectedCardIndex) {
+        assertEquals(expectedSelectedCardIndex.getZeroBased(), getPersonListPanel().getSelectedCardIndex());
+    }
+
+    /**
      * Asserts that the browser's url and the selected card in the person list panel remain unchanged.
-     * @see BrowserPanelHandle#isUrlChanged()
+     * @see BrowserAndRemindersPanelHandle#isUrlChanged()
      * @see PersonListPanelHandle#isSelectedPersonCardChanged()
      */
     protected void assertSelectedCardUnchanged() {
         assertFalse(getBrowserPanel().isUrlChanged());
+        assertFalse(getPersonListPanel().isSelectedPersonCardChanged());
+    }
+
+    /**
+     * Asserts that the selected card in the person list panel remain unchanged.
+     * @see PersonListPanelHandle#isSelectedPersonCardChanged()
+     */
+    protected void assertSelectedCardUnchangedForDetails() {
         assertFalse(getPersonListPanel().isSelectedPersonCardChanged());
     }
 

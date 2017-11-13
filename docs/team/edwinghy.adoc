@@ -1,0 +1,137 @@
+= Edwin Goh - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: iContacts
+iContacts is a Command Line Interface (CLI) application created for University Students who requires the functionality of managing contacts, deadlines and reminders in a single application.
+
+The purpose of this portfolio is to summarise my contributions in iContacts and shows the readers how this contributions are implemented. In addition it contains a few proposed enhancements for upcoming versions of the application.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-W14-B1/main/blob/master/collated/main/edwinghy.md[Functional code]] [https://github.com/CS2103AUG2017-W14-B1/main/blob/master/collated/test/edwinghy.md[Test code]]
+
+=== Enhancement Added: Exporting of contacts
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=export]
+
+#End of Extract#
+
+---
+
+==== Justification
+Exporting contacts from the application is a key feature to enable users to share contact information. As this application is targeted at university students
+sharing of contacts is necessary in the daily life of the student.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=export]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Importing contacts from file
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=import]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+To complete the entire contact sharing experience, students must be able to import contacts shared
+by their peers with a single command.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=import]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Find to include nickname searches
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=find]
+
+#End of Extract#
+
+---
+
+==== Justification
+With the implementation of the nickname feature, the find command should allow users to search for contacts using both nicknames and names.
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=find]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Sorting of contacts
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=sort]
+
+#End of Extract#
+
+---
+
+==== Justification
+When a contact is added to iContacts it is being appended to the end of the list, creating a very unorganised list.
+With sorting users can choose to sort iContacts in alphabetical order to have more organised contact list.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=sort]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Automatically add required field prefixs when a valid command is entered
+It is not possible to remember all the required fields for all the different commands in iContacts. Although the user is able to refer
+to check the required field from the help command, it makes the entire experience troublesome. With this enhancement as long as the user types in a valid command all required fields prefix will appear. This will allow for a better user experience.
+
+=== Enhancement Proposed: delete multiple contacts
+The current delete feature for iContacts only allows deleting 1 contact at a time. it will be troublesome if the student wants to delete a group of contacts. With this enhancement the user will  be able to delete multiple contacts in a single command.
+
+=== Enhancement Proposed: Enhance sort command to allow sorting by date added
+The current sort feature only sorts iContacts alphabetically, more sorting options can be added.
+
+
+=== Other contributions
+
+* Implemented Colored Tags https://github.com/CS2103AUG2017-W14-B1/main/pull/60

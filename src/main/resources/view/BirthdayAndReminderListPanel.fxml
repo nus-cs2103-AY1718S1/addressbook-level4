@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.control.Label?>
+<!-- @@author justinpoh -->
+<VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <HBox VBox.vgrow="ALWAYS" alignment="CENTER">
+         <children>
+            <VBox HBox.hgrow="ALWAYS" fx:id="birthdayListHolder">
+               <Label text="Upcoming birthdays"/>
+               <ListView fx:id="birthdayListView" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS"/>
+            </VBox>
+            <VBox HBox.hgrow="ALWAYS" fx:id="reminderListHolder">
+               <Label text="Reminders"/>
+               <ListView fx:id="reminderListView" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS"/>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+</VBox>

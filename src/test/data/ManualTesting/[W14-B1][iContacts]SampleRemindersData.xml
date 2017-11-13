@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<reminders>
+    <reminders>
+        <reminder>Email CS1010 Students about Midterm</reminder>
+        <date>17-11-2017</date>
+        <time>19:00</time>
+    </reminders>
+    <reminders>
+        <reminder>Birthday Party Eugene</reminder>
+        <date>17-11-2017</date>
+        <time>22:00</time>
+    </reminders>
+    <reminders>
+        <reminder>CS2103T Release jar</reminder>
+        <date>15-11-2017</date>
+        <time>12:00</time>
+    </reminders>
+    <reminders>
+        <reminder>CS2105 Assignment Due</reminder>
+        <date>22-11-2017</date>
+        <time>23:59</time>
+    </reminders>
+    <reminders>
+        <reminder>Survey for Product</reminder>
+        <date>19-11-2017</date>
+        <time>23:59</time>
+    </reminders>
+    <reminders>
+        <reminder>Fix Bugs of iContacts</reminder>
+        <date>4-12-2017</date>
+        <time>10:00</time>
+    </reminders>
+</reminders>

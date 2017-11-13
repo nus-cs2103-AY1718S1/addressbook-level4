@@ -9,10 +9,14 @@ import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Birthday;
+import seedu.address.model.person.DisplayPicture;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Nickname;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.PopularityCounter;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.Tag;
 
@@ -29,6 +33,14 @@ public class XmlAdaptedPerson {
     private String email;
     @XmlElement(required = true)
     private String address;
+    @XmlElement(required = true)
+    private String nickname;
+    @XmlElement(required = true)
+    private String birthday;
+    @XmlElement(required = true)
+    private String displayPicture;
+    @XmlElement(required = true)
+    private int popularityCounter;
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -50,6 +62,10 @@ public class XmlAdaptedPerson {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
+        nickname = source.getNickname().value;
+        birthday = source.getBirthday().value;
+        displayPicture = source.getDisplayPicture().getPath();
+        popularityCounter = source.getPopularityCounter().getCounter();
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
@@ -70,7 +86,11 @@ public class XmlAdaptedPerson {
         final Phone phone = new Phone(this.phone);
         final Email email = new Email(this.email);
         final Address address = new Address(this.address);
+        final Nickname nickname = new Nickname(this.nickname);
+        final Birthday birthday = new Birthday(this.birthday);
+        final DisplayPicture displayPicture = new DisplayPicture(this.displayPicture);
+        final PopularityCounter popularityCounter = new PopularityCounter(this.popularityCounter);
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, tags);
+        return new Person(name, phone, email, address, birthday, nickname, displayPicture, popularityCounter, tags);
     }
 }

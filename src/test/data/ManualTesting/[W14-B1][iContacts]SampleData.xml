@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addressbook>
+    <persons>
+        <name>Alex Yeoh</name>
+        <phone>87438807</phone>
+        <email>alexyeoh@example.com</email>
+        <address>Blk 30 Geylang Street 29, #06-40</address>
+        <nickname>Albert</nickname>
+        <birthday>21-10-1995</birthday>
+        <displayPicture></displayPicture>
+        <popularityCounter>0</popularityCounter>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Bernice Yu</name>
+        <phone>99272758</phone>
+        <email>berniceyu@example.com</email>
+        <address>Blk 30 Lorong 3 Serangoon Gardens, #07-18</address>
+        <nickname></nickname>
+        <birthday>22-10-1995</birthday>
+        <displayPicture></displayPicture>
+        <popularityCounter>0</popularityCounter>
+        <tagged>colleagues</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Charlotte Oliveiro</name>
+        <phone>93210283</phone>
+        <email>charlotte@example.com</email>
+        <address>Blk 11 Ang Mo Kio Street 74, #11-04</address>
+        <nickname>Charl</nickname>
+        <birthday>23-10-1995</birthday>
+        <displayPicture></displayPicture>
+        <popularityCounter>0</popularityCounter>
+        <tagged>neighbours</tagged>
+    </persons>
+    <persons>
+        <name>David Li</name>
+        <phone>91031282</phone>
+        <email>lidavid@example.com</email>
+        <address>Blk 436 Serangoon Gardens Street 26, #16-43</address>
+        <nickname></nickname>
+        <birthday>24-10-1995</birthday>
+        <displayPicture></displayPicture>
+        <popularityCounter>0</popularityCounter>
+        <tagged>family</tagged>
+    </persons>
+    <persons>
+        <name>Irfan Ibrahim</name>
+        <phone>92492021</phone>
+        <email>irfan@example.com</email>
+        <address>Blk 47 Tampines Street 20, #17-35</address>
+        <nickname></nickname>
+        <birthday>25-10-1995</birthday>
+        <displayPicture></displayPicture>
+        <popularityCounter>0</popularityCounter>
+        <tagged>classmates</tagged>
+    </persons>
+    <persons>
+        <name>Roy Balakrishnan</name>
+        <phone>92624417</phone>
+        <email>royb@example.com</email>
+        <address>Blk 45 Aljunied Street 85, #11-31</address>
+        <nickname></nickname>
+        <birthday>26-10-1995</birthday>
+        <displayPicture></displayPicture>
+        <popularityCounter>0</popularityCounter>
+        <tagged>colleagues</tagged>
+    </persons>
+    <persons>
+        <name>Alice Tan</name>
+        <phone>83292191</phone>
+        <email>alicet@example.com</email>
+        <address>35, Clementi, #11-31</address>
+        <nickname>ali</nickname>
+        <birthday>16-11-1999</birthday>
+        <displayPicture></displayPicture>
+        <popularityCounter>0</popularityCounter>
+        <tagged>cs1010</tagged>
+    </persons>
+    <persons>
+        <name>Rahul</name>
+        <phone>93242829</phone>
+        <email>rahul@example.com</email>
+        <address>Lokmanaya Nagar, 440016, Nagpur</address>
+        <nickname></nickname>
+        <birthday>15-11-1999</birthday>
+        <displayPicture></displayPicture>
+        <popularityCounter>0</popularityCounter>
+        <tagged>utown</tagged>
+        <tagged>cs1010</tagged>
+    </persons>
+    <persons>
+        <name>Bob</name>
+        <phone>83292191</phone>
+        <email>bob@example.com</email>
+        <address>35, Yio Chu Kang, #11-31</address>
+        <nickname></nickname>
+        <birthday>16-1-1999</birthday>
+        <displayPicture></displayPicture>
+        <popularityCounter>0</popularityCounter>
+        <tagged>cs1010</tagged>
+    </persons>
+    <persons>
+        <name>Janice</name>
+        <phone>92938829</phone>
+        <email>janicecool@example.com</email>
+        <address>21, Dover, 112932</address>
+        <nickname></nickname>
+        <birthday>16-5-1999</birthday>
+        <displayPicture></displayPicture>
+        <popularityCounter>0</popularityCounter>
+        <tagged>cs1010</tagged>
+    </persons>
+    <persons>
+        <name>Akshay</name>
+        <phone>62782292</phone>
+        <email>akshay@example.com</email>
+        <address>Changi, 1232922</address>
+        <nickname></nickname>
+        <birthday>4-11-2000</birthday>
+        <displayPicture></displayPicture>
+        <popularityCounter>0</popularityCounter>
+        <tagged>colleagues</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Rachael</name>
+        <phone>72927739</phone>
+        <email>rachel@example.com</email>
+        <address>Changi, 124289</address>
+        <nickname></nickname>
+        <birthday>21-11-2000</birthday>
+        <displayPicture></displayPicture>
+        <popularityCounter>0</popularityCounter>
+        <tagged>colleagues</tagged>
+    </persons>
+    <persons>
+        <name>Alex</name>
+        <phone>83292191</phone>
+        <email>alex@example.com</email>
+        <address>35, Jurong East</address>
+        <nickname></nickname>
+        <birthday>10-2-1950</birthday>
+        <displayPicture></displayPicture>
+        <popularityCounter>0</popularityCounter>
+        <tagged>family</tagged>
+    </persons>
+    <persons>
+        <name>Zee Leon</name>
+        <phone>9292923</phone>
+        <email>zeeleon@example.com</email>
+        <address>35, Mountain View, Google</address>
+        <nickname></nickname>
+        <birthday>17-11-1950</birthday>
+        <displayPicture></displayPicture>
+        <popularityCounter>0</popularityCounter>
+        <tagged>nusStudentClub</tagged>
+    </persons>
+    <persons>
+        <name>Yow rin</name>
+        <phone>82929278</phone>
+        <email>yow@example.com</email>
+        <address>Twin towers malaysia</address>
+        <nickname></nickname>
+        <birthday>10-5-2001</birthday>
+        <displayPicture></displayPicture>
+        <popularityCounter>0</popularityCounter>
+        <tagged>nusStudentClub</tagged>
+    </persons>
+    <persons>
+        <name>Wayne Lee</name>
+        <phone>9287478</phone>
+        <email>lee@example.com</email>
+        <address>Twin towers malaysia</address>
+        <nickname></nickname>
+        <birthday>10-2-2001</birthday>
+        <displayPicture></displayPicture>
+        <popularityCounter>0</popularityCounter>
+        <tagged>nusStudentClub</tagged>
+    </persons>
+    <persons>
+        <name>Maria</name>
+        <phone>29339282</phone>
+        <email>maria@example.com</email>
+        <address>Jurong West, 1182022</address>
+        <nickname></nickname>
+        <birthday>10-12-1996</birthday>
+        <displayPicture></displayPicture>
+        <popularityCounter>0</popularityCounter>
+        <tagged>nusStudentClub</tagged>
+    </persons>
+    <persons>
+        <name>Eugene Tan</name>
+        <phone>92283828</phone>
+        <email>eugie@example.com</email>
+        <address>Lentor Avenue, Singapore</address>
+        <nickname></nickname>
+        <birthday>18-11-1996</birthday>
+        <displayPicture></displayPicture>
+        <popularityCounter>0</popularityCounter>
+        <tagged>enemy</tagged>
+    </persons>
+    <persons>
+        <name>Nathan</name>
+        <phone>92283828</phone>
+        <email>nath@example.com</email>
+        <address>Bintan, Indonesia</address>
+        <nickname></nickname>
+        <birthday>18-7-1996</birthday>
+        <displayPicture></displayPicture>
+        <popularityCounter>0</popularityCounter>
+        <tagged>intern</tagged>
+    </persons>
+    <persons>
+        <name>Piyush</name>
+        <phone>28728828</phone>
+        <email>piyuswag@example.com</email>
+        <address>Toronto, Canada</address>
+        <nickname></nickname>
+        <birthday>4-9-1996</birthday>
+        <displayPicture></displayPicture>
+        <popularityCounter>0</popularityCounter>
+        <tagged>basketballTeam</tagged>
+    </persons>
+    <persons>
+        <name>Maria</name>
+        <phone>9288222</phone>
+        <email>mariaprincess@example.com</email>
+        <address>Jurong West, 1182022</address>
+        <nickname></nickname>
+        <birthday>10-12-1996</birthday>
+        <displayPicture></displayPicture>
+        <popularityCounter>0</popularityCounter>
+        <tagged>friend</tagged>
+    </persons>
+    <tags>utown</tags>
+    <tags>intern</tags>
+    <tags>basketballTeam</tags>
+    <tags>neighbours</tags>
+    <tags>enemy</tags>
+    <tags>friends</tags>
+    <tags>cs1010</tags>
+    <tags>colleagues</tags>
+    <tags>nusStudentClub</tags>
+    <tags>friend</tags>
+    <tags>classmates</tags>
+    <tags>family</tags>
+</addressbook>

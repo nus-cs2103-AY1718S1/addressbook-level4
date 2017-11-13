@@ -16,8 +16,11 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.reminders.ReadOnlyUniqueReminderList;
+import seedu.address.model.reminders.UniqueReminderList;
 import seedu.address.storage.UserPrefsStorage;
 import seedu.address.storage.XmlSerializableAddressBook;
+import seedu.address.storage.XmlSerializableReminders;
 import seedu.address.testutil.TestUtil;
 import systemtests.ModelHelper;
 
@@ -28,27 +31,43 @@ import systemtests.ModelHelper;
 public class TestApp extends MainApp {
 
     public static final String SAVE_LOCATION_FOR_TESTING = TestUtil.getFilePathInSandboxFolder("sampleData.xml");
+    public static final String SAVE_LOCATION_FOR_REMINDER_TESTING =
+            TestUtil.getFilePathInSandboxFolder("sampleReminderData.xml");
     public static final String APP_TITLE = "Test App";
 
     protected static final String DEFAULT_PREF_FILE_LOCATION_FOR_TESTING =
             TestUtil.getFilePathInSandboxFolder("pref_testing.json");
     protected static final String ADDRESS_BOOK_NAME = "Test";
     protected Supplier<ReadOnlyAddressBook> initialDataSupplier = () -> null;
+    protected Supplier<ReadOnlyUniqueReminderList> initialReminderDataSupplier = () -> null;
     protected String saveFileLocation = SAVE_LOCATION_FOR_TESTING;
+    protected String saveReminderFileLocation = SAVE_LOCATION_FOR_REMINDER_TESTING;
 
     public TestApp() {
     }
 
-    public TestApp(Supplier<ReadOnlyAddressBook> initialDataSupplier, String saveFileLocation) {
+    public TestApp(Supplier<ReadOnlyAddressBook> initialDataSupplier,
+                   Supplier<ReadOnlyUniqueReminderList> initialReminderDataSupplier, String saveFileLocation,
+                   String saveReminderFileLocation) {
         super();
         this.initialDataSupplier = initialDataSupplier;
+        this.initialReminderDataSupplier = initialReminderDataSupplier;
+        //@@author justinpoh
         this.saveFileLocation = saveFileLocation;
+        this.saveReminderFileLocation = saveReminderFileLocation;
+        //@@author
 
         // If some initial local data has been provided, write those to the file
         if (initialDataSupplier.get() != null) {
             createDataFileWithData(new XmlSerializableAddressBook(this.initialDataSupplier.get()),
                     this.saveFileLocation);
         }
+        //@@author justinpoh
+        if (initialReminderDataSupplier.get() != null) {
+            createDataFileWithData(new XmlSerializableReminders(),
+                    this.saveReminderFileLocation);
+        }
+        //@@author
     }
 
     @Override
@@ -67,6 +86,9 @@ public class TestApp extends MainApp {
         userPrefs.updateLastUsedGuiSetting(new GuiSettings(600.0, 600.0, (int) x, (int) y));
         userPrefs.setAddressBookFilePath(saveFileLocation);
         userPrefs.setAddressBookName(ADDRESS_BOOK_NAME);
+        //@@author justinpoh
+        userPrefs.setRemindersFilePath(saveReminderFileLocation);
+        //@@author
         return userPrefs;
     }
 
@@ -83,6 +105,21 @@ public class TestApp extends MainApp {
         }
     }
 
+    //@@author justinpoh
+    /**
+     * Returns a defensive copy of the reminder data stored inside the storage file.
+     */
+    public UniqueReminderList readStorageUniqueReminderList() {
+        try {
+            return new UniqueReminderList(storage.readReminders().get());
+        } catch (DataConversionException dce) {
+            throw new AssertionError("Data is not in the AddressBook format.");
+        } catch (IOException ioe) {
+            throw new AssertionError("Storage file cannot be found.");
+        }
+    }
+    //@@author
+
     /**
      * Returns the file path of the storage file.
      */
@@ -94,7 +131,7 @@ public class TestApp extends MainApp {
      * Returns a defensive copy of the model.
      */
     public Model getModel() {
-        Model copy = new ModelManager((model.getAddressBook()), new UserPrefs());
+        Model copy = new ModelManager((model.getAddressBook()), model.getUniqueReminderList(), new UserPrefs());
         ModelHelper.setFilteredList(copy, model.getFilteredPersonList());
         return copy;
     }

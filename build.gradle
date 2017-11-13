@@ -65,6 +65,9 @@ allprojects {
         compile "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
         compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jacksonDataTypeVersion"
         compile "com.google.guava:guava:$guavaVersion"
+        compile 'com.jfoenix:jfoenix:1.9.0'
+        compile 'de.jensd:fontawesomefx:8.9'
+        compile fileTree(dir: 'lib', include: '*.jar')
 
         testCompile "junit:junit:$junitVersion"
         testCompile "org.testfx:testfx-core:$testFxVersion"
@@ -87,7 +90,7 @@ allprojects {
     }
 
     shadowJar {
-        archiveName = "addressbook.jar"
+        archiveName = "iContacts.jar"
 
         destinationDir = file("${buildDir}/jar/")
     }

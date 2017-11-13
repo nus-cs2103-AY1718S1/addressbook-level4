@@ -1,0 +1,129 @@
+= Justin Poh - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: iContacts
+iContacts is an application that targets university students, aiming to help them manage their contacts and other aspects of their university life in an efficient manner.
+iContacts is a Command Line Interface (CLI) application, where most of the commands are executed by typing rather than clicking on buttons.
+Through iContacts, users would be able to store, manage and search through contact information efficiently and effectively.
+Not only that, users would be able to set display pictures for each contact and also add reminders for upcoming events.
+Last but not least, iContacts allow users to easily share contact information amongst each other via its import and export mechanisms. +
+
+This portfolio is to collate my contributions towards the developing of iContacts. It also showcases the software programming
+knowledge I have learned during the course of CS2103T, as well as how I utilized this knowledge and applied it to a real-world
+project. This portfolio also contains some suggested enhancements to be developed for iContacts in the future.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-W14-B1/main/blob/master/collated/main/justinpoh.md[Functional code]] [https://github.com/CS2103AUG2017-W14-B1/main/blob/master/collated/test/justinpoh.md[Test code]]
+
+=== Enhancement Added: Reminders for upcoming events
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=addReminder]
+
+include::../UserGuide.adoc[tag=editReminder]
+
+include::../UserGuide.adoc[tag=deleteReminder]
+
+#End of Extract#
+
+---
+
+==== Justification
+While iContacts allow users to store, manage and search for contact information efficiently, this alone is not
+sufficient to meet the needs of university students. Students often have multiple outstanding tasks or events such as
+assignments or meetings. Hence, what these students need is the ability to set reminders for upcoming tasks or events.
+
+We chose to display the reminders chronologically instead of having them pop-up when the event is nearing as we feel
+that it is more user-friendly to permanently display the reminders for the users to see. Displaying the reminders permanently
+can grant users a sense of the quantity of upcoming tasks and events. Also, only reminding the users of an upcoming task or event
+when it is nearing might give the user insufficient time to prepare for it. Instead, permanently displaying the reminders
+with a countdown to the event allow users to better prepare for it.
+
+We also recognize that there is a need to differentiate reminders based on the level of urgency. Therefore, we chose to do this
+by coloring the reminder cells differently. Using color is simple but powerful.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=reminder]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Toggle
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=toggle]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+To make iContacts useful and appealing, it needs to be able to provide more functionality to users, and this also means that it needs
+to be able to display more information. Without this toggling mechanism, users would have to squint their eyes as all the information
+and the browser would be squeezed together. Hence, to ensure a much more pleasant user experience, this toggling mechanism is required,
+as it allows related information to be displayed together in separate panels without being squeezed. +
+
+
+However, we choose to permanently display the list of contacts as we felt that iContacts is first and foremost an address book, hence
+the list of contacts is the most important information within iContacts and thus should always be displayed.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=toggle]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Find by similar keywords
+The `find` command in iContacts currently only works for keywords with exact wording (i.e. `find Han` would not work for a contact with name `Hans`),
+although it is still case-insensitive. This might be very inconvenient for users, as they might not remember the exact wording. Hence,
+the `find` command should be enhanced such that it can work with similar keywords.
+
+=== Enhancement Proposed: Dynamic command syntax validation using CommandBox border color
+Currently, iContacts only notify users of invalid command syntax after users have typed out the whole command and pressed `Enter`.
+As the feedback to the users is very general, users might have a hard time figuring out which part of the command had an erroneous
+syntax. Therefore, this dynamic command syntax validation feature would be able to instantly feedback to users regarding the
+validity of the command they typed, by changing the color of the border of the `CommandBox`. There will be three colors: +
+
+* A green border means that the syntax of the command is valid.
+* A red border means that the syntax of the command is invalid.
+* A yellow border means that the syntax of the command is not wrong, but is incomplete.
+
+=== Enhancement Proposed: Integration with online address book and Cloud Storage services
+Currently, iContacts is not integrated with any existing online services such as Google Contacts or Google Cloud Platform. Users still
+have to manually export the source file to share their contacts, and this can only take place if both users use iContacts. Furthermore,
+if the local copies of the source file are all corrupted or deleted, there are no online backup copies. Hence, there is a need
+to integrate iContacts with existing online address book and Cloud Storage services.
+
+=== Other contributions
+
+* Created the current default GUI of iContacts, as well as creating the Day theme for iContacts. (Pull requests https://github.com/CS2103AUG2017-W14-B1/main/pull/195[#195])
+* Updated component diagrams in DG and diagrams in UG during the project. (Pull requests https://github.com/CS2103AUG2017-W14-B1/main/pull/171[#171],
+ https://github.com/CS2103AUG2017-W14-B1/main/pull/200[#200], https://github.com/CS2103AUG2017-W14-B1/main/pull/201/files[#201],
+ https://github.com/CS2103AUG2017-W14-B1/main/pull/149[#149], https://github.com/CS2103AUG2017-W14-B1/main/pull/108[#108], https://github.com/CS2103AUG2017-W14-B1/main/pull/215[#215],
+ https://github.com/CS2103AUG2017-W14-B1/main/pull/242[#242], https://github.com/CS2103AUG2017-W14-B1/main/pull/243[#243])
+* Implemented Birthday field. (Pull requests https://github.com/CS2103AUG2017-W14-B1/main/pull/76[#76])
+* Updated READ.ME. (Pull requests https://github.com/CS2103AUG2017-W14-B1/main/pull/86[#86])
+* Updated AboutUs.adoc. (Pull requests https://github.com/CS2103AUG2017-W14-B1/main/pull/88[#88], https://github.com/CS2103AUG2017-W14-B1/main/pull/212[#212],
+https://github.com/CS2103AUG2017-W14-B1/main/pull/241[#241])
+* Updated Glossary. (Pull requests https://github.com/CS2103AUG2017-W14-B1/main/pull/59[#59], https://github.com/CS2103AUG2017-W14-B1/main/pull/70[#70])
+* Updated NFR. (Pull requests https://github.com/CS2103AUG2017-W14-B1/main/pull/50[#50])

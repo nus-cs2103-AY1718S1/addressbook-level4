@@ -11,9 +11,15 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Birthday;
+import seedu.address.model.person.DisplayPicture;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Nickname;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.PopularityCounter;
+import seedu.address.model.reminders.Date;
+import seedu.address.model.reminders.Time;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -80,6 +86,65 @@ public class ParserUtil {
     }
 
     /**
+     * Parses a {@code Optional<String> nickname} into an {@code Optional<Nickname>} if {@code nickname} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Nickname> parseNickname(Optional<String> nickname) throws IllegalValueException {
+        requireNonNull(nickname);
+        return nickname.isPresent() ? Optional.of(new Nickname(nickname.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> displayPicture} into an {@code Optional<DisplayPicture>}
+     * if {@code path} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<DisplayPicture> parseDisplayPicture(Optional<String> displayPicture)
+            throws IllegalValueException {
+        requireNonNull(displayPicture);
+        return displayPicture.isPresent() ? Optional.of(new DisplayPicture(displayPicture.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses popularity counter for dummy purpose
+     * @param popularityCounter represents the Popularity counter in terms of string(is actually an integer)
+     * @throws IllegalValueException if the string cannot be correctly converted to integer
+     */
+    public static Optional<PopularityCounter> parsePopularityCounter(Optional<String> popularityCounter)
+            throws IllegalValueException {
+        requireNonNull(popularityCounter);
+        return popularityCounter.isPresent()
+                ? Optional.of(new PopularityCounter(Integer.parseInt(popularityCounter.get()))) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> birthday} into an {@code Optional<Birthday>} if {@code birthday} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Birthday> parseBirthday(Optional<String> birthday) throws IllegalValueException {
+        requireNonNull(birthday);
+        return birthday.isPresent() ? Optional.of(new Birthday(birthday.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> date} into an {@code Optional<Date>} if {@code date} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Date> parseDate(Optional<String> date) throws IllegalValueException {
+        requireNonNull(date);
+        return date.isPresent() ? Optional.of(new Date(date.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> time} into an {@code Optional<Time>} if {@code time} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Time> parseTime(Optional<String> time) throws IllegalValueException {
+        requireNonNull(time);
+        return time.isPresent() ? Optional.of(new Time(time.get())) : Optional.empty();
+    }
+
+    /**
      * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
      */
     public static Set<Tag> parseTags(Collection<String> tags) throws IllegalValueException {
@@ -89,5 +154,18 @@ public class ParserUtil {
             tagSet.add(new Tag(tagName));
         }
         return tagSet;
+    }
+
+    /**
+     * Parses the given keyword tag into trimmed string
+     * @param tag keyword given by user
+     * @return trimmedTag which is trimmed for comparison purposes
+     * @throws IllegalValueException if the tag cannot be correctly parsed
+     */
+    public static String parseRecipientTag(String tag) throws IllegalValueException {
+        requireNonNull(tag);
+        String trimmedTag = tag.trim();
+
+        return trimmedTag;
     }
 }

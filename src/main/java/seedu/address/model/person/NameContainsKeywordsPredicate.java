@@ -15,11 +15,15 @@ public class NameContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> 
         this.keywords = keywords;
     }
 
+    //@@author edwinghy
     @Override
     public boolean test(ReadOnlyPerson person) {
         return keywords.stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword));
+                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword))
+                || keywords.stream()
+                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getNickname().value, keyword));
     }
+    //@@author
 
     @Override
     public boolean equals(Object other) {

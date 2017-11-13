@@ -1,0 +1,28 @@
+/* @@author justinpoh */
+.list-cell {
+    -fx-label-padding: 0 0 0 0;
+    -fx-graphic-text-gap : 0;
+    -fx-background-radius: 18 18 18 18;
+    -fx-border-radius: 18 18 18 18;
+    -fx-padding: 10px;
+    -fx-background-insets: 10px, 10px;
+    -fx-background-color: transparent, -fx-background;
+}
+
+.list-cell:filled {
+    -fx-background-color: derive(#dc143c, 0%);
+}
+
+.list-cell:filled:selected {
+    -fx-background-color: derive(#dc143c, +30%);
+}
+
+.list-cell:filled:selected #cardPane {
+    -fx-border-color: derive(#dc143c, +80%);
+    -fx-border-width: 3;
+    -fx-border-radius: 18 18 18 18;
+}
+
+.list-cell .label {
+    -fx-text-fill: white;
+}

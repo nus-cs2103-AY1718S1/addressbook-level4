@@ -19,9 +19,12 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.reminders.Date;
+import seedu.address.model.reminders.Time;
 import seedu.address.model.tag.Tag;
 
 public class ParserUtilTest {
@@ -29,12 +32,18 @@ public class ParserUtilTest {
     private static final String INVALID_PHONE = "+651234";
     private static final String INVALID_ADDRESS = " ";
     private static final String INVALID_EMAIL = "example.com";
+    private static final String INVALID_BIRTHDAY = "32/1/2017";
+    private static final String INVALID_DATE = "32/1/2017";
+    private static final String INVALID_TIME = "24:00";
     private static final String INVALID_TAG = "#friend";
 
     private static final String VALID_NAME = "Rachel Walker";
     private static final String VALID_PHONE = "123456";
     private static final String VALID_ADDRESS = "123 Main Street #0505";
     private static final String VALID_EMAIL = "rachel@example.com";
+    private static final String VALID_BIRTHDAY = "21/10/1995";
+    private static final String VALID_DATE = "01/01/2017";
+    private static final String VALID_TIME = "10:00";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
 
@@ -162,6 +171,83 @@ public class ParserUtilTest {
 
         assertEquals(expectedEmail, actualEmail.get());
     }
+
+    //@@author justinpoh
+    @Test
+    public void parseBirthday_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseBirthday(null);
+    }
+
+    @Test
+    public void parseBirthday_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseBirthday(Optional.of(INVALID_BIRTHDAY));
+    }
+
+    @Test
+    public void parseBirthday_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseBirthday(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseBirthday_validValue_returnsBirthday() throws Exception {
+        Birthday expectedBirthday = new Birthday(VALID_BIRTHDAY);
+        Optional<Birthday> actualBirthday = ParserUtil.parseBirthday(Optional.of(VALID_BIRTHDAY));
+
+        assertEquals(expectedBirthday, actualBirthday.get());
+    }
+
+    @Test
+    public void parseDate_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseDate(null);
+    }
+
+    @Test
+    public void parseDate_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseDate(Optional.of(INVALID_DATE));
+    }
+
+    @Test
+    public void parseDate_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseDate(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseDate_validValue_returnsDate() throws Exception {
+        Date expectedDate = new Date(VALID_DATE);
+        Optional<Date> actualDate = ParserUtil.parseDate(Optional.of(VALID_DATE));
+
+        assertEquals(expectedDate, actualDate.get());
+    }
+
+    @Test
+    public void parseTime_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseTime(null);
+    }
+
+    @Test
+    public void parseTime_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseTime(Optional.of(INVALID_TIME));
+    }
+
+    @Test
+    public void parseTime_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseTime(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseTime_validValue_returnsTime() throws Exception {
+        Time expectedTime = new Time(VALID_TIME);
+        Optional<Time> actualTime = ParserUtil.parseTime(Optional.of(VALID_TIME));
+
+        assertEquals(expectedTime, actualTime.get());
+    }
+    //@@author
 
     @Test
     public void parseTags_null_throwsNullPointerException() throws Exception {

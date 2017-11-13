@@ -6,6 +6,7 @@ import org.testfx.api.FxToolkit;
 
 import guitests.guihandles.MainWindowHandle;
 import seedu.address.TestApp;
+import seedu.address.model.reminders.UniqueReminderList;
 import seedu.address.testutil.TypicalPersons;
 
 /**
@@ -15,19 +16,22 @@ public class SystemTestSetupHelper {
     private TestApp testApp;
     private MainWindowHandle mainWindowHandle;
 
+    //@@author justinpoh
     /**
      * Sets up the {@code TestApp} and returns it.
      */
     public TestApp setupApplication() {
         try {
             FxToolkit.setupApplication(() -> testApp = new TestApp(TypicalPersons::getTypicalAddressBook,
-                    TestApp.SAVE_LOCATION_FOR_TESTING));
+                    UniqueReminderList::new, TestApp.SAVE_LOCATION_FOR_TESTING,
+                    TestApp.SAVE_LOCATION_FOR_REMINDER_TESTING));
         } catch (TimeoutException te) {
             throw new AssertionError("Application takes too long to set up.");
         }
 
         return testApp;
     }
+    //@@author
 
     /**
      * Initializes the stage to be used by the tests.

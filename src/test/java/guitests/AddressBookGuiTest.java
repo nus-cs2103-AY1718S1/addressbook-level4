@@ -9,17 +9,19 @@ import org.junit.Rule;
 import org.junit.rules.TestName;
 import org.testfx.api.FxToolkit;
 
-import guitests.guihandles.BrowserPanelHandle;
+import guitests.guihandles.BrowserAndRemindersPanelHandle;
 import guitests.guihandles.CommandBoxHandle;
 import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.MainWindowHandle;
 import guitests.guihandles.PersonListPanelHandle;
+import guitests.guihandles.PopularContactsPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.StatusBarFooterHandle;
 import javafx.stage.Stage;
 import seedu.address.TestApp;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.model.AddressBook;
+import seedu.address.model.reminders.UniqueReminderList;
 import seedu.address.testutil.TypicalPersons;
 
 /**
@@ -52,7 +54,8 @@ public abstract class AddressBookGuiTest {
         FxToolkit.setupStage((stage) -> {
             this.stage = stage;
         });
-        FxToolkit.setupApplication(() -> new TestApp(this::getInitialData, getDataFileLocation()));
+        FxToolkit.setupApplication(() -> new TestApp(this::getInitialData, UniqueReminderList::new,
+                getDataFileLocation(), getReminderDataFileLocation()));
         FxToolkit.showStage();
 
         mainWindowHandle = new MainWindowHandle(stage);
@@ -75,11 +78,15 @@ public abstract class AddressBookGuiTest {
         return mainWindowHandle.getPersonListPanel();
     }
 
+    protected PopularContactsPanelHandle getPopularContactListHandle() {
+        return mainWindowHandle.getPopularContactsPanelHandle();
+    }
+
     protected MainMenuHandle getMainMenu() {
         return mainWindowHandle.getMainMenu();
     }
 
-    protected BrowserPanelHandle getBrowserPanel() {
+    protected BrowserAndRemindersPanelHandle getBrowserPanel() {
         return mainWindowHandle.getBrowserPanel();
     }
 
@@ -104,6 +111,13 @@ public abstract class AddressBookGuiTest {
      */
     protected String getDataFileLocation() {
         return TestApp.SAVE_LOCATION_FOR_TESTING;
+    }
+
+    /**
+     * Override this in child classes to set the reminder data file location.
+     */
+    protected String getReminderDataFileLocation() {
+        return TestApp.SAVE_LOCATION_FOR_REMINDER_TESTING;
     }
 
     @After

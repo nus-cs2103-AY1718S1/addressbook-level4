@@ -4,53 +4,65 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: images
 :stylesDir: stylesheets
 
-AddressBook - Level 4 was developed by the https://se-edu.github.io/docs/Team.html[se-edu] team. +
-The dummy content given below serves as a placeholder to be used by future forks of the project. +
-{empty} +
+
+iContacts was developed by a team of students, with assistance from the link:#lecturer[Lecturer] and
+link:#project-supervisor[Project Supervisor], as a project for the module CS2103T.
+
+It is built upon the AddressBook - Level 4 project developed by the https://se-edu.github.io/docs/Team.html[se-edu] team. +
+
 We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
+
 
 == Project Team
 
-=== John Doe
+[[lecturer]]
+=== Damith
 image::damithc.jpg[width="150", align="left"]
-{empty}[http://www.comp.nus.edu.sg/~damithch[homepage]] [https://github.com/damithc[github]] [<<johndoe#, portfolio>>]
-
-Role: Project Advisor
+Role: Lecturer
 
 '''
 
-=== John Roe
-image::lejolly.jpg[width="150", align="left"]
-{empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
+[[project-supervisor]]
+=== Akshay Narayan
+image::Akshay.jpg[width="150", align="left"]
+{empty}[https://github.com/okkhoy[github]]
 
-Role: Team Lead +
-Responsibilities: UI
+Role: Project Supervisor
 
 '''
 
-=== Johnny Doe
-image::yijinl.jpg[width="150", align="left"]
-{empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
+=== Shradheya Thakre
+image::tshradheya.jpg[width="150", align="left"]
+{empty}[https://github.com/tshradheya[github]] [https://cs2103aug2017-w14-b1.github.io/main/team/tshradheya.html[portfolio]]
+
+Role: Team Leader +
+Responsibilities: Developer, Deliverables and deadlines, Scheduling and tracking, Model
+
+'''
+
+=== Edwin Goh
+image::edwinghy.jpg[width="150", align="left"]
+{empty}[https://github.com/edwinghy[github]] [https://cs2103aug2017-w14-b1.github.io/main/team/edwinghy.html[portfolio]]
 
 Role: Developer +
-Responsibilities: Data
+Responsibilities: Documentation, Storage
 
 '''
 
-=== Johnny Roe
-image::m133225.jpg[width="150", align="left"]
-{empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]
+=== Justin Poh
+image::justinpoh.jpg[width="150", align="left"]
+{empty}[https://github.com/justinpoh[github]] [https://cs2103aug2017-w14-b1.github.io/main/team/justinpoh.html[portfolio]]
 
 Role: Developer +
-Responsibilities: Dev Ops + Threading
+Responsibilities: UI, Model
 
 '''
 
-=== Benson Meier
-image::yl_coder.jpg[width="150", align="left"]
-{empty}[http://github.com/yl-coder[github]] [<<johndoe#, portfolio>>]
+=== Chua Wei Wen
+image::chuaweiwen.jpg[width="150", align="left"]
+{empty}[https://github.com/chuaweiwen[github]] [https://cs2103aug2017-w14-b1.github.io/main/team/chuaweiwen.html[portfolio]]
 
 Role: Developer +
-Responsibilities: UI
+Responsibilities: Documentation, Logic
 
 '''

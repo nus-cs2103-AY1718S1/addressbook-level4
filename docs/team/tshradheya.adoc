@@ -1,0 +1,251 @@
+= Shradheya Thakre - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: iContacts
+
+iContacts is an address book application that helps you manage your contacts easily. The application has a GUI but most of the interactions happen using a CLI (Command Line Interface). The application was made by keeping the target audience as university students and its features help a student effectively manage their university life. You can use iContacts to add, edit and delete contacts. It can store various details about the contact which can help students in emailing, finding their location and identifying them by their display picture. It has an easy-to-use search function to find specific contacts quickly. It also provides reminders for upcoming birthdays of contacts within the application, and allows you to create your own reminders for upcoming events.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-W14-B1/main/blob/master/collated/main/tshradheya.md[Functional code]] [https://github.com/CS2103AUG2017-W14-B1/main/blob/master/collated/test/tshradheya.md[Test code]]
+
+=== Enhancement Added: Display Picture for Contacts
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=displaypic]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+The Display picture command is used to add a personal factor to the iContacts application. By adding a personalised display picture for each contact, the user can identify their various contacts uniquely especially when you have multiple contacts having the same name.
+The Display picture also adds a visual appeal to the product giving a better User Interface (UI) design and making the product more appealing to the university students.
+
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=displaypic]
+
+#End of Extract#
+
+---
+
+
+=== Enhancement Added: Location Command
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=location]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Google Maps are often used by students to know the exact location of the destination. The command makes it easier for users to find exact location of a contact’s address and get directions to their place.
+The exact location can be obtained by just typing the command, which is a lot more user friendly than having to search for the location in Google Maps by typing the entire address.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=location]
+
+#End of Extract#
+
+---
+
+
+=== Enhancement Added: Email Command
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=email]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Email is highly used by university students. Usually the student has to go to the mailing website, individually type in the email id of all those people whom the user wants to email.
+This has been made easier through the `email` command. A user can simply email all contacts with a particular tag for e.g. `cs2103teammates` and get the drafted email with Subject, Body and all Recipients in the default browser.
+
+This saves the user from all the typing and copy pasting of email id's from various places just to draft a simple email.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=email]
+
+#End of Extract#
+
+---
+
+
+=== Enhancement Added: Frequently Visited Contacts
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=fvc]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Through the frequently viewed contacts list of top 5 popular contacts, the user can easily view their details by selecting them rather than having to type commands and search for them.
+
+It also provides a better user experience as the user can see the people he has frequenlty visited and are his favourites on top of application.
+
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=fvc]
+
+#End of Extract#
+
+---
+
+
+
+=== Enhancement Added: Details Panel
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=details]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+This command was made to improve the UI for better user experience. Now the user can only see important details in the person card and can use this command to view more details in a more enhanced UI design.
+
+The `details` command also works by manual selection which gives more freedom to user when viewing details of a particular user.
+
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=details]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Viewtag  Command
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=viewtag]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+
+Tags can be considered as groups by user. This feature is mainly implemented to enhance usage of other commands. +
+For e.g. in `export` command to export all contacts having a particular tag, user will have to use `viewtag cs2103team` and then use range as `all` for the `export` command than having to type the index of each of them.
+
+It only supports one keyword as `filter` command was made as an stronger search command combining functionality of `find` and `viewtag`.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=viewtag]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Saving Data on Server
+
+==== External Behaviour
+
+This feature will make sure the data of contacts and reminders is stored in the servers online. The data files and images are stored in the cloud and cannot be directly changed by opening them on your device.
+
+This will be automatically done once the user registers in the application.
+The files are encrypted using the SHA algorithm to prevent it from being read by others. This ensures that your data is secure and there is no privacy law violation.
+
+
+
+==== Justification
+
+This feature will make the product more personalised as the user will have to register to use this application.
+
+Moreover, the user can now access his data from any device as it is stored on cloud storage. The data cannot be directly manipulated since it is in clound and hence the application won't crash as data will never be corrupted.
+
+==== Implementation
+
+A login feature will be first implemented to identify user's uniquely.
+
+Through the following use case diagram, signing up of user will allow data to be stored on cloud which can downloaded anytime for backup purposes.
+
+
+image::usecase.PNG[width="600"]
+_Figure 1 : Use case Diagram._
+
+=== Other contributions
+
+* Managed all Issues and Milestone by managing the project and assigning work.
+* Wrote additional tests to increase coverage to 91%
+* Took the role of Team Leader to make important decisions regarding development of product.
+* Managed GitHub effectively to keep track of issues, merging Pull requests by resolving conflicts and keeping track of deadlines so that the weekly releases are made on time with a working product.
+* Fixed various(5+) bugs in the product including some bugs which existed previously in the product link:https://github.com/CS2103AUG2017-W14-B1/main/pull/231[`Pull Request #231`] link:https://github.com/CS2103AUG2017-W14-B1/main/pull/216[`Pull Request #216`].
+* Added several Use Cases for features in Developed Guide link:https://github.com/CS2103AUG2017-W14-B1/main/pull/57[`Pull Request #57`].
+* Improved User Interface design by adding Details Panel link:https://github.com/CS2103AUG2017-W14-B1/main/pull/197[`Pull Request #197`].
+* Added Frequently Visited Contact List link:https://github.com/CS2103AUG2017-W14-B1/main/pull/167[`Pull Request #167`].
+* Implemented Email Feature link:https://github.com/CS2103AUG2017-W14-B1/main/pull/140[`Pull Request #140`].
+* Helped teammate fix bugs in his feature link:https://github.com/CS2103AUG2017-W14-B1/main/pull/236[`Pull Request #236`].
+* Contributed in User Guide and Developer Guide to enhance its language link:https://github.com/CS2103AUG2017-W14-B1/main/pull/239[`Pull Request #239`].
+* Helped several people on the forum with their technical difficulties.
+* Found 6 bugs during acceptance testing link:https://github.com/CS2103AUG2017-T17-B4/main/issues?utf8=%E2%9C%93&q=is%3Aissue%20author%3Atshradheya%20[`Issues Created`]
+* Managed all final submissions for CS2103T and CS2101
+
+== Project: NUSEvents Android Application
+
+Students coming into university want to experience an enriching and diverse campus life. One of the most integral parts of a campus life is the host of events taking place around the campus. We want to bring forth an application, called NUSEvents by means of which members of the NUS family will be able to view the various events going around the campus on a day to day basis. Now there will be no need to worry about searching websites, scrolling through emails and pages on Facebook to know what events are being organized by various faculties and clubs. This will be convenient for all students and members of the various faculties as it will enable them to indicate their interest in the events that they want to attend.
+
+Students will get easy access to the list of activities that will take place, thus making sure that they are notified of all important events which otherwise could have gone unnoticed. For a university like NUS, which is rated to have the best campus life, NUSEvents application will bring to you all that you need to know about the various happenings in NUS and improve the campus life experience of students. Hence it will ensure an enjoyable and fulfilling campus life for the members of the NUS family.
+
+link:https://github.com/NUSEvents/NusEvents[`Link to GitHub Repository`]
