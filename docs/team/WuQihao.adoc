@@ -112,6 +112,7 @@ Both local and cloud import makes AcquaiNote more user friendly and would greatl
 
 === Other contributions
 
+* Added total number of contacts in the status bar footer and highlight result message with the invalid command entered (pull request https://github.com/CS2103AUG2017-T10-B1/main/pull/49[#49])
 * Updated the GUI color scheme (Pull requests https://github.com/CS2103AUG2017-T10-B1/main/pull/53[#53], https://github.com/CS2103AUG2017-T10-B1/main/pull/55[#55])
 * Changed favourite contact display on contact cards (Pull request https://github.com/CS2103AUG2017-T10-B1/main/pull/69[#69])
 * Added todo-item count on contact cards (Pull request https://github.com/CS2103AUG2017-T10-B1/main/pull/78[#78])

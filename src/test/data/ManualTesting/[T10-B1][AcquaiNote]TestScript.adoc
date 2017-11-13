@@ -33,7 +33,7 @@ Successful execution, a popup help window (User Guide) shown.
 
 . Enter `add n/Bob Ross p/91333462 e/ross@gmail.com a/US t/painter` +
 Successful addition, with all fields.
-. Enter `add n/Bob Ross` +
+. Enter `add n/Ross Geller` +
 Successful addition, with name only.
 . Enter `add n/Bob Ross p/91333462 e/ross@gmail.com a/US t/painter` +
 Fail addition, duplicate person.
@@ -47,12 +47,12 @@ Successful execution, show all persons stored.
 
 . Enter `edit 19 n/Edited Name p/91333461 e/edit@gmail.com a/USA t/artist` +
 Successful edition, any field(s).
-. Enter `edit 21 n/Edited Name p/91333461 e/edit@gmail.com a/USA t/artist` +
+. Enter `edit 23 n/Edited Name p/91333461 e/edit@gmail.com a/USA t/artist` +
 Fail edition, index out of bound.
 . Enter `edit 20 n/Edited Name p/91333461 e/edit@gmail.com a/USA t/artist` +
 Fail edition, duplicate person.
 . Enter `edit 19 n/Xiang Hailin p/93509250 e/hailin@qq.com a/PGP block5 t/classmates` +
-Successful execution, revert contact list back to initial state.
+Successful execution, revert edition on 19th person.
 
 == Test command: `delete` or `d`
 
@@ -67,10 +67,10 @@ Successful execution, undo deletion.
 
 == Test command: `del`
 
-. Enter `del ross` +
+. Enter `del Bob` +
 Successful deletion, person with index 21 deleted.
 . Enter `undo` +
-Enter `del rOSs` +
+Enter `del bOB` +
 Successful deletion, case insensitive.
 . Enter `del tom` +
 Warning, multiple persons found +
@@ -112,7 +112,7 @@ This file path is only applicable for Windows users with a local D drive.
 . Enter `export data/exported/My AcquaiNote.xmla` +
 Fail exportation, invalid command format(invalid file suffix).
 
-== Test command: `Find`
+== Test command: `find` or `f`
 
 . Enter `find some` +
 Successful execution, one person “Some Body” is found.
@@ -133,7 +133,7 @@ Successful execution, 0 person is found.
 . Enter `find -d n/a t/class` +
 Successful execution, 2 persons are found.
 . Enter `find -d` +
-Fail finding, invalid command format!
+Fail execution, invalid command format!
 . Enter `list`
 . Enter `find -u e` +
 Successful execution, 20 persons are found. All of them have at least one field contain letter “e”
@@ -155,11 +155,11 @@ Successful execution, a list of history commands shown on right.
 . Enter `lock random123` +
 Successful lock.
 . Enter `lock randompw123` +
-Warning, need to be unlocked.
+Warning, need to be unlocked first.
 . Enter `list` +
 Warning, need to be unlocked first.
 . Press `UP` key +
-No history will be shown.
+No history of the correct locking command will be shown.
 
 == Test command: `unlock`
 
@@ -195,15 +195,18 @@ Successful redo, 7th person deleted.
 Enter `d 7` +
 Enter `clear` +
 Enter `undo 3` +
+19 persons listed in address book
 Enter `redo 2` +
-Successful redo, redo the first 2 commands (`d 7` and `d 7`).
+Successful redo, redo the first 2 undone commands (`d 7` and `d 7`), 17 persons listed.
+. Enter `undo 3`
+Successful undo, 20 persons present in the contact list.
 
 == Test command: `switch` or `sw`
 
 . Enter `switch 1` or click on `Todo` button +
 Successful execution, the todo list will be shown.
 . Enter `switch 2` or click on `Browser` button +
-Successful execution, the browser will be shown.
+Successful execution, a browser will be shown with a click on any contact card.
 
 == Test command: `select` or `s`
 
@@ -223,6 +226,10 @@ Successful selection. Because the 13th person does not have address, alternative
 . Enter `select -d 1` +
 Fail execution, invalid command format!
 
+[NOTE]
+====
+Although you could use `select` command to browse a person's todo list, we recommend utilising options provided in `todo` command.
+====
 
 == Test command: `sort`
 
@@ -250,7 +257,7 @@ Successful execution, a new todo item is added to first person. Notice that the 
 Successful undo, the new item disappear.
 . Enter `redo` +
 Successful redo, the item is added back.
-. Enter `todo 1 -a f/01-01-2018 20:00 t/01-01-2018 20:30 d/practice piano` again +
+. Enter `todo 1 -a f/01-01-2018 20:00 t/01-01-2018 20:30 d/practice piano` +
 Fail execution, this todo item already exists in the address book.
 . Enter `todo 2 -a f/01-01-2019 d/a deadline` +
 Fail execution, invalid command format! +
@@ -259,18 +266,19 @@ The time should in format: dd-MM-yyyy HH:mm
 Successful execution, todo list of 1st person will be clear.
 . Enter `undo`
 . Enter `todo 1 -d 2` +
-Successful execution, the 2rd todo item of 1st person will be delete.
+Successful execution, the 2nd todo item of 1st person will be delete.
 . Enter `todo 4 -l` +
 Successful execution, list all todo items of 4th person.
-. Enter `todo`
+. Enter `todo` +
 Successful execution, list all todo items of all person. Notice that the selection in person list will be cancelled.
 . Enter `todo 21 -l` +
 Fail execution, the person index provided is invalid.
-. Enter `todo 20 -d 1` +
+. Enter `todo 19 -d 1` +
 Fail execution, the todo item index provided is invalid.
 
 == Test command: `exit`
 
 . Enter `exit` +
 or click on `File` on the menu bar, then click on `Exit` +
+or click on the cross located at the top-right corner of the window +
 Successful execution, app closed.
