@@ -1,5 +1,8 @@
 package seedu.address.ui;
 
+import static seedu.address.logic.commands.SocialCommand.INSTAGRAM_URL_PREFIX;
+import static seedu.address.logic.commands.SocialCommand.TWITTER_URL_PREFIX;
+
 import java.net.URL;
 import java.util.logging.Logger;
 
@@ -21,8 +24,6 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class BrowserPanel extends UiPart<Region> {
 
     public static final String DEFAULT_PAGE = "default.html";
-    public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/search?safe=off&q=";
-    public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
 
     private static final String FXML = "BrowserPanel.fxml";
 
@@ -39,13 +40,23 @@ public class BrowserPanel extends UiPart<Region> {
 
         loadDefaultPage();
         registerAsAnEventHandler(this);
-    }
 
+        // Allows Google sign in to work in WebView as
+        // Same-Origin Policy would prevent it otherwise
+        System.setProperty("sun.net.http.allowRestrictedHeaders", "true");
+    }
+    //@@author tbhbhbh
+    /**
+     * Loads the person's Instagram or Twitter depending on if the person has his/her social media fields filled in.
+     */
     private void loadPersonPage(ReadOnlyPerson person) {
-        loadPage(GOOGLE_SEARCH_URL_PREFIX + person.getName().fullName.replaceAll(" ", "+")
-                + GOOGLE_SEARCH_URL_SUFFIX);
+        if (!person.getInstagramName().toString().isEmpty()) {
+            loadPage(INSTAGRAM_URL_PREFIX + person.getInstagramName());
+        } else if (!person.getTwitterName().toString().isEmpty()) {
+            loadPage(TWITTER_URL_PREFIX + person.getTwitterName());
+        }
     }
-
+    //@@author
     public void loadPage(String url) {
         Platform.runLater(() -> browser.getEngine().load(url));
     }

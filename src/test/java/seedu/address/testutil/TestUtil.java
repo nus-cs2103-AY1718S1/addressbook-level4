@@ -17,6 +17,7 @@ public class TestUtil {
      * Folder used for temp files created during testing. Ignored by Git.
      */
     private static final String SANDBOX_FOLDER = FileUtil.getPath("./src/test/data/sandbox/");
+    private static final String TEST_IMAGE = "./src/test/data/ImageFileStorageTest/testImage.png";
 
     /**
      * Appends {@code fileName} to the sandbox folder path and returns the resulting string.
@@ -29,6 +30,10 @@ public class TestUtil {
             throw new RuntimeException(e);
         }
         return SANDBOX_FOLDER + fileName;
+    }
+
+    public static String getTestImgPath() {
+        return FileUtil.getPath(TEST_IMAGE);
     }
 
     /**

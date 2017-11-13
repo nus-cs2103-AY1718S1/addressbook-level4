@@ -32,6 +32,10 @@ public class EditPersonDescriptorBuilder {
         descriptor.setPhone(person.getPhone());
         descriptor.setEmail(person.getEmail());
         descriptor.setAddress(person.getAddress());
+        descriptor.setBirthday(person.getBirthday());
+        descriptor.setTwitterName(person.getTwitterName());
+        descriptor.setInstagramName(person.getInstagramName());
+        descriptor.setDisplayPic(person.getDisplayPic());
         descriptor.setTags(person.getTags());
     }
 
@@ -82,6 +86,31 @@ public class EditPersonDescriptorBuilder {
         }
         return this;
     }
+
+    /**
+     * Sets the {@code Birthday} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withBirthday(String birthday) {
+        try {
+            ParserUtil.parseBirthday(Optional.of(birthday)).ifPresent(descriptor::setBirthday);
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("birthday is expected to be unique.");
+        }
+        return this;
+    }
+    //@@author JunQuann
+    /**
+     * Sets the {@code DisplayPic} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withDisplayPic(String displayPic) {
+        try {
+            ParserUtil.parseDisplayPic(Optional.of(displayPic)).ifPresent(descriptor::setDisplayPic);
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("address is expected to be unique.");
+        }
+        return this;
+    }
+    //@@author
 
     /**
      * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code EditPersonDescriptor}

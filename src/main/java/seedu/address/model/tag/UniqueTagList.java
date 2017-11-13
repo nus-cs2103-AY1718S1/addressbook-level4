@@ -68,7 +68,16 @@ public class UniqueTagList implements Iterable<Tag> {
 
         assert CollectionUtil.elementsAreUnique(internalList);
     }
-
+    //@@author conantteo
+    /**
+     * Deletes the Tags in this list with those in the argument tag list.
+     */
+    public void deleteFrom(UniqueTagList from) {
+        from.internalList.stream()
+                .forEach(internalList::remove);
+        assert CollectionUtil.elementsAreUnique(internalList);
+    }
+    //@@author
     /**
      * Returns true if the list contains an equivalent Tag as the given argument.
      */

@@ -1,39 +1,53 @@
-= Address Book (Level 4)
+= HitMeUp
 ifdef::env-github,env-browser[:relfileprefix: docs/]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
-https://travis-ci.org/se-edu/addressbook-level4[image:https://travis-ci.org/se-edu/addressbook-level4.svg?branch=master[Build Status]]
-https://ci.appveyor.com/project/damithc/addressbook-level4[image:https://ci.appveyor.com/api/projects/status/3boko2x2vr5cc3w2?svg=true[Build status]]
-https://coveralls.io/github/se-edu/addressbook-level4?branch=master[image:https://coveralls.io/repos/github/se-edu/addressbook-level4/badge.svg?branch=master[Coverage Status]]
-https://www.codacy.com/app/damith/addressbook-level4?utm_source=github.com&utm_medium=referral&utm_content=se-edu/addressbook-level4&utm_campaign=Badge_Grade[image:https://api.codacy.com/project/badge/Grade/fc0b7775cf7f4fdeaf08776f3d8e364a[Codacy Badge]]
+https://travis-ci.org/CS2103AUG2017-W14-B3/main[image:https://travis-ci.org/CS2103AUG2017-W14-B3/main.svg?branch=master[Build Status]]
+https://ci.appveyor.com/project/danielbrzn/main[image:https://ci.appveyor.com/api/projects/status/5dietu4dyky37v1w?svg=true[Build status]]
+https://coveralls.io/github/CS2103AUG2017-W14-B3/main?branch=master[image:https://coveralls.io/repos/github/CS2103AUG2017-W14-B3/main/badge.svg?branch=master[Coverage Status]]
 
 ifdef::env-github[]
-image::docs/images/Ui.png[width="600"]
 endif::[]
 
-ifndef::env-github[]
-image::images/Ui.png[width="600"]
-endif::[]
+image::docs/images/Ui.png[width="800"]
 
-* This is a desktop Address Book application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
-* It is a Java sample application intended for students learning Software Engineering while using Java as the main programming language.
-* It is *written in OOP fashion*. It provides a *reasonably well-written* code example that is *significantly bigger* (around 6 KLoC)than what students usually write in beginner-level SE modules.
-* What's different from https://github.com/se-edu/addressbook-level3[level 3]:
-** A more sophisticated GUI that includes a list  panel and an in-built Browser.
-** More test cases, including automated GUI testing.
-** Support for _Build Automation_ using Gradle and for _Continuous Integration_ using Travis CI.
+// tag::introduction[]
+* HitMeUp is an address book application designed with the sociable user in mind.
+* It aims to be a one-stop center for managing and interacting with contacts.
+* A Command Line Interface (CLI) is primarily used for input
+* This project has been forked from the https://github.com/nus-cs2103-AY1718S1/addressbook-level4[AddressBook-Level4] repository
+// end::introduction[]
+
+// tag::features[]
+== Features
+====
+
+* Add a contact using only their name and number, or with any of the following supported fields:
+Email, Address, Birthday, Twitter, Instagram, Display Picture, Tag
+* Import your existing contacts from Google Contacts
+* Export individual contacts to easily share with others
+* Search by a contact's name, starting alphabet, birthday month or groups
+* Email contacts quickly without having to copy their email addresses
+* View your groups at a glance with the groups tab
+* Keep up with your contacts through the social command
+* View your contacts' addresses quickly in Google Maps
+====
+// end::features[]
 
 == Site Map
 
 * <<UserGuide#, User Guide>>
 * <<DeveloperGuide#, Developer Guide>>
-* <<LearningOutcomes#, Learning Outcomes>>
 * <<AboutUs#, About Us>>
 * <<ContactUs#, Contact Us>>
 
 == Acknowledgements
 
-* Some parts of this sample application were inspired by the excellent http://code.makery.ch/library/javafx-8-tutorial/[Java FX tutorial] by
+* http://code.makery.ch/library/javafx-8-tutorial/[Java FX tutorial] by
 _Marco Jakob_.
+
+* https://developers.google.com/people/[Google People API]
+
+* http://www.jfoenix.com/index.html#start[JFoenix JavaFX Material Design Library]
 
 == Licence : link:LICENSE[MIT]

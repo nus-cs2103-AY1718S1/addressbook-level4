@@ -3,23 +3,33 @@ package seedu.address.logic.parser;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AliasCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.EmailCommand;
 import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.ExportCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
+import seedu.address.logic.commands.ImportCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.LocationCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.SocialCommand;
+import seedu.address.logic.commands.TagDeleteCommand;
+import seedu.address.logic.commands.TagEditCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.UserPrefs;
 
 /**
  * Parses user input.
@@ -31,6 +41,12 @@ public class AddressBookParser {
      */
     private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
 
+    private final UserPrefs userPrefs;
+
+    public AddressBookParser(UserPrefs userPrefs) {
+        this.userPrefs = userPrefs;
+    }
+
     /**
      * Parses user input into command for execution.
      *
@@ -39,6 +55,7 @@ public class AddressBookParser {
      * @throws ParseException if the user input does not conform the expected format
      */
     public Command parseCommand(String userInput) throws ParseException {
+        HashMap<String, String> aliasMap = userPrefs.getAliasMap();
         final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
         if (!matcher.matches()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
@@ -46,7 +63,14 @@ public class AddressBookParser {
 
         final String commandWord = matcher.group("commandWord");
         final String arguments = matcher.group("arguments");
-        switch (commandWord) {
+
+        String actualCommand = commandWord;
+
+        if (aliasMap.get(actualCommand) != null) {
+            actualCommand = aliasMap.get(commandWord);
+        }
+
+        switch (actualCommand) {
 
         case AddCommand.COMMAND_WORD:
             return new AddCommandParser().parse(arguments);
@@ -84,8 +108,67 @@ public class AddressBookParser {
         case RedoCommand.COMMAND_WORD:
             return new RedoCommand();
 
+        case AliasCommand.COMMAND_WORD:
+            return new AliasCommandParser().parse(arguments);
+
+        case TagDeleteCommand.COMMAND_WORD:
+            return new TagDeleteCommandParser().parse(arguments);
+
+        case TagEditCommand.COMMAND_WORD:
+            return new TagEditCommandParser().parse(arguments);
+
+        case EmailCommand.COMMAND_WORD:
+            return new EmailCommandParser().parse(arguments);
+
+        case ImportCommand.COMMAND_WORD:
+            return new ImportCommandParser().parse(arguments);
+
+        case ExportCommand.COMMAND_WORD:
+            return new ExportCommandParser().parse(arguments);
+
+        case SocialCommand.COMMAND_WORD:
+            return new SocialCommandParser().parse(arguments);
+
+        case LocationCommand.COMMAND_WORD:
+            return new LocationCommandParser().parse(arguments);
+
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+        }
+    }
+
+    //@@author danielbrzn
+    /**
+     * Checks if the input command is valid.
+     *
+     * @param command command part of user input
+     * @return boolean determining if command entered is valid
+     */
+    public static boolean checkValidCommand(String command) {
+        switch (command) {
+        case AddCommand.COMMAND_WORD:
+        case EditCommand.COMMAND_WORD:
+        case SelectCommand.COMMAND_WORD:
+        case DeleteCommand.COMMAND_WORD:
+        case ClearCommand.COMMAND_WORD:
+        case FindCommand.COMMAND_WORD:
+        case ListCommand.COMMAND_WORD:
+        case HistoryCommand.COMMAND_WORD:
+        case ExitCommand.COMMAND_WORD:
+        case HelpCommand.COMMAND_WORD:
+        case UndoCommand.COMMAND_WORD:
+        case RedoCommand.COMMAND_WORD:
+        case AliasCommand.COMMAND_WORD:
+        case TagDeleteCommand.COMMAND_WORD:
+        case TagEditCommand.COMMAND_WORD:
+        case EmailCommand.COMMAND_WORD:
+        case ImportCommand.COMMAND_WORD:
+        case ExportCommand.COMMAND_WORD:
+        case SocialCommand.COMMAND_WORD:
+        case LocationCommand.COMMAND_WORD:
+            return true;
+        default:
+            return false;
         }
     }
 

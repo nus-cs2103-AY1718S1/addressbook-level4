@@ -1,5 +1,7 @@
 package seedu.address.model.util;
 
+import static seedu.address.ui.MainWindow.DEFAULT_DP;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -7,10 +9,13 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Birthday;
+import seedu.address.model.person.DisplayPic;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.UserName;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.tag.Tag;
 
@@ -21,24 +26,30 @@ public class SampleDataUtil {
     public static Person[] getSamplePersons() {
         try {
             return new Person[] {
-                new Person(new Name("Alex Yeoh"), new Phone("87438807"), new Email("alexyeoh@example.com"),
-                    new Address("Blk 30 Geylang Street 29, #06-40"),
-                    getTagSet("friends")),
-                new Person(new Name("Bernice Yu"), new Phone("99272758"), new Email("berniceyu@example.com"),
-                    new Address("Blk 30 Lorong 3 Serangoon Gardens, #07-18"),
-                    getTagSet("colleagues", "friends")),
-                new Person(new Name("Charlotte Oliveiro"), new Phone("93210283"), new Email("charlotte@example.com"),
-                    new Address("Blk 11 Ang Mo Kio Street 74, #11-04"),
-                    getTagSet("neighbours")),
-                new Person(new Name("David Li"), new Phone("91031282"), new Email("lidavid@example.com"),
-                    new Address("Blk 436 Serangoon Gardens Street 26, #16-43"),
-                    getTagSet("family")),
-                new Person(new Name("Irfan Ibrahim"), new Phone("92492021"), new Email("irfan@example.com"),
-                    new Address("Blk 47 Tampines Street 20, #17-35"),
-                    getTagSet("classmates")),
-                new Person(new Name("Roy Balakrishnan"), new Phone("92624417"), new Email("royb@example.com"),
-                    new Address("Blk 45 Aljunied Street 85, #11-31"),
-                    getTagSet("colleagues"))
+                new Person(new Name("Donald Trump"), new Phone("12345678"), new Email("dtrump@example.com"),
+                    new Address("1600 Pennsylvania Ave NW"), new Birthday("14/06/1946"),
+                    new UserName("realDonaldTrump"), new UserName("realDonaldTrump"),
+                    new DisplayPic(DEFAULT_DP), getTagSet("republican")),
+                new Person(new Name("Ed Sheeran"), new Phone("12345678"), new Email("ed@edsheeran.com"),
+                    new Address("Halifax, United Kingdom"), new Birthday("17/02/1991"),
+                    new UserName("edsheeran"), new UserName("teddysphotos"),
+                    new DisplayPic(DEFAULT_DP), getTagSet("singer")),
+                new Person(new Name("Kendrick Lamar"), new Phone("12345678"), new Email("kdot@topdawgent.com"),
+                    new Address("Compton, California, United States"), new Birthday("17/06/1987"),
+                        new UserName("kendricklamar"), new UserName("kendricklamar"),
+                    new DisplayPic(DEFAULT_DP), getTagSet("california", "hiphop")),
+                new Person(new Name("Kim Kardashian"), new Phone("12345678"), new Email("kim@kimk.com"),
+                        new Address("Los Angeles, California, United States"), new Birthday("21/10/1980"),
+                        new UserName("kimkardashian"), new UserName("kimkardashian"),
+                        new DisplayPic(DEFAULT_DP), getTagSet("california", "fashion")),
+                new Person(new Name("Sandara Park"), new Phone("12345678"), new Email("dara@ygent.com"),
+                        new Address("Busan, South Korea"), new Birthday("12/11/1984"),
+                        new UserName("krungy21"), new UserName("daraxxi"),
+                        new DisplayPic(DEFAULT_DP), getTagSet("kpop")),
+                new Person(new Name("Snoop Dogg"), new Phone("12345678"), new Email("snoop@snoop.com"),
+                    new Address("Long Beach, California"), new Birthday("20/10/1971"),
+                        new UserName("snoopdogg"), new UserName("snoopdogg"),
+                    new DisplayPic(DEFAULT_DP), getTagSet("hiphop", "california"))
             };
         } catch (IllegalValueException e) {
             throw new AssertionError("sample data cannot be invalid", e);

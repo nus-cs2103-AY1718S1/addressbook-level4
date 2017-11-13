@@ -78,6 +78,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     /**
      * Adds a person to the address book.
+     * Subsequently sorts the list by name.
      * Also checks the new person's tags and updates {@link #tags} with any new tags found,
      * and updates the Tag objects in the person to point to those in {@link #tags}.
      *
@@ -85,15 +86,14 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void addPerson(ReadOnlyPerson p) throws DuplicatePersonException {
         Person newPerson = new Person(p);
-        syncMasterTagListWith(newPerson);
-        // TODO: the tags master list will be updated even though the below line fails.
-        // This can cause the tags master list to have additional tags that are not tagged to any person
-        // in the person list.
         persons.add(newPerson);
+        persons.sortByName();
+        syncMasterTagListWith(persons);
     }
 
     /**
      * Replaces the given person {@code target} in the list with {@code editedReadOnlyPerson}.
+     * Subsequently sorts the list by name.
      * {@code AddressBook}'s tag list will be updated with the tags of {@code editedReadOnlyPerson}.
      *
      * @throws DuplicatePersonException if updating the person's details causes the person to be equivalent to
@@ -107,11 +107,11 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(editedReadOnlyPerson);
 
         Person editedPerson = new Person(editedReadOnlyPerson);
-        syncMasterTagListWith(editedPerson);
-        // TODO: the tags master list will be updated even though the below line fails.
-        // This can cause the tags master list to have additional tags that are not tagged to any person
-        // in the person list.
+        Person targetPerson = new Person(target);
         persons.setPerson(target, editedPerson);
+        persons.sortByName();
+        deleteMasterTagListWith(targetPerson);
+        syncMasterTagListWith(persons);
     }
 
     /**
@@ -143,13 +143,23 @@ public class AddressBook implements ReadOnlyAddressBook {
     private void syncMasterTagListWith(UniquePersonList persons) {
         persons.forEach(this::syncMasterTagListWith);
     }
-
+    //@@author conantteo
+    /**
+     * Ensures that all tags of a {@code person} is deleted away from the master tag list.
+     */
+    private void deleteMasterTagListWith(Person person) {
+        final UniqueTagList personTags = new UniqueTagList(person.getTags());
+        tags.deleteFrom(personTags);
+    }
+    //@@author
     /**
      * Removes {@code key} from this {@code AddressBook}.
      * @throws PersonNotFoundException if the {@code key} is not in this {@code AddressBook}.
      */
     public boolean removePerson(ReadOnlyPerson key) throws PersonNotFoundException {
         if (persons.remove(key)) {
+            deleteMasterTagListWith((Person) key);
+            syncMasterTagListWith(persons);
             return true;
         } else {
             throw new PersonNotFoundException();

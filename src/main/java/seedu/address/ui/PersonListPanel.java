@@ -67,6 +67,7 @@ public class PersonListPanel extends UiPart<Region> {
         scrollTo(event.targetIndex);
     }
 
+    //@@author danielbrzn
     /**
      * Custom {@code ListCell} that displays the graphics of a {@code PersonCard}.
      */
@@ -76,13 +77,16 @@ public class PersonListPanel extends UiPart<Region> {
         protected void updateItem(PersonCard person, boolean empty) {
             super.updateItem(person, empty);
 
-            if (empty || person == null) {
-                setGraphic(null);
-                setText(null);
-            } else {
-                setGraphic(person.getRoot());
-            }
+            Platform.runLater(() -> {
+                if (empty || person == null) {
+                    setGraphic(null);
+                    setText(null);
+                } else {
+                    setGraphic(person.getRoot());
+                }
+
+            });
+
         }
     }
-
 }

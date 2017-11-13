@@ -84,9 +84,14 @@ public class XmlAddressBookStorageTest {
         xmlAddressBookStorage.saveAddressBook(original); //file path not specified
         readBack = xmlAddressBookStorage.readAddressBook().get(); //file path not specified
         assertEquals(original, new AddressBook(readBack));
+        //@@author conantteo
+        //Save in a backup file and read back
+        xmlAddressBookStorage.backupAddressBook(original);
+        readBack = xmlAddressBookStorage.readAddressBook(filePath + "-backup.xml").get();
+        assertEquals(original, new AddressBook(readBack));
 
     }
-
+    //@@author
     @Test
     public void saveAddressBook_nullAddressBook_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);

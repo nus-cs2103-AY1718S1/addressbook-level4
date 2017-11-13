@@ -3,8 +3,14 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
+
+import com.google.common.eventbus.Subscribe;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,9 +18,14 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.SearchTagEvent;
+import seedu.address.commons.events.model.UserPrefsChangedEvent;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.PersonContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -22,9 +33,9 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
  */
 public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
-
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
+    private final UserPrefs userPrefs;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -36,6 +47,7 @@ public class ModelManager extends ComponentManager implements Model {
         logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
 
         this.addressBook = new AddressBook(addressBook);
+        this.userPrefs = userPrefs;
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
     }
 
@@ -49,11 +61,26 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author danielbrzn
+    @Override
+    public void resetAlias(HashMap<String, String> prevAliasMap) {
+        userPrefs.resetAlias(prevAliasMap);
+        indicateUserPrefsChanged();
+    }
+    //@@author
+
     @Override
     public ReadOnlyAddressBook getAddressBook() {
         return addressBook;
     }
 
+    //@@author danielbrzn
+    @Override
+    public UserPrefs getUserPrefs() {
+        return userPrefs;
+    }
+
+    //@@author
     /** Raises an event to indicate the model has changed */
     private void indicateAddressBookChanged() {
         raise(new AddressBookChangedEvent(addressBook));
@@ -72,6 +99,25 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author danielbrzn
+    @Override
+    public void addAlias(String alias, String command) {
+        userPrefs.addAlias(alias, command);
+        indicateUserPrefsChanged();
+    }
+
+    @Override
+    public String getAlias(String alias) {
+        return userPrefs.getAlias(alias);
+    }
+
+
+    /** Raises an event to indicate the model has changed */
+    private void indicateUserPrefsChanged() {
+        raise(new UserPrefsChangedEvent(userPrefs));
+    }
+
+    //@@author
     @Override
     public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException {
@@ -81,6 +127,45 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author tbhbhbh
+    @Override
+    public void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException {
+        for (int i = 0; i < addressBook.getPersonList().size(); i++) {
+            ReadOnlyPerson oldPerson = addressBook.getPersonList().get(i);
+
+            Person newPerson = new Person(oldPerson);
+            Set<Tag> newTags = new HashSet<>(newPerson.getTags());
+            newTags.remove(tag);
+            newPerson.setTags(newTags);
+
+            addressBook.updatePerson(oldPerson, newPerson);
+        }
+    }
+
+    @Override
+    public void editTag(Tag oldTag, Tag newTag) throws PersonNotFoundException, DuplicatePersonException {
+        for (int i = 0; i < addressBook.getPersonList().size(); i++) {
+            ReadOnlyPerson oldPerson = addressBook.getPersonList().get(i);
+            if (oldPerson.getTags().contains(oldTag)) {
+                Person newPerson = new Person(oldPerson);
+                Set<Tag> newTags = new HashSet<>(newPerson.getTags());
+                newTags.remove(oldTag);
+                newTags.add(newTag);
+                newPerson.setTags(newTags);
+
+                addressBook.updatePerson(oldPerson, newPerson);
+            }
+        }
+    }
+    //@@author conantteo
+    @Subscribe
+    private void handleSearchTagEvent(SearchTagEvent event)  {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        String[] tagNameArr = {event.tag.tagName};
+        Predicate<ReadOnlyPerson> predicate = new PersonContainsKeywordsPredicate(Arrays.asList(tagNameArr));
+        updateFilteredPersonList(predicate);
+    }
+    //@@author
     //=========== Filtered Person List Accessors =============================================================
 
     /**
@@ -113,7 +198,8 @@ public class ModelManager extends ComponentManager implements Model {
         // state check
         ModelManager other = (ModelManager) obj;
         return addressBook.equals(other.addressBook)
-                && filteredPersons.equals(other.filteredPersons);
+                && filteredPersons.equals(other.filteredPersons)
+                && userPrefs.equals(other.userPrefs);
     }
 
 }

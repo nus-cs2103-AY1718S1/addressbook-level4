@@ -1,0 +1,116 @@
+= Conant Teo Jia Yu - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+:repoURL: https://github.com/CS2103AUG2017-W14-B3/main
+
+== Project: HitMeUp
+image::../images/Ui.png[width="800"]
+
+include::../../README.adoc[tag=introduction]
+
+include::../../README.adoc[tag=features]
+
+*Code contributed*: [{repoURL}/tree/master/collated/main/conantteo.md[Functional code]] [{repoURL}/tree/master/collated/test/conantteo.md[Test code]]
+
+=== Enhancement Added: vCard Export
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=export]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+This feature is implemented to allow users to export their contacts information into a commonly used contacts file,
+vCard file. vCard file is also widely used in many platforms where people can share contacts information. Users can also
+decide if they want to export all contacts or only selected contacts depending on their needs. Therefore, this feature
+aims to provide the convenience for users who wish to easily export their contacts from HitMeUp to another platform.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=export]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Email
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=email]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+This feature is implemented to allow users to send an email to one or more persons in their list of contacts.
+It allows users to customize their own message with editing tools using their own mail application. In addition, this
+feature also allows user to easily attach documents to send to their contacts or save their message as a draft in their
+email. Hence, this feature helps to create a channel for communication between the users and people in their list of
+contacts.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=email]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Auto-completion
+
+==== External behavior
+
+---
+
+As user enters their command by pressing in partial words, they can view a list of suggestions in a drop down menu.
+Using the up/down arrow keys to select the desired suggestion and press enter will complete the command for them.
+
+---
+
+==== Justification
+
+For commands that are frequently used, an auto-completion will help users to save time and effort in typing the entire
+command. Auto-completion will filter a list of commonly used commands so that users do not have to repeatedly type the
+same command. Hence, this feature will help to make HitMeUp for user-friendly.
+
+==== Implementation
+
+---
+
+Firstly, there will be auto-complete text field that extends from the command box. There will be a maximum of 8
+auto-complete suggestions that are stored. Each time a user enters a command, there will be a count to suggest how often
+the command has been used.
+
+Next, as user enters a few letters into the command box, the drop down menu will match the string with an existing
+sorted set of frequently used commands. Once matched, the drop down menu will show these suggestions to the user. If the
+user wish to use the suggestion, he/she can simply hit enter so that the command box text property will be filled with
+the suggestion command.
+
+---
+
+=== Other contributions
+* Added Birthday field for a person (Pull request https://github.com/CS2103AUG2017-W14-B3/main/pull/18[#18])
+* Created the GroupLabel and GroupListPanel components of the UI (Pull requests https://github.com/CS2103AUG2017-W14-B3/main/pull/87[#87])
+* Modified find command to allow users to find people with the same birthday month (Pull requests https://github.com/CS2103AUG2017-W14-B3/main/pull/120[#120])
+* Resolved issues when HelpWindow is opened but other actions are not working (Pull requests https://github.com/CS2103AUG2017-W14-B3/main/pull/132[#132])
+* Created TestScript.adoc for HitMeUp user testing in practical exam (Issue: https://github.com/CS2103AUG2017-W14-B3/main/issues/138[#138])

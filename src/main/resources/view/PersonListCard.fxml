@@ -2,35 +2,68 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.FlowPane?>
-<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
 
-<HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-  <GridPane HBox.hgrow="ALWAYS">
-    <columnConstraints>
-      <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
-    </columnConstraints>
-    <VBox alignment="CENTER_LEFT" minHeight="105" GridPane.columnIndex="0">
-      <padding>
-        <Insets top="5" right="5" bottom="5" left="15" />
-      </padding>
-      <HBox spacing="5" alignment="CENTER_LEFT">
-        <Label fx:id="id" styleClass="cell_big_label">
-          <minWidth>
-            <!-- Ensures that the label text is never truncated -->
-            <Region fx:constant="USE_PREF_SIZE" />
-          </minWidth>
-        </Label>
-        <Label fx:id="name" text="\$first" styleClass="cell_big_label" />
+<!--@@author JunQuann-->
+
+<VBox xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <HBox id="cardPane" fx:id="cardPane" prefHeight="90.0" prefWidth="230.0" style="-fx-background-color: transparent;" VBox.vgrow="ALWAYS">
+         <children>
+            <Pane minHeight="25.0" minWidth="70.0" prefHeight="25.0" prefWidth="30.0" HBox.hgrow="NEVER">
+               <children>
+                  <Circle fx:id="displayPic" fill="WHITE" layoutX="35.0" layoutY="45.0" radius="25.0" stroke="WHITE" strokeType="INSIDE" />
+               </children>
+            </Pane>
+            <VBox alignment="CENTER_LEFT" minHeight="90.0" prefHeight="90.0" prefWidth="166.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <HBox alignment="CENTER_LEFT" spacing="5">
+                     <children>
+                        <Label fx:id="id" styleClass="cell_big_label">
+                           <minWidth>
+                              <Region fx:constant="USE_PREF_SIZE" />
+                           </minWidth>
+                        </Label>
+                        <Label fx:id="name" styleClass="cell_big_label" text="\$first">
+                           <font>
+                              <Font name="NanumGothic ExtraBold" size="15.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <FlowPane fx:id="tags" maxHeight="50.0" prefWrapLength="600.0" />
+                  <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" textFill="#797777">
+                     <font>
+                        <Font name="Material Design Icons" size="13.0" />
+                     </font>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+            </VBox>
+            <Pane minHeight="25.0" minWidth="70.0" prefHeight="25.0" prefWidth="30.0">
+               <children>
+                  <Circle fx:id="instaIcon" fill="#f5f9fa" layoutX="15.0" layoutY="45.0" radius="12.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+                  <Circle fx:id="twitterIcon" fill="#f5f9fa" layoutX="51.0" layoutY="45.0" radius="12.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" />
+               </children>
+            </Pane>
+         </children>
       </HBox>
-      <FlowPane fx:id="tags" />
-      <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" />
-      <Label fx:id="address" styleClass="cell_small_label" text="\$address" />
-      <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
-    </VBox>
-  </GridPane>
-</HBox>
+      <Separator prefWidth="200.0">
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+         <padding>
+            <Insets left="50.0" />
+         </padding>
+      </Separator>
+   </children>
+</VBox>

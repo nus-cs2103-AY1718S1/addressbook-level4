@@ -9,6 +9,8 @@ import com.google.common.eventbus.Subscribe;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.NewImageEvent;
+import seedu.address.commons.events.model.UserPrefsChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.ReadOnlyAddressBook;
@@ -22,12 +24,15 @@ public class StorageManager extends ComponentManager implements Storage {
     private static final Logger logger = LogsCenter.getLogger(StorageManager.class);
     private AddressBookStorage addressBookStorage;
     private UserPrefsStorage userPrefsStorage;
+    private ImageFileStorage imageFileStorage;
 
 
-    public StorageManager(AddressBookStorage addressBookStorage, UserPrefsStorage userPrefsStorage) {
+    public StorageManager(AddressBookStorage addressBookStorage, UserPrefsStorage userPrefsStorage,
+                          ImageFileStorage imageFileStorage) {
         super();
         this.addressBookStorage = addressBookStorage;
         this.userPrefsStorage = userPrefsStorage;
+        this.imageFileStorage = imageFileStorage;
     }
 
     // ================ UserPrefs methods ==============================
@@ -77,6 +82,21 @@ public class StorageManager extends ComponentManager implements Storage {
         addressBookStorage.saveAddressBook(addressBook, filePath);
     }
 
+    //@@author JunQuann
+    public void copyImageFile(String currentImageFile, String imageName) throws IOException {
+        imageFileStorage.copyImage(currentImageFile, imageName);
+    }
+
+    public String getImageFilePath(String imageName) {
+        return imageFileStorage.getImageFilePath(imageName);
+    }
+
+    //@@author conantteo
+    @Override
+    public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
+        saveAddressBook(addressBook, addressBookStorage.getAddressBookFilePath() + "-backup.xml");
+    }
+    //@@author
 
     @Override
     @Subscribe
@@ -88,5 +108,31 @@ public class StorageManager extends ComponentManager implements Storage {
             raise(new DataSavingExceptionEvent(e));
         }
     }
+
+    //@@author danielbrzn
+    @Override
+    @Subscribe
+    public void handleUserPrefsChangedEvent(UserPrefsChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local data changed, saving to file"));
+        try {
+            saveUserPrefs(event.data);
+        } catch (IOException e) {
+            raise(new DataSavingExceptionEvent(e));
+        }
+    }
+
+    //@@author JunQuann
+    @Override
+    @Subscribe
+    public void handleNewImageEvent(NewImageEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event, "Copying display picture to the designated folder"));
+        event.setImagePath(getImageFilePath(event.imageName));
+        try {
+            copyImageFile(event.currentImagePath, event.imageName);
+        } catch (IOException e) {
+            raise(new DataSavingExceptionEvent(e));
+        }
+    }
+    //@@author
 
 }

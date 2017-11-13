@@ -10,8 +10,10 @@ import seedu.address.commons.exceptions.IllegalValueException;
  */
 public class Tag {
 
-    public static final String MESSAGE_TAG_CONSTRAINTS = "Tags names should be alphanumeric";
-    public static final String TAG_VALIDATION_REGEX = "\\p{Alnum}+";
+    public static final String MESSAGE_TAG_CONSTRAINTS = "Tags names should be alphanumeric "
+            + "but should not be an integer\n"
+            + "Example: t/a01 is allowed but t/01 is not allowed";
+    public static final String TAG_VALIDATION_REGEX = "^[a-zA-Z0-9]*[a-zA-Z][a-zA-Z0-9]*";
 
     public final String tagName;
 
@@ -53,6 +55,10 @@ public class Tag {
      */
     public String toString() {
         return '[' + tagName + ']';
+    }
+
+    public String getTagName() {
+        return tagName;
     }
 
 }

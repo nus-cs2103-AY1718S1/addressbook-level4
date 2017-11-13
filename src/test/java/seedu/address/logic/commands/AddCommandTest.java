@@ -7,6 +7,7 @@ import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.function.Predicate;
 
 import org.junit.Rule;
@@ -20,10 +21,12 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandTest {
@@ -101,21 +104,61 @@ public class AddCommandTest {
             fail("This method should not be called.");
         }
 
+        //@@author danielbrzn
+        @Override
+        public void addAlias(String alias, String command) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public String getAlias(String alias) {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        //@@author
         @Override
         public void resetData(ReadOnlyAddressBook newData) {
             fail("This method should not be called.");
         }
 
+        //@@author danielbrzn
+        @Override
+        public void resetAlias(HashMap<String, String> prevAliasMap) {
+            fail("This method should not be called.");
+        }
+
+        //@@author
         @Override
         public ReadOnlyAddressBook getAddressBook() {
             fail("This method should not be called.");
             return null;
         }
 
+        //@@author danielbrzn
+        @Override
+        public UserPrefs getUserPrefs() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        //@@author
         @Override
         public void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
             fail("This method should not be called.");
         }
+
+        //@@author tbhbhbh
+        @Override
+        public void deleteTag(Tag tag) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void editTag(Tag oldTag, Tag newTag) {
+            fail("This method should not be called.");
+        }
+        //@@author
 
         @Override
         public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
@@ -148,6 +191,12 @@ public class AddCommandTest {
         public ReadOnlyAddressBook getAddressBook() {
             return new AddressBook();
         }
+
+        @Override
+        public UserPrefs getUserPrefs() {
+            return new UserPrefs();
+        }
+
     }
 
     /**
@@ -164,6 +213,11 @@ public class AddCommandTest {
         @Override
         public ReadOnlyAddressBook getAddressBook() {
             return new AddressBook();
+        }
+
+        @Override
+        public UserPrefs getUserPrefs() {
+            return new UserPrefs();
         }
     }
 

@@ -1,6 +1,5 @@
-= AddressBook Level 4 - User Guide
+= HitMeUp - User Guide
 :toc:
-:toc-title:
 :toc-placement: preamble
 :sectnums:
 :imagesDir: images
@@ -10,11 +9,29 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-W14-B3/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Daniel, Jun Quan, Conant, Bing Hwang`      Since: `Jun 2016`      Licence: `MIT`
+
+== Introduction
+
+HitMeUp is an address book application designed with the sociable user in mind. It aims to provide a one stop solution for every need: To contact, keep up
+and organise.
+With the cloud import feature, a user would be able to get the application
+up and running a matter of minutes. Being able to group your contacts, and view each group at a glance affords
+convenience like never before. Social integration to Instagram and Twitter is baked in, allowing users to view profiles
+in the application itself without having to switch to a browser or check their phone.
+
+== About
+
+This User Guide provides detailed description of each feature that are available in HitMeUp.
+Each feature has its own examples so that you can easily follow through.
+As this is a Command Line Interface (CLI) application, being able to type should help you use HitMeUp without much difficulty.
+Lastly, there will be a command summary which will provide you a quick overview of how each feature can be used.
 
 == Quick Start
+
+The following instructions will help you get started with HitMeUp quickly:
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
 +
@@ -22,24 +39,45 @@ By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
+.  Download the latest `HitMeUp.jar` link:{repoURL}/releases[here].
+
+.  Copy the file to the folder you want to use as the home folder for HitMeUp.
+
+.  Double-click the file to start the app. The user interface shown below should appear in a few seconds.
 +
 image::Ui.png[width="790"]
-+
-.  Type the command in the command box and press kbd:[Enter] to execute it. +
-e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
-.  Some example commands you can try:
+_Figure 3. HitMeUp User Interface_
 
+.  Type a command (we recommend trying the `import` command first) into the command box and press kbd:[Enter] to execute it. +
+e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
+
+.  Try some of these example commands to get started:
 * *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
+* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/19/09/1999` : adds a contact named `John Doe` to the list of contacts
+* **`delete`**`3` : deletes the 3rd contact shown in the current list of contacts
 * *`exit`* : exits the app
 
-.  Refer to the link:#features[Features] section below for details of each command.
+== Enhancement
+
+This section shows features that have been implemented in HitMeUp so far.
+
+====
+* Add a contact using only their name and number, or with any of the following supported fields:
+Email, Address, Birthday, Twitter, Instagram, Display Picture, Tag
+* Import your existing contacts from Google Contacts
+* Export individual contacts to easily share with others
+* Search by a contact's name, starting alphabet, birthday month or groups
+* Email contacts quickly without having to copy their email addresses
+* View your groups at a glance with the groups tab
+* Keep up with your contacts through the social command
+* View your contacts' addresses quickly in Google Maps
+
+====
+
 
 == Features
+
+This section covers all the existing features that are implemented in HitMeUp. The command format is as follows:
 
 ====
 *Command Format*
@@ -48,37 +86,71 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+
 ====
 
 === Viewing help : `help`
 
+Opens up the User Guide. +
+
 Format: `help`
 
+// tag::displayPic[]
 === Adding a person: `add`
 
-Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Adds a person to the application. +
 
+Format: `add n/NAME p/PHONE_NUMBER [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [tw/TWITTER] [ig/INSTAGRAM] [dp/] [t/TAG]...`
+
+****
+* Only the name and phone number field must be provided.
+* Duplicated person, where all the fields excluding tag and display picture choice are exactly the same, cannot be added.
+****
+
+=======
 [TIP]
-A person can have any number of tags (including 0)
+A person can have any number of tags (including 0).
+=======
+=======
+[TIP]
+If you do not have a display picture to add, leave out the dp/ prefix.
+=======
 
-Examples:
+Example:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+=======
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/19/09/1999 tw/john_doe dp/` +
+1. Pops up the file chooser for user to choose the image they want to set as display picture.
++
+image::AddDP1.png[width"800]
+2. Adds a person called *John Doe* with a phone number of *98765432*, an email address of *johnd@example.com*, an address of *John street,
+block 123, #01-01* and a Twitter username of *john_doe*.
+John Doe is also added with the image chosen as his display picture.
++
+image::AddDP2.png[width"800]
+3. The image is copied into the designated display picture storage directory with a unique name.
++
+image::AddDP3.png[width"800]
+=======
+// end::displayPic[]
 
 === Listing all persons : `list`
 
-Shows a list of all persons in the address book. +
+Shows a list of all persons in the application. +
+
 Format: `list`
 
+// tag::displayPic[]
 === Editing a person : `edit`
 
-Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Edits an existing person in the application. +
+
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [tw/TWITTER]
+[ig/INSTAGRAM] [dp/] [t/TAG]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* If a change in person's name ends up affecting the alphabetical order, the list of contacts will be resorted.
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
@@ -91,30 +163,24 @@ Examples:
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
-
-=== Locating persons by name: `find`
-
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
-
-****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-****
-
-Examples:
-
-* `find John` +
-Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
+* `edit 3 dp/` +
+======
+1. Pops up the file chooser for user toc hoose the image they want to set as display picture. +
++
+image::EditDP1.png[width="800"]
+2. Display picture of the 3rd person is changed to the chosen image. +
++
+image::EditDP2.png[width="800"]
+3. The image is copied into the designated display picture storage directory with a unique name. +
++
+image::EditDP3.png[width="800"]
+======
+// end::displayPic[]
 
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
+
 Format: `delete INDEX`
 
 ****
@@ -127,7 +193,7 @@ Examples:
 
 * `list` +
 `delete 2` +
-Deletes the 2nd person in the address book.
+Deletes the 2nd person from the list of contacts listed.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
@@ -135,10 +201,12 @@ Deletes the 1st person in the results of the `find` command.
 === Selecting a person : `select`
 
 Selects the person identified by the index number used in the last person listing. +
+
 Format: `select INDEX`
 
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
+* Selects the person in the list and loads either the Instagram or Twitter (if available, and in that order) of the person at the specified `INDEX`.
+* If the person does not have any social fields, no page wil be loaded.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
@@ -147,7 +215,7 @@ Examples:
 
 * `list` +
 `select 2` +
-Selects the 2nd person in the address book.
+Selects the 2nd person from the list of contacts listed.
 * `find Betsy` +
 `select 1` +
 Selects the 1st person in the results of the `find` command.
@@ -155,22 +223,24 @@ Selects the 1st person in the results of the `find` command.
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
+
 Format: `history`
 
 [NOTE]
 ====
-Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
+Pressing the ↑ and  ↓ keys will display the previous and next input respectively in the command box.
 ====
 
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
 Restores the address book to the state before the previous _undoable_ command was executed. +
+
 Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: commands that modify the application's content (`add`, `delete`, `edit` and `clear`).
 ====
 
 Examples:
@@ -192,6 +262,7 @@ The `undo` command fails as there are no undoable commands executed previously.
 === Redoing the previously undone command : `redo`
 
 Reverses the most recent `undo` command. +
+
 Format: `redo`
 
 Examples:
@@ -212,19 +283,270 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
+// tag::alias[]
+=== Adding an alias for a command : `alias`
+
+Allows you to add an alias for any command used in the application.
+
+Format: `alias USER_ALIAS COMMAND`
+
+****
+* The `USER_ALIAS` must either be a single word or single character
+* The `USER_ALIAS` cannot be the name of any valid commands.
+* The `COMMAND` must be a valid command
+* If the `USER_ALIAS` is currently used for a command, assigning it to another command will overwrite the previous mapping.
+****
+
+Examples:
+
+* `alias add help` +
+This command fails as `add` is the name of a valid command.
+
+* `alias a add` +
+Assigns the alias 'a' to the add command. 'a' can now be used in place of add.
+* `alias d delete` +
+`alias d exit` +
+'d' can now be used in place of exit. Initially, alias 'd' was assigned to delete, but since the alias was subsequently assigned to exit,
+it is no longer assigned to delete.
+// end::alias[]
+
+// tag::import[]
+=== Importing contacts : `import`
+
+Allows you to import contacts from either Google Contacts.
+
+Format: `import SERVICE_NAME`
+
+****
+* The service name can only be "Google"
+* The service name is case-insensitive.
+****
+
+* `import google` +
+. Opens the Google authentication page (as shown below) in HitMeUp to grant the app access to your contacts.
++
+image::HitMeUpImportStep1.png[width="790"]
+_Figure 5.11a. Google Authentication Page_
++
+.  Once you have logged in with your credentials, the consent page below will be loaded:
++
+image::HitMeUpImportStep2.png[width="790"]
+_Figure 5.11b. Google Consent Page_
++
+.  After granting access, HitMeUp will display a progress bar (as shown below) to indicate the progress of import.
++
+image::HitMeUpImportStep3.png[width="790"]
+_Figure 5.11c. HitMeUp Import Progress_
++
+.  After import has completed, the application will show the number of contacts successfully imported and the names of contacts that were
+unable to be imported.
++
+image::HitMeUpImportStep4.png[width="790"]
+_Figure 5.11d. Import Result Display_
+//end::import[]
+
+// tag::export[]
+=== Exporting contacts : `export`
+
+Allows you to export contacts from HitMeUp into a vCard file.
+
+Format: `export all` or `export INDEX [INDEX]...`
+
+****
+* Exports information of all contacts or the contact at the specified `INDEX` into a vCard file.
+* The input `all` is case-sensitive.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+* The data folder directory where the vCard file ("contacts.vcf") is located will be displayed after a successful export as shown below.
+****
+
+image::ExportDirectory.png[width="790"]
+_Figure 5.12. Data folder directory containing vCard file_
+
+Examples:
+
+* `export all` +
+Exports all contacts into a vCard file.
+* `list` +
+`export 1 2` +
+Exports the 1st and 2nd persons from the list of contacts into a vCard file.
+// end::export[]
+
+// tag::email[]
+=== Email contacts: `email`
+
+Emails one or more persons identified by the index number used in the last person listing. +
+
+Format: `email INDEX [INDEX]...`
+
+****
+* The index refers to the index number shown in the most recent listing
+* The index *must be a positive integer* 1, 2, 3, ...
+* The person specified must have a valid email address.
+* Opens the default mail application in your desktop as shown below with the email addresses of the specified persons
+****
+
+image::EmailWindow.png[width="790"]
+_Figure 5.13. Default mail application in Windows 10_
+
+=======
+[TIP]
+You can set your own default mail application. Please refer to instructions in the link:#mailsettings[FAQ].
+=======
+
+Examples:
+
+=======
+* `list` +
+`email 2 3` +
+Opens the default mail application to send an email to the 2nd and 3rd persons from the list of contacts.
+* `find Betsy` +
+`email 1` +
+Opens the default mail application to send an email to the 1st person in the results of the `find` command.
+=======
+// end::email[]
+
+// tag::tagdelete[]
+=== Deleting a tag : `tagdelete`
+
+Allows you to delete a tag from all persons in the address book.
+
+Format: `tagdelete TAG_NAME`
+
+****
+* The tag must be a valid tag (eg. already existing)
+****
+
+Examples:
+
+* `tagdelete friends` +
+Deletes the tag 'friends' from all persons with the 'friends' tag in the address book.
+// end::tagdelete[]
+
+// tag::tagedit[]
+=== Editing a tag : `tagedit`
+
+Allows you to change the name of a tag belonging to all persons in the address book.
+
+Format: `tagedit OLD_TAG_NAME NEW_TAG_NAME`
+
+****
+* Old tag must be an existing, valid tag
+* New tag must be a valid tag (eg. alphanumerical only)
+****
+
+
+Examples:
+
+* `tagedit friends losers` +
+Changes the tag 'friends' into 'losers' for all persons with that tag.
+// end::tagedit[]
+
+// tag::find[]
+=== Find persons (improved) : `find`
+
+Searches for persons whose name, tags, birthday or initials contain any of the given keywords. +
+
+
+Format: `find KEYWORD [MORE_KEYWORDS]` +
+
+****
+* The search is case insensitive. e.g. `hans` will match `Hans` (example below)
+* The order of keywords does not matter. (example below)
+* For names, only full words will be matched. e.g. `Han` will not match `Hans`
+****
+
+=======
+Examples with explanation:
+
+* `find` only supports searching for 1 name. +
+e.g.:  `find Alex` +
+`find Alex` will successfully find any persons with the name `Alex`, but find `Alex Bob` will not find all persons
+with the name `Alex` and `Bob`. It would instead find persons with both `Alex` and `Bob` in their names. +
+
+* `find` supports searching for multiple tags. +
+e.g.:  `find colleagues friends` +
+`find colleagues` will successfully find any persons with the tag `colleagues` in their description. `find
+colleagues friends` will find any persons with BOTH the tags `colleagues` and `friends`. +
+
+* `find` also supports searching for a name with tags. +
+e.g.:  `find Alex colleagues`
+`find Alex colleagues` returns all persons with the word `Alex` in their names (either first name or last name) and
+are `colleagues`.
+
+* `find` supports searching for a birthday month. +
+e.g.: `find 12` +
+`find 12` will return all persons whose birthdays are in the month of December.
+
+* `find` supports searching for an initial. +
+e.g.:  `find a` +
+`find a` will return all persons whose last names or first names begin with the letter `a`.
+
+* The order of keywords does not matter. +
+e.g.: `find Alex colleagues` is the same as `find colleagues Alex`. +
+
+* `find` is case insensitive for all inputs. +
+e.g.: `find BeRnICe FrIEnDs` is the same as `find Bernice friends`. +
+=======
+// end::find[]
+
+
+// tag::social[]
+=== Viewing a contact's Twitter/Instagram profile : `social`
+
+Opens a person's Twitter or Instagram profile in the browser panel. +
+
+Format: `social INDEX SOCIAL_MEDIA` +
+
+****
+* Uses the built-in browser panel to open up the chosen `SOCIAL_MEDIA` profile of person at the specified `INDEX`.
+* The chosen `SOCIAL_MEDIA` must either be `ig` (Instagram) or `tw` (Twitter).
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `social 1 ig` +
+Opens up the Instagram profile of the person at index 1. +
+
+* `social 2 tw` +
+Opens up the Twitter profile of the person at index 2.
+// end::social[]
+
+// tag::location[]
+=== Viewing a contact's address : `location`
+
+View a person's address in the browser panel using Google Maps. +
+
+Format: `location INDEX`
+
+****
+* The index *must be a positive integer* 1, 2, 3, ...
+* The index refers to the index number shown in the most recent listing.
+* The person at the chosen index should have an address.
+****
+
+Examples: +
+
+* `location 1` +
+Opens up the Google Maps location of the person at index 1.
+// end::location[]
 === Clearing all entries : `clear`
 
 Clears all entries from the address book. +
+
 Format: `clear`
 
 === Exiting the program : `exit`
 
 Exits the program. +
+
 Format: `exit`
 
 === Saving the data
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
+Application data is automatically saved to the hard disk after any command that changes the data. +
 There is no need to save manually.
 
 == FAQ
@@ -232,21 +554,48 @@ There is no need to save manually.
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
 
+[[mailsettings]]
+*Q*: How do I set my default mail application to use the email feature? +
+*A*: For Windows users, go to Settings > Apps & features > Default apps. For MAC users, click https://www.imore.com/how-set-mac-app-default-when-opening-file[here] for instructions.
+For other OS users, please refer to the guides online on how to set your default mail application.
+
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *Add* `add n/NAME p/PHONE_NUMBER [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [tw/TWITTER] [ig/INSTAGRAM] [dp/DISPLAY_PIC_CHOICE] [t/TAG]...` +
+e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 b/03/04/1990 ig/jamesho t/friend t/colleague`
+* *Alias* : `alias ALIAS COMMAND` +
+e.g. `alias a add`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+* *Edit* : `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [tw/TWITTER]
+            [ig/INSTAGRAM] [dp/DISPLAY_PIC_CHOICE] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
+* *Email* : `email INDEX [INDEX]...` +
+e.g. `email 1 2`
+* *Export* : `export INDEX [INDEX]...` +
+e.g. `export 1 2`
+* *Exit* : `exit`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
-* *List* : `list`
 * *Help* : `help`
-* *Select* : `select INDEX` +
-e.g.`select 2`
 * *History* : `history`
-* *Undo* : `undo`
+* *Import* : `import` +
+e.g. `import Google`
+* *List* : `list`
+* *Location* : `location INDEX` +
+e.g. `location 1`
 * *Redo* : `redo`
+* *Select* : `select INDEX` +
+e.g. `select 2`
+* *Social* : `social INDEX SOCIAL_MEDIA` +
+e.g. `social 1 ig`
+* *Tag Delete*: `tagdelete TAG_NAME` +
+e.g. `tagdelete friends`
+* *Tag Edit*: `tagedit OLD_TAG_NAME NEW_TAG_NAME` +
+e.g. `tagedit friends losers`
+* *Undo* : `undo`
+
+
+
+

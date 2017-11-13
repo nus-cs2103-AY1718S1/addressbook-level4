@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXListView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<!--@@author JunQuann-->
+
+<VBox minWidth="180.0" prefHeight="445.0" prefWidth="180.0" style="-fx-background-radius: 10; -fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Pane minHeight="30.0" minWidth="170.0" VBox.vgrow="NEVER">
+         <children>
+            <Label alignment="CENTER" layoutX="43.0" layoutY="-3.0" prefHeight="30.0" prefWidth="87.0" text="Groups">
+               <font>
+                  <Font name="Apple Chancery" size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <JFXListView fx:id="groupListView" style="-fx-background-radius: 10; -fx-background-color: #F5F9FA;" VBox.vgrow="ALWAYS" />
+   </children>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+</VBox>

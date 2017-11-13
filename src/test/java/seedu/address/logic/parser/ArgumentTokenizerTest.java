@@ -5,14 +5,62 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.lang.reflect.Method;
+
+import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 
+import seedu.address.commons.events.model.FileChooserEvent;
+import seedu.address.commons.events.model.NewImageEvent;
+import seedu.address.testutil.TestUtil;
+import seedu.address.ui.testutil.EventsCollectorRule;
+
 public class ArgumentTokenizerTest {
+    //@@author JunQuann
+    private static String getFinalImgPathName = "getFinalImgPath";
+
+    @Rule
+    public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
 
     private final Prefix unknownPrefix = new Prefix("--u");
     private final Prefix pSlash = new Prefix("p/");
     private final Prefix dashT = new Prefix("-t");
     private final Prefix hatQ = new Prefix("^Q");
+
+    private final Prefix dpSlash = new Prefix("dp/");
+    private final String hashedDisplayPicName = "HashedName";
+    private final String testImgPath = TestUtil.getTestImgPath();
+
+
+    private ArgumentTokenizer argumentTokenizer;
+    private Method getFinalImgPath;
+    private Class[] parameterTypes;
+    private Object[] parameters;
+
+
+    @Before
+    public void setUp() throws Exception {
+        argumentTokenizer = new ArgumentTokenizer();
+        parameterTypes = new Class[2];
+        parameterTypes[0] = java.lang.String.class;
+        parameterTypes[1] = java.lang.String.class;
+        getFinalImgPath = argumentTokenizer.getClass().getDeclaredMethod(getFinalImgPathName, parameterTypes);
+        getFinalImgPath.setAccessible(true);
+        parameters = new Object[2];
+    }
+
+    /**
+     * Test that {@raise NewImageEvent} is successfully raised
+     */
+    @Test
+    public void testGetFinalImgPath() throws Exception {
+        parameters[0] = hashedDisplayPicName;
+        parameters[1] = testImgPath;
+        String actualResult = (String) getFinalImgPath.invoke(argumentTokenizer, parameters);
+        assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof NewImageEvent);
+    }
+    //@@author
 
     @Test
     public void tokenize_emptyArgsString_noValues() {
@@ -126,15 +174,27 @@ public class ArgumentTokenizerTest {
         assertArgumentPresent(argMultimap, hatQ, "", "");
     }
 
+    //@@author JunQuann
     @Test
     public void tokenize_multipleArgumentsJoined() {
-        String argsString = "SomePreambleStringp/ pSlash joined-tjoined -t not joined^Qjoined";
-        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(argsString, pSlash, dashT, hatQ);
+        String argsString = "SomePreambleStringp/ pSlash joined-tjoined -t not joined^Qjoined dp/";
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(argsString, pSlash, dashT, hatQ, dpSlash);
         assertPreamblePresent(argMultimap, "SomePreambleStringp/ pSlash joined-tjoined");
         assertArgumentAbsent(argMultimap, pSlash);
         assertArgumentPresent(argMultimap, dashT, "not joined^Qjoined");
         assertArgumentAbsent(argMultimap, hatQ);
+        assertArgumentPresent(argMultimap, dpSlash, "", "/images/defaultperson.png");
     }
+
+    @Test
+    public void handlePresentDisplayPicPrefix_eventRaised() {
+        EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
+        String argString = "SomePreambleString dp/";
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(argString, dpSlash);
+        assertArgumentPresent(argMultimap, dpSlash, "", "/images/defaultperson.png");
+        assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof FileChooserEvent);
+    }
+    //@@author
 
     @Test
     public void equalsMethod() {

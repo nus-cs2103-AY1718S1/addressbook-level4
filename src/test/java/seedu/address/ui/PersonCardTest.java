@@ -3,7 +3,7 @@ package seedu.address.ui;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.testutil.TypicalPersons.ZEPHYR;
 import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysPerson;
 
 import org.junit.Test;
@@ -29,15 +29,16 @@ public class PersonCardTest extends GuiUnitTest {
         uiPartRule.setUiPart(personCard);
         assertCardDisplay(personCard, personWithTags, 2);
 
+        //@@author JunQuann
         // changes made to Person reflects on card
         guiRobot.interact(() -> {
-            personWithTags.setName(ALICE.getName());
-            personWithTags.setAddress(ALICE.getAddress());
-            personWithTags.setEmail(ALICE.getEmail());
-            personWithTags.setPhone(ALICE.getPhone());
-            personWithTags.setTags(ALICE.getTags());
+            personWithTags.setName(ZEPHYR.getName());
+            personWithTags.setPhone(ZEPHYR.getPhone());
+            personWithTags.setTags(ZEPHYR.getTags());
+            personWithTags.setDisplayPic(ZEPHYR.getDisplayPic());
         });
         assertCardDisplay(personCard, personWithTags, 2);
+        //@@author
     }
 
     @Test
@@ -80,5 +81,6 @@ public class PersonCardTest extends GuiUnitTest {
 
         // verify person details are displayed correctly
         assertCardDisplaysPerson(expectedPerson, personCardHandle);
+
     }
 }
