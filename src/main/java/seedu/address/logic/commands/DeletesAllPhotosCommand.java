@@ -19,27 +19,36 @@ public class DeletesAllPhotosCommand extends Command {
             + ": Deletes all photos from all persons. "
             + "Example: " + COMMAND_WORD;
 
-    public static final String MESSAGE_DELETE_ALL_IMAGE_SUCCESS = "Deleted all photos";
+    public static final String MESSAGE_DELETES_ALL_IMAGES_SUCCESS = "Deleted all photos";
+    public static final String MESSAGE_DELETES_ALL_IMAGES_FAILURE = "No photos to delete";
 
     @Override
     public CommandResult execute() throws CommandException {
-        deletesAllPhotos();
-        EventsCenter.getInstance().post(new PhotoChangeEvent());
+        boolean isDeleted = deletesAllPhotos();
 
-        LoggingCommand loggingCommand = new LoggingCommand();
-        loggingCommand.keepLog("", "Deleted all photos");
+        if (isDeleted) {
+            EventsCenter.getInstance().post(new PhotoChangeEvent());
 
-        return new CommandResult(String.format(MESSAGE_DELETE_ALL_IMAGE_SUCCESS));
+            LoggingCommand loggingCommand = new LoggingCommand();
+            loggingCommand.keepLog("", "Deleted all photos");
+
+            return new CommandResult(String.format(MESSAGE_DELETES_ALL_IMAGES_SUCCESS));
+        } else {
+            return new CommandResult(String.format(MESSAGE_DELETES_ALL_IMAGES_FAILURE));
+        }
     }
     /**
      * Deletes all photos of persons in the address book.
      */
-    public void deletesAllPhotos() {
+    public boolean deletesAllPhotos() {
+        boolean isDeleted = false;
         File dir = new File("photos/");
         for (File file : dir.listFiles()) {
             if (!(file.getName().equals("default.jpeg"))) {
                 file.delete();
+                isDeleted = true;
             }
         }
+        return isDeleted;
     }
 }
