@@ -106,7 +106,11 @@ public class PhoneCommand extends UndoableCommand {
         if (action.equals(COMMAND_REMOVE)) {
             uniquePhoneList.remove(phone);
         } else if (action.equals(COMMAND_ADD)) {
-            uniquePhoneList.add(phone);
+            if (!phone.equals(primaryPhone)) {
+                uniquePhoneList.add(phone);
+            } else {
+                throw new DuplicatePhoneException();
+            }
         }
 
         Person personUpdated = new Person(name, primaryPhone, email, address,
