@@ -676,105 +676,146 @@ the browser.
 
 * `facebooklink https://www.google.com` +
 Shares the link to `https://www.google.com` on your Facebook wall.
+
+.Common Mistakes
+|===
+|Incorrect |Correct
+
+|An invalid `LINK_URL` is input. +
+e.g. `some.invalid.link`
+|Ensure that the `LINK_URL` is valid and starts with either `http://` or `https://`.
+
+|===
 // end::facebooklink[]
 
 // tag::facebookadd[]
 [[facebookadd]]
 =====  Adding a contact from Facebook [Since v1.5]: `facebookadd`
+To add a contact to KayPoh using information on their Facebook account, use the `facebookadd` command.
 
-Imports a Facebook user as a contact. +
-Command Format `[red]#facebookadd# [green]#USERNAME#`
+====
+*Command format*: `[red]#facebookadd# [green]#DISPLAY_NAME#` +
+*Alias*: `[red]#fbadd#` +
+====
 
-* Your facebook account must be connected to use this feature. If not, the authorization page will automatically be launched in
+The Facebook user with the specified display name will be added to KayPoh.
+
+.Facebook user with the specified display name added to KayPoh
+image::facebookadd-result.png[width="800"]
+
+[NOTE]
+Your Facebook account must be connected to use this feature.
+If you have not already <<facebook-connect, connected to your Facebook account>>, the Facebook authorization page will automatically be launched in
 the browser.
-* The Facebook user will then be added as a contact.
 
 Examples:
 
-* `facebookadd barack obama` +
-Imports the facebook user 'Barack Obama' to your contacts.
+* `facebookadd Barack Obama` +
+Adds the Facebook user with the display name 'Barack Obama' as a contact to KayPoh.
 // end::facebookadd[]
 
 // tag::facebookaddallfriends[]
 [[facebookaddallfriends]]
 ===== Adding all your Facebook friends [Since v1.5]: `facebookaddallfriends`
+To add all of your Facebook friends as contacts in KayPoh, use the `facebookaddallfriends` command.
 
-Imports all your Facebook friends as contacts. (Current maximum is set at 30 friends) +
-Command Format `[red]#facebookaddallfriends#`
+====
+*Command format*: `[red]#facebookaddallfriends#` +
+*Alias*: `[red]#fbaddall#` +
+====
 
-* Your facebook account must be connected to use this feature. If not, the authorization page will automatically be launched in
-the browser.
-* All your valid facebook friends will then be added as a contact.
+All Facebook friends of your connected Facebook account will be added to KayPoh as contacts.
+
+[NOTE]
+Your Facebook account must be connected to use this feature.
+Please ensure that you have <<facebook-connect, connected to your Facebook account>> before using the command.
+
 // end::facebookaddallfriends[]
 
 === Managing Contact Data
-
-KayPoh contacts data are saved in the hard disk automatically after any command that changes the data. +
-There is no need to save manually.
 
 ==== Sharing Contacts
 
 [[export-command]]
 ===== Exporting contact data: `export`
+To share your contacts with your friends, you can use the `export` command to save your contact information to a file
+and send the file to your friend.
 
-Exports all contact data to an external file. +
-Command format: `[red]#export# [green]#FILE_PATH#` +
+====
+*Command format*: `[red]#export# [green]#EXPORT_FILE_PATH#` +
+====
 
-* `[green]#FILE_PATH#` is the location where the contact data is to be exported to.
-* The input `[green]#FILE_PATH#` must be an absolute file path.
-** `/Users/seedu/Documents/exportData.xml` for macOS and Linux
-** `c:\Users\seedu\Documents\exportData.xml` for Windows
-* You must have *write access* to the specified `[green]#FILE_PATH#`.
-
-You should see the confirmation message in the result display. +
+You should see a confirmation message, and new file at the specified `EXPORT_FILE_PATH` should be created containing your
+contact information.
 
 .Confirmation message after exporting contacts
 image::export-contacts.png[width="800"]
 
+This file can be sent to your friends, who can then <<import-command, import>> your contacts from the file.
+
 Examples:
 
 * `[red]#export# [green]#/Users/seedu/Documents/exportData.xml#` +
-Exports contact data to the location `/Users/seedu/Documents/exportData.xml`
+Exports contact data to the file `exportData.xml` in the folder `/Users/KayPoh/Documents`
+
+.Common Mistakes
+|===
+|Incorrect |Correct
+
+|User does not have *write access* to the specified `EXPORT_FILE_PATH`. +
+|Ensure that you have write access to the `EXPORT_FILE_PATH` that you are trying to export your contacts to.
+
+|===
 
 [[import-command]]
 ===== Importing contact data: `import`
+To import contacts from an external file, use the `import` command.
 
-Imports contact data from an external file. +
-Command format: `[red]#import# [green]#FILE_PATH#`
+====
+*Command format*: `[red]#import# [green]#IMPORT_FILE_PATH#` +
+====
 
-* `[green]#FILE_PATH#` is the location of the data file from which contact data is to be imported.
-* The input `[green]#FILE_PATH#` must be an absolute file path, e.g.
-** `/Users/seedu/Documents/exportData.xml` for macOS and Linux
-** `c:\Users\seedu\Documents\exportData.xml` for Windows
-* You must have *read access* to the specified `[green]#FILE_PATH#`.
-
-You should see the confirmation message in the result display. +
+You should see a confirmation message, and contacts stored in the file at `IMPORT_FILE_PATH` should be added to KayPoh.
 
 .Confirmation message after importing contacts
 image::import-contacts.png[width="800"]
 
 Examples:
 
-* `[red]#import# [green]#/Users/seedu/Documents/exportData.xml#` +
-Imports contact data to the location `/Users/seedu/Documents/exportData.xml`
+* `[red]#import# [green]#/Users/KayPoh/Documents/importData.xml#` +
+Imports contact data from file `importData.xml` in the folder `/Users/KayPoh/Documents`
 
+
+.Common Mistakes
+|===
+|Incorrect |Correct
+
+|User does not have *read access* to the specified `IMPORT_FILE_PATH`. +
+|Ensure that you have read access to the `IMPORT_FILE_PATH` that you are trying to import contacts from.
+
+|===
 
 ==== Synchronizing with the cloud [Coming in v2.0]:
 
 ===== Configuring your cloud account: `sync`
+To configure KayPoh to synchronize your contact information with the cloud, use the `sync` command.
 
-Configures the addressbook to synchronize with the cloud using the given user credentials. +
-Command format: `[red]#sync# [green]#u/USERNAME p/PASSWORD#`
+====
+*Command format*: `[red]#sync# [green]#u/USERNAME p/PASSWORD#` +
+====
 
 ===== Synchronizing with the cloud
 
-KayPoh contacts data is automatically synchronized with cloud when an internet connection is available. +
-There is no need to synchronize manually.
+KayPoh's contact data is automatically synchronized with cloud when an internet connection is available.
+There is no need to synchronize your contacts manually.
 
 ===== Removing your cloud account: `unsync`
 
-Stops synchronizing of contact information with any previously configured cloud accounts. +
-Command format: `[red]#unsync#`
+To stops synchronizing your contact information with the previously configured cloud account, use the `unsync` command.
+
+====
+*Command format*: `[red]#unsync#` +
+====
 
 === Miscellaneous
 
@@ -783,25 +824,21 @@ Command format: `[red]#unsync#`
 To change the theme of the application, use the `theme` command.
 
 ====
-*Command format*: `[red]#theme# [blue]#[OPTION]#` +
-*Alias*: `t`
+*Command format*:
+
+* Changing to `day` theme:
+`[red]#theme# [blue]#-day#`
+* Changing to `night` theme:
+`[red]#theme# [blue]#-night#`
+
+*Alias*: `[red]#t#` +
 ====
+You should see the user interface change according to the specified theme.
 
-*Options*:
-
-* `[blue]#-day#` +
-Changes the application theme to a light color scheme.
-* `[blue]#-night#` +
-Changes the application theme to a dark color scheme.
-
-*Examples*:
-
-* `theme -day`
-
+.User interface after applying the day theme
 image::Ui-day.png[width="800"]
 
-* `theme -night`
-
+.User interface after applying the night theme
 image::Ui-night.png[width="800"]
 
 ==== Listing entered commands: `history`
@@ -822,13 +859,20 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 To restore KayPoh to the state before the previous _undoable_ command was executed, use the `undo` command. +
 
 ====
-*Command format*: `undo` +
-*Alias*: `u`
+*Command format*: `[red]#undo#` +
+*Alias*: `[red]#u#`
 ====
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the KayPoh's content (`add`, `delete`, `edit` and `clear`).
+The following commands are undoable:
+
+* `add`
+* `edit`
+* `fav`
+* `unfav`
+* `delete`
+* `clear`
 ====
 
 *Examples*:
@@ -852,8 +896,8 @@ The `undo` command fails as there are no undoable commands executed previously.
 
 To reverse the most recent `undo` command, use the `redo` command. +
 ====
-*Command format*: `redo` +
-*Alias*: `r`
+*Command format*: `[red]#redo#` +
+*Alias*: `[red]#r#`
 ====
 
 *Examples*:
@@ -876,25 +920,32 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 ==== Exiting the application: `exit`
 
-To exit the application, use the `exit` command.
+To exit the KayPoh, use the `exit` command.
 
 ====
-*Command format*: `exit` +
-*Alias*: `x`
+*Command format*: `[red]#exit#` +
+*Alias*: `[red]#x#`
 ====
+
+The application will close upon executing of this command.
 
 ==== Viewing help: `help`
 
 To open the help window, use the `help` command.
 
 ====
-*Command format*: `help`
+*Command format*: `[red]#help#`
 ====
+
+You should see a window showing the user guide displayed.
+
+.Help window showing the user guide
+image::help-result.png[width="800"]
 
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: <<export-command, Export>> your data and transfer the exported file to the other computer. Install the application in the other computer, start it up and <<import-command, import>> the data file.
+*A*: <<export-command, Export>> your data and transfer the exported file to the other computer. Install KayPoh on the other computer, start it up and <<import-command, import>> the data file.
 
 == Command Summary
 
