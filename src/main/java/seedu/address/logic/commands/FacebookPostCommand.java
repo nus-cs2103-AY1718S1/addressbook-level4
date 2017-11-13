@@ -16,12 +16,13 @@ import seedu.address.ui.BrowserPanel;
 public class FacebookPostCommand extends Command {
     public static final String COMMAND_WORD = "facebookpost";
     public static final String COMMAND_ALIAS = "fbpost";
+    public static final String EXAMPLE_POST = "Hello World!";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": post a message to Facebook account\n"
             + "Alias: " + COMMAND_ALIAS + "\n"
             + "Parameters: MESSAGE\n"
-            + "Example: " + COMMAND_WORD + " hello world!";
+            + "Example: " + COMMAND_WORD + " " + EXAMPLE_POST;
 
     public static final String MESSAGE_FACEBOOK_POST_SUCCESS = "Posted to Facebook!";
     public static final String MESSAGE_FACEBOOK_POST_INITIATED = "User not authenticated, log in to proceed.";
