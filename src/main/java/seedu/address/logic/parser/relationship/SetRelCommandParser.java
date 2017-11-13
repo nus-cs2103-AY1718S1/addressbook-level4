@@ -34,6 +34,7 @@ public class SetRelCommandParser implements Parser<SetRelCommand> {
         + "relationship between two persons.";
     public static final String NULL_RELATION_INPUT = "Relationship entered should not be empty.";
     public static final String SAME_INDEX_ERROR = "Index of the two persons must be different.";
+    private static final int size = 3;
     /**
      * Parses the given {@code String} of arguments in the context of the SetRelCommand
      * and returns an SetRelCommand object for execution.
@@ -50,15 +51,15 @@ public class SetRelCommandParser implements Parser<SetRelCommand> {
         String[] indexes;
         boolean addPrefixPresent = false;
         value = argMultimap.getPreamble();
-        if (!sizeOfinput(value)) {
+        if (value.length() != size) {
             throw new ParseException("One index is not allowed, please enter two");
         }
-        indexes = value.split("\\s+");
         if (!areAnyPrefixesPresent(argMultimap, PREFIX_ADD_RELATIONSHIP, PREFIX_DELETE_RELATIONSHIP,
             PREFIX_CLEAR_RELATIONSHIP)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SetRelCommand.MESSAGE_USAGE));
         }
         try {
+            indexes = value.split("\\s+");
             indexOne = ParserUtil.parseIndex(indexes[0]);
             indexTwo = ParserUtil.parseIndex(indexes[1]);
         } catch (IllegalValueException ive) {
@@ -123,17 +124,6 @@ public class SetRelCommandParser implements Parser<SetRelCommand> {
      */
     private static boolean areAnyPrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
         return Stream.of(prefixes).anyMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
-    }
-
-    /**
-     * Check to make sure the length of argMultiMap.getPreamble is 3.
-     * @param input
-     */
-    private static boolean sizeOfinput(String input) {
-        if (input.length() == 3) {
-            return true;
-        }
-        return false;
     }
 }
 //@@author
