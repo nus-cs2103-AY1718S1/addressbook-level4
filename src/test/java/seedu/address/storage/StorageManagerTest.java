@@ -46,7 +46,7 @@ public class StorageManagerTest {
     public void getUserPrefsFilePathTest() {
         assertEquals(getTempFilePath("prefs"), storageManager.getUserPrefsFilePath());
     }
-    //@@author darrinloh
+    //@@author
 
     @Test
     public void prefsReadSave() throws Exception {
@@ -85,7 +85,7 @@ public class StorageManagerTest {
         String actualUrl = storageManager.getBackUpAddressBookFilePath();
         assertEquals(expectedUrl, actualUrl);
     }
-    //@@author darrinloh
+    //@@author
 
     @Test
     public void getAddressBookFilePath() {

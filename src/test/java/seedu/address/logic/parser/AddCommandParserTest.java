@@ -66,7 +66,6 @@ import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandParserTest {
     private AddCommandParser parser = new AddCommandParser();
-
     @Test
     public void parse_allFieldsPresent_success() {
         Person expectedPerson = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
@@ -126,7 +125,7 @@ public class AddCommandParserTest {
                         + REMARK_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
                 new AddCommand(expectedPersonMultipleTags));
     }
-
+    //@@author darrinloh
     @Test
     public void parse_optionalFieldsMissing_success() {
         // zero tags
@@ -209,6 +208,7 @@ public class AddCommandParserTest {
                 + VALID_ADDRESS_BOB, expectedMessage);
 
     }
+    //@@author
 
     @Test
     public void parse_invalidValue_failure() {
