@@ -117,4 +117,5 @@ the ControlFX library in JavaFX will prove useful in implementing this feature.
 * Updated gradle dependencies to add new libraries and other configurations.
 * Cleared many TODOs in UniCity. (Pull Request https://github.com/CS2103AUG2017-W13-B1/main/pull/112[#112])
 * Increase code coverage by 1.3%. (Pull Request https://github.com/CS2103AUG2017-W13-B1/main/pull/112[#112])
-
+* Enhanced the `UndoCommand` and `RedoCommand` to undo and redo multiple commands respectively.
+(Pull Request https://github.com/CS2103AUG2017-W13-B1/main/pull/74[#74])
