@@ -21,7 +21,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 
 //@@author jelneo
 /**
- * Displays username and password fields.
+ * The UI component that is responsible for receiving user login inputs.
  */
 public class LoginView extends UiPart<Region> {
     public static final String SEPARATOR = "|";

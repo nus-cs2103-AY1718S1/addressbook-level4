@@ -183,7 +183,7 @@ link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 .  `Logic` uses the `AddressBookParser` class to parse the user command.
 .  This results in a `Command` object which is executed by the `LogicManager`.
 .  The command execution can affect the `Model` (e.g. adding a person) and/or raise events.
-.  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
+.  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `UI`.
 
 Figure 3.3.3 below shows the interactions within the `Logic` component for the `execute("delete 1")` API call.
 
@@ -334,20 +334,20 @@ _Figure 4.1.2g: `UndoRedoStack` activity diagram_
 ---
 
 **Aspect:** How undo & redo executes +
-**Alternative 1 (current choice):** Saves the entire address book. +
+**Alternative 1 (current choice):** Saves the entire address book +
 **Pros:** Easy to implement. +
 **Cons:** May have performance issues in terms of memory usage. +
-**Alternative 2:** Individual command knows how to undo/redo by itself. +
+**Alternative 2:** Individual command knows how to undo/redo by itself +
 **Pros:** Will use less memory (e.g. for `delete`, just save the person being deleted). +
 **Cons:** We must ensure that the implementation of each individual command are correct.
 
 ---
 
 **Aspect:** Type of commands that can be undone/redone +
-**Alternative 1 (current choice):** Only include commands that modifies the address book (`add`, `clear`, `edit`). +
+**Alternative 1 (current choice):** Only include commands that modifies the address book (e.g. `add`, `clear`, `edit`) +
 **Pros:** We only revert changes that are hard to change back (the view can easily be re-modified as no data are lost). +
 **Cons:** User might think that undo also applies when the list is modified (undoing filtering for example), only to realize that it does not do that, after executing `undo`. +
-**Alternative 2:** Include all commands. +
+**Alternative 2:** Include all commands +
 **Pros:** Might be more intuitive for the user. +
 **Cons:** User have no way of skipping such commands if he or she just want to reset the state of the address book and not the view. +
 **Additional Info:** See our discussion  https://github.com/se-edu/addressbook-level4/issues/390#issuecomment-298936672[here].
@@ -366,52 +366,50 @@ _Figure 4.1.2g: `UndoRedoStack` activity diagram_
 // tag::borrowPaybackCommand[]
 === Borrow/payback command mechanism
 
-The `borrow` command allows users to increase the debt of a person should he/she borrow more money. On the other hand, when a debtor repays a specified amount, the `payback` command is used to deduct that amount from his/her current debt. The `BorrowCommand` and `PaybackCommand` classes, which handle the updating of the `Debt` field in a `Person` object, extends `UndoableCommand` so that these commands can be undone or redone if necessary.
+The `borrow` command allows users to increase the debt of a person should he/she borrow more money. On the other hand, when a debtor repays a specified amount, the `payback` command is used to deduct that amount from his/her current debt. The `BorrowCommand` and `PaybackCommand` classes, which handle the updating of the `Debt` fields in a `Person` object, extend `UndoableCommand` so that both of these commands can be undone or redone if necessary.
 
 These two commands require one compulsory argument which is the amount that is borrowed/paid back. Indicating the index (as listed in the person list panel on the left side of the application window) of the person who borrowed or paid back money is optional. If no index is specified, the command will be executed for the person that is currently selected in the person list.
-The arguments (index and amount borrowed/paid back) are separated by a whitespace instead of special prefixes (e.g. prefix `p/` used for phone number). Hence, the `String#split` method is used to tokenize the input using a single whitespace as the delimiter. As seen in Figure 4.2.1, the tokenized inputs (index and amount borrowed) are then converted to their appropriate `Object` types and supplied as arguments to the `BorrowCommand` constructor. Input for the `payback` command is tokenized in the same manner.
+The arguments (index and amount borrowed/paid back) are separated by a whitespace instead of special prefixes (e.g. prefix `n/` used for name). Hence, the `String#split` method is used to tokenize the input using a single whitespace as the delimiter. As seen in Figure 4.2.1, the tokenized inputs (index and amount borrowed) are then converted to their appropriate `Object` types and supplied as arguments to the `BorrowCommand` constructor. Input for the `payback` command is tokenized and supplied to the `PaybackCommand` constructor in the same manner.
 
 The `BorrowCommand` and `PaybackCommand` are executed in `LogicManager`.
-`BorrowCommand` updates the `debt` and `totalDebt` attributes in the target `Person` object in the `AddressBook` class (which is in the `Model` component). A new `Person` object is created with the updated `debt` and `totalDebt` amount. The target `Person` object is then replaced with this new `Person` object.
-`PaybackCommand` updates the target person's debt in the same manner as the `BorrowCommand`. However, only the `debt` attribute is updated.
+`BorrowCommand` updates the `debt`, `totalDebt` and `dateRepaid` attributes in the target `Person` object through the `ModelManager#addDebtToPerson()` which calls `AddressBook#addDebtToPerson()`. A new `Person` object is then created with the updated `debt` and `totalDebt` amount. Also, the `dateRepaid` field is set to `NOT REPAID`.  The target `Person` object is then replaced with this new `Person` object.
+
+`PaybackCommand` updates the target person's debt in the same manner as the `BorrowCommand`. However, only the `debt` attribute is updated. If the person has fully repaid his/her debts, the `PaybackCommand` will set the date repaid to the day the `PaybackCommand` was executed. The person will also be listed in the whitelist.
 
 [NOTE]
-`DateBorrow` field in the new `Person` object needs to be updated to match the `DateBorrow` field in the target `Person` object. This is because the date when the `Person` object was created is set as the date for the `DateBorrow` field.
+For the `BorrowCommand`, the `DateBorrow` field in the new `Person` object needs to be updated to match the `DateBorrow` field in the target `Person` object. This is because the date of creation of the `Person` object is assigned to the `DateBorrow` field when a `Person` object is created.
 
 The following sequence diagram, Figure 4.2.1, shows further details of the interaction between the `Logic` and `Model` component when the `borrow` command is executed:
 
 image::BorrowCommandSequenceDiagram.png[width="800"]
-_Figure 4.2.1 : Sequence diagram of how the `Borrow` command works_
+_Figure 4.2.1 : Sequence diagram of how the `borrow` command works_
 
 The `payback` command works in a similar way to the `borrow` command.
 
 ==== Design Considerations
 
-**Aspect:** Implementation of `BorrowCommandParser` and `PaybackCommandParser`+
-**Alternative 1 (current choice):** Tokenize arguments using `String#split` method +
-**Pros:** Easier to parse arguments using `String#split` method since there are no prefixes in the command input. It is also easier to validate the number of arguments entered by the user. This can be done through checking the length of the `String` array return by `String#split`. +
-**Cons:** User has to follow the format for entering the command strictly as an extra whitespace between the index and the amount borrowed would invoke a `ParseException`. +
-**Alternative 2:** Modify `ArgumentTokenizer#tokenize` method to tokenize arguments +
-**Pros:** Better modularity +
-**Cons:** Requires modifications of `ArgumentTokenizer#tokenize` method since supplying whitespace as a prefix to the current `ArgumentTokenizer#tokenize` method incorrectly tokenizes arguments.
+**Aspect:** Implementation of `BorrowCommandParser` and `PaybackCommandParser` +
+**Alternative 1 (current choice):** Tokenize arguments using `String#split()` +
+**Pros:** Easier to parse arguments using `String#split` method since there are no prefixes in the command input. It is also easier to validate the number of arguments entered by the user. This can be done through checking the length of the `String` array returned by `String#split`. +
+**Alternative 2:** Modify `ArgumentTokenizer#tokenize()` to tokenize arguments +
+**Pros:** Better modularity. +
+**Cons:** Requires modifications to `ArgumentTokenizer#tokenize()` since supplying whitespace as a prefix to the current `ArgumentTokenizer#tokenize()` method incorrectly tokenizes arguments.
 
 For example:
 
-Entered command: `borrow 1 500`
-
-Prefixes supplied to `ArgumentTokenizer#tokenize` method: " "
-
-Outcome: prefix `" "` will be mapped to `1 500` in `argMultimap`. Index and amount borrowed are not separated.
+Entered command: `borrow 1 500` +
+Prefix supplied to `ArgumentTokenizer#tokenize` method: `" "` +
+Outcome: prefix `" "` will be mapped to `1 500` in `argMultimap`. Index and amount borrowed are not separated. +
 
 ---
 
 **Aspect:** Updating `Debt` field +
-**Alternative 1 (current choice):** Create a new `Person` object, called `editedPerson`, by supplying the target `ReadOnlyPerson` object to constructor `Person::new`. +
-**Pros:** Straightforward and simple to implement +
-**Cons:** `Debt` class would need to have another constructor that takes in a `Double` parameter for easier implementation of `AddressBook#addDebtToPerson()` method. +
-**Alternative 2:** Reusing the `updatePerson()` method in `AddressBook.java` +
-**Pros:** Do not have to code the method from scratch +
-**Cons:** A new `Person` object have to be created in order to edit the `Debt` field. Since the `updatePerson()` method only accepts `ReadOnlyPerson` objects as parameters, more code has to be written to convert the `Person` object to be a `ReadOnlyPerson` object. +
+**Alternative 1 (current choice):** Create a new `Person` object, called `editedPerson`, by supplying the target `ReadOnlyPerson` object to constructor `Person::new` +
+**Pros:** Straightforward and simple to implement. +
+**Cons:** `Debt` class will need to have another constructor that takes in a `Double` parameter for simpler implementation of `AddressBook#addDebtToPerson()`. +
+**Alternative 2:** Reusing the `AddressBook#updatePerson()` method +
+**Pros:** Do not have to write the method from scratch. +
+**Cons:** A new `Person` object still has to be created in order to edit the `Debt` field. Since `Addressbook#updatePerson()` only accepts `ReadOnlyPerson` objects as parameters, more code has to be written to convert the `Person` object to be a `ReadOnlyPerson` object. +
 // end::borrowPaybackCommand[]
 
 // tag::backup[]
@@ -430,11 +428,11 @@ The `backupAddressBook` method is called in `MainApp#init()` which is called eac
 **Aspect:** When to create the backup +
 **Alternative 1 (current choice):** on startup of the application +
 **Pros:** Guarantees that a backup is made only of a working version of the address book that the user can easily revert to, should he/she mess up the main copy while using the application. +
-**Cons:** If the user tends to make many changes within one session, none of the changes are saved in the backup.
-**Alternative 2:** Implement a command to create backup. +
+**Cons:** If the user tends to make many changes within one session, none of the changes are saved in the backup. +
+**Alternative 2:** Implement a command to create backup +
 **Pros:** The backup is only created when the user desires to. +
 **Cons:** This makes the implementation pointless altogether as it is meant as a safety net for clumsy users. This alternative would only benefit the careful users, who do not require it as much in the first place. +
-**Alternative 3:** Create a backup after a fixed number of commands that change the address book. +
+**Alternative 3:** Create a backup after a fixed number of commands that change the address book +
 **Pros:** This will create backups that are guaranteed to be recent. +
 **Cons:** It is difficult to determine the ideal number of commands to ensure that the backup is both recent enough, yet outdated enough for the user to want to restore state to should he/she mess up a command at some point. +
 // end::backup[]
@@ -488,17 +486,17 @@ This is because the above mentioned constructor was meant to make a copy of the 
 ==== Design Considerations
 
 **Aspect:** Implementation of `DateBorrow` +
-**Alternative 1(current choice):** Create a `DateBorrow` class as such but modify the constructor to maintain consistency. +
+**Alternative 1(current choice):** Create a `DateBorrow` class as such but modify the constructor to maintain consistency +
 **Pros:** Blends well with existing coding style and how the commands work. +
 **Cons:** As of now there is no problems with the implementation. +
-**Alternative 2:** Have the user manually key in the date. +
+**Alternative 2:** Have the user manually key in the date +
 **Pros:** Implementation is very simple as the developer could just follow current coding style to create a new field. +
 **Cons:** Such an implementation would not be as user-friendly as the first alternative. Currently the amount of fields for the user to key in
 is rather high. Implementing alternative 2 would be more tedious on the user's side.
 // end::datestoring[]
 
 // tag::list[]
-=== List (Masterlist, Blacklist etc) mechanism
+=== List (Masterlist, Blacklist, etc.) mechanism
 
 Having multiple lists is useful for debt collectors to view debtors of different categories. Currently, these different lists include masterlist and blacklist.
 
@@ -509,7 +507,7 @@ The following sequence diagram, Figure 4.5.1, shows further details of the inter
 image::BlacklistCommandSequenceDiagram1.PNG[width="800"]
 _Figure 4.5.1 : Sequence diagram of how the `blacklist` command works_
 
-The following sequence diagram, Figure 4.5.2, shows further details of the interaction between `ModelManager` and 'ReadOnlyAddressBook` to obtain the blacklist:
+The following sequence diagram, Figure 4.5.2, shows further details of the interaction between `ModelManager` and `ReadOnlyAddressBook` to obtain the blacklist:
 
 image::BlacklistCommandSequenceDiagram2.png[width="800"]
 _Figure 4.5.2 : Sequence diagram of how `ModelManager` interacts with `ReadOnlyAddressBook` To generate blacklist From all persons_
@@ -556,7 +554,7 @@ However, if a `Person` is modified by a command, the modification will be reflec
 **Pros:** Easy to build on for future implementations. +
 **Cons:** Methods used for syncing are less intuitive and difficult to comprehend. +
 **Alternative 2:** Create new `persons` variable for each list in `Addressbook` class +
-**Pros:** Implemenation is easier to comprehend. +
+**Pros:** Implementation is easier to comprehend. +
 **Cons:** Waste of memory compared to current implementation which only has 1 `persons` variable in `Addressbook` class.
 // end::list[]
 
@@ -621,16 +619,16 @@ public class ClusterUtil {
 
 ==== Design Considerations
 
-**Aspect:** Grouping of contacts. +
-**Alternative 1 (current choice):** Create a field that contains the name and district number of the postal districts, based on postal code. +
+**Aspect:** Grouping of contacts +
+**Alternative 1 (current choice):** Create a field that contains the name and district number of the postal districts, based on postal code +
 **Pros:** Easy to implement and extend, requires minimal user input. +
 **Cons:** Requires developer to update `ClusterUtil` whenever a new postal district is drawn by the government, and
 requires users to reset their contacts' `cluster` via deletion and addition or via editing their `postal codes`. +
-**Alternative 2:** Import contacts' location and find their proximity from one another using Google Maps API. +
+**Alternative 2:** Import contacts' location and find their proximity from one another using Google Maps API +
 **Pros:** Higher precision of geographical location and proximity. +
 **Cons:** Tedious to implement proximity. Either takes up too much time in generating nearby contacts or too much space
  in storing them. +
-**Alternative 3:** Assign general location to each contact upon addition into the address book or via editing. +
+**Alternative 3:** Assign general location to each contact upon addition into the address book or via editing +
 **Pros:** Easy to implement. +
 **Cons:** Tedious for users. They also have to ensure that they do not make spelling mistakes.
 // end::cluster[]
@@ -640,9 +638,16 @@ requires users to reset their contacts' `cluster` via deletion and addition or v
 
 The `filter` command allows the user to filter contacts by tags. Multiple tags can be entered. The command returns a list of contacts that match *at least one* of the tags that is specified by the user.
 
-A `PersonContainsTagPredicate` is created to check if a person contains the tags of interest. The code implementation below shows how the `PersonContainsTagPredicate` is implemented to sieve out the relevant contacts. The `anyMatch` method ensures that the filtered list contains persons who have at least one tag specified by the user.
+Since the filtered person list stored in the `ModelManager` class is of the type FilteredList<>, filtering of the list can be done easily using Java’s `FilteredList#setPredicate()` method.
+Hence, a `PersonContainsTagPredicate` is created to check if a `Person` object contains the tags of interest. The code snippet below shows how the `PersonContainsTagPredicate` is implemented to sieve out the relevant contacts. The `Stream#anyMatch()` method ensures that the filtered list contains persons who have at least one tag specified by the user.
 [source,java]
 ----
+/**
+ * Evaluates this predicate on the given {@code person}. This predicate tests if a person contains at least one tag
+ * from {@code tagKeywords}.
+ * @return {@code true} if the person matches the predicate,
+ * otherwise {@code false}
+ */
 @Override
 public boolean test(ReadOnlyPerson person) {
     Set<Tag> tagList = person.getTags();
@@ -655,50 +660,57 @@ public boolean test(ReadOnlyPerson person) {
 }
 ----
 
-The list is filtered and updated through the `ListObserver#updateCurrentFilteredList` method in the `Logic` component so that it works across all lists (master list, blacklist, whitelist and overdue list). Since the person list is of a `FilteredList<>` type, filtering of the list can be handled by Java's `FilteredList` class method called `setPredicate`.
+The list is filtered and updated through `ListObserver#updateCurrentFilteredList()` in the `seedu.addressbook.commons` package, instead of `ModelManager#updateFilteredPersonList()`, so that it works across all lists (masterlist, blacklist, whitelist and overdue list).
 
 ==== Design Considerations
 
-**Aspect:** Implementation of `PersonContainsTagPredicate` predicate +
+**Aspect:** Implementation of `PersonContainsTagPredicate` +
 **Alternative 1 (current choice):** Predicate returns true if at least one tag matches the list of tags specified by the user +
-**Pros:** User will have more contacts to work with. The additional information may help the user make better decisions. +
+**Pros:** More contacts will be shown to the user. The additional information may be useful to the user. +
 **Cons:** The user may find some of the filtered contacts irrelevant. +
 **Alternative 2:** Predicate returns true only if the person contains the exact tags that are specified by the user +
 **Pros:** Shows the most relevant results if the user wants to search for an exact match. +
-**Cons:** If the user remembers one of the tags wrongly (but it is still a valid tag), there will be no contacts found.
+**Cons:** If the contacts have multiple tags and the user remembers just one of the tags wrongly, the `filter` command will return zero results.
 // end::filterTags[]
 
 // tag::loginLogout[]
 === Login/logout mechanism
 
-After a user enters a valid `login` command, verification of the login information will take place in the `Model` component. The username and password are verified against the information stored in `preferences.json`.
+Although there are two versions for login, the Graphic User Interface(GUI) version and the Command Line Interface(CLI) version, they both use the same login mechanism (see Figure 4.8.1 below). The GUI login is recommended over the CLI login because it has better password masking capabilities.
+This is because the password field in the GUI login is implemented using JavaFX 8's `PasswordField`. The CLI login exists, despite the inconsistent password masking, to allow the user to log into the app faster since using a one-shot command is faster than a multi-step command.
+The bugs in the CLI login could be resolved by removing password masking. However, this would have security implications because the password is not concealed.
+
+After a user logs in using either the CLI or GUI login, verification of the login information will take place in the `Model` component. The username and password are verified against the information stored in `preferences.json`.
 
 The password is stored as a SHA-512 hash to conceal the actual password. The salt that is used to generate the hashed password is also stored. Since the stored hash cannot be converted back to the original password, the password that is entered by the user needs to be hashed and verified against the stored hash. Thus, the same salt needs to be used to generate a hash to match with the stored hash. If a different salt is used, then the generated hash will be different from the stored hash even if the password provided is correct.
 
-After verifying that the username and password matches the information stored in `preferences.json`, an event is raised to notify the `UI` component of the user authentication results. If the user has successfully logged in, the `UI` component will display the person list, info panel and allow other commands to be executed from the command box.
+After verifying that the username and password matches the information stored in `preferences.json`, an event is raised to notify the `UI` component of the user authentication result. If the user has successfully logged in, the `UI` component will display the person list, info panel and allow other commands (such as `list`, `edit, `add`, etc.) to be executed from the command box.
 
-When a user enters the `logout` command, the `LogoutCommand` class in the `Logic` component will raise an even to notify the `UI` component to go back to the welcome page.
+The activity diagram below, Figure 4.8.1, shows the overall flow of the command execution for both GUI and CLI login:
+image::LoginActivityDiagram.PNG[width="800"]
+_Figure 4.8.1 : Activity diagram of how the `login` command works for both CLI and GUI version_
 
+When a user enters the `logout` command, the `LogoutCommand` class in the `Logic` component will call the `ModelManager#logout()` method. Two events will be raised: `LoginAppRequestEvent` and `LogoutAppRequestEvent`. `LoginAppRequestEvent` is to set the `isLoggedIn` variable in `LoginCommand` to `false` and `LogoutAppRequestEvent` is to set the `isLoggedOut` variable in `LogoutCommand` to `true`. Both events need to be raised to notify the `UI` component to go back to the welcome page and restrict the commands that are allowed to be executed.
 
 ==== Design Considerations
 
 **Aspect:** Implementation of password masking +
 **Alternative 1(current choice):** Use the unicode character 'BLACK CIRCLE' (●) for password masking +
-**Pros:** Allows other characters to be detected as password input +
-**Cons:** None +
+**Pros:** Other characters can be detected as password input, such as the asterisk character '\*' which is commonly used for password masking. +
 **Alternative 2:** Use the asterisk character (*) for password masking +
-**Pros:** User may use the asterisk character when entering the password. The asterisk character will be ignored and will not show in the text field when it is entered. This is because the method that handles password masking ignores the character used to mask the password. Refer to the code below for more details: +
+**Pros:** User may use the asterisk character when entering the password. The asterisk character will be ignored and will not show in the text field when it is entered. This is because the method that handles password masking ignores the character used to mask the password. Refer to the code snippet below for the implementation: +
 [source,java]
 ----
-// starts masking password after the second whitespace and prevent the reading of the BLACK_CIRCLE after
-// replacing a character in the command box text field with a BLACK_CIRCLE
+/*
+ * mask password after the second whitespace and prevent the reading of the BLACK_CIRCLE after replacing
+ * a character in the command box text field with a BLACK_CIRCLE
+ */
 if (numOfSpaces >= 2 && currentInput.charAt(currentInput.length() - 1) != ' '
         && currentInput.charAt(currentInput.length() - 1) != BLACK_CIRCLE) {
     maskPasswordInput(currentInput);
-
 }
 ----
-**Cons:** Although '\*' is an invalid password character, the user may still use it while entering the password. If the user types '*', the cursor will remain at its original position. The user will be under the impression that the command box is not registering what was typed.
+**Cons:** Although '\*' is an invalid password character, the user may still use it while entering the password. Hence, if the user types '*', the cursor will remain at its original position. The user will be under the impression that the command box is not registering what was typed.
 // end::loginLogout[]
 
 // tag::sort[]
@@ -775,7 +787,7 @@ public CommandResult execute() throws CommandException {
 **Alternative 2:** `Sort` by `debt` by default +
 **Pros:** Equally easy to implement. +
 **Cons:** Slightly less intuitive as sorting by `name` is the most prevalent way of sorting contacts. +
-**Alternative 3:** No default `sort`. +
+**Alternative 3:** No default `sort` +
 **Pros:** Extremely easy to implement. +
 **Cons:** Not user-friendly.
 // end::sort[]
@@ -834,12 +846,12 @@ public ReadOnlyPerson selectPersonForCommand(Index index) throws CommandExceptio
 
 ==== Design Considerations
 
-**Aspect:** Executing index-based commands without index. +
-**Alternative 1 (current choice):** These person to apply the commands on are determined in the constructors. +
+**Aspect:** Executing index-based commands without index +
+**Alternative 1 (current choice):** The person to apply the commands on are determined in the constructors +
 **Pros:** Allows for proper `redo`. +
 **Cons:** Hard to test as Command Exceptions are being thrown from the constructors. +
 **Alternative 2:** Calling a constructor of the `command` without an `Index` initialises its `targetIndex`
-to null, and the null index is handled as a special value during execution. +
+to null, and the null index is handled as a special value during execution +
 **Pros:** Easy to implement, easy to extend. +
 **Cons:** Although highly unlikely, it may be possible for a `command` to have an unintended null `targetIndex`, which
 will then cause it to behave as an indexless command instead of an error. May also cause problems with `redo`.
@@ -923,11 +935,11 @@ addDebtToPerson(person, amount);
 
 ==== Design Considerations
 
-**Aspect:** When to update / check a Person's debt. +
-**Alternative 1 (Current choice):** Check through the `AddressBook` in the `Model` component every time the user logs in. +
+**Aspect:** When to update / check a Person's debt +
+**Alternative 1 (Current choice):** Check through the `AddressBook` in the `Model` component every time the user logs in +
 **Pros:** Convenient and intuitive to implement for developer. +
 **Cons:** If user never logs out, the debt would not be accrued. +
-**Alternative 2:** Create a `Refresh` command that does the checking instead of relying on the `LoginAppRequestEvent`. +
+**Alternative 2:** Create a `Refresh` command that does the checking instead of relying on the `LoginAppRequestEvent` +
 **Pros:** User can have the most up-to-date debt as long as he / she remembers to always enter the `Refresh` command. +
 **Cons:** Not convenient for user at all. It is also unlikely that the user would remain logged in for such a long duration. +
 // end::interest[]
@@ -976,22 +988,22 @@ public CommandResult execute() {
 
 ==== Design Considerations
 
-**Aspect:** Condition for changing themes. +
-**Alternative 1 (current choice):** Use `String#endsWith()`. +
+**Aspect:** Condition for changing themes +
+**Alternative 1 (current choice):** Use `String#endsWith()` +
 **Pros:** Foolproof, guaranteed to work if the theme exists. +
-**Alternative 2:** Use file paths. +
+**Alternative 2:** Use file paths +
 **Pros:** Likely to work most of the time if handled well. +
 **Cons:** When debugging, it was found that the path started in the `build` folder instead of the `src` folder. Using
 this method seemed to cause inconsistencies between running the app from an IDE and from the `.jar` file.
 
 ---
 
-**Aspect:** Switching of themes. +
-**Alternative 1 (current choice):** Simple toggle between two themes. +
+**Aspect:** Switching of themes +
+**Alternative 1 (current choice):** Simple toggle between two themes +
 **Pros:** Easy to implement. +
 **Cons:** Troublesome to extend. +
 ** Alternative 2:** Use an `int` to keep track of the current theme, assign each theme to a number, and use `+` and `%`
-to cycle through the themes. +
+to cycle through the themes +
 **Pros:** Easy to extend. +
 **Cons:** Troublesome to implement considering that we intend to use only two themes.
 // end::theme[]
@@ -1452,7 +1464,7 @@ _Figure A.1.4b: After modification of `StatusBarFooter`_
 ** link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] needs to initialize the status bar on application start, and to update it accordingly whenever the address book is updated.
 * Solution
 ** Modify the constructor of link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to take in the number of persons when the application just started.
-** Use link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter#handleAddressBookChangedEvent(AddressBookChangedEvent)`] to update the number of persons whenever there are new changes to the addressbook.
+** Use link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter#handleAddressBookChangedEvent(AddressBookChangedEvent)`] to update the number of persons whenever there are new changes to the address book.
 ** See this https://github.com/se-edu/addressbook-level4/pull/596/files[PR] for the full solution.
 ****
 
@@ -1660,7 +1672,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |security-concerned debt collector |view my last login time |ensure that no one else is using my account
 
-|`* *` |security-concerned debt collector |have link:#2FA[two-FA] authentication for login and every other important action(exporting contacts) |ensure that no one else is capable of accessing sensitive information
+|`* *` |security-concerned debt collector |have link:#twoFA[2FA] authentication for login and every other important action(exporting contacts) |ensure that no one else is capable of accessing sensitive information
 
 |`* *` |multi-device user |be able to export my contacts in another format (e.g xml, vcf) |store my contacts in another device
 
@@ -1676,7 +1688,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is `Codii` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
 === Use case: Delete person
@@ -1684,9 +1696,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 *MSS*
 
 1.  User requests to list persons
-2.  AddressBook shows a list of persons
+2.  Codii shows a list of persons
 3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+4.  Codii deletes the person
 +
 Use case ends.
 
@@ -1700,7 +1712,7 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. Codii shows an error message.
 +
 Use case resumes at step 2.
 
@@ -1710,7 +1722,7 @@ Use case resumes at step 2.
 *MSS*
 
 1.  User requests to add a new tag to a person
-2.  AddressBook adds the tag to the person
+2.  Codii adds the tag to the person
 +
 Use case ends.
 
@@ -1719,41 +1731,41 @@ Use case ends.
 
 *MSS*
 
-1. User requests to sort AddressBook by name of persons
-2. AddressBook shows a sorted list of persons
+1. User requests to sort person list by name of persons
+2. Codii shows a sorted list of persons
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 2a. AddressBook is empty.
+* 2a. Codii is empty i.e. there are no contacts stored in Codii.
 +
 Use case ends.
 
 [discrete]
-=== Use case: Add a person to favourite list
+=== Use case: Add a person to blacklist
 
 *MSS*
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to favourite specific person in the list
-4.  AddressBook adds the person in the favourite list
-5.  User requests to list favourite contacts
-6.  AddressBook shows a list of favourite contacts
+1.  User requests to list all persons i.e. to show the masterlist
+2.  Codii shows the masterlist
+3.  User requests to ban a specific person in the list
+4.  Codii adds the person into the blacklist
+5.  User requests to list blacklisted contacts
+6.  Codii shows the blacklist
 
 *Extensions*
 
 [none]
-* 2a. The list is empty.
+* 2a. The masterlist is empty.
 +
 Use case ends.
 
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. Codii shows an error message.
 +
 Use case resumes at step 2.
 
@@ -1763,9 +1775,9 @@ Use case resumes at step 2.
 *MSS*
 
 1.  User requests to edit a person
-2.  AddressBook displays the current information of the person
+2.  Codii displays the current information of the person
 3.  User edits the information in person
-4.  AddressBook updates the information in person
+4.  Codii updates the information in person
 +
 Use case ends.
 
@@ -1775,7 +1787,7 @@ Use case ends.
 * 2a. User keys in invalid information into fields.
 +
 [none]
-** 2a1. AddressBook shows an error message.
+** 2a1. Codii shows an error message.
 +
 Use case resumes at step 2.
 
@@ -1785,24 +1797,24 @@ Use case resumes at step 2.
 *MSS*
 
 1.  User requests to add a person in the list
-2.  AddressBook adds the person
+2.  Codii adds the person
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 1a. The person already exists in the AddressBook.
+* 1a. The person already exists in the address book.
 +
 [none]
-** 1a1. AddressBook shows an error message.
+** 1a1. Codii shows an error message.
 +
 Use case resumes at step 1.
 
-* 1b. The user enters the wrong format into AddressBook.
+* 1b. The user enters the command in a wrong format into the command box.
 +
 [none]
-** 1b1. AddressBook shows an error message.
+** 1b1. Codii shows an error message.
 +
 Use case resumes at step 1.
 
@@ -1811,8 +1823,8 @@ Use case resumes at step 1.
 
 *MSS*
 
-1. User requests to find persons by name
-2. AddressBook shows a list of corresponding persons with matching case insensitive full words
+1. User requests to find person by name
+2. Codii shows a list of corresponding persons with any of the given keywords
 +
 Use case ends.
 
@@ -1822,7 +1834,7 @@ Use case ends.
 * 1a. No matches found.
 +
 [none]
-** 1a1. AddressBook shows 0 persons found.
+** 1a1. Codii shows 0 persons found.
 +
 Use case ends.
 
@@ -1835,7 +1847,6 @@ Use case ends.
 .  Should not take more than two seconds to complete a command.
 .  The system should be maintainable with proper documentation.
 .  The system should be usable by a novice who has never used an address book application before.
-.  Should log user out after 20 minutes of inactivity to protect privacy.
 
 [appendix]
 == Glossary
@@ -1843,7 +1854,7 @@ Use case ends.
 |===
 |Term |Definition
 
-|[[two-FA]]2FA
+|[[twoFA]]2FA
 |An extra layer of security that is known as "multi factor authentication" that requires not only a password and username but also a token
 
 |[[ban]]Ban
