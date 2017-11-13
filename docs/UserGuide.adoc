@@ -199,7 +199,7 @@ and there must be at least one valid phone number entered. +
 * A person can have any number of social media accounts (including zero). [Since v1.2] +
 * More information about representing social media accounts can be found in the <<social-media-integrations, Social Media Integrations>> section.
 * *To mark a person as a favorite contact*:
-** A person can be favorited by including the parameter `f/` +
+** A person can be favorited by including the parameter `f/` [Since v1.2] +
 * *To add a display photo for a person*:
 ** A person can have a display photo imported from the location specified by `DISPLAY_PHOTO_FILE_PATH` [Since v1.5]
 
