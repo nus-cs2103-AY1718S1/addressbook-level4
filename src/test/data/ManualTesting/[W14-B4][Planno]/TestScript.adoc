@@ -22,10 +22,6 @@ This test script contains step by step instructions for the manual testing of Pl
 It is segmented into sections, the first of which contains instructions on how to load the sample data.
 Each section that follows contains step by step instructions on how to proceed with testing the command.
 
-[NOTE]
-The expected results for the commands in this test scripts assumes that the commands are tested from a freshly loaded and clean sample data (No modification from base sample data).
-Any changes may cause differences between the expected and actual result.
-
 == Setting up the sample data
 
 .  Download the latest `Planno.jar` link:{repoURL}/releases[here].
@@ -41,27 +37,19 @@ Copy and paste the sample data into its respective file.
 .  Save the changes.
 .  Start the app. The sample data will be loaded and reflected in the GUI.
 
-+
-image::Ui.png[width="790"]
-_Figure 2: GUI_
-+
-.  Type the command in the command box and press kbd:[Enter] to execute it. +
-e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
-.  Try some sample commands:
+== Commands
 
-* *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
-* *`exit`* : exits the app
-+
 [NOTE]
-For the details of each command, please refer to Features section.
-+
-.  Congratulations! If you can run Planno without any trouble, you can start trying this application. Otherwise, Please refer to FAQ and solve your problems.
+The expected results for the commands in this test script assumes that the commands are tested from a freshly loaded and clean sample data (No modification from base sample data).
+Any changes may cause differences between the expected and actual result. +
+The tests will be CLI only. This means that all commands are entered through the command box.
 
-== Features
+=== Help Command
 
-=== General
+.  Type `help`.
+.  The help window will popup, displaying Planno's user guide.
+.  Close the help window.
+.  The result will display "Opened help window".
 
 ====
 *Command Format*
