@@ -448,6 +448,7 @@ Examples:
 Imports exchangeStudents.xml into current resident book.
 
 It can be done through the Ui as well.
+
 image::import_file_Ui.png[width='800']
 
 // end::import[]

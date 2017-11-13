@@ -684,7 +684,7 @@ The backup command saves the current ResidentBook into backup.xml located in the
 **Pros:** Flexible level of precision according to the needs of the user +
 **Cons:** User may miss some entries when specifying. Hard to roll back to the latest data during crisis
 
-One consideration for the chosen mechanism is that backup should aid during crisis, such as data corruption or lost. 
+One consideration for the chosen mechanism is that backup should aid during crisis, such as data corruption or lost.
 
 [source,java]
 ----
