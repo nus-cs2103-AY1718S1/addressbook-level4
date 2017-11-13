@@ -14,15 +14,15 @@ ifndef::env-github[]
 image::images/Ui.png[width="600"]
 endif::[]
 
-* This is a desktop Address Book application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
+* This is a desktop address book application specially designed for debt collectors. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
 * Debt collectors have to make outbound telephone calls, take inbound telephone calls, and search for updated information on debtors daily. Thus, there is a need for a simple yet efficient way to handle all these information. This address book aims to address this need.
 * Debt collectors can store information such as the amount owed, debt borrow date and debt cleared date in addition to debtor's personal information.
 * Unique features:
 ** Automatic debt update based on interests
 ** Whitelist / Blacklist / Overdue list
 ** Export data in other formats
-** Debt repayment progress bar
-** Nearby Persons Panel (show contacts that live near a selected person)
+** Debt repayment progress bar which indicates the progress of debt repayment and the debt repayment status
+** Nearby persons panel (show contacts that live near a selected person)
 
 == Site Map
 
