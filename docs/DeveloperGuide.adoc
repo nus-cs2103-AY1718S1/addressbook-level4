@@ -1104,7 +1104,7 @@ public ReadOnlyPerson addWhitelistedPerson(ReadOnlyPerson p) {
 
 `Setpath`, `Addpic` and `Delpic` commands facilitate updating a debtor's display picture. `Setpath` command sets the `path` to a folder that contains `JPG` format images of the debtors. This folder resides in the user's workspace.
 
-The images in the folder must initially be named after the debtors themselves. For example, a debtor named Alex Yeoh will have an image titled `AlexYeoh.jpg` in this folder.
+The images in the folder must initially be named after the debtors themselves. For example, a debtor named Alex Yeoh should have an image titled `AlexYeoh.jpg` in this folder.
 
 `Setpath` command modifies the destined `path` in the `ProfilePicturesFolder` `class`:
 
