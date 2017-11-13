@@ -496,7 +496,13 @@ Events can be seen on calendar interface since v1.5
 
 image::Calendar_UI.png[width="790"]
 
-* Click on the "PREV" or "NEXT" button to navigate to the previous or next month.
+[NOTE]
+
+To go to previous or next month, type
+`prev` or `next`. +
+Refer to the next section for details of each command.
+
+* User can also click on the "PREV" or "NEXT" button to navigate to the previous or next month.
 
 * Event names are truncated on the calendar to allow uniform calendar grid size. +
 
@@ -516,6 +522,19 @@ and let you know that they are more events happening on the same day.
 Example:
 
 image::Day_Events.png[width="300"]
+
+
+=== View previous or next month on calendar: `prev` or `next`
+Format: `prev` +
+Format: `next`
+
+This command allows users to view events taking place in the previous month, or in the next month. +
+If the current month is November and a user types `prev`, calendar will show October's events. Typing `prev` will bring
+the user to September; otherwise if the user types `next`, calendar will show December's events.
+
+An example of navigating to the previous month (from November) is shown below.
+
+image::PrevCommand.png[width="800"]
 
 // end::Calendar[]
 
@@ -547,3 +566,8 @@ e.g.`select 2`
 * *Undo* : `undo`
 * *Redo* : `redo`
 * *Backup* : `backup`
+* *Delete by tag*: `deletebytag TAG` +
+e.g. `deletebytag RA`
+* *Switch panel* : `switch`
+* *Previous Month*: `prev`
+* *Next Month*: `next`
