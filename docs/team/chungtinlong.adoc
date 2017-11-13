@@ -193,6 +193,6 @@ include::../DeveloperGuide.adoc[tag=quick_start]
 === Other contributions
 
 * Creating JUnit tests to ensure application is in working order during development.
-* Wrote user stories.
+* Writing user stories.
 * Revamping User Guide e.g. phrasing, formatting and feature grouping.
 * Continuous integration of above-stated features with other ongoing developments by other team members.
