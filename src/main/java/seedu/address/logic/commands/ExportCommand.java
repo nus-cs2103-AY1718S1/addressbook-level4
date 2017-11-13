@@ -12,7 +12,7 @@ public class ExportCommand extends Command {
     public static final String COMMAND_WORD = "export";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Exports contacts list to chosen directory.\n"
             + "Parameters: directory\n"
-            + "Example for export: " + COMMAND_WORD + " C:\\desktop\\addressbook.xml\n";
+            + "Example for export: " + COMMAND_WORD + " C:\\desktop\\circles.xml\n";
 
     public static final String MESSAGE_SUCCESS = "Contacts list exported successfully.";
 
