@@ -14,6 +14,7 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.ListObserver;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.ProfilePicturesFolder;
 import seedu.address.commons.core.Version;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.exceptions.DataConversionException;
@@ -67,6 +68,7 @@ public class MainApp extends Application {
 
         model = initModelManager(storage, userPrefs);
         ListObserver.init(model);
+        ProfilePicturesFolder.setPath(userPrefs.getProfilePicturesFolderPath());
 
         storage.backupAddressBook();
 

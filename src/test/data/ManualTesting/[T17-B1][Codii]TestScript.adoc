@@ -8,6 +8,7 @@ This document will explain the step-by-step procedure to perform manual testing.
 === Downloading the application
 .  You can download the latest version of `Codii` link:https://github.com/CS2103AUG2017-T17-B1/main/releases[here]. +
 .  Make sure that the `codii.jar` is saved in a folder without any other jar files. This will be the `main` folder for your `Codii` application.
+.  Make a new folder called profilepic in the same directory as codii.jar. Obtain any two JPG file and save them in this folder. Rename the image files as "AlexYeoh.jpg" and "BerniceYu.jpg" respectively.
 
 === Loading the sample data
 [NOTE]
@@ -175,3 +176,57 @@ link:https://github.com/CS2103AUG2017-T17-B1/main/blob/master/docs/UserGuide.ado
 ** Alex should be removed from the person list panel.
 . `repaid 1`
 ** Should show “Gisela Tan has already repaid debt!” in result display.
+
+==== Banning contacts
+. `ban 1`
+** Should show "MASTERLIST: Alex Yeoh has been added to BLACKLIST" in the result display.
+. `ban 2`
+** Should show "MASTERLIST: Bernice Yu has been added to BLACKLIST" in the result display.
+. `blacklist`
+** Alex Yeoh, Bernice Yu, Farhan Mohammed, Kanyee North and Nigel Tan should be in the person list panel.
+. `whitelist`
+. `ban 1`
+** Should show "WHITELIST: Gisela Tan has been added to BLACKLIST" in the result display and she disappears from the whitelist.
+. `overduelist`
+. `ban 1`
+** Should show "OVERDUELIST: David Li has been added to BLACKLIST" in the result display.
+
+==== Unbanning contacts
+. `list`
+. `unban 3`
+** Should show "Charlotte Oliveiro is not BLACKLISTED!" in the result display.
+. `unban 4`
+** Should show "MASTERLIST: Removed David Li from BLACKLIST" in the result display.
+. `unban 1`
+** Should show "MASTERLIST: Removed Alex Yeoh from BLACKLIST!" in the result display.
+. `blacklist`
+. `unban 1`
+** Should show "BLACKLIST: Removed Bernice Yu from BLACKLIST" in the result display and Bernice Yu should disappear from the person list panel.
+. `unban 2`
+** Should show "BLACKLIST: Removed Gisela Tan from BLACKLIST" in the result display and Gisela Tan should disappear from the person list panel.
+. `whitelist`
+. `unban 1`
+** Should show "Gisela Tan is not BLACKLISTED!" in the result display.
+
+==== Setting a path to the profile pictures folder and adding/deleting profile pictures
+[NOTE]
+Enter the folder named `profilepic`, located in the same directory as codii.jar, and right click on any of the images. Click on `Properties` and copy the `Location` path.
+
+. `list`
+. `setpath C:/invalid/path/`
+** Should show "Path is invalid!" in the result display.
+. `setpath [paste copied path here]`
+** Should show "Location to access profile pictures is now set!" in the result display.
+. `addpic 1`
+** Should show "MASTERLIST: Alex Yeoh profile picture has been updated!" in the result display and the display picture of the person should have been updated in the infopanel.
+. `list`
+. `addpic 2`
+** Should show "MASTERLIST: Bernice Yu profile picture has been updated!" in the result display and the display picture of the person should have been updated in the infopanel.
+. `list`
+. `delpic 1`
+** Should show "MASTERLIST: Alex Yeoh profile picture has been removed!" in the result display and the display picture of the person should have been updated in the infopanel.
+. `list`
+. `delpic 2`
+** Should show "MASTERLIST: Bernice Yu profile picture has been removed!" in the result display and the display picture of the person should have been updated in the infopanel.
+. `delpic 3`
+** Should show "Charlotte Oliveiro does not have a profile picture!" in the result display.
