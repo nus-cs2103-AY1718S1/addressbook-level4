@@ -1656,7 +1656,7 @@ public class Task implements ReadOnlyTask {
     public Task () {
         this.tags = new SimpleObjectProperty<>(new UniqueTagList());
         this.complete = new SimpleObjectProperty<>(false);
-        this.taskPriority = new SimpleObjectProperty<>(1);
+        this.taskPriority = new SimpleObjectProperty<>(3);
         this.id = new SimpleObjectProperty<>(this.hashCode());
         this.peopleIds = new SimpleObjectProperty<>(new ArrayList<Integer>());
     }
@@ -1675,7 +1675,7 @@ public class Task implements ReadOnlyTask {
         this.startDateTime = new SimpleObjectProperty<>(startDateTime);
         this.endDateTime = new SimpleObjectProperty<>(endDateTime);
         this.complete = new SimpleObjectProperty<>(false);
-        this.taskPriority = new SimpleObjectProperty<>(1);
+        //this.taskPriority = new SimpleObjectProperty<>(1);
     }
 
     /**
@@ -2238,6 +2238,17 @@ public class DateTime {
                 }
             }
         }
+    }
+
+    /**
+     * Compare two DateTime object
+     * @param other , another DateTime object
+     * @return true if they are of the same object or of the same value
+     */
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof DateTime // instanceof handles nulls
+                && (this.compareTo((DateTime) other) == 0));
     }
 
 
