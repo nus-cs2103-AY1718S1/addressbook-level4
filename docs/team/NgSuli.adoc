@@ -1,0 +1,55 @@
+= Melanie Ng - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: Contact+ Pro
+Contact+ Pro is a desktop address book application designed for students of NUS. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+This address book help ease communications among students, be it with new classmates or long-time friends in NUS.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T14-B4/main/blob/master/collated/main/NgSuli.md[Functional code]] [https://github.com/CS2103AUG2017-T14-B4/main/blob/master/collated/test/NgSuli.md[Test code]]
+
+=== Enhancement Added: Birthday Feature
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=birthday]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Adding the birthday feature helps to personalise the address book allowing students to get to know each other better.
+
+Adding the shorthand alias helps new users to use CLI with ease. It also reduces the amount of effort spend keying in
+the information.
+
+Implementing the white theme offers a cleaner option for users to use.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=birthday]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Implementing a theme switcher
+
+This gives user an option to personalise their address book by providing an option for the theme.
+
+=== Other contributions
+
+Added shorthand alias for HelpCommand, DeleteCommand, EditCommand, FavouriteCommand.
+
+Implemented white theme for Contact+ Pro
+
+== Project: TBA

@@ -13,6 +13,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.DeselectAllEvent;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -28,16 +29,21 @@ public class PersonListPanel extends UiPart<Region> {
     private ListView<PersonCard> personListView;
 
     public PersonListPanel(ObservableList<ReadOnlyPerson> personList) {
+        this(personList, new IconImage());
+    }
+
+    public PersonListPanel(ObservableList<ReadOnlyPerson> personList, IconImage image) {
         super(FXML);
-        setConnections(personList);
+        setConnections(personList, image);
         registerAsAnEventHandler(this);
     }
 
-    private void setConnections(ObservableList<ReadOnlyPerson> personList) {
+    private void setConnections(ObservableList<ReadOnlyPerson> personList, IconImage image) {
         ObservableList<PersonCard> mappedList = EasyBind.map(
-                personList, (person) -> new PersonCard(person, personList.indexOf(person) + 1));
+                personList, (person) -> new PersonCard(person, personList.indexOf(person) + 1, image));
         personListView.setItems(mappedList);
         personListView.setCellFactory(listView -> new PersonListViewCell());
+        personListView.setStyle("-fx-background-color: white;");
         setEventHandlerForSelectionChangeEvent();
     }
 
@@ -64,7 +70,14 @@ public class PersonListPanel extends UiPart<Region> {
     @Subscribe
     private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        scrollTo(event.targetIndex);
+        if (!event.isGroupType()) {
+            scrollTo(event.targetIndex);
+        }
+    }
+
+    @Subscribe
+    private void handleDeselectEvent(DeselectAllEvent event) {
+        personListView.getSelectionModel().clearSelection();
     }
 
     /**

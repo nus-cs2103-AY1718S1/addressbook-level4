@@ -1,14 +1,15 @@
 package systemtests;
 
 import static org.junit.Assert.assertTrue;
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
-import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static seedu.address.logic.commands.DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS;
 import static seedu.address.testutil.TestUtil.getLastIndex;
 import static seedu.address.testutil.TestUtil.getMidIndex;
 import static seedu.address.testutil.TestUtil.getPerson;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
 import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
+
+import java.util.ArrayList;
 
 import org.junit.Test;
 
@@ -23,6 +24,9 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 public class DeleteCommandSystemTest extends AddressBookSystemTest {
 
+    // this message is used to match message in result display, which should be empty for any failed execution
+    private static final String MESSAGE_EXECUTION_FAILURE_EMPTY = "";
+
     private static final String MESSAGE_INVALID_DELETE_COMMAND_FORMAT =
             String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE);
 
@@ -34,7 +38,10 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         Model expectedModel = getModel();
         String command = "     " + DeleteCommand.COMMAND_WORD + "      " + INDEX_FIRST_PERSON.getOneBased() + "       ";
         ReadOnlyPerson deletedPerson = removePerson(expectedModel, INDEX_FIRST_PERSON);
-        String expectedResultMessage = String.format(MESSAGE_DELETE_PERSON_SUCCESS, deletedPerson);
+
+        ArrayList<ReadOnlyPerson> personsToDelete = new ArrayList<>();
+        personsToDelete.add(deletedPerson);
+        String expectedResultMessage = DeleteCommand.getSb(personsToDelete);
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
 
         /* Case: delete the last person in the list -> deleted */
@@ -56,6 +63,26 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         /* Case: delete the middle person in the list -> deleted */
         Index middlePersonIndex = getMidIndex(getModel());
         assertCommandSuccess(middlePersonIndex);
+        executeCommand(UndoCommand.COMMAND_WORD, false);
+
+        /* Case: delete multiple persons in the list -> deleted */
+        expectedModel = getModel();
+        String multipleCommands = "     " + DeleteCommand.COMMAND_WORD + "      "
+                + INDEX_FIRST_PERSON.getOneBased() + " "
+                + INDEX_SECOND_PERSON.getOneBased() + " "
+                + INDEX_THIRD_PERSON.getOneBased()
+                + "       ";
+        deletedPerson = removePerson(expectedModel, INDEX_FIRST_PERSON);
+        ReadOnlyPerson deletedPerson2 = removePerson(expectedModel, INDEX_FIRST_PERSON);
+        ReadOnlyPerson deletedPerson3 = removePerson(expectedModel, INDEX_FIRST_PERSON);
+        personsToDelete.clear();
+        personsToDelete.add(deletedPerson);
+        personsToDelete.add(deletedPerson2);
+        personsToDelete.add(deletedPerson3);
+        expectedResultMessage = DeleteCommand.getSb(personsToDelete);
+        //assertCommandSuccess(multipleCommands, expectedModel, expectedResultMessage);
+        //executeCommand(UndoCommand.COMMAND_WORD, false);
+
 
         /* ------------------ Performing delete operation while a filtered list is being shown ---------------------- */
 
@@ -71,7 +98,7 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         showPersonsWithName(KEYWORD_MATCHING_MEIER);
         int invalidIndex = getModel().getAddressBook().getPersonList().size();
         command = DeleteCommand.COMMAND_WORD + " " + invalidIndex;
-        assertCommandFailure(command, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(command, MESSAGE_EXECUTION_FAILURE_EMPTY);
 
         /* --------------------- Performing delete operation while a person card is selected ------------------------ */
 
@@ -83,33 +110,38 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         selectPerson(selectedIndex);
         command = DeleteCommand.COMMAND_WORD + " " + selectedIndex.getOneBased();
         deletedPerson = removePerson(expectedModel, selectedIndex);
-        expectedResultMessage = String.format(MESSAGE_DELETE_PERSON_SUCCESS, deletedPerson);
+
+        personsToDelete.clear();
+        personsToDelete.add(deletedPerson);
+        expectedResultMessage = DeleteCommand.getSb(personsToDelete);
+
         assertCommandSuccess(command, expectedModel, expectedResultMessage, expectedIndex);
 
         /* --------------------------------- Performing invalid delete operation ------------------------------------ */
 
         /* Case: invalid index (0) -> rejected */
         command = DeleteCommand.COMMAND_WORD + " 0";
-        assertCommandFailure(command, MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
+        assertCommandFailure(command, MESSAGE_EXECUTION_FAILURE_EMPTY);
 
         /* Case: invalid index (-1) -> rejected */
         command = DeleteCommand.COMMAND_WORD + " -1";
-        assertCommandFailure(command, MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
+        assertCommandFailure(command, MESSAGE_EXECUTION_FAILURE_EMPTY);
 
         /* Case: invalid index (size + 1) -> rejected */
         Index outOfBoundsIndex = Index.fromOneBased(
                 getModel().getAddressBook().getPersonList().size() + 1);
         command = DeleteCommand.COMMAND_WORD + " " + outOfBoundsIndex.getOneBased();
-        assertCommandFailure(command, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(command, MESSAGE_EXECUTION_FAILURE_EMPTY);
 
         /* Case: invalid arguments (alphabets) -> rejected */
-        assertCommandFailure(DeleteCommand.COMMAND_WORD + " abc", MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
+        assertCommandFailure(DeleteCommand.COMMAND_WORD + " abc", MESSAGE_EXECUTION_FAILURE_EMPTY);
 
         /* Case: invalid arguments (extra argument) -> rejected */
-        assertCommandFailure(DeleteCommand.COMMAND_WORD + " 1 abc", MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
+        assertCommandFailure(DeleteCommand.COMMAND_WORD + " 1 abc", MESSAGE_EXECUTION_FAILURE_EMPTY);
 
         /* Case: mixed case command word -> rejected */
-        assertCommandFailure("DelETE 1", MESSAGE_UNKNOWN_COMMAND);
+        assertCommandFailure("DelETE 1",
+                MESSAGE_EXECUTION_FAILURE_EMPTY);
     }
 
     /**
@@ -134,7 +166,11 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
     private void assertCommandSuccess(Index toDelete) {
         Model expectedModel = getModel();
         ReadOnlyPerson deletedPerson = removePerson(expectedModel, toDelete);
-        String expectedResultMessage = String.format(MESSAGE_DELETE_PERSON_SUCCESS, deletedPerson);
+        StringBuilder sb = new StringBuilder();
+        sb.append(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS);
+        sb.append("1. ");
+        sb.append(deletedPerson);
+        String expectedResultMessage = sb.toString();
 
         assertCommandSuccess(
                 DeleteCommand.COMMAND_WORD + " " + toDelete.getOneBased(), expectedModel, expectedResultMessage);
@@ -163,8 +199,8 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
      * @see AddressBookSystemTest#assertSelectedCardChanged(Index)
      */
     private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage,
-            Index expectedSelectedCardIndex) {
-        executeCommand(command);
+                                      Index expectedSelectedCardIndex) {
+        executeCommand(command, false);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
 
         if (expectedSelectedCardIndex != null) {
@@ -191,7 +227,7 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
     private void assertCommandFailure(String command, String expectedResultMessage) {
         Model expectedModel = getModel();
 
-        executeCommand(command);
+        executeCommand(command, true);
         assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
         assertSelectedCardUnchanged();
         assertCommandBoxShowsErrorStyle();

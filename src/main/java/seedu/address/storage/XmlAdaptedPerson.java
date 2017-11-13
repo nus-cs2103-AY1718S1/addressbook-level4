@@ -9,11 +9,16 @@ import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Facebook;
+import seedu.address.model.person.Favorite;
+import seedu.address.model.person.Major;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.Remark;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -29,6 +34,16 @@ public class XmlAdaptedPerson {
     private String email;
     @XmlElement(required = true)
     private String address;
+    @XmlElement(required = true)
+    private String birthday;
+    @XmlElement(required = true)
+    private String remark;
+    @XmlElement(required = true)
+    private String major;
+    @XmlElement(required = true)
+    private String facebook;
+    @XmlElement(required = true)
+    private boolean favorite;
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -50,6 +65,11 @@ public class XmlAdaptedPerson {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
+        birthday = source.getBirthday().value;
+        remark = source.getRemark().remark;
+        major = source.getMajor().value;
+        facebook = source.getFacebook().value;
+        favorite = source.getFavorite().favorite;
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
@@ -70,7 +90,14 @@ public class XmlAdaptedPerson {
         final Phone phone = new Phone(this.phone);
         final Email email = new Email(this.email);
         final Address address = new Address(this.address);
+        final Birthday birthday = new Birthday(this.birthday);
+        final Remark remark = new Remark(this.remark);
+        final Major major = new Major(this.major);
+        final Facebook facebook = new Facebook(this.facebook);
+        final Favorite favorite = new Favorite(this.favorite);
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, tags);
+        Person person = new Person(name, phone, email, address, birthday, remark, major, facebook, tags);
+        person.setFavorite(favorite);
+        return person;
     }
 }

@@ -4,11 +4,10 @@ import static guitests.guihandles.WebViewUtil.waitUntilBrowserLoaded;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static seedu.address.ui.BrowserPanel.DEFAULT_PAGE;
-import static seedu.address.ui.BrowserPanel.GOOGLE_SEARCH_URL_PREFIX;
+import static seedu.address.ui.BrowserPanel.GOOGLE_MAP_URL_PREFIX;
 import static seedu.address.ui.BrowserPanel.GOOGLE_SEARCH_URL_SUFFIX;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
-import static seedu.address.ui.UiPart.FXML_FILE_FOLDER;
 import static seedu.address.ui.testutil.GuiTestAssert.assertListMatching;
 
 import java.net.MalformedURLException;
@@ -24,15 +23,16 @@ import org.junit.ClassRule;
 
 import guitests.guihandles.BrowserPanelHandle;
 import guitests.guihandles.CommandBoxHandle;
+import guitests.guihandles.GroupListPanelHandle;
 import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.MainWindowHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.StatusBarFooterHandle;
-import seedu.address.MainApp;
 import seedu.address.TestApp;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.SelectCommand;
@@ -84,6 +84,10 @@ public abstract class AddressBookSystemTest {
         return mainWindowHandle.getPersonListPanel();
     }
 
+    public GroupListPanelHandle getGroupListPanel() {
+        return mainWindowHandle.getGroupListPanel();
+    }
+
     public MainMenuHandle getMainMenu() {
         return mainWindowHandle.getMainMenu();
     }
@@ -104,13 +108,13 @@ public abstract class AddressBookSystemTest {
      * Executes {@code command} in the application's {@code CommandBox}.
      * Method returns after UI components have been updated.
      */
-    protected void executeCommand(String command) {
+    protected void executeCommand(String command, boolean inValid) {
         rememberStates();
         // Injects a fixed clock before executing a command so that the time stamp shown in the status bar
         // after each command is predictable and also different from the previous command.
         clockRule.setInjectedClockToCurrentTime();
 
-        mainWindowHandle.getCommandBox().run(command);
+        mainWindowHandle.getCommandBox().run(command, inValid);
 
         waitUntilBrowserLoaded(getBrowserPanel());
     }
@@ -119,7 +123,7 @@ public abstract class AddressBookSystemTest {
      * Displays all persons in the address book.
      */
     protected void showAllPersons() {
-        executeCommand(ListCommand.COMMAND_WORD);
+        executeCommand(ListCommand.COMMAND_WORD, false);
         assert getModel().getAddressBook().getPersonList().size() == getModel().getFilteredPersonList().size();
     }
 
@@ -127,7 +131,7 @@ public abstract class AddressBookSystemTest {
      * Displays all persons with any parts of their names matching {@code keyword} (case-insensitive).
      */
     protected void showPersonsWithName(String keyword) {
-        executeCommand(FindCommand.COMMAND_WORD + " " + keyword);
+        executeCommand(FindCommand.COMMAND_WORD + " " + keyword, false);
         assert getModel().getFilteredPersonList().size() < getModel().getAddressBook().getPersonList().size();
     }
 
@@ -135,7 +139,7 @@ public abstract class AddressBookSystemTest {
      * Selects the person at {@code index} of the displayed list.
      */
     protected void selectPerson(Index index) {
-        executeCommand(SelectCommand.COMMAND_WORD + " " + index.getOneBased());
+        executeCommand(SelectCommand.COMMAND_WORD + " " + index.getOneBased(), false);
         assert getPersonListPanel().getSelectedCardIndex() == index.getZeroBased();
     }
 
@@ -163,6 +167,7 @@ public abstract class AddressBookSystemTest {
         statusBarFooterHandle.rememberSaveLocation();
         statusBarFooterHandle.rememberSyncStatus();
         getPersonListPanel().rememberSelectedPersonCard();
+        getGroupListPanel().rememberSelectedGroupCard();
     }
 
     /**
@@ -182,10 +187,11 @@ public abstract class AddressBookSystemTest {
      * @see PersonListPanelHandle#isSelectedPersonCardChanged()
      */
     protected void assertSelectedCardChanged(Index expectedSelectedCardIndex) {
-        String selectedCardName = getPersonListPanel().getHandleToSelectedCard().getName();
+        String selectedCardAddress = getPersonListPanel().getHandleToSelectedCard().getAddress();
         URL expectedUrl;
         try {
-            expectedUrl = new URL(GOOGLE_SEARCH_URL_PREFIX + selectedCardName.replaceAll(" ", "+")
+            expectedUrl = new URL(GOOGLE_MAP_URL_PREFIX
+                    + StringUtil.partiallyEncode(selectedCardAddress)
                     + GOOGLE_SEARCH_URL_SUFFIX);
         } catch (MalformedURLException mue) {
             throw new AssertionError("URL expected to be valid.");
@@ -246,9 +252,9 @@ public abstract class AddressBookSystemTest {
     private void assertApplicationStartingStateIsCorrect() {
         try {
             assertEquals("", getCommandBox().getInput());
-            assertEquals("", getResultDisplay().getText());
+            assertEquals("Welcome to Contact Plus pro!", getResultDisplay().getText());
             assertListMatching(getPersonListPanel(), getModel().getFilteredPersonList());
-            assertEquals(MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE), getBrowserPanel().getLoadedUrl());
+            assertEquals(new URL(DEFAULT_PAGE), getBrowserPanel().getLoadedUrl());
             assertEquals("./" + testApp.getStorageSaveLocation(), getStatusBarFooter().getSaveLocation());
             assertEquals(SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
         } catch (Exception e) {

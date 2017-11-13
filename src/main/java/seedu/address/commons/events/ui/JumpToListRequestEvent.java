@@ -9,10 +9,18 @@ import seedu.address.commons.events.BaseEvent;
 public class JumpToListRequestEvent extends BaseEvent {
 
     public final int targetIndex;
+    //@@author hthjthtrh
+    private boolean isGroupType;
 
-    public JumpToListRequestEvent(Index targetIndex) {
+    public JumpToListRequestEvent(Index targetIndex, boolean isGrpType) {
         this.targetIndex = targetIndex.getZeroBased();
+        this.isGroupType = isGrpType;
     }
+
+    public boolean isGroupType() {
+        return this.isGroupType;
+    }
+    //@@author
 
     @Override
     public String toString() {

@@ -1,8 +1,5 @@
 package systemtests;
 
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
-import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.SelectCommand.MESSAGE_SELECT_PERSON_SUCCESS;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
@@ -18,6 +15,10 @@ import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
 
 public class SelectCommandSystemTest extends AddressBookSystemTest {
+
+    // this message is used to match message in result display, which should be empty for any failed execution
+    private static final String MESSAGE_EXECUTION_FAILURE_EMPTY = "";
+
     @Test
     public void select() {
         /* Case: select the first card in the person list, command with leading spaces and trailing spaces
@@ -33,13 +34,11 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: undo previous selection -> rejected */
         command = UndoCommand.COMMAND_WORD;
-        String expectedResultMessage = UndoCommand.MESSAGE_FAILURE;
-        assertCommandFailure(command, expectedResultMessage);
+        assertCommandFailure(command, MESSAGE_EXECUTION_FAILURE_EMPTY);
 
         /* Case: redo selecting last card in the list -> rejected */
         command = RedoCommand.COMMAND_WORD;
-        expectedResultMessage = RedoCommand.MESSAGE_FAILURE;
-        assertCommandFailure(command, expectedResultMessage);
+        assertCommandFailure(command, MESSAGE_EXECUTION_FAILURE_EMPTY);
 
         /* Case: select the middle card in the person list -> selected */
         Index middleIndex = Index.fromOneBased(personCount.getOneBased() / 2);
@@ -48,7 +47,7 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: invalid index (size + 1) -> rejected */
         int invalidIndex = getModel().getFilteredPersonList().size() + 1;
-        assertCommandFailure(SelectCommand.COMMAND_WORD + " " + invalidIndex, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(SelectCommand.COMMAND_WORD + " " + invalidIndex, MESSAGE_EXECUTION_FAILURE_EMPTY);
 
         /* Case: select the current selected card -> selected */
         assertCommandSuccess(command, middleIndex);
@@ -58,7 +57,7 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
          */
         showPersonsWithName(KEYWORD_MATCHING_MEIER);
         invalidIndex = getModel().getAddressBook().getPersonList().size();
-        assertCommandFailure(SelectCommand.COMMAND_WORD + " " + invalidIndex, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(SelectCommand.COMMAND_WORD + " " + invalidIndex, MESSAGE_EXECUTION_FAILURE_EMPTY);
 
         /* Case: filtered person list, select index within bounds of address book and person list -> selected */
         Index validIndex = Index.fromOneBased(1);
@@ -67,29 +66,25 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, validIndex);
 
         /* Case: invalid index (0) -> rejected */
-        assertCommandFailure(SelectCommand.COMMAND_WORD + " " + 0,
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
+        assertCommandFailure(SelectCommand.COMMAND_WORD + " " + 0, MESSAGE_EXECUTION_FAILURE_EMPTY);
 
         /* Case: invalid index (-1) -> rejected */
-        assertCommandFailure(SelectCommand.COMMAND_WORD + " " + -1,
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
+        assertCommandFailure(SelectCommand.COMMAND_WORD + " " + -1, MESSAGE_EXECUTION_FAILURE_EMPTY);
 
         /* Case: invalid arguments (alphabets) -> rejected */
-        assertCommandFailure(SelectCommand.COMMAND_WORD + " abc",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
+        assertCommandFailure(SelectCommand.COMMAND_WORD + " abc", MESSAGE_EXECUTION_FAILURE_EMPTY);
 
         /* Case: invalid arguments (extra argument) -> rejected */
-        assertCommandFailure(SelectCommand.COMMAND_WORD + " 1 abc",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
+        assertCommandFailure(SelectCommand.COMMAND_WORD + " 1 abc", MESSAGE_EXECUTION_FAILURE_EMPTY);
 
         /* Case: mixed case command word -> rejected */
-        assertCommandFailure("SeLeCt 1", MESSAGE_UNKNOWN_COMMAND);
+        assertCommandFailure("SeLeCt 1", MESSAGE_EXECUTION_FAILURE_EMPTY);
 
         /* Case: select from empty address book -> rejected */
-        executeCommand(ClearCommand.COMMAND_WORD);
+        executeCommand(ClearCommand.COMMAND_WORD, false);
         assert getModel().getAddressBook().getPersonList().size() == 0;
         assertCommandFailure(SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased(),
-                MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+                MESSAGE_EXECUTION_FAILURE_EMPTY);
     }
 
     /**
@@ -110,7 +105,7 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
                 MESSAGE_SELECT_PERSON_SUCCESS, expectedSelectedCardIndex.getOneBased());
         int preExecutionSelectedCardIndex = getPersonListPanel().getSelectedCardIndex();
 
-        executeCommand(command);
+        executeCommand(command, false);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
 
         if (preExecutionSelectedCardIndex == expectedSelectedCardIndex.getZeroBased()) {
@@ -135,7 +130,7 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
     private void assertCommandFailure(String command, String expectedResultMessage) {
         Model expectedModel = getModel();
 
-        executeCommand(command);
+        executeCommand(command, true);
         assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
         assertSelectedCardUnchanged();
         assertCommandBoxShowsErrorStyle();

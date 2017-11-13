@@ -8,6 +8,11 @@
         <street></street>
         <postalCode></postalCode>
         <city></city>
+        <remark></remark>
+        <major></major>
+        <facebook></facebook>
+        <birthday>01/01/1991</birthday>
+        <birthday></birthday>
     </persons>
     <tags>
         <name>Friends</name>

@@ -1,6 +1,14 @@
+//@@author hthjthtrh
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_VALUE_ARGUMENT;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -18,13 +26,30 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public DeleteCommand parse(String args) throws ParseException {
-        try {
-            Index index = ParserUtil.parseIndex(args);
-            return new DeleteCommand(index);
-        } catch (IllegalValueException ive) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
+        args = args.trim();
+
+        if (args.equals("")) {
+            throw new ParseException(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE);
         }
+        List<String> indexStrs = Arrays.asList(args.split("\\s+"));
+        //eliminate duplicates
+        HashSet<Integer> indexIntsSet = new HashSet<>();
+
+        for (String indexStr : indexStrs) {
+            try {
+                indexIntsSet.add(ParserUtil.parseInt(indexStr));
+            } catch (IllegalValueException e) {
+                throw new ParseException(MESSAGE_INVALID_VALUE_ARGUMENT, DeleteCommand.MESSAGE_USAGE);
+            }
+        }
+        List<Integer> indexInts = new ArrayList<>(indexIntsSet);
+        Collections.sort(indexInts);
+        ArrayList<Index> indexes = new ArrayList<>();
+        for (int i = 0; i < indexInts.size(); i++) {
+            indexes.add(Index.fromOneBased(indexInts.get(i)));
+        }
+        return new DeleteCommand(indexes);
     }
 
 }
+//@@author

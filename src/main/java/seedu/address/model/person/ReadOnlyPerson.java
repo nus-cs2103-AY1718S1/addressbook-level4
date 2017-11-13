@@ -1,5 +1,6 @@
 package seedu.address.model.person;
 
+import java.util.List;
 import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
@@ -20,8 +21,19 @@ public interface ReadOnlyPerson {
     Email getEmail();
     ObjectProperty<Address> addressProperty();
     Address getAddress();
+    ObjectProperty<Birthday> birthdayProperty();
+    Birthday getBirthday();
+    ObjectProperty<Remark> remarkProperty();
+    Remark getRemark();
+    ObjectProperty<Favorite> favoriteProperty();
+    Favorite getFavorite();
     ObjectProperty<UniqueTagList> tagProperty();
+    Major getMajor();
+    ObjectProperty<Major> majorProperty();
+    Facebook getFacebook();
+    ObjectProperty<Facebook> facebookProperty();
     Set<Tag> getTags();
+    List<String> getTagsString();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
@@ -32,7 +44,12 @@ public interface ReadOnlyPerson {
                 && other.getName().equals(this.getName()) // state checks here onwards
                 && other.getPhone().equals(this.getPhone())
                 && other.getEmail().equals(this.getEmail())
-                && other.getAddress().equals(this.getAddress()));
+                && other.getAddress().equals(this.getAddress()))
+                && other.getBirthday().equals(this.getBirthday())
+                && other.getRemark().equals(this.getRemark())
+                && other.getFavorite().equals(this.getFavorite())
+                && other.getMajor().equals(this.getMajor())
+                && other.getFacebook().equals(this.getFacebook());
     }
 
     /**
@@ -47,6 +64,16 @@ public interface ReadOnlyPerson {
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
+                .append(" Birthday: ")
+                .append(getBirthday())
+                .append(" Remark: ")
+                .append(getRemark())
+                .append(" Favorite: ")
+                .append(getFavorite())
+                .append(" Major: ")
+                .append(getMajor())
+                .append(" Facebook: ")
+                .append(getFacebook())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();

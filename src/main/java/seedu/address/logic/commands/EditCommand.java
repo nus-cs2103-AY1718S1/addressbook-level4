@@ -1,10 +1,15 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.core.Messages.MESSAGE_EXECUTION_FAILURE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_BIRTHDAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_FACEBOOK;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MAJOR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
@@ -17,11 +22,16 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Facebook;
+import seedu.address.model.person.Favorite;
+import seedu.address.model.person.Major;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.Remark;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
@@ -32,6 +42,7 @@ import seedu.address.model.tag.Tag;
 public class EditCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "edit";
+    public static final String COMMAND_ALIAS = "e";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
             + "by the index number used in the last person listing. "
@@ -41,6 +52,10 @@ public class EditCommand extends UndoableCommand {
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
+            + "[" + PREFIX_BIRTHDAY + "BIRTHDAY] "
+            + "[" + PREFIX_REMARK + "REMARK] "
+            + "[" + PREFIX_MAJOR + "MAJOR]"
+            + "[" + PREFIX_FACEBOOK + "FACEBOOK]"
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
@@ -70,7 +85,7 @@ public class EditCommand extends UndoableCommand {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(MESSAGE_EXECUTION_FAILURE, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
         ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
@@ -78,12 +93,14 @@ public class EditCommand extends UndoableCommand {
 
         try {
             model.updatePerson(personToEdit, editedPerson);
+            model.propagateToGroup(personToEdit, editedPerson, this.getClass());
         } catch (DuplicatePersonException dpe) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            throw new CommandException(MESSAGE_EXECUTION_FAILURE, MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedPerson));
     }
 
@@ -99,9 +116,19 @@ public class EditCommand extends UndoableCommand {
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
+        Birthday updatedBirthday = editPersonDescriptor.getBirthday().orElse(personToEdit.getBirthday());
+        Remark updatedRemark = editPersonDescriptor.getRemark().orElse(personToEdit.getRemark());
+        Major updatedMajor = editPersonDescriptor.getMajor().orElse(personToEdit.getMajor());
+        Facebook updatedFacebook = editPersonDescriptor.getFacebook().orElse(personToEdit.getFacebook());
+        Favorite updatedFavorite = personToEdit.getFavorite();
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
+        Person updatedPerson =
+                new Person(updatedName, updatedPhone, updatedEmail,
+                        updatedAddress, updatedBirthday, updatedRemark,
+                        updatedMajor, updatedFacebook, updatedTags);
+        updatedPerson.setFavorite(updatedFavorite);
+        return updatedPerson;
     }
 
     @Override
@@ -131,6 +158,10 @@ public class EditCommand extends UndoableCommand {
         private Phone phone;
         private Email email;
         private Address address;
+        private Birthday birthday;
+        private Remark remark;
+        private Major major;
+        private Facebook facebook;
         private Set<Tag> tags;
 
         public EditPersonDescriptor() {}
@@ -140,6 +171,10 @@ public class EditCommand extends UndoableCommand {
             this.phone = toCopy.phone;
             this.email = toCopy.email;
             this.address = toCopy.address;
+            this.birthday = toCopy.birthday;
+            this.remark = toCopy.remark;
+            this.major = toCopy.major;
+            this.facebook = toCopy.facebook;
             this.tags = toCopy.tags;
         }
 
@@ -147,7 +182,8 @@ public class EditCommand extends UndoableCommand {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.tags);
+            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.remark,
+                    this.major, this.facebook, this.tags);
         }
 
         public void setName(Name name) {
@@ -182,6 +218,38 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(address);
         }
 
+        public void setBirthday(Birthday birthday) {
+            this.birthday = birthday;
+        }
+
+        public Optional<Birthday> getBirthday() {
+            return Optional.ofNullable(birthday);
+        }
+
+        public void setRemark(Remark remark) {
+            this.remark = remark;
+        }
+
+        public Optional<Remark> getRemark() {
+            return Optional.ofNullable(remark);
+        }
+
+        public void setMajor(Major major) {
+            this.major = major;
+        }
+
+        public Optional<Major> getMajor() {
+            return Optional.ofNullable(major);
+        }
+
+        public void setFacebook(Facebook facebook) {
+            this.facebook = facebook;
+        }
+
+        public Optional<Facebook> getFacebook() {
+            return Optional.ofNullable(facebook);
+        }
+
         public void setTags(Set<Tag> tags) {
             this.tags = tags;
         }
@@ -209,6 +277,10 @@ public class EditCommand extends UndoableCommand {
                     && getPhone().equals(e.getPhone())
                     && getEmail().equals(e.getEmail())
                     && getAddress().equals(e.getAddress())
+                    && getBirthday().equals(e.getBirthday())
+                    && getRemark().equals(e.getRemark())
+                    && getMajor().equals(e.getMajor())
+                    && getFacebook().equals(e.getFacebook())
                     && getTags().equals(e.getTags());
         }
     }

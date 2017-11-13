@@ -32,6 +32,10 @@ public class EditPersonDescriptorBuilder {
         descriptor.setPhone(person.getPhone());
         descriptor.setEmail(person.getEmail());
         descriptor.setAddress(person.getAddress());
+        descriptor.setBirthday(person.getBirthday());
+        descriptor.setRemark(person.getRemark());
+        descriptor.setMajor(person.getMajor());
+        descriptor.setFacebook(person.getFacebook());
         descriptor.setTags(person.getTags());
     }
 
@@ -83,6 +87,44 @@ public class EditPersonDescriptorBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code Birthday} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withBirthday(String birthday) {
+        try {
+            ParserUtil.parseBirthday(Optional.of(birthday)).ifPresent(descriptor::setBirthday);
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("birthday is expected to be unique.");
+        }
+        return this;
+    }
+    //@@author heiseish
+    /**
+     * Sets the {@code Remark} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withRemark(String remark) {
+        ParserUtil.parseRemark(Optional.of(remark)).ifPresent(descriptor::setRemark);
+        return this;
+    }
+
+    /**
+     * Sets the {@code Major} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withMajor(String major) {
+        ParserUtil.parseMajor(Optional.of(major)).ifPresent(descriptor::setMajor);
+        return this;
+    }
+
+
+    /**
+     * Sets the {@code Facebook} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withFacebook(String facebook) {
+        ParserUtil.parseFacebook(Optional.of(facebook)).ifPresent(descriptor::setFacebook);
+        return this;
+    }
+
+    //author
     /**
      * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code EditPersonDescriptor}
      * that we are building.

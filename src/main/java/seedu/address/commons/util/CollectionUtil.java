@@ -4,10 +4,13 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Stream;
+
+import seedu.address.model.tag.Tag;
 
 /**
  * Utility methods related to Collections
@@ -48,4 +51,25 @@ public class CollectionUtil {
         }
         return true;
     }
+
+    //@@author heiseish
+    /**
+     * Return true if two collections has mutual member or 1 member of the first collections contains
+     * the second member of the 2nd set
+     */
+    public static boolean mutualOrContains(Set<Tag> s1, Set<Tag> s2) {
+        if (!Collections.disjoint(s1, s2)) {
+            return true;
+        }
+        for (Tag t1 : s1) {
+            for (Tag t2 : s2) {
+                if (t1.tagName.contains(t2.tagName)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    //author
+
 }

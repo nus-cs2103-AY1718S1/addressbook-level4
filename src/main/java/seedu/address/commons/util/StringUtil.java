@@ -33,8 +33,10 @@ public class StringUtil {
         String preppedSentence = sentence;
         String[] wordsInPreppedSentence = preppedSentence.split("\\s+");
 
+
         for (String wordInSentence: wordsInPreppedSentence) {
-            if (wordInSentence.equalsIgnoreCase(preppedWord)) {
+            if (wordInSentence.equalsIgnoreCase(preppedWord)
+                    || containsIgnoreCase(wordInSentence, preppedWord)) {
                 return true;
             }
         }
@@ -68,4 +70,32 @@ public class StringUtil {
             return false;
         }
     }
+
+    /**
+     * Returns a partially {@return encoded URL} from a {@params s}
+     */
+    public static String partiallyEncode(String s) {
+        requireNonNull(s);
+        return s.replaceAll(" ", "+")
+                .replaceAll(",", "%2C")
+                .replaceAll("#", "%23");
+    }
+
+    //@@author heiseish
+    /**
+     * check if a string contains another substring, ignoring case
+     * @param str String to be checked
+     * @param searchStr Substring
+     * @return true if {@code str} contains {@code searchStr}, false otherwise
+     */
+    public static boolean containsIgnoreCase(String str, String searchStr) {
+        final int length = searchStr.length();
+        for (int i = str.length() - length; i >= 0; i--) {
+            if (str.regionMatches(true, i, searchStr, 0, length)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    //@@author
 }

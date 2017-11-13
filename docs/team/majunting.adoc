@@ -1,0 +1,84 @@
+= Ma Junting - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: Contact+ Pro
+Contact+ Pro is a portable contact book designed specifically for NUS students with the aim to connect
+the students and help them keep in touch with friends and peers!
+*Code contributed*: [https://github.com/CS2103AUG2017-T14-B4/main/blob/master/collated/main/majunting.md[Functional code]] [https://github.com/CS2103AUG2017-T14-B4/main/blob/master/collated/test/majunting.md[Test code]]
+
+=== Enhancement Added: List Alphabet
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=listalp]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+For a forgetful user, when number of contacts stored in Contact+ Pro is very large, it would be extremely
+difficult to find a certain contact if he could not recall the full name of the contact. The list alphabet
+command aims to alleviate the difficulty: instead of searching by the full name or other attributes which
+are hard to remember, the user can search by the first alphabet of the name of the contact, and thus search
+for the desired contact more easily within a much narrower range.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=listalp]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Locate
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=locate]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+For a user who likes to visit his friends, navigation function is a crucial part of the address book his is using.
+With the locate command, the user can easily find out the route from any location to the location of any of his
+friends or relatives.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=locate]
+
+#End of Extract#
+
+---
+
+
+=== Enhancement Proposed: Link to useful websites such as IVLE or nusmods
+
+By linking to these websites, the user can view his schedule more easily and to
+plan their activities conveniently with reference to information shown on the websites.
+
+=== Other contributions
+
+* Implement delete tag command.
+* Improve find command to list favorite / unfavorite contacts.
+* Implement sort command.
+* Include google map direction url prefix and suffix for direction search

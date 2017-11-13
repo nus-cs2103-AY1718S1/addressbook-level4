@@ -11,9 +11,13 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Facebook;
+import seedu.address.model.person.Major;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Remark;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -41,6 +45,20 @@ public class ParserUtil {
             throw new IllegalValueException(MESSAGE_INVALID_INDEX);
         }
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
+    }
+
+    /**
+     * Parses a String into an integer and returns it. Leading and trailing whitespaces will be
+     * trimmed.
+     * @throws IllegalValueException if the specified number is invalid (not non-zero unsigned integer
+     * or not an integer).
+     */
+    public static int parseInt(String numStr) throws IllegalValueException {
+        String trimmedNumStr = numStr.trim();
+        if (!StringUtil.isNonZeroUnsignedInteger(trimmedNumStr)) {
+            throw new IllegalValueException(MESSAGE_INVALID_INDEX);
+        }
+        return Integer.parseInt(trimmedNumStr);
     }
 
     /**
@@ -80,6 +98,15 @@ public class ParserUtil {
     }
 
     /**
+     * Parses a {@code Optional<String> birthday} into an {@code Optional<Birthday>} if {@code birthday} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Birthday> parseBirthday(Optional<String> birthday) throws IllegalValueException {
+        requireNonNull(birthday);
+        return birthday.isPresent() ? Optional.of(new Birthday(birthday.get())) : Optional.empty();
+    }
+
+    /**
      * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
      */
     public static Set<Tag> parseTags(Collection<String> tags) throws IllegalValueException {
@@ -89,5 +116,34 @@ public class ParserUtil {
             tagSet.add(new Tag(tagName));
         }
         return tagSet;
+    }
+
+    //@@author heiseish
+    /**
+     * Parses a {@code Optional<String> remark} into an {@code Optional<Remark>} if {@code remark} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Remark> parseRemark(Optional<String> remark) {
+        requireNonNull(remark);
+        return remark.isPresent() ? Optional.of(new Remark(remark.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> rmajor} into an {@code Optional<Major>} if {@code major} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Major> parseMajor(Optional<String> major) {
+        requireNonNull(major);
+        return major.isPresent() ? Optional.of(new Major(major.get())) : Optional.empty();
+    }
+
+
+    /**
+     * Parses a {@code Optional<String> facebook} into an {@code Optional<Facebook>} if {@code facebook} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Facebook> parseFacebook(Optional<String> facebook) {
+        requireNonNull(facebook);
+        return facebook.isPresent() ? Optional.of(new Facebook(facebook.get())) : Optional.empty();
     }
 }

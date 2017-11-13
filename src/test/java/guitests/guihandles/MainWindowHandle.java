@@ -13,11 +13,13 @@ public class MainWindowHandle extends StageHandle {
     private final StatusBarFooterHandle statusBarFooter;
     private final MainMenuHandle mainMenu;
     private final BrowserPanelHandle browserPanel;
+    private final GroupListPanelHandle groupListPanel;
 
     public MainWindowHandle(Stage stage) {
         super(stage);
 
         personListPanel = new PersonListPanelHandle(getChildNode(PersonListPanelHandle.PERSON_LIST_VIEW_ID));
+        groupListPanel = new GroupListPanelHandle(getChildNode(GroupListPanelHandle.GROUP_LIST_VIEW_ID));
         resultDisplay = new ResultDisplayHandle(getChildNode(ResultDisplayHandle.RESULT_DISPLAY_ID));
         commandBox = new CommandBoxHandle(getChildNode(CommandBoxHandle.COMMAND_INPUT_FIELD_ID));
         statusBarFooter = new StatusBarFooterHandle(getChildNode(StatusBarFooterHandle.STATUS_BAR_PLACEHOLDER));
@@ -27,6 +29,10 @@ public class MainWindowHandle extends StageHandle {
 
     public PersonListPanelHandle getPersonListPanel() {
         return personListPanel;
+    }
+
+    public GroupListPanelHandle getGroupListPanel() {
+        return groupListPanel;
     }
 
     public ResultDisplayHandle getResultDisplay() {

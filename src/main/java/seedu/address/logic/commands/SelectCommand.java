@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.commons.core.Messages.MESSAGE_EXECUTION_FAILURE;
+
 import java.util.List;
 
 import seedu.address.commons.core.EventsCenter;
@@ -35,10 +37,10 @@ public class SelectCommand extends Command {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(MESSAGE_EXECUTION_FAILURE, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex));
+        EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex, false));
         return new CommandResult(String.format(MESSAGE_SELECT_PERSON_SUCCESS, targetIndex.getOneBased()));
 
     }

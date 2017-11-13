@@ -7,6 +7,7 @@ import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.function.Predicate;
 
 import org.junit.Rule;
@@ -14,12 +15,15 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.group.DuplicateGroupException;
+import seedu.address.model.group.Group;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -118,6 +122,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void favoritePerson(ReadOnlyPerson target) throws PersonNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
                 throws DuplicatePersonException {
             fail("This method should not be called.");
@@ -130,9 +139,72 @@ public class AddCommandTest {
         }
 
         @Override
+        public void sortBy(int attribute) {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
             fail("This method should not be called.");
         }
+
+        @Override
+        public void createGroup(String groupName, List<ReadOnlyPerson> personToGroup) throws DuplicateGroupException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void propagateToGroup(ReadOnlyPerson personToEdit, Person editedPerson, Class commandClass) {
+            fail("This method should not be called.");
+        }
+
+        public void propagateToGroup(ReadOnlyPerson personToEdit, Person editedPerson) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void deleteGroup(Group grpToDelete) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void setGrpName(Group targetGrp, String detail) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void addPersonToGroup(Group targetGrp, ReadOnlyPerson targetPerson) throws DuplicatePersonException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void removePersonFromGroup(Group targetGrp, ReadOnlyPerson targetPerson) throws PersonNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<Group> getFilteredGroupList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public void updateFilteredGroupList(Predicate<Group> predicateShowAllGroups) {
+            fail("This method should not be called.");
+        }
+
+        /**
+         * Finds the index of a group in the group list
+         *
+         * @param groupName
+         * @return
+         */
+        @Override
+        public Index getGroupIndex(String groupName) {
+            fail("This method should not be called.");
+            return null;
+        }
+
     }
 
     /**

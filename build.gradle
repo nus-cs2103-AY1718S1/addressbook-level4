@@ -43,6 +43,7 @@ allprojects {
         testFxVersion = '4.0.7-alpha'
         monocleVersion = '1.8.0_20'
         checkstyleVersion = '8.1'
+        restfbVersion = '2.0.0-rc.3'
 
         libDir = 'lib'
     }
@@ -65,6 +66,7 @@ allprojects {
         compile "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
         compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jacksonDataTypeVersion"
         compile "com.google.guava:guava:$guavaVersion"
+        compile "com.restfb:restfb:$restfbVersion"
 
         testCompile "junit:junit:$junitVersion"
         testCompile "org.testfx:testfx-core:$testFxVersion"
@@ -87,7 +89,7 @@ allprojects {
     }
 
     shadowJar {
-        archiveName = "addressbook.jar"
+        archiveName = "ContactPlusPro.jar"
 
         destinationDir = file("${buildDir}/jar/")
     }
@@ -148,6 +150,17 @@ class AddressBookTest extends Test {
     }
 }
 
+task specificTests(type: AddressBookTest) {
+    include 'seedu/address/ui/**'
+    exclude 'seedu/address/commons/util/**'
+    exclude 'systemtests/**'
+    exclude 'guitests/**'
+
+    jacoco {
+        destinationFile = new File("${buildDir}/jacoco/test.exec")
+    }
+}
+
 task guiTests(type: AddressBookTest) {
     include 'guitests/**'
     include 'systemtests/**'
@@ -157,7 +170,6 @@ task guiTests(type: AddressBookTest) {
         destinationFile = new File("${buildDir}/jacoco/test.exec")
     }
 }
-
 
 task nonGuiTests(type: AddressBookTest) {
     include 'seedu/address/**'
@@ -180,6 +192,7 @@ task headless << {
     guiTests.setHeadless()
     nonGuiTests.setHeadless()
     allTests.setHeadless()
+    specificTests.setHeadless()
 }
 
 // Makes sure that headless properties are set before running tests

@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addressbook>
+    <persons>
+        <name>Alex Yeoh</name>
+        <phone>87438807</phone>
+        <email>alexyeoh@example.com</email>
+        <address>Blk 30 Geylang Street 29, #06-40</address>
+        <birthday>01/01/1991</birthday>
+        <remark></remark>
+        <major>Chemical Engineering</major>
+        <facebook></facebook>
+        <favorite>false</favorite>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Bernice Yu</name>
+        <phone>99272758</phone>
+        <email>berniceyu@example.com</email>
+        <address>Blk 30 Lorong 3 Serangoon Gardens, #07-18</address>
+        <birthday>01/01/1991</birthday>
+        <remark></remark>
+        <major>Computer Science</major>
+        <facebook></facebook>
+        <favorite>false</favorite>
+        <tagged>colleagues</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Brendan</name>
+        <phone>29102304</phone>
+        <email>brendantan@yahoo.com.my</email>
+        <address>20, Jurong East Ave, #01-20</address>
+        <birthday>04/08/1996</birthday>
+        <remark>Fun</remark>
+        <major>Law</major>
+        <facebook>brendan.s.tan</facebook>
+        <favorite>false</favorite>
+        <tagged>Joker</tagged>
+    </persons>
+    <persons>
+        <name>Charlotte Oliveiro</name>
+        <phone>93210283</phone>
+        <email>charlotte@example.com</email>
+        <address>Blk 11 Ang Mo Kio Street 74, #11-04</address>
+        <birthday>01/01/1991</birthday>
+        <remark></remark>
+        <major>Information System</major>
+        <facebook></facebook>
+        <favorite>false</favorite>
+        <tagged>neighbours</tagged>
+    </persons>
+    <persons>
+        <name>David Li</name>
+        <phone>91031282</phone>
+        <email>lidavid@example.com</email>
+        <address>Blk 436 Serangoon Gardens Street 26, #16-43</address>
+        <birthday>01/01/1991</birthday>
+        <remark></remark>
+        <major>Business Analytics</major>
+        <facebook></facebook>
+        <favorite>false</favorite>
+        <tagged>family</tagged>
+    </persons>
+    <persons>
+        <name>Eli Le</name>
+        <phone>98012899</phone>
+        <email>elile@gmail.com</email>
+        <address>04 Hillcrest Road, #03-12</address>
+        <birthday>03/09/1880</birthday>
+        <remark>Acquaintance</remark>
+        <major></major>
+        <facebook></facebook>
+        <favorite>false</favorite>
+        <tagged>PhucsBF</tagged>
+    </persons>
+    <persons>
+        <name>Elon Musk</name>
+        <phone>92019201</phone>
+        <email>elonmusk@tesla.com</email>
+        <address>31, Victoria Street, #4-13</address>
+        <birthday>29/03/1993</birthday>
+        <remark>Hangs out with Tony Stark</remark>
+        <major>Computer Science</major>
+        <facebook></facebook>
+        <favorite>false</favorite>
+    </persons>
+    <persons>
+        <name>Irfan Ibrahim</name>
+        <phone>92492021</phone>
+        <email>irfan@example.com</email>
+        <address>Blk 47 Tampines Street 20, #17-35</address>
+        <birthday>01/01/1991</birthday>
+        <remark></remark>
+        <major>Computer Engineering</major>
+        <facebook></facebook>
+        <favorite>false</favorite>
+        <tagged>classmates</tagged>
+    </persons>
+    <persons>
+        <name>Jack Ma</name>
+        <phone>91820103</phone>
+        <email>jackma@alibaba.com</email>
+        <address>100, Bukit Timah road, #04-12</address>
+        <birthday>09/11/1890</birthday>
+        <remark>Starring in upcoming IPman movie</remark>
+        <major>Business Administration</major>
+        <facebook></facebook>
+        <favorite>false</favorite>
+        <tagged>Close</tagged>
+    </persons>
+    <persons>
+        <name>Jerald Lim</name>
+        <phone>81020104</phone>
+        <email>jerald@hotmail.com</email>
+        <address>#322, Clementi Avenue</address>
+        <birthday>01/12/1995</birthday>
+        <remark>Good friends</remark>
+        <major>Maths</major>
+        <facebook></facebook>
+        <favorite>false</favorite>
+        <tagged>PokemonGoRaid</tagged>
+    </persons>
+    <persons>
+        <name>Kuroky</name>
+        <phone>91829104</phone>
+        <email>kuro@yahoo.com</email>
+        <address>89, Old Airport Road, #4-15</address>
+        <birthday>01/10/1991</birthday>
+        <remark>God at Dota</remark>
+        <major>Computer Engineering</major>
+        <facebook></facebook>
+        <favorite>false</favorite>
+    </persons>
+    <persons>
+        <name>Ma Junting</name>
+        <phone>09192938</phone>
+        <email>junting@rocketmail.com</email>
+        <address>100, Changi Road, #09-11</address>
+        <birthday>11/11/1996</birthday>
+        <remark>Locate</remark>
+        <major>Computer Science</major>
+        <facebook></facebook>
+        <favorite>false</favorite>
+    </persons>
+    <persons>
+        <name>Mark Zuckerberg</name>
+        <phone>82819203</phone>
+        <email>zuck@facebook.com</email>
+        <address>40, Guillemard Road, #04-02</address>
+        <birthday>01/09/1991</birthday>
+        <remark>Smart</remark>
+        <major>Computer Science</major>
+        <facebook>zuck</facebook>
+        <favorite>false</favorite>
+    </persons>
+    <persons>
+        <name>Melanie</name>
+        <phone>91029101</phone>
+        <email>ngsuli@facebook.com</email>
+        <address>200, Woodlands Avenue, #11-30</address>
+        <birthday>05/05/1996</birthday>
+        <remark>Birthday feature</remark>
+        <major>Computer Science</major>
+        <facebook></facebook>
+        <favorite>false</favorite>
+    </persons>
+    <persons>
+        <name>Nobita</name>
+        <phone>92019501</phone>
+        <email>nobita@doraemon.com</email>
+        <address>200, Harborfront Avenue, #02-04</address>
+        <birthday>28/12/1995</birthday>
+        <remark>Clumsy</remark>
+        <major>Chemical Engineering</major>
+        <facebook></facebook>
+        <favorite>false</favorite>
+        <tagged>CS2103</tagged>
+    </persons>
+    <persons>
+        <name>Phuc Lim</name>
+        <phone>80103910</phone>
+        <email>leminhphuc10t1@gmail.com</email>
+        <address>304, Prince George Park's Residence, #06-57</address>
+        <birthday>24/12/1995</birthday>
+        <remark>Likes maths</remark>
+        <major>Maths</major>
+        <facebook></facebook>
+        <favorite>false</favorite>
+        <tagged>monkey</tagged>
+    </persons>
+    <persons>
+        <name>Rexing</name>
+        <phone>102010102</phone>
+        <email>rexing@overwatch.com</email>
+        <address>6969, Geylang street, #02-69</address>
+        <birthday>20/11/1996</birthday>
+        <remark>Needs healing</remark>
+        <major>Computer Science</major>
+        <facebook></facebook>
+        <favorite>false</favorite>
+        <tagged>ReallyNeedsHealing</tagged>
+    </persons>
+    <persons>
+        <name>Roy Balakrishnan</name>
+        <phone>92624417</phone>
+        <email>royb@example.com</email>
+        <address>Blk 45 Aljunied Street 85, #11-31</address>
+        <birthday>01/01/1991</birthday>
+        <remark></remark>
+        <major>Mathematics</major>
+        <facebook></facebook>
+        <favorite>false</favorite>
+        <tagged>colleagues</tagged>
+    </persons>
+    <persons>
+        <name>Seah Ying Hand</name>
+        <phone>12396969</phone>
+        <email>seah@gmail.com</email>
+        <address>69, Pansir Panjang, #03-214</address>
+        <birthday>019/06/1996</birthday>
+        <remark>Classmate</remark>
+        <major>Electrical Engineering</major>
+        <facebook>seahyh</facebook>
+        <favorite>false</favorite>
+        <tagged>StandfordBoi</tagged>
+    </persons>
+    <persons>
+        <name>Tony Stark</name>
+        <phone>98765432</phone>
+        <email>tony@stark.com.us</email>
+        <address>334, Pansir Panjang Road, #3-14</address>
+        <birthday>20/11/1995</birthday>
+        <remark>Likes to create stuff</remark>
+        <major>Astronuclearphysics</major>
+        <facebook></facebook>
+        <favorite>false</favorite>
+    </persons>
+    <tags>colleagues</tags>
+    <tags>classmates</tags>
+    <tags>neighbours</tags>
+    <tags>family</tags>
+    <tags>friends</tags>
+    <tags>PokemonGoRaid</tags>
+    <tags>StandfordBoi</tags>
+    <tags>Joker</tags>
+    <tags>ReallyNeedsHealing</tags>
+    <tags>CS2103</tags>
+    <tags>monkey</tags>
+    <tags>PhucsBF</tags>
+    <tags>StarringInUpcomingIPmanMovie</tags>
+    <tags>Close</tags>
+    <groups>
+        <groupName>Avengers</groupName>
+        <persons>
+            <name>Tony Stark</name>
+            <phone>98765432</phone>
+            <email>tony@stark.com.us</email>
+            <address>334, Pansir Panjang Road, #3-14</address>
+            <birthday>20/11/1995</birthday>
+            <remark>Likes to create stuff</remark>
+            <major>Astronuclearphysics</major>
+            <facebook></facebook>
+            <favorite>false</favorite>
+        </persons>
+    </groups>
+    <groups>
+        <groupName>CS2103</groupName>
+        <persons>
+            <name>Kuroky</name>
+            <phone>91829104</phone>
+            <email>kuro@yahoo.com</email>
+            <address>89, Old Airport Road, #4-15</address>
+            <birthday>01/10/1991</birthday>
+            <remark>God at Dota</remark>
+            <major>Computer Engineering</major>
+            <facebook></facebook>
+            <favorite>false</favorite>
+        </persons>
+        <persons>
+            <name>Melanie</name>
+            <phone>91029101</phone>
+            <email>ngsuli@facebook.com</email>
+            <address>200, Woodlands Avenue, #11-30</address>
+            <birthday>05/05/1996</birthday>
+            <remark>Birthday feature</remark>
+            <major>Computer Science</major>
+            <facebook></facebook>
+            <favorite>false</favorite>
+        </persons>
+        <persons>
+            <name>Nobita</name>
+            <phone>92019501</phone>
+            <email>nobita@doraemon.com</email>
+            <address>200, Harborfront Avenue, #02-04</address>
+            <birthday>28/12/1995</birthday>
+            <remark>Clumsy</remark>
+            <major>Chemical Engineering</major>
+            <facebook></facebook>
+            <favorite>false</favorite>
+            <tagged>CS2103</tagged>
+        </persons>
+        <persons>
+            <name>Rexing</name>
+            <phone>102010102</phone>
+            <email>rexing@overwatch.com</email>
+            <address>6969, Geylang street, #02-69</address>
+            <birthday>20/11/1996</birthday>
+            <remark>Needs healing</remark>
+            <major>Computer Science</major>
+            <facebook></facebook>
+            <favorite>false</favorite>
+            <tagged>ReallyNeedsHealing</tagged>
+        </persons>
+    </groups>
+    <groups>
+        <groupName>ComputerScience</groupName>
+        <persons>
+            <name>Bernice Yu</name>
+            <phone>99272758</phone>
+            <email>berniceyu@example.com</email>
+            <address>Blk 30 Lorong 3 Serangoon Gardens, #07-18</address>
+            <birthday>01/01/1991</birthday>
+            <remark></remark>
+            <major>Computer Science</major>
+            <facebook></facebook>
+            <favorite>false</favorite>
+            <tagged>colleagues</tagged>
+            <tagged>friends</tagged>
+        </persons>
+        <persons>
+            <name>Ma Junting</name>
+            <phone>09192938</phone>
+            <email>junting@rocketmail.com</email>
+            <address>100, Changi Road, #09-11</address>
+            <birthday>11/11/1996</birthday>
+            <remark>Locate</remark>
+            <major>Computer Science</major>
+            <facebook></facebook>
+            <favorite>false</favorite>
+        </persons>
+        <persons>
+            <name>Mark Zuckerberg</name>
+            <phone>82819203</phone>
+            <email>zuck@facebook.com</email>
+            <address>40, Guillemard Road, #04-02</address>
+            <birthday>01/09/1991</birthday>
+            <remark>Smart</remark>
+            <major>Computer Science</major>
+            <facebook>zuck</facebook>
+            <favorite>false</favorite>
+        </persons>
+        <persons>
+            <name>Melanie</name>
+            <phone>91029101</phone>
+            <email>ngsuli@facebook.com</email>
+            <address>200, Woodlands Avenue, #11-30</address>
+            <birthday>05/05/1996</birthday>
+            <remark>Birthday feature</remark>
+            <major>Computer Science</major>
+            <facebook></facebook>
+            <favorite>false</favorite>
+        </persons>
+        <persons>
+            <name>Rexing</name>
+            <phone>102010102</phone>
+            <email>rexing@overwatch.com</email>
+            <address>6969, Geylang street, #02-69</address>
+            <birthday>20/11/1996</birthday>
+            <remark>Needs healing</remark>
+            <major>Computer Science</major>
+            <facebook></facebook>
+            <favorite>false</favorite>
+            <tagged>ReallyNeedsHealing</tagged>
+        </persons>
+        <persons>
+            <name>Roy Balakrishnan</name>
+            <phone>92624417</phone>
+            <email>royb@example.com</email>
+            <address>Blk 45 Aljunied Street 85, #11-31</address>
+            <birthday>01/01/1991</birthday>
+            <remark></remark>
+            <major>Mathematics</major>
+            <facebook></facebook>
+            <favorite>false</favorite>
+            <tagged>colleagues</tagged>
+        </persons>
+    </groups>
+</addressbook>

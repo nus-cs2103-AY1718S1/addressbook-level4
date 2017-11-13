@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= Contact+ Pro - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,9 +10,11 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-T14-B4/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team T14-B4`
+
+The App is developer based on address-book level 4 by team `See-du`
 
 == Quick Start
 
@@ -47,25 +49,28 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+* Items with `?`​ after them can be used optionally including zero times e.g. `[m/MAJOR]?` can be used as `{nbsp}` (i.e. optional), `m/Computer Science`, `m/CS fb/zuck` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
 === Viewing help : `help`
 
-Format: `help`
+Format: `help` or `h`
 
+// tag::birthday[]
 === Adding a person: `add`
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BIRTHDAY [m/MAJOR]? [fb/FACEBOOK]? [r/REMARK]? [t/TAG]...`
 
+// end::birthday[]
 [TIP]
 A person can have any number of tags (including 0)
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/01/01/1990 m/Chemical Engineering fb/zuck`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 b/02/03/1990 t/criminal`
 
 === Listing all persons : `list`
 
@@ -75,7 +80,10 @@ Format: `list`
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [m/MAJOR]? [fb/FACEBOOK]? [t/TAG]...`
+
+or `e INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [m/MAJOR]? [fb/FACEBOOK]? [t/TAG]..`
+
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -91,16 +99,22 @@ Examples:
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+or
+* `e 1 p/91234567 e/johndoe@example.com` +
+Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+* `e 2 n/Betsy Crower t/` +
+Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+
 
 === Locating persons by name: `find`
 
-Finds persons whose names contain any of the given keywords. +
+*Unrestricted search
+Finds persons whose names, addresses, phones, emails or tags contain any of the given keywords or find favorite / unfavorite contacts. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
 * Only full words will be matched e.g. `Han` will not match `Hans`
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ****
@@ -111,16 +125,180 @@ Examples:
 Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
+* `find favorite` +
+Returns all favorite persons
+* `find unfavorite` +
+Returns all unfavorite persons
+
+*Restricted search
+Finds persons with one of the attributes: names, addresses, phones, emails or tags +
+contains any of the given keywords. +
+Format: `find [PREFIX/KEYWORD]`
+
+****
+* The search is case insensitive. e.g `hans` will match `Hans`
+* If multiple prefixes are provided, the search will only search based on the search term +
+with highest priority in the order: name > phone > address > email > tag
+****
+
+Examples:
+
+* `find n/John` +
+Returns `john` and `John Doe`
+* `find t/cs2103` +
+Returns any person having tags `cs2103`
+* `find e/example.com` +
+Returns any person having email containing `example.com`
+
+// tag::listalp[]
+=== Searching all persons whose name starts with a certain alphabet: `listalp`
+
+Finds persons whose names start with the given alphabet. +
+Format: `listalp ALPHABET`
+
+****
+* The search is case sensitive.
+****
+// end::listalp[]
+
+// tag::locate[]
+=== Finding the route from the specified address to a person in the addressbook: `locate`
+
+Finds the route from the given address to the address of the specified contact. +
+Format: `locate INDEX a/ADDRESS`
+
+Example:
+
+* `locate 1 a/clementi` +
+Displays the route from `clementi` to the address of the first person in the current list.
+// end::locate[]
+
+// tag::group[]
+=== Creating a group: `createGroup`
+
+Creates a group including a list of person from the address book. +
+Format: `createGroup GROUP_NAME(non-integer) INDEX [INDEX]...`
+
+****
+* Creates the group with group name `GROUP_NAME` including the list of people specified by `INDEX` s.
+* Group name cannot be empty.
+* Group name cannot be an integer, eg. 1341
+* Creating group with group name already existent in the addressbook will fail.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+* There must be *at least one* index to successfully create the group.
+****
+
+Examples:
+
+* `createGroup SoSmart 1 3 5` +
+Creates the group of group name SoSmart with the 1st, 3rd and 5th person in the current view.
+* `createGroup SoSmart 1 3 5` +
+`createGroup SoSmart 2 4` +
+Operation fails because group `SoSmart` already exists in the address book.
+* `createGroup YouSmart?` +
+Operation fails because no `index` is provided.
+* `createGroup 1234 1 2 3 4` +
+Operation fails because group name is an integer
+
+=== Deleting a group: `deleteGroup`
+
+Deletes a group from the addressbook. +
+Format: `deleteGroup GROUP_NAME` or `deleteGroup INDEX`
+
+****
+* Deletes the group with group name `GROUP_NAME` or index `INDEX`.
+* Group name must be a valid group name (exists in the addressbook and valid format)
+****
+
+Examples:
+
+* `createGroup SoSmart 1 2 3` +
+`deleteGroup SoSmart` +
+Deletes the group `SoSmart` successfully
+
+* `deleteGroup 12` +
+Deletes the 12th group in the list of groups
+
+* `deleteGroup SoSmart` +
+Operation fails because the group `SoSmart` does not exist
+
+* `deleteGroup -2` +
+Operation fails because -2 is neither a valid group name nor valid index
+
+=== Listing all groups: `listGroups`
+
+Lists all groups by group name in the addressbook. +
+Format: `listGroups`
+
+=== Listing persons within a group: `viewGroup`
+
+Lists all persons in the specified group +
+Format: `viewGroup GROUP_NAME` or `viewGroup INDEX`
+
+Examples:
+
+* `viewGroup Hello!` +
+Lists all person in the group `Hello!`.
+
+* `viewGroup 1` +
+Lists all person in the first group.
+
+* `viewGroup -1` +
+Operation fails since -1 is neither a valid group name nor a valid index
+
+=== Editing a group : `editGroup`
+
+Edits the group. +
+Format: `editGroup GROUP_NAME gn NEW_GROUP_NAME` or `editGroup GROUP_INDEX gn NEW_GROUP_NAME` +
+`editGroup GROUP_NAME add INDEX` or `editGroup GROUP_INDEX add INDEX` +
+`editGROUP GROUP_NAME delete INDEX` or `editGroup GROUP_INDEX delete INDEX` +
+
+****
+* This command supports three kinds of operations: 1. change group name 2. add a person to the group 3. delete a person from the group
+* `NEW_GROUP_NAME` must fit a valid group name format
+* person of specified index *within* the group is removed
+****
+
+Examples:
+
+* `editGroup test gn testing` +
+`editGroup anotherTest gn testing` +
+First operation succeeds if no existing group is called `testing` +
+Second operation fails if first operation goes through.
+
+* `editGroup 2 gn Sp1Cy!` +
+Second group group name is changed to Sp1Cy!.
+
+* `editGroup test add 1` +
+Adds the first person from the current view of persons to the group.
+
+* `editGroup 1 add 10` +
+Adds the tenth person into the first group.
+
+* `editGroup test delete 3` +
+Deletes the third person in the group.
+
+* `editGroup 1 delete 10` +
+Deletes the tenth person from the first group.
+
+* `editGroup test gn 12` +
+Operation fails as 12 is not a valid group name.
+
+// end::group[]
 
 === Deleting a person : `delete`
 
 Deletes the specified person from the address book. +
-Format: `delete INDEX`
+Format: `delete INDEX [INDEX]...` or  `d INDEX[INDEX]...`
 
 ****
-* Deletes the person at the specified `INDEX`.
+* Deletes the list of people at the specified `INDEX` s.
+* More than one index can be used to mass delete person.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
+* If any invalid index is provided, for example a character or number smaller than 1, will
+fail and no changes will be made.
 ****
 
 Examples:
@@ -129,8 +307,37 @@ Examples:
 `delete 2` +
 Deletes the 2nd person in the address book.
 * `find Betsy` +
-`delete 1` +
-Deletes the 1st person in the results of the `find` command.
+`delete 1 3 7` +
+Deletes the 1st, 3rd, 7th person in the results of the `find` command.
+
+
+// tag::favorite[]
+=== Favoriting a person : `favorite`
+
+
+Favorites the specified person from the address book so they will appear on top of the contact list or unfavorite a favorited person. +
+Format: `favorite INDEX` or `fav INDEX`
+
+****
+* Favorites the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+[NOTE]
+====
+To un-favorite a person, simply input the `favorite` command again with the person's index
+====
+
+Examples:
+
+* `list` +
+`favorite 3` +
+Favorite the 3rd person in the address book.
+* `find Betsy` +
+`favorite 1` +
+Favorite the 1st person in the results of the `find` command.
+// end::favorite[]
 
 === Selecting a person : `select`
 
@@ -152,6 +359,36 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
+=== Remarking a person : `remark`
+
+Add a remark to a person in the contact list. +
+Format: `edit INDEX [r/REMARK]`
+
+=== Deleting tags from all persons : `deleteTag`
+
+Delete one specific tag from all persons in the contact list. +
+Format: `deleteTag [KEYWORD]`
+
+=== Sort person list : `sort`
+
+Sort current person list by an attribute specified by the user. +
+Format: `sort [KEYWORD]`
+
+****
+* Sort the list by one of the four attributes:
+* name
+* phone
+* email
+* address
+****
+
+Examples:
+
+* `sort name` +
+Sort the person list by name.
+* `sort phone` +
+Sort the person list by phone.
+
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
@@ -163,14 +400,17 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 ====
 
 // tag::undoredo[]
+// tag::undo[]
 === Undoing previous command : `undo`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
-Format: `undo`
+Restores the address book to the state before the _undoable_ commands were executed, specified by the the number of commands to undo +
+Format: `undo [STEPS]` +
+Alternative format: `undo all`, which undoes all changes made in current session.
+
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit`, `remark` and `clear`).
 ====
 
 Examples:
@@ -185,9 +425,16 @@ Examples:
 The `undo` command fails as there are no undoable commands executed previously.
 
 * `delete 1` +
+`delete 2` +
+`delete 2` +
 `clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
+`undo 2` (reverses the 2 delete commands)
+
+* `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665` +
+`delete 1` +
+`delete 2` +
+`undo all` (reverses both delete commands and add command)
+// end::undo[]
 
 === Redoing the previously undone command : `redo`
 
@@ -222,6 +469,10 @@ Format: `clear`
 Exits the program. +
 Format: `exit`
 
+=== Access the facebook profile of a contact
+
+If a person is registered with a facebook user-name, a facebook icon will appear beside his name. To view his facebook profile and feeds, simply click on the facebook icon. Note: you might have to log in due to facebook data security.
+
 === Saving the data
 
 Address book data are saved in the hard disk automatically after any command that changes the data. +
@@ -234,19 +485,21 @@ There is no need to save manually.
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BIRTHDAY [r/REMARK]? [m/MAJOR]? [fb/FACEBOOK]? [t/TAG]...` +
+e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 b/01/01/1994 m/Computer Science fb/zuck t/friend t/colleague`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [r/REMARK] [m/MAJOR] [fb/FACEBOOK] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
+e.g. `find James Jake`, `find e/example.com`
 * *List* : `list`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
 * *History* : `history`
-* *Undo* : `undo`
+* *Remark*: `remark INDEX [r/REMARK]`
+* *Undo* : `undo` or `undo NUMBER_OF_TIME`
 * *Redo* : `redo`
+* *Favorite*: `favorite INDEX`

@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= Contact+ Pro - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,9 +10,11 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-T14-B4/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team T14-B4`
+
+The App is developer based on address-book level 4 by team `See-du`
 
 == Setting up
 
@@ -345,6 +347,27 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+// tag::listalp[]
+=== List Persons whose names start with certain alphabet
+
+List alphabet function is designated for frequent users who have a large number of contacts saved in the addressbook and could not recall the full name of the person he wants to find.
+
+List alphabet function is implemented in ListAlphabetCommand under logic component. When parsing the ListAlphaCommand in ListAlphaCommandParser, instead of passing the input argument to the ListAlphabetCommand, the parser invokes a method called NameStartsWithAlphabetPredicate.
+
+NameStartsWithAlphabetPredicate is a class created under model component, which checks for any persons whose name starts with the character same as the input argument, and returns a predicate to be passed into ListAlphabetCommand.
+
+ListAlphabetCommand reads the predicate and update filtered person list according to the predicate. After updating person list, Command result is returned with size of the updated filtered person list.
+
+==== Design Consideration
+**Aspect:** Way of comparing input argument and name +
+**Alternative 1 (current choice):** Comparing the first character of input argument and first character of a person's full name. +
+**Pros:** Easy to implement. +
+**Cons:** Only the first input alphabet is effective, and unable to search for multiple alphabets. +
+**Alternative 2:** Use regex to restrict input argument format, compare each single input character to get a full list of persons. +
+**Pros:** Allows user to search for multiple alphabets at once. +
+**Cons:** User might need to repeatedly type the same command if the input format is different from preset regex.
+// end::listalp[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
@@ -363,6 +386,254 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 === Configuration
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
+
+// tag::backupstorage[]
+=== Storage with back up
+
+Upon the first-time run of this application, user is provided with a sample list of people, provided by link:{repoURL}/src/main/java/seedu/address/storage/model/util/SampleDataUtil.java[`SampleDataUtil.java`]. This is to give the user an idea of how the working application should look like.
+
+If this is not a first-time run, under normal operation, addressbook.xml storage file in application directory/main/data is used to instantiate model for current session.
+
+However if user's main storage file addressbook.xml is non-existant, of incorrect format or unreadable, we make a best effort retrieval of back up data in addressbook.xml-backup.xml.
+
+Pseudo code for initiation of model:
+[source,java]
+----
+private Model initModelManager(Storage storage, UserPrefs userPrefs) {
+    ...
+    try {
+        read addressbook using storage
+        if storage file is not present:
+            initModelWithBackup
+    } catch (addressbook has incorrect format) {
+        initModelWithBackup
+    } catch (unreadable addressbook) {
+        initModelWithBackup
+    }
+    ...
+}
+
+private Model initModelWithBackup(Storage storage, UserPrefs userPrefs) {
+    ...
+    try {
+        read backup addressbook using storage
+        if backup storage file is present:
+            retrieve back up addressbook
+            save back up addressbook content to addressbook
+        else:
+            retrieve sample addressbook
+    } catch (addressbook has incorrect format) {
+        create empty addressbook
+    } catch (unreadable addressbook) {
+        create empty addressbook
+    }
+}
+----
+
+Back up file is kept up-to-date by updating itself when an AddressBookChangedEvent is raised.
+// end::backupstorage[]
+
+// tag::group[]
+=== Grouping
+
+The grouping function is created to allow user to better organise his contacts.
+This is achieved by introducing `UniqueGroupList` into the `addressbook`, which is a list of `Group` objects.
+
+`Group` objects are extensions of `UniquePersonList`, and contain all information of `Person` objects seperately
+from `UniquePersonList` in `addressbook` as a result of current implementation of `UniquePersonList`, which does
+not return direct reference to `Person` objects of interest.
+
+As `Person` in a `Group` and the corresponding `Person` in the `addressbook` are seperately kept, synchronization
+is done to all operations that cause a change in existing `Person` to propagate the changes down to `Group`.
+
+Code snippet demonstrating propagation of change using EditCommand as an example:
+[source,java]
+----
+public CommandResult executeUndoableCommand() throws CommandException {
+    ...
+    try {
+        model.updatePerson(personToEdit, editedPerson);
+        model.propagateToGroup(personToEdit, editedPerson);
+    } catch (DuplicatePersonException dpe) {
+        throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+    } catch (PersonNotFoundException pnfe) {
+        throw new AssertionError("The target person cannot be missing");
+    }
+    ....
+}
+----
+
+// end::group[]
+
+// tag::locate[]
+=== Locate: Navigate to a person's address
+
+Locate function allows the user to find the route from the address entered to a person's address, and the route displayed is the recommended by the Google Maps. The parameters to be entered by the user are the index of the person to be located, and the starting address with the address prefix in the front.
+
+During the implementation, the LocateCommandParser parses the input argument and extracts the index of the person and the starting address, and passes these values to a new LocateCommand object. The LocateCommand object obtains the address based on the index, and raises an event called `BrowserPanelLocateEvent` with the 2 addresses.
+
+Below shows the implementation of `BrowserPanelLocateEvent`:
+[source,java]
+----
+public class BrowserPanelLocateEvent extends BaseEvent {
+
+    private final String start;
+    private final String end;
+
+    public BrowserPanelLocateEvent(String start, String end) {
+        this.start = start;
+        this.end = end;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+
+    public String getEndAddress() {
+        return end;
+    }
+
+    public String getStartAddress() {
+        return start;
+    }
+}
+----
+
+The sequence diagram shown below shows how locate command works with input `locate 1 a/clementi`:
+
+image::LocateCommandSequenceDiagram.png[width="800"]
+
+[NOTE]
+Only one index and one address with address prefix are accepted. If input format is different, an invalid input message will be prompted. If the index given is wrong, an invalid person displayed index message will be prompted.
+
+==== Design Considerations
+
+**Aspect:** what the start and end addresses should be +
+**Alternative 1 (current choice):** The address input by the user is regarded as starting address by default, the address of the person in Contact+ Pro is set to end address. +
+**Pros:** Easier implementation +
+Command usage is more straight forward for the user. +
+**Cons:** User is not able to navigate from a person's address to a new location. +
+**Alternative 2:** The user decides which address is the start address and which is the end address.
+**Pros:** User has more freedom when using this locate command. +
+**Cons:** More inputs are expected from the user, causing the command to be more complicated.
+// end::locate[]
+
+// tag::favorite[]
+=== Favorite
+
+The Favorite function is created for frequent users who have have certain "close contacts" and
+want the contacts on top of their list for the ease of access.
+In order to implement such feature, two things need to be implemented:
+
+* Favorite class +
+* Sorting
+
+==== Favorite class
+A favorite class is implemented and used by Person class. A person object does not construct with a favorite object but it is
+able to setFavorite a new favorite object.
+A favorite object is different from other attribute object is that it just contains a simple boolean property.
+
+image::FavoriteClassDiagram.png[width="200"]
+
+To favorite a person in the list, a favorite command is implemented. The favorite command follows the same parser logic
+as `delete` command, which is to parse the index of the person to favorite. Hence, the favoriteCommand also extends
+UndoableCommand and overrides the methods in UndoableCommand.
+
+Model and UI components also have to be updated. For model, a method toggle favorite is implemented to favorite or "defavorite"
+a person at specified index:
+
+[source,java]
+----
+public void favorite(ReadOnlyPerson toFavorite)
+    throws PersonNotFoundException {
+        requireNonNull(toFavorite);
+        int index = internalList.indexOf(toFavorite);
+
+        if (index == -1) {
+            throw new PersonNotFoundException();
+        }
+
+        Person newPerson = new Person(toFavorite);
+        newPerson.setFavorite(new Favorite(!toFavorite.getFavorite().favorite));
+
+        internalList.set(index, newPerson);
+        sort();
+}
+----
+
+And for UI, a simple `Label` is created to displaying `favorite`, a filled shape heart if the person is favorite and a heart outline otherwise
+
+image::heart.png[width="40"]
+
+In the contact+ pro, it looks like:
+
+image::nameWithHeart.png[width="120"]
+
+and
+
+image::heartOutline.png[width="30"]
+
+==== Sorting
+
+A sorting algorithm needs to be implemented for the `UniquePersonList` of the `Model` Component.
+Fortunately, it can be easily done with `List.sort()` and  `Java predicate`. The priority of sorting is such that
+the persons favorited always appear on the top of the list, then all persons w/out favorited are
+sorted by alphabetical order:
+
+[source,java]
+----
+private void sort() {
+        internalList.sort((ReadOnlyPerson p1, ReadOnlyPerson p2) -> {
+            if (!p1.getFavorite().equals(p2.getFavorite())) {
+                return p2.getFavorite().getValue() - p1.getFavorite().getValue();
+            } else {
+                return p1.getName().fullName.compareTo(p2.getName().fullName);
+            }
+        });
+}
+----
+
+Finally, this method needs to be called whenever an event that causes changes to the model is called, eg
+Edit a person, Add a person or Favorite a person.
+
+
+==== Design Considerations
+
+**Aspect:** Where sorting should occur +
+**Alternative 1 (current choice):** On the lowest layer of `Model`, which is `UniquePersonList` +
+**Pros:** No need to have sorting in upper layer. +
+**Cons:** Permanently mutate the data list. +
+**Alternative 2:** Only sorting on the surface of `UI` component +
+**Pros:** No mutation of data list. +
+**Cons:** Difficult to implement system tests. +
+// end::favorite[]
+
+// tag::birthday[]
+== Birthday Detail
+
+A birthday detail is implemented under the Person class as Birthday. Users will add the birthday in along with the add command.
+It is a compulsory attribute like the Name, Phone, Email, Address of the Person class. It's implementation is similar as well.
+
+
+=== Description
+
+Format: b/[dd/mm/yyyy]
+
+=== Full solution
+
+See this http://github.com/NgSuli/main[PR] for the full solution.
+
+==== Design Considerations
+**Aspect:** Should this be an optional attribute instead?
+**Alternative 1(current choice):** It is easier to implement it as an compulsory field.
+**Pros:** Adding the birthday details makes the AddressBook more personal.
+**Cons:** Users have no choice but to key in the birthday detail.
+**Alternative 2:** Make the birthday attribute optional.
+**Pros:** Allows the user freedom to decide what they want in the addressbook.
+**Cons:** Slightly more tedious to implement.
+
+// end::birthday[]
 
 == Documentation
 
@@ -732,6 +1003,26 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`* * *` |user |undo/redo changes up to a reasonable number of steps in one go |So that multiple mistakes can be rectified easily.
+
+|`* * *` |new user |I can input the details of one contact in any order |so that I do not need memorize and follow the exact order
+
+|`* * *` |user |I can choose to find a contact with any details recorded in the AddressBook |so there are more ways to utilize the address book.
+
+|`* * *` |frequent user |I can sort people according to the frequency of interaction |so that I can find close friends easily
+
+|`* *` |power user |I can add tags to multiple people at the same time |so that creating a new grouping is much less time consuming
+
+|`*` |power user |I can customize abbreviation for people's names |so that searching for them is faster
+
+|`*` |power user |I can change my addressbook theme/color scheme |so that I can enjoy using the address book more.
+
+|`* *` |frequent user |I can 'favourite' a contact |so that these contacts will be on the top of my list on my UI
+
+|`* *` |user |I can click on an email and it opens up an email box |so i can directly send an email directly to the person
+
+|`* *` |user |I can choose to list contacts starting with a certain alphabet |
 |=======================================================================
 
 {More to be added}
@@ -767,6 +1058,88 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+
+== Use case: Search history
+
+*MSS*
+
+1. User request to search history by keying in 'history'
+2. Addressbook shows a list of commands used in the past.
+
+[discrete]
+=== Use case: Find person
+
+*MSS*
+
+1. User requests to find person by name, address, phone, email or tag
+2. AddressBook searches for person with the specified name and displays to user
+
+
++
+Use case ends.
+
+*Extensions*
+
+[none]
+
+* 2a. The list is empty.
++
+Use case ends.
+
+
+
+* 1a. The input name format is invalid.
++
+[none]
+** 1a1. AddressBook shows an error message.
++
+Use case ends.
+
+* 2a. No person with the specified name found.
++
+Use case ends.
+
+* 2b. Multiple persons whose names contain the same keyword are found.
++
+[none]
+** 2b1. AddressBook displays an indexed list of all persons found with the keyword in their names.
++
+Use case ends.
+
+[discrete]
+=== Use case: Add tag to an existing person
+
+*MSS*
+
+1. User request to find person
+2. User request to add a tag to the specified person
+3. AddressBook updates the tagList of the person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. Multiple persons are found.
++
+[none]
+** 1a1. AddressBook displays an indexed list of persons.
+** 1a2. User specifies index.
+** 1a3. AddressBook checks if the index is valid, if not AddressBook shows an error message and returns to step 1a2.
+** Use case resumes from step 2.
+
+* 2a. Format of tag provided by user is invalid.
++
+[none]
+** 2a1. AddressBook shows an error message.
+** Use case resumes from step 2.
+
+* 3a. The new tag is the same as an existing tag.
++
+Use cse ends.
+
+
+
 {More to be added}
 
 [appendix]
@@ -775,6 +1148,8 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  The addressbook will only work with english text.
+.  The addressbook should be easy enough for new users to understand and use (i.e. no complicated commands)
 
 {More to be added}
 

@@ -43,6 +43,7 @@ public class Tag {
                 && this.tagName.equals(((Tag) other).tagName)); // state check
     }
 
+
     @Override
     public int hashCode() {
         return tagName.hashCode();

@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.commons.core.Messages.MESSAGE_EXECUTION_FAILURE;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import seedu.address.logic.CommandHistory;
@@ -21,7 +22,7 @@ public class RedoCommand extends Command {
         requireAllNonNull(model, undoRedoStack);
 
         if (!undoRedoStack.canRedo()) {
-            throw new CommandException(MESSAGE_FAILURE);
+            throw new CommandException(MESSAGE_EXECUTION_FAILURE, MESSAGE_FAILURE);
         }
 
         undoRedoStack.popRedo().redo();

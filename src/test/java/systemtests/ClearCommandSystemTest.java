@@ -1,6 +1,5 @@
 package systemtests;
 
-import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 
 import org.junit.Test;
@@ -13,6 +12,9 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 
 public class ClearCommandSystemTest extends AddressBookSystemTest {
+
+    // this message is used to match message in result display, which should be empty for any failed execution
+    private static final String MESSAGE_EXECUTION_FAILURE_EMPTY = "";
 
     @Test
     public void clear() {
@@ -37,13 +39,13 @@ public class ClearCommandSystemTest extends AddressBookSystemTest {
         assertSelectedCardUnchanged();
 
         /* Case: selects first card in person list and clears address book -> cleared and no card selected */
-        executeCommand(UndoCommand.COMMAND_WORD); // restores the original address book
+        executeCommand(UndoCommand.COMMAND_WORD, false); // restores the original address book
         selectPerson(Index.fromOneBased(1));
         assertCommandSuccess(ClearCommand.COMMAND_WORD);
         assertSelectedCardDeselected();
 
         /* Case: filters the person list before clearing -> entire address book cleared */
-        executeCommand(UndoCommand.COMMAND_WORD); // restores the original address book
+        executeCommand(UndoCommand.COMMAND_WORD, false); // restores the original address book
         showPersonsWithName(KEYWORD_MATCHING_MEIER);
         assertCommandSuccess(ClearCommand.COMMAND_WORD);
         assertSelectedCardUnchanged();
@@ -53,7 +55,8 @@ public class ClearCommandSystemTest extends AddressBookSystemTest {
         assertSelectedCardUnchanged();
 
         /* Case: mixed case command word -> rejected */
-        assertCommandFailure("ClEaR", MESSAGE_UNKNOWN_COMMAND);
+        assertCommandFailure("ClEaR",
+                MESSAGE_EXECUTION_FAILURE_EMPTY);
     }
 
     /**
@@ -74,7 +77,7 @@ public class ClearCommandSystemTest extends AddressBookSystemTest {
      * @see ClearCommandSystemTest#assertCommandSuccess(String)
      */
     private void assertCommandSuccess(String command, String expectedResultMessage, Model expectedModel) {
-        executeCommand(command);
+        executeCommand(command, false);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
         assertCommandBoxShowsDefaultStyle();
         assertStatusBarUnchangedExceptSyncStatus();
@@ -92,7 +95,7 @@ public class ClearCommandSystemTest extends AddressBookSystemTest {
     private void assertCommandFailure(String command, String expectedResultMessage) {
         Model expectedModel = getModel();
 
-        executeCommand(command);
+        executeCommand(command, true);
         assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
         assertSelectedCardUnchanged();
         assertCommandBoxShowsErrorStyle();

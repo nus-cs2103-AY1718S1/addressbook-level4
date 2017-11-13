@@ -1,36 +1,49 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.commons.core.Messages.MESSAGE_EXECUTION_FAILURE;
 import static seedu.address.logic.UndoRedoStackUtil.prepareStack;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.deleteFirstPerson;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.testutil.TypicalIndexes;
 
 public class RedoCommandTest {
     private static final CommandHistory EMPTY_COMMAND_HISTORY = new CommandHistory();
     private static final UndoRedoStack EMPTY_STACK = new UndoRedoStack();
 
     private final Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-    private final DeleteCommand deleteCommandOne = new DeleteCommand(INDEX_FIRST_PERSON);
-    private final DeleteCommand deleteCommandTwo = new DeleteCommand(INDEX_FIRST_PERSON);
+    private DeleteCommand deleteCommandOne;
+    private DeleteCommand deleteCommandTwo;
+    private ArrayList<Index> testIndexes = new ArrayList<>();
 
     @Before
     public void setUp() {
+
+        testIndexes.add(TypicalIndexes.INDEX_FIRST_PERSON);
+        deleteCommandOne = new DeleteCommand(testIndexes);
+
+        ArrayList<Index> testIndexes1 = new ArrayList<>();
+        testIndexes1.add(TypicalIndexes.INDEX_FIRST_PERSON);
+        deleteCommandTwo = new DeleteCommand(testIndexes1);
+
         deleteCommandOne.setData(model, EMPTY_COMMAND_HISTORY, EMPTY_STACK);
         deleteCommandTwo.setData(model, EMPTY_COMMAND_HISTORY, EMPTY_STACK);
+
     }
 
     @Test
@@ -50,6 +63,6 @@ public class RedoCommandTest {
         assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
 
         // no command in redoStack
-        assertCommandFailure(redoCommand, model, RedoCommand.MESSAGE_FAILURE);
+        assertCommandFailure(redoCommand, model, MESSAGE_EXECUTION_FAILURE + RedoCommand.MESSAGE_FAILURE);
     }
 }

@@ -11,7 +11,7 @@ import seedu.address.commons.events.ui.NewResultAvailableEvent;
 
 public class ResultDisplayTest extends GuiUnitTest {
 
-    private static final NewResultAvailableEvent NEW_RESULT_EVENT_STUB = new NewResultAvailableEvent("Stub");
+    private static final NewResultAvailableEvent NEW_RESULT_EVENT_STUB = new NewResultAvailableEvent("Stub", false);
 
     private ResultDisplayHandle resultDisplayHandle;
 
@@ -28,7 +28,7 @@ public class ResultDisplayTest extends GuiUnitTest {
     public void display() {
         // default result text
         guiRobot.pauseForHuman();
-        assertEquals("", resultDisplayHandle.getText());
+        assertEquals("Welcome to Contact Plus pro!", resultDisplayHandle.getText());
 
         // new result received
         postNow(NEW_RESULT_EVENT_STUB);

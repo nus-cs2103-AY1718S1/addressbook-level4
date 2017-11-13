@@ -1,11 +1,12 @@
-= Address Book (Level 4)
+= Contact+ Pro
 ifdef::env-github,env-browser[:relfileprefix: docs/]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
-https://travis-ci.org/se-edu/addressbook-level4[image:https://travis-ci.org/se-edu/addressbook-level4.svg?branch=master[Build Status]]
-https://ci.appveyor.com/project/damithc/addressbook-level4[image:https://ci.appveyor.com/api/projects/status/3boko2x2vr5cc3w2?svg=true[Build status]]
-https://coveralls.io/github/se-edu/addressbook-level4?branch=master[image:https://coveralls.io/repos/github/se-edu/addressbook-level4/badge.svg?branch=master[Coverage Status]]
-https://www.codacy.com/app/damith/addressbook-level4?utm_source=github.com&utm_medium=referral&utm_content=se-edu/addressbook-level4&utm_campaign=Badge_Grade[image:https://api.codacy.com/project/badge/Grade/fc0b7775cf7f4fdeaf08776f3d8e364a[Codacy Badge]]
+https://ci.appveyor.com/project/heiseish/main[image:https://ci.appveyor.com/api/projects/status/vhv5ewn7p621ctvt/branch/master?svg=true[Build Status]]
+https://travis-ci.org/CS2103AUG2017-T14-B4/main[image:https://travis-ci.org/CS2103AUG2017-T14-B4/main.svg?branch=master[Build Status]]
+https://coveralls.io/github/CS2103AUG2017-T14-B4/main?branch=master[image:https://coveralls.io/repos/github/CS2103AUG2017-T14-B4/main/badge.svg?branch=master[Coverage Status]]
+https://www.codacy.com/app/heiseish/main?utm_source=github.com&utm_medium=referral&utm_content=CS2103AUG2017-T14-B4/main&utm_campaign=Badge_Grade[image:https://api.codacy.com/project/badge/Grade/ce6ebaad3ed34011af040ab8975dc24c[Codacy Badge]]
+
 
 ifdef::env-github[]
 image::docs/images/Ui.png[width="600"]
@@ -15,25 +16,19 @@ ifndef::env-github[]
 image::images/Ui.png[width="600"]
 endif::[]
 
-* This is a desktop Address Book application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
-* It is a Java sample application intended for students learning Software Engineering while using Java as the main programming language.
-* It is *written in OOP fashion*. It provides a *reasonably well-written* code example that is *significantly bigger* (around 6 KLoC)than what students usually write in beginner-level SE modules.
-* What's different from https://github.com/se-edu/addressbook-level3[level 3]:
-** A more sophisticated GUI that includes a list  panel and an in-built Browser.
-** More test cases, including automated GUI testing.
-** Support for _Build Automation_ using Gradle and for _Continuous Integration_ using Travis CI.
+* This is a product of group T14-B4 for CS2103 Software Engineering course.
+* The contact list app is designed specifically for NUS students.
+* Through the app, we hope to bring NUS students closer by providing a platform for people to keep in touch their friends!
 
 == Site Map
 
 * <<UserGuide#, User Guide>>
 * <<DeveloperGuide#, Developer Guide>>
-* <<LearningOutcomes#, Learning Outcomes>>
 * <<AboutUs#, About Us>>
 * <<ContactUs#, Contact Us>>
 
 == Acknowledgements
 
-* Some parts of this sample application were inspired by the excellent http://code.makery.ch/library/javafx-8-tutorial/[Java FX tutorial] by
-_Marco Jakob_.
+* Contact Plus Pro is modified based on AddressBook-Level4, a project created by SE-EDU initiative at https://github.com/se-edu/
 
 == Licence : link:LICENSE[MIT]

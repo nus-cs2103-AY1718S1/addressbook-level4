@@ -2,6 +2,8 @@ package seedu.address.testutil;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
+import seedu.address.model.group.DuplicateGroupException;
+import seedu.address.model.group.Group;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.tag.Tag;
@@ -46,6 +48,24 @@ public class AddressBookBuilder {
         }
         return this;
     }
+
+    //@@author hthjthtrh
+    /**
+     * adds a new group into the addressbook being built
+     * @param grp
+     * @return
+     */
+    public AddressBookBuilder withGroup(Group grp) {
+        try {
+            addressBook.addGroup(new Group(grp));
+        } catch (DuplicatePersonException e) {
+            throw new IllegalArgumentException("person is expected to be unique.");
+        } catch (DuplicateGroupException e) {
+            throw new IllegalArgumentException("group is expected to be unique.");
+        }
+        return this;
+    }
+    //@@author
 
     public AddressBook build() {
         return addressBook;

@@ -1,0 +1,59 @@
+= Dao Truong Giang - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: Contact+ Pro
+Contact+ Pro is a portable contact book designed specifically for NUS students with the aim to connect
+the students and help them keep in touch with friends and peers!
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T14-B4/main/blob/master/collated/main/heiseish.md[Functional code]] [https://github.com/CS2103AUG2017-T14-B4/main/blob/master/collated/test/heiseish.md[Test code]]
+
+=== Enhancement Added: Favorite
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=favorite]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+The contact list for frequent users might populate very fast and when people with same name
+or other details get added to the Contact+, it might become increasingly difficult to
+quickly search for a contact of a close friend. The favorite aims to solve just that: it could
+highlight certain individuals and put them on top of the contact list, giving the user the ease to browse
+through and with a quick glance they can see the details of such close friends.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=favorite]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Link for social media/messaging platform
+
+To further connect the students, a social media profile can be linked to each person
+in the contact book to let the user view with ease and message should the need arise.
+
+=== Other contributions
+
+* Update UI for PersonCard and GroupCard.
+* Add favorite, remark, major and facebook attribute to the Person class.
+* Add auto complete for command box.
+* Replace google search with google map for direction searching.
+* Adjust text color in the result display to better indicate the type of results.
+* Add random color generator for (except for pre-defined) labels.
+* Add graphical navigation for UI components.
+
+== Project: TBA

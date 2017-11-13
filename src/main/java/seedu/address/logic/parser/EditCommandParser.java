@@ -2,10 +2,15 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_VALUE_ARGUMENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_BIRTHDAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_FACEBOOK;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MAJOR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.Collection;
@@ -33,14 +38,15 @@ public class EditCommandParser implements Parser<EditCommand> {
     public EditCommand parse(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
+                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
+                        PREFIX_BIRTHDAY, PREFIX_REMARK, PREFIX_MAJOR, PREFIX_FACEBOOK, PREFIX_TAG);
 
         Index index;
 
         try {
             index = ParserUtil.parseIndex(argMultimap.getPreamble());
         } catch (IllegalValueException ive) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+            throw new ParseException(MESSAGE_INVALID_VALUE_ARGUMENT, EditCommand.MESSAGE_USAGE);
         }
 
         EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
@@ -49,13 +55,20 @@ public class EditCommandParser implements Parser<EditCommand> {
             ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE)).ifPresent(editPersonDescriptor::setPhone);
             ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).ifPresent(editPersonDescriptor::setEmail);
             ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).ifPresent(editPersonDescriptor::setAddress);
+            ParserUtil.parseBirthday(argMultimap.getValue(PREFIX_BIRTHDAY))
+                    .ifPresent(editPersonDescriptor::setBirthday);
+            ParserUtil.parseRemark(argMultimap.getValue(PREFIX_REMARK)).ifPresent(editPersonDescriptor::setRemark);
+            ParserUtil.parseMajor(argMultimap.getValue(PREFIX_MAJOR)).ifPresent(editPersonDescriptor::setMajor);
+            ParserUtil.parseFacebook(argMultimap.getValue(PREFIX_FACEBOOK))
+                    .ifPresent(editPersonDescriptor::setFacebook);
+
             parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
         } catch (IllegalValueException ive) {
-            throw new ParseException(ive.getMessage(), ive);
+            throw new ParseException(MESSAGE_INVALID_VALUE_ARGUMENT, ive.getMessage(), ive);
         }
 
         if (!editPersonDescriptor.isAnyFieldEdited()) {
-            throw new ParseException(EditCommand.MESSAGE_NOT_EDITED);
+            throw new ParseException(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_NOT_EDITED);
         }
 
         return new EditCommand(index, editPersonDescriptor);
