@@ -48,12 +48,12 @@ This app will not work with earlier versions of Java 8.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 .  This is your homepage.
 +
-//image::Ui.png[width="790"]                                  Add the homepage UI here
+image::cherBook.png[width="790"]
 _Figure 3.1 : cherBook's home page_
 
 . Type the command `select 1` in the command box and press kbd:[Enter] to to go to access the switch out of the Home Page. +
 +
-image::cherBook.png[width="790"]
+image::ui.png[width="790"]
 _Figure 3.2 : cherBook's application page_
 
 +
@@ -520,6 +520,7 @@ What is better then starting off a day right feeling good.
 These quotes changes every time the home page displayed through either calling then `home` command or starting the application.
 //end::homepanel[]
 
+//tag::home[]
 ===== Switching to home screen: `home` `Since v1.5`
 
 Switch all panels on the right to the home page. +
@@ -535,6 +536,7 @@ Examples:
 
 image::HomeImage.png[width="800"]
 _Figure 5.3.1.1 : Returns to the home page of cherBook_
+//end::home[]
 
 // tag::studentdetailspanel[]
 ==== Student Details Panel `Since v1.3`
@@ -749,12 +751,34 @@ Here is a list of shortcuts you can use in cherBook together with some examples.
 // end::commandshortcuts[]
 
 == FAQ
-//TODO: Update and Populate FAQ
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
 
 *Q*: What happens if I do not input fields that are optional? +
 *A*: A message will appear beside the optional field name in the extended screen, stating that the field is not recorded.
+
+*Q*: Will the list of sample students in the cherBook repopulate again everytime I reopen cherBook? +
+*A*: No, those sample students are generated only when you use cherBook for the first time to show you how
+a populated cherBook looks like, you can remove the list of the sample students immediately using the `clear` command.
+
+*Q*: I have accidentally deleted/edited my contact! Am I able to retrieve him/her? +
+*A*: There is a `undo` command where you can revert any accidental changes.
+
+*Q*: Is internet connectivity required for cherBook? +
+*A*: No, you are able to utilise all features of cherBook offline.
+
+*Q*: Why does clicking on the contacts not changes the home page to the statistic and graph panels? +
+*A*: There is a 'soft lock' that can only be unlock when the select command is entered. e.g. select 1. Everything can be done normally after that.
+
+*Q*: Is there any way I can delete more than one schedule or contact at a time? +
+*A*: For now, cherBook does not support deleting more than one schedule or contact, but make sure to keep a lookout for our v2.0 release because these features are currently undergoing development.
+
+*Q*: What the statistics in the `Statistics Panel` for? +
+*A*: The `Statistics Panel` calculates the statistics only for the students currently displayed in the `Students Panel`.
+It is automatically updated whenever the any students in the `Students Panel` are changed.
+
+*Q*: Where can I ask for more support or drop a feedback? +
+*A*: You can drop us an email at cherbook@gmail.com.
 
 == Glossary
 
