@@ -20,6 +20,6 @@ public class ThemeCommand extends Command {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof ThemeCommand); // All ThemeCommands are the same
+                || (other instanceof ThemeCommand); // all ThemeCommands are the same
     }
 }
