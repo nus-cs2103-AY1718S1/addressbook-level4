@@ -1,5 +1,5 @@
 # danielbrzn
-###### /java/guitests/guihandles/ProgressWindowHandle.java
+###### \java\guitests\guihandles\ProgressWindowHandle.java
 ``` java
 package guitests.guihandles;
 
@@ -34,7 +34,7 @@ public class ProgressWindowHandle extends StageHandle {
     }
 }
 ```
-###### /java/seedu/address/commons/util/GoogleUtilTest.java
+###### \java\seedu\address\commons\util\GoogleUtilTest.java
 ``` java
 package seedu.address.commons.util;
 
@@ -51,7 +51,7 @@ import seedu.address.testutil.PersonBuilder;
 public class GoogleUtilTest {
 
     @Test
-    public void convertFromGooglePerson_success() throws IllegalValueException {
+    public void convertFromGooglePersonWithAllFields_success() throws IllegalValueException {
         Person typicalPerson = new GooglePersonBuilder().build();
         seedu.address.model.person.Person typicalAddressBookPerson = new PersonBuilder().withTags("Google")
                 .withTwitter("").withInstagram("").build();
@@ -67,9 +67,70 @@ public class GoogleUtilTest {
         assertEquals(typicalAddressBookPerson, GoogleUtil.convertPerson(typicalPerson));
 
     }
+
+    @Test
+    public void convertFromGooglePersonWithInvalidPhone_returnsNull() throws IllegalValueException {
+        Person typicalPerson = new GooglePersonBuilder().withPhone("").build();
+        assertEquals(null, GoogleUtil.convertPerson(typicalPerson));
+
+    }
+
+    @Test
+    public void convertFromGooglePersonWithInvalidName_returnsNull() throws IllegalValueException {
+        Person typicalPerson = new GooglePersonBuilder().withName("").build();
+        assertEquals(null, GoogleUtil.convertPerson(typicalPerson));
+
+    }
+    @Test
+    public void convertFromGooglePersonWithNoPhoneList_returnsNull() throws IllegalValueException {
+        Person typicalPerson = new GooglePersonBuilder().noPhone().build();
+        assertEquals(null, GoogleUtil.convertPerson(typicalPerson));
+
+    }
+
+    @Test
+    public void convertFromGooglePersonWithNoEmail_success() throws IllegalValueException {
+        Person typicalPerson = new GooglePersonBuilder().withEmail("").build();
+        seedu.address.model.person.Person typicalAddressBookPerson = new PersonBuilder().withTags("Google")
+                .withTwitter("").withInstagram("").withEmail("").build();
+        assertEquals(typicalAddressBookPerson, GoogleUtil.convertPerson(typicalPerson));
+
+    }
+    @Test
+    public void convertFromGooglePersonWithNoNameList_returnsNull() throws IllegalValueException {
+        Person typicalPerson = new GooglePersonBuilder().noName().build();
+        assertEquals(null, GoogleUtil.convertPerson(typicalPerson));
+
+    }
+    @Test
+    public void convertFromGooglePersonWithNoEmailList_success() throws IllegalValueException {
+        Person typicalPerson = new GooglePersonBuilder().noEmail().build();
+        seedu.address.model.person.Person typicalAddressBookPerson = new PersonBuilder().withTags("Google")
+                .withTwitter("").withInstagram("").withEmail("").build();
+        assertEquals(typicalAddressBookPerson, GoogleUtil.convertPerson(typicalPerson));
+
+    }
+
+    @Test
+    public void convertFromGooglePersonWithNoBirthdayList_success() throws IllegalValueException {
+        Person typicalPerson = new GooglePersonBuilder().noBirthday().build();
+        seedu.address.model.person.Person typicalAddressBookPerson = new PersonBuilder().withTags("Google")
+                .withTwitter("").withInstagram("").withBirthday("").build();
+        assertEquals(typicalAddressBookPerson, GoogleUtil.convertPerson(typicalPerson));
+
+    }
+
+    @Test
+    public void convertFromGooglePersonWithNoAddressList_success() throws IllegalValueException {
+        Person typicalPerson = new GooglePersonBuilder().noAddress().build();
+        seedu.address.model.person.Person typicalAddressBookPerson = new PersonBuilder().withTags("Google")
+                .withTwitter("").withInstagram("").withAddress("").build();
+        assertEquals(typicalAddressBookPerson, GoogleUtil.convertPerson(typicalPerson));
+
+    }
 }
 ```
-###### /java/seedu/address/logic/commands/AddCommandTest.java
+###### \java\seedu\address\logic\commands\AddCommandTest.java
 ``` java
         @Override
         public void addAlias(String alias, String command) {
@@ -83,7 +144,7 @@ public class GoogleUtilTest {
         }
 
 ```
-###### /java/seedu/address/logic/commands/AddCommandTest.java
+###### \java\seedu\address\logic\commands\AddCommandTest.java
 ``` java
         @Override
         public void resetAlias(HashMap<String, String> prevAliasMap) {
@@ -91,7 +152,7 @@ public class GoogleUtilTest {
         }
 
 ```
-###### /java/seedu/address/logic/commands/AddCommandTest.java
+###### \java\seedu\address\logic\commands\AddCommandTest.java
 ``` java
         @Override
         public UserPrefs getUserPrefs() {
@@ -100,7 +161,7 @@ public class GoogleUtilTest {
         }
 
 ```
-###### /java/seedu/address/logic/commands/AliasCommandTest.java
+###### \java\seedu\address\logic\commands\AliasCommandTest.java
 ``` java
 
 package seedu.address.logic.commands;
@@ -198,7 +259,7 @@ public class AliasCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/ImportCommandTest.java
+###### \java\seedu\address\logic\commands\ImportCommandTest.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -296,7 +357,7 @@ public class ImportCommandTest {
 
 }
 ```
-###### /java/seedu/address/logic/commands/LocationCommandTest.java
+###### \java\seedu\address\logic\commands\LocationCommandTest.java
 ``` java
 
 package seedu.address.logic.commands;
@@ -450,7 +511,7 @@ public class LocationCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/AddCommandParserTest.java
+###### \java\seedu\address\logic\parser\AddCommandParserTest.java
 ``` java
         // no email
         expectedPerson = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
@@ -482,7 +543,7 @@ public class LocationCommandTest {
                 + EMAIL_DESC_AMY + TWITTER_DESC_AMY + INSTAGRAM_DESC_AMY
                 + ADDRESS_DESC_AMY, new AddCommand(expectedPerson));
 ```
-###### /java/seedu/address/logic/parser/AliasCommandParserTest.java
+###### \java\seedu\address\logic\parser\AliasCommandParserTest.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -519,7 +580,7 @@ public class AliasCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/ImportCommandParserTest.java
+###### \java\seedu\address\logic\parser\ImportCommandParserTest.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -559,7 +620,7 @@ public class ImportCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/LocationCommandParserTest.java
+###### \java\seedu\address\logic\parser\LocationCommandParserTest.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -591,7 +652,7 @@ public class LocationCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/storage/StorageManagerTest.java
+###### \java\seedu\address\storage\StorageManagerTest.java
 ``` java
     @Test
     public void getUserPrefsFilePath() {
@@ -599,7 +660,7 @@ public class LocationCommandParserTest {
     }
 
 ```
-###### /java/seedu/address/testutil/GooglePersonBuilder.java
+###### \java\seedu\address\testutil\GooglePersonBuilder.java
 ``` java
 package seedu.address.testutil;
 
@@ -694,7 +755,6 @@ public class GooglePersonBuilder {
         this.person.setEmailAddresses(emails);
         return this;
     }
-
     /**
      * Sets the {@code Birthday} of the {@code Person} that we are building.
      */
@@ -706,13 +766,52 @@ public class GooglePersonBuilder {
         return this;
     }
 
+    /**
+     * Empties the list of {@code Email} of the {@code Person} that we are building.
+     */
+    public GooglePersonBuilder noEmail() {
+        this.person.setEmailAddresses(new ArrayList<>());
+        return this;
+    }
+
+    /**
+     * Empties the list of {@code PhoneNumber} of the {@code Person} that we are building.
+     */
+    public GooglePersonBuilder noPhone() {
+        this.person.setPhoneNumbers(new ArrayList<>());
+        return this;
+    }
+
+    /**
+     * Empties the list of {@code Name} of the {@code Person} that we are building.
+     */
+    public GooglePersonBuilder noName() {
+        this.person.setNames(new ArrayList<>());
+        return this;
+    }
+
+    /**
+     * Empties the list of {@code Address} of the {@code Person} that we are building.
+     */
+    public GooglePersonBuilder noAddress() {
+        this.person.setAddresses(new ArrayList<>());
+        return this;
+    }
+
+    /**
+     * Empties the list of {@code Birthday} of the {@code Person} that we are building.
+     */
+    public GooglePersonBuilder noBirthday() {
+        this.person.setBirthdays(new ArrayList<>());
+        return this;
+    }
     public com.google.api.services.people.v1.model.Person build() {
         return this.person;
     }
 
 }
 ```
-###### /java/seedu/address/testutil/PersonBuilder.java
+###### \java\seedu\address\testutil\PersonBuilder.java
 ``` java
     /**
      * Sets the Twitter {@code UserName} of the {@code Person} that we are building.
@@ -739,7 +838,7 @@ public class GooglePersonBuilder {
     }
 
 ```
-###### /java/seedu/address/ui/ProgressWindowTest.java
+###### \java\seedu\address\ui\ProgressWindowTest.java
 ``` java
 package seedu.address.ui;
 

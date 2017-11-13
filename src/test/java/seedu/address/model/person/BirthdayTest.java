@@ -8,6 +8,8 @@ import org.junit.Test;
 
 public class BirthdayTest {
 
+    private boolean validBirthday;
+
     @Test
     public void isValidBirthday() {
         // invalid birthday format
@@ -16,7 +18,7 @@ public class BirthdayTest {
         assertFalse(Birthday.isValidBirthday("02/03/190")); // less than 8 digits
         assertFalse(Birthday.isValidBirthday("02/03/19000")); // more than 8 digits
         assertFalse(Birthday.isValidBirthday("phone")); // non-numeric
-        assertFalse(Birthday.isValidBirthday("9011p041")); // alphanumeric
+        assertFalse(validBirthday); // alphanumeric
         assertFalse(Birthday.isValidBirthday("02.03-1990")); // invalid characters between digits
         assertFalse(Birthday.isValidBirthday("02031990")); // exactly 8 digits without any forward slash
         assertFalse(Birthday.isValidBirthday("29/02/1900")); // invalid leap day

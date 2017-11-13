@@ -1,5 +1,5 @@
 # tbhbhbh
-###### /java/seedu/address/logic/commands/AddCommandTest.java
+###### \java\seedu\address\logic\commands\AddCommandTest.java
 ``` java
         @Override
         public void deleteTag(Tag tag) {
@@ -11,7 +11,7 @@
             fail("This method should not be called.");
         }
 ```
-###### /java/seedu/address/logic/commands/FindCommandTest.java
+###### \java\seedu\address\logic\commands\FindCommandTest.java
 ``` java
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
@@ -63,8 +63,30 @@
         FindCommand command = prepareSearchKeywordsCommand("Benson owesMoney");
         assertCommandSuccess(command, expectedMessage, Collections.singletonList(BENSON));
     }
+
+    @Test
+    public void execute_nameAlternatingUpperAndLowerCases_success() {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
+        FindCommand command = prepareSearchKeywordsCommand("BeNsOn");
+        assertCommandSuccess(command, expectedMessage, Collections.singletonList(BENSON));
+    }
+
+    @Test
+    public void execute_tagAlternatingUpperAndLowerCases_success() {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
+        FindCommand command = prepareSearchKeywordsCommand("owesMoney");
+        assertCommandSuccess(command, expectedMessage, Collections.singletonList(BENSON));
+    }
+
+    @Test
+    public void execute_initials_personFound() {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 2);
+        FindCommand command = prepareSearchKeywordsCommand("b");
+        assertCommandSuccess(command, expectedMessage, model.getFilteredPersonList());
+    }
+
 ```
-###### /java/seedu/address/logic/commands/FindCommandTest.java
+###### \java\seedu\address\logic\commands\FindCommandTest.java
 ``` java
     /**
      * Parses {@code userInput} which are keywords into a {@code FindCommand}.
@@ -93,7 +115,7 @@
     }
 }
 ```
-###### /java/seedu/address/logic/commands/SocialCommandTest.java
+###### \java\seedu\address\logic\commands\SocialCommandTest.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -220,10 +242,13 @@ public class SocialCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/TagDeleteCommandTest.java
+###### \java\seedu\address\logic\commands\TagDeleteCommandTest.java
 ``` java
 package seedu.address.logic.commands;
 
+import static junit.framework.TestCase.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
@@ -233,6 +258,7 @@ import java.util.Set;
 
 import org.junit.Test;
 
+import seedu.address.commons.core.Messages;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
@@ -248,7 +274,7 @@ public class TagDeleteCommandTest {
     public void execute_deleteValidTagUnfilteredList_success() throws Exception {
         Set<Tag> tagSet = new HashSet<>(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()).getTags());
         String tagName = tagSet.toArray()[0].toString().substring(1, 8);
-        TagDeleteCommand tagDeleteCommand = prepareCommand(tagSet.toArray()[0].toString().substring(1, 8));
+        TagDeleteCommand tagDeleteCommand = prepareCommand(tagName);
 
         String expectedMessage = String.format(TagDeleteCommand.MESSAGE_DELETE_TAG_SUCCESS, tagName);
 
@@ -256,6 +282,53 @@ public class TagDeleteCommandTest {
         expectedModel.deleteTag(new Tag(tagSet.toArray()[0].toString().substring(1, 8)));
 
         assertCommandSuccess(tagDeleteCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_deleteValidTagUnfilteredList_failure() throws Exception {
+        Set<Tag> tagSet = new HashSet<>(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()).getTags());
+        String tagName = "nonexistent";
+        TagDeleteCommand tagDeleteCommand = prepareCommand(tagName);
+
+        String expectedMessage = String.format(Messages.MESSAGE_INVALID_TAG_NAME);
+
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.deleteTag(new Tag(tagName));
+
+        assertCommandFailure(tagDeleteCommand, model, expectedMessage);
+    }
+
+    @Test
+    public void execute_deleteNonAlphanumericTag_failure() throws Exception {
+        Set<Tag> tagSet = new HashSet<>(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()).getTags());
+        String tagName = "non-existent";
+
+        TagDeleteCommand tagDeleteCommand = prepareCommand(tagName);
+        String expectedMessage = Tag.MESSAGE_TAG_CONSTRAINTS;
+
+        assertCommandFailure(tagDeleteCommand, model, expectedMessage);
+    }
+
+    @Test
+    public void equals() {
+        TagDeleteCommand deleteFirstTagCommand = new TagDeleteCommand("testone");
+        TagDeleteCommand deleteSecondTagCommand = new TagDeleteCommand("testtwo");
+
+        // same object -> returns true
+        assertTrue(deleteFirstTagCommand.equals(deleteFirstTagCommand));
+
+        // same values -> returns true
+        TagDeleteCommand deleteFirstTagCommandCopy = new TagDeleteCommand("testone");
+        assertTrue(deleteFirstTagCommand.equals(deleteFirstTagCommandCopy));
+
+        // different types -> returns false
+        assertFalse(deleteFirstTagCommand.equals(1));
+
+        // null -> returns false
+        assertFalse(deleteFirstTagCommand.equals(null));
+
+        // different tags -> returns false
+        assertFalse(deleteFirstTagCommand.equals(deleteSecondTagCommand));
     }
 
     /**
@@ -268,7 +341,7 @@ public class TagDeleteCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/TagEditCommandTest.java
+###### \java\seedu\address\logic\commands\TagEditCommandTest.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -299,6 +372,7 @@ public class TagEditCommandTest {
 
     public static final String DUMMY_TAG = "dummy";
     public static final String DUMMY_TAG_TWO = "dummytwo";
+    public static final String TAG_THAT_FAILS_ALPHANUMERIC = "fa-il";
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
@@ -322,8 +396,6 @@ public class TagEditCommandTest {
 
     @Test
     public void execute_editInvalidTagUnfilteredList_throwsCommandException() throws Exception {
-        Set<Tag> tagSet = new HashSet<>(model.getFilteredPersonList()
-                .get(INDEX_SECOND_PERSON.getZeroBased()).getTags());
         String oldTagName = DUMMY_TAG;
         Tag oldTag = new Tag(oldTagName);
         String newTagName = DUMMY_TAG_TWO;
@@ -335,6 +407,17 @@ public class TagEditCommandTest {
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.editTag(oldTag, newTag);
+
+        assertCommandFailure(tagEditCommand, model, expectedMessage);
+    }
+
+    @Test
+    public void execute_editIntoNonAlphanumericTag_failure() throws Exception {
+        String oldTagName = DUMMY_TAG;
+        String newTagName = TAG_THAT_FAILS_ALPHANUMERIC;
+
+        String expectedMessage = Tag.MESSAGE_TAG_CONSTRAINTS;
+        TagEditCommand tagEditCommand = prepareCommand(oldTagName, newTagName);
 
         assertCommandFailure(tagEditCommand, model, expectedMessage);
     }
@@ -373,7 +456,7 @@ public class TagEditCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/FindCommandParserTest.java
+###### \java\seedu\address\logic\parser\FindCommandParserTest.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -394,28 +477,31 @@ public class FindCommandParserTest {
     private FindCommandParser parser = new FindCommandParser();
 
     @Test
-    public void parse_emptyArg_throwsParseException() {
+    public void parse_invalidArg_throwsParseException() {
         assertParseFailure(parser, "     ",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "102",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
     }
+
 
     @Test
     public void parse_validArgs_returnsSearchCommand() {
         // no leading and trailing whitespaces
-        FindCommand expectedSearchCommand =
+        FindCommand expectedFindCommand =
                 new FindCommand(new PersonContainsKeywordsPredicate(Arrays.asList("Alice", "friends")));
-        assertParseSuccess(parser, "Alice friends", expectedSearchCommand);
+        assertParseSuccess(parser, "Alice friends", expectedFindCommand);
 
         // multiple whitespaces between keywords
-        assertParseSuccess(parser, " \n Alice \n \t friends  \t", expectedSearchCommand);
+        assertParseSuccess(parser, " \n Alice \n \t friends  \t", expectedFindCommand);
 
         // single birthday month represented by 2 digits
-        expectedSearchCommand = new FindCommand(new PersonContainsBirthdayPredicate("05"));
-        assertParseSuccess(parser, "05", expectedSearchCommand);
+        expectedFindCommand = new FindCommand(new PersonContainsBirthdayPredicate("05"));
+        assertParseSuccess(parser, "05", expectedFindCommand);
     }
 }
 ```
-###### /java/seedu/address/logic/parser/SocialCommandParserTest.java
+###### \java\seedu\address\logic\parser\SocialCommandParserTest.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -457,7 +543,113 @@ public class SocialCommandParserTest {
 
 }
 ```
-###### /java/systemtests/AddressBookSystemTest.java
+###### \java\seedu\address\model\person\PersonContainsKeywordsPredicateTest.java
+``` java
+package seedu.address.model.person;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import org.junit.Test;
+
+import seedu.address.testutil.PersonBuilder;
+
+public class PersonContainsKeywordsPredicateTest {
+    @Test
+    public void equals() {
+        List<String> firstPredicateKeywordList = Collections.singletonList("first");
+        List<String> secondPredicateKeywordList = Arrays.asList("first", "second");
+
+        PersonContainsKeywordsPredicate firstPredicate = new PersonContainsKeywordsPredicate(
+                firstPredicateKeywordList);
+        PersonContainsKeywordsPredicate secondPredicate = new PersonContainsKeywordsPredicate(
+                secondPredicateKeywordList);
+
+        // same object -> returns true
+        assertTrue(firstPredicate.equals(firstPredicate));
+
+        // same values -> returns true
+        PersonContainsKeywordsPredicate firstPredicateCopy = new PersonContainsKeywordsPredicate(
+                firstPredicateKeywordList);
+        assertTrue(firstPredicate.equals(firstPredicateCopy));
+
+        // different types -> returns false
+        assertFalse(firstPredicate.equals(1));
+
+        // null -> returns false
+        assertFalse(firstPredicate.equals(null));
+
+        // different person -> returns false
+        assertFalse(firstPredicate.equals(secondPredicate));
+    }
+
+    @Test
+    public void test_personContainsKeywords_returnsTrue() {
+        // Zero keywords, returns empty list
+        PersonContainsKeywordsPredicate predicate = new PersonContainsKeywordsPredicate(Collections.emptyList());
+        assertTrue(predicate.test(new PersonBuilder().withName("Alice").build()));
+
+        // One name
+        predicate = new PersonContainsKeywordsPredicate(Collections.singletonList("Alice"));
+        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
+
+        // One tag
+        predicate = new PersonContainsKeywordsPredicate(Collections.singletonList("friends"));
+        assertTrue(predicate.test(new PersonBuilder().withTags("friends").build()));
+
+        // One initial
+        predicate = new PersonContainsKeywordsPredicate(Collections.singletonList("a"));
+        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
+
+        // Mixed-case keywords
+        predicate = new PersonContainsKeywordsPredicate(Collections.singletonList("aLIce"));
+        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
+
+        // Mixed order keywords
+        predicate = new PersonContainsKeywordsPredicate(Arrays.asList("colleagues", "Alice", "friends"));
+        assertTrue(predicate.test(new PersonBuilder().withName("Alice").withTags("colleagues", "friends").build()));
+
+        // Mixed order with mixed case keywords
+        predicate = new PersonContainsKeywordsPredicate(Arrays.asList("colLEAgUes", "ALiCe", "fRiENds"));
+        assertTrue(predicate.test(new PersonBuilder().withName("Alice").withTags("colleagues", "friends").build()));
+    }
+
+    @Test
+    public void test_personDoesNotContainKeywords_returnsFalse() {
+        // Non-matching keyword
+        PersonContainsKeywordsPredicate predicate = new PersonContainsKeywordsPredicate(Arrays.asList("Carol"));
+        assertFalse(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
+
+        // Keywords match phone, email and address, but does not match name
+        predicate = new PersonContainsKeywordsPredicate(Arrays.asList("12345", "alice@email.com", "Main", "Street"));
+        assertFalse(predicate.test(new PersonBuilder().withName("Alice").withPhone("12345")
+                .withEmail("alice@email.com").withAddress("Main Street").build()));
+
+        // Keyword: initial does not exist
+        predicate = new PersonContainsKeywordsPredicate(Collections.singletonList("c"));
+        assertFalse(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
+
+        //Keyword: invalid tag
+        predicate = new PersonContainsKeywordsPredicate(Collections.singletonList("-ta!@"));
+        assertFalse(predicate.test(new PersonBuilder().withName("Alice Bob").withTags("friends").build()));
+
+        // Keywords: matches name, but not tag
+        predicate = new PersonContainsKeywordsPredicate(Arrays.asList("Carol", "friends"));
+        assertFalse(predicate.test(new PersonBuilder().withName("Carol").withTags("ilovecs2103t").build()));
+
+        // Keywords: matches tag, but not name
+        predicate = new PersonContainsKeywordsPredicate(Arrays.asList("Carol", "friends"));
+        assertFalse(predicate.test(new PersonBuilder().withName("Alice Bob").withTags("friends").build()));
+
+
+    }
+}
+```
+###### \java\systemtests\AddressBookSystemTest.java
 ``` java
     /**
      * Asserts that the browser's url is changed to display the details of the person in the person list panel at
@@ -479,7 +671,7 @@ public class SocialCommandParserTest {
         assertEquals(expectedSelectedCardIndex.getZeroBased(), getPersonListPanel().getSelectedCardIndex());
     }
 ```
-###### /java/systemtests/AddressBookSystemTest.java
+###### \java\systemtests\AddressBookSystemTest.java
 ``` java
     /**
      * Returns the person's instagram name from his/her full name.

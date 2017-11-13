@@ -24,8 +24,6 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class BrowserPanel extends UiPart<Region> {
 
     public static final String DEFAULT_PAGE = "default.html";
-    public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/search?safe=off&q=";
-    public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
 
     private static final String FXML = "BrowserPanel.fxml";
 
@@ -49,12 +47,11 @@ public class BrowserPanel extends UiPart<Region> {
     }
     //@@author tbhbhbh
     /**
-     * Loads the person's Instagram or Twitter
-     * depending on if the person has the social media fields filled in.
+     * Loads the person's Instagram or Twitter depending on if the person has his/her social media fields filled in.
      */
     private void loadPersonPage(ReadOnlyPerson person) {
         if (!person.getInstagramName().toString().isEmpty()) {
-            loadPage(INSTAGRAM_URL_PREFIX +  person.getInstagramName());
+            loadPage(INSTAGRAM_URL_PREFIX + person.getInstagramName());
         } else if (!person.getTwitterName().toString().isEmpty()) {
             loadPage(TWITTER_URL_PREFIX + person.getTwitterName());
         }

@@ -135,9 +135,9 @@ public class GoogleUtil {
                 phone = numbers.get(0).getCanonicalForm().replace(DIALING_PREFIX, "");
             } catch (NullPointerException npe) {
                 phone = numbers.get(0).getValue().replace(DIALING_PREFIX, "");
-                if (!Phone.isValidPhone(phone)) {
-                    return null;
-                }
+            }
+            if (!Phone.isValidPhone(phone)) {
+                return null;
             }
         } else {
             return null;

@@ -28,6 +28,7 @@ public class TagEditCommandTest {
 
     public static final String DUMMY_TAG = "dummy";
     public static final String DUMMY_TAG_TWO = "dummytwo";
+    public static final String TAG_THAT_FAILS_ALPHANUMERIC = "fa-il";
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
@@ -51,8 +52,6 @@ public class TagEditCommandTest {
 
     @Test
     public void execute_editInvalidTagUnfilteredList_throwsCommandException() throws Exception {
-        Set<Tag> tagSet = new HashSet<>(model.getFilteredPersonList()
-                .get(INDEX_SECOND_PERSON.getZeroBased()).getTags());
         String oldTagName = DUMMY_TAG;
         Tag oldTag = new Tag(oldTagName);
         String newTagName = DUMMY_TAG_TWO;
@@ -64,6 +63,17 @@ public class TagEditCommandTest {
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.editTag(oldTag, newTag);
+
+        assertCommandFailure(tagEditCommand, model, expectedMessage);
+    }
+
+    @Test
+    public void execute_editIntoNonAlphanumericTag_failure() throws Exception {
+        String oldTagName = DUMMY_TAG;
+        String newTagName = TAG_THAT_FAILS_ALPHANUMERIC;
+
+        String expectedMessage = Tag.MESSAGE_TAG_CONSTRAINTS;
+        TagEditCommand tagEditCommand = prepareCommand(oldTagName, newTagName);
 
         assertCommandFailure(tagEditCommand, model, expectedMessage);
     }

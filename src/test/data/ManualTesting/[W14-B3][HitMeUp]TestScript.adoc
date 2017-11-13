@@ -13,15 +13,15 @@ This document provides the steps to perform manual testing and load our sample d
 
 The following are the steps to load sample data to test:
 
-=== Steps to load sample data
+. Rename `[W14-B3][HitMeUp]SampleData.xml` > `HitMeUp.xml`
 
-. _Step by step instructions to load sample data_
+. Create a data folder where `HitMeUp.jar` is located
 
-=== After loading sample data
+. Move `HitMeUp.xml` into the data folder
 
-* _Add an image to display what they should start with_
+. Run `HitMeUp.jar`
 
-== Commands to Test
+== Commands
 
 The following are all the commands that can be tested:
 
@@ -55,31 +55,41 @@ Command: `find KEYWORD [MORE_KEYWORDS]`
 [NOTE]
 For all commands in this test, please remove invalid commands in the command box before continuing with the subsequent steps.
 
-. `find 12` +
-This command allows you to search your contacts with the same birthday month.
-The list of contacts should display Taylor Swift with the same birthday month in December.
+. To find a list of persons who have the birthday month, use find MM where MM represents a 2 digit integer from 01 to 12.
+  Birthday search cannot be used with other keywords.
 
-[NOTE]
-To find a list of persons who have the birthday month, use find MM where MM represents a 2 digit integer from 01 to 12.
-Birthday search cannot be used with other keywords.
+. `find 03` +
+This command allows you to search your contacts with the same birthday month of March.
+The list of contacts should display Taeyeon and Tyler The Creator with birthday month in March.
 
 . `find 00` +
+The list of contacts should invalid command format. +
+This is because there is no such birthday month represented by 00.
+
+[NOTE]
+The find `KEYWORD` feature is case-insensitive for names but case-sensitive for tags.
+Example jessica will match Jessica but Friends will not match friends.
+
+. To find a list of persons who have the initials in their first or last name, use find `initial` where initial represents
+any alphabet. Finding initial cannot be used with other keywords.
+
+. `find n` +
+The list of contacts should display Noel Gallagher starting with the letter N in either their last or first name.
+
+. `find n noel` +
 The list of contacts should display no contacts. +
-CommandResult should display that 0 person is listed because there is no such birthday month represented by 00.
+CommandResult should display that 0 person is listed because initial search cannot be used with other keywords.
 
 . `find jessica friends` +
 The list of contacts should display Jessica Jung with the tag friends.
 
-[NOTE]
-The find feature is case-insensitive. jessica will match Jessica.
+. `find japan jpop` +
+The list of contacts should display Kyary Pamyu Pamyu with both tags japan and jpop.
 
-. `find friends colleagues` +
-The list of contacts should display Tiffany Hwang with both tags friends and colleagues.
+. `find fashion` +
+The list of contacts should display Kim Kardashian and Virgil Abloh with the same tag fashion.
 
-. `find friends` +
-The list of contacts should display Jessica Jung and Tiffany Hwang with the same tag friends.
-
-. `find Superman` +
+. `find superman` +
 The list of contacts should display no contacts. +
 CommandResult should display that 0 person is listed because this person does not exist.
 
@@ -87,8 +97,8 @@ CommandResult should display that 0 person is listed because this person does no
 The list of contacts should display no contacts. +
 CommandResult should display that 0 person is listed because birthday search cannot be used with other keywords.
 
-. Click on the Group labelled friends on the Group List Panel.
-The list of contacts should display Jessica Jung and Tiffany Hwang with the same tag friends.
+. Click on the Group labelled `rock` on the Group List Panel.
+The list of contacts should display Liam Gallagher and Noel Gallagher with the same tag `rock`.
 
 [NOTE]
 The Group List Panel is located at the leftmost panel. You should click on the tag name to find people who has that tag.
@@ -107,18 +117,59 @@ The list of contacts should display Alpha with birthday 29/02/2020 because it is
 `add n/Alpha p/1111 b/29/02/2019` +
 CommandResult should display that the birthday format is wrong and prompts user to check if it is a valid leap day.
 
+. `add n/Alpha p/1111` +
+`add n/Alpha p/1111` +
+CommandResult should display that the person already exist in the address book.
+
+. `add n/Alpha p/2222` +
+The list of contacts should display two persons named Alpha with two different phone numbers.
+CommandResult should show that Alpha is successfully added as at least one of the field is different.
+
 . `undo` +
-Resets the list of contacts.
+The list should only contain one person named Alpha now.
+
+[NOTE]
+A person is only considered as a duplicate if all his fields except tags and display photo are the same.
+
+=== Add display photo
+
+Command: `add n/NAME p/PHONE_NUMBER [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [tw/TWITTER] [ig/INSTAGRAM] [dp/DISPLAY_PIC_CHOICE] [t/TAG]…​`
+
+[NOTE]
+If you do not have your own photo to test on, you can use the sample photo that we have provided.
+
+. `add n/Beta p/2222 dp/` +
+A file chooser should pop up and request you to input your desired photo.
+
+. After a successful addition of the person with a specified display photo. +
+CommandResult should display new person added with the file path of the photo in the data folder.
+
+[NOTE]
+Your selected photo will be automatically moved into the data folder and encoded with a hashcode.
+
+=== Edit display photo
+
+Command: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [tw/TWITTER] [ig/INSTAGRAM] [dp/] [t/TAG]…​`
+
+. `edit 3 dp/` +
+A file chooser should pop up and request you to input your desired photo.
+
+. After a successful edit of the person with a specified display photo. +
+CommandResult should display edited person added with the file path of the photo in the data folder.
+
+. `delete 3` +
+`delete 1`
+Both Beta and Alpha should be removed from your current list of contacts.
 
 === Tag Edit/Delete
 
 Command: `tagedit OLD_TAG_NAME NEW_TAG_NAME`
 
-. You should see a list of contacts with the tag name selected earlier.
+. You should see a list of contacts in the same state as when you started.
 
 . `tagedit friends enemies` +
 `find enemies` +
-You should see the Jessica Jung and Tiffany Hwang with a new tag name enemies. +
+You should see the Jessica Jung with a new tag name enemies. +
 You should also observe that the Group List Panel friends changes to enemies.
 
 . `tagdelete enemies` +
@@ -132,11 +183,27 @@ CommandResult should display that tag to edit does not exist.
 . `tagdelete friends` +
 CommandResult should display that the tag name to delete is invalid.
 
+. `tagedit singer 12` +
+CommandResult should display that tag names should be alphanumeric but should not be an integer.
+
+. `tagedit singer 8singers` +
+CommandResult should display that the tag [singer] has been edited to [8singers]
+You should observe that the group singer has been renamed as 8singers on the Group List Panel.
+
+. `undo` +
 . At this point, both tags friends and enemies should not appear in HitMeUp.
+Jessica Jung will also have no tags.
 
 === Social
 
 Command: `social INDEX SOCIAL_MEDIA`
+
+[NOTE]
+If social command is not used, browser panel will select the instagram profile of the selected person first. If it does not exist, it should display the
+twitter profile of the selected person.
+
+. `select 2` +
+You should see the browser panel on the right display the instagram profile of Beyonce.
 
 . `social 1 ig` +
 You should see the browser panel on the right switched to the Instagram profile of Avril Lavigne. +
@@ -147,14 +214,10 @@ This command will remove the instagram user of Avil Lavigne. +
 CommandResult should display an empty field after ig/.
 
 . `select 1` +
-You should see the browser panel on the right switched to the Twitter profile of Avil Lavigne.
-
-[NOTE]
-Browser panel will select the instagram profile of the selected person first. If it does not exist, it should display the
-twitter profile of the selected person.
+You should see the browser panel on the right switched to the twitter profile of Avil Lavigne.
 
 . `social 2 tw` +
-You should see the browser panel on the right switched to the Twitter profile of Beyonce. +
+You should see the browser panel on the right switched to the instagram profile of Beyonce. +
 CommandResult should display that Beyonce twitter profile is successfully loaded.
 
 . `social 1000 ig` +
@@ -193,7 +256,7 @@ CommandResult should display the names of all persons exported.
 
 [NOTE]
 You can use any text editor to open the contacts.vcf file to check that the information of the contacts are in the vCard file.
-Only information such as names and phone numbers are compulsory.
+Only information such as names and phone numbers are compulsory. Please close the folder after you are done.
 
 . `export 1 2` +
 You should see the same directory folder popped up with the contacts.vcf file created. +
@@ -207,8 +270,8 @@ CommandResult should display that the index specified is invalid.
 Command: `location INDEX`
 
 . `location 3`
-You should see the browser panel on the right switched to a Google Map location of Damith C Rajapakse. +
-CommandResult should display the location of Damith C Rajapakse loaded.
+You should see the browser panel on the right switched to a Google Map location of Donald Trump. +
+CommandResult should display the location of Donald Trump loaded.
 
 . `location 1000`
 CommandResult should display that the index specified is invalid.
@@ -224,7 +287,7 @@ CommandResult should display that the alias f is mapped to the command find.
 The list of contacts should display Donald Trump.
 
 . `alias find findbuddy` +
-CommandResult should display that the command entered is invalid.
+CommandResult should display that the command entered is invalid because findbuddy command does not exist.
 
 === Additional Notes
 [[settingmail]]
