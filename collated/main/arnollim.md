@@ -155,7 +155,7 @@ public class PrintCommand extends Command {
                 //of insuranceHeader to make the txt file more organised.
                 String insuranceEnd = "";
                 int headerLength = insuranceHeader.length();
-                for( int i = 1; i<= headerLength; i++) {
+                for (int i = 1; i <= headerLength; i++) {
                     insuranceEnd = insuranceEnd + "=";
                 }
                 lines.add(insuranceEnd);
@@ -209,8 +209,6 @@ import java.util.List;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Name;
 import seedu.address.model.person.ReadOnlyPerson;
 
 
@@ -228,6 +226,9 @@ public class WhyCommand extends Command {
     public static final String SHOWING_WHY_MESSAGE = "Because %1$s lives in %2$s";
     public static final String SHOWING_WHY_MESSAGE_2 = "Because %1$s is born in %2$s";
     public static final String SHOWING_WHY_MESSAGE_3 = "Because %1$s's email is %2$s";
+    public static final String SHOWING_WHY_MESSAGE_4 = "Because %1$s appreciates you";
+    public static final String SHOWING_WHY_MESSAGE_5 = "Because %1$s is a really cool person";
+    public static final String SHOWING_WHY_MESSAGE_6 = "Because %1$s can make the world a better place";
     public static final String SHOWING_WHY_MESSAGE_NO_ADDRESS = "Because %1$s has no address";
     public static final String SHOWING_WHY_MESSAGE_NO_DOB = "Because %1$s has no date of birth";
     public static final String SHOWING_WHY_MESSAGE_NO_EMAIL = "Because %1$s has no email";
@@ -355,8 +356,11 @@ public class WhyCommandParser implements Parser<WhyCommand> {
         DateOfBirth dob = this.getDateOfBirth();
 
         Random randomGenerator = new Random();
-        int randomInt = randomGenerator.nextInt(3);
-
+        int randomInt = randomGenerator.nextInt(6);
+        /**
+         * There are 6 easter egg messages that can be returned as feedback to the user. Which message is returned is
+         * randomly generated as decided by randomInt.
+         */
         if (randomInt == 0) {
 
             if (address.toString() == "") {
@@ -374,13 +378,18 @@ public class WhyCommandParser implements Parser<WhyCommand> {
             }
 
         } else if (randomInt == 2) {
-
             if (email.value == "") {
                 this.reason = String.format(SHOWING_WHY_MESSAGE_NO_EMAIL, name);
             } else {
                 this.reason = String.format(SHOWING_WHY_MESSAGE_3, name, email);
             }
 
+        } else if (randomInt == 3) {
+            this.reason = String.format(SHOWING_WHY_MESSAGE_4, name);
+        } else if (randomInt == 4) {
+            this.reason = String.format(SHOWING_WHY_MESSAGE_5, name);
+        } else if (randomInt == 5) {
+            this.reason = String.format(SHOWING_WHY_MESSAGE_6, name);
         }
         return reason;
     }

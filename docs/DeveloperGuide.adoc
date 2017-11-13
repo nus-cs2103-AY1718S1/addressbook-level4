@@ -245,7 +245,7 @@ A brute force approach is applied where the `commandWord` is compared against ev
 // tag::prefixAutofill[]
 === Prefix Autofill
 
-When adding a new insurance, all fields are require as a contract needs to be complete before it is valid.
+When adding a new insurance, all fields are required as a contract needs to be complete before it is valid.
 However, due to the multitude of information required, users should have the convenience of
 pressing enter with an unfilled command to trigger the autofill to prompt you with the prefixes
 required and move the the caret to the next field.
@@ -401,12 +401,13 @@ contacts with empty fields no longer prevent the autofilling of other empty pref
 the `EmptyFieldException` is no longer unique to the empty prefix and thus, there is no need for the prefix parameter,
 which is removed from the constructor of the exception.
 // end::autofill[]
+
 // tag::add[]
 === Making NAME the only compulsory field in Add Command
 
 The `add` command follows the format below:
 
-`add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [d/DATE_OF_BIRTH] [t/TAG]...`
+`add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [d/DATE_OF_BIRTH] [g/GENDER] [t/TAG]...`
 
 This means when adding a new person in LISA, the user only needs to provide value for the compulsory `NAME` field. Every other field is optional.
 
@@ -447,7 +448,7 @@ public Phone() {
 }
 ----
 
-The logic provided above can be applied to other optional fields, namely `[p/PHONE_NUMBER]`, `[e/EMAIL]`, `[a/ADDRESS]`, and `[d/DATE_OF_BIRTH]`.
+The logic provided above can be applied to other optional fields, namely `[p/PHONE_NUMBER]`, `[e/EMAIL]`, `[a/ADDRESS]`, `[g/GENDER]` and `[d/DATE_OF_BIRTH]`.
 `[t/TAG]...` uses a different implementation and will not be covered in this section.
 
 Due to this implementation, the field attribute of a `Person` object can never be `null`.
@@ -599,7 +600,7 @@ Therefore, in the above example, `"m"` is passed as the argument.
 As can be seen from the above code snippet , the given argument is converted to lower case and then given a value amongst
 the available enumerated constants : FEMALE , MALE and NOT_SPECIFIED (when no gender is specified)
 
-The genderset variable is specified to know if the user has entered the gender of the entry
+The `genderset` variable is specified to know if the user has entered the gender of the entry
 or not. If not , instead of displaying the default enum type :NOT_SPECIFIED , we can display
 a blank string. If specified , we can display the actual gender of the entry in a string format.
 
@@ -630,14 +631,58 @@ an empty string or the gender:
 
 // end::gender[]
 
+//tag::sortFunction[]
+=== Improved Contact Arrangement: sort function
+Originally, new contacts added into LISA will be added to the end of the list of contacts. If there were 19 contacts in
+LISA, then adding a new person named "Adam Lim" for example (add n/Adam Lim) will place him as the 20th contact in LISA.
+While a chronological order of contacts has limited benefits, especially when the user wishes to scroll through contacts
+manually or read through contacts in a printed contact list, a list of contacts sorted by alphabetical order will be much
+more useful.
+
+UniquePersonList.java
+[source,java]
+----
+    public void sortPersons() throws DuplicatePersonException {
+        ObservableList<Person> listToSort = FXCollections.observableArrayList(internalList);
+        listToSort.sort((ReadOnlyPerson first, ReadOnlyPerson second)-> {
+            int x = String.CASE_INSENSITIVE_ORDER.compare(first.getName().fullName, second.getName().fullName);
+            if (x == 0) {
+                x = (first.getName().fullName).compareTo(second.getName().fullName);
+            }
+            return x;
+        });
+        UniquePersonList listToReplace = new UniquePersonList();
+        for (ReadOnlyPerson person : listToSort) {
+            listToReplace.add(person);
+        }
+        setPersons(listToReplace);
+    }
+----
+sortPersons() takes in the old list of persons, sorts them alphabetically, and returns a replaced list of persons, now sorted
+in alphabetical order. This method is called in both setPerson and setPersons methods in ReadOnlyPerson, after a new person
+is added into the address book.
+
+
+Example, add a new person named "Kelvin Liew"
+
+image::BeforeAddingKelvin.png[width="800"]
+
+
+After the new contact "Kelvin Liew" is added, he is well placed between Irfan Ibrahim and Mary Jane.
+
+image::AfterAddingKelvin.png["width="800"]
+
+//end::sortFunction[]
+
 // tag::tagManagement[]
 === Improved Tag Management
 
-The original tag system management with the edit function have several difficulties which cause the user to too much trouble,
- inconvenience and inefficiency in managing their tags. This is mainly due to how the editing of a tag works. When using the
+The original tag system management within the edit function has several difficulties
+which cause the user inconvenience and inefficiency in managing
+their tags. This is mainly due to how the editing of a tag works. When using the
  edit function, just like how entering a new name will replace the existing name,
- using the tag prefix to add tags on to a user will end up overwriting all the existing tags and replace it
- with the new tag(s). For example, entering the `edit 1 t/Awesome` results in the following: +
+ using the tag prefix to add tags to a user will end up overwriting all the existing tags
+  and replace it with the new tag(s). For example, entering the `edit 1 t/Awesome` results in the following: +
 Command entered:
 
 image::addtagui.jpg[]
@@ -780,33 +825,229 @@ The rest of the execution then, follows closely to the case where the command is
 === Reading and Storing Life Insurances:
 `since v1.3`
 
-TBA
+image::LifeInsuranceClassDiagram.png[width="800"]
+_Figure 2.4.1 : Structure of the Components related to LifeInsurance_
+
+The `LifeInsurance`,
+
+* represents a life insurance in LISA.
+
+Fields inside a `LifeInsurance`:
+
+* `UUID` represents a unique id of the life insurance.
+* `InsuranceName` represents the name of the life insurance.
+* `Roles` is a `enum` type that represents the three person roles in a life insurance.
+Namely owner, insured, and beneficiary.
+* `EnumMap` maps a person role in a life insurance to the name of the corresponding person.
+* `InsurancePerson` represents a person in a life insurance. There are three such fields - owner, insured, and beneficiary  in a life insurance.
+* `Premium` represents the premium of a life insurance.
+* `ContractFileName` represents the name of a digital contract file (e.g. AlexYeohTermLife.pdf, BerniceYuWholeLife.docx) of a life insurance.
+* `LocalDate` represents the date components of a life insurance.
+There are two such fields - signing date and expiry date in a life insurance.
+
+
+The `UniqueLifeInsuranceMap`,
+
+* stores all `LifeInsurance` objects in LISA.
+* maps a `UUID` key to a `LifeInsurance` value.
+* exposes an unmodifiable `ObservableList<ReadOnlyInsurance>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+[NOTE]
+The `UUID` key inside the map has the same value with the `UUID` field inside the `LifeInsurance` it maps to.
+
+The `List<UUID>`,
+
+* stores all the `UUID` objects of the life insurances a `Person` object is involved.
+A person is involved in a life insurance if he/she is an owner, insured, or beneficiary of that piece of life insurance.
+* prevents storing duplicate ids, e.g., even if a person is both an owner and insured of a life insurance, `List<UUID>` will only store a single copy of the `UUID` of that life insurance.
+
+The `UniqueLifeInsuranceList`,
+
+* stores all the `LifeInsurance` objects  a `Person` object is involved.
+A person is involved in a life insurance if he/she is an owner, insured, or beneficiary of that piece of life insurance.
+* prevents storing duplicate life insurances, e.g., even if a person is both an owner and insured of a life insurance, `UniqueLifeInsuranceList` will only store a single copy of that life insurance.
+
+
+image::XmlAdaptedLifeInsuranceClassDiagram.png[width="800"]
+_Figure 2.4.1 : Structure of the Components related to XmlAdaptedLifeInsurance_
+
+The `XmlAdaptedLifeInsurance`
+
+* represents a JAXB-friendly version of the `LifeInsurance`.
+* follows the format below when saved in xml format:
+
+[source,xml]
+----
+<id>ad4dc852-e6bb-44e9-800e-fa8a8964e7f1</id>
+<insuranceName>Sample Life Insurance</insuranceName>
+<owner>Oscar Wang</owner>
+<insured>Oscar Wang</insured>
+<beneficiary>John Doe</beneficiary>
+<premium>1000.0</premium>
+<contractFileName>SampleOscarWang.pdf</contractFileName>
+<signingDate>01 Nov 2017</signingDate>
+<expiryDate>01 Nov 2047</expiryDate>
+----
+
+The `Map<String, XmlAdaptedLifeInsurance>`,
+
+* stores all `XmlAdaptedLifeInsurance` objects.
+* maps a `String` key to a `XmlAdaptedLifeInsurance` value.
+[NOTE]
+The `String` key inside the map has the same value with the `String` field inside the `XmlAdaptedLifeInsurance` it maps to.
+* follows the format below when saved in xml format:
+
+[source,xml]
+----
+<lifeInsuranceMap>
+    <entry>
+        <key>ad4dc852-e6bb-44e9-800e-fa8a8964e7f1</key>
+        <value>
+            <!-- XmlAdaptedLifeInsurance -->
+        </value>
+    </entry>
+    <!-- more entries -->
+</lifeInsuranceMap>
+----
+
+==== Synchronizing Life Insurances with Persons
+
+Inside `Addressbook.java` there are two methods in charge of keeping the life insurance master map `UniqueLifeInsuranceMap` and person master list `UniquePersonList` synchronized with each other.
+The first method, according to execution order, is `syncMasterLifeInsuranceMapWith(UniquePersonList persons)` and the
+second method is `syncMasterPersonListWith(UniqueLifeInsuranceMap lifeInsuranceMap)`
+
+The first method ensures that the three `InsurancePerson` objects (owner, insured, and beneficiary) of every `LifeInsurance` in the master map links to its corresponding `Person` object if it exists in the persons list.
+In addition, it also populates the list of insurance ids `List<UUID>` in every `Person` object with id of the life insurance he/her is involved in.
+It is implemented in this way:
+
+[source,java]
+----
+public void syncMasterLifeInsuranceMapWith(UniquePersonList persons) {
+    clearAllPersonsInsuranceIds();
+    lifeInsuranceMap.forEach((id, insurance) -> {
+        insurance.resetAllInsurancePersons();
+
+        String owner = insurance.getOwnerName();
+        // ... similar logic for insured and beneficiary...
+        persons.forEach(person -> {
+            if (person.getName().toString().equals(owner)) {
+                insurance.setOwner(new InsurancePerson(person));
+                person.addLifeInsuranceIds(id);
+            }
+            // ... similar logic for insured and beneficiary...
+        });
+    });
+    lifeInsuranceMap.syncMappedListWithInternalMap();
+}
+----
+
+[NOTE]
+The method `syncMappedListWithInternalMap()` in the last line is used to synchronize the internal list of `LifeInsurances` inside `UniqueLifeInsuranceMap`.
+This internal list is used for exposing an `ObservableList<ReadOnlyInsurance>` to the UI for binding.
+
+[NOTE]
+Because `Person` objects are identified by `Name` and stored in a list,
+for every `LifeInsurance` object we have to iterate through the entire list of persons to check if the name of the `Person` object matches with the name of the three `InsurancePerson` objects.
+
+The second method ensures that every `Person` in the master list contains the correct list of `LifeInsurance` objects corresponding to his/her list of insurance ids `List<UUID>`.
+It is implemented in this way:
+
+[source,java]
+----
+public void syncMasterPersonListWith(UniqueLifeInsuranceMap lifeInsuranceMap) throws InsuranceNotFoundException {
+    persons.forEach((ThrowingConsumer<Person>) person -> {
+        List<UUID> idList = person.getLifeInsuranceIds();
+        if (!idList.isEmpty()) {
+            person.clearLifeInsurances();
+            idList.forEach((ThrowingConsumer<UUID>) id -> {
+                LifeInsurance lf = lifeInsuranceMap.get(id);
+                person.addLifeInsurances(lf);
+            });
+        }
+    });
+}
+----
+
+[NOTE]
+Because `LifeInsurance` objects are identified by `UUID` and stored in a map,
+for every `Person` object can simply retrieve the `LifeInsurance` he/she is involved by providing the id rather than iterating through the entire map.
+
+The two methods above are grouped into a method called `synWithUpdate()`, which is called every time when
+an operation related to `LifeInsurance` or `Person` in is executed, e.g. `addPerson(ReadOnlyPerson p)`, `deleteInsurance(ReadOnlyInsurance target)`.
+
+==== Design Considerations
+
+**Aspect:** Data structure for storing and saving life insurances in xml format: +
+**Alternative 1 (current choice):** Use a map to store ids as keys and life insurances as values. +
+**Pros:** Provides efficient O(1) data access using the id. +
+**Cons:** Requires an internal list to provide an `ObservableList<ReadOnlyInsurance>` to the UI for binding.
+The internal list have to be synchronized when data in the map changes. +
+**Alternative 2:** Use a list to store all `LifeInsurances`. +
+**Pros:** Does not require internal list. Easier implementation. +
+**Cons:** Less efficient data access. Requires iterating through the entire list to search for a life insurance using id.
+
+---
 // end::li[]
 
 // tag::addli[]
 === Add Life Insurance Command:
 `since v1.4`
 
-TBA
+The following sequence diagram shows how the add life insurance operation works:
+
+image::AddLifeInsuranceCommandSequenceDiagram.png[width="800"]
+
+There are eight compulsory fields required for the user to input in the add life insurance command.
+They are: name, owner, insured, beneficiary, premium, signing date, expiry date, and contract file name.
+
+
+==== Design Considerations
+
+**Aspect:** Number of fields required from the user input: +
+**Alternative 1 (current choice):** Every field must be provided. +
+**Pros:** Ensures no field with null or empty value exists in a `LifeInsurance` object. +
+**Cons:** Not user-friendly. The user needs to fill in every field every time.
+**Alternative 2:** Making the name field the only compulsory field. The rest can be not provided. +
+**Pros:** More flexibility and user-friendly. +
+**Cons:** Requires good handling of null or empty values. In addition, an edit life insurance command has to be created to allow users to update the unfilled fields.
+
 // end::addli[]
+
 
 // tag::print[]
 === Addition of Print Command
-The print command enables the user to save his/her addressbook into a printable .txt file
+The print command enables the user to save his/her addressbook in the form of a printable .txt file
 
 The print command has the following format:
 print [FILENAME]
 
 There is no need to specify the .txt extension as the program does this automatically.
+
+[source,java]
 ----
-int personIndex = 1;
+        //First line in the .txt file is the time and date printed, so that the user will know the recency
+        //of the printed address book
+        lines.add("LISA was last updated on: " + timeStamp + "\n\n");
+        //Next, feedback the total number of contacts at said time and date
+        lines.add("There are " + lastShownList.size() + " contacts in LISA\n\n");
+
+        int personIndex = 1;
+
+        //iterating through each person in LISA
         for (ReadOnlyPerson person: lastShownList) {
-            String entry = personIndex + ". " + person.getAsText();
+            String entry = personIndex + ". " + person.getAsParagraph();
             lines.add(entry);
+            lines.add("\n" + person.getName().fullName
+                    + " is a personnel involved in the following insurance policies:\n");
 
             UniqueLifeInsuranceList insurances = person.getLifeInsurances();
+            int insuranceIndex = 1;
+
+            //within each person, iterate through all the insurance policies associated
+            //with this person
             for (ReadOnlyInsurance insurance: insurances) {
-                lines.add("Insurance Policy: =========");
+                String insuranceHeader = "Insurance Policy " + insuranceIndex
+                        + ": " + insurance.getInsuranceName() + " ======";
+                lines.add(insuranceHeader);
                 String owner = insurance.getOwner().getName();
                 String insured = insurance.getInsured().getName();
                 String beneficiary = insurance.getBeneficiary().getName();
@@ -818,16 +1059,59 @@ int personIndex = 1;
                         + "Beneficiary: " + beneficiary + "\n"
                         + "Premium: " + premium + "\n"
                         + "Signing Date: " + signingDate + "\n"
-                        + "Expiry Date: " + expiryDate + "\n"
+                        + "Expiry Date: " + expiryDate
                 );
-                lines.add("============");
+
+                //insuranceEnd is just a printed line "=====" which ties with the length
+                //of insuranceHeader to make the txt file more organised.
+                String insuranceEnd = "";
+                int headerLength = insuranceHeader.length();
+                for (int i = 1; i <= headerLength; i++) {
+                    insuranceEnd = insuranceEnd + "=";
+                }
+                lines.add(insuranceEnd);
+
+                lines.add("\n");
+                insuranceIndex++;
             }
+            lines.add("--------End of " + person.getName().fullName + "'s profile");
+            lines.add("\n");
             personIndex++;
         }
 ----
+Firstly, the time and date the address book is printed will be written down.
+After this, the total number of people in LISA at this time will also be written.
 Print Command iterates through each contact in the addressbook and prints out his/her basic details first.
 For each person, print command then iterates through ALL insurance policies he is involved in (whether as an
 owner/beneficiary/insured) and prints out the policy details.
+
+The Print Command requires two things: (1) That a filepath be specified, and (2) that the filepath does not contain illegal
+file path characters, which includes the following: /:*?"<>|
+
+[source,java]
+----
+    public static String parseFilePath(String args) throws IllegalValueException, InvalidPathException {
+        final Matcher matcher = PRINT_ARGS_FORMAT.matcher(args.trim());
+        if (!matcher.matches()) {
+            throw new IllegalValueException(MESSAGE_INVALID_COMMAND_FORMAT);
+        }
+        final Matcher matcherFilePath = PRINT_ARGS_ILLEGAL.matcher(args.trim());
+        if (!matcherFilePath.matches()) {
+            throw new InvalidPathException(args, MESSAGE_INVALID_FILEPATH);
+        }
+        return matcher.group("filename");
+    }
+----
+If the first requirement is violated, an IllegalValueException will be thrown.
+
+For the second requirement a regex has been set to detect the above mentioned illegal characters
+[source, java]
+----
+public static final Pattern PRINT_ARGS_ILLEGAL =
+            Pattern.compile("(?<filename>[^\\\\/:*?\"<>|]+)"); //Filepath cannot include illegal characters
+----
+If the specified file path contains illegal characters such that the second requirement is violated, then an
+InvalidPathException will be thrown.
 // end::print[]
 
 // tag::why[]
@@ -836,28 +1120,49 @@ The Why Command throws the user with random information about the indexed person
 asking "why".
 
 A fun, interesting easter egg feature for the user to play with in LISA.
+
+[source,java]
 ----
     public String getReason() {
-        Address address = this.getAddress();
-        Name name = this.getName();
-        Email email = this.getEmail();
-        DateOfBirth dob = this.getDateOfBirth();
-        Random randomGenerator = new Random();
-        int randomInt = randomGenerator.nextInt(3);
-        if (randomInt == 0) {
-            this.reason = String.format(SHOWING_WHY_MESSAGE, name, address);
-        } else if (randomInt == 1) {
-            this.reason = String.format(SHOWING_WHY_MESSAGE_2, name, dob);
-        } else if (randomInt == 2) {
-            this.reason = String.format(SHOWING_WHY_MESSAGE_3, name, email);
+            Address address = this.getAddress();
+            Name name = this.getName();
+            Email email = this.getEmail();
+            DateOfBirth dob = this.getDateOfBirth();
+            Random randomGenerator = new Random();
+            int randomInt = randomGenerator.nextInt(6);
+            if (randomInt == 0) {
+                if (address.toString() == "") {
+                    this.reason = String.format(SHOWING_WHY_MESSAGE_NO_ADDRESS, name);
+                } else {
+                    this.reason = String.format(SHOWING_WHY_MESSAGE, name, address);
+                }
+            } else if (randomInt == 1) {
+                if (dob.toString() == "") {
+                    this.reason = String.format(SHOWING_WHY_MESSAGE_NO_DOB, name);
+                } else {
+                    this.reason = String.format(SHOWING_WHY_MESSAGE_2, name, dob);
+                }
+            } else if (randomInt == 2) {
+                if (email.value == "") {
+                    this.reason = String.format(SHOWING_WHY_MESSAGE_NO_EMAIL, name);
+                } else {
+                    this.reason = String.format(SHOWING_WHY_MESSAGE_3, name, email);
+                }
+            } else if (randomInt == 3) {
+                this.reason = String.format(SHOWING_WHY_MESSAGE_4, name);
+            } else if (randomInt == 4) {
+                this.reason = String.format(SHOWING_WHY_MESSAGE_5, name);
+            } else if (randomInt == 5) {
+                this.reason = String.format(SHOWING_WHY_MESSAGE_6, name);
+            }
+            return reason;
         }
-        return reason;
-    }
 ----
 Why command takes in the index of a person, for e.g. why 1. The command parser then parses the index
 (in a similar way to edit) and runs through a random "reason" generator in getReason() in Person.java.
-For if 1, 2 or 3 is generated by randomGenerator.nextInt(3),  then the persons address, dob or email will
-be returned respectively, for example, "Because John Doe lives in Clementi Ave 2".
+For if 1, 2 or 3 is generated by randomGenerator.nextInt(5),  then the persons address, dob or email will
+be returned respectively, for example, "Because John Doe lives in Clementi Ave 2". For 4, 5 and 6, other interesting
+messages will be printed, such as "Because John Doe appreciates you".
 //end::why[]
 
 // tag::pdfSaveLoad[]
@@ -1135,6 +1440,54 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Alternative 2:** Use `HistoryManager` for undo/redo +
 **Pros:** We do not need to maintain a separate stack, and just reuse what is already in the codebase. +
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
+
+==== Enhancement: Undone/Redone Command as feedback in addition to Success Message
+`v1.5 Implementation`
+Each undoable command class (AddCommand, DeleteCommand, ClearCommand, EditCommand) will have and overriden ToString()
+function that allows the relevant details of the executed command to be printed out.
+
+Below is an example of the overriden ToString() function in the context of AddCommand.java
+[source,java]
+----
+    /**
+     * Returns the Command String of that added this person into the addressbook
+     */
+    @Override
+    public String toString() {
+        final StringBuilder builder = new StringBuilder();
+        builder.append(toAdd.getName())
+                .append(" Phone: ")
+                .append(toAdd.getPhone())
+                .append("Email: ")
+                .append(toAdd.getEmail())
+                .append("Address: ")
+                .append(toAdd.getAddress())
+                .append("DateOfBirth: ")
+                .append(toAdd.getDateOfBirth())
+                .append("Gender: ")
+                .append(toAdd.getGender())
+                .append(" Tags: ");
+        toAdd.getTags().forEach(builder::append);
+        String person = builder.toString();
+        return COMMAND_WORD + " " + person;
+    }
+----
+
+Before executing an Undo Command and transferring the undoable command from the undoStack to the redoStack, a peek is taken
+into the undoStack to obtain the undoable command to be undone. The command string that of this command to be undone can
+then be obtained from the overriden ToString() function of this undoable command.
+
+After obtaining the command string, the popping of the undoable command from the undoStack to the redoStack will proceed.
+
+[source,java]
+----
+        String commandString = undoRedoStack.peekUndo().toString();
+        String feedbackToUser = parseUndoCommand(commandString);
+        undoRedoStack.popUndo().undo();
+
+        return new CommandResult(feedbackToUser);
+----
+
 // end::undoredo[]
 
 === Logging
@@ -1514,6 +1867,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+
+|`* * *` |user |Include gender as a field in record entry|
 
 |`* * *` |user |Include date of birth as a field in record entry|
 
