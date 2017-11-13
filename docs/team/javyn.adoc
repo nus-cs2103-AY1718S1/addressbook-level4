@@ -50,6 +50,7 @@ include::../UserGuide.adoc[tag=sort]
 ==== Justification
 
 For admin staff especially in the human resource department, there would usually be a large number of contacts being added at once. Thus, after the large group of contacts is being added with the add multiple contacts feature, the user is then able to properly sort the contacts in TheYellowPage in alphabetical order.
+For example, when the user wants to search for a contact named "Ellie" but is unsure of the spelling of the name but is only sure of the starting alphabet of the name. Thus, the user can just sort and scroll down to names starting with letter E to find individually.
 
 ==== Implementation
 
@@ -65,6 +66,8 @@ include::../DeveloperGuide.adoc[tag=sort]
 === Other contributions
 
 Added occupation and website fields to Person (Pull requests https://github.com[#85], https://github.com[#58])
+
+When a person in the contact list is selected, their website will now be shown instead of their google search page.
 
 At the end of the enhancements, a person class will now contain fields inlcuding occupation, website and remark:
 

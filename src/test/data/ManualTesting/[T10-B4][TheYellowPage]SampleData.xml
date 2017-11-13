@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addressbook>
+    <persons>
+        <name>Alex Yeoh</name>
+        <occupation>Google, Software Engineer</occupation>
+        <phone>87438807</phone>
+        <email>alexyeoh@example.com</email>
+        <address>Blk 30 Geylang Street 29, #06-40</address>
+        <remark></remark>
+        <website>https://twitter.com/AlexYeoh</website>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Bernice Yu</name>
+        <occupation>Apple, Janitor</occupation>
+        <phone>99272758</phone>
+        <email>berniceyu@example.com</email>
+        <address>Blk 30 Lorong 3 Serangoon Gardens, #07-18</address>
+        <remark>Likes to swim.</remark>
+        <website>https://twitter.com/BerniceYu</website>
+        <tagged>colleagues</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Charlotte Oliveiro</name>
+        <occupation>Tan Tock Seng Hospital, Doctor</occupation>
+        <phone>93210283</phone>
+        <email>charlotte@example.com</email>
+        <address>Blk 11 Ang Mo Kio Street 74, #11-04</address>
+        <remark></remark>
+        <website>https://twitter.com/CharlotteOliveiro</website>
+        <tagged>neighbours</tagged>
+    </persons>
+    <persons>
+        <name>David Li</name>
+        <occupation>Prudential, Financial Assistant</occupation>
+        <phone>91031282</phone>
+        <email>lidavid@example.com</email>
+        <address>Blk 436 Serangoon Gardens Street 26, #16-43</address>
+        <remark>As quick a a leopard.</remark>
+        <website>https://twitter.com/DavidLi</website>
+        <tagged>family</tagged>
+    </persons>
+    <persons>
+        <name>Irfan Ibrahim</name>
+        <occupation>NUS, Professor</occupation>
+        <phone>92492021</phone>
+        <email>irfan@example.com</email>
+        <address>Blk 47 Tampines Street 20, #17-35</address>
+        <remark></remark>
+        <website>https://twitter.com/IrfanIbrahim</website>
+        <tagged>classmates</tagged>
+    </persons>
+    <persons>
+        <name>Ben Asmoth</name>
+        <occupation>Fairprice, Cashier</occupation>
+        <phone>98453628</phone>
+        <email>Ben@example.com</email>
+        <address>Blk 66 Simei Drive, #12-44</address>
+        <remark></remark>
+        <website>https://twitter.com/Ben</website>
+        <tagged>Cousin</tagged>
+    </persons>
+    <persons>
+        <name>Peter Pan</name>
+        <occupation>Converse, Shoe Designer</occupation>
+        <phone>84746363</phone>
+        <email>Peter@example.com</email>
+        <address>Blk 30 Geylang Street 29, #06-40</address>
+        <remark></remark>
+        <website>https://facebook.com/Peter</website>
+        <tagged>enemy</tagged>
+    </persons>
+    <persons>
+        <name>Claire</name>
+        <occupation>Asus, Sales manager</occupation>
+        <phone>94634356</phone>
+        <email>claire@example.com</email>
+        <address>77 Woodlands Road, #10-23</address>
+        <remark></remark>
+        <website>https://twitter.com/Claire</website>
+        <tagged>lawyer</tagged>
+    </persons>
+    <persons>
+        <name>Albert Ballard</name>
+        <occupation>AG, Social worker</occupation>
+        <phone>81610619</phone>
+        <email>albert@example.com</email>
+        <address>88 Pasir Panjang Road, #44-56</address>
+        <remark></remark>
+        <website>https://twitter.com/Albert</website>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Anne Deines</name>
+        <occupation>Matrix, Research chef</occupation>
+        <phone>98293453</phone>
+        <email>Anne@example.com</email>
+        <address>1778 Eagle Drive, Plymouth, MI 48170</address>
+        <remark></remark>
+        <website>https://twitter.com/Anne</website>
+        <tagged>relative</tagged>
+    </persons>
+    <persons>
+        <name>Florencio Pham</name>
+        <occupation>Consumers, Technician</occupation>
+        <phone>8746477</phone>
+        <email>florencio@example.com</email>
+        <address>3162 Fort Street, Rocky Mount, NC 27801</address>
+        <remark></remark>
+        <website>https://twitter.com/Florencio</website>
+        <tagged>grandmother</tagged>
+    </persons>
+    <persons>
+        <name>Dina Cyr</name>
+        <occupation>Flagg Bros Shoes, Office administrator</occupation>
+        <phone>96545638</phone>
+        <email>dina@example.com</email>
+        <address>4960 Lawman Avenue, Chantilly, VA 22021</address>
+        <remark></remark>
+        <website>https://twitter.com/Dina</website>
+        <tagged>boss</tagged>
+    </persons>
+    <persons>
+        <name>Brian McDougal</name>
+        <occupation>Meiji, Milk tester</occupation>
+        <phone>97356574</phone>
+        <email>brianmc@example.com</email>
+        <address>33 pasir ris drive, #12-48</address>
+        <remark></remark>
+        <website>https://facebook.com/BrianMc</website>
+        <tagged>teacher</tagged>
+    </persons>
+    <persons>
+        <name>Carlene Hood</name>
+        <occupation>Listenin Booth, Human resources trainer</occupation>
+        <phone>897488374</phone>
+        <email>carlene@example.com</email>
+        <address>747 Deercove Drive, Philadelphia, PA 19108</address>
+        <remark></remark>
+        <website>https://facebook.com/Carlene</website>
+        <tagged>girlfriend</tagged>
+    </persons>
+    <persons>
+        <name>Larry Bakker</name>
+        <occupation>Family Toy, Financial analyst</occupation>
+        <phone>90887532</phone>
+        <email>larry@example.com</email>
+        <address>2607 Brown Bear Drive, Murrieta, CA 92562</address>
+        <remark></remark>
+        <website>https://twitter.com/Larry</website>
+        <tagged>boyfriend</tagged>
+    </persons>
+    <persons>
+        <name>Milton Coleman</name>
+        <occupation>Helios Air, Armed Forces</occupation>
+        <phone>92773625</phone>
+        <email>miltonh@example.com</email>
+        <address>4947 Joseph Street, West Allis, WI 53227</address>
+        <remark></remark>
+        <website>https://twitter.com/milton</website>
+        <tagged>brother</tagged>
+    </persons>
+    <persons>
+        <name>Sydney Thomas</name>
+        <occupation>Childs Restaurants, Allergist</occupation>
+        <phone>87436367</phone>
+        <email>sydney@example.com</email>
+        <address>3233 Virginia Street, Chicago, IL 60631</address>
+        <remark></remark>
+        <website>https://facebook.com/Sydney</website>
+        <tagged>butcher</tagged>
+    </persons>
+    <persons>
+        <name>Michelle Martinez</name>
+        <occupation>Piece Goods Fabric, Pesticide sprayer</occupation>
+        <phone>90726355</phone>
+        <email>michelle@example.com</email>
+        <address>2577 Jail Drive, Peoria, IL 61602</address>
+        <remark></remark>
+        <website>https://github.com/Michellle</website>
+        <tagged>manager</tagged>
+    </persons>
+    <persons>
+        <name>Michael Gonzalez</name>
+        <occupation>Schucks Auto Supply, Instructional assistant</occupation>
+        <phone>99885537</phone>
+        <email>michael@example.com</email>
+        <address>3024 Meadowbrook Mall Road, Gardena, CA 90247</address>
+        <remark></remark>
+        <website>https://github.com/Michael</website>
+        <tagged>classmate</tagged>
+    </persons>
+    <persons>
+        <name>Jacqueline Keeler</name>
+        <occupation>Real Estate Service, Funeral attendant</occupation>
+        <phone>90303016</phone>
+        <email>Jacqy@example.com</email>
+        <address>2547 Berry Street, Limon, CO 80828</address>
+        <remark></remark>
+        <website>https://twitter.com/Jac</website>
+        <tagged>owner</tagged>
+    </persons>
+    <tags>owner</tags>
+    <tags>boss</tags>
+    <tags>manager</tags>
+    <tags>grandmother</tags>
+    <tags>boyfriend</tags>
+    <tags>Cousin</tags>
+    <tags>butcher</tags>
+    <tags>neighbours</tags>
+    <tags>enemy</tags>
+    <tags>classmate</tags>
+    <tags>friends</tags>
+    <tags>girlfriend</tags>
+    <tags>teacher</tags>
+    <tags>colleagues</tags>
+    <tags>classmates</tags>
+    <tags>family</tags>
+    <tags>brother</tags>
+    <tags>lawyer</tags>
+    <tags>relative</tags>
+</addressbook>
