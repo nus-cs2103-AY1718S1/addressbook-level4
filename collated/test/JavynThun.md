@@ -123,7 +123,8 @@ public class RemarkCommandTest {
      */
     private RemarkCommand prepareCommand(Index index, String remark) {
         RemarkCommand remarkCommand = new RemarkCommand(index, new Remark(remark));
-        remarkCommand.setData(model, new CommandHistory(), new UndoRedoStack(), new RecentlyDeletedQueue());
+        remarkCommand.setData(model, new CommandHistory(),
+                new UndoRedoStack(), new RecentlyDeletedQueue(), new String());
         return remarkCommand;
     }
 }

@@ -352,6 +352,38 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+// tag::findtag[]
+=== Find contacts by tag
+`FindTagCommand` allows the user to list those contacts whose tags are in a list of specified tags. The following diagram shows how `FindTagCommand` works:
+
+image::FindTagSequenceDiagram.PNG[width="800"]
+
+_Figure 4.1 : Sequence diagram for FindTagCommand_
+
+The user specifies the list of tags that he or she wants to search as the arguments of the command. `AddressBookParser` parses these keywords, and creates a new instance of `FindTagCommandParser`. `FindTagCommandParser` initializes a new instance of `FindTagCommand` with the given keywords as `TagsContainKeywordsPredicate`. `FindTagCommand` calls `updateFilteredPersonList` of model and returns the list of matched contacts.
+
+`TagsContainKeywordsPredicate` implements `Predicate` interface and specifies tag matching criteria. The following code snippets explain the class functionality:
+[source,java]
+----
+public class TagsContainKeywordsPredicate implements Predicate<ReadOnlyPerson> {
+    public TagsContainKeywordsPredicate(List<String> keywords) {
+        this.keywords = keywords;
+    }
+
+    private String stringifySetTags(Set<Tag> setTags) {
+        // ... convert a list of tags to string ...
+    }
+
+    @Override
+    public boolean test(ReadOnlyPerson person) {
+        return keywords.stream()
+                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(
+                stringifySetTags(person.getTags()), keyword));
+    }
+}
+----
+// end::findtag[]
+
 // tag::addMultiple[]
 === Add multiple contacts
 
@@ -386,6 +418,17 @@ It is highly advisable that the user enter the data in Excel and export as `Text
 |friend, criminal
 |===
 
+The following sequence diagram shows how the `AddMultipleByTsvCommand` works
+
+image::AddMultipleByTsvSequenceDiagram.PNG[width="800"]
+
+_Figure 4.2 : Sequence diagram for AddMultipleByTsvCommand_
+
+The user specifies the path to his list of contacts as the only argument of the command. `AddressBookParser` parses this argument and creates a new instance of `AddMultipleByTsvCommandParser` with the given argument as `contactTsvFilePath`. `AddMultipleByTsvCommandParser` then creates a new instance of `ContactTsvReader` with the given `contactTsvFilePath` and calls `readContactFromFile()` to start parsing.
+[NOTE]
+`readContactFromFile` throws `NoSuchElementException` and `IOException`.
+
+After `readContactFromFile` is finished, `AddMultipleByTsvCommandParser` calls `getToAddPeople()` for `toAddPeople` (a list of people to add) and `getFailedEntries` for failedEntries (a list of entries that TheYellowPage failed to add). `AddMultipleByTsvCommandParser` creates a new instance of `addMultipleByTsvCommand` given `toAddPeople` and `failedEntries`. Within this instance, `addPerson` will be called for each person in `toAddPeople`. After this, `addMultipleByTsvCommand` creates a new instance of `CommandResult` and sends the `result` back to `LogicManager`.
 
 `AddMultipleByTsvCommand` can throw the following exceptions:
 
@@ -393,16 +436,31 @@ It is highly advisable that the user enter the data in Excel and export as `Text
  * `IOException`: This happens when the system cannot find the file specified by users, and no entry will be added.
  * `DuplicatePersonException`: This happens when an entry has already been added, and it will not be added again.
 
-The following sequence diagram shows how the `AddMultipleByTsvCommand` works
+`ContactTsvReader` is used as a helper class to manage parsing contact details from a tab-separated file. The following code snippet explains the class functionality:
+[source,java]
+----
+public class ContactTsvReader {
+    private String contactTsvFilePath;
+    private ArrayList<ReadOnlyPerson> toAddPeople;
+    private ArrayList<Integer> failedEntries;
 
-image::AddMultipleByTsvSequenceDiagram.PNG[width="800"]
-_Figure 4.2 : Sequence diagram for `AddMultipleByTsvCommand`
+    public void readContactFromFile() throws ParseException, IOException {
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(contactTsvFilePath));
 
-The user specifies the path to his list of contacts as the only argument of the command. `AddressBookParser` parses this argument and creates a new instance of `AddMultipleByTsvCommandParser` with the given argument as `contactTsvFilePath`. `AddMultipleByTsvCommandParser` then creates a new instance of `ContactTsvReader` with the given `contactTsvFilePath` and calls `readContactFromFile()` to start parsing.
-[NOTE]
-`readContactFromFile` throws `NoSuchElementException` and `IOException`.
+        while(bufferedReader.readLine()) != null) {
+            // ... parse contact fields ...
+            ReadOnlyPerson toAddPerson = new Person(name, occupation, phone, email, address, remark, website, tagList);
+            toAddPeople.add(toAddPerson);
+        } catch (IllegalValueException ive) {
+            // ... throw new ParseException ...
+        } catch (NoSuchElementException nsee) {
+            failedEntries.add(i);
+        }
+    }
 
-After `readContactFromFile` is finished, `AddMultipleByTsvCommandParser` calls `getToAddPeople()` for `toAddPeople` (a list of people to add) and `getFailedEntries` for failedEntries (a list of entries that TheYellowPage failed to add). `AddMultipleByTsvCommandParser` creates a new instance of `addMultipleByTsvCommand` given `toAddPeople` and `failedEntries`. Within this instance, `addPerson` will be called for each person in `toAddPeople`. After this, `addMultipleByTsvCommand` creates a new instance of `CommandResult` and sends the `result` back to `LogicManager`.
+    // ... getters for toAddPeople, failedEntries ...
+}
+----
 // end::addMultiple[]
 
 // tag::FindCommand[]
@@ -447,12 +505,12 @@ A noteworthy part to mention is that the find function in TheYellowPage is desig
 
 Deleting multiple contacts is used so as to allow the user to delete multiple contacts with the use of a single command, saving time and without the need to clear the entire list.
 
-image::DeleteMultipleCommandSequenceDiagram.png[width="800"]
-_Figure 4.4 : Sequence diagram for `deleteMultipleCommand`_
+image::DeleteMultipleCommandSequenceDiagram.PNG[width="800"]
+_Figure 4.4 : Sequence diagram for DeleteMultipleCommand_
 
 Delete multiple contacts extends from undoable commands, and it can be undone using the undo function. By keying in the command word `deleteMul` along with `indexes`, the command word will be detected in the `AddressBookParser` class where the arguments (indexes in this case) will be passed over to the `DeleteMultipleCommandParser` class, as seen from figure 4.4 above.
 
-The deleteMultipleCommand is implemented this way:
+The DeleteMultipleCommand is implemented this way:
 ----
 public class DeleteMultipleCommand extends UndoableCommand {
     @Override
@@ -464,7 +522,7 @@ public class DeleteMultipleCommand extends UndoableCommand {
 
 As our indexes are intended to take in multiple index values, a `String[] listOfIndex = trimmedArgs.split("\\s+");` is used to split the arguments into individual indexes and store them into the String array. A `Collections.reverse(list);` is used to ensure that the user will be able to delete the correct indexes. The `ArrayList<String> list = new ArrayList<String>(Arrays.asList(listOfIndex));` is used to convert the list of index into an arrayList for use by the collections utility.
 
-In the `DeleteMultipleCommand` class, the commandResult method is used which compares the index with the `lastShownList` in the model, similar to the method used in the `deleteCommand`. However, as `DeleteMultipleCommand` is designed to take in multiple indexes, a for-loop is used to loop the commandResult method so as to check for every index within the arrayList. The names that are deleted will be stored inside a `String listOfDeletedContacts` which will be used to display the results on the UI.
+In the `DeleteMultipleCommand` class, the commandResult method is used which compares the index with the `lastShownList` in the model, similar to the method used in the `DeleteCommand`. However, as `DeleteMultipleCommand` is designed to take in multiple indexes, a for-loop is used to loop the commandResult method so as to check for every index within the arrayList. The names that are deleted will be stored inside a `String listOfDeletedContacts` which will be used to display the results on the UI.
 
 ==== Design Considerations
 
@@ -484,9 +542,13 @@ In the `DeleteMultipleCommand` class, the commandResult method is used which com
 === Recently Deleted List
 
 Recently deleted command is used to allow the user to have a list of the past 30 recently deleted contacts and their details.
-By keying in the command word `recentlyDel`, the command word will be detected in the `AddressBookParser` class and then the `RecentlyDeletedCommand` class would be executed.
-We will now create a `LinkedList<Person> RecentlyDeletedQueue = new LinkedList<>();` to store the recently deleted contacts for up to the past 30 contacts.
-In the `RecentlyDeletedCommand` class, the `commandResult` method is used which will show the deleted contacts.
+
+image::RecentlyDeletedSequenceDiagram.PNG[width="800"]
+_Figure 4.5 : Sequence diagram for RecentlyDeletedCommand_
+
+As we need to store the details of the deleted contacts, We will create a `LinkedList<ReadOnlyPerson> RecentlyDeletedQueue = new LinkedList<>();` to store the recently deleted contacts for up to the past 30 contacts.
+In the `RecentlyDeletedCommand` class, we will convert all the contacts in `RecentlyDeletedQueue` into `String` to show the recently deleted contacts and their details in the `ResultDisplay` box.
+The order of the contacts in the `RecentlyDeletedQueue` will also be reversed when shown in the `ResultDisplay` box, as we want to show the most recently deleted contact first.
 // end::recentlydeleted[]
 
 // tag::changePicture[]
@@ -496,13 +558,30 @@ In the `RecentlyDeletedCommand` class, the `commandResult` method is used which 
 The following sequence diagram shows how the `ChangeProfilePictureCommand` works
 
 image::ChangeProfilePictureSequenceDiagram.PNG[width="800"]
-_Figure 4.4 : Sequence diagram for `ChangeProfilePictureCommand`_
+_Figure 4.6 : Sequence diagram for ChangeProfilePictureCommand_
 
 When the user keys in the command word `changePicture` along with `INDEX` and `PICTURE_PATH`, `AddressBookParser` will detect the command word and parse the arguments to a new instance of `ChangeProfilePictureCommandParser`. `ChangeProfilePictureCommandParser` then creates a new instance of `ChangeProfilePictureCommand` with the given `INDEX` and `PICTURE_PATH`. This instance finds the `person` of the given `INDEX` in the most recent listing, then calls the static function `saveImageToStorage` with the `person` and `file` at `PICTURE_PATH`. `saveImageToStorage` creates a copy of the `file` and stores it under `data/`
 `ChangeProfilePictureCommand` can throw the following exceptions:
 
  * `IOException`: This happens when the system cannot find the file specified by users, and no picture will be changed.
  * `IllegalArgumentException`: This happens when the parsed arguments are not valid.
+
+`ImageStorageHandler` is used as a helper class to manage saving/deleting images in the storage. The following code snippet shows the class API:
+[source,java]
+----
+public class ImageStorageHandler {
+    private static final String DEFAULT_IMAGE_STORAGE_PREFIX = "data/"; // deafault image storage
+    private static final String DEFAULT_IMAGE_STORAGE_SUFFIX = ".png"; // default stored image format
+
+    public static void saveImageToStorage(File file, ReadOnlyPerson person) throws CommandException {
+        // ... save image to storage ...
+    }
+
+    public static void deleteProfilePicture(ReadOnlyPerson personToDelete) {
+        // ... delete image in storage ...
+    }
+}
+----
 // end::changePicture[]
 
 // tag::remark[]
@@ -537,15 +616,45 @@ Sort extends command which makes it an undoable command.
 
 Sort command can only be executed only if the person list is not empty.
 
-It uses the sort method from the collection class to sort the array list of persons in the address book.
+It uses the sort method from the collection class to sort the array list of persons in the address book:
+
+[source, java]
+----
+public Boolean sortPersonList(ArrayList<ReadOnlyPerson> personlist) {
+        if (filteredPersons.isEmpty()) {
+            return false;
+        }
+        personlist.addAll(filteredPersons);
+        Collections.sort(personlist, Comparator.comparing(name -> name.toString().toLowerCase()));
+
+        try {
+            addressBook.setPersons(personlist);
+        } catch (DuplicatePersonException e) {
+            System.out.println("Address book cannot not have duplicate persons");
+        }
+        return true;
+}
+----
 // end::sort[]
 
 // tag::theme[]
 === Changing of theme
 
 The `ThemeCommand` is used so as to allow the user to change the colour theme of TheYellowPage with the use of a single command. This provides the user with options to choose their preferred theme of TheYellowPage.
-There are 2 themes to alternate from: `DarkTheme.css` and `LightTheme.css`. By keying in the command word `theme`, the command word will be detected by the `AddressBookParser` class and then the `ThemeCommand` class would be executed.
+There are 2 themes to alternate from: `DarkTheme.css` and `LightTheme.css`. By keying in the command word `theme`, the command word will be detected by the `AddressBookParser` class and then a new instance of `ThemeCommand` class would be created.
 By keying the command word `theme`, the theme of TheYellowPage will switch from `DarkTheme.css` to `LightTheme.css` and vice versa.
+
+`ThemeCommand` is not an `UndoableCommand` and is implemented this way:
+
+[source, java]
+----
+public class ThemeCommand extends Command {
+    @Override
+    public CommandResult execute() {
+        // ... theme logic ...
+    }
+}
+----
 // end::theme[]
 
 === Logging

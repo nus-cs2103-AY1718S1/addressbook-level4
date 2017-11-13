@@ -1,4 +1,6 @@
-//@@author vmlimshimin
+# vmlimshimin
+###### /java/seedu/address/logic/commands/RecentlyDeletedCommandTest.java
+``` java
 package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertEquals;
@@ -77,3 +79,4 @@ public class RecentlyDeletedCommandTest {
         assertEquals(expectedMessage, recentlyDeletedCommand.execute().feedbackToUser);
     }
 }
+```
