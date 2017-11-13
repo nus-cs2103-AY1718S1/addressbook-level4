@@ -1,7 +1,14 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.commons.core.Messages.MESSAGE_THEME_NOT_FOUND;
 
+import java.io.File;
+import java.net.URISyntaxException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import seedu.address.MainApp;
 import seedu.address.logic.commands.ChangeThemeCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 //@@author kosyoz
@@ -16,9 +23,31 @@ public class ChangeThemeCommandParser implements Parser<ChangeThemeCommand> {
      */
     public ChangeThemeCommand parse(String userInput) throws ParseException {
         String trimmedArgs = userInput.trim();
-        if (trimmedArgs.isEmpty()) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ChangeThemeCommand.MESSAGE_USAGE));
+        File check;
+        String filepath;
+        try {
+            if (trimmedArgs.isEmpty()) {
+                throw new ParseException(
+                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, ChangeThemeCommand.MESSAGE_USAGE));
+            }
+            Path checkpath = Paths.get(MainApp.class.getResource("/view/" + trimmedArgs + ".css").toURI());
+            check = checkpath.toFile();
+            filepath = checkpath.toString();
+            if (!check.exists()) {
+                throw new ParseException(String.format(MESSAGE_THEME_NOT_FOUND));
+            }
+            try {
+                if (!check.getCanonicalPath().equals(filepath)) {
+                    throw new ParseException(String.format(MESSAGE_THEME_NOT_FOUND));
+                }
+            } catch (java.io.IOException ioe) {
+                throw new ParseException(String.format(MESSAGE_THEME_NOT_FOUND));
+            }
+        } catch (URISyntaxException use) {
+            throw new ParseException("");
+        }
+        catch (NullPointerException use) {
+            throw new ParseException(String.format(MESSAGE_THEME_NOT_FOUND));
         }
         return new ChangeThemeCommand(trimmedArgs);
     }

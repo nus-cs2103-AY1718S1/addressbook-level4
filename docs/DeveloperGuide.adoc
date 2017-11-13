@@ -595,6 +595,10 @@ The sort function is done by performing the `sortFilteredPersonList` function wh
 
 Within `ModelManager`, we mask `FilteredList` with a `SortedList` object, and call `sortFilteredPersonList` method within `Model`. This sets the comparator that been parsed by `SortCommandParser` into the `SortedList` filtered list. For each different way of sorting, a different comparator is being passed into `sortFilteredPersonList`. +
 
+The following is a sequence diagram detailing the process of how `SortCommand` sorts the list of persons. +
+
+image::SortSequenceDiagram.png[width="800"]
+
 Below is the code fragment found in `Model`.
 
 ----
@@ -622,7 +626,12 @@ If arguments given do not comply with the correct format, ParseException will be
 // tag::importexport[]
 === Import function
 
-The import function supports importing of vCard files (.vcf).
+The import function supports importing of vCard files (.vcf) and xml files (.xml).
+
+The diagram below details the sequence of how Rubrika handles the import command.
+
+[NOTE]
+The import function merges the contacts in the export files with the ones currently in the addressbook. If duplicate persons are found, Rubrika will inform the user of the number of duplicated contacts found.
 
 Firstly, the `ImportCommandParser` will create an new `ImportCommand` with a `FileInputSteam` containing the vCard file to be imported.
 
@@ -666,12 +675,37 @@ The contents are then read in this manner;
         ReadOnlyPerson toAdd = new Person(name, phone, email, address, remark, tagList);
         model.addPerson(toAdd);
 ----
+
+=== Export Function
+
+The export function is done by the `ExportCommand` class.
+
+After input validation in the `ExportCommandParser` class, the file path is passed to the `ExportCommand` class.
+
+In the `ExportCommand` class, depending on the file type requested by the user, a different method will be used to create the export file.
+
+If the file defined by the user uses a XML (.xml) file extension then the addressbook is exported into a XML file by using the static method `saveDataToFile` in the `XmlFileStorage` class.
+
+If the file defined by the user uses a vCard (.vcf) file extension, then the addressbook is exported dinto a vCard file by using the static method `saveDataToFile` in the `VcfExport` class.
+
+==== Design Considerations
+
+**Aspect**: Choice of export file types. +
+**Alternative 1 (current choice)**: vCard and XML files are supported +
+**Pros**: Easy to implement as XML file creation is already built into Address Book 4. vCard files are also relatively easy to create. +
+**Cons**: Limited files types supported +
+**Alternative 2**: Include .csv file types +
+**Pros**: More file types to choose from for the users. +
+**Cons**: Relatively harder to create a csv export file.
+
 // end::importexport[]
 
 // tag::findtag[]
 === FindTag Function
 
-The find tag function is done by the `TagsContainsKeywordsPredicate` class which lies under `Model`.`TagsContainsKeywordsPredicate` will iterate through each person and returns true for the person that has the tags similar to the keywords.
+The find tag function is done by the `TagsContainsKeywordsPredicate` class which lies under `Model`.
+
+`TagsContainsKeywordsPredicate` will iterate through each person and returns true for the person that has the tags similar to the keywords.
 
 In the method `execute()` under `FindTagCommand`, the predicate is then used to update the filtered list when it is parsed into the method `updateFilteredPersonList(Predicate)` which belongs to the `Model` class.
 
@@ -710,9 +744,9 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 // tag::theme[]
 === Theme Function
 
-The Theme Function is done by Calling `ChangeThemeCommand` that take in a `String` that specify the type of theme the user want to change to.
+The `theme` Function is done by Calling `ChangeThemeCommand` that take in a `String` that specify the type of theme the user want to change to.
 
-'ChangeThemeEvent` is then executed which triggers `handleChangeTheme` in `MainWindow`.
+`ChangeThemeEvent` is then executed which triggers `handleChangeTheme` in `MainWindow`.
 
 `handleChangeTheme` check remove all Stylesheets that are not the one specified by the user and add the Stylesheet user specified.
 

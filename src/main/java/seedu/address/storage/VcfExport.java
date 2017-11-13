@@ -27,8 +27,7 @@ public class VcfExport {
         logger.fine("Attempting to write to data file: " + file.getPath());
         BufferedWriter bw = new BufferedWriter(new FileWriter(file));
 
-        for (int i = 0; i < list.size(); i++) {
-            ReadOnlyPerson person = list.get(i);
+        for (ReadOnlyPerson person : list) {
             Set<Tag> tagList = person.getTags();
             bw.write("BEGIN:VCARD\n");
             bw.write("VERSON:2.1\n");
@@ -36,15 +35,21 @@ public class VcfExport {
             bw.write("EMAIL:" + person.getEmail() + "\n");
             bw.write("TEL:" + person.getPhone() + "\n");
             bw.write("ADR:" + person.getAddress() + "\n");
+
             if (!person.getRemark().isEmpty()) {
-                bw.write("RM:" + person.getRemark() + "\n");
+                bw.write("NOTE:" + person.getRemark() + "\n");
             }
-            for (Tag tag : tagList) {
-                bw.write("TAG:" + tag.getTagName() + "\n");
+
+            if (!tagList.isEmpty()) {
+                bw.write("CATEGORIES:");
+                for (Tag tag : tagList) {
+                    bw.write(tag.getTagName());
+                }
+                bw.write("\n");
             }
+
             bw.write("END:VCARD\n");
         }
         bw.close();
     }
-
 }

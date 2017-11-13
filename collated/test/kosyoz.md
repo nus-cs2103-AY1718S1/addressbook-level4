@@ -25,6 +25,52 @@ public class WebViewUtil {
     }
 }
 ```
+###### \java\seedu\address\logic\commands\ChangeThemeCommandTest.java
+``` java
+public class ChangeThemeCommandTest {
+    @Rule
+    public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
+
+    @Test
+    public void execute_validTheme_success() {
+        assertExecutionSuccess("RedTheme");
+        assertExecutionSuccess("DarkTheme");
+    }
+    @Test
+    public void execute_invalidTheme_failure() {
+        assertExecutionFailure("" , "Invalid command format!");
+    }
+    /**
+     * Executes a {@code ChangeThemeCommand} with the given {@code theme}, and checks that {@code ChangeThemeEvent}
+     * is raised with the correct theme.
+     */
+    private void assertExecutionSuccess(String theme) {
+        ChangeThemeCommand changeThemeCommand = new ChangeThemeCommand(theme);
+        try {
+            CommandResult commandResult = changeThemeCommand.execute();
+            assertEquals(String.format(ChangeThemeCommand.MESSAGE_SUCCESS + theme),
+                    commandResult.feedbackToUser);
+        } catch (CommandException ce) {
+            ce.printStackTrace();
+        }
+        ChangeThemeEvent lastEvent = (ChangeThemeEvent) eventsCollectorRule.eventsCollector.getMostRecent();
+        assertEquals(theme, (lastEvent.theme));
+    }
+    /**
+     * Executes a {@code ChangeThemeCommand} with the given {@code theme}, and checks that a {@code CommandException}
+     * is thrown with the {@code expectedMessage}.
+     */
+    private void assertExecutionFailure(String theme, String expectedMessage) {
+        ChangeThemeCommand changeThemeCommand = new ChangeThemeCommand(theme);
+        try {
+            changeThemeCommand.execute();
+            fail("The expected CommandException was not thrown.");
+        } catch (CommandException ce) {
+            Assert.assertEquals(expectedMessage, ce.getMessage());
+        }
+    }
+}
+```
 ###### \java\seedu\address\logic\commands\FindTagCommandTest.java
 ``` java
 public class FindTagCommandTest {
@@ -209,6 +255,29 @@ public class RemarkCommandTest {
         remarkCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return remarkCommand;
     }
+}
+```
+###### \java\seedu\address\logic\parser\ChangeThemeCommandParserTest.java
+``` java
+public class ChangeThemeCommandParserTest {
+
+    private ChangeThemeCommandParser parser = new ChangeThemeCommandParser();
+
+    @Test
+    public void parse_emptyArg_throwsParseException() {
+        assertParseFailure(parser, "     ", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                ChangeThemeCommand.MESSAGE_USAGE));
+    }
+    @Test
+    public void parse_invalidArg_throwParseException() {
+        assertParseFailure(parser, "YellowTheme", String.format(MESSAGE_THEME_NOT_FOUND));
+    }
+    @Test
+    public void parse_validArg_returnsChangeThemeCommand() {
+        ChangeThemeCommand expectecChangeThemeCommand = new ChangeThemeCommand("RedTheme");
+        assertParseSuccess(parser, "RedTheme", expectecChangeThemeCommand);
+    }
+
 }
 ```
 ###### \java\seedu\address\logic\parser\FindTagCommandParserTest.java
