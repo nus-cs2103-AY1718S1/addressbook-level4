@@ -59,6 +59,7 @@ public class CheckCommandsParser {
         final String[] subFindEventsCommands = new String[] { "eventfind", "findevent", "fe", "ef" };
         final String[] subUpdatePhotoCommands = new String[] { "updatephoto", "up" };
         final String[] subSetRelCommands = new String[] { "set", "rel", "setrel" };
+        final String[] subRepeatCommands = new String[] {"repeat", "rp"};
         final String[] subToggleTimetableCommands = new String[] { "timetable", "tt" };
 
 
@@ -88,6 +89,7 @@ public class CheckCommandsParser {
         final Set<String> commandsForFindEvent = new HashSet<>(Arrays.asList(subFindEventsCommands));
         final Set<String> commandsForUpdatePhoto = new HashSet<>(Arrays.asList(subUpdatePhotoCommands));
         final Set<String> commandsForSetRel = new HashSet<>(Arrays.asList(subSetRelCommands));
+        final Set<String> commandsForRepeat = new HashSet<>(Arrays.asList(subRepeatCommands));
         final Set<String> commandsForToggleTimetable = new HashSet<>(Arrays.asList(subToggleTimetableCommands));
 
         /**
@@ -135,6 +137,8 @@ public class CheckCommandsParser {
             finalUserCommand = "set";
         } else if (!Collections.disjoint(userInputCommand, commandsForToggleTimetable)) {
             finalUserCommand = "timetable";
+        }  else if (!Collections.disjoint(userInputCommand, commandsForRepeat)) {
+            finalUserCommand = "repeat";
         } else if (!Collections.disjoint(userInputCommand, commandsForListPersons)) {
             finalUserCommand = "listpersons";
         } else if (!Collections.disjoint(userInputCommand, commandsForListEvents)) {
