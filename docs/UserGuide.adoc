@@ -450,7 +450,6 @@ image::UG_header_alias.png[width="400"]
 Alias: `choose`, `pick`
 
 image::header_note.png[width="400"]
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
 
@@ -1029,7 +1028,12 @@ image::UG_mainheader_faq.png[width="900"]
 {sp}
 
 image:question.png[width="70"] How do I transfer my data to another Computer? +
-image:answer.png[width="70"] Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+image:answer.png[width="70"] Install the application in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+
+{sp}
+
+image:question.png[width="70"] Where do I find the latest version of Unify? +
+image:answer.png[width="70"] You can find the latest release version link:{repoURL}/releases[here].
 
 == Command Summary
 image::UG_mainheader_commandsummary.png[width="900"]
