@@ -720,34 +720,48 @@ the file. i.e. the user does not need to type `./data/import/Ark.xml`. +
 
 === Tab autocomplete mechanism
 
-image::SDforTabAutocomplete.png[width="900"]
-_Figure 4.8.1 : Sequence Diagram describing the operation of the `Autocompleter` when `autocomplete` is executed_
+The tab autocomplete mechanism is facilitated by the autocompleter package. The structure of the autocompleter
+package can be seen in the class diagram below:
 
-The tab autocomplete mechanism is facilitated by the `autocomplete` method residing inside the `Autocompleter`.
-It supports the tab autocompletion for possible commands that that match the text in the CommandBox. +
+image::AutocompleterClassDiagram.png[width="900"]
+_Figure 4.8.1 : Class diagram of the autocomplete package_
 
-A new `Autocompleter` is initialized when the `CommandBox` is initialized as an attribute of the `CommandBox`. When
-the `tab` key is pressed by the user, `CommandBox#processAutocomplete` retrieves the text that is currently in
-the `commandTextField` and passes it into the `Autocompleter#autocomplete` as a string. If the string is empty,
-`autocomplete` raises a `NewResultAvailableEvent` to prompt the user to use the help command and returns
-an empty string. +
+The `Autocompleter` class is the main entry point into the package. An instance of the `Autocompleter` class is
+instantiated inside the `CommandBox` class on start up. Inside the `CommandBox`, an event listener is
+attached to the text field which calls the `updateAutocompleter` method. The `updateAutocompleter` method then calls
+the `updateAutocompleter` method in the `Autocompleter` which updates the state of the `Autocompleter` according
+to the diagram below:
 
-If the string is not empty, the text in `commandTextField` will be converted into an array and stored in
-`commandBoxTextArray`. If there is only one word in the `commandBoxTextArray`,
-`AutoCompleter#processOneWordAutocomplete` will be called and the only word in commandBoxTextArray is passed in as a
-string `commandBoxText`. `processOneWordAutocomplete` will then pass `commandBoxText` into `getClosestCommands`.
-`getClosestCommands` then iterates through all the possible commands in `commandList` and compares them with
-`commandBoxText` using  `AutoComplete#isPossibleMatch` . If `isPossibleMatch` returns true, the command is then stored
-inside the arrayList `possibleResults`. After iterating through `commandList`, `getClosestCommands` then returns
-`possibleResults`. If there is only one item inside `possibleResults`, `processOneWordAutoComplete` will return it to
-`autocomplete` which then returns it to `processAutocomplete`. If there is more than one item, a
-`NewResultAvailableEvent` is raised which prompts the user on the possible autocomplete commands available and returns
-the original value of `commandBoxText`. +
+image::AutocompleteStateActivityDiagram.PNG[width="900"]
+_Figure 4.8.2 : Activity diagram of the `updateAutocompleter` method_
 
-After `autocomplete` returns a string to `processAutocomplete`, it then passes the string into `CommandBox#replaceText`
-to replace the text in `commandFieldText` with the string. +
+Besides updating the state, the updateState method also updates the `possibleAutocompleteOptions` list. In the case
+where there are multiple commands available, this will contain all the possible options. In the case where multiple
+prefixes are available, this will contain the missing prefixes. These options are accessed using the `resultIndex `which
+is either incremented with wrap-around or reset depending on the state of the `Autocompleter` when autocomplete
+is called. +
+The countingIndex is used to keep track of the index field for commands that need it. Its maximum size is the
+size of the current ActiveList in the model. It is either incremented with wrap-around or reset depending on
+the state of the `Autocompleter` when `autocomplete` is called.
+When tab is entered by the user, the `autocomplete` method is called through the `processAutocompelete` in the
+Command box which then updates the text field according to the diagram below.
+
+image::AutocompleterAutocompleteActivityDiagram.PNG[width="900"]
+_Figure 4.8.3 : Activity diagram of the `autocomplete` method_
 
 ==== Design Considerations
+
+**Aspect: autocomplete interface ** +
+
+* **Alternative 1 (current choice): ** A unix like tab auto-completion mechanism that allows users to cycle through
+options. +
+** **Pros:** More intuitive and non-intrusive interface, which improves user experience.
+** **Cons:** Harder to implement, the whole autocompleter would be built from the ground up.
+
+* **Alternative 2: ** A drop down box that gives users suggestions on the options they have.
+** **Pros:** Can be easily implemented by using a ComboBox in JavaFX.
+** **Cons:** Highly intrusive and isn't as intuitive as a tab autocomplete. The ComboBox response time might also be
+too slow for people who type fast.
 
 **Aspect: Implementation of `autocomplete`** +
 
