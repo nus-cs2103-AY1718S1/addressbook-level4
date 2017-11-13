@@ -4,6 +4,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.SelectCommand.MESSAGE_SELECT_PERSON_SUCCESS;
+import static seedu.address.logic.commands.SelectCommand.MESSAGE_SOCIAL_TYPE_NOT_FOUND;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 import static seedu.address.testutil.TypicalPersons.getTypicalPersons;
@@ -85,7 +86,7 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
         //@@author sarahnzx
         /* Case: valid arguments (social type instagram) -> selected */
         command = SelectCommand.COMMAND_WORD + " " + validIndex.getOneBased() + " instagram";
-        assertCommandSuccess(command, validIndex);
+        assertCommandFailure(command, MESSAGE_SOCIAL_TYPE_NOT_FOUND);
 
         /* Case: valid arguments (social type facebook) -> selected */
         command = SelectCommand.COMMAND_WORD + " " + validIndex.getOneBased() + " facebook";
@@ -93,7 +94,7 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: valid arguments (social type ig) -> selected */
         command = SelectCommand.COMMAND_WORD + " " + validIndex.getOneBased() + " ig";
-        assertCommandSuccess(command, validIndex);
+        assertCommandFailure(command, MESSAGE_SOCIAL_TYPE_NOT_FOUND);
 
         /* Case: valid arguments (social type fb) -> selected */
         command = SelectCommand.COMMAND_WORD + " " + validIndex.getOneBased() + " fb";
