@@ -17,7 +17,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import seedu.address.logic.commands.ListCommand;
 import seedu.address.testutil.PersonUtil;
 import seedu.address.ui.StatusBarFooter;
 
@@ -56,7 +55,6 @@ public class StatusBarFooterTest extends AddressBookGuiTest {
 
     @Test
     public void syncStatus_nonMutatingCommandSucceeds_syncStatusRemainsUnchanged() {
-        assertTrue(runCommand(ListCommand.COMMAND_WORD)); // non-mutating command succeeds
         assertEquals(SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
     }
 

@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= OurAB - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,9 +10,9 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-F09-B4/addressbook-level4.git
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team F09-B4`      Since: `Sep 2017`      Licence: `MIT`
 
 == Setting up
 
@@ -68,7 +68,7 @@ Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> docume
 
 ==== Updating documentation to match your fork
 
-After forking the repo, links in the documentation will still point to the `se-edu/addressbook-level4` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `se-edu/addressbook-level4`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
+After forking the repo, links in the documentation will still point to the `OurAB` repo. If you plan to develop this as a separate product (i.e. instead of contributing to `OurAB`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
 
 ==== Setting up CI
 
@@ -195,6 +195,7 @@ The `Model`,
 
 * stores a `UserPref` object that represents the user's preferences.
 * stores the Address Book data.
+* stores the meeting list data.
 * exposes an unmodifiable `ObservableList<ReadOnlyPerson>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
@@ -208,7 +209,8 @@ _Figure 2.5.1 : Structure of the Storage Component_
 The `Storage` component,
 
 * can save `UserPref` objects in json format and read it back.
-* can save the Address Book data in xml format and read it back.
+* can save the Address Book and Meeting List data in xml format and read it back.
+* can save a backup of the Address Book and restore from a backup file.
 
 === Common classes
 
@@ -345,6 +347,89 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+// tag::meetings[]
+=== Meetings
+
+==== Storage
+
+===== Implementation
+The mechanism and data structure of meetings are similar to that of the address book. The local storage is located at
+`data/meetinglist.xml` by default. For each meeting, the date, time location and participants are recorded. The participants
+must be from the address book.
+
+
+===== Design Considerations
+
+**Aspect:** Local storage of the meeting list +
+**Alternative 1 (current choice):** Use XML and separate from the address book storage+
+**Pros:** Follows the single responsibility principle and simplifies both the address book and meeting list data structre +
+**Cons:** Potentially duplicate code, violates the DRY principle +
+**Alternative 2:** Use XML together in the address book storage +
+**Pros:** Less extra components needed, some information shared between the two parts can be accessed more conveniently +
+**Cons:** The data structure of `addressbook.xml` would become too complicated
+
+---
+
+==== Asana Configuration
+
+===== Implementation of Setup Asana
+
+===== Design Considerations
+
+===== Implementation of Set unique key
+
+===== Design Considerations
+
+
+==== Add Meeting Command
+
+===== Implementation
+
+When the command is called, the user input is parsed as shown in the sequence diagram below.
+
+image::AddMeetingCommandLogic.png[width="800"]
+_Figure 3.2.3.a : Add Meeting Command Parser_
+
+Depending on some conditions:
+
+image::
+_Figure 3.2.3.a : Conditions for adding local or online meeting_
+
+There are two primary methods that will be executed:
+
+a. To add unique meetings (ensured by `DuplicateMeetingException`) associated with valid people in +
+addressbook (ensured by `IllegalIdException`).
+
+[source, java]
+----
+    try {
+        //..Add local meeting logic..
+    } catch (DuplicateMeetingException e) {
+        throw new CommandException(MESSAGE_DUPLICATE_MEETING);
+    } catch (IllegalIdException ive) {
+        throw new CommandException(MESSAGE_INVALID_ID);
+    }
+----
+
+b. To post a task on Asana
+[source, java]
+----
+    newAsanaTask = new PostTask(..notes.., ..due date..);
+    newAsanaTask.execute();
+----
+
+Create a new instance of `PostTask` and authenticate user using https://github.com/Asana/java-asana[OAuth2].
+
+===== Design Considerations
+
+**Aspect:** Post on Asana +
+**Alternative 1 (current choice):** Incorporate posting on Asana with every addCommand +
+**Pros:** Convenient for user to keep track of tasks related to meetings +
+**Cons:** Reduces control that user has in uploading tasks to Asana+
+**Alternative 2:** Create a separate command to add tasks onto Asana +
+**Pros:** More flexibility on the content that is saved onto Asana workspace +
+**Cons:** Unnecessary number of commands in the addressbook & reduce productivity of user
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
@@ -363,6 +448,425 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 === Configuration
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
+
+=== Command Box Helper
+
+The command box helper is meant to work similarly to the auto fill functions in IDEs. Two different classes are created, `CommandBoxHelper` and `HelperCard`.
+`CommandBoxHelper` contains a ListView which is populated by VBox containers holding the `HelperCard` class. `CommandBoxHelper` retrieves a list of commands and command templates from the `logic` class and performs a check to populate the listview everytime the user enters a key in the command box
+The commands are matched using the `contain()` function and comparing the first character of the user's input. Commands that are matched are placed in a list and mapped to their corresponding `HelperCard` classes.
+For example, an "add" command will create a new instance of `HelperCard` using "add" as a parameter for the `HelperCard` constructor.
+
+To emulate the behaviour of command helpers in IDEs, the use can also navigate the list of commands using the arrow keys. To prevent it from overwriting the existing code of loading input history, an if-else statement is used. The command box helper takes priority in this case; as long as there is a command
+that corresponds to the user's entered string in the CLI, i.e. the command box helper is shown, interaction with the command helper will take precedence over interactions with the CLI. This is implemented similarly in the key inputs `TAB` and `ENTER`, which are used to fill in the CLI after the user has selected his
+desired command in the command helper.
+
+==== Design Considerations
+
+**Aspect:** Implementation of the list view in `CommandBoxHelper` +
+**Alternative:** Instead of creating a new class to populate the ListView, use a StackPane instead of a ListView and add Strings to it +
+**Pros:** Easier to implement the display for command helper +
+**Cons:** Fragile architecture, have to change a few functions every time an extra command is added. This involves hardcoding the additional command Strings into the functions.
+Slightly harder to display selection of command in the helper box to the user.
+
+// tag::preferences[]
+=== Preferences
+
+In addition to configuration, user can customize the address book application by editing preferences. The difference between
+configurations and preferences is that configuration stores basic information requried to start the application, while
+preferences determine high level functionalities and UI styles. +
+
+==== Implementation
+The preferences are stored in `preferences.json` by default. This location is set in `config.json`. When the application
+is started, the `initPrefs` method reads the preferences file and converts it into a `UserPrefs` object using jackson-databind
+API. +
+In `UserPrefs` class, each valid preference key is defined as a field in the class, with initial value set to the default
+value of the preference. For example, the default path to the address book local storage is :
+[source,java]
+----
+private String addressBookFilePath = "data/addressbook.xml";
+----
+There are also two methods defined for each preference: `get<PreferenceKey>` and `set<PreferenceKey>`. These are used for
+reading and writing to the preference respectively. For example, for AddressBookFilePath, we have :
+[source,java]
+----
+public String getAddressBookFilePath() {
+    return addressBookFilePath;
+}
+
+public void setAddressBookFilePath(String addressBookFilePath) {
+    this.addressBookFilePath = addressBookFilePath;
+}
+----
+
+==== Command: `pref`
+The `pref` command allows users to view or edit the preferences. The details of its usage can be found in the
+<<UserGuide, UserGuide.adoc>>. The implementation of the command will be explained here. +
+When a `pref` command is entered, the `PrefCommand` will attempt to find and execute `get<PreferenceKey>`
+method in the `UserPrefs` class using Java Reflection API. If an exception is encountered, it is assumed that the method
+does not exist and the preference key entered by the user was invalid. Similarly, if two arguments were entered, `PrefCommand`
+will again try to find and execute `set<PreferenceKey>` method.
+
+==== Design Considerations
+
+**Aspect:** Implementation of `PrefCommand` +
+**Alternative 1 (current choice):** Use Reflection API +
+**Pros:** Easier to add in a new preference by changing only the `UserPrefs` class +
+**Cons:** Hard to debug since it is less intuitive +
+**Alternative 2:** Design another parser similar to the command parser +
+**Pros:** Easier to understand the code +
+**Cons:** More difficult to add in a new preference
+
+---
+
+**Aspect:** Data structure to store the preferences : +
+**Alternative 1 (current choice):** JSON and jackson-databind +
+**Pros:** Most of the parsing is taken care of by the API +
+**Cons:** Adding new preference is slightly troublesome; the API documentation is not beginner-friendly +
+**Alternative 2:** Use a hashmap to store the preferences +
+**Pros:** Intuitive, easy to add more preferences +
+**Cons:** Data structure is more restricted; may need to write native code to parse JSON if a library cannot be found to convert JSON to hashmap +
+// end::preferences[]
+
+=== Command: `List`
+Sorts and the lists everyone in the address book in alphabetical order.
+
+==== Implementation
+
+When the `List` command is executed, `UniquePersonList` is sorted lexicographically. +
+[source,java]
+----
+public void sortLexicographically () {
+        internalList.sort(new LexicographicComparator());
+ }
+----
+The `LexicographicComparator` compares which person should come before another based on alphabet sequences.
+This updates the address book storage file. When model calls for `filteredPersons` list, all persons are read from +
+the address book storage and then displayed on `PersonListPanel` on the GUI.
+
+
+==== Design Considerations
+
+**Aspect:** Persistent sort +
+**Alternative 1(current choice):** Persistent sort (Sort persons, by modifying `addressbook.xml`) +
+**Pros:** Reduces need for repeated sorting +
+**Cons:** Unnecessary operations on storage `addressbook.xml` +
+**Alternative 2:** Non-persistent sort (Sort persons in a temporary list) +
+**Pros:** Reduce operations on storage file, `Addressbook.xml` +
+**Cons:** Use of additional storage to copy all contacts is inefficient in terms of time & storage
+
+---
+
+=== Command: `List By Most Searched`
+Sorts and the lists everyone in the address book based on decreasing number of searches.
+
+==== Implementation
+Each successful `Search` command execution with non-zero search results, activates an update of search count for everyone in search results.+
+[source,java]
+----
+if (searchResultsCount != NO_RESULTS) {
+    model.recordSearchHistory();
+}
+
+----
+This equates to an update of the search count variable within the `SearchData` class within every `Person` class.
+[source,java]
+----
+public void incrementSearchCount()
+----
+
+When the `ListByMostSearched` is executed, `UniquePersonList` is sorted based on descending search count. +
+[source,java]
+----
+public void sortBySearchCount () {
+    internalList.sort(new ReadOnlyPersonComparator());
+}
+----
+The `ReadOnlyPersonComparator` compares the search count between two Persons. This updates the address book storage file.
+When model calls for `filteredPersons` list, all persons are read from +
+the address book storage and then displayed on `PersonListPanel` on the GUI.
+
+
+==== Design Considerations
+
+**Aspect:** Implementation of storage for `SearchData` +
+**Alternative 1 (current choice):** Add `SearchData` as a class in `Person` +
+**Pros:** Increase storage efficiency +
+**Cons:** `Addressbook.xml` is more complicated
+**Alternative 2:** Add `SearchData` to a separate storage file +
+**Pros:** Minimal changes to `Addressbook.xml` +
+**Cons:** Unnecessary repetition in storage; replication of `Person` details +
+
+---
+
+**Aspect:** Persistent sort +
+**Alternative 1(current choice):** Persistent sort (Sort persons, by modifying `addressbook.xml`) +
+**Pros:** Reduces need for repeated sorting & speed up `search` command +
+**Cons:** Unnecessary operations on storage `addressbook.xml` +
+**Alternative 2:** Non-persistent sort (Sort persons in a temporary list) +
+**Pros:** Reduce operations on storage file, `Addressbook.xml` +
+**Cons:** Use of additional storage to copy all contacts is inefficient in terms of time & storage
+
+---
+
+=== Choosing display mode
+
+This allows the user to select what they want displayed on the main screen. Since our application is targeted at university students to facillitate project meeting, who use a variety of social media
+platforms, the ability to select their preferred display is vital so they can view different social media platforms.
+
+==== Implementation
+
+The last selected display mode will be stored in `preferences.json` by default, which is set in `config.json` (coming in v1.4). The default mode of display will be set to `linkedin`.
+When a display mode is selected by the user via its command `choose`, an event is raised by the `ChooseCommand` object, via the following line :
+[source,java]
+----
+EventsCenter.getInstance().post(new JumpToBrowserListRequestEvent(targetDisplay));
+----
+This event is then handled by the `SettingsSelector` object. It selects and highlights the user's selected display mode, and then raises another event :
+[source,java]
+----
+raise(new BrowserPanelSelectionChangedEvent(browserSelection));
+----
+Which is handled by the `BrowserPanel` object to display their selected display type.
+
+==== Command: `choose`
+The `choose` command allows users to select the display type they prefer. When the String found in the command box is detected to contain either `choose` or `pref`, both of which are
+commands related to settings, the settings panel is brought in via a translation timeline animation. When the `MainWindow` is originally initialized, the container for the settings panel
+is translated on the X axis outside of the application view, and is then brought into view via the animation. When the String in the command box does not contain `choose` or `pref`, the
+settings panel is then translated out of sight again.
+
+image::SettingsPaneInOut.png[width="700"]
+
+When the choose command is called, another event is called to hide the other views that are not "chosen" by the user. For example, if the user types in the command `choose meeting`, the root view of the current display page, e.g linkedin, will be removed
+from the placeholder in the MainWindow, then the root view of the meeting display is placed in its stead.
+
+image::ChooseSequenceDiagram.png[width="700"]
+
+==== Design Considerations
+
+**Aspect:** Implementation of choose command +
+**Alternative:** Combine it with the pref command to come under a "mega" "settings" command. +
+**Pros:** Lesser commands for the user to remember, higher code modularity, easier for future command implementations on settings. +
+**Cons:** Harder to code and debug due to requirement to parse more arguments
+
+---
+
+**Aspect:** Animation of settings panel +
+**Alternative:** Use transitions instead of timeline +
+**Pros:** Transitions are easier to implement and understand +
+**Cons:** KeyValue objects are fit into a keyframe which is then fit into the timeline, which fits more into the concept of java's OOP and allows for more code reusability when we want to, for example, animate bouncing
+
+---
+
+==== Display LinkedIn Search Results
+
+When the `choose` command is activated with the argument `linkedin`, the `BrowserPanel` handles by calling:
+[source, java]
+----
+private void loadOtherPages(String page);
+----
+
+image::LinkedInProfile.png[width="200"]
+
+LinkedIn results page with parameters, such as `Name`, passed in from the selected `Person` class.
+
+Note: Cookies are stored to maintain login session for the length of the addressbook session.
+
+==== Design considerations
+
+**Aspect:** Implementation of display linked in authorisation
+**Alternative 1 (current option):** Manual key in of user-id and password into browser
+**Pros:** More details of user profile is viewable
+**Pros:** More secure
+**Cons:** Tedious to type login credentials into browser
+**Alternative 2:** Use OAuth 2.0 with LinkedIn Api
+**Pros:** More convenient as login credentials are required only once
+**Cons:** LinkedIn API available does not allow for viewing of full profile
+
+=== Command: `Delete Tag`
+
+`Delete Tag` lets users delete a particular tag from all users in the address book. +
+The feature also allows users to delete multiple tags at the same time.
+
+==== Implementation
+
+The specified arguments `TAG1 TAG2 ...` are parsed to generate an array of `String`.
+
+The generated string array is then used to generate an array of type `Tag`
+
+[source,java]
+----
+private Tag[] stringToTag (String[] tag);
+----
+
+Using this array of type `Tag` as parameter, the `deleteTag` method is executed as follows:
+
+image::deleteTagModelDiagram.png[width="200"]
+
+If `hasOneOrMoreDeletion` is true, user will be notified that tags are successfully deleted. +
+Otherwise, users will be notified that specified tags are not used in address book, and thus cannot be deleted.
+
+==== Design Considerations
+
+**Aspect:** implementation of `deleteTag` method in `modelManager`  +
+**Alternative 1 (current choice):** Iterate through every person & delete relevant tags +
+**Pros:** Increased storage efficiency +
+**Cons:** Unnecessary `remove` operations are carried out
+**Alternative 2:** Populate list of people with relevant tags & delete relevant tags +
+**Pros:** Fewer `remove` operations +
+**Cons:** [Space complexity (O(n)) is higher] More storage elements required to store temorary lists +
+**Cons:** More complex implementation
+
+---
+
+=== Command: `Search`
+
+`Search` lets users search for contacts in the address book by keywords in their contact details such name, address and telephone number +
+The feature is more powerful and useful than find which only searches by name.
+
+==== Implementation
+
+When the command is called, the user input is parsed as shown in the sequence diagram below.
+
+image::SDforSearchPerson.png[width="800"]
+
+The search command checks the keyword(s) given by the user against any parameters contained in the selected person
+[source,java]
+----
+public boolean test(ReadOnlyPerson person) {
+    return keywords.stream()
+            .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getAsText(), keyword));
+}
+----
+
+The keywords are generated as list of strings, which is then checked against the details of the persons
+in address book.
+[source,java]
+----
+public PersonContainsKeywordsPredicate(List<String> keywords) {
+        this.keywords = keywords;
+    }
+----
+
+The details are returned as strings, by the ReadOnlyPerson method in the person model. The list of searched
+people is then continually updated, before it is finally returned to the user
+[source,java]
+----
+ model.updateFilteredPersonList(predicate);
+----
+
+==== Design Considerations
+
+**Aspect:** implementation of `Search` command over `Find`  +
+**Pros:** More powerful search tool +
+**Cons:** Unnecessary results may be returned for larger address books
+
+---
+
+=== Command: `Map`
+
+Displays the google maps location of a person's address
+
+==== Implementation
+
+When 'map' command is executed, the command is interacts with the various components
+as shown in the high-level sequence diagram below.
+
+image::MapCommandHighLevelSequenceDiagram.png[width="800"]
+
+It retrieves the current list of people from model,
+and selects the person's address based on the index given.
+
+[source,java]
+----
+List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+
+ReadOnlyPerson personToShow = lastShownList.get(index.getZeroBased());
+----
+
+The address is then passed into a url template for a page loader to display
+the google maps on the browser panel.
+
+[source,java]
+----
+private void loadPersonMap(ReadOnlyPerson person) throws CommandException {
+    if (personSelected == null) {
+        throw new CommandException("Please select a person");
+    }
+    setMapsChosenTrue();
+    setLinkedinChosenFalse();
+    loadPage(GOOGLE_MAPS_URL_PREFIX + person.getAddress().toString().replaceAll(" ", "+")
+            + GOOGLE_SEARCH_URL_SUFFIX);
+}
+----
+
+==== Design Considerations
+
+**Aspect:** Passing URL directly +
+**Alternative 1:** Use google maps API +
+**Pros:** More powerful and secure search +
+**Cons:** Unnecessary imports of dependencies, slows the program +
+
+---
+
+=== Profile Photo
+
+A profile photo is displayed for each person in the addressbook.
+
+==== Implementation
+
+During startup, the application uses a person's email address to download his/her profile photo from link:https://en.gravatar.com/site/implement/[Gravatar] `cache/`. The photo will then be displayed on the person card.
+When a new person is added or a person's email address is changed, the new profile photo will be downloaded. +
+For contacts who have not set a Gravatar photo before, user also has the option to choose what type of default photo to
+display.
+
+==== Design Considerations
+
+**Aspect:** source of the profile photos +
+**Alternative 1 (current choice):** Gravatar +
+**Pros:** easy to implement; does not require user to input extra information +
+**Cons:** less customizable +
+**Alternative 2:** from other social network websites (Instagram, Facebook, etc.) +
+**Pros:** OurAb's target demographics usually update their profile photos on SNS more frequently +
+**Cons:** authentication might be required; User need to input contacts' user id for different websites +
+**Alternative 3:** user uploads profile photo for each person +
+**Pros:** user has most freedom to customize their addressbook +
+**Cons:** upload photo would be too complicated for a CLI application +
+
+**Aspect:** download photos in foreground or background+
+**Alternative 1 (current choice):** only download in background when the `DefaultProfilePhoto` preference is changed +
+**Pros:** the solution is balanced between program response time and update time (see below for explanation on the trade-off) +
+**Cons:** user might not see the change immediately after changing the preference +
+**Alternative 2:** always download in foreground +
+**Pros:** profile photos will be updated as soon as they are available +
+**Cons:** the application will freeze during the download; if `DefaultProfilePhoto` preference is changed, the application will appear unresponsive +
+**Alternative 3:** always download in background +
+**Pros:** user will not notice any unresponsiveness when using the application +
+**Cons:** it is technically challenging to update the photo in UI timely (concurrency is difficult)
+
+---
+
+=== Meeting Display
+
+Displays the list of upcoming meetings to the user on the main display window. Accessible through the `choose` command to select the display type.
+
+==== Implementation
+
+When the user executes the `choose` command under the `meeting` keyword, an event is raised to hide the current display, which is a WebView.
+Since the meeting display cannot be implemented using a WebView, the root view of the BrowserPanel.fxml is first removed from the placeholder, then the view of MeetingPanel.fxml is added into the placeholder instead.
+The meeting information is retrieved from a ReadOnlyMeetingList converted into an ObservableList<Meeting>, and stored into a list view with list cells containing 5x1 GridPanes, each populated with information on the meeting.
+
+==== Design Considerations
+
+**Aspect:** Constructor of the MeetingPanel class +
+**Alternative:** Instead of taking in logic, directly take in an ObservableList<Meeting> that is called from MainWindow.java. +
+**Pros:** Less coupling since there is no logic component in the MeetingPanel class. +
+**Cons:** Since the Meeting class does not have getter methods to obtain person strings and instead uses a mapped unique id system to obtain each person's name through the ReadOnlyAddressBook, a instance of the model object is required to obtain the strings of each person's name in the meeting object. +
+**Alternative 2:** Implement a direct getter method for the person's string in the meeting object. +
+**Pros:** Lesser code complexity; we no longer need a method in the LogicManager class to obtain person strings through the ReadOnlyAddressBook using the Meeting class' unique IDs. +
+**Pros:** Less coupling since there is no logic component in the MeetingPanel class. +
+**Cons:** Invalidates the unique id system currently in place for the meeting class.
+
+---
 
 == Documentation
 
@@ -469,251 +973,6 @@ a. Include those libraries in the repo (this bloats the repo size) +
 b. Require developers to download those libraries manually (this creates extra work for developers)
 
 [appendix]
-== Suggested Programming Tasks to Get Started
-
-Suggested path for new programmers:
-
-1. First, add small local-impact (i.e. the impact of the change does not go beyond the component) enhancements to one component at a time. Some suggestions are given in this section link:#improving-each-component[Improving a Component].
-
-2. Next, add a feature that touches multiple components to learn how to implement an end-to-end feature across all components. The section link:#creating-a-new-command-code-remark-code[Creating a new command: `remark`] explains how to go about adding such a feature.
-
-=== Improving each component
-
-Each individual exercise in this section is component-based (i.e. you would not need to modify the other components to get it to work).
-
-[discrete]
-==== `Logic` component
-
-[TIP]
-Do take a look at the link:#logic-component[Design: Logic Component] section before attempting to modify the `Logic` component.
-
-. Add a shorthand equivalent alias for each of the individual commands. For example, besides typing `clear`, the user can also type `c` to remove all persons in the list.
-+
-****
-* Hints
-** Just like we store each individual command word constant `COMMAND_WORD` inside `*Command.java` (e.g.  link:{repoURL}/src/main/java/seedu/address/logic/commands/FindCommand.java[`FindCommand#COMMAND_WORD`], link:{repoURL}/src/main/java/seedu/address/logic/commands/DeleteCommand.java[`DeleteCommand#COMMAND_WORD`]), you need a new constant for aliases as well (e.g. `FindCommand#COMMAND_ALIAS`).
-** link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] is responsible for analyzing command words.
-* Solution
-** Modify the switch statement in link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser#parseCommand(String)`] such that both the proper command word and alias can be used to execute the same intended command.
-** See this https://github.com/se-edu/addressbook-level4/pull/590/files[PR] for the full solution.
-****
-
-[discrete]
-==== `Model` component
-
-[TIP]
-Do take a look at the link:#model-component[Design: Model Component] section before attempting to modify the `Model` component.
-
-. Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in the address book.
-+
-****
-* Hints
-** The link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model`] API needs to be updated.
-**  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] classes can be used to implement the tag removal logic. link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] allows you to update a person, and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] allows you to update the tags.
-* Solution
-** Add the implementation of `deleteTag(Tag)` method in link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`]. Loop through each person, and remove the `tag` from each person.
-** See this https://github.com/se-edu/addressbook-level4/pull/591/files[PR] for the full solution.
-****
-
-[discrete]
-==== `Ui` component
-
-[TIP]
-Do take a look at the link:#ui-component[Design: UI Component] section before attempting to modify the `UI` component.
-
-. Use different colors for different tags inside person cards. For example, `friends` tags can be all in grey, and `colleagues` tags can be all in red.
-+
-**Before**
-+
-image::getting-started-ui-tag-before.png[width="300"]
-+
-**After**
-+
-image::getting-started-ui-tag-after.png[width="300"]
-+
-****
-* Hints
-** The tag labels are created inside link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard#initTags(ReadOnlyPerson)`] (`new Label(tag.tagName)`). https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html[JavaFX's `Label` class] allows you to modify the style of each Label, such as changing its color.
-** Use the .css attribute `-fx-background-color` to add a color.
-* Solution
-** See this https://github.com/se-edu/addressbook-level4/pull/592/files[PR] for the full solution.
-****
-
-. Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] such that link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] can show a different style on error (currently it shows the same regardless of errors).
-+
-**Before**
-+
-image::getting-started-ui-result-before.png[width="200"]
-+
-**After**
-+
-image::getting-started-ui-result-after.png[width="200"]
-+
-****
-* Hints
-** link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] is raised by link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] which also knows whether the result is a success or failure, and is caught by link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] which is where we want to change the style to.
-** Refer to link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] for an example on how to display an error.
-* Solution
-** Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] 's constructor so that users of the event can indicate whether an error has occurred.
-** Modify link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay#handleNewResultAvailableEvent(event)`] to react to this event appropriately.
-** See this https://github.com/se-edu/addressbook-level4/pull/593/files[PR] for the full solution.
-****
-
-. Modify the link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to show the total number of people in the address book.
-+
-**Before**
-+
-image::getting-started-ui-status-before.png[width="500"]
-+
-**After**
-+
-image::getting-started-ui-status-after.png[width="500"]
-+
-****
-* Hints
-** link:{repoURL}/src/main/resources/view/StatusBarFooter.fxml[`StatusBarFooter.fxml`] will need a new `StatusBar`. Be sure to set the `GridPane.columnIndex` properly for each `StatusBar` to avoid misalignment!
-** link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] needs to initialize the status bar on application start, and to update it accordingly whenever the address book is updated.
-* Solution
-** Modify the constructor of link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to take in the number of persons when the application just started.
-** Use link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter#handleAddressBookChangedEvent(AddressBookChangedEvent)`] to update the number of persons whenever there are new changes to the addressbook.
-** See this https://github.com/se-edu/addressbook-level4/pull/596/files[PR] for the full solution.
-****
-
-[discrete]
-==== `Storage` component
-
-[TIP]
-Do take a look at the link:#storage-component[Design: Storage Component] section before attempting to modify the `Storage` component.
-
-. Add a new method `backupAddressBook(ReadOnlyAddressBook)`, so that the address book can be saved in a fixed temporary location.
-+
-****
-* Hint
-** Add the API method in link:{repoURL}/src/main/java/seedu/address/storage/AddressBookStorage.java[`AddressBookStorage`] interface.
-** Implement the logic in link:{repoURL}/src/main/java/seedu/address/storage/StorageManager.java[`StorageManager`] class.
-* Solution
-** See this https://github.com/se-edu/addressbook-level4/pull/594/files[PR] for the full solution.
-****
-
-=== Creating a new command: `remark`
-
-By creating this command, you will get a chance to learn how to implement a feature end-to-end, touching all major components of the app.
-
-==== Description
-Edits the remark for a person specified in the `INDEX`. +
-Format: `remark INDEX r/[REMARK]`
-
-Examples:
-
-* `remark 1 r/Likes to drink coffee.` +
-Edits the remark for the first person to `Likes to drink coffee.`
-* `remark 1 r/` +
-Removes the remark for the first person.
-
-==== Step-by-step Instructions
-
-===== [Step 1] Logic: Teach the app to accept 'remark' which does nothing
-Let's start by teaching the application how to parse a `remark` command. We will add the logic of `remark` later.
-
-**Main:**
-
-. Add a `RemarkCommand` that extends link:{repoURL}/src/main/java/seedu/address/logic/commands/UndoableCommand.java[`UndoableCommand`]. Upon execution, it should just throw an `Exception`.
-. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to accept a `RemarkCommand`.
-
-**Tests:**
-
-. Add `RemarkCommandTest` that tests that `executeUndoableCommand()` throws an Exception.
-. Add new test method to link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`], which tests that typing "remark" returns an instance of `RemarkCommand`.
-
-===== [Step 2] Logic: Teach the app to accept 'remark' arguments
-Let's teach the application to parse arguments that our `remark` command will accept. E.g. `1 r/Likes to drink coffee.`
-
-**Main:**
-
-. Modify `RemarkCommand` to take in an `Index` and `String` and print those two parameters as the error message.
-. Add `RemarkCommandParser` that knows how to parse two arguments, one index and one with prefix 'r/'.
-. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to use the newly implemented `RemarkCommandParser`.
-
-**Tests:**
-
-. Modify `RemarkCommandTest` to test the `RemarkCommand#equals()` method.
-. Add `RemarkCommandParserTest` that tests different boundary values
-for `RemarkCommandParser`.
-. Modify link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`] to test that the correct command is generated according to the user input.
-
-===== [Step 3] Ui: Add a placeholder for remark in `PersonCard`
-Let's add a placeholder on all our link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] s to display a remark for each person later.
-
-**Main:**
-
-. Add a `Label` with any random text inside link:{repoURL}/src/main/resources/view/PersonListCard.fxml[`PersonListCard.fxml`].
-. Add FXML annotation in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] to tie the variable to the actual label.
-
-**Tests:**
-
-. Modify link:{repoURL}/src/test/java/guitests/guihandles/PersonCardHandle.java[`PersonCardHandle`] so that future tests can read the contents of the remark label.
-
-===== [Step 4] Model: Add `Remark` class
-We have to properly encapsulate the remark in our link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`] class. Instead of just using a `String`, let's follow the conventional class structure that the codebase already uses by adding a `Remark` class.
-
-**Main:**
-
-. Add `Remark` to model component (you can copy from link:{repoURL}/src/main/java/seedu/address/model/person/Address.java[`Address`], remove the regex and change the names accordingly).
-. Modify `RemarkCommand` to now take in a `Remark` instead of a `String`.
-
-**Tests:**
-
-. Add test for `Remark`, to test the `Remark#equals()` method.
-
-===== [Step 5] Model: Modify `ReadOnlyPerson` to support a `Remark` field
-Now we have the `Remark` class, we need to actually use it inside link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`].
-
-**Main:**
-
-. Add three methods `setRemark(Remark)`, `getRemark()` and `remarkProperty()`. Be sure to implement these newly created methods in link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`Person`], which implements the link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`] interface.
-. You may assume that the user will not be able to use the `add` and `edit` commands to modify the remarks field (i.e. the person will be created without a remark).
-. Modify link:{repoURL}/src/main/java/seedu/address/model/util/SampleDataUtil.java/[`SampleDataUtil`] to add remarks for the sample data (delete your `addressBook.xml` so that the application will load the sample data when you launch it.)
-
-===== [Step 6] Storage: Add `Remark` field to `XmlAdaptedPerson` class
-We now have `Remark` s for `Person` s, but they will be gone when we exit the application. Let's modify link:{repoURL}/src/main/java/seedu/address/storage/XmlAdaptedPerson.java[`XmlAdaptedPerson`] to include a `Remark` field so that it will be saved.
-
-**Main:**
-
-. Add a new Xml field for `Remark`.
-. Be sure to modify the logic of the constructor and `toModelType()`, which handles the conversion to/from  link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`].
-
-**Tests:**
-
-. Fix `validAddressBook.xml` such that the XML tests will not fail due to a missing `<remark>` element.
-
-===== [Step 7] Ui: Connect `Remark` field to `PersonCard`
-Our remark label in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] is still a placeholder. Let's bring it to life by binding it with the actual `remark` field.
-
-**Main:**
-
-. Modify link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard#bindListeners()`] to add the binding for `remark`.
-
-**Tests:**
-
-. Modify link:{repoURL}/src/test/java/seedu/address/ui/testutil/GuiTestAssert.java[`GuiTestAssert#assertCardDisplaysPerson(...)`] so that it will compare the remark label.
-. In link:{repoURL}/src/test/java/seedu/address/ui/PersonCardTest.java[`PersonCardTest`], call `personWithTags.setRemark(ALICE.getRemark())` to test that changes in the link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`Person`] 's remark correctly updates the corresponding link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`].
-
-===== [Step 8] Logic: Implement `RemarkCommand#execute()` logic
-We now have everything set up... but we still can't modify the remarks. Let's finish it up by adding in actual logic for our `remark` command.
-
-**Main:**
-
-. Replace the logic in `RemarkCommand#execute()` (that currently just throws an `Exception`), with the actual logic to modify the remarks of a person.
-
-**Tests:**
-
-. Update `RemarkCommandTest` to test that the `execute()` logic works.
-
-==== Full Solution
-
-See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-by-step solution.
-
-[appendix]
 == User Stories
 
 Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
@@ -729,7 +988,67 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |user |filter contacts by name, number, address, email or tag |find specific contacts easily
+
+|`* * *` |basic user |add display pictures to my contacts |easily identify people with the same name
+
+|`* * *` |basic user |call/email my contacts by clicking on them |save time in opening my email or phoning app
+
+|`* * *` |basic user |be able to change the theme of the app from dark to light |reduce the stress on my eyes
+
+|`* * *` |basic user |customise the background picture of the app |enhance my user experience since it looks nicer
+
+|`* *` |user |edit my tags more conveniently |not need to delete all the tags when editing somebody's tags
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+
+|`* *` |basic user |be able to put tags of different colours on my contacts |identify them more easily
+
+|`* *` |new user |add more icons to the app |make it look prettier
+
+|`* *` |new user |see several interactive text fields like a template when I use the add command |not need to memorise the command for adding people
+
+|`* *` |user who uses other address book apps |import/export my address book to other format |transfer address book data between applications easily
+
+|`* *` |user who often contacts people |add Speed dial or a favourites list |easily contact those that I am in frequent touch with
+
+|`* *` |user with bad vision |adjust the font size of the address book |see the contents easily
+
+|`* *` |user who has contacts with many tags |have each tag with their own associated colour |customise my contacts better for my own visibility
+
+|`*` |user |look at a prettier address book |enhance my user experience
+
+|`*` |user |find people near me using their addresses |contact them more conveniently
+
+|`*` |user |record the birthdays of my contacts |know when to celebrate their birthdays
+
+|`*` |user |receive a notification on my contacts birthdays |know when they are and celebrate them
+
+|`*` |user |add chinese names |record my chinese friends with no english names
+
+|`*` |basic user |open the address book maximised |focus on the address book itself
+
+|`*` |advanced user |use shorter versions of a command |speed up finding contacts
+
+|`*` |new user |enter a confirmation before executing any delete command |make sure I do not delete the wrong person
+
+|`*` |user who likes nice fonts |change the address book font to something like quicksand |make it look prettier
+
+|`*` |user who likes variety |change the font colour based on my mood |feel better while using the address book
+
+|`*` |user who is concerned about security |use a login system |secure my contacts information
+
+|`*` |user with bad memory |receive a hint for correct commands when I type something similar that is incorrect |remove the hassle of memorising commands
+
+|`*` |user who frequently needs to send mail |create a mailing list |send mail more conveniently
+
+|`*` |user who loves convenience |access edit and delete functions quickly |use the address book more efficiently and save time
+
+|`*` |user who is also a programmer |search using regular expression |search for contacts more precisely
+
+|`*` |ultra-book user |adjust the application to my viewport |scale it down to the size of my laptop screen
+
+|`*` |user with many friends |see their birthdays collated and displayed in a calendar |know when to prepare for their birthdays
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
 |=======================================================================
@@ -740,6 +1059,33 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 == Use Cases
 
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+
+[discrete]
+=== Use case: Add person
+
+*MSS*
+
+1.  User requests to add a new person
+2.  AddressBook adds the person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The person is already in the address book
++
+[none]
+** 2a1. AddressBook shows an error message.
++
+Use case resumes at step 1.
+
+* 2b. The command format is invalid
++
+[none]
+** 2b1. AddressBook shows an error message.
++
+Use case resumes at step 1.
 
 [discrete]
 === Use case: Delete person
@@ -767,16 +1113,81 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-{More to be added}
+[discrete]
+=== Use case: Edit person
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to edit a specific person in the list
+4.  AddressBook edits the person's contact details given by user
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. No one has been searched before
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3b. The command format is invalid
++
+[none]
+** 3b1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: List by most searched
+
+*MSS*
+
+1.  User requests to list persons by search frequency
+2.  AddressBook sorts persons by number of times each person is searched
+3.  Addressbook lists persons in descending order, with the person most searched
+being at the top of the list.
+
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The list is empty.
++
+Use case ends.
+
+* 2a. No one has been searched before
++
+** AddressBook continues to step 3
++
+Use case ends.
+
 
 [appendix]
 == Non Functional Requirements
 
-.  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
-.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed
+.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage
+.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse
+.  Should have support for UTF-8 chracters
+.  Should have an intuitive UI such that a new user can become familiarized with the application easily
+.  Should have an attractive UI so that potential users will be more inclined to try out this application
+.  Should be responsive to viewports of different sizes
+.  Users should be able to use the application within 5 seconds of starting the application
+.  Users should be familiar with using all functions of the application within a day
+.  Should at most take 10 seconds for any method invoked by users to return results
+.  Should have similar performance for all UI themes and fonts picked
 
-{More to be added}
 
 [appendix]
 == Glossary
@@ -795,19 +1206,20 @@ Private contact detail
 A contact detail that is not meant to be shared with others
 ....
 
-[appendix]
-== Product Survey
 
-*Product Name*
-
-Author: ...
-
-Pros:
-
-* ...
-* ...
-
-Cons:
-
-* ...
-* ...
+//[appendix]
+//== Product Survey
+//
+//*Product Name*
+//
+//Author: ...
+//
+//Pros:
+//
+//* ...
+//* ...
+//
+//Cons:
+//
+//* ...
+//* ...

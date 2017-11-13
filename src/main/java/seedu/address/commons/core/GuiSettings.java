@@ -19,7 +19,7 @@ public class GuiSettings implements Serializable {
     public GuiSettings() {
         this.windowWidth = DEFAULT_WIDTH;
         this.windowHeight = DEFAULT_HEIGHT;
-        this.windowCoordinates = null; // null represent no coordinates
+        this.windowCoordinates = new Point(0, 0); // null represent no coordinates
     }
 
     public GuiSettings(Double windowWidth, Double windowHeight, int xPosition, int yPosition) {

@@ -2,13 +2,23 @@ package seedu.address.ui;
 
 import java.util.logging.Logger;
 
+import com.google.common.eventbus.Subscribe;
+
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
+import javafx.util.Duration;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
+import seedu.address.commons.events.ui.ShowBrowserEvent;
+import seedu.address.commons.events.ui.ShowMeetingEvent;
 import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
@@ -27,16 +37,52 @@ public class CommandBox extends UiPart<Region> {
     private final Logic logic;
     private ListElementPointer historySnapshot;
 
+    private StackPane helperContainer;
+    private CommandBoxHelper commandBoxHelper;
+    private Boolean helpEnabled = false;
+    private SplitPane settingsPane;
+
+    private String style;
+
+    //Animation attributes
+    private Timeline timelineLeft;
+    private Timeline timelineRight;
+
     @FXML
     private TextField commandTextField;
 
-    public CommandBox(Logic logic) {
+    //@@author fongwz
+    public CommandBox(Logic logic, StackPane commandBoxHelp, SplitPane settingsPane) {
         super(FXML);
         this.logic = logic;
+        this.commandBoxHelper = new CommandBoxHelper(logic);
+        this.helperContainer = commandBoxHelp;
+        this.settingsPane = settingsPane;
+        this.style = getRoot().getStyle();
+        registerAsAnEventHandler(this);
+        setAnimation();
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
-        commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
+        commandTextField.textProperty().addListener((unused1, unused2, unused3) -> {
+            setStyleToDefault();
+            commandTextField.setStyle(style);
+
+            /** Shows helper if there is text in the command field that corresponds to the command list*/
+            if (commandBoxHelper.listHelp(commandTextField) && !helpEnabled) {
+                showHelper();
+            } else if (!commandBoxHelper.listHelp(commandTextField)) {
+                hideHelper();
+            }
+
+            /** Shows settings screen if there is text in the command field that corresponds to settings*/
+            if (checkForSettingsPanelPopup(commandTextField)) {
+                timelineLeft.play();
+            } else {
+                timelineRight.play();
+            }
+        });
         historySnapshot = logic.getHistorySnapshot();
     }
+    //@@author
 
     /**
      * Handles the key press event, {@code keyEvent}.
@@ -45,15 +91,44 @@ public class CommandBox extends UiPart<Region> {
     private void handleKeyPress(KeyEvent keyEvent) {
         switch (keyEvent.getCode()) {
         case UP:
-            // As up and down buttons will alter the position of the caret,
-            // consuming it causes the caret's position to remain unchanged
-            keyEvent.consume();
-
-            navigateToPreviousInput();
+            //Check if CLI has any text within to trigger commandboxhelper first
+            if (!commandBoxHelper.checkEmpty()) {
+                commandBoxHelper.selectUpHelperBox();
+            } else {
+                // As up and down buttons will alter the position of the caret,
+                // consuming it causes the caret's position to remain unchanged
+                keyEvent.consume();
+                navigateToPreviousInput();
+            }
             break;
         case DOWN:
+            //Check if CLI has any text within to trigger commandboxhelper first
+            if (!commandBoxHelper.checkEmpty()) {
+                commandBoxHelper.selectDownHelperBox();
+            } else {
+                keyEvent.consume();
+                navigateToNextInput();
+            }
+            break;
+        case TAB:
+            if (helperContainer.getChildren().contains(commandBoxHelper.getRoot())
+                    && commandBoxHelper.isMainSelected()) {
+                try {
+                    commandTextField.setText(commandBoxHelper.getHelperText());
+                    commandTextField.requestFocus();
+                    commandTextField.end();
+                    hideHelper();
+                } catch (Exception e) {
+                    logger.info(e.getMessage() + "Nothing selected in command helper");
+                }
+            }
             keyEvent.consume();
-            navigateToNextInput();
+            break;
+        case BACK_SPACE:
+            if (commandTextField.getText().trim().length() <= 0 || !commandBoxHelper.listHelp(commandTextField)) {
+                hideHelper();
+                //logger.info("Hiding command helper");
+            }
             break;
         default:
             // let JavaFx handle the keypress
@@ -101,20 +176,31 @@ public class CommandBox extends UiPart<Region> {
     @FXML
     private void handleCommandInputChanged() {
         try {
-            CommandResult commandResult = logic.execute(commandTextField.getText());
-            initHistory();
-            historySnapshot.next();
-            // process result of the command
-            commandTextField.setText("");
-            logger.info("Result: " + commandResult.feedbackToUser);
-            raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
+            if (helperContainer.getChildren().contains(commandBoxHelper.getRoot())
+                    && commandBoxHelper.isMainSelected()) {
+                commandTextField.setText(commandBoxHelper.getHelperText());
+                commandTextField.requestFocus();
+                commandTextField.end();
+                hideHelper();
+            } else {
+                hideHelper();
+                CommandResult commandResult = logic.execute(commandTextField.getText());
+                initHistory();
+                historySnapshot.next();
+                // process result of the command
+                commandTextField.setText("");
+                logger.info("Result: " + commandResult.feedbackToUser);
+                raise(new NewResultAvailableEvent(commandResult.feedbackToUser, false));
+                timelineRight.play();
+            }
 
         } catch (CommandException | ParseException e) {
             initHistory();
             // handle command failure
             setStyleToIndicateCommandFailure();
+            commandTextField.setStyle("-fx-text-fill: firebrick");
             logger.info("Invalid command: " + commandTextField.getText());
-            raise(new NewResultAvailableEvent(e.getMessage()));
+            raise(new NewResultAvailableEvent(e.getMessage(), true));
         }
     }
 
@@ -144,8 +230,65 @@ public class CommandBox extends UiPart<Region> {
         if (styleClass.contains(ERROR_STYLE_CLASS)) {
             return;
         }
-
         styleClass.add(ERROR_STYLE_CLASS);
     }
 
+    //@@author fongwz
+    /**
+     * Shows the command helper
+     */
+    private void showHelper() {
+        helperContainer.getChildren().add(commandBoxHelper.getRoot());
+        helpEnabled = true;
+    }
+
+    /**
+     * Hides the command helper
+     */
+    private void hideHelper() {
+        helperContainer.getChildren().remove(commandBoxHelper.getRoot());
+        helpEnabled = false;
+    }
+
+    /**
+     * Check whether to display the settings panel
+     */
+    private boolean checkForSettingsPanelPopup(TextField commandTextField) {
+        if (commandTextField.getText().contains("choose") || commandTextField.getText().contains("pref")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Sets the animation sequence for entering left and right on the settings panel
+     */
+    private void setAnimation() {
+        timelineLeft = new Timeline();
+        timelineRight = new Timeline();
+
+        timelineLeft.setCycleCount(1);
+        timelineLeft.setAutoReverse(true);
+        KeyValue kvLeft1 = new KeyValue(settingsPane.translateXProperty(), -10);
+        KeyFrame kfLeft = new KeyFrame(Duration.millis(200), kvLeft1);
+        timelineLeft.getKeyFrames().add(kfLeft);
+
+        timelineRight.setCycleCount(1);
+        timelineRight.setAutoReverse(true);
+        KeyValue kvRight1 = new KeyValue(settingsPane.translateXProperty(), 300);
+        KeyFrame kfRight = new KeyFrame(Duration.millis(200), kvRight1);
+        timelineRight.getKeyFrames().add(kfRight);
+    }
+
+    @Subscribe
+    private void handleShowMeetingEvent(ShowMeetingEvent event) {
+        timelineRight.play();
+    }
+
+    @Subscribe
+    private void handleShowBrowserEvent(ShowBrowserEvent event) {
+        timelineRight.play();
+    }
+    //@@author
 }

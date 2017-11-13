@@ -18,16 +18,24 @@ import seedu.address.model.ReadOnlyAddressBook;
  */
 public class XmlAddressBookStorage implements AddressBookStorage {
 
+    // Creates a new folder for all backup data
+    private static final String BACKUP_FILE_PREFIX = "backup/";
     private static final Logger logger = LogsCenter.getLogger(XmlAddressBookStorage.class);
 
     private String filePath;
+    private String backupFilePath;
 
     public XmlAddressBookStorage(String filePath) {
         this.filePath = filePath;
+        this.backupFilePath = BACKUP_FILE_PREFIX + filePath;
     }
 
     public String getAddressBookFilePath() {
         return filePath;
+    }
+
+    public String getBackupFilePath() {
+        return backupFilePath;
     }
 
     @Override
@@ -51,7 +59,8 @@ public class XmlAddressBookStorage implements AddressBookStorage {
             return Optional.empty();
         }
 
-        ReadOnlyAddressBook addressBookOptional = XmlFileStorage.loadDataFromSaveFile(new File(filePath));
+        ReadOnlyAddressBook addressBookOptional = XmlFileStorage.loadDataFromSaveFile(new File(filePath),
+                XmlSerializableAddressBook.class);
 
         return Optional.of(addressBookOptional);
     }
@@ -73,5 +82,16 @@ public class XmlAddressBookStorage implements AddressBookStorage {
         FileUtil.createIfMissing(file);
         XmlFileStorage.saveDataToFile(file, new XmlSerializableAddressBook(addressBook));
     }
+
+    //@@author liuhang0213
+    @Override
+    public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
+        saveAddressBook(addressBook, backupFilePath);
+    }
+
+    public Optional<ReadOnlyAddressBook> restoreAddressBook() throws IOException, DataConversionException {
+        return readAddressBook(backupFilePath);
+    }
+
 
 }

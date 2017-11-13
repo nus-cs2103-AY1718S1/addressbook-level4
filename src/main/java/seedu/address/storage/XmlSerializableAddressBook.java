@@ -9,16 +9,18 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
 /**
  * An Immutable AddressBook that is serializable to XML format
  */
 @XmlRootElement(name = "addressbook")
-public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
+public class XmlSerializableAddressBook extends XmlSerializableData implements ReadOnlyAddressBook {
 
     @XmlElement
     private List<XmlAdaptedPerson> persons;
@@ -49,8 +51,7 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
             try {
                 return p.toModelType();
             } catch (IllegalValueException e) {
-                e.printStackTrace();
-                //TODO: better error handling
+                LogsCenter.getLogger("").warning("Convert ReadOnlyPerson to model type failed.");
                 return null;
             }
         }).collect(Collectors.toCollection(FXCollections::observableArrayList));
@@ -71,4 +72,30 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
         return FXCollections.unmodifiableObservableList(tags);
     }
 
+    //@@author liuhang0213
+    @Override
+    public ReadOnlyPerson getPersonByInternalIndex(int index) throws PersonNotFoundException {
+        try {
+            for (XmlAdaptedPerson p : persons) {
+                if (p.getInternalId() == index) {
+                    return p.toModelType();
+                }
+            }
+        } catch (IllegalValueException e) {
+            e.printStackTrace();
+            return null;
+        }
+        throw new PersonNotFoundException();
+    }
+
+    @Override
+    public int getMaxInternalIndex() {
+        int maxIndex = 0;
+        for (XmlAdaptedPerson p : persons) {
+            if (p.getInternalId() > maxIndex) {
+                maxIndex = p.getInternalId();
+            }
+        }
+        return maxIndex;
+    }
 }

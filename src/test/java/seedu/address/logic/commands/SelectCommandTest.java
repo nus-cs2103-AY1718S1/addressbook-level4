@@ -22,6 +22,7 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
+import seedu.address.model.UniqueMeetingList;
 import seedu.address.model.UserPrefs;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
@@ -36,7 +37,7 @@ public class SelectCommandTest {
 
     @Before
     public void setUp() {
-        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        model = new ModelManager(getTypicalAddressBook(), new UniqueMeetingList(), new UserPrefs());
     }
 
     @Test
@@ -115,8 +116,7 @@ public class SelectCommandTest {
     }
 
     /**
-     * Executes a {@code SelectCommand} with the given {@code index}, and checks that a {@code CommandException}
-     * is thrown with the {@code expectedMessage}.
+     *java -jar Collate-TUI.jar collate from src to collated
      */
     private void assertExecutionFailure(Index index, String expectedMessage) {
         SelectCommand selectCommand = prepareCommand(index);

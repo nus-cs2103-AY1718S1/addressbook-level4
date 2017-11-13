@@ -4,53 +4,94 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: images
 :stylesDir: stylesheets
 
-AddressBook - Level 4 was developed by the https://se-edu.github.io/docs/Team.html[se-edu] team. +
-The dummy content given below serves as a placeholder to be used by future forks of the project. +
+OurAB is an addressbook developed by team https://github.com/orgs/CS2103AUG2017-F09-B4/people[F09-B4], modified from AddressBook - Level 4 developed by https://github.com/se-edu/addressbook-level4[se-edu]. +
 {empty} +
-We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
+We are a team based in the http://www.nus.edu.sg/[National University of Singapore], with students from +
+http://www.comp.nus.edu.sg[School of Computing] and http://www.ceg.nus.edu.sg/[Faculty of Electrical & Computer Engineering].
 
 == Project Team
 
-=== John Doe
-image::damithc.jpg[width="150", align="left"]
-{empty}[http://www.comp.nus.edu.sg/~damithch[homepage]] [https://github.com/damithc[github]] [<<johndoe#, portfolio>>]
+=== Srivatsa
+image::sri-vatsa.jpg[width="150", align="left"]
+{empty}[https://github.com/Sri-vatsa[github]] [<<srivatsa#, portfolio>>]
 
-Role: Project Advisor
+Role : Developer + Project Manager
+Responsibilities :
+
+a) Technical :
+
+** Handle LinkedIn API calls
+** Implement sorting method based on search data
+** Ensure appropriate behaviour of model elements
+** Ensure model methods conform to style regulations
+
+b) Project management :
+
+** Ensure that the technical environment is in place and operational throughout the project
+** Ensure team follows workflow
+** Create Milestone, create issues to ensure project is managed
 
 '''
 
-=== John Roe
-image::lejolly.jpg[width="150", align="left"]
-{empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
+=== Liu Hang
+image::liuhang0213.jpg[width="150", align="left"]
+{empty}[http://github.com/liuhang0213[github]] [<<liuhang#, portfolio>>]
 
-Role: Team Lead +
-Responsibilities: UI
+Role: Developer + Functionality check +
+Responsibilities:
+
+a) Technical :
+
+** Implemented profile photos
+** Implemented storage & model for meetings and created command to display next meeting
+** Added storage for user preferences, meetings and back-up functionality
+** Implemented user preferences management
+** Ensure storage methods conform to style regulations
+
+b) Project Management :
+
+** Ensure all the Pull Requests are merged properly
+** Update and maintain issue tracker weekly
 
 '''
 
-=== Johnny Doe
-image::yijinl.jpg[width="150", align="left"]
-{empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
+=== Martyn
+image::martyn-wong.jpg[width="150", align="left"]
+{empty}[http://github.com/martyn-wong[github]] [<<martyn#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Data
+Responsibilities: Logic
+
+a) Technical :
+
+** Implement shortcut logic for commands
+** Working with Google API for potential Calendar and Map function
+** Implement Search Command for more powerful search, when more details are added
+** Ensure logic methods conform to style regulations
+
+b) Project Management:
+
+**Ensure cross-functionality/integration of methods between programmers
 
 '''
 
-=== Johnny Roe
-image::m133225.jpg[width="150", align="left"]
-{empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]
+=== Fong Wei Zheng
+image::fongwz.jpg[width="150", align="left"]
+{empty}[https://github.com/fongwz[github]] [<<weizheng#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Dev Ops + Threading
+Responsibilities:
 
-'''
+a) Technical :
 
-=== Benson Meier
-image::yl_coder.jpg[width="150", align="left"]
-{empty}[http://github.com/yl-coder[github]] [<<johndoe#, portfolio>>]
+** Implement Command Box Helper
+** Update the list of themes
+** Implement a way to change display modes
+** Implement a slide-in-slide-out display to show the users their current display mode and selected theme
+** Ensure UI methods conform to style regulations
 
-Role: Developer +
-Responsibilities: UI
+b) Project management:
+
+** Ensure that the documentation of the project is properly done throughout the project
 
 '''

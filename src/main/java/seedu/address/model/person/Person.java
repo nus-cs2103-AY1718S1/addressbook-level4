@@ -9,6 +9,7 @@ import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -18,36 +19,61 @@ import seedu.address.model.tag.UniqueTagList;
  */
 public class Person implements ReadOnlyPerson {
 
+    public static final int TEMP_ID_VALUE = 0;
+    private ObjectProperty<InternalId> internalId;
     private ObjectProperty<Name> name;
     private ObjectProperty<Phone> phone;
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
-
     private ObjectProperty<UniqueTagList> tags;
+    private ObjectProperty<SearchData> searchCount;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
+    public Person(InternalId id, Name name, Phone phone, Email email, Address address, Set<Tag> tags,
+                  SearchData searchCount) {
+        requireAllNonNull(id, name, phone, email, address, tags);
+        this.internalId = new SimpleObjectProperty<>(id);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+        this.searchCount = new SimpleObjectProperty<>(searchCount);
     }
 
     /**
      * Creates a copy of the given ReadOnlyPerson.
      */
     public Person(ReadOnlyPerson source) {
-        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
-                source.getTags());
+        this(source.getInternalId(), source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
+                source.getTags(), source.getSearchData());
+    }
+
+    public void setInternalId(int id) {
+        if (this.internalId.getValue().getId() == TEMP_ID_VALUE) {
+            try {
+                this.internalId = new SimpleObjectProperty<>(new InternalId(id));
+            } catch (IllegalValueException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void setName(Name name) {
         this.name.set(requireNonNull(name));
+    }
+
+    @Override
+    public ObjectProperty<InternalId> internalIdProperty() {
+        return internalId;
+    }
+
+    @Override
+    public InternalId getInternalId() {
+        return internalId.get();
     }
 
     @Override
@@ -111,6 +137,16 @@ public class Person implements ReadOnlyPerson {
         return Collections.unmodifiableSet(tags.get().toSet());
     }
 
+    @Override
+    public ObjectProperty<SearchData> searchDataProperty() {
+        return searchCount;
+    }
+    //@@author Sri-vatsa
+    @Override
+    public SearchData getSearchData() {
+        return searchCount.get();
+    }
+    //@@author
     public ObjectProperty<UniqueTagList> tagProperty() {
         return tags;
     }
@@ -121,6 +157,7 @@ public class Person implements ReadOnlyPerson {
     public void setTags(Set<Tag> replacement) {
         tags.set(new UniqueTagList(replacement));
     }
+
 
     @Override
     public boolean equals(Object other) {

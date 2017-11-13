@@ -1,0 +1,370 @@
+= P Srivatsa - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: OurAb
+OurAb is a CLI(Command Line Interface)-based desktop Address Book application written in Java, targeted at university students.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-F09-B4/main/tree/master/src/main[Functional code]] [https://github.com/CS2103AUG2017-F09-B4/main/tree/master/src/test[Test code]]
+
+=== Enhancement Added: List (with lexicographic sort)
+
+==== External behavior
+
+#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/UserGuide.adoc[from: 2.3. Listing all persons : list]]#
+
+Shows a list of all persons in the address book in alphabetical order. +
+Format: `list`
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Allows users to list contacts alphabetically, for a more intuitive address book user interface.
+
+---
+
+==== Implementation
+
+#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/DeveloperGuide.adoc[from: Developer Guide]]#
+
+When the `List` command is executed, `UniquePersonList` is sorted lexicographically. +
+[source,java]
+----
+public void sortLexicographically () {
+        internalList.sort(new LexicographicComparator());
+ }
+----
+The `LexicographicComparator` compares which person should come before another based on alphabet sequences.
+This updates the address book storage file. When model calls for `filteredPersons` list, all persons are read from +
+the address book storage and then displayed on `PersonListPanel` on the GUI.
+
+
+==== Design Considerations
+
+**Aspect:** Persistent sort +
+**Alternative 1(current choice):** Persistent sort (Sort persons, by modifying `addressbook.xml`) +
+**Pros:** Reduces need for repeated sorting +
+**Cons:** Unnecessary operations on storage `addressbook.xml` +
+**Alternative 2:** Non-persistent sort (Sort persons in a temporary list) +
+**Pros:** Reduce operations on storage file, `Addressbook.xml` +
+**Cons:** Use of additional storage to copy all contacts is inefficient in terms of time & storage
+
+#End of Extract#
+
+=== Enhancement Added: List by most searched command
+
+==== External behavior
+
+#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/UserGuide.adoc[from: 2.4. Listing all persons, sorted by search frequency : listByMostSearched]]#
+
+* When `ListByMostSearched` command is executed, a list of persons is displayed based on how frequently each person is +
+searched for.
+
++
+image::ListByMostSearchedDisplay.png[width="790"]
++
+
+This list view is now undoable.
+
+From this example, it can be understood that `Bernice Yu` is the most searched person, followed by `Alex Yeoh` etc.
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Allows users to list contacts based on people they often connect with.
+
+---
+
+==== Implementation
+
+#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/DeveloperGuide.adoc[from: Developer Guide]]#
+
+Each successful `Find` command execution with non-zero search results, activates an update of search count for everyone in search results.+
+[source,java]
+----
+if (searchResultsCount != NO_RESULTS) {
+    model.recordSearchHistory();
+}
+
+----
+This equates to an update of the search count variable within the `SearchData` class within every `Person` class.
+[source,java]
+----
+public void incrementSearchCount()
+----
+
+When the `ListByMostSearched` is executed, `UniquePersonList` is sorted based on descending search count. +
+[source,java]
+----
+public void sortBySearchCount () {
+    internalList.sort(new ReadOnlyPersonComparator());
+}
+----
+The `ReadOnlyPersonComparator` compares the search count between two Persons. This updates the address book storage file.+
+When model calls for `filteredPersons` list, all persons are read from +
+the address book storage and then displayed on `PersonListPanel` on the GUI.
+
+//image:: Implementation Diagram.png[width="800"]
+
+=== Design Considerations
+
+**Aspect:** Implementation of storage for `SearchData` +
+**Alternative 1 (current choice):** Add `SearchData` as a class in `Person` +
+**Pros:** Increase storage efficiency +
+**Cons:** `Addressbook.xml` is more complicated
+**Alternative 2:** Add `SearchData` to a separate storage file +
+**Pros:** Minimal changes to `Addressbook.xml` +
+**Cons:** Unnecessary repetition in storage; replication of `Person` details +
+
+---
+
+**Aspect:** Persistent sort +
+**Alternative 1(current choice):** Persistent sort (Sort persons, by modifying `addressbook.xml`) +
+**Pros:** Reduces need for repeated sorting & speed up `find` command +
+**Cons:** Unnecessary operations on storage `addressbook.xml` +
+**Alternative 2:** Non-persistent sort (Sort persons in a temporary list) +
+**Pros:** Reduce operations on storage file, `Addressbook.xml` +
+**Cons:** Use of additional storage to copy all contacts is inefficient in terms of time & storage
+
+---
+
+#End of Extract#
+
+=== Enhancement Added: Delete tag Command
+
+==== External behavior
+
+#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/UserGuide.adoc[from: 2.8. Deleting Tags : deleteTag]]#
+
+Deletes the specified tags from everyone in address book. +
+Format: `deleteTag TAG1 TAG2 ...`
+
+****
+* Deletes all tags specified `TAG1 TAG2 ...`.
+* If a particular is not used in address book, user is notified that no tag is deleted.
+****
+
+Examples:
+
+* `deleteTag friends` +
+Deletes the tag `friends` from everyone in the address book.
+
+* `deleteTag friends colleagues` +
+Deletes tags `friends` and `colleagues` from everyone in the address book.
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Allows users to delete particular tags from every person on the address book.
+
+---
+
+==== Implementation
+
+#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/DeveloperGuide.adoc[from: Developer Guide]]#
+
+The specified arguments `TAG1 TAG2 ...` are parsed to generate an array of `String`.
+
+The generated string array is then used to generate an array of type `Tag`
+
+[source,java]
+----
+private Tag[] stringToTag (String[] tag);
+----
+
+Using this array of type `Tag` as parameter, the `deleteTag` method is executed as follows:
+
+image::deleteTagModelDiagram.png[width="200"]
+
+If `hasOneOrMoreDeletion` is true, user will be notified that tags are successfully deleted. +
+Otherwise, users will be notified that specified tags are not used in address book, and thus cannot be deleted.
+
+==== Design Considerations
+
+**Aspect:** implementation of `deleteTag` method in `modelManager`  +
+**Alternative 1 (current choice):** Iterate through every person & delete relevant tags +
+**Pros:** Increased storage efficiency +
+**Cons:** Unnecessary `remove` operations are carried out
+**Alternative 2:** Populate list of people with relevant tags & delete relevant tags +
+**Pros:** Fewer `remove` operations +
+**Cons:** [Space complexity (O(n)) is higher] More storage elements required to store temorary lists +
+**Cons:** More complex implementation
+
+---
+
+#End of Extract#
+
+---
+=== Enhancement Proposed: Display LinkedIn profile
+
+==== External behavior
+
+#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/UserGuide.adoc[from: User Guide]]#
+
+* When any of the contacts in the addressbook is selected, a list of closest LinkedIn Profiles are displayed.
+* e.g When `Alex Yeoh` is selected in the panel the display to the right will show a list +
+of profiles that match his details.
+
++
+image::FindLinkedIn Profile.PNG[width="790"]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Allows users to conveniently connect with contacts in addressbook & get to know more about these contacts.
+
+---
+
+==== Implementation
+
+#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/DeveloperGuide.adoc[from: Developer Guide]]#
+
+When the `choose` command is activated with the argument `linkedin`, the `BrowserPanel` handles by calling:
+[source, java]
+----
+private void loadOtherPages(String page);
+----
+
+image::LinkedInProfile.png[width="200"]
+
+LinkedIn results page with parameters, such as `Name`, passed in from the selected `Person` class.
+
+Note: Cookies are stored to maintain login session for the length of the addressbook session.
+
+---
+
+==== Design considerations
+
+**Aspect:** Implementation of display linked in authorisation +
+**Alternative 1 (current option):** Manual key in of user-id and password into browser +
+**Pros:** More details of user profile is viewable +
+**Pros:** More secure +
+**Cons:** Tedious to type login credentials into browser +
+**Alternative 2:** Use OAuth 2.0 with LinkedIn Api +
+**Pros:** More convenient as login credentials are required only once +
+**Cons:** LinkedIn API available does not allow for viewing of full profile +
+
+#End of Extract#
+---
+
+=== Enhancement Proposed: Add meeting
+
+==== External behavior
+
+#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/UserGuide.adoc[from: 2.12. Adding a new meeting command : AddMeeting]]#
+
+Adds a new meeting to the addressbook +
+Format: `addMeeting on DATE from TIME at LOCATION about NOTES [with PERSON]...`
+
+Furthermore, every meeting added is saved locally and online on https://www.asana.com[Asana]. +
+Each meeting is saved as a separate task under `Meetings` project in `Personal Projects` workspace.
+
+[TIP]
+A meeting can have more than 1 (at least 1) person associated with the meeting.
+
+Examples:
+
+* `add on 24/11/2017 from 1400 at Tea Party Cafe about Meetup with 1`
+* `add on 12/11/2017 from 1000 at University Town about Dialogue with 2 with 3`
+
+[NOTE]
+For Asana Integration to be fully functional, make sure you have: +
+* An account with Asana (Free or Premium) +
+* A Workspace called `Personal Projects` (This is usually generated automatically)
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Increase user productivity by adding meetings to the addressbook & Asana. +
+This helps users track their meetings easily both offline & Online. +
+Furthermore, users get a friendly reminder to their inbox in all by simply adding +
+meetings to ourAB.
+
+---
+
+==== Implementation
+
+#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/DeveloperGuide.adoc[from: Developer Guide]]#
+
+===== Implementation
+
+When the command is called, the user input is parsed as shown in the sequence diagram below.
+
+image::AddMeetingCommandLogic.png[width="800"]
+
+In the model, there are two primary methods that are called:
+
+1. To add unique meetings (ensured by `DuplicateMeetingException`) associated with valid people in +
+addressbook (ensured by `IllegalIdException`).
+
+[source, java]
+----
+    try {
+        model.addMeeting(toAdd);
+    } catch (DuplicateMeetingException e) {
+        throw new CommandException(MESSAGE_DUPLICATE_MEETING);
+    } catch (IllegalIdException ive) {
+        throw new CommandException(MESSAGE_INVALID_ID);
+    }
+----
+
+2. To post a task on Asana
+[source, java]
+----
+    newAsanaTask = new PostTask(toAdd.getNotes(), toAdd.getDate());
+    newAsanaTask.execute();
+----
+
+Create a new instance of `PostTask` and authenticate user using https://github.com/Asana/java-asana[OAuth2].
+
+===== Design Considerations
+
+**Aspect:** Post on Asana +
+**Alternative 1 (current choice):** Incorporate posting on Asana with every addCommand +
+**Pros:** Convenient for user to keep track of tasks related to meetings +
+**Cons:** Reduces control that user has in uploading tasks to Asana+
+**Alternative 2:** Create a separate command to add tasks onto Asana +
+**Pros:** More flexibility on the content that is saved onto Asana workspace +
+**Cons:** Unnecessary number of commands in the addressbook & reduce productivity of user
+
+#End of Extract#
+---
+
+=== Other contributions
+
+==== Implemented ReadOnlyMeeting class
+
+In an effort to be more defensive while programming, the addressbook application uses `ReadOnlyMeeting` instead of the +
+easily modifiable `Meeting` class. This is similar to the idea of using `ReadOnlyPerson` class whenever possible in +
+place of the `Person` class directly. This ensures fewer errors by restricting unnecessary modifications to the `Meeting` +
+class.
+
+==== Added SearchCount parameter to Person Class
+
+Each person has now an associated `searchCount` variable that keeps track of the number each person is searched for.
+
+==== Project Management
+
+* Assigned issues to teammates
+* Monitored progress and created milestones of the team
+* Constantly reviewed if users' needs were considered
+
+
+
+

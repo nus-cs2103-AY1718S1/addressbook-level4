@@ -32,10 +32,29 @@ public class ResultDisplay extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
+    //@@author Sri-vatsa
+    public ResultDisplay(String message) {
+        super(FXML);
+        resultDisplay.textProperty().bind(displayed);
+        registerAsAnEventHandler(this);
+
+        Platform.runLater(() -> {
+            displayed.setValue(message);
+            resultDisplay.setStyle("-fx-text-fill: white");
+        });
+    }
+
     @Subscribe
     private void handleNewResultAvailableEvent(NewResultAvailableEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        Platform.runLater(() -> displayed.setValue(event.message));
+        Platform.runLater(() -> {
+            displayed.setValue(event.message);
+            if (event.errorStatus) {
+                resultDisplay.setStyle("-fx-text-fill: #e35252");
+            } else {
+                resultDisplay.setStyle("-fx-text-fill: #70db75");
+            }
+        });
     }
 
 }

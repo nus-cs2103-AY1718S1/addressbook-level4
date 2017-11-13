@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= OurAB - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,9 +10,9 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-F09-B4/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team F09-B4`      Since: `Aug 2017`      Licence: `MIT`    Adapted codebase from: `Team SE-EDU`
 
 == Quick Start
 
@@ -22,8 +22,8 @@ By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
+.  Download the latest `OurAB.jar` link:{repoURL}/releases[here].
+.  Copy the file to the folder you want to use as the home folder for OurAB.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
 image::Ui.png[width="790"]
@@ -50,6 +50,17 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
+====
+*Command Helper*
+
+* When you start typing in the command line, a helper box appears to show you the list of commands available.
+* e.g Typing `e` in the command line will show both the `edit` and `exit` commands in the command helper box.
+* You can use the arrow keys to select commands that are displayed and press enter or tab to make it autofill for you in the command line.
++
+image::commandboxhelper.PNG[width="790"]
++
+====
+
 === Viewing help : `help`
 
 Format: `help`
@@ -68,9 +79,26 @@ Examples:
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
 === Listing all persons : `list`
+`From v1.3`
 
-Shows a list of all persons in the address book. +
+Shows a list of all persons in the address book in alphabetical order. +
 Format: `list`
+
+
+=== Listing all persons, sorted by search frequency : `listByMostSearched` `Since v1.2`
+
+Shows a list of all persons in the address book, sorted by descending order of search frequency +
+Format: `listByMostSearched`
+
++
+image::ListByMostSearchedDisplay.png[width="790"]
++
+
+This list view is now undoable.
+
+****
+* Each time a person is searched for using `search`, the search frequency of the person is updated.
+****
 
 === Editing a person : `edit`
 
@@ -92,25 +120,41 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Locating persons by name: `find`
+=== Locating persons by name: `find` `Removed since v1.5`
 
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+=== Search for persons by parameter: `Search` `Since v1.3`
+
+Finds persons whose details match the given keywords. +
+Format: 'search KEYWORD [MORE KEYWORD]'
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
+* Parameters are searched (Name, Address, Phone Number, Email)
 * Only full words will be matched e.g. `Han` will not match `Hans`
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ****
 
 Examples:
 
-* `find John` +
+* `search John` +
 Returns `john` and `John Doe`
-* `find Betsy Tim John` +
+* `search Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
+* `search Serangoon` +
+Returns `Bernice` and `David`, who stay in Serangoon
+
++
+image::search-command-before.png[width="790"]
++
+Before: User displaying contacts using the list command
+
++
+image::search-command-after.png[width="790"]
++
+After: Search command using the 'Serangoon' keyword
+
+From this example, it can be understood that by searching Serangoon, we can see that it has listed all the people living in Serangoon, namely 'Bernice' and 'David'
 
 === Deleting a person : `delete`
 
@@ -128,9 +172,28 @@ Examples:
 * `list` +
 `delete 2` +
 Deletes the 2nd person in the address book.
-* `find Betsy` +
+* `serach Betsy` +
 `delete 1` +
-Deletes the 1st person in the results of the `find` command.
+Deletes the 1st person in the results of the `serach` command.
+
+=== Deleting tags : `deleteTag`
+`From V1.3`
+
+Deletes the specified tags from everyone in address book. +
+Format: `deleteTag TAG1 TAG2 ...`
+
+****
+* Deletes all tags specified `TAG1 TAG2 ...`.
+* If a particular is not used in address book, user is notified that no tag is deleted.
+****
+
+Examples:
+
+* `deleteTag friends` +
+Deletes the tag `friends` from everyone in the address book.
+
+* `deleteTag friends colleagues` +
+Deletes tags `friends` and `colleagues` from everyone in the address book.
 
 === Selecting a person : `select`
 
@@ -148,9 +211,9 @@ Examples:
 * `list` +
 `select 2` +
 Selects the 2nd person in the address book.
-* `find Betsy` +
+* `serach Betsy` +
 `select 1` +
-Selects the 1st person in the results of the `find` command.
+Selects the 1st person in the results of the `serach` command.
 
 === Listing entered commands : `history`
 
@@ -161,6 +224,76 @@ Format: `history`
 ====
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
+
+=== Configure Asana `since v1.5`
+==== Setup Asana : `setupAsana`
+
+Configure Asana for use with `AddMeeting`. +
+Format: `setupAsana`
+
+The application will redirect you to a page that will look like this: +
+
+image::AsanaLogin.png[width="800"]
+
+Login with your own username and password. Create an account if you do not already have an account. +
+Once logged in, you will be asked to allow our application to access your account:
+
+image::AsanaConfirmation.png[width="800"]
+
+Once approved, you will be provided with an access code that looks like this:
+
+image::AsanaAccessCode.png[width="400"]
+
+Copy the the access code of the form : `DIGIT/ALPHANUMERICS`
+
+==== Set unique key : `setKey`
+
+Store your access key in our application. +
+Format: `setKey` `DIGIT/ALPHANUMERICS` +
+(type `setKey` & paste the access code from previous step)
+
+Example:
+
+* `setKey 0/1234gh678tyk32i3`
+
+[NOTE]
+====
+Only for this release, the access token is destroyed after closing the application. Reconfigure Asana upon restart.
+====
+
+=== Adding a new meeting command: `addMeeting` `Since v1.5`
+
+Adds a new meeting to the addressbook +
+Format: `addMeeting on DATE from TIME at LOCATION about NOTES [with PERSON]...`
+
+Furthermore, every meeting added is saved locally and online on https://www.asana.com[Asana]. +
+(Only if there is a working internet connection & Asana is setup) +
+Each meeting is saved as a separate task under `Meetings` project in `Personal Projects` workspace. +
+
+
+[TIP]
+A meeting can have more than 1 (at least 1) person associated with the meeting.
+
+Examples:
+
+* `add on 24/11/2017 from 1400 at Tea Party Cafe about Meetup with 1`
+* `add on 12/11/2017 from 1000 at University Town about Dialogue with 2 with 3`
+
+
+For Asana to be functional, make sure you have: +
+
+* An account with Asana (Free or Premium) +
+* A Workspace called `Personal Projects` (This is usually generated automatically)
+
+
+[WARNING]
+This is NOT an undoable command.
+
+// tag::nextmeeting[]
+=== Listing next upcoming meeting : `nextMeeting` `Since v1.3`
+
+Displays information about the next upcoming meeting. +
+Format: `nextMeeting`
 
 // tag::undoredo[]
 === Undoing previous command : `undo`
@@ -217,6 +350,62 @@ The `redo` command fails as there are no `undo` commands executed previously.
 Clears all entries from the address book. +
 Format: `clear`
 
+=== Customizing user preference : `pref` `Since v1.2`
+
+Edits the user preference. +
+Format: `pref [KEY] [NEW_VALUE]` +
+If  `NEW_VALUE` is blank, the current preference will be displayed. +
+
+[NOTE]
+====
+Some preference changes will take effect after restarting the address book.
+====
+
+[NOTE]
+====
+See <<#pref-list, Appendix A>> for the list of editable preferences.
+====
+
+Typing this command will bring up the settings panel at the side of the application. `Since v1.3`
+
+Examples:
+
+* `pref Theme` +
+Displays the current value for `Theme`
+* `pref Theme Dark` +
+Changes `Theme` to `Dark`
+
+=== Editing display screen : `choose` `Since v1.4`
+
+Chooses what to display on the main screen. +
+Format: `choose [NEW_VALUE]` +
+[NOTE]
+====
+See <<#pref-list, Appendix>> for the list of editable display preferences
+====
+
+Typing this command will bring up the settings panel at the side of the application. `Since v1.3`
+
+Examples:
+
+* `choose linkedin` +
+Displays the linkedin results page of profiles that match user selected.
+
+=== Searching for a person's address by google maps : `map` `Since v1.4`
+
+Displays a google map search based of the person's address of the given index in the browser panel. +
+Format: 'map [INDEX]'
+
+****
+* Selects the person and loads the Google maps page of the person's address at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
+image::google-map-example.png[width="790"]
+
+Example of a MapCommand search of Alex Yeoh, index 1 of the list.
+
 === Exiting the program : `exit`
 
 Exits the program. +
@@ -235,18 +424,62 @@ There is no need to save manually.
 == Command Summary
 
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague` +
+Can also use shortcut 'a'
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
-e.g. `delete 3`
+e.g. `delete 3` +
+Can also use shortcut 'd'
+* *Delete Tag* : `deleteTag TAG1 TAG2 ...` +
+e.g. `delete friends` +
+Can also use shortcut 'dt'
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *List* : `list`
+e.g. `edit 2 n/James Lee e/jameslee@example.com` +
+Can also use shortcut 'e'
+* *List By Most Searched* : `ListByMostSearched` +
+Can also use shortcut 'lms'
+* *List* : `list` +
+Can also use shortcut 'l'
+* *Map* : `map INDEX' +
+e.g.'map 3' +
+Can also use shortcut 'm'
 * *Help* : `help`
+* *Search* : `search KEYWORD [KEYWORD]` +
+Can also use shortcut 'se'
 * *Select* : `select INDEX` +
-e.g.`select 2`
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
+e.g.`select 2` +
+Can also use shortcut 's'
+* *History* : `history` +
+Can also use shortcut 'h'
+* *Add Meeting* : `addMeeting` +
+Can also use shortcut `am`
+* *Next Meeting* : `nextMeeting` +
+Can also use shortcut `nm`
+* *Undo* : `undo` +
+Can also use shortcut 'u'
+* *Redo* : `redo` +
+Can also use shortcut 'r'
+* *Preference* : `pref KEY [NEW_VALUE]` +
+Can also use shortcut 'p'
+* *Display Mode* : `choose [NEW_VALUE]`
+
+== Features coming in v2.0
+
+* *Find nearest meeting location* - finds a common meeting point based on users' addresses
+* *Add meeting time* - Adds a meeting time to the contacts that is removed automatically when the time is reached
+* *Retrieve meeting of the day* - Shows all current meetings for today that have been scheduled
+
+[appendix]
+== List Of User Preferences
+Possible arguments for `choose` command: `linkedin`, `google`, `meetings`, `maps`
+[#pref-list]
+Possible arguments for `pref` command:
+
+* `AddressBookName`
+* `AddressBookFilePath` : indicates where the address book is stored in local storage
+* `Theme`: Customizes the appearance of the application. Possible values are `Light`, `Blue` and `Dark`
+* `DefaultProfilePhoto`: The default photo used if the person does not have a personal Gravatar. Possible values are
+`person`, `geometric`, `monster`, `face`, `retro`, `robot` and `blank`. +
+ See link:https://en.gravatar.com/site/implement/images/[here] for examples.
+
+

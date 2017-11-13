@@ -8,9 +8,13 @@ import org.junit.Before;
 import org.junit.Test;
 
 import guitests.guihandles.CommandBoxHandle;
+import javafx.scene.control.SplitPane;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.StackPane;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
+import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -24,16 +28,20 @@ public class CommandBoxTest extends GuiUnitTest {
     private ArrayList<String> errorStyleOfCommandBox;
 
     private CommandBoxHandle commandBoxHandle;
+    private CommandBox commandBox;
 
     @Before
     public void setUp() {
         Model model = new ModelManager();
         Logic logic = new LogicManager(model);
+        StackPane commandBoxHelper = new StackPane();
+        SplitPane settingsPane = new SplitPane();
 
-        CommandBox commandBox = new CommandBox(logic);
+        commandBox = new CommandBox(logic, commandBoxHelper, settingsPane);
         commandBoxHandle = new CommandBoxHandle(getChildNode(commandBox.getRoot(),
                 CommandBoxHandle.COMMAND_INPUT_FIELD_ID));
         uiPartRule.setUiPart(commandBox);
+
 
         defaultStyleOfCommandBox = new ArrayList<>(commandBoxHandle.getStyleClass());
 
@@ -78,12 +86,13 @@ public class CommandBoxTest extends GuiUnitTest {
         // one command
         commandBoxHandle.run(COMMAND_THAT_SUCCEEDS);
         assertInputHistory(KeyCode.UP, COMMAND_THAT_SUCCEEDS);
-        assertInputHistory(KeyCode.DOWN, "");
+        assertInputHistory(KeyCode.DOWN, COMMAND_THAT_SUCCEEDS); //command box helper working as intended
 
         // two commands (latest command is failure)
         commandBoxHandle.run(COMMAND_THAT_FAILS);
         assertInputHistory(KeyCode.UP, COMMAND_THAT_SUCCEEDS);
         assertInputHistory(KeyCode.UP, COMMAND_THAT_SUCCEEDS);
+        assertInputHistory(KeyCode.A, "alist");
         assertInputHistory(KeyCode.DOWN, COMMAND_THAT_FAILS);
         assertInputHistory(KeyCode.DOWN, "");
         assertInputHistory(KeyCode.DOWN, "");
@@ -94,11 +103,13 @@ public class CommandBoxTest extends GuiUnitTest {
         String thirdCommand = "list";
         commandBoxHandle.run(thirdCommand);
         assertInputHistory(KeyCode.UP, thirdCommand);
+        assertInputHistory(KeyCode.A, "lista");
         assertInputHistory(KeyCode.UP, COMMAND_THAT_FAILS);
         assertInputHistory(KeyCode.UP, COMMAND_THAT_SUCCEEDS);
+        assertInputHistory(KeyCode.A, "lista");
         assertInputHistory(KeyCode.DOWN, COMMAND_THAT_FAILS);
         assertInputHistory(KeyCode.DOWN, thirdCommand);
-        assertInputHistory(KeyCode.DOWN, "");
+        assertInputHistory(KeyCode.DOWN, COMMAND_THAT_SUCCEEDS); //command box helper working as intended
     }
 
     @Test
@@ -124,6 +135,65 @@ public class CommandBoxTest extends GuiUnitTest {
         assertInputHistory(KeyCode.DOWN, "");
         assertInputHistory(KeyCode.UP, thirdCommand);
     }
+
+    //@@author fongwz
+    /**
+     * Testing the command box helper
+     */
+    @Test
+    public void commandBoxHelperTest() {
+        // Testing populating command box
+        guiRobot.push(KeyCode.A);
+        guiRobot.push(KeyCode.DOWN);
+        assertInputHistory(KeyCode.TAB, AddCommand.MESSAGE_TEMPLATE);
+        clearCommandBox();
+
+        //Testing DOWN arrow key on command box helper
+        guiRobot.push(KeyCode.E);
+        guiRobot.push(KeyCode.DOWN);
+        assertInputHistory(KeyCode.TAB, EditCommand.MESSAGE_TEMPLATE);
+        clearCommandBox();
+
+        guiRobot.push(KeyCode.E);
+        guiRobot.push(KeyCode.DOWN);
+        guiRobot.push(KeyCode.DOWN);
+        guiRobot.push(KeyCode.DOWN);
+        assertInputHistory(KeyCode.TAB, EditCommand.MESSAGE_TEMPLATE);
+        clearCommandBox();
+
+        //Testing UP arrow key on command box helper
+        guiRobot.push(KeyCode.E);
+        guiRobot.push(KeyCode.DOWN);
+        guiRobot.push(KeyCode.DOWN);
+        guiRobot.push(KeyCode.UP);
+        assertInputHistory(KeyCode.TAB, EditCommand.MESSAGE_TEMPLATE);
+        clearCommandBox();
+
+        //Testing whether command box helper disappears or appears appropriately
+        guiRobot.push(KeyCode.E);
+        guiRobot.push(KeyCode.A);
+        guiRobot.push(KeyCode.DOWN);
+        assertInputHistory(KeyCode.TAB, "ea");
+        clearCommandBox();
+
+        guiRobot.push(KeyCode.E);
+        guiRobot.push(KeyCode.D);
+        guiRobot.push(KeyCode.I);
+        guiRobot.push(KeyCode.T);
+        guiRobot.push(KeyCode.DOWN);
+        assertInputHistory(KeyCode.TAB, EditCommand.MESSAGE_TEMPLATE);
+        clearCommandBox();
+    }
+
+    /**
+     * Clears the text in current command field
+     */
+    private void clearCommandBox() {
+        while (!commandBoxHandle.getInput().isEmpty()) {
+            guiRobot.push(KeyCode.BACK_SPACE);
+        }
+    }
+    //@@author
 
     /**
      * Runs a command that fails, then verifies that <br>

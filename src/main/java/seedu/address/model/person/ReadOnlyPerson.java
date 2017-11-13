@@ -12,6 +12,8 @@ import seedu.address.model.tag.UniqueTagList;
  */
 public interface ReadOnlyPerson {
 
+    ObjectProperty<InternalId> internalIdProperty();
+    InternalId getInternalId();
     ObjectProperty<Name> nameProperty();
     Name getName();
     ObjectProperty<Phone> phoneProperty();
@@ -22,6 +24,8 @@ public interface ReadOnlyPerson {
     Address getAddress();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
+    ObjectProperty<SearchData> searchDataProperty();
+    SearchData getSearchData();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)

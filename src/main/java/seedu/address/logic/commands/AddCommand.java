@@ -18,6 +18,7 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 public class AddCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "add";
+    public static final String COMMAND_ALIAS = "a";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a person to the address book. "
             + "Parameters: "
@@ -36,6 +37,13 @@ public class AddCommand extends UndoableCommand {
 
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
+    public static final String MESSAGE_TEMPLATE = COMMAND_WORD + " "
+            + PREFIX_NAME + "NAME "
+            + PREFIX_PHONE + "PHONE "
+            + PREFIX_EMAIL + "EMAIL "
+            + PREFIX_ADDRESS + "ADDRESS "
+            + PREFIX_TAG + "TAG 1 "
+            + PREFIX_TAG + "TAG 2...";
 
     private final Person toAdd;
 
@@ -50,6 +58,8 @@ public class AddCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
         try {
+            int nextIndex = model.getAddressBook().getMaxInternalIndex() + 1;
+            toAdd.setInternalId(nextIndex);
             model.addPerson(toAdd);
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
         } catch (DuplicatePersonException e) {

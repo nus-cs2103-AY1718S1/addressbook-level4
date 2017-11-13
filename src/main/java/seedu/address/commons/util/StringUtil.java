@@ -5,11 +5,33 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
+
+import javax.xml.bind.DatatypeConverter;
 
 /**
  * Helper functions for handling strings.
  */
 public class StringUtil {
+
+    private static final String GRAVATAR_SIZE = "90";
+    private static final String GRAVATAR_URL_FORMAT = "https://www.gravatar.com/avatar/%1$s.jpg?d=%2$s&s="
+            + GRAVATAR_SIZE;
+    private static final String GRAVATAR_DEFAULT_FALLBACK = "person";
+    private static final HashMap<String, String> defaultGravatar = new HashMap<>();
+
+    static {
+        defaultGravatar.put("person", "mm");
+        defaultGravatar.put("geometric", "identicon");
+        defaultGravatar.put("monster", "monsterid");
+        defaultGravatar.put("face", "wavatar");
+        defaultGravatar.put("retro", "retro");
+        defaultGravatar.put("robot", "robohash");
+        defaultGravatar.put("blank", "blank");
+    }
 
     /**
      * Returns true if the {@code sentence} contains the {@code word}.
@@ -67,5 +89,42 @@ public class StringUtil {
         } catch (NumberFormatException nfe) {
             return false;
         }
+    }
+
+    //@@authur liuhang0213
+    /**
+     * Returns the md5 hash of a string
+     * @param s String to be hashed
+     */
+    public static String generateMd5(String s) {
+        try {
+            byte[] bytes = s.getBytes("UTF-8");
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            return DatatypeConverter.printHexBinary(md.digest(bytes));
+        } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
+            // Should not happen since they are fixed (UTF-8/MD5)
+            e.printStackTrace();
+            return "";
+        }
+    }
+
+    /**
+     * Generates the Gravatar link with given email address and default picture
+     * @param email
+     * @return
+     */
+    public static String generateGravatarUrl(String email, String def) {
+        String emailTrimmed = email.trim().toLowerCase();
+        String hash = generateMd5(emailTrimmed);
+        String defParam = defaultGravatar.getOrDefault(def,
+                defaultGravatar.get(GRAVATAR_DEFAULT_FALLBACK));
+        return String.format(GRAVATAR_URL_FORMAT, hash.toLowerCase(), defParam);
+    }
+
+    /**
+     * Generates the Gravatar link with default default picture (mystery-man)
+     */
+    public static String generateGravatarUrl(String email) {
+        return generateGravatarUrl(email, GRAVATAR_DEFAULT_FALLBACK);
     }
 }

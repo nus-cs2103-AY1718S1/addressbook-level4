@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- @@author fongwz -->
+
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox fx:id="commandhelperVbox" styleClass="vbox" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ListView fx:id="commandBoxHelperList" styleClass="list-vew" />
+   </children>
+</VBox>

@@ -17,6 +17,7 @@ import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
+import seedu.address.storage.Storage;
 
 /**
  * The manager of the UI component.
@@ -33,13 +34,15 @@ public class UiManager extends ComponentManager implements Ui {
     private static final String ICON_APPLICATION = "/images/address_book_32.png";
 
     private Logic logic;
+    private Storage storage;
     private Config config;
     private UserPrefs prefs;
     private MainWindow mainWindow;
 
-    public UiManager(Logic logic, Config config, UserPrefs prefs) {
+    public UiManager(Logic logic, Config config, UserPrefs prefs, Storage storage) {
         super();
         this.logic = logic;
+        this.storage = storage;
         this.config = config;
         this.prefs = prefs;
     }
@@ -50,10 +53,10 @@ public class UiManager extends ComponentManager implements Ui {
         primaryStage.setTitle(config.getAppTitle());
 
         //Set the application icon.
-        primaryStage.getIcons().add(getImage(ICON_APPLICATION));
+        primaryStage.getIcons().add(new Image("/images/address_book_32.png"));
 
         try {
-            mainWindow = new MainWindow(primaryStage, config, prefs, logic);
+            mainWindow = new MainWindow(primaryStage, config, prefs, logic, storage);
             mainWindow.show(); //This should be called before creating other UI parts
             mainWindow.fillInnerParts();
 

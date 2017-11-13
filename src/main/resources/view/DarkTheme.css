@@ -1,12 +1,12 @@
 .background {
     -fx-background-color: derive(#1d1d1d, 20%);
-    background-color: #383838; /* Used in the default.html file */
+    background-color: #fafafa; /* Used in the default.html file */
 }
 
 .label {
     -fx-font-size: 11pt;
     -fx-font-family: "Segoe UI Semibold";
-    -fx-text-fill: #555555;
+    -fx-text-fill: #fcfcfc;
     -fx-opacity: 0.9;
 }
 
@@ -15,6 +15,15 @@
     -fx-font-family: "Segoe UI Semibold";
     -fx-text-fill: white;
     -fx-opacity: 1;
+}
+
+.label-bright-underline {
+    -fx-font-size: 11pt;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-text-fill: #ffe4e1;
+    -fx-opacity: 1;
+    -fx-underline: true;
+    -fx-alignment: center;
 }
 
 .label-header {
@@ -87,6 +96,11 @@
     -fx-background-color: derive(#1d1d1d, 20%);
 }
 
+.split-pane:vertical .split-pane-divider {
+    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-border-width: 1;
+}
+
 .list-view {
     -fx-background-insets: 0;
     -fx-padding: 0;
@@ -96,6 +110,11 @@
     -fx-label-padding: 0 0 0 0;
     -fx-graphic-text-gap : 0;
     -fx-padding: 0 0 0 0;
+}
+
+.list-cell:empty {
+    /* Empty cells will not have alternating colours */
+    -fx-background: #383838;
 }
 
 .list-cell:filled:even {
@@ -321,7 +340,7 @@
     -fx-border-color: #383838 #383838 #ffffff #383838;
     -fx-border-insets: 0;
     -fx-border-width: 1;
-    -fx-font-family: "Segoe UI Light";
+    -fx-font-family: "Arial";
     -fx-font-size: 13pt;
     -fx-text-fill: white;
 }
@@ -331,6 +350,11 @@
 }
 
 #resultDisplay .content {
+    -fx-background-color: transparent, #383838, transparent, #383838;
+    -fx-background-radius: 0;
+}
+
+#commandBoxHelper .content {
     -fx-background-color: transparent, #383838, transparent, #383838;
     -fx-background-radius: 0;
 }
@@ -347,4 +371,36 @@
     -fx-border-radius: 2;
     -fx-background-radius: 2;
     -fx-font-size: 11;
+}
+
+#browserSelectorList .list-cell:even {
+    -fx-padding: 8,0,0,8;
+    -fx-background-color: #383838;
+}
+
+#browserSelectorList .list-cell:odd {
+    -fx-padding: 8,0,0,8;
+    -fx-background-color: #383838;
+}
+
+.list-cell:filled:selected #browserCardPane {
+    -fx-border-color: palegreen;
+    -fx-border-width: 2;
+    -fx-border-radius: 7 7 7 7;
+}
+
+#themeSelectorList .list-cell:even {
+    -fx-padding: 8,0,0,8;
+    -fx-background-color: #383838;
+}
+
+#themeSelectorList .list-cell:odd {
+    -fx-padding: 8,0,0,8;
+    -fx-background-color: #383838;
+}
+
+.list-cell:filled:selected #themeCardPane {
+    -fx-border-color: palegreen;
+    -fx-border-width: 2;
+    -fx-border-radius: 7 7 7 7;
 }

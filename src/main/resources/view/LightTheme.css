@@ -1,0 +1,26 @@
+/*@@author fongwz */
+.background {
+    -fx-background-color: derive(#F57F17, 20%);
+    background-color: #eeeeee; /* Used in the default.html file */
+}
+
+#tags {
+    -fx-hgap: 7;
+    -fx-vgap: 3;
+}
+
+.list-view {
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+.list-cell {
+    -fx-label-padding: 0 0 0 0;
+    -fx-graphic-text-gap : 0;
+    -fx-padding: 0 0 0 0;
+}
+
+.list-cell:empty {
+    /* Empty cells will not have alternating colours */
+    -fx-background: #f4f4f4;
+}

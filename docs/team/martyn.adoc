@@ -1,0 +1,196 @@
+= Martyn Wong - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: OurAb
+OurAb is a CLI(Command Line Interface)-based desktop Address Book application written in Java, targeted at university students.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-F09-B4/main/tree/master/src/main[Functional code]] [https://github.com/CS2103AUG2017-F09-B4/main/tree/master/src/test[Test code]]
+
+=== Enhancement Added: Shortcut Command
+
+==== External behavior
+
+Users can type a shortcut command for 16 commands, where entering the first letter(s) of the command also returns the same functionality:
+1) Add
+2) Delete
+3) Edit
+4) Find
+5) History
+6) List
+7) Redo
+8) Select
+9) Undo
+10) AddMeeting
+11) DeleteTag
+12) ListByMostSearched
+13) Pref
+14) NextMeeting
+15) Map
+16) Search
+
+e.g. entering "l" will also return a list of persons in the address book
+
+---
+
+==== Justification
+
+To make it more convenient for experienced users, who will be able to use the address book more efficiently once they are familiar with
+the shortcuts. Users can refer to the user guide for the list of the command shortcuts.
+
+[https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/UserGuide.adoc[from: command-summary]]#
+
+---
+
+==== Implementation
+
+#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/DeveloperGuide.adoc[from: Developer Guide]]#
+
+Alternatively to COMMAND_WORD, commands also have COMMAND_ALIAS which AddressBookParser will also accept as a valid input to execute the
+desired command
+
+[source,java]
+----
+     public static final String COMMAND_WORD = "add";
+     public static final String COMMAND_ALIAS = "a";
+----
+
+[source,java]
+----
+        case AddCommand.COMMAND_WORD:
+        case AddCommand.COMMAND_ALIAS:
+            return new AddCommandParser().parse(arguments);
+----
+
+e.g. Both "add" and "a" can be used to execute the AddCommand function
+
+#End of Extract#
+
+---
+
+=== Design Considerations
+
+**Aspect:** Shortcut implementation +
+**Alternative 1 (current choice):** Use an alias, shortened form of the command +
+**Pros:** Intuitive and easier to remember +
+**Cons:** Might have overlapping aliases, requiring updates +
+**Alternative 2:** Use a index for shortcuts +
+**Pros:** Easier to map each command +
+**Cons:** Less intuitive, and harder to remember
+
+=== Enhancement Added: Search Command
+
+=== External Behavior
+
+#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/UserGuide.adoc[from: 2.7. Search for persons by parameter: Search Since v1.3]]#
+
+Finds persons whose details match the given keywords. +
+Format: 'search KEYWORD [MORE KEYWORD]'
+
+****
+* The search is case insensitive. e.g `hans` will match `Hans`
+* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* Parameters are searched
+* Only full words will be matched e.g. `Han` will not match `Hans`
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+****
+
+Examples:
+
+* `search John` +
+Returns `john` and `John Doe`
+* `search Serangoon` +
+Returns `Bernice` and `David`, who stay in Serangoon
+
+#End of Extract#
+
+image::search-command-before.png[width="790"]
+Before: User displaying contacts using the list command
+
+image::search-command-after.png[width="790"]
+After: Search command using the 'Serangoon' keyword
+
+
+From this example, it can be understood that by searching Serangoon, we can see that it has listed all the people living in Serangoon, namely 'Bernice' and 'David'
+
+---
+
+==== Justification
+
+Allows users to have a more powerful search function, which will become more useful when the address book increases in size.
+
+---
+
+==== Implementation
+
+#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/DeveloperGuide.adoc[from: command-code-search-code]]#
+
+The keywords are generated as list of strings, which is then checked against the details of the persons
+in address book.
+
+The details are returned as strings, by the ReadOnlyPerson method in the person model. The list of searched
+people is then continually updated, before it is finally returned to the user
+
+=== Design Considerations
+
+**Aspect:** implementation of `Search` command over `Find`  +
+**Pros:** More powerful search tool +
+**Cons:** Unnecessary results may be returned for larger address books
+
+---
+
+#End of Extract#
+
+=== Enhancement Added: Map Command
+
+=== External Behavior
+
+#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/UserGuide.adoc[from: searching-for-a-person-s-address-by-google-maps-code-map-code-code-since-v1-4-code]]#
+
+Displays a google map search based of the person's address of the given index in the browser panel. +
+Format: 'map [INDEX]'
+
+****
+* Selects the person and loads the Google maps page of the person's address at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
+image::google-map-example.png[width="790"]
+
+Example of a MapCommand search of Alex Yeoh, index 1 of the list.
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Allows users to use google maps as a way to visualise the person's address, and potentially find nearby meeting spots
+
+---
+
+#Start of Extract [https://github.com/CS2103AUG2017-F09-B4/main/blob/master/docs/DeveloperGuide.adoc[from: command-code-map-code]]#
+
+==== Implementation
+
+When 'map' command is executed, it retrieves the current list of people,
+and selects the person's address based on the index given.
+
+The address is then passed into a url template for a page loader to display
+the google maps on the browser panel
+
+==== Design Considerations
+
+**Aspect:** Passing URL directly +
+**Alternative 1:** Use google maps API +
+**Pros:** More powerful and secure search +
+**Cons:** Unnecessary imports of dependencies, slows the program +
+
+---
+
+#End of Extract#
+---
+
+=== Other contributions

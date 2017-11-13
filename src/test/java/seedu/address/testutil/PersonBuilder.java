@@ -5,10 +5,12 @@ import java.util.Set;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.InternalId;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.SearchData;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
@@ -27,12 +29,15 @@ public class PersonBuilder {
 
     public PersonBuilder() {
         try {
+            InternalId id = new InternalId(Person.TEMP_ID_VALUE);
             Name defaultName = new Name(DEFAULT_NAME);
             Phone defaultPhone = new Phone(DEFAULT_PHONE);
             Email defaultEmail = new Email(DEFAULT_EMAIL);
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
-            this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress, defaultTags);
+            SearchData searchData = new SearchData("0");
+            this.person = new Person(id, defaultName, defaultPhone, defaultEmail, defaultAddress,
+                defaultTags, searchData);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default person's values are invalid.");
         }
@@ -105,8 +110,29 @@ public class PersonBuilder {
         return this;
     }
 
+    //@@author Sri-vatsa
+    /**
+     * Sets the {@code Name} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withSearchCount() {
+        try {
+            this.person.getSearchData().setSearchCount("0");
+        } catch (IllegalAccessError ive) {
+            throw new IllegalAccessError("Search count cannot be updated");
+        }
+        return this;
+    }
+    //@@author
+
+    /**
+     * Sets the {@code InternalIndex} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withInternalIndex(int id) {
+        this.person.setInternalId(id);
+        return this;
+    }
+
     public Person build() {
         return this.person;
     }
-
 }

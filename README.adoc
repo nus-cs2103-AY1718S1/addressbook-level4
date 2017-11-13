@@ -1,4 +1,4 @@
-= Address Book (Level 4)
+= OurAb
 ifdef::env-github,env-browser[:relfileprefix: docs/]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
@@ -15,19 +15,17 @@ ifndef::env-github[]
 image::images/Ui.png[width="600"]
 endif::[]
 
-* This is a desktop Address Book application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
-* It is a Java sample application intended for students learning Software Engineering while using Java as the main programming language.
-* It is *written in OOP fashion*. It provides a *reasonably well-written* code example that is *significantly bigger* (around 6 KLoC)than what students usually write in beginner-level SE modules.
-* What's different from https://github.com/se-edu/addressbook-level3[level 3]:
-** A more sophisticated GUI that includes a list  panel and an in-built Browser.
-** More test cases, including automated GUI testing.
-** Support for _Build Automation_ using Gradle and for _Continuous Integration_ using Travis CI.
+This is a CLI(Command Line Interface)-based desktop Address Book application written in Java.
+
+Our address book is aimed at increasing meeting productivity :
+
+** Connect with other contacts easily through linkedIn
+** Sorts your meetings by date to help you schedule your meetings better
 
 == Site Map
 
 * <<UserGuide#, User Guide>>
 * <<DeveloperGuide#, Developer Guide>>
-* <<LearningOutcomes#, Learning Outcomes>>
 * <<AboutUs#, About Us>>
 * <<ContactUs#, Contact Us>>
 
@@ -35,5 +33,6 @@ endif::[]
 
 * Some parts of this sample application were inspired by the excellent http://code.makery.ch/library/javafx-8-tutorial/[Java FX tutorial] by
 _Marco Jakob_.
+* Original source of code from [https://github.com/se-edu/addressbook-level4[SE-EDU initiative address book level 4]].
 
 == Licence : link:LICENSE[MIT]
