@@ -236,7 +236,7 @@ Deletes the 1st person in the results of the `find` command
 // tag::tagadd[]
 === Adding a tag to person(s) : `t-add` _[Since v1.1]_
 
-You can add a tag to specified person(s) in the address book current listing.
+You can add a tag to multiple persons specified by the indices in the current person listing. When you have a new project group, you can tag your group members in the contact list to differentiate from the rest of the contacts.
 
 Format: `t-add INDEX... TAG`
 
@@ -250,13 +250,13 @@ Examples:
 
 * `list` +
 `t-add 2 3 friends` +
-This command adds the tag friends to the 2nd and 3rd person in the address book
+This command adds the tag `friends` to the 2nd and 3rd person in the contact list
 // end::tagadd[]
 
 // tag::tagaddfav[]
 === Setting person(s) as favourite : `t-add` _[Since v1.3]_
 
-You can mark specified person(s) from the address book as favourite.
+You can mark specified person(s) from your contact list as `favourite`. Contacts marked as `favourite` will always be pinned to top of the contact list.
 
 image::tAddCommand.png[width="500"]
 _Figure 3.9.1 : Tagging multiple person as favourite_
@@ -264,7 +264,7 @@ _Figure 3.9.1 : Tagging multiple person as favourite_
 Format: `t-add INDEX... favourite`
 
 ****
-* All person(s) tagged as `favourite` by you will be shown as a coral shaped circle in front of the tag list.
+* All person(s) tagged as `favourite` by you will be identified by a coral shaped circle after the person name.
 * You can also use `fav`, and words containing `fav` interchangeably with `favourite`.
 * The index refers to the index number shown in the most recent listing, multiple indices are allowed.
 * The index *must be a positive integer* 1, 2, 3, ...
@@ -290,8 +290,8 @@ Format: `t-remove INDEX... TAG`
 ****
 * The index refers to the index number shown in the most recent listing, multiple indices are allowed.
 * The index *must be a positive integer* 1, 2, 3, ...
-* If you wish to remove a tag from all person(s) in the list, simply leave out the INDEX part.
-* The [TAG] *must not have its first word as a number*.
+* If you wish to remove a tag from all person(s) in the list, simply leave out the INDEX.
+* The TAG *must not have its first word as a number*, for example `1 friend`.
 ****
 
 image::tRemoveCommand-noIndex.png[width="500"]
@@ -307,7 +307,7 @@ This command removes the tag `friends` from all person(s) with the tag `friends`
 // tag::tagremove[]
 
 // tag::tagremovefav[]
-=== Removing a person(s) from favourite : `t-remove` _[Since v1.2]_
+=== Removing person(s) from favourite : `t-remove` _[Since v1.2]_
 
 You can remove specified person(s) in the address book from your `favourite` list.
 
@@ -318,7 +318,7 @@ Format: `t-remove INDEX... favourite`
 
 ****
 * You can also use `fav`, and words containing `fav` interchangeably with `favourite`.
-* If you wish to clear your favourite list, simply leave out the INDEX part.
+* If you wish to clear your favourite list, simply leave out the INDEX.
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
 
@@ -327,9 +327,6 @@ Examples:
 * `list` +
 `t-remove 2 3 fav` +
 This command removes the tag `favourite` from the 2nd and 3rd person in the address book
-
-* `t-remove fav` +
-This command removes the tag `fav` from all person(s) with the the tag `fav` in the address book
 // end::tagremovefav[]
 
 // tag::tagfind[]
@@ -343,14 +340,14 @@ _Figure 3.12.1 : Finding all persons tagged 'fav'_
 Format: `t-find TAG`
 
 ****
-* The results show a list of person(s) who has their `tagName` matching exactly; also those with `tagName` containing in `TAG` or the other way round.
+* Person list panel shows a list of person(s) who have their `tagName` matching exactly; and those with `tagName` containing or contained in `TAG`.
 ****
 
 Examples:
 
-* `t-find friend`
+* `t-find friend` +
 This command lists all the people with tag `friend`
-* `t-find frien`
+* `t-find frien` +
 This command could also list all the people with tag `friend` if any
 // end::tagfind[]
 
@@ -362,11 +359,11 @@ You can change the current theme into your preferred one.
 image::twilightTheme.png[width="790"]
 _Figure 3.13.1 : Twilight Theme_
 
-image::minimalismTheme.png[width="790"]
-_Figure 3.13.2 : Minimalism Theme_
-
 image::sunburstTheme.png[width="790"]
-_Figure 3.13.3 : Sunburst Theme_
+_Figure 3.13.2 : Sunburst Theme_
+
+image::minimalismTheme.png[width="790"]
+_Figure 3.13.3 : Minimalism Theme_
 
 Format: `theme [THEME] OR [INDEX]`
 
@@ -375,17 +372,17 @@ Format: `theme [THEME] OR [INDEX]`
 * `Twilight` is dark in color; `Sunburst` is bright and lively; `Minimalism` is basic and is the default.
 * You can key in `Twilight` or `dark` or `1` to change into dark theme; `Sunburst` or `bright` or `2` to bright theme and `Minimalism` or `default` or `3` to default theme.
 * When you only key in `theme`, the result box would display `1.Twilight 2.Sunburst 3.Minimalism`, you can simply key in the index to change into the specific theme.
-* The result indicates that you have successfully changed into your theme of choice.
+* The result in result box indicates that you have successfully changed into your theme of choice.
 ****
 
 Examples:
 
-* `theme dark`
-This command changed to current theme to Twilight
-* `theme Twilight`
-This command changed to current theme to Twilight
-* `theme 1`
-This command changed to current theme to Twilight
+* `theme dark` +
+This command changes current theme to Twilight
+* `theme Twilight` +
+This command changes current theme to Twilight
+* `theme 1` +
+This command changes current theme to Twilight
 // end::changetheme[]
 
 // tag::map[]
