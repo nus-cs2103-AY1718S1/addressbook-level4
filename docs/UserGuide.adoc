@@ -660,10 +660,10 @@ most one** command.
 Examples:
 
 * For `Windows` users: +
-`import C:\Users\John Doe\Documents\bonus.bo`
+`import --script C:\Users\John Doe\Documents\bonus.bo`
 
 * For `macOS` and `Linux` users: +
-`import /Users/John Doe/Documents/bonus.bo`
+`import --script /Users/John Doe/Documents/bonus.bo`
 
 [NOTE]
 ====

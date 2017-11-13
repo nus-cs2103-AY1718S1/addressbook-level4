@@ -4,7 +4,9 @@
 :imagesDir: images
 :stylesDir: stylesheets
 
-This is a test asciidoc document to check the setup for asciidoc documentation.
+This is a test AsciiDoc document to check the setup for AsciiDoc documentation.
+
+*Please ignore this document if you are not from the BoNUS development team.*
 
 == Heading
 

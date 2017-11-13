@@ -59,10 +59,15 @@ include::../UserGuide.adoc[tag=importNusmods]
 
 ---
 
-Most of the NUS students are currently using NUSMods as their school timetable builder. Also, the lessons and exams
-reflected on their NUSMods timetable account for a large part of their schedule. Thus, users definitely want to add all
-these activities into *BoNUS*. It would be much more convenient if they could import their school timetable to *BoNUS*
-directly rather than manually add upcoming events.
+This feature addresses a specific need of NUS students, since they are our target users.
+
+For university students, the lessons and exams reflected on their school timetable account for a large part of their
+schedule. When they are using *BoNUS*, it is very likely they want to put all these activities into the application as
+upcoming events. However, it becomes very tedious to do so manually.
+
+Most of the NUS students are currently using NUSMods as their school timetable builder. Their NUSMods timetable contains
+information about all their lessons and exams. Thus, it would be very convenient if users could directly import their
+NUSMods timetable into *BoNUS* in one step.
 
 ==== Implementation
 
