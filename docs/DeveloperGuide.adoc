@@ -602,8 +602,8 @@ to be arranged according to the time added. +
 // tag::viewcommand[]
 === View profile mechanism
 
-View command allows user to open a full view of a contact's profile instead of having to see all details on the small card inside person list panel.
-Its usage is mainly intended for later releases of Gentleman's Guide when various new contact fields have been added. +
+View command allows user to see all details of a contact in full view.
+Its benefit will be shown more clearly in later releases of Gentleman's Guide when various new contact fields have been added. +
 
 When executed, `ViewCommand` raises a `ShowProfileRequestEvent` and calls `post()` of `EventCenter` to post the event to all registered subscribers.
 The subscribers of `BrowserPanel` will then be notified of the event and handle it by calling `handleShowProfileRequestEvent()`,

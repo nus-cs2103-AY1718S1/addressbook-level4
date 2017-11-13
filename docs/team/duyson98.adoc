@@ -15,7 +15,7 @@ for users on how to use the features, the mechanism behind them, as well as the 
 
 *Code contributed*: [https://github.com/CS2103AUG2017-T09-B1/main/blob/master/collated/main/duyson98.md[Functional code]] [https://github.com/CS2103AUG2017-T09-B1/main/blob/master/collated/test/duyson98.md[Test code]]
 
-=== Enhancement Added: Retrieve command, Tag/Untag/Retag commands
+=== Enhancement Added: Tag/Untag/Retag commands and Retrieve command
 
 ==== External behavior
 
@@ -32,11 +32,13 @@ include::../UserGuide.adoc[tag=retrieve]
 
 ==== Justification
 
-`tag` and `retrieve` commands help you organize your address book by putting tags to contacts
-and quickly get all contacts that have been assigned with a certain tag.
+Through business networking, businessmen have many opportunities to make acquaintance with people from different companies.
+Therefore, they need a way to separate their contacts into smaller groups so that they can quickly access all contacts which are related to each other.
 
-`untag` and `retag` commands allow you to remove the tags that are no longer needed and modify the existing tags
-to reflect the changes in your relationship with the contact owners.
+With `tag` command, users can assign tags which contain relevant information to contacts. After that, by using `retrieve` command on a certain tag,
+they will be able to see all contacts that have been assigned with that tag.
+In addition, `untag` and `retag` commands are implemented to give users freedom in modifying the existing tags, such as removing tags which are no longer needed and renaming an existing tag inside contact list
+to reflect the changes in their relationships with the contact owners.
 
 ==== Implementation
 
@@ -64,7 +66,8 @@ include::../UserGuide.adoc[tag=viewprofile]
 
 ==== Justification
 
-
+View command displays the contact on a large panel, which allows users to see all contact details in a nice
+and clear way instead of having to see the details crammed inside the small cards of person list.
 
 ==== Implementation
 
@@ -79,14 +82,14 @@ include::../DeveloperGuide.adoc[tag=viewcommand]
 
 === Enhancement Proposed:
 
-===== Pop-up reminder notifications:
-
 ===== Custom contact fields:
 In addition to original fields which are name, phone number, email, address, and tags, users will be able to specify 5
 more fields according to their preferences. They can also choose which fields to display on the person card
 and if they wish to see all details of the contact, they can use view command to open the contact profile.
 
 ===== LinkedIn integration:
+As the target users of Gentleman's Guide are businessmen, who are most likely to have LinkedIn accounts, it will be convenient if
+users can directly access the LinkedIn profiles of their contacts without having to search for the profiles manually on the LinkedIn website.
 
 === Other Contributions
 
