@@ -1,0 +1,127 @@
+= Cao Liang - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+endif::[]
+
+== Project: ModU
+include::../DeveloperGuide.adoc[tag=intro]
+
+*Code contributed*: [https://github.com/CS2103AUG2017-W13-B4/main/blob/master/collated/main/caoliangnus.md[Functional code]] [https://github.com/CS2103AUG2017-W13-B4/main/blob/master/collated/test/caoliangnus.md[Test code]]
+
+[NOTE]
+Some pictures below might look strange because they are supposed to be gif in User Guide. [user
+guide (https://github.com/CS2103AUG2017-W13-B4/main/blob/master/docs/UserGuide.adoc)]
+
+=== Enhancement Added: Highlighting Keywords
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=colorKeyword]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Our software is targeting on professors. Sometimes, especially in add command, we believed that professors may find it hard to distinguish command keyword and other lesson information. Therefore, the highlighting feature is necessary in helping to improve on the readability of the command box.
+Besides that, this feature also indicates to the professor whether the command entered in the command box is valid or invalid. This ensures that the command can be executed correctly.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=colorKeyword]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Timetable
+
+==== External behavior
+
+---
+The timetable feature is used to display a timetable of all the lessons listed in a module.
+
+image::Ui.png[width="900"]
+
+---
+
+==== Justification
+
+Our software is used for professors to build timetable. We believed that displaying lessons in a timetable format is easier for professors to visualize.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=timetable]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: StickyNotes
+
+==== External behavior
+
+---
+The sticky notes feature is used to display additional information about a module.
+
+image::stickynotes.png[width="900"]
+
+---
+
+==== Justification
+
+Our software can also be used by students. We believed that the information displayed is not sufficient for student to understand a module. +
+Therefore, the stick notes feature allows professors to add additional information to help students to know the module better.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=stickyNote]
+
+#End of Extract#
+
+---
+
+
+=== Enhancement Proposed: Add command `import`
+
+* Currently, our software does not support the importing data. With this feature, professors can prepare the lesson information using Excel or Word. Then our software will generate the timetable for them based on the imported data.
+
+
+=== Enhancement Proposed: Add  `login` feature
+
+* Currently, our software can be accessed by anyone. Since our software only allows the professors to add and edit lesson information. The students should not be allowed to make any changes to the lessons. Hence, it is necessary to improve on the security level and grant different access to professors and students.
+
+
+=== Other contributions
+
+* Change the model base from the Addressbook level 4 to ModU (Pull requests https://github.com/CS2103AUG2017-W13-B4/main/pull/50[#50],
+https://github.com/CS2103AUG2017-W13-B4/main/pull/47[#47], https://github.com/CS2103AUG2017-W13-B4/main/pull/51[#51],
+https://github.com/CS2103AUG2017-W13-B4/main/pull/53/[#53], https://github.com/CS2103AUG2017-W13-B4/main/pull/57/[#57],
+https://github.com/CS2103AUG2017-W13-B4/main/pull/58/[#58], https://github.com/CS2103AUG2017-W13-B4/main/pull/63/[#63],)
+
+* Wrote tutorial for User Guide (Pull requests https://github.com/CS2103AUG2017-W13-B4/main/pull/99[#99],
+https://github.com/CS2103AUG2017-W13-B4/main/pull/139[#139], https://github.com/CS2103AUG2017-W13-B4/main/pull/144[#144],)
+
+* Designed a logo for ModU (Pull requests https://github.com/CS2103AUG2017-W13-B4/main/pull/118/[#118])
+
+* Offering code for others to reuse (Issues https://github.com/nus-cs2103-AY1718S1/forum/issues/208[#208])
+
+* Bugs reported and suggestions posted for other team’s products (Issues https://github.com/CS2103AUG2017-W10-B2/main/issues/136[#136],
+https://github.com/CS2103AUG2017-W13-B2/main/issues/132[#132], https://github.com/CS2103AUG2017-W13-B2/main/issues/105[#105])

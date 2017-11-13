@@ -5,12 +5,14 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.logic.UndoRedoStackUtil.prepareStack;
+import static seedu.address.testutil.TypicalLessons.getTypicalAddressBook;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.EmptyStackException;
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import seedu.address.logic.commands.Command;
@@ -18,13 +20,34 @@ import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.UndoableCommand;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.ListingUnit;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
+import seedu.address.model.module.predicates.UniqueModuleCodePredicate;
 
 public class UndoRedoStackTest {
-    private final DummyCommand dummyCommandOne = new DummyCommand();
-    private final DummyUndoableCommand dummyUndoableCommandOne = new DummyUndoableCommand();
-    private final DummyUndoableCommand dummyUndoableCommandTwo = new DummyUndoableCommand();
-
+    private static final CommandHistory EMPTY_COMMAND_HISTORY = new CommandHistory();
+    private static final UndoRedoStack EMPTY_STACK = new UndoRedoStack();
+    private DummyCommand dummyCommandOne;
+    private DummyUndoableCommand dummyUndoableCommandOne;
+    private DummyUndoableCommand dummyUndoableCommandTwo;
+    private final Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
     private UndoRedoStack undoRedoStack = new UndoRedoStack();
+
+    @Before
+    public void setUp() throws CommandException {
+        ListingUnit.setCurrentPredicate(new UniqueModuleCodePredicate(model.getUniqueCodeSet()));
+        ListingUnit.setCurrentListingUnit(ListingUnit.MODULE);
+        dummyCommandOne = new DummyCommand();
+        dummyUndoableCommandOne = new DummyUndoableCommand();
+        dummyUndoableCommandTwo = new DummyUndoableCommand();
+        dummyUndoableCommandOne.setData(model, EMPTY_COMMAND_HISTORY, EMPTY_STACK);
+        dummyUndoableCommandTwo.setData(model, EMPTY_COMMAND_HISTORY, EMPTY_STACK);
+        dummyUndoableCommandTwo.execute();
+        dummyUndoableCommandOne.execute();
+    }
 
     @Test
     public void push_nonUndoableCommand_redoStackClearedAndCommandNotAdded() {
@@ -34,9 +57,6 @@ public class UndoRedoStackTest {
         undoRedoStack.push(dummyCommandOne);
         assertStackStatus(Collections.singletonList(dummyUndoableCommandOne), Collections.emptyList());
 
-        // empty redoStack
-        undoRedoStack.push(dummyCommandOne);
-        assertStackStatus(Collections.singletonList(dummyUndoableCommandOne), Collections.emptyList());
     }
 
     @Test
@@ -59,6 +79,7 @@ public class UndoRedoStackTest {
         // non-empty redoStack
         undoRedoStack = prepareStack(Collections.singletonList(dummyUndoableCommandOne),
                 Arrays.asList(dummyUndoableCommandOne, dummyUndoableCommandTwo));
+        System.out.println("...");
         undoRedoStack.push(new UndoCommand());
         assertStackStatus(Collections.singletonList(dummyUndoableCommandOne),
                 Arrays.asList(dummyUndoableCommandOne, dummyUndoableCommandTwo));
@@ -142,6 +163,7 @@ public class UndoRedoStackTest {
 
     @Test
     public void equals() {
+
         undoRedoStack = prepareStack(Arrays.asList(dummyUndoableCommandTwo, dummyUndoableCommandOne),
                 Arrays.asList(dummyUndoableCommandOne, dummyUndoableCommandTwo));
 
@@ -243,5 +265,6 @@ public class UndoRedoStackTest {
         public CommandResult executeUndoableCommand() {
             return new CommandResult("");
         }
+
     }
 }

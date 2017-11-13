@@ -1,32 +1,33 @@
+/*@@author cctdaniel*/
 .background {
-    -fx-background-color: derive(#1d1d1d, 20%);
-    background-color: #383838; /* Used in the default.html file */
+    -fx-background-color: yellow;
+    background-color: yellow; /* Used in the default.html file */
 }
 
 .label {
     -fx-font-size: 11pt;
-    -fx-font-family: "Segoe UI Semibold";
-    -fx-text-fill: #555555;
+    -fx-font-family: monospace;
+    -fx-text-fill: white;
     -fx-opacity: 0.9;
 }
 
 .label-bright {
     -fx-font-size: 11pt;
-    -fx-font-family: "Segoe UI Semibold";
+    -fx-font-family: monospace;
     -fx-text-fill: white;
     -fx-opacity: 1;
 }
 
 .label-header {
     -fx-font-size: 32pt;
-    -fx-font-family: "Segoe UI Light";
+    -fx-font-family: monospace;
     -fx-text-fill: white;
     -fx-opacity: 1;
 }
 
 .text-field {
     -fx-font-size: 12pt;
-    -fx-font-family: "Segoe UI Semibold";
+    -fx-font-family: monospace;
 }
 
 .tab-pane {
@@ -66,7 +67,7 @@
 
 .table-view .column-header .label {
     -fx-font-size: 20pt;
-    -fx-font-family: "Segoe UI Light";
+    -fx-font-family: monospace;
     -fx-text-fill: white;
     -fx-alignment: center-left;
     -fx-opacity: 1;
@@ -120,45 +121,50 @@
 }
 
 .cell_big_label {
-    -fx-font-family: "Segoe UI Semibold";
-    -fx-font-size: 16px;
-    -fx-text-fill: #010504;
+    -fx-font-family: monospace;
+    -fx-font-size: 24px;
+    -fx-text-fill: white;
 }
 
 .cell_small_label {
-    -fx-font-family: "Segoe UI";
-    -fx-font-size: 13px;
-    -fx-text-fill: #010504;
+    -fx-font-family: monospace;
+    -fx-font-size: 16px;
+    -fx-text-fill: white;
 }
 
 .anchor-pane {
-     -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-background-color: derive(#1d1d1d, 60%);
 }
 
 .pane-with-border {
      -fx-background-color: derive(#1d1d1d, 20%);
-     -fx-border-color: derive(#1d1d1d, 10%);
-     -fx-border-top-width: 1px;
+     -fx-border-color: derive(#1d1d1d, 20%);
+     -fx-border-width: 10px;
+}
+
+.pane-without-border {
+    -fx-background-color: derive(#1d1d1d, 50%);
 }
 
 .status-bar {
     -fx-background-color: derive(#1d1d1d, 20%);
-    -fx-text-fill: black;
+    -fx-text-fill: white;
 }
 
 .result-display {
-    -fx-background-color: transparent;
-    -fx-font-family: "Segoe UI Light";
+    -fx-background-color: yellow;
+    -fx-font-family: monospace;
     -fx-font-size: 13pt;
+    -fx-font-weight: bolder;
     -fx-text-fill: white;
 }
 
 .result-display .label {
-    -fx-text-fill: black !important;
+    -fx-text-fill: white !important;
 }
 
 .status-bar .label {
-    -fx-font-family: "Segoe UI Light";
+    -fx-font-family: monospace;
     -fx-text-fill: white;
 }
 
@@ -196,13 +202,43 @@
 
 .menu-bar .label {
     -fx-font-size: 14pt;
-    -fx-font-family: "Segoe UI Light";
+    -fx-font-family: monospace;
     -fx-text-fill: white;
     -fx-opacity: 0.9;
 }
 
 .menu .left-container {
     -fx-background-color: black;
+}
+
+.keyword-label-default {
+    -fx-font-family: monospace;
+    -fx-font-size: 25;
+    -fx-text-fill: white;
+}
+
+.keyword-label-xsmall {
+        -fx-font-family: monospace;
+        -fx-font-size: 12;
+        -fx-text-fill: white;
+}
+
+.keyword-label-small {
+        -fx-font-family: monospace;
+        -fx-font-size: 17;
+        -fx-text-fill: white;
+}
+
+.keyword-label-large {
+        -fx-font-family: monospace;
+        -fx-font-size: 32;
+        -fx-text-fill: white;
+}
+
+.keyword-label-xlarge {
+        -fx-font-family: monospace;
+        -fx-font-size: 40;
+        -fx-text-fill: white;
 }
 
 /*
@@ -315,23 +351,66 @@
     -fx-text-fill: #F70D1A;
 }
 
+/*@@author caoliangnus*/
 #commandTextField {
     -fx-background-color: transparent #383838 transparent #383838;
     -fx-background-insets: 0;
     -fx-border-color: #383838 #383838 #ffffff #383838;
     -fx-border-insets: 0;
     -fx-border-width: 1;
-    -fx-font-family: "Segoe UI Light";
+    -fx-font-family: monospace;
     -fx-font-size: 13pt;
     -fx-text-fill: white;
 }
+
+#commandTextFieldKeyword {
+    -fx-background-color: transparent #383838 transparent #383838;
+    -fx-background-insets: 0;
+    -fx-border-color: #383838 #383838 #383838 #383838;
+    -fx-border-insets: 0;
+    -fx-border-width: 1;
+    -fx-font-family: monospace;
+    -fx-font-size: 13pt;
+    -fx-text-fill: white;
+}
+
+#commandTextDefault {
+    -fx-font-family: monospace;
+    -fx-font-size: 25;
+    -fx-text-fill: white;
+}
+
+#commandTextXsmall{
+    -fx-font-family: monospace;
+    -fx-font-size: 12;
+    -fx-text-fill: white;
+}
+
+#commandTextSmall{
+    -fx-font-family: monospace;
+    -fx-font-size: 17;
+    -fx-text-fill: white;
+}
+
+#commandTextLarge{
+    -fx-font-family: monospace;
+    -fx-font-size: 32;
+    -fx-text-fill: white;
+}
+
+#commandTextXLarge{
+    -fx-font-family: monospace;
+    -fx-font-size: 40;
+    -fx-text-fill: white;
+}
+
 
 #filterField, #personListPanel, #personWebpage {
     -fx-effect: innershadow(gaussian, black, 10, 0, 0, 0);
 }
 
 #resultDisplay .content {
-    -fx-background-color: transparent, #383838, transparent, #383838;
+    -fx-background-color: derive(#282939, 20%);
     -fx-background-radius: 0;
 }
 
@@ -347,4 +426,38 @@
     -fx-border-radius: 2;
     -fx-background-radius: 2;
     -fx-font-size: 11;
+}
+
+#lessonNode {
+    -fx-font-family: monospace;
+    -fx-font-size: large;
+    -fx-font-weight: bolder;
+    -fx-control-inner-background: #6B4A40;
+    -fx-text-fill: derive(#d4cbb3, 50%);
+    -fx-text-alignment: center;
+}
+
+#stickyNote {
+    -fx-background-color: transparent;
+    -fx-padding:5px 5px 5px;
+    -fx-font:20px monospace;
+    -fx-line-height:1.5;
+}
+
+#stickyNote .scroll-pane {
+    -fx-background-color: transparent;
+}
+
+#stickyNote .scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+
+#stickyNote .scroll-pane .content {
+    -fx-background-color: transparent;
+}
+
+#header {
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
 }

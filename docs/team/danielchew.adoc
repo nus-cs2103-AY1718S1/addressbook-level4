@@ -1,0 +1,76 @@
+= Daniel Chew - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: ModU
+include::../DeveloperGuide.adoc[tag=intro]
+
+*Code contributed*: [https://github.com/CS2103AUG2017-W13-B4/main/blob/master/collated/main/cctdaniel.md[Functional code]] [https://github.com/CS2103AUG2017-W13-B4/main/blob/master/collated/test/cctdaniel.md[Test code]]
+
+=== Enhancement Added: Customise Command
+
+Customise the font size of the application.
+
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[tag=customise]
+
+---
+
+==== Justification
+
+Users like customisation and personalisation and hence, they should be able to set their preferred font size for the application. Depending on the resolution of their display monitors, certain font sizes might be more suitable than the others. Therefore, there are 5 different font sizes to choose from to cater to the different preferences.
+
+==== Implementation
+
+---
+
+include::../DeveloperGuide.adoc[tag=customise]
+
+---
+
+=== Enhancement Added: Theme Command
+
+Change the theme of the application.
+
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[tag=theme]
+
+---
+
+==== Justification
+
+Users like customisation and personalisation and hence, they should be able to set their preferred theme for the application. Due to time constraint for the project, there are currently only 2 themes to choose from. However, there are plans to support more themes in version 2.0.
+
+==== Implementation
+
+---
+
+include::../DeveloperGuide.adoc[tag=theme]
+
+---
+
+=== Enhancement Proposed: Implement a login page
+
+Currently, ModU can be accessed by anyone. Since ModU have different restrictions for different user type (professors or students), a login page is necessary to differentiate between different users. Students should not be allowed to make changes to the information associated with lessons such as the time and venue of the lesson.
+
+=== Enhancement Proposed: Export/Import timetable schedule
+
+Currently, ModU does not support exporting or importing of timetable schedule to or from third-parties’ software. Since user sometimes prefer to use third-parties’ software that they are familiarised with, ModU plans to bring this functionality into the software to improve the user experience.
+
+=== Enhancement Proposed: Support network database
+
+Currently the data is stored at the user's computer but we have to support network database in order to release to public.
+
+=== Other contributions
+
+* Proofread and edited the User Guide and Developer Guide, correct sentence structures, grammar mistakes and language errors. [https://github.com/CS2103AUG2017-W13-B4/main/blob/master/docs/UserGuide.adoc[User Guide]] [https://github.com/CS2103AUG2017-W13-B4/main/blob/master/docs/DeveloperGuide.adoc[Developer Guide]]
+* Updated the GUI theme (Pull request https://github.com/CS2103AUG2017-W13-B4/main/pull/129[#129])
+* Change Model Module UI test cases (Pull request https://github.com/CS2103AUG2017-W13-B4/main/pull/105[#105])
+* Did acceptance testing for group W09-B4 (Issue https://github.com/CS2103AUG2017-W09-B4/main/issues/78[#78])

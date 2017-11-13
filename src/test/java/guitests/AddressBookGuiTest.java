@@ -11,16 +11,18 @@ import org.testfx.api.FxToolkit;
 
 import guitests.guihandles.BrowserPanelHandle;
 import guitests.guihandles.CommandBoxHandle;
+import guitests.guihandles.LessonListPanelHandle;
 import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.MainWindowHandle;
-import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.StatusBarFooterHandle;
+
 import javafx.stage.Stage;
+
 import seedu.address.TestApp;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.model.AddressBook;
-import seedu.address.testutil.TypicalPersons;
+import seedu.address.testutil.TypicalLessons;
 
 /**
  * A GUI Test class for AddressBook.
@@ -64,15 +66,15 @@ public abstract class AddressBookGuiTest {
      * Return null to use the data in the file specified in {@link #getDataFileLocation()}
      */
     protected AddressBook getInitialData() {
-        return TypicalPersons.getTypicalAddressBook();
+        return TypicalLessons.getTypicalAddressBook();
     }
 
     protected CommandBoxHandle getCommandBox() {
         return mainWindowHandle.getCommandBox();
     }
 
-    protected PersonListPanelHandle getPersonListPanel() {
-        return mainWindowHandle.getPersonListPanel();
+    protected LessonListPanelHandle getLessonListPanel() {
+        return mainWindowHandle.getLessonListPanel();
     }
 
     protected MainMenuHandle getMainMenu() {

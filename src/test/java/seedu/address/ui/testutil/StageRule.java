@@ -5,6 +5,7 @@ import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
 import org.testfx.api.FxToolkit;
 
+//@@author cctdaniel
 /**
  * Properly sets up and tears down a JavaFx stage for our testing purposes.
  */

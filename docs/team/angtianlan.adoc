@@ -1,0 +1,85 @@
+= Ang Tian Lan (Sky) - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: ModU
+ModU is a software design to help teachers and lecturers to plan their weekly teaching schedule. ModU was developed from a software, AddressBook-level 4, an address book software. +
+
+*Code contributed*: [https://github.com/CS2103AUG2017-W13-B4/main/blob/master/collated/main/angtianlannus.md[Functional code]] [https://github.com/CS2103AUG2017-W13-B4/main/blob/master/collated/test/angtianlannus.md[Test code]]
+
+=== New Command Added: `Sort` command
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=sort]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+After users have used ModU for a period of time, they will accumulate numerous data that make it difficult for them to find the information they need in ModU. This new sort command can sort the list of modules, lessons and locations in a meaningful manner and make it much easier for user to find the information he or she needs.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=sort]
+
+#End of Extract#
+
+---
+
+=== Enhancement Made: `Find`
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=find]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+The original Find command from AddressBook level 4(the application ModU was developed from) was to find list by person name. As we have changed the whole context of the original application to ModU, we would need to change the Find command to match the ModU’s context. ModU’s list command shown list to user in three attributes: location, module and lesson (via view command). Thus it would make senses that Find command could search for lesson, location and module in their respective list attributes.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=find]
+
+#End of Extract#
+
+---
+
+=== Enhancements Proposed : `Registration` and `Login` features
+
+In ModU version 2.0, we hope to incorporate functions that allow user to register an account with ModU. This function would allow ModU to distinguish the type of user is using ModU so ModU could give different access rights to different user type. For example, only administrator can set a list of valid module for other users to add lessons into.
+
+=== Enhancements Proposed : `Export` timetable feature
+
+In ModU version 2.0, we hope to  add a feature in ModU that allow users to export their weekly timetable on ModU as image files out of ModU so they can view their timetable without having to open ModU.
+
+=== Other contributions
+
+* Add timeSlot constraint that prevent user from adding two lessons with the same time slot and location  (Pull requests https://github.com/CS2103AUG2017-W13-B4/main/pull/126[#126], https://github.com/CS2103AUG2017-W13-B4/main/pull/143[#143])
+* Wrote additional tests to increase coverage (Pull requests https://github.com/CS2103AUG2017-W13-B4/main/pull/216[#216])
+* Keeping User Guide and Developer Guide up to date (Pull requests https://github.com/CS2103AUG2017-W13-B4/main/pull/67[#67],
+https://github.com/CS2103AUG2017-W13-B4/main/pull/70[#70],
+https://github.com/CS2103AUG2017-W13-B4/main/pull/115[#115],
+https://github.com/CS2103AUG2017-W13-B4/main/pull/219[#219],
+https://github.com/CS2103AUG2017-W13-B4/main/pull/244[#244],
+https://github.com/CS2103AUG2017-W13-B4/main/pull/262[#262])
+

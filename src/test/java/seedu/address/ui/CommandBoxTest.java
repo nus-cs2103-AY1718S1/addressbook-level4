@@ -1,14 +1,18 @@
 package seedu.address.ui;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import guitests.guihandles.CommandBoxHandle;
 import javafx.scene.input.KeyCode;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
 import seedu.address.logic.commands.ListCommand;
@@ -17,20 +21,23 @@ import seedu.address.model.ModelManager;
 
 public class CommandBoxTest extends GuiUnitTest {
 
-    private static final String COMMAND_THAT_SUCCEEDS = ListCommand.COMMAND_WORD;
+    private static final String COMMAND_THAT_SUCCEEDS = ListCommand.COMMAND_WORD + " module";
     private static final String COMMAND_THAT_FAILS = "invalid command";
 
     private ArrayList<String> defaultStyleOfCommandBox;
     private ArrayList<String> errorStyleOfCommandBox;
+    private HashMap<String, String> keywordColorMap;
+
 
     private CommandBoxHandle commandBoxHandle;
+    private CommandBox commandBox;
 
     @Before
     public void setUp() {
         Model model = new ModelManager();
         Logic logic = new LogicManager(model);
 
-        CommandBox commandBox = new CommandBox(logic);
+        commandBox = new CommandBox(logic);
         commandBoxHandle = new CommandBoxHandle(getChildNode(commandBox.getRoot(),
                 CommandBoxHandle.COMMAND_INPUT_FIELD_ID));
         uiPartRule.setUiPart(commandBox);
@@ -39,6 +46,8 @@ public class CommandBoxTest extends GuiUnitTest {
 
         errorStyleOfCommandBox = new ArrayList<>(defaultStyleOfCommandBox);
         errorStyleOfCommandBox.add(CommandBox.ERROR_STYLE_CLASS);
+
+        keywordColorMap = commandBox.getCommandKeywordColorMap();
     }
 
     @Test
@@ -91,7 +100,7 @@ public class CommandBoxTest extends GuiUnitTest {
 
         // insert command in the middle of retrieving previous commands
         guiRobot.push(KeyCode.UP);
-        String thirdCommand = "list";
+        String thirdCommand = "list module";
         commandBoxHandle.run(thirdCommand);
         assertInputHistory(KeyCode.UP, thirdCommand);
         assertInputHistory(KeyCode.UP, COMMAND_THAT_FAILS);
@@ -125,6 +134,73 @@ public class CommandBoxTest extends GuiUnitTest {
         assertInputHistory(KeyCode.UP, thirdCommand);
     }
 
+
+    //@@author caoliangnus
+
+    @Test
+    public void computeMarginTest() {
+        Text text = new Text("m/");
+
+        //XSmall Font size
+        Font font = new Font("Monospace regular", 12);
+        text.setFont(font);
+        double expectedMargin = commandBox.computeMargin(1, "m/");
+        assertEquals(text.getBoundsInLocal().getWidth(), expectedMargin, 0.001);
+
+        //Small Font size
+        font = new Font("Monospace regular", 17);
+        text.setFont(font);
+        expectedMargin = commandBox.computeMargin(2, "m/");
+        assertEquals(text.getBoundsInLocal().getWidth(), expectedMargin, 0.001);
+
+        //Default Font size
+        font = new Font("Monospace regular", 25);
+        text.setFont(font);
+        expectedMargin = commandBox.computeMargin(3, "m/");
+        assertEquals(text.getBoundsInLocal().getWidth(), expectedMargin, 0.001);
+
+        //Large Font size
+        font = new Font("Monospace regular", 32);
+        text.setFont(font);
+        expectedMargin = commandBox.computeMargin(4, "m/");
+        assertEquals(text.getBoundsInLocal().getWidth(), expectedMargin, 0.001);
+
+        //XLarge Font size
+        font = new Font("Monospace regular", 40);
+        text.setFont(font);
+        expectedMargin = commandBox.computeMargin(5, "m/");
+        assertEquals(text.getBoundsInLocal().getWidth(), expectedMargin, 0.001);
+
+    }
+
+    @Test
+    public void getTagIndexListTest() {
+        String textInput = "l/Victor l/Jack";
+        ArrayList<Integer> expectedList = new ArrayList<Integer>();
+        expectedList.add(0); // the first index for l/ is 0
+        expectedList.add(9); // the second index for l/ is 9
+        assertEquals(commandBox.getTagIndexList(textInput), expectedList);
+    }
+
+    @Test
+    public void configActiveKeywordTest() {
+        String commandKeyword = "list";
+        String commandColorTrue = "red";
+        String commandColorFalse = "black";
+        assertColorSame(commandColorTrue, commandKeyword);
+        assertColorNotSame(commandColorFalse, commandKeyword);
+    }
+
+
+    private void assertColorSame(String commandColor, String commandKeyword) {
+        assertEquals(commandColor, keywordColorMap.get(commandKeyword));
+    }
+
+    private void assertColorNotSame(String commandColor, String commandKeyword) {
+        assertNotEquals(commandColor, keywordColorMap.get(commandKeyword));
+    }
+    //@@author
+
     /**
      * Runs a command that fails, then verifies that <br>
      *      - the text remains <br>
@@ -154,4 +230,9 @@ public class CommandBoxTest extends GuiUnitTest {
         guiRobot.push(keycode);
         assertEquals(expectedCommand, commandBoxHandle.getInput());
     }
+
+
+
+
+
 }

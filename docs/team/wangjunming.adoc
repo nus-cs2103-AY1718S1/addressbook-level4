@@ -1,0 +1,133 @@
+= Wang Junming - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: ModU
+Many universities have timetable committee to deal with all matters concerning timetabling scheduling. One prevalent concern of such matters would be timetable clashes while scheduling.
+
+Welcome to ModU, a timetable scheduling software for professors and administrators in tertiary institutions.
+
+With ModU, you are able to easily identify timetable slots that are available for the module you are scheduling. Made a mistake while scheduling the timetable? Fret not, you can easily make any changes to the timetable.
+
+ModU uses the command line interface (CLI) as the main input. The natural language input field will allow you to quickly search, add, delete and edit your timetable. Just type what you want and ModU will do the rest for you!
+
+*Code contributed*: [https://github.com/CS2103AUG2017-W13-B4/main/blob/master/collated/main/junming403.md[Functional code]] [https://github.com/CS2103AUG2017-W13-B4/main/blob/master/collated/test/junming403.md[Test code]]
+
+* [Note] Contributions include some classes like `AddCommand` and `AddCommandTest`. This is because our product totally changed the model base from `person` to `lesson`. The command and test has been rewritten, although still based on original addCommand and addCommandTest.
+* [Note] Due to the restriction of the app `Visual Paradigm`. The notation of sequence diagram is slightly different from the notation taught in CS2103T, for exmaple, the object creation has not been shown. We have asked Professor Damith about this and he agreed we can continue to use this app.
+* [Note] Some pictures below might look strange because they are supposed to be gif in User Guide. [https://github.com/CS2103AUG2017-W13-B4/main/blob/master/docs/UserGuide.adoc[user guide]]
+
+=== Enhancement Added: View/List/Edit/Delete
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=list]
+include::../UserGuide.adoc[tag=view]
+include::../UserGuide.adoc[tag=edit]
+include::../UserGuide.adoc[tag=delete]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Since it is a module manager software, it must be able to list by various elements(listing type). In this case, module, lesson and location. Each module has a set of lessons, each location also includes a set of lessons.
+
+Since we can list by various listing type. We also need to be able to edit them accordingly.
+Thus when list lesson, we can edit/delete a specific lesson. When list by location, we can edit/delete the specific location and all lessons with this location will be edited/deleted accordingly.
+Similarly, we can list by module and edit/delete all lessons in this module.
+
+It offers a convenient way of managing lessons. You can see all the lessons of one specific module, and you can also check all lessons in a specific location and decide if you want to schedule your lessons there.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=ListingUnit]
+include::../DeveloperGuide.adoc[tag=list/view]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Mark/Unmark
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=mark]
+include::../UserGuide.adoc[tag=unmark]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+By marking lessons, you can have a marked list. By which as a student, you can customize your time table. While as a lecturer, you can also mark all the lessons you are teaching to create your timetable.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=mark/unmark]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Remark
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=remark]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+As a professor, you might also want to add some supplementary information about the module, such as an introduction. Thus your student can know what is this module about.
+Thus you can remark the module. And the remark content will be shown as sticky notes.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=remark]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Add command `export/import`
+
+In v2.0, ModU should be able to export/import the lessons info file out.
+In v2.0, ModU should be able to export the customized timetable out.
+
+=== Enhancement Proposed: Online Version
+
+In v2.0, ModU should be an online platform for professors to plan the courses they are teaching and for students to make their study timetable.
+
+=== Other contributions
+
+* Change the whole model from `Person(address, email, phone....)` to `Lesson(module code, location, time slot, class type, group number, lecturer)` and update test case accordingly (Pull requests https://github.com/CS2103AUG2017-W13-B4/main/pull/52/files[#52], https://github.com/CS2103AUG2017-W13-B4/main/pull/55/files[#55], https://github.com/CS2103AUG2017-W13-B4/main/pull/56/files[#56], https://github.com/CS2103AUG2017-W13-B4/main/pull/98/files[#98])
+* Add in the border color together with tick or cross to indicate if the command format is valid before execution (Pull requests https://github.com/CS2103AUG2017-W13-B4/main/pull/72/files[#72])
+* Enhance undo/redo mechanism. Undo redo crossing different listing type is not allowed because it causes confusion. (No specific pull request about this, can check developer guide for more info, see `DeveloperGuide` undoredo mechanism)
+* Generate JAR file for weekly milestones.
+* Fixed and discovered many bugs for the product, not only my own feature. See PR https://github.com/CS2103AUG2017-W13-B4/main/pull/325[#325], https://github.com/CS2103AUG2017-W13-B4/main/pull/322[#322], https://github.com/CS2103AUG2017-W13-B4/main/pull/307[#307], https://github.com/CS2103AUG2017-W13-B4/main/pull/306[#306], https://github.com/CS2103AUG2017-W13-B4/main/pull/298[#298], https://github.com/CS2103AUG2017-W13-B4/main/pull/278[#278], https://github.com/CS2103AUG2017-W13-B4/main/pull/225[#225]
+* Bugs/Suggestions found/proposed in acceptance testing in week 11. (Issues https://github.com/CS2103AUG2017-F09-B1/main/issues/87[#87], https://github.com/CS2103AUG2017-F09-B1/main/issues/86[#86], https://github.com/CS2103AUG2017-F09-B1/main/issues/84[#84])

@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import guitests.guihandles.HelpWindowHandle;
+
 import seedu.address.logic.commands.HelpCommand;
 
 public class HelpWindowTest extends AddressBookGuiTest {
@@ -16,7 +17,7 @@ public class HelpWindowTest extends AddressBookGuiTest {
 
     @Test
     public void openHelpWindow() {
-        //use accelerator
+        // use accelerator
         getCommandBox().click();
         getMainMenu().openHelpWindowUsingAccelerator();
         assertHelpWindowOpen();
@@ -25,19 +26,19 @@ public class HelpWindowTest extends AddressBookGuiTest {
         getMainMenu().openHelpWindowUsingAccelerator();
         assertHelpWindowOpen();
 
-        getPersonListPanel().click();
+        getLessonListPanel().click();
         getMainMenu().openHelpWindowUsingAccelerator();
         assertHelpWindowOpen();
 
-        getBrowserPanel().click();
-        getMainMenu().openHelpWindowUsingAccelerator();
-        assertHelpWindowNotOpen();
+        // getBrowserPanel().click();
+        // getMainMenu().openHelpWindowUsingAccelerator();
+        // assertHelpWindowNotOpen();
 
-        //use menu button
+        // use menu button
         getMainMenu().openHelpWindowUsingMenu();
         assertHelpWindowOpen();
 
-        //use command box
+        // use command box
         runCommand(HelpCommand.COMMAND_WORD);
         assertHelpWindowOpen();
     }

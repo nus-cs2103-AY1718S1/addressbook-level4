@@ -5,11 +5,13 @@ import static seedu.address.ui.testutil.GuiTestAssert.assertListMatching;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 
 import org.junit.Test;
 
 import seedu.address.model.AddressBook;
-import seedu.address.model.person.Person;
+import seedu.address.model.module.Code;
+import seedu.address.model.module.Lesson;
 import seedu.address.model.util.SampleDataUtil;
 import seedu.address.testutil.TestUtil;
 
@@ -41,7 +43,21 @@ public class SampleDataTest extends AddressBookGuiTest {
 
     @Test
     public void addressBook_dataFileDoesNotExist_loadSampleData() {
-        Person[] expectedList = SampleDataUtil.getSamplePersons();
-        assertListMatching(getPersonListPanel(), expectedList);
+        Lesson[] tempList = SampleDataUtil.getSampleLessons();
+        ArrayList<Code> uniqueList = new ArrayList<>();
+
+        for (int i = 0; i < tempList.length; i++) {
+            Lesson lesson = tempList[i];
+            if (!uniqueList.contains(lesson.getCode())) {
+                uniqueList.add(lesson.getCode());
+            }
+        }
+
+        Lesson[] expectedList = new Lesson[uniqueList.size()];
+        for (int i = 0; i < uniqueList.size(); i++) {
+            expectedList[i] = tempList[i];
+        }
+
+        assertListMatching(getLessonListPanel(), expectedList);
     }
 }

@@ -1,57 +1,84 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addressbook>
-    <persons>
-        <name>Hans Muster</name>
-        <phone isPrivate="false">9482424</phone>
-        <email isPrivate="false">hans@example.com</email>
-        <address isPrivate="false">4th street</address>
-    </persons>
-    <persons>
-        <name>Ruth Mueller</name>
-        <phone isPrivate="false">87249245</phone>
-        <email isPrivate="false">ruth@example.com</email>
-        <address isPrivate="false">81th street</address>
-    </persons>
-    <persons>
-        <name>Heinz Kurz</name>
-        <phone isPrivate="false">95352563</phone>
-        <email isPrivate="false">heinz@example.com</email>
-        <address isPrivate="false">wall street</address>
-    </persons>
-    <persons>
-        <name>Cornelia Meier</name>
-        <phone isPrivate="false">87652533</phone>
-        <email isPrivate="false">cornelia@example.com</email>
-        <address isPrivate="false">10th street</address>
-    </persons>
-    <persons>
-        <name>Werner Meyer</name>
-        <phone isPrivate="false">9482224</phone>
-        <email isPrivate="false">werner@example.com</email>
-        <address isPrivate="false">michegan ave</address>
-    </persons>
-    <persons>
-        <name>Lydia Kunz</name>
-        <phone isPrivate="false">9482427</phone>
-        <email isPrivate="false">lydia@example.com</email>
-        <address isPrivate="false">little tokyo</address>
-    </persons>
-    <persons>
-        <name>Anna Best</name>
-        <phone isPrivate="false">9482442</phone>
-        <email isPrivate="false">anna@example.com</email>
-        <address isPrivate="false">4th street</address>
-    </persons>
-    <persons>
-        <name>Stefan Meier</name>
-        <phone isPrivate="false">8482424</phone>
-        <email isPrivate="false">stefan@example.com</email>
-        <address isPrivate="false">little india</address>
-    </persons>
-    <persons>
-        <name>Martin Mueller</name>
-        <phone isPrivate="false">8482131</phone>
-        <email isPrivate="false">hans@example.com</email>
-        <address isPrivate="false">chicago ave</address>
-    </persons>
+    <lessons>
+        <classType>LEC</classType>
+        <location isPrivate="false">LT27</location>
+        <group isPrivate="false">1</group>
+        <code isPrivate="false">MA1101R</code>
+        <timeSlot isPrivate="false">MON[1400-1600]</timeSlot>
+        <isMarked>false</isMarked>
+        <lecturerList isPrivate="false">Cao Liang</lecturerList>
+    </lessons>
+    <lessons>
+        <classType>LEC</classType>
+        <location isPrivate="false">LT28</location>
+        <group isPrivate="false">2</group>
+        <code isPrivate="false">CS1020</code>
+        <timeSlot isPrivate="false">TUE[1400-1600]</timeSlot>
+        <isMarked>false</isMarked>
+        <lecturerList isPrivate="false">Wang Jun Ming</lecturerList>
+    </lessons>
+    <lessons>
+        <classType>LEC</classType>
+        <location isPrivate="false">LT29</location>
+        <group isPrivate="false">3</group>
+        <code isPrivate="false">CS1000</code>
+        <timeSlot isPrivate="false">WED[1400-1600]</timeSlot>
+        <isMarked>false</isMarked>
+        <lecturerList isPrivate="false">Daniel Chew</lecturerList>
+    </lessons>
+    <lessons>
+        <classType>LEC</classType>
+        <location isPrivate="false">LT30</location>
+        <group isPrivate="false">4</group>
+        <code isPrivate="false">CS1020</code>
+        <timeSlot isPrivate="false">TUES[1400-1600]</timeSlot>
+        <isMarked>false</isMarked>
+        <lecturerList isPrivate="false">Ang Tian Lan</lecturerList>
+    </lessons>
+    <lessons>
+        <classType>LEC</classType>
+        <location isPrivate="false">LT31</location>
+        <group isPrivate="false">5</group>
+        <code isPrivate="false">CS1010</code>
+        <timeSlot isPrivate="false">FRI[1400-1600]</timeSlot>
+        <isMarked>false</isMarked>
+        <lecturerList isPrivate="false">Chua Wei Wen</lecturerList>
+    </lessons>
+    <lessons>
+        <classType>LEC</classType>
+        <location isPrivate="false">LT32</location>
+        <group isPrivate="false">6</group>
+        <code isPrivate="false">CS2010</code>
+        <timeSlot isPrivate="false">MON[1400-1600]</timeSlot>
+        <isMarked>false</isMarked>
+        <lecturerList isPrivate="false">Justin Poh</lecturerList>
+    </lessons>
+    <lessons>
+        <classType>LEC</classType>
+        <location isPrivate="false">LT33</location>
+        <group isPrivate="false">7</group>
+        <code isPrivate="false">GER1000</code>
+        <timeSlot isPrivate="false">TUES[1400-1600]</timeSlot>
+        <isMarked>false</isMarked>
+        <lecturerList isPrivate="false">Leon</lecturerList>
+    </lessons>
+    <lessons>
+        <classType>LEC</classType>
+        <location isPrivate="false">LT34</location>
+        <group isPrivate="false">8</group>
+        <code isPrivate="false">GEQ1000</code>
+        <timeSlot isPrivate="false">WED[1400-1600]</timeSlot>
+        <isMarked>false</isMarked>
+        <lecturerList isPrivate="false">Zhao Yun</lecturerList>
+    </lessons>
+    <lessons>
+        <classType>LEC</classType>
+        <location isPrivate="false">LT35</location>
+        <group isPrivate="false">9</group>
+        <code isPrivate="false">MA1521</code>
+        <timeSlot isPrivate="false">WED[1400-1600]</timeSlot>
+        <isMarked>false</isMarked>
+        <lecturerList isPrivate="false">Guan Yu</lecturerList>
+    </lessons>
 </addressbook>

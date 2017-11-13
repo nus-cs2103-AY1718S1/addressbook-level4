@@ -4,53 +4,46 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: images
 :stylesDir: stylesheets
 
-AddressBook - Level 4 was developed by the https://se-edu.github.io/docs/Team.html[se-edu] team. +
-The dummy content given below serves as a placeholder to be used by future forks of the project. +
+ModU was developed based on the work of https://se-edu.github.io/docs/Team.html[se-edu] team. +
+
 {empty} +
 We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
 
 == Project Team
 
-=== John Doe
-image::damithc.jpg[width="150", align="left"]
-{empty}[http://www.comp.nus.edu.sg/~damithch[homepage]] [https://github.com/damithc[github]] [<<johndoe#, portfolio>>]
-
-Role: Project Advisor
-
-'''
-
-=== John Roe
-image::lejolly.jpg[width="150", align="left"]
-{empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
-
-Role: Team Lead +
-Responsibilities: UI
-
-'''
-
-=== Johnny Doe
-image::yijinl.jpg[width="150", align="left"]
-{empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
+=== Ang Tian Lan
+image::tianlan.jpg[width="150", align="left"]
+{empty} [https://github.com/angtianlannus[github]][https://cs2103aug2017-w13-b4.github.io/main/team/angtianlan.html[Project Portfolio]]
 
 Role: Developer +
-Responsibilities: Data
+Responsibilities: Storage component, adding SortCommand, enhance FindCommand, BookedSlot constraint and related tests.
 
 '''
 
-=== Johnny Roe
-image::m133225.jpg[width="150", align="left"]
-{empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]
+=== Cao Liang
+image::liang_profile_pic.jpeg[width="150", align="left"]
+{empty}[https://github.com/caoliangnus[github]] [https://cs2103aug2017-w13-b4.github.io/main/team/caoliang.html[Project Portfolio]]
+
 
 Role: Developer +
-Responsibilities: Dev Ops + Threading
+Responsibilities: Model component, add ColorKeywordCommand, add Timetable Panel, add StickyNotes Panel.
 
 '''
 
-=== Benson Meier
-image::yl_coder.jpg[width="150", align="left"]
-{empty}[http://github.com/yl-coder[github]] [<<johndoe#, portfolio>>]
+=== Wang Junming
+image::WangJunming.jpg[width="150", align="left"]
+{empty}[https://github.com/junming403[github]] [https://cs2103aug2017-w13-b4.github.io/main/team/wangjunming.html[Project Portfolio]]
 
 Role: Developer +
-Responsibilities: UI
+Responsibilities: Logic component, editing list//edit/delete command, adding view, mark, unmark, remark command.
+
+'''
+
+=== Chew Chaow Thong Daniel
+image::DanielChew.jpg[width="150", align="left"]
+{empty}[https://github.com/cctdaniel[github]] [https://cs2103aug2017-w13-b4.github.io/main/team/danielchew.html[Project Portfolio]]
+
+Role: Developer +
+Responsibilities: UI component, changed overall theme, add CustomiseCommand, add SwitchThemeCommand and related tests.
 
 '''
