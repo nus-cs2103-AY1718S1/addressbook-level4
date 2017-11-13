@@ -57,15 +57,15 @@ public class SelectTaskCommand extends Command {
 
     /**
      * find the tag of task in person list
+     * If there are no tags or tags cannot be found in the person list, all persons are listed
      * @param tag
      */
     private void conductSearch(String tag) {
         if (!tag.isEmpty()) {
             String[] tagArray = tag.split("\\s+");
             model.updateFilteredPersonList(new PersonContainsKeywordsPredicate(Arrays.asList(tagArray)));
-            if (model.getFilteredPersonList().size() < 1) {
-                model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-            }
+        } else if (tag.isEmpty() || model.getFilteredPersonList().size() < 1) {
+            model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         }
     }
 
