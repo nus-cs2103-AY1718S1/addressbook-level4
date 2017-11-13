@@ -129,7 +129,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      * @see #syncMasterTagListWith(Person)
      */
     public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedReadOnlyPerson)
-            throws DuplicatePersonException, PersonNotFoundException {
+            throws DuplicatePersonException, PersonNotFoundException, DeleteOnCascadeException {
         requireNonNull(editedReadOnlyPerson);
 
         Person editedPerson = new Person(editedReadOnlyPerson);
@@ -170,8 +170,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.forEach(this::syncMasterTagListWith);
     }
 
+    // @@author Adoby7
     /**
      * Remove tags that only in this deleted person
+     * Used for undo Add & Edit Command
      */
     public void separateMasterTagListWith(Set<Tag> tagsToRemove) {
         for (Tag tag : tagsToRemove) {
@@ -179,8 +181,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+
     /**
-     * A Javadoc method.
      * Get the tags in the new-added person, but not in the list
      */
     public Set<Tag> extractNewTags(ReadOnlyPerson person) {
@@ -195,6 +197,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         return newTags;
     }
+    // @@author
 
     /**
      * Removes {@code key} from this {@code AddressBook}.

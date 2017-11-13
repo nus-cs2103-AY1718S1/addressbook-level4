@@ -14,14 +14,14 @@ public class EventTime {
 
 
     public static final String MESSAGE_EVENT_TIME_CONSTRAINTS =
-            "Event time should be in dd/mm/yyyy form, and satisfies reality.";
+            "Event time should be in dd/mm/yyyy form, satisfy the reality, and be after 01/01/1900.";
 
     /**
      * The first character of the event name must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String EVNET_TIME_VALIDATION_REGEX = "^(0[1-9]|[12][\\d]|3[01]|[1-9])[/]"
-            + "(0[1-9]|1[012]|[1-9])[/](19|20)\\d\\d$";
+    public static final String EVNET_TIME_VALIDATION_REGEX = "\\d\\d/\\d\\d/"
+            + "(19|20)\\d\\d$";
 
     public final String eventTime;
     private String year;

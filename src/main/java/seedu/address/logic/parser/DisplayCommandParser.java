@@ -7,7 +7,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.DisplayCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
-//@@author leonchowwenhao
+//@@author
 /**
  * Parses input arguments and creates a new DisplayCommand object
  */

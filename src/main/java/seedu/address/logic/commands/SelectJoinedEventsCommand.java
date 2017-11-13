@@ -10,7 +10,7 @@ import seedu.address.model.event.EventContainsKeywordPredicate;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
-//@@author leonchowwenhao
+//@@author LeonChowWenHao
 /**
  * Selects a person identified using it's last displayed index from the address book
  * and displays all events the person has joined.
@@ -25,6 +25,8 @@ public class SelectJoinedEventsCommand extends Command {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
+    public static final String MESSAGE_SELECT_PERSON_JOINED_EVENTS = "For : %1$s";
+
     private final List<Index> indexList;
 
     public SelectJoinedEventsCommand(List<Index> indexList) {
@@ -36,8 +38,6 @@ public class SelectJoinedEventsCommand extends Command {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
         StringBuilder eventNames = new StringBuilder();
         StringBuilder personNames = new StringBuilder();
-
-        personNames.append("For ");
 
         for (Index targetIndex: indexList) {
             if (targetIndex.getZeroBased() >= lastShownList.size()) {
@@ -54,7 +54,7 @@ public class SelectJoinedEventsCommand extends Command {
         model.updateFilteredEventList(predicate);
 
         personNames.append(getMessageForEventListShownSummary(model.getFilteredEventList().size()));
-        return new CommandResult(personNames.toString());
+        return new CommandResult(String.format(MESSAGE_SELECT_PERSON_JOINED_EVENTS, personNames));
     }
 
     @Override

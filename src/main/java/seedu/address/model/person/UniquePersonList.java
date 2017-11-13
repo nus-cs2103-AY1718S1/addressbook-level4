@@ -67,6 +67,7 @@ public class UniquePersonList implements Iterable<Person> {
         internalList.add(position, new Person(toAdd));
     }
 
+    // @@author HouDenghao
     /**
      * Sorts the person list.
      */
@@ -76,6 +77,7 @@ public class UniquePersonList implements Iterable<Person> {
                 return p1.getName().toString().compareToIgnoreCase(p2.getName().toString()); } });
     }
 
+    // @@author
     /**
      * Replaces the person {@code target} in the list with {@code editedPerson}.
      *
@@ -83,12 +85,16 @@ public class UniquePersonList implements Iterable<Person> {
      * @throws PersonNotFoundException if {@code target} could not be found in the list.
      */
     public void setPerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
-            throws DuplicatePersonException, PersonNotFoundException {
+            throws DuplicatePersonException, PersonNotFoundException, DeleteOnCascadeException {
         requireNonNull(editedPerson);
 
         int index = internalList.indexOf(target);
         if (index == -1) {
             throw new PersonNotFoundException();
+        }
+
+        if (!target.getParticipation().isEmpty()) {
+            throw new DeleteOnCascadeException();
         }
 
         if (!target.equals(editedPerson) && internalList.contains(editedPerson)) {

@@ -94,7 +94,7 @@ public class StorageManager extends ComponentManager implements Storage {
         }
     }
 
-    //@@author leonchowwenhao
+    //@@author LeonChowWenHao
     // ================ EventStorage methods ==============================
 
     @Override

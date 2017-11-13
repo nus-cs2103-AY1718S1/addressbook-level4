@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.commons.core.Messages.MESSAGE_REDO_ASSERTION_ERROR;
+import static seedu.address.commons.core.Messages.MESSAGE_UNDO_ASSERTION_ERROR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PORTRAIT;
 
 import java.util.List;
@@ -7,6 +9,7 @@ import java.util.List;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.exceptions.DeleteOnCascadeException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.PortraitPath;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -28,8 +31,8 @@ public class PortraitCommand extends UndoableCommand {
             + PREFIX_PORTRAIT + "C:/user/images/sample.png";
     public static final String MESSAGE_ADD_PORTRAIT_SUCCESS = "Attached a head portrait to Person: %1$s";
     public static final String MESSAGE_DELETE_PORTRAIT_SUCCESS = "Removed head portrait from Person: %1$s";
-    public static final String MESSAGE_INVALID_URL = "The file path does not locate the image. "
-        + "Please make sure you enter the correct path.";
+    public static final String MESSAGE_PERSON_PARTICIPATE_EVENT_FAIL = "This person has participated some events,"
+            + "please disjoin all events before editing his portrait";
 
     private Index index;
     private PortraitPath filePath;
@@ -43,10 +46,6 @@ public class PortraitCommand extends UndoableCommand {
 
     @Override
     protected CommandResult executeUndoableCommand() throws CommandException {
-        if (!filePath.toString().isEmpty() && !PortraitPath.isValidUrl(filePath.toString())) {
-            throw new CommandException(MESSAGE_INVALID_URL);
-        }
-
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
@@ -65,6 +64,8 @@ public class PortraitCommand extends UndoableCommand {
             throw new AssertionError("The edited person cannot cause duplicate");
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
+        } catch (DeleteOnCascadeException doce) {
+            throw new AssertionError(MESSAGE_PERSON_PARTICIPATE_EVENT_FAIL);
         }
 
         String feedback = filePath.toString().isEmpty()
@@ -76,10 +77,8 @@ public class PortraitCommand extends UndoableCommand {
     protected void undo() {
         try {
             model.updatePerson(editedPerson, personToEdit);
-        } catch (DuplicatePersonException dpe) {
-            throw new AssertionError("The person cannot cause duplicate");
-        } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("The target person cannot be missing");
+        } catch (DuplicatePersonException | PersonNotFoundException | DeleteOnCascadeException e) {
+            throw new AssertionError(MESSAGE_UNDO_ASSERTION_ERROR);
         }
     }
 
@@ -87,12 +86,8 @@ public class PortraitCommand extends UndoableCommand {
     protected void redo() {
         try {
             model.updatePerson(personToEdit, editedPerson);
-        } catch (DuplicatePersonException dpe) {
-            throw new AssertionError("The command has been successfully executed previously; "
-                + "it should not fail now");
-        } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("The command has been successfully executed previously; "
-                + "it should not fail now");
+        } catch (DuplicatePersonException | PersonNotFoundException | DeleteOnCascadeException e) {
+            throw new AssertionError(MESSAGE_REDO_ASSERTION_ERROR);
         }
     }
 

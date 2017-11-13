@@ -46,7 +46,7 @@ public class FindEventCommandTest {
         String expectedMessage = String.format
                 (MESSAGE_EVENTS_LISTED_OVERVIEW, 4);
         FindEventCommand command = prepareCommand("meeting");
-        assertCommandSuccess(command, expectedMessage, Arrays.asList(FIRST, SECOND, THIRD, FORTH));
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(FIRST, SECOND, THIRD, FOURTH));
     }
 
     /**

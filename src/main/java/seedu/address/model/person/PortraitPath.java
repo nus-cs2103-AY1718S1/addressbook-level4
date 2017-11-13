@@ -2,8 +2,6 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
-import java.io.File;
-
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
@@ -40,13 +38,6 @@ public class PortraitPath {
      */
     public static boolean isValidPortraitPath(String test) {
         return test.isEmpty() || test.matches(PORTRAIT_VALIDATION_REGEX);
-    }
-
-    /**
-     * return true if the file path can really locate a file
-     */
-    public static boolean isValidUrl(String test) {
-        return new File(test).exists();
     }
 
     @Override

@@ -6,6 +6,7 @@ import java.util.Set;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.logic.commands.exceptions.DeleteOnCascadeException;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.exceptions.DuplicateEventException;
@@ -43,7 +44,7 @@ public class ModelStub implements Model {
     }
 
     @Override
-    public void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
+    public void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException, DeleteOnCascadeException {
         fail("This method should not be called.");
     }
 
@@ -91,7 +92,7 @@ public class ModelStub implements Model {
     }
 
     @Override
-    public void deleteEvent(ReadOnlyEvent target) throws EventNotFoundException {
+    public void deleteEvent(ReadOnlyEvent target) throws EventNotFoundException, DeleteOnCascadeException {
         fail("This method should not be called.");
     }
 

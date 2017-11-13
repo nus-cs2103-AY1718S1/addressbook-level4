@@ -7,7 +7,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.DeleteEventCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
-//@@author leonchowwenhao
+//@@author LeonChowWenHao
 /**
  * Parses input arguments and creates a new DeleteCommand object
  */

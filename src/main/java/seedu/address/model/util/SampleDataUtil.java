@@ -63,7 +63,7 @@ public class SampleDataUtil {
                     new EventTime("20/12/2017")),
                 new Event(new EventName("Third meeting"), new EventDescription("Discuss presentation"),
                     new EventTime("09/02/2018")),
-                new Event(new EventName("Forth meeting"), new EventDescription("Discuss demo"),
+                new Event(new EventName("Fourth meeting"), new EventDescription("Discuss demo"),
                     new EventTime("03/11/2018")),
             };
         } catch (IllegalValueException e) {

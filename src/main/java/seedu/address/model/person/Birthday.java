@@ -4,7 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 
-//@@author leonchowwenhao
+//@@author LeonChowWenHao
 /**
  * Represents a Person's birthday in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidBirthday(String)}
@@ -14,7 +14,7 @@ public class Birthday {
     public static final String MESSAGE_BIRTHDAY_CONSTRAINTS =
             "Person birthdays should be 6-8 numbers separated by '/', '-' or '.' with the format of day/month/year"
             + "\nExamples of valid format: 01/12/1990, 6-3-1991, 18-07-1992";
-    public static final String BIRTHDAY_VALIDATION_REGEX = "^(0[1-9]|[12][\\d]|3[01]|[1-9])[///./-]"
+    private static final String BIRTHDAY_VALIDATION_REGEX = "^(0[1-9]|[12][\\d]|3[01]|[1-9])[///./-]"
             + "(0[1-9]|1[012]|[1-9])[///./-](19|20)\\d\\d$";
 
     public final String value;
@@ -26,7 +26,7 @@ public class Birthday {
      */
     public Birthday(String birthday) throws IllegalValueException {
         requireNonNull(birthday);
-        if (birthday.equals("")) {
+        if (birthday.matches("")) {
             this.value = birthday;
         } else {
             String trimmedBirthday = birthday.trim();
@@ -47,7 +47,7 @@ public class Birthday {
     /**
      * Returns if a given string is a valid date.
      */
-    public static boolean isValidDate(String test) {
+    private static boolean isValidDate(String test) {
         Boolean result = false;
         String[] birthdayParts = splitBirthday(test);
         int day = Integer.parseInt(birthdayParts[0]);
@@ -74,30 +74,22 @@ public class Birthday {
     /**
      * Returns if a given string has a valid person birthday format.
      */
-    public static boolean isValidBirthdayFormat(String test) {
+    private static boolean isValidBirthdayFormat(String test) {
         return test.matches(BIRTHDAY_VALIDATION_REGEX);
     }
 
     /**
      * Returns an array with String split into 3 parts.
      */
-    public static String[] splitBirthday(String test) {
-        String[] birthdayParts = test.split("[///./-]");
-
-        return birthdayParts;
+    private static String[] splitBirthday(String test) {
+        return test.split("[///./-]");
     }
 
     /**
      * Returns if a given int is a leap year.
      */
-    public static boolean isLeapYear(int year) {
-        Boolean result = false;
-
-        if (year % 4 == 0 && year % 100 != 0 || year % 400 == 0) {
-            result = true;
-        }
-
-        return result;
+    private static boolean isLeapYear(int year) {
+        return (year % 4 == 0 && year % 100 != 0 || year % 400 == 0);
     }
 
     @Override

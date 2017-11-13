@@ -21,7 +21,7 @@ public class TypicalEvents {
     public static final ReadOnlyEvent THIRD = new EventBuilder().withName("Third meeting")
             .withDescription("Discuss presentation").withTime("17/10/2017").build();
 
-    public static final ReadOnlyEvent FORTH = new EventBuilder().withName("Forth meeting")
+    public static final ReadOnlyEvent FOURTH = new EventBuilder().withName("Fourth meeting")
             .withDescription("Discuss demo").withTime("03/11/2017").build();
 
     public static final ReadOnlyEvent FIFTH = new EventBuilder().withName("Fifth meeting")
@@ -51,8 +51,9 @@ public class TypicalEvents {
         return el;
     }
 
+    //@@author HouDenghao
     /**
-     * Returns an {@code EventList} with all the typical events.
+     * Returns an empty {@code EventList} with all the unsorted events.
      */
     public static EventList getUnsortedEventList() {
         EventList el = new EventList();
@@ -66,11 +67,21 @@ public class TypicalEvents {
         return el;
     }
 
-    public static List<ReadOnlyEvent> getTypicalEvents() {
-        return new ArrayList<>(Arrays.asList(FIRST, SECOND, THIRD, FORTH));
+    /**
+     * Returns an empty {@code EventList}.
+     */
+    public static EventList getEmptyEventList() {
+        EventList el = new EventList();
+        return el;
     }
 
+    //@@author
+    public static List<ReadOnlyEvent> getTypicalEvents() {
+        return new ArrayList<>(Arrays.asList(FIRST, SECOND, THIRD, FOURTH));
+    }
+
+    //@@author HouDenghao
     public static List<ReadOnlyEvent> getUnsortedEvents() {
-        return new ArrayList<>(Arrays.asList(FORTH, SECOND, FIRST, THIRD));
+        return new ArrayList<>(Arrays.asList(FOURTH, SECOND, FIRST, THIRD));
     }
 }

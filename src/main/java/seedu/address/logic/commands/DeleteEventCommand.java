@@ -1,7 +1,7 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.commons.core.Messages.MESSAGE_REDO_ASSERTION_ERROR;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_EVENTS;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ import seedu.address.logic.commands.exceptions.DeleteOnCascadeException;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.exceptions.EventNotFoundException;
 
-//@@author leonchowwenhao
+//@@author LeonChowWenHao
 /**
  * Deletes an event identified using it's last displayed index from the address book.
  */
@@ -68,7 +68,6 @@ public class DeleteEventCommand extends UndoableCommand {
     protected void undo() {
         requireAllNonNull(model, eventToDelete);
         model.addEvent(targetIndex.getZeroBased(), eventToDelete);
-        model.updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
     }
 
     @Override
@@ -76,20 +75,9 @@ public class DeleteEventCommand extends UndoableCommand {
         requireAllNonNull(model, eventToDelete);
         try {
             model.deleteEvent(eventToDelete);
-        } catch (EventNotFoundException pnfe) {
-            throw new AssertionError("The command has been successfully executed previously; "
-                    + "it should not fail now");
-        } catch (DeleteOnCascadeException doce) {
-            throw new AssertionError("The command has been successfully executed previously; "
-                    + "it should not fail now");
+        } catch (EventNotFoundException | DeleteOnCascadeException e) {
+            throw new AssertionError(MESSAGE_REDO_ASSERTION_ERROR);
         }
     }
 
-    /**
-     * Assign a typical event to delete
-     * Can only be used for JUnit test
-     */
-    public void assignEvent(ReadOnlyEvent event) {
-        this.eventToDelete = event;
-    }
 }
