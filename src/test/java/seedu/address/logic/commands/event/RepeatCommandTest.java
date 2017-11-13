@@ -38,7 +38,7 @@ public class RepeatCommandTest {
     private Model model = new ModelManager(getTypicalEventAddressBook(), new UserPrefs());
 
     @Test
-    public void execute_UnfilteredList_success() throws Exception {
+    public void execute_unfilteredList_success() throws Exception {
         Event editedEvent = new EventBuilder().withTitle(VALID_TITLE_SOCCER).withTimeslot(VALID_TIMESLOT_SOCCER)
                 .withDescription(VALID_DESCRIPTION_SOCCER).withPeriod(VALID_PERIOD_SOCCER).build();
         Optional<Period> period = Period.generatePeriod(VALID_PERIOD_MIDTERM);
