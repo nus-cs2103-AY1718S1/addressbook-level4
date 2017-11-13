@@ -5,11 +5,12 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 == Project: Gentleman's Guide
 Gentleman's Guide is a desktop contact book application modified from the Address Book - Level 4, created by https://se-edu.github.io/[SE-EDU team].
-It is designed to support the busy work life business-(gentle)men by helping them keep track of their contacts and reminding them about upcoming deadlines.
+It is designed to support business-(gentle)men in their busy work life by providing them with an effective and efficient way of managing their contacts.
+Furthermore, it helps them keep track of various tasks and reminds them about the upcoming deadlines.
 The interaction between user and Gentleman’s Guide is mostly done through a Command Line Interface (CLI). +
-This application is written in Java, with its Graphical User Interface (GUI) created with JavaFX. It is written in Java, and has about 6 kLoC.
+This application is written in Java, and its Graphical User Interface (GUI) is created with JavaFX.
 
-*About Project Portfolio*:
+*About Project Portfolio*: This project portfolio summarizes all enhancements that I have added to Gentleman's Guide, including
 
 *Code contributed*: [https://github.com/CS2103AUG2017-T09-B1/main/blob/master/collated/main/duyson98.md[Functional code]] [https://github.com/CS2103AUG2017-T09-B1/main/blob/master/collated/test/duyson98.md[Test code]]
 
@@ -78,6 +79,15 @@ include::../DeveloperGuide.adoc[tag=viewcommand]
 ---
 
 === Enhancement Proposed:
+
+===== Pop-up reminder notifications:
+
+===== Custom contact fields:
+In addition to original fields which are name, phone number, email, address, and tags, users will be able to specify 5
+more fields according to their preferences. They can also choose which fields to display on the person card
+and if they wish to see all details of the contact, they can use view command to open the contact profile.
+
+===== LinkedIn integration:
 
 === Other Contributions
 
