@@ -13,7 +13,7 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 === Shuang Yang
 image::yangshuang.jpg[width="150", align="left"]
 {empty}[https://github.com/damithc[github]]
-https://github.com/CS2103AUG2017-T14-B3/main/blob/master/docs/team/YangShuang.adoc[Portfolio]]
+[https://github.com/CS2103AUG2017-T14-B3/main/blob/master/docs/team/YangShuang.adoc[Portfolio]]
 
 Role: UI in-charge
 
