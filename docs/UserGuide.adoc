@@ -749,12 +749,18 @@ Here is a list of shortcuts you can use in cherBook together with some examples.
 // end::commandshortcuts[]
 
 == FAQ
-//TODO: Update and Populate FAQ
+//TODO: Update and Populate FAQ (add to about 7 in total)
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
 
 *Q*: What happens if I do not input fields that are optional? +
 *A*: A message will appear beside the optional field name in the extended screen, stating that the field is not recorded.
+
+*Q*: Why does clicking on the contacts not changes the home page to the statistic and graph panels? +
+*A*: There is a 'soft lock' that can only be unlock when the select command is entered. e.g. select 1. Everything can be done normally after that.
+
+*Q*: Where can I ask for more support or drop a feedback? +
+*A*: You can drop us an email at cherbook@gmail.com.
 
 == Glossary
 
