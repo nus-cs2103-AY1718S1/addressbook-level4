@@ -56,7 +56,7 @@ public class SyncCommandTest {
     }
 
     @Test
-    public void check_convertAPerson() {
+    public void test_convertAPerson() {
         showFirstPersonOnly(model);
 
         SyncCommand syncCommand = prepareCommand();
@@ -67,7 +67,7 @@ public class SyncCommandTest {
     }
 
     @Test
-    public void check_convertGPerson() throws Exception {
+    public void test_convertGPerson() throws Exception {
         showFirstPersonOnly(model);
 
         SyncCommand syncCommand = prepareCommand();
@@ -89,7 +89,7 @@ public class SyncCommandTest {
     }
 
     @Test
-    public void check_linkedContact() throws Exception {
+    public void test_linkedContact() throws Exception {
         showFirstPersonOnly(model);
 
         SyncCommand syncCommand = prepareCommand();
@@ -105,7 +105,7 @@ public class SyncCommandTest {
     }
 
     @Test
-    public void check_addAContact() throws Exception {
+    public void test_addAContact() throws Exception {
         SyncCommand syncCommand = prepareCommand();
         Person aliceGoogle = prepareAliceGoogle();
 
