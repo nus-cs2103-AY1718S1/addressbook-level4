@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= Gentleman's Guide (V1.5) - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,13 +10,28 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-T09-B1/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team T09-B1 CS2103AUG2017`      Since: `Sep 2017`      Licence: `MIT` +
+// tag::coverpage[]
+image:CoverPage.png[width="350"]
+// end::coverpage[]
 
+== Introduction
+// tag::introduction[]
+Looking way of keeping track of your contacts? Unsatisfied with ugly clunky designs currently available?
+
+Look no further with the Gentleman's Guide. With a superb user interface and sleek, professional touch, Gentleman's Guide provides you with a contact book that even James Bond would love, shaken not stirred.
+
+At the Heart of our Design is the idea that every man wants to be a Gentleman. Encompassing that idea is a system that respects you as you respect it. It provides the gentleman with exactly what he needed, when he needs it. Nothing more, nothing less
+
+This Gentleman's Guide is built to cater to every aspiring Gentleman. Any man what wants to do better for himself can download and use the Gentleman's Guide.
+Or any Lady. Being a Gentleman is not about one's gender, it is a way of life, a desire to better one's self that make one a true Gentleman. Our Gentleman's Guide will
+help any self respecting individual transform himself, or herself, into a Gentleman.
+// end::introduction[]
 == Quick Start
 
-.  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
+.  To use the Gentleman guide, ensure you have Java version `1.8.0_60` or later installed in your Computer.
 +
 [NOTE]
 Having any Java 8 version is not enough. +
@@ -27,17 +42,18 @@ This app will not work with earlier versions of Java 8.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
 image::Ui.png[width="790"]
+_Figure 2.1 : Interactions in the Login Command._
 +
-.  Type the command in the command box and press kbd:[Enter] to execute it. +
+.  To use the Gentleman's Guide, type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
-.  Some example commands you can try:
+.  Here are some example commands you can try:
 
 * *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
+* **`add`** `n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
+* **`delete`** `3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
-.  Refer to the link:#features[Features] section below for details of each command.
+.  You can refer to the link:#features[Features] section below for details of each command.
 
 == Features
 
@@ -52,12 +68,27 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 === Viewing help : `help`
 
+*Facing any difficulties? As a Gentleman, you do not ask others for help, instead you solve it yourself by opening the help menu.*
+
 Format: `help`
+
+This will open the help windows as shown below, solving any problems you may have.
+
+image::helpwindow.jpg[width="790"]
+_Figure 3.1.1 : Help Window._
 
 === Adding a person: `add`
 
-Adds a person to the address book +
+*You have just met someone new, a lady of the finest caliber, and you would like to talk to her again.
+As a Gentleman, you asks for her contact and stores it in the Gentleman's Guide.*
+
+Adds a person to the Gentleman's Guide +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+
+The Lady will be instantly added to the Gentleman's Guide, for the you to call another day.
+
+image::addperson.JPG[width="790"]
+_Figure 3.2.1 : John Doe added to Gentleman's Guide._
 
 [TIP]
 A person can have any number of tags (including 0)
@@ -67,14 +98,49 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
+=== Adding a reminder: `addReminder`
+
+*As a Gentleman, you are a busy man. As a Gentleman, you cannot be late.
+Thus, as a Gentleman, you add a reminder to the Gentleman's Guide.*
+
+Adds a reminder to the Gentleman's Guide +
+Format `addReminder z/TASK p/PRIORITY d/DATE and TIME m/MESSAGE [t/TAG]...`
+
+image::addreminder.JPG[width="790"]
+_Figure 3.3.1 : Reminder added to Gentleman's Guide._
+
+[TIP]
+A reminder can have any number of tags (including 0)
+
+Examples:
+
+* `addReminder z/Proposal Submission p/High d/20/12/2017 1500 m/Submit by 20th December t/Work`
+* `addReminder z/Meet Jane for Lunch p/Medium d/24/01/2017 1200 m/Meet at KFC`
+
 === Listing all persons : `list`
 
-Shows a list of all persons in the address book. +
+*You are planning a party. As a Gentleman, you would like to invite all your contacts.
+Thus you list all persons in the Gentleman's Guide.*
+
+Shows a list of all persons in the Gentleman's Guide. +
 Format: `list`
+
+// tag::listReminder[]
+=== Listing all reminders : `listReminder`
+
+*As a Gentleman, you are a busy man. Thus, you need to see your entire schedule to know what you have planned.
+Thus you lists all reminders in his Gentleman's Guide.*
+
+Shows a list of all reminders in the Gentleman's Guide. +
+Format: `listReminder`
+
+// end::listReminder[]
 
 === Editing a person : `edit`
 
-Edits an existing person in the address book. +
+*You realised that you have entered the Lady's contact incorrectly. As a Gentleman, you immediately beg for the Lady's forgiveness and correct her contact.*
+
+Edits an existing person in the Gentleman's Guide. +
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
 ****
@@ -92,8 +158,62 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
+=== Editing a reminder: `editReminder`
+
+*The Lady has changed the time of your date. As a Gentleman, you update your reminder as, as a Gentleman, if you are not 5 minutes early, you are late.*
+
+Edits an existing reminder in the Gentleman's Guide. +
+Format: `editReminder INDEX [z/TASK] [p/PRIORITY] [d/DATE and TIME] [m/MESSAGE] [t/TAG]...`
+
+****
+* Edits the reminder at the specified `INDEX`. The index refers to the index number shown in the last reminder listing. The index *must be a positive integer* 1, 2, 3, ...
+* At least one of the optional fields must be provided.
+* Existing values will be updated to the input values.
+* When editing tags, the existing tags of the message will be removed i.e adding of tags is not cumulative.
+* You can remove all the message's tags by typing `t/` without specifying any tags after it.
+****
+
+Examples:
+
+* `editReminder 1 p/Low m/venue at NUS` +
+Edits the priority and message of the 1st reminder to be `Low` and `venue at NUS` respectively.
+* `edit 2 z/Progress Report t/` +
+Edits the task name of the 2nd reminder to be `Progress Report` and clears all existing tags.
+
+// tag::birthday[]
+=== Modifying birthday to person: `birthday`
+
+*As a Gentleman, you respect those around you and want them to feel appreciated.
+Start off by remembering their birthdays and add it into the Gentleman's Guide.*
+
+Adds / Edits / Removes a birthday to an existing person in the Gentleman's Guide. +
+Format: `birthday INDEX [b/dd/mm/yyyy]`
+
+****
+* Adds / Edits / Removes birthday parameter to the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* For adding / editing : Format must be of " `dd/mm/yyyy` " including the " `/` "
+* For removing : Simply input nothing after " `b/` "
+****
+
+Now you can be the best boss in the world, without all the effort!
+
+Examples:
+
+* `birthday 1 b/20/07/1995` +
+Adds / changes birthday of the 1st person to be `20/07/1995`
+* `birthday 3 b/` +
+Removes the birthday of the 3rd person.
+
+image::samplePersonCard.png[width="400"]
+_Figure 3.8.1 Birthday on a person card_
+
+// end::birthday[]
+
 === Locating persons by name: `find`
 
+**You had an amazing date. As a Gentleman, you send The Lady home. As a Gentleman, you never ask for directions.
+Thus, you find The Lady's contact on the Gentleman's Guide to get her address.
+**
 Finds persons whose names contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
@@ -112,9 +232,107 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
 
+// tag::find[]
+=== Locating persons by emails: `findEmail`
+
+*You received an email from an unknown source. You have no time to check through your entire list
+to see if you know the person. Instead you use the findEmail command in the Gentleman's Guide.*
+
+Finds person(s) whose email(s) is same as the keyword(s). +
+Format: `findEmail KEYWORD [MORE_KEYWORDS]`
+
+****
+* The search is case insensitive. e.g `Alexyeoh@example.com` will match `alexyeoh@example.com`
+* Only emails are searched.
+* Only full words will be matched e.g. `johnny` will not match `johnny@example.con`
+* Multiple emails can be searched at one time.
+****
+
+Examples:
+
+* `findEmail alex@example.com` +
+Returns person with the email `alex@example.com`
+* `findEmail alex@example.com jamie@example.com` +
+Returns persons with email `alex@example.com` or `jamie@example.com`
+
+=== Locating persons by phone number: `findPhone`
+
+*You received a phone call from an unknown number. As a Gentleman, you have to know who you are addressing.
+Thus, you search for the number on the Gentleman's Guide before answering.*
+
+Finds person(s) whose phone is same as the keyword(s). +
+Format: `findPhone KEYWORD [MORE_KEYWORDS]`
+
+****
+* Only numbers are searched.
+* Only full numbers will be matched e.g. `9567` will not match `95678432`
+* Multiple phone numbers can be searched at one time.
+****
+
+Examples:
+
+* `findPhone 86564385` +
+Returns person with the phone number `96564385`
+* `findPhone 87655678 98435670` +
+Returns person with numbers `87655678` , `98435670`
+
+=== Locating reminders by task names: `findReminder`
+
+*As a Gentleman, you want to know when your project submission deadline is.
+Thus, you search for "project" on the Gentleman's Guide to show all reminders with task name "project".*
+
+Finds reminders whose task names contain any of the given keywords. +
+Format: `findReminder KEYWORD [MORE_KEYWORDS]`
+
+****
+* The search is case insensitive. e.g `proposal` will match `Proposal`
+* The order of the keywords does not matter. e.g. `Proposal Submission` will match `Submission Proposal`
+* Only the task name is searched.
+* Only full words will be matched e.g. `proposal` will not match `proposals`
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Proposal Submission` will return `Proposal Draft`, `Project Submission`
+****
+
+Examples:
+
+* `findReminder Proposal` +
+Returns `Proposal submission` and `Proposal deadline`
+* `findReminder Meeting Project Work` +
+Returns any reminder having task names `Meeting`, `Project` and `Work`
+
+image::BeforeAndAfterFindReminder.png[width="600"]
+_Figure 3.12.1 Reminder list before and after the findReminder command_
+
+
+=== Locating reminders by priority: `findPriority`
+
+*As a Gentleman, you need to prioritise your time. You need to accomplish things of the highest priority first.
+Thus you search for "priority high" in the Gentleman's Guide to get your next important meeting.*
+
+Finds reminders whose priority is same as the keyword. +
+Format: `findPriority KEYWORD [MORE_KEYWORDS]`
+
+****
+* Only Low / Medium / High is searched.
+* The search is case insensitive. e.g `low` will match `Low`
+* Only full words will be matched e.g. `Hig` will not match `High`
+* Multiple priorities can be searched at one time.
+****
+
+Examples:
+
+* `findPriority High` +
+Returns reminder with the priority `High`
+* `findPriority Medium Low` +
+Returns reminders with priority `Medium` , `Low`
+
+// end::find[]
+
 === Deleting a person : `delete`
 
-Deletes the specified person from the address book. +
+*As a Gentleman, you may need to delete uncultured people from your contact list.
+Thus you can "delete" contact in the Gentleman's Guide.*
+
+Deletes the specified person from the Gentleman's Guide. +
 Format: `delete INDEX`
 
 ****
@@ -127,18 +345,41 @@ Examples:
 
 * `list` +
 `delete 2` +
-Deletes the 2nd person in the address book.
+Deletes the 2nd person in the Gentleman's Guide.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
-=== Selecting a person : `select`
+=== Deleting a reminder : `deleteReminder`
 
-Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
+*After the date with The Lady, you delete the reminder as a Gentleman is a tidy fellow.*
+
+Deletes the specified reminder from the Gentleman's Guide. +
+Format: `deleteReminder INDEX`
 
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
+* Deletes the reminder at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `list` +
+`delete 2` +
+Deletes the 2nd reminder in the Gentleman's Guide.
+
+=== Selecting a person : `select`
+
+*While sending The Lady home, you select her contact to open Google Maps and get directions to her house.*
+
+Selects the person identified by the index number used in the last person listing. +
+Format: `select INDEX` +
+Or +
+Format: Clicking the person on the GUI.
+
+****
+* Selects the person and loads the Google Maps of the person address at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
@@ -147,12 +388,215 @@ Examples:
 
 * `list` +
 `select 2` +
-Selects the 2nd person in the address book.
+Selects the 2nd person in the Gentleman's Guide.
 * `find Betsy` +
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
+// tag::selectReminder[]
+
+=== Selecting a reminder : `selectReminder`
+
+*As a Gentleman, you take detailed notes of your Reminders.
+Thus you select your Reminder in the Gentleman's Guide for easy viewing.*
+
+Selects the Reminder identified by the index number used in the last reminder listing. +
+Format: `selectReminder INDEX` +
+Or +
+Formal: Clicking the reminder on the Gui.
+
+image::selectReminder.PNG[width="800"]
+_Figure 3.17.1 Detailed information of reminder_
+****
+* Selects the Reminder and loads the Google search page the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+Examples:
+
+* `select 2` +
+Selects the 2nd reminder in the Gentleman's Guide.
+
+// end::selectReminder[]
+
+// tag::viewprofile[]
+=== Opening full profile of a person : `view`
+
+*The Gentleman comes across the contact of an old friend who he has not seen for a long time.
+Thus, he uses the view command to open his friend's full profile which he had stored inside the Gentleman's Guide.*
+
+Views profile of the person identified by the index number used in the last person listing. +
+Format: `view INDEX`
+
+****
+* Views profile of the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+// end::viewprofile[]
+
+Examples:
+
+* `list` +
+`view 2` +
+Views profile of the 2nd person in the Gentleman's Guide.
+* `find Betsy` +
+`view 1` +
+Views profile of the 1st person in the results of the `find` command.
+
+// tag::sort[]
+=== Sorting all entries by name: `sort`
+
+*As a Gentleman, you are well-organized and you would want your contact list to be neat.
+You use the sort command to sort the names of your contacts in alphabetical order.*
+
+Sorts all entries in the Gentleman's Guide by alphabetical order. +
+Format: `sort`
+
+Below is an illustration of an unsorted and sort list of contacts.
+
+**Before**
+
+image::unsortedlist.png[width="300"]
+_Figure 3.19.1 : Unsorted reminder list._
+
+**After**
+
+image::sortedlist.png[width="300"]
+_Figure 3.19.2 : Sorted reminder list (In alphabetical order)._
+
+=== Sorting all entries by age : `sortAge`
+
+*You may be interested in seeing who's the oldest friend in your contact list. Use the sortAge command.*
+
+Sorts all entries in the person list by their age, from the oldest to youngest. +
+Format: `sortAge`
+
+=== Sorting all entries by birthday: `sortBirthday`
+
+*Or you may be interested in checking upcoming birthdays of your friends and give them a surprise.*
+
+Sorts all entries in the person list by their birthday, from 1st Jan to 31st Dec. +
+Format: `sortBirthday`
+
+=== Sorting all entries by priority: `sortPriority`
+
+*As a Gentleman, you keep your priorities right, and you set an example to everyone. So bring your priorities
+forward now!*
+
+Sorts all entries in the reminder list by their priority, from High to Medium to Low. +
+Format: `sortPriority`
+
+// end::sort[]
+
+// tag::tagsmanipulation[]
+=== Tagging multiple persons : `tag`
+
+*As a Gentleman, you want to keep track of the relevant information about your contacts such as
+where you met the contact owners and what your current relationships with them are.
+Thus, you tag your contacts for easy reference.*
+
+Tags the persons identified by the index numbers used in the last person listing. +
+Format: `tag INDEX,[MORE_INDEXES],... TAG`
+
+****
+* Tags the persons at the specified `INDEX,[MORE_INDEXES],...` with the `TAG` tag.
+* The indexes refer to the index numbers shown in the most recent listing.
+* The indexes *must be positive integers* `1, 2, 3, ...`
+* The tag name *must be alphanumeric*
+****
+
+Examples:
+
+* `list` +
+`tag 1,2,3 friends` +
+Assigns the "friends" tag to the 1st, 2nd and 3rd persons in the results of the `list` command.
+
+=== Untagging multiple persons : `untag`
+
+*As a Gentleman, you want to be up to date of the relevant information about your contacts.
+You see some tags containing information that is no longer suitable to describe the contacts.
+Thus, you untag them from your contacts.*
+
+Removes the specified tags from the persons identified by the index numbers used in the last person listing. +
+Format: `tag INDEX,[MORE_INDEXES],... TAG/[MORE_TAGS]/...`
+
+****
+* Removes all `TAG/[MORE_TAGS]/...` tags from the persons at the specified `INDEX,[MORE_INDEXES],...`.
+* The indexes refer to the index numbers shown in the most recent listing.
+* The indexes *must be positive integers* `1, 2, 3, ...`
+* The tag names *must be alphanumeric*
+* You can choose to remove the specified tags from all persons in the last person listing by replacing `INDEX,[MORE_INDEXES],...` with `-all`.
+* All tags will be removed from the persons at the specified indexes if `TAG/[MORE_TAGS]/...` is left blank.
+* You will be notified of all existing tags inside person list if the tag names you provide cannot be found.
+****
+
+Examples:
+
+* `list` +
+`untag 1,2,3 friends/enemies` +
+Removes the "friends" and "enemies" tags from the 1st, 2nd and 3rd persons in the results of the `list` command.
+
+* `list` +
+`untag 1,2,3` +
+Removes all tags from the 1st, 2nd and 3rd persons in the results of the `list` command.
+
+* `list` +
+`untag -all friends/enemies` +
+Removes the "friends" and "enemies" tags from all persons in the results of the `list` command.
+
+* `list` +
+`untag -all` +
+Removes all tags from all persons in the results of the `list` command.
+
+=== Renaming a tag in contact list : `retag`
+
+*As a Gentleman, you want to be up to date of the relevant information about your contacts.
+You will soon transfer to another department of the company to obtain more work experience.
+Separation with your current colleagues is sad, but nothing can be done.
+Thus, you rename the "colleagues" tag to "exColleagues".*
+
+Renames a certain tag in contact list to a new tag name. +
+Format: `retag OLD_TAG NEW_TAG`
+
+****
+* Renames the existing `OLD_TAG` tag to `NEW_TAG`.
+* All persons having the `OLD_TAG` tag will be updated accordingly.
+* The tag names *must be alphanumeric*
+****
+
+Examples:
+
+* `retag colleagues exColleagues` +
+Renames the existing "colleagues" tag in the Gentleman's Guide to "exColleagues".
+// end::tagsmanipulation[]
+
+// tag::retrieve[]
+=== Retrieving all persons having an existing tag : `retrieve`
+
+*After having worked in the new department for quite a time, you feel like having a reunion with your former colleagues.
+Thus, you use the retrieve command to quickly get their contacts so that you can send invitations to all of them at the same time
+ while avoiding leaving someone out accidentally.*
+
+Lists all contacts having a certain existing tag in the Gentleman's Guide. +
+Format: `retrieve TAG`
+
+****
+* Retrieves all persons having the specified `TAG` tag.
+* The tag name *must be alphanumeric*
+* You will be notified of all existing tags inside person list if the tag name you provide cannot be found
+****
+
+Examples:
+
+* `retrieve exColleagues` +
+Retrieves all persons with the "exColleagues" tag in the Gentleman's Guide.
+// end::retrieve[]
+
 === Listing entered commands : `history`
+
+*As a Gentleman, you want to be able to see what you have done previously.
+Thus you use history on the Gentleman's Guide.*
 
 Lists all the commands that you have entered in reverse chronological order. +
 Format: `history`
@@ -165,12 +609,15 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
+*You have accidentally deleted The Lady contact. You panic, but you remember that the Gentleman's Guide is always here for you.
+Thus you undo the previous command in the Gentleman's Guide.*
+
+Restores the Gentleman's Guide to the state before the previous _undoable_ command was executed. +
 Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify the Gentleman's Guide's content (`add`, `delete`, `edit` and `clear`).
 ====
 
 Examples:
@@ -190,6 +637,9 @@ The `undo` command fails as there are no undoable commands executed previously.
 `undo` (reverses the `delete 1` command) +
 
 === Redoing the previously undone command : `redo`
+
+*You realised that you did not actually delete The Lady's contact, but instead undid another command.
+Thus you use redo the previous command in the Gentleman's Guide.*
 
 Reverses the most recent `undo` command. +
 Format: `redo`
@@ -214,10 +664,55 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 === Clearing all entries : `clear`
 
-Clears all entries from the address book. +
+*You are getting married. As a Gentleman, you realised that you are starting a new chapter in your life.
+Thus you clear your entire Gentleman's Guide.*
+
+Clears all entries from the Gentleman's Guide. +
 Format: `clear`
 
+// tag::create[]
+
+=== Creating a private database : `Create`
+
+*You have gotten married. As a Gentleman, you know that there are things The Lady should not trouble herself with.
+Thus, you create a private database on the Gentleman's Guide.*
+
+Create a Private Database +
+Format: `create u/USERNAME p/PASSWORD`
+
+e.g. `create u/JamesBond p/ShakenNotStirred`
+
+// end::create[]
+
+// tag::login[]
+
+=== Logging in to private database : `login`
+
+*The Lady has left the room. There are urgent matters you have to attend to while she is gone. As a Gentleman, you
+login into the Gentleman's Guide to get James Bond's number. You have a mission tonight.*
+
+Login into a Private Database +
+Format: `login u/USERNAME p/PASSWORD`
+
+e.g. `login u/JamesBond p/ShakenNotStirred`
+
+// end::login[]
+
+// tag::logout[]
+
+=== Logging out of private database : `logout`
+
+*The Lady has entered the room. As a Gentleman, you do not want to trouble her with your private matters.
+Thus, you logout of the private database on the Gentleman's Guide*
+
+Logout of a Private Database +
+Format: `logout`
+
+// end::logout[]
+
 === Exiting the program : `exit`
+
+*As a Gentleman, you do not forsake the Gentleman's Guide. Therefore this command is not needed*
 
 Exits the program. +
 Format: `exit`
@@ -234,19 +729,58 @@ There is no need to save manually.
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
+* *Add Person* : `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *Add Reminder* : `addReminder z/TASK p/PRIORITY d/DATE and TIME m/MESSAGE [t/TAG]...` +
+e.g. `addReminder z/Proposal Submission p/Low d/20/12/2017 1500 m/Submit to John t/work`
 * *Clear* : `clear`
-* *Delete* : `delete INDEX` +
+* *Delete Person* : `delete INDEX` +
 e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+* *Delete Reminder* : `deleteReminder INDEX` +
+e.g. `deleteReminder 5`
+* *Edit Person* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
+* *Edit Reminder* : `editReminder INDEX [z/TASK] [p/PRIORITY] [d/DATE and TIME] [M/MESSAGE] [t/TAG]...` +
+e.g. `editReminder 2 p/Medium m/Venue changed to Office`
+* *Update Birthday*: `birthday INDEX b/BIRTHDAY` +
+e.g. `birthday 4 b/20/10/1995`
+* *Find Person* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
-* *List* : `list`
+* *Find Email* : `findEmail KEYWORD [MORE_KEYWORDS]` +
+e.g. `findEmail james@example.com`
+* *Find Phone* : `findPhone KEYWORD [MORE_KEYWORDS]` +
+e.g. `findPhone 87654321`
+* *Find Reminder* : `findReminder KEYWORD [MORE_KEYWORDS]` +
+e.g. `findReminder Project`
+* *Find Priority* : `findPriority KEYWORD [MORE_KEYWORDS]` +
+e.g. `findPriority High` +
+e.g. `findPriority Medium`
+* *List Persons* : `list`
+* *List Reminders* : `listReminder`
 * *Help* : `help`
 * *Select* : `select INDEX` +
-e.g.`select 2`
+e.g. `select 2`
+* *Select Reminder* : `selectReminder INDEX` +
+e.g. `selectReminder 2`
+* *View* : `view INDEX` +
+e.g.`view 2`
+* *Sort by Name* : `sort`
+* *Sort by Age* : `sortAge`
+* *Sort by Birthday* : `sortBirthday`
+* *Sort by Priority* : `sortPriority`
+* *Tag* : `tag INDEX,[MORE_INDEXES],... TAG` +
+e.g.`tag 1,2,3 friends`
+* *Untag* : `untag INDEX,[MORE_INDEXES],... TAG/[MORE_TAGS]/...` +
+e.g.`untag 1,2,3 friends/enemies`
+* *Retag* : `retag OLD_TAG NEW_TAG` +
+e.g.`retag colleagues exColleagues`
+* *Retrieve* : `retrieve TAG` +
+e.g.`retrieve exColleagues`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Creating a private database* : `create u/USERNAME p/PASSWORD` +
+e.g. `create u/private p/password`
+* *Log in to private database* :  `login u/USERNAME p/PASSWORD` +
+e.g. `login u/private p/password`
+* *Log out of private database* : `logout`

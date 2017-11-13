@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- @@author duyson98 -->
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<HBox id="profilePane" fx:id="profilePane" maxHeight="500.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <AnchorPane id="profilePic">
+      <children>
+         <ImageView fitWidth="300.0" layoutX="45.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="45.0" AnchorPane.rightAnchor="45.0" AnchorPane.topAnchor="20.0">
+            <image>
+               <Image url="@../images/gentleman-profile.png" />
+            </image></ImageView>
+          <Label fx:id="profileName" alignment="CENTER" layoutX="60.0" layoutY="178.0" prefHeight="35.0" prefWidth="270.0" styleClass="cell_big_label" text="\$name" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="60.0" />
+      </children>
+   </AnchorPane>
+    <GridPane id="profileInfo" gridLinesVisible="true" HBox.hgrow="ALWAYS">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+        <children>
+            <Label styleClass="profile_big_label" text="Full Name" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <Label styleClass="profile_big_label" text="Birthday" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+            <Label styleClass="profile_big_label" text="Phone Number" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+            <Label styleClass="profile_big_label" text="Email Address" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+            <Label styleClass="profile_big_label" text="Home Address" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+            <Label styleClass="profile_big_label" text="Tags" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
+
+            <TextArea fx:id="name" prefColumnCount="4" prefRowCount="4" styleClass="profile_small_text_area" text="\$name" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" />
+            <TextArea fx:id="birthday" prefColumnCount="4" prefRowCount="4" styleClass="profile_small_text_area" text="\$birthday" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+            <TextArea fx:id="phone" prefColumnCount="4" prefRowCount="4" styleClass="profile_small_text_area" text="\$phone" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+            <TextArea fx:id="email" prefColumnCount="4" prefRowCount="4" styleClass="profile_small_text_area" text="\$email" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+            <TextArea fx:id="address" prefColumnCount="4" prefRowCount="4" styleClass="profile_small_text_area" text="\$address" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+            <FlowPane fx:id="tags" alignment="CENTER" columnHalignment="CENTER" minHeight="30.0" prefHeight="72.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
+        </children>
+    </GridPane>
+</HBox>

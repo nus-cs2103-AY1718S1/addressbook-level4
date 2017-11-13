@@ -1,7 +1,11 @@
 package seedu.address.ui;
 
+import static java.util.Objects.requireNonNull;
+
 import java.time.Clock;
 import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Logger;
 
 import org.controlsfx.control.StatusBar;
@@ -10,9 +14,11 @@ import com.google.common.eventbus.Subscribe;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.model.clock.ClockDisplay;
 
 /**
  * A ui for the status bar that is displayed at the footer of the application.
@@ -36,17 +42,27 @@ public class StatusBarFooter extends UiPart<Region> {
 
     private static final String FXML = "StatusBarFooter.fxml";
 
+    private ClockDisplay footerClock;
+
     @FXML
     private StatusBar syncStatus;
+    @FXML
+    private Label displayDate;
+    @FXML
+    private Label displayTime;
     @FXML
     private StatusBar saveLocationStatus;
 
 
     public StatusBarFooter(String saveLocation) {
         super(FXML);
+        this.footerClock = new ClockDisplay();
+
         setSyncStatus(SYNC_STATUS_INITIAL);
         setSaveLocation("./" + saveLocation);
         registerAsAnEventHandler(this);
+
+        startFooterClock(footerClock);
     }
 
     /**
@@ -78,4 +94,36 @@ public class StatusBarFooter extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(abce, "Setting last updated status to " + lastUpdated));
         setSyncStatus(String.format(SYNC_STATUS_UPDATED, lastUpdated));
     }
+
+    //@@author duyson98
+    /**
+     * Starts running the clock display.
+     */
+    private void startFooterClock(ClockDisplay footerClock) {
+        final Timer timer = new Timer();
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                setFooterClockTime(footerClock);
+                setFooterClockDate(footerClock);
+            }
+        };
+        timer.scheduleAtFixedRate(task, 0, 1000);
+    }
+
+    private void setFooterClockTime(ClockDisplay footerClock) {
+        requireNonNull(footerClock.getTime());
+
+        footerClock.getTime().setCurrentTime();
+        Platform.runLater(() -> displayTime.setText(footerClock.getTimeAsText()));
+    }
+
+    private void setFooterClockDate(ClockDisplay footerClock) {
+        requireNonNull(footerClock.getDate());
+
+        footerClock.getDate().setCurrentDate();
+        Platform.runLater(() -> displayDate.setText(footerClock.getDateAsText()));
+    }
+    //@@author
+
 }

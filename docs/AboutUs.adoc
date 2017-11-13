@@ -4,53 +4,34 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: images
 :stylesDir: stylesheets
 
-AddressBook - Level 4 was developed by the https://se-edu.github.io/docs/Team.html[se-edu] team. +
-The dummy content given below serves as a placeholder to be used by future forks of the project. +
-{empty} +
+The Gentleman's Guide was developed from AddressBook - Level 4 by the https://se-edu.github.io/docs/Team.html[se-edu] team. +
+It was then modified and enhanced by the https://github.com/CS2103AUG2017-T09-B1[CS2103T T09-B1] team.
+
 We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
 
-== Project Team
-
-=== John Doe
-image::damithc.jpg[width="150", align="left"]
-{empty}[http://www.comp.nus.edu.sg/~damithch[homepage]] [https://github.com/damithc[github]] [<<johndoe#, portfolio>>]
-
-Role: Project Advisor
-
-'''
-
-=== John Roe
-image::lejolly.jpg[width="150", align="left"]
-{empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
-
-Role: Team Lead +
-Responsibilities: UI
-
-'''
-
-=== Johnny Doe
-image::yijinl.jpg[width="150", align="left"]
-{empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
+== Loh Jia Hao
+image::jiahao.jpg[width="150", align="left"]
+{empty}[http://github.com/inGall[github]] [<<inGall#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Data
+Responsibilities: In charge of Logic
 
 '''
 
-=== Johnny Roe
-image::m133225.jpg[width="150", align="left"]
-{empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]
+== Chan Qing Hong
+image::ChanQingHong.jpg[width="150", align="left"]
+{empty}[http://github.com/cqhchan[github]] [<<cqhchan#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Dev Ops + Threading
+Responsibilities: In charge of  UI
 
 '''
 
-=== Benson Meier
-image::yl_coder.jpg[width="150", align="left"]
-{empty}[http://github.com/yl-coder[github]] [<<johndoe#, portfolio>>]
+== Nguyen Duy Son
+image::duyson98.jpg[width="150", align="left"]
+{empty}[http://github.com/duyson98[github]] [<<duyson98#, portfolio>>]
 
 Role: Developer +
-Responsibilities: UI
+Responsibilities: In charge of Model and Storage
 
 '''

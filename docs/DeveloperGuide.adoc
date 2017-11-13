@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+﻿= Gentleman's Guide (V1.5) - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,13 +10,33 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-T09-B1/main/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team T09-B1 CS2103AUG2017`      Since: `Sep 2017`      Licence: `MIT` +
+image:CoverPage.png[width="350"]
+
+== Introduction
+
+// tag::introduction[]
+
+At the Heart of our Design is the idea that every man wants to be a Gentleman.
+Encompassing that idea is a system that respects you as you respect it.
+It provides the gentleman with exactly what he needed, when he needs it.
+Nothing more, nothing less.
+
+Gentleman's Guide is a contact book for the elite.
+It is a command line based programming with a GUI. It it targeted to work for the sophisticated gentleman,
+with every aspect of it built to cater to them. The UI captures a Gentleman's eyes from the first moment their eyes gaze upon it.
+With rule 18 of the Gentleman staring straight at them, they will forever remember who they are, a Gentleman.
+
+This developer guide will describe the design and implementation of Gentleman's Guide. It will help you understand how Gentleman's Guide works and how you can further contribute to its development. We have organised this guide in a top-down manner so that you can understand the big picture before moving on to the more detailed sections.
+// end::introduction[]
 
 == Setting up
 
 === Prerequisites
+
+First of all, you need to have two of the following:
 
 . *JDK `1.8.0_60`* or later
 +
@@ -29,7 +49,7 @@ This app will not work with earlier versions of Java 8.
 +
 [NOTE]
 IntelliJ by default has Gradle and JavaFx plugins installed. +
-Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plugins` to re-enable them.
+Make sure you do not disable them. If you have disabled them, go to `File` > `Settings` > `Plugins` to re-enable them.
 
 
 === Setting up the project in your computer
@@ -57,8 +77,8 @@ This will generate all resources required by the application and tests.
 
 This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.md[oss-generic coding standards]. IntelliJ's default style is mostly compliant with ours but it uses a different import order from ours. To rectify,
 
-. Go to `File` > `Settings...` (Windows/Linux), or `IntelliJ IDEA` > `Preferences...` (macOS)
-. Select `Editor` > `Code Style` > `Java`
+. Go to `File` > `Settings...` for Windows/Linux, or `IntelliJ IDEA` > `Preferences...` for macOS
+. After that, select `Editor` > `Code Style` > `Java`
 . Click on the `Imports` tab to set the order
 
 * For `Class count to use import with '\*'` and `Names count to use static import with '*'`: Set to `999` to prevent IntelliJ from contracting the import statements
@@ -91,7 +111,7 @@ When you are ready to start coding,
 === Architecture
 
 image::Architecture.png[width="600"]
-_Figure 2.1.1 : Architecture Diagram_
+_Figure 3.1.1 : Architecture Diagram_
 
 The *_Architecture Diagram_* given above explains the high-level design of the App. Given below is a quick overview of each component.
 
@@ -123,7 +143,7 @@ Each of the four components
 For example, the `Logic` component (see the class diagram given below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
 
 image::LogicClassDiagram.png[width="800"]
-_Figure 2.1.2 : Class Diagram of the Logic Component_
+_Figure 3.1.2 : Class Diagram of the Logic Component_
 
 [discrete]
 ==== Events-Driven nature of the design
@@ -131,7 +151,7 @@ _Figure 2.1.2 : Class Diagram of the Logic Component_
 The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
 
 image::SDforDeletePerson.png[width="800"]
-_Figure 2.1.3a : Component interactions for `delete 1` command (part 1)_
+_Figure 3.1.3 : Component interactions for `delete 1` command (part 1)_
 
 [NOTE]
 Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
@@ -139,7 +159,7 @@ Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address 
 The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
 image::SDforDeletePersonEventHandling.png[width="800"]
-_Figure 2.1.3b : Component interactions for `delete 1` command (part 2)_
+_Figure 3.1.4 : Component interactions for `delete 1` command (part 2)_
 
 [NOTE]
 Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
@@ -149,7 +169,7 @@ The sections below give more details of each component.
 === UI component
 
 image::UiClassDiagram.png[width="800"]
-_Figure 2.2.1 : Structure of the UI Component_
+_Figure 3.2.1 : Structure of the UI Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
@@ -166,10 +186,10 @@ The `UI` component,
 === Logic component
 
 image::LogicClassDiagram.png[width="800"]
-_Figure 2.3.1 : Structure of the Logic Component_
+_Figure 3.3.1 : Structure of the Logic Component_
 
 image::LogicCommandClassDiagram.png[width="800"]
-_Figure 2.3.2 : Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in Figure 2.3.1_
+_Figure 3.3.2 : Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in Figure 2.3.1_
 
 *API* :
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
@@ -182,12 +202,12 @@ link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
 
 image::DeletePersonSdForLogic.png[width="800"]
-_Figure 2.3.1 : Interactions Inside the Logic Component for the `delete 1` Command_
+_Figure 3.3.3 : Interactions Inside the Logic Component for the `delete 1` Command_
 
 === Model component
 
 image::ModelClassDiagram.png[width="800"]
-_Figure 2.4.1 : Structure of the Model Component_
+_Figure 3.4.1 : Structure of the Model Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
@@ -201,7 +221,7 @@ The `Model`,
 === Storage component
 
 image::StorageClassDiagram.png[width="800"]
-_Figure 2.5.1 : Structure of the Storage Component_
+_Figure 3.5.1 : Structure of the Storage Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 
@@ -226,6 +246,8 @@ The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides insi
 `UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
 
 image::LogicCommandClassDiagram.png[width="800"]
+_Figure 4.1.0.1 : Inheritance Diagram for Undoable Commands._
+
 
 As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
 
@@ -265,10 +287,13 @@ Suppose that the user has just launched the application. The `UndoRedoStack` wil
 The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
 
 image::UndoRedoStartingStackDiagram.png[width="800"]
+_Figure 4.1.0.2 : Stack Diagram for Undoable Commands 1._
+
 
 As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person.
 
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
+_Figure 4.1.0.3 : Stack Diagram for Undoable Commands 2._
 
 [NOTE]
 If a command fails its execution, it will not be pushed to the `UndoRedoStack` at all.
@@ -278,6 +303,7 @@ The user now decides that adding the person was a mistake, and decides to undo t
 We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed.
 
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
+_Figure 4.1.0.4 : Stack Diagram for Undoable Commands 3._
 
 [NOTE]
 If the `undoStack` is empty, then there are no other commands left to be undone, and an `Exception` will be thrown when popping the `undoStack`.
@@ -285,6 +311,7 @@ If the `undoStack` is empty, then there are no other commands left to be undone,
 The following sequence diagram shows how the undo operation works:
 
 image::UndoRedoSequenceDiagram.png[width="800"]
+_Figure 4.1.0.5 : Sequence Diagram for Undoable Commands._
 
 The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
 
@@ -294,6 +321,7 @@ If the `redoStack` is empty, then there are no other commands left to be redone,
 The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow).
 
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
+_Figure 4.1.0.6 : Stack Diagram for Undoable Commands 4._
 
 Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution:
 
@@ -302,6 +330,7 @@ image::UndoRedoNewCommand3StackDiagram.png[width="800"]
 The following activity diagram summarize what happens inside the `UndoRedoStack` when a user executes a new command:
 
 image::UndoRedoActivityDiagram.png[width="200"]
+_Figure 4.1.0.7 : Stack Diagram for Undoable Commands 5._
 
 ==== Design Considerations
 
@@ -345,6 +374,430 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+// tag::PrivateDatabase[]
+
+=== Private Database System
+
+The `Private Database` system is implemented by creating a separate xml database file, similar to the system used in the current
+database. To facilitate its implementation, there are account models that allows the user to create a unique account in the
+`Unique Account List` with the parameters `Username` and `Password`.
+When the Gentleman's Guide is started, the `Main App` searches for an existing account database. If one
+is not present, it would load a new account database with a typical account with `Username:` private and `Password:` password.
+The `Create Account`, `Login` and `Logout` function extends an abstract `Command` class.
+
+
+
+The below shows the inheritance diagram for the abstract `Command` class.
+
+image::Inheritance_Login.JPG[width="800"]
+_Figure 4.2.0.1 : Inheritance Diagram for Private Database Commands._
+
+
+
+As it can be seem, `Create Account`, `Login` and `Logout` extends the abstract `Command` class. Thus when the user call
+on the according commands, with the right parameters, the `LogicManager` will call on the command to `Execute`.
+A detailed explanation of the individual commands can be found below.
+
+==== Create Account
+
+The `Create Account` function is implemented by extending the abstract class `Command`. When the `Create Account` function is entered with the command
+`create` and the parameters `u/USERAME` and `p/PASSWORD`, the Gentleman's guide will look through the current accounts for the existence of an account with the same `USERNAME`.
+If it exists, it would show a Duplicate Account message. If an account does not exist, it would create the account with the entered parameters.
+
+The below shows the interaction of the features through the multiple components.
+
+image::CreateAccountSequenceDiagram.JPG[width="800"]
+_Figure 4.2.1.1 : Interactions in the Create Account Command._
+
+
+
+As it can be seen, the `LogicManager` will call on the `CreateAccountCommand` to execute. It will then call on the model
+to add and `Account` which would throw a `DuplicateAccountException` if the account already exists. If not, it will update the
+`FilteredAccountList` and the `database`.
+
+Thus User can choose to Create an account if he does not already have one, but he will not be able to access the other users database.
+
+==== Login/Logout Function
+
+The Login and Logout function work using similar principles. The functions work using many different components. To facilitate
+its implementation there is a `LoginCommand`
+inside the `LogicManager` and `AddressBook Parser`. The `LoginCommand` works by taking the input and checking it with a
+database of accounts that are available in the separate database created as explained earlier in the Create Function.
+If the inputs are verified, it will call upon the `UI` to restart the addressbook application with
+the new filepath. The `LogoutCommand` works similar to the `LoginCommand` except that it does not check with the account database.
+Instead, the `Logoutcommand` simply  call on the `UI` to restart the addressbook application with its default filepath.
+
+The process of how the feature functions and what would happen is as follows:
+
+image::LoginSequenceDiagram.JPG[width="1000"]
+_Figure 4.2.2.1 : Interactions in the Login Command._
+
+
+
+As it can be seen, when the `logincommand` is called, if the credentials are correct, it would call on the `UiManager` to restart the application with the user database and model. The `Restart()` method created new user configs, preferences and storage according to the username. It then called on the current `Mainwindow` to close and closes the `primarystage` that the current `Mainwindow` is using. From there, it will call on the `UiManager` to initialise with the user `logic`, user `storage`, user `preferences` and user `config`.
+
+Similiarly, the user can choose to implement the `logoutcommand` which would call on the `restart()` method with the parameter addressbook. The application would then restart and load the public addressbook.
+
+==== Design Considerations
+
+**Aspect:** Implementation of `LoginFunction`. +
+**Alternative 1:** Create a whole new `LoginFunction` interface, with its own GUI. +
+**Pros:** `LoginFunction will have separate User profile and database. It would be a more versatile application. +
+**Cons:** Difficult to implement and even harder to test. +
+**Alternative 2 (current choice):** Implement a `LoginCommand` function at the `CommandBox`. +
+**Pros:** Easier to implement. Achieves the basic functions of security. +
+**Cons:** Does not look as good.
+
+**Aspect:** Implementation of `Private Database`. +
+**Alternative 1 (current choice):** Create a `Private Database` from scratch. +
+**Pros:** `Database` will build on the current data storing methods. Easier to implement. +
+**Cons:** Not as secure. +
+**Alternative 2:** Implement a `Private Database` using a MySql Database.+
+**Pros:** More secure, a more widely used method. +
+**Cons:** Less code to write as most of it would be pre-written and in built into MySql.
+
+**Aspect:** Implementation of `Private Database` as `UndoableCommand` or `Command`. +
+**Alternative 1 (current choice):** `Command`. +
+**Pros:** `Database` more reliable and less complicated. +
+**Cons:** Less versatility. +
+**Alternative 2:** `UndoableCommand`. +
+**Pros:** More versatility, allows for easy undo of accidental accounts. +
+**Cons:** Increased complication, allowing for potential errors that the `Undo` command would work in the wrong database.
+
+// end::PrivateDatabase[]
+
+---
+
+// tag::birthday[]
+=== Birthday
+
+==== BirthdayCommand
+
+`BirthdayCommand` : It allows the adding, editing and removing of birthday parameter to/from a person. +
+
+
+The `BirthdayCommand` lies in the `commands` of `Logic`. and deals with `UndoableCommands`, thus the actions can
+be reversed.  The following diagram shows the inheritance diagram for commands:
+
+image::birthdayLogic.png[width="900"]
+_Figure 4.3.1.1 : Structure of Commands in the Logic Component._
+
+You will not be able to enter the birthday parameter when adding contacts. +
+Suppose that you have a list of persons. The birthday parameters of each contact will be empty if you have not modified them before. +
+You can then choose to add their birthday using the BirthdayCommand. For example if you want to add the birthday (20/07/1994) of the
+second person in your contact list, key in " `birthday 2 b/20/07/1994` "  +
+Similarly, you can edit their birthday using the same command. +
+To delete their birthday, simply not key in anything for his birthday. For example,
+" `birthday 2 b/` "
+
+The following sequence diagram shows how the birthday operation works:
+
+image::birthdaySD.png[width="900"]
+_Figure 4.3.1.2 : Interactions in the Birthday Command._
+
+==== Design Considerations
+
+**Aspect:** Adding Birthday parameter +
+**Alternative 1 (current choice):** Add birthday parameter separately after person object is created. +
+**Pros:** Lesser parameters to add while creating person class and easier to implement. +
+**Cons:** Slower for users to add in all the parameters. +
+**Alternative 2:**  Add birthday parameter during the creation of person object. +
+**Pros:** Faster for users to add in all the parameters. +
+**Cons:** More parameters to add while creating person class and harder to implement. +
+
+---
+**Aspect:** Birthday commands with specific uses +
+**Alternative 1 (current choice):** Only one birthday command to add / edit / delete birthday from person. +
+**Pros:** Convenient, lesser commands for users to remember. +
+**Cons:** Birthday command is very general and may be confusing to the user instead. +
+**Alternative 2:**  Create other commands such as editBirthday and deleteBirthday. +
+**Pros:** Less convenient, many commands for users to remember. +
+**Cons:** Each command is specific and purpose of each command is clear. +
+
+---
+
+// end::birthday[]
+
+// tag::taggingfunctions[]
+=== Tags Manipulation & Retrieve mechanism
+
+Three commands for tags manipulation, namely `TagCommand`, `UntagCommand` and `RetagCommand`, together with `RetrieveCommand`, all reside in the `commands` of `Logic`.
+
+==== Tag command
+
+Tag command allows user to assign tags to the persons at the specified index in the last person listing.
+
+This command inherits from `UndoableCommand`. Thus, the tagging action can be undone.
+
+For every person at the index specified, a `Person` object with the updated tag list will be created and the `updatePerson()` method of `Model` will be called to replace the person inside `AddressBook` 's person list with the new person object.
+
+The following sequence diagram shows how the tag operation works:
+
+image::TagSequenceDiagram.png[width="800"]
+_Figure 4.4.1.1 : Interactions in the Tag Command._
+
+==== Untag command
+
+Untag command allows user to remove tags from the persons at the specified index in the last person listing.
+In addition, user can choose to:
+
+* Remove all tags from the persons at the specified index in the last person listing.
+* Remove the specified tags from all persons in the last person listing.
+* Remove all tags from all persons in the last person listing.
+
+This command inherits from `UndoableCommand`. Thus, the untagging action can be undone.
+
+Compared to `TagCommand`, `UntagCommand` has a boolean attribute called `toAllInFilteredList` to indicate whether untagging will be applied
+to all persons in filtered list or not.
+
+The following sequence diagram shows how the untag operation works:
+
+image::UntagSequenceDiagram.png[width="800"]
+_Figure 4.4.2.1 : Interactions in the Untag Command._
+
+Similar to tag command operation, for every person that will be untagged, a `Person` object with the updated tag list will be created and the `updatePerson()` method of `Model` will be called to replace the person inside `AddressBook` 's person list with the new person object.
+
+After having updated all relevant persons, `UntagCommand` will utilize `deleteUnusedTag()` of `Model` to remove any unused `Tag` inside `AddressBook` 's unique tag list.
+
+==== Retag command
+
+Retag command allows user to rename an existing tag to a new tag name.
+
+This command inherits from `UndoableCommand`. Thus, the retagging action can be undone.
+
+At the beginning of its execution, the command updates person filterd list with all persons inside the addressbook by calling `updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS)` of `Model`.
+After that, it will loop through the filtered list and perform update on persons with the specified old tag name similar to how `TagCommand` and `UntagCommand` updates persons.
+
+After having updated the person list of `AddressBook` where necessary, `RetagCommand` will call `deleteUnusedTag()` of `Model` on the old `Tag` to remove it from `AddressBook` 's unique tag list.
+
+==== Retrieve command
+
+Retrieve command allows user to list all persons that have been assigned a tag already existing inside the unique tag list.
+
+This command inherits from `Command`, so retrieving cannot be undone.
+
+Suppose that the address book already has a sufficiently large number of persons, some of whom have a certain `Tag`. The `UniqueTagList` will contain this tag. +
+
+The user wants to quickly find out all of the those persons with this tag, so he decides to use `retrieve`.
+
+We will now parse the command argument to get the name of the tag which user want to use `retrieve` on.
+
+[NOTE]
+If the tag name provided by user is empty or invalid, an `Exception` will be thrown during parsing.
+
+We use `TagContainsKeyWordPredicate` to test whether the tag is inside the tag list of each person in the address book and get the filtered person list with `updateFilteredPersonList()` of `Model` to display to user.
+
+[NOTE]
+If the filtered person list is empty, that means the tag user want to look for does not exist. User will then be notified of all existing tags.
+
+The following sequence diagram shows how the retrieve operation works:
+
+image::RetrieveSequenceDiagram.png[width="800"]
+_Figure 4.4.4.1 : Sequence Diagram for the Retrieve Command._
+
+==== Design Considerations
+
+**Aspect:** Adding tags to person's tag list +
+**Alternative 1 (current choice):** Use `Set` to implement person's tag list and to store tags to be added during command parsing. +
+**Pros:** Duplicated tags will be automatically taken care of. +
+**Cons:** The order of tags inside person's tag list is not maintained. Users may want the tags of their contacts
+to be arranged according to the time added. +
+**Alternative 2:**  Using `List` implement person's tag list and to store tags to be added. +
+**Pros:** Full control over the order of tags inside person's tag list. +
+**Cons:** Duplicated tags need to be handled manually. +
+
+---
+
+**Aspect:** Finding out all persons with the specififed tag +
+**Alternative 1 (current choice):** Go through every person in the addressbook to filter out those having the tag. +
+**Pros:** Easy to implement. +
+**Cons:** Slower if the addressbook contains a large number of persons +
+**Alternative 2:**  Create a list attribute for `Tag` to store all persons currently having that tag. +
+**Pros:** Faster to get the persons as the filtered person list is already created. +
+**Cons:** Requires to save the lists of all existing tags to storage file. +
+// end::taggingfunctions[]
+
+// tag::viewcommand[]
+=== View profile mechanism
+
+View command allows user to see all details of a contact in full view.
+Its benefit will be shown more clearly in later releases of Gentleman's Guide when various new contact fields have been added. +
+
+When executed, `ViewCommand` raises a `ShowProfileRequestEvent` and calls `post()` of `EventCenter` to post the event to all registered subscribers.
+The subscribers of `BrowserPanel` will then be notified of the event and handle it by calling `handleShowProfileRequestEvent()`,
+which closes any children currently opening inside `BrowserPanel` and attempts to load `PersonProfile` onto the panel.
+// end::viewcommand[]
+
+=== Reminder list
+
+The `Reminder` list mechanism works similar to the `Person` list. +
+It integrates the `Logic`, `Model`, `Storage`, `UI` component. +
+It consists of different commands that allow users to store reminders into the address book.
+The commands reside in the `commands` of `Logic` +
+
+==== AddReminderCommand
+Adds information of reminders in address book. +
+e.g. `addReminder z/Proposal Submission p/Low d/12/11/2017 m/Submit to Manager t/Friends` +
+
+==== EditReminderCommand
+
+==== EditReminderCommand
+`EditReminderCommand`: Edits the details of reminders in address book. +
+e.g. `editReminder 2 p/Medium m/Submit to Department Head`
+
+==== DeleteReminderCommand
+
+`DeleteReminderCommand`: Deletes the reminder of the last reminder list. +
+e.g. `deleteReminder 3`
+
+==== SortPriorityCommand
+
+`SortPriorityCommand`: Sorts the reminder list in order of `priority` . +
+(Will be covered more in sort Mechanism)
+
+==== FindReminderCommand and FindPriorityCommand
+
+`findReminder` : Finds the reminder that contains the keyword. +
+`findPriority` : Finds the reminders that contains the keyword. +
+(Will be covered more in Find Mechanism)
+
+// tag::listReminder[]
+==== listReminderCommand
+
+`listReminder` : Lists all the reminders in the reminder list. +
+e.g. `listReminder`
+
+// end::listReminder[]
+
+[NOTE]
+Missing details during adding of reminders will result in Invalid Command format.
+
+[NOTE]
+If an invalid Index is given during editing and deleting reminders, an `Exception` would be thrown.
+
+
+// tag::find[]
+=== Find Mechanism
+
+==== findPhoneCommand
+
+Finds contact with the phone number given. +
+e.g. `findPhone 87654321`
+
+==== findEmailCommand
+
+Finds the contact with the email given. +
+e.g. `findEmail alex@example.com`
+
+==== findReminderCommand
+
+Finds reminder(s) with same task name as the keyword given. +
+e.g. `findReminder project`
+
+==== findPriorityCommand
+
+Finds reminder(s) with the priority (Low / Medium / High) given. +
+e.g. `findPriority High`
+
+The 4 advanced find commands, as well as the original `find` command lies in the `commands` of `Logic`. and does not deal
+with `UndoableCommands`, thus the actions cannot be reversed. +
+The following diagram shows the inheritance diagram for `findPhone` command:
+
+image::findPhoneSD.png[width="900"]
+_Figure 4.7.4.1 Interactions in the findPhone command._
+
+Suppose the user keys in the command (e.g. `findReminder Proposal`) to search for all his reminders with the keyword
+"Proposal". The application searches through the entire reminder list and displays all reminders
+with the keyword.
+
+image::BeforeAndAfterFindReminder.png[width=850"]
+_Figure 4.7.4.2 Reminder list before and after the findReminder command_
+
+
+[NOTE]
+====
+- Only keywords are searched, incomplete keywords in command such as `findEmail alex@example` will not return contact
+with email "alex@example.com". +
+- All find commands are case insensitive (e.g. "high" will match "High"). +
+====
+
+==== Design Considerations
+
+**Aspect:** Number of Find command +
+**Alternative 1 (current choice):** Different find commands for each purpose +
+**Pros:** Fast and direct, convenient for user. +
+**Cons:** Many find commands for users to remember / Users may need to check for user guide or help function very often
+ to see the types of find commands available. +
+**Alternative 2:**  Users key in the word "find", application then shows the types of find available and users selects
+the type of find command he wants +
+**Pros:** Lesser commands to remember and checks user guide less often. +
+**Cons:** Slower and less direct. +
+
+---
+
+// end::find[]
+
+// tag::sort[]
+=== Sorting Mechanism
+
+==== sortCommand
+
+Sorts the contact list in alphabetical order. +
+e.g. `sort`
+
+==== sortAgeCommand
+
+Sorts the contact list in order of their age, from the oldest to youngest. +
+e.g. `sortAge`
+
+==== sortBirthdayCommand
+
+Sorts the contact list in from 1st January to 31st December, irregardless of their age. +
+e.g. `sortBirthday`
+
+==== sortPriority
+
+Sorts the reminder list in order of the task priority. (*High* -> *Medium* -> *Low*) +
+e.g. `sortPriority`
+
+The 4 sort commands support undoing and redoing of commands, similar to add, edit and delete commands.
+It inherits from `UndoableCommand` and uses the `Collection` class. +
+Given below is the Sequence Diagram for interactions within the Logic component for the execute("sort") API call.
+
+image::sortSD.png[width="800"]
+_Figure 4.8.4.1 Interactions in the sort command._
+
+==== Design Considerations
+
+**Aspect:** Number of Sort command +
+**Alternative 1 (current choice):** Different sort commands for each purpose +
+**Pros:** Fast and direct, convenient for user. +
+**Cons:** Many sort commands for users to remember / Users may need to check for user guide or help function very often
+ to see the types of sort commands available. +
+**Alternative 2:**  Users key in the word "sort", application then shows the types of sort available and users selects
+the type of sort command he wants +
+**Pros:** Lesser commands to remember and checks user guide less often. +
+**Cons:** Slower and less direct. +
+
+---
+
+// end::sort[]
+
+// tag::selectReminder[]
+
+==== Select Reminder
+Clicking on any of the `Reminder` card or typing the command `selectReminder` followed by the index of the `Reminder` card will expand its details. The expanded
+details would be displayed beside it. +
+It allow viewing of the entire `message` field if it is too long.
+
+===== Implementation
+
+The `Select Reminder` is implemented using event handlers. Clicking on the `Reminder` card or typing the `selectReminder` command
+will call different select reminder event. The subscribers to the events in the `BrowserPanel` class will receive the event and call on the `BrowserPanel` to load the
+appropriate `Reminder` card to display.
+
+// end::selectReminder[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
@@ -359,6 +812,7 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 * `WARNING` : Can continue, but with caution
 * `INFO` : Information showing the noteworthy actions by the App
 * `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
+
 
 === Configuration
 
@@ -392,7 +846,7 @@ Here are the steps to convert the project documentation files to PDF format.
 .  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For best results, use the settings indicated in the screenshot below.
 
 image::chrome_save_as_pdf.png[width="300"]
-_Figure 5.6.1 : Saving documentation as PDF files in Chrome_
+_Figure 5.3.1 : Saving documentation as PDF files in Chrome_
 
 == Testing
 
@@ -447,7 +901,7 @@ e.g. `seedu.address.logic.LogicManagerTest`
 
 === Build Automation
 
-See <<UsingGradle#, UsingGradle.adoc>> to learn how to use Gradle for build automation.
+You can take a look at <<UsingGradle#, UsingGradle.adoc>> to learn how to use Gradle for build automation.
 
 === Continuous Integration
 
@@ -457,9 +911,9 @@ We use https://travis-ci.org/[Travis CI] and https://www.appveyor.com/[AppVeyor]
 
 Here are the steps to create a new release.
 
-.  Update the version number in link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp.java`].
-.  Generate a JAR file <<UsingGradle#creating-the-jar-file, using Gradle>>.
-.  Tag the repo with the version number. e.g. `v0.1`
+.  First, update the version number of your address book in the link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp.java`].
+.  Next, generate a JAR file <<UsingGradle#creating-the-jar-file, using Gradle>>.
+.  After that, tag the repo with the version number you are at now. e.g. `v0.1`
 .  https://help.github.com/articles/creating-releases/[Create a new release using GitHub] and upload the JAR file you created.
 
 === Managing Dependencies
@@ -531,6 +985,9 @@ image::getting-started-ui-tag-before.png[width="300"]
 +
 image::getting-started-ui-tag-after.png[width="300"]
 +
+_Figure A.1.1 : Before after Ui component_
+
+
 ****
 * Hints
 ** The tag labels are created inside link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard#initTags(ReadOnlyPerson)`] (`new Label(tag.tagName)`). https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html[JavaFX's `Label` class] allows you to modify the style of each Label, such as changing its color.
@@ -548,7 +1005,9 @@ image::getting-started-ui-result-before.png[width="200"]
 **After**
 +
 image::getting-started-ui-result-after.png[width="200"]
-+
+
+_Figure A.1.2 : Before after ResultDisplay_
+
 ****
 * Hints
 ** link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] is raised by link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] which also knows whether the result is a success or failure, and is caught by link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] which is where we want to change the style to.
@@ -569,6 +1028,8 @@ image::getting-started-ui-status-before.png[width="500"]
 +
 image::getting-started-ui-status-after.png[width="500"]
 +
+_Figure A.1.3 : Before after StatusBarFooter component_
+
 ****
 * Hints
 ** link:{repoURL}/src/main/resources/view/StatusBarFooter.fxml[`StatusBarFooter.fxml`] will need a new `StatusBar`. Be sure to set the `GridPane.columnIndex` properly for each `StatusBar` to avoid misalignment!
@@ -723,15 +1184,75 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *` |basic user |add a new person |store the person's information into address book
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |basic user |add a new reminder |store the reminder's information into address book
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |basic user |edit a person's information |update changes to their particulars
 
-|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+|`* * *` |basic user |edit a reminder's information |update changes to reminder's information
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* * *` |basic user |delete a person |remove entries that I no longer need
+
+|`* * *` |basic user |delete a reminder |remove entries that I no longer need
+
+|`* * *` |basic user |select a person |look at the person in detail
+
+|`* * *` |basic user |select a reminder |look at the reminder in detail
+
+|`* * *` |basic user |find a person by name |locate details of persons without having to go through the entire list
+
+|`* * *` |basic user |find persons by emails |locate details of persons without having to go through the entire list
+
+|`* * *` |basic user |find persons by phones |locate details of persons without having to go through the entire list
+
+|`* * *` |basic user |find a reminder by task names |locate details of reminders without having to go through the entire list
+
+|`* * *` |basic user |find reminders by priority |locate details of reminders without having to go through the entire list
+
+|`* * *` |basic user |list all people in address book |see whose contacts the address book already has
+
+|`* * *` |basic user |list all reminders in address book |see all the reminders in the address book
+
+|`* * *` |basic user |clear all people in the address book |remove all contacts conveniently
+
+|`* * *` |basic user |list the command history |view all commands already entered
+
+|`* * *` |basic user |undo previous command |amend any mistakes
+
+|`* * *` |basic user |redo the previously undone command |amend any mistakes
+
+|`* * *` |basic user |add birthday details to a contact| store and access their birthday easily
+
+|`* * *` |user with many people in the address book |sort contacts by names in alphabetical order |have a clearer view
+
+|`* * *` |user with many people in the address book |sort contacts by age |look at the list from oldest to youngest
+
+|`* * *` |user with many people in the address book |sort contacts by birthday |look for upcoming birthdays
+
+|`* * *` |user with many people in the address book |sort reminders by priority |look at the most important reminders
+
+|`* * *` |user with many people in the address book |tag user |Classify the contact into a certain group
+
+|`* * *` |user with many people in the address book |find users based on tags |locate different groups easily
+
+|`* * *` |user with many people in the address book |rename an existing tag |update a tag which is no longer suitable to describe the people who have it
+
+|`* * *` |user with many people in the address book |remove tag from person(s) |remove tags that are not suitable to describe the people who have it
+
+|`* *` |user with many people in the address book |tag multiple people at the same time |quickly tag all people who share the similarities conveniently
+
+|`* *` |careful user |create account |store special contacts / reminders into a private data base
+
+|`* *` |careful user |login to account |view special contacts / reminders inside a private data base
+
+|`* *` |careful user |logout of account |exit the private data base
+
+|`*` |business-man |display addresses of contacts and reminders on map | access their locations
+
+|`*` |user |view current time |know what is the time right now
+
+
 |=======================================================================
 
 {More to be added}
@@ -739,17 +1260,83 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+
 
 [discrete]
-=== Use case: Delete person
+=== Use case: Add person / reminder
 
 *MSS*
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1. User requests to add person / reminder
+2. AddressBook adds the person / reminder in the list
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. Parameter(s) required are missing.
++
+[none]
+** 1a1. AddressBook shows an error message.
++
+Use case ends.
+* 1b. Parameter(s) are in the wrong format.
++
+[none]
+** 1b1. AddressBook shows an error message.
++
+Use case ends.
+* 1c. Duplicate contact / reminder is added.
++
+[none]
+** 1c1. AddressBook shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Edit person / reminder
+
+*MSS*
+
+1.  User requests to list persons / reminders
+2.  AddressBook shows a list of persons / reminders
+3.  User requests to edit a specific person / reminder in the list
+4.  AddressBook update the person’s / reminder's details
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+* 3b. New contact’s / reminder's details provided by user are invalid or insufficient.
++
+[none]
+** 3b1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+
+[discrete]
+=== Use case: Delete person / reminder
+
+*MSS*
+
+1.  User requests to list persons / reminder
+2.  AddressBook shows a list of persons / reminders
+3.  User requests to delete a specific person / reminder in the list
+4.  AddressBook deletes the person / reminder
 +
 Use case ends.
 
@@ -767,7 +1354,356 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-{More to be added}
+[discrete]
+=== Use case: Add birthday
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to add birthday to a person in the list
+4.  AddressBook adds the details fo birthday to the person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+* 3b. Birthday parameter given is insufficient / invalid
++
+[none]
+** 3b1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+
+[discrete]
+=== Use case: List all the persons / reminders
+
+*MSS*
+
+1.  User requests to list all the persons / reminders
+2.  AddressBook shows a list of persons / reminders
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+[discrete]
+=== Use case: Sort persons / reminders by name
+
+*MSS*
+
+1.  User requests to sort persons / reminders by name
+2.  AddressBook sorts all the contacts / reminders
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+[discrete]
+=== Use case: Sort person by age
+
+*MSS*
+
+1.  User requests to sort persons by age
+2.  AddressBook shows a list of persons from oldest to youngest.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The list is empty.
++
+Use case ends.
+
+[discrete]
+=== Use case: Sort person by birthday
+
+*MSS*
+
+1.  User requests to sort persons by birthday
+2.  AddressBook shows a list of persons from Jan to Dec
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The list is empty.
++
+Use case ends.
+
+[discrete]
+=== Use case: Sort reminder by priority
+
+*MSS*
+
+1.  User requests to sort reminders by priority
+2.  AddressBook shows a list of reminders from High to Medium to Low.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The list is empty.
++
+Use case ends.
+
+[discrete]
+=== Use case: Find person by name / phone / email
+*MSS*
+
+1.  User requests to find person by name / phone / email.
+2.  AddressBook shows person with the name / phone / email.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The list is empty.
++
+Use case ends.
+* 1b. Person with name / phone / email is not found.
++
+Use case ends.
+
+[discrete]
+=== Use case: Find reminders by name / priority
+*MSS*
+
+1.  User requests to find reminders by name / priority.
+2.  AddressBook shows reminders with name / priority.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The list is empty.
++
+Use case ends.
+* 1b. Reminder with name / priority is not found.
++
+Use case ends.
+
+[discrete]
+=== Use case: Tag person
+
+*MSS*
+
+1.  User requests to tag a person(s)
+2.  AddressBook shows a list of person with updated tags.
+
+*Extensions*
+
+[none]
+* 1a. The list is empty.
++
+Use case ends.
++
+[none]
+* 1b. At least one of the given index(es) is invalid.
++
+** 1b1. AddressBook shows an error message.
++
+Use case resumes at step 2.
++
+[none]
+* 1c. Person already has the tag
++
+** 1c1. AddressBook shows an error message.
++
+Use case resumes at step 2.
++
+[none]
+* 1d. The given tag is invalid
++
+** 1d1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+
+[discrete]
+=== Use case: Find persons by tags
+
+*MSS*
+
+1.  User requests to find all the tags
+2.  AddressBook shows a list of tags
+3.  User requests to list persons with specified tag
+4.  AddressBook shows a list of persons with the tag
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. There are no tags.
++
+Use case ends.
+
+* 3a. The given tag is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Renaming of an existing tag
+
+**MSS**
+
+1.  User requests to list all existing tags
+2.  AddressBook shows a list of existing tags
+3.  User requests to rename an existing tag
+4.  AddressBook renames the existing tag
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. Tag not found.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3b. Tag given is same as previous tag.
++
+[none]
+** 3b1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Remove tag from person(s)
+
+**MSS**
+
+1.  User requests to list all persons.
+2.  AddressBook shows a list of persons.
+3.  User requests to remove tag of person(s).
+4.  AddressBook removes tag from the person(s).
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. Tag not found.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+* 3b. Given index(es) not valid.
++
+[none]
+** 3b1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+* 3b. At least one given index(es) does not contain tag.
++
+[none]
+** 3b1. Addressbook removes tag from only the valid index(es).
++
+** 3b2. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Create Account
+*MSS*
+
+1. User requests to create a new account.
+2. AddressBook creates account for user.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. Parameter(s) are in the wrong format.
++
+[none]
+** 1a1. AddressBook shows an error message.
++
+Use case ends.
+* 1b. Account with the same username already exist.
++
+[none]
+** 1b1. AddressBook shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Login to account
+*MSS*
+
+1. User requests to login to account
+2. AddressBook login to account
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. Parameter(s) are in the wrong format.
++
+[none]
+** 1a1. AddressBook shows an error message.
++
+Use case ends.
+* 1b. Given username or password is wrong.
++
+[none]
+** 1b1. AddressBook shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Logout of account
+*MSS*
+
+1. User requests to logout of account
+2. AddressBook logout of account
++
+Use case ends.
+
 
 [appendix]
 == Non Functional Requirements
@@ -775,8 +1711,11 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-{More to be added}
+.  Should come with automated unit tests and open source code.
+.  Should be able to log errors and backup data when errors occur.
+.  Should be lightweight, can respond back to user within 2 seconds.
+.  Should be user-friendly, usable even by computer novices.
+.  Should be easy for maintenance.
 
 [appendix]
 == Glossary
@@ -788,11 +1727,18 @@ Mainstream OS
 Windows, Linux, Unix, OS-X
 ....
 
-[[private-contact-detail]]
-Private contact detail
+[[Database]]
+Database
 
 ....
-A contact detail that is not meant to be shared with others
+A group of information that is organized so that it can be easily accessed, handled and make changes to.
+....
+
+[[GUI]]
+GUI
+
+....
+Graphical user interface : Allows users to interact with electronic devices through visual indicators
 ....
 
 [appendix]

@@ -2,17 +2,20 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_ACCOUNTS;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlyDatabase;
 
 /**
  * Represents a command which can be undone and redone.
  */
 public abstract class UndoableCommand extends Command {
     private ReadOnlyAddressBook previousAddressBook;
+    private ReadOnlyDatabase previousDatabase;
 
     protected abstract CommandResult executeUndoableCommand() throws CommandException;
 
@@ -33,6 +36,7 @@ public abstract class UndoableCommand extends Command {
         requireAllNonNull(model, previousAddressBook);
         model.resetData(previousAddressBook);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        model.updateFilteredAccountList(PREDICATE_SHOW_ALL_ACCOUNTS);
     }
 
     /**

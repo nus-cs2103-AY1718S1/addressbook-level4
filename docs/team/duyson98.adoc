@@ -1,0 +1,103 @@
+= Nguyen Duy Son - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: Gentleman's Guide
+Gentleman's Guide is a desktop contact book application modified from the Address Book - Level 4, created by https://se-edu.github.io/[SE-EDU team].
+It is designed to support business-(gentle)men in their busy work life by providing them with an effective and efficient way of managing their contacts.
+Furthermore, it helps them keep track of various tasks and reminds them about the upcoming deadlines.
+The interaction between user and Gentleman’s Guide is mostly done through a Command Line Interface (CLI). +
+This application is written in Java, and its Graphical User Interface (GUI) is created with JavaFX.
+
+*About Project Portfolio*: This project portfolio summarizes all new features that I have added to Gentleman's Guide, including the instructions
+for users on how to use the features, the mechanism behind them, as well as the justification for implementing these features.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T09-B1/main/blob/master/collated/main/duyson98.md[Functional code]] [https://github.com/CS2103AUG2017-T09-B1/main/blob/master/collated/test/duyson98.md[Test code]]
+
+=== Enhancement Added: Tag/Untag/Retag commands and Retrieve command
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=tagsmanipulation]
+
+include::../UserGuide.adoc[tag=retrieve]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Through business networking, businessmen have many opportunities to make acquaintance with people from different companies.
+Therefore, they need a way to separate their contacts into smaller groups so that they can quickly access all contacts which are related to each other.
+
+With `tag` command, users can assign tags which contain relevant information to contacts. After that, by using `retrieve` command on a certain tag,
+they will be able to see all contacts that have been assigned with that tag.
+In addition, `untag` and `retag` commands are implemented to give users freedom in modifying the existing tags, such as removing tags which are no longer needed and renaming an existing tag inside contact list
+to reflect the changes in their relationships with the contact owners.
+
+==== Implementation
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../DeveloperGuide.adoc[tag=taggingfunctions]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: View contact profile
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=viewprofile]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+View command displays the contact on a large panel, which allows users to see all contact details in a nice
+and clear way instead of having to see the details crammed inside the small cards of person list.
+
+==== Implementation
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../DeveloperGuide.adoc[tag=viewcommand]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed:
+
+===== Custom contact fields:
+In addition to original fields which are name, phone number, email, address, and tags, users will be able to specify 5
+more fields according to their preferences. They can also choose which fields to display on the person card
+and if they wish to see all details of the contact, they can use view command to open the contact profile.
+
+===== LinkedIn integration:
+As the target users of Gentleman's Guide are businessmen, who are most likely to have LinkedIn accounts, it will be convenient if
+users can directly access the LinkedIn profiles of the contacts from inside the application without having to search for the profiles manually on the LinkedIn website.
+
+=== Other Contributions
+
+* Added a digital clock to display current date and time inside the footer panel of the application's GUI (Pull request https://github.com/CS2103AUG2017-T09-B1/main/pull/94[94]).
+* Created reminder feature's model component and wrote JUnit tests for it. (Pull requests https://github.com/CS2103AUG2017-T09-B1/main/pull/49[49],
+https://github.com/CS2103AUG2017-T09-B1/main/pull/90[90], https://github.com/CS2103AUG2017-T09-B1/main/pull/104[104])
+* Implemented days countdown for reminder card (Pull request https://github.com/CS2103AUG2017-T09-B1/main/pull/112[112]).
+* Wrote JUnit tests for various classes.
+* Reported bug for Project ModU (Issue https://github.com/CS2103AUG2017-W13-B4/main/issues/255[255])
+
+== Project

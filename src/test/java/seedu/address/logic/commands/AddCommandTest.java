@@ -20,10 +20,17 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlyDatabase;
+import seedu.address.model.account.ReadOnlyAccount;
+import seedu.address.model.account.exceptions.DuplicateAccountException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.reminder.ReadOnlyReminder;
+import seedu.address.model.reminder.exceptions.DuplicateReminderException;
+import seedu.address.model.reminder.exceptions.ReminderNotFoundException;
+import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandTest {
@@ -100,9 +107,28 @@ public class AddCommandTest {
         public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
             fail("This method should not be called.");
         }
+        @Override
+        public boolean checkAccount(ReadOnlyAccount account) {
+            fail("This method should not be called");
+            return true;
+        }
+
+        @Override
+        public void addAccount(ReadOnlyAccount account) throws DuplicateAccountException {
+            fail("This method should not be called");
+        }
+        @Override
+        public void addReminder(ReadOnlyReminder newData) {
+            fail("This method should not be called.");
+        }
 
         @Override
         public void resetData(ReadOnlyAddressBook newData) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void resetDatabase(ReadOnlyDatabase newData) {
             fail("This method should not be called.");
         }
 
@@ -113,13 +139,46 @@ public class AddCommandTest {
         }
 
         @Override
+        public ReadOnlyDatabase getDatabase() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
         public void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void deleteAccount(ReadOnlyAccount account) throws PersonNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void deleteReminder(ReadOnlyReminder target) throws ReminderNotFoundException {
             fail("This method should not be called.");
         }
 
         @Override
         public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
                 throws DuplicatePersonException {
+            fail("This method should not be called.");
+        }
+
+        public void updateAccount(ReadOnlyAccount account, ReadOnlyAccount editedAccount)
+                throws DuplicateAccountException {
+            fail("This method should not be called.");
+        }
+
+
+        @Override
+        public void updateReminder(ReadOnlyReminder target, ReadOnlyReminder editedReminder)
+                throws DuplicateReminderException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void deleteUnusedTag(Tag tag) {
             fail("This method should not be called.");
         }
 
@@ -130,7 +189,70 @@ public class AddCommandTest {
         }
 
         @Override
+        public ObservableList<ReadOnlyAccount> getFilteredAccountList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+
+        @Override
+        public ObservableList<ReadOnlyReminder> getFilteredReminderList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
         public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void updateFilteredAccountList(Predicate<ReadOnlyAccount> predicate) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void updateFilteredReminderList(Predicate<ReadOnlyReminder> predicate) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void deletePersonTag(Tag tag) {
+            fail("This metthod should not be called.");
+        }
+
+        @Override
+        public void deleteReminderTag(Tag tag) {
+            fail("This metthod should not be called.");
+        }
+
+        public Boolean checkIfPersonListEmpty(ArrayList<ReadOnlyPerson> contactList) {
+            fail("This method should not be called.");
+            return false;
+        }
+
+        public Boolean checkIfReminderListEmpty(ArrayList<ReadOnlyReminder> reminderList) {
+            fail("This method should not be called.");
+            return false;
+        }
+
+        @Override
+        public void sortListByName(ArrayList<ReadOnlyPerson> contactList) throws CommandException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void sortListByBirthday(ArrayList<ReadOnlyPerson> contactList) throws CommandException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void sortListByAge(ArrayList<ReadOnlyPerson> contactList) throws CommandException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void sortListByPriority(ArrayList<ReadOnlyReminder> contactList)  throws CommandException {
             fail("This method should not be called.");
         }
     }

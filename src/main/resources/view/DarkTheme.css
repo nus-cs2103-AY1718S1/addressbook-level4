@@ -3,6 +3,15 @@
     background-color: #383838; /* Used in the default.html file */
 }
 
+.fit { /* set relative picture size */
+    max-width: 100%;
+    max-height: 100%;
+}
+.center {
+    display: block;
+    margin: auto;
+}
+
 .label {
     -fx-font-size: 11pt;
     -fx-font-family: "Segoe UI Semibold";
@@ -57,10 +66,10 @@
     -fx-border-width: 0 0 1 0;
     -fx-background-color: transparent;
     -fx-border-color:
-        transparent
-        transparent
-        derive(-fx-base, 80%)
-        transparent;
+            transparent
+            transparent
+            derive(-fx-base, 80%)
+            transparent;
     -fx-border-insets: 0 10 1 0;
 }
 
@@ -88,6 +97,7 @@
 }
 
 .list-view {
+    -fx-background-color: derive(#1d1d1d, 20%);
     -fx-background-insets: 0;
     -fx-padding: 0;
 }
@@ -121,8 +131,8 @@
 
 .cell_big_label {
     -fx-font-family: "Segoe UI Semibold";
-    -fx-font-size: 16px;
-    -fx-text-fill: #010504;
+    -fx-font-size: 20px;
+    -fx-text-fill: white;
 }
 
 .cell_small_label {
@@ -132,13 +142,13 @@
 }
 
 .anchor-pane {
-     -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-background-color: derive(#1d1d1d, 20%);
 }
 
 .pane-with-border {
-     -fx-background-color: derive(#1d1d1d, 20%);
-     -fx-border-color: derive(#1d1d1d, 10%);
-     -fx-border-top-width: 1px;
+    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-border-color: derive(#1d1d1d, 10%);
+    -fx-border-top-width: 1px;
 }
 
 .status-bar {
@@ -155,6 +165,13 @@
 
 .result-display .label {
     -fx-text-fill: black !important;
+}
+
+.reminder-display {
+    -fx-background-color: transparent;
+    -fx-font-family: "Segoe UI Light";
+    -fx-font-size: 13pt;
+    -fx-text-fill: black;
 }
 
 .status-bar .label {
@@ -227,8 +244,8 @@
 }
 
 .button:pressed, .button:default:hover:pressed {
-  -fx-background-color: white;
-  -fx-text-fill: #1d1d1d;
+    -fx-background-color: white;
+    -fx-text-fill: #1d1d1d;
 }
 
 .button:focused {
@@ -335,6 +352,7 @@
     -fx-background-radius: 0;
 }
 
+
 #tags {
     -fx-hgap: 7;
     -fx-vgap: 3;
@@ -348,3 +366,81 @@
     -fx-background-radius: 2;
     -fx-font-size: 11;
 }
+
+/* @@author duyson98 */
+#personListHeading {
+    -fx-background-color: deepskyblue;
+    -fx-border-color: white;
+}
+
+#personListHeading .label {
+    -fx-font-style: italic;
+    -fx-font-weight: bolder;
+    -fx-font-size: 25px;
+    -fx-text-fill: white;
+}
+
+#reminderListHeading {
+    -fx-background-color: deepskyblue;
+    -fx-border-color: white;
+}
+
+#reminderListHeading .label {
+    -fx-font-style: italic;
+    -fx-font-weight: bolder;
+    -fx-font-size: 25px;
+    -fx-text-fill: white;
+}
+
+#displayDate {
+    -fx-font-family: 'Nova Square';
+    -fx-font-size: 25;
+    -fx-text-fill: white;
+}
+
+#displayTime {
+    -fx-padding: 0 150 0 0;
+    -fx-font-family: 'Digital-7 Italic';
+    -fx-font-size: 50;
+    -fx-text-fill: white;
+}
+
+.opening-img {
+    height: 745px;
+}
+
+#profilePic {
+    -fx-border-color: deepskyblue;
+}
+
+#profileInfo {
+    -fx-border-color: deepskyblue;
+}
+
+#profileName {
+    -fx-font-family: 'HaloHandletter';
+    -fx-font-size: 50px;
+}
+
+.profile_big_label {
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-font-size: 20px;
+    -fx-font-style: italic;
+    -fx-text-fill: white;
+}
+
+.profile_small_label {
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-font-size: 16px;
+    -fx-text-fill: white;
+}
+
+.profile_small_text_area {
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-font-size: 18px;
+}
+
+.reminder_big_label {
+    -fx-font-size: 15px;
+}
+/* @@author */

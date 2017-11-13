@@ -27,26 +27,26 @@ public class TypicalPersons {
     public static final ReadOnlyPerson ALICE = new PersonBuilder().withName("Alice Pauline")
             .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")
             .withPhone("85355255")
-            .withTags("friends").build();
+            .withTags("friends", "retrieveTester").build();
     public static final ReadOnlyPerson BENSON = new PersonBuilder().withName("Benson Meier")
             .withAddress("311, Clementi Ave 2, #02-25")
             .withEmail("johnd@example.com").withPhone("98765432")
-            .withTags("owesMoney", "friends").build();
+            .withTags("owesMoney", "friends", "retrieveTester").build();
     public static final ReadOnlyPerson CARL = new PersonBuilder().withName("Carl Kurz").withPhone("95352563")
             .withEmail("heinz@example.com").withAddress("wall street").build();
     public static final ReadOnlyPerson DANIEL = new PersonBuilder().withName("Daniel Meier").withPhone("87652533")
             .withEmail("cornelia@example.com").withAddress("10th street").build();
-    public static final ReadOnlyPerson ELLE = new PersonBuilder().withName("Elle Meyer").withPhone("9482224")
+    public static final ReadOnlyPerson ELLE = new PersonBuilder().withName("Elle Meyer").withPhone("94822324")
             .withEmail("werner@example.com").withAddress("michegan ave").build();
-    public static final ReadOnlyPerson FIONA = new PersonBuilder().withName("Fiona Kunz").withPhone("9482427")
+    public static final ReadOnlyPerson FIONA = new PersonBuilder().withName("Fiona Kunz").withPhone("94828427")
             .withEmail("lydia@example.com").withAddress("little tokyo").build();
-    public static final ReadOnlyPerson GEORGE = new PersonBuilder().withName("George Best").withPhone("9482442")
+    public static final ReadOnlyPerson GEORGE = new PersonBuilder().withName("George Best").withPhone("94802442")
             .withEmail("anna@example.com").withAddress("4th street").build();
 
     // Manually added
-    public static final ReadOnlyPerson HOON = new PersonBuilder().withName("Hoon Meier").withPhone("8482424")
+    public static final ReadOnlyPerson HOON = new PersonBuilder().withName("Hoon Meier").withPhone("84827424")
             .withEmail("stefan@example.com").withAddress("little india").build();
-    public static final ReadOnlyPerson IDA = new PersonBuilder().withName("Ida Mueller").withPhone("8482131")
+    public static final ReadOnlyPerson IDA = new PersonBuilder().withName("Ida Mueller").withPhone("84828131")
             .withEmail("hans@example.com").withAddress("chicago ave").build();
 
     // Manually added - Person's details found in {@code CommandTestUtil}
@@ -57,6 +57,9 @@ public class TypicalPersons {
             .build();
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
+
+    // A keyword that matches RETRIEVETESTER
+    public static final String KEYWORD_MATCHING_RETRIEVETESTER = "retrieveTester";
 
     private TypicalPersons() {} // prevents instantiation
 

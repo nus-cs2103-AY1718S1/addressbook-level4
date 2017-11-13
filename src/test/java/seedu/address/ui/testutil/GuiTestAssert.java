@@ -7,8 +7,10 @@ import java.util.stream.Collectors;
 
 import guitests.guihandles.PersonCardHandle;
 import guitests.guihandles.PersonListPanelHandle;
+import guitests.guihandles.ReminderCardHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.reminder.ReadOnlyReminder;
 
 /**
  * A set of assertion methods useful for writing GUI tests.
@@ -26,6 +28,20 @@ public class GuiTestAssert {
         assertEquals(expectedCard.getTags(), actualCard.getTags());
     }
 
+    //@@author duyson98
+    /**
+     * Asserts that {@code actualCard} displays the same values as {@code expectedCard}.
+     */
+    public static void assertReminderCardEquals(ReminderCardHandle expectedCard, ReminderCardHandle actualCard) {
+        assertEquals(expectedCard.getId(), actualCard.getId());
+        assertEquals(expectedCard.getTask(), actualCard.getTask());
+        assertEquals(expectedCard.getPriority(), actualCard.getPriority());
+        assertEquals(expectedCard.getDate(), actualCard.getDate());
+        assertEquals(expectedCard.getMessage(), actualCard.getMessage());
+        assertEquals(expectedCard.getTags(), actualCard.getTags());
+    }
+    //@@author
+
     /**
      * Asserts that {@code actualCard} displays the details of {@code expectedPerson}.
      */
@@ -34,9 +50,24 @@ public class GuiTestAssert {
         assertEquals(expectedPerson.getPhone().value, actualCard.getPhone());
         assertEquals(expectedPerson.getEmail().value, actualCard.getEmail());
         assertEquals(expectedPerson.getAddress().value, actualCard.getAddress());
+        assertEquals(expectedPerson.getBirthday().value, actualCard.getBirthday());
         assertEquals(expectedPerson.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
                 actualCard.getTags());
     }
+
+    //@@author duyson98
+    /**
+     * Asserts that {@code actualCard} displays the details of {@code expectedReminder}.
+     */
+    public static void assertCardDisplaysReminder(ReadOnlyReminder expectedReminder, ReminderCardHandle actualCard) {
+        assertEquals(expectedReminder.getTask().taskName, actualCard.getTask());
+        assertEquals(expectedReminder.getPriority().value, actualCard.getPriority());
+        assertEquals(expectedReminder.getDate().date, actualCard.getDate());
+        assertEquals(expectedReminder.getMessage().message, actualCard.getMessage());
+        assertEquals(expectedReminder.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
+                actualCard.getTags());
+    }
+    //@@author
 
     /**
      * Asserts that the list in {@code personListPanelHandle} displays the details of {@code persons} correctly and
