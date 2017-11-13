@@ -29,8 +29,8 @@
             personListPanel = new PersonListPanel(persons);
             personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
         } catch (IllegalStateException e) {
-            logger.info("Cannot update profile photo on a non-main thread. "
-                    + "Type 'list' to see the new profile photos. '¯\\_(ツ)_/¯");
+            logger.info("Cannot update profile photo on a non-main thread. ¯\\_(ツ)_/¯ "
+                    + "Type 'list' to see the new profile photos.");
         }
     }
 
@@ -110,6 +110,7 @@ public class PrefCommandParser implements Parser<PrefCommand> {
 
     /**
      * Checks whether the given key is a short form for a preference key
+     *
      * @param prefKey User's input value for preference key
      * @return the actual key name if the input was shortcut, otherwise returns the input itself
      */
@@ -191,6 +192,7 @@ public class PrefCommand extends Command {
     private String newPrefValue = "";
 
     /**
+     * Creates a new PrefCommand with the given key and value
      */
     public PrefCommand(String prefKey, String newPrefValue) {
         this.prefKey = prefKey;
@@ -280,8 +282,7 @@ public class PrefCommand extends Command {
 ###### /java/seedu/address/model/UniqueMeetingList.java
 ``` java
 /**
- * A list of meetings that enforces no nulls and uniqueness between its elements.
- *
+ * A list of meetings that enforces no nulls and uniqueness between its elements. *
  * Supports minimal set of list operations for the app's features.
  *
  * @see Meeting#equals(Object)
@@ -330,6 +331,7 @@ public class UniqueMeetingList implements Iterable<ReadOnlyMeeting>, ReadOnlyMee
 
     /**
      * Replaces the Meetings in this list with those in the argument meeting list.
+     *
      * @param meetings
      */
     public void setMeetings(ObservableList<ReadOnlyMeeting> meetings) {
@@ -467,6 +469,7 @@ public class InternalId {
      * Updates the maximum internal index among all persons in the person list
      * Currently not used; implemented previously for remove(), but it was unnecessary to update
      * after each deletion
+     *
      * @return the maximum internal index
      */
     private int updateMaxInternalIndex() {
@@ -528,14 +531,13 @@ public class InternalId {
 ``` java
     /**
      * Returns an unmodifiable view of a person by the given internal index
-     * @param i internal index of the person
      *
+     * @param i internal index of the person
      */
     ReadOnlyPerson getPersonByInternalIndex(int i) throws PersonNotFoundException;
 
     /**
      * Returns the maximum index of persons in the address book.
-     * @return
      */
     int getMaxInternalIndex();
 
@@ -877,10 +879,10 @@ public class XmlSerializableMeetingList extends XmlSerializableData implements R
 
     /**
      * Should not be reached since the list should be immutable and cannot be sorted
-     * @return
      */
     @Override
     public ReadOnlyMeeting getUpcomingMeeting() {
+        assert false : "This method should not be called from an XmlSerializableMeetingList";
         return null;
     }
 }
@@ -1018,6 +1020,7 @@ public class XmlMeetingListStorage implements MeetingListStorage {
     }
 
     /**
+     * Returns a ReadOnlyMeetingList from a given file
      * @param filePath location of the data. Cannot be null
      * @throws DataConversionException if the file is not in the correct format.
      */
