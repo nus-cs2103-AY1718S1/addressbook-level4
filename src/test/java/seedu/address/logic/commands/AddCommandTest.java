@@ -203,7 +203,9 @@ public class AddCommandTest {
         public ReadOnlyAddressBook getAddressBook() {
             return new AddressBook();
         }
-        public ReadOnlyMeetingList getMeetingList() { return new UniqueMeetingList(); }
+        public ReadOnlyMeetingList getMeetingList() {
+            return new UniqueMeetingList();
+        }
     }
 
     /**
