@@ -173,7 +173,8 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void addLifeInsurance(ReadOnlyInsurance toAdd)
             throws DuplicateInsuranceException, DuplicateContractFileNameException {
         LifeInsurance lifeInsurance = new LifeInsurance(toAdd);
-        lifeInsuranceMap.put(lifeInsurance.getId(), lifeInsurance);
+        UUID id = lifeInsurance.getId();
+        lifeInsuranceMap.put(id, lifeInsurance);
         syncWithUpdate();
     }
     //@@author
