@@ -7,7 +7,7 @@ import java.util.Calendar;
  * Creates the dates in the month and name of month
  */
 public class MonthDateBuilder {
-    private static final int MAX_NUMBER_DAYS = 42;
+    private static final int MAX_NUMBER_DAYS = 42; //Maximum number of cells every month has
     private Integer[] monthYearArray;
     private String[] monthDateArray;
     private Calendar calendar;
@@ -38,7 +38,7 @@ public class MonthDateBuilder {
 
         monthDateArray = new String[MAX_NUMBER_DAYS];
         monthYearArray = new Integer[2];
-        setMonthYearArray(month, year); //Set current month and year
+        setMonthYearArray(month, year); //Sets arbitrary month and year
         setNameOfMonth();
         calendar.set(Calendar.MONTH, monthYearArray[0]);   //Sets the given calendar MONTH to monthYearArray[0]
         calendar.set(Calendar.YEAR, monthYearArray[1]);    //Sets the given calendar YEAR to monthYearArray[1]
