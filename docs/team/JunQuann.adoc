@@ -16,7 +16,7 @@ in the application itself without having to switch to a browser or check their p
 
 === Enhancement Added: Developed the Graphic User Interface
 
-Change to graphic user interface of HitMeUp (Pull request https://github.com/CS2103AUG2017-W14-B3/main/pull/88[#88])
+Change to graphic user interface of HitMeUp
 
 image::Ui.png[width="800"]
 
