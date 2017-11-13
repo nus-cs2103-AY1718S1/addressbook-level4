@@ -43,7 +43,7 @@ public class EditCommandParser implements Parser<EditCommand> {
         String[] preambles;
 
         try {
-            preambles = argMultimap.getPreamble().split(" ");
+            preambles = argMultimap.getPreamble().split(" +");
             for (String preamble: preambles) {
                 indices.add(ParserUtil.parseIndex(preamble));
             }
