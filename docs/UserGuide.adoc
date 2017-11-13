@@ -445,10 +445,10 @@ Format: import FILE_PATH
 Examples:
 
 * `import C:\Desktop\exchangeStudents.xml` +
-Imports colleagues.xml into current resident book.
+Imports exchangeStudents.xml into current resident book.
 
-Through the UI:
-image::import_file_Ui.png[width="800"]
+It can be done through the Ui as well.
+image::import_file_Ui.png[width='800']
 
 // end::import[]
 

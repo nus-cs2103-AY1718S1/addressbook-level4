@@ -659,9 +659,9 @@ The following activity diagram summarize what happens inside the `ImportCommand`
 
 image::ImportCommandActivityDiagram.png[width="500"]
 
-// end::import
+// end::import[]
 
-// tag::backup
+// tag::backup[]
 === Backup Command
 The backup command saves the current ResidentBook into backup.xml located in the project location. One consideration for this mechanism is that backup should only happen when necessary, as it will take up a lot of space.
 
@@ -1379,7 +1379,7 @@ Use case ends.
 
 
 [discrete]
-// tag::backupUseCase
+// tag::backupUseCase[]
 == Use case: Backup storage files
 
 *MSS*
@@ -1411,7 +1411,7 @@ Use cases resumes at step 4
 
 Use case ends.
 
-// end::backupUseCase
+// end::backupUseCase[]
 
 [discrete]
 == Use case: View and delete obsolete contacts
