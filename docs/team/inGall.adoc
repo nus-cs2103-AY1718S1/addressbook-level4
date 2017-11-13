@@ -85,6 +85,14 @@ include::../DeveloperGuide.adoc[tag = listReminder]
 
 === Other Contributions
 
+- Contributed to Reminder feature in Gentleman's Guide, mainly on Logic implementation. (Pull Requests https://github.com/CS2103AUG2017-T09-B1/main/pull/28[#28])
+
 - Added test cases to improve code coverage (Pull Requests https://github.com/CS2103AUG2017-T09-B1/main/pull/77[#77],
   https://github.com/CS2103AUG2017-T09-B1/main/pull/85[#85], https://github.com/CS2103AUG2017-T09-B1/main/pull/89[89],
   https://github.com/CS2103AUG2017-T09-B1/main/pull/121[#121] )
+
+- Contributed to User guide and Developer Guide (Pull Requests https://github.com/CS2103AUG2017-T09-B1/main/pull/18[#18],
+  https://github.com/CS2103AUG2017-T09-B1/main/pull/44[#44], https://github.com/CS2103AUG2017-T09-B1/main/pull/48[#48],
+  https://github.com/CS2103AUG2017-T09-B1/main/pull/61[#61], https://github.com/CS2103AUG2017-T09-B1/main/pull/93[#93],
+  https://github.com/CS2103AUG2017-T09-B1/main/pull/109[#109], https://github.com/CS2103AUG2017-T09-B1/main/pull/113[#113],
+  https://github.com/CS2103AUG2017-T09-B1/main/pull/116[#116], https://github.com/CS2103AUG2017-T09-B1/main/pull/121[#121] )
