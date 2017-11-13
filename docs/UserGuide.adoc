@@ -53,7 +53,7 @@ _Figure 3.1 : cherBook's home page_
 
 . Type the command `select 1` in the command box and press kbd:[Enter] to to go to access the switch out of the Home Page. +
 +
-image::Ui.png[width="790"]
+image::cherBook.png[width="790"]
 _Figure 3.2 : cherBook's application page_
 
 +
@@ -78,7 +78,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 The following image highlights cherBook's User Interface and its 6 components.
 
-image::UiLayout.png[width="790"]
+image::UiLayout.png[width="800"]
 _Figure 4.1 : cherBook's User Interface layout_
 
 Here’s how you can use them:
@@ -522,10 +522,12 @@ These quotes changes every time the home page displayed through either calling t
 
 Switch all panels on the right to the home page. +
 The quotes on the home page is generated on random for you. +
+Using the `select command` toggles the panel to `Student Details Panel`, `Statistics Panel` and `Graph Panel`.
 Format: `home`
 
 [NOTE]
-To select your contacts on this page, use the select command. This is to ensure that people who access your cherBook are unable to view the information of your contacts easily.
+To select your contacts on this page, use the `select command`. This is to ensure that people who access your cherBook are unable to view the information of your contacts easily. +
+`Do Not click` on contacts while home page is being displayed! Use `select command` first and only when the panels do toggle are you able to click on the Students Panel.
 
 Examples:
 
@@ -585,6 +587,7 @@ _Figure 5.3.4.1 : Displays the graph in your cherBook with the first tab index_
 image::Tab2Image.png[width="800"]
 _Figure 5.3.4.2 : Displays the graph in your cherBook with the second tab index_
 // end::tab[]
+
 
 // tag::randomisedUniqueTagColors[]
 ==== Randomised Unique Tag Colors: `Since v1.4`
@@ -795,16 +798,15 @@ In version v2.0, you will be able to:
 
 === Features added in v1.5
 In version v1.5, you are be able to:
-//TODO: update here and remove this comment
 
-* `update here and remove this comment`
+* View the home page and toggle it using the `home` command
 
 === Features added in v1.5rc
 In version v1.5rc, you are be able to:
 
 * View your appointments with the `viewschedule` command
 * Delete yor appointments with students with the `deleteschedule` command
-* Switch between the linge graph and bar chart with the `tab` command
+* Switch between the line graph and bar chart with the `tab` command
 
 === Features added in v1.4
 In version v1.4, you are be able to:
