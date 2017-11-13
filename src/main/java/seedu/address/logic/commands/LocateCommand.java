@@ -11,7 +11,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author taojiashu
 /**
- * Display the location of the person with the given index in the contact list in Google Maps
+ * Displays the location of the person with the given index in the contact list in Google Maps.
  */
 public class LocateCommand extends Command {
 

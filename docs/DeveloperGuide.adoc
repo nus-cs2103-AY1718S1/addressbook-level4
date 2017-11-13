@@ -1554,7 +1554,7 @@ Use case ends.
 +
 Use case ends.
 
-discrete]
+[discrete]
 === Use case: Favourite a person
 
 *MSS*
