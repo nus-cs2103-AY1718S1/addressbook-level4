@@ -1,0 +1,190 @@
+= Lim Pei Yi, Celine - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: cherBook
+cherBook - is a desktop address book application used for teachers and educators.
+The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java.
+
+*Code contributed*: [https://github.com/limcel/main/blob/master/collated/main/limcel.md[Functional code]] [https://github.com/limcel/main/blob/master/collated/test/limcel.md[Test code]]
+
+=== Enhancement Added: Sort Command [v1.2]
+
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=sort]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=sortreason]
+
+#End of Extract#
+
+---
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=sortimplementation]
+
+#End of Extract#
+
+---
+=== Enhancement Added: Extended Person Card Panel [v1.3]
+
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+image::ExtendedPersonCard.png[width="400"]
+This figure shows how the Extended Person Card looks like in cherBook. It contains all the information of a student.
+
+#End of Extract#
+
+---
+
+==== Justification
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=studentdetailspanel]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Schedule Command [v1.4]
+
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=schedule]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=schedulereason]
+
+#End of Extract#
+
+---
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=scheduleimplementation]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: View Schedule Command [v1.5]
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=viewschedule]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=viewschedulereason]
+
+#End of Extract#
+
+---
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=viewscheduleimplementation]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Delete Schedule Command [v1.5]
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=deleteschedule]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Use `Postal Code` to display Google Map of student's address
+
+==== External behavior
+Clicking the `Postal Code` attribute displayed on the `Student Details` panel would open a `Google Map` panel that displays the map of the student's address. The map would display the surroundings as well as provide all possible ways to get to the student's house.
+
+==== Justification
+Sometimes when students fall sick for a long period of time, they might face huge difficulties in trying to catch up with their studies.
+The reason for this implementation is so that users of cherBook (teachers / educators) have the ability to conduct house visits easily to update their student on the school-related assignments, as well as to show concern for the student.
+
+==== Implementation
+Link the `Postal Code` attribute to `Google Map` panel whereby the map would display the vicinity of the student's address. `Google` API would be called and the `Postal Code` of the user's current and designated location would be parsed before the map and routes are displayed and calculated respectively.
+
+=== Enhancement Proposed: Use Schedules to remind users (teachers / educators) about their meetings and appointments
+
+==== External behavior
+No external behaviour. The teacher only has to enter their schedules into cherBook. cherBook will automatically remind them ten minutes before when their scheduled date and time is due.
+
+==== Justification
+When teachers have many schedules to keep and meetings to attend in one day, and not forgetting their regular classes and duties, it is often hard for them to keep track of time. +
+Our cherBook application can make use of the schedules that the teacher has added and remind them ten minutes before any schedules are due. This is so that the teachers can focus on their work and let cherBook keep time for them instead.
+
+==== Implementation
+The clock function in cherBook is required to take note of the time and compare it with the date and time of every schedule in the schedule list. +
+cherBook will produce a audible reminder ten minutes before every scheduled appointment.
+
+
+=== Other contributions
+
+* Update READMEs for the different versions, created Ui mockups and cherBook icon
+** https://github.com/CS2103AUG2017-T16-B2/main/pull/29[Add new PostalCode field in v1.1]
+** https://github.com/CS2103AUG2017-T16-B2/main/pull/132[Add graphics for all UserGuide commands]
+
+=== Helping out
+** https://github.com/CS2103AUG2017-T16-B2/main/pull/114[Helped teammate create TabCommand in v1.5]

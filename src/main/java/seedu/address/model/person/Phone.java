@@ -1,3 +1,4 @@
+//@@author Lenaldnwj
 package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
@@ -10,16 +11,17 @@ import seedu.address.commons.exceptions.IllegalValueException;
  */
 public class Phone {
 
-
     public static final String MESSAGE_PHONE_CONSTRAINTS =
-            "Phone numbers can only contain numbers, and should be at least 3 digits long";
-    public static final String PHONE_VALIDATION_REGEX = "\\d{3,}";
+            "Phone numbers can only contain numbers, and should be exactly 8 digits";
+    public static final String PHONE_VALIDATION_REGEX = "(\\d\\d\\d\\d\\d\\d\\d\\d)"
+            + "|(\\(Student phone not recorded\\))";
+
     public final String value;
 
     /**
-     * Validates given phone number.
+     * Validates the student phone number.
      *
-     * @throws IllegalValueException if given phone string is invalid.
+     * @throws IllegalValueException if student phone string is of invalid format.
      */
     public Phone(String phone) throws IllegalValueException {
         requireNonNull(phone);
@@ -31,7 +33,7 @@ public class Phone {
     }
 
     /**
-     * Returns true if a given string is a valid person phone number.
+     * Returns true if a given string is a valid student phone number.
      */
     public static boolean isValidPhone(String test) {
         return test.matches(PHONE_VALIDATION_REGEX);

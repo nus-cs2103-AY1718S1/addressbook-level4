@@ -19,7 +19,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
  * Supports a minimal set of list operations.
  *
  * @see Person#equals(Object)
- * @see CollectionUtil#elementsAreUnique(Collection)
+ * @see CollectionUtil #elementsAreUnique(Collection)
  */
 public class UniquePersonList implements Iterable<Person> {
 
@@ -81,7 +81,7 @@ public class UniquePersonList implements Iterable<Person> {
         if (!personFoundAndDeleted) {
             throw new PersonNotFoundException();
         }
-        return personFoundAndDeleted;
+        return true;
     }
 
     public void setPersons(UniquePersonList replacement) {
@@ -119,4 +119,15 @@ public class UniquePersonList implements Iterable<Person> {
     public int hashCode() {
         return internalList.hashCode();
     }
+
+    //@@author limcel
+    /**
+     * Returns an observable list as as an unmodifiable {@code ObservableList}
+     */
+    public ObservableList<ReadOnlyPerson> asObservableListSortedByName() {
+        internalList.sort((o1, o2) ->((o1.getName().toString().toLowerCase())
+                .compareTo(o2.getName().toString().toLowerCase())));
+        return FXCollections.unmodifiableObservableList(mappedList);
+    }
+    //@@author
 }

@@ -8,6 +8,7 @@ import static seedu.address.testutil.TypicalPersons.IDA;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.io.IOException;
+import java.util.Calendar;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -15,10 +16,14 @@ import org.junit.rules.ExpectedException;
 import org.junit.rules.TemporaryFolder;
 
 import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.Person;
+import seedu.address.model.schedule.Schedule;
+import seedu.address.model.schedule.UniqueScheduleList;
+import seedu.address.testutil.TypicalPersons;
 
 public class XmlAddressBookStorageTest {
     private static final String TEST_DATA_FOLDER = FileUtil.getPath("./src/test/data/XmlAddressBookStorageTest/");
@@ -62,22 +67,27 @@ public class XmlAddressBookStorageTest {
     }
 
     @Test
-    public void readAndSaveAddressBook_allInOrder_success() throws Exception {
+    public void readAndSaveAndBackupAddressBook_allInOrder_success() throws Exception {
         String filePath = testFolder.getRoot().getPath() + "TempAddressBook.xml";
         AddressBook original = getTypicalAddressBook();
+        AddressBook backup = original;
         XmlAddressBookStorage xmlAddressBookStorage = new XmlAddressBookStorage(filePath);
 
         //Save in new file and read back
         xmlAddressBookStorage.saveAddressBook(original, filePath);
+        xmlAddressBookStorage.backupAddressBook(backup);
         ReadOnlyAddressBook readBack = xmlAddressBookStorage.readAddressBook(filePath).get();
         assertEquals(original, new AddressBook(readBack));
+        assertEquals(backup, original);
 
         //Modify data, overwrite exiting file, and read back
         original.addPerson(new Person(HOON));
         original.removePerson(new Person(ALICE));
         xmlAddressBookStorage.saveAddressBook(original, filePath);
+        xmlAddressBookStorage.backupAddressBook(original);
         readBack = xmlAddressBookStorage.readAddressBook(filePath).get();
         assertEquals(original, new AddressBook(readBack));
+        assertEquals(backup, original);
 
         //Save and read without specifying file path
         original.addPerson(new Person(IDA));
@@ -107,6 +117,15 @@ public class XmlAddressBookStorageTest {
         addressBook.getTagList().remove(0);
     }
 
+    //@@author limcel
+    @Test
+    public void getScheduleList_modifyList_throwsUnsupportedOperationException() {
+        XmlSerializableAddressBook addressBook = new XmlSerializableAddressBook();
+        thrown.expect(UnsupportedOperationException.class);
+        addressBook.getScheduleList().remove(0);
+    }
+    //@@author
+
     /**
      * Saves {@code addressBook} at the specified {@code filePath}.
      */
@@ -124,5 +143,30 @@ public class XmlAddressBookStorageTest {
         saveAddressBook(new AddressBook(), null);
     }
 
+    //@@author limcel
+    @Test
+    public void createNewXmlAdaptedScheduleTest() throws IllegalValueException {
+        Calendar date = Calendar.getInstance();
+        String personToAdd = TypicalPersons.ALICE.getName().toString();
+
+        Schedule expectedSchedule = new Schedule(personToAdd, date);
+
+        XmlAdaptedSchedule newSchedule = new XmlAdaptedSchedule(expectedSchedule);
+
+        UniqueScheduleList scheduleList = new UniqueScheduleList();
+        scheduleList.add(newSchedule.toModelType());
+
+        assertTrue(expectedSchedule, scheduleList.asObservableList().get(0));
+    }
+
+    //====================================== HELPER METHODS ========================================
+
+    /**
+     * Checks if the expectedSchedule is equals to the schedule in the storage
+     */
+    private boolean assertTrue(Schedule expectedSchedule, Schedule schedule) {
+        return expectedSchedule.equals(schedule);
+    }
+    //@@author
 
 }

@@ -4,9 +4,9 @@
 }
 
 .label {
-    -fx-font-size: 11pt;
+    -fx-font-size: 10pt;
     -fx-font-family: "Segoe UI Semibold";
-    -fx-text-fill: #555555;
+    -fx-text-fill: white;
     -fx-opacity: 0.9;
 }
 
@@ -53,7 +53,7 @@
 }
 
 .table-view .column-header, .table-view .filler {
-    -fx-size: 35;
+    -fx-size: 35px;
     -fx-border-width: 0 0 1 0;
     -fx-background-color: transparent;
     -fx-border-color:
@@ -90,6 +90,7 @@
 .list-view {
     -fx-background-insets: 0;
     -fx-padding: 0;
+    -fx-background-color: transparent, derive(#1d1d1d, 20%);
 }
 
 .list-cell {
@@ -122,13 +123,13 @@
 .cell_big_label {
     -fx-font-family: "Segoe UI Semibold";
     -fx-font-size: 16px;
-    -fx-text-fill: #010504;
+    -fx-text-fill: #ffffff;
 }
 
 .cell_small_label {
     -fx-font-family: "Segoe UI";
     -fx-font-size: 13px;
-    -fx-text-fill: #010504;
+    -fx-text-fill: #ffffff;
 }
 
 .anchor-pane {
@@ -205,6 +206,44 @@
     -fx-background-color: black;
 }
 
+.axis {
+    -fx-tick-label-fill: #ffffff;
+}
+
+.axis-label {
+    -fx-text-fill: white;
+}
+
+.chart-title {
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 1.6em;
+}
+
+.tab-pane .tab-header-area .tab-header-background {
+    -fx-effect: null;
+}
+
+.tab-pane .tab-header-area .tab-header-background {
+    -fx-opacity: 0;
+}
+
+.tab-pane {
+    -fx-tab-max-width: 200px;
+    -fx-tab-min-width: 100px;
+}
+
+#tabPaneGraphs .tab {
+    -fx-background-color: #606060;
+}
+
+#tabPaneGraphs .tab:selected {
+    -fx-background-color: #ffffff;
+    -fx-focus-color:transparent;
+}
+
+.default-color0.chart-bar{
+    -fx-bar-fill: #4169E1;
+}
 /*
  * Metro style Push Button
  * Author: Pedro Duque Vieira
@@ -234,7 +273,7 @@
 .button:focused {
     -fx-border-color: white, white;
     -fx-border-width: 1, 1;
-    -fx-border-style: solid, segments(1, 1);
+    -fx-border-style: solid;
     -fx-border-radius: 0, 0;
     -fx-border-insets: 1 1 1 1, 0;
 }
@@ -318,11 +357,11 @@
 #commandTextField {
     -fx-background-color: transparent #383838 transparent #383838;
     -fx-background-insets: 0;
-    -fx-border-color: #383838 #383838 #ffffff #383838;
+    -fx-border-color: #ffffff #ffffff #ffffff #ffffff;
     -fx-border-insets: 0;
     -fx-border-width: 1;
     -fx-font-family: "Segoe UI Light";
-    -fx-font-size: 13pt;
+    -fx-font-size: 15pt;
     -fx-text-fill: white;
 }
 
@@ -347,4 +386,40 @@
     -fx-border-radius: 2;
     -fx-background-radius: 2;
     -fx-font-size: 11;
+}
+
+#groupStatistics {
+    -fx-text-fill: white;
+}
+
+#mean {
+    -fx-text-fill: white;
+}
+
+#median {
+    -fx-text-fill: white;
+}
+
+#mode {
+    -fx-text-fill: white;
+}
+
+#variance {
+    -fx-text-fill: white;
+}
+
+#standardDeviation {
+    -fx-text-fill: white;
+}
+
+#quartile3 {
+    -fx-text-fill: white;
+}
+
+#quartile1 {
+    -fx-text-fill: white;
+}
+
+#interQuartileRange {
+    -fx-text-fill: white;
 }

@@ -18,6 +18,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.schedule.Schedule;
 import seedu.address.model.tag.Tag;
 
 public class AddressBookTest {
@@ -31,6 +32,7 @@ public class AddressBookTest {
     public void constructor() {
         assertEquals(Collections.emptyList(), addressBook.getPersonList());
         assertEquals(Collections.emptyList(), addressBook.getTagList());
+        assertEquals(Collections.emptyList(), addressBook.getScheduleList());
     }
 
     @Test
@@ -51,7 +53,8 @@ public class AddressBookTest {
         // Repeat ALICE twice
         List<Person> newPersons = Arrays.asList(new Person(ALICE), new Person(ALICE));
         List<Tag> newTags = new ArrayList<>(ALICE.getTags());
-        AddressBookStub newData = new AddressBookStub(newPersons, newTags);
+        List<Schedule> newSchedules = new ArrayList<>();
+        AddressBookStub newData = new AddressBookStub(newPersons, newTags, newSchedules);
 
         thrown.expect(AssertionError.class);
         addressBook.resetData(newData);
@@ -69,16 +72,27 @@ public class AddressBookTest {
         addressBook.getTagList().remove(0);
     }
 
+    //@@author limcel
+    @Test
+    public void getScheduleList_modifyList_throwsUnsupportedOperationException() {
+        thrown.expect(UnsupportedOperationException.class);
+        addressBook.getScheduleList().remove(0);
+    }
+    //@@author
+
     /**
      * A stub ReadOnlyAddressBook whose persons and tags lists can violate interface constraints.
      */
     private static class AddressBookStub implements ReadOnlyAddressBook {
         private final ObservableList<ReadOnlyPerson> persons = FXCollections.observableArrayList();
         private final ObservableList<Tag> tags = FXCollections.observableArrayList();
+        private final ObservableList<Schedule> schedules = FXCollections.observableArrayList();
 
-        AddressBookStub(Collection<? extends ReadOnlyPerson> persons, Collection<? extends Tag> tags) {
+        AddressBookStub(Collection<? extends ReadOnlyPerson> persons, Collection<? extends Tag> tags,
+                        Collection<? extends Schedule> schedules) {
             this.persons.setAll(persons);
             this.tags.setAll(tags);
+            this.schedules.setAll(schedules);
         }
 
         @Override
@@ -90,6 +104,13 @@ public class AddressBookTest {
         public ObservableList<Tag> getTagList() {
             return tags;
         }
+
+        //@@author limcel
+        @Override
+        public ObservableList<Schedule> getScheduleList() {
+            return schedules;
+        }
+        //@@author
     }
 
 }

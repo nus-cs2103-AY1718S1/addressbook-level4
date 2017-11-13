@@ -10,15 +10,23 @@ import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.DeleteScheduleCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.FindTagsCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
+import seedu.address.logic.commands.HomeCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.RemarkCommand;
+import seedu.address.logic.commands.ScheduleCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.SortCommand;
+import seedu.address.logic.commands.TabCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.ViewScheduleCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -46,30 +54,47 @@ public class AddressBookParser {
 
         final String commandWord = matcher.group("commandWord");
         final String arguments = matcher.group("arguments");
+        //@@author lincredibleJC
         switch (commandWord) {
 
-        case AddCommand.COMMAND_WORD:
+        case AddCommand.COMMAND_WORD://Fallthrough
+        case AddCommand.COMMAND_ALIAS:
             return new AddCommandParser().parse(arguments);
 
-        case EditCommand.COMMAND_WORD:
+        case EditCommand.COMMAND_WORD://Fallthrough
+        case EditCommand.COMMAND_ALIAS:
             return new EditCommandParser().parse(arguments);
 
-        case SelectCommand.COMMAND_WORD:
+        case SelectCommand.COMMAND_WORD://Fallthrough
+        case SelectCommand.COMMAND_ALIAS:
             return new SelectCommandParser().parse(arguments);
 
-        case DeleteCommand.COMMAND_WORD:
+        case ScheduleCommand.COMMAND_WORD://Fallthrough
+        case ScheduleCommand.COMMAND_ALIAS:
+            return new ScheduleCommandParser().parse(arguments);
+
+        case DeleteCommand.COMMAND_WORD://Fallthrough
+        case DeleteCommand.COMMAND_ALIAS:
             return new DeleteCommandParser().parse(arguments);
 
-        case ClearCommand.COMMAND_WORD:
+        case ClearCommand.COMMAND_WORD://Fallthrough
+        case ClearCommand.COMMAND_ALIAS:
             return new ClearCommand();
 
-        case FindCommand.COMMAND_WORD:
+        case FindCommand.COMMAND_WORD://Fallthrough
+        case FindCommand.COMMAND_ALIAS:
             return new FindCommandParser().parse(arguments);
 
-        case ListCommand.COMMAND_WORD:
+        case FindTagsCommand.COMMAND_WORD://Fallthrough
+        case FindTagsCommand.COMMAND_ALIAS:
+            return new FindTagsCommandParser().parse(arguments);
+
+        case ListCommand.COMMAND_WORD://Fallthrough
+        case ListCommand.COMMAND_ALIAS:
             return new ListCommand();
 
-        case HistoryCommand.COMMAND_WORD:
+        case HistoryCommand.COMMAND_WORD://Fallthrough
+        case HistoryCommand.COMMAND_ALIAS:
             return new HistoryCommand();
 
         case ExitCommand.COMMAND_WORD:
@@ -78,15 +103,39 @@ public class AddressBookParser {
         case HelpCommand.COMMAND_WORD:
             return new HelpCommand();
 
-        case UndoCommand.COMMAND_WORD:
+        case UndoCommand.COMMAND_WORD://Fallthrough
+        case UndoCommand.COMMAND_ALIAS:
             return new UndoCommand();
 
-        case RedoCommand.COMMAND_WORD:
+        case RedoCommand.COMMAND_WORD://Fallthrough
+        case RedoCommand.COMMAND_ALIAS:
             return new RedoCommand();
+
+        case SortCommand.COMMAND_WORD:
+        case SortCommand.COMMAND_ALIAS:
+            return new SortCommand();
+
+        case ViewScheduleCommand.COMMAND_WORD:
+        case ViewScheduleCommand.COMMAND_ALIAS:
+            return new ViewScheduleCommand();
+
+        case DeleteScheduleCommand.COMMAND_WORD:
+        case DeleteScheduleCommand.COMMAND_ALIAS:
+            return new DeleteScheduleCommandParser().parse(arguments);
+
+        case RemarkCommand.COMMAND_WORD:
+        case RemarkCommand.COMMAND_ALIAS:
+            return new RemarkCommandParser().parse(arguments);
+
+        case TabCommand.COMMAND_WORD:
+            return new TabCommandParser().parse(arguments);
+
+        case HomeCommand.COMMAND_WORD:
+            return new HomeCommand();
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }
+        //@@author
     }
-
 }

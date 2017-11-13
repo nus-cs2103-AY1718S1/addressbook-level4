@@ -20,24 +20,33 @@ import org.junit.rules.ExpectedException;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Grades;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.ParentPhone;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Remark;
 import seedu.address.model.tag.Tag;
 
 public class ParserUtilTest {
     private static final String INVALID_NAME = "R@chel";
-    private static final String INVALID_PHONE = "+651234";
+    private static final String INVALID_PHONE = "97997";
     private static final String INVALID_ADDRESS = " ";
     private static final String INVALID_EMAIL = "example.com";
+    private static final String INVALID_GRADES = "-123";
     private static final String INVALID_TAG = "#friend";
+    private static final String INVALID_PARENTPHONE = "9872111b";
+    private static final String INVALID_REMARK = null;
+
 
     private static final String VALID_NAME = "Rachel Walker";
-    private static final String VALID_PHONE = "123456";
+    private static final String VALID_PARENTPHONE = "97272011";
+    private static final String VALID_PHONE = "97979797";
     private static final String VALID_ADDRESS = "123 Main Street #0505";
     private static final String VALID_EMAIL = "rachel@example.com";
+    private static final String VALID_GRADES = "123.0";
+    private static final String VALID_REMARK = "Top 25 percentile";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
-
     @Rule
     public final ExpectedException thrown = ExpectedException.none();
 
@@ -163,6 +172,88 @@ public class ParserUtilTest {
         assertEquals(expectedEmail, actualEmail.get());
     }
 
+    //@@author Lenaldnwj
+    @Test
+    public void parseParentPhone_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseParentPhone(null);
+    }
+
+    @Test
+    public void parseParentPhone_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseParentPhone(Optional.of(INVALID_PARENTPHONE));
+    }
+
+    @Test
+    public void parseParentPhone_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseParentPhone(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseParentPhone_validValue_returnsParentPhone() throws Exception {
+        ParentPhone expectedParentPhone = new ParentPhone(VALID_PARENTPHONE);
+        Optional<ParentPhone> actualGrades = ParserUtil.parseParentPhone(Optional.of(VALID_PARENTPHONE));
+
+        assertEquals(expectedParentPhone, actualGrades.get());
+    }
+
+    //@@author
+
+    //@@author lincredibleJC
+    @Test
+    public void parseGrades_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseGrades(null);
+    }
+
+    @Test
+    public void parseGrades_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseGrades(Optional.of(INVALID_GRADES));
+    }
+
+    @Test
+    public void parseGrades_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseGrades(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseGrades_validValue_returnsGrade() throws Exception {
+        Grades expectedGrades = new Grades(VALID_GRADES);
+        Optional<Grades> actualGrades = ParserUtil.parseGrades(Optional.of(VALID_GRADES));
+
+        assertEquals(expectedGrades, actualGrades.get());
+    }
+    //@@author
+
+    @Test
+    public void parseRemark_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseEmail(null);
+    }
+
+    //@@author nahtanojmil
+    @Test
+    public void parseRemark_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseRemark(Optional.of(INVALID_REMARK));
+    }
+
+    @Test
+    public void parseRemark_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseRemark(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseRemark_validValue_returnsEmail() throws Exception {
+        Remark expectedRemark = new Remark(VALID_REMARK);
+        Optional<Remark> actualRemark = ParserUtil.parseRemark(Optional.of(VALID_REMARK));
+
+        assertEquals(expectedRemark, actualRemark.get());
+    }
+    //@@author
+
     @Test
     public void parseTags_null_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
@@ -187,4 +278,16 @@ public class ParserUtilTest {
 
         assertEquals(expectedTagSet, actualTagSet);
     }
+    //@@author limcel
+    @Test
+    public void parseSchedule_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseSchedule(null);
+    }
+
+    @Test
+    public void parseSchedule_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseSchedule(Optional.empty()).isPresent());
+    }
+    //@@author
 }

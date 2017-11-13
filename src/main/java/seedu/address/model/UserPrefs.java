@@ -68,11 +68,9 @@ public class UserPrefs {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Gui Settings : " + guiSettings.toString());
-        sb.append("\nLocal data file location : " + addressBookFilePath);
-        sb.append("\nAddressBook name : " + addressBookName);
-        return sb.toString();
+        return ("Gui Settings : " + guiSettings.toString())
+                + "\nLocal data file location : " + addressBookFilePath
+                + "\nAddressBook name : " + addressBookName;
     }
 
 }

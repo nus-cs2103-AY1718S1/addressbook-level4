@@ -16,4 +16,15 @@ public class UniqueTagListTest {
         thrown.expect(UnsupportedOperationException.class);
         uniqueTagList.asObservableList().remove(0);
     }
+
+    //@@author limcel
+    @Test
+    public void testForDuplicateTags() {
+        UniqueTagList uniqueTagList = new UniqueTagList();
+        for (int i = 0; i < uniqueTagList.asObservableList().size(); i++) {
+            thrown.expect(UniqueTagList.DuplicateTagException.class);
+            uniqueTagList.asObservableList().remove(uniqueTagList.asObservableList().remove(i));
+        }
+    }
+    //@@author
 }

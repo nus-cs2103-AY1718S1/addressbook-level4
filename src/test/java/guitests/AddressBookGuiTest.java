@@ -9,7 +9,6 @@ import org.junit.Rule;
 import org.junit.rules.TestName;
 import org.testfx.api.FxToolkit;
 
-import guitests.guihandles.BrowserPanelHandle;
 import guitests.guihandles.CommandBoxHandle;
 import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.MainWindowHandle;
@@ -49,9 +48,7 @@ public abstract class AddressBookGuiTest {
 
     @Before
     public void setup() throws Exception {
-        FxToolkit.setupStage((stage) -> {
-            this.stage = stage;
-        });
+        FxToolkit.setupStage((stage) -> this.stage = stage);
         FxToolkit.setupApplication(() -> new TestApp(this::getInitialData, getDataFileLocation()));
         FxToolkit.showStage();
 
@@ -77,10 +74,6 @@ public abstract class AddressBookGuiTest {
 
     protected MainMenuHandle getMainMenu() {
         return mainWindowHandle.getMainMenu();
-    }
-
-    protected BrowserPanelHandle getBrowserPanel() {
-        return mainWindowHandle.getBrowserPanel();
     }
 
     protected StatusBarFooterHandle getStatusBarFooter() {

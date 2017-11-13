@@ -1,5 +1,11 @@
 package seedu.address.ui;
 
+import java.awt.Color;
+import java.util.ArrayList;
+import java.util.Formatter;
+import java.util.HashMap;
+import java.util.Random;
+
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -13,7 +19,14 @@ import seedu.address.model.person.ReadOnlyPerson;
  */
 public class PersonCard extends UiPart<Region> {
 
+    //@@author Lenaldnwj
     private static final String FXML = "PersonListCard.fxml";
+
+    private static HashMap<String, String> currentTagColors = new HashMap<String, String>();
+
+    private static String assignedColor;
+
+    private static ArrayList<String> usedColors = new ArrayList<>();
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -34,9 +47,9 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label phone;
     @FXML
-    private Label address;
+    private Label parentPhone;
     @FXML
-    private Label email;
+    private Label formClass;
     @FXML
     private FlowPane tags;
 
@@ -44,8 +57,54 @@ public class PersonCard extends UiPart<Region> {
         super(FXML);
         this.person = person;
         id.setText(displayedIndex + ". ");
-        initTags(person);
+        initialiseTags(person);
         bindListeners(person);
+    }
+
+    /**
+     * This method takes in the tagName, and returns the color associated with that tagName
+     * If the if the tag has no associated color, a unique random color will be assigned to the tag.
+=     *
+     * @param tagName is the String name of the tag
+     * @return the color associated to the tagName
+     */
+    public static String obtainTagColors(String tagName) {
+        if (!currentTagColors.containsKey(tagName)) {
+            do {
+                Random random = new Random();
+                final float hue = random.nextFloat();
+                final float saturation = 0.65f + random.nextFloat()
+                        * (0.90f - 0.65f);
+                final float luminance = 0.60f + random.nextFloat()
+                        * (0.90f - 0.60f);
+
+                Color color = Color.getHSBColor(hue, saturation, luminance);
+
+                Formatter hexRepresentation = new Formatter(new StringBuffer("#"));
+                hexRepresentation.format("%02X", color.getRed());
+                hexRepresentation.format("%02X", color.getGreen());
+                hexRepresentation.format("%02X", color.getBlue());
+                assignedColor = hexRepresentation.toString();
+            } while (usedColors.contains(assignedColor));
+
+            usedColors.add(assignedColor);
+            currentTagColors.put(tagName, assignedColor);
+        }
+        return currentTagColors.get(tagName);
+    }
+
+    /**
+     * To access private String assignedColor for testing
+     */
+    public String getAssignedTagColor() {
+        return this.assignedColor;
+    }
+
+    /**
+     * To access private ArrayList usedColor for testing
+     */
+    public ArrayList getUsedColor() {
+        return this.usedColors;
     }
 
     /**
@@ -55,18 +114,11 @@ public class PersonCard extends UiPart<Region> {
     private void bindListeners(ReadOnlyPerson person) {
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
-        address.textProperty().bind(Bindings.convert(person.addressProperty()));
-        email.textProperty().bind(Bindings.convert(person.emailProperty()));
-        person.tagProperty().addListener((observable, oldValue, newValue) -> {
-            tags.getChildren().clear();
-            person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
-        });
+        parentPhone.textProperty().bind(Bindings.convert(person.parentPhoneProperty()));
+        formClass.textProperty().bind(Bindings.convert(person.formClassProperty()));
+        tags.getChildren().clear();
+        initialiseTags(person);
     }
-
-    private void initTags(ReadOnlyPerson person) {
-        person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
-    }
-
     @Override
     public boolean equals(Object other) {
         // short circuit if same object
@@ -84,4 +136,18 @@ public class PersonCard extends UiPart<Region> {
         return id.getText().equals(card.id.getText())
                 && person.equals(card.person);
     }
+    /**
+     * Initialise the {@code person} tags
+     *
+     * @param person Person to be assigned tag colour.
+     */
+    private void initialiseTags(ReadOnlyPerson person) {
+        person.getTags().forEach(tag -> {
+            Label tagLabel = new Label(tag.tagName);
+
+            tagLabel.setStyle("-fx-background-color: " + obtainTagColors(tag.tagName));
+            tags.getChildren().add(tagLabel);
+        });
+    }
+
 }

@@ -6,7 +6,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.function.Predicate;
 
 import org.junit.Rule;
@@ -24,6 +24,9 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.schedule.Schedule;
+import seedu.address.model.schedule.exceptions.ScheduleNotFoundException;
+import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandTest {
@@ -45,7 +48,7 @@ public class AddCommandTest {
         CommandResult commandResult = getAddCommandForPerson(validPerson, modelStub).execute();
 
         assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, validPerson), commandResult.feedbackToUser);
-        assertEquals(Arrays.asList(validPerson), modelStub.personsAdded);
+        assertEquals(Collections.singletonList(validPerson), modelStub.personsAdded);
     }
 
     @Test
@@ -122,6 +125,35 @@ public class AddCommandTest {
                 throws DuplicatePersonException {
             fail("This method should not be called.");
         }
+
+        //@@author limcel
+        @Override
+        public void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<ReadOnlyPerson> sortByPersonName() throws NullPointerException {
+            fail("This method should not be called.");
+            return getFilteredPersonList();
+        }
+
+        @Override
+        public void addSchedule(Schedule schedule) throws PersonNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void removeSchedule(Schedule schedule) throws ScheduleNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<Schedule> getScheduleList() {
+            fail("This method should not be called.");
+            return getScheduleList();
+        }
+        //@@author
 
         @Override
         public ObservableList<ReadOnlyPerson> getFilteredPersonList() {

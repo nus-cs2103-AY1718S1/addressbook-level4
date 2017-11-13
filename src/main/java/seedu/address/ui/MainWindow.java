@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
@@ -18,6 +19,8 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.HomeRequestEvent;
+import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
@@ -29,7 +32,7 @@ import seedu.address.model.UserPrefs;
  */
 public class MainWindow extends UiPart<Region> {
 
-    private static final String ICON = "/images/address_book_32.png";
+    private static final String ICON = "/images/cherbookicon.jpg";
     private static final String FXML = "MainWindow.fxml";
     private static final int MIN_HEIGHT = 600;
     private static final int MIN_WIDTH = 450;
@@ -40,13 +43,12 @@ public class MainWindow extends UiPart<Region> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private BrowserPanel browserPanel;
+    private ExtendedPersonCard extendedPersonCard;
+    private StatisticsPanel statisticsPanel;
+    private GraphPanel graphPanel;
     private PersonListPanel personListPanel;
     private Config config;
     private UserPrefs prefs;
-
-    @FXML
-    private StackPane browserPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -62,6 +64,15 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private StackPane statusbarPlaceholder;
+
+    @FXML
+    private StackPane extendedScreenPlaceHolder;
+
+    @FXML
+    private SplitPane statsGraphPlaceHolder;
+
+    @FXML
+    private SplitPane detailsStatsPlaceHolder;
 
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
@@ -94,6 +105,7 @@ public class MainWindow extends UiPart<Region> {
 
     /**
      * Sets the accelerator of a MenuItem.
+     *
      * @param keyCombination the KeyCombination value of the accelerator
      */
     private void setAccelerator(MenuItem menuItem, KeyCombination keyCombination) {
@@ -122,15 +134,19 @@ public class MainWindow extends UiPart<Region> {
         });
     }
 
+    //@@author nahtanojmil
     /**
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
-
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+
+        extendedPersonCard = new ExtendedPersonCard();
+
+        GraphPanel graphPanel = new GraphPanel(logic);
+
+        StatisticsPanel statisticsPanel = new StatisticsPanel(logic.getFilteredPersonList());
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
@@ -140,8 +156,28 @@ public class MainWindow extends UiPart<Region> {
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
+        detailsStatsPlaceHolder.getItems().set(0, extendedPersonCard.getRoot());
+        detailsStatsPlaceHolder.getItems().set(1, statisticsPanel.getRoot());
+        statsGraphPlaceHolder.getItems().set(0, detailsStatsPlaceHolder);
+        statsGraphPlaceHolder.getItems().set(1, graphPanel.getRoot());
     }
 
+    //@@author nahtanojmil
+    /**
+     * change to home display page when the home command is parsed. @param valid
+     */
+    public void setScreenDisplay(boolean valid) {
+        HomePanel homePanel = new HomePanel(prefs);
+        if (valid) {
+            extendedScreenPlaceHolder.getChildren().removeAll();
+            extendedScreenPlaceHolder.getChildren().setAll(homePanel.getRoot());
+            homePanel.refreshPage();
+        } else {
+            extendedScreenPlaceHolder.getChildren().removeAll();
+            extendedScreenPlaceHolder.getChildren().setAll(statsGraphPlaceHolder);
+        }
+    }
     void hide() {
         primaryStage.hide();
     }
@@ -152,6 +188,7 @@ public class MainWindow extends UiPart<Region> {
 
     /**
      * Sets the given image as the icon of the main window.
+     *
      * @param iconSource e.g. {@code "/images/help_icon.png"}
      */
     private void setIcon(String iconSource) {
@@ -170,7 +207,7 @@ public class MainWindow extends UiPart<Region> {
         }
     }
 
-    private void setWindowMinSize() {
+    public void setWindowMinSize() {
         primaryStage.setMinHeight(MIN_HEIGHT);
         primaryStage.setMinWidth(MIN_WIDTH);
     }
@@ -208,13 +245,31 @@ public class MainWindow extends UiPart<Region> {
         return this.personListPanel;
     }
 
-    void releaseResources() {
-        browserPanel.freeResources();
+    public ExtendedPersonCard getExtendedPersonCard() {
+        return this.extendedPersonCard;
+    }
+
+    public GraphPanel getGraphPanel() {
+        return this.graphPanel;
+    }
+
+    public StatisticsPanel getStatisticsPanel() {
+        return this.statisticsPanel;
     }
 
     @Subscribe
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
+    }
+
+    @Subscribe
+    private void handleJumpRequestEvent(JumpToListRequestEvent event) {
+        setScreenDisplay(false);
+    }
+
+    @Subscribe
+    private void handleHomeRequest (HomeRequestEvent event) {
+        setScreenDisplay(true);
     }
 }
