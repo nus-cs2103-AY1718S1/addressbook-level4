@@ -45,8 +45,9 @@ public class CalendarPanel extends UiPart<Region> {
 
     private static final String FXML = "CalendarPanel.fxml";
 
-    private final Logger logger = LogsCenter.getLogger(this.getClass());
     private static Clock clock = Clock.systemDefaultZone();
+
+    private final Logger logger = LogsCenter.getLogger(this.getClass());
     private final Logic logic;
     private final Model model;
 
@@ -293,7 +294,6 @@ public class CalendarPanel extends UiPart<Region> {
         String lastUpdated = new Date(now).toString();
         logger.info(LogsCenter.getEventHandlingLogMessage(abc, "Calender updated status to " + lastUpdated));
         setDate(model.getAddressBook().getPersonList(), model.getAddressBook().getTaskList());
-        //loadDefaultPage();
         updateCalender();
     }
 }
