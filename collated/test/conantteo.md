@@ -182,8 +182,6 @@ public class IndexArrayUtilTest {
     }
 }
 ```
-<<<<<<< HEAD
-=======
 ###### \java\seedu\address\commons\util\StringUtilTest.java
 ``` java
     @Test
@@ -223,7 +221,6 @@ public class IndexArrayUtilTest {
     }
 }
 ```
->>>>>>> bd7f7c248711b469ccd96ffcda72d62ab2bae828
 ###### \java\seedu\address\logic\commands\EmailCommandTest.java
 ``` java
 package seedu.address.logic.commands;
