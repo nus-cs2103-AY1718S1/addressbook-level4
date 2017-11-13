@@ -79,17 +79,20 @@ Examples:
 Shows a list of all persons in the Contact Book. +
 Format: `list`
 
-=== Editing a person : `edit`
+=== Editing people : `edit`
 
 Edits an existing person in the Contact Book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG_TO_ADD] [-t/TAG_TO_REMOVE]...`
+Format: `edit [INDEX]... [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG_TO_ADD] [-t/TAG_TO_REMOVE]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* There can be multiple indices separated by one or more whitespace characters.
+*USE THIS CAREFULLY as this changes multiple contacts*
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values. If no input value is specified, the corresponding field will be removed (except name and phone which are compulsory fields).
 * When editing tags, the existing tags of the person will be cumulatively added or removed.
-* If TAG_TO_ADD has a duplicate or TAG_TO_REMOVE is absent in the edited person, the specified change will be ignored
+* If TAG_TO_ADD has a duplicate or TAG_TO_REMOVE is absent in the edited person,
+the specified tags will be ignored
 * You can remove all the person's tags by typing `t/` or `-t/` without specifying any tags after it.
 ****
 
@@ -99,8 +102,8 @@ Examples:
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
-* `edit 2 t/best -t/worst` +
-Removes tag `worst` and adds tag `best` to the second person
+* `edit 1  2 t/best -t/worst` +
+Removes tag `worst` and adds tag `best` to the first and the second persons.
 
 // tag::search[]
 === Locating persons: The search box
@@ -139,6 +142,11 @@ Displays persons having 8269 as a prefix of his/her phone numbers
 * `friends` +
 Displays all persons tagged as `friends`
 // end::search[]
+
+=== Grouping contacts
+Grouping contacts is achieved with `edit` and the search box. Simply `edit` the people
+you want to group with `t/GROUP NAME`, and you can perform search to find the group you want.
+When you want someone out of a group, search him, `edit` him with `-t/GROUP TO KICK OUT FROM`.
 
 === Deleting a person : `delete`
 
