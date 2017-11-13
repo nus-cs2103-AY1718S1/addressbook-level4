@@ -1,6 +1,5 @@
 package seedu.address.autocomplete.parser;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.AMY;
@@ -16,12 +15,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import seedu.address.autocomplete.AutoCompleteTestUtils;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.Person;
@@ -36,10 +34,12 @@ public class AutoCompleteWordInNameParserTest {
     private AutoCompleteWordInNameParser parser;
     private ModelStubWithRequiredMethods mockModel;
     private final List<ReadOnlyPerson> allPersonsAdded = Arrays.asList(
-            new ReadOnlyPerson[]{ALICE, AMY, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE});
+            ALICE, AMY, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE);
 
-    @Before
-    public void fillMockModel() {
+    //@@author john19950730
+    @Test
+    public void testParsePossibilities() {
+
         mockModel = new ModelStubWithRequiredMethods();
         try {
             mockModel.addAllPersons(allPersonsAdded);
@@ -47,43 +47,32 @@ public class AutoCompleteWordInNameParserTest {
             fail("This exception should not be thrown.");
         }
         parser = new AutoCompleteWordInNameParser(mockModel);
-    }
 
-    //@@author john19950730
-    @Test
-    public void testParsePossibilities() {
         // multiple matches
         String preamble = "find A";
-        assertEquals(parser.parseForPossibilities(preamble),
-                Arrays.asList(preamble + "lice",
-                        preamble + "my",
-                        preamble));
+        AutoCompleteTestUtils.assertParserPossibilities(preamble, parser,
+                preamble + "lice",
+                preamble + "my");
 
         // single match
         preamble = "find P";
-        assertEquals(parser.parseForPossibilities(preamble),
-                Arrays.asList(preamble + "auline",
-                        preamble));
+        AutoCompleteTestUtils.assertParserPossibilities(preamble, parser,
+                preamble + "auline");
 
         // single duplicate match
         preamble = "find Mey";
-        assertEquals(parser.parseForPossibilities(preamble),
-                Arrays.asList(preamble + "er",
-                        preamble));
+        AutoCompleteTestUtils.assertParserPossibilities(preamble, parser,
+                preamble + "er");
 
         // no match
         preamble = "find Z";
-        assertEquals(parser.parseForPossibilities(preamble),
-                Arrays.asList(preamble));
-    }
+        AutoCompleteTestUtils.assertParserPossibilities(preamble, parser);
 
-    //@@author
-    @After
-    public void cleanUpMockModel() {
         mockModel = null;
         parser = null;
     }
 
+    //@@author
     /**
      * A Model stub that allows calling of certain methods used in the test,
      * including some required accessors and addPerson

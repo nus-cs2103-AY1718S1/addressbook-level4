@@ -7,8 +7,7 @@
 public class ChangeThemeEvent extends BaseEvent {
 
     public final String theme;
-    public ChangeThemeEvent(String theme)
-    {
+    public ChangeThemeEvent(String theme) {
         this.theme = theme;
     }
     @Override
@@ -16,8 +15,7 @@ public class ChangeThemeEvent extends BaseEvent {
         return this.getClass().getSimpleName();
 
     }
-    public String getTheme()
-    {
+    public String getTheme() {
         return this.theme;
     }
 

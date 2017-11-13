@@ -1,12 +1,12 @@
 package seedu.address.autocomplete.parser;
 
-import static org.junit.Assert.assertEquals;
-
 import java.util.Arrays;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+
+import seedu.address.autocomplete.AutoCompleteTestUtils;
 
 //@@author john19950730
 public class AutoCompleteSetStringParserTest {
@@ -14,26 +14,23 @@ public class AutoCompleteSetStringParserTest {
     public ExpectedException thrown = ExpectedException.none();
 
     private final AutoCompleteSetStringParser parser = new AutoCompleteSetStringParser(Arrays.asList(
-            new String[] {"apple", "banana", "coriander", "disneyland", "enderman", "application"}
-    ));
+            "apple", "banana", "coriander", "disneyland", "enderman", "application"));
 
     @Test
     public void testSetStringParser() {
         //all match, parser is greedy
-        assertEquals(parser.parseForPossibilities(""),
-                Arrays.asList(
-                        new String[] {"apple", "banana", "coriander", "disneyland", "enderman", "application", ""}));
+        AutoCompleteTestUtils.assertParserPossibilities("", parser,
+                "apple", "banana", "coriander", "disneyland", "enderman", "application");
 
         //multiple matches
-        assertEquals(parser.parseForPossibilities("appl"),
-                Arrays.asList(new String[] {"apple", "application", "appl"}));
+        AutoCompleteTestUtils.assertParserPossibilities("appl", parser,
+                "apple", "application");
 
         //single match
-        assertEquals(parser.parseForPossibilities("dis"),
-                Arrays.asList(new String[] {"disneyland", "dis"}));
+        AutoCompleteTestUtils.assertParserPossibilities("dis", parser,
+                "disneyland");
 
         //no match, does not match 'contains'
-        assertEquals(parser.parseForPossibilities("an"),
-                Arrays.asList(new String[] {"an"}));
+        AutoCompleteTestUtils.assertParserPossibilities("an", parser);
     }
 }

@@ -23,6 +23,8 @@ public class ImportCommand extends UndoableCommand {
     public static final String MESSAGE_FILE_CORRUPT = "File is corrupted. Please check.";
     public static final String MESSAGE_FILE_NOT_FOUND = "File was not found in specified directory.";
     public static final String MESSAGE_IMPORT_CANCELLED = "Import cancelled";
+    public static final String MESSAGE_FILE_INVALID = "File might not have been exported from Rubrika"
+            + " and contains missing fields.";
     public static final String XML_EXTENSION = ".xml";
     public static final String VCF_EXTENSION = ".vcf";
 

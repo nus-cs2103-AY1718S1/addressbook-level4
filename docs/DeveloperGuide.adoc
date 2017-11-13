@@ -137,14 +137,15 @@ link:#common-classes[*`Commons`*] represents a collection of classes used by mul
 * `EventsCenter` : This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design)
 * `LogsCenter` : Used by many classes to write log messages to the App's log file.
 
-The rest of the App consists of four components.
+The rest of the App consists of five components.
 
 * link:#ui-component[*`UI`*] : The UI of the App.
 * link:#logic-component[*`Logic`*] : The command executor.
 * link:#model-component[*`Model`*] : Holds the data of the App in-memory.
 * link:#storage-component[*`Storage`*] : Reads data from, and writes data to, the hard disk.
+* link:#autocomplete-component[*`AutoCompleteLogic`*] : Completes user commands.
 
-Each of the four components
+Each of the five components
 
 * Defines its _API_ in an `interface` with the same name as the Component.
 * Exposes its functionality using a `{Component Name}Manager` class.
@@ -238,6 +239,18 @@ The `Storage` component,
 
 * can save `UserPref` objects in json format and read it back.
 * can save the Address Book data in xml format and read it back.
+
+=== AutoCompleteLogic component
+
+image::AutoCompleteLogicClassDiagram.png[width="800"]
+_Figure 3.6.1 : Structure of the AutoCompleteLogic Component_
+
+*API* : link:{repoURL}/src/main/java/seedu/address/autocomplete/AutoCompleteLogic.java[`AutoCompleteLogic.java`]
+
+The `AutoCompleteLogic` component,
+
+* can take in incomplete user input and generate a list of possible autocomplete options.
+* can store autocomplete options such that new lists need not be generated every time.
 
 === Common classes
 
@@ -404,6 +417,9 @@ The list of options is generated according to several defining characteristics o
 
 An `AutoCompleteParser` will be chosen for the 'stub' based on the characteristics listed above, each of the specialize in fetching and matching different sets of data.
 
+image::AutoCompleteLogicSequenceDiagram.png[width="200"]
+_Figure 4.2.1 : Sequence diagram of `AutoCompleteLogic` in action._
+
 Different implementations of `AutoCompleteParser` to parse different options shall be explained below.
 
 ==== `AutoCompleteCommandParser`
@@ -483,7 +499,6 @@ This flattened list is then matched with the incomplete user input stub, such th
 
 ---
 
-(added v1.3)
 **Aspect:** Implement dropdown menu UI for autocomplete +
 **Alternative 1 (current choice):** No dropdown menu
 **Pros:** No need for additional UI component. +
@@ -580,6 +595,11 @@ The sort function is done by performing the `sortFilteredPersonList` function wh
 
 Within `ModelManager`, we mask `FilteredList` with a `SortedList` object, and call `sortFilteredPersonList` method within `Model`. This sets the comparator that been parsed by `SortCommandParser` into the `SortedList` filtered list. For each different way of sorting, a different comparator is being passed into `sortFilteredPersonList`. +
 
+The following is a sequence diagram detailing the process of how `SortCommand` sorts the list of persons. +
+
+image::SortSequenceDiagram.png[width="800"]
+_Figure 4.6.1 : Sequence Diagram of sort function_
+
 Below is the code fragment found in `Model`.
 
 ----
@@ -607,53 +627,29 @@ If arguments given do not comply with the correct format, ParseException will be
 // tag::importexport[]
 === Import function
 
-The import function supports importing of vCard files (.vcf) and xml files (.xml).
+The `import` function supports importing of vCard files (.vcf) and xml files (.xml).
+
+The diagram below details the sequence of how Rubrika handles the `import` command after the user has entered the command. Note that the diagram assumes the user has included the `FILEPATH` of the import file.
+
+image::ImportSequenceDiagram.png[width="800"]
+_Figure 4.7.1 : Sequence Diagram of import function_
+
+In the case a file path is not specified, the `ImportCommandParser` raises a `ImportFileChooseEvent` which opens up a `FileChooser` window for the user to select his import `File`. The `File` is then passed back to the `ImportCommandParser` to extract the `Person` Objects.
+
+To parse the `File` into a list of `Person`, ImportCommandParser calls a static method within XmlFileStorage or VcfImport depending on the file type to be imported. A more detailed sequence of event is shown below in Figure 4.7.2.
+
+image::ImportSequenceDiagram2.png[width="800"]
+_Figure 4.7.2 : Sequence Diagram Interaction between ImportCommandParser and XmlFileStorage and VcfImport_
 
 [NOTE]
-The import function merges the contacts in the export files with the ones currently in the addressbook. If duplicate persons are found, Rubrika will inform the user of the number of duplicated contacts found.
+The import function merges the contacts in the export files with the ones currently in the addressbook. If duplicate persons are found, Rubrika will inform the user of the number of duplicated contacts found. +
+ +
+Also, for importing of .vcf files, due to using an inbuilt parser, only vCards created by Rubrika will work.
 
-Firstly, the `ImportCommandParser` will create an new `ImportCommand` with a `FileInputSteam` containing the vCard file to be imported.
+==== Design Considerations
 
-An `BufferedReader` object is then created within `ImportCommand` to read in the data within the vCard file.
-The contents are then read in this manner;
-
-----
-@Override
-    public CommandResult executeUndoableCommand() throws CommandException {
-        // ...iterates through each line...
-        while (!newLine.equals("END:VCARD")) {
-            String type = newLine.split(":")[0];
-            String parameter = newLine.split(":")[1];
-
-            switch (type) {
-            case "FN":
-                name = new Name(parameter);
-                break;
-
-            case "EMAIL":
-                email = new Email(parameter);
-                break;
-
-            case "TEL":
-                phone = new Phone(parameter);
-                break;
-
-            case "ADR":
-                address = new Address(parameter);
-                break;
-
-            case "RM":
-                remark = new Remark(parameter);
-                break;
-
-            case "TAG":
-                Tag tag = new Tag(parameter);
-                tagList.add(tag);
-                break;
-        }
-        ReadOnlyPerson toAdd = new Person(name, phone, email, address, remark, tagList);
-        model.addPerson(toAdd);
-----
+**Aspect**: Choice of parsing XML files. +
+** Alternative 1 (current choice)**:
 
 === Export Function
 
