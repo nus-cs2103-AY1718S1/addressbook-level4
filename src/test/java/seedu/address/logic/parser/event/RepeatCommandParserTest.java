@@ -6,6 +6,8 @@ import static seedu.address.logic.commands.CommandTestUtil.INVALID_PERIOD_SOCCER
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PERIOD_MIDTERM;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
+import static seedu.address.model.event.Period.MESSAGE_PERIOD_CONSTRAINTS;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_EVENT;
 
 import java.util.Optional;
@@ -34,18 +36,18 @@ public class RepeatCommandParserTest {
     @Test
     public void parse_invalidPreamble_failure() {
         // negative index
-        assertParseFailure(parser, "-5" + VALID_PERIOD_MIDTERM, MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, "-5" + VALID_PERIOD_MIDTERM, MESSAGE_INVALID_INDEX);
 
         // zero index
         assertParseFailure(parser, VALID_PERIOD_MIDTERM, MESSAGE_INVALID_FORMAT);
 
         // invalid arguments being parsed as preamble
-        assertParseFailure(parser, "1 some random string", MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, "1 some random string", MESSAGE_PERIOD_CONSTRAINTS);
     }
 
     @Test
     public void parse_invalidValue_failure() {
-        assertParseFailure(parser, "1" + INVALID_PERIOD_SOCCER, Period.MESSAGE_PERIOD_CONSTRAINTS); // invalid period
+        assertParseFailure(parser, "1" + INVALID_PERIOD_SOCCER, MESSAGE_PERIOD_CONSTRAINTS); // invalid period
     }
 
     @Test

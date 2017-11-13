@@ -2,6 +2,7 @@ package seedu.address.model;
 
 import static junit.framework.TestCase.fail;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TIMESLOT_SOCCER;
 import static seedu.address.testutil.TypicalEvents.ANNIVERSARY;
 import static seedu.address.testutil.TypicalEvents.BIRTHDAY;
@@ -60,9 +61,8 @@ public class EventListTest {
             eventList.add(toAdd2);
             fail("The expected exception was not thrown.");
         } catch (Exception e) {
-            thrown.expect(EventTimeClashException.class);
+            assertTrue(e instanceof EventTimeClashException);
         }
-
     }
 
     //@@author reginleiff

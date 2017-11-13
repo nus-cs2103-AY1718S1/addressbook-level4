@@ -29,7 +29,7 @@ public class RepeatCommandParser implements Parser<RepeatCommand> {
         String trimmedArgs = args.trim();
         String[] tokens = trimmedArgs.split("\\s+");
 
-        if (tokens.length != 2) {
+        if (tokens.length < 2) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RepeatCommand.MESSAGE_USAGE));
         }
 
@@ -38,7 +38,7 @@ public class RepeatCommandParser implements Parser<RepeatCommand> {
 
         try {
             index = ParserUtil.parseIndex(tokens[0]);
-            period = ParserUtil.parsePeriod(Optional.of(tokens[1]));
+            period = ParserUtil.parsePeriod(Optional.of(tokens[tokens.length - 1]));
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }

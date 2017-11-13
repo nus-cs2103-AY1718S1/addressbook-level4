@@ -8,6 +8,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_PERIOD_MIDTERM;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PERIOD_SOCCER;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TIMESLOT_MIDTERM;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TIMESLOT_SOCCER;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_MIDTERM;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_SOCCER;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
@@ -38,21 +39,6 @@ public class RepeatCommandTest {
     private Model model = new ModelManager(getTypicalEventAddressBook(), new UserPrefs());
 
     @Test
-    public void execute_unfilteredList_success() throws Exception {
-        Event editedEvent = new EventBuilder().withTitle(VALID_TITLE_SOCCER).withTimeslot(VALID_TIMESLOT_SOCCER)
-                .withDescription(VALID_DESCRIPTION_SOCCER).withPeriod(VALID_PERIOD_SOCCER).build();
-        Optional<Period> period = Period.generatePeriod(VALID_PERIOD_MIDTERM);
-        RepeatCommand editCommand = prepareCommand(INDEX_FIRST_EVENT, period);
-
-        String expectedMessage = String.format(RepeatCommand.MESSAGE_REPEAT_EVENT_SUCCESS, editedEvent);
-
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.updateEvent(model.getFilteredEventList().get(0), editedEvent);
-
-        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
-    }
-
-    @Test
     public void execute_noFieldSpecifiedUnfilteredList_success() {
         RepeatCommand editCommand = prepareCommand(INDEX_FIRST_EVENT, Optional.empty());
         ReadOnlyEvent editedEvent = model.getFilteredEventList().get(INDEX_FIRST_EVENT.getZeroBased());
@@ -69,8 +55,7 @@ public class RepeatCommandTest {
         showFirstEventOnly(model);
 
         ReadOnlyEvent eventInFilteredList = model.getFilteredEventList().get(INDEX_FIRST_EVENT.getZeroBased());
-        Event editedEvent = new EventBuilder(eventInFilteredList).withTitle(VALID_TITLE_SOCCER)
-                .withTimeslot(VALID_TIMESLOT_MIDTERM).withPeriod(VALID_PERIOD_MIDTERM).build();
+        Event editedEvent = new EventBuilder(eventInFilteredList).withPeriod(VALID_PERIOD_MIDTERM).build();
         Optional<Period> period = Period.generatePeriod(VALID_PERIOD_MIDTERM);
         RepeatCommand editCommand = prepareCommand(INDEX_FIRST_EVENT, period);
 
