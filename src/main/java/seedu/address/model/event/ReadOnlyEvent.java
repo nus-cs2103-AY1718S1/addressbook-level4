@@ -60,6 +60,10 @@ public interface ReadOnlyEvent {
 
     void plusDays(int days);
 
+    Event getNextScheduledEvent();
+
+    void setNextScheduledEvent(Event nextScheduledEvent);
+
     //@@author
 
     /**

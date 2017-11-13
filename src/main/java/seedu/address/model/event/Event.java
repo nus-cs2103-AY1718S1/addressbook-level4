@@ -38,6 +38,9 @@ public class Event implements ReadOnlyEvent, Comparable<Event> {
     //The template event that this event is created from
     private Optional<ReadOnlyEvent> templateEvent;
 
+    //The scheduled recurring event in the next period
+    private Event nextScheduledEvent;
+
 
     /**
      * Every field must be present and not null.
@@ -260,5 +263,13 @@ public class Event implements ReadOnlyEvent, Comparable<Event> {
     @Override
     public String toString() {
         return getAsText();
+    }
+
+    public Event getNextScheduledEvent() {
+        return nextScheduledEvent;
+    }
+
+    public void setNextScheduledEvent(Event nextScheduledEvent) {
+        this.nextScheduledEvent = nextScheduledEvent;
     }
 }
