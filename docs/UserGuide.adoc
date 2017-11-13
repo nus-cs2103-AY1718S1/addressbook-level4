@@ -83,7 +83,7 @@ Format: `list` or `l`
 
 === Editing a place : `edit` or `ed`
 
-Edits an existing place in the address book. +
+Edits an existing place in the Tourist-Book +
 Format: `edit INDEX [n/NAME] [a/ADDRESS] [p/POSTALCODE] [t/TAG]...`
 
 or
@@ -104,6 +104,7 @@ Examples:
 Edits the address and tag of the 1st place to be `20 Bayfront Avenue` and `bookmarks` respectively.
 * `ed 2 n/Singapore Zoo t/` +
 Edits the name of the 2nd place to be `Singapore Zoo` and clears all existing tags.
+
 //tag::find[]
 === Locating places by name or tag: `find` or  `fd`
 
