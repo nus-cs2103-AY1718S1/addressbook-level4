@@ -848,6 +848,26 @@ Skype calls are usually able to take in both email and phone number inputs. Mean
 an urgent need to be copied as the Locate command in our app already copies the address and displays it on Google Maps.
 As such, until user feedback proves otherwise, copying email addresses is the main priority for this feature.
 
+**Aspect:** Which field(s) to copy +
+**Alternative 1 (current choice):** Email address +
+**Pros:** Emails more widely copied than any other field. +
+**Cons:** Users who want to copy other fields cannot do so. +
+**Alternative 2:** All fields can be copied with their respective identifiers (e.g. address/, phone/) +
+**Pros:** Users gain flexibility to copy any field required. +
+**Cons:** Creates more confusion and delay for users because they have to also type the identifier.
+
+Alternative 3: it may also be possible to permanently display all fields in each contact listing as selectable text. However, this means that the user is required to select each line of text via user interface rather than command line, which contradicts a core requirement of the project.
+
+---
+
+**Aspect:** How to implement copy for multiple contacts' information +
+**Alternative 1 (current choice):** Select by index (1 2 3 etc.) +
+**Pros:** Simpler and more efficient for small numbers (e.g. under 4 contacts on average) +
+**Cons:** Prohibitively difficult for selecting large numbers of contacts. +
+**Alternative 2:** Select by index range (1 - 3 etc.) +
+**Pros:** Easier to selec large numbers of contacts +
+**Cons:** Confusing for users who want to skip between indexes often.
+
 In terms of mode of input, current multiple email copy works with one or more indices as the user can already filter for a small list of people
 that may be of interest, cutting the amount of scrolling significantly. In addition, as we assume that most users
 using the application would not have to send email to a massive number of recipients at a time, which may cause our implementation
@@ -857,8 +877,6 @@ However, eventually allowing the command to accept a range of indices (copy 1 - 
 command that takes in all currently displayed contacts, are potential planned features for v 2.0. We may need to conduct investigation
 of user preferences and usage patterns to decide which input methods to include, as allowing too many modes of input can be
 confusing to novice users and inefficient for the app to process (thereby increasing wait time and resource usage).
-
-Alternatively, it may also be possible to permanently display all fields in each contact listing as selectable text. However, this means that the user is required to select each line of text via user interface rather than command line, which contradicts a core requirement of the project.
 
 //end::copy[]
 
