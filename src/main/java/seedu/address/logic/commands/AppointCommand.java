@@ -63,25 +63,11 @@ public class AppointCommand extends UndoableCommand {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
-        Person editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
-                personToEdit.getAddress(), personToEdit.getComment(), appoint, personToEdit.getAvatar(),
-                                         personToEdit.getTags());
-
-        try {
-            model.updatePerson(personToEdit, editedPerson);
-        } catch (DuplicatePersonException dpe) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
-        } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("The target person cannot be missing");
-        }
-
         if (!appoint.value.isEmpty()) {
             try {
                 Calendar current = Calendar.getInstance();
                 SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy h:mm");
                 String currentDate = formatter.format(current.getTime());
-                System.out.println(currentDate);
                 String appointDate = this.appoint.value;
                 Date newDate = formatter.parse(appointDate);
                 Calendar appointCal = Calendar.getInstance();
@@ -93,6 +79,19 @@ public class AppointCommand extends UndoableCommand {
             if (!isLate) {
                 throw new CommandException(INPUT_DATE_INVALID);
             }
+        }
+
+        ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
+        Person editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
+                personToEdit.getAddress(), personToEdit.getComment(), appoint, personToEdit.getAvatar(),
+                personToEdit.getTags());
+
+        try {
+            model.updatePerson(personToEdit, editedPerson);
+        } catch (DuplicatePersonException dpe) {
+            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("The target person cannot be missing");
         }
 
         model.updateFilteredListToShowAll();
