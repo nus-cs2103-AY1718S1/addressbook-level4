@@ -99,7 +99,7 @@ public class PersonBuilder {
             for (String rawSocialInfo : rawSocialInfos) {
                 socialInfos.add(parseSocialInfo(rawSocialInfo));
             }
-            // convert to array to be passed as varargs in getSocialInfoSet
+            // convert to array to be passed as varargs in getSocialInfos
             SocialInfo[] socialInfosArray = socialInfos.toArray(new SocialInfo[rawSocialInfos.length]);
             this.person.setSocialInfos(SampleDataUtil.getSocialInfos(socialInfosArray).toSet());
         } catch (IllegalValueException ive) {
