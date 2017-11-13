@@ -176,6 +176,9 @@ Format: `whitelist`
 It should be noted that each time the user logs into `Codii`, it checks through the address book for debtors
 whose deadlines have been passed and automatically adds them into the overdue list. +
 
+[NOTE]
+If any debtor in the overdue list has cleard his/her debt, they are removed from the overdue list. +
+
 Shows a list of all persons with overdue debt in the address book. +
 Format: `overduelist`
 // end::overduelist[]
