@@ -773,6 +773,10 @@ a populated cherBook looks like, you can remove the list of the sample students 
 *Q*: Is there any way I can delete more than one schedule or contact at a time? +
 *A*: For now, cherBook does not support deleting more than one schedule or contact, but make sure to keep a lookout for our v2.0 release because these features are currently undergoing development.
 
+*Q*: What the statistics in the `Statistics Panel` for? +
+*A*: The `Statistics Panel` calculates the statistics only for the students currently displayed in the `Students Panel`.
+It is automatically updated whenever the any students in the `Students Panel` are changed.
+
 *Q*: Where can I ask for more support or drop a feedback? +
 *A*: You can drop us an email at cherbook@gmail.com.
 
