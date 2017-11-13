@@ -29,9 +29,9 @@ ConTag is an efficient and feature-packed address book desktop application, capa
 
 === The ConTag Help System
 
-Our help system is designed to progressively provide all necessary information to help you navigate the application with ease.
+Our help system is designed to progressively provide all the necessary information to help you navigate through ConTag with ease.
 
-Apart from comprehensive help coverage in this user guide, you can also choose to get concentrated help on specific areas with `help` in the command line of Contag or pressing the `F1` key.
+Apart from the comprehensive help coverage in this user guide. You can also choose to get help on demand inside the ConTag application by pressing the `F1` key or utilising ConTag's `help` feature (refer to link:#viewing-help-code-help-code[Help]).
 
 === Features and Capabilities Overview
 Key features you can expect:
@@ -629,23 +629,23 @@ To *transfer data* to another Computer, install the app in the other computer an
 |Commands Words |Commands Alias |Format|Example
 |link:#adding-a-person-code-add-code-last-updated-in-v1-3[Add] | `a`  |`add n/NAME p/PHONE_NUMBER e/EMAIL [e/UNIQUE EMAIL] a/ADDRESS [t/TAG]` |  `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend`
 
-|link:#opening-calendar-code-calendar-code-since-v1-3[Backup] |`b` |`backup TARGET_DIRECTORY` | backup F:\myFiles\
+|link:#back-up-contag-code-backup-code[Backup] |`b` |`backup TARGET_DIRECTORY` | backup F:\myFiles\
 
-|link:#opening-calendar-code-calendar-code-since-v1-3[Calendar] |`cl` |`calendar` |
+|link:#opening-calendar-code-calendar-code[Calendar] |`cl` |`calendar` |
 
 |link:#clearing-all-entries-code-clear-code[Clear] | `c`| `clear` |
 
-|link:#getting-email-addresses-code-copy-code-since-v1-3[Copy] |`cp` |`copy INDEX [UNIQUE INDEX]...`| `copy 1 2`
+|link:#getting-email-addresses-code-copy-code[Copy] |`cp` |`copy INDEX [UNIQUE INDEX]...`| `copy 1 2`
 
-|link:#deleting-person-s-code-delete-code-last-updated-in-v1-1[Delete] |`d`|`delete INDEX [UNIQUE INDEX]...`| `delete 3`
+|link:#deleting-person-s-code-delete-code[Delete] |`d`|`delete INDEX [UNIQUE INDEX]...`| `delete 3`
 
 |link:#editing-a-person-code-edit-code[Edit] | `e` |`edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]` |`edit 2 n/James Lee e/jameslee@example.com`
 
-|link:#emailing-persons-code-email-code-since-v1-5[Email] |`m` |`delete INDEX [UNIQUE INDEX]...`| `email 2`
+|link:#emailing-persons-code-email-code[Email] |`m` |`delete INDEX [UNIQUE INDEX]...`| `email 2`
 
 |link:#exiting-the-program-code-exit-code[Exit] |  | `exit` |
 
-|link:#finding-persons-by-any-field-code-find-code-since-v1-2-and-v1-4[Find]|`f` |`find KEYWORD based on [n/NAME] or  [p/PHONE]  or [c/COUNTRY] or [e/EMAIL] or [a/ADDRESS] or  [t/TAG] or [act/ACTIVTY]` |`find n/James Jake`
+|link:#finding-persons-by-any-field-code-find-code[Find]|`f` |`find KEYWORD based on [n/NAME] or  [p/PHONE]  or [c/COUNTRY] or [e/EMAIL] or [a/ADDRESS] or  [t/TAG] or [act/ACTIVTY]` |`find n/James Jake`
 
 |link:#viewing-help-code-help-code[Help] | `h` | `help COMMAND WORD` | `help add`
 
@@ -653,14 +653,14 @@ To *transfer data* to another Computer, install the app in the other computer an
 
 |link:#listing-entered-commands-code-history-code[List] |`l` |`list` |
 
-|link:#locating-a-person-s-address-code-locate-code-since-v1-2[Locate]|`lc` |`locate INDEX` | `locate 2`
+|link:#locating-a-person-s-address-code-locate-code[Locate]|`lc` |`locate INDEX` | `locate 2`
 
 |link:#redoing-the-previously-undone-command-code-redo-code[Redo] |`r` |`redo` |
 
-|link:#scheduling-an-activity-code-schedule-code-since-v1-3[Schedule] |`sc` |`schedule INDEX [INDEX]... d/DATE act/ACTIVITY` | `schedule 1 d/25-12-2017 act/Christmas dinner`
+|link:#scheduling-an-activity-code-schedule-code[Schedule] |`sc` |`schedule INDEX [INDEX]... d/DATE act/ACTIVITY` | `schedule 1 d/25-12-2017 act/Christmas dinner`
 
 |link:#undoing-previous-command-code-undo-code[Undo] |`u`| `undo` |
 
-|link:#enabling-and-disabling-the-welcome-screen-code-welcome-code-since-v1-5[Welcome] | `w` | `welcome ENABLING_KEYWORD` | `welcome enable`
+|link:#enabling-and-disabling-the-welcome-screen-code-welcome-code[Welcome] | `w` | `welcome ENABLING_KEYWORD` | `welcome enable`
 
 |=======================================================================
