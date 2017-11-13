@@ -454,9 +454,13 @@ Format: `switch NUMBER`  (1 for Todo list, 2 for browser)
 === Undoing previous command : `undo`
 
 Restores the address book to the state before the previous specified number of _undoable_ commands +
-were executed. If the number of stated is more than the available commands to undo, all the +
+were executed. If the number entered is more than the available commands to undo, all the +
 _undoable_ commands will be undone. If no number is specified, only the most recent command will be undone. +
 Format: `undo 1` or `undo`
+
+****
+The index *must be a positive integer* `1, 2, 3, ...`
+****
 
 [NOTE]
 ====
@@ -497,6 +501,10 @@ command will be reversed.
 
 Format: `redo 2`
 
+****
+The index *must be a positive integer* `1, 2, 3, ...`
+****
+
 Examples:
 
 * `favourite 3` +
@@ -521,7 +529,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 Tips
 
 ****
-* Similar to `undo`, you can `redo` all `undo`commands by keying in a ridiculously large index eg. `redo 1000`
+* Similar to `undo`, you can `redo` all `undo` commands by keying in a ridiculously large index eg. `redo 1000`
 ****
 // end::undoredo[]
 
