@@ -134,7 +134,7 @@ Command usage: `ws WINDOWSIZE`
 
 === Favourite command
 
-Command usage: `favourite INDEX` or `fav INDEX`
+Command usage: `favourite INDEX` OR `fav INDEX`
 
 [NOTE]
 If the person is already a favourite person, performing `FavouriteCommand` on this person will remove the person from favourite.
@@ -160,6 +160,9 @@ Example: favourite OR fav 1
 
 * `fav 99999` +
 Expected result: The person index provided is invalid
++
+[NOTE]
+This result will only be displayed if and only if there are fewer than 99999 contacts in UniCity.
 
 * `favourite` +
 Expected result: +
@@ -167,4 +170,86 @@ Invalid command format! +
 favourite: Mark the person as favourite by the index number used in the last person listing. +
 Parameters: INDEX (must be a positive integer) +
 Example: favourite OR fav 1
++
+
+
+=== List all favourite person
+
+Command usage: `showFavourite` or `sf`
+
+* `sf` +
+Expected result: 5 persons listed!
++
+A list of the 5 favourite persons will be displayed.
+
+=== Display address on Google Maps
+
+Command usage: `locate INDEX` +
+
+* `list` +
+`locate 1` +
+Expected result: Address of the person is displayed
++
+Google Maps will be loaded in BrowsePanel. In the search box is the address of Alex Yeoh.
++
+
+* `locate 7` +
+Expected result:  Address of this person has not been inputted.
++
+In this case, Google Maps will not be loaded in BrowsePanel.
+
+* `locate` +
+Expected result: +
+Invalid command format! +
+locate: Displays the location of the person identified by the index number in the latest person listing.Parameters: INDEX (must be a positive integer) +
+Example: locate 1
++
+
+* `locate 99999` +
+Expected result: The person index provided is invalid
++
+
+[NOTE]
+This result will be displayed if and only if there are fewer than 99999 contacts in UniCity.
++
+
+* `locate 0` +
+Expected result: +
+Invalid command format! +
+locate: Displays the location of the person identified by the index number in the latest person listing.Parameters: INDEX (must be a positive integer) +
+Example: locate 1
+
+=== Facebook command
+
+Command usage: `facebook INDEX` OR `fb INDEX` +
+[NOTE]
+Facebook may ask you to login to proceed, or ask you key in the characters in a picture for verification purpose.
+
+* `facebook 2` +
+Expected result: Opened facebook window.
++
+Facebook search page will be loaded in BrowsePanel. In this search box is the name of the second person in UniCity, which is Charlotte Oliverio.
+[NOTE]
+It may take a few seconds for the Facebook page to be loaded.
++
+
+* `facebook` +
+Expected result: +
+Invalid command format! +
+facebook: Searches the name of the person specified by the index number in Facebook. +
+Parameters: INDEX (must be a positive integer) +
+Example: facebook 1 OR fb 1 +
+
+* `fb 0` +
+Expected result: +
+Invalid command format! +
+facebook: Searches the name of the person specified by the index number in Facebook. +
+Parameters: INDEX (must be a positive integer) +
+Example: facebook 1 OR fb 1 +
+
+* `fb 99999` +
+Expected result: The person index provided is invalid
++
+[NOTE]
+This result will be displayed if and only if there are fewer than 99999 contacts in UniCity.
 +
