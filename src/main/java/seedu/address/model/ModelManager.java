@@ -86,7 +86,9 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
         addressBook.removePerson(target);
         indicateAddressBookChanged();
-        indicateCalendarChanged();
+        if (!target.getBirthday().isEmpty()) {
+            indicateCalendarChanged();
+        }
     }
 
     @Override
@@ -94,7 +96,9 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.addPerson(person);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
-        indicateCalendarChanged();
+        if (!person.getBirthday().isEmpty()) {
+            indicateCalendarChanged();
+        }
     }
 
     @Override
@@ -131,7 +135,9 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void deleteTask(ReadOnlyTask target) throws TaskNotFoundException {
         addressBook.removeTask(target);
         indicateAddressBookChanged();
-        indicateCalendarChanged();
+        if (!target.getDeadline().isEmpty()) {
+            indicateCalendarChanged();
+        }
     }
 
     //@@author raisa2010
@@ -140,7 +146,9 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.addTask(task);
         updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
         indicateAddressBookChanged();
-        indicateCalendarChanged();
+        if (!task.getDeadline().isEmpty()) {
+            indicateCalendarChanged();
+        }
     }
 
     @Override
