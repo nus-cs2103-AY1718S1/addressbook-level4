@@ -608,6 +608,7 @@ The FindCommand initialises with its `PersonContainsKeywordsPredicates`, which g
 The FindCommand is then returned to the logic manager which calls for `command.execute()`.
 The FindCommand uses the model to get persons in the current view and tests all persons based on the predicate.
 Accordind to the type of search and number of matches, the person(s) that fulfills the search criteria will be shown on the GUI.
+Note: FindByMrt currently does not exist as it is of a lower priority (overlaps with findByAddress)
 
 // end::search[]
 
