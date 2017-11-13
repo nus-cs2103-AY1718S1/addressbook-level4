@@ -15,10 +15,10 @@ By: `Daniel, Jun Quan, Conant, Bing Hwang`      Since: `Jun 2016`      L
 
 == Introduction
 
-HitMeUp is an address book application designed with the sociable user in mind. It aims to provide a one stop solution for every need: To contact, keep up
-and organise.
-With the cloud import feature, a user would be able to get the application
-up and running a matter of minutes. Being able to group your contacts, and view each group at a glance affords
+HitMeUp is an address book application designed with the sociable user in mind. It aims to provide a one stop solution for majority of your needs: To contact your friends, maintain relationships
+and organise your contacts.
+With the cloud import feature, a user will be able to get the application
+up and running a matter of minutes. Being able to group your contacts, and view each group at a glance enables
 convenience like never before. Social integration to Instagram and Twitter is baked in, allowing users to view profiles
 in the application itself without having to switch to a browser or check their phone.
 
@@ -106,7 +106,7 @@ The design patterns of the App is shown in the following sections:
 === Architecture
 
 image::Architecture.png[width="600"]
-_Figure 2.1.1 : Architecture Diagram_
+_Figure 4.1.1 : Architecture Diagram_
 
 The *_Architecture Diagram_* given above explains the high-level design of the App. Given below is a quick overview of each component.
 
@@ -138,7 +138,7 @@ Each of the four components:
 For example, the `Logic` component (see the class diagram given below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
 
 image::LogicClassDiagram.png[width="800"]
-_Figure 2.1.2 : Class Diagram of the Logic Component_
+_Figure 4.1.2 : Class Diagram of the Logic Component_
 
 [discrete]
 ==== Events-Driven nature of the design
@@ -146,7 +146,7 @@ _Figure 2.1.2 : Class Diagram of the Logic Component_
 The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
 
 image::SDforDeletePerson.png[width="800"]
-_Figure 2.1.3a : Component interactions for `delete 1` command (part 1)_
+_Figure 4.1.3a : Component interactions for `delete 1` command (part 1)_
 
 [NOTE]
 Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
@@ -154,16 +154,16 @@ Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address 
 The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
 image::SDforDeletePersonEventHandling.png[width="800"]
-_Figure 2.1.3b : Component interactions for `delete 1` command (part 2)_
+_Figure 4.1.3b : Component interactions for `delete 1` command (part 2)_
 
 [NOTE]
 Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
 
 === UI component
-With reference to the diagram below, the UI consists of a `MainWindow` that is made up of parts such as `CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel`. All these, including the `MainWindow`, inherit the abstract `UiPart` class.
+With reference to the diagram below, the UI consists of a `MainWindow` that is made up of parts such as `CommandBox`, `ResultDisplay`, `PersonListPanel`, `GroupListPanel`, `PersonDescriptionPanel`, `StatusBarFooter` and `BrowserPanel`. All these, including the `MainWindow`, inherit the abstract `UiPart` class.
 
 image::UiClassDiagram.png[width="800"]
-_Figure 2.2.1 : Structure of the UI Component_
+_Figure 4.2.1 : Structure of the UI Component_
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
@@ -182,15 +182,15 @@ The diagram below illustrates how the Logic uses `AddressBookParser` class to pa
 This results in a `Command` object which is executed by the `LogicManager`.
 
 image::LogicClassDiagram.png[width="800"]
-_Figure 2.3.1 : Structure of the Logic Component_
+_Figure 4.3.1 : Structure of the Logic Component_
 
 The command execution can affect the `Model` (e.g. adding a person) and/or raise events.
 The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
 
-The figure below shows the finer details concerning `XYZCommand` and `Command` in Figure 2.3.1.
+The figure below shows the finer details concerning `XYZCommand` and `Command` in 4.3.1:
 
 image::LogicCommandClassDiagram.png[width="800"]
-_Figure 2.3.2 : Structure of Commands in the Logic Component._
+_Figure 4.3.2 : Structure of Commands in the Logic Component._
 
 *API* :
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
@@ -203,14 +203,14 @@ The `Logic` is able to:
 Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
 
 image::DeletePersonSdForLogic.png[width="800"]
-_Figure 2.3.1 : Interactions Inside the Logic Component for the `delete 1` Command_
+_Figure 4.3.3 : Interactions Inside the Logic Component for the `delete 1` Command_
 
 === Model component
 
 The diagram below shows different components and interfaces in the `Model`.
 
 image::ModelClassDiagram.png[width="800"]
-_Figure 2.4.1 : Structure of the Model Component_
+_Figure 4.4.1 : Structure of the Model Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
@@ -226,7 +226,7 @@ The `Model` is able to:
 The diagram below shows different storage classes that store the App's data.
 
 image::StorageClassDiagram.png[width="800"]
-_Figure 2.5.1 : Structure of the Storage Component_
+_Figure 4.5.1 : Structure of the Storage Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 
@@ -325,11 +325,11 @@ The following activity diagram summarize what happens inside the `UndoRedoStack`
 
 image::UndoRedoActivityDiagram.png[width="200"]
 
-==== Design Considerations
+===== Design Considerations
 
 **Aspect:** Implementation of `UndoableCommand` +
 **Alternative 1 (current choice):** Add a new abstract method `executeUndoableCommand()` +
-**Pros:** We will not lose any undone/redone functionality as it is now part of the default behaviour. Classes that deal with `Command` do not have to know that `executeUndoableCommand()` exist. +
+**Pros:** It will not lose any undone/redone functionality as it is now part of the default behaviour. Classes that deal with `Command` do not have to know that `executeUndoableCommand()` exist. +
 **Cons:** It will be hard for new developers to understand the template pattern. +
 **Alternative 2:** Override `execute()` +
 **Pros:** It does not involve the template pattern so that it is easier for new developers to understand. +
@@ -377,7 +377,7 @@ In this case, the URI is created with reference to the mail command scheme and e
 
 image::EmailCommandSequenceDiagram.png[width="800"]
 
-_Figure 3.2.1 Email Command Sequence Diagram_
+_Figure 5.2.1 Email Command Sequence Diagram_
 
 From the diagram above, when users enter the command `email 1` to email a person in the contact list.
 `EmailCommandParser` will parse the arguments, which is a single index provided by the user, and stores it
@@ -467,9 +467,7 @@ Lastly, users' desktop will launch a default mail application where they can com
 Moreover, users can also edit their recipients field to include carbon copy or blind carbon copy before sending out
 the email to their recipients.
 
-*Design Considerations*:
-
----
+===== Design Considerations:
 
 **Aspect:** Type of application to send emails +
 **Alternative 1 (current choice):** Use user's default mail application in their desktop +
@@ -586,33 +584,33 @@ The import mechanism is built upon an `UndoableCommand`, which means that any ch
 **Aspect:** How import executes +
 **Alternative 1 (current choice):** Individually adds each contact. +
 **Pros:** User is able to see each contact being added. +
-**Cons:** Slower than adding retrieved contacts all at once as the data has to be written to disk every time a contact is added individually +
+**Cons:** It is slower than adding retrieved contacts all at once as the data has to be written to disk every time a contact is added individually +
 **Alternative 2:** Contacts are only added after every single `Person` is parsed +
-**Pros:** Faster than adding as soon as each `Person` is parsed as data is written all at once, instead of multiple times +
-**Cons:** Requires a new method `addAllInList` to be implemented in model, which only has limited use as import is the only command doing a batch
+**Pros:** It is faster than adding as soon as each `Person` is parsed as data is written all at once, instead of multiple times +
+**Cons:** It requires a new method `addAllInList` to be implemented in model, which only has limited use as import is the only command doing a batch
 addition of contacts
 
 ---
 
 **Aspect:** How import progress is shown to the user +
 **Alternative 1 (current choice):** Show a pop-up progress window indicating how many contacts have been added +
-**Pros:** Intuitive for the user to understand +
-**Cons:** Difficult to implement as importing contacts takes a (relatively) long time and thus, blocks the JavaFX thread from updating the UI in a timely manner. As such, the progress bar will not be updated until the `importContacts` function is completed.
+**Pros:** It is intuitive for the user to understand +
+**Cons:** It is difficult to implement as importing contacts takes a (relatively) long time and thus, blocks the JavaFX thread from updating the UI in a timely manner. As such, the progress bar will not be updated until the `importContacts` function is completed.
 Threading has to be used to allow the progress bar to update as the `importContacts` method is running. +
 **Alternative 2:** Show the user how many contacts have been added in `ResultDisplay`  +
-**Pros:** Easy to implement as no new UI elements have to be added +
-**Cons:** Not as user-friendly as having a progress bar +
+**Pros:** It is easier to implement as no new UI elements have to be added +
+**Cons:** It is not as user-friendly as having a progress bar +
 
 ---
 
 **Aspect:** Implementation of authorization +
 **Alternative 1 (current choice):** Use the `BrowserPanel` to show the authorization page +
-**Pros:** Clearer for the user to understand and focus is kept on the main application. +
-**Cons:** Requires implementing a new class as modification to the existing classes provided by the Google Libraries is needed to allow for the +
+**Pros:** It is clearer for the user to understand and focus is kept on the main application. +
+**Cons:** It requires implementing a new class as modification to the existing classes provided by the Google Libraries is needed to allow for the +
 authorization URL to be shown in the `BrowserPanel` +
 **Alternative 2 :** Pop-up the authorization page in the user's default browser +
-**Pros:** Easy for the user to authorize as they may already be logged in to their Google account on their browsers. +
-**Cons:** Takes the focus away from the main application to the user's default browser, which may be a jarring user experience. +
+**Pros:** It is easy for the user to authorize as they may already be logged in to their Google account on their browsers. +
+**Cons:** It takes the focus away from the main application to the user's default browser, which may be a jarring user experience. +
 // end::import[]
 
 // tag::export[]
@@ -686,9 +684,7 @@ The `DEFAULT_FILE_DIR` is the data folder found in the application directory and
 
 Finally, the directory that stores the "contacts.vcf" file will be shown to the user and the file can be imported to other platforms that support vCard files.
 
-*Design Considerations*:
-
----
+===== Design Consideration:
 
 **Aspect:** Type of file to create +
 **Alternative 1 (current choice):** Creates vCard file +
@@ -810,35 +806,35 @@ public void copyImage(String currentImagePath, String imageName) throws IOExcept
 This method will copy the chosen image into the designated display picture storage folder and return the path to the copied image.
 The returned path will be stored as the display picture value of a person.
 
-==== Design Considerations
-**Aspect:** When to implement the feature +
+===== Design Considerations
+**Aspect:** Where to implement this feature +
 **Alternative 1 (current choice):** Prompts for display picture when parser detects `dp/` in `add` or `edit` commands +
-**Pros:** Natural flow of event as users can decide to add a display picture while adding the person +
-**Cons:** Much more complex implementation is needed as we have to intercept the parsing of `add` or `edit` commands to add information for display picture +
+**Pros:** It is easier for users to add display picture as they can add a display picture while adding the person. +
+**Cons:** It is much more complex to implement is needed as we have to intercept the parsing of `add` or `edit` commands to add information for display picture. +
 **Alternative 2:**  Have a separate command `DisplayPic [INDEX]` to select a display picture for the person at `INDEX` after adding the person +
-**Pros:** Easier implementation as it is very similar to the existing `edit` command +
-**Cons:** Troublesome as users will need 2 step to add a display picture for their contacts +
+**Pros:** It is easier implementation as it is very similar to the existing `edit` command. +
+**Cons:** It will be more troublesome as users will need 2 step to add a display picture for their contacts. +
 
 ---
 
 **Aspect:** How to select display picture +
 **Alternative 1 (current choice):** Use a FileChooser and allow Users to select the file +
-**Pros:** Convenient for users as  to select the file +
-**Cons:** No longer a CLI interface +
-**Cons:** Hard to deploy JUnit testing as there are not way to automate the choosing of files in FileChooser +
-**Alternative 2:** Users find the path of the file themselves and add it into the command +
-**Pros:** CLI interface +
-**Cons:** Hard for users who are not tech-savvy to find know the path of the image file +
+**Pros:** It is more convenient for users as they just have to select a file from the pop up. +
+**Cons:** It deviates from CLI interface. +
+**Cons:** It is difficult to deploy JUnit testing as it is hard to automate the choosing of files in FileChooser. +
+**Alternative 2:** Find the path of the file themselves and add it into the command +
+**Pros:** It remains as a CLI interface. +
+**Cons:** It is hard for users who are not tech-savvy to find know the path of the image file. +
 
 ---
 
 **Aspect:** How is chosen image made accessible in the storage +
 **Alternative 1 (current choice):** Copying the chosen image into the designated storage path +
-**Pros:** Image will still be present at original path for users to use the image +
-**Cons:** Inefficient memory usage as duplicate copy of the same image is made +
+**Pros:** Image will still be present at original path for users to use the image. +
+**Cons:** This results in inefficient memory usage as duplicate copy of the same image is made. +
 **Alternative 2:** Moving the chosen image to the designated storage path +
-**Pros:** Efficient memory usage as duplicate copies will not be created +
-**Cons:** Users may have difficulty finding the chosen image for later use as they will be renamed to prevent overwriting of image in the designated storage +
+**Pros:** This enables efficient memory usage as duplicate copies will not be created. +
+**Cons:** Users may have difficulty finding the chosen image for later use as they will be renamed. +
 
 ---
 // end::displayPic[]
@@ -856,14 +852,14 @@ tag `losers` in the address book. `TagEditCommandParser` will parse the 2 argume
 they are `friends` and `losers`) provided by the user and it will return `TagEditCommand`. Next, `TagEditCommand`
 will call its method `executeUndoableCommand()` and ensure that the tag `friends` specified is valid.
 
-==== Design Considerations
+===== Design Considerations
 **Aspect:** Implementation of `TagEditCommand` +
 **Alternative 1 (current choice):** implement it by extending `UndoableCommand` +
-**Pros:** Editing tags is undoable/redoable +
-**Cons:** May be difficult for new developers to understand the flow +
+**Pros:** Editing tags is undoable/redoable. +
+**Cons:** It may be difficult for new developers to understand the flow. +
 **Alternative 2:** just override `execute()` +
-**Pros:** Does not involve template pattern, easier to understand +
-**Cons:** Cannot undo/redo unless `super.execute()` is called
+**Pros:** It does not involve template pattern, easier to understand. +
+**Cons:** It cannot be undo/redo unless `super.execute()` is called.
 // end::tagedit[]
 
 // tag::find[]
@@ -930,14 +926,14 @@ return `FindCommand`. In `FindCommand`, the method `PersonContainsKeywordsPredic
 against the existing list of names and tags and return all persons with the matching keyword `Alex` in their names and
 tag `friends`. Finally, `execute()` will run `updateFilteredPersonList` to show the list of persons returned.
 
-==== Design Considerations
+===== Design Considerations
 *Aspect:* How to input arguments for the command +
-*Alternative 1 (current choice):* flexible input, no prefixes needed +
-*Pros:* easy and simple to use for the users +
-*Cons:* harder to implement and edit in future +
-*Alternative 2:* require users to enter prefixes to use find +
-*Pros:* easy and simple to implement +
-*Cons:* inconvenient and inflexible for the users
+*Alternative 1 (current choice):* Flexible input, no prefixes needed +
+*Pros:* It is easy and simple to use for the users. +
+*Cons:* It is harder to implement and edit in future. +
+*Alternative 2:* Require users to enter prefixes to use find +
+*Pros:* It is easy and simple to implement. +
+*Cons:* It is inconvenient and inflexible for the users. +
 // end::find[]
 
 // tag::social[]
@@ -949,7 +945,7 @@ provided that they have their usernames stored. Currently, HitMeUp supports Twit
 The diagram below shows the sequence diagram of a typical social command:
 
 image::SocialSequenceDiagram.png[width="800]
-pass:[<div align="center"><b>Figure 3.8.1 Social Command Implementation</b></div>]
+pass:[<div align="center"><b>Figure 5.8.1 Social Command Implementation</b></div>]
 
 As shown above, when the user enters the command `social 1 ig`, `SocialCommandParser` will parse the arguments which
 are an index and the chosen social media platform and return a `SocialCommand`. `SocialCommand` will then check the type
@@ -958,17 +954,17 @@ of social media platform in the 2nd argument of the user input. In this case, th
 posting a new `SocialRequestEvent` to the UI. In the UI, the `MainWindow` calls an instance of the `BrowserPanel` to
 load the Instagram page of the person at index 1.
 
-==== Design Considerations
+===== Design Considerations
 *Aspect:* What the user input for social media field should be +
 *Alternative 1 (current choice):* Use the same prefixes when adding person +
-*Pros:* Feels intuitive since you add people with the prefixes `ig` and `tw` and therefore should be able to invoke
-this command the same way +
-*Cons:* New users might instinctively type in the full name Instagram and Twitter instead of using the aliases +
+*Pros:* It feels intuitive since you add people with the prefixes `ig` and `tw` and therefore should be able to invoke
+this command the same way. +
+*Cons:* New users might instinctively type in the full name Instagram and Twitter instead of using the aliases. +
 *Alternative 2:* Use the full name of the social media platform +
-*Pros:* Might be natural for some people to type in the full name +
-*Cons:* Might not make sense since you add people's social media into their details based on shortcuts and yet in this
+*Pros:* It might be natural for some people to type in the full name. +
+*Cons:* It might not make sense since you add people's social media into their details based on shortcuts and yet in this
 command the full name of the chosen social media is required. Moreover, it might be more user-friendly to allow them to
-type less into the CLI +
+type less into the CLI. +
 // end::social[]
 
 // tag::location[]
@@ -1017,18 +1013,16 @@ The following activity diagram summarizes the flow of the location command:
 
 image::LocationActivityDiagram.png[width="800]
 
-==== Design Considerations
+===== Design Considerations
 *Aspect:* How the Google Maps URL is passed to the BrowserPanel +
 *Alternative 1 (current choice):* Use a `showUrlEvent` to send the URL to the `MainWindow` subscriber +
-*Pros:* Allows `LocationCommand` to be more cohesive as it does not need to have an extra method to deal with the logic +
-for displaying a URL in the `BrowserPanel` +
-*Cons:* `LocationCommand` class would be more coupled with the `EventsCenter` class as it relies on the event for its core functionality +
+*Pros:* It allows `LocationCommand` to be more cohesive as it does not need to have an extra method to deal with the logic +
+for displaying a URL in the `BrowserPanel`. +
+*Cons:* `LocationCommand` class would be more coupled with the `EventsCenter` class as it relies on the event for its core functionality. +
 *Alternative 2:* Create a public method in `MainWindow` for showing a URL in the `BrowserPanel`  +
-*Pros:* Easy to implement, only 1 method in `MainWindow` required and it is called from the `execute` method of `LocationCommand` +
-*Cons:* Exposes functionality of `MainWindow` unnecessarily to other classes
+*Pros:* It is easy to implement as only 1 method in `MainWindow` is required and it is called from the `execute` method of `LocationCommand`. +
+*Cons:* It exposes functionality of `MainWindow` unnecessarily to other classes. +
 // end::location[]
-
-
 
 === Logging
 
