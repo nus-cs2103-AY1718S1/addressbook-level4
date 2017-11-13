@@ -28,6 +28,11 @@ public class GuiTestAssert {
         assertEquals(expectedCard.getTags(), actualCard.getTags());
     }
 
+    /**
+     * Overloaded method to assertCardEquals for EventCard
+     * @param expectedCard
+     * @param actualCard
+     */
     public static void assertCardEquals(EventCardHandle expectedCard, EventCardHandle actualCard) {
         assertEquals(expectedCard.getId(), actualCard.getId());
         assertEquals(expectedCard.getEventName(), actualCard.getEventName());
