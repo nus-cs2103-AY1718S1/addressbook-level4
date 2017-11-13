@@ -134,10 +134,19 @@ public class EditCommand extends UndoableCommand {
     private Person listSyncChecks(ReadOnlyPerson personToEdit, Person editedPerson) {
         if (personToEdit.isWhitelisted() && editedPerson.getDebt().toNumber() > 0) {
             editedPerson.setIsWhitelisted(false);
+            editedPerson.setDateRepaid(new DateRepaid());
         } else if (!personToEdit.isWhitelisted() && !personToEdit.isBlacklisted()
                 && editedPerson.getDebt().toNumber() == 0) {
             editedPerson.setIsWhitelisted(true);
             editedPerson.setDateRepaid(new DateRepaid(formatDate(new Date())));
+        }
+        if (editedPerson.getDebt().toNumber() == 0) {
+            try {
+                editedPerson.setDeadline(new Deadline(Deadline.NO_DEADLINE_SET));
+                editedPerson.setHasOverdueDebt(false);
+            } catch (IllegalValueException ive) {
+                assert false : "Cannot happen as input for new deadline was controlled.";
+            }
         }
         if (!editedPerson.getDeadline().value.equals(Deadline.NO_DEADLINE_SET)) {
             Date editedPersonDeadline = DateUtil.convertStringToDate(editedPerson.getDeadline().valueToDisplay);

@@ -213,5 +213,11 @@ public interface Model {
      * @return updated {@code ReadOnlyPerson}.
      */
     ReadOnlyPerson removeProfilePicture(ReadOnlyPerson person) throws ProfilePictureNotFoundException;
-    //@@author
+
+    //@@author lawwman
+    /**
+     * Removes the {@code person} deadline.
+     * @throws PersonNotFoundException if the person is not found in addressbook
+     */
+    ReadOnlyPerson resetDeadlineForPerson(ReadOnlyPerson target) throws PersonNotFoundException;
 }

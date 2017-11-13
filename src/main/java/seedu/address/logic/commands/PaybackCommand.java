@@ -47,8 +47,14 @@ public class PaybackCommand extends UndoableCommand {
         ReadOnlyPerson targetPerson = personThatPaidBack;
         try {
             targetPerson = model.deductDebtFromPerson(targetPerson, amount);
-            if (targetPerson.getDebt().toNumber() == 0 && !targetPerson.isBlacklisted()) {
-                targetPerson = model.addWhitelistedPerson(targetPerson);
+            if (targetPerson.getDebt().toNumber() == 0) {
+                targetPerson = model.resetDeadlineForPerson(targetPerson);
+                if (!targetPerson.isBlacklisted()) {
+                    targetPerson = model.addWhitelistedPerson(targetPerson);
+                }
+                if (targetPerson.hasOverdueDebt()) {
+                    targetPerson = model.removeOverdueDebtPerson(targetPerson);
+                }
             }
         } catch (PersonNotFoundException pnfe) {
             assert false : "The target person cannot be missing";

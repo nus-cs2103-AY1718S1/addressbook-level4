@@ -6,6 +6,7 @@ import seedu.address.commons.core.ListObserver;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 //@@author jaivigneshvenugopal
 /**
@@ -25,24 +26,29 @@ public class RepaidCommand extends UndoableCommand {
     public static final String MESSAGE_REPAID_PERSON_SUCCESS = "%1$s has now repaid his/her debt";
     public static final String MESSAGE_REPAID_PERSON_FAILURE = "%1$s has already repaid debt!";
 
-    private final ReadOnlyPerson personToWhitelist;
+    private final ReadOnlyPerson repaidDebtor;
 
     public RepaidCommand() throws CommandException {
-        personToWhitelist = selectPersonForCommand();
+        repaidDebtor = selectPersonForCommand();
     }
 
     public RepaidCommand(Index targetIndex) throws CommandException {
-        personToWhitelist = selectPersonForCommand(targetIndex);
+        repaidDebtor = selectPersonForCommand(targetIndex);
     }
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-        if (personToWhitelist.getDebt().toNumber() == 0) {
-            throw new CommandException(String.format(MESSAGE_REPAID_PERSON_FAILURE, personToWhitelist.getName()));
+        if (repaidDebtor.getDebt().toNumber() == 0) {
+            throw new CommandException(String.format(MESSAGE_REPAID_PERSON_FAILURE, repaidDebtor.getName()));
         }
 
-        ReadOnlyPerson targetPerson = model.addWhitelistedPerson(personToWhitelist);
-
+        ReadOnlyPerson targetPerson = model.addWhitelistedPerson(repaidDebtor);
+        try {
+            targetPerson = model.removeOverdueDebtPerson(targetPerson);
+            targetPerson = model.resetDeadlineForPerson(targetPerson);
+        } catch (PersonNotFoundException pnfe) {
+            assert false : "The target person cannot be missing";
+        }
         ListObserver.updateCurrentFilteredList(PREDICATE_SHOW_ALL_PERSONS);
         reselectPerson(targetPerson);
 
@@ -55,6 +61,6 @@ public class RepaidCommand extends UndoableCommand {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof RepaidCommand // instanceof handles nulls
-                && this.personToWhitelist.equals(((RepaidCommand) other).personToWhitelist)); // state check
+                && this.repaidDebtor.equals(((RepaidCommand) other).repaidDebtor)); // state check
     }
 }
