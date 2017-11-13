@@ -13,6 +13,7 @@ import javafx.scene.web.WebView;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.ShowFacebookRequestEvent;
 import seedu.address.commons.events.ui.ShowLocationRequestEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -24,17 +25,15 @@ public class BrowserPanel extends UiPart<Region> {
     public static final String DEFAULT_PAGE = "default.html";
 
     //@@author LeeYingZheng
-    //different search pages for different commands
-    //GoogleCommand
     public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/search?safe=off&q=";
     public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
-
-    //FacebookCommand
-    public static final String FACEBOOK_URL = "https://www.facebook.com";
     //@@author
 
-    //LocateCommand
-    public static final String MAPS_URL = "https://www.google.com.sg/maps/search/";
+    //@@author taojiashu
+    public static final String FACEBOOK_SEARCH_URL = "https://m.facebook.com/search/people/?q=";
+
+    public static final String MAPS_SEARCH_URL = "https://www.google.com.sg/maps/search/";
+    //@@author
 
     private static final String FXML = "BrowserPanel.fxml";
 
@@ -60,13 +59,11 @@ public class BrowserPanel extends UiPart<Region> {
 
     //@@author taojiashu
     public void loadLocationPage(String address) {
-        loadPage(MAPS_URL + address);
+        loadPage(MAPS_SEARCH_URL + address);
     }
-    //@@author
 
-    //@@author LeeYingZheng
-    public void loadFacebookPage() {
-        loadPage(FACEBOOK_URL);
+    public void loadFacebookPage(String name) {
+        loadPage(FACEBOOK_SEARCH_URL + name);
     }
     //@@author
 
@@ -105,6 +102,12 @@ public class BrowserPanel extends UiPart<Region> {
     private void handleLocationRequest(ShowLocationRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadLocationPage(event.getAddress());
+    }
+
+    @Subscribe
+    private void handleFacebookRequest(ShowFacebookRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadFacebookPage(event.getName());
     }
     //@@author
 }

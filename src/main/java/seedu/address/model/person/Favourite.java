@@ -23,7 +23,7 @@ public class Favourite {
         this.status = favourite ? "True" : "False";
     }
 
-    private void setFavouriteStatus() {
+    private void updateFavouriteStatus() {
         status = favourite ? "True" : "False";
     }
 
@@ -33,21 +33,21 @@ public class Favourite {
      */
     public void toggleFavourite() {
         favourite = !favourite;
-        setFavouriteStatus();
+        updateFavouriteStatus();
     }
 
-    public boolean getFavourite() {
+    public boolean isFavourite() {
         return favourite;
     }
 
     public String getStatus() {
-        setFavouriteStatus(); // Ensure the status is in sync with favourite
+        updateFavouriteStatus(); // Ensure the status is in sync with favourite
         return status;
     }
 
     @Override
     public String toString() {
-        setFavouriteStatus(); // Ensure the status is in sync with favourite
+        updateFavouriteStatus(); // Ensure the status is in sync with favourite
         return status;
     }
 
@@ -60,7 +60,7 @@ public class Favourite {
 
     @Override
     public int hashCode() {
-        setFavouriteStatus();
+        updateFavouriteStatus();
         return status.hashCode();
     }
 }

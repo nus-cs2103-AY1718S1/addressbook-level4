@@ -80,7 +80,7 @@ public class PersonCard extends UiPart<Region> {
      * Sets the colour of a favourite label based on its favourite status
      */
     private void initFavouriteLabel(ReadOnlyPerson person) {
-        boolean favouriteStatus = person.getFavourite().getFavourite();
+        boolean favouriteStatus = person.getFavourite().isFavourite();
         Label favouriteLabel = new Label();
         Image starFilled = new Image(getClass().getResource("/images/Gold_Star.png").toExternalForm());
         Image starTransparent = new Image(getClass().getResource("/images/Star_star.png").toExternalForm());

@@ -22,6 +22,7 @@ import seedu.address.commons.events.ui.ChangeWindowSizeRequestEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.PopulateBirthdayEvent;
 import seedu.address.commons.events.ui.ShowFacebookRequestEvent;
+
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
@@ -229,16 +230,6 @@ public class MainWindow extends UiPart<Region> {
         helpWindow.show();
     }
 
-    //@@author LeeYingZheng
-    /**
-     * Opens the Facebook window in BrowserPanel.
-     */
-    @FXML
-    public void handleFacebook() {
-        browserPanel.loadFacebookPage();
-    }
-    //@@author
-
     void show() {
         primaryStage.show();
     }
@@ -319,12 +310,5 @@ public class MainWindow extends UiPart<Region> {
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
-    }
-
-    //@@author LeeYingZheng
-    @Subscribe
-    private void handleShowFacebookEvent(ShowFacebookRequestEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        handleFacebook();
     }
 }

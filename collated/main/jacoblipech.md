@@ -1,201 +1,13 @@
 # jacoblipech
-###### /java/seedu/address/model/Model.java
+###### \java\seedu\address\commons\events\ui\NewResultAvailableEvent.java
 ``` java
-    /** Adds the given birthday to a person */
-    void addBirthday(Index targetIndex, Birthday toAdd) throws PersonNotFoundException,
-            DuplicatePersonException;
-
-```
-###### /java/seedu/address/model/Model.java
-``` java
-    /**
-     * Sort the given list according to alphabetical order
-     * @throws NullPointerException if {@code contactList} is null.
-     */
-    Boolean sortPersonByName(ArrayList<ReadOnlyPerson> contactList);
-
-}
-```
-###### /java/seedu/address/model/ModelManager.java
-``` java
-    @Override
-    public synchronized void addBirthday(Index targetIndex, Birthday toAdd) throws PersonNotFoundException,
-            DuplicatePersonException {
-
-        ReadOnlyPerson oldPerson = this.getFilteredPersonList().get(targetIndex.getZeroBased());
-
-        Person newPerson = new Person(oldPerson);
-
-        newPerson.setBirthday(toAdd);
-
-        addressBook.updatePerson(oldPerson, newPerson);
-        indicateAddressBookChanged();
+    public NewResultAvailableEvent(String message, boolean isError) {
+        this.message = message;
+        this.isError = isError;
     }
 
 ```
-###### /java/seedu/address/model/ModelManager.java
-``` java
-    @Override
-    public Boolean sortPersonByName(ArrayList<ReadOnlyPerson> contactList) {
-
-        if (filteredPersons.size() == 0) {
-            return null;
-        }
-        contactList.addAll(filteredPersons);
-
-        Collections.sort(contactList, Comparator.comparing(p -> p.toString().toLowerCase()));
-
-        if (contactList.equals(filteredPersons)) {
-            return false;
-        }
-
-        try {
-            addressBook.setPersons(contactList);
-            indicateAddressBookChanged();
-        } catch (DuplicatePersonException e) {
-            assert false : "AddressBooks should not have duplicate persons";
-        }
-        return true;
-    }
-
-    //=========== Filtered Person List Accessors =============================================================
-
-```
-###### /java/seedu/address/model/person/Person.java
-``` java
-    public void setBirthday(Birthday birthday) {
-
-        this.birthday.set(requireNonNull(birthday));
-    }
-
-    @Override
-    public ObjectProperty<Birthday> birthdayProperty() {
-
-        return birthday;
-    }
-
-    @Override
-    public Birthday getBirthday() {
-
-        return birthday.get();
-    }
-
-```
-###### /java/seedu/address/model/person/Birthday.java
-``` java
-/**
- * Represents a birthday field in the address book.
- * Guarantees: immutable; name is valid as declared in {@link #isValidBirthdayFormat(String)}
- */
-public class Birthday {
-
-    public static final String MESSAGE_BIRTHDAY_CONSTRAINTS = "Birthdays should be numeric in the format "
-            + "DD/MM/YY or DD/MM/YYYY.";
-
-    public static final String BIRTHDAY_VALIDATION_REGEX = "^(?:(?:31(\\/|-|\\.)(?:0?[13578]|1[02]))\\1|(?:(?:29|30)"
-            + "(\\/|-|\\.)(?:0?[1,3-9]|1[0-2])\\2))(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$|^(?:29(\\/|-|\\.)0?2\\3"
-            + "(?:(?:(?:1[6-9]|[2-9]\\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$"
-            + "|^(?:0?[1-9]|1\\d|2[0-8])(\\/|-|\\.)(?:(?:0?[1-9])|(?:1[0-2]))\\4(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$";
-
-    public static final String DEFAULT_BIRTHDAY = "No Birthday Added";
-
-    private final String birthdayNumber;
-
-    public Birthday () {
-        this.birthdayNumber = DEFAULT_BIRTHDAY; //default value
-    }
-
-    /**
-     * Validates given birthday input.
-     *
-     * @throws IllegalValueException if the given birthday string is invalid.
-     */
-    public Birthday(String birthday) throws IllegalValueException {
-        requireNonNull(birthday);
-        String trimmedBirthday = birthday.trim();
-        if (!isValidBirthdayFormat(trimmedBirthday)) {
-            throw new IllegalValueException(MESSAGE_BIRTHDAY_CONSTRAINTS);
-        }
-        this.birthdayNumber = trimmedBirthday;
-    }
-
-    /**
-     * Returns the string value of the birthday
-     */
-    public String getBirthdayNumber() {
-        return birthdayNumber;
-    }
-
-    /**
-     * Returns true if a given string is a valid birthday number.
-     */
-    public static boolean isValidBirthdayFormat(String test) {
-
-        return test.matches(BIRTHDAY_VALIDATION_REGEX) || test.equalsIgnoreCase(DEFAULT_BIRTHDAY);
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof Birthday // instanceof handles nulls
-                && this.birthdayNumber.equals(((Birthday) other).birthdayNumber)); // state check
-    }
-
-    @Override
-    public int hashCode() {
-        return birthdayNumber.hashCode();
-    }
-
-    /**
-     * Format state as text for viewing.
-     */
-    public String toString() {
-        return birthdayNumber;
-    }
-}
-```
-###### /java/seedu/address/logic/commands/SortCommand.java
-``` java
-/**
- * Sort the list of contacts by their names
- */
-public class SortCommand extends Command {
-    public static final String COMMAND_WORDVAR_1 = "sort";
-    public static final String COMMAND_WORDVAR_2 = "st";
-
-    public static final String MESSAGE_USAGE = COMMAND_WORDVAR_1
-            + " OR "
-            + COMMAND_WORDVAR_2
-            + ": Sort all contacts by alphabetical order according to their name. "
-            + "Command is case-insensitive.";
-
-    public static final String MESSAGE_SUCCESS = "All contacts in AddressBook are sorted by name.";
-    public static final String MESSAGE_ALREADY_SORTED = "The AddressBook is already sorted.";
-    public static final String MESSAGE_EMPTY_LIST = "There is no contact to be sorted in AddressBook.";
-
-    private ArrayList<ReadOnlyPerson> contactList;
-
-    public SortCommand() {
-        contactList = new ArrayList<>();
-    }
-
-    @Override
-    public CommandResult execute() {
-
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        Boolean isNotEmpty = model.sortPersonByName(contactList);
-        if (isNotEmpty == null) {
-            return new CommandResult(MESSAGE_EMPTY_LIST);
-        } else if (!isNotEmpty) {
-            return new CommandResult(MESSAGE_ALREADY_SORTED);
-        }
-        return new CommandResult(MESSAGE_SUCCESS);
-    }
-}
-
-
-```
-###### /java/seedu/address/logic/commands/AddBirthdayCommand.java
+###### \java\seedu\address\logic\commands\AddBirthdayCommand.java
 ``` java
 /**
  * Adds the birthday to the identified persons.
@@ -294,7 +106,7 @@ public class AddBirthdayCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/EditCommand.java
+###### \java\seedu\address\logic\commands\EditCommand.java
 ``` java
         public void setBirthday(Birthday birthday) {
             this.birthday = birthday;
@@ -305,7 +117,48 @@ public class AddBirthdayCommand extends UndoableCommand {
         }
 
 ```
-###### /java/seedu/address/logic/parser/AddBirthdayCommandParser.java
+###### \java\seedu\address\logic\commands\SortCommand.java
+``` java
+/**
+ * Sort the list of contacts by their names
+ */
+public class SortCommand extends Command {
+    public static final String COMMAND_WORDVAR_1 = "sort";
+    public static final String COMMAND_WORDVAR_2 = "st";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORDVAR_1
+            + " OR "
+            + COMMAND_WORDVAR_2
+            + ": Sort all contacts by alphabetical order according to their name. "
+            + "Command is case-insensitive.";
+
+    public static final String MESSAGE_SUCCESS = "All contacts in AddressBook are sorted by name.";
+    public static final String MESSAGE_ALREADY_SORTED = "The AddressBook is already sorted.";
+    public static final String MESSAGE_EMPTY_LIST = "There is no contact to be sorted in AddressBook.";
+
+    private ArrayList<ReadOnlyPerson> contactList;
+
+    public SortCommand() {
+        contactList = new ArrayList<>();
+    }
+
+    @Override
+    public CommandResult execute() {
+
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        Boolean isNotEmpty = model.sortPersonByName(contactList);
+        if (isNotEmpty == null) {
+            return new CommandResult(MESSAGE_EMPTY_LIST);
+        } else if (!isNotEmpty) {
+            return new CommandResult(MESSAGE_ALREADY_SORTED);
+        }
+        return new CommandResult(MESSAGE_SUCCESS);
+    }
+}
+
+
+```
+###### \java\seedu\address\logic\parser\AddBirthdayCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new AddBirthdayCommand object
@@ -348,19 +201,7 @@ public class AddBirthdayCommandParser implements Parser<AddBirthdayCommand> {
 
 }
 ```
-###### /java/seedu/address/logic/parser/ParserUtil.java
-``` java
-    /**
-     * Parses a {@code Optional<String> birthday} into an {@code Optional<Birthday>} if {@code birthday} is present.
-     * See header comment of this class regarding the use of {@code Optional} parameters.
-     */
-    public static Optional<Birthday> parseBirthday(Optional<String> birthday) throws IllegalValueException {
-        requireNonNull(birthday);
-        return birthday.isPresent() ? Optional.of(new Birthday(birthday.get())) : Optional.empty();
-    }
-
-```
-###### /java/seedu/address/logic/parser/ArgumentMultimap.java
+###### \java\seedu\address\logic\parser\ArgumentMultimap.java
 ``` java
     /**
      * Returns the last address value of the field entered {@code prefix}.
@@ -390,7 +231,174 @@ public class AddBirthdayCommandParser implements Parser<AddBirthdayCommand> {
     }
 
 ```
-###### /java/seedu/address/storage/XmlAdaptedPerson.java
+###### \java\seedu\address\logic\parser\ParserUtil.java
+``` java
+    /**
+     * Parses a {@code Optional<String> birthday} into an {@code Optional<Birthday>} if {@code birthday} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Birthday> parseBirthday(Optional<String> birthday) throws IllegalValueException {
+        requireNonNull(birthday);
+        return birthday.isPresent() ? Optional.of(new Birthday(birthday.get())) : Optional.empty();
+    }
+
+```
+###### \java\seedu\address\model\Model.java
+``` java
+    /** Adds the given birthday to a person */
+    void addBirthday(Index targetIndex, Birthday toAdd) throws PersonNotFoundException,
+            DuplicatePersonException;
+
+```
+###### \java\seedu\address\model\Model.java
+``` java
+    /**
+     * Sort the given list according to alphabetical order
+     * @throws NullPointerException if {@code contactList} is null.
+     */
+    Boolean sortPersonByName(ArrayList<ReadOnlyPerson> contactList);
+
+}
+```
+###### \java\seedu\address\model\ModelManager.java
+``` java
+    @Override
+    public synchronized void addBirthday(Index targetIndex, Birthday toAdd) throws PersonNotFoundException,
+            DuplicatePersonException {
+
+        ReadOnlyPerson oldPerson = this.getFilteredPersonList().get(targetIndex.getZeroBased());
+
+        Person newPerson = new Person(oldPerson);
+
+        newPerson.setBirthday(toAdd);
+
+        addressBook.updatePerson(oldPerson, newPerson);
+        indicateAddressBookChanged();
+    }
+
+```
+###### \java\seedu\address\model\ModelManager.java
+``` java
+    @Override
+    public Boolean sortPersonByName(ArrayList<ReadOnlyPerson> contactList) {
+
+        if (filteredPersons.size() == 0) {
+            return null;
+        }
+        contactList.addAll(filteredPersons);
+
+        Collections.sort(contactList, Comparator.comparing(p -> p.toString().toLowerCase()));
+
+        if (contactList.equals(filteredPersons)) {
+            return false;
+        }
+
+        try {
+            addressBook.setPersons(contactList);
+            indicateAddressBookChanged();
+        } catch (DuplicatePersonException e) {
+            assert false : "AddressBooks should not have duplicate persons";
+        }
+        return true;
+    }
+
+    //=========== Filtered Person List Accessors =============================================================
+
+```
+###### \java\seedu\address\model\person\Birthday.java
+``` java
+/**
+ * Represents a birthday field in the address book.
+ * Guarantees: immutable; name is valid as declared in {@link #isValidBirthdayFormat(String)}
+ */
+public class Birthday {
+
+    public static final String MESSAGE_BIRTHDAY_CONSTRAINTS = "Birthdays should be numeric in the format "
+            + "DD/MM/YY or DD/MM/YYYY.";
+
+    public static final String BIRTHDAY_VALIDATION_REGEX = "^(?:(?:31(\\/|-|\\.)(?:0?[13578]|1[02]))\\1|(?:(?:29|30)"
+            + "(\\/|-|\\.)(?:0?[1,3-9]|1[0-2])\\2))(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$|^(?:29(\\/|-|\\.)0?2\\3"
+            + "(?:(?:(?:1[6-9]|[2-9]\\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$"
+            + "|^(?:0?[1-9]|1\\d|2[0-8])(\\/|-|\\.)(?:(?:0?[1-9])|(?:1[0-2]))\\4(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$";
+
+    public static final String DEFAULT_BIRTHDAY = "No Birthday Added";
+
+    private final String birthdayNumber;
+
+    public Birthday () {
+        this.birthdayNumber = DEFAULT_BIRTHDAY; //default value
+    }
+
+    /**
+     * Validates given birthday input.
+     *
+     * @throws IllegalValueException if the given birthday string is invalid.
+     */
+    public Birthday(String birthday) throws IllegalValueException {
+        requireNonNull(birthday);
+        String trimmedBirthday = birthday.trim();
+        if (!isValidBirthdayFormat(trimmedBirthday)) {
+            throw new IllegalValueException(MESSAGE_BIRTHDAY_CONSTRAINTS);
+        }
+        this.birthdayNumber = trimmedBirthday;
+    }
+
+    /**
+     * Returns the string value of the birthday
+     */
+    public String getBirthdayNumber() {
+        return birthdayNumber;
+    }
+
+    /**
+     * Returns true if a given string is a valid birthday number.
+     */
+    public static boolean isValidBirthdayFormat(String test) {
+
+        return test.matches(BIRTHDAY_VALIDATION_REGEX) || test.equalsIgnoreCase(DEFAULT_BIRTHDAY);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof Birthday // instanceof handles nulls
+                && this.birthdayNumber.equals(((Birthday) other).birthdayNumber)); // state check
+    }
+
+    @Override
+    public int hashCode() {
+        return birthdayNumber.hashCode();
+    }
+
+    /**
+     * Format state as text for viewing.
+     */
+    public String toString() {
+        return birthdayNumber;
+    }
+}
+```
+###### \java\seedu\address\model\person\Person.java
+``` java
+    public void setBirthday(Birthday birthday) {
+
+        this.birthday.set(requireNonNull(birthday));
+    }
+
+    @Override
+    public ObjectProperty<Birthday> birthdayProperty() {
+
+        return birthday;
+    }
+
+    @Override
+    public Birthday getBirthday() {
+
+        return birthday.get();
+    }
+
+```
+###### \java\seedu\address\storage\XmlAdaptedPerson.java
 ``` java
     @XmlElement(required = true)
     private String birthday;
@@ -415,7 +423,7 @@ public class AddBirthdayCommandParser implements Parser<AddBirthdayCommand> {
         email = source.getEmail().value;
         address = source.getAddress().value;
 ```
-###### /java/seedu/address/storage/XmlAdaptedPerson.java
+###### \java\seedu\address\storage\XmlAdaptedPerson.java
 ``` java
         birthday = source.getBirthday().getBirthdayNumber();
         tagged = new ArrayList<>();
@@ -439,7 +447,7 @@ public class AddBirthdayCommandParser implements Parser<AddBirthdayCommand> {
         final Email email = new Email(this.email);
         final Address address = new Address(this.address);
 ```
-###### /java/seedu/address/storage/XmlAdaptedPerson.java
+###### \java\seedu\address\storage\XmlAdaptedPerson.java
 ``` java
         final Birthday birthday = new Birthday(this.birthday);
         final Set<Tag> tags = new HashSet<>(personTags);
@@ -447,92 +455,7 @@ public class AddBirthdayCommandParser implements Parser<AddBirthdayCommand> {
     }
 }
 ```
-###### /java/seedu/address/commons/events/ui/NewResultAvailableEvent.java
-``` java
-    public NewResultAvailableEvent(String message, boolean isError) {
-        this.message = message;
-        this.isError = isError;
-    }
-
-```
-###### /java/seedu/address/ui/StatusBarFooter.java
-``` java
-    /**
-     * Display the total number of people in the address book
-     * @param totalPeople
-     * @ return a string of the displayed text
-     */
-    public static String getTotalPeopleText(int totalPeople) {
-        String displayText = totalPeople + " person(s) in UniCity";
-
-        return displayText;
-    }
-
-    public void setTotalPeople(int totalPeople) {
-
-        this.totalPeople.setText(getTotalPeopleText(totalPeople));
-    }
-}
-```
-###### /java/seedu/address/ui/PersonCard.java
-``` java
-    private static String[] colors = { "red", "blue", "orange", "brown", "purple", "black", "gray", "maroon", "coral",
-        "blueviolet", "slategrey", "darkseagreen", "darkturquoise", "darkkhaki", "firebrick", "darkcyan" };
-    private static HashMap<String, String> tagColors = new HashMap<>();
-    private static int tagNumber = 0;
-
-    /**
-     * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
-     * As a consequence, UI elements' variable names cannot be set to such keywords
-     * or an exception will be thrown by JavaFX during runtime.
-     *
-     * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The issue on AddressBook level 4</a>
-     */
-
-```
-###### /java/seedu/address/ui/PersonCard.java
-``` java
-        initTags(person);
-```
-###### /java/seedu/address/ui/PersonCard.java
-``` java
-    /**
-     * Binds the individual tags shown for each contact to a different color
-     * so that it is clearer for the user.
-     */
-    private void initTags(ReadOnlyPerson person) {
-        person.getTags().forEach((Tag tag) -> {
-            Label tagLabel = new Label(tag.tagName);
-            if (tag.tagName.equalsIgnoreCase("friends") || tag.tagName.equalsIgnoreCase("friend")) {
-                tagLabel.setStyle("-fx-background-color: green");
-            } else {
-                tagLabel.setStyle("-fx-background-color: " + getColorForTag(tag.tagName));
-            }
-            tags.getChildren().add(tagLabel);
-        });
-    }
-
-    private String getColorForTag(String tagValue) {
-        if (!tagColors.containsKey(tagValue)) {
-            tagColors.put(tagValue, colors[tagNumber]);
-            tagNumber++;
-        }
-        if (tagNumber >= colors.length) {
-            tagNumber = 0;
-        }
-
-        return tagColors.get(tagValue);
-    }
-
-```
-###### /java/seedu/address/ui/MainWindow.java
-``` java
-    public ExtendedPersonDisplay getExtendedPersonDisplay() {
-        return this.extendedPersonDisplay;
-    }
-
-```
-###### /java/seedu/address/ui/ExtendedPersonDisplay.java
+###### \java\seedu\address\ui\ExtendedPersonDisplay.java
 ``` java
 /**
  * Extended person card show more details about a certain contact
@@ -631,7 +554,65 @@ public class ExtendedPersonDisplay extends UiPart<Region> {
 
 }
 ```
-###### /java/seedu/address/ui/ResultDisplay.java
+###### \java\seedu\address\ui\MainWindow.java
+``` java
+    public ExtendedPersonDisplay getExtendedPersonDisplay() {
+        return this.extendedPersonDisplay;
+    }
+
+```
+###### \java\seedu\address\ui\PersonCard.java
+``` java
+    private static String[] colors = { "red", "blue", "orange", "brown", "purple", "black", "gray", "maroon", "coral",
+        "blueviolet", "slategrey", "darkseagreen", "darkturquoise", "darkkhaki", "firebrick", "darkcyan" };
+    private static HashMap<String, String> tagColors = new HashMap<>();
+    private static int tagNumber = 0;
+
+    /**
+     * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
+     * As a consequence, UI elements' variable names cannot be set to such keywords
+     * or an exception will be thrown by JavaFX during runtime.
+     *
+     * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The issue on AddressBook level 4</a>
+     */
+
+```
+###### \java\seedu\address\ui\PersonCard.java
+``` java
+        initTags(person);
+```
+###### \java\seedu\address\ui\PersonCard.java
+``` java
+    /**
+     * Binds the individual tags shown for each contact to a different color
+     * so that it is clearer for the user.
+     */
+    private void initTags(ReadOnlyPerson person) {
+        person.getTags().forEach((Tag tag) -> {
+            Label tagLabel = new Label(tag.tagName);
+            if (tag.tagName.equalsIgnoreCase("friends") || tag.tagName.equalsIgnoreCase("friend")) {
+                tagLabel.setStyle("-fx-background-color: green");
+            } else {
+                tagLabel.setStyle("-fx-background-color: " + getColorForTag(tag.tagName));
+            }
+            tags.getChildren().add(tagLabel);
+        });
+    }
+
+    private String getColorForTag(String tagValue) {
+        if (!tagColors.containsKey(tagValue)) {
+            tagColors.put(tagValue, colors[tagNumber]);
+            tagNumber++;
+        }
+        if (tagNumber >= colors.length) {
+            tagNumber = 0;
+        }
+
+        return tagColors.get(tagValue);
+    }
+
+```
+###### \java\seedu\address\ui\ResultDisplay.java
 ``` java
     @Subscribe
     private void handleNewResultAvailableEvent(NewResultAvailableEvent event) {
@@ -667,20 +648,26 @@ public class ExtendedPersonDisplay extends UiPart<Region> {
 
 }
 ```
-###### /resources/view/MainWindow.fxml
-``` fxml
-      <SplitPane orientation="VERTICAL" prefHeight="200.0" prefWidth="80.0">
-        <items>
-            <StackPane fx:id="extendedPersonDisplayPlaceholder" prefHeight="150.0" prefWidth="50.0">
-              <padding>
-                <Insets bottom="10" left="0" right="0" top="10" />
-              </padding>
-            </StackPane>
-        </items>
-      </SplitPane>
+###### \java\seedu\address\ui\StatusBarFooter.java
+``` java
+    /**
+     * Display the total number of people in the address book
+     * @param totalPeople
+     * @ return a string of the displayed text
+     */
+    public static String getTotalPeopleText(int totalPeople) {
+        String displayText = totalPeople + " person(s) in UniCity";
 
+        return displayText;
+    }
+
+    public void setTotalPeople(int totalPeople) {
+
+        this.totalPeople.setText(getTotalPeopleText(totalPeople));
+    }
+}
 ```
-###### /resources/view/ExtendedPersonDisplay.fxml
+###### \resources\view\ExtendedPersonDisplay.fxml
 ``` fxml
 
 <?import javafx.geometry.Insets?>
@@ -753,4 +740,17 @@ public class ExtendedPersonDisplay extends UiPart<Region> {
     </Label>
     </children>
 </VBox>
+```
+###### \resources\view\MainWindow.fxml
+``` fxml
+      <SplitPane orientation="VERTICAL" prefHeight="200.0" prefWidth="80.0">
+        <items>
+            <StackPane fx:id="extendedPersonDisplayPlaceholder" prefHeight="150.0" prefWidth="50.0">
+              <padding>
+                <Insets bottom="10" left="0" right="0" top="10" />
+              </padding>
+            </StackPane>
+        </items>
+      </SplitPane>
+
 ```

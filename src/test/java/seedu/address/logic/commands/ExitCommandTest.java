@@ -23,6 +23,7 @@ public class ExitCommandTest {
     //@@author taojiashu
     private ExitCommand exitCommand;
     private CommandHistory history;
+    //@@author
 
     //@@author taojiashu
     @Before
@@ -32,6 +33,7 @@ public class ExitCommandTest {
         exitCommand = new ExitCommand();
         exitCommand.setData(model, history, new UndoRedoStack());
     }
+    //@@author
 
     //@@author taojiashu
     @Test
@@ -42,23 +44,25 @@ public class ExitCommandTest {
         history.add(otherCommand);
         assertCommandResult(exitCommand, MESSAGE_CONFIRMATION);
     }
+    //@@author
 
-
+    //@@author taojiashu
     @Test
     public void execute_exit_success() {
-        //@@author taojiashu
         history.add("exit");
 
         assertCommandResult(exitCommand, MESSAGE_EXIT_ACKNOWLEDGEMENT);
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof ExitAppRequestEvent);
         assertTrue(eventsCollectorRule.eventsCollector.getSize() == 1);
     }
+    //@@author
 
-    //@@author taojiashu-reused
+    //@@author taojiashu
     /**
-     * Asserts that the result message from the execution of {@code historyCommand} equals to {@code expectedMessage}
+     * Asserts that the result message from the execution of {@code ExitCommand} equals to {@code expectedMessage}
      */
     private void assertCommandResult(ExitCommand exitCommand, String expectedMessage) {
         assertEquals(expectedMessage, exitCommand.execute().feedbackToUser);
     }
+    //@@author
 }
