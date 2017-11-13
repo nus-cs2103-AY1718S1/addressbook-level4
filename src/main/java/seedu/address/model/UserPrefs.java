@@ -13,8 +13,8 @@ import seedu.address.model.util.SampleDataUtil;
 public class UserPrefs {
 
     private GuiSettings guiSettings;
-    private String addressBookFilePath = "data/addressbook.xml";
-    private String addressBookName = "MyAddressBook";
+    private String addressBookFilePath = "data/intelli.xml";
+    private String addressBookName = "Intelli";
 
     public UserPrefs() {
         this.setGuiSettings(350, 600, 0, 0, SampleDataUtil.getSampleTagColours());
