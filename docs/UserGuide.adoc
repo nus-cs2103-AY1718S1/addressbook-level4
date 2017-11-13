@@ -668,7 +668,7 @@ To quickly revert address book data to the state of last use:
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous address Book. +
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous address book. +
 
 *Q*: What is the difference between `repaid` command and `payback` command? +
 *A*: `repaid` command completely clears a debtor's debt while `payback` clears a specified amount. In both cases, when the debt reaches zero, the person is
