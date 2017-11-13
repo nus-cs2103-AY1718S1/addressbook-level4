@@ -76,6 +76,28 @@ public class FindCommandTest {
         FindCommand command = prepareSearchKeywordsCommand("Benson owesMoney");
         assertCommandSuccess(command, expectedMessage, Collections.singletonList(BENSON));
     }
+
+    @Test
+    public void execute_nameAlternatingUpperAndLowerCases_success() {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
+        FindCommand command = prepareSearchKeywordsCommand("BeNsOn");
+        assertCommandSuccess(command, expectedMessage, Collections.singletonList(BENSON));
+    }
+
+    @Test
+    public void execute_tagAlternatingUpperAndLowerCases_success() {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
+        FindCommand command = prepareSearchKeywordsCommand("owesMoney");
+        assertCommandSuccess(command, expectedMessage, Collections.singletonList(BENSON));
+    }
+
+    @Test
+    public void execute_initials_personFound() {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 2);
+        FindCommand command = prepareSearchKeywordsCommand("b");
+        assertCommandSuccess(command, expectedMessage, model.getFilteredPersonList());
+    }
+
     //@@author conantteo
     @Test
     public void execute_birthdayMonth_personFound() {

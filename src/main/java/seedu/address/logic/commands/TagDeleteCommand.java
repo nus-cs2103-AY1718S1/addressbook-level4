@@ -39,13 +39,14 @@ public class TagDeleteCommand extends UndoableCommand {
         List<Tag> tagList = model.getAddressBook().getTagList();
 
         try {
+            System.out.println("" + Tag.MESSAGE_TAG_CONSTRAINTS);
             tagToDelete = new Tag(tagName);
             if (!tagList.contains(tagToDelete)) {
                 throw new CommandException(Messages.MESSAGE_INVALID_TAG_NAME);
             }
             model.deleteTag(tagToDelete);
         } catch (IllegalValueException ive) {
-            assert false : "The target tag is invalid";
+            throw new CommandException(Tag.MESSAGE_TAG_CONSTRAINTS);
         } catch (PersonNotFoundException pnfe) {
             assert false : "The target person cannot be missing";
         }
