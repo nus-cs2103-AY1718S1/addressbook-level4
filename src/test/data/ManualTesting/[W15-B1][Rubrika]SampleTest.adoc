@@ -29,3 +29,35 @@ _Result:_ +
 * Only other commands with command skeletons are:
 * `add` and `remark`
 ****
+
+==== Invalid Input (No Command)
+
+_Test:_ +
+Enter `derp` and then press `TAB` key.
+
+_Result:_ +
+Nothing should change in the command box, `derp` and only `derp` should be in the command box.
+
+=== AutoComplete By Set String
+
+==== Sort Command
+
+_Test:_ +
+Enter `sort n` and then press `TAB` key.
+
+_Result:_ +
+`sort name` should appear in the command box.
+
+_Test:_ +
+Enter `sort name a` and then press `TAB` key.
+
+_Result:_ +
+`sort name asc` should appear in the command box.
+
+==== Theme Command
+
+_Test:_ +
+Enter `theme r` and then press `TAB` key.
+
+_Result:_ +
+`theme RedTheme` should appear in the command box.
