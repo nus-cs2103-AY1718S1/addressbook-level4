@@ -57,7 +57,7 @@ public class AddCommandParserTest {
                 .withEmail(MISSING_FIELD).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_FRIEND).build();
 
         Person expectedMissingAddressPerson = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
-                .withEmail(MISSING_FIELD).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_FRIEND).build();
+                .withEmail(VALID_EMAIL_BOB).withAddress(MISSING_FIELD).withTags(VALID_TAG_FRIEND).build();
 
         Person expectedMissingPhoneEmailAddressPerson = new PersonBuilder().withName(VALID_NAME_BOB)
                 .withPhone(MISSING_FIELD).withEmail(MISSING_FIELD).withAddress(MISSING_FIELD)

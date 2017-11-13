@@ -56,7 +56,7 @@ import seedu.address.testutil.PersonUtil;
 
 public class AddCommandSystemTest extends AddressBookSystemTest {
 
-    public final static String MISSING_FIELD = "---";
+    public static final String MISSING_FIELD = "---";
 
     @Test
     public void add() throws Exception {
