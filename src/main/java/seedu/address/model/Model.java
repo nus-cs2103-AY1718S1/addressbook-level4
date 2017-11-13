@@ -1,11 +1,15 @@
 package seedu.address.model;
 
+import java.util.ArrayList;
 import java.util.function.Predicate;
 
+import javafx.beans.property.ObjectProperty;
 import javafx.collections.ObservableList;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.UniqueTagList;
 
 /**
  * The API of the Model component.
@@ -39,10 +43,26 @@ public interface Model {
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
 
+    /** Returns an unmodifiable view of the tag list */
+    ObservableList<Tag> getTagList();
+
+    //@@author WangJieee
+    /** Returns an unmodifiable view of the list containing existing tags */
+    ObjectProperty<UniqueTagList> getRealTagList();
+    //@@author
+
     /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
+
+    //@@author yuheng222
+    /** Sorts the persons in the AddressBook lexicographically */
+    void sort();
+
+    /** Returns the themes list */
+    ArrayList<String> getThemesList();
+    //@@author
 
 }

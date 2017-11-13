@@ -2,11 +2,14 @@ package seedu.address.logic;
 
 import static org.junit.Assert.assertEquals;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_THEME_DISPLAYED_INDEX;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.junit.rules.TemporaryFolder;
 
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.HistoryCommand;
@@ -16,14 +19,32 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.storage.JsonUserPrefsStorage;
+import seedu.address.storage.Storage;
+import seedu.address.storage.StorageManager;
+import seedu.address.storage.XmlAddressBookStorage;
 
 
 public class LogicManagerTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
+    @Rule
+    public TemporaryFolder testFolder = new TemporaryFolder();
     private Model model = new ModelManager();
+    private Storage storage;
     private Logic logic = new LogicManager(model);
+
+    @Before
+    public void setUp() {
+        XmlAddressBookStorage addressBookStorage = new XmlAddressBookStorage(getTempFilePath("ab"));
+        JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(getTempFilePath("prefs"));
+        storage = new StorageManager(addressBookStorage, userPrefsStorage);
+    }
+
+    private String getTempFilePath(String fileName) {
+        return testFolder.getRoot().getPath() + fileName;
+    }
 
     @Test
     public void execute_invalidCommandFormat_throwsParseException() {
@@ -38,6 +59,15 @@ public class LogicManagerTest {
         assertCommandException(deleteCommand, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         assertHistoryCorrect(deleteCommand);
     }
+
+    //@@author yuheng222
+    @Test
+    public void execute_selectThemeCommandExecutionError_throwsCommandException() {
+        String selectThemeCommand = "theme 9";
+        assertCommandException(selectThemeCommand, MESSAGE_INVALID_THEME_DISPLAYED_INDEX);
+        assertHistoryCorrect(selectThemeCommand);
+    }
+    //@@author
 
     @Test
     public void execute_validCommand_success() {

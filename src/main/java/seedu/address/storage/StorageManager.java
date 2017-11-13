@@ -89,4 +89,18 @@ public class StorageManager extends ComponentManager implements Storage {
         }
     }
 
+    @Override
+    public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
+        saveAddressBook(addressBook, addressBookStorage.getAddressBookFilePath()
+                .substring(0, addressBookStorage.getAddressBookFilePath().length() - 4) + "-backup.xml");
+    }
+
+    /**
+     * Reads the backup of Address Book for testing purposes
+     */
+    public Optional<ReadOnlyAddressBook> readBackupAddressBook() throws DataConversionException, IOException {
+        return readAddressBook(addressBookStorage.getAddressBookFilePath()
+                .substring(0, addressBookStorage.getAddressBookFilePath().length() - 4) + "-backup.xml");
+    }
+
 }

@@ -82,7 +82,7 @@
 }
 
 .split-pane {
-    -fx-border-radius: 1;
+    -fx-border-radius: 7;
     -fx-border-width: 1;
     -fx-background-color: derive(#1d1d1d, 20%);
 }
@@ -90,24 +90,32 @@
 .list-view {
     -fx-background-insets: 0;
     -fx-padding: 0;
+    -fx-background-color: derive(#1d1d1d, 20%);
 }
 
 .list-cell {
-    -fx-label-padding: 0 0 0 0;
+    -fx-background-color: #474747 ;
+    -fx-label-padding: 0 0 5 0;
     -fx-graphic-text-gap : 0;
-    -fx-padding: 0 0 0 0;
+    -fx-padding: 0 0 5 0;
+    -fx-border-width: 3px;
 }
 
 .list-cell:filled:even {
-    -fx-background-color: #3c3e3f;
+    -fx-background-color: #474747;
+    -fx-background-radius: 1;
+    -fx-border-color: transparent transparent #dcdcdc transparent;
 }
 
 .list-cell:filled:odd {
     -fx-background-color: #515658;
+    -fx-background-radius: 1;
+    -fx-border-color: transparent transparent #dcdcdc transparent;
 }
 
 .list-cell:filled:selected {
     -fx-background-color: #424d5f;
+    -fx-border-color: transparent transparent #dcdcdc transparent;
 }
 
 .list-cell:filled:selected #cardPane {
@@ -121,13 +129,13 @@
 
 .cell_big_label {
     -fx-font-family: "Segoe UI Semibold";
-    -fx-font-size: 16px;
+    -fx-font-size: 25px;
     -fx-text-fill: #010504;
 }
 
 .cell_small_label {
     -fx-font-family: "Segoe UI";
-    -fx-font-size: 13px;
+    -fx-font-size: 20px;
     -fx-text-fill: #010504;
 }
 
@@ -148,6 +156,7 @@
 
 .result-display {
     -fx-background-color: transparent;
+    -fx-background-radius: 8;
     -fx-font-family: "Segoe UI Light";
     -fx-font-size: 13pt;
     -fx-text-fill: white;
@@ -322,7 +331,7 @@
     -fx-border-insets: 0;
     -fx-border-width: 1;
     -fx-font-family: "Segoe UI Light";
-    -fx-font-size: 13pt;
+    -fx-font-size: 14pt;
     -fx-text-fill: white;
 }
 
@@ -345,6 +354,22 @@
     -fx-background-color: #3e7b91;
     -fx-padding: 1 3 1 3;
     -fx-border-radius: 2;
-    -fx-background-radius: 2;
-    -fx-font-size: 11;
+    -fx-background-radius: 5;
+    -fx-font-size: 15;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+}
+
+#totalTags {
+    -fx-hgap: 7;
+    -fx-vgap: 3;
+}
+
+#totalTags .label {
+    -fx-text-fill: white;
+    -fx-background-color: #3e7b91;
+    -fx-padding: 1 3 1 3;
+    -fx-border-radius: 2;
+    -fx-background-radius: 5;
+    -fx-font-size: 20;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
 }

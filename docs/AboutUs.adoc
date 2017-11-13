@@ -4,53 +4,44 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: images
 :stylesDir: stylesheets
 
-AddressBook - Level 4 was developed by the https://se-edu.github.io/docs/Team.html[se-edu] team. +
-The dummy content given below serves as a placeholder to be used by future forks of the project. +
+Address Book & Booklets (AB&B) was developed by the https://github.com/CS2103AUG2017-T10-B3[CS2103AUG2017-T10-B3] team. +
 {empty} +
 We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
 
 == Project Team
 
-=== John Doe
-image::damithc.jpg[width="150", align="left"]
-{empty}[http://www.comp.nus.edu.sg/~damithch[homepage]] [https://github.com/damithc[github]] [<<johndoe#, portfolio>>]
+=== Xie Yu Heng
+image::yuheng222.png[width="150", align="left"]
+{empty}[https://github.com/yuheng222[github]] [<<xieyuheng#, portfolio>>]
 
-Role: Project Advisor
+Role: Developer +
+Responsibilities: UI
 
 '''
 
-=== John Roe
-image::lejolly.jpg[width="150", align="left"]
-{empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
+=== Zechariah Gerard Tan Jia Le
+image::infinity-ace.jpg[width="150", align="left"]
+{empty}[https://github.com/Infinity-Ace[github]] [<<infinity-ace#, portfolio>>]
 
-Role: Team Lead +
+Role: Developer +
+Responsibilities: Documentation
+
+'''
+
+=== Wang Jie
+image::wangjieee.png[width="150", align="left"]
+{empty}[http://github.com/WangJieee[github]] [<<wangjie#, portfolio>>]
+
+Role: Developer +
 Responsibilities: UI
 
 '''
 
-=== Johnny Doe
-image::yijinl.jpg[width="150", align="left"]
-{empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
+=== Teo Meng Shin, Ryan
+image::acecentury.jpg[width="150", align="left"]
+{empty}[http://github.com/AceCentury[github]] [<<ryanteo#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Data
-
-'''
-
-=== Johnny Roe
-image::m133225.jpg[width="150", align="left"]
-{empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]
-
-Role: Developer +
-Responsibilities: Dev Ops + Threading
-
-'''
-
-=== Benson Meier
-image::yl_coder.jpg[width="150", align="left"]
-{empty}[http://github.com/yl-coder[github]] [<<johndoe#, portfolio>>]
-
-Role: Developer +
-Responsibilities: UI
+Responsibilities: Logic
 
 '''

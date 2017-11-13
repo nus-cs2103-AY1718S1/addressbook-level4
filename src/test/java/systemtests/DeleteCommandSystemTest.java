@@ -2,7 +2,6 @@ package systemtests;
 
 import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
-import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS;
 import static seedu.address.testutil.TestUtil.getLastIndex;
 import static seedu.address.testutil.TestUtil.getMidIndex;
@@ -108,10 +107,16 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         /* Case: invalid arguments (extra argument) -> rejected */
         assertCommandFailure(DeleteCommand.COMMAND_WORD + " 1 abc", MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
 
-        /* Case: mixed case command word -> rejected */
-        assertCommandFailure("DelETE 1", MESSAGE_UNKNOWN_COMMAND);
+        //@@author AceCentury
+        /* Case: mixed case command word -> deleted */
+        expectedModel = getModel();
+        command = "DelETE " + INDEX_FIRST_PERSON.getOneBased();
+        deletedPerson = removePerson(expectedModel, INDEX_FIRST_PERSON);
+        expectedResultMessage = String.format(MESSAGE_DELETE_PERSON_SUCCESS, deletedPerson);
+        assertCommandSuccess(command, expectedModel, expectedResultMessage, INDEX_FIRST_PERSON);
     }
 
+    //@@author
     /**
      * Removes the {@code ReadOnlyPerson} at the specified {@code index} in {@code model}'s address book.
      * @return the removed person

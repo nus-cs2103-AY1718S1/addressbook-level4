@@ -1,0 +1,105 @@
+= Zechariah Gerard Tan Jia Le - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: AddressBook - Level 4
+AB&B is a desktop Address Book application created by Team T10-B3 in AY2017/8 Semester 1 as a CS2103T Software Engineering project. It is written in Java, and has about 6 kLoC.
+
+This application has a GUI but most user interactions happen using a CLI (Command Line Interface), making it ideal for users who can type fast. The current features are selectively implemented to cater to administrative users.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T10-B3/main/blob/master/collated/main/infinity-ace.md[Functional code]] [https://github.com/CS2103AUG2017-T10-B3/main/blob/master/collated/test/infinity-ace.md[Test code]]
+
+=== Enhancement Added: New fields NOK Name & NOK Phone
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=add]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+For administration such as schools or tuition centres.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Optional Fields
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=add]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Sometimes it's inappropriate to ask people such as colleagues for their personal details such as Address, Email & NOK details
+
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc
+
+#End of Extract#
+
+=== Enhancement Added: Address Book Backup
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=backup]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+In the case where any mistake was made and the app was accidentally closed (thus preventing the undo command from working on the next start), the previous backup can be retrieved.
+
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc
+
+#End of Extract#
+
+=== Enhancement Proposed: Make NOK Name and NOK Phone coupled together
+
+It does not make sense to have NOK Name without NOK Phone and vice versa.
+
+=== Other contributions
+
+* Helped to check and merge some pull requests (Pull requests https://github.com/CS2103AUG2017-T10-B3/main/pull/98[#98], https://github.com/CS2103AUG2017-T10-B3/main/pull/97[#97] & https://github.com/CS2103AUG2017-T10-B3/main/pull/89[#89])
+
+== Project: Robocodez
+
+*NUS Orbital 2017 Project*: [https://gitlab.com/robocodez/robowarriors[Robocodez]]

@@ -1,7 +1,5 @@
 package seedu.address.model.person;
 
-import static java.util.Objects.requireNonNull;
-
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
@@ -18,6 +16,7 @@ public class Address {
      * otherwise " " (a blank string) becomes a valid input.
      */
     public static final String ADDRESS_VALIDATION_REGEX = "[^\\s].*";
+    public static final String ADDRESS_UNDEFINED_DEFAULT = "NIL";
 
     public final String value;
 
@@ -27,18 +26,21 @@ public class Address {
      * @throws IllegalValueException if given address string is invalid.
      */
     public Address(String address) throws IllegalValueException {
-        requireNonNull(address);
-        if (!isValidAddress(address)) {
-            throw new IllegalValueException(MESSAGE_ADDRESS_CONSTRAINTS);
+        if (address == null) {
+            this.value = ADDRESS_UNDEFINED_DEFAULT;
+        } else {
+            if (!isValidAddress(address)) {
+                throw new IllegalValueException(MESSAGE_ADDRESS_CONSTRAINTS);
+            }
+            this.value = address;
         }
-        this.value = address;
     }
 
     /**
      * Returns true if a given string is a valid person email.
      */
     public static boolean isValidAddress(String test) {
-        return test.matches(ADDRESS_VALIDATION_REGEX);
+        return test.matches(ADDRESS_VALIDATION_REGEX) || test.equals(ADDRESS_UNDEFINED_DEFAULT);
     }
 
     @Override
@@ -57,5 +59,4 @@ public class Address {
     public int hashCode() {
         return value.hashCode();
     }
-
 }

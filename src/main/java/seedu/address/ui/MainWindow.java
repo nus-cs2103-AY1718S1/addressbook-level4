@@ -18,6 +18,7 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.SelectThemeRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
@@ -29,10 +30,11 @@ import seedu.address.model.UserPrefs;
  */
 public class MainWindow extends UiPart<Region> {
 
-    private static final String ICON = "/images/address_book_32.png";
+    private static final String ICON = "/images/app_icon.png";
     private static final String FXML = "MainWindow.fxml";
     private static final int MIN_HEIGHT = 600;
     private static final int MIN_WIDTH = 450;
+    private static final int CURRENT_THEME_INDEX = 1;
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -42,6 +44,7 @@ public class MainWindow extends UiPart<Region> {
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
     private PersonListPanel personListPanel;
+    private TagPane tagPane;
     private Config config;
     private UserPrefs prefs;
 
@@ -62,6 +65,9 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private StackPane statusbarPlaceholder;
+
+    @FXML
+    private StackPane tagPanePlaceholder;
 
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
@@ -140,6 +146,11 @@ public class MainWindow extends UiPart<Region> {
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
+        //@@author WangJieee
+        tagPane = new TagPane(logic.getRealTagList());
+        tagPanePlaceholder.getChildren().add(tagPane.getRoot());
+        //@@author
     }
 
     void hide() {
@@ -196,6 +207,18 @@ public class MainWindow extends UiPart<Region> {
         primaryStage.show();
     }
 
+    //@@author yuheng222
+    /**
+     * Selects the theme given by user input.
+     */
+    public void handleSelectTheme(String theme) {
+        if (getRoot().getStylesheets().size() > 1) {
+            getRoot().getStylesheets().remove(CURRENT_THEME_INDEX);
+        }
+        getRoot().getStylesheets().add("/view/" + theme);
+    }
+    //@@author
+
     /**
      * Closes the application.
      */
@@ -208,6 +231,10 @@ public class MainWindow extends UiPart<Region> {
         return this.personListPanel;
     }
 
+    public TagPane getTagPane() {
+        return this.tagPane;
+    }
+
     void releaseResources() {
         browserPanel.freeResources();
     }
@@ -217,4 +244,12 @@ public class MainWindow extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
     }
+
+    //@@author yuheng222
+    @Subscribe
+    private void handleSelectThemeEvent(SelectThemeRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleSelectTheme(event.theme);
+    }
+    //@@author
 }

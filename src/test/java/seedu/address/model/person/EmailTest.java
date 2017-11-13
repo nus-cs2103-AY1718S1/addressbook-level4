@@ -2,6 +2,7 @@ package seedu.address.model.person;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static seedu.address.model.person.Email.EMAIL_UNDEFINED_DEFAULT;
 
 import org.junit.Test;
 
@@ -36,5 +37,8 @@ public class EmailTest {
         assertTrue(Email.isValidEmail("_user_@_e_x_a_m_p_l_e_.com_"));    // underscores
         assertTrue(Email.isValidEmail("peter_jack@very_very_very_long_example.com"));   // long domain name
         assertTrue(Email.isValidEmail("if.you.dream.it_you.can.do.it@example.com"));    // long local part
+
+        //default undefined address
+        assertTrue(Email.isValidEmail(EMAIL_UNDEFINED_DEFAULT));
     }
 }

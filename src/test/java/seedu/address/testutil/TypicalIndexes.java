@@ -9,4 +9,7 @@ public class TypicalIndexes {
     public static final Index INDEX_FIRST_PERSON = Index.fromOneBased(1);
     public static final Index INDEX_SECOND_PERSON = Index.fromOneBased(2);
     public static final Index INDEX_THIRD_PERSON = Index.fromOneBased(3);
+    public static final Index INDEX_FIRST_THEME = Index.fromOneBased(1);
+    public static final Index INDEX_SECOND_THEME = Index.fromOneBased(2);
+    public static final Index INDEX_THIRD_THEME = Index.fromOneBased(3);
 }

@@ -1,8 +1,13 @@
 package seedu.address.ui;
 
+import java.awt.image.BufferedImage;
+
 import javafx.beans.binding.Bindings;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
@@ -36,7 +41,13 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label address;
     @FXML
+    private Label nokName;
+    @FXML
+    private Label nokPhone;
+    @FXML
     private Label email;
+    @FXML
+    private ImageView avatarDisplay;
     @FXML
     private FlowPane tags;
 
@@ -46,6 +57,7 @@ public class PersonCard extends UiPart<Region> {
         id.setText(displayedIndex + ". ");
         initTags(person);
         bindListeners(person);
+        setAvatar(person);
     }
 
     /**
@@ -56,16 +68,42 @@ public class PersonCard extends UiPart<Region> {
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
+        String test = nokName.toString();                                           // Problem
+        nokName.textProperty().bind(Bindings.convert(person.nokNameProperty()));
+        nokPhone.textProperty().bind(Bindings.convert(person.nokPhoneProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
-            person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+            initTags(person);
         });
     }
 
-    private void initTags(ReadOnlyPerson person) {
-        person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+    //@@author yuheng222
+    /**
+     *  Sets the chosen Avatar for the specified person.
+     */
+    private void setAvatar(ReadOnlyPerson person) {
+
+        BufferedImage avatar = person.getAvatar().getAvatar();
+        Image image = SwingFXUtils.toFXImage(avatar, null);
+        avatarDisplay.setImage(image);
     }
+    //@@author
+
+    /**
+     * Creates a tag label for every {@code Person} and sets a color for each tag label.
+     */
+    private void initTags(ReadOnlyPerson person) {
+        person.getTags().forEach(tag -> {
+            Label tagLabel = new Label(tag.tagName);
+            tagLabel.setStyle("-fx-background-color: " + tag.tagColour + ";");
+            tags.getChildren().add(tagLabel);
+        });
+    }
+
+    /*public static String getColour(String tag) {
+        return tagColors.get(tag);
+    }*/
 
     @Override
     public boolean equals(Object other) {

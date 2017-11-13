@@ -81,6 +81,16 @@ public class StorageManagerTest {
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof DataSavingExceptionEvent);
     }
 
+    @Test
+    public void handleBackupAddressBook() throws Exception {
+        AddressBook original = getTypicalAddressBook();
+        storageManager.saveAddressBook(original);
+        ReadOnlyAddressBook retrieved = storageManager.readAddressBook().get();
+
+        storageManager.backupAddressBook(retrieved);
+        ReadOnlyAddressBook backup = storageManager.readBackupAddressBook().get();
+        assertEquals(new AddressBook(retrieved), new AddressBook(backup));
+    }
 
     /**
      * A Stub class to throw an exception when the save method is called

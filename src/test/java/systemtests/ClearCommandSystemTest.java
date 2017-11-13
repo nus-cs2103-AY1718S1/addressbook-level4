@@ -1,6 +1,5 @@
 package systemtests;
 
-import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 
 import org.junit.Test;
@@ -51,11 +50,12 @@ public class ClearCommandSystemTest extends AddressBookSystemTest {
         /* Case: clear empty address book -> cleared */
         assertCommandSuccess(ClearCommand.COMMAND_WORD);
         assertSelectedCardUnchanged();
-
-        /* Case: mixed case command word -> rejected */
-        assertCommandFailure("ClEaR", MESSAGE_UNKNOWN_COMMAND);
+        //@@author AceCentury
+        /* Case: mixed case command word -> cleared */
+        assertCommandSuccess("ClEaR");
     }
 
+    //@@author
     /**
      * Executes {@code command} and verifies that the command box displays an empty string, the result display
      * box displays {@code ClearCommand#MESSAGE_SUCCESS} and the model related components equal to an empty model.

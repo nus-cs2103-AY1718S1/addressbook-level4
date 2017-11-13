@@ -1,0 +1,93 @@
+= Teo Meng Shin, Ryan - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: AB&B
+AB&B is a java-based address book application. The application allows the user to easily manage his/her
+contacts' information. Although there is a GUI, main interactions from the user are done via CLI.
+While there are features which benefit the generic user, the team has included features tailored specifically
+for administrative personnel.
+
+The objective of this portfolio is to document notable contributions I have made to the application.
+A record of my contributions towards other similar projects can be found towards the end of the document.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T10-B3/main/blob/master/collated/main/AceCentury.md[Functional code]] [https://github.com/CS2103AUG2017-T10-B3/main/blob/master/collated/test/AceCentury.md[Test code]]
+
+=== Enhancement Added: Deletion by Name
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=deletebyname]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+To allow users to easily delete a contact with their name instead of having to scroll
+through the displayed person list to obtain the corresponding index. It also provides
+some time saving benefits by integrating a `find` function with the deletion query in
+the event that the user cannot recall the exact name of the contact to delete.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=DeleteByNameCommand]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Export to CSV
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=export]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+To allow users to easily make use of the data stored in AB&B with other applications. An example
+would be to upload the CSV file into an email client as a quick and simple way to mass update
+email addresses.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=export]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Ability to suggest frequently accessed contacts
+
+Users may need to frequently look up a particular contact for numerous reasons. By having such a feature,
+it would save them time and effort if AB&B were able to suggest or prioritise frequently
+accessed contacts in the displayed person list.
+
+=== Other contributions
+* Made the `command word` case-insensitive. (Pull request https://github.com/CS2103AUG2017-T10-B3/main/pull/42[#42])
+* Offered `DeleteByNameCommand` for re-use (https://github.com/nus-cs2103-AY1718S1/forum/issues/121[Re-Use Offer])
+
+=== Contributions to other teams' projects
+* `Export` function re-used by `Tourist Book`. (https://github.com/CS2103AUG2017-F09-B2/main/pull/78[Implementation]) (https://github.com/nus-cs2103-AY1718S1/forum/issues/158[Re-Use Offer])
+
+* Bug reports for `ContactPro` (Issues https://github.com/CS2103AUG2017-T12-B1/main/issues/62[#62], https://github.com/CS2103AUG2017-T12-B1/main/issues/63[#63], https://github.com/CS2103AUG2017-T12-B1/main/issues/71[#71])
+
+* Bug report for `AcquaiNote` (Issue https://github.com/CS2103AUG2017-T10-B1/main/issues/80[#80])
