@@ -25,7 +25,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
-    private static final String FILE_PATH = "photos/";
+    private static final String FILE_PATH = "photos";
     private static final String DEFAULT_FILE_PATH = "/images/default.jpeg";
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -94,21 +94,30 @@ public class PersonCard extends UiPart<Region> {
      */
     private void setImage() {
 
-        File file = new File(FILE_PATH + person.getEmail().toString() + ".png");
-        Path path = Paths.get(FILE_PATH + person.getEmail().toString() + ".png");
+        try {
+            Path p = Files.createDirectories(Paths.get(FILE_PATH));
 
-        if (Files.exists(path)) {
-            Image image = new Image(file.toURI().toString(), 150, 150, false, false);
-            photo.setImage(image);
+            String fp = p.toString();
 
-        } else {
-            URL url = getClass().getResource(DEFAULT_FILE_PATH);
-            try {
-                Image img = new Image(url.openStream(), 150, 150, false, false);
-                photo.setImage(img);
-            } catch (Exception e) {
-                e.printStackTrace();
+            File file = new File(fp + File.separator + person.getEmail().toString() + ".png");
+            Path path = Paths.get(fp + File.separator + person.getEmail().toString() + ".png");
+
+            if (Files.exists(path)) {
+                Image image = new Image(file.toURI().toString(), 150, 150, false, false);
+                photo.setImage(image);
+
+            } else {
+                URL url = getClass().getResource(DEFAULT_FILE_PATH);
+                try {
+                    Image img = new Image(url.openStream(), 150, 150, false, false);
+                    photo.setImage(img);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
+
+        } catch (Exception ie) {
+            ie.printStackTrace();
         }
 
     }
