@@ -54,3 +54,36 @@ Expected result: Address book repopulated with all persons and events.
 Input: `redo`, `undo`
 
 Expected result: Address book is cleared again, then repopulated again.
+
+=== Test 9 - Sort command
+Input `sort name`
+
+Expected result: Person list sorted alphabetically by name.
+
+Input `sort tag`
+
+Expected result: Person list sorted alphabetically by tag then again by name.
+
+Input: `sort company`
+Input: `sort position`
+
+Expected result: Person list sorted by company/position first and then alphabetically by person name with *NIL*
+company/position at the bottom.
+
+Input: `sort priority`
+
+Expected result: Person list sorted by priority first, in the order of *H, M, L* and then alphabetically by person
+name.
+
+=== Test 10 - Set Relationship Command
+Input: `set 1 2 ar/friends`
+
+Expected result: Adds the relationship between the two indexes if they do not have one.
+
+Input: `set 1 2 dr/friends`
+
+Expected result: Deletes the relationship between the two indexes if it is present.
+
+Input: `set 1 2 cr/`
+
+Expected clears all relationship between the two persons only.

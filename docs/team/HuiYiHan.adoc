@@ -121,7 +121,9 @@ include::../DeveloperGuide.adoc[tag=SettingRelationship]
 === Enhancement Proposed:
 
 ** Enhance Set Relationship command to be able to edit relationship between two persons.
-** Add specific relationship groups that groups specific relationships together to enable easier viewing
+** Enhance Delete Command to be able to delete all the corresponding relationship that person has with other people,
+so that when one person is being deleted all relationships other person has with him/her will be deleted.
+** Add specific relationship groups that group specific relationships together to enable easier viewing
  for user when the person card is selected.
 
 === Issue Reported:
@@ -133,7 +135,8 @@ include::../DeveloperGuide.adoc[tag=SettingRelationship]
 === Other Contributions
 
 ** Updated architecture diagram for Model, Storage Component
-(Pull request: [https://github.com/CS2103AUG2017-T14-B3/main/pull/108[#108]])
+(Pull request: [https://github.com/CS2103AUG2017-T14-B3/main/pull/108[#108]],
+ Pull request: [https://github.com/CS2103AUG2017-T14-B3/main/pull/119[#119])
 ** Updated the person panel with relationship information
 (Pull request: [https://github.com/CS2103AUG2017-T14-B3/main/pull/93[#93]])
 
