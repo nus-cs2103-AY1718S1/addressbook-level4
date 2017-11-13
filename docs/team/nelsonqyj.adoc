@@ -3,8 +3,11 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
-== Project: AddressBook - Level 4
-AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+== Project: ScheduBook
+_ScheduBook_ a desktop address book application intended for students to plan and schedule their meetings with their peers, tutors or professors. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 9 kLoC(Lines of Code).
+
+This project is a product of the module, Software Engineering, CS2103T, in NUS. _ScheduBook_ is proudly developed by my team based on https://github.com/se-edu/addressbook-level4[AddressBook(Level4)], and by https://se-edu.github.io/[SE-EDU] team, whose initial address book application was created to be used for teaching Software Engineering principles.
+
 
 *Code contributed*: [https://github.com/CS2103AUG2017-T09-B2/main/blob/master/collated/main/nelsonqyj.md[Functional code]] [https://github.com/CS2103AUG2017-T09-B2/main/blob/master/collated/test/nelsonqyj.md[Test code]] {give links to collated code files}
 
@@ -29,10 +32,10 @@ include::../UserGuide.adoc[tag=googlemaps]
 
 {Justify the need for, and the current design (i.e. external behavior) of, the feature}
 
-There is a need for students to properly plan their important meetings. Thus, the addmeeting feature allows student
+There is a need for users, especially students, to properly plan their important meetings. Thus, the addmeeting feature is implemented to allow users
 to create meetings with existing contacts and to be reminded of the meeting when it is due. Furthermore, by using the
 selectmeeting command, the location of the meeting will be automatically loaded into Google Maps as the destination and all the user
-needs to do is just to input current location and the directions to the meeting location will be shown. This allows the
+needs to do is just to input their current location and the directions to the meeting location will be shown. This allows the
 user to properly plan their time needed and route to meeting locations.
 
 
@@ -43,13 +46,15 @@ user to properly plan their time needed and route to meeting locations.
 
 include::../DeveloperGuide.adoc[tag=addmeeting]
 
+include::../DeveloperGuide.adoc[tag=selectmeeting]
+
 #End of Extract#
 
 ---
 
 === Enhancement Proposed: Add follow-up meetings
 
-Allows user to continue to add on from the original meeting which allows user to have a history of the previous meeting details
+Allows user to continue to add on from the original meeting which keeps track and archive the previous meeting details
 such as location and meeting partners.
 
 === Other contributions
@@ -57,6 +62,5 @@ such as location and meeting partners.
 * Updated the GUI color scheme (Pull requests https://github.com/CS2103AUG2017-T09-B2/main/pull/103, https://github.com/CS2103AUG2017-T09-B2/main/pull/110)
 * Wrote additional tests to improve coverage (Pull requests https://github.com/CS2103AUG2017-T09-B2/main/pull/125, https://github.com/CS2103AUG2017-T09-B2/main/pull/127)
 
-== Project: PowerPointLabs
+== Project: FPGA Design Project: Real-Time Audio Effects (Verilog Programming in Digital Fundamentals EE2020)
 
-{Optionally (not graded), you may include other projects in your portfolio.}
