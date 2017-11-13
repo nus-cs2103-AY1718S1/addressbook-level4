@@ -281,19 +281,13 @@ public class BrowserPanel extends UiPart<Region> {
         case FacebookAddAllFriendsCommand.COMMAND_WORD:
         case FacebookAddAllFriendsCommand.COMMAND_ALIAS:
             logger.info(LogsCenter.getEventHandlingLogMessage(event));
+            FacebookAddAllFriendsCommand.setUserId(browser.getEngine().getLocation());
+            FacebookAddCommand facebookAddCommandForAddAll = new FacebookAddCommand(true);
+            logic.completeFacebookAddCommand(facebookAddCommandForAddAll, processType);
 
-            if (!FacebookConnectCommand.isAuthenticated()) {
-                FacebookConnectCommand.completeAuth(browser.getEngine().getLocation());
-                FacebookAddAllFriendsCommand.addFirstFriend();
-            } else {
-                FacebookAddAllFriendsCommand.setUserId(browser.getEngine().getLocation());
-                FacebookAddCommand facebookAddCommandForAddAll = new FacebookAddCommand(true);
-                logic.completeFacebookAddCommand(facebookAddCommandForAddAll, processType);
-
-                // go on to add next friend
-                FacebookAddAllFriendsCommand.incrementTotalFriendsAdded();
-                FacebookAddAllFriendsCommand.setupNextFriend();
-            }
+            // go on to add next friend
+            FacebookAddAllFriendsCommand.incrementTotalFriendsAdded();
+            FacebookAddAllFriendsCommand.setupNextFriend();
             break;
 
         default:

@@ -26,8 +26,7 @@ public class FacebookAddAllFriendsCommand extends UndoableCommand {
     public static final String COMMAND_ALIAS = "fbaddall";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": adds all available friends from a Facebook account. (maximum friends that can be added is "
-            + "currently capped at 30.)\n"
+            + ": adds all available friends from an authenticated Facebook account.\n"
             + "Alias: " + COMMAND_ALIAS + "\n";
     public static final String MESSAGE_FACEBOOK_ADD_ALL_FRIENDS_ERROR = "Error with Facebook Tagable Friends API call."
             + "User may not be registered as 'Test User'";
@@ -44,7 +43,6 @@ public class FacebookAddAllFriendsCommand extends UndoableCommand {
     private static ResponseList<TaggableFriend> currentList;
     private static Paging<TaggableFriend> currentPaging;
     private static String currentPhotoID;
-    private static int maxFriends = 30;
     private static int totalFriendsAdded = 0;
     private static int friendIndex = 0;
 
@@ -125,10 +123,6 @@ public class FacebookAddAllFriendsCommand extends UndoableCommand {
      * Sets up the counter and adds the next Facebook Contact
      */
     public static void setupNextFriend() {
-        if (totalFriendsAdded >= maxFriends) {
-            finishFacebookAddAllFriends();
-            return;
-        }
         friendIndex++;
         try {
             addNextFriend();
@@ -167,12 +161,6 @@ public class FacebookAddAllFriendsCommand extends UndoableCommand {
     protected CommandResult executeUndoableCommand() throws CommandException {
         if (!FacebookConnectCommand.isAuthenticated()) {
             throw new CommandException(MESSAGE_FACEBOOK_ADD_ALL_FRIENDS_INITIATION_ERROR);
-            /*
-            BrowserPanel.setProcessType(COMMAND_WORD);
-            FacebookConnectCommand newFacebookConnect = new FacebookConnectCommand();
-            newFacebookConnect.execute();
-            return new CommandResult(MESSAGE_FACEBOOK_ADD_ALL_FRIENDS_INITIATED);
-            */
         } else {
             BrowserPanel.setProcessType(COMMAND_WORD);
             addFirstFriend();
