@@ -89,14 +89,63 @@ include::../DeveloperGuide.adoc[tag=tab]
 #End of Extract#
 
 ---
+=== Enhancement Added: Home
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=home]
+
+include::../UserGuide.adoc[tag=homepanel]
+#End of Extract#
+
+---
+
+==== Justification
+
+Added a home page to help lift one's mood when using the application.
+In addition, it can act as a soft security measure when a teacher needs to leave the desk and in doing so prevents
+leak of information from passer bys.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=home]
+
+#End of Extract#
+
+---
 === Enhancement Proposed: Add 25 & 75 percentile lines
-adds a horizontal line across the graph to show the 75th and 25th percentile of the current list grades.
+==== External Behaviour
+No external behaviour, when the statistics panel calculates the results, the line would be drawn at the different percentiles on the line graph.
+
+==== Justification
+Helps the teacher to easily show who are the students who are over and under performing and can easily use the graph for their reports.
+
+==== Implementation
+Create a line on the graph which would by sync to the figures provided by the statistics panel, such that every time the list changes,
+so does the line.
+
+=== Enhancement Proposed: Refresh Home panel wallpaper
+==== External Behaviour
+Changes the wallpaper every time the home command is typed or when the application starts up.
+
+==== Justification
+Adds more variety to their wallpaper so that they do not have to feel bored looking at the same photo
+
+==== Implementation
+Read the filepath of the folder of wallpapers and creating a new array of files. Randomly pick a file and set it to Image every time the home
+command is entered.
 
 === Other contributions
 
 * Updated the GUI to include graphs of students either in class or tags (pull request https://github.com[#65], https://github.com[#87])
 * Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
-* Logic tabCommand implementation (Special thanks to Celine who helped me layout tabCommand)
+* Logic tabCommand implementation (Special thanks to Celine who helped me layout tabCommand) (https://github.com/CS2103AUG2017-T16-B2/main/pull/114)
 
 == Project: Tea (Game)
 

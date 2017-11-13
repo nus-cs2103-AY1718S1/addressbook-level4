@@ -588,7 +588,6 @@ image::Tab2Image.png[width="800"]
 _Figure 5.3.4.2 : Displays the graph in your cherBook with the second tab index_
 // end::tab[]
 
-
 // tag::randomisedUniqueTagColors[]
 ==== Randomised Unique Tag Colors: `Since v1.4`
 
