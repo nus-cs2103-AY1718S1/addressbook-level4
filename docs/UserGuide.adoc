@@ -1047,6 +1047,19 @@ image::UG_header_v2features.png[width="500"]
 +
 For example, when the user is editing a contact, he/she is able to say "music play pop" to play some music without moving away from his/her current task.
 
+* Index tabbing cycles based on people listed in the contact list
+** Now, if you entered an index that is too large, pressing kbd:[Tab] will help correct your index immediately.
+** For example:
+1. There are 6 people listed
+2. user input: `delete 6`
+3. press kbd:[Tab]
+4. user input: `delete 1`
+
+* Use links to online images for `Avatar` +
+** In v2.0, you can use links to profile pictures on your favourite social media as `Avatar` for your contacts
+** Simply enter the link as the argument (eg: i/https://avatars2.githubusercontent.com/u/1926229?s=400&v=4) and Unify will download the image for you!
+
+
 == FAQ
 image::UG_mainheader_faq.png[width="900"]
 //-
