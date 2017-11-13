@@ -48,7 +48,7 @@ public class UiManager extends ComponentManager implements Ui {
     public void start(Stage primaryStage) {
         logger.info("Starting UI...");
         primaryStage.setTitle(config.getAppTitle());
-
+        primaryStage.setMaximized(true);
         //Set the application icon.
         primaryStage.getIcons().add(getImage(ICON_APPLICATION));
 
@@ -90,7 +90,7 @@ public class UiManager extends ComponentManager implements Ui {
     private static void showAlertDialogAndWait(Stage owner, AlertType type, String title, String headerText,
                                                String contentText) {
         final Alert alert = new Alert(type);
-        alert.getDialogPane().getStylesheets().add("view/DarkTheme.css");
+        alert.getDialogPane().getStylesheets().add("view/pimp.css");
         alert.initOwner(owner);
         alert.setTitle(title);
         alert.setHeaderText(headerText);

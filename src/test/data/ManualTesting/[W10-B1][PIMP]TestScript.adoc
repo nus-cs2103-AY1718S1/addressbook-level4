@@ -1,0 +1,373 @@
+= Manual Testing Script
+:toc:
+:toc-placement: preamble
+:imagesDir: images
+:stylesDir: stylesheets
+
+This document explains the steps needed to perform manual testing for PIMP.
+
+== Loading Test Script
+
+- Create a new folder and save the `pimp-v1.5.jar` into it.
+- The test script data is placed in the same directory as this TestScript file, at `main\src\test\data\ManualTesting\`. The addressbook data file is labelled `[W10-B1][PIMP]SampleData.xml`. Copy this file.
+- Navigate to the folder that the `pimp-v1.5.jar` file is located in. Create a new folder `data` and place the `[W10-B1][PIMP]SampleData.xml` file inside the data directory.
+- Rename the `[W10-B1][PIMP]SampleData.xml` file to `addressbook.xml`.
+- Run the `pimp-v1.5.jar` file.
+
+== The User Interface
+
+== Basic PIMP Commands
+
+=== Add contact
+
+Command:
+
+- `add n/Aero Tan p/99990000 a/Aero Plane Road e/aero@gmail.com fb/aerotan t/friend`
+
+Result:
+
+- Aero is inserted into the contact list and is shown on the left pane as index 2. The rest of the contacts apart from "Aaron Doe" is pushed down (i.e. Apple Tay is now at index 3).
+- The counter at the top left changes to 24.
+- The result box shows "New person added: Aero Tan Phone: 99990000 Email: aero@gmail.com Address: Aero Plane Road FB: aerotan  Remark:  Tags: [friend]"
+
+=== Edit contact
+
+Command:
+
+- `edit 2 ig/aero p/88880000`
+
+Result:
+
+- Aero Tan (index 2 of the left pane) has the phone number changed to "88880000" and a new field "IG: aero".
+- The heart (access count) in Aero's box is now 1.
+- The result box shows "Edited Person: Aero Tan Phone: 88880000 Email: aero@gmail.com Address: Aero Plane Road FB: aerotan IG: aero Remark:  Tags: [friend]".
+
+=== Delete contact
+
+Command:
+
+- `delete 2`
+
+Result:
+
+- Aero Tan (index 2 of the left pane) is deleted, and all the contacts below are pushed up (i.e. Apple Tay is now at index 2).
+- The counter at the top left changes to 23.
+- The result box shows "Deleted Person: Aero Tan Phone: 88880000 Email: aero@gmail.com Address: Aero Plane Road FB: aerotan IG: aero Remark:  Tags: [friend]".
+
+== Remarks
+
+Command:
+
+- `list`
+- `remark 2 r/loves apples`
+
+Result:
+
+- A new remark now appears below the entry `Apple Tay` that says `loves apples`.
+- The result box shows `Added remark to Person: Apple Tay Phone: 91504948 Email: applytay@example.com Address: 41 Hindhehe Drive, #12-12 FB: appletay TW: appletay IG: appletay Remark: loves apples Tags: [friends]`
+
+Command:
+
+- `remark 2 r/`
+
+Result:
+
+- The remark for the user `Apple Tay` that said `loves apples` is now removed.
+- The result box shows `Removed remark from Person: Apple Tay Phone: 91504948 Email: applytay@example.com Address: 41 Hindhehe Drive, #12-12 FB: appletay TW: appletay IG: appletay Remark:  Tags: [friends]`
+
+== Find Contact
+
+=== Normal find
+
+Command:
+
+- `find john`
+
+Result:
+
+- 6 results appear in the left panel, all of whom have first name `John`. This search is case insensitive.
+- Result box displays message `6 persons listed!`
+
+=== Find by Regex
+
+Command:
+
+- `findregex john`
+
+Result:
+
+- No results appear, since the findregex search is case sensitive.
+- Result box displays message `0 persons listed!`
+
+Command:
+
+- `findregex John`
+
+Result:
+
+- 6 results appear in the left panel as before.
+- Result box displays message `6 persons listed!`
+
+Command:
+
+- `findregex Joh?nny
+
+Result:
+
+- 3 results appear in the left panel, `Johnny`, `Johnnyy` and `Jonny`. findregex searches by substring, so all entries with `Jonny` or `Johnny` as a substring are displayed.
+- Result box displays message `3 persons listed!`
+
+=== Find by Tags
+
+Command:
+
+- `findtag owesmoney`
+
+Result:
+
+- 13 results appear in the left panel, all of whom have the tag `owesMoney`. This search is case insensitive.
+- Result box displays message `13 persons listed!`
+
+Command:
+
+- `findtag friend`
+
+Result:
+
+- No results appear since the findtag command searches with exact case insensitive matches.
+- Result box displays message `0 persons listed!`
+
+Command:
+
+- `findtag colleagues neighbours`
+
+Result:
+
+- 4 results appear in the left panel, all of whom have either the tag `colleagues` or `neighbours`.
+- Result box displays message `4 persons listed!`
+
+== Tags Manipulation
+
+Command:
+
+- `tag add 1 clubber`
+
+Result:
+
+- Aaron Doe (index 1 of the left pane) has a new tag called "clubber".
+- The heart (access count) in Aaron's box is now 2.
+- The result box shows "Added Tag/s to Person: Aaron Doe Phone: 98765432 Email: johnd@example.com Address: 31, Clementi Ave 5, #02-25 FB: aarondoe TW: aarondoe IG: aarondoe Remark:  Tags: [owesMoney][clubber][friends]"
+
+Command:
+
+- `tag remove 1 clubber`
+
+Result:
+
+- Aaron Doe (index 1 of the left pane) has tag "clubber" removed.
+- The heart (access count) in Aaron's box is now 3.
+- The result box shows "Removed Tag/s to Person: Aaron Doe Phone: 98765432 Email: johnd@example.com Address: 31, Clementi Ave 5, #02-25 FB: aarondoe TW: aarondoe IG: aarondoe Remark:  Tags: [owesMoney][friends]"
+
+== History
+
+Command:
+
+- `history`
+
+Result:
+- The history being displayed in the result box, for example:
+
+```
+Entered commands (from most recent to earliest):
+(1) undo
+(2) clear
+(3) edit 2 n/Jane Doe
+```
+
+Command:
+
+- `clear`
+
+Result:
+
+- the contacts list at the left pane is empty.
+- status bar shows "0" which reflects that there are now zero contacts in the
+address book.
+- the result box shows "Address book has been cleared!".
+
+Command:
+
+- `undo`
+
+Result:
+
+- the previous command is undoed. For example, if the previous command is `clear`,
+then the address book is shown again.
+- the result box shows "1 command undoed."
+
+Command:
+
+- `redo`
+
+Result:
+
+- the previous command is redoed. For example, if the previous command before the
+undo is `clear`, then the address book is cleared again.
+- the result box shows "1 command redoed."
+
+Command:
+
+- `add n/John Doe p/98765432 e/johnd@example.com a/Address`
+- `add n/Jane Doe p/98765432 e/johnd@example.com a/Address`
+- `undo 2`
+
+Result:
+
+- the previous 2 add commands are undoed.
+- the result box shows "2 commands undoed."
+
+Command:
+
+- `redo 2`
+
+Result:
+
+- the previous 2 add commands are redoed.
+- the result box shows "2 commands redoed."
+
+Command:
+
+- `redo`
+
+Result:
+
+- the `redo` command fails.
+- the result box shows "No more commands to redo!"
+
+== Changing Font Size
+
+Command:
+
+- `size 4`
+
+Result:
+
+- The font size of the contacts list sidebar, the command box, and the result
+display is now increased by 4 points.
+- The result box shows "Font size increased by 4! Current change is 4."
+
+Command:
+
+- `size -3`
+
+Result:
+
+- The font size of the contacts list sidebar, the command box, and the result
+display is now decreased by 3 points.
+- The result box shows "Font size decreased by 3! Current change is 1."
+
+Command:
+
+- `size -10`
+
+Result:
+
+- The command fails, and the font size remains unchanged.
+- The result box shows "New font size out of bounds! Current change is 1, the
+command will change it into -9, which is outside [-5, 5]."
+
+Command:
+
+- `size`
+
+Result:
+
+- The font size of the contacts list sidebar, the command box, and the result
+display is reset.
+- The result box shows "Font size successfully reset!"
+
+== Social Media
+
+Command:
+
+- `edit 1 ig/kimkardashian`
+- `socialmedia instagram 1`
+
+Result:
+
+- The Instagram profile of the first contact (in this case, kimkardashian) is
+shown in the browser panel.
+- The result box shows "Social media shown!"
+
+== Accesses
+
+Command:
+
+- `list`
+- `select 1`
+
+Result:
+
+- The number of accesses corresponding to the person with index 1 is increased by 1.
+
+=== Toggling the access display
+
+Command:
+
+- `accessdisplay off`
+
+Result:
+
+- The number of accesses and the heart icon for each Person is hidden.
+- The result box shows "Display toggled off."
+
+Command:
+
+- `accessdisplay on`
+
+Result:
+
+- The number of accesses and the heart icon for each Person is shown.
+- The result box shows "Display toggled on."
+
+== Statistics
+
+Command:
+
+- `statistics`
+
+Result:
+
+- The browser display is hidden
+- The result box shows "Listed statistics."
+
+== Help
+
+Command:
+
+- `help`
+
+Result:
+
+- A new window showing PIMP's user guide will be displayed.
+- The result box shows "Opened help window."
+
+=== Quick Help
+
+Command:
+
+- `quickhelp`
+
+Result:
+
+- The result box shows valid command words that is accepted by PIMP.
+
+== Exit
+
+Command:
+
+- `exit`
+
+Result:
+
+- The PIMP application will quit.

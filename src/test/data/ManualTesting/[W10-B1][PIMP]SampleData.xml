@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addressbook>
+    <persons>
+        <name>Eunice</name>
+        <phone>87438807</phone>
+        <email>eunice@example.com</email>
+        <address>Blk 30 Geylang Street 29, #06-40</address>
+        <remark>Owes Money</remark>
+        <tagged>friends</tagged>
+        <createdAt>2016-10-17T08:12:35.565+08:00</createdAt>
+        <accessCount>8</accessCount>
+        <facebook>eunice</facebook>
+        <twitter>eunice</twitter>
+        <instagram>eunice</instagram>
+    </persons>
+    <persons>
+        <name>Bernice Yu</name>
+        <phone>99272758</phone>
+        <email>berniceyu@example.com</email>
+        <address>Blk 30 Lorong 3 Serangoon Gardens, #07-18</address>
+        <remark></remark>
+        <tagged>colleagues</tagged>
+        <createdAt>2016-10-17T08:12:35.567+08:00</createdAt>
+        <accessCount>1</accessCount>
+        <facebook></facebook>
+        <twitter></twitter>
+        <instagram></instagram>
+    </persons>
+    <persons>
+        <name>Charlotte Oliveiro</name>
+        <phone>93210283</phone>
+        <email>charlotte@example.com</email>
+        <address>Blk 11 Ang Mo Kio Street 74, #11-04</address>
+        <remark></remark>
+        <tagged>neighbours</tagged>
+        <createdAt>2016-10-17T08:12:35.567+08:00</createdAt>
+        <accessCount>0</accessCount>
+        <facebook>charlotte</facebook>
+        <twitter></twitter>
+        <instagram>charlotte</instagram>
+    </persons>
+    <persons>
+        <name>David Li</name>
+        <phone>91031282</phone>
+        <email>lidavid@example.com</email>
+        <address>Blk 436 Serangoon Gardens Street 26, #16-43</address>
+        <remark></remark>
+        <tagged>family</tagged>
+        <createdAt>2016-10-17T08:12:35.568+08:00</createdAt>
+        <accessCount>0</accessCount>
+        <facebook>davidli</facebook>
+        <twitter></twitter>
+        <instagram>davlidli</instagram>
+    </persons>
+    <persons>
+        <name>Irfan Ibrahim</name>
+        <phone>92492021</phone>
+        <email>irfan@example.com</email>
+        <address>Blk 47 Tampines Street 20, #17-35</address>
+        <remark></remark>
+        <tagged>classmates</tagged>
+        <createdAt>2016-10-17T08:12:35.568+08:00</createdAt>
+        <accessCount>0</accessCount>
+        <facebook>irfan</facebook>
+        <twitter></twitter>
+        <instagram>irfan</instagram>
+    </persons>
+    <persons>
+        <name>Roy Balakrishnan</name>
+        <phone>92624417</phone>
+        <email>royb@example.com</email>
+        <address>Blk 45 Aljunied Street 85, #11-31</address>
+        <remark>colleague</remark>
+        <tagged>colleagues</tagged>
+        <createdAt>2016-10-17T08:12:35.568+08:00</createdAt>
+        <accessCount>0</accessCount>
+        <facebook></facebook>
+        <twitter></twitter>
+        <instagram></instagram>
+    </persons>
+    <persons>
+        <name>John Doe</name>
+        <phone>98765432</phone>
+        <email>johnd@example.com</email>
+        <address>311, Clementi Ave 2, #02-25</address>
+        <remark></remark>
+        <tagged>owesMoney</tagged>
+        <tagged>friends</tagged>
+        <createdAt>2017-10-17T08:12:58.350+08:00</createdAt>
+        <accessCount>0</accessCount>
+        <facebook>johnd</facebook>
+        <twitter></twitter>
+        <instagram></instagram>
+    </persons>
+    <persons>
+        <name>John Doe</name>
+        <phone>91234568</phone>
+        <email>johhdoe@example.com</email>
+        <address>123, Strand Road, #12-15</address>
+        <remark></remark>
+        <tagged>owesMoney</tagged>
+        <tagged>friends</tagged>
+        <createdAt>2017-10-17T08:14:20.859+08:00</createdAt>
+        <accessCount>0</accessCount>
+        <facebook>johndoe</facebook>
+        <twitter></twitter>
+        <instagram></instagram>
+    </persons>
+    <persons>
+        <name>Mark Henry</name>
+        <phone>92324312</phone>
+        <email>markhenry@example.com</email>
+        <address>21, World Strongest Man Road</address>
+        <remark></remark>
+        <tagged>owesMoney</tagged>
+        <tagged>friends</tagged>
+        <createdAt>2017-10-21T09:54:16.445+08:00</createdAt>
+        <accessCount>0</accessCount>
+        <facebook>markhenry</facebook>
+        <twitter>markhenry</twitter>
+        <instagram>markhenry</instagram>
+    </persons>
+    <persons>
+        <name>John Doeh</name>
+        <phone>98765432</phone>
+        <email>johnd@example.com</email>
+        <address>311, Clementi Street 2, #02-25</address>
+        <remark></remark>
+        <tagged>owesMoney</tagged>
+        <tagged>friends</tagged>
+        <createdAt>2017-10-21T09:55:03.298+08:00</createdAt>
+        <accessCount>0</accessCount>
+        <facebook></facebook>
+        <twitter></twitter>
+        <instagram></instagram>
+    </persons>
+    <persons>
+        <name>John Dooe</name>
+        <phone>98765432</phone>
+        <email>johndooo@example.com</email>
+        <address>311, Hougang Ave 2, #02-25</address>
+        <remark></remark>
+        <tagged>owesMoney</tagged>
+        <tagged>friends</tagged>
+        <createdAt>2017-10-21T10:03:52.002+08:00</createdAt>
+        <accessCount>0</accessCount>
+        <facebook></facebook>
+        <twitter>johndooo</twitter>
+        <instagram></instagram>
+    </persons>
+    <persons>
+        <name>Johnie Doe</name>
+        <phone>98765432</phone>
+        <email>johnied@example.com</email>
+        <address>310, Clementi Ave 2, #02-25</address>
+        <remark></remark>
+        <tagged>owesMoney</tagged>
+        <tagged>friends</tagged>
+        <createdAt>2017-10-21T10:17:22.149+08:00</createdAt>
+        <accessCount>0</accessCount>
+        <facebook></facebook>
+        <twitter></twitter>
+        <instagram></instagram>
+    </persons>
+    <persons>
+        <name>Johnnyy Doe</name>
+        <phone>98765432</phone>
+        <email>johnddd@example.com</email>
+        <address>123, Lakeside Ave 2, #02-25</address>
+        <remark></remark>
+        <tagged>owesMoney</tagged>
+        <tagged>friends</tagged>
+        <createdAt>2017-07-24T08:40:43.756+08:00</createdAt>
+        <accessCount>0</accessCount>
+        <facebook>johnddd</facebook>
+        <twitter>johnddd</twitter>
+        <instagram></instagram>
+    </persons>
+    <persons>
+        <name>Jonny Do</name>
+        <phone>91212423</phone>
+        <email>dodo@example.com</email>
+        <address>31, Ang Mo Kio Ave 2, #07-25</address>
+        <remark></remark>
+        <tagged>owesMoney</tagged>
+        <tagged>friends</tagged>
+        <createdAt>2017-08-31T11:05:17.526+08:00</createdAt>
+        <accessCount>0</accessCount>
+        <facebook>dodo</facebook>
+        <twitter>dodo</twitter>
+        <instagram>dodo</instagram>
+    </persons>
+    <persons>
+        <name>John Loe</name>
+        <phone>91231212</phone>
+        <email>johnloe@example.com</email>
+        <address>4 Marsling Road</address>
+        <remark></remark>
+        <tagged>owesMoney</tagged>
+        <tagged>friends</tagged>
+        <createdAt>2017-09-30T11:05:33.492+08:00</createdAt>
+        <accessCount>0</accessCount>
+        <facebook>johnloe</facebook>
+        <twitter>johnloe</twitter>
+        <instagram>johnloe</instagram>
+    </persons>
+    <persons>
+        <name>John Shoe</name>
+        <phone>91245432</phone>
+        <email>johnshoe@example.com</email>
+        <address>51 Rangoon Street #12-21</address>
+        <remark></remark>
+        <tagged>colleagues</tagged>
+        <createdAt>2017-10-31T11:05:43.051+08:00</createdAt>
+        <accessCount>0</accessCount>
+        <facebook>johnshoe</facebook>
+        <twitter>johnshoe</twitter>
+        <instagram>johnshoe</instagram>
+    </persons>
+    <persons>
+        <name>Mary Lim</name>
+        <phone>91235952</phone>
+        <email>mary@example.com</email>
+        <address>43 Harding Road</address>
+        <remark></remark>
+        <tagged>friends</tagged>
+        <createdAt>2017-10-31T11:17:54.971+08:00</createdAt>
+        <accessCount>0</accessCount>
+        <facebook>marylim</facebook>
+        <twitter>marylim</twitter>
+        <instagram>marylim</instagram>
+    </persons>
+    <persons>
+        <name>Apple Tay</name>
+        <phone>91504948</phone>
+        <email>applytay@example.com</email>
+        <address>41 Hindhehe Drive, #12-12</address>
+        <remark></remark>
+        <tagged>friends</tagged>
+        <createdAt>2017-10-31T11:38:01.415+08:00</createdAt>
+        <accessCount>0</accessCount>
+        <facebook>appletay</facebook>
+        <twitter>appletay</twitter>
+        <instagram>appletay</instagram>
+    </persons>
+    <persons>
+        <name>Tom</name>
+        <phone>98765432</phone>
+        <email>johnd@example.com</email>
+        <address>123, Moulmein Avenue, #1-25</address>
+        <remark></remark>
+        <tagged>owesMoney</tagged>
+        <tagged>friends</tagged>
+        <createdAt>2017-10-31T11:39:48.260+08:00</createdAt>
+        <accessCount>10</accessCount>
+        <facebook>tom</facebook>
+        <twitter>tom</twitter>
+        <instagram>tom</instagram>
+    </persons>
+    <persons>
+        <name>Jing Jing</name>
+        <phone>94031923</phone>
+        <email>jj@example.com</email>
+        <address>31, Mandalay Road</address>
+        <remark></remark>
+        <tagged>friends</tagged>
+        <createdAt>2017-10-31T11:40:03.330+08:00</createdAt>
+        <accessCount>0</accessCount>
+        <facebook>jing</facebook>
+        <twitter>jing</twitter>
+        <instagram>jing</instagram>
+    </persons>
+    <persons>
+        <name>Aaron Doe</name>
+        <phone>98765432</phone>
+        <email>johnd@example.com</email>
+        <address>31, Clementi Ave 5, #02-25</address>
+        <remark></remark>
+        <tagged>owesMoney</tagged>
+        <tagged>friends</tagged>
+        <createdAt>2017-10-31T12:39:06.397+08:00</createdAt>
+        <accessCount>1</accessCount>
+        <facebook>aarondoe</facebook>
+        <twitter>aarondoe</twitter>
+        <instagram>aarondoe</instagram>
+    </persons>
+    <persons>
+        <name>Johnny Morisson Doe</name>
+        <phone>98765432</phone>
+        <email>johnm@example.com</email>
+        <address>100, Jurong Ave 2, #02-25</address>
+        <remark></remark>
+        <tagged>owesMoney</tagged>
+        <tagged>friends</tagged>
+        <createdAt>2017-11-02T08:31:25.320+08:00</createdAt>
+        <accessCount>0</accessCount>
+        <facebook>johnm</facebook>
+        <twitter>johnm</twitter>
+        <instagram>johnm</instagram>
+    </persons>
+    <persons>
+        <name>Nguyễn Doe</name>
+        <phone>98765432</phone>
+        <email>nguyen@example.com</email>
+        <address>100, Commonwealth Ave 2, #05-42</address>
+        <remark></remark>
+        <tagged>owesMoney</tagged>
+        <tagged>friends</tagged>
+        <createdAt>2017-11-02T08:31:47.712+08:00</createdAt>
+        <accessCount>0</accessCount>
+        <facebook>doe</facebook>
+        <twitter>doe</twitter>
+        <instagram>doe</instagram>
+    </persons>
+    <tags>owesMoney</tags>
+    <tags>colleagues</tags>
+    <tags>classmates</tags>
+    <tags>asdf</tags>
+    <tags>neighbours</tags>
+    <tags>classmate</tags>
+    <tags>family</tags>
+    <tags>friends</tags>
+</addressbook>

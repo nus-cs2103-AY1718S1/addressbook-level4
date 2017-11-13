@@ -16,6 +16,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.ui.testutil.LogicStub;
 
 public class PersonListPanelTest extends GuiUnitTest {
     private static final ObservableList<ReadOnlyPerson> TYPICAL_PERSONS =
@@ -27,7 +28,7 @@ public class PersonListPanelTest extends GuiUnitTest {
 
     @Before
     public void setUp() {
-        PersonListPanel personListPanel = new PersonListPanel(TYPICAL_PERSONS);
+        PersonListPanel personListPanel = new PersonListPanel(new LogicStub(TYPICAL_PERSONS));
         uiPartRule.setUiPart(personListPanel);
 
         personListPanelHandle = new PersonListPanelHandle(getChildNode(personListPanel.getRoot(),
