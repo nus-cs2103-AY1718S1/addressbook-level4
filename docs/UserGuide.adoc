@@ -159,6 +159,28 @@ Examples:
 Returns all persons in the tag `enemies`
 // end::findbytag[]
 
+// tag::fuzzyfind[]
+=== Locating persons by substring: `fuzzyfind`
+
+Finds all persons who are members of a specified tag. +
+Format: `fuzzyfind KEYWORD [MORE KEYWORDS]`
+
+****
+* The search is case insensitive. e.g `friends` will match `Friends`
+* All words will be checked for the substring e.g. `Ha` will match `Hans`
+* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* Only the name is searched.
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+****
+
+Examples:
+
+* `fuzzyfind Jo` +
+Returns `john` and `John Doe`
+* `fuzzyfind a` +
+Returns any person with the letter `a` in their name
+// end::fuzzyfind[]
+
 // tag::delete[]
 === Deleting one or more person(s) : `delete`/`d`
 
