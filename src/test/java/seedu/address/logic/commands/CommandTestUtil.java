@@ -23,9 +23,7 @@ import seedu.address.model.TaskBook;
 import seedu.address.model.person.ContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.model.task.Name;
 import seedu.address.model.task.ReadOnlyTask;
-import seedu.address.model.task.TaskNameContainsKeywordsPredicate;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.EditTaskDescriptorBuilder;
 /**
