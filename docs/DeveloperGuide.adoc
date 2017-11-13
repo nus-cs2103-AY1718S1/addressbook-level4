@@ -1455,7 +1455,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |security-concerned debt collector |view my last login time |ensure that no one else is using my account
 
-|`* *` |security-concerned debt collector |have link:#2FA[two-FA] authentication for login and every other important action(exporting contacts) |ensure that no one else is capable of accessing sensitive information
+|`* *` |security-concerned debt collector |have link:#2FA[2-FA] authentication for login and every other important action(exporting contacts) |ensure that no one else is capable of accessing sensitive information
 
 |`* *` |multi-device user |be able to export my contacts in another format (e.g xml, vcf) |store my contacts in another device
 
@@ -1471,7 +1471,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is `Codii` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
 === Use case: Delete person
@@ -1479,9 +1479,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 *MSS*
 
 1.  User requests to list persons
-2.  AddressBook shows a list of persons
+2.  Codii shows a list of persons
 3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+4.  Codii deletes the person
 +
 Use case ends.
 
@@ -1495,7 +1495,7 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. Codii shows an error message.
 +
 Use case resumes at step 2.
 
@@ -1505,7 +1505,7 @@ Use case resumes at step 2.
 *MSS*
 
 1.  User requests to add a new tag to a person
-2.  AddressBook adds the tag to the person
+2.  Codii adds the tag to the person
 +
 Use case ends.
 
@@ -1514,41 +1514,41 @@ Use case ends.
 
 *MSS*
 
-1. User requests to sort AddressBook by name of persons
-2. AddressBook shows a sorted list of persons
+1. User requests to sort person list by name of persons
+2. Codii shows a sorted list of persons
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 2a. AddressBook is empty.
+* 2a. Codii is empty i.e. there are no contacts stored in Codii.
 +
 Use case ends.
 
 [discrete]
-=== Use case: Add a person to favourite list
+=== Use case: Add a person to blacklist
 
 *MSS*
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to favourite specific person in the list
-4.  AddressBook adds the person in the favourite list
-5.  User requests to list favourite contacts
-6.  AddressBook shows a list of favourite contacts
+1.  User requests to list all persons i.e. to show the masterlist
+2.  Codii shows the masterlist
+3.  User requests to ban a specific person in the list
+4.  Codii adds the person into the blacklist
+5.  User requests to list blacklisted contacts
+6.  Codii shows the blacklist
 
 *Extensions*
 
 [none]
-* 2a. The list is empty.
+* 2a. The masterlist is empty.
 +
 Use case ends.
 
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. Codii shows an error message.
 +
 Use case resumes at step 2.
 
@@ -1558,9 +1558,9 @@ Use case resumes at step 2.
 *MSS*
 
 1.  User requests to edit a person
-2.  AddressBook displays the current information of the person
+2.  Codii displays the current information of the person
 3.  User edits the information in person
-4.  AddressBook updates the information in person
+4.  Codii updates the information in person
 +
 Use case ends.
 
@@ -1570,7 +1570,7 @@ Use case ends.
 * 2a. User keys in invalid information into fields.
 +
 [none]
-** 2a1. AddressBook shows an error message.
+** 2a1. Codii shows an error message.
 +
 Use case resumes at step 2.
 
@@ -1580,7 +1580,7 @@ Use case resumes at step 2.
 *MSS*
 
 1.  User requests to add a person in the list
-2.  AddressBook adds the person
+2.  Codii adds the person
 +
 Use case ends.
 
@@ -1590,14 +1590,14 @@ Use case ends.
 * 1a. The person already exists in the AddressBook.
 +
 [none]
-** 1a1. AddressBook shows an error message.
+** 1a1. Codii shows an error message.
 +
 Use case resumes at step 1.
 
-* 1b. The user enters the wrong format into AddressBook.
+* 1b. The user enters the wrong format into Codii.
 +
 [none]
-** 1b1. AddressBook shows an error message.
+** 1b1. Codii shows an error message.
 +
 Use case resumes at step 1.
 
@@ -1606,8 +1606,8 @@ Use case resumes at step 1.
 
 *MSS*
 
-1. User requests to find persons by name
-2. AddressBook shows a list of corresponding persons with matching case insensitive full words
+1. User requests to find person by name
+2. Codii shows a list of corresponding persons with any of the given keywords
 +
 Use case ends.
 
@@ -1617,7 +1617,7 @@ Use case ends.
 * 1a. No matches found.
 +
 [none]
-** 1a1. AddressBook shows 0 persons found.
+** 1a1. Codii shows 0 persons found.
 +
 Use case ends.
 
@@ -1630,7 +1630,6 @@ Use case ends.
 .  Should not take more than two seconds to complete a command.
 .  The system should be maintainable with proper documentation.
 .  The system should be usable by a novice who has never used an address book application before.
-.  Should log user out after 20 minutes of inactivity to protect privacy.
 
 [appendix]
 == Glossary
@@ -1638,7 +1637,7 @@ Use case ends.
 |===
 |Term |Definition
 
-|[[two-FA]]2FA
+|[[2-FA]]2FA
 |An extra layer of security that is known as "multi factor authentication" that requires not only a password and username but also a token
 
 |[[ban]]Ban
