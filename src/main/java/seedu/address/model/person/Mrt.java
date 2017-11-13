@@ -5,6 +5,7 @@ import static java.util.Objects.requireNonNull;
 import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.MrtMapLogic;
 
 /**
  * Represents a Person's mrt station in the address book.
@@ -44,9 +45,8 @@ public class Mrt {
      * Returns if a given string is a valid Mrt station.
      */
     public static boolean isValidMrt(String test) {
-        boolean check1 = test.matches(MRT_VALIDATION_REGEX);
-        boolean check2 = VALID_MRT.contains(test);
-        return check1 && check2;
+        MrtMapLogic mrtMapLogic = new MrtMapLogic();
+        return mrtMapLogic.isValidMrt(test);
     }
 
     @Override
