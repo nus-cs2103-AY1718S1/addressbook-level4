@@ -32,7 +32,7 @@ public class TodoOptionList extends CommandOption<TodoCommand> {
      * No option parameter for this command.
      */
     @Override
-    boolean isValidOptionArgs() {
+    public boolean isValidOptionArgs() {
         return optionArgs.isEmpty();
     }
 }

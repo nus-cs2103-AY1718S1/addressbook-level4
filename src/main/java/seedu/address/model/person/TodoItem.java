@@ -29,7 +29,7 @@ public class TodoItem implements Comparable<TodoItem> {
     public TodoItem(LocalDateTime start, LocalDateTime end, String task)
             throws IllegalValueException {
         requireNonNull(start, task);
-        if (!isValidTodoItem(start, end, task)) {
+        if (!isValidTodoItem(start, end, task.trim())) {
             throw new IllegalValueException(MESSAGE_TODOITEM_CONSTRAINTS);
         }
         this.start = start;
@@ -41,13 +41,7 @@ public class TodoItem implements Comparable<TodoItem> {
      * Checks whether the inputs are valid.
      */
     private boolean isValidTodoItem(LocalDateTime start, LocalDateTime end, String task) {
-        if (task.isEmpty()) {
-            return false;
-        }
-        if (end != null && end.compareTo(start) < 0) {
-            return false;
-        }
-        return true;
+        return !(task.isEmpty() || end != null && end.compareTo(start) < 0);
     }
 
     /**

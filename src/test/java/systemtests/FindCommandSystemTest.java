@@ -170,7 +170,7 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
     //@@author Hailinx
     @Test
     public void findByDetail() {
-        /* Case: find multiple persons in address book by name detail, command with leading spaces and trailing spaces
+        /* Case: find multiple persons in address book by name field, command with leading spaces and trailing spaces
          * -> 2 persons found
          */
         String command = "   " + FindCommand.COMMAND_WORD + " " + FindCommand.PREFIX_FIND_IN_DETAIL
@@ -180,7 +180,7 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find multiple persons in address book by name detail, name is not complete
+        /* Case: find multiple persons in address book by name, name is not complete
          * -> 3 persons found
          */
         command = FindCommand.COMMAND_WORD + " " + FindCommand.PREFIX_FIND_IN_DETAIL + " " + PREFIX_NAME + "me";
@@ -281,7 +281,7 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
     }
 
     @Test
-    public void findFuzzySearch() {
+    public void findByFuzzySearch() {
         /* Case: find multiple persons in address book by fuzzy search, command with leading spaces and trailing spaces
          * -> 3 persons found
          */

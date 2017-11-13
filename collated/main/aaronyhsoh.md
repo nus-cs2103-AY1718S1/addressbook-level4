@@ -230,7 +230,6 @@ public class FavouriteCommand extends UndoableCommand {
         case FavouriteCommand.COMMAND_WORD:
         case FavouriteCommand.COMMAND_ALIAS:
             return new FavouriteCommandParser().parse(arguments);
-
 ```
 ###### \java\seedu\address\logic\parser\FavouriteCommandParser.java
 ``` java

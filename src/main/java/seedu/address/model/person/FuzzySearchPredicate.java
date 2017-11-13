@@ -4,7 +4,7 @@ package seedu.address.model.person;
 import java.util.function.Predicate;
 
 /**
- * Conducts fuzzy test on whether a {@code ReadOnlyPerson}'s attribute matches any of the keywords given.
+ * Conducts a fuzzy test on whether a {@code ReadOnlyPerson}'s attribute matches any of the keywords given.
  */
 public class FuzzySearchPredicate implements Predicate<ReadOnlyPerson> {
     private final String keyword;
