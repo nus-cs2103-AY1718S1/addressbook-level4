@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addressbook>
+    <persons>
+        <name>John Doe</name>
+        <phone>98912738</phone>
+        <email>johndoe@gmail.com</email>
+        <address>80 Anson Road #28-03 Fuji Xerox Towers, 079907, Singapore</address>
+        <remark></remark>
+        <tagged>prospective</tagged>
+    </persons>
+    <persons>
+        <name>Jane Doe</name>
+        <phone>93814819</phone>
+        <email>janedoe@gmail.com</email>
+        <address>Sheraton Towers Hotel 39 Scotts Road Singapore 228230, Singapore</address>
+        <remark></remark>
+        <tagged>prospective</tagged>
+    </persons>
+    <persons>
+        <name>Cosy Ko</name>
+        <phone>92847191</phone>
+        <email>cosyboy@gmail.com</email>
+        <address>Millenia Walk 9 Raffles Boulevard #02-33/#02-36A 039596, Singapore</address>
+        <remark></remark>
+        <tagged>freelancer</tagged>
+    </persons>
+    <persons>
+        <name>Xin Ren</name>
+        <phone>928320192</phone>
+        <email>newperson@gmail.com</email>
+        <address>1 Harbourfront Centre Walk 02-143 Vivocity, 098585, Singapore</address>
+        <remark></remark>
+        <tagged>event</tagged>
+        <tagged>prospective</tagged>
+    </persons>
+    <persons>
+        <name>Ang Ku Kueh</name>
+        <phone>91283912</phone>
+        <email>akk@gmail.com</email>
+        <address>9 Temasek Boulevard #02-01 Suntec Tower 2, 038989, Singapore</address>
+        <remark>Sells Ang Ku Kueh</remark>
+        <tagged>Plan5</tagged>
+        <tagged>prospective</tagged>
+    </persons>
+    <persons>
+        <name>John Ko</name>
+        <phone>92839182</phone>
+        <email>jonny@gmail.com</email>
+        <address>Toa Payoh Loring 4 Blk 212 #04-66</address>
+        <remark></remark>
+        <tagged>Plan3</tagged>
+        <tagged>prospective</tagged>
+    </persons>
+    <persons>
+        <name>John Loh</name>
+        <phone>91289283</phone>
+        <email>lohti@gmail.com</email>
+        <address>10 Admiralty Road, 03-09 Northlink Building</address>
+        <remark></remark>
+        <tagged>InTalk</tagged>
+        <tagged>event</tagged>
+    </persons>
+    <persons>
+        <name>Jane Seah</name>
+        <phone>91832817</phone>
+        <email>janetoh@gmail.com</email>
+        <address>445 Clementi Ave 3 #01-173</address>
+        <remark>Meeting at 12/5/2018 8pm</remark>
+        <tagged>InTalk</tagged>
+        <tagged>event</tagged>
+    </persons>
+    <persons>
+        <name>Kelly Poon</name>
+        <phone>82726511</phone>
+        <email>kelly@gmail.com</email>
+        <address>566A Balestier Road, 329883</address>
+        <remark></remark>
+        <tagged>important</tagged>
+    </persons>
+    <persons>
+        <name>Jia Jia</name>
+        <phone>92617266</phone>
+        <email>iamapanda@gmail.com</email>
+        <address>80 Mandai Lake Road</address>
+        <remark></remark>
+        <tagged>important</tagged>
+    </persons>
+    <persons>
+        <name>Kai Kai</name>
+        <phone>92617822</phone>
+        <email>anotherpanda@gmail.com</email>
+        <address>60 Mandai Lake Road</address>
+        <remark></remark>
+        <tagged>important</tagged>
+    </persons>
+    <persons>
+        <name>Morgan Freeman</name>
+        <phone>92761888</phone>
+        <email>morgan@gmail.com</email>
+        <address>1 Harbourfront Centre Walk 02-143 Vivocity</address>
+        <remark></remark>
+        <tagged>important</tagged>
+    </persons>
+    <persons>
+        <name>Negan Fox</name>
+        <phone>92615577</phone>
+        <email>walkingdead@gmail.com</email>
+        <address>29, Joo Koon Rd Singapore 628983</address>
+        <remark>In China till December 2018</remark>
+        <tagged>important</tagged>
+        <tagged>freelancer</tagged>
+        <tagged>overseas</tagged>
+    </persons>
+    <persons>
+        <name>Joseph Ko</name>
+        <phone>92823819</phone>
+        <email>orangetree@gmail.com</email>
+        <address>6 Gul Street 3</address>
+        <remark></remark>
+        <tagged>Plan1</tagged>
+        <tagged>prospective</tagged>
+    </persons>
+    <persons>
+        <name>John Chin</name>
+        <phone>92831928</phone>
+        <email>applechin@gmail.com</email>
+        <address>18 Boon Lay Way Tradehub-21 10-117</address>
+        <remark></remark>
+        <tagged>Plan2</tagged>
+        <tagged>prospective</tagged>
+    </persons>
+    <persons>
+        <name>Alicia Tun</name>
+        <phone>92839182</phone>
+        <email>tunningz@gmail.com</email>
+        <address>50 Serangoon North Ave 4 #07-13 First Centre</address>
+        <remark></remark>
+        <tagged>Plan2</tagged>
+        <tagged>InTalk</tagged>
+    </persons>
+    <persons>
+        <name>Lydia Bunz</name>
+        <phone>92812928</phone>
+        <email>bunzbunz@gmail.com</email>
+        <address>Blk 14 Beach Road #01-4661</address>
+        <remark></remark>
+        <tagged>important</tagged>
+        <tagged>Plan2</tagged>
+        <tagged>Plan4</tagged>
+        <tagged>prospective</tagged>
+    </persons>
+    <persons>
+        <name>John Patticia</name>
+        <phone>91824192</phone>
+        <email>johnnydepp@gmail.com</email>
+        <address>3027 Ubi Road 1, 03-120</address>
+        <remark></remark>
+        <tagged>Plan3</tagged>
+        <tagged>prospective</tagged>
+    </persons>
+    <persons>
+        <name>Lydia Tan</name>
+        <phone>92839182</phone>
+        <email>lydiatan@gmail.com</email>
+        <address>502 Sims Avenue</address>
+        <remark></remark>
+        <tagged>important</tagged>
+        <tagged>InTalk</tagged>
+    </persons>
+    <persons>
+        <name>Lotus Chan</name>
+        <phone>92839182</phone>
+        <email>lorin@gmail.com</email>
+        <address>Queenstown Lutheran Church 709 Commonwealth Drive</address>
+        <remark></remark>
+        <tagged>important</tagged>
+        <tagged>Plan2</tagged>
+    </persons>
+    <persons>
+        <name>Lorange Tan</name>
+        <phone>92837182</phone>
+        <email>johncena@gmail.com</email>
+        <address>26 Ayer Rajah Crescent #05-06 Ayer Rajah Industrial Estate</address>
+        <remark></remark>
+        <tagged>unlikely</tagged>
+    </persons>
+    <persons>
+        <name>Jonathan Poh</name>
+        <phone>92839182</phone>
+        <email>jonathan@email.com</email>
+        <address>59B Jalan Besar</address>
+        <remark></remark>
+        <tagged>signing</tagged>
+    </persons>
+    <persons>
+        <name>Dylan Poh</name>
+        <phone>93839182</phone>
+        <email>dpdp@gmail.com</email>
+        <address>848 Sims Avenue #01-724</address>
+        <remark></remark>
+        <tagged>important</tagged>
+        <tagged>signing</tagged>
+    </persons>
+    <persons>
+        <name>Donnie Yen</name>
+        <phone>91928381</phone>
+        <email>donnie@gmail.com</email>
+        <address>86, International Rd Singapore</address>
+        <remark></remark>
+        <tagged>prospective</tagged>
+    </persons>
+    <persons>
+        <name>Andy Lau</name>
+        <phone>91283918</phone>
+        <email>andy@gmail.com</email>
+        <address>20 Bedok North Street 2</address>
+        <remark></remark>
+        <tagged>prospective</tagged>
+    </persons>
+    <persons>
+        <name>Andy Loo</name>
+        <phone>92831920</phone>
+        <email>andy@gmail.com</email>
+        <address>21 Bedok North Street 3</address>
+        <remark></remark>
+    </persons>
+    <tags>prospective</tags>
+    <tags>freelancer</tags>
+    <tags>event</tags>
+    <tags>Plan5</tags>
+    <tags>Plan3</tags>
+    <tags>InTalk</tags>
+    <tags>important</tags>
+    <tags>overseas</tags>
+    <tags>Plan1</tags>
+    <tags>Plan2</tags>
+    <tags>Plan4</tags>
+    <tags>unlikely</tags>
+    <tags>signing</tags>
+    <tags>prospetive</tags>
+    <tags>faggot</tags>
+</addressbook>

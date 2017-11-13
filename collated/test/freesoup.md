@@ -76,6 +76,72 @@ public class ExportCommandTest {
 
 }
 ```
+###### \java\seedu\address\logic\commands\ImportCommandTest.java
+``` java
+public class ImportCommandTest {
+    private Model model;
+    private List<ReadOnlyPerson> list1;
+    private List<ReadOnlyPerson> list2;
+
+    @Before
+    public void setUp() {
+        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        list1 = model.getAddressBook().getPersonList();
+        list2 = new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL));
+    }
+
+    @Test
+    public void equals() {
+
+        ImportCommand test1Import = new ImportCommand(list1);
+        ImportCommand test2Import = new ImportCommand(list2);
+
+        //same Object -> return true
+        assertTrue(test1Import.equals(test1Import));
+
+        //same attributes -> return true
+        ImportCommand test1ImportCopy = new ImportCommand(list1);
+        assertTrue(test1Import.equals(test1ImportCopy));
+
+        //Different object -> return false
+        assertFalse(test1Import.equals(false));
+
+        //null -> return false
+        assertFalse(test1Import.equals(null));
+
+        //Different attributes -> return false
+        assertFalse(test1Import.equals(test2Import));
+    }
+
+    @Test
+    public void import_toEmptyAddressBook_success() throws DuplicatePersonException {
+
+        Model testModel = new ModelManager(new AddressBook(), new UserPrefs());
+        AddressBook testAddressBook = new AddressBook();
+        testAddressBook.setPersons(list2);
+        Model testModelAliceBensonCarl = new ModelManager(testAddressBook, new UserPrefs());
+
+        //Import list of 3 people into empty addressbook
+        assertCommandSuccess(prepareCommand(list2, testModel), testModel,
+                String.format(ImportCommand.MESSAGE_SUCCESS, 0), testModelAliceBensonCarl);
+
+        //Import list of 7 people into addressbook with 3 people inside.
+        assertCommandSuccess(prepareCommand(list1, testModel), testModel,
+                String.format(ImportCommand.MESSAGE_SUCCESS, 3), model);
+
+    }
+
+    /**
+     * Generates a new {@code ExportCommand} which upon execution, exports the contacts in {@code model}.
+     */
+    private ImportCommand prepareCommand(List list, Model model) {
+        ImportCommand command = new ImportCommand(list);
+        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        return command;
+    }
+
+}
+```
 ###### \java\seedu\address\logic\commands\RemoveTagCommandTest.java
 ``` java
 /**
@@ -95,7 +161,7 @@ public class RemoveTagCommandTest {
     }
 
     @Test
-    public void execute_removeTag_success() throws IllegalValueException, PersonNotFoundException {
+    public void execute_removeTag_success() throws IllegalValueException, NoSuchTagException {
         String expectedMessage = MESSAGE_TAG_REMOVED;
 
         RemoveTagCommand command = prepareCommand("friends");
@@ -105,12 +171,38 @@ public class RemoveTagCommandTest {
     }
 
     @Test
-    public void execute_removeSingleTag_success() throws IllegalValueException, PersonNotFoundException {
+    public void execute_removeTagInvalidIndex() throws IllegalValueException {
+        //addressbook does not have specified Index.
+        assertCommandFailure(prepareCommand(10, "prospective"), model,
+                Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void execute_removeNonExistantTag_failure() throws IllegalValueException {
+        //addressbook does not contain enemy tag.
+        assertCommandFailure(prepareCommand("enemy"), model, RemoveTagCommand.MESSAGE_TAG_NOT_FOUND);
+
+        //Elle has family tag but no enemy tag
+        assertCommandFailure(prepareCommand(4, "enemy"), model,
+                String.format(RemoveTagCommand.MESSAGE_TAG_NOT_FOUND_IN, 5));
+
+        //Carl has no tags
+        assertCommandFailure(prepareCommand(2, "colleagues"), model,
+                String.format(RemoveTagCommand.MESSAGE_TAG_NOT_FOUND_IN, 3));
+
+        //Benson has two tags, owesMoney and friend but no family tag.
+        assertCommandFailure(prepareCommand(1, "family"), model,
+                String.format(RemoveTagCommand.MESSAGE_TAG_NOT_FOUND_IN, 2));
+
+    }
+
+    @Test
+    public void execute_removeSingleTag_success() throws IllegalValueException, NoSuchTagException {
         String expectedMessage = MESSAGE_TAG_REMOVED;
 
-        RemoveTagCommand command = prepareCommand(5, "owesMoney");
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.removeTag(Index.fromOneBased(5), new Tag("owesMoney"));
+        RemoveTagCommand command = prepareCommand(4, "family");
+        ModelManager expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        expectedModel.removeTag(Index.fromZeroBased(4), new Tag("family"));
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
     }
 
@@ -189,6 +281,42 @@ public class SortCommandTest {
 
 }
 ```
+###### \java\seedu\address\logic\parser\AddressBookParserTest.java
+``` java
+    @Test
+    public void parseCommand_removetag() throws Exception {
+        String tag = "foo";
+        RemoveTagCommand command = (RemoveTagCommand) parser.parseCommand(
+                RemoveTagCommand.COMMAND_WORD + " " + "all" + " " + tag);
+        assertEquals(new RemoveTagCommand(new Tag(tag)), command);
+
+
+        RemoveTagCommand command2 = (RemoveTagCommand) parser.parseCommand(
+                RemoveTagCommand.COMMAND_WORD + " " + "5" + " " + tag);
+        assertEquals(new RemoveTagCommand(Index.fromOneBased(5), new Tag(tag)), command2);
+    }
+
+    @Test
+    public void parseCommand_sort() throws Exception {
+        SortCommand command = (SortCommand) parser.parseCommand(
+                SortCommand.COMMAND_WORD + " " + "name asc");
+        assertEquals(new SortCommand(ReadOnlyPerson.NAMESORTASC), command);
+    }
+
+    @Test
+    public void parseCommand_export() throws Exception {
+        ExportCommand command = (ExportCommand) parser.parseCommand(
+                ExportCommand.COMMAND_WORD + " " + "output.vcf");
+        assertEquals(new ExportCommand("output.vcf"), command);
+    }
+
+    @Test
+    public void parseCommand_import() throws Exception {
+        ImportCommand command = (ImportCommand) parser.parseCommand(ImportCommand.COMMAND_WORD + " "
+                        + ImportCommandParserTest.TEST_FILE_DIRECTORY + "ValidTypicalAddressBook.xml");
+        assertEquals(new ImportCommand(getTypicalAddressBook().getPersonList()), command);
+    }
+```
 ###### \java\seedu\address\logic\parser\ExportCommandParserTest.java
 ``` java
 public class ExportCommandParserTest {
@@ -248,6 +376,16 @@ public class ImportCommandParserTest {
     }
 
     @Test
+    public void parse_missingFile_throwsParseException() {
+        //Missing .xml
+        assertParseFailure(parser, TEST_FILE_DIRECTORY + "missing.xml",
+                ImportCommand.MESSAGE_FILE_NOT_FOUND);
+        //Missing .vcf
+        assertParseFailure(parser, TEST_FILE_DIRECTORY + "missing.vcf",
+                ImportCommand.MESSAGE_FILE_NOT_FOUND);
+    }
+
+    @Test
     public void parse_corruptedFile_throwsParseException() {
         //Corrupted xml
         assertParseFailure(parser,
@@ -271,6 +409,10 @@ public class ImportCommandParserTest {
         //Valid xml file with data of getTypicalAddressBook.
         assertParseSuccess(parser, TEST_FILE_DIRECTORY + "ValidTypicalAddressBook.xml",
                 new ImportCommand(getTypicalAddressBook().getPersonList()));
+
+        //Valid vcf file with data of getTypicalAddressBook.
+        assertParseSuccess(parser, TEST_FILE_DIRECTORY + "ValidTypicalAddressBook.vcf",
+                new ImportCommand(getTypicalAddressBook().getPersonList()));
     }
 }
 ```
@@ -287,8 +429,33 @@ public class RemoveTagCommandParserTest {
     }
 
     @Test
-    public void parse_multipleArg_throwsParseException() {
+    public void parse_noRange_throwsParseException() {
+        //1 tags no range
+        assertParseFailure(parser, "friends", String.format(
+                MESSAGE_INVALID_COMMAND_FORMAT, RemoveTagCommand.MESSAGE_USAGE));
+
+        //2 tags no range
         assertParseFailure(parser, "friends owesMoney", String.format(
+                MESSAGE_INVALID_COMMAND_FORMAT, RemoveTagCommand.MESSAGE_USAGE));
+
+        //3 tags no range
+        assertParseFailure(parser, "friends owesMoney prospective", String.format(
+                MESSAGE_INVALID_COMMAND_FORMAT, RemoveTagCommand.MESSAGE_EXCEEDTAGNUM));
+    }
+
+    @Test
+    public void parse_multipleTag_throwsParseException() {
+        //all range 2 tags
+        assertParseFailure(parser, "all owesMoney prospective", String.format(
+                MESSAGE_INVALID_COMMAND_FORMAT, RemoveTagCommand.MESSAGE_EXCEEDTAGNUM));
+
+        assertParseFailure(parser, "5 owesMoney prospective", String.format(
+                MESSAGE_INVALID_COMMAND_FORMAT, RemoveTagCommand.MESSAGE_EXCEEDTAGNUM));
+    }
+
+    @Test
+    public void parse_invalidArg_throwsParseException() {
+        assertParseFailure(parser, ".123\\5", String.format(
                 MESSAGE_INVALID_COMMAND_FORMAT, RemoveTagCommand.MESSAGE_USAGE));
     }
 
@@ -296,14 +463,14 @@ public class RemoveTagCommandParserTest {
     public void parse_validArgs_returnsRemoveTagCommand() throws IllegalValueException {
         // no leading and trailing whitespaces
         RemoveTagCommand expectedCommand = new RemoveTagCommand (new Tag("friends"));
-        assertTrue(parser.parse("friends") instanceof RemoveTagCommand);
-        assertParseSuccess(parser, "friends", expectedCommand);
+        assertTrue(parser.parse("all friends") instanceof RemoveTagCommand);
+        assertParseSuccess(parser, "all friends", expectedCommand);
 
         // no leading and trailing whitespaces but with Index.
         RemoveTagCommand expectedCommand2 = new RemoveTagCommand (Index.fromZeroBased(0), new Tag(
                 "enemy"));
         assertTrue(parser.parse("1 enemy") instanceof RemoveTagCommand);
-        assertParseSuccess(parser, " 1 enemy", expectedCommand2);
+        assertParseSuccess(parser, "1 enemy", expectedCommand2);
     }
 
 }

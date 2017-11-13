@@ -206,27 +206,45 @@ Deletes the 1st person in the results of the `find` command.
 
 === Deleting a tag : `removetag`
 
-Removes a tag from every person in the list in the address book. +
-If an an index is given the tag is removed from the person +
-in the specified index shown on the list. +
-Format: `removetag TAGNAME` OR `removetag INDEX TAGNAME`
-
 [NOTE]
 Remove Tag command available since v1.1 +
 Option to remove a tag for selected people since V1.2
 
+If you want to remove a certain tag from the address book or from a specific person in your addressbook, you can use the removetag function to perform this action. +
 
+To do so simply follow these steps
+
+. Type `removetag` followed by the `INDEX` of the person and the `TAG` that you wish to remove.
++
+[TIP]
+If you are trying to delete a `TAG` from everybody in the list, type `all` in the `INDEX` field.
++
+An example is shown below.
++
+image::removetag.png[width="790"]
+_Figure 4.7.1 : Rubrika main page_
++
+. Upon pressing `ENTER` you should be greeted with a confirmation message.
++
+image::removetag-2.png[width="790"]
+_Figure 4.7.1 : Remove Tag Confirmation message_
+
+The `TAG` that you have given should now be removed from the addressbook or from the person corresponding to the `INDEX` in the list. +
+
+Do take note that:
 ****
-* Deletes every tag that matches the TAGNAME.
-* Deletes tag from specified index if INDEX is given.
 * The tag must exist in any person.
-* Index must be a positive integer
+* `INDEX` must be a positive integer
+* `INDEX` of the person refers to his/her `INDEX` in the list displayed.
+* `removetag` is an undoable command, and you can restore your deleted tags.
 ****
+
+Format: `removetag all TAGNAME` OR `removetag INDEX TAGNAME`
 
 Examples:
 
 * `list` +
-`removetag friends` +
+`removetag all friends` +
 Deletes the tag `friends` from everyone in the address book.
 
 * `list` +
@@ -242,19 +260,30 @@ Deletes tag `enemy` from the first person in the list shown in the address book.
 [NOTE]
 Sort feature available since v1.3
 
-Sorts the list of person in the addressbook. +
-You may choose to sort based on a parameter and display in +
-ascending or descending order.
+To help keep your contact list in an organise manner, you can choose to rearrange your contacts in a specified order. +
 
-[NOTE]
-Sort command is NOT undoable nor redoable, since the order is not preserved, and will revert to original order on execution of many other commands.
+Currently, Rubrika allows you to list your clients by your client's name, email or phone in ascending or descending order.
+
+. Type `sort` followed by the `FIELD` followed by the `ORDER` that you wish to list your contacts. An example is shown below.
++
+image::sort.png[width="790"]
+_Figure 4.8.1 : Rubrika main page_
++
+. Upon pressing `ENTER` you should see a confirmation message.
++
+image::sort-2.png[width="790"]
+_Figure 4.8.1 : Sort confirmation message_
+
+Your list of contacts should now be displayed in the specified order based on your choice.
+
+Do take note that:
+****
+* The available `FIELD` are name, email or phone.
+* The available `ORDER` are be asc (ascending) or dsc (descending)
+* Sort is not an undoable command.
+****
 
 Format: `sort FIELD ORDER` +
-
-****
-* FIELD must be name, email or phone.
-* ORDER must be asc (ascending) or dsc (descending)
-****
 
 Examples:
 
@@ -300,17 +329,42 @@ Change the theme of the Rubrika to DarkTheme.
 [NOTE]
 Import feature available since v1.4.
 
-To import a your contact from a pre-existing import file, you may choose to use the import functionality of Rubrika by calling the following command. +
+To help you add your contacts from a pre-existing list of contact, you can choose to use the import function of Rubrika to automate the process.
 
-Format: `import` `File Path` or `import`
+[NOTE]
+Currently the import feature only supports vCards and XML files exported by Rubrika. +
+To create the export file, please refer to link:#export[Exporting Contacts]
 
+. Type `import` into your command box. The following window will appear.
++
+image::import-window.png[width="790"]
+_Figure 4.10.1 : Import window_
++
+. Select the file you want to import and select `open`.
++
+image::import-window-2.png[width="790"]
+_Figure 4.10.2 : Locate the file and select `Open`_
+
++
+. If you have performed your steps correctly, you will be greeted with the following message.
++
+image::import-window-3.png[width="790"]
+_Figure 4.10.3 : Comfirmation message_
+
+Your contact list should now contain your contacts you had previously as well as the contacts that was included in the file.
+
+Do take note that:
 ****
-* The function only imports user that do not exist in the current address book.
-* Duplicate persons will be ignored.
-* Only able to import .vcf or .xml files.
-* Only .vcf or .xml files exported by Rubrika will work.
-* You may use use an absolute path of a the import file if you want to load your import from a seperate Folder.
+* The function only imports contacts that do not exist in the current address book.
+* Duplicate persons in your contact list will be ignored.
+* Import function is an undoable feature, and you can undo your previous import.
 ****
+
+[TIP]
+You may choose to skip the file selection process if you place the export file directly in the same folder as your Rubrika application. +
+You can do so by typing `import FILENAME`. +
+
+Format: `import FILENAME` or `import`
 
 Examples:
 
@@ -323,19 +377,40 @@ Imports the sample.vcf file found in the root folder.
 * `import sample.xml` +
 Imports the sample.xml file found in the root folder.
 
+[[export]]
 === Exporting contacts: `export`
 
 [NOTE]
 Export feature available since v1.4. +
 
-If you wish to export your contacts in your current Rubrika to add to another Rubrika application, you can use the export function of Rubrika by calling the following command.
+If you wish to export your contacts in your Rubrika to add to another Rubrika application, you can use the export function of Rubrika.
 
-Format: `export Filepath`
+[NOTE]
+Currently, Rubrika's export feature only support vCards or XML files. +
+The export file might not work on applications outside of Rubrika.
 
-****
-* Only .vcf or .xml files are supported.
-* You may use use an absolute path of a folder if you want to save your export to a seperate Folder.
-****
+To create your export file, simply follow these steps.
+
+. Type `export`, followed by the `FILENAME` of the file.
++
+image::export-1.png[width="790"]
+_Figure 4.11.1 : Typing the export command in the command box_
++
+. Upon pressing `ENTER`, you should be greeted with the confirmation message as seen below.
++
+image::export-2.png[width="790"]
+_Figure 4.11.2 : Export Confirmation message_
++
+. Retrieve the export file from the same directory as your `Rubrika.jar` file.
++
+image::export-3.png[width="790"]
+_Figure 4.11.2 : Save location of the export file_
+
+[TIP]
+You may use use an absolute path of a folder if you want to save your export to a separate folder. +
+For e.g `export C:\Users\(username)\Desktop\output.vcf`
+
+Format: `export FILENAME`
 
 Examples:
 
@@ -384,7 +459,7 @@ Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit`, `import`, `removetag` and `clear`).
 ====
 
 Examples:
@@ -495,8 +570,8 @@ e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 123466
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
-* *RemoveTag* : `removetag TAGNAME` or `removetag INDEX TAGNAME` +
-e.g `removetag friends` +
+* *RemoveTag* : `removetag all TAGNAME` or `removetag INDEX TAGNAME` +
+e.g `removetag all friends` +
 e.g `removetag 3 enemy`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
@@ -509,8 +584,8 @@ e.g.`select 2`
 * *Sort* : `sort FIELD ORDER` +
 e.g. `sort name asc` +
 e.g. `sort email dsc`
-* *Import* : `ìmport`
-* *Export* : `export`
+* *Import* : `ìmport FILEPATH`
+* *Export* : `export FILEPATH`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`

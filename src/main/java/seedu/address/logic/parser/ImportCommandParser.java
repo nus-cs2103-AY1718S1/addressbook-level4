@@ -27,40 +27,75 @@ public class ImportCommandParser implements Parser<ImportCommand> {
     @Override
     public ImportCommand parse(String userInput) throws ParseException {
         File file;
+
         if (userInput.trim().isEmpty()) {
-            FileWrapper fw = new FileWrapper();
-            EventsCenter.getInstance().post(new ImportFileChooseEvent(fw));
-            file = fw.getFile();
-            if (file == null) {
-                throw new ParseException(ImportCommand.MESSAGE_IMPORT_CANCELLED);
-            }
+            file = getFileFromImportWindow();
         } else {
             file = new File(userInput.trim());
         }
+
         if (file.getName().endsWith(ImportCommand.XML_EXTENSION)) {
-            try {
-                ReadOnlyAddressBook importingBook = XmlFileStorage.loadDataFromSaveFile(file);
-                List<ReadOnlyPerson> importList = importingBook.getPersonList();
-
-                return new ImportCommand(importList);
-            } catch (DataConversionException dce) {
-                throw new ParseException(ImportCommand.MESSAGE_FILE_CORRUPT);
-            } catch (FileNotFoundException fnfe) {
-                throw new ParseException(ImportCommand.MESSAGE_FILE_NOT_FOUND);
-            }
-
+            return importByXml(file);
         } else if (file.getName().endsWith(ImportCommand.VCF_EXTENSION)) {
-            try {
-                List<ReadOnlyPerson> importList = VcfImport.getPersonList(file);
-                return new ImportCommand(importList);
-            } catch (IllegalValueException ive) {
-                throw new ParseException(ImportCommand.MESSAGE_FILE_CORRUPT);
-            } catch (IOException ioe) {
-                throw new ParseException(ImportCommand.MESSAGE_FILE_NOT_FOUND);
-            }
-
+            return importByVcf(file);
         } else {
             throw new ParseException(ImportCommand.MESSAGE_WRONG_FORMAT);
         }
+    }
+
+    /**
+     * Creates an ImportCommand with the list of contacts given in the vcf file.
+     * @param file of .vcf file format containing list of contacts.
+     * @return ImportCommand that contains the list of contact given in the vcf file
+     * @throws ParseException if filepath given is not found or if file is corrupted.
+     */
+    private ImportCommand importByVcf(File file) throws ParseException {
+        try {
+            List<ReadOnlyPerson> importList = VcfImport.getPersonList(file);
+
+            return new ImportCommand(importList);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(ImportCommand.MESSAGE_FILE_CORRUPT);
+        } catch (IOException ioe) {
+            throw new ParseException(ImportCommand.MESSAGE_FILE_NOT_FOUND);
+        } catch (NullPointerException npe) {
+            throw new ParseException(ImportCommand.MESSAGE_FILE_INVALID);
+        }
+    }
+
+    /**
+     * Creates an ImportCommand with the list of contacts given in the xml file.
+     * @param file of .xml file format containing list of contacts.
+     * @return ImportCommand that contains the list of contact given in the xml file
+     * @throws ParseException if filepath given is not found or if file is corrupted.
+     */
+    private ImportCommand importByXml(File file) throws ParseException {
+        try {
+            ReadOnlyAddressBook importingBook = XmlFileStorage.loadDataFromSaveFile(file);
+            List<ReadOnlyPerson> importList = importingBook.getPersonList();
+
+            return new ImportCommand(importList);
+        } catch (DataConversionException dce) {
+            throw new ParseException(ImportCommand.MESSAGE_FILE_CORRUPT);
+        } catch (FileNotFoundException fnfe) {
+            throw new ParseException(ImportCommand.MESSAGE_FILE_NOT_FOUND);
+        }
+    }
+
+    /**
+     * Raises an event to open a File Explorer and returns the file to be imported
+     * @return File containing contacts to be created
+     * @throws ParseException if File Explorer was closed before a file has been selected
+     */
+    private File getFileFromImportWindow() throws ParseException {
+        File file;
+        FileWrapper fw = new FileWrapper();
+
+        EventsCenter.getInstance().post(new ImportFileChooseEvent(fw));
+        file = fw.getFile();
+        if (file == null) {
+            throw new ParseException(ImportCommand.MESSAGE_IMPORT_CANCELLED);
+        }
+        return file;
     }
 }

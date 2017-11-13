@@ -29,7 +29,7 @@ The Import and Export feature also serves as a way to backup a user's contact so
 
 The user may choose to use a File Explorer to locate the contact file as there can be many possible download locations depending on the user's preference.
 
-The currently supported format are vCard(.vcf) and XML(.xml) as they are commonly used file types.
+The supported format for import and export features are vCard(.vcf) and XML(.xml) as they are commonly used file types amongst working professionals.
 
 ==== Implementation
 

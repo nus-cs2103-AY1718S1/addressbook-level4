@@ -580,6 +580,10 @@ The sort function is done by performing the `sortFilteredPersonList` function wh
 
 Within `ModelManager`, we mask `FilteredList` with a `SortedList` object, and call `sortFilteredPersonList` method within `Model`. This sets the comparator that been parsed by `SortCommandParser` into the `SortedList` filtered list. For each different way of sorting, a different comparator is being passed into `sortFilteredPersonList`. +
 
+The following is a sequence diagram detailing the process of how `SortCommand` sorts the list of persons. +
+
+image::SortSequenceDiagram.png[width="800"]
+
 Below is the code fragment found in `Model`.
 
 ----
@@ -608,6 +612,8 @@ If arguments given do not comply with the correct format, ParseException will be
 === Import function
 
 The import function supports importing of vCard files (.vcf) and xml files (.xml).
+
+The diagram below details the sequence of how Rubrika handles the import command.
 
 [NOTE]
 The import function merges the contacts in the export files with the ones currently in the addressbook. If duplicate persons are found, Rubrika will inform the user of the number of duplicated contacts found.
