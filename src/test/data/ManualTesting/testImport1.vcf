@@ -1,0 +1,16 @@
+BEGIN:VCARD
+VERSION:3.0
+FN:Tom Riddle
+N:;Tom Riddle;;;
+EMAIL;TYPE=INTERNET;TYPE=HOME:tomR@example.com
+TEL;TYPE=CELL:66666666
+ADR:;;13 Computing Drive;;;;
+END:VCARD
+BEGIN:VCARD
+VERSION:3.0
+FN:Richard Harrison
+N:;Richard Harrison;;;
+EMAIL;TYPE=INTERNET;TYPE=HOME:richardR@example.com
+TEL;TYPE=CELL:99999999
+ADR:;;13 Computing Drive;;;;
+END:VCARD

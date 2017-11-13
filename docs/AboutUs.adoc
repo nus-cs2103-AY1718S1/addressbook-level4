@@ -10,7 +10,7 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 
 == Project Team
 
-=== Daniel Kwang
+=== Daniel Kwang Wee Teck
 image::danielweide.png[width="150", align="left"]
 {empty}[https://github.com/danielweide[github]] [https://github.com/CS2103AUG2017-W15-B3/main/blob/master/docs/team/danielkwang.adoc[portfolio]]
 
@@ -28,7 +28,7 @@ In-charge of: Model Component
 
 '''
 
-=== Joshua Lim
+=== Lim Cheng Zhong Joshua
 image::blaqkrow.png[width="150", align="left"]
 {empty}[http://github.com/blaqkrow[github]] [https://github.com/CS2103AUG2017-W15-B3/main/blob/master/docs/team/joshualim.adoc[portfolio]]
 
