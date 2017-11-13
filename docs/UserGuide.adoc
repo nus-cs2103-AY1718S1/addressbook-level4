@@ -186,15 +186,19 @@ Sorts the list in numerical order of their phone.
 // end::sort[]
 
 // tag::find[]
-==== Search for contact: `find`
+==== Search for contact: `find` / `findpinned`
 
-Trying to find one of your contacts? You can do so easily with the `find` command! +
+Trying to find one of your contacts? You can do so easily with the `find` or `findpinned` command! +
+`find` search through all your contacts whereas `findpinned` will search through pinned contacts only.
+
 Format: `find` `KEYWORD` `[MORE_KEYWORDS]` `...`
 
 Examples:
 
 * `find` `John` +
 Returns `john` and `John Doe`.
+* `findpinned` `Roy` +
+Returns pinned contact `Roy`
 * `find` `Betsy` `Tim` `John` +
 Returns any person having names `Betsy`, `Tim`, or `John`.
 * `find` `friend` +

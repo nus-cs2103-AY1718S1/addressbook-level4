@@ -12,7 +12,7 @@ public class Messages {
             + "Want to see your contact's full details? use \"select\"\n"
             + "Want to view list of contact or tasks? use \"list\" or \"listpin\"\n"
             + "Want to find your contact or tasks? use \"find\"\n"
-            + "Want to find pinned contact? use \"findpin\"\n"
+            + "Want to find pinned contact? use \"findpinned\"\n"
             + "Want to add remark to your contact? use \"remark\"\n"
             + "Made a mistake adding contact or tasks? use \"undo\"\n"
             + "Want to view list of tasks? use \"task\"\n"
