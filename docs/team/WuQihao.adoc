@@ -4,7 +4,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :stylesDir: ../stylesheets
 
 == Project: AcquaiNote
-AcquaiNote is a desktop address book application which helps to manage personal contacts easily and safely, with scheduling functionality. The user interacts with it using a command line interface (CLI), and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+AcquaiNote is a desktop address book application which helps to manage personal contacts easily and safely, with scheduling functionality. The user interacts with it using a command line interface (CLI), and it is written in Java and it has a GUI created with JavaFX.
 
 *Code contributed*: [https://github.com/CS2103AUG2017-T10-B1/main/blob/master/collated/main/qihao27.md[Functional code]] [https://github.com/CS2103AUG2017-T10-B1/main/blob/master/collated/test/qihao27.md[Test code]]
 
