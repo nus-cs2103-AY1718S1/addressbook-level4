@@ -208,7 +208,10 @@ public class MainWindow extends UiPart<Region> {
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
-
+        //@@author sebtsh
+        personPanel.setDimensions(personListPanel.getRoot().getHeight(),
+                primaryStage.getWidth() - personListPanel.getRoot().getWidth());
+        //@@author
 
         //@@author shuang-yang
         //When calendar button is clicked, the browserPlaceHolder will switch
