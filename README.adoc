@@ -24,14 +24,15 @@ relationship with clients better
 ** Scheduling and managing events (such as meeting with clients, call with
 potential leads)
 ** Get timely reminders for upcoming scheduled events
-* What's new in v1.4:
-** A fresh look with the updated event panel and calendar UI
+* What's new in v1.5:
 ** Added features and enhancement:
-*** Use a calendar interface to check scheduled events, and edit event's
-timing through drag-and-drop interactions
-*** Viewing of today's schedule via a timetable view
-*** Add relationship between multiple clients
-*** Check event details in an event panel
+*** A new Repeat Command to schedule recurring events
+*** Toggling of timetable to increase viewing space
+*** Adding, editing and viewing a relationship between clients
+*** Improved scaling for UI +
+
+** Removed:
+*** Notification icon until feature implementation
 
 == Site Map
 

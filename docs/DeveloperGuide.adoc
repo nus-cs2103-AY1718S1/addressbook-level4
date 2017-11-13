@@ -195,7 +195,8 @@ The `Model`,
 
 * stores a `UserPref` object that represents the user's preferences.
 * stores the Address Book data.
-* exposes an unmodifiable `ObservableList<ReadOnlyPerson>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* exposes an unmodifiable `ObservableList<ReadOnlyPerson>` and an unmodifiable `ObservableList<ReadOnlyEvent` that can
+be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
 === Storage component
@@ -347,32 +348,110 @@ image::UndoRedoActivityDiagram.png[width="200"]
 
 // tag::eventcrud[]
 === Events CRUD Mechanism
-The events CRUD (Create, Read, Update, Delete) mechanism is very similar to the persons CRUD system.  Four commands `AddEventCommand`, `FindEventCommand`, `DeleteEventCommand`, `EditEventCommand` are used to execute their respective functions through the `LogicManager`. +
+The events CRUD (Create, Read, Update, Delete) mechanism is very similar to the persons CRUD system.  Four commands
+`AddEventCommand`, `FindEventCommand` (work in progress), `DeleteEventCommand`, `EditEventCommand` are used to execute their respective
+functions through the `LogicManager`. +
 
-Commands are first read from `CommandBox` which then calls upon the `LogicManager` to detect the type of command. `LogicManager` then creates a `AddressBookParser` which uses `CheckCommandsParser` to detect any synonymous alternatives for their respective commands and returns the specific command type if available. +
+image::EventsSequenceDiagram.png[width="800"]
 
-The specific command type is passed through its specific parser along with its arguments (E.g. `AddEventCommand` is parsed via `AddEventCommandParser`). The specific parser creates a specific command to return to `LogicManager` (E.g. `AddEventCommandParser` returns `AddEventCommand` with the `Event` to be be added once executed). +
+Commands are first read from `CommandBox` in the UI Component which then calls upon the `LogicManager` in the Logic Component
+to detect the type of command.
+`LogicManager` then creates a `AddressBookParser` which uses `CheckCommandsParser` to detect any synonymous alternatives
+for their respective commands and returns the specific command type if available. +
 
-`LogicManager` proceeds to execute the received command. In this implementation, the Command will call upon `ModelManager` to do complete the CRUD operations onto its internal database. (E.g. `AddEventCommand` calls `model.addEvent(event)` to add the event created by `AddEventCommandParser` to the event list in `AddressBook`. +
+The specific command type is passed through its specific parser along with its arguments (E.g. `DeleteEventCommand` is parsed
+via `DeleteEventCommandParser`). The specific parser creates a specific command to return to `LogicManager` (E.g.
+`DeleteEventCommandParser` returns `DeleteEventCommand` with the index of the `Event` to be be deleted once executed). +
 
-Once this is complete, an update is sent to the the `filteredEventList` which updates the `UI` Component. +
+`LogicManager` proceeds to execute the received command. In this implementation, the Command will call upon
+`ModelManager` in the Model component to do complete the respective CRUD operation onto its internal database.
+(E.g. `DeleteEventCommand` results in `model.deleteEvent(event)` to delete the event at index indicated by
+`DeleteEventCommandParser` from the event list in `AddressBook`. +
 
-Additionally, an `AddressBookChangedEvent` is also raised to the `EventsCenter` to indicate a change into so that `XmlAddressBookStorage` can begin saving the new information. It calls on `XmlSerializableAddressBook` to serialize the new event information and saves it to the data file via `XmlFileStorage`.
+Once the model component has been updated, a signal is sent to the the `filteredEventList` which updates the UI
+Component. +
+
+Additionally, an `AddressBookChangedEvent` is also raised to the `EventsCenter` to indicate a change into so that
+`XmlAddressBookStorage` in the storage component can begin saving the new information. It calls on
+`XmlSerializableAddressBook` to serialize the new event list information and saves it to the data file via
+`XmlFileStorage`.
 
 ==== Design Considerations
 
-**Aspect:** Implementation of Storage +
-**Alternative 1 (current choice):** Saving to a single data file shared with Person Data +
-**Pros:** We do not need a separate data file to save event information. Additionally, reading data is only done once. +
-**Cons:** Not very modular and intuitive. +
-**Alternative 2:** Create new data file to record events. +
-**Pros:** Modular and intuitive to new developers. Manual additions to the data file will also be easier. +
-**Cons:** Separate files are harder to manage.
+**Aspect 1:** Implementation of Storage +
+
+**Alternative 1 (current choice):** Saving to a single XML file shared with contact data +
+****
+**Pros:**
+
+* We do not need a separate data file to save event information. Additionally, reading data is only done once. +
+
+**Cons:**
+
+* Not very modular and intuitive. +
+
+****
+
+**Alternative 2:** Create a separate XML file to record events data +
+****
+**Pros:**
+
+* Modular and intuitive to new developers. Manual additions to the data file will also be easier. +
+
+**Cons:**
+
+* Separate files are harder to manage.
+****
+
+**Aspect 2:** Implementation of Parsers +
+
+**Alternative 1 (current choice): ** Creating individual parsers for a new function (E.g. `AddEventCommandParser` for `AddEventCommand`) +
+****
+**Pros:**
+
+* Modular implementation where a parser only parses for a specific command.
+
+* Issues will be easy to isolate and target.
+
+**Cons**
+
+* Repeated functionality with correponding parsers for Persons.
+
+****
+
+**Alternative 2: ** Creating a shared parser for events and persons which switch functionality depending on an input +
+****
+**Pros:**
+
+* Removes the repeated functionality amongst the 4 pairs of parsers.
+
+**Cons**
+
+* Complex implementation which will be harder to maintain in the long run of development.
+
+* More difficulty in debugging with newer changes.
+
+****
 
 ---
 // end::eventcrud[]
 
 // tag::timetable[]
+=== Timetable Events
+The timetable events schedule functions similarly to the events list on the left of the application. Upon starting the
+application, after the model component initialises saved data to create its "memory-model" of the storage, `AddressBook`
+uses its new functionality `getCurrentDate()` to retrieve today's date as indicated on the local machine and saves it
+to retrieve the scheduled events for today. +
+
+The implementation of the `EventList` used to store all the events in the model component has been modified to a `TreeMap`
+to allow the retrieval of a sublist of events between any two dates. This is done through `getObservablesSublist()` which
+uses the current date and the date that is one day after (possible due to the implementation of `addDays()` in `Date`. +
+
+image::TimetableUpdate.png[width="800"]
+
+This list is stored in the model component and will be updated accordingly if there are any changes to events made known
+upon the signalling of `AddressBookChangedEvent`.
+
 // end::timetable[]
 
 // tag::scheduling[]
