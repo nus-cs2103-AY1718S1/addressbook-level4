@@ -1,0 +1,487 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addressbook>
+    <persons>
+        <name>Abdel Isacsson</name>
+        <phone>2534283161</phone>
+        <email>aisacsson7@indiegogo.com</email>
+        <address>5341 Mayfield Junction</address>
+        <birthday></birthday>
+        <tagged>bestie</tagged>
+        <tagged>cs2101Group</tagged>
+        <tagged>friend</tagged>
+        <tagged>ee2020Group</tagged>
+        <tagged>clubMates</tagged>
+    </persons>
+    <persons>
+        <name>Adrian Antat</name>
+        <phone>2686708515</phone>
+        <email>aantatn@macromedia.com</email>
+        <address>13074 Oak Valley Parkway</address>
+        <birthday></birthday>
+        <tagged>cs2101Group</tagged>
+        <tagged>friend</tagged>
+        <tagged>colleague</tagged>
+    </persons>
+    <persons>
+        <name>Angele Gabbitis</name>
+        <phone>7646170353</phone>
+        <email>agabbitis0@angelfire.com</email>
+        <address>203 Nelson Park</address>
+        <birthday></birthday>
+        <tagged>friend</tagged>
+        <tagged>ee2020Group</tagged>
+        <tagged>family</tagged>
+    </persons>
+    <persons>
+        <name>Annis Curness</name>
+        <phone>3959667823</phone>
+        <email>acurnessl@foxnews.com</email>
+        <address>89 Sommers Pass</address>
+        <birthday></birthday>
+        <tagged>oweMoney</tagged>
+    </persons>
+    <persons>
+        <name>Dagny Sinnat</name>
+        <phone>5556617246</phone>
+        <email>dsinnato@meetup.com</email>
+        <address>54 Westend Avenue</address>
+        <birthday></birthday>
+        <tagged>cs2103Group</tagged>
+        <tagged>colleague</tagged>
+    </persons>
+    <persons>
+        <name>Geordie Drohun</name>
+        <phone>5013843835</phone>
+        <email>gdrohunb@sogou.com</email>
+        <address>93632 Arizona Trail</address>
+        <birthday></birthday>
+        <tagged>cs2103Group</tagged>
+    </persons>
+    <persons>
+        <name>Ignacio Kalinowsky</name>
+        <phone>2964465105</phone>
+        <email>ikalinowskyj@bizjournals.com</email>
+        <address>7065 Fieldstone Plaza</address>
+        <birthday></birthday>
+    </persons>
+    <persons>
+        <name>Jo ann Arlet</name>
+        <phone>4198456350</phone>
+        <email>jannc@examiner.com</email>
+        <address>380 Caliangt Junction</address>
+        <birthday></birthday>
+    </persons>
+    <persons>
+        <name>Jolee Licari</name>
+        <phone>6792039389</phone>
+        <email>jlicari5@hostgator.com</email>
+        <address>349 Forster Trail</address>
+        <birthday></birthday>
+        <tagged>clubMates</tagged>
+        <tagged>colleague</tagged>
+    </persons>
+    <persons>
+        <name>Karlotta Lozano</name>
+        <phone>2696586257</phone>
+        <email>klozano2@jugem.jp</email>
+        <address>0647 Boyd Parkway</address>
+        <birthday></birthday>
+        <tagged>cs2103Group</tagged>
+    </persons>
+    <persons>
+        <name>Kass Reuben</name>
+        <phone>4201381036</phone>
+        <email>kreubena@jalbum.net</email>
+        <address>976 Mcguire Crossing</address>
+        <birthday></birthday>
+    </persons>
+    <persons>
+        <name>Kellen Pietrasik</name>
+        <phone>4214108085</phone>
+        <email>kpietrasikr@cnn.com</email>
+        <address>24163 1st Avenue</address>
+        <birthday></birthday>
+        <tagged>clubMates</tagged>
+        <tagged>whoIsThis</tagged>
+    </persons>
+    <persons>
+        <name>Lelia Turone</name>
+        <phone>7619512523</phone>
+        <email>lturonek@pen.io</email>
+        <address>9478 Northland Point</address>
+        <birthday></birthday>
+    </persons>
+    <persons>
+        <name>Les Kidson</name>
+        <phone>7204712248</phone>
+        <email>lkidson4@cbc.ca</email>
+        <address>42716 Rutledge Avenue</address>
+        <birthday></birthday>
+        <tagged>clubMates</tagged>
+    </persons>
+    <persons>
+        <name>Lorri Martineau</name>
+        <phone>6129274913</phone>
+        <email>lmartineauh@toplist.cz</email>
+        <address>652 Lunder Junction</address>
+        <birthday></birthday>
+        <tagged>whoIsThis</tagged>
+    </persons>
+    <persons>
+        <name>Lotte Stothert</name>
+        <phone>1282615555</phone>
+        <email>lstothert3@ocn.ne.jp</email>
+        <address>09 Grayhawk Drive</address>
+        <birthday></birthday>
+        <tagged>oweMoney</tagged>
+    </persons>
+    <persons>
+        <name>Lu Sichardt</name>
+        <phone>2368114308</phone>
+        <email>lsichardt1@myspace.com</email>
+        <address>58 Logan Point</address>
+        <birthday></birthday>
+        <tagged>whoIsThis</tagged>
+    </persons>
+    <persons>
+        <name>Meade Peres</name>
+        <phone>5789137377</phone>
+        <email>mperesq@auda.org.au</email>
+        <address>446 Onsgard Terrace</address>
+        <birthday></birthday>
+        <tagged>oweMoney</tagged>
+        <tagged>clubMates</tagged>
+    </persons>
+    <persons>
+        <name>Nestor Vasyaev</name>
+        <phone>9318825962</phone>
+        <email>nvasyaevm@japanpost.jp</email>
+        <address>6 Fisk Park</address>
+        <birthday></birthday>
+        <tagged>cs2103Group</tagged>
+    </persons>
+    <persons>
+        <name>Redd Monini</name>
+        <phone>7951711067</phone>
+        <email>rmoninit@weather.com</email>
+        <address>5905 Vernon Place</address>
+        <birthday></birthday>
+        <tagged>whoIsThis</tagged>
+    </persons>
+    <persons>
+        <name>Ruy Rosle</name>
+        <phone>7609887090</phone>
+        <email>rroslep@squidoo.com</email>
+        <address>9 Amoth Road</address>
+        <birthday></birthday>
+    </persons>
+    <persons>
+        <name>Shayla Oxteby</name>
+        <phone>4227752984</phone>
+        <email>soxtebyg@twitter.com</email>
+        <address>158 Lake View Plaza</address>
+        <birthday></birthday>
+        <tagged>clubMates</tagged>
+    </persons>
+    <persons>
+        <name>Sonnnie Bleythin</name>
+        <phone>6461983659</phone>
+        <email>sbleythini@ning.com</email>
+        <address>0 Eagle Crest Terrace</address>
+        <birthday></birthday>
+        <tagged>oweMoney</tagged>
+    </persons>
+    <persons>
+        <name>Sonnnie Legh</name>
+        <phone>1948641918</phone>
+        <email>sleghe@4shared.com</email>
+        <address>0 Trailsway Plaza</address>
+        <birthday></birthday>
+    </persons>
+    <persons>
+        <name>Stacee Pashen</name>
+        <phone>7697775718</phone>
+        <email>spashen6@accuweather.com</email>
+        <address>0 3rd Junction</address>
+        <birthday></birthday>
+        <tagged>cs2103Group</tagged>
+    </persons>
+    <persons>
+        <name>Willamina Ockleshaw</name>
+        <phone>3238903628</phone>
+        <email>wockleshaw9@google.co.uk</email>
+        <address>71 Linden Park</address>
+        <birthday></birthday>
+        <tagged>oweMoney</tagged>
+    </persons>
+    <persons>
+        <name>Yancy Panichelli</name>
+        <phone>6727860531</phone>
+        <email>ypanichellid@uol.com.br</email>
+        <address>54489 Emmet Court</address>
+        <birthday></birthday>
+        <tagged>oweMoney</tagged>
+    </persons>
+    <persons>
+        <name>Yetta Holttom</name>
+        <phone>7462438868</phone>
+        <email>yholttoms@nytimes.com</email>
+        <address>3 Derek Park</address>
+        <birthday></birthday>
+        <tagged>cousins</tagged>
+    </persons>
+    <persons>
+        <name>Yolane Farnall</name>
+        <phone>5301640186</phone>
+        <email>yfarnall8@about.com</email>
+        <address>863 3rd Road</address>
+        <birthday></birthday>
+        <tagged>cousins</tagged>
+    </persons>
+    <persons>
+        <name>Zackariah Bardey</name>
+        <phone>7313670154</phone>
+        <email>zbardeyf@stumbleupon.com</email>
+        <address>81591 Crownhardt Park</address>
+        <birthday></birthday>
+        <tagged>oweMoney</tagged>
+        <tagged>cousins</tagged>
+    </persons>
+    <tags>bestie</tags>
+    <tags>cs2101Group</tags>
+    <tags>work</tags>
+    <tags>ee2020Group</tags>
+    <tags>clubMates</tags>
+    <tags>colleague</tags>
+    <tags>whoIsThis</tags>
+    <tags>oweMoney</tags>
+    <tags>school</tags>
+    <tags>friend</tags>
+    <tags>cs2103Group</tags>
+    <tags>family</tags>
+    <tags>urgent</tags>
+    <tags>cousins</tags>
+    <tags>cousin</tags>
+    <tags>freeTime</tags>
+    <tags>hobby</tags>
+    <tags>travel</tags>
+    <tasks>
+        <description>GER100 Assignment Due</description>
+        <deadline>Fri, Mar 21, '17</deadline>
+        <startTime>4:55</startTime>
+        <endTime>8:07</endTime>
+        <tagged>school</tagged>
+    </tasks>
+    <tasks>
+        <description>Group Meeting</description>
+        <deadline>Tue, Nov 14, '17</deadline>
+        <startTime>10:46</startTime>
+        <endTime>12:26</endTime>
+        <tagged>school</tagged>
+    </tasks>
+    <tasks>
+        <description>Quiz</description>
+        <deadline>Tue, Nov 14, '17</deadline>
+        <startTime>11:00</startTime>
+        <endTime>12:00</endTime>
+        <tagged>urgent</tagged>
+    </tasks>
+    <tasks>
+        <description>Go to gym</description>
+        <deadline>Thu, Nov 16, '17</deadline>
+        <startTime>01:30</startTime>
+        <endTime>02:30</endTime>
+    </tasks>
+    <tasks>
+        <description>Internship interview</description>
+        <deadline>Fri, Nov 17, '17</deadline>
+        <startTime>08:00</startTime>
+        <endTime>09:00</endTime>
+        <tagged>work</tagged>
+    </tasks>
+    <tasks>
+        <description>Finish homework assignment</description>
+        <deadline>Mon, Nov 20, '17</deadline>
+        <startTime>03:15</startTime>
+        <endTime>21:55</endTime>
+        <tagged>school</tagged>
+    </tasks>
+    <tasks>
+        <description>Flight to Italy</description>
+        <deadline>Mon, Dec '17</deadline>
+        <startTime></startTime>
+        <endTime>2:42</endTime>
+        <tagged>travel</tagged>
+    </tasks>
+    <tasks>
+        <description>Exam week starts</description>
+        <deadline>Fri, Nov 24, '17</deadline>
+        <startTime></startTime>
+        <endTime></endTime>
+        <tagged>school</tagged>
+    </tasks>
+    <tasks>
+        <description>Beach day</description>
+        <deadline>Sat, Nov 25, '17</deadline>
+        <startTime>08:37</startTime>
+        <endTime>18:04</endTime>
+        <tagged>freeTime</tagged>
+    </tasks>
+    <tasks>
+        <description>Visit cousins</description>
+        <deadline>Sun, Nov 26, '17</deadline>
+        <startTime></startTime>
+        <endTime>16:35</endTime>
+        <tagged>cousin</tagged>
+        <tagged>cousins</tagged>
+    </tasks>
+    <tasks>
+        <description>Pay day</description>
+        <deadline>Tue, Nov 28, '17</deadline>
+        <startTime></startTime>
+        <endTime></endTime>
+        <tagged>work</tagged>
+    </tasks>
+    <tasks>
+        <description>Shopping spree</description>
+        <deadline>Fri, Dec 1, '17</deadline>
+        <startTime>11:00</startTime>
+        <endTime>12:20</endTime>
+        <tagged>freeTime</tagged>
+    </tasks>
+    <tasks>
+        <description>Check out new restaurant</description>
+        <deadline>Sat, Dec 2, '17</deadline>
+        <startTime>20:00</startTime>
+        <endTime>21:30</endTime>
+        <tagged>freeTime</tagged>
+    </tasks>
+    <tasks>
+        <description>Internship Interview</description>
+        <deadline>Tue, Dec 5, '17</deadline>
+        <startTime>10:06</startTime>
+        <endTime>10:44</endTime>
+        <tagged>work</tagged>
+    </tasks>
+    <tasks>
+        <description>Meeting with boss</description>
+        <deadline>Fri, Dec 8, '17</deadline>
+        <startTime></startTime>
+        <endTime>10:00</endTime>
+        <tagged>work</tagged>
+    </tasks>
+    <tasks>
+        <description>Volunteer at local pet shelter</description>
+        <deadline>Sat, Dec 9, '17</deadline>
+        <startTime></startTime>
+        <endTime></endTime>
+    </tasks>
+    <tasks>
+        <description>Go shopping</description>
+        <deadline>Mon, Dec 11, '17</deadline>
+        <startTime>13:28</startTime>
+        <endTime>8:20</endTime>
+        <tagged>freeTime</tagged>
+    </tasks>
+    <tasks>
+        <description>Meetup with friends</description>
+        <deadline>Tue, Dec 12, '17</deadline>
+        <startTime></startTime>
+        <endTime>15:15</endTime>
+        <tagged>friend</tagged>
+    </tasks>
+    <tasks>
+        <description>Club meeting</description>
+        <deadline>Wed, Dec 13, '17</deadline>
+        <startTime></startTime>
+        <endTime>10:16</endTime>
+        <tagged>school</tagged>
+    </tasks>
+    <tasks>
+        <description>Product Pitch</description>
+        <deadline>Thu, Dec 14, '17</deadline>
+        <startTime></startTime>
+        <endTime>13:04</endTime>
+        <tagged>school</tagged>
+        <tagged>work</tagged>
+    </tasks>
+    <tasks>
+        <description>CS Assignment Due</description>
+        <deadline>Fri, Dec 15, '17</deadline>
+        <startTime></startTime>
+        <endTime>23:59</endTime>
+        <tagged>cs2101Group</tagged>
+        <tagged>school</tagged>
+    </tasks>
+    <tasks>
+        <description>EE2020 Assignment Due</description>
+        <deadline>Mon, Dec 18, '17</deadline>
+        <startTime></startTime>
+        <endTime>23:59</endTime>
+        <tagged>school</tagged>
+        <tagged>ee2020Group</tagged>
+    </tasks>
+    <tasks>
+        <description>EE2020 Project Meeting</description>
+        <deadline>Tue, Dec 19, '17</deadline>
+        <startTime>11:32</startTime>
+        <endTime>12:49</endTime>
+        <tagged>school</tagged>
+        <tagged>ee2020Group</tagged>
+    </tasks>
+    <tasks>
+        <description>Vacation</description>
+        <deadline>Sat, Dec 23, '17</deadline>
+        <startTime></startTime>
+        <endTime></endTime>
+    </tasks>
+    <tasks>
+        <description>Apply for more internships</description>
+        <deadline></deadline>
+        <startTime></startTime>
+        <endTime></endTime>
+        <tagged>work</tagged>
+    </tasks>
+    <tasks>
+        <description>Book Consultation with Professor</description>
+        <deadline></deadline>
+        <startTime></startTime>
+        <endTime></endTime>
+        <tagged>school</tagged>
+    </tasks>
+    <tasks>
+        <description>Meetup with friends from school</description>
+        <deadline></deadline>
+        <startTime></startTime>
+        <endTime></endTime>
+        <tagged>friend</tagged>
+    </tasks>
+    <tasks>
+        <description>Get presents for family</description>
+        <deadline></deadline>
+        <startTime></startTime>
+        <endTime></endTime>
+        <tagged>family</tagged>
+    </tasks>
+    <tasks>
+        <description>Call family</description>
+        <deadline></deadline>
+        <startTime></startTime>
+        <endTime></endTime>
+        <tagged>family</tagged>
+    </tasks>
+    <tasks>
+        <description>Finish Assignment</description>
+        <deadline></deadline>
+        <startTime></startTime>
+        <endTime></endTime>
+    </tasks>
+    <tasks>
+        <description>Finish art piece</description>
+        <deadline></deadline>
+        <startTime></startTime>
+        <endTime></endTime>
+        <tagged>urgent</tagged>
+        <tagged>hobby</tagged>
+    </tasks>
+</addressbook>
