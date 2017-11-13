@@ -12,7 +12,7 @@ endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :repoURL: https://github.com/se-edu/addressbook-level4/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team 09-B2`      Since: `Jun 2016`      Licence: `MIT`
 
 == Setting up
 
@@ -511,7 +511,7 @@ _Figure 3.6.3 : UI button added to the `MainWindow`_
 //tag::sort[]
 === Sort Mechanism
 
-Sort mechanism operates by sorting the `internalList` in `UniquePersonList`. This command allows the user to sort the list in alphebitacal orders.
+Sort mechanism operates by sorting the `internalList` in `UniquePlaceList`. This command allows the user to sort the list in alphebatical orders.
 Sort command will inherit from `commands`.
 
 Following is the sequence diagram of `sort` command.
