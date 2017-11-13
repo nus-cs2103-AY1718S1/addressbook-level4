@@ -434,6 +434,27 @@ Searches the 2nd person in the address book in Google Map.
 
 // end::locate[]
 
+=== Locating a person's mrt station : `locateMrt`
+
+Locate the specified person's mrt station from the address book on Google Map +
+Format: `Locate INDEX`
+
+****
+* Searches the mrt station of the person at the specified `INDEX` on Google Map.
+* Sometime it just display a general location instead of the mrt Station
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `list` +
+`locate 2` +
+Searches the 2nd person in the address book in Google Map.
+
+// end::locate[]
+
+
 === Selecting a person : `select`
 
 Selects the person identified by the index number used in the last person listing. +
