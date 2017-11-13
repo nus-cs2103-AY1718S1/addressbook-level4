@@ -6,14 +6,14 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
 
 == Project Team
-=== https://github.com/LauY99[Joey Lau]
+=== https://cs2103aug2017-t12-b4.github.io/main/team/lauyung.html[Lau Yung]
 image::lauy99.png[width="150", align="left"]
 
 Role: In charge of Storage
 
 '''
 
-=== https://github.com/grantcm[Grant Miller]
+=== https://cs2103aug2017-t12-b4.github.io/main/team/grantmiller.html[Grant Miller]
 image::grantcm.png[width="150", align="left"]
 
 Role: Integration, Code Quality, Testing
@@ -22,7 +22,7 @@ In Charge of: Logic and Model
 
 '''
 
-=== http://github.com/aali195[Ahmed Ali]
+=== https://cs2103aug2017-t12-b4.github.io/main/team/AhmedAli.html[Ahmed Ali]
 image::aali195.jpg[width="150", align="left"]
 
 Role: Scheduling and tracking, Documentation

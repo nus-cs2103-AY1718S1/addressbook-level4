@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addressbook>
+    <persons>
+        <name>Alex Yeoh</name>
+        <phone>87438807</phone>
+        <email>alexyeoh@example.com</email>
+        <address>Blk 30 Geylang Street 29, #06-40</address>
+        <remark></remark>
+        <image></image>
+        <expiryDate></expiryDate>
+        <tagged>friends</tagged>
+        <group>none</group>
+    </persons>
+    <persons>
+        <name>Bernice Yu</name>
+        <phone>99272758</phone>
+        <email>berniceyu@example.com</email>
+        <address>Blk 30 Lorong 3 Serangoon Gardens, #07-18</address>
+        <remark></remark>
+        <image></image>
+        <expiryDate></expiryDate>
+        <tagged>colleagues</tagged>
+        <tagged>friends</tagged>
+        <group>none</group>
+    </persons>
+    <persons>
+        <name>Charlotte Oliveiro</name>
+        <phone>93210283</phone>
+        <email>charlotte@example.com</email>
+        <address>Blk 11 Ang Mo Kio Street 74, #11-04</address>
+        <remark></remark>
+        <image></image>
+        <expiryDate></expiryDate>
+        <tagged>neighbours</tagged>
+        <group>none</group>
+    </persons>
+    <persons>
+        <name>David Li</name>
+        <phone>91031282</phone>
+        <email>lidavid@example.com</email>
+        <address>Blk 436 Serangoon Gardens Street 26, #16-43</address>
+        <remark></remark>
+        <image></image>
+        <expiryDate></expiryDate>
+        <tagged>family</tagged>
+        <group>none</group>
+    </persons>
+    <persons>
+        <name>Irfan Ibrahim</name>
+        <phone>92492021</phone>
+        <email>irfan@example.com</email>
+        <address>Blk 47 Tampines Street 20, #17-35</address>
+        <remark></remark>
+        <image></image>
+        <expiryDate></expiryDate>
+        <tagged>classmates</tagged>
+        <group>none</group>
+    </persons>
+    <persons>
+        <name>Roy Balakrishnan</name>
+        <phone>92624417</phone>
+        <email>royb@example.com</email>
+        <address>Blk 45 Aljunied Street 85, #11-31</address>
+        <remark></remark>
+        <image></image>
+        <expiryDate></expiryDate>
+        <tagged>colleagues</tagged>
+        <group>none</group>
+    </persons>
+    <persons>
+        <name>Don Porter</name>
+        <phone>85833142</phone>
+        <email>donport@example.com</email>
+        <address>25 Lower Kent Ridge Rd</address>
+        <remark></remark>
+        <image></image>
+        <expiryDate></expiryDate>
+        <tagged>colleagues</tagged>
+        <group>none</group>
+    </persons>
+    <persons>
+        <name>Ashley Lao</name>
+        <phone>9872123</phone>
+        <email>ashll@example.com</email>
+        <address>South Tower</address>
+        <remark></remark>
+        <image></image>
+        <expiryDate></expiryDate>
+        <tagged>colleagues</tagged>
+        <group>none</group>
+    </persons>
+    <persons>
+        <name>Kevin Tan</name>
+        <phone>53522389</phone>
+        <email>kevt@example.com</email>
+        <address>Prince George Park</address>
+        <remark></remark>
+        <image></image>
+        <expiryDate></expiryDate>
+        <tagged>classmates</tagged>
+        <group>none</group>
+    </persons>
+    <persons>
+        <name>James Lim</name>
+        <phone>4453236</phone>
+        <email>jamesl@example.com</email>
+        <address>Marina Bay Sands</address>
+        <remark></remark>
+        <image></image>
+        <expiryDate></expiryDate>
+        <tagged>classmates</tagged>
+        <group>none</group>
+    </persons>
+    <persons>
+        <name>Sulimen</name>
+        <phone>7573463</phone>
+        <email>slm@example.com</email>
+        <address>Woodlands</address>
+        <remark></remark>
+        <image></image>
+        <expiryDate></expiryDate>
+        <tagged>classmates</tagged>
+        <group>none</group>
+    </persons>
+    <persons>
+        <name>Grant Miller</name>
+        <phone>7573463</phone>
+        <email>grantm@example.com</email>
+        <address>Ridge View Residences</address>
+        <remark></remark>
+        <image></image>
+        <expiryDate></expiryDate>
+        <tagged>classmates</tagged>
+        <group>none</group>
+    </persons>
+    <persons>
+        <name>Ali</name>
+        <phone>7573463</phone>
+        <email>slm@example.com</email>
+        <address>PGP</address>
+        <remark></remark>
+        <image></image>
+        <expiryDate></expiryDate>
+        <tagged>classmates</tagged>
+        <group>none</group>
+    </persons>
+    <persons>
+        <name>Joey Lau</name>
+        <phone>61557065</phone>
+        <email>joey@example.com</email>
+        <address>UTown</address>
+        <remark></remark>
+        <image></image>
+        <expiryDate></expiryDate>
+        <tagged>classmates</tagged>
+        <group>none</group>
+    </persons>
+    <persons>
+        <name>Kaye Fan</name>
+        <phone>97566383</phone>
+        <email>kayefan@example.com</email>
+        <address>16-201, North Tower, UTown</address>
+        <remark></remark>
+        <image></image>
+        <expiryDate></expiryDate>
+        <tagged>classmates</tagged>
+        <group>none</group>
+    </persons>
+    <persons>
+        <name>Kelly</name>
+        <phone>25176096</phone>
+        <email>kchoy@example.com</email>
+        <address>16-201, North Tower, UTown</address>
+        <remark></remark>
+        <image></image>
+        <expiryDate></expiryDate>
+        <tagged>classmates</tagged>
+        <group>none</group>
+    </persons>
+    <persons>
+        <name>Sze Man</name>
+        <phone>28581284</phone>
+        <email>sman@example.com</email>
+        <address>16-201, North Tower, UTown</address>
+        <remark></remark>
+        <image></image>
+        <expiryDate></expiryDate>
+        <tagged>classmates</tagged>
+        <group>none</group>
+    </persons>
+    <persons>
+        <name>Jess Chan</name>
+        <phone>96182716</phone>
+        <email>jesschan@example.com</email>
+        <address>16-201, North Tower, UTown</address>
+        <remark></remark>
+        <image></image>
+        <expiryDate></expiryDate>
+        <tagged>classmates</tagged>
+        <group>none</group>
+    </persons>
+    <persons>
+        <name>Woo King Yan</name>
+        <phone>93687476</phone>
+        <email>wky@example.com</email>
+        <address>08-202, South Tower, UTown</address>
+        <remark></remark>
+        <image></image>
+        <expiryDate></expiryDate>
+        <tagged>colleagues</tagged>
+        <group>none</group>
+    </persons>
+    <persons>
+        <name>Kan Ng</name>
+        <phone>27756635</phone>
+        <email>kan@example.com</email>
+        <address>Ridge View Residences</address>
+        <remark></remark>
+        <image></image>
+        <expiryDate></expiryDate>
+        <tagged>classmates</tagged>
+        <group>none</group>
+    </persons>    
+    <persons>
+        <name>David Sanders</name>
+        <phone>38473628</phone>
+        <email>sanders@example.com</email>
+        <address>South Tower, UTown</address>
+        <remark></remark>
+        <image></image>
+        <expiryDate></expiryDate>
+        <tagged>colleagues</tagged>
+        <group>none</group>
+    </persons>
+    <persons>
+        <name>Kevin Tam</name>
+        <phone>87545638</phone>
+        <email>kevint@example.com</email>
+        <address>North Tower, UTown</address>
+        <remark></remark>
+        <image></image>
+        <expiryDate></expiryDate>
+        <tagged>classmates</tagged>
+        <group>none</group>
+    </persons>    
+</addressbook>
