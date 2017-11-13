@@ -775,12 +775,12 @@ The `DeleteEventCommand` then creates a `CommandResult` object and returns it to
 
 // tag::editE[]
 === EditEvent mechanism
-The `EditEvent Command` is facilitated by the `LogicManager`. 
-It supports `undo` and `redo` as it inherits from `UndoableCommand`. 
+The `EditEvent Command` is facilitated by the `LogicManager`.
+It supports `undo` and `redo` as it inherits from `UndoableCommand`.
 
 The Logic manager will firstly call the parser to parse the user input. The parser will generate a descriptor which
 contains information of edited attributes. +
-Instead of accessing into the Event inside Event List and modify its attributes, 
+Instead of accessing into the Event inside Event List and modify its attributes,
 EditEvent will create an event with certain attributes modified by descriptor. Then it simply replaces the original event
 in the Event List. +
 
