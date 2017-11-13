@@ -124,3 +124,7 @@ include::../UserGuide.adoc[tag = coverpage]
 (Pull request https://github.com/CS2103AUG2017-T09-B1/main/pull/88[88])
 
 (Pull request https://github.com/CS2103AUG2017-T09-B1/main/pull/87[87])
+
+=== Added Maps functions and Edited Ui browser display
+
+(Pull request https://github.com/CS2103AUG2017-T09-B1/main/pull/43[43])
