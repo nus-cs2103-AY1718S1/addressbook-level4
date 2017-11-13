@@ -657,10 +657,11 @@ public class NoUniqueImport extends Exception {
 
 The following activity diagram summarize what happens inside the `ImportCommand` when a user executes this command:
 
-image::ImportCommandActivityDiagram.png[width="300"]
+image::ImportCommandActivityDiagram.png[width="500"]
 
+// end::import
 
-//tage::backup
+// tag::backup
 === Backup Command
 The backup command saves the current ResidentBook into backup.xml located in the project location. One consideration for this mechanism is that backup should only happen when necessary, as it will take up a lot of space.
 
@@ -687,6 +688,8 @@ public void backupImages() throws IOException {
 ----
 
 A future enhancement can allow user to specify backup location and file name.
+
+// end::backup[]
 
 // tag::sort[]
 === Sort Command
@@ -739,13 +742,19 @@ public int compareTo(Object otherPerson) {
 The main things to note in this method is that the value "Not Set" will always be sorted away to the bottom of the list.
 Also, by default, the list is sorted by name.
 
+// tag::removeTag[]
 === RemoveTag Command
 
 The RemoveTag command is implemented for fast removal of a tag from all entries in the address book. It is implemented by updating the tag list of Residents. +
 The motivation for implementing such a command is that the hostel/hotel administrator may need to mass delete a Tag from the person. For example, deleting the "RA" (Resident Assistant) +
 tag when the old batch of RA steps down from operations.
 
-The difference between the RemoveTag and Delete Person by Tag is that RemoveTag does not remove any Resident from the ResidentBook. It just removes all the specified tags attached to the Resident.
+The following is the Sequence Diagram for RemoveTag command. The alias is "rm".
+
+image::SDforRemoveTagCommand.png[width="800"]
+
+[NOTE]
+The difference between the RemoveTag and DeleteByTag is that RemoveTag does not remove any Resident from the ResidentBook. It just removes all the specified tags attached to the Resident.
 
 The following shows the implementation method, where user will specify the tagName:
 [source,java]
@@ -757,6 +766,8 @@ public RemoveTagCommand(String tagName) {
 
 [NOTE]
 If the tagName is invalid, the TagNotFoundException will be raised.
+
+// end::removeTag[]
 
 // tag::deletebytag[]
 === Deletebytag Command
@@ -772,7 +783,7 @@ The sequence of steps carried out by this command is shown in the activity diagr
 image::deleteByTagAD.png[width="800"]
 
 [NOTE]
-Deletebytag command and Removetag command may sound similar, but they serve totally different purpose.
+Deletebytag command and RemoveTag command may sound similar, but they serve totally different purpose.
 
 
 The function to actually delete the persons who have the `TAG` supplied is done in the UniquePersonList class.
@@ -1368,6 +1379,7 @@ Use case ends.
 
 
 [discrete]
+// tag::backupUseCase
 == Use case: Backup storage files
 
 *MSS*
@@ -1399,6 +1411,7 @@ Use cases resumes at step 4
 
 Use case ends.
 
+// end::backupUseCase
 
 [discrete]
 == Use case: View and delete obsolete contacts
