@@ -1,5 +1,5 @@
 # itsdickson
-###### /java/seedu/address/commons/events/ui/ChangeThemeRequestEvent.java
+###### \java\seedu\address\commons\events\ui\ChangeThemeRequestEvent.java
 ``` java
 
 import seedu.address.commons.events.BaseEvent;
@@ -22,7 +22,8 @@ public class ChangeThemeRequestEvent extends BaseEvent {
     }
 }
 ```
-###### /java/seedu/address/commons/events/ui/EventPanelSelectionChangedEvent.java
+###### \java\seedu\address\commons\events\ui\EventPanelSelectionChangedEvent.java
+
 ``` java
 
 import seedu.address.commons.events.BaseEvent;
@@ -49,7 +50,9 @@ public class EventPanelSelectionChangedEvent extends BaseEvent {
     }
 }
 ```
-###### /java/seedu/address/commons/events/ui/ShowThemeRequestEvent.java
+
+###### \java\seedu\address\commons\events\ui\ShowThemeRequestEvent.java
+
 ``` java
 
 import seedu.address.commons.events.BaseEvent;
@@ -65,7 +68,8 @@ public class ShowThemeRequestEvent extends BaseEvent {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/DeleteEventCommand.java
+
+###### \java\seedu\address\logic\commands\DeleteEventCommand.java
 ``` java
 
 import java.util.List;
@@ -126,7 +130,8 @@ public class DeleteEventCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/EventsCommand.java
+###### \java\seedu\address\logic\commands\EventsCommand.java
+
 ``` java
 /**
  * Lists all events in the address book to the user.
@@ -149,7 +154,8 @@ public class EventsCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/FavouriteCommand.java
+###### \java\seedu\address\logic\commands\FavouriteCommand.java
+
 ``` java
 
 import java.util.List;
@@ -214,7 +220,7 @@ public class FavouriteCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/FavouriteListCommand.java
+###### \java\seedu\address\logic\commands\FavouriteListCommand.java
 ``` java
 
 import seedu.address.model.person.NameContainsFavouritePredicate;
@@ -237,7 +243,7 @@ public class FavouriteListCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/FindTagCommand.java
+###### \java\seedu\address\logic\commands\FindTagCommand.java
 ``` java
 
 import seedu.address.model.person.TagContainsKeywordsPredicate;
@@ -276,7 +282,7 @@ public class FindTagCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/SwitchThemeCommand.java
+###### \java\seedu\address\logic\commands\SwitchThemeCommand.java
 ``` java
 
 import java.util.ArrayList;
@@ -345,7 +351,7 @@ public class SwitchThemeCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/ThemeListCommand.java
+###### \java\seedu\address\logic\commands\ThemeListCommand.java
 ``` java
 
 import seedu.address.commons.core.EventsCenter;
@@ -368,7 +374,7 @@ public class ThemeListCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/UnfavouriteCommand.java
+###### \java\seedu\address\logic\commands\UnfavouriteCommand.java
 ``` java
 
 import java.util.List;
@@ -433,30 +439,31 @@ public class UnfavouriteCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/Logic.java
+###### \java\seedu\address\logic\Logic.java
 ``` java
     /** Returns an unmodifiable view of the filtered list of events */
     ObservableList<ReadOnlyEvent> getFilteredEventList();
 ```
-###### /java/seedu/address/logic/Logic.java
+
+###### \java\seedu\address\logic\Logic.java
 ``` java
     void setCurrentTheme(String theme);
 ```
-###### /java/seedu/address/logic/LogicManager.java
+###### \java\seedu\address\logic\LogicManager.java
 ``` java
     @Override
     public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
         return model.getFilteredPersonList();
     }
 ```
-###### /java/seedu/address/logic/LogicManager.java
+###### \java\seedu\address\logic\LogicManager.java
 ``` java
     @Override
     public void setCurrentTheme(String theme) {
         model.setCurrentTheme(theme);
     }
 ```
-###### /java/seedu/address/logic/parser/DeleteEventCommandParser.java
+###### \java\seedu\address\logic\parser\DeleteEventCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new DeleteEventCommand object
@@ -480,7 +487,7 @@ public class DeleteEventCommandParser implements Parser<DeleteEventCommand> {
 
 }
 ```
-###### /java/seedu/address/logic/parser/FavouriteCommandParser.java
+###### \java\seedu\address\logic\parser\FavouriteCommandParser.java
 ``` java
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
@@ -511,7 +518,7 @@ public class FavouriteCommandParser implements Parser<FavouriteCommand> {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/FindTagCommandParser.java
+###### \java\seedu\address\logic\parser\FindTagCommandParser.java
 ``` java
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
@@ -546,7 +553,7 @@ public class FindTagCommandParser implements Parser<FindTagCommand> {
 
 }
 ```
-###### /java/seedu/address/logic/parser/SwitchThemeCommandParser.java
+###### \java\seedu\address\logic\parser\SwitchThemeCommandParser.java
 ``` java
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
@@ -578,7 +585,7 @@ public class SwitchThemeCommandParser implements Parser<SwitchThemeCommand> {
 
 }
 ```
-###### /java/seedu/address/logic/parser/UnfavouriteCommandParser.java
+###### \java\seedu\address\logic\parser\UnfavouriteCommandParser.java
 ``` java
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
@@ -609,7 +616,7 @@ public class UnfavouriteCommandParser implements Parser<UnfavouriteCommand> {
     }
 }
 ```
-###### /java/seedu/address/model/AddressBook.java
+###### \java\seedu\address\model\AddressBook.java
 ``` java
     /**
      * Favourites {@code target} to this {@code AddressBook}.
@@ -627,7 +634,7 @@ public class UnfavouriteCommandParser implements Parser<UnfavouriteCommand> {
         persons.unfavouritePerson(target);
     }
 ```
-###### /java/seedu/address/model/AddressBook.java
+###### \java\seedu\address\model\AddressBook.java
 ``` java
     /**
      * Deletes an event from the address book.
@@ -655,7 +662,7 @@ public class UnfavouriteCommandParser implements Parser<UnfavouriteCommand> {
         return themes;
     }
 ```
-###### /java/seedu/address/model/Model.java
+###### \java\seedu\address\model\Model.java
 ``` java
     /** Deletes the given event */
     void deleteEvent(ReadOnlyEvent event) throws EventNotFoundException;
@@ -666,7 +673,7 @@ public class UnfavouriteCommandParser implements Parser<UnfavouriteCommand> {
     /** Unfavourites the given person */
     void unfavouritePerson(ReadOnlyPerson target) throws PersonNotFoundException;
 ```
-###### /java/seedu/address/model/Model.java
+###### \java\seedu\address\model\Model.java
 ``` java
     /** Returns the themes list */
     ArrayList<String> getThemesList();
@@ -677,7 +684,7 @@ public class UnfavouriteCommandParser implements Parser<UnfavouriteCommand> {
     /** Returns the current theme */
     String getCurrentTheme();
 ```
-###### /java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\model\ModelManager.java
 ``` java
     @Override
     public synchronized void deleteEvent(ReadOnlyEvent event) throws EventNotFoundException {
@@ -714,7 +721,7 @@ public class UnfavouriteCommandParser implements Parser<UnfavouriteCommand> {
         return currentTheme;
     }
 ```
-###### /java/seedu/address/model/person/NameContainsFavouritePredicate.java
+###### \java\seedu\address\model\person\NameContainsFavouritePredicate.java
 ``` java
 
 import java.util.function.Predicate;
@@ -739,7 +746,7 @@ public class NameContainsFavouritePredicate implements Predicate<ReadOnlyPerson>
     }
 }
 ```
-###### /java/seedu/address/model/person/Person.java
+###### \java\seedu\address\model\person\Person.java
 ``` java
     public void setFavourite(Boolean favourite) {
         this.favourite.set(requireNonNull(favourite));
@@ -755,7 +762,7 @@ public class NameContainsFavouritePredicate implements Predicate<ReadOnlyPerson>
         return favourite.get();
     }
 ```
-###### /java/seedu/address/model/person/TagContainsKeywordsPredicate.java
+###### \java\seedu\address\model\person\TagContainsKeywordsPredicate.java
 ``` java
 
 import java.util.List;
@@ -788,7 +795,7 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     }
 }
 ```
-###### /java/seedu/address/model/person/UniquePersonList.java
+###### \java\seedu\address\model\person\UniquePersonList.java
 ``` java
     /**
      * Favourites the equivalent person in the list.
@@ -820,7 +827,7 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
         internalList.get(index).setFavourite(false);
     }
 ```
-###### /java/seedu/address/model/UserPrefs.java
+###### \java\seedu\address\model\UserPrefs.java
 ``` java
     public String getTheme() {
         return theme == null ? "/view/DarkTheme.css" : theme;
@@ -834,7 +841,7 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
         this.theme = theme;
     }
 ```
-###### /java/seedu/address/ui/BrowserPanel.java
+###### \java\seedu\address\ui\BrowserPanel.java
 ``` java
     /**
      * Sets the default HTML file based on the current theme.
@@ -849,7 +856,7 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
         loadPage(defaultPage.toExternalForm());
     }
 ```
-###### /java/seedu/address/ui/CommandBox.java
+###### \java\seedu\address\ui\CommandBox.java
 ``` java
     /**
      * Sets the command box style to indicate a succeeded command.
@@ -864,7 +871,7 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
         styleClass.add(SUCCESS_STYLE_CLASS);
     }
 ```
-###### /java/seedu/address/ui/EventCard.java
+###### \java\seedu\address\ui\EventCard.java
 ``` java
 
 import javafx.beans.binding.Bindings;
@@ -938,7 +945,9 @@ public class EventCard extends UiPart<Region> {
     }
 }
 ```
-###### /java/seedu/address/ui/EventListPanel.java
+
+###### \java\seedu\address\ui\EventListPanel.java
+
 ``` java
 
 import java.util.logging.Logger;
@@ -1008,7 +1017,8 @@ public class EventListPanel extends UiPart<Region> {
 
 }
 ```
-###### /java/seedu/address/ui/MainWindow.java
+###### \java\seedu\address\ui\MainWindow.java
+
 ``` java
     /**
      * Sets the default theme based on user preferences.
@@ -1024,7 +1034,7 @@ public class EventListPanel extends UiPart<Region> {
         return getRoot().getStylesheets().get(CURRENT_THEME_INDEX);
     }
 ```
-###### /java/seedu/address/ui/MainWindow.java
+###### \java\seedu\address\ui\MainWindow.java
 ``` java
     /**
      * Opens the theme window.
@@ -1056,7 +1066,7 @@ public class EventListPanel extends UiPart<Region> {
         }
     }
 ```
-###### /java/seedu/address/ui/MainWindow.java
+###### \java\seedu\address\ui\MainWindow.java
 ``` java
     @Subscribe
     private void handleShowThemesEvent(ShowThemeRequestEvent event) {
@@ -1072,7 +1082,8 @@ public class EventListPanel extends UiPart<Region> {
         logic.setCurrentTheme(getCurrentTheme());
     }
 ```
-###### /java/seedu/address/ui/PersonCard.java
+###### \java\seedu\address\ui\PersonCard.java
+
 ``` java
     /**
      * Initialises the tags with a randomised color.
@@ -1114,7 +1125,8 @@ public class EventListPanel extends UiPart<Region> {
         }
     }
 ```
-###### /java/seedu/address/ui/ResultDisplay.java
+###### \java\seedu\address\ui\ResultDisplay.java
+
 ``` java
     @Subscribe
     private void handleNewResultAvailableEvent(NewResultAvailableEvent event) {
@@ -1147,7 +1159,7 @@ public class EventListPanel extends UiPart<Region> {
         styleClass.add(ERROR_STYLE_CLASS);
     }
 ```
-###### /java/seedu/address/ui/ThemesWindow.java
+###### \java\seedu\address\ui\ThemesWindow.java
 ``` java
 
 import java.util.logging.Logger;
@@ -1213,7 +1225,7 @@ public class ThemesWindow extends UiPart<Region> {
     }
 }
 ```
-###### /java/seedu/address/ui/UiManager.java
+###### \java\seedu\address\ui\UiManager.java
 ``` java
     /**
      * Sets the given theme as the main theme of the main window.
@@ -1223,7 +1235,7 @@ public class ThemesWindow extends UiPart<Region> {
         mainWindow.getRoot().getStylesheets().add("/view/" + theme);
     }
 ```
-###### /resources/view/BrightTheme.css
+###### \resources\view\BrightTheme.css
 ``` css
 .background {
     -fx-background-color: derive(#f7f7f7, 20%);
@@ -1647,14 +1659,14 @@ public class ThemesWindow extends UiPart<Region> {
     -fx-font-size: 11;
 }
 ```
-###### /resources/view/DarkTheme.css
+###### \resources\view\DarkTheme.css
 ``` css
 .background {
     -fx-background-color: #1d1d1d;
     background-color: #1d1d1d; /* Used in the default.html file */
 }
 ```
-###### /resources/view/DarkTheme.css
+###### \resources\view\DarkTheme.css
 ``` css
 .table-view {
     -fx-base: #1d1d1d;
@@ -1740,7 +1752,7 @@ public class ThemesWindow extends UiPart<Region> {
     -fx-text-fill: white;
 }
 ```
-###### /resources/view/DarkTheme.css
+###### \resources\view\DarkTheme.css
 ``` css
 .anchor-pane {
     -fx-background-color: #1d1d1d;
@@ -2000,7 +2012,8 @@ public class ThemesWindow extends UiPart<Region> {
     -fx-background-color: #1d1d1d;
 }
 ```
-###### /resources/view/EventListCard.fxml
+###### \resources\view\EventListCard.fxml
+
 ``` fxml
 
 <?import javafx.geometry.Insets?>
@@ -2036,7 +2049,7 @@ public class ThemesWindow extends UiPart<Region> {
     </GridPane>
 </HBox>
 ```
-###### /resources/view/EventListPanel.fxml
+###### \resources\view\EventListPanel.fxml
 ``` fxml
 
 <?import javafx.scene.control.ListView?>
@@ -2046,7 +2059,7 @@ public class ThemesWindow extends UiPart<Region> {
     <ListView fx:id="eventListView" VBox.vgrow="ALWAYS" />
 </VBox>
 ```
-###### /resources/view/MainWindow.fxml
+###### \resources\view\MainWindow.fxml
 ``` fxml
       <StackPane fx:id="personAndEventListPlaceholder" maxWidth="270.0" minWidth="270.0" prefWidth="270.0">
          <children>
@@ -2072,7 +2085,7 @@ public class ThemesWindow extends UiPart<Region> {
          </padding>
       </StackPane>
 ```
-###### /resources/view/ThemesWindow.fxml
+###### \resources\view\ThemesWindow.fxml
 ``` fxml
 
 <?import javafx.scene.layout.StackPane?>

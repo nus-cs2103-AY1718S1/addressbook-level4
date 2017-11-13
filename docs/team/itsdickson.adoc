@@ -246,7 +246,7 @@ This section outlines the additional contributions by Chan Kin Hung Dickson for 
 ==== Documentation Contributions
 
 * Updated the images used in User Guide (Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/106[#106])
-* Created use cases in Developer Guide (Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/39[#39])
+* Created use cases in Developer Guide (Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/39[#39], https://github.com/CS2103AUG2017-T15-B3/main/pull/163[#163])
 * Updated User Guide layout (Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/102[#102], https://github.com/CS2103AUG2017-T15-B3/main/pull/152[#152])
 
 ==== Acceptance Testing: Ark (Team T16-B1):
