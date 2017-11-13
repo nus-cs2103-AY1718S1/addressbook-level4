@@ -90,7 +90,10 @@ Format: `list`
 Shows a list of all persons in the address book, sorted by descending order of search frequency +
 Format: `listByMostSearched`
 
-`From v1.3`
++
+image::ListByMostSearchedDisplay.png[width="790"]
++
+
 This list view is now undoable.
 
 ****
@@ -222,13 +225,51 @@ Format: `history`
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
 
-=== Adding a new meeting command: `AddMeeting` `Since v1.5`
+=== Configure Asana `since v1.5`
+==== Setup Asana : `setupAsana`
+
+Configure Asana for use with `AddMeeting`. +
+Format: `setupAsana`
+
+The application will redirect you to a page that will look like this: +
+
+image::AsanaLogin.png[width="800"]
+
+Login with your own username and password. Create an account if you do not already have an account. +
+Once logged in, you will be asked to allow our application to access your account:
+
+image::AsanaConfirmation.png[width="800"]
+
+Once approved, you will be provided with an access code that looks like this:
+
+image::AsanaAccessCode.png[width="400"]
+
+Copy the the access code of the form : `DIGIT/ALPHANUMERICS`
+
+==== Set unique key : `setKey`
+
+Store your access key in our application. +
+Format: `setKey` `DIGIT/ALPHANUMERICS` +
+(type `setKey` & paste the access code from previous step)
+
+Example:
+
+* `setKey 0/1234gh678tyk32i3`
+
+[NOTE]
+====
+Only for this release, the access token is destroyed after closing the application. Reconfigure Asana upon restart.
+====
+
+=== Adding a new meeting command: `addMeeting` `Since v1.5`
 
 Adds a new meeting to the addressbook +
 Format: `addMeeting on DATE from TIME at LOCATION about NOTES [with PERSON]...`
 
 Furthermore, every meeting added is saved locally and online on https://www.asana.com[Asana]. +
-Each meeting is saved as a separate task under `Meetings` project in `Personal Projects` workspace.
+(Only if there is a working internet connection & Asana is setup) +
+Each meeting is saved as a separate task under `Meetings` project in `Personal Projects` workspace. +
+
 
 [TIP]
 A meeting can have more than 1 (at least 1) person associated with the meeting.
@@ -238,10 +279,12 @@ Examples:
 * `add on 24/11/2017 from 1400 at Tea Party Cafe about Meetup with 1`
 * `add on 12/11/2017 from 1000 at University Town about Dialogue with 2 with 3`
 
-[NOTE]
-For Asana Integration to be fully functional, make sure you have: +
+
+For Asana to be functional, make sure you have: +
+
 * An account with Asana (Free or Premium) +
 * A Workspace called `Personal Projects` (This is usually generated automatically)
+
 
 [WARNING]
 This is NOT an undoable command.
