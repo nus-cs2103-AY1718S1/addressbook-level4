@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.time.LocalDate;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.parser.event.DateParser;
@@ -112,12 +113,17 @@ public class Date implements Comparable<Date> {
      * Sets date after {@code days} have elapsed. Works for negative numbers.
      */
     public Date addDays(int days) {
-        Calendar cal = Calendar.getInstance();
-        cal.set(this.year, this.month, this.day);
+        Calendar cal = new GregorianCalendar();
+
+        int setYear = this.year;
+        int setMonth = this.month - 1; // Java Calendar counts months from 0
+        int setDay = this.day;
+
+        cal.set(setYear, setMonth, setDay);
         cal.add(Calendar.DATE, days);
 
         int year = cal.get(Calendar.YEAR);
-        int month = cal.get(Calendar.MONTH);
+        int month = cal.get(Calendar.MONTH) + 1; // Java Calendar counts months from 0
         int day = cal.get(Calendar.DAY_OF_MONTH);
 
         try {

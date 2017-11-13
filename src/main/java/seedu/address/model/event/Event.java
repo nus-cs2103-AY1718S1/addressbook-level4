@@ -142,6 +142,7 @@ public class Event implements ReadOnlyEvent, Comparable<Event> {
         return period.get();
     }
 
+    @Override
     public void setPeriod(Period period) {
         this.period.set(requireNonNull(period));
     }
@@ -225,6 +226,16 @@ public class Event implements ReadOnlyEvent, Comparable<Event> {
             return true;
         }
         return false;
+    }
+
+    /**
+     * Adds a given number of days to the timeslot of the event
+     * @param days number of days to add
+     */
+
+    public void plusDays(int days) {
+        Timeslot newSlot = this.getTimeslot().plusDays(days);
+        this.setTimeslot(newSlot);
     }
 
     @Override

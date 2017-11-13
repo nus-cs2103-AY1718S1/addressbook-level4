@@ -8,7 +8,6 @@ import java.util.Optional;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.commands.event.EditEventCommand;
 import seedu.address.logic.commands.event.RepeatCommand;
 import seedu.address.logic.parser.Parser;
 import seedu.address.logic.parser.ParserUtil;
@@ -30,14 +29,18 @@ public class RepeatCommandParser implements Parser<RepeatCommand> {
         String trimmedArgs = args.trim();
         String[] tokens = trimmedArgs.split("\\s+");
 
+        if (tokens.length < 2) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RepeatCommand.MESSAGE_USAGE));
+        }
+
         Index index;
         Optional<Period> period;
 
         try {
             index = ParserUtil.parseIndex(tokens[0]);
-            period = ParserUtil.parsePeriod(Optional.of(tokens[1]));
+            period = ParserUtil.parsePeriod(Optional.of(tokens[tokens.length - 1]));
         } catch (IllegalValueException ive) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditEventCommand.MESSAGE_USAGE));
+            throw new ParseException(ive.getMessage(), ive);
         }
 
         return new RepeatCommand(index, period);

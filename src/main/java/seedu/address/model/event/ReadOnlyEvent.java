@@ -42,6 +42,8 @@ public interface ReadOnlyEvent {
 
     Period getPeriod();
 
+    void setPeriod(Period period);
+
     Optional<ReadOnlyEvent> getTemplateEvent();
 
     void setTemplateEvent(Optional<ReadOnlyEvent> templateEvent);
@@ -55,6 +57,9 @@ public interface ReadOnlyEvent {
     LocalTime getStartTime();
 
     java.util.Date getEndDateTime();
+
+    void plusDays(int days);
+
     //@@author
 
     /**
@@ -77,7 +82,9 @@ public interface ReadOnlyEvent {
                 .append(" Timeslot: ")
                 .append(getTimeslot())
                 .append(" Description: ")
-                .append(getDescription());
+                .append(getDescription())
+                .append(" Period of recurrence: ")
+                .append(getPeriod());
         return builder.toString();
     }
 }
