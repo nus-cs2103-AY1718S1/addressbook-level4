@@ -88,7 +88,13 @@ include::../UserGuide.adoc[tag=find]
 
 ==== Justification
 
-This feature allows user to find by name, phone number, tags etc.
+User sometimes need to lookup whose phone number or email etc. is that. With this feature, they can query any information
+and get the relevant contact. `NAME` is the most flexible - no order, case insensitive. The reason is that we might not
+know the order we insert the user's first and last name. For example, both `Boo Kai Hsien` and `Kai Hsien Boo` is equally
+likely to appear in DeathNote. For the case of `PHONE`, user might not know if they have input the country code or not.
+Both `6593759662` and `93759662` refers to the same phone. Hence taking substring is a feasible option. Finally, the design
+rationale is that user are often looking for a specific person or group of persons. Hence, typing `n/Amy Wong p/12345`
+intuitively means a person named Amy with phone number 12345.
 
 ==== Implementation
 

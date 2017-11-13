@@ -411,12 +411,6 @@ _Figure 4.2.2 : Create New Address Book Sequence Diagram_
 From the sequence diagram, we can see that the workflow is very similar. One thing to note is that even though the
 preprocessing is different, in the end they will post the same `SwitchAddressBookRequestEvent` to the `EventsCenter`.
 
-image::OpenAddressBookEvent.png[width="800"]
-
-As you can see from the diagram, when the `Open` button is clicked in the Application, it raises an event and triggers `MainApp` to update new Application metadata and restart the UI.
-
-This loads the selected XML file which opens a new address book with contacts from selected XML file.
-
 ==== Design considerations
 
 **Aspect:** Similarity of implementation for Open and New command.
@@ -427,10 +421,12 @@ This loads the selected XML file which opens a new address book with contacts fr
  Therefore, we use the same RequestEvent for both commands. The preprocessing is different, since one check for existing file and one
  check for the other way round, we separate both of them. +
 **Cons:** Slightly harder for developers to get understand how `SwitchAddressBookRequestEvent` works. +
+
 **Alternative 2:** Separate the two commands totally. +
 **Pros:** Easier for new developers to understand the underlying mechanism because they can treat them as different operations. +
 **Cons:** Hard to maintain. Since two commands are very similar. If a bug is found in one of them, the other one is
 likely to be affected as well. Hence twice amount of work for the same outcome. +
+
 **Alternative 3:** Combine the two commands totally. +
 **Pros:** Easier to maintain because everything is within the same class. +
 **Cons:** Confusing to understand. NewCommand checks that `Path` is not an existing file but OpenCommand checks that `Path`
@@ -570,11 +566,55 @@ https://github.com/CS2103AUG2017-W10-B3/main/pull/8/files[Adding birthday parame
 
 === Find Command
 
+The implementation of `find` is very similar to `edit`. After the command, both requires the user to describe the target.
 
+The matching algorithm is implemented as follows:
+
+----
+        /**
+         * Check {@code Person} in DeathNote against {@code this} finder target.
+         *
+         * @param person in DeathNote to check
+         * @return true if other all fields matches
+         */
+        public boolean match(ReadOnlyPerson person) {
+            if (this.name != null && !matchName(this.name, person.getName())) {
+                return false;
+            }
+            if (this.phone != null && !matchPhone(this.phone, person.getPhone())) {
+                return false;
+            }
+            if (this.email != null && !this.email.equals(person.getEmail())) {
+                return false;
+            }
+            if (this.address != null && !this.address.equals(person.getAddress())) {
+                return false;
+            }
+            if (this.website != null && !this.website.equals(person.getWebsite())) {
+                return false;
+            }
+            if (this.birthday != null && !this.birthday.equals(person.getBirthday())) {
+                return false;
+            }
+            if (this.tags != null && !matchTag(this.tags, person.getTags())) {
+                return false;
+            }
+
+            return true;
+        }
+----
 
 ==== Design considerations
 
+**Aspect:** Component that is responsible for `matchName`, `matchPhone`.
 
+**Alternative 1 (current choice):** Implement under `FindCommand` in `Logic` component. +
+**Pros:** More specific, because only `FindCommand` uses it and not any other methods. +
+**Cons:** Harder to integrate if other components want to use these methods. +
+
+**Alternative 2:** Implement under respective `Name` and `Phone` class in `Model` component. +
+**Pros:** Easier to integrate into other components. +
+**Cons:** Redundant as the only method that is currently using it is the find command. +
 
 //end::find[]
 

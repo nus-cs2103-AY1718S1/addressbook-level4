@@ -211,11 +211,15 @@ Finds persons who matches the given attributes. +
 
   Alias: summon [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [t/TAG]...
 
-* Searches based on the input and prefix.
-* The search is case insensitive for NAME. e.g `hans` will match `Hans`
-* The order of the keywords for NAME does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* The other prefixes require the exact words
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* The search is case insensitive for `NAME`. If you want to look for `Hans`, you can also type `hans`.
+* The order of the words in `NAME` does not matter. If you want to look for `Hans Bo`, you can also type `Bo Hans`.
+* Person must match contains all word in `NAME` to be returned. If you want type `Bo Hans`, `Hans` and `Bo` will not show up, but `Bo Yang Hans` will.
+* `Phone` requires to be a substring of the person. If you want to look for `6593759662` you can also type `93759662`.
+* `TAG` is case sensitive. You cannot find person with tag `FRIEND` if you search for `t/friend`.
+* Person must match all `TAG`. If you type `t/friends t/colleague`, `t/friends` and `t/colleague` will not show up, but `t/friends t/colleague` and
+`t/friends t/colleague t/neighbor` will.
+* Person must match all fields to be returned. If you type `n/Hans p/93759662`, `n/Hans p/111222` will not show up.
+
 //end::find[]
 
 [big green]#Examples#:
