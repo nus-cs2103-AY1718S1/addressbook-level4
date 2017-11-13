@@ -19,9 +19,7 @@ image::docs/images/Ui.png[width="800"]
 // end::introduction[]
 
 // tag::features[]
-
 == Features
-
 ====
 
 * Add a contact using only their name and number, or with any of the following supported fields:
