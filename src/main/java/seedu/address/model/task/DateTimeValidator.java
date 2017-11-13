@@ -3,17 +3,13 @@ package seedu.address.model.task;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Optional;
-
-import seedu.address.commons.exceptions.IllegalValueException;
 
 //@@author raisa2010
 /**
- * Represents a date for a task in the task manager.
+ * Contains methods to validate dates and times input by users into the task manager.
  */
-public abstract class TaskDates {
+public abstract class DateTimeValidator {
 
-    public static final String DISPLAY_DATE_FORMAT = "EEE, MMM d, ''yy";
     public static final String[] DOTTED_DATE_FORMATS = new String[]{"MM.dd.yyyy", "MM.d.yyyy", "M.d.yyyy",
         "M.d.yy", "M.dd.yy", "MM.d.yy", "MM.dd.yy", "M.dd.yyyy"};
     public static final String[] VALID_DATE_FORMATS = new String[]{"MM-dd-yyyy", "M-dd-yyyy", "M-d-yyyy",
@@ -25,54 +21,17 @@ public abstract class TaskDates {
     public static final int MAX_DAYS_IN_MONTH = 31;
     public static final int MAX_DAYS_IN_FEB = 29;
 
-    public static final String MESSAGE_DATE_CONSTRAINTS = "Date is invalid";
+    public static final String MESSAGE_DATE_CONSTRAINTS = "Date is invalid! Invalid values include values such as 32 "
+            + "Jan, 32-01-2019.\n"
+            + "Invalid formats include \"next thursday\", \"th\", \"the 25th\" (without specifying the month), "
+            + "and any date not using the (M)M(d)d(YY)YY format.";
+    public static final String MESSAGE_TIME_CONSTRAINTS = "Time is invalid! Invalid values include values such as "
+            + "29:00, 29pm or 2900.\n"
+            + "Invalid formats include 100 (instead of 1:00), 1900 (instead of 19:00) and 11 (instead of 11 am or pm";
 
     /**
-     * Formats the last date of a given {@code Date} object into a String.
-     */
-    public static String formatDate(Date date) throws IllegalValueException {
-        SimpleDateFormat sdf = new SimpleDateFormat(DISPLAY_DATE_FORMAT);
-        return sdf.format(date);
-    }
-
-    /**
-     * Returns true if the {@code StartDate} is before the {@code Deadline}} or if one of the parameters is empty.
-     * Otherwise, an exception is thrown.
-     */
-    public static boolean isStartDateBeforeDeadline(StartDate startDate, Deadline deadline) {
-        if (!startDate.isEmpty() && !deadline.isEmpty()) {
-            try {
-                Date parsedStartDate = new SimpleDateFormat(DISPLAY_DATE_FORMAT).parse(startDate.toString());
-                Date parsedDeadline = new SimpleDateFormat(DISPLAY_DATE_FORMAT).parse(deadline.toString());
-                return parsedDeadline.after(parsedStartDate);
-            } catch (ParseException p) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    /**
-     * Carries out the same function as {@Link isStartDateBeforeDeadline(StartDate, Deadline)} except the parameters
-     * are wrapped in an Optional.
-     * Returns true if the {@code StartDate} is before the {@code Deadline}} or if one of the parameters is empty.
-     * Otherwise, an exception is thrown.
-     */
-    public static boolean isStartDateBeforeDeadline(Optional<StartDate> startDate, Optional<Deadline> deadline) {
-        if (startDate.isPresent() && !startDate.get().isEmpty() && deadline.isPresent() && !deadline.get().isEmpty()) {
-            try {
-                Date parsedStartDate = new SimpleDateFormat(DISPLAY_DATE_FORMAT).parse(startDate.get().toString());
-                Date parsedDeadline = new SimpleDateFormat(DISPLAY_DATE_FORMAT).parse(deadline.get().toString());
-                return parsedDeadline.after(parsedStartDate);
-            } catch (ParseException p) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    /**
-     * Validates a given {@code String} inputDate given in an MDY format.
+     * Validates a given {@code inputDate} given in an MDY format.
+     * Works around some limitations of the Pretty Time NLP.
      */
     public static boolean isDateValid(String inputDate) {
         String trimmedDate = inputDate.trim();
@@ -91,6 +50,21 @@ public abstract class TaskDates {
             }
         }
         return true;
+    }
+
+    /**
+     * Validates a given {@code startTime} to check if it is before the {@code endTime}.
+     */
+    public static boolean isStartTimeBeforeEndTime(EventTime startTime, EventTime endTime) {
+        try {
+            Date parsedStartTime =
+                    new SimpleDateFormat(DateTimeFormatter.DISPLAY_TIME_FORMAT).parse(startTime.toString());
+            Date parsedEndTime = new SimpleDateFormat(DateTimeFormatter.DISPLAY_TIME_FORMAT).parse(endTime.toString());
+            return parsedStartTime.before(parsedEndTime);
+        } catch (ParseException p) {
+            assert !startTime.isPresent() | !endTime.isPresent();
+            return true;
+        }
     }
 
     /**

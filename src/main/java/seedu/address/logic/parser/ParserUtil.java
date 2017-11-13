@@ -1,10 +1,6 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.SUFFIX_NO_RECUR_INTERVAL;
-import static seedu.address.logic.parser.CliSyntax.SUFFIX_RECURRING_DATE_MONTHLY;
-import static seedu.address.logic.parser.CliSyntax.SUFFIX_RECURRING_DATE_WEEKLY;
-import static seedu.address.logic.parser.CliSyntax.SUFFIX_RECURRING_DATE_YEARLY;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -29,10 +25,11 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.task.DateTimeFormatter;
+import seedu.address.model.task.DateTimeValidator;
 import seedu.address.model.task.Deadline;
 import seedu.address.model.task.Description;
-import seedu.address.model.task.StartDate;
-import seedu.address.model.task.TaskDates;
+import seedu.address.model.task.EventTime;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
@@ -162,31 +159,40 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code Optional<String> date} into an {@code Optional<StartDate>} if {@code date} is present.
+     * Parses a {@code Optional<String> date} into an {@code Deadline} if {@code date} is present.
      */
-    public static Optional<StartDate> parseStartDate(Optional<String> date) throws IllegalValueException {
+    public static Optional<Deadline> parseDeadline(Optional<String> date)
+            throws IllegalValueException {
         requireNonNull(date);
-        if (date.isPresent() && !TaskDates.getDottedFormat(date.get()).isEmpty()) {
-            return Optional.of(new StartDate(TaskDates.formatDate(parseDottedDate(date.get())),
-                    parseRecurInterval(date.get())));
+        if (date.isPresent() && !DateTimeValidator.getDottedFormat(date.get()).isEmpty()) {
+            return Optional.of(new Deadline(DateTimeFormatter.formatDate(parseDottedDate(date.get()))));
         }
-        return (date.isPresent() && !date.get().isEmpty())
-                ? Optional.of(new StartDate(TaskDates.formatDate(parseDate(date.get())),
-                parseRecurInterval(date.get()))) : Optional.empty();
+        if ((date.isPresent() && !date.get().isEmpty())) {
+            Date parsedDate = parseDate(date.get());
+            return Optional.of(new Deadline(DateTimeFormatter.formatDate(parsedDate)));
+        }
+        return Optional.empty();
     }
 
     /**
-     * Parses a {@code Optional<String> date} into an {@code Deadline} if {@code date} is present.
+     * Parses a {@code Optional<String> time} into a {@code EventTime} is the {@code time} is present.
      */
-    public static Optional<Deadline> parseDeadline(Optional<String> date) throws IllegalValueException {
-        requireNonNull(date);
-        if (date.isPresent() && !TaskDates.getDottedFormat(date.get()).isEmpty()) {
-            return Optional.of(new Deadline(TaskDates.formatDate(parseDottedDate(date.get())),
-                    parseRecurInterval(date.get())));
+    public static Optional<EventTime[]> parseEventTimes(Optional<String> dateTime) throws IllegalValueException {
+        requireNonNull(dateTime);
+        if (dateTime.isPresent()) {
+            List<DateGroup> dateGroup = new PrettyTimeParser().parseSyntax(dateTime.get().trim());
+            if (dateGroup.isEmpty()) {
+                throw new IllegalValueException(DateTimeValidator.MESSAGE_TIME_CONSTRAINTS);
+            }
+            List<Date> dates = dateGroup.get(dateGroup.size() - 1).getDates();
+
+            String endTime = DateTimeFormatter.formatTime(dates.get(dates.size() - 1));
+            String startTime = dates.size() > 1 ? DateTimeFormatter.formatTime(dates.get(dates.size() - 2)) : "";
+
+            return Optional.of(new EventTime[]{new EventTime(startTime), new EventTime(endTime)});
+        } else {
+            return Optional.empty();
         }
-        return (date.isPresent() && !date.get().isEmpty())
-                ? Optional.of(new Deadline(TaskDates.formatDate(parseDate(date.get())), parseRecurInterval(date.get())))
-                : Optional.empty();
     }
 
     /**
@@ -195,8 +201,8 @@ public class ParserUtil {
      */
     public static Date parseDate(String naturalLanguageInput) throws IllegalValueException {
         List<DateGroup> dateGroup = new PrettyTimeParser().parseSyntax(naturalLanguageInput.trim());
-        if (dateGroup.isEmpty() | !TaskDates.isDateValid(naturalLanguageInput)) {
-            throw new IllegalValueException(TaskDates.MESSAGE_DATE_CONSTRAINTS);
+        if (dateGroup.isEmpty() | !DateTimeValidator.isDateValid(naturalLanguageInput)) {
+            throw new IllegalValueException(DateTimeValidator.MESSAGE_DATE_CONSTRAINTS);
         }
         List<Date> dates = dateGroup.get(dateGroup.size() - 1).getDates();
         return dates.get(dates.size() - 1);
@@ -208,19 +214,9 @@ public class ParserUtil {
      */
     public static Date parseDottedDate(String inputDate) throws IllegalValueException {
         try {
-            return new SimpleDateFormat(TaskDates.getDottedFormat(inputDate)).parse(inputDate);
+            return new SimpleDateFormat(DateTimeValidator.getDottedFormat(inputDate)).parse(inputDate);
         } catch (ParseException p) {
-            throw new IllegalValueException(TaskDates.MESSAGE_DATE_CONSTRAINTS);
+            throw new IllegalValueException(DateTimeValidator.MESSAGE_DATE_CONSTRAINTS);
         }
-    }
-
-    /**
-     * Parses the {@code String dateString} of a date into a {@code Suffix} specifying its recur interval.
-     */
-    public static Suffix parseRecurInterval(String dateString) {
-        return (dateString.contains(SUFFIX_RECURRING_DATE_WEEKLY.toString()) ? SUFFIX_RECURRING_DATE_WEEKLY
-                : (dateString.contains(SUFFIX_RECURRING_DATE_MONTHLY.toString())) ? SUFFIX_RECURRING_DATE_MONTHLY
-                : (dateString.contains(SUFFIX_RECURRING_DATE_YEARLY.toString())) ? SUFFIX_RECURRING_DATE_YEARLY
-                : SUFFIX_NO_RECUR_INTERVAL);
     }
 }
