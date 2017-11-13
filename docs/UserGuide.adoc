@@ -246,7 +246,7 @@ Format: `sort [TYPE]`
 sort them
 alphabetically by their names.
 
-3. Sorting by *status* sorts the list by making all the *_NIL_* status to be at the bottom of the list. After doing
+3. Sorting by *company* sorts the list by making all the *_NIL_* status to be at the bottom of the list. After doing
 that it will then also sort them alphabetically.
 ====
 
