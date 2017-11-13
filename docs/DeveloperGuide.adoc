@@ -598,6 +598,7 @@ Within `ModelManager`, we mask `FilteredList` with a `SortedList` object, and ca
 The following is a sequence diagram detailing the process of how `SortCommand` sorts the list of persons. +
 
 image::SortSequenceDiagram.png[width="800"]
+_Figure 4.6.1 : Sequence Diagram of sort function_
 
 Below is the code fragment found in `Model`.
 
@@ -626,55 +627,29 @@ If arguments given do not comply with the correct format, ParseException will be
 // tag::importexport[]
 === Import function
 
-The import function supports importing of vCard files (.vcf) and xml files (.xml).
+The `import` function supports importing of vCard files (.vcf) and xml files (.xml).
 
-The diagram below details the sequence of how Rubrika handles the import command.
+The diagram below details the sequence of how Rubrika handles the `import` command after the user has entered the command. Note that the diagram assumes the user has included the `FILEPATH` of the import file.
+
+image::ImportSequenceDiagram.png[width="800"]
+_Figure 4.7.1 : Sequence Diagram of import function_
+
+In the case a file path is not specified, the `ImportCommandParser` raises a `ImportFileChooseEvent` which opens up a `FileChooser` window for the user to select his import `File`. The `File` is then passed back to the `ImportCommandParser` to extract the `Person` Objects.
+
+To parse the `File` into a list of `Person`, ImportCommandParser calls a static method within XmlFileStorage or VcfImport depending on the file type to be imported. A more detailed sequence of event is shown below in Figure 4.7.2.
+
+image::ImportSequenceDiagram2.png[width="800"]
+_Figure 4.7.2 : Sequence Diagram Interaction between ImportCommandParser and XmlFileStorage and VcfImport_
 
 [NOTE]
-The import function merges the contacts in the export files with the ones currently in the addressbook. If duplicate persons are found, Rubrika will inform the user of the number of duplicated contacts found.
+The import function merges the contacts in the export files with the ones currently in the addressbook. If duplicate persons are found, Rubrika will inform the user of the number of duplicated contacts found. +
+ +
+Also, for importing of .vcf files, due to using an inbuilt parser, only vCards created by Rubrika will work.
 
-Firstly, the `ImportCommandParser` will create an new `ImportCommand` with a `FileInputSteam` containing the vCard file to be imported.
+==== Design Considerations
 
-An `BufferedReader` object is then created within `ImportCommand` to read in the data within the vCard file.
-The contents are then read in this manner;
-
-----
-@Override
-    public CommandResult executeUndoableCommand() throws CommandException {
-        // ...iterates through each line...
-        while (!newLine.equals("END:VCARD")) {
-            String type = newLine.split(":")[0];
-            String parameter = newLine.split(":")[1];
-
-            switch (type) {
-            case "FN":
-                name = new Name(parameter);
-                break;
-
-            case "EMAIL":
-                email = new Email(parameter);
-                break;
-
-            case "TEL":
-                phone = new Phone(parameter);
-                break;
-
-            case "ADR":
-                address = new Address(parameter);
-                break;
-
-            case "RM":
-                remark = new Remark(parameter);
-                break;
-
-            case "TAG":
-                Tag tag = new Tag(parameter);
-                tagList.add(tag);
-                break;
-        }
-        ReadOnlyPerson toAdd = new Person(name, phone, email, address, remark, tagList);
-        model.addPerson(toAdd);
-----
+**Aspect**: Choice of parsing XML files. +
+** Alternative 1 (current choice)**:
 
 === Export Function
 
