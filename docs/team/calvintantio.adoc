@@ -105,4 +105,4 @@ include::../DeveloperGuide.adoc[tag=welcomeScreen]
 === Other contributions
 
 * Created 2 different versions of ConTag logo, 1 for the documentations and the other for the application
-* Enabled ConTag to take in command aliases as command identifiers, in addition to only command words
+* Enabled ConTag to recognise both command words and command aliases as valid command identifiers
