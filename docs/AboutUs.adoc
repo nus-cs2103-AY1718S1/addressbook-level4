@@ -20,7 +20,7 @@ Responsibilities: Storage, Model, Logic
 
 '''
 
-=== Jolyn Tan
+=== Tan Yi Jing, Jolyn
 image::jo-lyn.jpg[width="150", align="left"]
 {empty}https://github.com/jo-lyn[github] <<Jolyn#, portfolio>>
 

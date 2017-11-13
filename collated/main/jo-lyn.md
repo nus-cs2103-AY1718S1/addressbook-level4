@@ -72,6 +72,8 @@ public class RemarkCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "remark";
     public static final Set<String> COMMAND_WORD_ABBREVIATIONS =
             new HashSet<>(Arrays.asList(COMMAND_WORD, "note", "rmk", "comment"));
+    public static final String FORMAT = "remark INDEX r/REMARK";
+    public static final String COMMAND_HOTKEY = "Ctrl+R";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
             + "by the index number used in the last person listing. "
@@ -390,42 +392,15 @@ public class KeyListener {
         } else if (KEY_COMBINATION_LIST.match(keyEvent)) {
             executeCommand(ListCommand.COMMAND_WORD);
 
-        } else if (KEY_COMBINATION_OPEN_FILE.match(keyEvent)) {
-            executeCommand(OpenRolodexCommand.COMMAND_WORD);
-
-        } else if (KEY_COMBINATION_NEW_FILE.match(keyEvent)) {
-            executeCommand(NewRolodexCommand.COMMAND_WORD);
-
-        } else if (KEY_COMBINATION_ADD.match(keyEvent)) {
-            displayCommandFormat(AddCommand.FORMAT);
-
-        } else if (KEY_COMBINATION_EDIT.match(keyEvent)) {
-            displayCommandFormat(EditCommand.FORMAT);
-
-        } else if (KEY_COMBINATION_FIND.match(keyEvent)) {
-            displayCommandFormat(FindCommand.FORMAT);
-
-        } else if (KEY_COMBINATION_SELECT.match(keyEvent)) {
-            displayCommandFormat(SelectCommand.FORMAT);
-
-        } else if (KEY_COMBINATION_DELETE.match(keyEvent)) {
-            displayCommandFormat(DeleteCommand.FORMAT);
-
-        } else {
-            // no key combination matches, do nothing
-        }
-    }
-
+```
+###### \java\seedu\address\ui\KeyListener.java
+``` java
     /**
      * Executes command triggered by key presses.
      */
     private void executeCommand(String command) {
-        if (command.equals(OpenRolodexCommand.COMMAND_WORD) || command.equals(NewRolodexCommand.COMMAND_WORD)) {
-            commandBox.replaceText(command + " ");
-        } else {
-            commandBox.replaceText(command);
-            commandBox.handleCommandInputChanged();
-        }
+        commandBox.replaceText(command);
+        commandBox.handleCommandInputChanged();
     }
 ```
 ###### \java\seedu\address\ui\MainWindow.java
@@ -708,7 +683,7 @@ public class KeyListenerUtil {
     public static final KeyCombination KEY_COMBINATION_FOCUS_PERSON_LIST_ALT = KeyCombination.valueOf("Ctrl+Left");
     public static final KeyCombination KEY_COMBINATION_FOCUS_COMMAND_BOX = KeyCombination.valueOf("Enter");
     public static final KeyCombination KEY_COMBINATION_FOCUS_RESULT_DISPLAY = KeyCombination.valueOf("Ctrl+Right");
-    public static final KeyCombination KEY_COMBINATION_DELETE_SELECTION = KeyCombination.valueOf("Ctrl+D");
+    public static final KeyCombination KEY_COMBINATION_DELETE_SELECTION = KeyCombination.valueOf("Ctrl+Shift+D");
 
     // Command events
     public static final KeyCombination KEY_COMBINATION_CLEAR = KeyCombination.valueOf(ClearCommand.COMMAND_HOTKEY);
@@ -716,16 +691,9 @@ public class KeyListenerUtil {
     public static final KeyCombination KEY_COMBINATION_UNDO = KeyCombination.valueOf(UndoCommand.COMMAND_HOTKEY);
     public static final KeyCombination KEY_COMBINATION_REDO = KeyCombination.valueOf(RedoCommand.COMMAND_HOTKEY);
     public static final KeyCombination KEY_COMBINATION_LIST = KeyCombination.valueOf(ListCommand.COMMAND_HOTKEY);
-    public static final KeyCombination KEY_COMBINATION_OPEN_FILE = KeyCombination
-            .valueOf(OpenRolodexCommand.COMMAND_HOTKEY);
-    public static final KeyCombination KEY_COMBINATION_NEW_FILE = KeyCombination
-            .valueOf(NewRolodexCommand.COMMAND_HOTKEY);
-    public static final KeyCombination KEY_COMBINATION_ADD = KeyCombination.valueOf(AddCommand.COMMAND_HOTKEY);
-    public static final KeyCombination KEY_COMBINATION_EDIT = KeyCombination.valueOf(EditCommand.COMMAND_HOTKEY);
-    public static final KeyCombination KEY_COMBINATION_FIND = KeyCombination.valueOf(FindCommand.COMMAND_HOTKEY);
-    public static final KeyCombination KEY_COMBINATION_SELECT = KeyCombination.valueOf(SelectCommand.COMMAND_HOTKEY);
-    public static final KeyCombination KEY_COMBINATION_DELETE = KeyCombination.valueOf(DeleteCommand.COMMAND_HOTKEY);
-
+```
+###### \java\seedu\address\ui\util\KeyListenerUtil.java
+``` java
     public static final Set<KeyCombination> POSSIBLE_KEY_COMBINATIONS =
             new HashSet<>(Arrays.asList(
                     KEY_COMBINATION_FOCUS_PERSON_LIST,
@@ -740,13 +708,6 @@ public class KeyListenerUtil {
                     KEY_COMBINATION_LIST,
                     KEY_COMBINATION_OPEN_FILE,
                     KEY_COMBINATION_NEW_FILE,
-                    KEY_COMBINATION_ADD,
-                    KEY_COMBINATION_EDIT,
-                    KEY_COMBINATION_FIND,
-                    KEY_COMBINATION_SELECT,
-                    KEY_COMBINATION_DELETE
-            ));
-}
 ```
 ###### \resources\view\LightTheme.css
 ``` css
