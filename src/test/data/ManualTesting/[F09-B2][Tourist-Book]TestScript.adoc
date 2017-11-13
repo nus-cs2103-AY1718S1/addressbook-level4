@@ -221,15 +221,15 @@ Format: `bookmark INDEX`
 ** *Expected output* +
 Successfully bookmarked the first place in the list.
 
+[discrete]
+=== Negative Test Cases
+
 . `list` +
 `bookmark 5` +
 `bookmark 5`
 
 ** *Expected output* +
-Error message "**Place already has that tag.**"
-
-[discrete]
-=== Negative Test Cases
+Error message will be display as `INDEX 5` has already been bookmarked.
 
 . `list` +
 `bookmark 45`
@@ -293,6 +293,16 @@ Format: `clear_bookmark`
 === Positive Test Cases
 . `list` +
 `show_bookmark` +
+`clear_bookmark` +
+
+** *Expected output* +
+It will clear all the bookmarked places and list all the places. +
+When type `show_bookmark` it will list an empty page.
+
+. `list` +
+`bookmark 1` +
+`bookmark 2` +
+`bookmark 3` +
 `clear_bookmark` +
 
 ** *Expected output* +
@@ -387,7 +397,7 @@ The `undo` command fails as there are no undoable commands executed previously.
 ** *Expected output* +
 Error message "**Unknown command**"
 
-== Undo Command
+== Redo Command
 Reverses the most recent `undo` command. +
 Format: `redo` or `re`
 
@@ -480,6 +490,7 @@ Format: `ed INDEX [n/NAME] [a/ADDRESS] [p/POSTALCODE] [t/TAG]...`
 * You can remove a place's tags by typing `t/` without specifying any tags after it.
 ====
 
+[discrete]
 === Positive Test Cases
 . `edit 1 a/20 Bayfront Avenue p/000001 t/bookmarks`
 ** *Expected output* +
@@ -495,6 +506,7 @@ The tags of the place would be cleared as well.
 The UI will display a message showing the place and the value of the fields which has been edited, +
 even if the values are the same.
 
+[discrete]
 === Negative Test Cases
 . `edit -1 t/`
 ** *Expected output* +
@@ -539,6 +551,7 @@ Format: `find PREFIX KEYWORD` or `fd PREFIX KEYWORD`
 * Output is assuming the user is using the default data values with no modifications done.
 ====
 
+[discrete]
 === Positive Test Cases
 . `find n/Singapore`
 ** *Expected output* +
@@ -556,6 +569,7 @@ The UI will display `11 places listed!` and will list out the places which has t
 ** *Expected output* +
 The UI will display `8 places listed!` and will list out the places which has the name `Singapore` and `Gardens` in it.
 
+[discrete]
 === Negative Test Cases
 . `Find n/Singapore`
 ** *Expected output* +
@@ -596,6 +610,7 @@ Format: `goto 1` or `Goto 1`
 Index used in the command input must be positive.
 ====
 
+[discrete]
 === Positive Test Cases
 . `goto 1`
 ** *Expected output* +
@@ -605,6 +620,7 @@ The UI will display a `Go to: 1` message and displays the place on Google Maps t
 ** *Expected output* +
 The UI will display a `Go to: 1` message and displays the place on Google Maps through the browser panel.
 
+[discrete]
 === Negative Test Cases
 . `goto`
 ** *Expected output* +
@@ -666,6 +682,7 @@ Format: `select INDEX` or `s INDEX`
 * The command is **case sensitive**
 ====
 
+[discrete]
 === Positive Test Cases
 . `select 2`
 ** *Expected output*
@@ -677,6 +694,7 @@ in the browser.
 The UI will display a message `Selected Place: 2`, the place will be selected and the webpage will be loaded +
 in the browser.
 
+[discrete]
 === Negative Test Cases
 . `Select 2`
 ** *Expected output* +
@@ -745,6 +763,7 @@ Format: `history`
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
 
+[discrete]
 === Positive Test Cases
 . `history`
 ** *Expected output* +
@@ -758,6 +777,7 @@ The UI will display a message `Entered commands (from most recent to earliest):`
 all the commands (irregardless valid or invalid) that the user has entered +
 from most recent to the the earliest (top to bottom).
 
+[discrete]
 === Negative Test Cases
 . `History`
 ** *Expected output* +
@@ -783,6 +803,7 @@ Format: `weather`
 * It is also not an undoable command, hence the `undo` command will not work.
 ====
 
+[discrete]
 === Positive Test Cases
 . `weather`
 ** *Expected output* +
@@ -796,6 +817,7 @@ The UI will display a `Opened Weather on the Browser.` message and the weather w
 ** *Expected output* +
 The UI will display a `Opened Weather on the Browser.` message and the weather will be loaded on the browser panel.
 
+[discrete]
 === Negative Test Cases
 . `WEATHER`
 ** *Expected output* +
@@ -828,6 +850,7 @@ the base https://github.com/se-edu/addressbook-level4/issues/727[Addressbook-lev
 * It is also not an undoable command, hence the `undo` command will not work.
 ====
 
+[discrete]
 === Positive Test Cases
 . `mrt`
 ** *Expected output* +
@@ -841,6 +864,7 @@ The browser window will pop up, displaying the transit map.
 ** *Expected output* +
 The browser window will pop up, displaying the transit map.
 
+[discrete]
 === Negative Test Cases
 . `MRT`
 ** *Expected output* +
@@ -874,6 +898,7 @@ Format: `psi`
 * It is also not an undoable command, hence the `undo` command will not work.
 ====
 
+[discrete]
 === Positive Test Cases
 . `psi`
 ** *Expected output* +
@@ -887,6 +912,7 @@ The UI will display a `Latest PSI webpage loaded.` message and the latest PSI wi
 ** *Expected output* +
 The UI will display a `Latest PSI webpage loaded.` message and the latest PSI will be loaded on the browser panel.
 
+[discrete]
 === Negative Test Cases
 . `PSI`
 ** *Expected output* +
@@ -920,6 +946,8 @@ Format: `export`
 ====
 Running this command after the first time will overwrite the previous save file that is already in the folder!
 ====
+
+[discrete]
 === Positive Test Cases
 . `export`
 ** *Expected output* +
@@ -948,6 +976,7 @@ the jar file, in .csv format.
 Refer to above image at the first test case.
 ====
 
+[discrete]
 === Negative Test Cases
 . `EXPORT`
 ** *Expected output* +
@@ -985,6 +1014,8 @@ Format: `backup`
 ====
 Running this command after the first time will overwrite the previous save file that is already in the folder!
 ====
+
+[discrete]
 === Positive Test Cases
 . `backup`
 ** *Expected output* +
@@ -1013,6 +1044,7 @@ folder as the main data file.
 Refer to above image at the first test case.
 ====
 
+[discrete]
 === Negative Test Cases
 . `BACKUP`
 ** *Expected output* +
@@ -1050,6 +1082,7 @@ the base https://github.com/se-edu/addressbook-level4/issues/727[Addressbook-lev
 * It is also not an undoable command, hence the `undo` command will not work.
 ====
 
+[discrete]
 === Positive Test Cases
 . `sos`
 ** *Expected output* +
@@ -1067,6 +1100,7 @@ The browser window will pop up, displaying a list of useful contact numbers.
 ** *Expected output* +
 The browser window will pop up, displaying a list of useful contact numbers.
 
+[discrete]
 === Negative Test Cases
 . `EMERGENCY`
 ** *Expected output* +
@@ -1092,6 +1126,7 @@ Format: `sort`
 * The command will ignore any other parameters after the command word.
 ====
 
+[discrete]
 === Positive Test Cases
 . `sort`
 ** *Expected output* +
@@ -1109,6 +1144,7 @@ The places list will be sorted by alphabetical order.
 ** *Expected output* +
 The places list will be sorted by alphabetical order.
 
+[discrete]
 === Negative Test Cases
 . `SORT`
 ** *Expected output* +
