@@ -78,6 +78,10 @@ public class PersonWindow extends UiPart<Region> {
         dialogStage.showAndWait();
     }
 
+    public void close() {
+        dialogStage.close();
+    }
+
     @FXML
     private void handleExit () {
         dialogStage.close();

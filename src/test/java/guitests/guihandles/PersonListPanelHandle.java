@@ -68,6 +68,7 @@ public class PersonListPanelHandle extends NodeHandle<ListView<PersonCard>> {
         guiRobot.interact(() -> {
             getRootNode().scrollTo(matchingCard.get());
             getRootNode().getSelectionModel().select(matchingCard.get());
+
         });
         guiRobot.pauseForHuman();
     }
