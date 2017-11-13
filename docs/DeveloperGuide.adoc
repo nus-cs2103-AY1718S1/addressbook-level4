@@ -480,14 +480,14 @@ checks of `null` in its respective class:
 
 **Aspect:** Which component is responsible for `null`. +
 
-**Alternative 1 (current choice):** Parameters can be instantiated with `null` parameter, but the object itself cannot be `null`.
+**Alternative 1 (current choice):** Parameters can be instantiated with `null` parameter, but the object itself cannot be `null`. +
 **Pros:** Only parameter classes that are within `Model` component need to be modified. Other components are still functioning
 correctly. This improves coherent within `Model` component. +
 **Cons:** Potentially confusing for new developers. This design is equivalent to "having a phone with `null` number" rather
-than the more intuitive "doesn't have a phone".
+than the more intuitive "doesn't have a phone". +
 
 **Alternative 2:** Parameter objects can be `null`. +
-**Pros:** More intuitive for a new developer. Easier modification on `Model` component.
+**Pros:** More intuitive for a new developer. Easier modification on `Model` component. +
 **Cons:** Many components rely on the assumption that parameter objects are non-null. Hence, this design will fail the other components.
 More verification is needed outside the `Model` component when interacting with these parameter objects. This increases coupling. +
 
