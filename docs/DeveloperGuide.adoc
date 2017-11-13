@@ -407,9 +407,6 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
-[d]
-=== Since v1.1
-
 // tag::sort[]
 === Sorting of contacts
 
@@ -495,9 +492,6 @@ Figure 4.4.3: Sequence diagram for SortCommand executeUndoableCommand()
 **Pros:** This gives users freedom to select how they want their list to be sorted +
 **Cons:** Forgetful users may not be able to find their contact if they forget to sort by name when they add a new contact +
 // end::sort[]
-
-[d]
-=== Since v1.2
 
 //  tag::find[]
 === Enhanced find
@@ -603,28 +597,28 @@ A loop is then used to iterate through the list to delete the persons requested 
 **Cons:** It has to display the result repeatedly after every every person is deleted successfully. +
 // end::delete[]
 
-// tag::hide[]
-=== Hide
+// tag::hideunhide[]
+=== Hide / Unhide
 
 The hide feature allows for multiple indices to be accepted by the parser. This is done similar to the enhanced delete
-feature, where inputs are split into multiple string tokens, each containing the index of the person to be hidden.
+feature, where inputs are split into multiple string tokens, each containing the index of the person to be hidden. The
+`Person` class has a boolean variable called `isPrivate` that is set to false by default. Only when the `hide` command
+is executed will the variable change to true, and conceal the person contact from the main list of contacts.
 A list, listhidden, is then used to store all the indices of the person(s) to be hidden. Unhide is then done to revert
-the previously hidden indices from the list storing all hidden persons.
+the previously hidden indices from the list storing all hidden persons by reverting the `isPrivate` boolean variable to
+false.
 
 ==== Design Considerations
 
 **Aspect**: Defining how accurate the hide command will be +
-** Alternative 1 (current choice):** Indicse are parsed into a list containing all the index of person to be deleted. +
-**Pros:** If the index is valid (within range), the user can delete as many persons as they choose. +
+** Alternative 1 (current choice):** Indices are parsed into a list containing all the index of person to be deleted. +
+**Pros:** If the index is valid (within range), the user can hide as many persons as they choose. +
 **Cons:** The use of a loop will increase the time for the code to run. +
-**Alternative 2**: The indices are deleted one by one, without using a list. +
-**Pros:** If the index is valid (within range), the user can delete as many persons as they choose. +
+**Alternative 2**: The indices are hidden one by one, without using a list. +
+**Pros:** If the index is valid (within range), the user can hide as many persons as they choose. +
 **Cons:** User has to repeatedly type the command multiple times, and application has to display the result repeatedly
 after every person is hidden successfully.
-// end::hide[]
-
-[d]
-=== Since v1.3
+// end::hideunhide[]
 
 // tag::pinunpin[]
 === Pin / Unpin
@@ -642,9 +636,6 @@ variable change to `true`. Similarly, the variable can be changed from `true` to
 **Pros:** It is easier to implement because `Tag` has already been implemented. A new `Tag` called `pinned` can just be added to the `Person` +
 **Cons:** It may not be noticeable if the person already has many `Tag` on them.
 // end::pinunpin[]
-
-[d]
-=== Since v1.4
 
 // tag::tutorial[]
 === First time tutorial
@@ -770,9 +761,6 @@ public static Optional<Name> parseName(Optional<String> name, String command) th
 **Cons:** The code will be unnecessarily lengthy and may cause features to break +
 // end::add[]
 
-[d]
-=== Since v1.5
-
 // tag::parentmode[]
 === Parent Mode
 When Bluebird is launched, the boolean variable `isParentEnabled` in `AddressBookParser` is set to `false`
@@ -824,6 +812,24 @@ Pros: This allows child to edit the contacts or tasks if they were to add wrongl
 Cons: There is a possibility that the child may edit important contacts or tasks.
 // end::parentmode[]
 
+// tag::birthdayfield[]
+=== Birthday Field
+The Birthday field is an additional attribute to the person class for contacts in Bluebird. Since the addition of
+feature 4.11 Enhanced Add, not all fields are compulsory, except for the name field. Therefore the birthday field can be
+added individually in addition to the name field when adding a new contact. Alternatively, an existing person's contact
+card in Bluebird can be edited to add the birth date. There are 2 valid formats for adding birth dates to the birthday
+field, which are `DD/MM/YYYY` or `DD/MM/YY`, where only digits are permitted. Months in the form of alphabets are not
+permitted.
+
+// end::birthdayfield[]
+
+// tag::showbirthdays[]
+=== Show Birthdays
+The `showbirthdays` command scans through the list of person contacts in Bluebird and displays the person(s) whose
+birthdays fall on the same date as the current day with respect to the user. The `showbirthdays` command is made possible
+with the `CheckBirthdays` class. The CheckBirthdays class determines if a contact's birthday falls on the current day
+by checking if the day and month of the contact's birthday is equal to the current day and month date.
+// end::showbirthdays[]
 
 // tag::documentation[]
 == Documentation
