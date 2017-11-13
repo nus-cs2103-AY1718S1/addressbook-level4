@@ -10,13 +10,12 @@ ifdef::env-github[]
 image::docs/images/Ui.png[width="600"]
 endif::[]
 
-* This is a desktop Address Book application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
-* It is a Java sample application intended for a 20 year old socialite. The target user, X, can be described as follows:
-** X is a 20 year old socialite and her life revolves around her friends and acquaintances. The size of her social circle is of great importance to her.
-** X wishes to keep track of various statistics, such as the number of times she has accessed a particular address book entry, so that she can keep track of her social circle.
-** Birthdays are highly important to X as her schedule will revolve around the various birthday celebrations of her friends.
-** X shares a lot of secrets with her friends. She wants to be able to keep records of what she has said to each friend.
-** X wants to be able to view the public social media information of her contact, especially the updates from her friends who are influencers.
+* PIMP is a desktop application. It has a GUI but most of the user interactions utilise the Command Line Interface (CLI).
+* PIMP is a Java application intended for a 20 year old socialite. Our target user, Kyleigh "Socialite" Jennar, can be described as a 20 year old socialite. Her life revolves around her friends and acquaintances. The size of her social circle is of great importance to her.
+* Kyleigh has the following requirements of an application to maintain her social life:
+** To be able to keep track of various statistics, such as the number of times she has accessed a particular address book entry, so that she can keep track of her social circle.
+** To be able to record certain remarks about her contacts and update information stored about her contacts
+** To be able to view the public social media information of her contact, especially the updates from her friends who are influencers.
 
 == Site Map
 
