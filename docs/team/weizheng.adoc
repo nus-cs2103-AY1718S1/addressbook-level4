@@ -97,6 +97,11 @@ settings panel is then translated out of sight again.
 
 image::SettingsPaneInOut.png[width="700"]
 
+When the choose command is called, another event is called to hide the other views that are not "chosen" by the user. For example, if the user types in the command `choose meeting`, the root view of the current display page, e.g linkedin, will be removed
+from the placeholder in the MainWindow, then the root view of the meeting display is placed in its stead.
+
+image::ChooseSequenceDiagram.png[width="700"]
+
 ==== Design Considerations
 
 **Aspect:** Implementation of choose command

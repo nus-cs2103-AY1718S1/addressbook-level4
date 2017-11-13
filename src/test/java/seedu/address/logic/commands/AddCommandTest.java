@@ -203,7 +203,9 @@ public class AddCommandTest {
         public ReadOnlyAddressBook getAddressBook() {
             return new AddressBook();
         }
-        public ReadOnlyMeetingList getMeetingList() { return new UniqueMeetingList(); }
+        public ReadOnlyMeetingList getMeetingList() {
+            return new UniqueMeetingList();
+        }
     }
 
     /**
@@ -222,7 +224,9 @@ public class AddCommandTest {
             return new AddressBook();
         }
         @Override
-        public ReadOnlyMeetingList getMeetingList() { return new UniqueMeetingList(); }
+        public ReadOnlyMeetingList getMeetingList() {
+            return new UniqueMeetingList();
+        }
     }
 
 }
