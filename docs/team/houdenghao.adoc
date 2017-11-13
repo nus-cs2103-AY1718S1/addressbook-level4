@@ -5,11 +5,9 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 == Project: Planno
 
-Planno is a desktop address book application targeted to those users who have multiple contacts and events. The users interacts with Planno using a Command Line Interface (CLI) which needs users to type commands instead of clicking buttons. The Graphical User Interface (GUI) of Planno is created with JavaFx. Furthermore, this application is written in Java with 10 thousand lines of code (LOC). With Planno, besides managing contacts and events, users are able to keep track of the participants of their events and collect emails, phone numbers or addresses from the participants of a specific event.
+Planno is a desktop address book application targeted to those users who have multiple contacts and events. The users interacts with Planno using a Command Line Interface (CLI) which needs users to type commands instead of clicking buttons. The Graphical User Interface (GUI) of Planno is created with JavaFx. Furthermore, this application is written in Java with 10 thousand lines of code (LOC). With Planno, besides managing contacts and events, users are able to keep track of the participants of their events and collect emails, phone numbers or addresses from the participants of a specific event.The purpose of this portfolio is to highlight the enhancements I have contributed to Planno. Moreover, I will also introduce the other contributions to the development of Planno.
 
-The purpose of this portfolio is to highlight the enhancements I have contributed to Planno and the other features I plan to add in the future. Moreover, I will also introduce the other contributions to the development of Planno.
-
-*Code contributed*: [https://github.com/CS2103AUG2017-W14-B4/main/blob/master/collated/main/HouDenghao.md[Functional code]] [https://github.com/CS2103AUG2017-W14-B4/main/blob/master/collated/test/HouDenghao.md[Test code]] {give links to collated code files}
+*Code contributed*: [https://github.com/CS2103AUG2017-W14-B4/main/blob/master/collated/main/HouDenghao.md[Functional code]] [https://github.com/CS2103AUG2017-W14-B4/main/blob/master/collated/test/HouDenghao.md[Test code]]
 
 === Enhancement Added: Sort
 
