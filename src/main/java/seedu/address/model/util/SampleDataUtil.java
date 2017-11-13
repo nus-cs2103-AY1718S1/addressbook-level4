@@ -3,6 +3,7 @@ package seedu.address.model.util;
 import java.util.HashSet;
 import java.util.Set;
 
+import seedu.address.commons.exceptions.DuplicateDataException;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
@@ -15,6 +16,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.social.SocialInfo;
+import seedu.address.model.social.UniqueSocialInfoList;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -31,7 +33,7 @@ public class SampleDataUtil {
                     new Favorite(true),
                     new DisplayPhoto(DisplayPhoto.SAMPLE_PHOTO),
                     getTagSet("friends"),
-                    getSocialInfoSet(
+                    getSocialInfos(
                             new SocialInfo("facebook", "alex", "https://facebook.com/alex")));
             Person bernice = new Person(
                     new Name("Bernice Yu"),
@@ -41,7 +43,7 @@ public class SampleDataUtil {
                     new Favorite(false),
                     new DisplayPhoto(null),
                     getTagSet("colleagues", "friends"),
-                    getSocialInfoSet(
+                    getSocialInfos(
                             new SocialInfo("facebook", "bernice", "https://facebook.com/bernice"),
                             new SocialInfo("instagram", "bernice", "https://instagram.com/bernice")));
             Person charlotte = new Person(
@@ -52,7 +54,7 @@ public class SampleDataUtil {
                     new Favorite(false),
                     new DisplayPhoto(null),
                     getTagSet("neighbours"),
-                    getSocialInfoSet());
+                    getSocialInfos());
             Person david = new Person(
                     new Name("David Li"),
                     new Phone("91031282"),
@@ -61,7 +63,7 @@ public class SampleDataUtil {
                     new Favorite(true),
                     new DisplayPhoto(null),
                     getTagSet("family"),
-                    getSocialInfoSet());
+                    getSocialInfos());
             Person irfan = new Person(
                     new Name("Irfan Ibrahim"),
                     new Phone("92492021"),
@@ -70,7 +72,7 @@ public class SampleDataUtil {
                     new Favorite(false),
                     new DisplayPhoto(null),
                     getTagSet("classmates"),
-                    getSocialInfoSet());
+                    getSocialInfos());
             Person roy = new Person(
                     new Name("Roy Balakrishnan"),
                     new Phone("92624417"),
@@ -79,7 +81,7 @@ public class SampleDataUtil {
                     new Favorite(false),
                     new DisplayPhoto(null),
                     getTagSet("colleagues"),
-                    getSocialInfoSet());
+                    getSocialInfos());
 
             return new Person[] {alex, bernice, charlotte, david, irfan, roy};
         } catch (IllegalValueException e) {
@@ -112,15 +114,17 @@ public class SampleDataUtil {
 
     //@@author marvinchin
     /**
-     * Returns a {@code Set} containing the list of {@code SocialInfo}s given.
+     * Returns a {@code UniqueSocialInfoList} containing the {@code SocialInfo}s given.
      */
-    public static Set<SocialInfo> getSocialInfoSet(SocialInfo... socialInfos) {
+    public static UniqueSocialInfoList getSocialInfos(SocialInfo... socialInfos) throws DuplicateDataException {
         HashSet<SocialInfo> socialInfoSet = new HashSet<>();
         for (SocialInfo socialInfo : socialInfos) {
             socialInfoSet.add(socialInfo);
         }
 
-        return socialInfoSet;
+        UniqueSocialInfoList uniqueSocialInfoList = new UniqueSocialInfoList(socialInfoSet);
+
+        return uniqueSocialInfoList;
     }
     //@@author
 

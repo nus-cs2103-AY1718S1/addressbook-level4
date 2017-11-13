@@ -25,6 +25,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.social.SocialInfo;
+import seedu.address.model.social.UniqueSocialInfoList;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -59,10 +60,11 @@ public class AddCommandParser implements Parser<AddCommand> {
                 displayPhoto = ParserUtil.parseDisplayPhoto(argMultimap.getValue(PREFIX_DISPLAY_PHOTO)).get();
             }
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
-            Set<SocialInfo> socialInfoList = ParserUtil.parseSocialInfos(argMultimap.getAllValues(PREFIX_SOCIAL));
+            Set<SocialInfo> socialInfoSet = ParserUtil.parseSocialInfos(argMultimap.getAllValues(PREFIX_SOCIAL));
+            UniqueSocialInfoList uniqueSocialInfoList = new UniqueSocialInfoList(socialInfoSet);
 
             ReadOnlyPerson person = new Person(
-                    name, phone, email, address, favorite, displayPhoto, tagList, socialInfoList);
+                    name, phone, email, address, favorite, displayPhoto, tagList, uniqueSocialInfoList);
             return new AddCommand(person);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);

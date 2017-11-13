@@ -23,6 +23,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.social.SocialInfo;
+import seedu.address.model.social.UniqueSocialInfoList;
 import seedu.address.model.tag.Tag;
 import seedu.address.ui.BrowserPanel;
 
@@ -98,12 +99,13 @@ public class FacebookAddCommand extends UndoableCommand {
             SocialInfo facebookInfo = null;
             facebookInfo = SocialInfoMapping.parseSocialInfo("facebook " + toAddId);
             socialInfos.add(facebookInfo);
+            UniqueSocialInfoList uniqueSocialInfoList = new UniqueSocialInfoList(socialInfos);
 
             Set<Tag> tags = new HashSet<>();
             tags.add(new Tag("facebookFriend"));
 
             toAdd = new Person(new Name(toAddName), new Phone(), new Email(), new Address(),
-                    new Favorite(false), new DisplayPhoto(null), tags, socialInfos);
+                    new Favorite(false), new DisplayPhoto(null), tags, uniqueSocialInfoList);
         } catch (IllegalValueException e) {
             throw new CommandException(MESSAGE_FACEBOOK_ADD_PERSON_ERROR);
         }

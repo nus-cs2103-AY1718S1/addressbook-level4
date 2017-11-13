@@ -17,6 +17,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.social.SocialInfo;
+import seedu.address.model.social.UniqueSocialInfoList;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
@@ -46,7 +47,7 @@ public class PersonBuilder {
             Favorite defaultFavoriteStatus = new Favorite(DEFAULT_FAVORITE);
             DisplayPhoto defaultDisplayPhoto = new DisplayPhoto(DEFAULT_DISPLAY_PHOTO);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
-            Set<SocialInfo> defaultSocialInfos = SampleDataUtil.getSocialInfoSet(DEFAULT_SOCIAL);
+            UniqueSocialInfoList defaultSocialInfos = SampleDataUtil.getSocialInfos(DEFAULT_SOCIAL);
             this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress,
                     defaultFavoriteStatus, defaultDisplayPhoto, defaultTags, defaultSocialInfos);
         } catch (IllegalValueException ive) {
@@ -89,7 +90,7 @@ public class PersonBuilder {
 
     //@@author marvinchin
     /**
-     * Parses the {@code socialInfos} into a {@code Set<SocialInfo} and set it to the {@code Person}
+     * Parses the {@code socialInfos} into a {@code UniqueSocialInfoList} and set it to the {@code Person}
      * that we are building.
      */
     public PersonBuilder withSocialInfos(String... rawSocialInfos) {
@@ -100,7 +101,7 @@ public class PersonBuilder {
             }
             // convert to array to be passed as varargs in getSocialInfoSet
             SocialInfo[] socialInfosArray = socialInfos.toArray(new SocialInfo[rawSocialInfos.length]);
-            this.person.setSocialInfos(SampleDataUtil.getSocialInfoSet(socialInfosArray));
+            this.person.setSocialInfos(SampleDataUtil.getSocialInfos(socialInfosArray).toSet());
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("raw social infos must be valid.");
         }

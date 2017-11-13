@@ -9,6 +9,7 @@ import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import seedu.address.commons.exceptions.DuplicateDataException;
 import seedu.address.model.social.SocialInfo;
 import seedu.address.model.social.UniqueSocialInfoList;
 import seedu.address.model.tag.Tag;
@@ -34,7 +35,7 @@ public class Person implements ReadOnlyPerson {
      * Every field must be present but can be null except 'name'.
      */
     public Person(Name name, Phone phone, Email email, Address address, Favorite favorite, DisplayPhoto displayPhoto,
-                  Set<Tag> tags, Set<SocialInfo> socialInfos) {
+                  Set<Tag> tags, UniqueSocialInfoList socialInfos) {
         requireAllNonNull(name, phone, email, address, tags, socialInfos);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
@@ -44,13 +45,13 @@ public class Person implements ReadOnlyPerson {
         this.displayPhoto = new SimpleObjectProperty<>(displayPhoto);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
-        this.socialInfos = new SimpleObjectProperty<>(new UniqueSocialInfoList(socialInfos));
+        this.socialInfos = new SimpleObjectProperty<>(socialInfos);
         // set the last access date to now
         this.lastAccessDate = new SimpleObjectProperty<>(new LastAccessDate());
     }
 
     public Person(Name name, Phone phone, Email email, Address address, Favorite favorite,
-                  DisplayPhoto displayPhoto, Set<Tag> tags, Set<SocialInfo> socialInfos,
+                  DisplayPhoto displayPhoto, Set<Tag> tags, UniqueSocialInfoList socialInfos,
                   LastAccessDate lastAccessDate) {
         this(name, phone, email, address, favorite, displayPhoto, tags, socialInfos);
         requireNonNull(lastAccessDate);
@@ -61,8 +62,23 @@ public class Person implements ReadOnlyPerson {
      * Creates a copy of the given ReadOnlyPerson.
      */
     public Person(ReadOnlyPerson source) {
-        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getFavorite(),
-                source.getDisplayPhoto(), source.getTags(), source.getSocialInfos(), source.getLastAccessDate());
+            this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getFavorite(),
+                    source.getDisplayPhoto(), source.getTags(), createUniqueSocialInfoList(source),
+                    source.getLastAccessDate());
+    }
+
+    /**
+     * Creates a {@code UniqueSocialInfoList} based on the {@code SocialInfo} belonging to the {@code source}.
+     */
+    private static UniqueSocialInfoList createUniqueSocialInfoList(ReadOnlyPerson source) {
+        UniqueSocialInfoList uniqueSocialInfoList = null;
+        try {
+            uniqueSocialInfoList = new UniqueSocialInfoList(source.getSocialInfos());
+        } catch (DuplicateDataException dde) {
+            assert false: "The ReadOnlyPerson should not have duplicate social types in it's social infos";
+        }
+
+        return uniqueSocialInfoList;
     }
 
     public void setName(Name name) {
@@ -179,10 +195,10 @@ public class Person implements ReadOnlyPerson {
 
     @Override
     public Set<SocialInfo> getSocialInfos() {
-        return Collections.unmodifiableSet(socialInfos.get().toSet());
+        return socialInfos.get().toSet();
     }
 
-    public void setSocialInfos(Set<SocialInfo> replacement) {
+    public void setSocialInfos(Set<SocialInfo> replacement) throws DuplicateDataException {
         socialInfos.set(new UniqueSocialInfoList(replacement));
     }
 

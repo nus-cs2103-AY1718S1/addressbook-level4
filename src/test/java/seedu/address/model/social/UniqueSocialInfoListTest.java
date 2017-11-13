@@ -11,6 +11,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import seedu.address.commons.exceptions.DuplicateDataException;
+
 //@@author marvinchin
 /**
  * Contains unit tests for {@code UniqueSocialInfoList}.
@@ -25,14 +27,14 @@ public class UniqueSocialInfoListTest {
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void uniqueSocialInfoList_toSet_success() {
+    public void uniqueSocialInfoList_toSet_success() throws DuplicateDataException {
         UniqueSocialInfoList uniqueSocialInfoList = prepareUniqueSocialInfoList(ALICE_FACEBOOK, ALICE_TWITTER);
         HashSet<SocialInfo> expectedSet = new HashSet<>(Arrays.asList(ALICE_FACEBOOK, ALICE_TWITTER));
         assertEquals(expectedSet, uniqueSocialInfoList.toSet());
     }
 
     @Test
-    public void uniqueSocialInfoList_addUnique_success() throws UniqueSocialInfoList.DuplicateSocialTypeException {
+    public void uniqueSocialInfoList_addUnique_success() throws DuplicateDataException {
         UniqueSocialInfoList uniqueSocialInfoList = prepareUniqueSocialInfoList(ALICE_FACEBOOK);
         uniqueSocialInfoList.add(ALICE_TWITTER);
         HashSet<SocialInfo> expectedSet = new HashSet<>(Arrays.asList(ALICE_FACEBOOK, ALICE_TWITTER));
@@ -41,7 +43,7 @@ public class UniqueSocialInfoListTest {
 
     @Test
     public void uniqueSocialInfoList_addDuplicateSocialType_throwsDuplicateSocialTypeException()
-            throws UniqueSocialInfoList.DuplicateSocialTypeException {
+            throws DuplicateDataException {
         UniqueSocialInfoList uniqueSocialInfoList = prepareUniqueSocialInfoList(ALICE_FACEBOOK);
         thrown.expect(UniqueSocialInfoList.DuplicateSocialTypeException.class);
         uniqueSocialInfoList.add(BOB_FACEBOOK);
@@ -61,7 +63,7 @@ public class UniqueSocialInfoListTest {
     }
 
     @Test
-    public void uniqueSocialInfoList_equals_success() throws UniqueSocialInfoList.DuplicateSocialTypeException {
+    public void uniqueSocialInfoList_equals_success() throws DuplicateDataException {
         UniqueSocialInfoList aliceList = prepareUniqueSocialInfoList(ALICE_FACEBOOK, ALICE_TWITTER);
         UniqueSocialInfoList bobList = prepareUniqueSocialInfoList(BOB_FACEBOOK, BOB_TWITTER);
         assertFalse(aliceList.equals(bobList));
@@ -79,7 +81,7 @@ public class UniqueSocialInfoListTest {
 
     @Test
     public void uniqueSocialInfoList_equalsOrderInsensitive_success()
-            throws UniqueSocialInfoList.DuplicateSocialTypeException {
+            throws DuplicateDataException {
         UniqueSocialInfoList aliceList = prepareUniqueSocialInfoList(ALICE_FACEBOOK, ALICE_TWITTER);
         UniqueSocialInfoList bobList = prepareUniqueSocialInfoList(BOB_FACEBOOK, BOB_TWITTER);
         assertFalse(aliceList.equalsOrderInsensitive(bobList));
@@ -95,7 +97,8 @@ public class UniqueSocialInfoListTest {
         assertTrue(aliceListOrdered.equalsOrderInsensitive(aliceListReversed));
     }
 
-    private static UniqueSocialInfoList prepareUniqueSocialInfoList(SocialInfo... socialInfos) {
+    private static UniqueSocialInfoList prepareUniqueSocialInfoList(SocialInfo... socialInfos)
+            throws DuplicateDataException {
         return new UniqueSocialInfoList(
                 new HashSet<>(Arrays.asList(socialInfos))
         );

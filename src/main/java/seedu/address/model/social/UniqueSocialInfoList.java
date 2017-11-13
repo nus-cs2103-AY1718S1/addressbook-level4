@@ -3,6 +3,7 @@ package seedu.address.model.social;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -28,8 +29,11 @@ public class UniqueSocialInfoList implements Iterable<SocialInfo> {
      * Creates a UniqueSocialInfoList using given {@code socialInfos}.
      * Enforces no nulls.
      */
-    public UniqueSocialInfoList(Set<SocialInfo> socialInfos) {
+    public UniqueSocialInfoList(Set<SocialInfo> socialInfos) throws DuplicateSocialTypeException {
         requireAllNonNull(socialInfos);
+        if (containsDuplicateSocialType(socialInfos)) {
+            throw new DuplicateSocialTypeException();
+        }
         internalList.addAll(socialInfos);
 
         assert areInternalListSocialTypesUnique();
@@ -91,18 +95,24 @@ public class UniqueSocialInfoList implements Iterable<SocialInfo> {
      * Checks that there are no {@code SocialInfo} of the same platform in the internal list.
      */
     private boolean areInternalListSocialTypesUnique() {
+        return !containsDuplicateSocialType(internalList);
+    }
+
+    /**
+     * Checks that there are no {@code SocialInfo} of the same platform in the {@code Collection<SocialInfo>}.
+     */
+    private boolean containsDuplicateSocialType(Collection<SocialInfo> socialInfos) {
         HashSet<String> socialTypes = new HashSet<>();
 
-        for (SocialInfo socialInfo : internalList) {
+        for (SocialInfo socialInfo : socialInfos) {
             String socialType = socialInfo.getSocialType();
             if (socialTypes.contains(socialType)) {
-                return false;
+                return true;
             } else {
                 socialTypes.add(socialType);
             }
         }
-
-        return true;
+        return false;
     }
 
     /**
@@ -146,7 +156,7 @@ public class UniqueSocialInfoList implements Iterable<SocialInfo> {
      */
     public static class DuplicateSocialTypeException extends DuplicateDataException {
         protected DuplicateSocialTypeException() {
-            super("Operation would result in more than one SocialInfo of the same type");
+            super("Person cannot have more than one social media account of the same social type.");
         }
     }
 }
