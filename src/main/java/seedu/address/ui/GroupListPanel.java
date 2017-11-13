@@ -1,6 +1,8 @@
 //@@author conantteo
 package seedu.address.ui;
 
+import java.util.logging.Logger;
+
 import org.fxmisc.easybind.EasyBind;
 
 import javafx.application.Platform;
@@ -9,6 +11,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.model.SearchTagEvent;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -16,6 +20,8 @@ import seedu.address.model.tag.Tag;
  */
 public class GroupListPanel extends UiPart<Region> {
     private static final String FXML = "GroupList.fxml";
+
+    private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     @FXML
     private ListView<GroupLabel> groupListView;
@@ -34,7 +40,17 @@ public class GroupListPanel extends UiPart<Region> {
                 allTagsList, (tag) -> new GroupLabel(tag));
         groupListView.setItems(mappedList);
         groupListView.setCellFactory(listView -> new GroupListViewCell());
+        setEventHandlerForSelectionChangeEvent();
+    }
 
+    private void setEventHandlerForSelectionChangeEvent() {
+        groupListView.getSelectionModel().selectedItemProperty()
+                .addListener((observable, oldValue, newValue) -> {
+                    if (newValue != null) {
+                        logger.fine("Selection in group list panel changed to : '" + newValue + "'");
+                        raise(new SearchTagEvent(newValue.getTag()));
+                    }
+                });
     }
 
     /**
