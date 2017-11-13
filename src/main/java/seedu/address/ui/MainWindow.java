@@ -21,8 +21,6 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ChangeWindowSizeRequestEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.PopulateBirthdayEvent;
-import seedu.address.commons.events.ui.ShowFacebookRequestEvent;
-
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
