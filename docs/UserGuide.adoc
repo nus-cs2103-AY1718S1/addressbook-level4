@@ -316,9 +316,13 @@ Currently available themes are:
 
 ****
 * DarkTheme +
+****
 image::darktheme.png[width="700"]
+_Figure 4.9.1 : Rubrika DarkTheme_
 * RedTheme +
+****
 image::redtheme.png[width="700"]
+_Figure 4.9.2 : Rubrika RedTheme_
 ****
 Examples:
 
