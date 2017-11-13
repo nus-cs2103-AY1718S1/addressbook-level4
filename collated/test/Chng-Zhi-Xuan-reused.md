@@ -1,10 +1,10 @@
 # Chng-Zhi-Xuan-reused
-###### \java\seedu\address\logic\commands\DirCommandTest.java
+###### \java\seedu\address\logic\commands\DirectionCommandTest.java
 ``` java
 /**
- * Contains integration tests (interaction with the Model) for {@code DirCommand}.
+ * Contains integration tests (interaction with the Model) for {@code DirectionCommand}.
  */
-public class DirCommandTest {
+public class DirectionCommandTest {
     @Rule
     public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
 
@@ -46,14 +46,14 @@ public class DirCommandTest {
 
     @Test
     public void equals() {
-        DirCommand dirFirstToSecondCommand = new DirCommand(INDEX_FIRST_PLACE, INDEX_SECOND_PLACE);
-        DirCommand dirSecondToThirdCommand = new DirCommand(INDEX_SECOND_PLACE, INDEX_THIRD_PLACE);
+        DirectionCommand dirFirstToSecondCommand = new DirectionCommand(INDEX_FIRST_PLACE, INDEX_SECOND_PLACE);
+        DirectionCommand dirSecondToThirdCommand = new DirectionCommand(INDEX_SECOND_PLACE, INDEX_THIRD_PLACE);
 
         // same object -> returns true
         assertTrue(dirFirstToSecondCommand.equals(dirFirstToSecondCommand));
 
         // same values -> returns true
-        DirCommand dirFirstToSecondCommandCopy = new DirCommand(INDEX_FIRST_PLACE, INDEX_SECOND_PLACE);
+        DirectionCommand dirFirstToSecondCommandCopy = new DirectionCommand(INDEX_FIRST_PLACE, INDEX_SECOND_PLACE);
         assertTrue(dirFirstToSecondCommand.equals(dirFirstToSecondCommandCopy));
 
         // different types -> returns false
@@ -67,15 +67,15 @@ public class DirCommandTest {
     }
 
     /**
-     * Executes a {@code DirCommand} with the given {@code index}, and checks that {@code JumpToListRequestEvent}
+     * Executes a {@code DirectionCommand} with the given {@code index}, and checks that {@code JumpToListRequestEvent}
      * is raised with the correct index.
      */
     private void assertExecutionSuccess(Index fromIndex, Index toIndex) {
-        DirCommand dirCommand = prepareCommand(fromIndex, toIndex);
+        DirectionCommand directionCommand = prepareCommand(fromIndex, toIndex);
 
         try {
-            CommandResult commandResult = dirCommand.execute();
-            assertEquals(DirCommand.MESSAGE_DIR_SUCCESS,
+            CommandResult commandResult = directionCommand.execute();
+            assertEquals(DirectionCommand.MESSAGE_DIR_SUCCESS,
                     commandResult.feedbackToUser);
         } catch (CommandException ce) {
             throw new IllegalArgumentException("Execution of command should not fail.", ce);
@@ -86,14 +86,14 @@ public class DirCommandTest {
     }
 
     /**
-     * Executes a {@code DirCommand} with the given {@code index}, and checks that a {@code CommandException}
+     * Executes a {@code DirectionCommand} with the given {@code index}, and checks that a {@code CommandException}
      * is thrown with the {@code expectedMessage}.
      */
     private void assertExecutionFailure(Index fromIndex, Index toIndex, String expectedMessage) {
-        DirCommand dirCommand = prepareCommand(fromIndex, toIndex);
+        DirectionCommand directionCommand = prepareCommand(fromIndex, toIndex);
 
         try {
-            dirCommand.execute();
+            directionCommand.execute();
             fail("The expected CommandException was not thrown.");
         } catch (CommandException ce) {
             assertEquals(expectedMessage, ce.getMessage());
@@ -102,12 +102,12 @@ public class DirCommandTest {
     }
 
     /**
-     * Returns a {@code DirCommand} with parameters {@code index}.
+     * Returns a {@code DirectionCommand} with parameters {@code index}.
      */
-    private DirCommand prepareCommand(Index fromIndex, Index toIndex) {
-        DirCommand dirCommand = new DirCommand(fromIndex, toIndex);
-        dirCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-        return dirCommand;
+    private DirectionCommand prepareCommand(Index fromIndex, Index toIndex) {
+        DirectionCommand directionCommand = new DirectionCommand(fromIndex, toIndex);
+        directionCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return directionCommand;
     }
 }
 ```
@@ -149,24 +149,24 @@ public class ClearBookmarkCommandParserTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\DirCommandParserTest.java
+###### \java\seedu\address\logic\parser\DirectionCommandParserTest.java
 ``` java
 /**
  * Test scope: similar to {@code DeleteCommandParserTest}.
  * @see DeleteCommandParserTest
  */
-public class DirCommandParserTest {
+public class DirectionCommandParserTest {
 
-    private DirCommandParser parser = new DirCommandParser();
+    private DirectionCommandParser parser = new DirectionCommandParser();
 
     @Test
     public void parse_validArgs_returnsDirCommand() {
-        assertParseSuccess(parser, "1 2", new DirCommand(INDEX_FIRST_PLACE, INDEX_SECOND_PLACE));
+        assertParseSuccess(parser, "1 2", new DirectionCommand(INDEX_FIRST_PLACE, INDEX_SECOND_PLACE));
     }
 
     @Test
     public void parse_invalidArgs_throwsParseException() {
-        assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT, DirCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT, DirectionCommand.MESSAGE_USAGE));
     }
 }
 ```

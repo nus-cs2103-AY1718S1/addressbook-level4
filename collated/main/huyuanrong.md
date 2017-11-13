@@ -494,13 +494,13 @@ public class ShowContactsEvent extends BaseEvent {
 ```
 ###### \java\seedu\address\logic\commands\BackupCommand.java
 ``` java
-public class BackupCommand extends UndoableCommand {
+public class BackupCommand extends Command {
 
     public static final String COMMAND_WORD = "backup";
     public static final String MESSAGE_SUCCESS = "A Tourist Book backup has been created!";
 
     @Override
-    protected CommandResult executeUndoableCommand() throws CommandException {
+    public CommandResult execute() throws CommandException {
         requireNonNull(model);
         EventsCenter.getInstance().post(new BackupEvent(model.getAddressBook()));
         return new CommandResult(String.format(MESSAGE_SUCCESS));
@@ -534,11 +534,11 @@ public class ContactsCommand extends Command {
     public static final String COMMAND_WORD_NAME_PREFIX = "n/";
     public static final String COMMAND_WORD_TAG_PREFIX = "t/";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all places whose names contain any of "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all places or tags whose names contain any of "
             + "the specified keywords (case-sensitive) and displays them as a list with index numbers.\n"
             + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
-            + "Example: " + COMMAND_WORD + COMMAND_WORD_NAME_PREFIX + "alice bob charlie"
-            + "Example: " + COMMAND_WORD + COMMAND_WORD_TAG_PREFIX + "[bookmark] [attractions]";
+            + "Example: " + COMMAND_WORD + " " + COMMAND_WORD_NAME_PREFIX + "Marina Bay Sands"
+            + " or " + "Example: " + COMMAND_WORD + " " + COMMAND_WORD_TAG_PREFIX + "[bookmark] [attractions]";
 ```
 ###### \java\seedu\address\logic\parser\AddressBookParser.java
 ``` java
@@ -642,7 +642,7 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPlace> {
 ``` java
     @Override
     public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
-        logger.fine("Attempting to create a backup for Tourist Book data file" );
+        logger.fine("Attempting to create a backup for Tourist Book data file");
         addressBookStorage.backupAddressBook(addressBook);
     }
 

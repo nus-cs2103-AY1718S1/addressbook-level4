@@ -610,27 +610,66 @@ all the way back to `LogicManager`.
 
 ==== Design Considerations
 
-**Aspect:** Construction of Strings
-**Alternative 1 (current choice):** Using `StringBuilder`
-**Pros:** Able to easily construct the `String` due to the mutability of `StringBuilder`.
-**Cons:** Dependency on the `StringBuilder` class.
-**Alternative 2:** Using `String` only.
-**Pros:** Reduced dependency on additional classes.
-**Cons:** Constant re-assignment of resultant `String` is required as it is not mutable.
+**Aspect:** Construction of Strings +
+**Alternative 1 (current choice):** Using `StringBuilder` +
+**Pros:** Able to easily construct the `String` due to the mutability of `StringBuilder`. +
+**Cons:** Dependency on the `StringBuilder` class. +
+**Alternative 2:** Using `String` only. +
+**Pros:** Reduced dependency on additional classes. +
+**Cons:** Constant re-assignment of resultant `String` is required as it is not mutable. +
 
 ---
 
-**Aspect:** Generating Place Data
-**Alternative 1 (current choice):** "Hard-code" the data to obtain from a `ReadOnlyPlace`.
-**Pros:** Code is executed at a faster rate.
-**Cons:** Coupling is increased with `ReadOnlyPlace` / Code is not adaptable if new fields are added to `ReadOnlyPlace`.
-**Alternative 2:** Generate place data according to the fields present in `ReadOnlyPlace`.
-**Pros:** Code is adaptable should new fields be added to `ReadOnlyPlace`.
-**Cons:** Additional processing overhead / Difficult and time-consuming to implement.
+**Aspect:** Generating Place Data +
+**Alternative 1 (current choice):** "Hard-code" the data to obtain from a `ReadOnlyPlace`. +
+**Pros:** Code is executed at a faster rate. +
+**Cons:** Coupling is increased with `ReadOnlyPlace`/Code is not adaptable if new fields are added to `ReadOnlyPlace`. +
+**Alternative 2:** Generate place data according to the fields present in `ReadOnlyPlace`. +
+**Pros:** Code is adaptable should new fields be added to `ReadOnlyPlace`. +
+**Cons:** Additional processing overhead / Difficult and time-consuming to implement. +
 
 The implementation of the method is credited to link:https://github.com/AceCentury[Ryan Teo] and +
 link:https://github.com/nus-cs2103-AY1718S1/forum/issues/158[this issue].
 //end::exportCommand[]
+
+// tag::directionDesign[]
+=== Direction Implementation
+
+The underlying principle of direction is to retrieve 2 places from the index given by the user and convert each place's
+name and postal code into a usable URL. The URL is then passed to the Ui component, within `MainWindow` to change the
+URL of the `BrowserPanel`.
+
+`DirectionCommandParser` gets indexes with the help of `parseIndexFromPosition` in `ParserUtil`. It
+extracts the first 2 indexes from a given string using zero-based positions 0 and 1.
+
+[NOTE]
+Direction uses 1 based indexing from the user, index 0 is not used.
+Same index values will be rejected by the parser, and if either index are out
+of bounds, it will throw a `CommandExceptionError` during execute().
+
+The following is the sequence diagram for `dir` command +
+
+image::DirectionSequenceDiagram.png[width="800"]
+
+==== Design Considerations
+**Aspect:** Implementation of `dir`.  +
+**Alternative 1 (current choice)** place's name and postal code transformation to URL. +
+**Pros:** Least amount of maintenance and takes advantage of browser panel to do more work. +
+**Cons:** Command can only work with an internet connection. +
+**Alternative 2:** Cache directions from one place to all other places within a attribute of a place. +
+**Pros:** Same directions given as google maps and works offline. +
+**Cons:** Huge amount of space required (complete graph) and tedious implementation through Google Maps API. +
+
+---
+
+**Aspect:** Amount of places user can "chain" for getting directions.  +
+**Alternative 1 (current choice)** Maximum of 2 places is used, with directions given between them.  +
+**Pros:** No additional data structure needed to support this, less scope means quicker deployment and less prone to bugs. +
+**Cons:** User must use "dir 1 2" then "dir 2 3" to plan their schedule for places 1 2 3. +
+**Alternative 2:** Implement a queue structure. +
+**Pros:** User can type "dir 1 2 3" to store all the data needed. Use another command like "next_dir" to show directions instead of typing the `dir` command again. +
+**Cons:** Data structure implementation requires extensive test coverage, longer to deploy and needs a limit on how many places can it store. +
+// end::directionDesign[]
 
 == Documentation
 

@@ -29,6 +29,7 @@ import seedu.address.model.tag.Tag;
 public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
+    public static final String MESSAGE_REQUIRED_TWO_INDEX = "Only 2 indexes are allowed.";
     public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
 
     /**
@@ -60,6 +61,10 @@ public class ParserUtil {
         try {
             String trimmedIndex = oneBasedIndex.trim();
             indexes = trimmedIndex.split(" ");
+
+            if (indexes.length != 2) {
+                throw new IllegalValueException(MESSAGE_REQUIRED_TWO_INDEX);
+            }
 
             indexAtPosition = indexes[zeroBasedPosition];
 
