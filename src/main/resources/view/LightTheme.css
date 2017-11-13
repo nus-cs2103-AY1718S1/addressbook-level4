@@ -1,7 +1,7 @@
 /*@@author fongwz */
 .background {
     -fx-background-color: derive(#F57F17, 20%);
-    background-color: #F57F17; /* Used in the default.html file */
+    background-color: #eeeeee; /* Used in the default.html file */
 }
 
 #tags {
