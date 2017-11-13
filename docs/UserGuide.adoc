@@ -300,6 +300,7 @@ Selects the 3rd person in the address book and adds "Likes to play computer game
 * `list` +
 `comment 2 c/` +
 Selects the 2nd person in the address book and removes its comment.
+
 '''
 Adding comment "Likes to play computer games." to 3rd contact.
 
@@ -343,23 +344,24 @@ Selects the 2nd person in the address book and assigns the above appointment slo
 * `list` +
 `appoint 4 ap/` +
 Removes the appointment from the 4th contact.
+
 '''
-Adding appointment at `October 20th, 2017 14:45` to 2nd contact.
+Adding appointment at `December 28th, 2017 14:45` to 2nd contact.
 
 image::AppointCommand/05-1.PNG[width="800"]
 
 '''
-The result of `ppoint 2 ap/20/10/2017 14:45` shows the following:
+The result of `appoint 2 ap/28/12/2017 14:45` shows the following:
 
 image::AppointCommand/06-2.PNG[width="800"]
 
 '''
-Removing the appointment from 4th contact.
+Removing the appointment from 3rd contact.
 
 image::AppointCommand/07-1.PNG[width="800"]
 
 '''
-The result of `appoint 4 ap/` shows the following:
+The result of `appoint 3 ap/` shows the following:
 
 image::AppointCommand/08-2.PNG[width="800"]
 // end::appointment[]
