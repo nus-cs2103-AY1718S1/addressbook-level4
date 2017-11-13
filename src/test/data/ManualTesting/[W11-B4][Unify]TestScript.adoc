@@ -1,0 +1,233 @@
+= Unify - Test Script
+:toc:
+:toc-title:
+:toc-placement: preamble
+:sectnums:
+:imagesDir: images
+:stylesDir: stylesheets
+:experimental:
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+endif::[]
+:repoURL: https://github.com/CS2103AUG2017-W11-B4/main
+
+By: `W11 B4`      Since: `Sep 2017`      Licence: `MIT`
+
+== Introduction
+This is the test script for Team W11-B4's address book, Unify.
+
+== Setting Up
+1. Create a folder called `Unify`
+2. Place `[W11-B4][Unify].jar` inside the `Unify` folder.
+4. Inside the `Unify` folder, create a folder called `data`
+5. Place `[W11-B4][Unify]SampleData.xml` into the `data` folder.
+6. Rename `[W11-B4][Unify]SampleData.xml` to `addressbook.xml`
+7. Execute `[W11-B4][Unify].jar` to launch Unify.
+
+== Things to Note
+Hints and auto completion is one of our core features. As commands are being typed, you may check for the hints and autocomplete text.
+
+
+== Basic Commands
+
+=== Add Command
+
+==== Incomplete Command
+
+[cols="2*^"]
+|===
+|*User Input*|`a`
+|*Hint*|`dd adds a person`
+|*Autocomplete Input*|`add{sp}`
+|*Result*|`Unknown Command`
+|===
+
+[cols="2*^"]
+|===
+|*User Input*|`add`
+|*Hint*|`{sp}n/name`
+|*Autocomplete Input*|`add n/`
+|*Result*|`Invalid command format! ...`
+|===
+
+[cols="2*^"]
+|===
+|*User Input*|`add`
+|*Hint*|`{sp}n/name`
+|*Autocomplete Input*|`add n/`
+|*Result*|`Invalid command format! ...`
+|===
+
+[cols="2*^"]
+|===
+|*User Input*|`add n/`
+|*Hint*|`name`
+|*Autocomplete Input*|`add p/`
+|*Result*|`Invalid command format! ...`
+|===
+
+[cols="2*^"]
+|===
+|*User Input*|`add p/`
+|*Hint*|`phone`
+|*Autocomplete Input*|`add e/`
+|*Result*|`Invalid command format! ...`
+|===
+
+[cols="2*^"]
+|===
+|*User Input*|`add n/{sp}`
+|*Hint*|`p/phone`
+|*Autocomplete Input*|`add n/ p/`
+|*Result*|`Invalid command format! ...`
+|===
+
+==== Complete Command
+
+[cols="2*^"]
+|===
+|*User Input*|`add n/Nicholas p/12345 e/email@example.com a/address`
+|*Hint*|`{sp}r/remark (optional)`
+|*Autocomplete Input*|`add n/Nicholas p/12345 e/email@example.com a/address r/`
+|*Result*|`New person added: Nicholas ...`
+|*Note*| Person Nicholas is added to Unify at index 21. When selected, his details should be the same as input with an empty remark and default avatar.
+|===
+
+[cols="2*^"]
+|===
+|*User Input*|`add n/Nicholas p/12345 e/email@example.com a/address r/remark t/tag`
+|*Hint*|`{sp}i/avatar file path (optional)`
+|*Autocomplete Input*|`add n/Wei Wen p/12345 e/email@example.com a/address r/remark t/tag i/`
+|*Result*|`New person added: Wei Wen ...`
+|*Note*| Person Wei Wen is added to Unify at index 22. When selected, his details should be the same as input with a default avatar.
+|===
+
+=== Delete Command
+
+==== Incomplete Command
+
+[cols="2*^"]
+|===
+|*User Input*|`d`
+|*Hint*|`elete deletes a person`
+|*Autocomplete Input*|`delete{sp}`
+|*Result*|`Unknown Command`
+|===
+
+[cols="2*^"]
+|===
+|*User Input*|`delete`
+|*Hint*|`{sp}1 index`
+|*Autocomplete Input*|`delete 1`
+|*Result*|`Invalid command format!...`
+|===
+
+
+==== Complete Command
+
+[cols="2*^"]
+|===
+|*User Input*|`delete 22`
+|*Hint*|`{sp}index`
+|*Autocomplete Input*|`delete 23`
+|*Result*|`Deleted Person: Wei Wen...`
+|*Note*| Person Wei Wen is deleted from the address book. Auto complete input will give invalid index 23
+|===
+
+
+[cols="2*^"]
+|===
+|*User Input*|`delete 23`
+|*Hint*|`{sp}index`
+|*Autocomplete Input*|`delete 23`
+|*Result*|`The person index provided is invalid`
+|===
+
+=== Select Command
+
+==== Incomplete Command
+
+[cols="2*^"]
+|===
+|*User Input*|`s`
+|*Hint*|`elect selects a person`
+|*Autocomplete Input*|`select{sp}`
+|*Result*|`Unknown Command`
+|===
+
+[cols="2*^"]
+|===
+|*User Input*|`select`
+|*Hint*|`{sp}1 index`
+|*Autocomplete Input*|`select 1`
+|*Result*|`Invalid command format!...`
+|===
+
+==== Complete Command
+
+[cols="2*^"]
+|===
+|*User Input*|`select 1`
+|*Hint*|`{sp}index`
+|*Autocomplete Input*|`select 2`
+|*Result*|`Selected Person: 1`
+|*Note*| Person at index 1, Alex Yeoh will be selected
+|===
+
+[cols="2*^"]
+|===
+|*User Input*|`select 22`
+|*Hint*|`{sp}index`
+|*Autocomplete Input*|`select 23`
+|*Result*|`The person index provided is invalid`
+|===
+
+=== Help Command
+
+==== Incomplete Command
+
+[cols="2*^"]
+|===
+|*User Input*|`h`
+|*Hint*|`elp shows user guide`
+|*Autocomplete Input*|`help{sp}`
+|*Result*|`Unknown Command`
+|===
+
+==== Complete Command
+
+[cols="2*^"]
+|===
+|*User Input*|`help`
+|*Hint*|`{sp}shows user guide`
+|*Autocomplete Input*|`help{sp}`
+|*Result*|`Opened help window.`
+|*Note*| Help window will open, showing the user guide
+|===
+
+=== History Command
+
+==== Incomplete Command
+
+[cols="2*^"]
+|===
+|*User Input*|`hi`
+|*Hint*|`story shows command history`
+|*Autocomplete Input*|`history{sp}`
+|*Result*|`Unknown Command`
+|===
+
+==== Complete Command
+
+[cols="2*^"]
+|===
+|*User Input*|`history`
+|*Hint*|`{sp}shows command history`
+|*Autocomplete Input*|`history{sp}`
+|*Result*|`Entered commands (from most recent to earliest): ...`
+|*Note*| A list of all previously entered commands will be displayed in the result display.
+|===
+
+== Advanced Commands
+
