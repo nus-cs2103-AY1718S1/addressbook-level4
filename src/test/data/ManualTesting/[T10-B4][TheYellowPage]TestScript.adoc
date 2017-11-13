@@ -122,7 +122,52 @@ All contacts with friends or classmate tags will be listed in TheYellowPage.
 
 === Add Multiple
 
+Add multiple contacts at once to TheYellowPage.
+
+Type "addMul FILEPATH" in the command box.
+
+FILEPATH refers to the file path of the text file you have saved in your computer.
+
+Example:
+
+[NOTE]
+====
+the following fields must be separated by a tab-space
+====
+The following is a valid tab-separated file at D:/contact.txt:
+
+|===
+|name  |occupation |phone |email |address |website |tag
+
+|John Doe
+|Google, CEO
+|98765432
+|johnd@example.com
+|John street, block 123, #01-01
+|https://github.com/JohnDoe
+|friend, neighbor
+
+|Betsy Crowe
+|Microsoft, Software Engineer
+|1234567
+|betsycrowe@example.com
+|Newgate Prison
+|https://github.com/BetsyCrowe
+|friend, criminal
+|===
+
 === Change Photo
+
+Add photo to the specified index in TheYellowPage.
+
+Type "changePicture 1 FILEPATH" in the command box.
+
+FILEPATH refers to the file path of the image on your computer.
+The specified picture must be in either .png or .jpg format.
+
+Example: changePicture 1 D://myPicture.png
+
+This will change the photo of the first person on the list to myPicuture.
 
 === Remark
 
