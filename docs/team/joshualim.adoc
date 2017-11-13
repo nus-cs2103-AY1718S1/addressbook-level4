@@ -1,0 +1,150 @@
+= Joshua Lim - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Purpose
+
+The purpose of this portfolio page is to document my contributions for CS2103T Addressbook Application +
+(renamed to ConnectUs). It is a team project where we had to provide weekly incremental improvements on the application.
+Below you will find the features I helped implement, including snippets from the user guide and developer guide, as well as future improvements suggested.
+
+== Project: ConnectUs
+ConnectUs is a desktop address book application used to store contact information such as name, phone, email and address.
+The user can tag entries for more efficient search and can open up an email client to send an email. The GUI displays the list of contacts as well as additional information
+such as his/her address on Google Maps. The user interacts with it using a CLI, although there are additional GUI elements created in JavaFX such as a form to edit contacts, and a QR generator for you to scan
+the contact's number and automatically port it to your smartphone. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-W15-B3/main/blob/master/collated/main/blaqkrow.md] [https://github.com/CS2103AUG2017-W15-B3/main/blob/master/collated/test/blaqkrow.md] {give links to collated code files}
+
+=== Enhancement Added: Mapping of commands to buttons
+
+==== Justification
+
+`delete` button was added to facilitate in easy deletion of contacts via the GUI, rather than through the command line interface.
+In theory, the other commands within the program can be mapped to GUI elements, but it would be too much of an effort to map all of them.
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=delete]
+
+#End of Extract#
+
+---
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=mapping]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Edit Profile
+
+==== Justification
+
+`Edit profile` form was implemented so as to enhance user efficiency in using the application. It would be hard for users to manually remember the commands. Also, typing the commands exposes the user to potential input errors.
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=edit]
+
+#End of Extract#
+
+---
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=form]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Email
+
+==== Justification
+
+`Email` feature was implemented because it can be tedious to manually find and organise emails. With the email function, emailing contacts is one click/command away. Similar to edit profile, automatically filling up +
+the "to:" field in the email minimises the chance of human error.
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=email]
+
+#End of Extract#
+
+---
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=email]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Displaying contact on Google Maps
+
+==== Justification
+`Google maps` was implemented because displaying the location of a contact would prove useful to users who require
+location based services such as food delivery and door to door services. +
+Our application was developed with business users in mind, so this feature will benefit them greatly as they can locate potential +
+business contacts/customers easily.
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=googlemaps]
+
+#End of Extract#
+
+---
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=googlemaps]
+
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Add command `Draft email`
+
+Similar to the email feature, but enables users to compose email from the command line directly
+
+
+=== Other contributions
+
+* In-charge of weekly milestone allocation and scheduling
+* Assisted Jasmine in her upload photo feature, suggested her to save each image with a unique ID (email)
+* Assisted Daniel in designing and Mapping his QR Code feature
+
+== Project: PowerPointLabs
+
+{Optionally (not graded), you may include other projects in your portfolio.}

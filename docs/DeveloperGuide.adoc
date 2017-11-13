@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= ConnectUs - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,13 +10,35 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-W15-B3/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `W15-B3`      Since: `Jun 2016`      Licence: `MIT`
+
+== Introduction
+ConnectUs is an address book application that allows you to manage your contacts through the use of a command-line interface (CLI) or a graphical user interface (GUI). +
+
+This guide provides information that can help you contribute to the application in terms of coding and testing, and also allow you to better understand the features
+through the use of diagrams and explanations. +
+
+ConnectUs consists of the following features: +
+
+* Adding new contacts
+* Editing, deleting, sorting, and emailing existing contacts
+* Importing contacts from phone and exporting contacts to phone
+* Filtering and removing tags of contacts
+* Providing a view of the location in Google Maps by the contact's address
+* Generating QR code for calling, messaging and saving contacts
+* Changing colour theme
+* Uploading and deleting photos of contacts
+* Logging of user's actions
 
 == Setting up
 
 === Prerequisites
+
+In order to have a better experience in using the application, it would be good if you have the following
+java version installed:
+
 
 . *JDK `1.8.0_60`* or later
 +
@@ -34,22 +56,42 @@ Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plu
 
 === Setting up the project in your computer
 
-. Fork this repo, and clone the fork to your computer
-. Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
-. Set up the correct JDK version for Gradle
-.. Click `Configure` > `Project Defaults` > `Project Structure`
-.. Click `New...` and find the directory of the JDK
-. Click `Import Project`
-. Locate the `build.gradle` file and select it. Click `OK`
-. Click `Open as Project`
-. Click `OK` to accept the default settings
+The following describes the steps you would take to get started developing the application on your computer:
+
+1) Fork this repo, and clone the fork to your computer
+
+image::fork.png[width="1000"]
+
+2) Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
+
+3) Set up the correct JDK version for Gradle +
+   (a) Click `Configure` > `Project Defaults` > `Project Structure`
+
+image::configure.png[width="500"]
+
+(b) Click `New...` and find the directory of the JDK
+
+image::newSDK.png[width="500"]
+
+4) Click `Import Project`
+
+image::import.png[width="500"]
+
+5) Locate the `build.gradle` file and select it. Click `OK`
+
+6) Click `Open as Project`
+
+7) Click `OK` to accept the default settings
 . Open a console and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message. +
 This will generate all resources required by the application and tests.
 
+image::terminal.png[width="500"]
+
 === Verifying the setup
 
-. Run the `seedu.address.MainApp` and try a few commands
-. link:#testing[Run the tests] to ensure they all pass.
+1) Run the `seedu.address.MainApp` and try a few commands
+
+2) link:#testing[Run the tests] to ensure they all pass.
 
 === Configurations to do before writing code
 
@@ -57,12 +99,18 @@ This will generate all resources required by the application and tests.
 
 This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.md[oss-generic coding standards]. IntelliJ's default style is mostly compliant with ours but it uses a different import order from ours. To rectify,
 
-. Go to `File` > `Settings...` (Windows/Linux), or `IntelliJ IDEA` > `Preferences...` (macOS)
-. Select `Editor` > `Code Style` > `Java`
-. Click on the `Imports` tab to set the order
+1) Go to `File` > `Settings...` (Windows/Linux), or `IntelliJ IDEA` > `Preferences...` (macOS)
+
+image::preferences.png[width="200"]
+
+2) Select `Editor` > `Code Style` > `Java`
+
+3) Click on the `Imports` tab to set the order
 
 * For `Class count to use import with '\*'` and `Names count to use static import with '*'`: Set to `999` to prevent IntelliJ from contracting the import statements
 * For `Import Layout`: The order is `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, `import all other imports`. Add a `<blank line>` between each `import`
+
+image::codeStyle.png[width="500"]
 
 Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure Intellij to check style-compliance as you write code.
 
@@ -71,39 +119,48 @@ Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> docume
 After forking the repo, links in the documentation will still point to the `se-edu/addressbook-level4` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `se-edu/addressbook-level4`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
 
 ==== Setting up CI
-
-Set up Travis to perform Continuous Integration (CI) for your fork. See <<UsingTravis#, UsingTravis.adoc>> to learn how to set it up.
-
-Optionally, you can set up AppVeyor as a second CI (see <<UsingAppVeyor#, UsingAppVeyor.adoc>>).
+Travis CI is a hosted, distributed continuous integration service used to build and test software projects hosted at GitHub.
 
 [NOTE]
 Having both Travis and AppVeyor ensures your App works on both Unix-based platforms and Windows-based platforms (Travis is Unix-based and AppVeyor is Windows-based)
 
+
+To setup Travis, you can refer to <<UsingTravis#, UsingTravis.adoc>> to learn how to set it up.
+
+Optionally, you can set up AppVeyor as a second CI (see <<UsingAppVeyor#, UsingAppVeyor.adoc>>).
+
 ==== Getting started with coding
 
-When you are ready to start coding,
+Here are some tips to get you started on coding:
 
-1. Get some sense of the overall design by reading the link:#architecture[Architecture] section.
-2. Take a look at the section link:#suggested-programming-tasks-to-get-started[Suggested Programming Tasks to Get Started].
+1) Get some sense of the overall design by reading the link:#architecture[Architecture] section.
+
+2) Take a look at the section link:#suggested-programming-tasks-to-get-started[Suggested Programming Tasks to Get Started].
 
 == Design
 
 === Architecture
 
-image::Architecture.png[width="600"]
-_Figure 2.1.1 : Architecture Diagram_
+To help you better understand the relationship between each component in our application, the following section describes how each component interact
+with each other.
 
-The *_Architecture Diagram_* given above explains the high-level design of the App. Given below is a quick overview of each component.
+The *_link:#architecture-diagram[Architecture Diagram]_* given below explains the high-level design of the App. Given below is a quick overview of each component.
+
+image::Architecture.png[width="600"]
+_Figure 3.1.1 : Architecture Diagram_
+
 
 [TIP]
 The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
 
-`Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for,
+As seen in _Figure 3.1.1_, the App is made up of the following segments:
 
-* At app launch: Initializes the components in the correct sequence, and connects them up with each other.
-* At shut down: Shuts down the components and invokes cleanup method where necessary.
+The `Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for,
 
-link:#common-classes[*`Commons`*] represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level.
+* Initializing the components at app launch in the correct sequence, and connects them up with each other.
+* terminating the components whilst shutting down and invokes cleanup method where necessary.
+
+The link:#common-classes[*`Commons`*] represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level.
 
 * `EventsCenter` : This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design)
 * `LogsCenter` : Used by many classes to write log messages to the App's log file.
@@ -120,18 +177,23 @@ Each of the four components
 * Defines its _API_ in an `interface` with the same name as the Component.
 * Exposes its functionality using a `{Component Name}Manager` class.
 
-For example, the `Logic` component (see the class diagram given below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
 
+The following figure below shows the class diagram of the logic component.
+[[figure3.1.2]]
 image::LogicClassDiagram.png[width="800"]
-_Figure 2.1.2 : Class Diagram of the Logic Component_
+_Figure 3.1.2 : Class Diagram of the Logic Component_
+
+In the figure above, the `Logic` component defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
+
+
 
 [discrete]
 ==== Events-Driven nature of the design
 
-The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
+The _link:#sequence-diagram[Sequence Diagram]_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
 
 image::SDforDeletePerson.png[width="800"]
-_Figure 2.1.3a : Component interactions for `delete 1` command (part 1)_
+_Figure 3.1.3a : Component interactions for `delete 1` command (part 1)_
 
 [NOTE]
 Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
@@ -139,7 +201,7 @@ Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address 
 The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
 image::SDforDeletePersonEventHandling.png[width="800"]
-_Figure 2.1.3b : Component interactions for `delete 1` command (part 2)_
+_Figure 3.1.3b : Component interactions for `delete 1` command (part 2)_
 
 [NOTE]
 Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
@@ -147,9 +209,12 @@ Note how the event is propagated through the `EventsCenter` to the `Storage` and
 The sections below give more details of each component.
 
 === UI component
+This section describes how the UI component works.
+
+The figure below shows you on the structure of the UI component in our App.
 
 image::UiClassDiagram.png[width="800"]
-_Figure 2.2.1 : Structure of the UI Component_
+_Figure 3.2.1 : Structure of the UI Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
@@ -165,11 +230,15 @@ The `UI` component,
 
 === Logic component
 
+This section describes how the Logic component works.
+
+The following diagrams _Figure 3.3.1_ and _Figure 3.3.2_ shows the structure of the logic component.
+
 image::LogicClassDiagram.png[width="800"]
-_Figure 2.3.1 : Structure of the Logic Component_
+_Figure 3.3.1 : Structure of the Logic Component_
 
 image::LogicCommandClassDiagram.png[width="800"]
-_Figure 2.3.2 : Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in Figure 2.3.1_
+_Figure 3.3.2 : Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in Figure 2.3.1_
 
 *API* :
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
@@ -179,15 +248,19 @@ link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 .  The command execution can affect the `Model` (e.g. adding a person) and/or raise events.
 .  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
 
-Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
+Given below is the link:#sequence-diagram[Sequence Diagram] for interactions within the `Logic` component for the `execute("delete 1")` API call.
 
 image::DeletePersonSdForLogic.png[width="800"]
-_Figure 2.3.1 : Interactions Inside the Logic Component for the `delete 1` Command_
+_Figure 3.3.1 : Interactions Inside the Logic Component for the `delete 1` Command_
 
 === Model component
 
+This section describes how the Model component works.
+
+_Figure 3.4.1_ shows the structure of the Model Component
+
 image::ModelClassDiagram.png[width="800"]
-_Figure 2.4.1 : Structure of the Model Component_
+_Figure 3.4.1 : Structure of the Model Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
@@ -200,8 +273,12 @@ The `Model`,
 
 === Storage component
 
+This section describes how the Storage component works.
+
+Lastly, _Figure 3.5.1_ shows the structure of the Storage component.
+
 image::StorageClassDiagram.png[width="800"]
-_Figure 2.5.1 : Structure of the Storage Component_
+_Figure 3.5.1 : Structure of the Storage Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 
@@ -214,20 +291,255 @@ The `Storage` component,
 
 Classes used by multiple components are in the `seedu.addressbook.commons` package.
 
+[NOTE]
+Some examples of common classes includes: `StringUtil` , `FileUtil`, `IllegalValueException` etc.
+
 == Implementation
 
 This section describes some noteworthy details on how certain features are implemented.
+// tag::email[]
+
+=== Email Function
+(added in v1.2)
+
+The email function allows a user to email the selected person by opening an email client on the user's
+PC with the 'to:' field filled with the receiver's email.
+
+This function has been mapped to `EmailButton`
+
+Once a `PersonPanelSelectionChangedEvent` is raised, `EmailButton` will save the currently selected
+email under the "email" attribute.
+[source,java]
+----
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        this.selectedEmail = event.getNewSelection().person.emailProperty().getValue().toString();
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+    }
+----
+
+
+The following sequence diagram describes how `OpenEmailClient` passes in the "email" attribute to `Desktop`
+
+image::OpenEmailClientSequenceDiagram.png[width="800"]
+_Figure 4.1.1 : Sequence Diagram of the Email function_
+
+==== Design Considerations
+
+**Aspect:** Functionality of `Email` +
+**Alternative 1 (current choice):** Open up an email client in another window by calling `OpenEmailClient` with to field filled with receiver's email. +
+**Pros:** Easier to implement, user will be familiar with his/her prefered email client. +
+**Cons:** Only one field filled up, user still has to manually compose email. +
+**Alternative 2:** Build a form within current GUI and compose email there. +
+**Pros:** Better performance, does not rely on additional software. +
+**Cons:** Makes the current UI even more cluttered and confusing.
+
+---
+
+//end::email[]
+// tag::googlemaps[]
+
+=== Displaying a contact's location on Google Maps
+(added in v1.2)
+
+In this section, we explain how a contact's location is displayed on Google Maps whenever a selection is made. +
+
+Whenever a `PersonPanelSelectionChangedEvent` is raised, the loadPersonPage method in `BrowserPanel` will update the address to the currently selected person.
+[source,java]
+----
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadPersonPage(event.getNewSelection().person);
+    }
+----
+
+The browser will then render the new URL it has received. Below is the code snippet of `loadPersonPage`
+[source,java]
+----
+    public void loadPersonPage(ReadOnlyPerson person) {
+        browser.getEngine().setUserAgent("Mozilla/5.0 "
+                + "(Windows NT x.y; Win64; x64; rv:10.0) Gecko/20100101 Firefox/10.0");
+        loadPage(GOOGLE_SEARCH_URL_PREFIX + person.getAddress().toString().replaceAll(" ", "+"));
+    }
+----
+
+[NOTE]
+The browser's user agent had to be set to ** "Mozilla/5.0 "
+                                                          + "(Windows NT x.y; Win64; x64; rv:10.0) Gecko/20100101 Firefox/10.0" **because
+there were unicode issue's when load Google Maps on Mac computers.
+
+//end::googlemaps[]
+// tag::mapping[]
+
+=== Mapping a command to a JavaFX Button
+(added in v1.2)
+
+This section describes how a command can be mapped to a JavaFX button.
+
+We will use the `DeleteButton` as an example but it can work for any command currently availble
+in the application.
+
+To initialise the button, we have to create a `StackPane` placeholder for it in `MainWindow`
+[source,java]
+----
+@FXML
+    private StackPane deleteButtonPlaceholder;
+----
+Next, we create the `DeleteButton` class with the following constructor:
+[source,java]
+----
+    public DeleteButton(Logic logic, int selectedIn) {
+        super(FXML);
+        this.logic = logic;
+        this.selectedIndex = selectedIn;
+        registerAsAnEventHandler(this);
+    }
+----
+
+The `DeleteButton` will be instatiated in `MainWindow` where the
+placeholder adds the corresponding button element:
+[source,java]
+----
+
+        deleteButton = new DeleteButton(logic, 0);
+        deleteButtonPlaceholder.getChildren().add(deleteButton.getRoot());
+----
+
+Once a `PersonPanelSelectionChangedEvent` is raised, `DeleteButton` will save the currently selected
+index under the "selectedIndex" attribute.
+
+The `DeleteButton` has an instance of  `Logic` and `CommandResult` which performs a similar function
+to `CommandBox`.
+
+When the DeleteButton is pressed, it will be handled by the handleDeleteButtonPressed() function:
+
+[source,java]
+----
+ @FXML
+    private void handleDeleteButtonPressed() throws CommandException, ParseException {
+        CommandResult commandResult = logic.execute("delete " + getSelectedIndex());
+        logger.info("Result: " + commandResult.feedbackToUser);
+    }
+----
+
+//end::mapping[]
+// tag::form[]
+
+=== Edit form implementation and validation
+
+image::form.png[width="150"]
+_Figure 4.4.1 : Edit Person Form_
+
+This section describes how the edit form has been implemented.
+
+Similar to the deleteButton, the editButton has been mapped to the `edit` command. Refering to _Figure 4.4.1_, this +
+command will be called whenever the `Save` button is pressed. Fields that have changed in TextFields 1, 2, 3, 4 and 5 (`Name`, `Phone`, `Email`, `Address` and `Tags`) would be be saved for the currently selected user. Thus, we have to make sure that the user
+inputs the correct command parameters into the `edit` command so that there would be no input errors.
+
+Textfields for each of the 5 fields are implemented this way, in this example, here's how the name field gets saved:
+[source,java]
+----
+public class NameTextField extends UiPart<Region> {
+
+    public static final String ERROR_STYLE_CLASS = "error";
+    private static final String FXML = "NameTextField.fxml";
+    private final Logger logger = LogsCenter.getLogger(CommandBox.class);
+
+    @FXML
+    private TextField nameTextField;
+
+    public NameTextField() {
+        super(FXML);
+        registerAsAnEventHandler(this);
+    }
+    public String getNameTextField() {
+        return nameTextField.getText();
+    }
+
+    public void setNameTextField(String text) {
+        nameTextField.setText(text);
+    }
+    public TextField getObject() {
+        return nameTextField;
+    }
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        setNameTextField(event.getNewSelection().person.getName().toString());
+    }
+}
+----
+
+As shown above, whenever a user selects a new contact, the details of that contact would be displayed on the textfield +
+through the use of this event listener:
+
+[source,java]
+----
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        setNameTextField(event.getNewSelection().person.getName().toString());
+    }
+----
+
+The user can now modify the selected field, in this case, the name field. Once he is happy with the changes, he goes +
+on to click the save button.
+
+Shown below is a code snippet of where the save button gets instantiated. It takes in the textfields as parameters:
+
+[source,java]
+----
+//extracted from MainWindow.java
+// void fillInnerPats()
+// ...
+
+        editButton = new EditButton(logic, nameTextField, phoneTextField,
+                emailTextField, addressTextField, tagTextField);
+----
+
+Before the contact details are saved, `EditButton` does a check on whether the inputs are valid:
+
+[source,java]
+----
+    public static String checkInput(String name, String phone, String email, String address, String tag) {
+        if (name.matches(".*\\d+.*") || name.isEmpty()) {
+            return NAME_ERROR;
+        }
+        if (!phone.matches("[0-9]+")) {
+            return PHONE_ERROR;
+        }
+        if (!email.contains("@") || !email.contains(".")) {
+            return EMAIL_ERROR;
+        }
+        //check tag doesnt end with a special character
+        String[] tagSplit = tag.split(",");
+        for (int i = 0; i < tagSplit.length; i++) {
+            if (!tagSplit[i].matches("[a-zA-Z0-9]*")) {
+                return TAG_ERROR;
+            }
+        }
+        return VALIDATION_SUCCESS;
+    }
+----
+
+The contact would only be saved if this function returns a `VALIDATION_SUCCESS`, else it would output an input format error.
+
+// end::form[]
 
 // tag::undoredo[]
 === Undo/Redo mechanism
 
 The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the address book (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
 
-`UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
+`UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead.
+
+The following diagram shows the inheritance diagram for commands:
 
 image::LogicCommandClassDiagram.png[width="800"]
+_Figure 4.5.1 : Class Diagram for Logic Command_
 
-As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
+As you can see in _Figure 4.5.1_, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
 
 Commands that are not undoable are implemented this way:
 [source,java]
@@ -262,29 +574,34 @@ public class DeleteCommand extends UndoableCommand {
 
 Suppose that the user has just launched the application. The `UndoRedoStack` will be empty at the beginning.
 
-The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
+As shown in _Figure 4.5.2_ below, the user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
 
 image::UndoRedoStartingStackDiagram.png[width="800"]
+_Figure 4.5.2: Undoable Command example_
 
-As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person.
+As the user continues to use the program, more commands are added into the `undoStack`. For example in _Figure 4.5.3_, the user may execute `add n/David ...` to add a new person.
 
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
+_Figure 4.5.3: Undoable Command example_
 
 [NOTE]
 If a command fails its execution, it will not be pushed to the `UndoRedoStack` at all.
 
 The user now decides that adding the person was a mistake, and decides to undo that action using `undo`.
 
-We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed.
+We will pop the most recent command out of the `undoStack` and push it back to the `redoStack` as shown in _Figure 4.5.4_. We will restore the address book to the state before the `add` command executed.
 
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
+_Figure 4.5.4: Undoable Command example_
 
 [NOTE]
 If the `undoStack` is empty, then there are no other commands left to be undone, and an `Exception` will be thrown when popping the `undoStack`.
 
-The following sequence diagram shows how the undo operation works:
+The following link:#sequence-diagram[sequence diagram] shows how the undo operation works:
 
 image::UndoRedoSequenceDiagram.png[width="800"]
+
+_Figure 4.5.5_ : Sequence Diagram of the Undo and Redo function._
 
 The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
 
@@ -294,14 +611,17 @@ If the `redoStack` is empty, then there are no other commands left to be redone,
 The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow).
 
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
+_Figure 4.5.6: Undoable Command example_
 
 Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution:
 
 image::UndoRedoNewCommand3StackDiagram.png[width="800"]
+_Figure 4.5.7: Undoable Command example_
 
-The following activity diagram summarize what happens inside the `UndoRedoStack` when a user executes a new command:
+The following link:#activity-diagram[activity diagram]summarize what happens inside the `UndoRedoStack` when a user executes a new command:
 
 image::UndoRedoActivityDiagram.png[width="200"]
+_Figure 4.5.8: Undoable Command Activity Diagram_
 
 ==== Design Considerations
 
@@ -364,9 +684,895 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
+// tag::import[]
+=== Import Command
+(added in v1.2)
+
+The import command is a new feature implemented that allows the user to import contact details directly from some external source.
+
+The logic is implemented by reading the external source file and then retrieving the relevant contact details by reading the file line by line.
+
+Once the required information (name, email, address, phone number) is retrieved from the data, a Person object will be created and the Model will then add the person into the address book.
+
+* The user will first enter the command `import FILENAME.vcf` where the `FILENAME` is the name of the file.
+
+* Next, the `AddressBookParser` class will retrieve the command as well as the argument and then call the `ImportCommandParser` class with the `FILENAME` as the argument.
+
+----
+        case ImportCommand.COMMAND_WORD:
+        case ImportCommand.COMMAND_ALIAS:
+            return new ImportCommandParser().parse(arguments);
+----
+
+* Then, in the `ImportCommandParser` class the file will be retrieved by the java `FILE` class which will access and convert the file into a byte stream using `bufferedReader` and `fileReader` class.
+
+* Once the file is loaded into the `bufferedReader`, the `ImportCommandParser` class will read the file line by line to identify the required contact information that is inside the file.
+
+---
+    public ImportCommand parse(String args) {
+        String filename = args.trim();
+        ArrayList<ReadOnlyPerson> p = new ArrayList<ReadOnlyPerson>();
+        BufferedReader br = null;
+        FileReader fr = null;
+
+---
+
+* The class uses simple String comparison to identify key words such as "FN" for name and "EMAIL" for email address etc.
+
+---
+                if (currLine.contains("FN")) {
+                    name = currLine.split(":")[1];
+                }
+                if (currLine.contains("TEL")) {
+                    phone = currLine.split(":")[1];
+                }
+                if (currLine.contains("ADR")) {
+                    address = currLine.split(";")[2];
+                }
+                if (currLine.contains("EMAIL")) {
+                    email = currLine.split(":")[1];
+                }
+
+---
+
+* Once the line reads the keyword "END", it means that the end of the first contact has been accessed and all its required values were all retrieved by the class.
+
+* Then using the informaton the class retrieved, it will then create a `Person` object. This object is then stored inside a `ReadOnlyPerson` array.
+
+---
+
+ try {
+    Name n = new Name(name);
+    Phone pe = new Phone(phone);
+    Email e = new Email(email);
+    Address a = new Address(address);
+    ReadOnlyPerson person = new Person(n, pe, e, a, tagList);
+         p.add(person);
+      } catch (IllegalValueException ie) {
+        ie.getMessage();
+     }
+
+---
+
+* When all the contact in the file has been accessed and created as a `Person` object and stored inside the array, the `ImportCommandParser` will then return a new `ImportCommand()` that will parse the array to the `ImportCommand` class for execution.
+
+* The `ImportCommand` class will retrieve the `ReadOnlyPerson` array that was parsed into its' constructor and then loop through the array and add each `Person` object into the addressbook.
+
+---
+    private ArrayList<ReadOnlyPerson> p;
+    public ImportCommand(ArrayList<ReadOnlyPerson> list) {
+        this.p = list;
+    }
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        if (p.isEmpty()) {
+            return new CommandResult(MESSAGE_FAILURE);
+        } else {
+            try {
+                for (ReadOnlyPerson pp : p) {
+                    model.addPerson(pp);
+                }
+            } catch (DuplicatePersonException de) {
+                throw new CommandException(AddCommand.MESSAGE_DUPLICATE_PERSON);
+            }
+            LoggingCommand loggingCommand = new LoggingCommand();
+            loggingCommand.keepLog("", "Import Action");
+            return new CommandResult(MESSAGE_SUCCESS);
+        }
+    }
+
+---
+
+* Lastly, the `ImportCommand` class will return a success message to inform the user that all the contacts has been imported.
+
+==== Design Considerations
+
+**Aspect:** The types of file that can be imported using the Import command. +
+**Alternative 1 (current choice):** Currently, the import command can only read files that has the extension `.vcf`. +
+**Pros:** Multi platform compatibility and the format in `.vcf` file enables the program to retrieve the information easily. +
+**Cons:** Since the logic is written specifically for `.vcf` files, we will have to rewrite the logic if we want to support other file types in the future. +
+**Alternative 2:** use `.csv` file as the import source +
+**Pros:** Format is simple, each value is separated by a comma. +
+**Cons:** Values in the file will have a hard time to be mapped into each variable as each value is only separated by a comma, mistakes can be made when trying to map each values into each category. +
+
+---
+
+**Aspect:** Which directory to access the source file. +
+**Alternative 1 (current choice):** Currently, the file has to be stored in /main directory. +
+**Pros:** Easy to develop the logic as there is only one filepath . +
+**Cons:** User will have to specifically place the file in the /main directory which does not really make sense. +
+**Alternative 2:** Create a `File upload` function. +
+**Pros:** User friendly. User can upload a file that is residing in any part of the user's PC. Does not require user to specifically place the file at the /data directory. +
+**Cons:** Requires an `Upload` button to be created, involves UI component. Requires more time to develop the upload function. +
+
+// end::import[]
+
+// tag::filtertag[]
+
+=== Filter by tag mechanism
+(added in v1.2)
+
+The filter by tag mechanism logic is implemented by the `TagContainsKeywordsPredicate` class which lies under Model. +
+
+* The keywords inputted by the user is put into a List<String> and
+then parses into `TagContainsKeywordsPredicate`. +
+* `TagContainsKeywordsPredicate` will override the test(ReadOnlyPerson) method where the method checks against the list of tags of each person and returns true for the person
+that has the tags similar to the keywords. +
+* After which, the predicate returned by `TagContainsKeywordsPredicate` will be saved in `TagCommand`. The tag command is not undoable so it will just override execute().
+* At the method execute(), the predicate is then used to update the filtered list when it is parsed into the method updateFilteredPersonList(Predicate) which belongs to the `Model` class. +
+* The filtered list size is then parsed into the getMessageForPersonListShownSummary(int) which will return the `CommandResult` to show to the user. +
+* The result will be the message showing the amount of persons in the filtered list and the display of the filtered list. +
+
+
+==== Design Considerations
+**Aspect:** Implementation logic of `TagCommand` +
+**Alternative 1 (current choice):** Keywords(case-insensitive) that are substrings or equal to the tag names will match +
+**Pros:** Easy and convenient for users to search for specific tags. +
+**Cons:** If the user only type a common letter or substring found in all tag names, more persons will be returned which makes it difficult to search for the specific tag. +
+**Alternative 2:** Only keywords(case-sensitive) that are exactly equal to the tag names will match +
+**Pros:** Results in an accurate filtered list  +
+**Cons:** Requires user to type the exact tag name which makes it inconvenient. As convenience is more important, Alternative 1 is chosen.
+
+// end::filtertag[]
+
+// tag::removetag[]
+=== Remove tag mechanism
+(added in v1.2)
+
+The remove tag mechanism is implemented by `Logic` and `Model`.
+
+* When parsing the command,each of the keywords inputted by the user is used to create a new Tag object that is put into a ArrayList<Tag>. +
+* The ArrayList<Tag> is then parsed in to `RemoveTagCommand` which is returned by the `RemoveTagCommandParser` class. +
+* The `RemoveTagCommand` is undoable so it will execute and override executeUndoableCommand() instead of overriding execute().
+* Under the executeUndoableCommand() method in the `RemoveTagCommand` under `Logic`, each `Tag` inside the ArrayList<Tag> is then sent to the removeTag(Tag) method which is handled by the
+`ModelManager` which implements `Model`. The method removes any tags of a person that matches the tag in the ArrayList. +
+* The method works by looping the person list in the 'AddressBook' and creating a new `Person` object called newPerson for each `Person` in the list. The Set<Tag> is then obtained from the newPerson
+and then removes the `Tag` that is parsed into the method. +
+* The setTags is then set for the newPerson and the updatePerson(oldPerson, newPerson) method is subsequently called to update the `Person` in the `AddressBook`.
+* `RemoveTagCommand` also handles the checking of whether the Tag(keyword) matches any of the existing tags in ConnectUs.
+
+[NOTE]
+If the keywords is not identical to any of the existing tag names, 'CommandResult' will notify the user that no tags has been removed. Otherwise, a success message will be shown.
+
+The following sequence diagram shows how the remove tag operation works:
+
+image::removeTag_sequenceDiagram.png[width="800"]
+_Figure 4.8.1: Remove Tag Sequence Diagram_
+
+==== Design Considerations
+**Aspect:** Implementation logic of `RemoveTagCommand` +
+**Alternative 1 (current choice):** Only keywords(case-sensitive) that are exactly equal to the tag names will match +
+**Pros:** Ensures that only the tag specified by the user gets deleted.  +
+**Cons:** Requires user to type the exact tag name which makes it inconvenient. +
+**Alternative 2 :** Keywords(case-insensitive) that are substrings or equal to the tag names will match +
+**Pros:** More convenient for users to type. +
+**Cons:** If the user only type a common letter or substring found in all tag names, some tags which may not be what the user wanted may get deleted.
+ Even though the command can be undone, it is undesirable to have this logic when deleting. +
+
+---
+
+**Aspect:** Data structure to support the `RemoveTagCommand` +
+**Alternative 1 (current choice):** Use an ArrayList<Tag> to store the keywords +
+**Pros:** Compares between the same object Tag which can ensure that only the tag specified by the user gets deleted.  +
+**Cons:** Requires more overhead at creating the object Tag for each keyword +
+**Alternative 2 :** Use an ArrayList<String> to store the keywords +
+**Pros:** Less overhead as can compare between keyword strings and tag name strings +
+**Cons:** Further implementation and checks required to check that the keyword is identical to the tag name +
+
+// end::removetag[]
+
+// tag::colourtheme[]
+=== Change colour theme mechanism
+(added in v1.2)
+
+You can customise the look of the application by changing the color theme. This feature can be done on the GUI or the CLI.
+
+The colour theme options are implemented by the `UI`
+on the `MainWindow` MenuBar as MenuItems. +
+
+* When the option is clicked, it will trigger the specified action for the MenuItem. E.g. Clicking on "White Theme" MenuItem
+will trigger the onAction method "handleWhiteTheme". +
+* The method adds the stylesheet to the `VBox` that is specific for the colour theme chosen and removes the stylesheets
+that belongs to other colours. +
+
+For the CLI, the `ChangeThemeCommand` makes use of the `EventsCenter` to post the event `ThemeChangeEvent` whenever the command is executed.
+
+* When the command is executed, the theme inputted by you would be saved as a String variable to the `ThemeChangeEvent`.
+* The method "handleThemeCommand" on the `MainWindow` is subscribed to the `ThemeChangeEvent` and will check with the saved theme to handle
+the specific themes.
+* The same onAction methods will be triggered for the different specific themes and follows the GUI implementation as above.
+
+The diagrams shows the UI of the additional colour themes:
+
+image::whiteThemeUI.jpeg[width="800"]
+_Figure 4.9.1 : White Theme_
+
+image::Ui.png[width="800"]
+_Figure 4.9.2 : Green Theme_
+
+// end::colourtheme[]
+
+// tag::uploadphoto[]
+=== Upload photo mechanism
+(added in v1.4)
+
+The uploading photo mechanism is implemented by `EventsCenter` and `Logic`.
+
+* There are two ways a user can upload a photo to the contact, either by choosing an image from a file explorer or inputting in the image file path in the command. +
+* After the user enters the command, the `UploadPhotoCommandParser` will separate the argument into the index and file path before parsing both variables into `UploadPhotoCommand`. +
+* In `UploadPhotoCommand`, the execute() method will check for invalid index before checking if filePath string is empty. The file explorer will open for the user to choose an image if the filePath string is empty. +
+* Next, the method will check if the file is a valid image file before saving the file into the project directory, as well as raising an event called `PhotoChangeEvent` as seen below.
+[source,java]
+----
+    if (isValidImageFile(imageFile)) {
+                saveFile(imageFile, personToUploadImage.getEmail());
+                EventsCenter.getInstance().post(new PhotoChangeEvent());
+            } else {
+                throw new CommandException(String.format(MESSAGE_UPLOAD_IMAGE_FALURE));
+            }
+----
+* The event is raised to allow instant display of the modification of the photo. To implement this, `PersonCard` is registered as an event handler and includes a @Subscribe handlePhotoChange to handle the event of uploading the photo. +
+* The handlePhotoChange method will set the `ImageView` to the new image file path of the uploaded photo in the project directory.
+
+[NOTE]
+If the file given is not a valid image file, a 'CommandException' will be thrown to specify that the file is invalid.
+
+==== Design Considerations
+**Aspect:** Storing of photo for each contact in `UploadPhotoCommand` +
+**Alternative 1 (current choice):** The uploaded photo file name is saved as the person's email. +
+**Pros:** Implementation needs just `EventsCenter` and `PersonCard` to handle any change of photo event and instantly displays the change.  +
+**Cons:** Requires other modification to the storage of photo logic such as deleting or clearing contacts, as well as adding and editing a contact. +
+**Alternative 2 :** Modify `Person` in `Model` to include a `Photo` attribute. +
+**Pros:** Reliable as the photo path is always stored for each `Person`. +
+**Cons:** Requires a lot of modification to codes that will require `Person` , as well as changing tests to reflect the additional attribute.
+
+// end::uploadphoto[]
+
+// tag::export[]
+=== Export Command
+(added in v1.3)
+
+The export command is a new feature implemented that allows the user to export contact details to other external applications.
+
+This feature enables the user to do a backup of their contact details from our application to other applications that support the vCard format for contact details.
+
+Similar to the import command, the logic for the export command will read all the `ReadOnlyPerson` object that is stored in the addressbook array.
+
+And for each `ReadOnlyPerson` object found in the array, the required information (name, email, address, phone number) will be retrieved and placed onto a crafted vCard format string variable for writing to a vCard file.
+
+* The user will first enter the command `export` from the command line interface
+
+* Next, the `AddressBookParser` class will be invoked and the  `ExportCommand` class will be called.
+
+---
+    case ExportCommand.COMMAND_WORD:
+    case ExportCommand.COMMAND_ALIAS:
+        return new ExportCommand();
+
+---
+
+* In the `ExportCommand` class, the class will first check if the address book is empty.
+
+* If the address book is empty, it will return an error message to the user indicating that there is nothing to export.`
+
+---
+        if (model.getAddressBook().getPersonList().isEmpty()) {
+            return new CommandResult(MESSAGE_EMPTY_AB);
+
+---
+
+* Once the class checks that there are objects in the address book array that can be retrieved, the class will call the method `writeToFile()` to do the necessary retrieving of the data
+
+* The `writeTofile()` method will first create a filename called `output.vcf`.
+
+* The method then use the `bufferedWriter` and the `fileWriter` class to write all the information retrieved onto a string variable in each iteration..
+
+* Lastly, we call the `close()` method in both `bufferedWriter` and `fileWriter` in order to save the output onto the file `output.vcf`.
+
+---
+    /**
+     * This method handles the writing of contacts to a file
+     */
+    private void writeToFile() throws IOException {
+        final String filename = "output.vcf";
+        FileWriter fw = new FileWriter(filename);
+        BufferedWriter bw = new BufferedWriter(fw);
+        for (ReadOnlyPerson p : model.getAddressBook().getPersonList()) {
+            String header = "BEGIN:VCARD\n";
+            String version = "VERSION:3.0\n";
+            String fullName = "FN:" + p.getName().toString() + "\n";
+            String name = "N:;" + p.getName().toString() + ";;;\n";
+            String email = "EMAIL;TYPE=INTERNET;TYPE=HOME:" + p.getEmail().toString() + "\n";
+            String tel = "TEL;TYPE=CELL:" + p.getPhone().toString() + "\n";
+            String address = "ADR:;;" + p.getAddress().toString() + ";;;;\n";
+            String footer = "END:VCARD\n";
+            bw.write(header);
+            bw.write(version);
+            bw.write(fullName);
+            bw.write(name);
+            bw.write(email);
+            bw.write(tel);
+            bw.write(address);
+            bw.write(footer);
+        }
+        if (bw != null) {
+            bw.close();
+        }
+        if (fw != null) {
+            fw.close();
+        }
+    }
+
+---
+
+==== Design Considerations
+
+**Aspect:** The types of file that can be exported using the export command. +
+**Alternative 1 (current choice):** Currently, the export command can only output files onto a file with the extension `.vcf`. +
+**Pros:** Multi platform compatibility and the format in `.vcf` file enables the user to use our output as a backup onto other application that supports it. +
+**Cons:** Since the logic is written specifically for `.vcf` files, we will have to rewrite the logic if we want to support other file types in the future. +
+**Alternative 2:** use `.csv` file as the import source +
+**Pros:** Format is simple, each value is separated by a comma. +
+**Cons:** All values will have a hard time to be retrieved and mapped into each variable as each value is only separated by a comma, mistakes can be made when trying to map each values into each category. +
+
+---
+
+**Aspect:** Which directory to access the source file. +
+**Alternative 1 (current choice):** Currently, the file will be stored in `/main` directory. +
+**Pros:** Easy to develop the logic as there is only one filepath . +
+**Cons:** User will have to specifically place the file in the /main directory which does not really make sense. +
+**Alternative 2:** Create a `Export` button for the user on the GUI. +
+**Pros:** User friendly. User can simply click on an `Export` button and all the contacts will be exported.
+**Cons:** Requires an `Export` button to be created, involves UI component.
+
+// end::export[]
+
+// tag::deletephoto[]
+=== Delete photo mechanism
+(added in v1.5)
+
+The delete photo mechanism is similar to the upload photo mechanism where it is also implemented by `EventsCenter` and `Logic`.
+
+* After inputting the command with the index of the person in the argument, `DeletePhotoCommandParser` will parse in the index into `DeletePhotoCommand`. +
+* At the execute() method of `DeletePhotoCommand`, the method first checks if the index given is larger than the current filteredPersonList. If it is, a `CommandException` will be thrown to indicate invalid index. +
+* Next, the method will get the `ReadOnlyPerson` object based on the index given.
+* A method called isPhotoExist will check if there is an existing photo for the current person before deleting the photo as shown in the code below:
+[source,java]
+----
+     if (isPhotoExist(personToDeleteImage)) {
+                deletePhoto(personToDeleteImage);
+                EventsCenter.getInstance().post(new PhotoChangeEvent());
+            } else {
+                throw new CommandException(String.format(MESSAGE_DELETE_IMAGE_FAILURE));
+            }
+----
+* The event is raised to allow instant display of the modification of the photo. To implement this, `PersonCard` is registered as an event handler and includes a @Subscribe handlePhotoChange to handle the event of deleting the photo. +
+* The handlePhotoChange method will set the `ImageView` to the default image file path in the project directory.
+
+[NOTE]
+If the person does not have an existing uploaded photo, a 'CommandException' will be thrown to specify that the person does not have a photo to delete.
+
+// end::deletephoto[]
+
+// tag::deletesallphotos[]
+=== Deletes all photos mechanism
+(added in v1.5)
+
+The deletes all photos mechanism is similar to the delete photo mechanism where it is also implemented by `EventsCenter` and `Logic`.
+
+* After entering the command, the execute() method in `DeletesAllPhotosCommand` will delete all the photos in the project directory. +
+
+==== Design Considerations
+**Aspect:** Implementation of code +
+**Alternative 1 (current choice):** Implementing this feature in a separate `DeletesAllPhotosCommand` class +
+**Pros:** Separation of Concerns Principle (SoC) is not violated as the `DeletesAllPhotosCommand` class simply handles the deletion of all photos. +
+**Cons:** One more command has to be added which can inconvenience the user. +
+**Alternative 2 :** Implementing this feature in the `DeletePhotoCommand` class by having the same command and different parameters +
+**Pros:** There will be one less command which makes it more convenient to the user. +
+**Cons:** This will violate Separation of Concerns Principle (SoC) as even though both classes concerns the deletion of photos, `DeletePhotoCommand` +
+is specifically concerned in deleting a person's photo while `DeletesAllPhotosCommand` is concerned with deleting all photos.
+
+// end::deletesallphotos[]
+
+=== LoggingCommand Function
+(added in v1.2)
+// tag::loggingcom[]
+
+In this section, we explain how logging is done in the application whenever an important action is taken by user.
+
+Whenever an action such as "Add", "Clear", "Delete", "Edit", "Email", "Import", "List", "Redo", "RemoveTag", "Undo", "UploadPhoto", "DeletePhoto" & "DeletesAllPhotos" is executed, the LoggingCommand method will be called and information of the action is recorded in ConnectUsLog.txt with a timestamp.
+
+With slight modification to link:#figure3.1.2[Figure 3.1.2], we have the following diagram showing the Class Diagram on how LoggingCommand is implemented in the system.
+
+image::LogCommandClassDia.png[]
+_Figure 4.15.1 : Class Diagram of LoggingCommand function_
+
+The sequence diagram uses delete command as an example on how LoggingCommand is implemented.
+
+image::loggingcommandseq.png[]
+_Figure 4.15.2 : An example of Sequence Diagram for LoggingCommand function used for delete_
+
+This is how you can use the LoggingCommand method in your code.
+[source,java]
+----
+   LoggingCommand loggingCommand = new LoggingCommand();
+   loggingCommand.keepLog("Information", "Type of Action such as Add,Clear,etc.");
+----
+[NOTE]
+With reference to the code for LoggingCommand, the "information" indicate the data that the user are editing with while "type of action" indicate the action taken by the user.
+// end::loggingcom[]
+
+=== ClearLog Function
+(added in v1.3)
+// tag::clearlog[]
+[NOTE]
+This action is irreversible.
+
+In this section, we will explain how users can clear their log for ConnectUsLog.txt file.
+
+In cases, where you want to keep your logfile organised by clearing logfile such as after checks or confirmation of log details. The logfile information is no longer useful to the user and this method allow that action.
+
+This function has been mapped to `ClearLogButton` and 'clearlog' 'cl' for commandline.
+
+The following sequence diagram describes how 'ClearLogCommand' delete ConnectUsLog.txt file when method is called.
+
+image::clearlogseq.png[]
+_Figure 4.16.1 : Sequence Diagram of the ClearLogCommand_
+
+The ClearLog Method is implemented in the 'ClearLogButton' with the following codes.
+[source,java]
+----
+       @FXML
+       private void handleClearLogButtonPressed() throws CommandException, ParseException, IOException {
+           Alert alert = new Alert(AlertType.CONFIRMATION, "Are you sure you want clear the log?",
+                   ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
+           alert.showAndWait();
+           if (alert.getResult() == ButtonType.YES) {
+               ClearLogCommand clearLogCommand = new ClearLogCommand();
+               clearLogCommand.execute();
+               logger.info("Log has been cleared.");
+           }
+       }
+----
+
+The ClearLog Method implementation for commandline with the following codes.
+[source,java]
+----
+    public CommandResult execute() throws CommandException, IOException {
+        File file = new File("ConnectUsLog.txt");
+        file.delete();
+        return new CommandResult(MESSAGE_SUCCESS);
+    }
+----
+// end::clearlog[]
+
+=== QrCall Function
+(added in v1.4)
+// tag::qrcall[]
+
+In this section, we explain how users can generation Quick Response(QR) Code for calling with any contact number available in the addressbook.
+
+To make user experience more convenience, QR Code can make calling easy through the use of Smartphone with QR Scanner application installed.
+
+This function has been mapped to `QrButton` and `qrcall` `qc` for commandline.
+
+The following sequence diagram describes how 'QrCall' Generates QR Code using commandline.
+
+image::QrCallCommand.png[]
+_Figure 4.17.1 : Sequence Diagram of the QrCallCommand_
+
+The QrCallCommandParser Method is implemented with the following code.
+[source,java]
+----
+          public QrCallCommand parse(String args) throws ParseException {
+              try {
+                  Index index = ParserUtil.parseIndex(args);
+                  return new QrCallCommand(index);
+              } catch (IllegalValueException ive) {
+                  throw new ParseException(
+                          String.format(MESSAGE_INVALID_COMMAND_FORMAT, QrCallCommand.MESSAGE_USAGE));
+              }
+          }
+----
+
+The QrCallCommand Method implementation for commandline with the following codes.
+[source,java]
+----
+     @Override
+        public CommandResult execute() throws CommandException {
+
+            List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+
+            if (targetIndex.getZeroBased() >= lastShownList.size()) {
+                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            }
+            int indexOfPersonInList = targetIndex.getOneBased() - 1;
+            EventsCenter.getInstance().post(new QrEvent(lastShownList.get(indexOfPersonInList)));
+            return new CommandResult(String.format(MESSAGE_SELECT_PERSON_SUCCESS, targetIndex.getOneBased()));
+
+        }
+----
+
+The QrEvent Method implementation for commandline with the following codes.
+[source,java]
+----
+        @Override
+        public String toString() {
+            return this.getClass().getSimpleName();
+        }
+        public ReadOnlyPerson getPerson() {
+            return person;
+        }
+----
+
+The QrButton Method implementation for commandline with the following codes.
+[source,java]
+----
+    @FXML
+    private void handleQrButtonPressed() throws CommandException, ParseException, IOException {
+        if ( person != null) {
+            bp.loadQrCode(person);
+            logger.info("QR Code displayed");
+        } else {
+            logger.info(MESSAGE_FAIL);
+        }
+    }
+----
+
+The BrowserPanel Method implementation for commandline with the following codes.
+[source,java]
+----
+       public void loadQrCode(ReadOnlyPerson person) {
+           QrGenCallCommand qrGenCallCommand = new QrGenCallCommand();
+           browser.getEngine().setUserAgent("Mozilla/5.0 "
+                   + "(Windows NT x.y; Win64; x64; rv:10.0) Gecko/20100101 Firefox/10.0");
+           loadPage(qrGenCallCommand.qrCall(person.getPhone().toString()));
+       }
+----
+
+The QrGenCallCommand to retrieve QrCode with the following codes.
+[source,java]
+----
+       public String qrCall(String phoneNum) {
+              String qrCodeA = "http://";
+              String qrCodeB = "api.qrserver.com/";
+              String qrCodeC = "v1/";
+              String qrCodeD = "create-qr-code/";
+              String qrCodeE = "?color=000000";
+              String qrCodeF = "&bgcolor=FFFFFF";
+              String qrCodeG = "&data";
+              String qrCodeH = "=tel";
+              String qrCodeI = "%3A";
+              String qrCodeJ = "&qzone";
+              String qrCodeK = "=1";
+              String qrCodeL = "&margin";
+              String qrCodeM = "=0";
+              String qrCodeN = "&size";
+              String qrCodeO = "=500x500";
+              String qrCodeP = "&ecc";
+              String qrCodeQ = "=L";
+              String qrLineA = qrCodeA + qrCodeB + qrCodeC + qrCodeD + qrCodeE + qrCodeF
+                      + qrCodeG + qrCodeH + qrCodeI;
+              String qrLineB = qrCodeJ + qrCodeK + qrCodeL + qrCodeM + qrCodeN + qrCodeO
+                      + qrCodeP + qrCodeQ;
+              String fullQr = qrLineA + phoneNum + qrLineB;
+              return fullQr;
+          }
+----
+// end::qrcall[]
+
+=== QrSms Function
+(added in v1.4)
+// tag::qrsms[]
+
+In this section, we explain how users can generation Quick Response(QR) Code for Sms(Short Message Services) with any contact number available in the addressbook.
+
+To make user experience more convenience, QR Code can make sms easy through the use of Smartphone with QR Scanner application installed.
+
+This function has been mapped to `QrSmsButton` and `qrsms` `qs` for commandline.
+
+The following sequence diagram describes how 'QrSms' Generates QR Code using commandline.
+
+image::QrSmsCommand.png[]
+_Figure 4.18.1 : Sequence Diagram of the QrSmsCommand_
+
+The QrSmsCommandParser Method is implemented with the following code.
+[source,java]
+----
+ public QrSmsCommand parse(String args) throws ParseException {
+        try {
+            Index index = ParserUtil.parseIndex(args);
+            return new QrSmsCommand(index);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, QrSmsCommand.MESSAGE_USAGE));
+        }
+    }
+----
+
+The QrSmsCommand Method implementation for commandline with the following codes.
+[source,java]
+----
+   @Override
+       public CommandResult execute() throws CommandException {
+
+           List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+           if (targetIndex.getZeroBased() >= lastShownList.size()) {
+               throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+           }
+           int indexOfPersonInList;
+           indexOfPersonInList = targetIndex.getOneBased() - 1;
+           EventsCenter.getInstance().post(new QrSmsEvent(lastShownList.get(indexOfPersonInList)));
+           return new CommandResult(String.format(MESSAGE_SELECT_PERSON_SUCCESS, targetIndex.getOneBased()));
+
+       }
+----
+
+The QrSmsEvent Method implementation for commandline with the following codes.
+[source,java]
+----
+        @Override
+        public String toString() {
+            return this.getClass().getSimpleName();
+        }
+        public ReadOnlyPerson getPerson() {
+            return person;
+        }
+----
+
+The QrSmsButton Method implementation for commandline with the following codes.
+[source,java]
+----
+     @FXML
+        private void handleQrSmsButtonPressed() throws CommandException, ParseException, IOException {
+            if ( person != null) {
+                bp.loadSmsQrCode(person);
+                logger.info("QR Code displayed");
+            } else {
+                logger.info(MESSAGE_FAIL);
+            }
+        }
+----
+
+The BrowserPanel Method implementation for commandline with the following codes.
+[source,java]
+----
+ public void loadSmsQrCode(ReadOnlyPerson person) {
+        QrGenSmsCommand qrGenSmsCommand = new QrGenSmsCommand();
+        browser.getEngine().setUserAgent("Mozilla/5.0 "
+                + "(Windows NT x.y; Win64; x64; rv:10.0) Gecko/20100101 Firefox/10.0");
+        loadPage(qrGenSmsCommand.qrSms(person.getPhone().toString(), person.getName().fullName));
+    }
+----
+
+The QrGenSmsCommand to retrieve QrCode with the following codes.
+[source,java]
+----
+  public String qrSms(String phoneNum, String contactName) {
+        String qrCodeA = "http://";
+        String qrCodeB = "api.qrserver.com/";
+        String qrCodeC = "v1/";
+        String qrCodeD = "create-qr-code/";
+        String qrCodeE = "?color=000000";
+        String qrCodeF = "&bgcolor=FFFFFF";
+        String qrCodeG = "&data";
+        String qrCodeH = "=SMSTO";
+        String qrCodeI = "%3A";
+        String qrCodeJ = "&qzone";
+        String qrCodeK = "=1";
+        String qrCodeL = "&margin";
+        String qrCodeM = "=0";
+        String qrCodeN = "&size";
+        String qrCodeO = "=500x500";
+        String qrCodeP = "&ecc";
+        String qrCodeQ = "=L";
+        String qrLineA = qrCodeA + qrCodeB + qrCodeC + qrCodeD + qrCodeE + qrCodeF
+                + qrCodeG + qrCodeH + qrCodeI;
+        String qrLineB = qrCodeI + "Dear+" + contactName + "%2C";
+        String qrLineC = qrCodeJ + qrCodeK + qrCodeL + qrCodeM + qrCodeN + qrCodeO
+                + qrCodeP + qrCodeQ;
+        String fullQr = qrLineA + phoneNum + qrLineB + qrLineC;
+        return fullQr;
+    }
+----
+// end::qrsms[]
+
+=== QrSaveContact Function
+(added in v1.4)
+// tag::qrsave[]
+[NOTE]
+Currently only available for Android Users.
+
+In this section, we explain how users can generation Quick Response(QR) Code for saving contact into their android smartphone.
+
+To make user experience more convenience, QR Code can make saving contact easy through the use of Smartphone with QR Scanner application installed.
+
+This function has been mapped to `QrSaveButton` and `qrsave` `qrs` for commandline.
+
+The following sequence diagram describes how 'QrSave' Generates QR Code using commandline.
+
+image::QrSaveContactCommand.png[]
+_Figure 4.19.1 : Sequence Diagram of the QrSaveContactCommand_
+
+The QrSaveContactCommandParser Method is implemented with the following code.
+[source,java]
+----
+    public QrSaveContactCommand parse(String args) throws ParseException {
+        try {
+            Index index = ParserUtil.parseIndex(args);
+            return new QrSaveContactCommand(index);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, QrSaveContactCommand.MESSAGE_USAGE));
+        }
+    }
+----
+
+The QrSaveContactCommand Method implementation for commandline with the following codes.
+[source,java]
+----
+   @Override
+      public CommandResult execute() throws CommandException {
+
+          List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+          if (targetIndex.getZeroBased() >= lastShownList.size()) {
+              throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+          }
+          int indexOfPersonInList = 0;
+          indexOfPersonInList = targetIndex.getOneBased() - 1;
+          EventsCenter.getInstance().post(new QrSaveEvent(lastShownList.get(indexOfPersonInList)));
+          return new CommandResult(String.format(MESSAGE_SELECT_PERSON_SUCCESS, targetIndex.getOneBased()));
+
+      }
+----
+
+The QrSaveEvent Method implementation for commandline with the following codes.
+[source,java]
+----
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+    public ReadOnlyPerson getPerson() {
+        return person;
+    }
+----
+
+The QrSaveButton Method implementation for commandline with the following codes.
+[source,java]
+----
+    @FXML
+    private void handleQrSaveButtonPressed() throws CommandException, ParseException, IOException {
+        if ( person != null) {
+            bp.loadSaveQrCode(person);
+            logger.info("QR Code displayed");
+        } else {
+            logger.info(MESSAGE_FAIL);
+        }
+    }
+----
+
+The BrowserPanel Method implementation for commandline with the following codes.
+[source,java]
+----
+ public void loadSaveQrCode(ReadOnlyPerson person) {
+        QrGenSaveContactCommand qrGenSaveContactCommand = new QrGenSaveContactCommand();
+        browser.getEngine().setUserAgent("Mozilla/5.0 "
+                + "(Windows NT x.y; Win64; x64; rv:10.0) Gecko/20100101 Firefox/10.0");
+        loadPage(qrGenSaveContactCommand.qrSaveContact(person.getPhone().toString(), person.getName().fullName,
+                person.getEmail().toString()));
+    }
+----
+
+The QrGenSmsCommand to retrieve QrCode with the following codes.
+[source,java]
+----
+    public String qrSaveContact(String phoneNum, String contactName, String contactEmail) {
+        String qrA = "http://";
+        String qrB = "api.qrserver.com/";
+        String qrC = "v1/";
+        String qrD = "create-qr-code/";
+        String qrE = "?color=000000";
+        String qrF = "&bgcolor=FFFFFF";
+        String qrG = "&data=BEGIN";
+        String qrH = "%3AVCARD";
+        String qrI = "%0AVERSION";
+        String qrJ = "%3A2.1%0";
+        String qrK = "AFN%3A";
+        String lineA = qrA + qrB + qrC + qrD + qrE + qrF + qrG + qrH + qrI
+                + qrJ + qrK;
+        String newName = contactName.replace(' ', '+');
+        String lineB = "%0AN%3A%3B";
+        String qrL = "%0ATEL";
+        String qrM = "%3BWORK";
+        String qrN = "%3BVOICE%3A";
+        String lineC = qrL + qrM + qrN;
+        String qrO = "%0AEMAIL";
+        String qrP = "%3BWORK";
+        String qrQ = "%3BINTERNET%3A";
+        String lineD = qrO + qrP + qrQ;
+        String qrCodeA = "%0AEND";
+        String qrCodeB = "%3AVCARD";
+        String qrCodeC = "%0A&qzone=1";
+        String qrCodeD = "&margin=0";
+        String qrCodeE = "&size=500x500";
+        String qrCodeF = "&ecc=L";
+        String lineE = qrCodeA + qrCodeB + qrCodeC + qrCodeD + qrCodeE + qrCodeF;
+        String fullQr = lineA + newName + lineB + newName + lineC + phoneNum + lineD + contactEmail + lineE;
+        System.out.println(fullQr);
+        return fullQr;
+    }
+----
+// end::qrsave[]
+
+// tag::sort[]
+=== Sort Command
+(Added in v1.2)
+
+The `sort` command is a feature we implemented to allow users to sort their contact details based on the name of the contacts. When we add in new contacts using the `add` feature, the contact
+will usually be added into the bottom of the address book.
+
+As the contacts in the addressbook gets larger and larger, it will be difficult to maintain the contacts as the contact details in the contact list panel will become messy and we will have to use the `find` feature constantly to look
+for the contact we want.
+
+The `sort` command starts off by taking in the `sort` command from the  `AddressBookParser` class and call a new `SortCommand` class.
+
+---
+  case SortCommand.COMMAND_WORD:
+  case SortCommand.COMMAND_ALIAS:
+     return new SortCommand();
+
+---
+
+The `SortCommand` class will then call the `sort()` method created in the `AddressBook` class to modify the array list that was used to maintain the contact details
+in the `UniquePersonList` class.
+
+The sorting algorithm lies in the `UniquePersonList` class where a self-defined comparator was implemented to sort the elements in the array list based on the name of the Person in the list.
+
+---
+    public void sort() {
+        internalList.sort((person1, person2) -> (
+                person1.getName().fullName
+                        .compareToIgnoreCase(person2.getName().fullName)));
+    }
+
+---
+
+==== Design Considerations
+
+**Aspect:** What attributes to be sorted by the user. +
+**Alternative 1 (current choice):** Currently, the sort command only allows sorting the name of the contact list. +
+**Pros:** The most logical way is to sort by the name as all other attributes is associated to the name of the person in the list +
+**Cons:** User may want to sort by other attributes to allow better managing and retrieving of contacts +
+**Alternative 2:** implement sort by various attributes +
+**Pros:** Allows user to sort by attributes to their preference.  +
+**Cons:** Does not make any sense when sorting by attributes such as Phone number or address. +
+
+// end::sort[]
+
 == Documentation
 
-We use asciidoc for writing documentation.
+We use asciidoc for riting documentation.
 
 [NOTE]
 We chose asciidoc over Markdown because asciidoc, although a bit more complex than Markdown, provides more flexibility in formatting.
@@ -392,7 +1598,7 @@ Here are the steps to convert the project documentation files to PDF format.
 .  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For best results, use the settings indicated in the screenshot below.
 
 image::chrome_save_as_pdf.png[width="300"]
-_Figure 5.6.1 : Saving documentation as PDF files in Chrome_
+_Figure 5.3.1 : Saving documentation as PDF files in Chrome_
 
 == Testing
 
@@ -718,6 +1924,8 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
 
+=== Must Have
+
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
@@ -729,27 +1937,80 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
-|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+|`* * *` |user |the application to look simple and easy to use |easily understand how the application works.
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* * *` |user |input commands on a GUI |won't need to memorize the commands
+
+|`* * *` |user |delete people by their name |clear space for new contacts
+
+|`* * *` |user |be able to sort my contact based on most recent contact |immediately get the contact.
+
+|`* * *` |user |retrieve my past command history |review what I entered previously
+
+|`* * *` |user |undo my last command |enter in the correct command instead
+
+|`* * *` |user |clear the whole list of persons |pass this app to a new user
+
+|`* * *` |user |edit the details of a person |update any changes to the person.
 |=======================================================================
 
-{More to be added}
+=== Nice to have
+
+[width="59%",cols="22%,<23%,<25%,<30%",options="header",]
+|=======================================================================
+|Priority |As a ... |I want to ... |So that I can...
+|`* *` |user |filter the list through details such as tags |search for those contacts that I only need.
+
+|`* *` |user |easily send email or messages to the contact through the application |immediately send  messages.
+
+|`* *` |user |have a map view of all my contacts based on their address | plan where to visit them.
+
+|`* *` |user |import my phone contacts to the addressbook easily |save time in adding them again.
+
+|`* *` |user |update my group friends of an upcoming event or activities |be informed of the activities.
+
+|`* *` |user |have my information secured |be assured that my contact information are safe on cloud storage
+
+|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+
+|`* *` |user |personalize the application |feel more familiar with the application
+
+|`* *` |user |check what command or changes was done at any point in time | can rectify mistakes committed to keep addressbook up to date
+
+|`* *` |user |avoid careless mistake when keying number for calling | be more productive and careless free
+
+|`* *` |user |avoid careless mistake when keying number for sending of sms | be more productive and careless free
+
+|`* *` |user |save user contact to my smart phone | be more productive and careless free. As well as saving time from manual input for huge number of contact information.
+
+|=======================================================================
+
+=== Unlikely to have
+
+[width="59%",cols="22%,<23%,<25%,<30%",options="header",]
+|=======================================================================
+|Priority |As a ... |I want to ... |So that I can...
+|`*` |user |upload images to different contacts |so that I can easily identify them
+
+|`*` |user |delete images of different contacts |so that I can remove outdated photos
+
+|`*` |user |plan out the best path for each contact based on what i select |take advantage of the most efficient routes.
+|=======================================================================
 
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all link:#use-case[use cases] below, the *System* is the `ConnectUs` and the *Actor* is the `user`, unless specified otherwise)
 
-[discrete]
+
 === Use case: Delete person
 
 *MSS*
 
 1.  User requests to list persons
-2.  AddressBook shows a list of persons
+2.  ConnectUs shows a list of persons
 3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+4.  ConnectUs deletes the person
 +
 Use case ends.
 
@@ -763,23 +2024,181 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. ConnectUs shows an error message.
 +
 Use case resumes at step 2.
 
-{More to be added}
+=== Use case: Add person
+
+*MSS*
+
+1.  User requests to add person
+2.  ConnectUs adds the person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The given command is invalid.
+[none]
+** 1a1. ConnectUs shows an error message.
++
+Use case resumes at step 1.
+
+* 1b. The given person is a duplicate of an existing person.
+[none]
+** 1b1. ConnectUs shows an error message.
++
+Use case resumes at step 1.
+
+=== Use case: Edit person
+
+*MSS*
+
+1.  User requests to list persons
+2.  ConnectUs shows a list of persons
+3.  User requests to edit a specific person in the list
+4.  ConnectUs edits the person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. ConnectUs shows an error message.
++
+Use case resumes at step 2.
+
+* 3b. The given changes are a duplicate of an existing person.
++
+[none]
+** 3b1. ConnectUs shows an error message.
++
+Use case resumes at step 2.
+
+* 3c. The given command is invalid.
++
+[none]
+** 3c1. ConnectUs shows an error message.
++
+Use case resumes at step 2.
+
+=== Use case: Redo command
+
+*MSS*
+
+1.  User requests to redo command
+2.  ConnectUs redoes the command
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. There is no command to redo.
++
+[none]
+** 1a1. ConnectUs shows an error message.
++
+Use case ends.
+
+=== Use case: Undo command
+
+*MSS*
+
+1.  User requests to undo command
+2.  ConnectUs undoes the command
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. There is no command to undo.
++
+[none]
+** 1a1. ConnectUs shows an error message.
++
+Use case ends.
+
+=== Use case: Select person
+
+*MSS*
+
+1.  User requests to list persons
+2.  ConnectUs shows a list of persons
+3.  User requests to select a specific person in the list
+4.  ConnectUs selects the person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. ConnectUs shows an error message.
++
+Use case resumes at step 2.
+
+=== Use case: Find person
+
+*MSS*
+
+1.  User requests to find person by name
+2.  ConnectUs finds and displays the list of person(s) with their names similar to the keywords
++
+Use case ends.
+
+*Extensions*
+
+* 1a. The given command is invalid.
++
+[none]
+** 1a1. ConnectUs shows an error message.
++
+Use case resumes at step 2.
 
 [appendix]
 == Non Functional Requirements
 
-.  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
-.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-{More to be added}
+*  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
+*  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
+*  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+*  Internet connection is required to maximise the functionality of the AddressBook Application. Such as accessing features in BrowserPanel.
+*  Should have at least 100MB of space in HardDiskDrive in order for application to install.
+*  Should have at least 2GB of ram in computer in order for the application to run smoothly.
+*  Requirement of at least 3rd Generation i3 processor to operate the application.
 
 [appendix]
 == Glossary
+
+[[activity-diagram]]
+Activity Diagram
+
+....
+A flowchart to represent the flow from one activity to another activity
+....
+
+[[architecture-diagram]]
+Architecture Diagram
+
+....
+A diagram that defines the structure, behavior, and views of a system.
+....
 
 [[mainstream-os]]
 Mainstream OS
@@ -795,19 +2214,19 @@ Private contact detail
 A contact detail that is not meant to be shared with others
 ....
 
+
+[[sequence-diagram]]
+Sequence Diagram
+
+....
+A diagram that shows how objects operate with one another and in what order.
+....
+
+[[use-case]]
+Use Case
+
+....
+a list of actions or event steps typically defining the interactions between a role and a system to achieve a goal.
+....
+
 [appendix]
-== Product Survey
-
-*Product Name*
-
-Author: ...
-
-Pros:
-
-* ...
-* ...
-
-Cons:
-
-* ...
-* ...

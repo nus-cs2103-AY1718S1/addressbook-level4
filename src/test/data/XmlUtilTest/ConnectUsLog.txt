@@ -1,0 +1,3 @@
+Application Started on 2017-11-03T10:57:06.268
+Add	Johnny Doe Phone: 98455432 Email: johncmncm@example.com Address: 311, Clementi Ave 2, #02-25 Tags: [owesMoney][friends]	2017-11-03T10:57:44.069
+

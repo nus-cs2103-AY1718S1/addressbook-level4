@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= ConnectUs - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,72 +10,141 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-W15-B3/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team W15-B3`      Since: `Jun 2016`      Licence: `MIT`
 
-== Quick Start
+== Introduction
 
-.  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
-+
+ConnectUs is a professional address book application tailored to small to medium enterprises
+who wish for prompt lookup of their business partners particulars. It allows for storage and management of business contacts, quick and easy
+access to their emails, and displays their location on Google Maps.
+
+
+== About
+
+This tutorial gives an overview on the basic functions of ConnectUs such as adding a contact, emailing a contact
+and displaying their location on Google Maps. Being a very simple application, no prior technical knowledge is required to use this application.
+
+Below lists the command terminology which would be used throughout this guide:
+
+*Command Format*
+
+
+* These are the list of available prefixes you can use: +
+
+[width="59%",cols="15%,<17%,options="header",]
+|=======================================================================
+|Prefix | Meaning
+
+|n/ | NAME
+
+|p/ | PHONE
+
+|e/ | EMAIL
+
+|a/ | ADDRESS
+
+|t/ | [TAG]
+|=======================================================================
+
+* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
+* Items in square brackets are optional e.g `n/NAME [t/TAG]` ,tag is optional and can be used as `n/John Doe t/friend` or as `n/John Doe`.
+* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+
+
+== Installation - Getting Started
+
+This section is to help you get started in setting up the application. +
+
+.  Ensure you have Java link:http://www.oracle.com/technetwork/java/javase/8u60-relnotes-2620227.html[version] `1.8.0_60` or later installed in your Computer.
 [NOTE]
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
+.  Download the latest `connectUs.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
+.  Double-click the file to start the app. You will see the GUI (Graphical User Interface) appear in a few seconds.
 +
-image::Ui.png[width="790"]
+image::defaultUI.jpeg[width="790"]
+_Figure 3.1 : UI_
 +
-.  Type the command in the command box and press kbd:[Enter] to execute it. +
+....
+Here are some terms of the components in the GUI for you to refer to before you proceed to the next step (you may refer to the labels in Figure 3.1):
+
+1. File menu: allows you to change colour themes and exit the application
+2. Help menu: clicking on the Help menu will pop out a help window
+3. Command box: allows you to type your commands
+4. Result display: shows the outcome or messages of your command
+5. Person list panel: includes photo display and details display for each contact
+   -Photo display: shows the photo of your contact
+   (default image is displayed if photo is not uploaded to the contact yet)
+   -Details display: shows all the details of your contact
+6. Form display: allows you to input the details of your contact that you clicked for editing
+   (form will auto-fill existing details of the contact in the text-fields when you click on a contact)
+7. Delete button: allows you to delete the contact that you chose
+8. Email button: allows you to email the contact that you chose
+9. Save button: saves the edited information of the contact in the form to the chosen contact
+10. Browser panel: shows the logo image and changes to the map view of the contact's location
+    upon clicking on a contact
+11. Clear button: allows you to clear the log
+QR Code Generator Buttons (the QR code will be displayed in the browser panel):
+12. Call button: allows you to generate QR code of the contact's phone number for calling
+13. SMS button: allows you to generate QR code to SMS the contact with a template
+14. Share button: allows you to generate QR code to save contact information into your phone
+....
+
+.  Type the command in the command box (labelled 3 in Figure 3.1)  and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
-.  Some example commands you can try:
+.  ConnectUs comes with some pre-loaded data to help you get started. Here are some example commands you can try:
 
-* *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
-* *`exit`* : exits the app
+* *`list`* : to list all contacts, you can enter `list`
+* **`add`**: to add a new contact named `John Doe` to ConnectUs, you can enter `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
+* **`delete`**: to delete the 3rd contact in the current list, enter `delete 3` or **`d`**`3`
+* *`exit`* : to exit from the application, you can enter `exit`
 
-.  Refer to the link:#features[Features] section below for details of each command.
+.  Now you are ready to start using the application. Refer to the link:#features[Features] section below for details of each command.
 
 == Features
 
-====
-*Command Format*
-
-* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
-* Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
-* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
-====
+Now you are ready to start using some of the more advanced features that we have in the our applications.The following section contains all of the commands that you can use in this application.
 
 === Viewing help : `help`
 
+If you encounter any difficulties during the use of the application you may key in help in the command line to gain access to our user guide.
 Format: `help`
 
 === Adding a person: `add`
 
-Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+You can also add the contact information of the person into the address book that you just made connections using the following command. +
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
+OR +
+You may also use shorter command which does the same function of adding contact +
+`a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 
 [TIP]
 A person can have any number of tags (including 0)
+It is advisable for you to include tag as it allows you to search for certain group of people with ease such as using link:#filtertag[filter by tags] features.
 
 Examples:
-
+****
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `a n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+****
 
 === Listing all persons : `list`
 
-Shows a list of all persons in the address book. +
-Format: `list`
+If you are uncomfortable with filtered contact being displayed you can use this function to display all the contacts in the person list panel. +
+Format: `list` or `l`
+// tag::edit[]
 
 === Editing a person : `edit`
 
-Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+These are the command you can use to edit or update contact if you happen to key in wrong information or to update changed information of your contact.
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+or +
+`e INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -89,13 +158,29 @@ Examples:
 
 * `edit 1 p/91234567 e/johndoe@example.com` +
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` +
+* `e 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+
+Alternatively, you can use the form implementation to edit contacts:
+
+image::form.png[width="150"]
+_Figure 4.4.1 : Edit Person Form_
+
+****
+*  Refering to _Figure 4.4.1_, select a person in the list or use the select command. The textboxes fill up with the individual's particulars.
+1. Select `Name` field and type in a new name, make sure not to enter names with numerics or leave the field empty.
+2. Select `Phone` field and type in a new phone number, make sure not to enter phone numbers with letters.
+3. Select `Email` field and type in a new email address, make sure to include a valid email address (with the @ symbol).
+4. Select `Address` field and type in a new street address.
+5. Select `Tags` field and type new tags in this format: `tag1`,`tag2`,`tag3`...(Tags should contain alphanumeric characters only!)
+6. Select the `Save` button to save all changes.
+****
+// end::edit[]
 
 === Locating persons by name: `find`
 
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+If you need to find a certain person you may key in one name of the person that you want the application to display. You can also search with more than one keyword to make the results you want more efficiently. +
+Format: `find KEYWORD [MORE_KEYWORDS]` or `f KEYWORD [MORE_KEYWORDS]`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
@@ -107,15 +192,16 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 
 Examples:
 
-* `find John` +
+* `f John` +
 Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
+// tag::delete[]
 
 === Deleting a person : `delete`
 
-Deletes the specified person from the address book. +
-Format: `delete INDEX`
+In case where you accidentally key in contact that you do not need, you may use the delete function to remove the contact from your application. +
+Format: `delete INDEX` or `d INDEX`
 
 ****
 * Deletes the person at the specified `INDEX`.
@@ -129,13 +215,73 @@ Examples:
 `delete 2` +
 Deletes the 2nd person in the address book.
 * `find Betsy` +
-`delete 1` +
+`d 1` +
 Deletes the 1st person in the results of the `find` command.
+
+Another way to delete a contact in the list:
+
+image::contact_list.png[width="200"]
+_Figure 4.6.1 : Deleting a contact_
+
+****
+1. Select a person in the list
+2. Click the delete button
+3. Selected person will be deleted from the list
+****
+// end::delete[]
+// tag::googlemaps[]
+
+=== Displaying a contact's location
+(added in v1.2)
+
+As a business user, you might want to identify the addresses of your clients in order to provide services such as delivery and technical support. The application is equipped with the ability to display your client's location using Google Maps, allowing you to plan your trip while using the application. +
+
+image::google_maps.png[width="790"]
+_Figure 4.7.1 : viewing a contact on Google Maps_
+
+You can select a contact either using:
+
+* `select INDEX`
+* or by clicking on a contact on the list
+
+Their location will be displayed on the browser panel on the right, as shown in _Figure 4.7.1_.
+// end::googlemaps[]
+// tag::email[]
+
+=== Email a person : `email`
+(added in v1.3)
+
+To make your work more efficient, we have implemented an email feature that allows the application to open up an email application, such as outlook, on your desktop with the receiver's email filled.
+
+Format: `email INDEX`
+
+image::email.png[width="790"]
+_Figure 4.8.1 : emailing a contact_
+
+Refering to Figure 4.8.1, the steps below describe how to email a client.
+
+****
+1. Select a person in the list
+2. Click the "Email" Button
+3. Proceed to compose email on email client
+****
+If you want to use the command line:
+
+You can email a contact using:
+
+* `email INDEX`
+
+Examples:
+
+* `email 1` +
+Opens an email client with the email of the first person in the address book.
+// end::email[]
 
 === Selecting a person : `select`
 
-Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
+There are cases where you want to have more detailed information of the contact you want to view. You may use the select command which will display important information such as contact number , email and address which is needed for your task. +
+Simply key in the number position of the contact you want to view. +
+Format: `select INDEX` or  `s INDEX`
 
 ****
 * Selects the person and loads the Google search page the person at the specified `INDEX`.
@@ -149,13 +295,13 @@ Examples:
 `select 2` +
 Selects the 2nd person in the address book.
 * `find Betsy` +
-`select 1` +
+`s 1` +
 Selects the 1st person in the results of the `find` command.
 
 === Listing entered commands : `history`
 
-Lists all the commands that you have entered in reverse chronological order. +
-Format: `history`
+In order to avoid unnecessary mistakes committed through human error, we implemented the history features which allows you to view all the important actions done by you through the application. This will ensure that you are able to identify the mistakes input during the entry. This will help you save a lot of time and trouble from searching the contacts to identify a single mistake committed. +
+Format: `history` or `h`
 
 [NOTE]
 ====
@@ -165,8 +311,8 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
-Format: `undo`
+During the usage of the application, if you realised that you committed a mistake during one of the entry. You do not need to worry about editing the information all over again as you can easily undo the actions with the undo function. +
+Format: `undo` or `u`
 
 [NOTE]
 ====
@@ -191,8 +337,8 @@ The `undo` command fails as there are no undoable commands executed previously.
 
 === Redoing the previously undone command : `redo`
 
-Reverses the most recent `undo` command. +
-Format: `redo`
+During the process of using undo function to undo mistakes committed, you realised that one of the command was accurate and you want to keep that information. You can do so with the redo command to return back to the previous information that you accidentally undo. +
+Format: `redo` or `r`
 
 Examples:
 
@@ -212,41 +358,368 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
+// tag::sort[]
+=== Sorting contacts in the Address Book : `sort`
+(added in v1.2)
+
+If you want your contact names to be displayed in neat and tidy order, you may do so with the sort command. Which sorts the contact list by name. +
+Format: `sort` or `ss`
+// end::sort[]
+
+// tag::filtertag[]
+=== Filtering list by tags : `tag`
+(added in v1.2)
+
+To make your work more efficient, we have implemented search by tag functions that allow you to search for contact with keywords for tag.
+Format: `tag KEYWORD [MORE_KEYWORDS]` or `t KEYWORD [MORE_KEYWORDS]`
+
+****
+* The search is case insensitive. e.g `Friends` will match `friends`
+* The order of the keywords does not matter. e.g. `friends classmates` will match `classmates friends`
+* Only the tags is searched.
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `friends classmates` will return persons with tags `friends`, `classmates`
+****
+
+Examples:
+
+* `tag friends` +
+Returns any person having tags `friends` or `bestFriends`
+* `t friends classmates colleagues` +
+Returns any person having tags `friends`, `classmates`, or `colleagues`
+
+// end::filtertag[]
+
+// tag::removetag[]
+=== Removing tags : `rtag`
+(added in v1.2)
+
+There are cases where you realised that you do not need a specific tag, you may remove them with the remove tag command. +
+Format: `rtag KEYWORD [MORE_KEYWORDS]` or `rt KEYWORD [MORE_KEYWORDS]`
+
+****
+* The keyword is case sensitive. e.g `Friends` will not match `friends`
+* The order of the keywords does not matter. e.g. `friends classmates` will match `classmates friends`
+* Any tags of all persons that matches the keyword will be removed e.g. `friends classmates` will remove tags `friends`, `classmates` from all persons
+****
+
+Examples:
+
+* `rtag friends` +
+Removes "friends" tag from all persons
+* `rt friends classmates colleagues` +
+Removes "friends", "classmates", "colleagues" tag from all persons
+
+// end::removetag[]
+
+// tag::import[]
+
+=== Importing Contacts from external source : `import`
+(added in v1.2)
+
+If you have an existing contact list information which is in forms of '.vcf' format. You can do so with your application by important those files into the application. +
+[TIP]
+File must also be placed in the main folder.
+
+Format: `import FILENAME.vcf` or `im FILENAME.vcf` where `FILENAME` is the name of the file that you wish to import.
+// end::import[]
+
+// tag::export[]
+=== Exporting Contacts to external source : `export`
+(added in v1.3)
+
+If you want to backup your contact list information, you may do so with our export command which export the content of the contact list in forms of '.vcf' format. +
+[TIP]
+File will be exported onto the main folder as `output.vcf`
+
+Format: `export` or `ex`
+// end::export[]
+
+// tag::changetheme[]
+=== Change colour theme : `theme`
+(added in v1.3)
+
+You can customise the colour theme in order to feel more familiar with ConnectUs and to suit your preferences. +
+Currently, the available colour themes are:
+
+* Dark (default theme)
+* White
+* Green
+
+You can change the colour theme with the following command. +
+Format: `theme COLOUR THEME` or `th COLOUR THEME` where `COLOUR THEME` is the colour theme that you wish to change to.
+
+If you want to change the colour theme using the GUI:
+
+. Click on the `File` drop down menu on the top left hand corner of the screen.
+. A drop down menu appears with all the colour themes listed.
+. Click on the theme you want to apply.
+
+
+Examples:
+
+* `theme white` +
+* `th white` +
+Changes the colour theme to white.
+// end::changetheme[]
+
+// tag::uploadphoto[]
+=== Upload photo image for a contact : `photo`
+(added in v1.3)
+
+You can also customise your contact's photo in order to make your contact list looks more user friendly. It also helps you to get familiar with how your client or contact looks like. You can do so with the following command. +
+Format: `photo INDEX` or `p INDEX` or `photo INDEX [FILEPATH]` or `p INDEX [FILEPATH]`
+
+If you want to choose the image from a file explorer:
+
+. Type the command until the index.
+. Upon entering the command, a file explorer will appear to allow you to choose the image from your computer.
+. Click "Open" once you choose your image and it will be added to the person you specified.
+
+If you want to specify the image file path:
+
+. Type the file path after the index.
+. The image file will be added to the person you specified if it is valid.
+
+****
+* Uploads photo to the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `photo 1` +
+* `p 1` +
+Opens file explorer and uploads photo to the 1st person in the address book.
+* `photo 2 C:\Users\Pictures\photo.jpg` +
+* `p 2 C:\Users\Pictures\photo.jpg` +
+Uploads photo of specified image file path to the 2nd person in the address book.
+// end::uploadphoto[]
+
+// tag::deletephoto[]
+=== Delete photo image of a contact : `dphoto`
+(added in v1.5)
+
+You can delete the photo of a contact if the photo is outdated or if you mistakenly uploaded the wrong photo. You can do so with the following command. +
+Format: `dphoto INDEX` or `dp INDEX`
+
+****
+* Deletes photo of the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `dphoto 1` +
+* `dp 1` +
+Deletes photo of the 1st person in the address book.
+// end::deletephoto[]
+
+// tag::deletesallphotos[]
+=== Deletes all photos from all contacts : `daphotos`
+(added in v1.5)
+
+If you want to have a fresh start as all the photos are outdated,you can delete all the photos from all contacts. You can do so with the following command. +
+Format: `daphotos` or `dap INDEX`
+
+Examples:
+
+* `daphotos` +
+* `dap` +
+Deletes all photos from all contacts in the address book.
+// end::deletesallphotos[]
+
+=== Clearing ConnectUs LogFile : `clearlog`
+// tag::connectuslog[]
+If you happen to realise that you committed a mistake after closing the application. Where the function of undo or redo is not valid to use,you can take advantage of our backend logging function that keeps track of all actions done by you in forms of '.txt' file.It includes information of important actions as well as timestamp for each actions done. +
+This command allows you to clear the logfile which you might want to do so to keep the logfile neat and organised.
+Format: 'clearlog' or 'cl'
+[WARNING]
+All important actions made by the user such as add,clear,edit,delete,import,list,redo,undo, upload photo, delete photo, delete all photos and starting of application are recorded in the ConnectUs.txt logfile. +
+Users have the option of clearing the logfile in order to make the log more organised. +
+All information will be wipe out. So use the function with care.
+// end::connectuslog[]
+
+=== Generating QR(Quick Response) Code to call a person : `qrcall`
+// tag::qrcall[]
+[NOTE]
+Requires a smartphone with camera and QR Scanner application
+
+If you want to call a specific contact in the contact list, we made the operation simple with QR(Quick Response) code. Simply scan the QR code with your smartphone devices equipped with camera and QR scanner, you will be able to make a call without any hassle. +
+Format: 'qrcall INDEX' or 'qc INDEX'
+
+****
+* Selects the person and loads the QR Call code the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
+Examples:
+
+* `list` +
+`qrcall 2` +
+Generate QR Call Code for the 2nd person in the address book.
+* `find Betsy` +
+`qc 1` +
+Generate QR Call Code for the 1st person in the results of the `find` command.
+// end::qrcall[]
+
+=== Generating QR Code to sms a Contact : `qrsms`
+// tag::qrsms[]
+[NOTE]
+Requires a smartphone with camera and QR Scanner application
+
+If you are in a rush and need to message someone from the contact list fast, you can do so with QR sms function which comes with a template that starts with "Dear [Name]," which saves you time from typing out those messages. +
+Format: 'qrsms INDEX' or 'qs INDEX'
+
+****
+* Selects the person and loads the QR SMS code the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
+Examples:
+
+* `list` +
+`qrsms 2` +
+Generate QR SMS Code for the 2nd person in the address book.
+* `find Betsy` +
+`qs 1` +
+Generate QR SMS Code for the 1st person in the results of the `find` command.
+// end::qrsms[]
+
+=== Generating QR Code to save a Contact : `qrsave`
+// tag::qrsave[]
+[NOTE]
+Requires a smartphone with camera and QR Scanner application. +
+Only information like Contact Name , Email , Address and Phone Number is saved in the process.
+
+
+If you need to save the contact information without having the hassle of exporting or importing '.vcf' file into your phone. You can do so with the QR Save Contact Command which allows you to save the contact you wanted with just a scan from your phone.
+Format: 'qrsave INDEX' or 'qrs INDEX'
+
+****
+* Selects the person and loads the QR Save Contact code the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
+Examples:
+
+* `list` +
+`qrsave 2` +
+Generate QR Save Contact Code for the 2nd person in the address book.
+* `find Betsy` +
+`qrs 1` +
+Generate QR Save Contact Code for the 1st person in the results of the `find` command.
+// end::qrsave[]
+
 === Clearing all entries : `clear`
 
-Clears all entries from the address book. +
-Format: `clear`
+In case, you want to clear all the contact on your list. You may do so with the clear function. +
+[WARNING]
+It is advised that you should do a backup copy of your contact list before using this command. As it would wipe out all the contact information in the application.
+
+Format: `clear` or `c`
 
 === Exiting the program : `exit`
 
-Exits the program. +
+When you are done with the application, you may close it with the exit command. +
 Format: `exit`
-
-=== Saving the data
-
+[NOTE]
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
+== Upcoming Features
+(added in v1.2) +
+There are more features to be added to the application. You will soon be able to do the following features:
+
+=== Sorts contact with a click of a button `Coming in v2.0`
+Sorts the contact in the address book based on the name of the contact by clicking on the `Sort` button instead of using command line.
+
+=== Filters contact by tags with a click of a button `Coming in v2.0`
+Filters the contact in the address book based on your inputted tag name on a text-field and clicking on the `Filter` button instead of using command line.
+
+=== Removing tags by clicking on a tag `Coming in v2.0`
+Allows you to choose to remove the tag that you clicked instead of using command line.
+
+=== Reads out Command Executed with computer voicing `Coming in v2.0`
+Allows user to decide if they want to activate the function in order to listen to commands they executed and the response feedback from the application.
+
 == FAQ
+This section answers some common questions that you may have. If you have any more queries, feel free to contact us at connectors@connectus.com. +
 
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
 
-== Command Summary
+// tag::colourtheme[]
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX` +
-e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *List* : `list`
-* *Help* : `help`
-* *Select* : `select INDEX` +
-e.g.`select 2`
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
+*Q*: How do I change the theme? +
+*A*: Click on the `File` drop down menu on the top left hand corner of the screen. A drop down menu appears. Click on the theme you want to apply.
+// end::colourtheme[]
+
+== Command Summary
+[width="59%",cols="22%,<40%,<40%,options="header",]
+|=======================================================================
+|Command |Format |Example
+
+|*Add* | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` |`add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+|*Clear* | `clear` | `clear`
+|*Delete* | `delete INDEX` | `delete 3`
+|*Edit* | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` | `edit 2 n/James Lee e/jameslee@example.com`
+|*Find* | `find KEYWORD [MORE_KEYWORDS]` |`find James Jake`
+|*List* | `list` | `list`
+|*Help* | `help` | `help`
+|*Select* | `select INDEX` |`select 2`
+|*Email* | `email INDEX` |`email 1`
+|*History* | `history` |`history`
+|*Undo* | `undo` | `undo`
+|*Redo* | `redo` | `redo`
+|*Sort* | `sort` | `sort`
+|*Tag* | `tag KEYWORD [MORE_KEYWORDS]` | `tag friends classmates`
+|*Remove Tag* | `rtag KEYWORD [MORE_KEYWORDS]` |`rtag friends classmates`
+|*Import* | `import FILENAME.vcf` | `import contacts.vcf`
+|*Export* | `export` | `export`
+|*Change theme* | `theme COLOUR THEME` |`theme white`
+|*Upload Photo* | `photo INDEX` OR `photo INDEX FILEPATH` |`photo 3` OR `photo 3 C:\Users\Pictures\photo.jpg`
+|*Delete Photo* | `dphoto INDEX` |`dphoto 3`
+|*Delete All Photos* | `daphotos` |`daphotos`
+|*Clear Log* | `clearlog` | `clearlog`
+|*Generate QR for Calling* | `qrcall INDEX` | `qrcall 1`
+|*Generate QR for SMS* | `qrsms INDEX` | `qrsms 1`
+|*Generate QR for Saving Contact* | `qrsave INDEX` | `qrsave 1`
+
+|=======================================================================
+
+== Command Shortcuts Summary
+
+[width="59%",cols="22%,<40%,<40%,options="header",]
+|=======================================================================
+|Command |Format |Example
+
+|*Add* | `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` |`a n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+|*Clear* | `c` | `c`
+|*Delete* | `d INDEX` | `d 3`
+|*Edit* | `e INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` | `e 2 n/James Lee e/jameslee@example.com`
+|*Find* | `f KEYWORD [MORE_KEYWORDS]` |`f James Jake`
+|*List* | `l` | `l`
+|*Select* | `s INDEX` |`s 2`
+|*Email* | `em INDEX` |`em 1`
+|*History* | `h` |`h`
+|*Undo* | `u` | `u`
+|*Redo* | `r` | `r`
+|*Sort* | `ss` | `ss`
+|*Tag* | `t KEYWORD [MORE_KEYWORDS]` | `t friends classmates`
+|*Remove Tag* | `rt KEYWORD [MORE_KEYWORDS]` |`rt friends classmates`
+|*Import* | `im FILENAME.vcf` | `im contacts.vcf`
+|*Export* | `exp` | `exp`
+|*Change theme* | `th COLOUR THEME` |`th white`
+|*Upload Photo* | `p INDEX` OR `p INDEX FILEPATH` |`p 3` OR `p 3 C:\Users\Pictures\photo.jpg`
+|*Delete Photo* | `dp INDEX` |`dp 3`
+|*Delete All Photos* | `dap` |`dap`
+|*Clear Log* | `cl` | `cl`
+|*Generate QR for Calling* | `qc INDEX` | `qc 1`
+|*Generate QR for SMS* | `qs INDEX` | `qs 1`
+|*Generate QR for Saving Contact* | `qrs INDEX` | `qrs 1`
+|=======================================================================

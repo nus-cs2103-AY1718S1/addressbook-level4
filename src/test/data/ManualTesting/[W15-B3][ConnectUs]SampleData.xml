@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addressbook>
+    <persons>
+        <name>Aik Huat Transport Pte Ltd</name>
+        <phone>62206095</phone>
+        <email>aikhuat8@hotmail.com</email>
+        <address>45 Kampong Bahru Road (169360)</address>
+        <tagged>transport</tagged>
+    </persons>
+    <persons>
+        <name>C and P Transport Pte Ltd</name>
+        <phone>68853263</phone>
+        <email>raymond_ng@candp.com</email>
+        <address>46 Penjuru Lane, C &amp; P Logistics Hub 1 Office Tower 2 (609206)</address>
+        <tagged>transport</tagged>
+    </persons>
+    <persons>
+        <name>GSI Transportation Pte Ltd</name>
+        <phone>62385115</phone>
+        <email>mervin@cmsgroup.com.sg</email>
+        <address>7B Keppel Road #18-09, Tanjong Pagar Complex (089055)</address>
+        <tagged>transport</tagged>
+    </persons>
+    <persons>
+        <name>NTT Transport Pte Ltd</name>
+        <phone>62700833</phone>
+        <email>nttpl@yahoo.com.sg</email>
+        <address>Blk 61 Telok Blangah Heights (100061)</address>
+        <tagged>transport</tagged>
+    </persons>
+    <persons>
+        <name>Union Transport Co Pte Ltd</name>
+        <phone>62682770</phone>
+        <email>harry@uniontransport.com.sg</email>
+        <address>2 Penjuru Lane (609183)</address>
+        <tagged>transport</tagged>
+    </persons>
+    <persons>
+        <name>Gordon Ramsay</name>
+        <phone>66885665</phone>
+        <email>gordonramsay@hellskitchen.com</email>
+        <address>2 Bayfront Avenue, 01 - 81 The Shoppes at Marina Bay Sands, 018956</address>
+        <tagged>Chef</tagged>
+    </persons>
+    <persons>
+        <name>Wolfgang Puck</name>
+        <phone>66887429</phone>
+        <email>stephanie.edens@wolfgangpuck.com</email>
+        <address>L1-80, Bay Level The Shoppes at Marina Bay Sands</address>
+        <tagged>Chef</tagged>
+    </persons>
+    <persons>
+        <name>Masaharu Morimoto</name>
+        <phone>62337429</phone>
+        <email>Masaharu@gmail.com</email>
+        <address>Tampines Central 5, #04-19/20, 529510</address>
+        <tagged>Chef</tagged>
+    </persons>
+    <persons>
+        <name>Jamie Oliver</name>
+        <phone>67335500</phone>
+        <email>JamieOliver@gmail.com</email>
+        <address>1 Harbourfront Walk, #1-165-167 VivoCity, 098585</address>
+        <tagged>Chef</tagged>
+    </persons>
+    <persons>
+        <name>Michael Wray</name>
+        <phone>65237429</phone>
+        <email>MichaelWray@gmail.com</email>
+        <address>311 New Upper Changi Road, 01-10/11 Bedok Mall, 467360</address>
+        <tagged>Chef</tagged>
+    </persons>
+    <persons>
+        <name>Ru Shao</name>
+        <phone>98765432</phone>
+        <email>rushao@example.com</email>
+        <address>10 Anson Road #30-08 INTERNATIONAL PLAZA, 079903</address>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Ding Yong</name>
+        <phone>68429300</phone>
+        <email>dingyong@example.com</email>
+        <address>28 Kaki Bukit Crescent KAKI BUKIT TECHPARK 1, 416259</address>
+        <tagged>family</tagged>
+    </persons>
+    <persons>
+        <name>Wu Huang</name>
+        <phone>67462222</phone>
+        <email>wuhuang@example.com</email>
+        <address>6, Aljunied Ave 3 #04-00 Singapore 389932</address>
+        <tagged>owesMoney</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Cecelia Pagac</name>
+        <phone>64889778</phone>
+        <email>cecel@example.com</email>
+        <address>1 Brooke Road #03-07 Katong Plaza Singapore 429979</address>
+        <tagged>owesMoney</tagged>
+        <tagged>family</tagged>
+    </persons>
+    <persons>
+        <name>Gregoria Mertz</name>
+        <phone>63252633</phone>
+        <email>gregoria@example.com</email>
+        <address>71 KAMPONG BAHRU ROAD 169373</address>
+        <tagged>excolleague</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>City Print</name>
+        <phone>65982345</phone>
+        <email>cityprint@gmail.com</email>
+        <address>251, Bedok Street 3, #01-15</address>
+        <tagged>Printing</tagged>
+        <tagged>TechnicalServices</tagged>
+    </persons>
+    <persons>
+        <name>Laundry Cares</name>
+        <phone>94606785</phone>
+        <email>admin@laundrycares.com</email>
+        <address>71, Bukit Batok Crescent, #03-566</address>
+        <tagged>TechnicalServices</tagged>
+        <tagged>Laundry</tagged>
+    </persons>
+    <persons>
+        <name>Summer Plumbing Service</name>
+        <phone>83833302</phone>
+        <email>summerplumbing@gmail.com</email>
+        <address>255, Jurong East Street 24, #01-03</address>
+        <tagged>TechnicalServices</tagged>
+        <tagged>plumbing</tagged>
+    </persons>
+    <persons>
+        <name>CC Plumbing</name>
+        <phone>97897227</phone>
+        <email>ccplumbing@hotmail.com</email>
+        <address>672, Tampines Street 41, #01-24</address>
+        <tagged>TechnicalServices</tagged>
+        <tagged>plumbing</tagged>
+    </persons>
+    <persons>
+        <name>Print Lab</name>
+        <phone>67490526</phone>
+        <email>enquiries@printlab.com.sg</email>
+        <address>25, Ubi Road 4, #01-00</address>
+        <tagged>Printing</tagged>
+        <tagged>TechnicalServices</tagged>
+    </persons>
+    <tags>family</tags>
+    <tags>friends</tags>
+    <tags>transport</tags>
+    <tags>Chef</tags>
+    <tags>owesMoney</tags>
+    <tags>Printing</tags>
+    <tags>TechnicalServices</tags>
+    <tags>Laundry</tags>
+    <tags>plumbing</tags>
+</addressbook>

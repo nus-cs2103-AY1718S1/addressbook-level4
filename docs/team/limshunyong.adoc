@@ -1,0 +1,126 @@
+= Lim Shunyong - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: ConnectUs
+ConnectUs is a professional address book application tailored to small to medium enterprises
+who wish for prompt lookup of their business partners particulars. It allows for storage and management of business contacts, quick and easy
+access to their emails, and displays their location on Google Maps.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-W15-B3/main/blob/master/collated/main/limshunyong.md[Functional code]] [https://github.com/CS2103AUG2017-W15-B3/main/blob/master/collated/test/limshunyong.md[Test code]]
+
+=== Enhancement Added: Sort
+
+==== External behavior
+
+---
+
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=sort]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Sorting enables the user to list all its contact details in an organised manner. This allows the
+user to identify a particular contact details based on its name in a quicker manner.
+
+Currently, the user simply needs to type the command `sort` in the command line interface and the application
+will automatically sort the address book based on the name of the contacts.
+
+The sorting make use of self-defined java comparator that compare against the name of the objects in the `ReadOnlyPerson` list.
+
+==== Implementation
+
+---
+
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=sort]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Add command `import`
+
+==== External behavior
+
+---
+
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=import]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+
+As the application is targeted to business professionals, we wanted them to be able to retrieve his or her list of contact details from other sources to our application
+easily.
+
+So instead of having to add in the contact details one by one, we implemented the import function to allow the user to import all the contact details from his or her external sources to our application with just a single command.
+
+We chose vCard for our import sources because it is supported by other application such as the contact list from the user's mobile application as well as more common web or desktop applications such as Google contacts or Apple contacts.
+
+==== Implementation
+
+---
+
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=import]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Added Command `export`
+
+==== External behavior
+
+---
+
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=export]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+
+As a business professionals, it is important to be able to backup all the contact details that one may have expecially the more important ones such as your business partner.
+
+Therefore our applications allows the user to export all his or her contact details from our application into a vCard so that the user will be able to backup all the details into a secondary addressbook application
+so that in the event of experiencing a downtime from our application, the user can still retrieve his or her contact details from the secondry application.
+
+==== Implementation
+
+---
+
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=export]
+
+#End of Extract#
+
+=== Other contributions
+
+* Ensure each milestone is met and properly closed.
+
+* Wrote additional tests (Pull requests https://github.com/CS2103AUG2017-W15-B3/main/pull/27[#27], https://github.com/CS2103AUG2017-W15-B3/main/pull/72[#72], https://github.com/CS2103AUG2017-W15-B3/main/pull/105[#105])
+
+* Contribute to Acceptance Testing for other teams by identifying bugs (Pull requests https://github.com/CS2103AUG2017-T15-B4/main/issues/235[#235], https://github.com/CS2103AUG2017-T15-B4/main/issues/237[#237])
+
+
+

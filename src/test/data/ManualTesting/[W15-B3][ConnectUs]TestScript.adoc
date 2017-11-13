@@ -1,0 +1,858 @@
+= Test Script for Manual Testing
+:toc:
+:toc-title:
+:toc-placement: preamble
+:sectnums:
+:imagesDir: images
+:stylesDir: stylesheets
+:experimental:
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+endif::[]
+
+== Loading the sample data
+
+---
+
+. Download the file `[W15-B3][ConnectUs]SampleData.xml`.
+. Create a folder called `data` and place it on the same directory as the `[W15-B3][ConnectUs].jar` file.
+. Rename the `[W15-B3][ConnectUs]SampleData.xml` to `addressbook.xml` and place it inside the `data` folder.
+. Double click on the `[W15-B3][ConnectUs].jar` file to start our application.
+
+****
+*Results:*
+
+* In the *left most* column of our application, there should be 20 contact details appearing with indices from 1 to 20.
+* In the *middle* column there should be an empty form with the following fields:
+    ** Name
+    ** Phone
+    ** Email
+    ** Address
+    ** Tags
+    ** a `Save` button
+* In the *right most* column of our application, there should be a green in color image with our `ConnectUs` logo.
+* On top of the right column, there should be 4 buttons with the label:
+    ** Clear
+    ** SMS
+    ** Call
+    ** Share
+
+****
+
+== Things to take note before starting the test
+. Ensure that your computer has an `internet connection`.
+. Ensure that you have a `QR Reader` mobile application installed in your phone.
+
+== Help
+. Type `help` on the command line on the top of our application with a blinking text cursor.
+. Click on the `Help` tab on the top left corner of our application and select the `Help` function.
+
+****
+*Results:*
+
+* Our user guide should pop up.
+****
+
+== Add a person
+
+=== Add Success
+
+1. Copy the following command onto the command line input: +
+`add n/Alice Tan p/12345678 e/alice@example.com a/13 Computing Drive t/Colleagues`
+
+****
+*Result:* +
+
+* The user should be successfully added into the contacts panel on the left with indices `21`
+
+****
+
+=== Add Duplicate Person
+
+. Copy the following command onto the command line input: +
+`add n/Alice Tan p/12345678 e/alice@example.com a/13 Computing Drive t/Colleagues`
+
+****
+*Result:* +
+
+* An error message will be displayed at the bottom of the input line indicating that `the person already exist`.
+
+****
+
+=== Add invalid phone number
+
+. Copy the following command onto the command line input: +
+`add n/Valid Name p/ invalid number e/testSubject1@example.com a/13 Computing Drive`
+
+****
+*Result:* +
+
+* An error message will be displayed at the bottom of the input line indicating that `The phone number can only contain numbers`.
+
+****
+
+=== Add invalid email
+
+. Copy the following command onto the command line input: +
+`add n/Valid Name p/ 12345678 e/invlaid email a/13 Computing Drive`
+
+****
+*Result:* +
+
+* An error message will be displayed at the bottom of the input line indicating that `The email address is invalid`.
+
+****
+
+== Edit a person
+
+=== Edit the name of the person
+. Copy the following command onto the command line input: +
+`edit 21 n/Bob Tan`
+
+****
+*Result:* +
+
+* Name of the contact in index 21 should have its name change to `Bob Tan`
+
+****
+
+=== Edit phone with invalid value
+. Copy the following command onto the command line input: +
+`edit 21 p/invalid num`
+
+****
+*Result:* +
+
+* An error message will be displayed at the bottom of the input line indicating that `The phone number can only contain numbers`.
+
+****
+
+=== Edit email with invalid value
+. Copy the following command onto the command line input: +
+`edit 21 e/invalid email`
+
+****
+*Result:* +
+
+* An error message will be displayed at the bottom of the input line indicating that `The email address is invalid`.
+
+****
+
+
+=== Edit name in the form field
+. Click on the contact at index 21
+. Enter the following into the text field for the name at the middle panel with `Alice Tan`.
+. Click the `Save` button at the bottom of the panel.
+
+****
+*Result:* +
+
+* Name of the contact in index 21 should have its name change to `Alice Tan`
+
+****
+
+=== Edit contact in the form field with invalid phone number
+. Click on the contact at index 21
+. Enter the following into the text field for the phone at the middle panel with `invalid number`
+. Click the `Save` button at the bottom of the panel.
+
+
+****
+*Result:* +
+
+* A pop up should appear indicating an `invalid Phone number`
+
+****
+
+== List all person(s)
+
+=== List Success
+
+1. Copy the following command onto the command line input: +
+`list`
+
+****
+*Result:* +
+
+* The person list panel should show the list of all persons in the address book. +
+* The result display should show the message `Listed all persons`.
+
+****
+
+== Find a person
+
+=== Find keyword match
+. Copy the following command onto the command line input: +
+`find plumbing`
+
+****
+*Result:* +
+
+* The person list panel should list the persons with the name containing `plumbing`. +
+* The result display should indicate how many persons are listed.
+
+****
+
+=== Find multiple keywords match
+. Copy the following command onto the command line input: +
+`find transport lab`
+
+****
+*Result:* +
+
+* The person list panel should list the persons with the name containing `transport` or `lab`. +
+* The result display should indicate how many persons are listed.
+
+****
+
+=== Find keyword do not match
+. Copy the following command onto the command line input: +
+`find john`
+
+****
+*Result:* +
+
+* The person list panel should show an empty list. +
+* The result display should show the message `0 persons listed!`
+****
+
+== Delete a person
+
+=== Delete contact with valid index number
+. Copy the following command onto the command line input: +
+`delete 1`
+****
+*Result:* +
+
+* The contact at index 1 in the contact list panel should be deleted
+****
+
+=== Delete contact with invalid positive index number
+. Copy the following command onto the command line input: +
+`delete 999`
+****
+*Result:* +
+
+* An error message should appear indicating that the index number is invalid
+
+****
+
+=== Delete contact with invalid negative index number
+. Copy the following command onto the command line input: +
+`delete -1`
+****
+*Result:* +
+
+* An error message should appear indicating that the index number is invalid and should be a positive number
+
+****
+
+== Displaying Contact Location
+
+=== Display a person location using command
+
+. Copy the following command onto the command line input: +
+`select 3`
+****
+*Result:* +
+
+* The selected contact's address would be displayed on Google Maps on the right panel.
+
+****
+
+== Email a person
+
+=== Email person with valid index number
+. Copy the following command onto the command line input: +
+`email 2`
+****
+*Result:* +
+
+* The email client will open with the email address of contact number 2
+
+****
+
+=== Email person with positive invalid index number
+. Copy the following command onto the command line input: +
+`email 999`
+****
+*Result:* +
+
+* An error message should appear indicating that the index number is invalid
+
+****
+
+=== Email person with negative invalid index number
+. Copy the following command onto the command line input: +
+`email -1`
+****
+*Result:* +
+
+* An error message should appear indicating that the index number is invalid and should be a positive number
+
+****
+
+=== Email person using email button
+. Select on a contact on the contact list
+. Click on the `Email` button
+****
+*Result:* +
+
+* The email client will open with the email address of contact number 2
+****
+
+== Selecting a person
+
+=== Select person with valid index number
+. Copy the following command onto the command line input: +
+`select 20`
+****
+*Result:* +
+
+* The contact at index 20 in the contact list panel should have a thin blue line around it
+
+****
+
+=== Select person with positive invalid index number
+. Copy the following command onto the command line input: +
+`select 999`
+****
+*Result:* +
+
+* An error message should appear indicating that the index number is invalid
+
+****
+
+=== Select person with negative invalid index number
+. Copy the following command onto the command line input: +
+`select -1`
+****
+*Result:* +
+
+* An error message should appear indicating that the index number is invalid and should be a positive number
+
+****
+
+
+== History of commands entered
+
+=== List history of commands
+. Copy the following command onto the command line input: +
+`history`
+****
+*Result:* +
+
+* A list of all the latest commands entered will be displayed on the output window
+****
+
+== Undo previous command
+
+=== Undo previous command
+. Copy the following command onto the command line input: +
+`undo`
+****
+*Result:* +
+
+* Previous command entered will undone, a success message will be displayed on the output window
+****
+
+== Redo previously undone command
+
+=== Redo previous command before an undo statement
+. Copy the following command onto the command line input: +
+`redo`
+****
+*Result:* +
+
+* Error message "No more commands to redo!" will be displayed on the output window.
+****
+
+=== Redo previous command following an undo statement
+. Enter the following command onto the command line input in sequence: +
+`delete 1`, `undo`, `redo`
+****
+*Result:* +
+
+* The delete command should have been redone, and first contact should have been deleted.
+****
+
+== Sort contacts in the addressbook
+
+=== Sort the name of contact in alphabetical order
+
+. Copy the following command onto the command line input: +
+`sort`
+
+****
+*Result:* +
+
+* The contact list should be sorted in alphabetical order
+
+****
+
+== Filter list by tag
+
+=== Tag keyword match
+. Copy the following command onto the command line input: +
+`tag chef`
+
+****
+*Result:* +
+
+* The person list panel should list the persons with the tag `chef`. +
+* The result display should indicate how many persons are listed.
+
+****
+
+=== Tag multiple keywords match
+. Copy the following command onto the command line input: +
+`tag printing excolleague`
+
+****
+*Result:* +
+
+* The person list panel should list the persons with the tag `printing` or `excolleague`. +
+* The result display should indicate how many persons are listed.
+
+****
+
+=== Tag keyword do not match
+. Copy the following command onto the command line input: +
+`tag nothing`
+
+****
+*Result:* +
+
+* The person list panel should show an empty list. +
+* The result display should show the message `0 persons listed!`
+
+****
+
+== Remove tag
+
+=== Remove tag keyword match
+. Copy the following command onto the command line input: +
+`list` +
+`rtag transport`
+
+****
+*Result:* +
+
+* The tag `transport` should disappear for all contacts in the person list panel. +
+* The result display should show the message `Removed tag(s)`
+
+****
+
+=== Remove tag multiple keywords match
+. Copy the following command onto the command line input: +
+`rtag family owesMoney`
+
+****
+*Result:* +
+
+* The tag `family` and `owesMoney` should disappear for all contacts in the person list panel. +
+* The result display should show the message `Removed tag(s)`
+
+****
+
+=== Remove tag keyword do not match
+. Copy the following command onto the command line input: +
+`rtag business Plumbing`
+
+****
+*Result:* +
+
+* The result display should show the message `Tag(s) not removed`
+
+****
+
+== Importing Contacts from external source
+
+=== Import contacts with all valid attributes successfully
+. Download the file `testImport1.vcf` from the `ManualTesting` folder and place it in the same directory as the `[W15-B3][ConnectUs].jar` application
+. In the application, copy the following command onto the command line input: +
+`import testImport1.vcf`
+
+****
+*Result:* +
+
+* The contacts in the file should be successfully added onto the addressbook at the bottom of the list
+
+****
+
+=== Importing contacts with some missing attributes successfully.
+. Download the file `testImport2.vcf` from the `ManualTesting` folder and place it in the same directory as the `[W15-B3][ConnectUs].jar` application
+. In the application, copy the following command onto the command line input: +
+`import testImport2.vcf`
+
+****
+*Result:* +
+
+* The contacts in the file should be successfully added onto the addressbook at the bottom of the list, with the tags
+`containsDummyemail` and `containsDummyPhone`.
+
+****
+
+=== Importing contacts with invalid file name.
+. Copy the following command onto the command line input: +
+`import invalidFile.vcf`
+
+****
+*Result:* +
+
+* An error message should occur indicating that the file name is incorrect or file is not found.
+
+****
+
+== Exporting contacts to external source
+
+=== Exporting all contacts in the list successfully
+. Copy the following command onto the command line input: +
+`export`
+
+****
+*Result:* +
+
+* A file called `output.vcf` should be created in the same directory as the `[W15-B3][ConnectUs].jar`
+* You can open the file with any text editor to check if all the contacts are listed inside the file in a vCard format.
+
+****
+
+== Change color theme of our application
+
+=== Change colour theme using command line with success
+. Copy the following command onto the command line input: +
+`theme white`
+
+****
+*Result:* +
+
+* The application should change to the white theme.
+* The result display should show the message `Theme changed`
+
+****
+
+=== Change colour theme using command line with no success
+. Copy the following command onto the command line input: +
+`theme blue`
+
+****
+*Result:* +
+
+* No theme change to the application.
+* The result display should show: +
+`Invalid command format! +
+theme: Changes colour theme. Current colour themes: Dark, White, Green +
+Parameters: Colour theme +
+Example: theme white`
+****
+
+=== Change colour theme using GUI
+. Click on `File` menu at the top left corner of the application.
+. Select `Green Theme` on the dropdown menu
+
+****
+*Result:* +
+
+* The application should change to the green theme.
+
+****
+
+== Upload an image of a person
+
+. Download the SampleImages folder from the ManualTesting folder and place it in the same directory as the `[W15-B3][ConnectUs].jar` application. +
+
+=== Upload an image using the command line with success
+. Copy the following command onto the command line input: +
+`photo 1 ./SampleImages/bear.jpeg`
+
+****
+*Result:* +
+
+* The uploaded image should replace the default photo of the first person. +
+* The result display should indicate that the image is uploaded to the first person and that person details are shown. +
+
+****
+
+=== Upload an image using the command line with an non-existent file
+. Copy the following command onto the command line input: +
+`photo 2 ./SampleImages/nothing.jpeg`
+
+****
+*Result:* +
+
+* An error message will be displayed at the bottom of the input line indicating that
+`Image file is not valid. Try again!`
+
+****
+
+=== Upload an image using the command line with an invalid file
+. Copy the following command onto the command line input: +
+`photo 2 ./SampleImages/nothing.txt`
+
+****
+*Result:* +
+
+* An error message will be displayed at the bottom of the input line indicating that
+`Image file is not valid. Try again!`
+
+****
+
+=== Upload an image using the GUI with success
+. Copy the following command onto the command line input: +
+`photo 2`
+. In the file explorer, go to the SampleImages folder in the directory of `[W15-B3][ConnectUs].jar` application.
+. Choose the image titled "lion" and click "Open".
+
+****
+*Result:* +
+
+* The chosen image should replace the default photo of the first person. +
+* The result display should indicate that the image is uploaded to the second person and that person details are shown. +
+
+****
+
+=== Upload an image to a person of invalid index
+. Copy the following command onto the command line input: +
+`photo 30`
+
+****
+*Result:* +
+
+* An error message will be displayed at the bottom of the input line indicating that
+`The person index provided is invalid`
+
+****
+
+== Delete an image of a person
+
+=== Delete an image of a person successfully
+. Copy the following command onto the command line input: +
+`dphoto 1`
+
+****
+*Result:* +
+
+* The previously uploaded "bear" image should disappear and be replaced by the default photo for the first person. +
+* The result display should indicate that the image is deleted from the first person and that person details are shown.
+
+****
+
+=== Delete an image of a person of invalid index
+. Copy the following command onto the command line input: +
+`dphoto 30`
+
+****
+*Result:* +
+
+* An error message will be displayed at the bottom of the input line indicating that
+`The person index provided is invalid`
+
+****
+
+=== Delete an image of a person with no uploaded photo
+. Copy the following command onto the command line input: +
+`dphoto 3`
+
+****
+*Result:* +
+
+* An error message will be displayed at the bottom of the input line indicating that
+`Person does not have a photo to delete`
+
+****
+
+== Deletes all images for all people
+
+=== Deletes all images for all people successfully
+. To see the full effect of the function, you can upload an image to person with index 3 first which will be done in the next step.
+. Copy the following commands onto the command line input in sequence: +
+`photo 3 ./SampleImages/beautiful.jpg` +
+`daphotos`
+
+****
+*Result:* +
+
+* All the photos should be deleted and all the photos of the contacts should be default photos.
+
+****
+
+=== No photos to delete
+. Copy the following command onto the command line input: +
+`daphotos`
+
+****
+*Result:* +
+
+* The result display should show `No photos to delete`
+
+****
+
+== Clear logfile
+
+=== Valid Clear Logfile
+[NOTE]
+
+Action is irreversible
+
+1. Copy the following command onto the command line input: +
+`clearlog`
+
+****
+*Result:* +
+
+*  A message will be displayed at the bottom of the input line indicating that `ConnectUs.txt log has been cleared!`
+
+****
+
+=== Invalid Clear Logfile
+
+1. Copy the following command onto the command line input: +
+`Clearlog`
+
+****
+*Result:* +
+
+* An error message will be displayed at the bottom of the input line indicating that `Unknown command`.
+
+****
+
+== Genering QR Code
+
+[NOTE]
+Internet Access is required for this feature. +
+Smartphone with QRScanner Application Installed.
+
+
+=== QRCode to call a person
+
+1. Copy the following command onto the command line input: +
+`qrcall 1`
+
+****
+*Result:* +
+
+* A message will be displayed at the bottom of the input line indicating that `Generated SMS Qr for Selected Person: 1`
+
+****
+
+2. Scan the QRCode on the browser panel with your smartphone to verify if information is correct
+
+=== Invalid QRCode to call a person
+
+1. Copy the following command onto the command line input: +
+`Qrcall 1`
+
+****
+*Result:* +
+
+* An error message will be displayed at the bottom of the input line indicating that `Unknown command`.
+
+****
+
+=== QRCode to send SMS(Short Message Services) message to a person
+
+1. Copy the following command onto the command line input: +
+`qrsms 1`
+
+****
+*Result:* +
+
+* A message will be displayed at the bottom of the input line indicating that `Generated SMS Qr for Selected Person: 1`
+
+****
+
+2. Scan the QRCode on the browser panel with your smartphone to verify if information is correct
+
+=== Invalid QRCode to send SMS message to a person
+
+1. Copy the following command onto the command line input: +
+`Qrsms 1`
+
+****
+*Result:* +
+
+* An error message will be displayed at the bottom of the input line indicating that `Unknown command`.
+
+****
+
+=== QRCode to save a person's contact to phone
+[NOTE]
+Currently supported devices are: Android
+
+1. Copy the following command onto the command line input: +
+`qrsave 1`
+
+****
+*Result:* +
+
+* A message will be displayed at the bottom of the input line indicating that `Generated Contact Saving Qr for Selected Person: 1`
+
+****
+
+2. Scan the QRCode on the browser panel with your smartphone to verify if information is correct
+
+=== Invalid QRCode to save a person's contact to phone
+
+1. Copy the following command onto the command line input: +
+`Qrsave 1`
+
+****
+*Result:* +
+
+* An error message will be displayed at the bottom of the input line indicating that `Unknown command`.
+
+****
+
+== Clear all entries in the contact list
+
+=== Clear all entries in contact list
+
+1. Copy the following command onto the command line input: +
+`clear`
+
+****
+*Result:* +
+
+* A message will be displayed at the bottom of the input line indicating that `Address book has been cleared!`
+
+****
+
+=== Invalid Clear all entries in contact list
+
+1. Copy the following command onto the command line input: +
+`Clear`
+
+****
+*Result:* +
+
+* An error message will be displayed at the bottom of the input line indicating that `Unknown command`.
+
+****
+
+== Exit the application
+
+=== Invalid Exit Command
+
+1. Copy the following command onto the command line input: +
+`Exit`
+
+****
+*Result:* +
+
+* An error message will be displayed at the bottom of the input line indicating that `Unknown command`.
+
+****
+
+=== Valid Exit Command
+
+1. Copy the following command onto the command line input: +
+`exit`
+
+****
+*Result:* +
+
+* The Application will close.
+
+****

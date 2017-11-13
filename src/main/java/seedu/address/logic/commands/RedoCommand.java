@@ -13,6 +13,7 @@ import seedu.address.model.Model;
 public class RedoCommand extends Command {
 
     public static final String COMMAND_WORD = "redo";
+    public static final String COMMAND_ALIAS = "r";
     public static final String MESSAGE_SUCCESS = "Redo success!";
     public static final String MESSAGE_FAILURE = "No more commands to redo!";
 
@@ -25,6 +26,8 @@ public class RedoCommand extends Command {
         }
 
         undoRedoStack.popRedo().redo();
+        LoggingCommand loggingCommand = new LoggingCommand();
+        loggingCommand.keepLog("", "Redo");
         return new CommandResult(MESSAGE_SUCCESS);
     }
 

@@ -13,6 +13,7 @@ import seedu.address.model.Model;
 public class UndoCommand extends Command {
 
     public static final String COMMAND_WORD = "undo";
+    public static final String COMMAND_ALIAS = "u";
     public static final String MESSAGE_SUCCESS = "Undo success!";
     public static final String MESSAGE_FAILURE = "No more commands to undo!";
 
@@ -25,6 +26,8 @@ public class UndoCommand extends Command {
         }
 
         undoRedoStack.popUndo().undo();
+        LoggingCommand loggingCommand = new LoggingCommand();
+        loggingCommand.keepLog("", "Undo");
         return new CommandResult(MESSAGE_SUCCESS);
     }
 

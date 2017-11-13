@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- @@author blaqkrow-->
+<?import javafx.scene.control.Button?>
+
+
+<Button fx:id="emailButton" mnemonicParsing="false" onAction="#handleEmailButtonPressed" text="Email" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" />
