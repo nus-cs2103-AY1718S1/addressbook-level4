@@ -399,7 +399,7 @@ Format: `nearby INDEX`
 * A person must be selected before this command is called.
 * Selects the person and loads the full information of the person at the specified `INDEX`.
 * The index refers to the index number shown in the nearby contacts listing.
-* The index *must be a positive integer*(e.g. 1, 2, 3, ...)
+* The index *must be a positive integer* (e.g. 1, 2, 3, ...)
 ****
 
 Examples:
