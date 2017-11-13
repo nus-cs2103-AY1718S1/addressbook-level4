@@ -1,5 +1,6 @@
 package seedu.address.storage;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -9,7 +10,10 @@ import com.google.common.eventbus.Subscribe;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.storage.BackupDataEvent;
+import seedu.address.commons.events.storage.BackupFilePresentEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
+import seedu.address.commons.events.storage.RestoreBackupDataEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
@@ -77,7 +81,28 @@ public class StorageManager extends ComponentManager implements Storage {
         addressBookStorage.saveAddressBook(addressBook, filePath);
     }
 
+    //@@author LimYangSheng
+    @Override
+    public void backupAddressBook(ReadOnlyAddressBook addressBook) {
+        String backupAddressBookFilePath = createBackupAddressBookFilePath(addressBookStorage.getAddressBookFilePath());
+        logger.info("Attempting to backup data to data file: " + backupAddressBookFilePath);
+        try {
+            saveAddressBook(addressBook, backupAddressBookFilePath);
+        } catch (IOException e) {
+            raise (new DataSavingExceptionEvent(e));
+        }
+    }
 
+    /**
+     * Creates file path of the backup data file.
+     */
+    private String createBackupAddressBookFilePath(String addressBookFilePath) {
+        String nameOfFile = addressBookFilePath.split("[.]")[0];
+        String nameOfBackupFile = nameOfFile + "-backup.xml";
+        return nameOfBackupFile;
+    }
+
+    //@@author
     @Override
     @Subscribe
     public void handleAddressBookChangedEvent(AddressBookChangedEvent event) {
@@ -88,5 +113,36 @@ public class StorageManager extends ComponentManager implements Storage {
             raise(new DataSavingExceptionEvent(e));
         }
     }
+
+    //@@author LimYangSheng
+    @Override
+    @Subscribe
+    public void handleBackupDataEvent(BackupDataEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        backupAddressBook(event.getAddressBookData());
+    }
+
+    @Override
+    @Subscribe
+    public void handleRestoreBackupDataEvent(RestoreBackupDataEvent event) throws DataConversionException, IOException {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        ReadOnlyAddressBook backupAddressBookData;
+        String backupFilePath = createBackupAddressBookFilePath(addressBookStorage.getAddressBookFilePath());
+        backupAddressBookData = readAddressBook(backupFilePath).get();
+        event.updateAddressBookData(backupAddressBookData);
+    }
+
+    @Override
+    @Subscribe
+    public void handleBackupFilePresentEvent(BackupFilePresentEvent event) {
+        String backupAddressBookFilePath = createBackupAddressBookFilePath(addressBookStorage.getAddressBookFilePath());
+        File f = new File(backupAddressBookFilePath);
+        if (f.exists()) {
+            event.updateBackupFilePresenceStatus(true);
+        } else {
+            event.updateBackupFilePresenceStatus(false);
+        }
+    }
+    //@@author
 
 }

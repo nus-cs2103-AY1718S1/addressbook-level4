@@ -1,18 +1,18 @@
 package guitests.guihandles;
 
 import javafx.collections.ObservableList;
-import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
+import seedu.address.ui.AutoCompleteTextField;
 import seedu.address.ui.CommandBox;
 
 /**
  * A handle to the {@code CommandBox} in the GUI.
  */
-public class CommandBoxHandle extends NodeHandle<TextField> {
+public class CommandBoxHandle extends NodeHandle<AutoCompleteTextField> {
 
     public static final String COMMAND_INPUT_FIELD_ID = "#commandTextField";
 
-    public CommandBoxHandle(TextField commandBoxNode) {
+    public CommandBoxHandle(AutoCompleteTextField commandBoxNode) {
         super(commandBoxNode);
     }
 
@@ -32,10 +32,31 @@ public class CommandBoxHandle extends NodeHandle<TextField> {
         guiRobot.interact(() -> getRootNode().setText(command));
         guiRobot.pauseForHuman();
 
+        if (getRootNode().getDropDownMenu().isShowing()) {
+            guiRobot.type(KeyCode.ENTER);
+        }
+
         guiRobot.type(KeyCode.ENTER);
 
         return !getStyleClass().contains(CommandBox.ERROR_STYLE_CLASS);
     }
+
+    //@@author newalter
+    /**
+     * Enters the given command in the Command Box and presses the given keys and then presses enter.
+     * @return true if the command succeeded, false otherwise.
+     */
+    public boolean pressAndRun(String command, KeyCode... keyPresses) {
+        click();
+        guiRobot.interact(() -> getRootNode().setText(command));
+        guiRobot.pauseForHuman();
+
+        guiRobot.type(keyPresses);
+
+        guiRobot.type(KeyCode.ENTER);
+        return !getStyleClass().contains(CommandBox.ERROR_STYLE_CLASS);
+    }
+    //@@author
 
     /**
      * Returns the list of style classes present in the command box.

@@ -72,16 +72,34 @@ public class StorageManagerTest {
         assertNotNull(storageManager.getAddressBookFilePath());
     }
 
+    //@@author LimYangSheng
+    @Test
+    public void successfulBackupOfAddressBook() throws Exception {
+        ReadOnlyAddressBook original = getTypicalAddressBook();
+        storageManager.backupAddressBook(original);
+        ReadOnlyAddressBook retrieved = storageManager.readAddressBook(getTempFilePath("ab-backup.xml")).get();
+        assertEquals(original, new AddressBook(retrieved));
+    }
+
+    @Test
+    public void backupOfAddressBook_exceptionThrown() throws Exception {
+        // Create a StorageManager while injecting a stub that throws an exception when the save method is called
+        Storage storage = new StorageManager(new XmlAddressBookStorageExceptionThrowingStub("dummy"),
+                new JsonUserPrefsStorage("dummy"));
+        storage.backupAddressBook(new AddressBook());
+        assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof DataSavingExceptionEvent);
+    }
+
     @Test
     public void handleAddressBookChangedEvent_exceptionThrown_eventRaised() {
-        // Create a StorageManager while injecting a stub that  throws an exception when the save method is called
+        // Create a StorageManager while injecting a stub that throws an exception when the save method is called
         Storage storage = new StorageManager(new XmlAddressBookStorageExceptionThrowingStub("dummy"),
                                              new JsonUserPrefsStorage("dummy"));
         storage.handleAddressBookChangedEvent(new AddressBookChangedEvent(new AddressBook()));
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof DataSavingExceptionEvent);
     }
 
-
+    //@@author
     /**
      * A Stub class to throw an exception when the save method is called
      */

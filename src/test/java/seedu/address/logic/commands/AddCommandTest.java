@@ -20,10 +20,13 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.meeting.Meeting;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.person.exceptions.TagNotFoundException;
+import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandTest {
@@ -59,6 +62,7 @@ public class AddCommandTest {
         getAddCommandForPerson(validPerson, modelStub).execute();
     }
 
+    //@@author derrickchua
     @Test
     public void equals() {
         Person alice = new PersonBuilder().withName("Alice").build();
@@ -83,6 +87,7 @@ public class AddCommandTest {
         assertFalse(addAliceCommand.equals(addBobCommand));
     }
 
+    //@@author
     /**
      * Generates a new AddCommand with the details of the given person.
      */
@@ -129,10 +134,61 @@ public class AddCommandTest {
             return null;
         }
 
+        //@@author newalter
+        @Override
+        public Predicate<? super ReadOnlyPerson> getPersonListPredicate() {
+            fail("This method should not be called.");
+            return null;
+        }
+        //@@author
+
         @Override
         public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
             fail("This method should not be called.");
         }
+
+        //@@author alexanderleegs
+        @Override
+        public ObservableList<Meeting> getFilteredMeetingList() {
+            fail("This method should not be called.");
+            return null;
+        }
+        //@@author
+
+        //@@author LimYangSheng
+        @Override
+        public Predicate<? super Meeting> getMeetingListPredicate() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public void updateFilteredMeetingList(Predicate<Meeting> predicate) {
+            fail("This method should not be called.");
+        }
+
+        //@@author alexanderleegs
+        @Override
+        public void deleteTag(Tag tag) throws DuplicatePersonException, PersonNotFoundException, TagNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void deleteMeeting(Meeting meeting) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void sort(String field) {
+            fail("This method should not be called.");
+        }
+
+        //@@author LimYangSheng
+        @Override
+        public void sortMeeting() {
+            fail("This method should not be called.");
+        }
+        //@@author
     }
 
     /**

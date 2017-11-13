@@ -7,17 +7,29 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AddMeetingCommand;
+import seedu.address.logic.commands.AddTagCommand;
+import seedu.address.logic.commands.BackupCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.DeleteMeetingCommand;
+import seedu.address.logic.commands.DeleteTagCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.LoginCommand;
+import seedu.address.logic.commands.LogoutCommand;
+import seedu.address.logic.commands.NoteCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.ResizeCommand;
+import seedu.address.logic.commands.RestoreBackupCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.SortCommand;
+import seedu.address.logic.commands.SyncCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -48,41 +60,77 @@ public class AddressBookParser {
         final String arguments = matcher.group("arguments");
         switch (commandWord) {
 
-        case AddCommand.COMMAND_WORD:
+        case AddCommand.COMMAND_WORD: case AddCommand.COMMAND_ALIAS:
             return new AddCommandParser().parse(arguments);
 
-        case EditCommand.COMMAND_WORD:
-            return new EditCommandParser().parse(arguments);
+        case AddMeetingCommand.COMMAND_WORD: case AddMeetingCommand.COMMAND_ALIAS:
+            return new AddMeetingCommandParser().parse(arguments);
 
-        case SelectCommand.COMMAND_WORD:
-            return new SelectCommandParser().parse(arguments);
+        case AddTagCommand.COMMAND_WORD: case AddTagCommand.COMMAND_ALIAS:
+            return new AddTagCommandParser().parse(arguments);
 
-        case DeleteCommand.COMMAND_WORD:
-            return new DeleteCommandParser().parse(arguments);
+        case BackupCommand.COMMAND_WORD: case BackupCommand.COMMAND_ALIAS:
+            return new BackupCommand();
 
-        case ClearCommand.COMMAND_WORD:
+        case ClearCommand.COMMAND_WORD: case ClearCommand.COMMAND_ALIAS:
             return new ClearCommand();
 
-        case FindCommand.COMMAND_WORD:
-            return new FindCommandParser().parse(arguments);
+        case DeleteCommand.COMMAND_WORD: case DeleteCommand.COMMAND_ALIAS:
+            return new DeleteCommandParser().parse(arguments);
 
-        case ListCommand.COMMAND_WORD:
-            return new ListCommand();
+        case DeleteMeetingCommand.COMMAND_WORD: case DeleteMeetingCommand.COMMAND_ALIAS:
+            return new DeleteMeetingCommandParser().parse(arguments);
 
-        case HistoryCommand.COMMAND_WORD:
-            return new HistoryCommand();
+        case DeleteTagCommand.COMMAND_WORD: case DeleteTagCommand.COMMAND_ALIAS:
+            return new DeleteTagCommandParser().parse(arguments);
 
-        case ExitCommand.COMMAND_WORD:
+        case EditCommand.COMMAND_WORD: case EditCommand.COMMAND_ALIAS:
+            return new EditCommandParser().parse(arguments);
+
+        case ExitCommand.COMMAND_WORD: case ExitCommand.COMMAND_ALIAS:
             return new ExitCommand();
 
-        case HelpCommand.COMMAND_WORD:
+        case FindCommand.COMMAND_WORD: case FindCommand.COMMAND_ALIAS:
+            return new FindCommandParser().parse(arguments);
+
+        case HelpCommand.COMMAND_WORD: case HelpCommand.COMMAND_ALIAS:
             return new HelpCommand();
 
-        case UndoCommand.COMMAND_WORD:
-            return new UndoCommand();
+        case HistoryCommand.COMMAND_WORD: case HistoryCommand.COMMAND_ALIAS:
+            return new HistoryCommand();
 
-        case RedoCommand.COMMAND_WORD:
+        case LoginCommand.COMMAND_WORD: case LoginCommand.COMMAND_ALIAS:
+            return new LoginCommand();
+
+        case LogoutCommand.COMMAND_WORD: case LogoutCommand.COMMAND_ALIAS:
+            return new LogoutCommand();
+
+        case ListCommand.COMMAND_WORD: case ListCommand.COMMAND_ALIAS:
+            return new ListCommand();
+
+        case ResizeCommand.COMMAND_WORD: case ResizeCommand.COMMAND_ALIAS:
+            return new ResizeCommandParser().parse(arguments);
+
+        case NoteCommand.COMMAND_WORD: case NoteCommand.COMMAND_ALIAS:
+            return new NoteCommandParser().parse(arguments);
+
+        case RedoCommand.COMMAND_WORD: case RedoCommand.COMMAND_ALIAS:
             return new RedoCommand();
+
+        case RestoreBackupCommand.COMMAND_WORD: case RestoreBackupCommand.COMMAND_ALIAS:
+            return new RestoreBackupCommand();
+
+        case SelectCommand.COMMAND_WORD: case SelectCommand.COMMAND_ALIAS:
+            return new SelectCommandParser().parse(arguments);
+
+        case SortCommand.COMMAND_WORD: case SortCommand.COMMAND_ALIAS:
+            return new SortCommandParser().parse(arguments);
+
+        case SyncCommand.COMMAND_WORD: case SyncCommand.COMMAND_ALIAS:
+            return new SyncCommand();
+
+        case UndoCommand.COMMAND_WORD: case UndoCommand.COMMAND_ALIAS:
+            return new UndoCommand();
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

@@ -3,12 +3,15 @@ package seedu.address.ui;
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import guitests.guihandles.CommandBoxHandle;
 import javafx.scene.input.KeyCode;
+import seedu.address.google.OAuth;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
 import seedu.address.logic.commands.ListCommand;
@@ -27,8 +30,11 @@ public class CommandBoxTest extends GuiUnitTest {
 
     @Before
     public void setUp() {
+        OAuth oauth = OAuth.getInstance();
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+
         Model model = new ModelManager();
-        Logic logic = new LogicManager(model);
+        Logic logic = new LogicManager(model, oauth, executor);
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxHandle = new CommandBoxHandle(getChildNode(commandBox.getRoot(),
@@ -154,4 +160,5 @@ public class CommandBoxTest extends GuiUnitTest {
         guiRobot.push(keycode);
         assertEquals(expectedCommand, commandBoxHandle.getInput());
     }
+
 }

@@ -4,53 +4,42 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: images
 :stylesDir: stylesheets
 
-AddressBook - Level 4 was developed by the https://se-edu.github.io/docs/Team.html[se-edu] team. +
-The dummy content given below serves as a placeholder to be used by future forks of the project. +
-{empty} +
-We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
+ABC Business Contacts was developed by the team W13B3 from CS2103T AY17/18, National University of Singapore . +
 
 == Project Team
 
-=== John Doe
-image::damithc.jpg[width="150", align="left"]
-{empty}[http://www.comp.nus.edu.sg/~damithch[homepage]] [https://github.com/damithc[github]] [<<johndoe#, portfolio>>]
+=== Derrick Chua
+image::derrickchua.jpg[width="150", align="left"]
+{empty}[https://github.com/derrickchua[github]][<<derrickchua#, portfolio>>]
 
-Role: Project Advisor
-
-'''
-
-=== John Roe
-image::lejolly.jpg[width="150", align="left"]
-{empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
-
-Role: Team Lead +
-Responsibilities: UI
+Role: Project Member +
+Responsibilities: UI, Scheduling and Tracking
 
 '''
 
-=== Johnny Doe
-image::yijinl.jpg[width="150", align="left"]
-{empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
+=== Lim Yang Sheng
+image::LimYangSheng.jpg[width="150", align="left"]
+{empty}[http://github.com/LimYangSheng[github]][<<limyangsheng#, portfolio>>]
+
+Role: Project Member +
+Responsibilities: Storage, Documentation
+
+'''
+
+=== Li Zeyong
+image::newalter.jpg[width="150", align="left"]
+{empty}[http://github.com/newalter[github]][<<lizeyong#, portfolio>>]
+
+Role: Project Member +
+Responsibilities: Logic, Code Quality
+
+'''
+
+=== Lee Guo Sheng Alexander
+image::alexanderlee.jpg[width="150", align="left"]
+{empty}[http://github.com/alexanderleegs[github]][<<alexanderleegs#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Data
-
-'''
-
-=== Johnny Roe
-image::m133225.jpg[width="150", align="left"]
-{empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]
-
-Role: Developer +
-Responsibilities: Dev Ops + Threading
-
-'''
-
-=== Benson Meier
-image::yl_coder.jpg[width="150", align="left"]
-{empty}[http://github.com/yl-coder[github]] [<<johndoe#, portfolio>>]
-
-Role: Developer +
-Responsibilities: UI
+Responsibilities: Model, Deliverables and deadlines
 
 '''

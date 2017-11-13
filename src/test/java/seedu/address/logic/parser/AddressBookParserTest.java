@@ -5,10 +5,13 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.logic.commands.FindCommand.FALSE;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import org.junit.Rule;
@@ -16,8 +19,10 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.BackupCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.DeleteTagCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.commands.ExitCommand;
@@ -25,12 +30,17 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.NoteCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.ResizeCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.SyncCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.predicate.NameContainsKeywordsPredicate;
+import seedu.address.model.tag.Tag;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
@@ -62,6 +72,14 @@ public class AddressBookParserTest {
     }
 
     @Test
+    public void parseCommand_deleteTag() throws Exception {
+        String keyword = "tag1";
+        DeleteTagCommand command = (DeleteTagCommand) parser.parseCommand(
+                DeleteTagCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + " " + keyword);
+        assertEquals(new DeleteTagCommand(INDEX_FIRST_PERSON, new Tag(keyword)), command);
+    }
+
+    @Test
     public void parseCommand_edit() throws Exception {
         Person person = new PersonBuilder().build();
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(person).build();
@@ -78,10 +96,13 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_find() throws Exception {
+        List<String> argument = Arrays.asList("n/foo", "bar", "baz");
         List<String> keywords = Arrays.asList("foo", "bar", "baz");
+        ArrayList<Predicate<ReadOnlyPerson>> predicates = new ArrayList<>();
+        predicates.addAll(Arrays.asList(new NameContainsKeywordsPredicate(keywords), FALSE, FALSE, FALSE, FALSE));
         FindCommand command = (FindCommand) parser.parseCommand(
-                FindCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
-        assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
+                FindCommand.COMMAND_WORD + " " + argument.stream().collect(Collectors.joining(" ")));
+        assertEquals(new FindCommand(predicates), command);
     }
 
     @Test
@@ -103,6 +124,16 @@ public class AddressBookParserTest {
         }
     }
 
+    //@@author newalter
+    @Test
+    public void parseCommand_resize() throws Exception {
+        ResizeCommand command = (ResizeCommand) parser.parseCommand(
+                ResizeCommand.COMMAND_WORD
+                        + String.format(" %d %d", ResizeCommand.MAX_WIDTH, ResizeCommand.MAX_HEIGHT));
+        assertEquals(new ResizeCommand(ResizeCommand.MAX_WIDTH, ResizeCommand.MAX_HEIGHT), command);
+    }
+    //@@author
+
     @Test
     public void parseCommand_list() throws Exception {
         assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
@@ -114,6 +145,21 @@ public class AddressBookParserTest {
         SelectCommand command = (SelectCommand) parser.parseCommand(
                 SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new SelectCommand(INDEX_FIRST_PERSON), command);
+    }
+
+    //@@author newalter
+    @Test
+    public void parseCommand_sync() throws Exception {
+        SyncCommand command = (SyncCommand) parser.parseCommand(
+                SyncCommand.COMMAND_WORD);
+        assertEquals(new SyncCommand(), command);
+    }
+    //@@author
+
+    @Test
+    public void parseCommand_backup() throws Exception {
+        assertTrue(parser.parseCommand(BackupCommand.COMMAND_WORD) instanceof BackupCommand);
+        assertTrue(parser.parseCommand(BackupCommand.COMMAND_WORD + " 3") instanceof BackupCommand);
     }
 
     @Test
@@ -129,6 +175,15 @@ public class AddressBookParserTest {
     }
 
     @Test
+    public void parseCommand_noteCommandWord_returnsNoteCommand() throws Exception {
+        assertTrue(parser.parseCommand(NoteCommand.COMMAND_WORD
+                + " " + INDEX_FIRST_PERSON.getOneBased()
+                + " ")
+                instanceof NoteCommand);
+        assertTrue(parser.parseCommand("note 3 n/") instanceof NoteCommand);
+    }
+
+    @Test
     public void parseCommand_unrecognisedInput_throwsParseException() throws Exception {
         thrown.expect(ParseException.class);
         thrown.expectMessage(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
@@ -141,4 +196,5 @@ public class AddressBookParserTest {
         thrown.expectMessage(MESSAGE_UNKNOWN_COMMAND);
         parser.parseCommand("unknownCommand");
     }
+
 }

@@ -1,0 +1,127 @@
+= Li Zeyong - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: ABC Business Contacts
+*ABC Business Contacts* is a free desktop contact management application that helps the user to manage a large collection of contacts conveniently and keep track of appointments. The user can store contacts as well as other information and retrieve them efficiently with the help of *ABC*. +
+ The user interacts with it using a Command Line Interface(CLI), and it has a Graphic User Interface(GUI) created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-W13-B3/main/blob/master/collated/main/newalter.md[Functional code]] [https://github.com/CS2103AUG2017-W13-B3/main/blob/master/collated/test/newalter.md[Test code]]
+
+=== Enhancement Added: `find` Command Reworked
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=find]
+
+#End of Extract#
+
+---
+
+==== Key Feature 1: Works on all fields
+
+===== Justification
+
+---
+The new `find` command now works on all fields, i.e. `Name`, `Phone Number`, `Email`, `Address` and `Tag`. For example, the user can find a contact by phone numbers. +
+This allows the user to locate specific contacts efficiently using all available information on top of `Name`.
+
+---
+
+==== Key Feature 2: Allows wildcard symbols
+
+===== Justification
+
+---
+Wildcard symbols `\*` and `?` are allowed in the parameters to match unknown symbols. +
+The use of wildcard symbols allows fuzzy search. It enables the user to search even if he forgets certain details. +
+The use of wildcard symbols also allows the user to search for a group of contacts sharing something similar. For example, the user can use `*@example.com` to search for contacts whose emails share the same domain.
+
+---
+
+==== Key Feature 3: Filters the displayed list
+
+===== Justification
+
+---
+The `find` command filters the displayed list of contacts. Contacts not shown in the most recent listing would *NOT* show up in the result of a `find` command. Therefore, successive `find` commands would make the list smaller and smaller. +
+By filtering the displayed list, the user can narrow down the list to locate a specific contact without exact information or find a group of contacts sharing multiple similar properties.
+
+---
+
+===== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=filter]
+
+#End of Extract#
+
+---
+
+
+
+=== Enhancement Added: Auto-Completion Suggestion
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=tabcomplete]
+
+#End of Extract#
+
+Suggestions are also generated based on the context of what the user has keyed in. If the user is typing a command word, a list of valid command words would be generated. If the user is keying in tags, a list of valid tags from the stored contact data would be generated.
+
+---
+
+==== Justification
+
+Auto-Completion allows users to type less. Moreover, since all suggestions are generated from the stored data, it can reduce the chance of mistyping. For example, if the user wants to find a contact by a very long name, the name would show up as a suggestion when the user type in the first few letters. On the other hand, if the user needs to type the name out in full, there is a higher chance for him to make mistakes.
+
+
+=== Enhancement Added: `resize` Command
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=resize]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+---
+The resize command allows the user to enlarge/shrink the size of the main window conveniently using CLI so that he can view more contacts or make space in the screen for other applications.
+
+---
+
+=== Enhancement Proposed: A More Powerful `find` Command
+
+* The user can choose to search from all contacts instead of the displayed ones using an argument `-a` which stands for `all`.
+For example, `find -a t/friends` would search for *ALL* contacts that are tagged with `friends`.
+* The user can choose to search for contacts that satisfy all conditions using an argument `-s` which stands for `strict`.
+For example, `find -s n/John t/friends` would search for contacts that match *BOTH* the name `John` the tag `friends`.
+* The user can choose to filter away unwanted contacts from the displayed list using an argument `-u` which stands for `unwanted`.
+For instance, `find -u t/friends` would filter *AWAY* contacts tagged with `friends`.
+
+=== Enhancement Proposed: Rank Auto-Completion Suggestions by Occurrence
+If a certain keyword is frequently used, it would show up first in the suggestion menu.
+
+
+=== Other contributions
+
+* Discovered a bug that causes the app to crash and provided a solution. (https://github.com/nus-cs2103-AY1718S1/forum/issues/137[Issue #137])
+* Discovered bugs during acceptance testing. (Issues https://github.com/CS2103AUG2017-W14-B4/main/issues/116[#116], https://github.com/CS2103AUG2017-W14-B4/main/issues/117[#117], https://github.com/CS2103AUG2017-W14-B4/main/issues/118[#118])
+* Proposed wildcard symbol feature for reuse. (https://github.com/nus-cs2103-AY1718S1/forum/issues/132[Issue #132])
+* Fix a bug on undo/redo. (https://github.com/CS2103AUG2017-W13-B3/main/pull/172[Pull Request #172])

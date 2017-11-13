@@ -28,9 +28,13 @@ public class RedoCommandTest {
     private final DeleteCommand deleteCommandTwo = new DeleteCommand(INDEX_FIRST_PERSON);
 
     @Before
-    public void setUp() {
+    public void setUp() throws Exception {
         deleteCommandOne.setData(model, EMPTY_COMMAND_HISTORY, EMPTY_STACK);
         deleteCommandTwo.setData(model, EMPTY_COMMAND_HISTORY, EMPTY_STACK);
+        deleteCommandOne.execute();
+        deleteCommandTwo.execute();
+        deleteCommandTwo.undo();
+        deleteCommandOne.undo();
     }
 
     @Test

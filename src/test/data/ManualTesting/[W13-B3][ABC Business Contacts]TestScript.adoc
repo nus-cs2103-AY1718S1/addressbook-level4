@@ -1,0 +1,202 @@
+= Test Script
+
+== Set up
+
+.    Change the name of `SampleData.xml` into `addressbook.xml`
+.    Move the `addressbook.xml` file into `~/data/`, where `~` is the directory you have the jar file located at
+.    Set up a dummy gmail account for use in synchronising contacts
+
+=== Sync
+[width="100%",cols="5%, 15%, 80%",options="header",]
+|=======================================================================
+|Index |Command |Expected Output
+|S1 |sync  |Error message: “Please login first”
+|S2 |login | Browser window opens for Google login (Please complete your login)
+|S3 |sync | Google Contacts will be updated with local contacts (Might take up to 2 minutes) (Only after S2 is completed)
+|S4 |Disable your wifi-connection and run sync after 30 seconds | Error message: “Unable to connect to the Internet. Please check your internet and firewall settings"
+”
+|S5 |Enable wifi and logout | Error message: “Logged out!”
+|S6 |sync | Error message: “Please login first”
+|S7 |logout | Error message: “Failure logging out. Are you sure you are logged in?”
+|S8 |login | Browser window opens for Google login (Please complete your login)
+|=======================================================================
+
+=== Contacts
+[width="100%",cols="5%, 15%, 80%",options="header",]
+|=======================================================================
+|Index |Command |Expected Output
+|C1 |add n/John Moe | New person added: John Moe Phone: No Phone Number Email: No Email Address: No Address Note:  Tags:  Meetings:
+|C2 |add n/John Moe | Error message: This person already exists in the address book
+|C3 |add n/Bob Rob t/friend p/91234567| New person added: Bob Rob Phone: 91234567 Email: No Email Address: No Address Note:  Tags: [friend] Meetings:
+|C4 |undo | Undo success!
+|C5 |add p/98765432 | Error message: Invalid command format!
+add: Adds a person to the address book. Parameters: n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...
+Example: add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney
+(Name is compulsory for new contacts)
+|C6 |a n/Charlie Brown e/charlieb@example.com p/91191191 a/123 address road t/friend t/neighbour | New person added: Charlie Brown Phone: 91191191 Email: charlieb@example.com Address: 123 address road Note:  Tags: [friend][neighbour] Meetings:
+|C7 |add n/Bob! | Error message: Person names should only contain alphanumeric characters and spaces, and it should not be blank
+|C8 |add n/Amy p/invalid | Error message: Phone numbers can only contain numbers, and should be at least 3 digits long
+|C9 |add n/Eve e/invalid | Error message: Person emails should be 2 alphanumeric/period strings separated by '@'
+|C10 |add m/anything | Error message: Invalid command format!
+add: Adds a person to the address book. Parameters: n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...
+Example: add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney
+(Inputting invalid prefixes is not allowed)
+|C11 |a n/Luke t/multiple words | Error message: Tag names should be alphanumeric (multiple words in tag not allowed)
+|C12 |undo | Undo success! (Last successful command, adding Charlie Brown, is undone)
+|C13 |delete 1 | Deleted Person: Abraham Lionel Phone: No Phone Number Email: abraham@lionel.com Address: No Address Note: Has 3 children Tags: [colleagues][friend][male] Meetings: [2017-11-20 11:00][2017-11-30 13:00][2017-12-20 11:00]
+(Meetings of deleted person is also deleted from meeting list)
+|C14 |undo | Undo success!
+|C15 |find n/John | 3 persons listed! (Only meetings of people in filtered list are shown)
+|C16 |d 3 | Deleted Person: John Moe Phone: No Phone Number Email: No Email Address: No Address Note:  Tags:  Meetings:
+|C17 |delete 3 | Error message: The person index provided is invalid (delete fails if filtered list is too small)
+|C18 |list | Listed all persons
+|C19 |d -1| Error message: Invalid command format!
+delete: Deletes the person identified by the index number used in the last person listing.
+Parameters: INDEX (must be a positive integer)
+Example: delete 1
+|C20 |d 100| Error message The person index provided is invalid
+|C21 |edit 1 n/Ash| Edited Person: Ash Phone: No Phone Number Email: abraham@lionel.com Address: No Address Note: Has 3 children Tags: [colleagues][friend][male] Meetings: [2017-11-20 11:00][2017-11-30 13:00][2017-12-20 11:00] (meetings also change name)
+|C22 |undo| Undo success!
+|C23 |edit 100 p/120| Error message: The person index provided is invalid
+|C24 |edit n/Hi| Error message: Invalid command format!
+edit: Edits the details of the person identified by the index number used in the last person listing. Existing values will be overwritten by the input values.
+Parameters: INDEX (must be a positive integer) [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...
+Example: edit 1 p/91234567 e/johndoe@example.com
+|C25 |edit 5 p/12345678| Edited Person: Betsy Crowe Phone: 12345678 Email: betsycrowe@example.com Address: Newgate Prison Note: Remember to buy eggs Tags: [wife][female] Meetings: [2017-12-15 20:00][2017-12-18 20:00]
+|C26 |undo| Undo success!
+|C27 |e 3 a/| Error message: Person addresses can take any values, and it should not be blank
+|C28 |note 1 Important note| Note Added: Abraham Lionel Phone: No Phone Number Email: abraham@lionel.com Address: No Address Note: Important note Tags: [colleagues][friend][male] Meetings: [2017-11-20 11:00][2017-11-30 13:00][2017-12-20 11:00]
+|C29 |note -1 Important note| Error message: Invalid command format!
+note: Modifies a note for the person identified by the index number used in the last person listing.
+Parameters: INDEX (must be a positive integer) [NOTE]
+|C30 |note 1 | Note Added: Abraham Lionel Phone: No Phone Number Email: abraham@lionel.com Address: No Address Note:  Tags: [colleagues][friend][male] Meetings: [2017-11-20 11:00][2017-11-30 13:00][2017-12-20 11:00]
+|C31 |note | Error message: Invalid command format!
+note: Modifies a note for the person identified by the index number used in the last person listing.
+Parameters: INDEX (must be a positive integer) [NOTE]
+Example: note 1  Has 3 children.
+|=======================================================================
+
+=== Organization
+[width="100%",cols="5%, 15%, 80%",options="header",]
+|=======================================================================
+|Index |Command |Expected Output
+|O1 |list| Listed all persons
+|O2 |find t/fri | Suggestion for `find t/friend` would pop up
+|O3 |Press kbd:[tab] | The command would be completed with `find t/friend`
+|O4 |Press kdb:[enter] | 9 persons listed!
+|O5 |list | Listed all persons
+|O6 |find t/friend family | 11 persons listed!
+|O7 |list | Listed all persons
+|O8 |find t/friend family p/81427313 | 12 persons listed!
+|O9 |f e/*@example.com | 9 persons listed!
+|O10 |list | Listed all persons
+|O11 |f e/*@example.com | 18 persons listed!
+|O12 |list | Listed all persons
+|O13 |find n/steph?n | 2 persons listed!
+|O14 |list | Listed all persons
+|O15 |find Bob | Error message: Invalid command format!
+find: Finds all persons whose specified fields contain any of the specified keywords (case-insensitive) and displays them as a list with index numbers.
+Parameters: [n/KEYWORD...] [p/KEYWORD...] [e/KEYWORD...] [a/KEYWORD...] [t/KEYWORD...]
+Example: find n/alice bob charlie p/98765432 93250124 e/johnd@example.com a/Clementi Ave t/friends owesMoney
+|O16 |find n/John m/123 | 2 persons listed! (as m/ is not a valid delimiter, ‘m/123’ is searched as a name)
+|O17 |list | Listed all persons
+|O18 |sort | Error message: Invalid command format!
+sort: Sorts the list of contacts by the field specified and displays them as a list. Parameters: FIELD
+Example: sort tag
+|O19 |sort e | suggestion for `sort email` would pop up
+|O20 |sort email | List sorted successfully!
+|O21 |sort phone | List sorted successfully!
+|O22 |sort tag | List sorted successfully!
+|O23 |sort name | List sorted successfully!
+|O24 |sort invalid | Error message: Field provided is invalid!
+|O25 |undo | Undo success! (sort by name is undone)
+|O26 |redo | Redo success!
+|O27 |list| Listed all persons
+|=======================================================================
+
+=== Meetings
+[width="100%",cols="5%, 15%, 80%",options="header",]
+|=======================================================================
+|Index |Command |Expected Output
+|M1 |addmeeting| Error message: “Invalid command format!
+addmeeting: Adds a meeting to the person identified by the index number used in the last person listing.
+Parameters: INDEX (must be a positive integer) MEETING NAME / MEETING TIME (YYYY-MM-DD HH:MM)
+Example: addmeeting 1 business / 2017-12-20 10:00”
+|M2 |addmeeting 1 Dinner/2017-12-30 19:00| Added Meeting: Dinner
+|M3 |addmeeting 1 Dinner/2018-02-29 19:00| Error message: “Time format should be YYYY-MM-DD HH:MM”
+|M4 |addmeeting 2 Dinner/2017-12-30 19:00| Added Meeting: Dinner
+|M5 |undo| Undo success!
+|M6 |redo| Redo success!
+|M7 |deletemeeting | Error message: “Invalid command format!
+deletemeeting: Deletes a meeting from the meeting list identified by the index number used in the last meeting listing.
+Parameters: INDEX (must be a positive integer)
+Example: deletemeeting 1”
+|M8 |deletemeeting 1| Deleted Meeting: Car insurance
+|M9 |deletemeeting -1| Error mesage: “Invalid command format!
+deletemeeting: Deletes a meeting from the meeting list identified by the index number used in the last meeting listing.
+Parameters: INDEX (must be a positive integer)
+Example: deletemeeting 1”
+|M10 |select 1| “Selected Person: 1”, Abraham Lionel is selected and he has 3 displayed meetings
+|M11 |select -1| Error message: “Invalid command format!
+select: Selects the person identified by the index number used in the last person listing.
+Parameters: INDEX (must be a positive integer)
+Example: select 1”
+|M12 |dm 1| Deleted Meeting: Health insurance (deleted on the originallist, not filtered list)
+|M13 |undo| Undo success! (undoes both bernice and abraham’s deletions)
+|M14 |click to select second contact| Alex Lim is selected, with 2 meetings
+|M15 |undo| Undo success! M8 reverted
+|M16 |undo| Undo success! M4 reverted
+|M17 |undo| Undo success! M2 reverted
+|=======================================================================
+
+=== Tags
+[width="100%",cols="5%, 15%, 80%",options="header",]
+|=======================================================================
+|Index |Command |Expected Output
+|T1 |addtag|Error message : “Invalid command format! addtag: Adds a tag to the person identified by the index number used in the last person listing. Parameters: INDEX (must be a positive integer) TAG NAME (one alphanumeric tag only) Example: addtag 1 friends”
+|T2 |addtag 1 uncle|Added Tag: uncle
+|T3 |addtag 1 uncle|This person already has this tag.
+|T4 |deletetag| Error message : “Invalid command format! deletetag: Removes a given tag from a specified person. Parameters: INDEX (must be a positive integer) TAG NAME (one alphanumeric tag only) Example: deletetag 1 friends”
+|T5 |deletetag 1 uncle| Deleted Tag: uncle
+|T6 |deletetag 1 uncle| Error message: This person does not have this tag.
+|T7 |find t/friend|9 persons listed!
+|T8 |deletetag all friend| Deleted Tag: friend (the list becomes empty
+|T9 |list|Listed all persons
+|T10 |find t/friend|0 persons listed!
+|T11 |undo| Undo success!
+|=======================================================================
+
+=== Others
+[width="100%",cols="5%, 15%, 80%",options="header",]
+|=======================================================================
+|Index |Command |Expected Output
+|Z1 |help |Opens the User Guide
+|Z2 |restore | Unable to execute restore as there is no backup file available (Ensure ~/data/addressbook-backup.xml does not exist when executing Z2)
+|Z3 |backup | Data has been backed up (~/data/addressbook-backup.xml is created)
+|Z4 |clear | Address book has been cleared!
+|Z5 |rb | Data has been restored
+|Z6 |undo | Undo success!
+|Z7 |redo | Redo success!
+|Z8 |history |Entered commands (from most recent to earliest):redo undo rb ...
+|Z9 |resize 200 200| Error message : `Invalid command format!
+resize: Resize the MainWindows to the specified (300< =)WIDTH(< =1920) and (230< =)HEIGHT(< =1080) Parameters: WIDTH HEIGHT Example: resize 1920 1080’
+|Z10 |resize 8| No suggestion
+|Z11 |resize 800 600| Resize successfully to 800*600
+|Z12 |resize 8| suggestion for `resize 800` would pop up
+|Z13 |resize 800 3000| Error message : `Invalid command format!
+resize: Resize the MainWindows to the specified (300< =)WIDTH(< =1920) and (230<=)HEIGHT(< =1080) Parameters: WIDTH HEIGHT Example: resize 1920 1080’
+|Z14 |a n/Charlie Brown e/charlieb@example.com p/91191191 a/123 address road |New person added: Charlie Brown Phone: 91191191 Email: charlieb@example.com Address: 123 address road Note:  Tags:  Meetings:
+|Z15 | sync | Charlie Brown should appear as a Google Contact
+|Z16 |add a Google contact with Name: Mary Brown Phone: 81234567 Address:Singapore Email: mary@example.com| Google Contact should be added
+|Z17 |sync |”Synchronised” message, and Mary Brown should appear
+|Z18 |e 1 p/91234567 | “Edited Person: Abraham Lionel Phone: 91234567 Email: abraham@lionel.com Address: No Address Note: Has 3 children Tags: [colleagues][friend][male] Meetings: [2017-11-20 11:00][2017-11-30 13:00][2017-12-20 11:00]”
+|Z19 |sync | “Synchronised” and Google Contact should now have Phone Number: 91234567 for Abraham Lionel
+|Z20 |Remove Abraham Lionel’s phone number in Google Contacts | Abraham Lionel’s Google Contact phone number should be blank
+|Z21 |sync | “Synchronised” and Abraham Lionel’s phone number is now blank in ABC
+|Z22 |delete 1| Deleted Person: Abraham Lionel Phone: No Phone Number Email: abraham@lionel.com Address: No Address Note: Has 3 children Tags: [colleagues][friend][male] Meetings: [2017-11-20 11:00][2017-11-30 13:00][2017-12-20 11:00]
+|Z23 |sync | “Synchronised” and Abraham Lionel should no longer appear in Google Contacts
+|Z24 |Delete Alex Lim in Google Contacts | Alex Lim should be deleted only in Google Contacts
+|Z25 |sync |The first entry in ABC, Alex Lim, is now deleted
+|Z26 |exit| The application exits
+|=======================================================================
+

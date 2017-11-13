@@ -1,0 +1,90 @@
+= Derrick Chua - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: ABC Business Contacts
+ABC Business Contact(ABC) is a free and open-source desktop Business Contact Management application that allows the user to store a local database of contacts, and track their appointments. There are a wide variety of commands to optimise organisation and management of a user's contact information. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-W13-B3/main/blob/master/collated/main/derrickchua.md[Functional code]] [https://github.com/CS2103AUG2017-W13-B3/main/blob/master/collated/test/derrickchua.md[Test code]] [https://github.com/CS2103AUG2017-W13-B3/main/blob/master/collated/main/derrickchua-reused.md[Reused code]]
+
+=== Enhancement Added: Sync
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=sync]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+People use their smartphones mainly to access their contacts,
+and adding synchronisation with Google Contacts provides a way
+for the modern user to use the ABC Business Contacts application
+without the hassle of importing and exporting his contacts
+constantly.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=sync]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Add command `note`
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=note]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Adding a `note` command enables the user to add notes for his contacts quickly should he need
+to jot something down.
+
+=== Enhancement Added: Optional fields for `add`
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=add]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Not all details are always known about a contact, but it should not prevent
+a user from adding him/her.
+
+=== Enhancement Proposed: Add different views for Meetings
+
+A command `view` is added, where the user can specify how he wants to view his meetings, i.e. by week, month or year
+
+==== Justification
+
+Users should be able to categorise their contacts by period, i.e. week, month or year
+
+=== Other contributions
+
+* Implement tag colours (Pull request https://github.com/CS2103AUG2017-W13-B3/main/pull/1[#1])
+* Fix white PersonListPanel CSS (Pull request https://github.com/CS2103AUG2017-W13-B3/main/pull/75[#75])
+* Discovered bugs during acceptance testing (Issue https://github.com/CS2103AUG2017-F10-B1/main/issues/125[#125])

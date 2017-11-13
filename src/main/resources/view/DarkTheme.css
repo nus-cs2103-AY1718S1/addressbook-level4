@@ -1,6 +1,6 @@
 .background {
     -fx-background-color: derive(#1d1d1d, 20%);
-    background-color: #383838; /* Used in the default.html file */
+    background-color: #231313; /* Used in the default.html file */
 }
 
 .label {
@@ -19,6 +19,13 @@
 
 .label-header {
     -fx-font-size: 32pt;
+    -fx-font-family: "Segoe UI Light";
+    -fx-text-fill: white;
+    -fx-opacity: 1;
+}
+
+.meetings-header {
+    -fx-font-size: 20pt;
     -fx-font-family: "Segoe UI Light";
     -fx-text-fill: white;
     -fx-opacity: 1;
@@ -88,6 +95,7 @@
 }
 
 .list-view {
+    -fx-background-color: derive(#1d1d1d, 20%);
     -fx-background-insets: 0;
     -fx-padding: 0;
 }

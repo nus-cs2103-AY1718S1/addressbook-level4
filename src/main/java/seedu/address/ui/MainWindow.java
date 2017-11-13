@@ -18,6 +18,7 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.ResizeMainWindowEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
@@ -31,8 +32,8 @@ public class MainWindow extends UiPart<Region> {
 
     private static final String ICON = "/images/address_book_32.png";
     private static final String FXML = "MainWindow.fxml";
-    private static final int MIN_HEIGHT = 600;
-    private static final int MIN_WIDTH = 450;
+    private static final int MIN_HEIGHT = 230;
+    private static final int MIN_WIDTH = 300;
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -40,13 +41,13 @@ public class MainWindow extends UiPart<Region> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private BrowserPanel browserPanel;
+    private MeetingListPanel meetingListPanel;
     private PersonListPanel personListPanel;
     private Config config;
     private UserPrefs prefs;
 
     @FXML
-    private StackPane browserPlaceholder;
+    private StackPane meetingListPanelPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -126,8 +127,8 @@ public class MainWindow extends UiPart<Region> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+        meetingListPanel = new MeetingListPanel(logic.getFilteredMeetingList());
+        meetingListPanelPlaceholder.getChildren().add(meetingListPanel.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
@@ -208,13 +209,26 @@ public class MainWindow extends UiPart<Region> {
         return this.personListPanel;
     }
 
-    void releaseResources() {
-        browserPanel.freeResources();
-    }
-
     @Subscribe
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
+    }
+
+    //@@author newalter
+    @Subscribe
+    private void handleResizeMainWindowEvent(ResizeMainWindowEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        primaryStage.setWidth(event.getWidth());
+        primaryStage.setHeight(event.getHeight());
+    }
+    //@@author
+
+    public static int getMinHeight() {
+        return MIN_HEIGHT;
+    }
+
+    public static int getMinWidth() {
+        return MIN_WIDTH;
     }
 }

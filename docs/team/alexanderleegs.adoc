@@ -1,0 +1,82 @@
+= Lee Guo Sheng Alexander - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: ABC Business Contacts
+*ABC Business Contacts* (ABC) is a free desktop contact management application that provides the user with a quick and convenient way to manage a large number of contacts and keep track of appointments. The user can store contacts as well as other information and retrieve them efficiently with the help of *ABC*. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-W13-B3/main/blob/master/collated/main/alexanderleegs.md[Functional code]] [https://github.com/CS2103AUG2017-W13-B3/main/blob/master/collated/test/alexanderleegs.md[Test code]]
+
+=== Enhancement Added: AddTag/DeleteTag
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=addremovetag]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Users cannot add and delete tags easily using the edit function, as this resets all tag attached to the person. As such, a convenient way to add and delete tags would be useful for many users.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=addremovetag]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: AddMeeting/DeleteMeeting
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=addremovemeeting]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Businessmen frequently need to arrange meetings. This allows them to add meetings to specific people. They are also able to delete the meeting if it has been cancelled or has already passed.
+
+
+=== Enhancement Added: Sort
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=sort]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+As a user with many contacts, it can be difficult to find someone in your ABC. As such, the sort command allows users to arrange their contact in the way that is most convenient for them, whether it be name, phone, address, or even meeting time.
+
+=== Enhancement Proposed: Automatic checking of date
+
+ABC should be able to automatically delete meetings once the date has passed. The meetings should also be colour coded based on how close it is to the time of the meeting, so that users can see immediately at a glance how soon their next meetings are.
+
+=== Other contributions
+
+* Updated various commands to work correctly with meetings (Pull requests https://github.com/CS2103AUG2017-W13-B3/main/pull/124[#124], https://github.com/CS2103AUG2017-W13-B3/main/pull/125[#125])
+* Updated sort command to move contacts with empty fields to the back of the list (Pull request https://github.com/CS2103AUG2017-W13-B3/main/pull/121[#121])
+* Discovered bugs during acceptance testing (Issues https://github.com/CS2103AUG2017-W15-B3/main/issues/95[#95], https://github.com/CS2103AUG2017-W15-B3/main/issues/102[#102])

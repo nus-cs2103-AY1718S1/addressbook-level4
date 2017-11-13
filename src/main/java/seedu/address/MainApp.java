@@ -3,6 +3,8 @@ package seedu.address;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -18,6 +20,7 @@ import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.ConfigUtil;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.google.OAuth;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
 import seedu.address.model.AddressBook;
@@ -40,7 +43,7 @@ import seedu.address.ui.UiManager;
  */
 public class MainApp extends Application {
 
-    public static final Version VERSION = new Version(0, 6, 0, true);
+    public static final Version VERSION = new Version(1, 5, 0, true);
 
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
 
@@ -50,6 +53,8 @@ public class MainApp extends Application {
     protected Model model;
     protected Config config;
     protected UserPrefs userPrefs;
+    protected OAuth oauth;
+    protected ExecutorService executor;
 
 
     @Override
@@ -66,14 +71,19 @@ public class MainApp extends Application {
 
         initLogging(config);
 
+        oauth = OAuth.getInstance();
+
+        executor = Executors.newFixedThreadPool(30);
+
         model = initModelManager(storage, userPrefs);
 
-        logic = new LogicManager(model);
+        logic = new LogicManager(model, oauth, executor);
 
         ui = new UiManager(logic, config, userPrefs);
 
         initEventsCenter();
     }
+
 
     private String getApplicationParameter(String parameterName) {
         Map<String, String> applicationParameters = getParameters().getNamed();
@@ -103,6 +113,8 @@ public class MainApp extends Application {
         }
 
         return new ModelManager(initialData, userPrefs);
+
+
     }
 
     private void initLogging(Config config) {
@@ -189,6 +201,7 @@ public class MainApp extends Application {
 
     @Override
     public void stop() {
+        storage.backupAddressBook(model.getAddressBook());
         logger.info("============================ [ Stopping Address Book ] =============================");
         ui.stop();
         try {
