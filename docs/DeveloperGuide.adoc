@@ -392,22 +392,24 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 // tag::meetingClass[]
+
 === Implementing Meeting Class
 
 The Meeting class is a new class just like the Person class, which resides inside `model`. It features commands that modifies the state of the address book
-such as AddMeeting, DeleteMeeting, EditMeeting, ListMeeting and FindMeeting.
-The attributes of Meeting class include `NameMeeting`, `DateTime`, `Place`, `PersonToMeet` and `PhoneNum`.
+such as `addmeeting`, `deletemeeting`, `editmeeting`, `listmeeting` and `findmeeting`.
+The attributes of Meeting class include `NameMeeting`, `DateTime`, `Place`, `Persons` and `MeetingTag`.
 
+`Persons` are `ReadOnlyPerson` class from the contact list added by the users. In this meeting class, `List<ReadOnlyPerson> personsToMeet` are an object inside `Meeting` class which stores the information of the persons inside the class itself.
 
 ==== Design Considerations
 
 **Aspect:** Creation of Meeting class +
-**Alternative 1 (current choice):** Meeting class that is created with 'PersonToMeet' and 'PhoneNum' class +
-**Pros:** Easy to implement +
-**Cons:** More codes for developers to write and change +
-**Alternative 2:** Input a person class in Meeting class to retrieve their name and phone number +
-**Pros:** Allows developers to be more flexible to implement with meeting class  +
+**Alternative 1 (current choice):** Input a person class in Meeting class to retrieve their name and phone number +
+**Pros:** Allows developers to be more flexible to implement with meeting class, also simplify the creation of group meetings  +
 **Cons:** It is difficult to implement.
+**Alternative 2:** Meeting class that is created with 'PersonToMeet' and 'PhoneNum' class +
+**Pros:** Easy to implement +
+**Cons:** More codes for developers to write and change.
 //end::meetingClass[]
 
 // tag::addmeeting[]
@@ -642,7 +644,7 @@ _Figure 5.10.1 : Sequence diagram of Ui of Meeting Card_
 image::MeetingCard.png[width="250"]
 _Figure 5.10.2 : Meeting Card_
 
-To show the urgency of the meeting. Colours are assigned to the card by comparing the date and time in the meeting class to the date and time of the log in.
+To show the urgency of the meeting, as you can see from the examples below, colours are assigned to the card by comparing the date and time in the meeting class to the date and time of the log in.
 
 * `darkRed` : Meeting is in next 24 hours.
 

@@ -1,7 +1,6 @@
 package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_MEETINGS;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
