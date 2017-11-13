@@ -145,10 +145,10 @@ When you are ready to start coding,
 This section will provide an overview of the high level architecture system used to design and implement the application , mainly
 `Model` , `Logic` , `Storage` and `UI`.
 
-The *_Architecture Diagram_* shown in _Figure 2.1.1_ below explains the high-level design of the App. Given below is a quick overview of each component.
+The *_Architecture Diagram_* shown in _Figure 3.1.1_ below explains the high-level design of the App. Given below is a quick overview of each component.
 
 image::Architecture.png[width="600"]
-_Figure 2.1.1 : Architecture Diagram_
+_Figure 3.1.1 : Architecture Diagram_
 
 [TIP]
 The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
@@ -175,38 +175,38 @@ Each of the four components
 * Defines its _API_ in an `interface` with the same name as the Component.
 * Exposes its functionality using a `{Component Name}Manager` class.
 
-For example, the `Logic` component (see _Figure 2.1.2_ below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
+For example, the `Logic` component (see _Figure 3.1.2_ below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
 
 image::LogicClassDiagram.png[width="800"]
-_Figure 2.1.2 : Class Diagram of the Logic Component_
+_Figure 3.1.2 : Class Diagram of the Logic Component_
 
 [discrete]
 ==== Events-Driven nature of the design
 
-_Figure 2.1.3a_ below shows the _Sequence Diagram_ for how the components interact in the scenario where the user issues the command `delete 1`.
+_Figure 3.1.3a_ below shows the _Sequence Diagram_ for how the components interact in the scenario where the user issues the command `delete 1`.
 
 image::SDforDeletePerson.png[width="800"]
-_Figure 2.1.3a : Component interactions for `delete 1` command (part 1)_
+_Figure 3.1.3a : Component interactions for `delete 1` command (part 1)_
 
 [NOTE]
 Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
 
-_Figure 2.1.3b_ below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
+_Figure 3.1.3b_ below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
 image::SDforDeletePersonEventHandling.png[width="800"]
-_Figure 2.1.3b : Component interactions for `delete 1` command (part 2)_
+_Figure 3.1.3b : Component interactions for `delete 1` command (part 2)_
 
 [NOTE]
 Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
 
 The sections below give more details of each component.
 
-=== UI component
+=== UI Component
 
-As seen from _Figure 2.2.1_ below, the UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+As seen from _Figure 3.2.1_ below, the UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
 image::UiComponentClassDiagram.png[width="800"]
-_Figure 2.2.1 : Structure of the UI Component_
+_Figure 3.2.1 : Structure of the UI Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
@@ -218,9 +218,9 @@ The `UI` component,
 * Binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change.
 * Responds to events raised from various parts of the App and updates the UI accordingly.
 
-=== Logic component
+=== Logic Component
 
-_Figure 2.3.1_ below shows the structure of the `Logic` component.
+_Figure 3.3.1_ below shows the structure of the `Logic` component.
 
 .  `Logic` uses the `AddressBookParser` class to parse the user command.
 .  This results in a `Command` object which is executed by the `LogicManager`.
@@ -228,12 +228,12 @@ _Figure 2.3.1_ below shows the structure of the `Logic` component.
 .  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
 
 image::LogicClassDiagram.png[width="800"]
-_Figure 2.3.1_ : Structure of the Logic Component
+_Figure 3.3.1_ : Structure of the Logic Component
 
-_Figure 2.3.2_ shows finer details concerning `XYZCommand` and `Command` in _Figure 2.3.1_.
+_Figure 3.3.2_ shows finer details concerning `XYZCommand` and `Command` in _Figure 3.3.1_.
 
 image::NewCommandClassDiagram.PNG[width="800"]
-_Figure 2.3.2_ : Structure of Commands in the Logic Component.
+_Figure 3.3.2_ : Structure of Commands in the Logic Component.
 
 *API* :
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
@@ -245,14 +245,14 @@ The following is a brief explanation on how the API is implemented:
 .  The command execution can affect the `Model` (e.g. adding a person) and/or raise events.
 .  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
 
-_Figure 2.3.3_ below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
+_Figure 3.3.3_ below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
 
 image::DeletePersonSdForLogic.png[width="800"]
-_Figure 2.3.3 : Interactions Inside the Logic Component for the `delete 1` Command_
+_Figure 3.3.3 : Interactions Inside the Logic Component for the `delete 1` Command_
 
-=== Model component
+=== Model Component
 
-The structure of the `Model` component can be seen in _Figure 2.4.1_ below.
+The structure of the `Model` component can be seen in _Figure 3.4.1_ below.
 
 The `Model`,
 
@@ -261,26 +261,26 @@ The `Model`,
 * exposes an unmodifiable `ObservableList<ReadOnlyPerson>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
-image::ModelComponentClassDiagram.PNG[width="800"]
-_Figure 2.4.1 : Structure of the Model Component_
+image::ModelComponentClassDiagram.png[width="800"]
+_Figure 3.4.1 : Structure of the Model Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
-=== Storage component
+=== Storage Component
 
-The structure of the `Storage` component can be seen in _Figure 2.5.1_ below.
+The structure of the `Storage` component can be seen in _Figure 3.5.1_ below.
 
 The `Storage` component,
 
 * can save `UserPref` objects in json format and read it back.
 * can save the Address Book data in xml format and read it back.
 
-image::NewStorageClassDiagram.PNG[width="800"]
-_Figure 2.5.1 : Structure of the Storage Component_
+image::NewStorageComponentClassDiagram.PNG[width="800"]
+_Figure 3.5.1 : Structure of the Storage Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 
-=== Common classes
+=== Common Classes
 
 Classes used by multiple components are in the `seedu.addressbook.commons` package.
 
@@ -290,14 +290,14 @@ This section describes some noteworthy details on how certain features are imple
 Each sample code shows the correct sequence of calls and parameters in general implementation of the feature to allow you to perform modification of your own.
 
 // tag::undoredo[]
-=== Undo/Redo mechanism
+=== Undo/Redo Mechanism
 
 The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the address book (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
 
 `UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. _Figure 4.1.1_ below shows the inheritance diagram for commands:
 
 image::NewCommandClassDiagram.PNG[width="800"]
-_Figure 4.1.1 : Inheritance Diagram for Commands_
+_Figure 4.1.1 : Inheritance diagram for commands_
 
 As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
 
@@ -339,12 +339,12 @@ Suppose that the user has just launched the application. The `UndoRedoStack` wil
 As depicted in _Figure 4.1.4_: The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
 
 image::UndoRedoStartingStackDiagram.png[width="800"]
-_Figure 4.1.4 : UndoRedoStack Diagram 1_
+_Figure 4.1.4 : UndoRedoStack diagram 1_
 
 As depicted in _Figure 4.1.5_: As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person.
 
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
-_Figure 4.1.5 : UndoRedoStack Diagram 2_
+_Figure 4.1.5 : UndoRedoStack diagram 2_
 
 [NOTE]
 If a command fails its execution, it will not be pushed to the `UndoRedoStack` at all.
@@ -354,7 +354,7 @@ The user now decides that adding the person was a mistake, and decides to undo t
 As depicted in _Figure 4.1.6_: We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed.
 
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
-_Figure 4.1.6 : UndoRedoStack Diagram 3_
+_Figure 4.1.6 : UndoRedoStack diagram 3_
 
 [NOTE]
 If the `undoStack` is empty, then there are no other commands left to be undone, and an `Exception` will be thrown when popping the `undoStack`.
@@ -372,19 +372,19 @@ If the `redoStack` is empty, then there are no other commands left to be redone,
 As depicted in _Figure 4.1.8_: The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow).
 
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
-_Figure 4.1.8 : UndoRedoStack Diagram 4_
+_Figure 4.1.8 : UndoRedoStack diagram 4_
 
 As depicted in _Figure 4.1.9_: Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution.
 
 image::UndoRedoNewCommand3StackDiagram.png[width="800"]
-_Figure 4.1.9 : UndoRedoStack Diagram 5_
+_Figure 4.1.9 : UndoRedoStack diagram 5_
 
 The following activity diagram in _Figure 4.1.10_ below summarizes what happens inside the `UndoRedoStack` when a user executes a new command:
 
 image::UndoRedoActivityDiagram.png[width="200"]
-_Figure 4.1.10 : UndoRedoStack Activity Diagram_
+_Figure 4.1.10 : UndoRedoStack activity diagram_
 
-==== Design Considerations for `UndoableCommand`
+==== Design Considerations
 
 **Aspect:** Implementation of `UndoableCommand` +
 **Alternative 1 (current choice):** Add a new abstract method `executeUndoableCommand()`. +
@@ -418,16 +418,16 @@ _Figure 4.1.10 : UndoRedoStack Activity Diagram_
 ---
 
 **Aspect:** Data structure to support the undo/redo commands +
-**Alternative 1 (current choice):** Use separate stack for undo and redo +
+**Alternative 1 (current choice):** Use separate stack for undo and redo. +
 **Pros:** Easy to understand for new Computer Science student undergraduates to understand, who are likely to be the new incoming developers of our project. +
 **Cons:** Logic is duplicated twice. For example, when a new command is executed, we must remember to update both `HistoryManager` and `UndoRedoStack`. +
-**Alternative 2:** Use `HistoryManager` for undo/redo +
+**Alternative 2:** Use `HistoryManager` for undo/redo. +
 **Pros:** We do not need to maintain a separate stack, and just reuse what is already in the codebase. +
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
 // tag::deletemultiple[]
-=== Deleting multiple persons [Since v1.1]
+=== Deleting Multiple Persons [Since v1.1]
 
 In _Figure 3.3.3_, the interactions in the `Logic` component are shown when a person is deleted. Since version 1.1, the `DeleteCommand` has been enhanced in its execution, to delete persons belonging to different indices keyed in by the user.
 
@@ -537,7 +537,7 @@ public class DeleteCommand extends UndoableCommand {
 ----
 _Figure 4.2.4 : Code section in DeleteCommand.java_
 
-==== Design Considerations for Deleting Multiple Persons
+==== Design Considerations
 
 **Aspect:** User input restrictions +
 **Alternative 1 (current choice):** Disallow repeated indices from user, even if indices can be found in the list. +
@@ -592,7 +592,7 @@ _Figure 4.3.1 : Code section in CommandIdentifier.java_
 [NOTE]
 A valid command identifier includes all existing command and their aliases.
 
-For the Logic component, `HelpCommandParser` has been created to parse user input that follows the `help` command word. Refer to the code section in _Figure4.3.2_ below to understand how it is implemented.
+For the Logic component, `HelpCommandParser` has been created to parse user input that follows the `help` command word. Refer to the code section in _Figure 4.3.2_ below to understand how it is implemented.
 
 [source,java]
 ----
@@ -637,7 +637,7 @@ public CommandResult execute() {
     // ... default case: opens help window ...
 }
 ----
-_Figure 4.2.4 : Code section from CommandResult.java_
+_Figure 4.3.4 : Code section from CommandResult.java_
 
 The following sequence diagram in _Figure 4.3.5_ shows an example that summarises how the `HelpCommand` is being called and executed.
 
@@ -649,7 +649,7 @@ _Figure 4.3.6_ below shows the enhanced help command in action.
 
 image::HelpEnhancementScreenShot.PNG[width="800"]
 
-_Figure 4.2.2: Enhanced `HelpCommand` execution_
+_Figure 4.3.6: Enhanced `HelpCommand` execution_
 
 ==== Design Considerations
 
@@ -663,16 +663,16 @@ _Figure 4.2.2: Enhanced `HelpCommand` execution_
 // end::help[]
 
 //tag::locate[]
-=== Locating a contact's address [Since v1.2]
+=== Locating a Contact's Address [Since v1.2]
 
 This function is mainly facilitated by two events: `JumpToListRequestEvent` and `PersonPanelSelectionChangedEvent`.
 
-The sequence diagram in _Figure 4.3.1_ below shows how the locate command is executed in the logic component:
+The sequence diagram in _Figure 4.4.1_ below shows how the locate command is executed in the logic component:
 
 image::LogicComponentSequenceDiagramLocate.png[width="800"]
-_Figure 4.3.1 : Sequence Diagram for locating address in logic component_
+_Figure 4.4.1 : Sequence Diagram for locating address in logic component_
 
-Notice when the `LocateCommand` is being executed, after checking that the target index is valid, a new `JumpToListRequestEvent` is posted by the `EventsCenter` class to its `EventBus`, as shown in _Figure 4.3.2_:
+Notice when the `LocateCommand` is being executed, after checking that the target index is valid, a new `JumpToListRequestEvent` is posted by the `EventsCenter` class to its `EventBus`, as shown in _Figure 4.4.2_:
 [source,java]
 ----
 public class LocateCommand extends Command {
@@ -687,9 +687,9 @@ public class LocateCommand extends Command {
     }
 }
 ----
-_Figure 4.3.2: Code section in LocateCommand.java_
+_Figure 4.4.2: Code section in LocateCommand.java_
 
-The UI part `PersonListPanel` is in charge of handling this event (i.e.`JumpToListRequestEvent`) , and does so by scrolling to the contact of the corresponding index and selecting it, as shown in _Figure 4.3.3_:
+The UI part `PersonListPanel` is in charge of handling this event (i.e.`JumpToListRequestEvent`) , and does so by scrolling to the contact of the corresponding index and selecting it, as shown in _Figure 4.4.3_:
 [source,java]
 ----
 public class PersonListPanel extends UiPart<Region> {
@@ -711,14 +711,14 @@ public class PersonListPanel extends UiPart<Region> {
     }
 }
 ----
-_Figure 4.3.3: Code section in PersonListPanel.java_
+_Figure 4.4.3: Code section in PersonListPanel.java_
 
 The UI outcome of scrolling and selecting a `PersonCard` in the `PersonListPanel` is shown in Figure 4.3.4 below:
 
 image::PersonListPanelSelect.png[width="400"]
-_Figure 4.3.4 : UI outcome of scrolling and selecting a `PersonCard`_
+_Figure 4.4.4 : UI outcome of scrolling and selecting a `PersonCard`_
 
-When the constructor of `PersonListPanel` class is called, it will add a listener to the personListView which consists of a list view of each `PersonCard`. This listener ensures that a new `PersonPanelSelectionChangedEvent` will be raised when a new item in the list view is being selected. This can be shown below in _Figure 4.3.5_:
+When the constructor of `PersonListPanel` class is called, it will add a listener to the personListView which consists of a list view of each `PersonCard`. This listener ensures that a new `PersonPanelSelectionChangedEvent` will be raised when a new item in the list view is being selected. This can be shown below in _Figure 4.4.5_:
 [source,java]
 ----
 public class PersonListPanel extends UiPart<Region> {
@@ -753,9 +753,9 @@ public class PersonListPanel extends UiPart<Region> {
     }
 }
 ----
-_Figure 4.3.5: Code section 2 in PersonListPanel.java_
+_Figure 4.4.5: Code section 2 in PersonListPanel.java_
 
-The `BrowserPanel` contains a `WebView` which displays a web page of the google map location of the selected person's address. It is able to do so as it is an event subscriber for the `PersonPanelSelectionChangedEvent` as shown below in _Figure 4.3.6_:
+The `BrowserPanel` contains a `WebView` which displays a web page of the google map location of the selected person's address. It is able to do so as it is an event subscriber for the `PersonPanelSelectionChangedEvent` as shown below in _Figure 4.4.6_:
 [source,java]
 ----
 public class BrowserPanel extends UiPart<Region> {
@@ -767,20 +767,20 @@ public class BrowserPanel extends UiPart<Region> {
     }
 }
 ----
-_Figure 4.3.6: Code section in BrowserPanel.java_
+_Figure 4.4.6: Code section in BrowserPanel.java_
 
 By being a subscriber to this event, the `WebView` in `BrowserPanel` will load the corresponding web page whenever a new
-`PersonPanelSelectionChangedEvent` is posted to the `EventBus`. The sequence diagram in _Figure 4.3.7_ below shows how the raising of `PersonPanelSelectionChangedEvent` leads to the loading of the web page in `BrowserPanel`.
+`PersonPanelSelectionChangedEvent` is posted to the `EventBus`. The sequence diagram in _Figure 4.4.7_ below shows how the raising of `PersonPanelSelectionChangedEvent` leads to the loading of the web page in `BrowserPanel`.
 
 image::SequenceDiagramLoadPersonPage.png[width="800"]
-_Figure 4.3.7 : Sequence diagram showing how the web page is loaded from `PersonPanelSelectionChangedEvent`_
+_Figure 4.4.7 : Sequence diagram showing how the web page is loaded from `PersonPanelSelectionChangedEvent`_
 
-_Figure 4.3.8_ below shows the full UI outcome of selecting a selecting a `PersonCard` in the `PersonListPanel`, as well as displaying the corresponding address location in `BrowserPanel`.
+_Figure 4.4.8_ below shows the full UI outcome of selecting a selecting a `PersonCard` in the `PersonListPanel`, as well as displaying the corresponding address location in `BrowserPanel`.
 
 image::Full UI outcome for LocateCommand.png[width="800"]
-_Figure 4.3.8 : Full UI outcome of locate implementation_
+_Figure 4.4.8 : Full UI outcome of locate implementation_
 
-==== Design Considerations for `LocateCommand`
+==== Design Considerations
 
 **Aspect:** Execution of `LocateCommand` +
 **Alternative 1 (current choice):** Posts a new `JumpToListRequestEvent` to `EventBus`. +
@@ -794,7 +794,7 @@ _Figure 4.3.8 : Full UI outcome of locate implementation_
 // end::locate[]
 
 //tag::copy[]
-=== Copy email address to clipboard [Since v1.2]
+=== Copy Email Address to Clipboard [Since v1.2]
 
 The `copy` function uses the Clipboard in Toolkit API to automatically copy emails of selected indexes onto the system clipboard.
 The index(es) selected must exist in the current result display window, as shown in _Figure 4.5.1_.
@@ -834,7 +834,7 @@ _Figure 4.5.3b : Copy from multiple contacts_
 
 _Figure 4.5.4_ below shows an applied use of this command in an e-mail application--addresses automatically detected upon clipboard paste
 
-image::CopyCommand_browser_result.PNG[width="400"]
+image::CopyCommand_browser_result.PNG[width="800"]
 _Figures 4.5.4: Applied use of command in email application_
 
 ==== Design Considerations for `CopyCommand`
@@ -853,6 +853,26 @@ Skype calls are usually able to take in both email and phone number inputs. Mean
 an urgent need to be copied as the Locate command in our app already copies the address and displays it on Google Maps.
 As such, until user feedback proves otherwise, copying email addresses is the main priority for this feature.
 
+**Aspect:** Which field(s) to copy +
+**Alternative 1 (current choice):** Email address. +
+**Pros:** Emails more widely copied than any other field. +
+**Cons:** Users who want to copy other fields cannot do so. +
+**Alternative 2:** All fields can be copied with their respective identifiers (e.g. address/, phone/) +
+**Pros:** Users gain flexibility to copy any field required. +
+**Cons:** Creates more confusion and delay for users because they have to also type the identifier.
+
+Alternative 3: it may also be possible to permanently display all fields in each contact listing as selectable text. However, this means that the user is required to select each line of text via user interface rather than command line, which contradicts a core requirement of the project.
+
+---
+
+**Aspect:** How to implement copy for multiple contacts' information +
+**Alternative 1 (current choice):** Select by index (1 2 3 etc.) +
+**Pros:** Simpler and more efficient for small numbers (e.g. under 4 contacts on average) +
+**Cons:** Prohibitively difficult for selecting large numbers of contacts. +
+**Alternative 2:** Select by index range (1 - 3 etc.) +
+**Pros:** Easier to selec large numbers of contacts +
+**Cons:** Confusing for users who want to skip between indexes often.
+
 In terms of mode of input, current multiple email copy works with one or more indices as the user can already filter for a small list of people
 that may be of interest, cutting the amount of scrolling significantly. In addition, as we assume that most users
 using the application would not have to send email to a massive number of recipients at a time, which may cause our implementation
@@ -862,8 +882,6 @@ However, eventually allowing the command to accept a range of indices (copy 1 - 
 command that takes in all currently displayed contacts, are potential planned features for v 2.0. We may need to conduct investigation
 of user preferences and usage patterns to decide which input methods to include, as allowing too many modes of input can be
 confusing to novice users and inefficient for the app to process (thereby increasing wait time and resource usage).
-
-Alternatively, it may also be possible to permanently display all fields in each contact listing as selectable text. However, this means that the user is required to select each line of text via user interface rather than command line, which contradicts a core requirement of the project.
 
 //end::copy[]
 
@@ -922,14 +940,13 @@ image::CalendarCommand.png[width="800"]
 
 _Figure 4.6.5: Output of `CalendarCommand.java` execution_
 
-==== Design Considerations for `CalendarCommand`
-
+==== Design Considerations
 
 **Aspect:** Implementation of `CalendarCommand` +
 **Alternative 1 (current choice)**: Opening  `Calendar` web page in `BrowserPanel`. +
-**Pros:** To brings about greater convenience for the user as user does not need to navigate between multple webpages to find the calendar.User are able to find out about the public holidays which are not avaliable on desktop calendar. +
-**Cons:** User might bypass the `CalendarCommand` and rely on desktop calendar +
-**Alternative 2:** Opening up of Google calendar +
+**Pros:** To brings about greater convenience for the user as user does not need to navigate between multple webpages to find the calendar. User are able to find out about the public holidays which are not avaliable on desktop calendar. +
+**Cons:** User might bypass the `CalendarCommand` and rely on desktop calendar. +
+**Alternative 2:** Opening up of Google calendar. +
 **Pros:** User are able to store the events in the google calendar. +
 **Cons:** Unable to view public holidays.User also have to go through the hassle of logging in just to view the calendar. +
 
@@ -937,7 +954,7 @@ _Figure 4.6.5: Output of `CalendarCommand.java` execution_
 //end::calendar[]
 
 // tag::multipleemails[]
-=== Support for adding or editing contact with multiple emails [Since v1.3]
+=== Support for Adding or Editing Contact with Multiple Emails [Since v1.3]
 
 Since version 1.3, more than one email can be saved to a `Person` and all emails can be displayed in the `PersonCard`. The `AddCommand` and `EditCommand` provides support to this enhancement.
 The method to parse all email inputs in `ParserUtil` returns a set of `Email` from a collection of user input emails, as seen in _Figure 4.7.1_ below.
@@ -1022,19 +1039,19 @@ public class UniqueEmailList {
 ----
 _Figure 4.7.4: Code section in UniqueEmailList.java_
 
-==== Design Considerations for Adding or Editing contact with Multiple Emails
+==== Design Considerations
 
 **Aspect:** Storing of emails in `Person` +
 **Alternative 1 (current choice)**: Emails stored as `ObjectProperty` of `UniqueEmailList`. +
 **Pros:** We are able to add listeners to track changes in the object `UniqueEmailList`. +
 **Cons:** Need to call more methods to get the set of emails. +
-**Alternative 2:** Emails stored as a set +
+**Alternative 2:** Emails stored as a set. +
 **Pros:** Able to get the set of emails and use it from a simple getter method. +
 **Cons:** We are unable to track changes in the email list if we want the UI to change accordingly.
 // end::multipleemails[]
 
 //tag::country_code[]
-=== Country of contact [Since v1.3]
+=== Country of Contact [Since v1.3]
 
 When a contact is added or edited, its phone number is checked for existence of a country code prefix, e.g. "+1 ".
 The country code is extracted from the phone number in several steps:
@@ -1052,7 +1069,7 @@ If it is identified to have one, it will then be checked against a list of valid
                 + "6[6543210]|5[87654321]|4[987654310]|3[9643210]|2[70]|7|1)\\s\\d{4,16}$";
 
 ----
-_Figure 4.11.1: From Phone.java; checks for either any valid string of numbers (top), or a specific list of
+_Figure 4.8.1: From Phone.java; checks for either any valid string of numbers (top), or a specific list of
 existing countries' codes if the plus sign is detected._
 
 2) The plus sign `+` is detected, triggering the extraction.
@@ -1072,10 +1089,10 @@ existing countries' codes if the plus sign is detected._
         }
 
 ----
-_Figure 4.11.2: From Phone.java; extracts the digits starting after plus sign and before white space._
+_Figure 4.8.2: From Phone.java; extracts the digits starting after plus sign and before white space._
 
 Finally, the country code obtained is then sent to the Country class, where it is compared against a `Hashmap` of
-country code and name Strings, as shown in Figure 4.11.3:
+country code and name Strings, as shown in Figure 4.8.3:
 
 [source,java]
 ----
@@ -1099,7 +1116,7 @@ country code and name Strings, as shown in Figure 4.11.3:
                 return countries;
         }
 ----
-_Figure 4.11.2: From Country.java_
+_Figure 4.8.3: From Country.java_
 
 Note that the above default country code and name are defined as such:
 
@@ -1108,7 +1125,7 @@ Note that the above default country code and name are defined as such:
     public static final String DEFAULT_COUNTRY_CODE = "";
     public static final String DEFAULT_COUNTRY = "Country Unavailable";
 ----
-_Figure 4.11.3: From Country.java_
+_Figure 4.8.4: From Country.java_
 
 Meanwhile, codeList is instantiated at the end of the HashMap population to facilitate easier output of the full list
 in alphabetical order, should the user want to find out whether the code they are using is inside our database.
@@ -1132,29 +1149,29 @@ the official release:
         return output;
     }
 ----
-_Figure 4.11.4: From Country.java; getCodeList() includes output formatting to accommodate the size limitations of the
+_Figure 4.8.5: From Country.java; getCodeList() includes output formatting to accommodate the size limitations of the
 result display box, when called by HelpCommand._
 
 As the extra feature to display our supported code list is expected to be temporary, it is called by `help codes` with
 HelpCommand, rather than as a stand-alone help class.
 
-Observe in Figure 4.11.5 below, that the contact shows `Country Unavailable` when a generic phone number
-is used without a country code prefix. When its phone number field is edited in Figure 4.11.6, the country
+Observe in Figure 4.8.6 below, that the contact shows `Country Unavailable` when a generic phone number
+is used without a country code prefix. When its phone number field is edited in Figure 4.8.7, the country
 name field automatically changes to `Singapore` upon returning the command.
 
-image::country_code demo 1.PNG[width="400"]
-_Figure 4.11.5 : Country code shows unavailable status when no code is entered._
+image::country_code demo 1.PNG[width="00"]
+_Figure 4.8.6 : Country code shows unavailable status when no code is entered._
 
-image::country_code demo 2.PNG[width="400"]
-_Figure 4.11.6 : Country name updated once a matching country code is added to phone number._
+image::country_code demo 2.PNG[width="700"]
+_Figure 4.8.7 : Country name updated once a matching country code is added to phone number._
 
-Note that as shown in Figure 4.11.7, country codes that do not belong to any valid country or state will be
+Note that as shown in Figure 4.8.8, country codes that do not belong to any valid country or state will be
 rejected. The current list of acceptable codes can be listed with the command `help codes`.
 
-image::country_code demo 3.PNG[width="600"]
-_Figure 4.11.7 : Copy from multiple contacts_
+image::country_code demo 3.PNG[width="800"]
+_Figure 4.8.8 : Copy from multiple contacts_
 
-==== Design Considerations for `Country`
+==== Design Considerations
 
 Most importantly, this feature allows the user to skip the input of a new contact's country, and makes the country section
 of the Address input optional as well. This reduces the number of steps during contact creation and modification.
@@ -1178,6 +1195,17 @@ This idea started with creating a field for standalone input of Country name. Ho
 many users may skip, we decided to infer this field from existing information instead. Depending on user feedback, we may want to re-open
 the idea of allowing custom user-defined input, concurrent to a default country inference when a contact is first made.
 
+**Aspect:** How to input Country name +
+**Alternative 1 (current choice):** Automatic detection from phone number. +
+**Pros:** Fewer steps by user, ensures all contacts have country. +
+**Cons:** User cannot change a custom country for contact.  +
+**Alternative 2:** Automatic detection from address +
+**Pros:** Fewer steps by user, does not rely on phone prefixes. +
+**Cons:** User may not input country in some addresses. +
+**Alternative 3:** Manual entry of contact's country. +
+**Pros:** Guarantees satisfactory country field as defined by user. +
+**Cons:** More steps, users may not want to expend the extra time while populating address book over time.
+
 ---
 //end::country_code[]
 
@@ -1189,7 +1217,6 @@ The `ScheduleCommand` allows the user to schedule and activity with one person i
 image::ScheduleCommandLogicCommandClassDiagram.png[width="800"]
 
 _Figure 4.9.1 : Inheritance diagram for commands_
-
 
 The diagram in _Figure 4.9.2_ below shows the sequence of the schedule operation.
 
@@ -1248,7 +1275,7 @@ This choice facilitates the creation of the link:#viewing-of-user-s-agenda-since
 **Alternative 1 (current choice)**: DD-MM-YYYY is the only valid date format. +
 **Pros:** It is possible to determine which date comes first and which comes later. +
 **Cons:** The user has lesser flexibility in inputting dates. +
-**Alternative 2:** Both DD-MM and DD-MM-YYYY are acceptable date format.  +
+**Alternative 2:** Both DD-MM and DD-MM-YYYY are acceptable date formats.  +
 **Pros:** This gives the user more flexibility when inputting dates.  +
 **Cons:** This creates ambiguity when arranging the schedules based on dates.
 
@@ -1310,7 +1337,7 @@ _Figure 4.10.2 : UI display of a successful enhanced `ScheduleCommand` execution
 **Cons:** There is a need to override the `hashCode()` and `equals()` methods in the `Index` for the `Set` implementation to work correctly. +
 **Alternative 2:** `ArrayList` is used to store indices input. +
 **Pros:** `List` implementation allows the indices input to be stored in order; and hence, easier to manipulate if required.  +
-**Cons:** The user receive an error message if they input non-unique indices.
+**Cons:** The user receives an error message if he inputs non-unique indices.
 
 ---
 
@@ -1318,16 +1345,16 @@ _Figure 4.10.2 : UI display of a successful enhanced `ScheduleCommand` execution
 **Alternative 1 (current choice)**: `ArrayList` is used to store multiple schedules. +
 **Pros:** This makes it possible to arrange the schedules based on dates. +
 **Cons:** There is a need to check for duplicate schedules so that all the schedules attached to a person are unique. +
-**Alternative 2:** `Set` is used to store multiple schedules  +
+**Alternative 2:** `Set` is used to store multiple schedules.  +
 **Pros:** There is no need to specially check for duplicate schedules. +
 **Cons:** `Set` does not provide any ordering guarantees for the schedules.
 //end::scheduleMultiple[]
 
 //tag::find[]
-=== FindCommand by any search field [Since v1.2 and v1.4]
+=== FindCommand by Any Search Field [Since v1.2 and v1.4]
 
 
-`FindCommand` which reside in `Logic` will support the search of contact by any keywords. `Logic` uses the `AddressBookParser` class to parse user command. `parseCommand` in `AddressBookParser` will detect the command word `find` and the keywords keyed in by user and call `parse` method in `FindCommandParser`.`parse` method in `FindCommandParser` will check for the prefix based existing parameters `Name`, `Email`, `Address`, `Phone`,`Tags` , `Activity` and `Country`. Such parameters inherit from `Person` which resides inside `Model`. _Figures 4.4.1_ indicates the the parsing of user command in  `FindCommandParser`.
+`FindCommand` which reside in `Logic` will support the search of contact by any keywords. `Logic` uses the `AddressBookParser` class to parse user command. `parseCommand` in `AddressBookParser` will detect the command word `find` and the keywords keyed in by user and call `parse` method in `FindCommandParser`.`parse` method in `FindCommandParser` will check for the prefix based existing parameters `Name`, `Email`, `Address`, `Phone`,`Tags` , `Activity` and `Country`. Such parameters inherit from `Person` which resides inside `Model`. _Figures 4.11.1_ indicates the the parsing of user command in  `FindCommandParser`.
 
 [source,java]
 ----
@@ -1341,20 +1368,20 @@ public class FindCommandParser implements Parser<FindCommand> {
 }
 
 ----
-_Figure 4.4.1: Code section in FindCommandParser.java_
+_Figure 4.11.1: Code section in FindCommandParser.java_
 
 [NOTE]
 A valid find command can only search for keywords based on specific prefix  [n/NAME] or [p/PHONE] or [e/EMAIL] or [a/ADDRESS] or [t/TAG] or [c/COUNTRY] or [act/ACTIVITY].
 
-Any other prefix as input will be considered as invalid input.In absence of valid prefix ,an exception will be thrown in  `FindCommandParser`, as shown in _Figure 4.4.2_.
+Any other prefix as input will be considered as invalid input.In absence of valid prefix ,an exception will be thrown in  `FindCommandParser`, as shown in _Figure 4.11.2_.
 [source,java]
 ----
          default:
                     throw new ParseException(MESSAGE_UNKNOWN_FINDCOMMAND);
 ----
-_Figure 4.4.2: Code section 2 in FindCommandParser.java_
+_Figure 4.11.2: Code section 2 in FindCommandParser.java_
 
-A successful match of the prefix in `FindCommandParser` will create a `FindCommand` object with `containsKeyWordPredicate` that resides in `Model` to be passed as parameter.Command execution in `LogicManager` will then call `updateFilteredPersonList` method in `ModelManager`.Addressbook will then search for contact based on the predicate paramater passed in `PredicateUtil` as shown in _Figure 4.4.3_.
+A successful match of the prefix in `FindCommandParser` will create a `FindCommand` object with `containsKeyWordPredicate` that resides in `Model` to be passed as parameter.Command execution in `LogicManager` will then call `updateFilteredPersonList` method in `ModelManager`.Addressbook will then search for contact based on the predicate paramater passed in `PredicateUtil` as shown in _Figure 4.11.3_.
 .
 [source,java]
 ----
@@ -1363,43 +1390,42 @@ public class PredicateUtil {
 }
 
 ----
-_Figure 4.4.3: Code section  in PredicateUtil.java_
+_Figure 4.11.3: Code section  in PredicateUtil.java_
 
-The component diagram in _Figure 4.4.4_ below shows the interactions within the Logic component for the execution of find command.
+The component diagram in _Figure 4.11.4_ below shows the interactions within the Logic component for the execution of find command.
 
 image::LogicComponentSequenceDiagramFind.PNG[width="800"]
-_Figure 4.4.4 : Find component diagram_
+_Figure 4.11.4 : Find component diagram_
 
-The sequence diagram in _Figure 4.4.5_ below shows how the find function works:
+The sequence diagram in _Figure 4.11.5_ below shows how the find function works:
 
 image::SequenceDiagramFind.PNG[width="800"]
-_Figure 4.4.5 : Find sequence diagram_
+_Figure 4.11.5 : Find sequence diagram_
 
-Upon any successful match, the particulars of the contact will be displayed in `CommandBox`. _Figures 4.4.6a to 4.4.6g_ below indicate the various outcomes of search function by  using `FindCommand`.
+Upon any successful match, the particulars of the contact will be displayed in `CommandBox`. _Figures 4.11.6a to 4.11.6g_ below indicate the various outcomes of search function by  using `FindCommand`.
 
 image::FindCommand_Name.PNG[width="400"]
-_Figure 4.4.6a : Find by name [n/NAME]_
+_Figure 4.11.6a : Find by name [n/NAME]_
 
 image::FindCommand_Phone.PNG[width="400"]
-_Figure 4.4.6b : Find by phone [p/PHONE]_
+_Figure 4.11.6b : Find by phone [p/PHONE]_
 
 image::FindCommand_Email.PNG[width="400"]
-_Figure 4.4.6c : Find by email [e/EMAIL]_
+_Figure 4.11.6c : Find by email [e/EMAIL]_
 
 image::FindCommand_Address.PNG[width="400"]
-_Figure 4.4.6d : Find by address [a/ADDRESS]_
+_Figure 4.11.6d : Find by address [a/ADDRESS]_
 
 image::FindCommand_Activity.PNG[width="400"]
-_Figure 4.4.6e : Find by activity [act/ACTIVITY]_
+_Figure 4.11.6e : Find by activity [act/ACTIVITY]_
 
 image::FindCommand_Tag.PNG[width="400"]
-_Figure 4.4.6f : Find by tag [t/TAG]_
+_Figure 4.11.6f : Find by tag [t/TAG]_
 
 image::FindCommand_Country.PNG[width="400"]
-_Figure 4.4.6g : Find by country [c/COUNTRY]_
+_Figure 4.11.6g : Find by country [c/COUNTRY]_
 
-==== Design Considerations for `FindCommand`
-
+==== Design Considerations
 
 **Aspect:** Enhancement of `FindCommand` +
 **Alternative 1 (current choice)**: Searching for contact based on the `prefix` of search field given. +
@@ -1413,9 +1439,9 @@ _Figure 4.4.6g : Find by country [c/COUNTRY]_
 //end::find[]
 
 // tag::agenda[]
-=== Viewing of user's agenda [Since v1.4]
+=== Viewing of User's Agenda [Since v1.4]
 
-All scheduled activities by the user are displayed as a list view in the `AgendaPanel`. The `AgendaPanel` is first initialised in the `MainWindow`, with the observable schedule list of the `AddressBook` being passed in as a parameter to its constructor. This can be observed in _Figure 4.8.1_ below.
+All scheduled activities by the user are displayed as a list view in the `AgendaPanel`. The `AgendaPanel` is first initialised in the `MainWindow`, with the observable schedule list of the `AddressBook` being passed in as a parameter to its constructor. This can be observed in _Figure 4.12.1_ below.
 
 [source,java]
 ----
@@ -1430,9 +1456,9 @@ public class MainWindow extends UiPart<Region> {
 }
 
 ----
-_Figure 4.8.1: Code section in MainWindow.java_
+_Figure 4.12.1: Code section in MainWindow.java_
 
-Each schedule in the schedule list is represented as a `ScheduleCard`. Each `ScheduleCard` can be viewed in each cell of the list view. The `AgendaPanel` connects each schedule to a `ScheduleCard` as seen in _Figure 4.8.2_ below.
+Each schedule in the schedule list is represented as a `ScheduleCard`. Each `ScheduleCard` can be viewed in each cell of the list view. The `AgendaPanel` connects each schedule to a `ScheduleCard` as seen in _Figure 4.12.2_ below.
 
 [source,java]
 ----
@@ -1445,9 +1471,9 @@ public class AgendaPanel extends UiPart<Region> {
     }
 }
 ----
-_Figure 4.8.2: Code section in AgendaPanel.java_
+_Figure 4.12.2: Code section in AgendaPanel.java_
 
-New additions to the `AddressBook` schedule list will be reflected in the schedule cards and changes in any schedule will be reflected in the cards themselves. This is implemented as shown in _Figure 4.8.3_ below:
+New additions to the `AddressBook` schedule list will be reflected in the schedule cards and changes in any schedule will be reflected in the cards themselves. This is implemented as shown in _Figure 4.12.3_ below:
 
 [source,java]
 ----
@@ -1462,12 +1488,12 @@ public class ScheduleCard extends UiPart<Region> {
     }
 }
 ----
-_Figure 4.8.3: Code section in ScheduleCard.java_
+_Figure 4.12.3: Code section in ScheduleCard.java_
 
 The UI outcome for the `AgendaPanel` consisting of a few schedules can be seen below in _Figure 4.8.4_.
 
 image::AgendaPanelUI.png[width="400"]
-_Figure 4.8.4: UI display for user's agenda_
+_Figure 4.12.4: UI display for user's agenda_
 
 ==== Design Considerations for Viewing of User's Agenda
 
@@ -1545,11 +1571,11 @@ image::WelcomeScreen.png[width="400"]
 
 _Figure 4.13.3 : The welcome screen_
 
-When the `Continue` button is pressed, `WelcomeScreen` will pass the `MainWindow` scene into the `primaryStage`, replacing `WelcomeScreen` with `MainWindow`.
+When the btn:[Continue] button is pressed, `WelcomeScreen` will pass the `MainWindow` scene into the `primaryStage`, replacing `WelcomeScreen` with `MainWindow`.
 
 ==== Design Considerations
 
-**Aspect:** Nature of `WelcomeScreen` +
+**Aspect:** Nature of the welcome screen +
 **Alternative 1 (current choice)**: The users' action is required to close the welcome screen. +
 **Pros:** This enables the developer to customise the text on the welcome screen as required, such as tips or important notice. This is because the user will have enough time to read the text on the welcome screen. +
 **Cons:** A button is required to handle the passing of scenes into the `primaryStage`. +
@@ -1569,10 +1595,10 @@ When the `Continue` button is pressed, `WelcomeScreen` will pass the `MainWindow
 //end::welcomeScreen[]
 
 // tag::reminder[]
-=== Pop-up reminder window [Since v1.5]
+=== Pop-up Reminder Window [Since v1.5]
 
 The `AddressBook` consists of 2 schedule lists: one contains all the scheduled activities by the user, while the other contains the scheduled activities that the user need to be reminded of. +
-If there exists any activities that the user need to be reminded of, a `ReminderWindow` will open after the `MainWindow`, as shown in _Figure 4.9.1_ below.
+If there exists any activities that the user need to be reminded of, a `ReminderWindow` will open after the `MainWindow`, as shown in _Figure 4.14.1_ below.
 
 [source,java]
 ----
@@ -1593,7 +1619,7 @@ public class UiManager extends ComponentManager implements Ui {
      }
 }
 ----
-_Figure 4.9.1: Code section in UiManager.java_
+_Figure 4.14.1: Code section in UiManager.java_
 
 The `Reminder Window` contains a list view and each `Schedule` connection to `ScheduleCard` is set similar to that in the `AgendaPanel`. [Refer to _Figure 4.7.2_]
 
@@ -1612,9 +1638,9 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 }
 ----
-_Figure 4.9.2: Code section in AddressBook.java_
+_Figure 4.14.2: Code section in AddressBook.java_
 
-Scheduled activities whose due date is 1 day after the date the user starts the application will be added to the `schedulesToRemind` list in `AddressBook`. This criteria is enforced in a static method in `Schedule.java`, as shown in _Figure 4.9.3_ below.
+Scheduled activities whose due date is 1 day after the date the user starts the application will be added to the `schedulesToRemind` list in `AddressBook`. This criteria is enforced in a static method in `Schedule.java`, as shown in _Figure 4.14.3_ below.
 
 [source,java]
 ----
@@ -1645,10 +1671,10 @@ public class Schedule {
     }
 }
 ----
-_Figure 4.9.3: Code section in Schedule.java_
+_Figure 4.14.3: Code section in Schedule.java_
 
 
-==== Design Considerations for Pop-up Reminder Window
+==== Design Considerations
 
 **Aspect:** Content of reminder window +
 **Alternative 1 (current choice)**: Show list view of schedule cards like the user agenda feature +
@@ -1663,12 +1689,12 @@ _Figure 4.9.3: Code section in Schedule.java_
 
 === Sending Email [Since v1.5]
 
-`EmailCommand` utilise `Desktop` to launch a email platform for users to send email to multiple contacts. _Figure 4.10.1_ below indicates the sequence diagram that illsutrate how the components interact in the scenario where the user issues the email command.
+`EmailCommand` utilise `Desktop` to launch a email platform for users to send email to multiple contacts. _Figure 4.15.1_ below indicates the sequence diagram that illsutrate how the components interact in the scenario where the user issues the email command.
 
 image::SequenceDiagramEmail.PNG[width="600"]
-_Figure 4.10.1: Component interactions for email function_
+_Figure 4.15.1: Component interactions for email function_
 
-User will first have to key in indexes of the contact. `Logic` will use `AddressBookParser` class to parse user command. `ParseException` will be thrown in `EmailCommandParser` when there is detection of illegal value.By using a `Set` to store the indices inputed by user, this will prevent duplication of indicies. _Figure 4.10.2_ below indicates the parsing of user input in `EmailCommandParser`.
+User will first have to key in indexes of the contact. `Logic` will use `AddressBookParser` class to parse user command. `ParseException` will be thrown in `EmailCommandParser` when there is detection of illegal value.By using a `Set` to store the indices inputed by user, this will prevent duplication of indicies. _Figure 4.15.2_ below indicates the parsing of user input in `EmailCommandParser`.
 
 [source,java]
 ----
@@ -1686,9 +1712,9 @@ public class EmailCommandParser implements Parser<EmailCommand> {
 }
 
 ----
-_Figure 4.10.2: Code section in EmailCommandParser.java_
+_Figure 4.15.2: Code section in EmailCommandParser.java_
 
-A `Command` object will be executed by `Logic Manger`.During command excution, a filtered person list will be extracted from `Model`. The emails extracted from the filtered person list will be stored in a `recipientList` as shown in _Figure 4.10.3_ .`Desktop` class will be used to send email using `Desktop.Action.Mail` baed on `recipientList`.
+A `Command` object will be executed by `Logic Manger`.During command excution, a filtered person list will be extracted from `Model`. The emails extracted from the filtered person list will be stored in a `recipientList` as shown in _Figure 4.15.3_ .`Desktop` class will be used to send email using `Desktop.Action.Mail` baed on `recipientList`.
 
 [source,java]
 ----
@@ -1701,29 +1727,28 @@ public class EmailCommand extends Command {
 //email logic
 }
 ----
-_Figure 4.10.3: Code section in EmailCommand.java_
+_Figure 4.15.3: Code section in EmailCommand.java_
 
 
-Figure 4.10.4 below shows the Sequence Diagram for interactions within the Logic component for the excution of email command.
+Figure 4.15.4 below shows the Sequence Diagram for interactions within the Logic component for the excution of email command.
 
 image::LogicComponentSequenceDiagramEmail.PNG[width="800"]
-_Figure 4.10.4: Component interactions inside Logic Component when user issue email command_
+_Figure 4.15.4: Component interactions inside Logic Component when user issue email command_
 
 
-The outcome of successful launching of email platform to send email to multiple contacts is shown in _Figure 4.10.5_.
+The outcome of successful launching of email platform to send email to multiple contacts is shown in _Figure 4.15.5_.
 
 image::EmailCommand.PNG[width="800"]
-_Figure 4.10.5: Output of `EmailCommand.java` execution_
+_Figure 4.15.5: Output of `EmailCommand.java` execution_
 
 
-==== Design Considerations for `EmailCommand`
-
+==== Design Considerations
 
 **Aspect:** Data structure to support `EmailCommand` +
 **Alternative 1 (current choice)**: Use Set for storing of user's input of indices.  +
 **Pros:** Prevent duplication of indices to speed up execution of `EmailCommand`. +
-**Cons:** Set provides random access.Two objects might be considred equal if they have the same hascode even though they are different.  +
-**Alternative 2:** Using ArrayList +
+**Cons:** `Set` provides random access.Two objects might be considred equal if they have the same hashcode even though they are different.  +
+**Alternative 2:** Using `ArrayList` for storing of user's input of indices. +
 **Pros:** List implementations are ordered as List stores element in the order they were added. +
 **Cons:** Unable to detect duplicate indicies. +
 
@@ -1742,6 +1767,8 @@ Since this display used to launch completely empty, placing any useful informati
 increase information displayed. As this box is a pre-emptive Help feature, it currently resides in HelpCommand (Figure 4.12.2) despite being
 first called at launch, rather than by the user. However, in addition to this, a user enter `help command` to make this quick guide re-appear.
 
+Figure 4.16.1 below shows how the result display is directly populated at launch. This allowed us to work around the limitations of result display, which usually only displays results upon user input.
+
 [source,java]
 ----
 // Directly raise a result to the result pane to make use of its space at application launch
@@ -1749,7 +1776,7 @@ first called at launch, rather than by the user. However, in addition to this, a
 raise(new NewResultAvailableEvent(COMMAND_QUICK_HELP, false));
 
 ----
-_Figure 4.12.1: From WelcomeScreen.java_
+_Figure 4.16.1: From WelcomeScreen.java_
 
 [source,java]
 ----
@@ -1776,18 +1803,18 @@ public static final String COMMAND_QUICK_HELP =
                 + Country.COMMAND_WORD;
 
 ----
-_Figure 4.12.2: From HelpCommand.java_
+_Figure 4.16.2: From HelpCommand.java_
 
-Figure 4.12.3 shows the formatted quick help list of shortcuts, commands and their aliases. Figure 4.12.4 shows this display re-appearing
+Figure 4.16.3 shows the formatted quick help list of shortcuts, commands and their aliases. Figure 4.16.4 shows this display re-appearing
 after the user enters `help command`.
 
 image::country_code demo 1.PNG[width="400"]
-_Figure 4.12.3 : Quick-start help on application launch_
+_Figure 4.16.3 : Quick-start help on application launch_
 
 image::quick_help demo 1.PNG[width="400"]
-_Figure 4.12.4 : Quick-start help through entering help command_
+_Figure 4.16.4 : Quick-start help through entering help command_
 
-==== Design Considerations for `Quick-Start Help`
+==== Design Considerations
 
 As there is only about 3 lines' worth of space in the result display box, we needed to prioritize the most important
 information to the user. Since a Command Line Interface (CLI) may have a steeper learning curve stemming from users being
@@ -1800,6 +1827,14 @@ a new line for each command. This reasonably compact layout should also be more 
 in a long straight line in either direction.
 
 *Alternatives considered*
+
+**Aspect:** Where to display quick-start help information +
+**Alternative 1 (current choice):** Inside result display box. +
+**Pros:** Space-saving and strategically placed in easy-to-view area. +
+**Cons:** The help info is removed after user's first command entered. +
+**Alternative 2:** In a new box or central main window area. +
+**Pros:** Information can be displayed for a longer time as needed. +
+**Cons:** Less convenient to look at, takes up more precious space and may not be compatible with lower resolution displays.
 
 We could instead have placed this information in a completely new display box in the app. Although this meant that the quick
 help would be available all the time, we already had significant space demands by the existing 3 other major feature panels
@@ -1837,10 +1872,10 @@ E.g. `backup F:\Backups` and `backup F:\Backups\addressbook.xml` perform the sam
         return address.trim();
     }
 ----
-_Figure 4.13.1: From ParserUtil.java; Detects whether the file name exists in the input, and failing which, whether
+_Figure 4.17.1: From ParserUtil.java; Detects whether the file name exists in the input, and failing which, whether
 the input ends with a back slash._
 
-The result will be shown to the user as either a successful backup, or a failed one. As shown in Figure 4.13.2,
+The result will be shown to the user as either a successful backup, or a failed one. As shown in Figure 4.17.2,
 the input directory `String` will be queried as a `Path`; if the destination path is valid, BackupCommand will attempt
 to copy and paste `addressbook.xml` into the target folder, and conclude that the attempt has failed if it detects an
 IO Exception.
@@ -1863,21 +1898,21 @@ IO Exception.
         return new CommandResult(String.format(BACKUP_SUCCESS_MESSAGE, address));
     }
 ----
-_Figure 4.13.2: From BackupCommand.java; Determines whether backup was successful._
+_Figure 4.17.2: From BackupCommand.java; Determines whether backup was successful._
 
-As shown in Figure 4.13.3 below, a valid file path given will be accepted and the user will be notified of a successful
+As shown in Figure 4.17.3 below, a valid file path given will be accepted and the user will be notified of a successful
 backup.
 
-image::backup demo 1.PNG[width="400"]
-_Figure 4.13.3 : Country name updated once a matching country code is added to phone number._
+image::backup demo 1.PNG[width="600"]
+_Figure 4.17.3 : Country name updated once a matching country code is added to phone number._
 
 Similarly, if a path *does not exist, is read-only, or the addressbook.xml file already exists in the directory*,
-the message shown in Figure 4.13.4 will be displayed instead.
+the message shown in Figure 4.17.4 will be displayed instead.
 
-image::backup demo 2.PNG[width="400"]
-_Figure 4.13.4 : Copy from multiple contacts_
+image::backup demo 2.PNG[width="600"]
+_Figure 4.17.4 : Copy from multiple contacts_
 
-==== Design considerations for `Backup`
+==== Design considerations
 
 The Backup function makes it easier for the user to secure their valuable information, with no room for error.
 As such, the implementation forbids overwriting another addressbook.xml file when writing a new one. Users must
@@ -1900,6 +1935,15 @@ three challenges surfaced:
 less responsive and possibly less user oriented.
 . CloudRail did not officially support our application's use of Gradle, and integration may not be completely stable
 across all devices.
+
+**Aspect:** Where to back up the address book +
+**Alternative 1 (current choice):** In a local directory on user's PC. +
+**Pros:** Easy to implement, easy for the user to understand. +
+**Cons:** The address book may still be lost in the event of local catastrophic failure, such as a house fire or power surge. +
+**Alternative 2:** On a cloud service. +
+**Pros:** Information is safe as long as user has credentials to their cloud accounts. +
+**Cons:** Not all users have cloud service accounts, or know how to operate one. More difficult to implement.
+
 
 As such, this idea was postponed. If these challenges are addressed, it remains a highly viable and useful alternative
 that can also be used in conjunction with the current implementation.
@@ -2050,263 +2094,6 @@ a. Include those libraries in the repo (this bloats the repo size) +
 b. Require developers to download those libraries manually (this creates extra work for developers)
 
 [appendix]
-== Suggested Programming Tasks to Get Started
-
-Suggested path for new programmers:
-
-1. First, add small local-impact (i.e. the impact of the change does not go beyond the component) enhancements to one component at a time. Some suggestions are given in this section link:#improving-each-component[Improving a Component].
-
-2. Next, add a feature that touches multiple components to learn how to implement an end-to-end feature across all components. The section link:#creating-a-new-command-code-remark-code[Creating a new command: `remark`] explains how to go about adding such a feature.
-
-=== Improving each component
-
-Each individual exercise in this section is component-based (i.e. you would not need to modify the other components to get it to work).
-
-[discrete]
-==== `Logic` component
-
-The following is a suggestion for the local enhancement in the `Logic` component:
-
-[TIP]
-Do take a look at the link:#logic-component[Design: Logic Component] section before attempting to modify the `Logic` component.
-
-. Add a shorthand equivalent alias for each of the individual commands. For example, besides typing `clear`, the user can also type `c` to remove all persons in the list.
-+
-****
-* Hints
-** Just like we store each individual command word constant `COMMAND_WORD` inside `*Command.java` (e.g.  link:{repoURL}/src/main/java/seedu/address/logic/commands/FindCommand.java[`FindCommand#COMMAND_WORD`], link:{repoURL}/src/main/java/seedu/address/logic/commands/DeleteCommand.java[`DeleteCommand#COMMAND_WORD`]), you need a new constant for aliases as well (e.g. `FindCommand#COMMAND_ALIAS`).
-** link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] is responsible for analyzing command words.
-* Solution
-** Modify the switch statement in link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser#parseCommand(String)`] such that both the proper command word and alias can be used to execute the same intended command.
-** See this https://github.com/se-edu/addressbook-level4/pull/590/files[PR] for the full solution.
-****
-
-[discrete]
-==== `Model` component
-
-The following is a suggestion for the local enhancement in the `Model` component:
-
-[TIP]
-Do take a look at the link:#model-component[Design: Model Component] section before attempting to modify the `Model` component.
-
-. Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in the address book.
-+
-****
-* Hints
-** The link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model`] API needs to be updated.
-**  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] classes can be used to implement the tag removal logic. link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] allows you to update a person, and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] allows you to update the tags.
-* Solution
-** Add the implementation of `deleteTag(Tag)` method in link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`]. Loop through each person, and remove the `tag` from each person.
-** See this https://github.com/se-edu/addressbook-level4/pull/591/files[PR] for the full solution.
-****
-
-[discrete]
-==== `Ui` component
-
-The following are some suggestions for the local enhancements in the `Ui` component:
-
-[TIP]
-Do take a look at the link:#ui-component[Design: UI Component] section before attempting to modify the `UI` component.
-
-. Use different colors for different tags inside person cards. For example, `friends` tags can be all in grey, and `colleagues` tags can be all in red. The before and after screenshots can be seen in _Figure A.1.1a_ and _Figure A.1.1b_ below.
-+
-**Before**
-+
-image::getting-started-ui-tag-before.png[width="300"]
-_Figure A.1.1a : `PersonListPanel` before enhancement_
-+
-**After**
-+
-image::getting-started-ui-tag-after.png[width="300"]
-_Figure A.1.1b : `PersonListPanel` after enhancement_
-+
-****
-* Hints
-** The tag labels are created inside link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard#initTags(ReadOnlyPerson)`] (`new Label(tag.tagName)`). https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html[JavaFX's `Label` class] allows you to modify the style of each Label, such as changing its color.
-** Use the .css attribute `-fx-background-color` to add a color.
-* Solution
-** See this https://github.com/se-edu/addressbook-level4/pull/592/files[PR] for the full solution.
-****
-
-. Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] such that link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] can show a different style on error (currently it shows the same regardless of errors). The before and after screenshots can be seen in _Figure A.1.2a_ and _Figure A.1.2b_ below.
-+
-**Before**
-+
-image::getting-started-ui-result-before.png[width="200"]
-_Figure A.1.2a : `CommandBox` and `ResultDisplay` before enhancement_
-+
-**After**
-+
-image::getting-started-ui-result-after.png[width="200"]
-_Figure A.1.2b : `CommandBox` and `ResultDisplay` after enhancement_
-+
-****
-* Hints
-** link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] is raised by link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] which also knows whether the result is a success or failure, and is caught by link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] which is where we want to change the style to.
-** Refer to link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] for an example on how to display an error.
-* Solution
-** Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] 's constructor so that users of the event can indicate whether an error has occurred.
-** Modify link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay#handleNewResultAvailableEvent(event)`] to react to this event appropriately.
-** See this https://github.com/se-edu/addressbook-level4/pull/593/files[PR] for the full solution.
-****
-
-. Modify the link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to show the total number of people in the address book. The before and after screenshots can be seen in _Figure A.1.3a_ and _Figure A.1.3b_ below.
-+
-**Before**
-+
-image::getting-started-ui-status-before.png[width="500"]
-_Figure A.1.3a : `StatusBarFooter` before enhancement_
-+
-**After**
-+
-image::getting-started-ui-status-after.png[width="500"]
-_Figure A.1.3b : `StatusBarFooter` after enhancement_
-+
-****
-* Hints
-** link:{repoURL}/src/main/resources/view/StatusBarFooter.fxml[`StatusBarFooter.fxml`] will need a new `StatusBar`. Be sure to set the `GridPane.columnIndex` properly for each `StatusBar` to avoid misalignment!
-** link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] needs to initialize the status bar on application start, and to update it accordingly whenever the address book is updated.
-* Solution
-** Modify the constructor of link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to take in the number of persons when the application just started.
-** Use link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter#handleAddressBookChangedEvent(AddressBookChangedEvent)`] to update the number of persons whenever there are new changes to the addressbook.
-** See this https://github.com/se-edu/addressbook-level4/pull/596/files[PR] for the full solution.
-****
-
-[discrete]
-==== `Storage` component
-
-[TIP]
-Do take a look at the link:#storage-component[Design: Storage Component] section before attempting to modify the `Storage` component.
-
-. Add a new method `backupAddressBook(ReadOnlyAddressBook)`, so that the address book can be saved in a fixed temporary location.
-+
-****
-* Hint
-** Add the API method in link:{repoURL}/src/main/java/seedu/address/storage/AddressBookStorage.java[`AddressBookStorage`] interface.
-** Implement the logic in link:{repoURL}/src/main/java/seedu/address/storage/StorageManager.java[`StorageManager`] class.
-* Solution
-** See this https://github.com/se-edu/addressbook-level4/pull/594/files[PR] for the full solution.
-****
-
-=== Creating a new command: `remark`
-
-By creating this command, you will get a chance to learn how to implement a feature end-to-end, touching all major components of the app.
-
-==== Description
-Edits the remark for a person specified in the `INDEX`. +
-Format: `remark INDEX r/[REMARK]`
-
-Examples:
-
-* `remark 1 r/Likes to drink coffee.` +
-Edits the remark for the first person to `Likes to drink coffee.`
-* `remark 1 r/` +
-Removes the remark for the first person.
-
-==== Step-by-step Instructions
-
-===== [Step 1] Logic: Teach the app to accept 'remark' which does nothing
-Let's start by teaching the application how to parse a `remark` command. We will add the logic of `remark` later.
-
-**Main:**
-
-. Add a `RemarkCommand` that extends link:{repoURL}/src/main/java/seedu/address/logic/commands/UndoableCommand.java[`UndoableCommand`]. Upon execution, it should just throw an `Exception`.
-. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to accept a `RemarkCommand`.
-
-**Tests:**
-
-. Add `RemarkCommandTest` that tests that `executeUndoableCommand()` throws an Exception.
-. Add new test method to link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`], which tests that typing "remark" returns an instance of `RemarkCommand`.
-
-===== [Step 2] Logic: Teach the app to accept 'remark' arguments
-Let's teach the application to parse arguments that our `remark` command will accept. E.g. `1 r/Likes to drink coffee.`
-
-**Main:**
-
-. Modify `RemarkCommand` to take in an `Index` and `String` and print those two parameters as the error message.
-. Add `RemarkCommandParser` that knows how to parse two arguments, one index and one with prefix 'r/'.
-. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to use the newly implemented `RemarkCommandParser`.
-
-**Tests:**
-
-. Modify `RemarkCommandTest` to test the `RemarkCommand#equals()` method.
-. Add `RemarkCommandParserTest` that tests different boundary values
-for `RemarkCommandParser`.
-. Modify link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`] to test that the correct command is generated according to the user input.
-
-===== [Step 3] Ui: Add a placeholder for remark in `PersonCard`
-Let's add a placeholder on all our link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] s to display a remark for each person later.
-
-**Main:**
-
-. Add a `Label` with any random text inside link:{repoURL}/src/main/resources/view/PersonListCard.fxml[`PersonListCard.fxml`].
-. Add FXML annotation in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] to tie the variable to the actual label.
-
-**Tests:**
-
-. Modify link:{repoURL}/src/test/java/guitests/guihandles/PersonCardHandle.java[`PersonCardHandle`] so that future tests can read the contents of the remark label.
-
-===== [Step 4] Model: Add `Remark` class
-We have to properly encapsulate the remark in our link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`] class. Instead of just using a `String`, let's follow the conventional class structure that the codebase already uses by adding a `Remark` class.
-
-**Main:**
-
-. Add `Remark` to model component (you can copy from link:{repoURL}/src/main/java/seedu/address/model/person/Address.java[`Address`], remove the regex and change the names accordingly).
-. Modify `RemarkCommand` to now take in a `Remark` instead of a `String`.
-
-**Tests:**
-
-. Add test for `Remark`, to test the `Remark#equals()` method.
-
-===== [Step 5] Model: Modify `ReadOnlyPerson` to support a `Remark` field
-Now we have the `Remark` class, we need to actually use it inside link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`].
-
-**Main:**
-
-. Add three methods `setRemark(Remark)`, `getRemark()` and `remarkProperty()`. Be sure to implement these newly created methods in link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`Person`], which implements the link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`] interface.
-. You may assume that the user will not be able to use the `add` and `edit` commands to modify the remarks field (i.e. the person will be created without a remark).
-. Modify link:{repoURL}/src/main/java/seedu/address/model/util/SampleDataUtil.java/[`SampleDataUtil`] to add remarks for the sample data (delete your `addressBook.xml` so that the application will load the sample data when you launch it.)
-
-===== [Step 6] Storage: Add `Remark` field to `XmlAdaptedPerson` class
-We now have `Remark` s for `Person` s, but they will be gone when we exit the application. Let's modify link:{repoURL}/src/main/java/seedu/address/storage/XmlAdaptedPerson.java[`XmlAdaptedPerson`] to include a `Remark` field so that it will be saved.
-
-**Main:**
-
-. Add a new Xml field for `Remark`.
-. Be sure to modify the logic of the constructor and `toModelType()`, which handles the conversion to/from  link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`].
-
-**Tests:**
-
-. Fix `validAddressBook.xml` such that the XML tests will not fail due to a missing `<remark>` element.
-
-===== [Step 7] Ui: Connect `Remark` field to `PersonCard`
-Our remark label in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] is still a placeholder. Let's bring it to life by binding it with the actual `remark` field.
-
-**Main:**
-
-. Modify link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard#bindListeners()`] to add the binding for `remark`.
-
-**Tests:**
-
-. Modify link:{repoURL}/src/test/java/seedu/address/ui/testutil/GuiTestAssert.java[`GuiTestAssert#assertCardDisplaysPerson(...)`] so that it will compare the remark label.
-. In link:{repoURL}/src/test/java/seedu/address/ui/PersonCardTest.java[`PersonCardTest`], call `personWithTags.setRemark(ALICE.getRemark())` to test that changes in the link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`Person`] 's remark correctly updates the corresponding link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`].
-
-===== [Step 8] Logic: Implement `RemarkCommand#execute()` logic
-We now have everything set up... but we still can't modify the remarks. Let's finish it up by adding in actual logic for our `remark` command.
-
-**Main:**
-
-. Replace the logic in `RemarkCommand#execute()` (that currently just throws an `Exception`), with the actual logic to modify the remarks of a person.
-
-**Tests:**
-
-. Update `RemarkCommandTest` to test that the `execute()` logic works.
-
-==== Full Solution
-
-See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-by-step solution.
-
-[appendix]
 == User Stories
 
 Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
@@ -2390,14 +2177,15 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 (For all use cases below, the *System* is the `Contag` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
-=== Use case: Add remark
-=== Use case: Add remark
+=== Use case: Schedule an activity
+=== Use case: Schedule an activity
+
 *MSS*
 
 1.  User requests to list persons
 2.  ConTag shows a list of persons
-3.  User requests to add remark to a specific person in the list
-4.  ConTag successfully adds remark to contact
+3.  User requests to schedule an activity to a specific person in the list
+4.  ConTag successfully schedules activity to contact
 +
 Use case ends.
 
@@ -2411,7 +2199,7 @@ Use case ends.
 * 3a. The given index or format is invalid.
 +
 [none]
-** 3a1. ConTagshows an error message.
+** 3a1. ConTag shows an error message.
 +
 Use case resumes at step 2.
 
@@ -2515,35 +2303,40 @@ A contact detail that is not meant to be shared with others
 CI
 
 ....
-Continuous Integration (CI) is the process of automating the build and testing of code every time a team member commits changes to version control
+Continuous Integration (CI) is the process of automating the build and testing of
+code every time a team member commits changes to version control
 ....
 
 [[gradle]]
 Gradle
 
 ....
-Gradle is an open source build automation system that builds upon the concepts of Apache Ant and Apache Maven
+Gradle is an open source build automation system that builds upon\
+the concepts of Apache Ant and Apache Maven
 ....
 
 [[JUnit]]
 JUnit
 
 ....
-JUnit is a simple framework to write repeatable tests. It is an instance of the xUnit architecture for unit testing frameworks
+JUnit is a simple framework to write repeatable tests. It is an instance of the xUnit
+architecture for unit testing frameworks
 ....
 
 [[JavaFX]]
 JavaFX
 
 ....
-JavaFX is a software platform for creating and delivering desktop applications, as well as rich internet applications (RIAs) that can run across a wide variety of devices
+JavaFX is a software platform for creating and delivering desktop applications,
+as well as rich internet applications (RIAs) that can run across a wide variety of devices
 ....
 
 [[GUI]]
 GUI
 
 ....
-A graphical user interface (GUI) is a human-computer interface that uses windows, icons and menus and  can be manipulated by a mouse.
+A graphical user interface (GUI) is a human-computer interface that uses windows,
+icons and menus and  can be manipulated by a mouse.
 ....
 
 [[xml]]
@@ -2552,20 +2345,3 @@ xml
 ....
 XML is a file extension for an Extensible Markup Language (XML) file format.
 ....
-
-[appendix]
-== Product Survey
-
-*Product Name*
-
-Author: ...
-
-Pros:
-
-* ...
-* ...
-
-Cons:
-
-* ...
-* ...

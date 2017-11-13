@@ -29,9 +29,9 @@ ConTag is an efficient and feature-packed address book desktop application, capa
 
 === The ConTag Help System
 
-Our help system is designed to progressively provide all necessary information to help you navigate the application with ease.
+Our help system is designed to progressively provide all the necessary information to help you navigate through ConTag with ease.
 
-Apart from comprehensive help coverage in this user guide, you can also choose to get concentrated help on specific areas with `help` in the command line of Contag or pressing the `F1` key.
+Apart from the comprehensive help coverage in this user guide. You can also choose to get help on demand inside the ConTag application by pressing the `F1` key or utilising ConTag's `help` feature (refer to link:#viewing-help-code-help-code[Help]).
 
 === Features and Capabilities Overview
 Key features you can expect:
@@ -127,35 +127,13 @@ Examples:
 * `help` (without command identifier)
 * `help add` (using command word)
 * `help a` (using alias)
+
+image::HelpEnhancementScreenShot.PNG[width="800"]
+_Figure 3.2.1: UI display for HelpCommand_
+
 // end::help[]
 
 === Modifying Contacts
-
-// tag::welcomeScreen[]
-==== Enabling and disabling the welcome screen: `welcome`
-
-=> Alias: `w` <=
-
-Enables or disables the welcome screen.
-Format: `welcome ENABLING_KEYWORD`
-
-Examples:
-
-* `welcome enable`
-
-* `welcome disable` +
-
-[NOTE]
-The welcome screen is disabled by default.
-
-[TIP]
-Try enabling the welcome screen, close and rerun ConTag.
-
-If the welcome screen is successfully enabled, you should be able to see a the following screen, as shown in _Figure 3.5.5.1_ every time ConTag is run. The welcome screen displays 1 out of the 15 default productivity quotes at random to keep you motivated throughout the day.
-
-image::WelcomeScreen.png[width="400"]
-_Figure 3.4.3.1: The welcome screen_
-// end::welcomeScreen[]
 
 // tag::multipleemails[]
 ==== Adding a Person: `add`
@@ -257,6 +235,32 @@ Format: `clear`
 
 === Key Features
 
+// tag::welcomeScreen[]
+==== Enabling and disabling the welcome screen: `welcome`
+
+=> Alias: `w` <=
+
+Enables or disables the welcome screen.
+Format: `welcome ENABLING_KEYWORD`
+
+Examples:
+
+* `welcome enable`
+
+* `welcome disable` +
+
+[NOTE]
+The welcome screen is disabled by default.
+
+[TIP]
+Try enabling the welcome screen, close and rerun ConTag.
+
+If the welcome screen is successfully enabled, you should be able to see a the following screen, as shown in _Figure 3.5.5.1_ every time ConTag is run. The welcome screen displays 1 out of the 15 default productivity quotes at random to keep you motivated throughout the day.
+
+image::WelcomeScreen.png[width="400"]
+_Figure 3.4.1: The welcome screen_
+// end::welcomeScreen[]
+
 // tag::find[]
 ==== Finding persons by any field : `find`
 
@@ -311,6 +315,28 @@ Returns all persons with tag `Party` and `Presentation`
 
 * `find c/Singapore` +
 Returns all persons of country code `Singapore`
+
+image::FindCommand_Name.PNG[width="400"]
+_Figure 3.4.2a : Find by name [n/NAME]_
+
+image::FindCommand_Phone.PNG[width="400"]
+_Figure 3.4.2b : Find by phone [p/PHONE]_
+
+image::FindCommand_Email.PNG[width="400"]
+_Figure 3.4.2c : Find by email [e/EMAIL]_
+
+image::FindCommand_Address.PNG[width="400"]
+_Figure 3.4.2d : Find by address [a/ADDRESS]_
+
+image::FindCommand_Activity.PNG[width="400"]
+_Figure 3.4.2e : Find by activity [act/ACTIVITY]_
+
+image::FindCommand_Tag.PNG[width="400"]
+_Figure 3.4.2f : Find by tag [t/TAG]_
+
+image::FindCommand_Country.PNG[width="400"]
+_Figure 3.4.2g : Find by country [c/COUNTRY]_
+
 // end::find[]
 
 // tag::locate[]
@@ -336,6 +362,10 @@ Locates the 2nd person's address in the address book.
 * `find n/Betsy` +
 `locate 1` +
 Locates the 1st person's address in the results of the `find` command.
+
+image::Full UI outcome for LocateCommand.png[width="800"]
+_Figure 3.4.3 :  UI display of LocateCommand_
+
 // end::locate[]
 
 // tag::schedule[]
@@ -363,10 +393,10 @@ Associates the specified schedule with the 1st person in the results of the `fin
 // tag::agenda[]
 ===== Viewing of user's agenda
 
-A list of all scheduled activities by the user is displayed in the 'My Agenda' section of the application, as shown below in _Figure 3.4.3.1_.
+A list of all scheduled activities by the user is displayed in the 'My Agenda' section of the application, as shown below in _Figure 3.4.4.1_.
 
-image::AgendaPanelUI.png[width="400"]
-_Figure 3.4.3.1: UI display for user's agenda_
+image::AgendaPanelUI.png[width="300"]
+_Figure 3.4.4.1: UI display for user's agenda_
 
 When an activity is scheduled, the agenda list will be immediately updated, with the list being arranged from earliest to latest date with the earliest being at the top.
 // end::agenda[]
@@ -376,8 +406,8 @@ When an activity is scheduled, the agenda list will be immediately updated, with
 
 A pop-up reminder will be appear after the main application window has opened, if there exists scheduled activities by the user which are due the day after the current date. The display of the reminder window can be seen in _Figure 3.4.3.2_ below:
 
-image::ReminderWindowUI.png[width="400"]
-_Figure 3.4.3.2: UI display for pop-up reminder window_
+image::ReminderWindowUI.png[width="700"]
+_Figure 3.4.4.2: UI display for pop-up reminder window_
 // end::reminder[]
 
 // tag::copy[]
@@ -401,6 +431,10 @@ Examples:
 Outputs the 1st person's email address in console: `johndoe@example.com`
 * `copy 1 4 5` +
 Outputs email addresses of people at index 1, 4 and 5, with a semi-colon between each: `a@a.com; d@d.com; e@e.com`
+
+image::CopyCommand_browser_result.PNG[width="600"]
+_Figures 3.4.5: UI display of CopyCommand_
+
 // end::copy[]
 
 //tag::calendar[]
@@ -417,6 +451,10 @@ Opens up calendar browser in the address book. +
 * `calendar` (using command word) +
 * `cl` (using alias) +
 Opens up calendar browser in the address book.
+
+image::CalendarCommand.png[width="800"]
+
+_Figure 3.4.6: UI display of CalendarCommand_
 // end::calendar[]
 
 //tag::email[]
@@ -442,7 +480,12 @@ Emails the 1st and 2nd person in the address book.
 * `find n/Betsy` +
 `email 1` +
 Emails the 1st person in the results of the `find` command.
+
+image::EmailCommand.PNG[width="700"]
+_Figure 3.4.7: UI display of EmailCommand_
+
 // end::email[]
+
 
 //tag::backup[]
 ==== Back up ConTag : `backup`
@@ -479,6 +522,14 @@ Note:
 can take in either format.
 
 2. The path can include white spaces such as `\Folder 2\`, so do not replace spaces with other characters.
+
+
+image::backup demo 1.PNG[width="700"]
+_Figure 3.4.8 : UI display for BackupCommand1_
+
+image::backup demo 2.PNG[width="700"]
+_Figure 3.4.8 : UI display for BackupCommand2_
+
 //end::backup[]
 
 === Other Navigation Commands
@@ -578,23 +629,23 @@ To *transfer data* to another Computer, install the app in the other computer an
 |Commands Words |Commands Alias |Format|Example
 |link:#adding-a-person-code-add-code-last-updated-in-v1-3[Add] | `a`  |`add n/NAME p/PHONE_NUMBER e/EMAIL [e/UNIQUE EMAIL] a/ADDRESS [t/TAG]` |  `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend`
 
-|link:#opening-calendar-code-calendar-code-since-v1-3[Backup] |`b` |`backup TARGET_DIRECTORY` | backup F:\myFiles\
+|link:#back-up-contag-code-backup-code[Backup] |`b` |`backup TARGET_DIRECTORY` | backup F:\myFiles\
 
-|link:#opening-calendar-code-calendar-code-since-v1-3[Calendar] |`cl` |`calendar` |
+|link:#opening-calendar-code-calendar-code[Calendar] |`cl` |`calendar` |
 
 |link:#clearing-all-entries-code-clear-code[Clear] | `c`| `clear` |
 
-|link:#getting-email-addresses-code-copy-code-since-v1-3[Copy] |`cp` |`copy INDEX [UNIQUE INDEX]...`| `copy 1 2`
+|link:#getting-email-addresses-code-copy-code[Copy] |`cp` |`copy INDEX [UNIQUE INDEX]...`| `copy 1 2`
 
-|link:#deleting-person-s-code-delete-code-last-updated-in-v1-1[Delete] |`d`|`delete INDEX [UNIQUE INDEX]...`| `delete 3`
+|link:#deleting-person-s-code-delete-code[Delete] |`d`|`delete INDEX [UNIQUE INDEX]...`| `delete 3`
 
 |link:#editing-a-person-code-edit-code[Edit] | `e` |`edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]` |`edit 2 n/James Lee e/jameslee@example.com`
 
-|link:#emailing-persons-code-email-code-since-v1-5[Email] |`m` |`delete INDEX [UNIQUE INDEX]...`| `email 2`
+|link:#emailing-persons-code-email-code[Email] |`m` |`delete INDEX [UNIQUE INDEX]...`| `email 2`
 
 |link:#exiting-the-program-code-exit-code[Exit] |  | `exit` |
 
-|link:#finding-persons-by-any-field-code-find-code-since-v1-2-and-v1-4[Find]|`f` |`find KEYWORD based on [n/NAME] or  [p/PHONE]  or [c/COUNTRY] or [e/EMAIL] or [a/ADDRESS] or  [t/TAG] or [act/ACTIVTY]` |`find n/James Jake`
+|link:#finding-persons-by-any-field-code-find-code[Find]|`f` |`find KEYWORD based on [n/NAME] or  [p/PHONE]  or [c/COUNTRY] or [e/EMAIL] or [a/ADDRESS] or  [t/TAG] or [act/ACTIVTY]` |`find n/James Jake`
 
 |link:#viewing-help-code-help-code[Help] | `h` | `help COMMAND WORD` | `help add`
 
@@ -602,14 +653,14 @@ To *transfer data* to another Computer, install the app in the other computer an
 
 |link:#listing-entered-commands-code-history-code[List] |`l` |`list` |
 
-|link:#locating-a-person-s-address-code-locate-code-since-v1-2[Locate]|`lc` |`locate INDEX` | `locate 2`
+|link:#locating-a-person-s-address-code-locate-code[Locate]|`lc` |`locate INDEX` | `locate 2`
 
 |link:#redoing-the-previously-undone-command-code-redo-code[Redo] |`r` |`redo` |
 
-|link:#scheduling-an-activity-code-schedule-code-since-v1-3[Schedule] |`sc` |`schedule INDEX [INDEX]... d/DATE act/ACTIVITY` | `schedule 1 d/25-12-2017 act/Christmas dinner`
+|link:#scheduling-an-activity-code-schedule-code[Schedule] |`sc` |`schedule INDEX [INDEX]... d/DATE act/ACTIVITY` | `schedule 1 d/25-12-2017 act/Christmas dinner`
 
 |link:#undoing-previous-command-code-undo-code[Undo] |`u`| `undo` |
 
-|link:#enabling-and-disabling-the-welcome-screen-code-welcome-code-since-v1-5[Welcome] | `w` | `welcome ENABLING_KEYWORD` | `welcome enable`
+|link:#enabling-and-disabling-the-welcome-screen-code-welcome-code[Welcome] | `w` | `welcome ENABLING_KEYWORD` | `welcome enable`
 
 |=======================================================================
