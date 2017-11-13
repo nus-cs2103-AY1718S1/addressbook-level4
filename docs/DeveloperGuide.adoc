@@ -591,16 +591,53 @@ If more than one tag is given or if `INDEX` out of the range of the shown list i
 // tag::sort[]
 === Sort Function
 
-The sort function is done by performing the `sortFilteredPersonList` function which resides in the `ModelManager` class. Sort currently supports sorting by name, email and phone in ascending or descending order. +
+Rubrika's sort function allows user to display their list of contacts in a specified order.
 
-Within `ModelManager`, we mask `FilteredList` with a `SortedList` object, and call `sortFilteredPersonList` method within `Model`. This sets the comparator that been parsed by `SortCommandParser` into the `SortedList` filtered list. For each different way of sorting, a different comparator is being passed into `sortFilteredPersonList`. +
+[NOTE]
+The arrangement of contacts after sorting is *not meant to be permanent*. +
+The sort function merely displays the list in a specified manner when the user requests to do so.
 
-The following is a sequence diagram detailing the process of how `SortCommand` sorts the list of persons. +
+The sort function is done by calling the `sortFilteredPersonList` method which resides in the `ModelManager` class. `Sort` currently supports sorting by name, email and phone in ascending or descending order. +
+
+Firstly, after the `FIELD` and `ORDER` of the sort command has been entered, the `sortCommandParser` fetches the appropriate `Comparator` from `ReadOnlyPerson`.
+
+Below is a code fragment detailing the selection process.
+
+----
+public SortCommand parse(String args) throws ParseException {
+        ....
+        String trimmedArgs = args.trim();
+
+        switch (trimmedArgs) {
+        case SORTBYNAMEASCENDING:
+            return new SortCommand(ReadOnlyPerson.NAMESORTASC);
+        case SORTBYEMAILASCENDING:
+            return new SortCommand(ReadOnlyPerson.EMAILSORTASC);
+        case SORTBYPHONEASCENDING:
+            return new SortCommand(ReadOnlyPerson.PHONESORTASC);
+        case SORTBYNAMEDESCENDING:
+            return new SortCommand(ReadOnlyPerson.NAMESORTDSC);
+        case SORTBYEMAILDESCENDING:
+            return new SortCommand(ReadOnlyPerson.EMAILSORTDSC);
+        case SORTBYPHONEDESCENDING:
+            return new SortCommand(ReadOnlyPerson.PHONESORTDSC);
+        ....
+        }
+}
+----
+
+For each way of sorting, a different comparator is being passed into `SortCommand`. +
+
+The following is a sequence diagram detailing the process of how `sort` instruction is handled by Rubrika after the `SortCommandParser` has been created. And how `UI` component is able to display the sorted list. +
 
 image::SortSequenceDiagram.png[width="800"]
 _Figure 4.6.1 : Sequence Diagram of sort function_
 
-Below is the code fragment found in `Model`.
+Within `Model` component, `FilteredList` is masked by a `SortedList` object.
+
+When a user wants to sort his list of contacts in Rubrika, `execute` method in `SortCommand` call `sortFilteredPersonList` method within `Model`. This sets the comparator that been parsed by `SortCommandParser` into the `SortedList`.
+
+Below is the code fragment found in `ModelManager` that changes the comparator used on the list of contacts.
 
 ----
     @Override
@@ -610,18 +647,22 @@ Below is the code fragment found in `Model`.
 ----
 
 [NOTE]
-If arguments given do not comply with the correct format, ParseException will be thrown before execution of the function.
-
+If arguments given do not comply with the correct format, ParseException will be thrown before execution of the function. +
+Sort Command is an undoable Command.
 
 ==== Design Considerations
 
 **Aspect:** Whether to sort the intern list of the addressBook or just the filtered list. +
+
 **Alternative 1 (current):** Sorts the filteredList found in `ModelManager`. +
-**Alternative 2:** Sorts the internalList found in `AddressBook`. +
-**Pros:** A more defensive approach as internalList in AddressBook is not modified in anyway. +
+**Pros:** A more defensive approach as internalList in `AddressBook` is not modified in anyway. +
 **Pros:** User may have already have a preferred way of listing users and may only want to sort once for convenience. +
-**Cons:** More difficult to implement. +
-**Cons:** Other methods within ModelManager must be modified since SortedList is the list being displayed, not FilteredList. +
+**Cons:** More difficult to implement, and requires the `SortedList` object. +
+**Cons:** Other methods within `ModelManager` must be modified since `SortedList` is the list being displayed, not FilteredList. +
+
+**Alternative 2:** Sorts the internalList found in `AddressBook`. +
+**Pros:** Easier to implement since `internalList` is implemented using `List`. +
+**Cons:** A sort will rearrange contacts permanently, and the previous arrangement will be lost permanently.+
 // end::sort[]
 
 // tag::importexport[]
@@ -641,6 +682,8 @@ To parse the `File` into a list of `Person`, ImportCommandParser calls a static 
 image::ImportSequenceDiagram2.png[width="800"]
 _Figure 4.7.2 : Sequence Diagram Interaction between ImportCommandParser and XmlFileStorage and VcfImport_
 
+Finally,The list of person is then added using the `addPerson` method found in `model`.
+
 [NOTE]
 The import function merges the contacts in the export files with the ones currently in the addressbook. If duplicate persons are found, Rubrika will inform the user of the number of duplicated contacts found. +
  +
@@ -649,7 +692,18 @@ Also, for importing of .vcf files, due to using an inbuilt parser, only vCards c
 ==== Design Considerations
 
 **Aspect**: Choice of parsing XML files. +
-** Alternative 1 (current choice)**:
+
+**Alternative 1 (current choice)** : Using the `loadDataFromSaveFile` static method found in `XmlFileStorage`. +
+**Pros** : Able to call static method directly from `Logic` Component, hence easier to implement. +
+**Cons** : Slightly more coupling issues as a change in either files might require a change in the other. +
+
+**Alternative 2** : Using the `readAddressBook` method in `AddressBookStorage` class. +
+**Pros** : Does not bypass `StorageManager` component and already handles `logging`. +
+**Cons** : Even more coupling between the 3 classes. Also we will need to instantiate a `StorageManager` object within Logic. +
+
+**Alternative 3** : Writing a built-in parser that parses the XML diagram directly into a `List` Object. +
+**Pros** : Less coupling as the parser will on be associated with `ImportCommandParser`. +
+**Cons** : Very intensive to implement within the given time frame.
 
 === Export Function
 
