@@ -81,7 +81,7 @@ public class SwitchToProfilePanelRequestEvent extends BaseEvent {
 ###### \java\seedu\address\logic\commands\PartialFindCommand.java
 ``` java
 /**
- * Finds and lists all persons in address book whose name starts with any of the argument keywords.
+ * Finds and lists all persons in address book whose name contains any of the argument keywords partially.
  * Keyword matching is case sensitive.
  */
 public class PartialFindCommand extends Command {
@@ -95,9 +95,9 @@ public class PartialFindCommand extends Command {
             + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
             + "Example: " + COMMAND_WORD + " Ali Bo Ch";
 
-    private final NameStartsWithKeywordsPredicate predicate;
+    private final NameContainsPartialKeywordsPredicate predicate;
 
-    public PartialFindCommand (NameStartsWithKeywordsPredicate predicate) {
+    public PartialFindCommand (NameContainsPartialKeywordsPredicate predicate) {
         this.predicate = predicate;
     }
 
@@ -136,7 +136,7 @@ public class PartialFindCommandParser implements Parser<PartialFindCommand> {
 
         String[] nameKeywords = trimmedArgs.split("\\s+");
 
-        return new PartialFindCommand(new NameStartsWithKeywordsPredicate(Arrays.asList(nameKeywords)));
+        return new PartialFindCommand(new NameContainsPartialKeywordsPredicate(Arrays.asList(nameKeywords)));
     }
 
 }
@@ -169,32 +169,33 @@ public class PartialFindCommandParser implements Parser<PartialFindCommand> {
         return FXCollections.unmodifiableObservableList(internalList);
     }
 ```
-###### \java\seedu\address\model\person\NameStartsWithKeywordsPredicate.java
+###### \java\seedu\address\model\person\NameContainsPartialKeywordsPredicate.java
 ``` java
 /**
- * Tests that a {@code ReadOnlyPerson}'s {@code Name} matches the start of any of the keywords given.
+ * Tests that a {@code ReadOnlyPerson}'s {@code Name} matches any of the keywords given partially.
  */
-public class NameStartsWithKeywordsPredicate implements Predicate<ReadOnlyPerson> {
+public class NameContainsPartialKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     private final List<String> keywords;
 
-    public NameStartsWithKeywordsPredicate(List<String> keywords) {
+    public NameContainsPartialKeywordsPredicate(List<String> keywords) {
         this.keywords = keywords;
     }
 
     @Override
     public boolean test(ReadOnlyPerson person) {
         return keywords.stream()
-                .anyMatch(keyword -> person.getName().fullName.toLowerCase().startsWith(keyword.toLowerCase()));
+                .anyMatch(keyword -> person.getName().fullName.toLowerCase().contains(keyword.toLowerCase()));
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof NameStartsWithKeywordsPredicate // instanceof handles nulls
-                && this.keywords.equals(((NameStartsWithKeywordsPredicate) other).keywords)); // state check
+                || (other instanceof NameContainsPartialKeywordsPredicate // instanceof handles nulls
+                && this.keywords.equals(((NameContainsPartialKeywordsPredicate) other).keywords)); // state check
     }
 
 }
+
 ```
 ###### \java\seedu\address\ui\InsuranceCard.java
 ``` java
@@ -315,7 +316,7 @@ public class InsuranceIdLabel extends UiPart<Region> {
         owner.setText(null);
         insured.setText(null);
         beneficiary.setText(null);
-        contractName.setText(null);
+        contractFileName.setText(null);
         premium.setText(null);
         signingDate.setText(null);
         expiryDate.setText(null);
@@ -327,13 +328,15 @@ public class InsuranceIdLabel extends UiPart<Region> {
      * @param insurance
      */
     private void initializeContractFile(ReadOnlyInsurance insurance) {
-        insuranceFile =  new File(PDFFOLDERPATH + insurance.getContractFileName());
+        private void initializeContractFile(ReadOnlyInsurance insurance) {
+                insuranceFile =  new File(PDF_FOLDER_PATH + insurance.getContractFileName()
+                        + (insurance.getContractFileName().toString().endsWith(PDF_EXTENSION) ? "" : PDF_EXTENSION));
         if (isFileExists(insuranceFile)) {
             activateLinkToInsuranceFile();
         } else {
-            contractName.getStyleClass().clear();
-            contractName.getStyleClass().add("missing-file");
-            contractName.setOnMouseClicked(event -> {
+            contractFileName.getStyleClass().clear();
+            contractFileName.getStyleClass().add("missing-file");
+            contractFileName.setOnMouseClicked(event -> {
                 FileChooser.ExtensionFilter extensionFilter =
                         new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf");
                 FileChooser chooser = new FileChooser();
@@ -358,9 +361,9 @@ public class InsuranceIdLabel extends UiPart<Region> {
      *  Enable the link to open contract pdf file and adjusting the text hover highlight
      */
     private void activateLinkToInsuranceFile() {
-        contractName.getStyleClass().clear();
-        contractName.getStyleClass().add("valid-file");
-        contractName.setOnMouseClicked(event -> {
+        contractFileName.getStyleClass().clear();
+        contractFileName.getStyleClass().add("valid-file");
+        contractFileName.setOnMouseClicked(event -> {
             try {
                 Desktop.getDesktop().open(insuranceFile);
             } catch (IOException ee) {

@@ -244,6 +244,7 @@ public class MainWindow extends UiPart<Region> {
 
     void show() {
         primaryStage.show();
+        primaryStage.setMaximized(true);
     }
 
     /**

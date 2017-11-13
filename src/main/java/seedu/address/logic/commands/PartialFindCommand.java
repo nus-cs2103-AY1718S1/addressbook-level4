@@ -1,10 +1,10 @@
 package seedu.address.logic.commands;
 
-import seedu.address.model.person.NameStartsWithKeywordsPredicate;
+import seedu.address.model.person.NameContainsPartialKeywordsPredicate;
 
 //@@author RSJunior37
 /**
- * Finds and lists all persons in address book whose name starts with any of the argument keywords.
+ * Finds and lists all persons in address book whose name contains any of the argument keywords partially.
  * Keyword matching is case sensitive.
  */
 public class PartialFindCommand extends Command {
@@ -18,9 +18,9 @@ public class PartialFindCommand extends Command {
             + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
             + "Example: " + COMMAND_WORD + " Ali Bo Ch";
 
-    private final NameStartsWithKeywordsPredicate predicate;
+    private final NameContainsPartialKeywordsPredicate predicate;
 
-    public PartialFindCommand (NameStartsWithKeywordsPredicate predicate) {
+    public PartialFindCommand (NameContainsPartialKeywordsPredicate predicate) {
         this.predicate = predicate;
     }
 
