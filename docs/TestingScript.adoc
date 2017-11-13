@@ -1,0 +1,56 @@
+= Sales Navigator - Testing Script
+
+== Setup
+
+=== Loading sample data
+. Create a folder anywhere named "test".
+. Copy `salesnavigator.jar` into the test folder.
+. Create a folder within the test folder named "data".
+. Copy sample data into the data folder.
+. Rename sample data to `addressbook.xml`.
+
+== Tests
+=== Test 1 - Add command without optional parameters
+Input: `add n/Jack Sparrow p/90923422 e/jacksparrow@pirate.com a/Caribbean Islands`
+
+Expected result: New person added. Company, Position, Status, Note fields set to NIL. Priority set to L. No photo, tags or relationships.
+
+=== Test 2 - Add command with optional parameters
+Input: `add n/Davey Jones p/90921211 e/daveyjones@pirate.com a/Caribbean Islands c/Pirate Co. po/Captain s/Requires immediate follow up pr/H t/friends`
+
+Expected result: New person added. Note field set to NIL. No photo or relationships.
+
+=== Test 3 - Edit command
+Input: `edit 1 n/Johnathan Doel no/Enjoys seafood and western restaurants. pr/M`
+
+Expected result: Note and priority fields changed.
+
+=== Test 4 - Delete command
+Input: `delete 3`
+
+Expected result: Person with index 3 removed from person list.
+
+=== Test 5 - Find command
+Input: `find Jack`
+
+Expected result: Jack Sparrow only person on person list.
+
+=== Test 5 - List command
+Input: `list`
+
+Expected result: All persons listed in person list.
+
+=== Test 6 - Clear command
+Input: `clear`
+
+Expected result: Address book cleared of all persons and events.
+
+=== Test 7 - Undo command
+Input: `undo`
+
+Expected result: Address book repopulated with all persons and events.
+
+=== Test 8 - Redo command
+Input: `redo`, `undo`
+
+Expected result: Address book is cleared again, then repopulated again.
