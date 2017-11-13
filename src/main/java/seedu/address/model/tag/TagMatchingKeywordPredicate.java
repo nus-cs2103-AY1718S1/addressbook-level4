@@ -4,9 +4,11 @@ import java.util.Set;
 import java.util.function.Predicate;
 
 import seedu.address.model.person.ReadOnlyPerson;
-
+//@@author ZhangH795
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Tag} matches keyword given.
+ * If looseFind is true, the predicate will compare substrings of tagName and keyword
+ * Otherwise, the predicate will compare the exact word
  */
 public class TagMatchingKeywordPredicate implements Predicate<ReadOnlyPerson> {
     private final String keyword;

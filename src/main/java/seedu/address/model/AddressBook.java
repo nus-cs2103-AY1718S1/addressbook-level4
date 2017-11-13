@@ -320,13 +320,6 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Sort list of person(s), those with favourite tag comes first.
-     */
-    public void favouriteShownFirst() {
-        persons.sortByFavourite();
-    }
-
-    /**
      * Check if the given event clashes with any events in the master list of events
      *
      * @param event
@@ -412,6 +405,15 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     private void syncMasterEventListMembers(UniqueEventList events) {
         events.forEach(this::syncMasterEventListMembers);
+    }
+    //@@author
+
+    //@@author ZhangH795
+    /**
+     * Sort list of person(s), those with favourite tag would come first in the person list.
+     */
+    public void favouriteShownFirst() {
+        persons.sortByFavourite();
     }
     //@@author
 
