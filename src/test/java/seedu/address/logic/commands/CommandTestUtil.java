@@ -147,8 +147,9 @@ public class CommandTestUtil {
     public static final String VALID_DESCRIPTION_SOCCER = "Bring the ball pump and drinks";
 
     //@@author shuang-yang
-    public static final String VALID_PERIOD_MIDTERM = "180";
-    public static final String VALID_PERIOD_SOCCER = "7";
+    public static final String VALID_PERIOD_MIDTERM = " 180";
+    public static final String VALID_PERIOD_SOCCER = " 7";
+    public static final String INVALID_PERIOD_SOCCER = " -7";
     public static final String PERIOD_MIDTERM = " " + PREFIX_PERIOD + VALID_PERIOD_MIDTERM;
     public static final String PERIOD_SOCCER = " " + PREFIX_PERIOD + VALID_PERIOD_SOCCER;
     public static final String INVALID_PERIOD = " " + PREFIX_PERIOD + " -1";

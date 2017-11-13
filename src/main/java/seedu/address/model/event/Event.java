@@ -142,6 +142,7 @@ public class Event implements ReadOnlyEvent, Comparable<Event> {
         return period.get();
     }
 
+    @Override
     public void setPeriod(Period period) {
         this.period.set(requireNonNull(period));
     }

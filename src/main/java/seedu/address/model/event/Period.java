@@ -3,7 +3,10 @@ package seedu.address.model.event;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Optional;
+
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.parser.ParserUtil;
 
 /**
  * Represents an Event's period of repetition in the address book.
@@ -39,6 +42,16 @@ public class Period {
      */
     public static boolean isValidPeriod(String test) {
         return !test.equals("") && test.matches(PERIOD_VALIDATION_REGEX);
+    }
+
+    public static Optional<Period> generatePeriod(String periodString) {
+        Optional<Period> period;
+        try {
+            period = ParserUtil.parsePeriod(Optional.of(periodString));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("Period not recognized.");
+        }
+        return period;
     }
 
 
