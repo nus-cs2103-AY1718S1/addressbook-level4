@@ -193,4 +193,4 @@ include::../DeveloperGuide.adoc[tag=quick_start]
 === Other contributions
 
 * Creating JUnit tests to ensure application is in working order during development.
-* Revamping User Guide e.g. formatting and feature grouping.
+* Revamping User Guide e.g. phrasing, formatting and feature grouping.
