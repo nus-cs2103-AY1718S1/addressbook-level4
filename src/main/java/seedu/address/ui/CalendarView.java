@@ -543,10 +543,15 @@ public class CalendarView extends UiPart<Region> {
      */
     @Subscribe
     public void handleAddressBookChangedEvent(AddressBookChangedEvent abce) {
-        logger.info("LastChangedEvent is " + abce.data.getLastChangedEvent());
-        logger.info("NewlyAddedEvent is " + abce.data.getNewlyAddedEvent());
-        updateEvents(calendarView, abce.data.getEventList(), abce.data.getLastChangedEvent(), abce.data
-                .getNewlyAddedEvent());
+        ReadOnlyEvent lastChangedEvent = abce.data.getLastChangedEvent();
+        ReadOnlyEvent newlyAddedEvent = abce.data.getNewlyAddedEvent();
+        logger.info("LastChangedEvent is " + lastChangedEvent);
+        logger.info("NewlyAddedEvent is " + newlyAddedEvent);
+        if (lastChangedEvent != null && newlyAddedEvent != null) {
+            updateEvents(calendarView, abce.data.getEventList(), lastChangedEvent, newlyAddedEvent);
+        } else {
+            initEvents(calendarView, abce.data.getEventList(), null);
+        }
     }
 
 
