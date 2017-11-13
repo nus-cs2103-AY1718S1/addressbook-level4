@@ -426,9 +426,9 @@ The `backupAddressBook` method is called in `MainApp#init()` which is called eac
 ==== Design Considerations
 
 **Aspect:** When to create the backup +
-**Alternative 1 (current choice):** on startup of the application +
+**Alternative 1 (current choice):** Create it on application start up +
 **Pros:** Guarantees that a backup is made only of a working version of the address book that the user can easily revert to, should he/she mess up the main copy while using the application. +
-**Cons:** If the user tends to make many changes within one session, none of the changes are saved in the backup. +
+**Cons:** Not suitable for users who tend to make many changes within one session, as too many changes will not be backed up. +
 **Alternative 2:** Implement a command to create backup +
 **Pros:** The backup is only created when the user desires to. +
 **Cons:** This makes the implementation pointless altogether as it is meant as a safety net for clumsy users. This alternative would only benefit the careful users, who do not require it as much in the first place. +
