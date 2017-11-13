@@ -227,14 +227,6 @@ public class MainWindow extends UiPart<Region> {
                 } else {
                     browserPlaceholder.getChildren().remove(calendarView.getRoot());
                 }
-                //@@author sebtsh
-                if (browserPlaceholder.getChildren().contains(personPanel.getRoot())) {
-                    browserPlaceholder.getChildren().remove(personPanel.getRoot());
-                }
-                if (browserPlaceholder.getChildren().contains(eventPanel.getRoot())) {
-                    browserPlaceholder.getChildren().remove(eventPanel.getRoot());
-                }
-                //@@author
             }
         });
         //@@author
@@ -383,6 +375,12 @@ public class MainWindow extends UiPart<Region> {
     @Subscribe
     private void handleShowCalendarEvent(ShowCalendarEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        if (browserPlaceholder.getChildren().contains(personPanel.getRoot())) {
+            browserPlaceholder.getChildren().remove(personPanel.getRoot());
+        }
+        if (browserPlaceholder.getChildren().contains(eventPanel.getRoot())) {
+            browserPlaceholder.getChildren().remove(eventPanel.getRoot());
+        }
         handleShowCalendar();
     }
 

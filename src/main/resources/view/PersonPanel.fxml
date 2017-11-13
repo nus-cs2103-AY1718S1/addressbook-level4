@@ -14,7 +14,7 @@
 <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="330.0" prefWidth="846.0" stylesheets="@BrightTheme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <AnchorPane layoutX="-1.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="265.0" prefWidth="846.0">
    <children>
-      <Label fx:id="nameLabel" layoutX="14.0" layoutY="14.0" prefHeight="62.0" prefWidth="346.0" styleClass="label-header">
+      <Label fx:id="nameLabel" layoutX="14.0" layoutY="14.0" prefHeight="62.0" prefWidth="563.0" styleClass="label-header">
          <font>
             <Font size="28.0" />
          </font>
