@@ -278,7 +278,9 @@ public class AddressBook implements ReadOnlyAddressBook {
                 break;
             }
         }
-        if (!started || !ended) res = false;
+        if (!started || !ended) {
+            res = false;
+        }
         for (int j = 0; j < listOfIndex.length; j++) {
             if (!res) {
                 break;
