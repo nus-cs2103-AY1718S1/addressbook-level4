@@ -189,8 +189,8 @@ endif::[]
 ****
 *Result:* +
 
-* The person list panel should list 2 persons. +
-* The result display should show the message `2 persons listed!`
+* The person list panel should list the persons with the name containing `plumbing`. +
+* The result display should indicate how many persons are listed.
 
 ****
 
@@ -201,8 +201,8 @@ endif::[]
 ****
 *Result:* +
 
-* The person list panel should list 5 persons. +
-* The result display should show the message `5 persons listed!`
+* The person list panel should list the persons with the name containing `transport` or `lab`. +
+* The result display should indicate how many persons are listed.
 
 ****
 
@@ -400,8 +400,8 @@ endif::[]
 ****
 *Result:* +
 
-* The person list panel should list 5 persons. +
-* The result display should show the message `5 persons listed!`
+* The person list panel should list the persons with the tag `chef`. +
+* The result display should indicate how many persons are listed.
 
 ****
 
@@ -412,8 +412,8 @@ endif::[]
 ****
 *Result:* +
 
-* The person list panel should list 3 persons. +
-* The result display should show the message `3 persons listed!`
+* The person list panel should list the persons with the tag `printing` or `excolleague`. +
+* The result display should indicate how many persons are listed.
 
 ****
 
@@ -439,7 +439,7 @@ endif::[]
 ****
 *Result:* +
 
-* The tag `transport` should disappear in the person list panel for the first 5 persons in the list. +
+* The tag `transport` should disappear for all contacts in the person list panel. +
 * The result display should show the message `Removed tag(s)`
 
 ****
@@ -451,7 +451,7 @@ endif::[]
 ****
 *Result:* +
 
-* The tag `family` and `owesMoney` should disappear in the person list panel where person number 12 and 14 would noticeably have no more tags. +
+* The tag `family` and `owesMoney` should disappear for all contacts in the person list panel. +
 * The result display should show the message `Removed tag(s)`
 
 ****
@@ -571,8 +571,7 @@ Example: theme white`
 *Result:* +
 
 * The uploaded image should replace the default photo of the first person. +
-* The result display should indicate +
- `Uploaded image to Person: Aik Huat Transport Pte Ltd Phone: 62206095 Email: aikhuat8@hotmail.com Address: 45 Kampong Bahru Road (169360) Tags: [transport]`
+* The result display should indicate that the image is uploaded to the first person and that person details are shown. +
 
 ****
 
@@ -610,8 +609,7 @@ Example: theme white`
 *Result:* +
 
 * The chosen image should replace the default photo of the first person. +
-* The result display should indicate +
-`Uploaded image to Person: C and P Transport Pte Ltd Phone: 68853263 Email: raymond_ng@candp.com Address: 46 Penjuru Lane, C & P Logistics Hub 1 Office Tower 2 (609206) Tags: [transport]`
+* The result display should indicate that the image is uploaded to the second person and that person details are shown. +
 
 ****
 
@@ -637,8 +635,7 @@ Example: theme white`
 *Result:* +
 
 * The previously uploaded "bear" image should disappear and be replaced by the default photo for the first person. +
-* The result display should indicate +
-`Deleted photo of Person: Aik Huat Transport Pte Ltd Phone: 62206095 Email: aikhuat8@hotmail.com Address: 45 Kampong Bahru Road (169360) Tags: [transport]`
+* The result display should indicate that the image is deleted from the first person and that person details are shown.
 
 ****
 
