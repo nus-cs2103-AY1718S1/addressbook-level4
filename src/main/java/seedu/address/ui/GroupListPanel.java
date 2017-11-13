@@ -61,7 +61,8 @@ public class GroupListPanel extends UiPart<Region> {
     private void scrollTo(int index) {
         Platform.runLater(() -> {
             groupListView.scrollTo(index);
-            groupListView.getSelectionModel().clearAndSelect(index);
+            groupListView.getSelectionModel().clearSelection(index);
+            groupListView.getSelectionModel().select(index);
         });
     }
 

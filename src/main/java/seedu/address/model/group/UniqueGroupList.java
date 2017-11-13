@@ -9,7 +9,9 @@ import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
  * A list of groups that enforces uniqueness between its elements and does not allow nulls.
@@ -76,6 +78,7 @@ public class UniqueGroupList implements Iterable<Group> {
 
     /**
      * Removes the specified group from the group list
+     *
      * @param grpToDelete
      */
     public void removeGroup(Group grpToDelete) {
@@ -85,8 +88,9 @@ public class UniqueGroupList implements Iterable<Group> {
 
     /**
      * sets the group to the new name
+     *
      * @param targetGrp group to change name
-     * @param newName new name to change to
+     * @param newName   new name to change to
      * @throws DuplicateGroupException if a group of newName already exists in the group list
      */
     public void setGrpName(Group targetGrp, String newName) throws DuplicateGroupException {
@@ -94,13 +98,20 @@ public class UniqueGroupList implements Iterable<Group> {
             if (grp.getGrpName().equals(newName)) {
                 throw new DuplicateGroupException();
             }
+            if (targetGrp.getGrpName().equals(grp.getGrpName())) {
+                targetGrp = grp;
+                break;
+            }
         }
-
         targetGrp.setGrpName(newName);
         sort();
     }
 
-
+    /**
+     * get the index of a group in the group list
+     * @param groupName
+     * @return -1 if the group isn't in the group list
+     */
     public int getGroupIndex(String groupName) {
         for (Group grp : internalList) {
             if (grp.getGrpName().equals(groupName)) {
@@ -108,6 +119,31 @@ public class UniqueGroupList implements Iterable<Group> {
             }
         }
         return -1;
+    }
+
+    /**
+     * removes a person from the group
+     * @param targetGrp
+     * @param targetPerson
+     */
+    public void removePersonFromGroup(Group targetGrp, ReadOnlyPerson targetPerson) {
+        try {
+            targetGrp.remove(targetPerson);
+            targetGrp.updatePreviews();
+        } catch (PersonNotFoundException e) {
+            assert false : "This person should be in the group";
+        }
+    }
+
+    /**
+     * adds target person into target group
+     * @param targetGrp
+     * @param targetPerson
+     * @throws DuplicatePersonException
+     */
+    public void addPersonToGroup(Group targetGrp, ReadOnlyPerson targetPerson) throws DuplicatePersonException {
+        targetGrp.add(targetPerson);
+        targetGrp.updatePreviews();
     }
 }
 //@@author

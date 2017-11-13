@@ -335,5 +335,23 @@ public class AddressBook implements ReadOnlyAddressBook {
     public Index getGroupIndex(String groupName) {
         return Index.fromZeroBased(groups.getGroupIndex(groupName));
     }
+
+    /**
+     * removes targetPerson from targetGroup
+     * @param targetGrp
+     * @param targetPerson
+     */
+    public void removePersonFromGroup(Group targetGrp, ReadOnlyPerson targetPerson) {
+        groups.removePersonFromGroup(targetGrp, targetPerson);
+    }
+
+    /**
+     * addes targetPerson to targetGroup
+     * @param targetGrp
+     * @param targetPerson
+     */
+    public void addPersonToGroup(Group targetGrp, ReadOnlyPerson targetPerson) throws DuplicatePersonException {
+        groups.addPersonToGroup(targetGrp, targetPerson);
+    }
     //@@author
 }

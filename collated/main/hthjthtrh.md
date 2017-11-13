@@ -1,5 +1,47 @@
 # hthjthtrh
-###### /java/seedu/address/logic/commands/DeleteGroupCommand.java
+###### \java\seedu\address\commons\events\ui\GroupPanelSelectionChangedEvent.java
+``` java
+package seedu.address.commons.events.ui;
+
+import seedu.address.commons.events.BaseEvent;
+import seedu.address.ui.GroupCard;
+
+/**
+ * Represents a selection change in the Group List Panel
+ */
+public class GroupPanelSelectionChangedEvent extends BaseEvent {
+
+
+    private final GroupCard newSelection;
+
+    public GroupPanelSelectionChangedEvent(GroupCard newSelection) {
+        this.newSelection = newSelection;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+
+    public GroupCard getNewSelection() {
+        return newSelection;
+    }
+}
+```
+###### \java\seedu\address\commons\events\ui\JumpToListRequestEvent.java
+``` java
+    private boolean isGroupType;
+
+    public JumpToListRequestEvent(Index targetIndex, boolean isGrpType) {
+        this.targetIndex = targetIndex.getZeroBased();
+        this.isGroupType = isGrpType;
+    }
+
+    public boolean isGroupType() {
+        return this.isGroupType;
+    }
+```
+###### \java\seedu\address\logic\commands\DeleteGroupCommand.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -7,49 +49,82 @@ import static seedu.address.commons.core.Messages.MESSAGE_EXECUTION_FAILURE;
 
 import java.util.List;
 
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.DeselectAllEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.group.Group;
 
 /**
  * Deletes a group, depending on the existence of the group
  */
-public class DeleteGroupCommand extends UndoableCommand {
+public class DeleteGroupCommand extends GroupTypeUndoableCommand {
 
     public static final String COMMAND_WORD = "deleteGroup";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Deletes the group identified by the group name.\n"
+            + ": Deletes the group identified by the group name or index.\n"
             + "Parameters: GROUP_NAME\n"
-            + "Example: " + COMMAND_WORD + " TestGroup";
+            + "or: INDEX (must be a positive integer)\n"
+            + "Example: " + COMMAND_WORD + " TestGroup\n"
+            + "or: " + COMMAND_WORD + " 4";
 
     public static final String MESSAGE_DELETE_GROUP_SUCCESS = "Deleted Group: %s.";
 
     public static final String MESSAGE_NONEXISTENT_GROUP = "The group '%s' does not exist.";
 
-    private final String groupName;
+    public static final String MESSAGE_INDEXOUTOFBOUND_GROUP = "Provided index is out of range.";
+
+    private String groupName;
+    private Index index;
+    private boolean isIndex;
 
     private Group grpToDelete;
 
-    public DeleteGroupCommand(String grpName) {
-        this.groupName = grpName.trim();
+    public DeleteGroupCommand(Object object, boolean isIndex) {
+        if (isIndex) {
+            this.index = (Index) object;
+        } else {
+            this.groupName = (String) object;
+        }
+        this.isIndex = isIndex;
     }
 
     @Override
     protected CommandResult executeUndoableCommand() throws CommandException {
         if (groupExists()) {
             model.deleteGroup(grpToDelete);
+
+            EventsCenter.getInstance().post(new DeselectAllEvent());
             return new CommandResult(String.format(MESSAGE_DELETE_GROUP_SUCCESS, groupName));
         } else {
-            throw new CommandException(MESSAGE_EXECUTION_FAILURE, String.format(MESSAGE_NONEXISTENT_GROUP, groupName));
+            if (!isIndex) {
+                throw new CommandException(MESSAGE_EXECUTION_FAILURE,
+                        String.format(MESSAGE_NONEXISTENT_GROUP, groupName));
+            } else {
+                throw new CommandException(MESSAGE_EXECUTION_FAILURE,
+                        MESSAGE_INDEXOUTOFBOUND_GROUP);
+            }
         }
 
     }
 
     @Override
     public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof DeleteGroupCommand // instanceof handles nulls
-                && this.groupName.equals(((DeleteGroupCommand) other).groupName)); // state check
+        if (other == this) {
+            return true;
+        }
+
+        if (other instanceof DeleteGroupCommand) {
+            DeleteGroupCommand temp = (DeleteGroupCommand) other;
+            if (isIndex) {
+                return this.index.equals(temp.index);
+            } else {
+                return this.groupName.equals(temp.groupName);
+            }
+        }
+        return false;
+
     }
 
 
@@ -58,52 +133,63 @@ public class DeleteGroupCommand extends UndoableCommand {
      */
     private boolean groupExists() {
         List<Group> groupList = model.getAddressBook().getGroupList();
-        for (Group grp : groupList) {
-            if (grp.getGrpName().equals(this.groupName)) {
-                grpToDelete = grp;
+        if (!isIndex) {
+            for (Group grp : groupList) {
+                if (grp.getGrpName().equals(this.groupName)) {
+                    grpToDelete = grp;
+                    undoGroupIndex = Index.fromZeroBased(groupList.indexOf(grp));
+                    return true;
+                }
+            }
+        } else {
+            try {
+                grpToDelete = groupList.get(index.getZeroBased());
+                undoGroupIndex = Index.fromZeroBased(index.getZeroBased());
+                groupName = grpToDelete.getGrpName();
                 return true;
+            } catch (IndexOutOfBoundsException iobe) {
+                return false;
             }
         }
         return false;
     }
 }
 ```
-###### /java/seedu/address/logic/commands/EditGroupCommand.java
+###### \java\seedu\address\logic\commands\EditGroupCommand.java
 ``` java
 package seedu.address.logic.commands;
 
 import static seedu.address.commons.core.Messages.MESSAGE_EXECUTION_FAILURE;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_GROUP_DISPLAYED_INDEX;
 
 import java.util.List;
-import java.util.function.Predicate;
 
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
-import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.parser.ParserUtil;
 import seedu.address.model.group.DuplicateGroupException;
 import seedu.address.model.group.Group;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.model.person.predicates.GroupContainsPersonPredicate;
 
 /**
  * Edits the group, either 1.change group name, 2.adds a person to the group or 3.deletes a person from the group
  */
-public class EditGroupCommand extends UndoableCommand {
+public class EditGroupCommand extends GroupTypeUndoableCommand {
 
     public static final String COMMAND_WORD = "editGroup";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": edits the group. Supports three kinds of operations: 1. change group name 2. add a person 3. delete"
             + " a person\n"
-            + "Parameters: GROUP_NAME grpName NEW_GROUP_NAME\n"
-            + "OR: GROUP_NAME add INDEX\n"
-            + "OR: GROUP_NAME delete INDEX\n"
-            + "Examples: " + COMMAND_WORD + " SmartOnes grpName SuperSmartOnes\n"
+            + "Parameters: GROUP_NAME gn NEW_GROUP_NAME (new group name cannot be an integer)\n"
+            + "OR: GROUP_NAME add INDEX (must be positive integer)\n"
+            + "OR: GROUP_NAME delete INDEX (must be positive integer)\n"
+            + "Examples: " + COMMAND_WORD + " SmartOnes gn SuperSmartOnes\n"
             + COMMAND_WORD + " SmartOnes add 3\n"
             + COMMAND_WORD + " SmartOnes delete 4";
 
@@ -120,95 +206,159 @@ public class EditGroupCommand extends UndoableCommand {
     public static final String MESSAGE_DUPLICATE_GROUP =
             "A group by the name of '%s' already exists in the addressbook!";
 
-    private String grpName;
-    private String operation;
-    private String detail;
-    private Predicate predicate;
+    private String grpName = null;
+    private Index grpIndex = null;
+    private String operation = null;
+    private String newName = null;
+    private Index personIndex = null;
+    private boolean indicateByIndex;
 
-    public EditGroupCommand(String grpName, String operation, String detail) {
-        this.grpName = grpName;
+    public EditGroupCommand(String grpName, Index grpIndex, String operation, String newName, boolean indicateByIdx) {
+        if (indicateByIdx) {
+            this.grpIndex = grpIndex;
+        } else {
+            this.grpName = grpName;
+        }
         this.operation = operation;
-        this.detail = detail;
+        this.newName = newName;
+        this.indicateByIndex = indicateByIdx;
+    }
+
+    public EditGroupCommand(String grpName, Index grpIndex, String operation, Index personIndex,
+                            boolean indicateByIdx) {
+        if (indicateByIdx) {
+            this.grpIndex = grpIndex;
+        } else {
+            this.grpName = grpName;
+        }
+        this.operation = operation;
+        this.personIndex = personIndex;
+        this.indicateByIndex = indicateByIdx;
     }
 
     @Override
     protected CommandResult executeUndoableCommand() throws CommandException {
-        List<Group> grpList = model.getAddressBook().getGroupList();
 
-        // find target group
+        List<Group> grpList = model.getAddressBook().getGroupList();
+        Group targetGrp = locateTargetGrp(grpList);
+
+        if ("gn".equals(operation)) {
+            return handleNameChangeOp(targetGrp);
+        } else {
+            Person targetPerson = null;
+            if ("add".equals(operation)) {
+                List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+                targetPerson = locateTargetPerson(lastShownList);
+                return handleAddOp(targetGrp, targetPerson);
+
+            } else {
+                List<ReadOnlyPerson> personListInGroup = targetGrp.getPersonList();
+                targetPerson = locateTargetPerson(personListInGroup);
+                return handleDeleteOp(targetGrp, targetPerson);
+            }
+        }
+    }
+
+    /**
+     * deletes the target person from target group
+     * @param targetGrp
+     * @param targetPerson
+     * @return
+     * @throws CommandException
+     */
+    private CommandResult handleDeleteOp(Group targetGrp, Person targetPerson) {
+        try {
+            model.removePersonFromGroup(targetGrp, targetPerson);
+        } catch (PersonNotFoundException e) {
+            assert false : "The target person cannot be missing";
+        }
+
+        EventsCenter.getInstance().post(new JumpToListRequestEvent(this.grpIndex, true));
+
+        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, grpName,
+                targetPerson.toString()));
+    }
+
+    /**
+     * locate and return the target person in the person list
+     * @param personList
+     * @return
+     * @throws CommandException
+     */
+    private Person locateTargetPerson(List<ReadOnlyPerson> personList) throws CommandException {
+        try {
+            ReadOnlyPerson targetPerson = personList.get(personIndex.getZeroBased());
+            Person copiedPerson = new Person(targetPerson);
+            return copiedPerson;
+        } catch (IndexOutOfBoundsException e) {
+            throw new CommandException(MESSAGE_EXECUTION_FAILURE,
+                    Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+    }
+
+    /**
+     * adds the target person to the target group
+     * @param targetGrp
+     * @return
+     */
+    private CommandResult handleAddOp(Group targetGrp, Person targetPerson) throws CommandException {
+        try {
+            model.addPersonToGroup(targetGrp, targetPerson);
+        } catch (DuplicatePersonException e) {
+            throw new CommandException(MESSAGE_EXECUTION_FAILURE, MESSAGE_DUPLICATE_PERSON);
+        }
+
+        EventsCenter.getInstance().post(new JumpToListRequestEvent(this.grpIndex, true));
+
+        return new CommandResult(String.format(MESSAGE_ADD_PERSON_SUCCESS, grpName,
+                targetPerson.toString()));
+    }
+
+    /**
+     * updates the group name of target group
+     * @param targetGrp
+     * @return
+     * @throws CommandException if a group by the new name already exists
+     */
+    private CommandResult handleNameChangeOp(Group targetGrp) throws CommandException {
+        try {
+            model.setGrpName(targetGrp, newName);
+            return new CommandResult(String.format(MESSAGE_CHANGE_NAME_SUCCESS, grpName, newName));
+        } catch (DuplicateGroupException e) {
+            throw new CommandException(MESSAGE_EXECUTION_FAILURE, String.format(MESSAGE_DUPLICATE_GROUP, newName));
+        }
+    }
+
+    /**
+     * locate and return the target group indicated by either index or group name
+     * @param grpList
+     * @return target group
+     * @throws CommandException
+     */
+    private Group locateTargetGrp(List<Group> grpList) throws CommandException {
         Group targetGrp = null;
-        for (int i = 0; i < grpList.size(); i++) {
-            if (grpList.get(i).getGrpName().equals(grpName)) {
-                targetGrp = grpList.get(i);
-                break;
+        if (indicateByIndex) {
+            try {
+                targetGrp = grpList.get(grpIndex.getZeroBased());
+                undoGroupIndex = Index.fromZeroBased(grpIndex.getZeroBased());
+                grpName = targetGrp.getGrpName();
+                return targetGrp;
+            } catch (IndexOutOfBoundsException e) {
+                throw new CommandException(MESSAGE_EXECUTION_FAILURE, MESSAGE_INVALID_GROUP_DISPLAYED_INDEX);
+            }
+        } else {
+            for (Group grp : grpList) {
+                if (grp.getGrpName().equals(grpName)) {
+                    targetGrp = grp;
+                    grpIndex = Index.fromZeroBased(grpList.indexOf(grp));
+                    undoGroupIndex = Index.fromZeroBased(grpList.indexOf(grp));
+                    return targetGrp;
+                }
             }
         }
 
         if (targetGrp == null) {
             throw new CommandException(MESSAGE_EXECUTION_FAILURE, MESSAGE_GROUP_NONEXISTENT);
-        }
-
-        // use 'detail' differently according to operation type
-        Index idx = null;
-        if (operation.equals("add") || operation.equals("delete")) {
-            try {
-                idx = ParserUtil.parseIndex(detail);
-            } catch (IllegalValueException e) {
-                throw new AssertionError("detail should be an integer at this stage");
-            }
-        }
-
-        // operation is change grpName
-        if (idx == null) {
-            try {
-                model.setGrpName(targetGrp, detail);
-            } catch (DuplicateGroupException e) {
-                throw new CommandException(MESSAGE_EXECUTION_FAILURE, String.format(MESSAGE_DUPLICATE_GROUP,
-                        detail));
-            }
-            return new CommandResult(String.format(MESSAGE_CHANGE_NAME_SUCCESS, grpName, detail));
-        } else {
-            ReadOnlyPerson targetPerson;
-            Person copiedPerson;
-            if (operation.equals("add")) { //add operation
-
-                List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
-                if (idx.getZeroBased() >= lastShownList.size() || idx.getOneBased() <= 0) {
-                    throw new CommandException(MESSAGE_EXECUTION_FAILURE,
-                            Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-                }
-                targetPerson = lastShownList.get(idx.getZeroBased());
-                copiedPerson = new Person(targetPerson);
-
-                try {
-                    model.addPersonToGroup(targetGrp, copiedPerson);
-                    predicate = new GroupContainsPersonPredicate(targetGrp);
-                    model.updateFilteredPersonList(predicate);
-                    return new CommandResult(String.format(MESSAGE_ADD_PERSON_SUCCESS, grpName,
-                            copiedPerson.toString()));
-                } catch (DuplicatePersonException e) {
-                    throw new CommandException(MESSAGE_EXECUTION_FAILURE, MESSAGE_DUPLICATE_PERSON);
-                }
-            } else { //delete operation
-
-                List<ReadOnlyPerson> grpPersonList = targetGrp.getPersonList();
-                if (idx.getZeroBased() >= grpPersonList.size()) {
-                    throw new CommandException(MESSAGE_EXECUTION_FAILURE,
-                            Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-                }
-                targetPerson = grpPersonList.get(idx.getZeroBased());
-                copiedPerson = new Person(targetPerson);
-
-                try {
-                    model.removePersonFromGroup(targetGrp, copiedPerson);
-                    predicate = new GroupContainsPersonPredicate(targetGrp);
-                    model.updateFilteredPersonList(predicate);
-                    return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, grpName,
-                            copiedPerson.toString()));
-                } catch (PersonNotFoundException e) {
-                    assert false : "The target person cannot be missing";
-                }
-            }
         }
         return null;
     }
@@ -219,28 +369,74 @@ public class EditGroupCommand extends UndoableCommand {
             return true;
         }
 
+        // sorry for this extremely long thing but I have null values to take care off
         if (other instanceof EditGroupCommand) {
             EditGroupCommand temp = (EditGroupCommand) other;
-            return (this.grpName.equals(temp.grpName) && this.operation.equals(temp.operation)
-                && this.detail.equals(temp.detail));
-        }
+            if (this.indicateByIndex == temp.indicateByIndex) {
+                if (this.indicateByIndex) {
+                    if (this.operation.equals(temp.operation)) {
+                        if (this.operation.equals("gn")) {
+                            return this.grpIndex.equals(temp.grpIndex)
+                                    && this.newName.equals(temp.newName);
+                        } else {
+                            return this.grpIndex.equals(temp.grpIndex)
+                                    && this.personIndex.equals(temp.personIndex);
+                        }
+                    }
+                } else {
+                    if (this.operation.equals(temp.operation)) {
+                        if (this.operation.equals("gn")) {
+                            return this.grpName.equals(temp.grpName)
+                                    && this.newName.equals(temp.newName);
+                        } else {
+                            return this.grpName.equals(temp.grpName)
+                                    && this.personIndex.equals(temp.personIndex);
+                        }
+                    }
+                }
+            }
 
+        }
         return false;
+    }
+
+    /**
+     * Reconstructs command message, used by RedoCommand
+     * @return command message as a string
+     */
+    public String reconstructCommandString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(COMMAND_WORD + " ");
+
+        if (indicateByIndex) {
+            sb.append(grpIndex.getOneBased());
+        } else {
+            sb.append(grpName);
+        }
+        sb.append(" " + operation + " ");
+
+        if ("gn".equals(operation)) {
+            sb.append(newName);
+        } else {
+            sb.append(personIndex.getOneBased());
+        }
+        return sb.toString();
     }
 }
 ```
-###### /java/seedu/address/logic/commands/GroupingCommand.java
+###### \java\seedu\address\logic\commands\GroupingCommand.java
 ``` java
 package seedu.address.logic.commands;
 
 import static seedu.address.commons.core.Messages.MESSAGE_EXECUTION_FAILURE;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.group.DuplicateGroupException;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -255,7 +451,7 @@ public class GroupingCommand extends UndoableCommand {
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Creates a group for the list of person based on group name(non-integer) "
             + "and index numbers provided\n"
-            + "Parameters: GROUP_NAME INDEX [INDEX]...\n"
+            + "Parameters: GROUP_NAME (must not be an integer) INDEX [INDEX]... (must be positive integer)\n"
             + "Example: " + COMMAND_WORD + " SmartOnes 1 4 2";
 
     public static final String MESSAGE_GROUPING_PERSON_SUCCESS = "Created group '%s' for people:\n";
@@ -298,7 +494,9 @@ public class GroupingCommand extends UndoableCommand {
             throw new CommandException(MESSAGE_EXECUTION_FAILURE, MESSAGE_DUPLICATE_GROUP_NAME);
         }
 
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        Index grpIndex = model.getGroupIndex(groupName);
+
+        EventsCenter.getInstance().post(new JumpToListRequestEvent(grpIndex, true));
 
         return new CommandResult(getSb(groupName, personToGroup));
     }
@@ -307,7 +505,8 @@ public class GroupingCommand extends UndoableCommand {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof GroupingCommand // instanceof handles nulls
-                && this.groupName.equals(((GroupingCommand) other).groupName)); // state check
+                && this.groupName.equals(((GroupingCommand) other).groupName)
+                && this.targetIdxs.equals(((GroupingCommand) other).targetIdxs)); // state check
     }
 
     /**
@@ -325,12 +524,28 @@ public class GroupingCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/ListGroupsCommand.java
+###### \java\seedu\address\logic\commands\GroypTypeUndoableCommand.java
+``` java
+package seedu.address.logic.commands;
+
+import seedu.address.commons.core.index.Index;
+
+/**
+ * abstract class to assist UndoableCommand
+ */
+abstract class GroupTypeUndoableCommand extends UndoableCommand {
+
+    protected Index undoGroupIndex;
+}
+```
+###### \java\seedu\address\logic\commands\ListGroupsCommand.java
 ``` java
 package seedu.address.logic.commands;
 
 import java.util.List;
 
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.DeselectAllEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.group.Group;
 
@@ -359,16 +574,71 @@ public class ListGroupsCommand extends Command {
 
         for (int i = 1; i <= grpListSize; i++) {
             sb.append(i + ". ");
-            sb.append(model.getAddressBook().getGroupList().get(i - 1).getGrpName());
+            sb.append((model.getFilteredGroupList().get(i - 1).getGrpName()));
             if (i != grpListSize) {
                 sb.append("\n");
             }
         }
+
+        EventsCenter.getInstance().post(new DeselectAllEvent());
+
         return new CommandResult(sb.toString());
     }
 }
 ```
-###### /java/seedu/address/logic/commands/UndoCommand.java
+###### \java\seedu\address\logic\commands\UndoableCommand.java
+``` java
+    /**
+     * Reverts the AddressBook to the state before this command
+     * was executed and updates the filtered person list to
+     * show all persons.
+     */
+
+    protected final void undo() {
+        requireAllNonNull(model, previousAddressBook);
+        model.resetData(previousAddressBook);
+        if (!(this instanceof  GroupTypeUndoableCommand)) {
+            model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        } else {
+            Index temp = ((GroupTypeUndoableCommand) this).undoGroupIndex;
+            EventsCenter.getInstance().post(new JumpToListRequestEvent(temp, true));
+
+        }
+    }
+
+
+    /**
+     * Executes the command and updates the filtered person
+     * list to show all persons.
+     */
+    protected final void redo() throws CommandException {
+        requireNonNull(model);
+        try {
+            executeUndoableCommand();
+        } catch (CommandException ce) {
+            if (!(this instanceof GroupTypeUndoableCommand)) {
+                throw new AssertionError("The command has been successfully executed previously; "
+                        + "it should not fail now");
+            } else {
+                throw new CommandException(ce.getExceptionHeader(), constructNewCommandExceptionMsg(ce));
+            }
+        }
+        if (!(this instanceof GroupTypeUndoableCommand)) {
+            model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        }
+    }
+
+    /**
+     * constructs new body message for command exception
+     * @param ce
+     * @return
+     */
+    private String constructNewCommandExceptionMsg(CommandException ce) {
+        return ce.getMessage() + "\n\nCommand you tried to redo: "
+                + ((EditGroupCommand) this).reconstructCommandString();
+    }
+```
+###### \java\seedu\address\logic\commands\UndoCommand.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -434,7 +704,7 @@ public class UndoCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/ViewGroupCommand.java
+###### \java\seedu\address\logic\commands\ViewGroupCommand.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -444,12 +714,13 @@ import static seedu.address.logic.commands.UndoableCommand.appendPersonList;
 import java.util.List;
 import java.util.function.Predicate;
 
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.group.Group;
 import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.predicates.GroupContainsPersonPredicate;
 
 /**
  * Lists all person within the group
@@ -460,8 +731,10 @@ public class ViewGroupCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": list all persons in the specified group(by group name or index)\n"
-            + "Parameters: GROUP_NAME          OR          INDEX\n"
-            + "Example: " + COMMAND_WORD + " SmartOnes";
+            + "Parameters: GROUP_NAME\n"
+            + "or: INDEX (must be a positive integer)\n"
+            + "Example: " + COMMAND_WORD + " SmartOnes\n"
+            + "or: " + COMMAND_WORD + " 3";
 
     public static final String MESSAGE_GROUPING_PERSON_SUCCESS = "Listing %d person(s) in the group '%s'";
 
@@ -483,28 +756,48 @@ public class ViewGroupCommand extends Command {
     public CommandResult execute() throws CommandException {
 
         List<Group> grpList = model.getAddressBook().getGroupList();
-        Group grpToView;
 
         if (this.index != null) {
-            try {
-                grpToView = grpList.get(index.getZeroBased());
+            return viewByIndex(grpList);
+        } else { //either index or grpName should be non-null
+            return viewByGrpName(grpList);
+        }
+    }
 
-                predicate = new GroupContainsPersonPredicate(grpToView);
-                model.updateFilteredPersonList(predicate);
+    /**
+     * select the group using index provided
+     * @param grpList
+     * @return
+     * @throws CommandException
+     */
+    private CommandResult viewByIndex(List<Group> grpList) throws CommandException {
+        try {
+            Group grpToView = grpList.get(index.getZeroBased());
+
+            EventsCenter.getInstance().post(new JumpToListRequestEvent(this.index, true));
+
+            return new CommandResult(String.format(MESSAGE_GROUPING_PERSON_SUCCESS,
+                    grpToView.getPersonList().size(), grpToView.getGrpName()));
+        } catch (IndexOutOfBoundsException e) {
+            throw new CommandException(MESSAGE_EXECUTION_FAILURE, Messages.MESSAGE_INVALID_GROUP_DISPLAYED_INDEX);
+        }
+    }
+
+    /**
+     * select the group using group name provided
+     * @param grpList
+     * @return
+     * @throws CommandException
+     */
+    private CommandResult viewByGrpName(List<Group> grpList) throws CommandException {
+        for (int i = 0; i < grpList.size(); i++) {
+            if (grpList.get(i).getGrpName().equals(this.grpName)) {
+                Group grpToView = grpList.get(i);
+
+                EventsCenter.getInstance().post(new JumpToListRequestEvent(Index.fromZeroBased(i), true));
+
                 return new CommandResult(String.format(MESSAGE_GROUPING_PERSON_SUCCESS,
                         grpToView.getPersonList().size(), grpToView.getGrpName()));
-            } catch (IndexOutOfBoundsException e) {
-                throw new CommandException(MESSAGE_EXECUTION_FAILURE, Messages.MESSAGE_INVALID_GROUP_DISPLAYED_INDEX);
-            }
-        } else { //either index or grpName should be non-null
-            for (int i = 0; i < grpList.size(); i++) {
-                if (grpList.get(i).getGrpName().equals(this.grpName)) {
-                    grpToView = grpList.get(i);
-                    predicate = new GroupContainsPersonPredicate(grpToView);
-                    model.updateFilteredPersonList(predicate);
-                    return new CommandResult(String.format(MESSAGE_GROUPING_PERSON_SUCCESS,
-                            grpToView.getPersonList().size(), grpToView.getGrpName()));
-                }
             }
         }
         throw new CommandException(MESSAGE_EXECUTION_FAILURE, MESSAGE_GROUP_NONEXISTENT);
@@ -539,7 +832,28 @@ public class ViewGroupCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/DeleteCommandParser.java
+###### \java\seedu\address\logic\LogicManager.java
+``` java
+    @Override
+    public ObservableList<Group> getFilteredGroupList() {
+        return model.getFilteredGroupList();
+    }
+
+    @Override
+    public ListElementPointer getHistorySnapshot() {
+        return new ListElementPointer(history.getHistory());
+    }
+
+    /**
+     * updates the filtered person list according to group
+     * @param predicate
+     */
+    @Override
+    public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
+        model.updateFilteredPersonList(predicate);
+    }
+```
+###### \java\seedu\address\logic\parser\DeleteCommandParser.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -569,10 +883,11 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
      */
     public DeleteCommand parse(String args) throws ParseException {
         args = args.trim();
+
         if (args.equals("")) {
             throw new ParseException(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE);
         }
-        List<String> indexStrs = Arrays.asList(args.split(" "));
+        List<String> indexStrs = Arrays.asList(args.split("\\s+"));
         //eliminate duplicates
         HashSet<Integer> indexIntsSet = new HashSet<>();
 
@@ -594,7 +909,7 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
 
 }
 ```
-###### /java/seedu/address/logic/parser/DeleteGroupCommandParser.java
+###### \java\seedu\address\logic\parser\DeleteGroupCommandParser.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -603,7 +918,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import java.util.Arrays;
 import java.util.List;
 
-import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.DeleteGroupCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -614,24 +929,27 @@ public class DeleteGroupCommandParser implements Parser<DeleteGroupCommand> {
     @Override
     public DeleteGroupCommand parse(String userInput) throws ParseException {
         userInput = userInput.trim();
-        List<String> argList = Arrays.asList(userInput.split(" "));
+        List<String> argList = Arrays.asList(userInput.split("\\s+"));
 
         if (userInput.equals("") || argList.size() != 1) {
             throw new ParseException(MESSAGE_INVALID_COMMAND_FORMAT, DeleteGroupCommand.MESSAGE_USAGE);
         }
 
         try {
-            ParserUtil.parseInt(argList.get(0));
-        } catch (IllegalValueException e) {
-            // non-integer, a possible valid group name
-            return new DeleteGroupCommand(argList.get(0));
+            int index = Integer.parseInt(argList.get(0));
+            if (index <= 0) {
+                throw new ParseException(MESSAGE_INVALID_COMMAND_FORMAT, DeleteGroupCommand.MESSAGE_USAGE);
+            }
+            return new DeleteGroupCommand(Index.fromOneBased(index), true);
+        } catch (NumberFormatException e) {
+            // non-integer
+            return new DeleteGroupCommand(argList.get(0), false);
         }
 
-        throw new ParseException(MESSAGE_INVALID_COMMAND_FORMAT, DeleteGroupCommand.MESSAGE_USAGE);
     }
 }
 ```
-###### /java/seedu/address/logic/parser/EditGroupCommandParser.java
+###### \java\seedu\address\logic\parser\EditGroupCommandParser.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -643,6 +961,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.EditGroupCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -652,7 +971,14 @@ import seedu.address.logic.parser.exceptions.ParseException;
  */
 public class EditGroupCommandParser implements Parser<EditGroupCommand> {
 
-    private static final Set<String> validOp = new HashSet<>(Arrays.asList("grpName", "add", "delete"));
+    private static final Set<String> validOp = new HashSet<>(Arrays.asList("gn", "add", "delete"));
+    private String grpName;
+    private Index grpIndex;
+    private String operation;
+    private String newName;
+    private Index personIndex;
+    private boolean indicateByIndex;
+
 
     /**
      * Parses the given {@code String} of arguments in the context of the EditGroupCommand
@@ -663,68 +989,85 @@ public class EditGroupCommandParser implements Parser<EditGroupCommand> {
     public EditGroupCommand parse(String userInput) throws ParseException {
         requireNonNull(userInput);
         userInput = userInput.trim();
-
-        List<String> argsList = Arrays.asList(userInput.split(" "));
+        List<String> argsList = Arrays.asList(userInput.split("\\s+"));
 
         if (argsList.size() != 3 || userInput.equals("")) {
             throw new ParseException(MESSAGE_INVALID_COMMAND_FORMAT, EditGroupCommand.MESSAGE_USAGE);
         }
 
-        String grpName;
-        String operation;
-        String detail;
-
-        // parseing
-        try {
-            grpName = argsList.get(0);
-            operation = argsList.get(1);
-
-            if (isInteger(grpName) || isInteger(operation)) {
-                throw new Exception();
-            }
-            if (!validOp.contains(operation)) {
-                throw new Exception();
-            }
-
-            detail = argsList.get(2);
-            // if operation is add or delete, detail should be an index
-            if (operation.equals("add") || operation.equals("delete")) {
-                if (!isInteger(detail)) {
-                    throw new Exception();
-                }
-            } else {
-                // operation is to change name, need to enforce the rule that group name is not an integer
-                if (isInteger(detail)) {
-                    throw new Exception();
-                }
-            }
-        } catch (IndexOutOfBoundsException e) {
-            throw new ParseException(MESSAGE_INVALID_COMMAND_FORMAT, EditGroupCommand.MESSAGE_USAGE);
-        } catch (Exception e) {
-            throw new ParseException(MESSAGE_INVALID_COMMAND_FORMAT, EditGroupCommand.MESSAGE_USAGE);
+        parseGroupIndicator(argsList.get(0));
+        parseOpIndicator(argsList.get(1));
+        if ("gn".equals(operation)) {
+            parseNewName(argsList.get(2));
+            return new EditGroupCommand(grpName, grpIndex, operation, newName, indicateByIndex);
+        } else {
+            parseIndex(argsList.get(2));
+            return new EditGroupCommand(grpName, grpIndex, operation, personIndex, indicateByIndex);
         }
-
-        return new EditGroupCommand(grpName, operation, detail);
     }
 
     /**
-     * trues to parse input into an integer
-     * @param input
-     * @return true if input is integer
+     * parses the indicator to either a group name or index
+     * @param grpIndicator
+     * @throws ParseException
      */
-    private boolean isInteger(String input) {
-        boolean isInt;
+    private void parseGroupIndicator(String grpIndicator) throws ParseException {
         try {
-            ParserUtil.parseInt(input);
-            isInt = true;
-        } catch (IllegalValueException e) {
-            isInt = false;
+            int index = Integer.parseInt(grpIndicator);
+            if (index <= 0) {
+                throw new ParseException(MESSAGE_INVALID_COMMAND_FORMAT, EditGroupCommand.MESSAGE_USAGE);
+            }
+            grpIndex = Index.fromOneBased(index);
+            indicateByIndex = true;
+        } catch (NumberFormatException e) {
+            // non-integer, must be a group name
+            grpName = grpIndicator;
+            indicateByIndex = false;
         }
-        return isInt;
+    }
+
+    /**
+     * parses the operation indicator to existing operations
+     * @param opIndicator
+     * @throws ParseException
+     */
+    private void parseOpIndicator(String opIndicator) throws ParseException {
+        if (!validOp.contains(opIndicator)) {
+            throw new ParseException(MESSAGE_INVALID_COMMAND_FORMAT, EditGroupCommand.MESSAGE_USAGE);
+        } else {
+            operation = opIndicator;
+        }
+    }
+
+    /**
+     * parses the new group name
+     * @param groupName
+     * @throws ParseException if new name is an integer
+     */
+    private void parseNewName(String groupName) throws ParseException {
+        try {
+            Integer.parseInt(groupName);
+            throw new ParseException(MESSAGE_INVALID_COMMAND_FORMAT, EditGroupCommand.MESSAGE_USAGE);
+        } catch (NumberFormatException e) {
+            this.newName = groupName;
+        }
+    }
+
+    /**
+     * parses the index string into an Index object
+     * @param index
+     * @throws ParseException if index is of invalid value
+     */
+    private void parseIndex(String index) throws ParseException {
+        try {
+            personIndex = ParserUtil.parseIndex(index);
+        } catch (IllegalValueException e) {
+            throw new ParseException(MESSAGE_INVALID_COMMAND_FORMAT, EditGroupCommand.MESSAGE_USAGE);
+        }
     }
 }
 ```
-###### /java/seedu/address/logic/parser/GroupingCommandParser.java
+###### \java\seedu\address\logic\parser\GroupingCommandParser.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -747,8 +1090,6 @@ import seedu.address.logic.parser.exceptions.ParseException;
  */
 public class GroupingCommandParser implements Parser<GroupingCommand> {
 
-    public static final String MESSAGE_INCORRECT_GROUPNAME_FORMAT = "Group name cannot be a integer!";
-
     /**
      * Parses the given {@code String} of arguments in the context of the GroupingCommand
      * and returns an GroupingCommand object for execution.
@@ -758,26 +1099,18 @@ public class GroupingCommandParser implements Parser<GroupingCommand> {
     public GroupingCommand parse(String args) throws ParseException {
         requireNonNull(args);
         args = args.trim();
-        List<String> argsList = Arrays.asList(args.split(" "));
+        List<String> argsList = Arrays.asList(args.split("\\s+"));
 
         String grpName;
         List<String> indStrList;
 
-        boolean isInteger;
         if (argsList.size() >= 2) {
-            // check if group name is an integer
             try {
-                ParserUtil.parseInt(argsList.get(0));
-                isInteger = true;
-            } catch (IllegalValueException e) {
-                isInteger = false;
+                Integer.parseInt(argsList.get((0)));
+                throw new ParseException(MESSAGE_INVALID_COMMAND_FORMAT, GroupingCommand.MESSAGE_USAGE);
+            } catch (NumberFormatException e) {
+                grpName = argsList.get(0);
             }
-
-            // if group name is integer, alert user
-            if (isInteger) {
-                throw new ParseException(MESSAGE_INCORRECT_GROUPNAME_FORMAT, GroupingCommand.MESSAGE_USAGE);
-            }
-            grpName = argsList.get(0);
             indStrList = argsList.subList(1, argsList.size());
         } else {
             throw new ParseException(MESSAGE_INVALID_COMMAND_FORMAT, GroupingCommand.MESSAGE_USAGE);
@@ -802,7 +1135,7 @@ public class GroupingCommandParser implements Parser<GroupingCommand> {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/UndoCommandParser.java
+###### \java\seedu\address\logic\parser\UndoCommandParser.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -823,9 +1156,11 @@ public class UndoCommandParser implements Parser<UndoCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public UndoCommand parse(String args) throws ParseException {
+        args = args.trim();
+
         if (args.isEmpty()) {
             return new UndoCommand();
-        } else if (args.equals(" all")) {
+        } else if (args.equals("all")) {
             return new UndoCommand(Integer.MAX_VALUE);
         } else {
             try {
@@ -838,7 +1173,7 @@ public class UndoCommandParser implements Parser<UndoCommand> {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/ViewGroupCommandParser.java
+###### \java\seedu\address\logic\parser\ViewGroupCommandParser.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -849,7 +1184,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import seedu.address.commons.core.index.Index;
-import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.ViewGroupCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -867,24 +1201,26 @@ public class ViewGroupCommandParser implements Parser<ViewGroupCommand> {
     public ViewGroupCommand parse(String userInput) throws ParseException {
         requireNonNull(userInput);
         userInput = userInput.trim();
-        List<String> argsList = Arrays.asList(userInput.split(" "));
+        List<String> argsList = Arrays.asList(userInput.split("\\s+"));
 
         if (argsList.size() > 1 || argsList.get(0).equals("")) {
             throw new ParseException(MESSAGE_INVALID_COMMAND_FORMAT, ViewGroupCommand.MESSAGE_USAGE);
         }
 
-        Index index;
         try {
-            index = ParserUtil.parseIndex(userInput);
-            return new ViewGroupCommand(index);
-        } catch (IllegalValueException e) {
+            int index = Integer.parseInt(argsList.get(0));
+            if (index <= 0) {
+                throw new ParseException(MESSAGE_INVALID_COMMAND_FORMAT, ViewGroupCommand.MESSAGE_USAGE);
+            }
+            return new ViewGroupCommand(Index.fromOneBased(index));
+        } catch (NumberFormatException e) {
             // argument is not an index
             return new ViewGroupCommand(userInput);
         }
     }
 }
 ```
-###### /java/seedu/address/MainApp.java
+###### \java\seedu\address\MainApp.java
 ``` java
     /**
      * Returns a {@code ModelManager} with the data from {@code storage}'s backup address book and
@@ -912,13 +1248,13 @@ public class ViewGroupCommandParser implements Parser<ViewGroupCommand> {
         return new ModelManager(initialData, userPrefs);
     }
 ```
-###### /java/seedu/address/model/AddressBook.java
+###### \java\seedu\address\model\AddressBook.java
 ``` java
     public void setGroups(List<? extends Group> groups) throws DuplicateGroupException, DuplicatePersonException {
         this.groups.setGroups(groups);
     }
 ```
-###### /java/seedu/address/model/AddressBook.java
+###### \java\seedu\address\model\AddressBook.java
 ``` java
     /**
      * Creates and adds the group into groups
@@ -936,6 +1272,7 @@ public class ViewGroupCommandParser implements Parser<ViewGroupCommand> {
                 throw new AssertionError("Shouldn't exist duplicate person");
             }
         });
+        newGroup.updatePreviews();
         groups.add(newGroup);
     }
 
@@ -954,7 +1291,7 @@ public class ViewGroupCommandParser implements Parser<ViewGroupCommand> {
         groups.add(newGroup);
     }
 ```
-###### /java/seedu/address/model/AddressBook.java
+###### \java\seedu\address\model\AddressBook.java
 ``` java
     /**
      * Deletes or updates the group, if the group contains personToEdit
@@ -974,6 +1311,8 @@ public class ViewGroupCommandParser implements Parser<ViewGroupCommand> {
                     } catch (PersonNotFoundException pnfe) {
                         throw new AssertionError("The target person cannot be missing");
                     }
+
+                    group.updatePreviews();
                 }
             });
         } else if (commandClass.equals(DeleteCommand.class)) {
@@ -984,6 +1323,8 @@ public class ViewGroupCommandParser implements Parser<ViewGroupCommand> {
                     } catch (PersonNotFoundException pnfe) {
                         throw new AssertionError("The target person cannot be missing");
                     }
+
+                    group.updatePreviews();
                 }
             });
         } else {
@@ -997,6 +1338,8 @@ public class ViewGroupCommandParser implements Parser<ViewGroupCommand> {
                     } catch (PersonNotFoundException pnfe) {
                         throw new AssertionError("The target person cannot be missing");
                     }
+
+                    group.updatePreviews();
                 }
             });
         }
@@ -1009,8 +1352,30 @@ public class ViewGroupCommandParser implements Parser<ViewGroupCommand> {
     public void setGrpName(Group targetGrp, String newName) throws DuplicateGroupException {
         this.groups.setGrpName(targetGrp, newName);
     }
+
+    public Index getGroupIndex(String groupName) {
+        return Index.fromZeroBased(groups.getGroupIndex(groupName));
+    }
+
+    /**
+     * removes targetPerson from targetGroup
+     * @param targetGrp
+     * @param targetPerson
+     */
+    public void removePersonFromGroup(Group targetGrp, ReadOnlyPerson targetPerson) {
+        groups.removePersonFromGroup(targetGrp, targetPerson);
+    }
+
+    /**
+     * addes targetPerson to targetGroup
+     * @param targetGrp
+     * @param targetPerson
+     */
+    public void addPersonToGroup(Group targetGrp, ReadOnlyPerson targetPerson) throws DuplicatePersonException {
+        groups.addPersonToGroup(targetGrp, targetPerson);
+    }
 ```
-###### /java/seedu/address/model/group/DuplicateGroupException.java
+###### \java\seedu\address\model\group\DuplicateGroupException.java
 ``` java
 package seedu.address.model.group;
 
@@ -1026,10 +1391,17 @@ public class DuplicateGroupException extends DuplicateDataException {
     }
 }
 ```
-###### /java/seedu/address/model/group/Group.java
+###### \java\seedu\address\model\group\Group.java
 ``` java
 package seedu.address.model.group;
 
+import static java.util.Objects.requireNonNull;
+
+import java.util.Arrays;
+import java.util.List;
+
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
@@ -1041,32 +1413,92 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 
 public class Group extends UniquePersonList {
 
-    private String grpName;
+    private ObjectProperty<String> grpName;
+    private ObjectProperty<String> firstPreview;
+    private ObjectProperty<String> secondPreview;
+    private ObjectProperty<String> thirdPreview;
+
 
     public Group(String groupName) {
-        this.grpName = groupName;
+        requireNonNull(groupName);
+        this.grpName = new SimpleObjectProperty<>(groupName);
+        initPreviews();
     }
 
     public Group(Group grp) throws DuplicatePersonException {
-        setGrpName(grp.getGrpName());
+        this.grpName = new SimpleObjectProperty<>(grp.getGrpName());
         setPersons(grp.getPersonList());
+
+        initPreviews();
+        updatePreviews();
     }
 
-    public String getGrpName() {
+    private void initPreviews() {
+        this.firstPreview = new SimpleObjectProperty<>(" ");
+        this.secondPreview = new SimpleObjectProperty<>(" ");
+        this.thirdPreview = new SimpleObjectProperty<>(" ");
+    }
+
+
+    public ObjectProperty<String> firstPreviewProperty() {
+        return firstPreview;
+    }
+
+    public ObjectProperty<String> secondPreviewProperty() {
+        return secondPreview;
+    }
+
+    public ObjectProperty<String> thirdPreviewProperty() {
+        return thirdPreview;
+    }
+
+    public ObjectProperty<String> grpNameProperty() {
         return grpName;
     }
 
+    public String getGrpName() {
+        return grpName.get();
+    }
+
     public void setGrpName(String grpName) {
-        this.grpName = grpName;
+        this.grpName.set(grpName);
+    }
+
+    /**
+     * Helper function for updatePreviews to facilitate the use of for loop
+     * @return preview properties of this group as a list
+     */
+    private List<ObjectProperty<String>> getPersonPreviews() {
+        return Arrays.asList(firstPreview, secondPreview, thirdPreview);
     }
 
     public ObservableList<ReadOnlyPerson> getPersonList() {
         return this.asObservableList();
     }
 
+    @Override
+    public boolean equals(Object other) {
+        return this == other
+                || ((other instanceof Group)
+                && this.getGrpName().equals(((Group) other).getGrpName()));
+    }
+
+    /**
+     * Update preview properties for GroupCard
+     */
+    public void updatePreviews() {
+        int i;
+        for (i = 0; i < 3 && i < this.getPersonList().size(); i++) {
+            getPersonPreviews().get(i).set(this.getPersonList().get(i).getName().toString());
+        }
+        for (i = this.getPersonList().size(); i < 3; i++) {
+            getPersonPreviews().get(i).set("");
+        }
+    }
+
 }
 ```
-###### /java/seedu/address/model/group/UniqueGroupList.java
+###### \java\seedu\address\model\group\UniqueGroupList.java
 ``` java
 package seedu.address.model.group;
 
@@ -1078,7 +1510,9 @@ import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
  * A list of groups that enforces uniqueness between its elements and does not allow nulls.
@@ -1143,14 +1577,21 @@ public class UniqueGroupList implements Iterable<Group> {
         sort();
     }
 
+    /**
+     * Removes the specified group from the group list
+     *
+     * @param grpToDelete
+     */
     public void removeGroup(Group grpToDelete) {
         internalList.remove(grpToDelete);
+        sort();
     }
 
     /**
      * sets the group to the new name
+     *
      * @param targetGrp group to change name
-     * @param newName new name to change to
+     * @param newName   new name to change to
      * @throws DuplicateGroupException if a group of newName already exists in the group list
      */
     public void setGrpName(Group targetGrp, String newName) throws DuplicateGroupException {
@@ -1158,19 +1599,61 @@ public class UniqueGroupList implements Iterable<Group> {
             if (grp.getGrpName().equals(newName)) {
                 throw new DuplicateGroupException();
             }
+            if (targetGrp.getGrpName().equals(grp.getGrpName())) {
+                targetGrp = grp;
+                break;
+            }
         }
-
         targetGrp.setGrpName(newName);
+        sort();
+    }
+
+    /**
+     * get the index of a group in the group list
+     * @param groupName
+     * @return -1 if the group isn't in the group list
+     */
+    public int getGroupIndex(String groupName) {
+        for (Group grp : internalList) {
+            if (grp.getGrpName().equals(groupName)) {
+                return internalList.indexOf(grp);
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * removes a person from the group
+     * @param targetGrp
+     * @param targetPerson
+     */
+    public void removePersonFromGroup(Group targetGrp, ReadOnlyPerson targetPerson) {
+        try {
+            targetGrp.remove(targetPerson);
+            targetGrp.updatePreviews();
+        } catch (PersonNotFoundException e) {
+            assert false : "This person should be in the group";
+        }
+    }
+
+    /**
+     * adds target person into target group
+     * @param targetGrp
+     * @param targetPerson
+     * @throws DuplicatePersonException
+     */
+    public void addPersonToGroup(Group targetGrp, ReadOnlyPerson targetPerson) throws DuplicatePersonException {
+        targetGrp.add(targetPerson);
+        targetGrp.updatePreviews();
     }
 }
 ```
-###### /java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\model\ModelManager.java
 ``` java
     @Override
     public void createGroup(String groupName, List<ReadOnlyPerson> personToGroup)
             throws DuplicateGroupException {
         addressBook.addGroup(groupName, personToGroup);
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
     }
 
@@ -1203,22 +1686,45 @@ public class UniqueGroupList implements Iterable<Group> {
             throws DuplicatePersonException {
         requireAllNonNull(targetGrp, targetPerson);
 
-        targetGrp.add(targetPerson);
+        addressBook.addPersonToGroup(targetGrp, targetPerson);
 
         indicateAddressBookChanged();
     }
 
     @Override
-    public synchronized void removePersonFromGroup(Group targetGrp, ReadOnlyPerson targetPerson)
-            throws PersonNotFoundException {
+    public synchronized void removePersonFromGroup(Group targetGrp, ReadOnlyPerson targetPerson) {
         requireAllNonNull(targetGrp, targetPerson);
 
-        targetGrp.remove(targetPerson);
+        addressBook.removePersonFromGroup(targetGrp, targetPerson);
 
         indicateAddressBookChanged();
     }
+
+    @Override
+    public ObservableList<Group> getFilteredGroupList() {
+        return FXCollections.unmodifiableObservableList(filteredGroups);
+    }
+
+    @Override
+    public void updateFilteredGroupList(Predicate<Group> predicateShowAllGroups) {
+        requireNonNull(predicateShowAllGroups);
+
+        filteredGroups.setPredicate(predicateShowAllGroups);
+    }
+
+    /**
+     * Finds the index of a group in the group list
+     * @param groupName
+     * @return
+     */
+    @Override
+    public Index getGroupIndex(String groupName) {
+        requireNonNull(groupName);
+
+        return addressBook.getGroupIndex(groupName);
+    }
 ```
-###### /java/seedu/address/model/person/predicates/GroupContainsPersonPredicate.java
+###### \java\seedu\address\model\person\predicates\GroupContainsPersonPredicate.java
 ``` java
 package seedu.address.model.person.predicates;
 
@@ -1244,13 +1750,13 @@ public class GroupContainsPersonPredicate implements Predicate<ReadOnlyPerson> {
     }
 }
 ```
-###### /java/seedu/address/storage/StorageManager.java
+###### \java\seedu\address\storage\StorageManager.java
 ``` java
     public Optional<ReadOnlyAddressBook> readBackupAddressBook() throws DataConversionException, IOException {
         return readAddressBook(backupAddressbook.getAddressBookFilePath());
     }
 ```
-###### /java/seedu/address/storage/StorageManager.java
+###### \java\seedu\address\storage\StorageManager.java
 ``` java
 
 
@@ -1266,7 +1772,7 @@ public class GroupContainsPersonPredicate implements Predicate<ReadOnlyPerson> {
     }
 
 ```
-###### /java/seedu/address/storage/StorageManager.java
+###### \java\seedu\address\storage\StorageManager.java
 ``` java
     private void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
         String backupPath = backupAddressbook.getAddressBookFilePath();
@@ -1274,7 +1780,7 @@ public class GroupContainsPersonPredicate implements Predicate<ReadOnlyPerson> {
         saveAddressBook(addressBook, backupPath);
     }
 ```
-###### /java/seedu/address/storage/XmlAdaptedGroup.java
+###### \java\seedu\address\storage\XmlAdaptedGroup.java
 ``` java
 package seedu.address.storage;
 
@@ -1334,7 +1840,7 @@ public class XmlAdaptedGroup {
     }
 }
 ```
-###### /java/seedu/address/storage/XmlSerializableAddressBook.java
+###### \java\seedu\address\storage\XmlSerializableAddressBook.java
 ``` java
     @Override
     public ObservableList<Group> getGroupList() {
@@ -1350,7 +1856,7 @@ public class XmlAdaptedGroup {
         return FXCollections.unmodifiableObservableList(groups);
     }
 ```
-###### /java/seedu/address/ui/CommandBox.java
+###### \java\seedu\address\ui\CommandBox.java
 ``` java
     /**
      * Opens an alert dialogue to inform user of the error
@@ -1360,16 +1866,307 @@ public class XmlAdaptedGroup {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Warning");
         Stage alertStage = (Stage) alert.getDialogPane().getScene().getWindow();
-        FxViewUtil.setStageIcon(alertStage, "/images/warning_sign.png");
+        FxViewUtil.setStageIcon(alertStage, "/images/Warning-300px.png");
 
         if (e.getClass().equals(CommandException.class)) {
             alert.setHeaderText(((CommandException) e).getExceptionHeader());
         } else {
             alert.setHeaderText(((ParseException) e).getExceptionHeader());
         }
-        alert.setContentText(e.getMessage());
 
-        alert.setResizable(true);
+        TextArea txtArea = new TextArea(e.getMessage());
+        txtArea.setEditable(false);
+        txtArea.setWrapText(true);
+
+        txtArea.setMaxWidth(Double.MAX_VALUE);
+        txtArea.setMaxHeight(Double.MAX_VALUE);
+        GridPane.setVgrow(txtArea, Priority.ALWAYS);
+        GridPane.setHgrow(txtArea, Priority.ALWAYS);
+
+        GridPane expContent = new GridPane();
+        expContent.setMaxWidth(Double.MAX_VALUE);
+        expContent.add(txtArea, 0, 0);
+
+        alert.getDialogPane().setContent(expContent);
+
         alert.showAndWait();
+
     }
+```
+###### \java\seedu\address\ui\GroupCard.java
+``` java
+package seedu.address.ui;
+
+import javafx.beans.binding.Bindings;
+import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.scene.layout.Region;
+import seedu.address.model.group.Group;
+
+/**
+ * An UI component that displays information of a {@code Group}.
+ */
+public class GroupCard extends UiPart<Region> {
+    private static final String FXML = "GroupListCard.fxml";
+
+    public final Group group;
+
+    @FXML
+    private Label id;
+    @FXML
+    private Label grpName;
+    @FXML
+    private Label firstPerson;
+    @FXML
+    private Label secondPerson;
+    @FXML
+    private Label thirdPerson;
+    @FXML
+    private Label ellipsis;
+
+    public GroupCard(Group group, int displayedIndex) {
+        super(FXML);
+        this.group = group;
+        id.setText(displayedIndex + ". ");
+        initEllipsis();
+        bindPreview(group);
+    }
+
+    /**
+     * Binds the individual UI elements to observe their respective {@code Group} properties
+     * so that they will be notified of any changes.
+     */
+    private void bindPreview(Group group) {
+        grpName.textProperty().bind(Bindings.convert(group.grpNameProperty()));
+        firstPerson.textProperty().bind(Bindings.convert(group.firstPreviewProperty()));
+        secondPerson.textProperty().bind(Bindings.convert(group.secondPreviewProperty()));
+        thirdPerson.textProperty().bind(Bindings.convert(group.thirdPreviewProperty()));
+        group.thirdPreviewProperty().addListener(((observable, oldValue, newValue) -> {
+            ellipsis.setVisible(!"".equals(newValue));
+        }));
+    }
+
+    /**
+     * Initiating content and visibility of ellipsis
+     */
+    private void initEllipsis() {
+        ellipsis.setText("...");
+        ellipsis.setVisible(!group.thirdPreviewProperty().get().equals(""));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof GroupCard)) {
+            return false;
+        }
+
+        // state check
+        GroupCard card = (GroupCard) other;
+        return id.getText().equals(card.id.getText())
+                && group.equals(card.group);
+    }
+}
+```
+###### \java\seedu\address\ui\GroupListPanel.java
+``` java
+package seedu.address.ui;
+
+import java.util.logging.Logger;
+
+import org.fxmisc.easybind.EasyBind;
+
+import com.google.common.eventbus.Subscribe;
+
+import javafx.application.Platform;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
+import javafx.scene.layout.Region;
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.DeselectAllEvent;
+import seedu.address.commons.events.ui.GroupPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.JumpToListRequestEvent;
+import seedu.address.model.group.Group;
+
+/**
+ * Panel containing the list of groups
+ */
+public class GroupListPanel extends UiPart<Region> {
+
+    private static final String FXML = "GroupListPanel.fxml";
+    private final Logger logger = LogsCenter.getLogger(GroupListPanel.class);
+
+    @FXML
+    private ListView<GroupCard> groupListView;
+
+    public GroupListPanel(ObservableList<Group> groupList) {
+        super(FXML);
+        setConnections(groupList);
+        registerAsAnEventHandler(this);
+    }
+
+    private void setConnections(ObservableList<Group> groupList) {
+        ObservableList<GroupCard> mappedList = EasyBind.map(
+                groupList, (group) -> new GroupCard(group, groupList.indexOf(group) + 1));
+        groupListView.setItems(mappedList);
+        groupListView.setCellFactory(listView -> new GroupListViewCell());
+        setEventHandlerForSelectionChangeEvent();
+    }
+
+    private void setEventHandlerForSelectionChangeEvent() {
+        groupListView.getSelectionModel().selectedItemProperty()
+                .addListener((observable, oldValue, newValue) -> {
+                    if (newValue != null) {
+                        logger.fine("Selection in group list panel changed to : '" + newValue + "'");
+                        raise(new GroupPanelSelectionChangedEvent(newValue));
+                    }
+                });
+    }
+
+    /**
+     * Scrolls to the {@code GroupCard} at the {@code index} and selects it.
+     */
+    private void scrollTo(int index) {
+        Platform.runLater(() -> {
+            groupListView.scrollTo(index);
+            groupListView.getSelectionModel().clearSelection(index);
+            groupListView.getSelectionModel().select(index);
+        });
+    }
+
+    @Subscribe
+    /**
+     * handles the selection of a group
+     */
+    private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        if (event.isGroupType()) {
+            scrollTo(event.targetIndex);
+        }
+    }
+
+    @Subscribe
+    private void handleDeselectEvent(DeselectAllEvent event) {
+        groupListView.getSelectionModel().clearSelection();
+    }
+
+    /**
+     * Custom {@code ListCell} that displays the graphics of a {@code GroupCard}.
+     */
+    class GroupListViewCell extends ListCell<GroupCard> {
+
+        @Override
+        protected void updateItem(GroupCard group, boolean empty) {
+            super.updateItem(group, empty);
+
+            if (empty || group == null) {
+                setGraphic(null);
+                setText(null);
+            } else {
+                setGraphic(group.getRoot());
+            }
+        }
+    }
+
+}
+```
+###### \java\seedu\address\ui\MainWindow.java
+``` java
+    @Subscribe
+    private void handleGroupPanelSelectionChangedEvent(GroupPanelSelectionChangedEvent event) {
+        logic.updateFilteredPersonList(new GroupContainsPersonPredicate(event.getNewSelection().group));
+    }
+
+    @Subscribe
+    private void handleDeselectEvent(DeselectAllEvent event) {
+        logic.updateFilteredPersonList(new Predicate<ReadOnlyPerson>() {
+            @Override
+            public boolean test(ReadOnlyPerson readOnlyPerson) {
+                return true;
+            }
+        });
+    }
+```
+###### \resources\view\GroupListCard.fxml
+``` fxml
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+    <GridPane HBox.hgrow="ALWAYS">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
+        </columnConstraints>
+        <VBox alignment="CENTER_LEFT" minHeight="105" GridPane.columnIndex="0">
+            <padding>
+                <Insets bottom="5" left="15" right="5" top="5" />
+            </padding>
+            <HBox alignment="CENTER_LEFT" spacing="5">
+                <Label fx:id="id" styleClass="cell_big_label">
+                    <minWidth>
+                        <!-- Ensures that the label text is never truncated -->
+                        <Region fx:constant="USE_PREF_SIZE" />
+                    </minWidth>
+                </Label>
+                <Label fx:id="grpName" styleClass="cell_big_label" text="\$grpName" />
+            </HBox>
+            <FlowPane prefHeight="30.0" />
+            <Label fx:id="firstPerson" styleClass="cell_small_label" text="\$firstPerson" />
+            <Label fx:id="secondPerson" styleClass="cell_small_label" text="\$secondPerson" />
+            <Label fx:id="thirdPerson" styleClass="cell_small_label" text="\$thirdPerson" />
+            <Label fx:id="ellipsis" styleClass="cell_small_label" text="\$ellipsis" />
+        </VBox>
+        <rowConstraints>
+            <RowConstraints />
+        </rowConstraints>
+    </GridPane>
+</HBox>
+```
+###### \resources\view\GroupListPanel.fxml
+``` fxml
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+  <ListView fx:id="groupListView" VBox.vgrow="ALWAYS" />
+</VBox>
+```
+###### \resources\view\MainWindow.fxml
+``` fxml
+    <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.5, 0.5" VBox.vgrow="ALWAYS">
+      <SplitPane dividerPositions="0.5" maxWidth="280.0" minWidth="200.0" orientation="VERTICAL" prefHeight="200.0" prefWidth="200.0">
+         <items>
+            <Pane maxHeight="30.0" minHeight="30.0" prefHeight="30.0">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="76.0" layoutY="2.0" styleClass="label-dark" stylesheets="@DarkTheme.css" text="Groups" textAlignment="CENTER" underline="true">
+                     <padding>
+                        <Insets bottom="2.0" top="2.0" />
+                     </padding>
+                  </Label>
+               </children>
+            </Pane>
+                <VBox fx:id="groupList">
+                    <padding>
+                        <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
+                    </padding>
+                    <children>
+                        <StackPane fx:id="groupListPanelPlaceholder" VBox.vgrow="ALWAYS" />
+                    </children>
+                </VBox>
+         </items>
+      </SplitPane>
 ```

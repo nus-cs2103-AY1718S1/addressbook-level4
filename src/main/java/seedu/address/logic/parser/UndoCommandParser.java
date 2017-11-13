@@ -22,7 +22,7 @@ public class UndoCommandParser implements Parser<UndoCommand> {
 
         if (args.isEmpty()) {
             return new UndoCommand();
-        } else if (args.equals(" all")) {
+        } else if (args.equals("all")) {
             return new UndoCommand(Integer.MAX_VALUE);
         } else {
             try {

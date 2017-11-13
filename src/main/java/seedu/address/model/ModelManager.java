@@ -91,7 +91,6 @@ public class ModelManager extends ComponentManager implements Model {
     public void createGroup(String groupName, List<ReadOnlyPerson> personToGroup)
             throws DuplicateGroupException {
         addressBook.addGroup(groupName, personToGroup);
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
     }
 
@@ -124,19 +123,16 @@ public class ModelManager extends ComponentManager implements Model {
             throws DuplicatePersonException {
         requireAllNonNull(targetGrp, targetPerson);
 
-        targetGrp.add(targetPerson);
-        targetGrp.updatePreviews();
+        addressBook.addPersonToGroup(targetGrp, targetPerson);
 
         indicateAddressBookChanged();
     }
 
     @Override
-    public synchronized void removePersonFromGroup(Group targetGrp, ReadOnlyPerson targetPerson)
-            throws PersonNotFoundException {
+    public synchronized void removePersonFromGroup(Group targetGrp, ReadOnlyPerson targetPerson) {
         requireAllNonNull(targetGrp, targetPerson);
 
-        targetGrp.remove(targetPerson);
-        targetGrp.updatePreviews();
+        addressBook.removePersonFromGroup(targetGrp, targetPerson);
 
         indicateAddressBookChanged();
     }
@@ -239,8 +235,26 @@ public class ModelManager extends ComponentManager implements Model {
 
         // state check
         ModelManager other = (ModelManager) obj;
-        return addressBook.equals(other.addressBook)
-                && filteredPersons.equals(other.filteredPersons);
+
+        if (this.filteredGroups.size() != other.filteredGroups.size()) {
+            return false;
+        }
+        for (int i = 0; i < this.filteredGroups.size(); i++) {
+            if (!this.filteredGroups.get(i).equals(other.filteredGroups.get(i))) {
+                return false;
+            }
+        }
+
+        if (this.filteredPersons.size() != other.filteredPersons.size()) {
+            return false;
+        }
+        for (int i = 0; i < this.filteredPersons.size(); i++) {
+            if (!this.filteredPersons.get(i).isSameStateAs(other.filteredPersons.get(i))) {
+                return false;
+            }
+        }
+
+        return addressBook.equals(other.addressBook);
     }
 
 }

@@ -16,8 +16,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+//import com.sun.xml.internal.bind.v2.model.core.ID;
+
 import seedu.address.model.AddressBook;
 import seedu.address.model.group.DuplicateGroupException;
+import seedu.address.model.group.Group;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 
@@ -91,30 +94,14 @@ public class TypicalPersons {
                 assert false : "not possible";
             }
         }
-        List<ReadOnlyPerson> testGrpPersons = new ArrayList<>();
-        testGrpPersons.add(HOON);
-        testGrpPersons.add(IDA);
+
+
+        List<Group> typicalGroups = new TypicalGroups().getTypicalGroups();
 
         try {
-            ab.addGroup("testGrp1", testGrpPersons);
-        } catch (DuplicateGroupException e) {
-            assert false : "not possible";
-        }
-
-        testGrpPersons.clear();
-        testGrpPersons.add(HOON);
-        testGrpPersons.add(ALICE);
-        testGrpPersons.add(AMY);
-        try {
-            ab.addGroup("testGrp2", testGrpPersons);
-        } catch (DuplicateGroupException e) {
-            assert false : "not possible";
-        }
-
-        TypicalGroups typicalGroups = new TypicalGroups();
-        try {
-            ab.addGroup(typicalGroups.getTestGroup3());
-            ab.addGroup(typicalGroups.getTestGroup4());
+            for (int i = 0; i < typicalGroups.size(); i++) {
+                ab.addGroup(typicalGroups.get(i));
+            }
         } catch (DuplicateGroupException e) {
             assert false : "not possible";
         }

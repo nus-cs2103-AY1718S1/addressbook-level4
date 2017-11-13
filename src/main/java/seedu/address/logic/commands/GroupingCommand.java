@@ -2,8 +2,6 @@
 package seedu.address.logic.commands;
 
 import static seedu.address.commons.core.Messages.MESSAGE_EXECUTION_FAILURE;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_GROUPS;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,9 +66,6 @@ public class GroupingCommand extends UndoableCommand {
         } catch (DuplicateGroupException e) {
             throw new CommandException(MESSAGE_EXECUTION_FAILURE, MESSAGE_DUPLICATE_GROUP_NAME);
         }
-
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        model.updateFilteredGroupList(PREDICATE_SHOW_ALL_GROUPS);
 
         Index grpIndex = model.getGroupIndex(groupName);
 

@@ -12,12 +12,29 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
  * to create typical groups
  */
 public class TypicalGroups {
-
+    private Group testGroup1;
+    private Group testGroup2;
     private Group testGroup3;
-
     private Group testGroup4;
 
     public TypicalGroups() {
+        testGroup1 = new Group("TestGrp1");
+        try {
+            testGroup1.add(TypicalPersons.HOON);
+            testGroup1.add(TypicalPersons.IDA);
+        } catch (DuplicatePersonException e) {
+            assert false : "not possible";
+        }
+
+        testGroup2 = new Group("TestGrp2");
+        try {
+            testGroup2.add(TypicalPersons.HOON);
+            testGroup2.add(TypicalPersons.ALICE);
+            testGroup2.add(TypicalPersons.AMY);
+        } catch (DuplicatePersonException e) {
+            assert false : "not possible";
+        }
+
         testGroup3 = new Group("TestGrp3");
         try {
             testGroup3.add(TypicalPersons.ALICE);
@@ -35,18 +52,11 @@ public class TypicalGroups {
         } catch (DuplicatePersonException e) {
             assert false : "not possible";
         }
-    }
 
-    public Group getTestGroup3() {
-        return testGroup3;
-    }
-
-    public Group getTestGroup4() {
-        return testGroup4;
     }
 
     public List<Group> getTypicalGroups() {
-        return new ArrayList<>(Arrays.asList(testGroup3, testGroup4));
+        return new ArrayList<>(Arrays.asList(testGroup1, testGroup2, testGroup3, testGroup4));
     }
 }
 //@@author

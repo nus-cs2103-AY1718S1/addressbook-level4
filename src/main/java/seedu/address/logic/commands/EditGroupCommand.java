@@ -21,7 +21,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 /**
  * Edits the group, either 1.change group name, 2.adds a person to the group or 3.deletes a person from the group
  */
-public class EditGroupCommand extends UndoableCommand {
+public class EditGroupCommand extends GroupTypeUndoableCommand {
 
     public static final String COMMAND_WORD = "editGroup";
 
@@ -82,13 +82,109 @@ public class EditGroupCommand extends UndoableCommand {
     protected CommandResult executeUndoableCommand() throws CommandException {
 
         List<Group> grpList = model.getAddressBook().getGroupList();
-        Group targetGrp = null;
+        Group targetGrp = locateTargetGrp(grpList);
 
-        // locate target group
+        if ("gn".equals(operation)) {
+            return handleNameChangeOp(targetGrp);
+        } else {
+            Person targetPerson = null;
+            if ("add".equals(operation)) {
+                List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+                targetPerson = locateTargetPerson(lastShownList);
+                return handleAddOp(targetGrp, targetPerson);
+
+            } else {
+                List<ReadOnlyPerson> personListInGroup = targetGrp.getPersonList();
+                targetPerson = locateTargetPerson(personListInGroup);
+                return handleDeleteOp(targetGrp, targetPerson);
+            }
+        }
+    }
+
+    /**
+     * deletes the target person from target group
+     * @param targetGrp
+     * @param targetPerson
+     * @return
+     * @throws CommandException
+     */
+    private CommandResult handleDeleteOp(Group targetGrp, Person targetPerson) {
+        try {
+            model.removePersonFromGroup(targetGrp, targetPerson);
+        } catch (PersonNotFoundException e) {
+            assert false : "The target person cannot be missing";
+        }
+
+        EventsCenter.getInstance().post(new JumpToListRequestEvent(this.grpIndex, true));
+
+        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, grpName,
+                targetPerson.toString()));
+    }
+
+    /**
+     * locate and return the target person in the person list
+     * @param personList
+     * @return
+     * @throws CommandException
+     */
+    private Person locateTargetPerson(List<ReadOnlyPerson> personList) throws CommandException {
+        try {
+            ReadOnlyPerson targetPerson = personList.get(personIndex.getZeroBased());
+            Person copiedPerson = new Person(targetPerson);
+            return copiedPerson;
+        } catch (IndexOutOfBoundsException e) {
+            throw new CommandException(MESSAGE_EXECUTION_FAILURE,
+                    Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+    }
+
+    /**
+     * adds the target person to the target group
+     * @param targetGrp
+     * @return
+     */
+    private CommandResult handleAddOp(Group targetGrp, Person targetPerson) throws CommandException {
+        try {
+            model.addPersonToGroup(targetGrp, targetPerson);
+        } catch (DuplicatePersonException e) {
+            throw new CommandException(MESSAGE_EXECUTION_FAILURE, MESSAGE_DUPLICATE_PERSON);
+        }
+
+        EventsCenter.getInstance().post(new JumpToListRequestEvent(this.grpIndex, true));
+
+        return new CommandResult(String.format(MESSAGE_ADD_PERSON_SUCCESS, grpName,
+                targetPerson.toString()));
+    }
+
+    /**
+     * updates the group name of target group
+     * @param targetGrp
+     * @return
+     * @throws CommandException if a group by the new name already exists
+     */
+    private CommandResult handleNameChangeOp(Group targetGrp) throws CommandException {
+        try {
+            model.setGrpName(targetGrp, newName);
+            return new CommandResult(String.format(MESSAGE_CHANGE_NAME_SUCCESS, grpName, newName));
+        } catch (DuplicateGroupException e) {
+            throw new CommandException(MESSAGE_EXECUTION_FAILURE, String.format(MESSAGE_DUPLICATE_GROUP, newName));
+        }
+    }
+
+    /**
+     * locate and return the target group indicated by either index or group name
+     * @param grpList
+     * @return target group
+     * @throws CommandException
+     */
+    private Group locateTargetGrp(List<Group> grpList) throws CommandException {
+        Group targetGrp = null;
         if (indicateByIndex) {
             try {
                 targetGrp = grpList.get(grpIndex.getZeroBased());
+                undoGroupIndex = Index.fromZeroBased(grpIndex.getZeroBased());
                 grpName = targetGrp.getGrpName();
+                return targetGrp;
             } catch (IndexOutOfBoundsException e) {
                 throw new CommandException(MESSAGE_EXECUTION_FAILURE, MESSAGE_INVALID_GROUP_DISPLAYED_INDEX);
             }
@@ -97,7 +193,8 @@ public class EditGroupCommand extends UndoableCommand {
                 if (grp.getGrpName().equals(grpName)) {
                     targetGrp = grp;
                     grpIndex = Index.fromZeroBased(grpList.indexOf(grp));
-                    break;
+                    undoGroupIndex = Index.fromZeroBased(grpList.indexOf(grp));
+                    return targetGrp;
                 }
             }
         }
@@ -105,55 +202,7 @@ public class EditGroupCommand extends UndoableCommand {
         if (targetGrp == null) {
             throw new CommandException(MESSAGE_EXECUTION_FAILURE, MESSAGE_GROUP_NONEXISTENT);
         }
-
-        if ("gn".equals(operation)) {
-            try {
-                model.setGrpName(targetGrp, newName);
-                return new CommandResult(String.format(MESSAGE_CHANGE_NAME_SUCCESS, grpName, newName));
-            } catch (DuplicateGroupException e) {
-                throw new CommandException(MESSAGE_EXECUTION_FAILURE, String.format(MESSAGE_DUPLICATE_GROUP, newName));
-            }
-        } else {
-            ReadOnlyPerson targetPerson = null;
-            Person copiedPerson = null;
-            if ("add".equals(operation)) {
-                List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
-
-                try {
-                    targetPerson = lastShownList.get(personIndex.getZeroBased());
-                    copiedPerson = new Person(targetPerson);
-                    model.addPersonToGroup(targetGrp, copiedPerson);
-                } catch (IndexOutOfBoundsException e) {
-                    throw new CommandException(MESSAGE_EXECUTION_FAILURE,
-                            Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-                } catch (DuplicatePersonException e) {
-                    throw new CommandException(MESSAGE_EXECUTION_FAILURE, MESSAGE_DUPLICATE_PERSON);
-                }
-
-                EventsCenter.getInstance().post(new JumpToListRequestEvent(this.grpIndex, true));
-
-                return new CommandResult(String.format(MESSAGE_ADD_PERSON_SUCCESS, grpName,
-                        copiedPerson.toString()));
-            } else {
-                List<ReadOnlyPerson> personListInGroup = targetGrp.getPersonList();
-
-                try {
-                    targetPerson = personListInGroup.get(personIndex.getZeroBased());
-                    copiedPerson = new Person(targetPerson);
-                    model.removePersonFromGroup(targetGrp, copiedPerson);
-                } catch (IndexOutOfBoundsException e) {
-                    throw new CommandException(MESSAGE_EXECUTION_FAILURE,
-                            Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-                } catch (PersonNotFoundException e) {
-                    assert false : "The target person cannot be missing";
-                }
-
-                EventsCenter.getInstance().post(new JumpToListRequestEvent(this.grpIndex, true));
-
-                return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, grpName,
-                        copiedPerson.toString()));
-            }
-        }
+        return null;
     }
 
     @Override
@@ -191,6 +240,29 @@ public class EditGroupCommand extends UndoableCommand {
 
         }
         return false;
+    }
+
+    /**
+     * Reconstructs command message, used by RedoCommand
+     * @return command message as a string
+     */
+    public String reconstructCommandString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(COMMAND_WORD + " ");
+
+        if (indicateByIndex) {
+            sb.append(grpIndex.getOneBased());
+        } else {
+            sb.append(grpName);
+        }
+        sb.append(" " + operation + " ");
+
+        if ("gn".equals(operation)) {
+            sb.append(newName);
+        } else {
+            sb.append(personIndex.getOneBased());
+        }
+        return sb.toString();
     }
 }
 //@@author
