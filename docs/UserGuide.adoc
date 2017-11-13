@@ -380,7 +380,7 @@ When an activity is scheduled, the agenda list will be immediately updated, with
 
 A pop-up reminder will be appear after the main application window has opened, if there exists scheduled activities by the user which are due the day after the current date. The display of the reminder window can be seen in _Figure 3.4.3.2_ below:
 
-image::ReminderWindowUI.png[width="600"]
+image::ReminderWindowUI.png[width="700"]
 _Figure 3.4.3.2: UI display for pop-up reminder window_
 // end::reminder[]
 
@@ -406,7 +406,7 @@ Outputs the 1st person's email address in console: `johndoe@example.com`
 * `copy 1 4 5` +
 Outputs email addresses of people at index 1, 4 and 5, with a semi-colon between each: `a@a.com; d@d.com; e@e.com`
 
-image::CopyCommand_browser_result.PNG[width="400"]
+image::CopyCommand_browser_result.PNG[width="600"]
 _Figures 3.4.4.1: UI display of CopyCommand_
 
 // end::copy[]
@@ -456,7 +456,7 @@ Emails the 1st and 2nd person in the address book.
 `email 1` +
 Emails the 1st person in the results of the `find` command.
 
-image::EmailCommand.PNG[width="800"]
+image::EmailCommand.PNG[width="700"]
 _Figure 3.4.6.1: UI display of EmailCommand_
 
 // end::email[]
@@ -499,11 +499,11 @@ can take in either format.
 2. The path can include white spaces such as `\Folder 2\`, so do not replace spaces with other characters.
 
 
-image::backup demo 1.PNG[width="400"]
-_Figure 3.4.6.1 : UI display for BackupCommand1_
+image::backup demo 1.PNG[width="800"]
+_Figure 3.4.7.1 : UI display for BackupCommand1_
 
-image::backup demo 2.PNG[width="400"]
-_Figure 3.4.6.2 : UI display for BackupCommand2_
+image::backup demo 2.PNG[width="800"]
+_Figure 3.4.7.2 : UI display for BackupCommand2_
 
 //end::backup[]
 
@@ -605,8 +605,8 @@ Try enabling the welcome screen, close and rerun ConTag.
 
 If the welcome screen is successfully enabled, you should be able to see a the following screen, as shown in _Figure 3.5.5.1_ every time ConTag is run. The welcome screen displays 1 out of the 15 default productivity quotes at random to keep you motivated throughout the day.
 
-image::WelcomeScreen.png[width="400"]
-_Figure 3.4.3.1: The welcome screen_
+image::WelcomeScreen.png[width="600"]
+_Figure 3.5.5.1: The welcome screen_
 // end::welcomeScreen[]
 
 ==== Exiting the program : `exit`
