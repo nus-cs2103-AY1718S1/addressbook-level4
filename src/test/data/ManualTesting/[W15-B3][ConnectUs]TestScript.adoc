@@ -583,7 +583,7 @@ Example: theme white`
 == Deletes all images for all people
 
 === Deletes all images for all people successfully
-. To see the full effect of the function, you can upload an image to person with index 3 first.
+. To see the full effect of the function, you can upload an image to person with index 3 first which will be done in the next step.
 . Copy the following commands onto the command line input in sequence: +
 `photo 3 ./SampleImages/beautiful.jpg` +
 `daphotos`
