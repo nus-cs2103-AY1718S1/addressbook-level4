@@ -33,8 +33,10 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
     @XmlElement
     private List<XmlAdaptedEvent> events;
     //@@author
+    //@@author huiyiiih
     @XmlElement
     private List<XmlAdaptedRelationship> relation;
+    //@@author
 
     /**
      * Creates an empty XmlSerializableAddressBook.
@@ -45,8 +47,9 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
         tags = new ArrayList<>();
         //@@author reginleiff
         events = new ArrayList<>();
-        //@@author
+        //@@author huiyiiih
         relation = new ArrayList<>();
+        //@@author
     }
 
     /**
@@ -59,7 +62,9 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
         events.addAll(src.getEventList().stream().map(XmlAdaptedEvent::new).collect(Collectors.toList()));
         //@@author
         tags.addAll(src.getTagList().stream().map(XmlAdaptedTag::new).collect(Collectors.toList()));
+        //@@author huiyiiih
         relation.addAll(src.getRelList().stream().map(XmlAdaptedRelationship::new).collect(Collectors.toList()));
+        //@@author
     }
 
     @Override
@@ -111,6 +116,7 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
     }
     //@@author
 
+    //@@author huiyiiih
     @Override
     public ObservableList<Relationship> getRelList() {
         final ObservableList<Relationship> rel = this.relation.stream().map(r -> {
@@ -124,6 +130,7 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
         }).collect(Collectors.toCollection(FXCollections::observableArrayList));
         return FXCollections.unmodifiableObservableList(rel);
     }
+    //@@author
 
     @Override
     public ReadOnlyEvent getLastChangedEvent() {

@@ -23,6 +23,9 @@ public class SortCommandParserTest {
         //SortCommand exp
         assertParseSuccess(parser, "name", new SortCommand("name"));
         assertParseSuccess(parser, "tag", new SortCommand("tag"));
+        assertParseSuccess(parser, "position", new SortCommand("position"));
+        assertParseSuccess(parser, "company", new SortCommand("company"));
+        assertParseSuccess(parser, "priority", new SortCommand("priority"));
     }
 }
 //@@author

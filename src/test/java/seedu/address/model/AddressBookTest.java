@@ -71,11 +71,13 @@ public class AddressBookTest {
         thrown.expect(UnsupportedOperationException.class);
         addressBook.getTagList().remove(0);
     }
+    //@@author huiyiiih
     @Test
     public void getRelList_modifyList_throwsUnsupportedOperationException() {
         thrown.expect(UnsupportedOperationException.class);
         addressBook.getRelList().remove(0);
     }
+    //@@author
 
 
     /**
