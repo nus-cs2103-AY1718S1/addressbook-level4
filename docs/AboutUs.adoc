@@ -13,6 +13,7 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 === Archana Pradeep
 image::archthegit.png[width="150", align="left"]
 {empty}[https://github.com/archthegit[github]]
+{empty}[https://cs2103aug2017-t15-b3.github.io/main/team/archthegit.html[Portfolio]]
 
 Role: Project Leader & Elite Developer +
 Responsibilities: UI & Dev Ops
