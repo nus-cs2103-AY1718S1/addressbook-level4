@@ -3,7 +3,6 @@ package seedu.address.logic.parser;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -216,7 +215,6 @@ public class RemoveCommandParser implements Parser<RemoveTagCommand> {
                 }
             }
         }
-        Collections.sort(indexSet);
         return new RemoveTagCommand(toRemoveSet, index, indexSet);
     }
 

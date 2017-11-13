@@ -244,7 +244,13 @@ public class ModelManager extends ComponentManager implements Model {
             }
         } else {
             for (int i = 0; i < totalSize; i++) {
-                Person toDelete = new Person(getFilteredPersonList().get(i));
+                int newSize = getFilteredPersonList().size();
+                Person toDelete;
+                if (newSize == totalSize) {
+                    toDelete = new Person(getFilteredPersonList().get(i));
+                } else {
+                    toDelete = new Person(getFilteredPersonList().get(0));
+                }
                 Person toUpdate = new Person(toDelete);
                 Set<Tag> oldTags = toDelete.getTags();
                 Set<Tag> newTags = deleteTagUpdate(tag, oldTags);

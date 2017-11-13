@@ -205,6 +205,9 @@ _Figure 4.1.7.1 : Find command_
 ** e.g. `Han` will match `Hans`
 * Persons matching at least one keyword will be returned (i.e. `OR` search).
 ** e.g. `n/Hans n/Bo` will return `Hans Gruber`, `Bo Yang`
+* Find command results cannot be compounded
+** e.g. After `find n/Alex` is executed, `find n/Hans` will be executed based on the original
+unfiltered contact list and not from the filtered list of the previous `find` command.
 ****
 
 [NOTE]

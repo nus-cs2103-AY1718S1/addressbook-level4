@@ -5,6 +5,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.StringTokenizer;
@@ -214,7 +215,19 @@ public class AddTagCommandParser implements Parser<AddTagCommand> {
             throw new ParseException("Please provide an input for tag\n"
                     + String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTagCommand.MESSAGE_USAGE));
         }
-        Collections.sort(indexSet);
+
+        List<Integer> numList = new ArrayList<>();
+        Iterator<String> it = indexSet.iterator();
+        while (it.hasNext()) {
+            int numToAdd = Integer.parseInt(it.next());
+            numList.add(numToAdd);
+        }
+        Collections.sort(numList);
+        indexSet.clear();
+        for (Integer i : numList) {
+            String strToAdd = String.valueOf(i);
+            indexSet.add(strToAdd);
+        }
         indexInput = indexSet.stream().collect(Collectors.joining(", "));
         return new AddTagCommand(toAddSet, index, indexInput);
     }

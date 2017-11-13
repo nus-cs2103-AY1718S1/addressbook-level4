@@ -60,7 +60,7 @@
     <persons>
         <name>Erfan Ibrahim</name>
         <phone>92492021</phone>
-        <email>eirfan@example.com</email>
+        <email>eirfan@nus.edu.sg</email>
         <address>Blk 47 Tampines Street 20, #17-35</address>
         <favouriteStatus>false</favouriteStatus>
         <tagged>classmates</tagged>
@@ -114,7 +114,7 @@
     <persons>
         <name>Lacob Yasim</name>
         <phone>82664417</phone>
-        <email>LacobYas@example.com</email>
+        <email>LacobYas@nus.edu.sg</email>
         <address>Blk 512 Sengkang Street 81, #03-19</address>
         <favouriteStatus>false</favouriteStatus>
         <tagged>classmates</tagged>
@@ -173,6 +173,7 @@
         <address>Blk 45 Aljunied Street 85, #11-31</address>
         <favouriteStatus>false</favouriteStatus>
         <tagged>colleagues</tagged>
+        <tagged>enemy</tagged>
         <link></link>
     </persons>
     <persons>
@@ -205,7 +206,7 @@
     <persons>
         <name>Zack Jojo</name>
         <phone>82623417</phone>
-        <email>zackjojo@example.com</email>
+        <email>zackjojo@nus.edu.sg</email>
         <address>Blk 213 Sengkang Street 42, #12-82</address>
         <favouriteStatus>false</favouriteStatus>
         <tagged>classmates</tagged>
@@ -214,6 +215,7 @@
     <tags>colleagues</tags>
     <tags>classmates</tags>
     <tags>neighbours</tags>
+    <tags>enemy</tags>
     <tags>family</tags>
     <tags>friends</tags>
 </addressbook>

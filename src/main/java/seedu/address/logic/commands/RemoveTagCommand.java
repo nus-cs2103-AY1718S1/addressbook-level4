@@ -2,7 +2,8 @@ package seedu.address.logic.commands;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -30,9 +31,9 @@ public class RemoveTagCommand extends UndoableCommand {
             + "in the last person listing.\n"
             + "Remove the specified tag in the whole address book by excluding the [INDEX] parameter.\n"
             + "Parameters: INDEX... TAG...(INDEX must be positive integer)\n"
-            + "[INDEX] can be set as a range."
-            + "Example: " + COMMAND_WORD + " 1 friends"
-            + "Example: " + COMMAND_WORD + " 1-4 friends";
+            + "[INDEX] can be set as a range.\n"
+            + "Example: " + COMMAND_WORD + " 1 friends\n"
+            + "Example: " + COMMAND_WORD + " 1-4 friends\n";
 
     public static final String MESSAGE_REMOVE_SUCCESS = "Removed Tag: %1$s";
     public static final String MESSAGE_TAG_NOT_FOUND = "Tag: %1$s does not exist in";
@@ -58,6 +59,20 @@ public class RemoveTagCommand extends UndoableCommand {
         String successMessage;
         String notFound;
         Set<Tag> tagDisplaySet;
+        List<Integer> numList = new ArrayList<>();
+
+
+        Iterator<String> it = indexList.iterator();
+        while (it.hasNext()) {
+            int numToAdd = Integer.parseInt(it.next());
+            numList.add(numToAdd);
+        }
+        Collections.sort(numList);
+        indexList.clear();
+        for (Integer i : numList) {
+            String strToAdd = String.valueOf(i);
+            indexList.add(strToAdd);
+        }
 
         String indexDisplay = indexList.stream().collect(Collectors.joining(", "));
 
