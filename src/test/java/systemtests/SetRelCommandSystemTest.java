@@ -76,7 +76,7 @@ public class SetRelCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: clearing the relationship between the two persons -> relationship cleared */
         command = SetRelCommand.COMMAND_WORD + " " + indexOne.getOneBased() + " " + indexTwo.getOneBased()
-            + " " + PREFIX_CLEAR_RELATIONSHIP + VALID_REL_SIBLINGS;
+            + " " + PREFIX_CLEAR_RELATIONSHIP;
         personOne = new PersonBuilder(personInFilteredListOne).withRelation().build();
         personTwo = new PersonBuilder(personInFilteredListTwo).withRelation().build();
         assertCommandSuccess(command, indexOne, indexTwo, personOne, personTwo);
@@ -103,11 +103,15 @@ public class SetRelCommandSystemTest extends AddressBookSystemTest {
         assertCommandFailure(SetRelCommand.COMMAND_WORD + " 1 2" + REL_DESC_SIBLINGS + REL_DESC_COLLEAGUE,
             String.format(SetRelCommandParser.ONE_RELATIONSHIP_ALLOWED));
 
-        /* Case: setting another relationship to the same two persons -> rejected*/
+        /* Case: setting another relationship to the same two persons -> rejected */
         executeCommand(SetRelCommand.COMMAND_WORD + " 1 2" + REL_DESC_COLLEAGUE);
         assertCommandFailure(SetRelCommand.COMMAND_WORD + " 1 2 " + REL_DESC_COLLEAGUE,
             SetRelCommand.MESSAGE_NO_MULTIPLE_REL);
 
+        /* Case: only one index is present -> rejected */
+        executeCommand(SetRelCommand.COMMAND_WORD + " 1" + REL_DESC_SIBLINGS);
+        assertCommandFailure(SetRelCommand.COMMAND_WORD + " 1" + REL_DESC_SIBLINGS,
+            SetRelCommandParser.INVALID_INDEX);
     }
 
     /**

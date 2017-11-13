@@ -39,7 +39,7 @@ import seedu.address.model.tag.Tag;
 public class SetRelCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "set";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sets the relationship between two persons."
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sets the relationship between two persons "
         + "by the index number used in the last person listing.\n"
         + "For adding of relationship, only one relationship is allowed. This command is able to add and delete\n "
         + "specifc relationship between two persons and clear deletes all relationships the two persons have.\n"
