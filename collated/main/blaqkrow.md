@@ -1,5 +1,5 @@
 # blaqkrow
-###### /java/seedu/address/commons/events/ui/PersonPanelSelectionChangedEvent.java
+###### \java\seedu\address\commons\events\ui\PersonPanelSelectionChangedEvent.java
 ``` java
 /**
  * Represents a selection change in the Person List Panel
