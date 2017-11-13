@@ -86,7 +86,7 @@ This command allow users to redo/undo multiple commands at one go, which makes i
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=undoredo]
+include::../DeveloperGuide.adoc[tag=unredo]
 
 #End of Extract#
 
