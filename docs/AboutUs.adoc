@@ -48,7 +48,8 @@ https://github.com/CS2103AUG2017-T17-B2/main/pull/81[List By Bloodtype Command]
 ** https://github.com/CS2103AUG2017-T17-B2/main/pull/158[Consistency for Name, Address and Email]
 
 ** User Guide +
-** https://github.com/CS2103AUG2017-T17-B2/main/pull/79[Wording Changes]
+https://github.com/CS2103AUG2017-T17-B2/main/pull/79[Wording Changes] +
+https://github.com/CS2103AUG2017-T17-B2/main/pull/183[Acceptance Testing Changes] +
 (In collaboration with http://github.com/Jeremylsw[Jeremy])
 
 '''
