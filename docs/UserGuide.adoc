@@ -326,26 +326,6 @@ image::deletebytagMessage.png[width='800']
 
 // end::deletebytag[]
 
-// tag::removeTag[]
-=== Remove Tag from Person: `removeTag`
-
-Deletes tag in the address book, and remove Tag from all Residents in possession of it +
-Format: `removeTag TAG` +
-Command Alias: `rm`
-
-Examples:
-
-* `removeTag RA` will delete RA tag from ResidentBook, and remove "RA" tag from everyone.
-
-* If Alice has tags "RA" and "CollegeMaster", `removeTag RA` will remove tag from Alice, retaining her other details in the ResidentBook.
-
-The tagName specified must exist in the current ResidentBook. If it does not exist, exception will be thrown and user will be notified that not such tag exist.
-The following shows an example when invalid tag is provided.
-
-image::removeTagCommand_error.png[width='800']
-
-// end::removeTag[]
-
 === Selecting a person : `select`
 
 Selects the person identified by the index number used in the last person listing. +
@@ -466,10 +446,12 @@ Imports colleagues.xml into current resident book.
 Through the UI:
 image::ui_import.png[width="400"]
 
+// tag::removeTag[]
 === Remove all Tags with specified name : `rm` (Since v1.3)
 
 This function is useful to remove all deprecated tags. For example, when all residents have moved in, all the tags can be removed as "Pending". +
-Format: rm TAG_NAME
+Format: `removeTag TAG` +
+Command Alias: `rm`
 
 ****
 * The TAG_NAME must be present in the Resident Book.
@@ -478,11 +460,17 @@ Format: rm TAG_NAME
 Examples:
 
 * `rm pending` +
-Remove all "pending" tags from list of residents.
+* Remove all "pending" tags from list of residents.
 
-=== Facebook Search (coming in v2.0)
+* If Alice has tags "RA" and "CollegeMaster", `removeTag RA` will remove tag from Alice, retaining her other details in the ResidentBook.
 
-Query Facebook using list of emails from resident book.
+The tagName specified must exist in the current ResidentBook. If it does not exist, exception will be thrown and user will be notified that not such tag exist.
+The following shows an example when invalid tag is provided.
+
+image::removeTagCommand_error.png[width='800']
+
+// end::removeTag[]
+
 
 // tag::personPanel[]
 === Person Panel (since v1.4)
