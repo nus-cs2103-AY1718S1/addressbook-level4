@@ -46,7 +46,7 @@ public class EditEventCommand extends UndoableCommand {
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_EVENT = "This event already exists in the address book.";
     public static final String MESSAGE_EVENT_BEING_PARTICIPATED_FAIL = "Some person participates this event,"
-            + "please disjoin all participated persons before deleting this event";
+            + "please disjoin all participated persons before editing this event";
 
     private Index index;
     private EditEventDescriptor editEventDescriptor;
