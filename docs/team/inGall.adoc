@@ -96,3 +96,4 @@ include::../DeveloperGuide.adoc[tag = listReminder]
   https://github.com/CS2103AUG2017-T09-B1/main/pull/61[#61], https://github.com/CS2103AUG2017-T09-B1/main/pull/93[#93],
   https://github.com/CS2103AUG2017-T09-B1/main/pull/109[#109], https://github.com/CS2103AUG2017-T09-B1/main/pull/113[#113],
   https://github.com/CS2103AUG2017-T09-B1/main/pull/116[#116], https://github.com/CS2103AUG2017-T09-B1/main/pull/121[#121] )
+  
