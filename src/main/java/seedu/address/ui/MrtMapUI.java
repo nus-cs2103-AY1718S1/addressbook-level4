@@ -10,8 +10,8 @@ import java.util.HashMap;
 
 public class MrtMapUI {
     //radius of circle use to visualise mrt stations in the graph
-    private int DEFAULT_CIRCLE_RADIUS = 5;
-    private int MAX_CIRCLE_RADIUS = 20;
+    private int DEFAULT_CIRCLE_RADIUS = 3;
+    private int MAX_CIRCLE_RADIUS = 30;
 
     HashMap<String, Point> mrtToPoint = new HashMap<String, Point>();
 
@@ -186,42 +186,69 @@ public class MrtMapUI {
         }
     }
 
-    private void displayConvenientPoints(int[] mrtIndexes, int numDisplayStation) {
+    /**
+     *
+     * @param meetStation is the mrt station where the people meet
+     * @param mrtStations are the list of mrtStations where the people meet
+     */
+    public void displayUserInfo(String meetStation, ArrayList<String> mrtStations) {
+        visualiseStations(mrtStations);
 
-        for(int i = 0; i < numDisplayStation && i < mrtIndexes.length; i++) {
-            int currMrtIndex = mrtIndexes[i];
-            String currMrtName = mrtStationNames.get(currMrtIndex);
-            int circleDifference = (MAX_CIRCLE_RADIUS - DEFAULT_CIRCLE_RADIUS)/numDisplayStation;
-            int circleRadius = MAX_CIRCLE_RADIUS - i * circleDifference;
-            displayMrtPoint(currMrtIndex, circleRadius);
+        displayMrtPoint(meetStation, MAX_CIRCLE_RADIUS);
+        displayMrtName(meetStation, MAX_CIRCLE_RADIUS);
+    }
+
+    private void visualiseStations(ArrayList<String> mrtStations){
+        HashMap<String, Integer> mrtStationCount = new HashMap<String, Integer>();
+        for(int i = 0; i < mrtStations.size(); i++){
+            String currStationName = mrtStations.get(i);
+            boolean isExist = mrtStationCount.containsKey(currStationName);
+            int mrtCount = 0;
+            if(isExist){
+                mrtCount = mrtStationCount.get(currStationName);
+                mrtCount++;
+                mrtStationCount.put(currStationName, mrtCount);
+            }else{
+                mrtStationCount.put(currStationName, 1);
+                mrtCount++;
+            }
+            int circleRadius = DEFAULT_CIRCLE_RADIUS + mrtCount*DEFAULT_CIRCLE_RADIUS;
+            if(circleRadius > MAX_CIRCLE_RADIUS){
+                circleRadius = MAX_CIRCLE_RADIUS;
+            }
+            displayMrtPoint(currStationName, circleRadius);
         }
     }
 
-    /**
-     * All the data (mrtStationsNames, mrtNameToIndex, mrtStationShortNames, mrtStationLine,
-     * mrtStation number) must be initialise before calling this method. This is resolve
-     * by the only constructor of this class which call the initializer method. That is,
-     * before this class could be called, the data are already initialiszed by the constructor
-     * method.
-     * @param mrtNames is the list of mrt stations sorted with the most convenient at the front.
-     * @param numDisplayStation is the number of mrt stations to highlight
-     */
-    public void displayConvenientPoints(ArrayList<String> mrtNames, int numDisplayStation){
-        int[] mrtIndexes = new int[mrtNames.size()];
-        for(int i = 0; i < mrtNames.size(); i++){
-            String mrtName = mrtNames.get(i);
-            int mrtIndex = mrtNameToIndex.get(mrtName);
-            mrtIndexes[i] = mrtIndex;
-        }
-        displayConvenientPoints(mrtIndexes, numDisplayStation);
+    private void displayMrtPoint(String mrtStationName, int circleRadius){
+        int mrtIndex = mrtNameToIndex.get(mrtStationName);
+        displayMrtPoint(mrtIndex, circleRadius);
+    }
+
+    private void displayMrtName(String mrtStationName, int circleRadius){
+        int mrtIndex = mrtNameToIndex.get(mrtStationName);
+        displayMrtName(mrtIndex, circleRadius);
+    }
+
+    private void displayMrtName(int mrtIndex, int circleRadius){
+        Point point = getMrtStationCanvassCoordinate(mrtIndex);
+        //display the name right above the circle
+        StdDraw.text(point.getX(), point.getY() + circleRadius, mrtStationNames.get(mrtIndex));
     }
 
     private void displayMrtPoint(int mrtIndex, int circleRadius){
         Point point = getMrtStationCanvassCoordinate(mrtIndex);
-        StdDraw.filledCircle(point.getX(), point.getY(), circleRadius);
+        int numInterchange = mrtLineNames.get(mrtIndex).size();
+        for(int i = 0; i < numInterchange; i++) {
+            Color stationColor = getStationColor(mrtLineNames.get(mrtIndex).get(i));
+            StdDraw.setPenColor(stationColor);
+            int currCircleRadius = circleRadius - (circleRadius/numInterchange)*i;
+            StdDraw.filledCircle(point.getX(), point.getY(), currCircleRadius);
+        }
+
+        //a black outline for visibility purposes;
         StdDraw.setPenColor(Color.BLACK);
-        //write the text right about the circle
-        StdDraw.text(point.getX(), point.getY() + circleRadius, mrtStationNames.get(mrtIndex));
+        StdDraw.circle(point.getX(), point.getY(), circleRadius);
     }
 
     private boolean isNeighbour(int mrtIndexOne, int mrtIndexTwo) {
@@ -312,7 +339,7 @@ public class MrtMapUI {
 
         }else {
             //if reach here, the station lineName is wrong;
-            return null;
+            return Color.BLACK;
         }
     }
 
@@ -335,11 +362,4 @@ public class MrtMapUI {
         }
     }
 
-    public static void main (String[] args) {
-        MrtMapUI mrtUI = new MrtMapUI();
-        ArrayList<String> convenientMrts = new ArrayList<String>();
-        convenientMrts.add("Jurong East");
-        convenientMrts.add("Dhoby Ghaut");
-        mrtUI.displayConvenientPoints(convenientMrts, 2);
-    }
 }
