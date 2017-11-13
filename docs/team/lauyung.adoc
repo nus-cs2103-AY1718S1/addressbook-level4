@@ -4,9 +4,9 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :stylesDir: ../stylesheets
 
 == Project: TouristBook
-AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+TouristBook is an addressbook application designed for tour guides. With the newly added expiry date feature, it will be easier for them to manage their large number contacts.
 
-*Code contributed*: [https://github.com/CS2103AUG2017-T12-B4/main/blob/master/collated/main/lauy99.md[Functional Code] [https://github.com/CS2103AUG2017-T12-B4/main/blob/master/collated/test/lauy99.md[Test Code]]
+*Code contributed*: [https://github.com/CS2103AUG2017-T12-B4/main/blob/master/collated/main/lauy99.md[Functional Code]][https://github.com/CS2103AUG2017-T12-B4/main/blob/master/collated/test/lauy99.md[Test Code]]
 
 === Enhancement Added: Expiry Date
 
