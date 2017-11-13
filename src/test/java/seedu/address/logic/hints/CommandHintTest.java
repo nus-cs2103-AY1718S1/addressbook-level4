@@ -24,6 +24,13 @@ public class CommandHintTest {
                 "adds a person",
                 "add ");
 
+        commandHint = new CommandHint(" ad ", "ad");
+        parseAndAssertHint(
+                commandHint,
+                "d ",
+                "adds a person",
+                "add ");
+
         commandHint = new CommandHint("find", "find");
         parseAndAssertHint(
                 commandHint,

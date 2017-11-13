@@ -36,7 +36,7 @@ public class CommandHint extends Hint {
 
     @Override
     public String autocomplete() {
-        return userInput + argumentHint;
+        return userInput.trim() + argumentHint;
     }
 
     @Override

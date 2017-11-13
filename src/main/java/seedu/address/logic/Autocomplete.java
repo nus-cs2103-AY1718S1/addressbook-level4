@@ -54,7 +54,7 @@ public class Autocomplete {
     }
 
     /**
-     * Parses {@code String input} and returnsthe closest matching string in {@code String[] strings},
+     * Parses {@code String input} and returns the closest matching string in {@code String[] strings},
      * or null if nothing matches.
      */
     public static String autocompleteFromList(String input, String[] strings) {
