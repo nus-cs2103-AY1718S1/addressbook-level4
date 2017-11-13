@@ -613,6 +613,8 @@ If arguments given do not comply with the correct format, ParseException will be
 
 The import function supports importing of vCard files (.vcf) and xml files (.xml).
 
+The diagram below details the sequence of how Rubrika handles the import command.
+
 [NOTE]
 The import function merges the contacts in the export files with the ones currently in the addressbook. If duplicate persons are found, Rubrika will inform the user of the number of duplicated contacts found.
 
