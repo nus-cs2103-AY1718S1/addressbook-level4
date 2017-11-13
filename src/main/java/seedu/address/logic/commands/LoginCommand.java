@@ -18,7 +18,7 @@ public class LoginCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + " USERNAME PASSWORD\nExample: "
             + COMMAND_WORD + " JohnDoe hiIAmJohnDoe123";
     public static final String MESSAGE_LOGIN_ACKNOWLEDGEMENT = "Login successful";
-    public static final String MESSAGE_LOGIN_UNSUCCESSFUL = "Unable to log into Address Book";
+    public static final String MESSAGE_LOGIN_UNSUCCESSFUL = "Unable to log into Codii";
     private static boolean isLoggedIn = false;
     private final Username username;
     private final Password password;
