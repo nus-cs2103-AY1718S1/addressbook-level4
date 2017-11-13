@@ -862,7 +862,7 @@ my own copy of Ark. How can I do this? +
  of your Ark application. Then launch the Ark application and import your the copied save file into Ark.
  Please refer to the link:#import[Import Command section] if you are unfamiliar with using the import command.
 
-
+//tag::commandSummary[]
 == Command Summary
 |===
 | *Command* | *Description* | *Compulsory fields* | *Optional fields* | *Example usage*
@@ -895,6 +895,7 @@ my own copy of Ark. How can I do this? +
 | *Redo* | Redoes the latest undone command in Ark | | | `Redo`
 | *Import* | Imports one or more parcels from an xml file  | `FILE_NAME` | | `import ark_save`
 |===
+//end::commandSummary[]
 == Patch Notes
 
 === Features added in v1.0
