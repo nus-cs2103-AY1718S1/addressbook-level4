@@ -5,7 +5,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.PriorityQueue;
 
-//@@author Yew Onn
+//@@author YewOnn
 /**
  * The java class that computes the list of mrt stations that reduces the total travelling
  * time. The timing is base on actual mrt data.
