@@ -3,10 +3,19 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
-== Project: Blast!
-Blast! is a desktop address book application developed with tutors and sales persons in mind The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and more than 6 kLoC.
+=== Purpose
 
+This Project Portfolio page is created to showcase my experiences in Software Engineering to potential employers, academic programs and other interested people my experiences in Software Engineering I acquired thus far.
+If you are keen on contacting me further for possible collaborations, please email me at stephenksl[at]gmail[dot]com.
+
+== Project: Blast!
 *Code contributed*: [https://github.com/KhorSL/main[Functional code]] [https://github.com/KhorSL/main[Test code]]
+
+=== Software Overview
+
+Blast! is a desktop address book application developed with tutors and sales persons in mind. It is written in Java, and more than 6 kLoC.
+Command Line Interface (CLI) is the primary mean of interaction between the user and Blast!.
+The application has a Graphical User Interface (GUI) component created with JavaFX. The GUI will provide the user, visual feedback to commands that are performed.
 
 === Enhancement Added: Add multiple persons from `.txt` file
 
@@ -94,6 +103,12 @@ include::../DeveloperGuide.adoc[tag=merge]
 Main tutors with many assistant tutors is able to merge the different address book of my assistant tutors
 so as to have all the student contacts.
 
+=== Other contributions
+
+. Done acceptance testing for other team (T14-B3)
+
 == Project: GoPost!
 
 GoPost! is an exciting platform that provide users a one-stop portal for all events needs. The web application offers a spectrum of features and utility. Users will be able to create events, create a registration forms, manage their events schedules, and many more.
+
+image::gopost.png[width="450", align="left"]
