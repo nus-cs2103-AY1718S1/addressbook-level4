@@ -74,7 +74,6 @@ public class TagAddCommandTest {
                 "[" + VALID_TAG_HUSBAND + "]"));
     }
 
-
     @Test
     public void executeInvalidPersonIndexUnfilteredListFailure() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
@@ -143,7 +142,6 @@ public class TagAddCommandTest {
 
         // different descriptor -> returns false
         assertFalse(copyDescriptor.equals(copyDescriptor1));
-
     }
 
     @Test
@@ -172,6 +170,11 @@ public class TagAddCommandTest {
         assertTrue(tagAddDescriptor.getTags().equals(toCopy.getTags()));
     }
 
+    /**
+     * Creates string for edited tag list.
+     * @param editedPerson edited person to show tag list
+     * Returns formatted string to indicate edited tag list.
+     */
     public String createTagListDisplay(Person editedPerson) {
         int tagListStringStartIndex = 1;
         int tagListStringEndIndex;
