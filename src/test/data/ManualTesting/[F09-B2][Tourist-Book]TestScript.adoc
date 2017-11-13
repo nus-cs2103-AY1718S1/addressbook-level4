@@ -222,16 +222,11 @@ Format: `bookmark INDEX`
 Successfully bookmarked the first place in the list.
 
 . `list` +
-`bookmark 1`
-
-** *Expected output* +
-Error message "**Place already has that tag.**"
-
-. `list` +
+`bookmark 5` +
 `bookmark 5`
 
 ** *Expected output* +
-Successfully bookmarked the first place in the list.
+Error message "**Place already has that tag.**"
 
 [discrete]
 === Negative Test Cases
