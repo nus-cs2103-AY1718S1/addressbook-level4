@@ -29,7 +29,7 @@ deliveries. This test script is used help testers perform manual testing of Ark.
 
 === Startup Tests
 
-We have implemented some features that triggered automatically on startup. + 
+We have implemented some features that triggered automatically on startup. +
 
 ==== Manual Testing
 
