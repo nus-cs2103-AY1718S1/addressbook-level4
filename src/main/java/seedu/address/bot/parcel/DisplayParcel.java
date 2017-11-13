@@ -1,3 +1,4 @@
+//@@author fustilio
 package seedu.address.bot.parcel;
 
 import seedu.address.model.parcel.Address;
@@ -5,7 +6,7 @@ import seedu.address.model.parcel.Name;
 import seedu.address.model.parcel.Phone;
 
 /**
- * Created by Francis on 31/10/2017.
+ * Formats a parcel to be displayed on telegram.
  */
 public class DisplayParcel {
 
@@ -26,3 +27,4 @@ public class DisplayParcel {
                 + "\nPhone: " + this.phone.toString();
     }
 }
+//@@author

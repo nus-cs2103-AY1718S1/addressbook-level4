@@ -10,6 +10,7 @@ import org.telegram.telegrambots.TelegramBotsApi;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 import org.telegram.telegrambots.generics.BotSession;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.application.Application;
@@ -85,6 +86,7 @@ public class MainApp extends Application {
 
         initEventsCenter();
 
+        //@@author fustilio
         // Instantiate bot here
         if (!botStarted) {
 
@@ -94,6 +96,7 @@ public class MainApp extends Application {
             try {
                 bot = new ArkBot(logic, model,
                         config.getBotToken(), config.getBotUsername());
+                logger.info("Bot Authentication Token: " + config.getBotToken());
                 botSession = botsApi.registerBot(bot);
                 botStarted = true;
             } catch (TelegramApiException e) {
@@ -101,6 +104,7 @@ public class MainApp extends Application {
                         + "you have keyed in the token correctly and restart the application.");
             }
         }
+        //@@author
     }
 
     private String getApplicationParameter(String parameterName) {
@@ -246,24 +250,22 @@ public class MainApp extends Application {
         launch(args);
     }
 
+    //@@author fustilio
     /**
      * Method to return instance of logic manager for testing.
      */
+    @VisibleForTesting
     public Logic getLogic() {
         return this.logic;
     }
 
-    /**
-     * Method to return instance of bot for testing.
-     */
-    public ArkBot getBot() {
-        return this.bot;
-    }
 
     /**
      * Method to return instance of bot for testing.
      */
-    public boolean getBotHasStarted() {
-        return botStarted;
+    @VisibleForTesting
+    public ArkBot getBot() {
+        return this.bot;
     }
+    //@@author
 }

@@ -1,3 +1,4 @@
+//@@author fustilio
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
@@ -17,6 +18,9 @@ import seedu.address.model.tag.Tag;
  * same path through the DeleteTagCommand, and therefore we test only one of them.
  * The path variation for those two cases occur inside the ParserUtil, and
  * therefore should be covered by the ParserUtilTest.
+ *
+ * Deprecated in Ark v1.5
+ * See {@link DeleteTagCommand}
  */
 public class DeleteTagCommandParserTest {
 
