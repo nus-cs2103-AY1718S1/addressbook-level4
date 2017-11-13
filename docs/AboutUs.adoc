@@ -4,7 +4,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: images
 :stylesDir: stylesheets
 
-Rolodex was developed by the https://github.com/orgs/CS2103AUG2017-W11-B2/people[Rolodex] team and
+Rolodex was developed by the https://github.com/orgs/CS2103AUG2017-W11-B2/people[Rolodex] team (CS2103 W11-B2) and
 is an extension of the AddressBook - Level 4 developed by the https://se-edu.github.io/docs/Team.html[se-edu] team. +
 {empty} +
 We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].

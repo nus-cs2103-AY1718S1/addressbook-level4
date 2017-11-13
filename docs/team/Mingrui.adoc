@@ -3,56 +3,97 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
+ifdef::env-github[]
+https://cs2103aug2017-w11-b2.github.io/main/team/Mingrui.html[Please click here to view portfolio.]
+endif::[]
+
+ifndef::env-github[]
 == Project: Rolodex
 include::../../README.adoc[tag=applicationDescription]
 
-*Code contributed*: [https://github.com/CS2103AUG2017-W11-B2/main/blob/master/collated/main/mingruiii.md[Functional code]] [https://github.com/CS2103AUG2017-W11-B2/main/blob/master/collated/test/jo-lyn.md[Test code]]
+*Code contributed*: [https://github.com/CS2103AUG2017-W11-B2/main/blob/master/collated/main/mingruiii.md[Functional code]] [https://github.com/CS2103AUG2017-W11-B2/main/blob/master/collated/test/mingruiii.md[Test code]] [https://github.com/CS2103AUG2017-W11-B2/main/blob/master/collated/unused/mingruiii.md[Unused code]]
+
+=== Enhancement Added: Drop-down List
+
+==== External behavior
+
+include::../UserGuide.adoc[leveloffset=2,tag=dropdownlist]
+
+==== Justification
+It will be difficult for the user to memorise all the commands. The drop-down list suggests possible commands as he/she types,
+making keying in commands much easier.
+
+Users can also make use of the drop-down list to type commands faster. They can directly select the correct suggestion without having to
+manually type out the command word in full.
+
+==== Implementation
+
+include::../DeveloperGuide.adoc[leveloffset=2,tag=dropdownlist]
 
 === Enhancement Added: Auto-completion
 
 ==== External behavior
 
----
-
 include::../UserGuide.adoc[leveloffset=2,tag=autocomplete]
-
----
-
 
 ==== Justification
 
-It is difficult for the user to remember all the fields and the corresponding prefixes. Auto-completion ensures that the user will know exactly what is required.
-Auto-selection of the placeholder will improve user experience by a lot, because the user can directly type in information without having to manually place the cursor.
+It will be difficult for the user to remember all the fields and the corresponding prefixes. Auto-completion ensures that the user will know exactly what is required.
+Auto-selection of the placeholder improves the user experience, because the user can directly type in information without having to manually place the cursor.
 
 ==== Implementation
 
 include::../DeveloperGuide.adoc[leveloffset=2,tag=auto-completion]
 
-=== Enhancement Added: Opening email composer
+=== Enhancement Added: Opening Email Composer
 
 ==== External behavior
 
----
-
 include::../UserGuide.adoc[leveloffset=2,tag=email]
-
----
 
 ==== Justification
 
 This feature makes emailing a contact much easier. The user no longer has to go through the tedious process of copying the contact's email address, opening the email application
 or website and pasting the email address there. All these can be done with a short and simple command within two seconds.
 
-=== Enhancement Proposed: Integration of social media
+==== Implementation
+
+include::../DeveloperGuide.adoc[leveloffset=2,tag=email]
+
+=== Enhancement Added: Keyboard Shortcuts for Commands with Auto-complete Function
+
+==== External behavior
+
+include::../UserGuide.adoc[leveloffset=2,tag=auto-complete-shortcut]
+
+==== Justification
+
+The above shortcuts provide a faster way of using the command-line interface.
+Users can simply activate auto-completion with a key press without the need to type in the command word and press kbd:[Tab] to activate auto-completion.
+
+==== Implementation
+
+include::../DeveloperGuide.adoc[leveloffset=2,tag=auto-complete-shortcut]
+
+=== Enhancement Proposed: Integration of Social Media
 
 Link Rolodex with the user's Facebook account and automatically match contacts in Rolodex to the user's Facebook friends, so that the user can view their friends' social media updates in Rolodex.
 
+=== Enhancement Proposed: Prompt the User for Confirmation before Execution of Dangerous Commands
+
+Before executing commands `clear` and `exit`, ask the user "Are you sure you want to...?". Continue with the execution if the user responds "yes", stop the execution otherwise.
+
+These two commands are considered dangerous because the entire contact list can be cleared or the current Rolodex can be closed. The confirmation can make sure that they are not executed by accident.
+
+An implementation of confirmation dialog box can be found https://github.com/CS2103AUG2017-W11-B2/main/pull/114[here]. It is not used in the current version of Rolodex due to project requirement.
+Command line confirmation (the user types "yes" in the command box) is a more recommended implementation that integrates well with the command-lind interface.
+
+
 === Other contributions
 
-* Updated the General Documentation (Pull requests https://github.com/CS2103AUG2017-W11-B2/main/pull/7[#7] https://github.com/CS2103AUG2017-W11-B2/main/pull/22[#22])
-* Added abbreviations for commands (Pull requests https://github.com/CS2103AUG2017-W11-B2/main/pull/10[#10])
-* Added hotkeys for auto-completion commands (Pull requests https://github.com/CS2103AUG2017-W11-B2/main/pull/87[#87])
-* Added confirmation dialog for delete, clear and exit commands (Pull requests https://github.com/CS2103AUG2017-W11-B2/main/pull/114[#114])
+* Added abbreviations for commands (Pull request https://github.com/CS2103AUG2017-W11-B2/main/pull/10[#10])
+* Updated the General Documentation (Pull requests https://github.com/CS2103AUG2017-W11-B2/main/pull/7[#7] https://github.com/CS2103AUG2017-W11-B2/main/pull/22[#22] https://github.com/CS2103AUG2017-W11-B2/main/pull/128[#128] https://github.com/CS2103AUG2017-W11-B2/main/pull/150[#150])
+* (Unused) Added confirmation dialog for delete, clear and exit commands (Pull request https://github.com/CS2103AUG2017-W11-B2/main/pull/114[#114])
 
 endif::[]
 ifndef::env-github[]
