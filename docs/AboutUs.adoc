@@ -1,54 +1,53 @@
 = About Us
-:relfileprefix: team/
+:relfileprefix: team\
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: images
 :stylesDir: stylesheets
 
-AddressBook - Level 4 was developed by the https://se-edu.github.io/docs/Team.html[se-edu] team. +
-The dummy content given below serves as a placeholder to be used by future forks of the project. +
+Planno was developed by the https://github.com/CS2103AUG2017-W14-B4/main[W14-B4] team. +
 {empty} +
 We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
 
 == Project Team
 
-=== John Doe
-image::damithc.jpg[width="150", align="left"]
-{empty}[http://www.comp.nus.edu.sg/~damithch[homepage]] [https://github.com/damithc[github]] [<<johndoe#, portfolio>>]
+=== Alvin Loh
+image::alvin.png[width="150", align="left"]
+{empty}[https://github.com/alvinlyj[github]]
 
 Role: Project Advisor
 
 '''
 
-=== John Roe
-image::lejolly.jpg[width="150", align="left"]
-{empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
+=== Leon Chow WenHao
+image::leonchowwenhao.png[width="150", align="left"]
+{empty}[https://github.com/LeonChowWenHao[github]] [<<leonchowwenhao#, portfolio>>]
 
 Role: Team Lead +
-Responsibilities: UI
+Responsibilities: Storage
 
 '''
 
-=== Johnny Doe
-image::yijinl.jpg[width="150", align="left"]
-{empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
+=== Hu Wanqing
+image::celiahuuuu.png[width="150", align="left"]
+{empty}[http://github.com/celiahuuuu[github]] [<<huwanqing#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Data
+Responsibilities: Model
 
 '''
 
-=== Johnny Roe
-image::m133225.jpg[width="150", align="left"]
-{empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]
+=== Jiang Chunhui
+image::adoby7.png[width="150", align="left"]
+{empty}[https://github.com/Adoby7[github]] [<<jiangchunhui#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Dev Ops + Threading
+Responsibilities: Logic
 
 '''
 
-=== Benson Meier
-image::yl_coder.jpg[width="150", align="left"]
-{empty}[http://github.com/yl-coder[github]] [<<johndoe#, portfolio>>]
+=== Hou Denghao
+image::houdenghao.png[width="150", align="left"]
+{empty}[http://github.com/HouDenghao[github]] [<<houdenghao#, portfolio>>]
 
 Role: Developer +
 Responsibilities: UI

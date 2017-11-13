@@ -41,12 +41,10 @@ public class MainWindow extends UiPart<Region> {
 
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
+    private EventListPanel eventListPanel;
     private PersonListPanel personListPanel;
     private Config config;
     private UserPrefs prefs;
-
-    @FXML
-    private StackPane browserPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -59,6 +57,9 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private StackPane resultDisplayPlaceholder;
+
+    @FXML
+    private StackPane togglePlaceHolder;
 
     @FXML
     private StackPane statusbarPlaceholder;
@@ -126,12 +127,24 @@ public class MainWindow extends UiPart<Region> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
+        //@@ leonchowwenhao
         browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
+        // @@author HouDenghao
+        InformationBoard informationBoard = new InformationBoard();
+
+        // @@author
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
+        // @@author HouDenghao
+        eventListPanel = new EventListPanel(logic.getFilteredEventList());
+
+        //@@author LeonChowWenHao
+        TogglePanel togglePanel = new TogglePanel(browserPanel, informationBoard, eventListPanel);
+        togglePlaceHolder.getChildren().add(togglePanel.getRoot());
+
+        // @@author
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
@@ -196,6 +209,10 @@ public class MainWindow extends UiPart<Region> {
         primaryStage.show();
     }
 
+    private void releaseResources() {
+        browserPanel.freeResources();
+    }
+
     /**
      * Closes the application.
      */
@@ -206,10 +223,6 @@ public class MainWindow extends UiPart<Region> {
 
     public PersonListPanel getPersonListPanel() {
         return this.personListPanel;
-    }
-
-    void releaseResources() {
-        browserPanel.freeResources();
     }
 
     @Subscribe

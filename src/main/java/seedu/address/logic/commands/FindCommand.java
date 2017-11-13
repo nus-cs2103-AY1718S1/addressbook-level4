@@ -1,10 +1,13 @@
 package seedu.address.logic.commands;
 
+import java.util.List;
+
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 
 /**
  * Finds and lists all persons in address book whose name contains any of the argument keywords.
- * Keyword matching is case sensitive.
+ * Keyword matching is not case sensitive.
  */
 public class FindCommand extends Command {
 
@@ -20,13 +23,24 @@ public class FindCommand extends Command {
     public FindCommand(NameContainsKeywordsPredicate predicate) {
         this.predicate = predicate;
     }
-
+    // @@author HuWanqing
     @Override
-    public CommandResult execute() {
+    public CommandResult execute() throws CommandException {
         model.updateFilteredPersonList(predicate);
+        List<String> tags = predicate.getSelectedTags();
+        if (tags != null) {
+            if (tags.size() != 0) {
+                String selectedTags = " Selected tags:";
+                for (String eachTag: tags) {
+                    selectedTags += " " + eachTag;
+                }
+                return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size())
+                        + selectedTags);
+            }
+        }
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
     }
-
+    // @@author
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

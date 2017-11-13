@@ -1,0 +1,123 @@
+= Hu Wanqing - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: Planno
+Planno is a desktop address book application used for managing events and persons. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-W14-B4/main/blob/master/collated/main/HuWanqing.md[Functional code]][https://github.com/CS2103AUG2017-W14-B4/main/blob/master/collated/test/HuWanqing.md[Test code]]
+
+=== Enhancement Added: find
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=find]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+For users who need to frequently locate their contacts, it would be much faster with a find command. The command can find contacts by both person names and tags. In particular, find tag can find a group of contacts with the particular tag. Such
+find procedure is fast and can produce results more efficiently.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=find]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: join
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=join]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+For a event, users can join its participants to the event in Planno. In this way, the user can quickly obtain information of the participants in the future.
+The feature will be extremely helpful if the event involve a large number of people. The user only need to join them in the beginning, and can quickly pull out information, such as emails, phone numbers in the future.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide] written by Adoby7#
+
+include::../DeveloperGuide.adoc[tag=join]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: new component EventLists in Model
+
+==== Justification
+In our model, we added Event class, which is the core feature in our application. Each event object have
+a name, description, date and a participant list.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=model]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: addE
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=addE]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+For the event list, the basic operations: adding, deleting, listing and editing is necessary. Each of the team member did one part of the four operations above.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide] written by Adoby7#
+
+include::../DeveloperGuide.adoc[tag=addE]
+
+#End of Extract#
+
+---
+
+=== Other contributions
+
+* Code refinement in Model and Logic component.
+* Suggestion report to other teams in acceptance testing. +
+    (issue: [https://github.com/CS2103AUG2017-T15-B3/main/issues/121[#121]])
+* Optimization in UI segment. +
+    (pull requests: [https://github.com/CS2103AUG2017-W14-B4/main/pull/127[#127]] [https://github.com/CS2103AUG2017-W14-B4/main/pull/88[#88]])
+* Wrote tests for Model component. +
+    (pull request: [https://github.com/CS2103AUG2017-W14-B4/main/pull/126[#126]])
+

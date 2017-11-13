@@ -1,10 +1,14 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.commons.core.Messages.MESSAGE_REDO_ASSERTION_ERROR;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+
 import java.util.List;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.exceptions.DeleteOnCascadeException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
@@ -21,8 +25,11 @@ public class DeleteCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
+    public static final String MESSAGE_PERSON_PARTICIPATE_EVENT_FAIL = "This person has participated some events,"
+            + "please disjoin all events before deleting this person";
 
     private final Index targetIndex;
+    private ReadOnlyPerson personToDelete;
 
     public DeleteCommand(Index targetIndex) {
         this.targetIndex = targetIndex;
@@ -38,12 +45,14 @@ public class DeleteCommand extends UndoableCommand {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        ReadOnlyPerson personToDelete = lastShownList.get(targetIndex.getZeroBased());
+        personToDelete = lastShownList.get(targetIndex.getZeroBased());
 
         try {
             model.deletePerson(personToDelete);
         } catch (PersonNotFoundException pnfe) {
             assert false : "The target person cannot be missing";
+        } catch (DeleteOnCascadeException doce) {
+            throw new CommandException(MESSAGE_PERSON_PARTICIPATE_EVENT_FAIL);
         }
 
         return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete));
@@ -55,4 +64,22 @@ public class DeleteCommand extends UndoableCommand {
                 || (other instanceof DeleteCommand // instanceof handles nulls
                 && this.targetIndex.equals(((DeleteCommand) other).targetIndex)); // state check
     }
+
+    //@@author Adoby7
+    @Override
+    protected void undo() {
+        requireAllNonNull(model, personToDelete);
+        model.addPerson(targetIndex.getZeroBased(), personToDelete);
+    }
+
+    @Override
+    protected void redo() {
+        requireAllNonNull(model, personToDelete);
+        try {
+            model.deletePerson(personToDelete);
+        } catch (PersonNotFoundException |  DeleteOnCascadeException e) {
+            throw new AssertionError(MESSAGE_REDO_ASSERTION_ERROR);
+        }
+    }
+
 }

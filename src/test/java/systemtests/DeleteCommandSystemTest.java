@@ -17,6 +17,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.exceptions.DeleteOnCascadeException;
 import seedu.address.model.Model;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -121,6 +122,8 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         try {
             model.deletePerson(targetPerson);
         } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("targetPerson is retrieved from model.");
+        } catch (DeleteOnCascadeException doce) {
             throw new AssertionError("targetPerson is retrieved from model.");
         }
         return targetPerson;

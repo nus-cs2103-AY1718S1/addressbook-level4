@@ -7,17 +7,31 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AddEventCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.DeleteEventCommand;
+import seedu.address.logic.commands.DisjoinCommand;
+import seedu.address.logic.commands.DisplayCommand;
 import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.EditEventCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.FindEventCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
+import seedu.address.logic.commands.JoinCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.ListEventCommand;
+import seedu.address.logic.commands.PortraitCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.SelectJoinedEventsCommand;
+import seedu.address.logic.commands.ShowParticipantsCommand;
+import seedu.address.logic.commands.SortCommand;
+import seedu.address.logic.commands.SortEventCommand;
+import seedu.address.logic.commands.ToggleCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -51,14 +65,51 @@ public class AddressBookParser {
         case AddCommand.COMMAND_WORD:
             return new AddCommandParser().parse(arguments);
 
+        case AddEventCommand.COMMAND_WORD:
+            return new AddEventCommandParser().parse(arguments);
+
         case EditCommand.COMMAND_WORD:
             return new EditCommandParser().parse(arguments);
 
+        //@@author Adoby7
+        case EditEventCommand.COMMAND_WORD:
+            return new EditEventCommandParser().parse(arguments);
+
+        // @@author HouDenghao
+        case ShowParticipantsCommand.COMMAND_WORD:
+            return new ShowParticipantsCommandParser().parse(arguments);
+
+        // @@author
         case SelectCommand.COMMAND_WORD:
             return new SelectCommandParser().parse(arguments);
 
+        //@@author LeonChowWenHao
+        case SelectJoinedEventsCommand.COMMAND_WORD:
+            return new SelectJoinedEventsCommandParser().parse(arguments);
+
+        //@@author
         case DeleteCommand.COMMAND_WORD:
             return new DeleteCommandParser().parse(arguments);
+
+        //@@author LeonChowWenHao
+        case DeleteEventCommand.COMMAND_WORD:
+            return new DeleteEventCommandParser().parse(arguments);
+
+        //@@author Adoby7
+        case DisjoinCommand.COMMAND_WORD:
+            return new DisjoinCommandParser().parse(arguments);
+
+        //@@author HuWanqing
+        case JoinCommand.COMMAND_WORD:
+            return new JoinCommandParser().parse(arguments);
+
+        //@@author
+        case DisplayCommand.COMMAND_WORD:
+            return new DisplayCommandParser().parse(arguments);
+
+        //@@author Adoby7
+        case PortraitCommand.COMMAND_WORD:
+            return new PortraitCommandParser().parse(arguments);
 
         case ClearCommand.COMMAND_WORD:
             return new ClearCommand();
@@ -66,9 +117,29 @@ public class AddressBookParser {
         case FindCommand.COMMAND_WORD:
             return new FindCommandParser().parse(arguments);
 
+        // @@author HouDenghao
+        case FindEventCommand.COMMAND_WORD:
+            return new FindEventCommandParser().parse(arguments);
+
+        // @@author
         case ListCommand.COMMAND_WORD:
             return new ListCommand();
 
+        // @@author HouDenghao
+        case ListEventCommand.COMMAND_WORD:
+            return new ListEventCommand();
+
+        case SortCommand.COMMAND_WORD:
+            return new SortCommand();
+
+        case SortEventCommand.COMMAND_WORD:
+            return new SortEventCommand();
+
+        // @@author LeonChowWenhao
+        case ToggleCommand.COMMAND_WORD:
+            return new ToggleCommand();
+
+        //@@ author
         case HistoryCommand.COMMAND_WORD:
             return new HistoryCommand();
 

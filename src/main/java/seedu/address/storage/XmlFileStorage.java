@@ -15,7 +15,7 @@ public class XmlFileStorage {
     /**
      * Saves the given addressbook data to the specified file.
      */
-    public static void saveDataToFile(File file, XmlSerializableAddressBook addressBook)
+    public static void saveDataToFileAddressBook(File file, XmlSerializableAddressBook addressBook)
             throws FileNotFoundException {
         try {
             XmlUtil.saveDataToFile(file, addressBook);
@@ -27,7 +27,7 @@ public class XmlFileStorage {
     /**
      * Returns address book in the file or an empty address book
      */
-    public static XmlSerializableAddressBook loadDataFromSaveFile(File file) throws DataConversionException,
+    public static XmlSerializableAddressBook loadDataFromSaveFileAddressBook(File file) throws DataConversionException,
                                                                             FileNotFoundException {
         try {
             return XmlUtil.getDataFromFile(file, XmlSerializableAddressBook.class);
@@ -36,4 +36,27 @@ public class XmlFileStorage {
         }
     }
 
+    /**
+     * Saves the given eventstorage data to the specified file.
+     */
+    public static void saveDataToFileEventStorage(File file, XmlSerializableEventStorage eventStorage)
+            throws FileNotFoundException {
+        try {
+            XmlUtil.saveDataToFile(file, eventStorage);
+        } catch (JAXBException e) {
+            assert false : "Unexpected exception " + e.getMessage();
+        }
+    }
+
+    /**
+     * Returns event storage in the file or an empty event storage
+     */
+    public static XmlSerializableEventStorage loadDataFromSaveFileEventStorage(File file)
+            throws DataConversionException, FileNotFoundException {
+        try {
+            return XmlUtil.getDataFromFile(file, XmlSerializableEventStorage.class);
+        } catch (JAXBException e) {
+            throw new DataConversionException(e);
+        }
+    }
 }

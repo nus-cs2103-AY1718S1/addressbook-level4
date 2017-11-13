@@ -32,10 +32,15 @@ public class ResultDisplay extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
+    // @@author HouDenghao
     @Subscribe
     private void handleNewResultAvailableEvent(NewResultAvailableEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        Platform.runLater(() -> displayed.setValue(event.message));
+        if (!event.message.startsWith("Details: ")) {
+            Platform.runLater(() -> displayed.setValue(event.message));
+        } else {
+            Platform.runLater(() -> displayed.setValue("More Details In The Information Board"));
+        }
     }
 
 }

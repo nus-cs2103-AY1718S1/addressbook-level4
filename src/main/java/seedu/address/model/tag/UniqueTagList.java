@@ -92,6 +92,21 @@ public class UniqueTagList implements Iterable<Tag> {
         assert CollectionUtil.elementsAreUnique(internalList);
     }
 
+    /**
+     * Remove a Tag in the list.
+     *
+     * @throws TagNotFoundException if the Tag to remove is not in the list.
+     */
+    public void remove(Tag toRemove) throws TagNotFoundException {
+        requireNonNull(toRemove);
+        if (!contains(toRemove)) {
+            throw new TagNotFoundException();
+        }
+        internalList.remove(toRemove);
+
+        assert CollectionUtil.elementsAreUnique(internalList);
+    }
+
     @Override
     public Iterator<Tag> iterator() {
         assert CollectionUtil.elementsAreUnique(internalList);
@@ -136,6 +151,15 @@ public class UniqueTagList implements Iterable<Tag> {
     public static class DuplicateTagException extends DuplicateDataException {
         protected DuplicateTagException() {
             super("Operation would result in duplicate tags");
+        }
+    }
+
+    /**
+     * Signals that a certain tag is not found in the list.
+     */
+    public static class TagNotFoundException extends IllegalArgumentException {
+        protected TagNotFoundException() {
+            super("This tag does not exist in tag list");
         }
     }
 

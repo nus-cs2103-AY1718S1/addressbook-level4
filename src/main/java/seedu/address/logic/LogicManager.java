@@ -5,12 +5,14 @@ import java.util.logging.Logger;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.logic.commands.AbortedCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
+import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -38,11 +40,20 @@ public class LogicManager extends ComponentManager implements Logic {
             Command command = addressBookParser.parseCommand(commandText);
             command.setData(model, history, undoRedoStack);
             CommandResult result = command.execute();
-            undoRedoStack.push(command);
+            // @@author HuWanqing
+            if (!(command instanceof AbortedCommand)) {
+                undoRedoStack.push(command);
+            }
+            // @@author
             return result;
         } finally {
             history.add(commandText);
         }
+    }
+
+    @Override
+    public ObservableList<ReadOnlyEvent> getFilteredEventList() {
+        return model.getFilteredEventList();
     }
 
     @Override

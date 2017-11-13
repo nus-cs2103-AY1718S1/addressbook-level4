@@ -12,9 +12,10 @@ public class UserPrefs {
     private GuiSettings guiSettings;
     private String addressBookFilePath = "data/addressbook.xml";
     private String addressBookName = "MyAddressBook";
+    private String eventStorageFilePath = "data/eventstorage.xml";
 
     public UserPrefs() {
-        this.setGuiSettings(500, 500, 0, 0);
+        this.setGuiSettings(1000, 1000, 0, 0);
     }
 
     public GuiSettings getGuiSettings() {
@@ -45,6 +46,14 @@ public class UserPrefs {
         this.addressBookName = addressBookName;
     }
 
+    public String getEventStorageFilePath() {
+        return eventStorageFilePath;
+    }
+
+    public void setEventStorageFilePath(String eventStorageFilePath) {
+        this.eventStorageFilePath = eventStorageFilePath;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {
@@ -58,12 +67,13 @@ public class UserPrefs {
 
         return Objects.equals(guiSettings, o.guiSettings)
                 && Objects.equals(addressBookFilePath, o.addressBookFilePath)
-                && Objects.equals(addressBookName, o.addressBookName);
+                && Objects.equals(addressBookName, o.addressBookName)
+                && Objects.equals(eventStorageFilePath, o.eventStorageFilePath);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(guiSettings, addressBookFilePath, addressBookName);
+        return Objects.hash(guiSettings, addressBookFilePath, addressBookName, eventStorageFilePath);
     }
 
     @Override
@@ -72,6 +82,7 @@ public class UserPrefs {
         sb.append("Gui Settings : " + guiSettings.toString());
         sb.append("\nLocal data file location : " + addressBookFilePath);
         sb.append("\nAddressBook name : " + addressBookName);
+        sb.append("\nLocal event data file location: " + eventStorageFilePath);
         return sb.toString();
     }
 

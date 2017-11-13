@@ -9,9 +9,11 @@ import com.google.common.eventbus.Subscribe;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.EventStorageChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlyEventList;
 import seedu.address.model.UserPrefs;
 
 /**
@@ -22,12 +24,15 @@ public class StorageManager extends ComponentManager implements Storage {
     private static final Logger logger = LogsCenter.getLogger(StorageManager.class);
     private AddressBookStorage addressBookStorage;
     private UserPrefsStorage userPrefsStorage;
+    private EventStorage eventStorage;
 
 
-    public StorageManager(AddressBookStorage addressBookStorage, UserPrefsStorage userPrefsStorage) {
+    public StorageManager(AddressBookStorage addressBookStorage, UserPrefsStorage userPrefsStorage,
+                          EventStorage eventStorage) {
         super();
         this.addressBookStorage = addressBookStorage;
         this.userPrefsStorage = userPrefsStorage;
+        this.eventStorage = eventStorage;
     }
 
     // ================ UserPrefs methods ==============================
@@ -84,6 +89,48 @@ public class StorageManager extends ComponentManager implements Storage {
         logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local data changed, saving to file"));
         try {
             saveAddressBook(event.data);
+        } catch (IOException e) {
+            raise(new DataSavingExceptionEvent(e));
+        }
+    }
+
+    //@@author LeonChowWenHao
+    // ================ EventStorage methods ==============================
+
+    @Override
+    public String getEventStorageFilePath() {
+        return eventStorage.getEventStorageFilePath();
+    }
+
+    @Override
+    public Optional<ReadOnlyEventList> readEventStorage() throws DataConversionException, IOException {
+        return readEventStorage(eventStorage.getEventStorageFilePath());
+    }
+
+    @Override
+    public Optional<ReadOnlyEventList> readEventStorage(String filePath) throws DataConversionException, IOException {
+        logger.fine("Attempting to read data from file: " + filePath);
+        return eventStorage.readEventStorage(filePath);
+    }
+
+    @Override
+    public void saveEventStorage(ReadOnlyEventList eventStore) throws IOException {
+        saveEventStorage(eventStore, eventStorage.getEventStorageFilePath());
+    }
+
+    @Override
+    public void saveEventStorage(ReadOnlyEventList eventStore, String filePath) throws IOException {
+        logger.fine("Attempting to write to data file: " + filePath);
+        eventStorage.saveEventStorage(eventStore, filePath);
+    }
+
+
+    @Override
+    @Subscribe
+    public void handleEventStorageChangedEvent(EventStorageChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local data changed, saving to file"));
+        try {
+            saveEventStorage(event.data);
         } catch (IOException e) {
             raise(new DataSavingExceptionEvent(e));
         }

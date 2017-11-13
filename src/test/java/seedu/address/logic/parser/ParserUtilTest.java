@@ -19,6 +19,7 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
@@ -29,12 +30,14 @@ public class ParserUtilTest {
     private static final String INVALID_PHONE = "+651234";
     private static final String INVALID_ADDRESS = " ";
     private static final String INVALID_EMAIL = "example.com";
+    private static final String INVALID_BIRTHDAY = "32-7-1993";
     private static final String INVALID_TAG = "#friend";
 
     private static final String VALID_NAME = "Rachel Walker";
     private static final String VALID_PHONE = "123456";
     private static final String VALID_ADDRESS = "123 Main Street #0505";
     private static final String VALID_EMAIL = "rachel@example.com";
+    private static final String VALID_BIRTHDAY = "01/01/1990";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
 
@@ -161,6 +164,26 @@ public class ParserUtilTest {
         Optional<Email> actualEmail = ParserUtil.parseEmail(Optional.of(VALID_EMAIL));
 
         assertEquals(expectedEmail, actualEmail.get());
+    }
+
+    @Test
+    public void parseBirthday_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseBirthday(null);
+    }
+
+    @Test
+    public void parseBirthday_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseBirthday(Optional.of(INVALID_BIRTHDAY));
+    }
+
+    @Test
+    public void parseBirthday_validValue_returnsBirthday() throws Exception {
+        Birthday expectedBirthday = new Birthday(VALID_BIRTHDAY);
+        Optional<Birthday> actualBirthday = ParserUtil.parseBirthday(Optional.of(VALID_BIRTHDAY));
+
+        assertEquals(expectedBirthday, actualBirthday.get());
     }
 
     @Test

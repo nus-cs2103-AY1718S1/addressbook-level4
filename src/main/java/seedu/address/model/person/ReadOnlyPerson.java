@@ -3,6 +3,8 @@ package seedu.address.model.person;
 import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
+import seedu.address.model.event.Event;
+import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -20,8 +22,13 @@ public interface ReadOnlyPerson {
     Email getEmail();
     ObjectProperty<Address> addressProperty();
     Address getAddress();
+    ObjectProperty<Birthday> birthdayProperty();
+    Birthday getBirthday();
+    ObjectProperty<PortraitPath> portraitProperty();
+    PortraitPath getPortraitPath();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
+    Set<Event> getParticipation();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
@@ -32,7 +39,9 @@ public interface ReadOnlyPerson {
                 && other.getName().equals(this.getName()) // state checks here onwards
                 && other.getPhone().equals(this.getPhone())
                 && other.getEmail().equals(this.getEmail())
-                && other.getAddress().equals(this.getAddress()));
+                && other.getAddress().equals(this.getAddress()))
+                && other.getBirthday().equals(this.getBirthday())
+                && other.getPortraitPath().equals(this.getPortraitPath());
     }
 
     /**
@@ -47,8 +56,15 @@ public interface ReadOnlyPerson {
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
+                .append(" Birthday: ")
+                .append(getBirthday())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
+        builder.append(" Participated events: ");
+        for (ReadOnlyEvent event : getParticipation()) {
+            builder.append(event.getEventName())
+                    .append(" ");
+        }
         return builder.toString();
     }
 

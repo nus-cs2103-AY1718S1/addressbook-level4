@@ -10,7 +10,11 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.model.event.EventDescription;
+import seedu.address.model.event.EventName;
+import seedu.address.model.event.EventTime;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
@@ -77,6 +81,47 @@ public class ParserUtil {
     public static Optional<Email> parseEmail(Optional<String> email) throws IllegalValueException {
         requireNonNull(email);
         return email.isPresent() ? Optional.of(new Email(email.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> birthday} into an {@code Optional<Birthday>} if {@code birthday} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Birthday> parseBirthday(Optional<String> birthday) throws IllegalValueException {
+        requireNonNull(birthday);
+        return birthday.isPresent() ? Optional.of(new Birthday(birthday.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> eventDescription} into an {@code Optional<EventDescription>}
+     * if {@code eventDescription} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<EventDescription> parseEventDescription(Optional<String> eventDescription)
+            throws IllegalValueException {
+        requireNonNull(eventDescription);
+        return eventDescription.isPresent() ? Optional.of(new EventDescription(eventDescription.get()))
+                : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> eventName} into an {@code Optional<EventName>}
+     * if {@code eventName} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<EventName> parseEventName(Optional<String> eventName)
+            throws IllegalValueException {
+        requireNonNull(eventName);
+        return eventName.isPresent() ? Optional.of(new EventName(eventName.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> EventTime} into an {@code Optional<EventTime>} if {@code eventTime} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<EventTime> parseEventTime(Optional<String> eventTime) throws IllegalValueException {
+        requireNonNull(eventTime);
+        return eventTime.isPresent() ? Optional.of(new EventTime(eventTime.get())) : Optional.empty();
     }
 
     /**
