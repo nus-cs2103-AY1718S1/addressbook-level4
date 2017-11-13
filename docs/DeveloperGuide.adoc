@@ -874,7 +874,7 @@ method. +
 a person called `Gwendolyn`.
 
 ==== Future enhancements
-Find Command is able to search under specific attributes with prefix. Example, `Find e/` to search under email. Also
+Find Command is able to search under specific attributes with prefix. Example, `Find e/` to search under email.
 
 // end::FindFilter[]
 
