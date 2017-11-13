@@ -1,0 +1,113 @@
+= Ong Hong Jing - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: The Classroom
+The Classroom is a software address book application that is designed to help students manage their countless assignments and projects with others.
+Users will be able to add and remove contacts and tasks with those contacts, along with various other features that will facilitate their work management.
+The user interacts with it using a CLI, and it is written in Java with a GUI created with JavaFX. +
+
+This portfolio page aims to document the enhancements I have added to The Classroom and provide details on how the user
+interacts with these enhancements and the underlying implementation behind them. Justification for various design considerations
+and decisions will also be provided.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T09-B4/main/blob/master/collated/main/Houjisan.md[Functional code]] [https://github.com/CS2103AUG2017-T09-B4/main/blob/master/collated/test/Houjisan.md[Test code]]
+
+=== Enhancement Added: Favourite a contact
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::..\UserGuide.adoc[tag=favourite]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Students will commonly have dozens of contacts as they work with others and make friends in their school modules throughout the school years.
+As a result, it can be bothersome for users to find the contact details and associated remarks of people they frequently work with or their close friends. +
+With this feature, users can favourite the contacts they specify after which the contacts will be conveniently sorted to the top of the list by default, making their contact details easily accessible and visible.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::..\DeveloperGuide.adoc[tag=favourite]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Sort the contact list
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::..\UserGuide.adoc[tag=sort]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Sorting allows students to organize their contact list according to their preferences, which can be useful. +
+For example, sorting by phone numbers that have area codes can give a general idea of which contacts live in the same geographical area (applicable for student users in countries other than Singapore). +
+Furthermore, when the birthday field is added in a future version of The Classroom, contacts can be sorted by their birthday or age.
+This will also apply to any other contact detail that may be implemented in a person in the future.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::..\DeveloperGuide.adoc[tag=sort]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: List all existing tags
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::..\UserGuide.adoc[tag=tags]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+As the student uses The Classroom over a long time, the number of tags will continually increase, making it hard for the student to keep track of all the currently existing tags. +
+Being able to see a list of the tags that are currently tagged to the contacts in The Classroom helps the student in finding contacts by tag and removing tags that are no longer needed. +
+As the average student is not likely to have thousands of contacts or more, it was decided that looping through every contact to find tags that are no longer being used for clearing would not result in too much of a hit to speed performance and could maintain the same amount of storage space needed.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::..\DeveloperGuide.adoc[tag=tags]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed:
+Adding a birthday field to contact details and enable finding contacts by birthday day, month, year. +
+
+=== Other contributions
+Bug testing for other team (Issue https://github.com/CS2103AUG2017-W10-B3/main/issues/76[#76]
+Issue https://github.com/CS2103AUG2017-W10-B3/main/issues/77[#77])

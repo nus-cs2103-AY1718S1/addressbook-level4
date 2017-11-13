@@ -1,0 +1,93 @@
+= Lim Yong Song - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: The Classroom
+The Classroom is a desktop application that helps users manage their contacts and keep track of tasks or remarks that pertain to specific contacts.
+It is especially helpful in helping students manage and increase the efficiency of their group work. +
+The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 8 kLoC. +
+The Classroom is built up from the [https://github.com/se-edu/addressbook-level4[AddressBook - Level 4]] (an address book application used for teaching Software Engineering principles)
+
+The purpose of this portfolio is to highlight the changes that I made to improve the application from the basic address book
+application and why the enhancements were made, along with how they were implemented.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T09-B4/main/blob/master/collated/main/limyongsong.md[Functional code]] [https://github.com/CS2103AUG2017-T09-B4/main/blob/master/collated/test/limyongsong.md[Test code]]
+
+=== Enhancement Added: Remark CheckList
+Allow user to add and remove specific remarks pertaining to any persons in the contact
+
+==== External behaviour
+
+---
+#Start of Extract [from: User Guide]#
+
+include::..\UserGuide.adoc[tag=remarkchecklist]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Since our target users are students that do a lot of group work (or people that work with different people frequently),
+we wanted to include a function that allows the user to save remarks on task that want to do with other people, or
+things they want to make sure other people do. +
+So having a remark checklist helps the user keep track of things they need to do
+with different people.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::..\DeveloperGuide.adoc[tag=remarkchecklist]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Link Command
+Allow user to add a twitter link to a person in the contact that loads when target person is selected
+
+==== External behaviour
+
+---
+#Start of Extract [from: User Guide]#
+
+include::..\UserGuide.adoc[tag=link]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+With a twitter page linked to a person in the contact, the user will be able to determine exactly who is in his contact,
+even if he/she have multiple contact of the same name. +
+On top of this, they would be able to take advantage of the twitter
+messaging feature to handle discussions without leaving the application.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::..\DeveloperGuide.adoc[tag=link]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Private/ public accounts
+Allow user to have a private contact list that is protected by login username and password. +
+Having an account would allow us to save any application information to be used on other computers or platforms if required.
+
+=== Other contributions
+
+Updated the GUI color scheme (Pull request https://github.com/CS2103AUG2017-T09-B4/main/pull/104[#104]) +
+Add colours to tags (Pull request https://github.com/CS2103AUG2017-T09-B4/main/pull/6[#6]) +
+Added continuous integration tools using Appveyor, Travis CI. +
+Bug testing for other team (Issue https://github.com/CS2103AUG2017-F09-B2/main/issues/68[#68])
+
+

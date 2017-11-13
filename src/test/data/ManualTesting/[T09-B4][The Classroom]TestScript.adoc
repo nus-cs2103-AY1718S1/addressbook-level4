@@ -1,0 +1,473 @@
+= The Classroom - Test Script
+
+== Setting up for tests
+
+. Download the jar file, `[T09-B4][The Classroom].jar` from IVLE.
+. Create a new folder `data` in the directory where the jar file is located.
+. Download the Sample Data, `[T09-B4][The Classroom]SampleData.xml` file into the `data` folder.
+. Rename the Sample Data file to `addressbook.xml`.
+. Run the jar file and begin with the tests.
+
+== Contact-related features
+
+=== Adding a person: `add`
+
+Input: `add` +
+Expected result: Command failed, invalid command format +
+
+Input: `add n/John Doe` +
+Expected result: Command failed, invalid command format, at least name, phone number, email and address needed +
+
+Input: `add n/ p/ a/ e/ t/` +
+Expected result: Command failed, person names should only contain alphanumeric characters and spaces, and it should not be blank +
+
+Input: `add n/John Doe p/98765432 a/322, Seng Kang Ave 5, #02-25  e/johnd@example.com t/friends t/owesMoney l/twitter.com` +
+Expected result: Command failed, because l/ or  r/ is not recognised in `add` command so it registers as a long tag with a whitespace and tags names should only be alphanumeric +
+
+Input: `add n/John Doe p/98765432 a/311, Clementi Ave 2, #02-25 e/johnd@example.com` +
+Expected result: Command success, John Doe has been added with his details +
+
+Input: `undo` +
+Expected result: Command success, changes made by add command can be undone +
+
+Input:  `add n/John Doe p/98765432 a/311, Clementi Ave 2, #02-25 e/johnd@example.com t/friends t/owesMoney` +
+Expected result: Command success, John Doe has been added with his details +
+
+Input:  `add n/John Doe p/98765432 a/322, Seng Kang Ave 5, #02-25  e/johnd@example.com t/friends t/owesMoney`
+Expected result: Command success, John Doe has been added with his details because this john doe has a different address (also works if they have differen email or phone number) +
+
+Input: `undo` +
+Expected result: Command success, changes made by add command can be undone +
+
+Input: `undo` +
+Expected result: Command success, changes made by add command can be undone, so we can revert the sample data back to the original state +
+
+=== Undo/Redo command : `undo`/`redo`
+
+Input: `delete 2` +
+Expected result: Command success. Person at index 2, Alex Yeoh has been deleted from the contact list.
+
+Input: `redo` +
+Expected result: Command failure. No command has been previously undone.
+
+Input: `undo` +
+Expected result: Command success. Alex Yeoh will be re-added to the contact list as `delete` is an undoable command.
+
+Input: `addtag 2 enemy` +
+Expected result: Command success. An enemy tag will be added to the person at index 2, Alex Yeoh.
+
+Input: `undo` +
+Expected result: Command success. The enemy tag will be removed.
+
+Input: `find n/Alex` +
+Expected result: Command success. Alex Yeoh will appear in the filtered list.
+
+Input: `redo` +
+Expected result: Command failure. Previously undone command has been purged upon execution of `find` command.
+
+Input: `list` +
+Expected result: Command success. Complete contact list displayed.
+
+Input: `undo` +
+Expected result: Command failure. `list` is not an undoable command.
+
+
+=== Editing a person : `edit`
+Input: `edit` +
+Expected result: Command failed, invalid command format +
+
+Input: `edit 3` +
+Expected result: Command failed, at least one field to edit must be provided +
+
+Input: `edit 45 p/98765432` +
+Expected result: Command failed, index is invalid +
+
+Input: `edit 5 n/Alex Yeoh p/87438807 e/alexyeoh@example.com a/Blk 30 Geylang Street 29, #06-40 t/friends` +
+Expected result: Command failed, person already exists in the address book +
+
+Input: `edit 5 n/` +
+Expected result: Command failed, name cannot be blank +
+
+Input: `edit 5 n/Ch@rlotte` +
+Expected result: Command failed, name can only contain alphanumeric characters and spaces +
+
+Input: `edit 5 p/nm` +
+Expected result: Command failed, phone can only contain numbers and should be at least 3 digits long +
+
+Input: `edit 5 e/char.com` +
+Expected result: Command failed, email should be 2 alphanumeric/period strings separated by '@' +
+
+Input: `edit 5 n/Charlotte Wee` +
+Expected result: Command success, name has been edited +
+
+Input: `undo` +
+Expected result: Command success, name edit can be undone +
+
+Input: `edit 5 p/98765432` +
+Expected result: Command success, phone has been edited +
+
+Input: `undo` +
+Expected result: Command success, phone edit can be undone +
+
+Input: `edit 5 e/char@example.com` +
+Expected result: Command success, email has been edited +
+
+Input: `undo` +
+Expected result: Command success, email edit can be undone +
+
+Input: `edit 5 a/Blk 10 Ang Mo Kio Street 74, #11-04` +
+Expected result: Command success, address has been edited +
+
+Input: `undo` +
+Expected result: Command success, address edit can be undone +
+
+Input: `edit 5 t/friends` +
+Expected result: Command success, tag 'neighbour' has been changed to 'friends' +
+
+Input: `undo` +
+Expected result: Command success, tag change can be undone +
+
+=== Finding persons : `find`
+
+Input: `find n/john` +
+Expected result: Command success. Ahmad Johnson will be displayed in the filtered list.
+
+Input: `find n/` +
+Expected result: Command failure. Missing input for `name` field.
+
+Input: `f n/al a/gey` +
+Expected result: Command success. Alex Yeoh, Foy Balakrishnan and Mua Wei Zong will be displayed in the filtered list as
+partial inputs are accepted.
+
+Input: `f t/       friends` +
+Expected result: Command success. Alex Yeoh, Bernice Yu, Mua Wei Zong and Orence Yu are displayed.
+
+Input: `find e/nus edu.sg t/enemy` +
+Expected result: Command success. Erfan Ibrahim, Lacob Yasim, Zack Jojo and Royston tan will be displayed as sentences are accepted as inputs.
+
+Input: `find Serangoon` +
+Expected result: Command failure. Invalid command format as no prefix was provided.
+
+Input: `list` +
+Expected result: Command success. Displays entire contact list.
+
+=== Favouriting a person : `favourite`
+Input: `favourite` +
+Expected result: Command failed, invalid command format +
+
+Input: `favourite David` +
+Expected result: Command failed, invalid command format, parameter should be index +
+
+Input: `favourite 45` +
+Expected result:  Command failed, index is invalid +
+
+Input: `favourite 6` +
+Expected result: Command success, David has been favourited and is now index 1 +
+
+Input: `undo` +
+Expected result: Command success, favourite command can be undone +
+
+Input: `redo` +
+Expected result: Command success, David has been favourited again +
+
+Input: `favourite 1` +
+Expected result: Command success, David has been unfavourited using the favourite command +
+
+=== Listing all persons : `list`
+Input: `find n/Alex` +
+Expected result: Command success, application now shows only 1 person +
+
+Input: `list` +
+Expected result: Command success, the application now shows all persons in the contact list +
+
+=== Deleting a person : `delete`
+Input: `delete` +
+Expected result: Command failed, invalid command format +
+
+Input: `delete 45` +
+Expected result: Command failed, index is invalid +
+
+Input: `delete David` +
+Expected result: Command failed, invalid command format, parameter should be index +
+
+Input: `delete 6` +
+Expected result: Command success, David Li has now been deleted from the contact list +
+
+Input: `undo` +
+Expected result: Command success, delete command can be undone and David Li is back in the contact list +
+
+=== Sorting the contact list : `sort`
+Input: `sort` +
+Expected result: Command failed, invalid command format +
+
+Input: `sort height` +
+Expected result: Command failed, invalid command format, no such datafield +
+
+Input: `favourite 6` +
+Expected result: Command success, David has been favourited and is now at index 1 +
+
+Input: `sort phone` +
+Expected result: Command success, contact list is now sorted by phone +
+
+Input: `sort EMAIL` +
+Expected result: Command success, contact list is now sorted by email, uppercase does not matter +
+
+Input: `sort address` +
+Expected result: Command success, contact list is now sorted by address +
+
+Input: `sort address -ignorefav` +
+Expected result:  Command success, contact list has been sorted by address ignoring favourites, David is not at index 1 anymore +
+
+Input: `sort address -reverse` +
+Expected result: Command success, contact list is now sorted by address in reverse order +
+
+Input: `sort address -ignorefav -reverse` +
+Expected result:  Command success, contact list has been sorted by address in reverse order ignoring favourites, David is not at index 1 anymore +
+
+Input: `sort name` +
+Expected result: Command success, contact list is now sorted by name +
+
+Input: `favourite 1` +
+Expected result: Command success, David has been unfavourited and is no longer at index 1 +
+
+=== Selecting a person : `select`
+
+Input: `select` +
+Expected result: Command failure, invalid command format.
+
+Input: `select abc` +
+Expected result: Command failure, invalid command format.
+
+Input: `select 50` +
+Expected result: Command failure, the person index provided is invalid, since the person data provided does not reach 50. +
+
+Input: `select 1` +
+Expected result: Command success, first person in index is selected +
+
+=== Linking Twitter to a person : `link`
+
+Input: `link` +
+Expected result: Command failure, invalid command format. +
+
+Input: `link 50` +
+Expected result: Command failure, the person index provided is invalid, since the person data provided does not reach 50. +
+
+Input: `link 1 l/Hello` +
+Expected result: Command failure, link format is invalid link. +
+
+Input: `link 1 l/twitter.commmmm` +
+Expected result: Command failure, link format is invalid link. +
+
+Input: `link 1 l/twitter.com/randomnumber!!!!!!!!!!` +
+Expected result: Command success, because it is a valid twitter url format,
+however when person is selected it should show that twitter page doesn't exist if there is no twitter handle of "randomnumber!!!!!!!!!!". +
+
+Input: `link 1 l/twitter.com/_david_li_` +
+Expected result: Command success, when person is selected, it should show a twitter page at _david_li_'s profile. +
+
+Input: `undo` +
+Expected result: Command success, link is an undoable command +
+
+Input: `link 1` +
+Expected result: Command success, the twitter link should be removed, and when person is selected, it should show a twitter search for the person's name. +
+
+
+=== Clearing all entries : `clear`
+
+Input: `clear` +
+Expected result: Command success. The contact list will be cleared of all contacts.
+
+Input: `undo` +
+Expected result: Command success. The contact list will be restored.
+
+Input: `clear 4` +
+Expected result: Command success. The contact list will be cleared of all contacts regardless of any words succeeding the `clear` term.
+
+Input: `undo` +
+Expected result: Command success. The contact list will be restored.
+
+Input: `c` +
+Expected result: Command success. The contact list will be cleared of all contacts.
+
+Input: `undo` +
+Expected result: Command success. The contact list will be restored.
+
+== Tag-related features
+
+=== Listing all tags : `tags`
+
+Input: `tags` +
+Expected result: Command success. Tag list containing classmates, colleagues, enemy, family, friends and neighbours will be displayed.
+
+Input: `removetag family` +
+Expected result: Command success. Family tag will be removed from the entire contact list.
+
+Input: `tags` +
+Expected result: Command success. Tag list containing classmates, colleagues, enemy, friends and neighbours will be displayed.
+
+Input: `removetag classmates` +
+Expected result: Command success. Tag list containing colleagues, enemy, friends and neighbours will be displayed.
+
+Input: `undo` +
+Expected result: Command success. Whole contact list will be displayed and classmates tag has been re-added.
+
+Input: `tags` +
+Expected result: Command result. Tag list containing classmates, colleagues, enemy, friends and neighbours will be displayed.
+
+Input: `undo` +
+Expected result: Command success. Whole contact list will be displayed and family tag has been re-added.
+
+Input: `tags` +
+Expected result: Command result. Tag list containing classmates, colleagues, enemy, family, friends and neighbours will be displayed.
+
+=== Adding tag(s) : `addtag`
+
+Input: `addtag 3 cousin` +
+Expected result: Command success. Cousin tag will be added to Ashley Ashley.
+
+Input: `at 2-4 6-8 7 cousin` +
+Expected result: Command success. Cousin tag will be added to Alex Yeoh, Bernice Yu, David Li, Erfan Ibrahim and Foy Balakrishnan.
+
+Input: `removetag cousin` +
+Expected result: Command success. Cousin tag will be removed from the entire contact list.
+
+Input: `addtag 5-3 enemy` +
+Expected result: Command failure. Range provided is invalid.
+
+Input: `addtag 2 what?` +
+Expected result: Command failure. Tag names must be alphanumeric.
+
+Input: `addtag 4-4 sister` +
+Expected result: Command success. Sister tag added to Bernice Yu.
+
+Input: `undo` +
+Expected result: Command success. Sister tag removed from Bernice Yu as `addtag` command is undoable.
+
+Input: `addtag 5 neighbours` +
+Expected result: Command failure. Neighbours tag already exists at index 5, Charlotte Oliveiro.
+
+=== Removing tag(s) : `removetag`
+
+Input: `removetag family friends` +
+Expected result: Command success. Removed family and friends tag from entire contact list.
+
+Input: `tags` +
+Expected result: Command success. Tag list containing classmates, colleagues, enemy and neighbours will be displayed.
+
+Input: `undo` +
+Expected result: Command success. Family and friends tags are re-added to the contact list.
+
+Input: `rt 1-4 cousins` +
+Expected result: Command failure. Cousins tag does not exist in index 1-4.
+
+Input: `rt 5-9 classmates cousins` +
+Expected result: Command success. Classmates tag removed from Erfan Ibrahim and Games Willian. Since cousins tag does not exist
+, it will not be mentioned in the result display.
+
+Input: `undo` +
+Expected result: Command success. Classmates tags are re-added to Erfan Ibrahim and Games Willian.
+
+Input: `removetag 6 13 18 17-19 family` +
+Expected result: Command success. Removed family tag from David Li and Qavid Lee.
+
+Input: `undo` +
+Expected result: Command success. Family tags are re-added to David Li and Qavid Lee.
+
+Input: `remove friends` +
+Expected result: Command failure. Unknown command.
+
+
+== Remark-related features
+
+=== Add a remark note to contact: `addremark`
+
+Input: `addremark` +
+Expected result: Command failure, invalid command format. +
+
+Input: `addremark abc` +
+Expected result: Command failure, invalid command format. +
+
+Input: `addremark 50` +
+Expected result: Command failure, the person index provided is invalid, since the person data provided does not reach 50. +
+
+Input: `addremark 1` +
+Expected result: Command success, when person of index 1 is selected you should see that he has a blank remark added, we allow users to add blank remarks to just note that have things they want to do with a person, but do not want to specify. +
+
+Input: `addremark 1 Eat lunch` +
+Expected result: Command failure, invalid command format, r/ is needed before a remark you want to add. +
+
+Input: `addremark 1 r/` +
+Expected result: Command success, when person of index 1 is selected you should see that he now has 2 blank remarks added, we allow any kind of string for remarks +
+
+Input: `undo` +
+Expected results: Command success, addremark is an undoable command +
+
+Input: `undo` +
+Expected results: Command success, addremark is an undoable command, both empty remarks should disappear from the pending remarks of the specific person. +
+
+Input: `addremark 1 r/r/` +
+Expected result: Command success, when person of index 1 is selected you should see a remark "r/" has been added, because there is no space between the r/ and r/, so the 2nd r/ is registered as a remark.
+
+Input: `addremark 1 r/ r/ r/Eat lunch` +
+Expected result: Command success, when person of index 1 is selected you should see 2 blanks remarks and 1 remark that is "Eat lunch" added. +
+
+Input: `addremark 1 r/SUPERLONGREMARK_SUPERLONGREMARK_SUPERLONGREMARK_SUPERLONGREMARKSUPERLONGREMARK_SUPERLONGREMARK` +
+Expected result: Command success, when person of index 1 is selected you should see the long remark being added, and you can scroll left or right on the remark panel to look at the whole remark. +
+
+Input: `addremark 1 r/Remarks r/Remarks r/Remarks r/Remarks r/Remarks r/Remarks r/Remarks r/Remarks r/Remarks r/Remarks r/Remarks r/Remarks r/Remarks r/Remarks r/Remarks r/Remarks r/Remarks r/Remarks r/Remarks` +
+Expected result: Command success, when person of index 1 is selected you should see many remarks being added, and you can scroll up or down to looks through the remarks. +
+
+Input: `addremark 2 r/Sample remark` +
+Expected result: Command success, you should see the person(s) with pending remarks list at the right increase in number, if index 2 doesn't have a remark before. +
+
+=== Remove a remark note from contact: `removeremark`
+
+Input: `removeremark` +
+Expected result: Command failure, invalid command format. +
+
+Input: `removeremark abc` +
+Expected result: Command failure, invalid command format. +
+
+Input: `removeremark 50` +
+Expected result: Command failure, the person index provided is invalid, since the person data provided does not reach 50. +
+
+Input: `removeremark 1` +
+Expected result: Command success, this command clears all the remarks from the person of index 1 (can be used even if there are no remarks), you should also see the person disappear from the person(s) with pending remarks list. +
+
+Input: `removeremark 1 abc` +
+Expected result: Command failure, invalid command format.
+
+Input: `removeremark 1 1` +
+Expected result: Command failure, the remark index provided is invalid, since all the person's (of index 1) remark has been removed in the previous command and there are no more remarks left. +
+
+Input: `undo` +
+Expected results: Command success, removeremark is an undoable command, you should get back all the remarks you added in the addremark tests section. +
+
+Input: `removeremark 1 1 2 3 4` +
+Expected results: Command success, the remarks with index 1, 2, 3 and 4 should be removed from the remark list of the person of index 1. +
+
+Input: `removeremark 1 1 2 5 7 2 1` +
+Expected results: Command success, the remarks with index 1, 2, 5 and 7 should be removed from the remark list of the person of index 1 (duplicate remark index in a single command are ignored). +
+
+Input: `removeremark 1 1 2 50` +
+Expected results: Command failure, although the person of index 1 should still have remark index of 1 and 2, he does not have a remark index of 50, so the command fails.
+
+== Miscellaneous features
+
+=== Viewing help : `help`
+Input: `help` +
+Expected result: Command success, the help window appears +
+
+=== Listing entered commands : `history`
+Input: `tags` +
+Expected result: Command success, the application now shows a list of existing tags +
+
+Input: `list` +
+Expected result: Command success, the application now shows all the person in the contact list +
+
+Input: `history` +
+Expected result: Command success, the 3 most recent commands should be list, tags then help +
+
+=== Exiting the program : `exit`
+Input: `exit` +
+Expected result: Command success, the application has closed. +

@@ -19,6 +19,8 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.commons.events.ui.ShowPersonListViewEvent;
+import seedu.address.commons.events.ui.ShowTagListViewEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
@@ -29,7 +31,7 @@ import seedu.address.model.UserPrefs;
  */
 public class MainWindow extends UiPart<Region> {
 
-    private static final String ICON = "/images/address_book_32.png";
+    private static final String ICON = "/images/TheClassroomLogo.png";
     private static final String FXML = "MainWindow.fxml";
     private static final int MIN_HEIGHT = 600;
     private static final int MIN_WIDTH = 450;
@@ -42,6 +44,9 @@ public class MainWindow extends UiPart<Region> {
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
     private PersonListPanel personListPanel;
+    private TagListPanel tagListPanel;
+    private RemarkListPanel remarkListPanel;
+    private RemarkPanel remarkPanel;
     private Config config;
     private UserPrefs prefs;
 
@@ -55,13 +60,19 @@ public class MainWindow extends UiPart<Region> {
     private MenuItem helpMenuItem;
 
     @FXML
-    private StackPane personListPanelPlaceholder;
+    private StackPane personAndTagListPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
 
     @FXML
     private StackPane statusbarPlaceholder;
+
+    @FXML
+    private StackPane remarkDisplayPlaceholder;
+
+    @FXML
+    private StackPane remarkListDisplayPlaceholder;
 
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
@@ -75,10 +86,10 @@ public class MainWindow extends UiPart<Region> {
         // Configure the UI
         setTitle(config.getAppTitle());
         setIcon(ICON);
-        setWindowMinSize();
         setWindowDefaultSize(prefs);
         Scene scene = new Scene(getRoot());
         primaryStage.setScene(scene);
+        primaryStage.setMaximized(true);
 
         setAccelerators();
         registerAsAnEventHandler(this);
@@ -130,12 +141,22 @@ public class MainWindow extends UiPart<Region> {
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
-        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+        tagListPanel = new TagListPanel(logic.getTagList());
+        personAndTagListPanelPlaceholder.getChildren().add(tagListPanel.getRoot());
+        personAndTagListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+        tagListPanel.setVisible(false);
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
+        remarkPanel = new RemarkPanel();
+        remarkDisplayPlaceholder.getChildren().add(remarkPanel.getRoot());
+
+        remarkListPanel = new RemarkListPanel(logic.getFilteredPersonList());
+        remarkListDisplayPlaceholder.getChildren().add(remarkListPanel.getRoot());
+
+        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath(),
+                logic.getFilteredPersonList().size());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
         CommandBox commandBox = new CommandBox(logic);
@@ -216,5 +237,20 @@ public class MainWindow extends UiPart<Region> {
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
+    }
+
+    //@@author Houjisan
+    @Subscribe
+    private void handleShowPersonListEvent(ShowPersonListViewEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        personListPanel.setVisible(true);
+        tagListPanel.setVisible(false);
+    }
+
+    @Subscribe
+    private void handleShowTagListEvent(ShowTagListViewEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        personListPanel.setVisible(false);
+        tagListPanel.setVisible(true);
     }
 }

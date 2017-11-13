@@ -12,6 +12,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.web.WebView;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.PossibleLinks;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -21,8 +22,6 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class BrowserPanel extends UiPart<Region> {
 
     public static final String DEFAULT_PAGE = "default.html";
-    public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/search?safe=off&q=";
-    public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
 
     private static final String FXML = "BrowserPanel.fxml";
 
@@ -40,11 +39,24 @@ public class BrowserPanel extends UiPart<Region> {
         loadDefaultPage();
         registerAsAnEventHandler(this);
     }
-
+    //@@author limyongsong
+    /**
+     * Loads the twitter page based on Person link.value or if person does not have link,
+     * loads a twitter search for the Person name.fullName
+     * @param person
+     */
     private void loadPersonPage(ReadOnlyPerson person) {
-        loadPage(GOOGLE_SEARCH_URL_PREFIX + person.getName().fullName.replaceAll(" ", "+")
-                + GOOGLE_SEARCH_URL_SUFFIX);
+        if (person.getLink().value.contains(PossibleLinks.POSSIBLE_LINK_2)
+                || person.getLink().value.contains(PossibleLinks.POSSIBLE_LINK_3)) {
+            loadPage(person.getLink().value);
+        } else if (person.getLink().value.contains(PossibleLinks.POSSIBLE_LINK_1)) {
+            loadPage("https://www." + person.getLink().value);
+        } else {
+            loadPage(PossibleLinks.SEARCH_URL_PREFIX_1 + person.getName().fullName.replaceAll(" ", "+")
+                    + PossibleLinks.SEARCH_URL_SUFFIX_1);
+        }
     }
+    //@@author
 
     public void loadPage(String url) {
         Platform.runLater(() -> browser.getEngine().load(url));

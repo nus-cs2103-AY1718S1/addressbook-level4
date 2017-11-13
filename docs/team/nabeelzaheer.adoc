@@ -1,0 +1,112 @@
+= Nabeel Zaheer - Project Portfolio
+//ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: The Classroom
+The Classroom is a desktop address book application designed to specifically cater to students to manage their contacts.
+The user interacts with it using a CLI, has a GUI created with JavaFX and is wriitten in Java.
+
+The Classroom is equipped with features and functionalities aimed to facilitate in effectively managing contacts'
+details as well as tasks that they may share with them which is represented  in the application in the form of remarks.
+
+This portfolio page aims to highlight features that have been enhanced or introduced to meet the needs of students and
+further push the capabilities of the application towards total user-customisation. Additionally, extracts of the User and Developer Guide are
+included to further illustrate the implementation and execution of these features.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T09-B4/main/blob/master/collated/main/NabeelZaheer.md[Functional code]]
+[https://github.com/CS2103AUG2017-T09-B4/main/blob/master/collated/test/NabeelZaheer.md[Test code]] +
+
+=== Enhancement Added: Add/Remove Tags
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=addremove]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+The feature to add and remove tags in the application is crucial not only as an added functionality of the application but
+also as a practical use for users. As our audience is targeted towards students who in a form or another will be involved in
+group projects, the above mentioned feature is implemented to cater to this particular aspect of our target audience by allowing them to
+organise contacts based on their different groups and associations.
+
+Furthermore, the current design of this feature is such that it allows versatility on how the feature is executed.
+For instance, users can provide a range of index from which a tags are to be removed. Such versatility in performance
+attest to the vision of the project which is to effectively manage contacts through extensive user-customisations.
+
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=addremove]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Find persons
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=find]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+As the contact list continues to be populated, it would be a challenge to keep track of the indexes to execute commands.
+Thus, with the find command, users are able to view a filtered list and execute commands easily. Additionally, the
+versatility of the find feature in accepting various fields gives user more options and usability.
+
+Furthermore, besides allowing multiple fields to be accepted in the command mechanism, partial keyword inputs are also allowed.
+This aspect of the feature further establishes its finding capability as well as its practicality. This is due to the
+fact that there are instances that users may only remember a a first letter of a name or just the first 3 digits of the phone
+number. As a result, this capability of the feature in accepting partial inputs would definitely be of great use for users.
+Moreover, efforts in ensuring user-friendliness for this feature was also considered in its design. Users need not repeatedly
+type a `PREFIX` before every keyword belonging to the same field. Instead, users are allowed to provide inputs of the
+same field in a sentence and only specify the `PREFIX` once, preceding the sentence.
+
+
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=find]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed:
+
+* For the `Find` feature of the application, a mechanism can be implemented to *highlight* keywords specified keywords
+in the filtered list of the results as shown in the screenshot below. +
+
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=enhancedfind]
+
+#End of Extract#
+
+* Implement a scheduling feature to allow user to keep track of personal tasks and act as a reminder by incorporating
+the Clock and Date aspect.
+
+=== Other contributions
+
+Added Welcome screen in browser panel as part of UI. (Pull Request https://github.com/CS2103AUG2017-T09-B4/main/pull/120[#120])

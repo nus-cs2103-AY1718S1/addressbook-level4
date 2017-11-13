@@ -1,5 +1,6 @@
 package seedu.address.model.person;
 
+import java.util.ArrayList;
 import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
@@ -20,8 +21,14 @@ public interface ReadOnlyPerson {
     Email getEmail();
     ObjectProperty<Address> addressProperty();
     Address getAddress();
+    ObjectProperty<ArrayList<Remark>> remarkProperty();
+    ArrayList<Remark> getRemark();
+    ObjectProperty<FavouriteStatus> favouriteStatusProperty();
+    FavouriteStatus getFavouriteStatus();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
+    ObjectProperty<Link> linkProperty();
+    Link getLink();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
@@ -32,7 +39,9 @@ public interface ReadOnlyPerson {
                 && other.getName().equals(this.getName()) // state checks here onwards
                 && other.getPhone().equals(this.getPhone())
                 && other.getEmail().equals(this.getEmail())
-                && other.getAddress().equals(this.getAddress()));
+                && other.getAddress().equals(this.getAddress())
+                && other.getFavouriteStatus().equals(this.getFavouriteStatus())
+                && other.getLink().equals(this.getLink()));
     }
 
     /**
@@ -41,14 +50,20 @@ public interface ReadOnlyPerson {
     default String getAsText() {
         final StringBuilder builder = new StringBuilder();
         builder.append(getName())
+                .append(" Favourite: ")
+                .append(getFavouriteStatus().getStatus())
                 .append(" Phone: ")
                 .append(getPhone())
                 .append(" Email: ")
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
-                .append(" Tags: ");
+                .append(" Remark: ");
+        getRemark().forEach(builder::append);
+        builder.append(" Tags: ");
         getTags().forEach(builder::append);
+        builder.append(" Link: ")
+                .append(getLink());
         return builder.toString();
     }
 

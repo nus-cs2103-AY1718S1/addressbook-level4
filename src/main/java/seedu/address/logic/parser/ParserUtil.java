@@ -2,8 +2,10 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -14,6 +16,7 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Remark;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -29,6 +32,7 @@ public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
     public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
+    private static final Integer ONE_OBJECT = 1;
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -90,4 +94,81 @@ public class ParserUtil {
         }
         return tagSet;
     }
+
+    /**
+     * Parses {@code Collection<String> names} into a {@code List<Name>}.
+     */
+    public static List<Name> parseNameFind(Collection<String> names) throws IllegalValueException {
+        requireNonNull(names);
+        final List<Name> nameList = new ArrayList<>();
+        for (String name : names) {
+            nameList.add(new Name(name));
+        }
+        return nameList;
+    }
+
+    /**
+     * Parses {@code Collection<String> phones} into a {@code List<Phone>}.
+     */
+    public static List<Phone> parsePhoneFind(Collection<String> phones) throws IllegalValueException {
+        requireNonNull(phones);
+        final List<Phone> phoneList = new ArrayList<>();
+        for (String phoneName : phones) {
+            phoneList.add(new Phone(phoneName));
+        }
+        return phoneList;
+    }
+
+    /**
+     * Parses {@code Collection<String> emails} into a {@code List<Email>}.
+     */
+    public static List<Email> parseEmailFind(Collection<String> emails) throws IllegalValueException {
+        requireNonNull(emails);
+        final List<Email> emailList = new ArrayList<>();
+        for (String emailName : emails) {
+            emailList.add(new Email(emailName));
+        }
+        return emailList;
+    }
+
+    /**
+     * Parses {@code Collection<String> addresses} into a {@code List<Address>}.
+     */
+    public static List<Address> parseAddressFind(Collection<String> addresses) throws IllegalValueException {
+        requireNonNull(addresses);
+        final List<Address> addressList = new ArrayList<>();
+        for (String addressName : addresses) {
+            addressList.add(new Address(addressName));
+        }
+        return addressList;
+    }
+    //@@author limyongsong
+    /**
+     * Parses {@code Collection<String> remarks} into a {@code ArrayList<Remark>}.
+     */
+    public static ArrayList<Remark> parseRemarks(Collection<String> remarks) throws IllegalValueException {
+        requireNonNull(remarks);
+        final ArrayList<Remark> remarkArrayList = new ArrayList<>();
+        for (String remarkString : remarks) {
+            remarkArrayList.add(new Remark(remarkString));
+        }
+        if (remarkArrayList.size() < ONE_OBJECT) {
+            remarkArrayList.add(new Remark(""));
+        }
+        return remarkArrayList;
+    }
+
+    /**
+     * Parses {@code Collection<Integer> indexes} into a {@code ArrayList<Integer>}.
+     */
+    public static ArrayList<Integer> parseIndexes(Collection<Integer> indexes) throws IllegalValueException {
+        requireNonNull(indexes);
+        final ArrayList<Integer> indexArrayList = new ArrayList<>();
+        for (Integer index : indexes) {
+            indexArrayList.add(index);
+        }
+
+        return indexArrayList;
+    }
+    //@@author
 }
