@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.time.YearMonth;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -17,11 +18,14 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.ChangeWindowSizeRequestEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.PopulateBirthdayEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.windowsize.WindowSize;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -42,6 +46,8 @@ public class MainWindow extends UiPart<Region> {
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
     private PersonListPanel personListPanel;
+    private ExtendedPersonDisplay extendedPersonDisplay;
+    private CalendarView calendarView;
     private Config config;
     private UserPrefs prefs;
 
@@ -57,6 +63,13 @@ public class MainWindow extends UiPart<Region> {
     @FXML
     private StackPane personListPanelPlaceholder;
 
+    //author @JacobLipech
+    @FXML
+    private StackPane extendedPersonDisplayPlaceholder;
+
+    @FXML
+    private StackPane calendarDisplayPlaceholder;
+    //author
     @FXML
     private StackPane resultDisplayPlaceholder;
 
@@ -132,10 +145,23 @@ public class MainWindow extends UiPart<Region> {
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
+        //@@author jacoblipech
+        extendedPersonDisplay = new ExtendedPersonDisplay();
+        extendedPersonDisplayPlaceholder.getChildren().add(extendedPersonDisplay.getRoot());
+
+        calendarView = new CalendarView(YearMonth.now(), logic.getFilteredPersonList(), logic);
+        calendarDisplayPlaceholder.getChildren().add(calendarView.getView());
+
+        //CalendarViewPane calendarViewPane = new CalendarViewPane(logic);
+        //logic.setCalendarView
+        //calendarDisplayPlaceholder.getChildren().add(calendarViewPane.getCalendarPane().getView());
+
+        //@@author
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
+        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath(),
+                logic.getFilteredPersonList().size());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
         CommandBox commandBox = new CommandBox(logic);
@@ -175,6 +201,16 @@ public class MainWindow extends UiPart<Region> {
         primaryStage.setMinWidth(MIN_WIDTH);
     }
 
+    //@@author vivekscl
+    /**
+     * Sets the window size to the user defined size.
+     */
+    private void setWindowUserDefinedSize(double newWidth, double newHeight) {
+        primaryStage.setWidth(newWidth);
+        primaryStage.setHeight(newHeight);
+    }
+
+    //@@author
     /**
      * Returns the current size and the position of the main Window.
      */
@@ -204,14 +240,70 @@ public class MainWindow extends UiPart<Region> {
         raise(new ExitAppRequestEvent());
     }
 
+    //@@author vivekscl
+    /**
+     * Changes window size to small.
+     */
+    @FXML
+    private void handleSmallWindowSize() {
+        raise(new ChangeWindowSizeRequestEvent(WindowSize.SMALL_WIDTH,
+                WindowSize.SMALL_HEIGHT));
+    }
+
+    /**
+     * Changes window size to medium.
+     */
+    @FXML
+    private void handleMediumWindowSize() {
+        raise(new ChangeWindowSizeRequestEvent(WindowSize.MEDIUM_WIDTH,
+                WindowSize.MEDIUM_HEIGHT));
+    }
+
+    /**
+     * Changes window size to big.
+     */
+    @FXML
+    private void handleBigWindowSize() {
+        raise(new ChangeWindowSizeRequestEvent(WindowSize.BIG_WIDTH,
+                WindowSize.BIG_HEIGHT));
+    }
+
+    /**
+     * Handles a change to the size of the window.
+     */
+    @Subscribe
+    private void handleChangeWindowSizeEvent(ChangeWindowSizeRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        setWindowUserDefinedSize(event.getWindowWidth(), event.getWindowHeight());
+    }
+
+    //@@author
     public PersonListPanel getPersonListPanel() {
         return this.personListPanel;
     }
 
+    //@@author jacoblipech
+    public ExtendedPersonDisplay getExtendedPersonDisplay() {
+        return this.extendedPersonDisplay;
+    }
+
+    //@@author
     void releaseResources() {
         browserPanel.freeResources();
     }
 
+    //@@author jacoblipech
+    /**
+     * this method is to populate the calendar when there is an add or change in birthday.
+     * @param request
+     */
+    @Subscribe
+    private void handleBirthdayEvent(PopulateBirthdayEvent request) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(request));
+        calendarView.populateUpdatedCalendar(request.contactList);
+    }
+
+    //@@author
     @Subscribe
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));

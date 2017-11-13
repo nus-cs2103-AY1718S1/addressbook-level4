@@ -76,6 +76,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     //// person-level operations
 
+    //@@author vivekscl
     /**
      * Adds a person to the address book.
      * Also checks the new person's tags and updates {@link #tags} with any new tags found,
@@ -85,11 +86,12 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void addPerson(ReadOnlyPerson p) throws DuplicatePersonException {
         Person newPerson = new Person(p);
-        syncMasterTagListWith(newPerson);
-        // TODO: the tags master list will be updated even though the below line fails.
-        // This can cause the tags master list to have additional tags that are not tagged to any person
-        // in the person list.
-        persons.add(newPerson);
+        try {
+            persons.add(newPerson);
+            syncMasterTagListWith(newPerson);
+        } catch (DuplicatePersonException e) {
+            throw new DuplicatePersonException();
+        }
     }
 
     /**
@@ -107,13 +109,18 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(editedReadOnlyPerson);
 
         Person editedPerson = new Person(editedReadOnlyPerson);
-        syncMasterTagListWith(editedPerson);
-        // TODO: the tags master list will be updated even though the below line fails.
-        // This can cause the tags master list to have additional tags that are not tagged to any person
-        // in the person list.
-        persons.setPerson(target, editedPerson);
+        try {
+            persons.setPerson(target, editedPerson);
+            syncMasterTagListWith(editedPerson);
+        } catch (DuplicatePersonException e) {
+            throw new DuplicatePersonException();
+        } catch (PersonNotFoundException e) {
+            throw new PersonNotFoundException();
+        }
+
     }
 
+    //@@author
     /**
      * Ensures that every tag in this person:
      *  - exists in the master list {@link #tags}
@@ -162,14 +169,16 @@ public class AddressBook implements ReadOnlyAddressBook {
         tags.add(t);
     }
 
+
     //// util methods
 
+    //@@author vivekscl
     @Override
     public String toString() {
-        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags";
-        // TODO: refine later
+        return "Persons: " + getPersonList() + "\nTags: " + getTagList();
     }
 
+    //@@author
     @Override
     public ObservableList<ReadOnlyPerson> getPersonList() {
         return persons.asObservableList();

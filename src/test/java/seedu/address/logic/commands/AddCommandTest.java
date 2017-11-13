@@ -1,12 +1,10 @@
 package seedu.address.logic.commands;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.function.Predicate;
 
 import org.junit.Rule;
@@ -14,16 +12,19 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
-import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.person.Birthday;
+import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandTest {
@@ -35,28 +36,6 @@ public class AddCommandTest {
     public void constructor_nullPerson_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
         new AddCommand(null);
-    }
-
-    @Test
-    public void execute_personAcceptedByModel_addSuccessful() throws Exception {
-        ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
-        Person validPerson = new PersonBuilder().build();
-
-        CommandResult commandResult = getAddCommandForPerson(validPerson, modelStub).execute();
-
-        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, validPerson), commandResult.feedbackToUser);
-        assertEquals(Arrays.asList(validPerson), modelStub.personsAdded);
-    }
-
-    @Test
-    public void execute_duplicatePerson_throwsCommandException() throws Exception {
-        ModelStub modelStub = new ModelStubThrowingDuplicatePersonException();
-        Person validPerson = new PersonBuilder().build();
-
-        thrown.expect(CommandException.class);
-        thrown.expectMessage(AddCommand.MESSAGE_DUPLICATE_PERSON);
-
-        getAddCommandForPerson(validPerson, modelStub).execute();
     }
 
     @Test
@@ -101,6 +80,18 @@ public class AddCommandTest {
             fail("This method should not be called.");
         }
 
+        //@@author vivekscl
+        @Override
+        public void removeTag(ArrayList<Index> targetIndexes, Tag toRemove, String commandWord)  {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void addTag(ArrayList<Index> targetIndexes, Tag toAdd, String commandWord)  {
+            fail("This method should not be called.");
+        }
+
+        //@@author
         @Override
         public void resetData(ReadOnlyAddressBook newData) {
             fail("This method should not be called.");
@@ -123,6 +114,14 @@ public class AddCommandTest {
             fail("This method should not be called.");
         }
 
+        //@@author vivekscl
+        @Override
+        public String getClosestMatchingName(NameContainsKeywordsPredicate predicate) {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        //@@author
         @Override
         public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
             fail("This method should not be called.");
@@ -133,8 +132,21 @@ public class AddCommandTest {
         public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
             fail("This method should not be called.");
         }
+
+        //@@author jacoblipech
+        @Override
+        public void addBirthday (Index targetIndex, Birthday toAdd) throws PersonNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public Boolean sortPersonByName(ArrayList<ReadOnlyPerson> contactList) {
+            fail("This method should not be called.");
+            return false;
+        }
     }
 
+    //@@author
     /**
      * A Model stub that always throw a DuplicatePersonException when trying to add a person.
      */
@@ -165,6 +177,8 @@ public class AddCommandTest {
         public ReadOnlyAddressBook getAddressBook() {
             return new AddressBook();
         }
+
     }
+
 
 }

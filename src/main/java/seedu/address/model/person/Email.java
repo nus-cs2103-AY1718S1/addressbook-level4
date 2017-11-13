@@ -13,8 +13,13 @@ public class Email {
     public static final String MESSAGE_EMAIL_CONSTRAINTS =
             "Person emails should be 2 alphanumeric/period strings separated by '@'";
     public static final String EMAIL_VALIDATION_REGEX = "[\\w\\.]+@[\\w\\.]+";
+    public static final String DEFAULT_EMAIL = "No Email Added";
 
     public final String value;
+
+    public Email() {
+        this.value = DEFAULT_EMAIL; //default value
+    }
 
     /**
      * Validates given email.
@@ -31,10 +36,13 @@ public class Email {
     }
 
     /**
-     * Returns if a given string is a valid person email.
+     * Returns if a given string is a valid person email or default value.
      */
     public static boolean isValidEmail(String test) {
-        return test.matches(EMAIL_VALIDATION_REGEX);
+        if (test.matches(EMAIL_VALIDATION_REGEX) || test.equalsIgnoreCase(DEFAULT_EMAIL)) {
+            return true;
+        }
+        return false;
     }
 
     @Override

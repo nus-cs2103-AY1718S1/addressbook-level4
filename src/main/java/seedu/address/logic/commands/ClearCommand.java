@@ -9,7 +9,11 @@ import seedu.address.model.AddressBook;
  */
 public class ClearCommand extends UndoableCommand {
 
-    public static final String COMMAND_WORD = "clear";
+    //@@author LeeYingZheng
+    public static final String COMMAND_WORDVAR_1 = "clear";
+    public static final String COMMAND_WORDVAR_2 = "c";
+    //@@author
+
     public static final String MESSAGE_SUCCESS = "Address book has been cleared!";
 
 

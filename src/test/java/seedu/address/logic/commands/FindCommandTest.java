@@ -3,12 +3,14 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static seedu.address.commons.core.Messages.MESSAGE_NO_PERSON_FOUND;
 import static seedu.address.commons.core.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
 import static seedu.address.testutil.TypicalPersons.CARL;
 import static seedu.address.testutil.TypicalPersons.ELLE;
 import static seedu.address.testutil.TypicalPersons.FIONA;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -64,6 +66,31 @@ public class FindCommandTest {
         assertCommandSuccess(command, expectedMessage, Collections.emptyList());
     }
 
+    //@@author vivekscl
+    @Test
+    public void execute_oneKeyword_noPersonFound() {
+        FindCommand command = prepareCommand("car");
+        ArrayList<String> keywordList = new ArrayList<String>();
+        keywordList.add("car");
+        NameContainsKeywordsPredicate keyword = new NameContainsKeywordsPredicate(keywordList);
+        String expectedMessage = String.format(MESSAGE_NO_PERSON_FOUND, "car",
+                model.getClosestMatchingName(keyword));
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL));
+    }
+
+    @Test
+    public void execute_multipleKeywords_noPersonFound() {
+        String keywordsAsString = "kun ell car";
+        FindCommand command = prepareCommand(keywordsAsString);
+        String closestMatchingNames = model.getClosestMatchingName(
+                new NameContainsKeywordsPredicate(Arrays.asList(keywordsAsString.split("\\s+"))));
+        List<String> targetsAsList = Arrays.asList(closestMatchingNames.split("\\s+"));
+        String expectedMessage = String.format(MESSAGE_NO_PERSON_FOUND, keywordsAsString,
+                String.join(", ", targetsAsList));
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, ELLE, FIONA));
+    }
+
+    //@@author
     @Test
     public void execute_multipleKeywords_multiplePersonsFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
@@ -90,7 +117,6 @@ public class FindCommandTest {
     private void assertCommandSuccess(FindCommand command, String expectedMessage, List<ReadOnlyPerson> expectedList) {
         AddressBook expectedAddressBook = new AddressBook(model.getAddressBook());
         CommandResult commandResult = command.execute();
-
         assertEquals(expectedMessage, commandResult.feedbackToUser);
         assertEquals(expectedList, model.getFilteredPersonList());
         assertEquals(expectedAddressBook, model.getAddressBook());

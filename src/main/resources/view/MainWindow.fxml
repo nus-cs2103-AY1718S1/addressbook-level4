@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<VBox xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
   <stylesheets>
     <URL value="@DarkTheme.css" />
     <URL value="@Extensions.css" />
@@ -22,32 +22,52 @@
     <Menu mnemonicParsing="false" text="Help">
       <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
     </Menu>
+      <!--@@author vivekscl-->
+      <Menu mnemonicParsing="false" text="Window">
+        <items>
+          <MenuItem mnemonicParsing="false" onAction="#handleSmallWindowSize" text="Small (800x600)" />
+            <MenuItem mnemonicParsing="false" onAction="#handleMediumWindowSize" text="Medium (1024x720)" />
+            <MenuItem mnemonicParsing="false" onAction="#handleBigWindowSize" text="Big (1600x1024)" />
+        </items>
+      </Menu>
   </MenuBar>
-
-  <StackPane VBox.vgrow="NEVER" fx:id="commandBoxPlaceholder" styleClass="pane-with-border">
+  <!--@@author-->
+  <StackPane fx:id="commandBoxPlaceholder" styleClass="pane-with-border" VBox.vgrow="NEVER">
     <padding>
-      <Insets top="5" right="10" bottom="5" left="10" />
+      <Insets bottom="5" left="10" right="10" top="5" />
     </padding>
   </StackPane>
 
-  <StackPane VBox.vgrow="NEVER" fx:id="resultDisplayPlaceholder" styleClass="pane-with-border"
-      minHeight="100" prefHeight="100" maxHeight="100">
+  <StackPane fx:id="resultDisplayPlaceholder" maxHeight="100" minHeight="100" prefHeight="100" styleClass="pane-with-border" VBox.vgrow="NEVER">
     <padding>
-      <Insets top="5" right="10" bottom="5" left="10" />
+      <Insets bottom="5" left="10" right="10" top="5" />
     </padding>
   </StackPane>
 
-  <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
-    <VBox fx:id="personList" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
+  <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4, 0.5" VBox.vgrow="ALWAYS">
+    <VBox fx:id="personList" maxWidth="300" minWidth="250" prefWidth="250" SplitPane.resizableWithParent="false">
       <padding>
-        <Insets top="10" right="10" bottom="10" left="10" />
+        <Insets bottom="10" left="10" right="10" top="10" />
       </padding>
-      <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+      <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS" />
     </VBox>
 
-    <StackPane fx:id="browserPlaceholder" prefWidth="340" >
+    <!--@@author jacoblipech-->
+    <SplitPane dividerPositions="0.12" orientation="VERTICAL" prefHeight="200.0" prefWidth="80.0">
+        <items>
+            <StackPane fx:id="extendedPersonDisplayPlaceholder" prefHeight="15.0" prefWidth="59.0">
+            <padding>
+                <Insets bottom="10" left="0" right="0" top="10" />
+              </padding>
+            </StackPane>
+            <StackPane fx:id="calendarDisplayPlaceholder" prefHeight="150.0" prefWidth="200.0" />
+        </items>
+    </SplitPane>
+
+    <!--@@author -->
+    <StackPane fx:id="browserPlaceholder" prefWidth="340">
       <padding>
-        <Insets top="10" right="10" bottom="10" left="10" />
+        <Insets bottom="10" left="10" right="10" top="10" />
       </padding>
     </StackPane>
   </SplitPane>

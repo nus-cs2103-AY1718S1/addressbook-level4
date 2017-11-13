@@ -1,0 +1,121 @@
+= Lee Ying Zheng - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project:  UniCity
+UniCity is a desktop address book application used to help university students manage their ever-growing network.
+The user interacts with it using a CLI, and it has a GUI created with JavaFX.
+It is written in Java, and has about 16 kLoC (16 000 Lines of Code).
+
+*Code contributed*: [https://github.com/CS2103AUG2017-W13-B1/main/blob/master/collated/main/LeeYingZheng.md [Functional code]]
+ [https://github.com/CS2103AUG2017-W13-B1/main/blob/master/collated/test/LeeYingZheng.md [Test code]]
+
+=== Enhancement Added: `filter` command
+
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[tag=filterbytags]
+
+---
+
+==== Justification
+
+The purpose of associating contacts with tags was that users could categorize their contacts. +
+While tags help to label these contacts, we feel that we can further build on the notion of categorization by showing a list of
+contacts according to a specified tag(s) +
+Users may want to locate a list of contacts with some purpose(s). These purpose(s) can be seen as tags and the filtering mechanism can help
+locate those contacts. +
+
+==== Implementation
+
+---
+
+include::../DeveloperGuide.adoc[tag=filterbytags]
+
+---
+
+=== Enhancement Added: `facebook` comand
+
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[tag=facebook]
+
+
+---
+
+==== Justification
+
+The purpose of introducing facebook command was so users can keep themselves up to date of their friends' social media posts. +
+We understand that university students have social media accounts and they use it frequently for academic or social purposes. +
+Since UniCity aims to connect people together, this feature will set a foundation for future enhancements that involves other social media websites
+and including links to social media accounts for each contacts. +
+The facebook command was initially created by me to allow users to log in and navigate through facebook;
+I programmed UniCity to only show the facebook log in page when `facebook` command was typed in the early stages of development. +
+Subsequently, Jiashu modified this feature by changing the behaviour of the command to allow users to search for a specified contact on Facebook. +
+The facebook command now requires an additional parameter `INDEX` that searches the person of a specified contact in UniCity. +
+
+==== Implementation
+
+---
+
+include::../DeveloperGuide.adoc[tag=facebook]
+include::../DeveloperGuide.adoc[tag=facebookcont]
+
+---
+
+=== Enhancement Added: `reply` command and duplicate-checking mechanism
+
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[tag=reply]
+
+---
+
+==== Justification
+
+Users may accidentally add a contact with duplicate fields existing in their contacts list. This may cause unnecessary confusion
+when users try to differentiate among similar contacts in UniCity. Hence, we needed the mechanism to check for duplicates to address this issue.
+The add and edit command will inform users if they have used a similar name, phone number, email address or home address to register a contact before.
+
+==== Implementation
+
+---
+
+include::../DeveloperGuide.adoc[tag=reply]
+
+---
+
+=== Enhancement Proposed: Add command `follow`
+
+This is a refinement for the `facebook` command. By observing the implementation of `facebook` command, we can proceed to including
+links to websites as one of the fields contained in a contact. It will be an optional field included by the users on `add` command.
+By typing the 'follow' command, UniCity will direct its users to the website stored under the specified contact's field.
+
+==== Justification
+
+This purpose aligns with the `facebook` command; As UniCity strives to provide the convenience for users to access their friends' information, we can help users store
+their friends' social media accounts, aside from just sorting their contacts.
+
+==== Mechanism
+
+A `Website` class will be introduced and like all other contact fields, it will be used by the `Person` class. This class will store a String url to the contact's profile web page.
+Like all other optional fields, the default value will be "Website not added". The 'Website' class will validate the link provided by the users on `add` command by checking
+with regular expressions before executing it. ++
+
+`FollowCommand` will be the class dedicated to sending events to the `EventCenter` so the `BrowserPanel` class can handle these events to load the webpage.
+Similar to 'BrowserPanel''s `loadPage` method, there will be a method to load the webpage in the contact's field.
+
+=== Other contributions
+
+* Made UniCity to accept abbreviated and case-insensitive commands. (Pull requests https://github.com/CS2103AUG2017-W13-B1/main/pull/4 [#4])
+
+== Project: PowerPointLabs
+
+{Optionally (not graded), you may include other projects in your portfolio.}

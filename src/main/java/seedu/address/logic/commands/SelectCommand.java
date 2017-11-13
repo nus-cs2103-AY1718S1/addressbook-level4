@@ -14,12 +14,18 @@ import seedu.address.model.person.ReadOnlyPerson;
  */
 public class SelectCommand extends Command {
 
-    public static final String COMMAND_WORD = "select";
+    //@@author LeeYingZheng
+    public static final String COMMAND_WORDVAR_1 = "select";
+    public static final String COMMAND_WORDVAR_2 = "s";
+    //@@author
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Selects the person identified by the index number used in the last person listing.\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORDVAR_1
+            + " OR "
+            + COMMAND_WORDVAR_2
+            + ": Selects the person identified by the index number used in the last person listing."
+            + "Command is case-insensitive. \n"
             + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " 1";
+            + "Example: " + COMMAND_WORDVAR_1 + " 1";
 
     public static final String MESSAGE_SELECT_PERSON_SUCCESS = "Selected Person: %1$s";
 

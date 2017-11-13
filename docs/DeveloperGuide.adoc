@@ -1,4 +1,5 @@
-= AddressBook Level 4 - Developer Guide
+= UniCity - Developer Guide
+= UniCity - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,9 +11,26 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-W13-B1/main/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team W13-B1`      Since: `AUG 2017`      Licence: `MIT`
+
+== Introduction
+
+=== Purpose
+
+UniCity is a contact management command line desktop application implemented in Java. This developer guide aims to provide
+adequate information for a new developer to understand the underlying structure of UniCity and how it works.
+
+=== Overview
+
+This guide covers the following: +
+
+* Design architecture of UniCity. +
+* Implementation details of main features such as undoing and redoing of previous commands, logging, configuration and
+etc. +
+* Software testing and integration for future releases. +
+* Additional information covered by the appendix section. +
 
 == Setting up
 
@@ -21,28 +39,28 @@ By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 . *JDK `1.8.0_60`* or later
 +
 [NOTE]
-Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
 
 . *IntelliJ* IDE
 +
 [NOTE]
-IntelliJ by default has Gradle and JavaFx plugins installed. +
+IntelliJ by default has Gradle and JavaFX plugins installed. +
 Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plugins` to re-enable them.
 
 
 === Setting up the project in your computer
 
-. Fork this repo, and clone the fork to your computer
-. Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
-. Set up the correct JDK version for Gradle
-.. Click `Configure` > `Project Defaults` > `Project Structure`
-.. Click `New...` and find the directory of the JDK
-. Click `Import Project`
-. Locate the `build.gradle` file and select it. Click `OK`
-. Click `Open as Project`
-. Click `OK` to accept the default settings
+. Fork this repository.
+. Clone the forked repository to your computer
+. Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first).
+. Set up the correct JDK version for Gradle.
+.. Click `Configure` > `Project Defaults` > `Project Structure`.
+.. Click `New...` and find the directory of the JDK.
+. Click `Import Project`.
+. Locate the `build.gradle` file and select it. Click `OK`.
+. Click `Open as Project`.
+. Click `OK` to accept the default settings.
 . Open a console and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message. +
 This will generate all resources required by the application and tests.
 
@@ -55,14 +73,14 @@ This will generate all resources required by the application and tests.
 
 ==== Configuring the coding style
 
-This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.md[oss-generic coding standards]. IntelliJ's default style is mostly compliant with ours but it uses a different import order from ours. To rectify,
+This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.md[oss-generic coding standards]. IntelliJ's default style is mostly compliant with ours but it uses a different import order from ours. To rectify:
 
-. Go to `File` > `Settings...` (Windows/Linux), or `IntelliJ IDEA` > `Preferences...` (macOS)
-. Select `Editor` > `Code Style` > `Java`
-. Click on the `Imports` tab to set the order
+. Go to `File` > `Settings...` (Windows/Linux), or `IntelliJ IDEA` > `Preferences...` (macOS).
+. Select `Editor` > `Code Style` > `Java`.
+. Click on the `Imports` tab to set the order.
 
-* For `Class count to use import with '\*'` and `Names count to use static import with '*'`: Set to `999` to prevent IntelliJ from contracting the import statements
-* For `Import Layout`: The order is `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, `import all other imports`. Add a `<blank line>` between each `import`
+* For `Class count to use import with '\*'` and `Names count to use static import with '*'`: Set to `999` to prevent IntelliJ from contracting the import statements.
+* For `Import Layout`: The order is `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, `import all other imports`. Add a `<blank line>` between each `import`.
 
 Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure Intellij to check style-compliance as you write code.
 
@@ -70,20 +88,20 @@ Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> docume
 
 After forking the repo, links in the documentation will still point to the `se-edu/addressbook-level4` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `se-edu/addressbook-level4`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
 
-==== Setting up CI
+==== Setting up Continuous Integration (CI)
 
-Set up Travis to perform Continuous Integration (CI) for your fork. See <<UsingTravis#, UsingTravis.adoc>> to learn how to set it up.
+Set up Travis to perform CI for your fork. See <<UsingTravis#, UsingTravis.adoc>> to learn how to set it up.
 
 Optionally, you can set up AppVeyor as a second CI (see <<UsingAppVeyor#, UsingAppVeyor.adoc>>).
 
 [NOTE]
-Having both Travis and AppVeyor ensures your App works on both Unix-based platforms and Windows-based platforms (Travis is Unix-based and AppVeyor is Windows-based)
+Having both Travis and AppVeyor ensures UniCity works on both Unix-based platforms and Windows-based platforms (Travis is Unix-based and AppVeyor is Windows-based).
 
 ==== Getting started with coding
 
-When you are ready to start coding,
+When you are ready to start coding:
 
-1. Get some sense of the overall design by reading the link:#architecture[Architecture] section.
+1. Get a sense of the overall design by reading the link:#architecture[Architecture] section.
 2. Take a look at the section link:#suggested-programming-tasks-to-get-started[Suggested Programming Tasks to Get Started].
 
 == Design
@@ -93,34 +111,34 @@ When you are ready to start coding,
 image::Architecture.png[width="600"]
 _Figure 2.1.1 : Architecture Diagram_
 
-The *_Architecture Diagram_* given above explains the high-level design of the App. Given below is a quick overview of each component.
+The *_Architecture Diagram_* given in Figure 2.1.1 explains the high-level design of UniCity. Information provided below is a quick overview of each component.
 
 [TIP]
-The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
+The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, simply modify the diagram in the pptx file, edit the objects of the diagram accordingly and choose `Save as picture`.
 
-`Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for,
+`Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for:
 
-* At app launch: Initializes the components in the correct sequence, and connects them up with each other.
-* At shut down: Shuts down the components and invokes cleanup method where necessary.
+* At app launch: Initializing the components in the correct sequence, and connects them up with each other.
+* At shut down: Shutting down the components and invokes cleanup method where necessary.
 
-link:#common-classes[*`Commons`*] represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level.
+link:#common-classes[*`Commons`*] represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level:
 
-* `EventsCenter` : This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design)
-* `LogsCenter` : Used by many classes to write log messages to the App's log file.
+* `EventsCenter` : This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design).
+* `LogsCenter` : This class is used by many other classes to write log messages to UniCity's log file.
 
-The rest of the App consists of four components.
+The rest of UniCity consists of four components:
 
-* link:#ui-component[*`UI`*] : The UI of the App.
-* link:#logic-component[*`Logic`*] : The command executor.
-* link:#model-component[*`Model`*] : Holds the data of the App in-memory.
-* link:#storage-component[*`Storage`*] : Reads data from, and writes data to, the hard disk.
+* link:#ui-component[*`User Interface(UI)`*] : The UI of UniCity to showcase the styling of UniCity.
+* link:#logic-component[*`Logic`*] : The command executor to execute commands.
+* link:#model-component[*`Model`*] : UniCity build-in memory to store data.
+* link:#storage-component[*`Storage`*] : The hard disk to read data from and writes data to.
 
-Each of the four components
+Each of the four components:
 
 * Defines its _API_ in an `interface` with the same name as the Component.
 * Exposes its functionality using a `{Component Name}Manager` class.
 
-For example, the `Logic` component (see the class diagram given below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
+For example, the `Logic` component (see figure 2.1.2 given below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
 
 image::LogicClassDiagram.png[width="800"]
 _Figure 2.1.2 : Class Diagram of the Logic Component_
@@ -128,7 +146,7 @@ _Figure 2.1.2 : Class Diagram of the Logic Component_
 [discrete]
 ==== Events-Driven nature of the design
 
-The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
+The _Sequence Diagram_ in figure 2.1.3a shows how the different components interact for the scenario where the user issues the command `delete 1`.
 
 image::SDforDeletePerson.png[width="800"]
 _Figure 2.1.3a : Component interactions for `delete 1` command (part 1)_
@@ -136,7 +154,7 @@ _Figure 2.1.3a : Component interactions for `delete 1` command (part 1)_
 [NOTE]
 Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
 
-The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
+The diagram in figure 2.1.3b shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
 image::SDforDeletePersonEventHandling.png[width="800"]
 _Figure 2.1.3b : Component interactions for `delete 1` command (part 2)_
@@ -146,18 +164,18 @@ Note how the event is propagated through the `EventsCenter` to the `Storage` and
 
 The sections below give more details of each component.
 
-=== UI component
+=== User Interface (UI) component
 
 image::UiClassDiagram.png[width="800"]
-_Figure 2.2.1 : Structure of the UI Component_
+_Figure 2.2 : Structure of the UI Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+As shown in figure 2.2, the `UI` component consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `ExtendedPersonList`, `CalendarView`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
-The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
+The `UI` component uses JavaFX UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
-The `UI` component,
+The `UI` component:
 
 * Executes user commands using the `Logic` component.
 * Binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change.
@@ -174,24 +192,24 @@ _Figure 2.3.2 : Structure of Commands in the Logic Component. This diagram shows
 *API* :
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 
-.  `Logic` uses the `AddressBookParser` class to parse the user command.
-.  This results in a `Command` object which is executed by the `LogicManager`.
+.  As shown in figure 2.3.1, `Logic` uses the `AddressBookParser` class to parse the user command.
+.  This results in a `Command` object which is executed by the `LogicManager` as shown in figure 2.3.2.
 .  The command execution can affect the `Model` (e.g. adding a person) and/or raise events.
 .  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
 
-Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
+Figure 2.3.3 below shows the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
 
 image::DeletePersonSdForLogic.png[width="800"]
-_Figure 2.3.1 : Interactions Inside the Logic Component for the `delete 1` Command_
+_Figure 2.3.3 : Interactions Inside the Logic Component for the `delete 1` Command_
 
 === Model component
 
 image::ModelClassDiagram.png[width="800"]
-_Figure 2.4.1 : Structure of the Model Component_
+_Figure 2.4 : Structure of the Model Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
-The `Model`,
+The `Model` shown in figure 2.4:
 
 * stores a `UserPref` object that represents the user's preferences.
 * stores the Address Book data.
@@ -201,11 +219,11 @@ The `Model`,
 === Storage component
 
 image::StorageClassDiagram.png[width="800"]
-_Figure 2.5.1 : Structure of the Storage Component_
+_Figure 2.5 : Structure of the Storage Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 
-The `Storage` component,
+The `Storage` component shown in figure 2.5:
 
 * can save `UserPref` objects in json format and read it back.
 * can save the Address Book data in xml format and read it back.
@@ -345,6 +363,561 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+// tag::favourite[]
+=== Favourite mechanism (Since v1.2)
+To favourite a contact is achieved by `FavouriteCommand`. It basically changes the value of the `Favourite` field of a `Person`. The `Favourite` class has two status indicators: one is a boolean value and the other is a String. The boolean one is used in the constructor while the String one is for UI and output purposes.
+
+In this sense, `Favourite` class needs to be created to store the favourite status of a contact. As `AddCommand` does not involve `Favourite`, the default `Favourite` status for every newly added `Person` is false.
+
+The following sequence diagram shows how a `FavouriteCommand` is processed:
+
+image::FavouriteSequenceDiagram.png[width="800"]
+
+To make the default status of a `Favourite` field "False", the default constructor of `Favourite` takes no arguments and set the boolean indicator to false. The value of the String indicator is synchronised with the boolean indicator. But in some cases, such as JUnit Tests, a `FavouriteCommand` needs to be initialised in such a way that its status is "True". Thus, another constructor that takes in a boolean argument is also available. The following shows the two different constructors:
+[source,java]
+----
+    public Favourite() {
+        this.favourite = false;
+        this.status = "False";
+    }
+
+    public Favourite(boolean favourite) {
+        this.favourite = favourite;
+        this.status = favourite ? "True" : "False";
+    }
+----
+
+In addition, the utility class `PersonBuilder` is also modified to set the default value of `Favourite` to each newly created object.
+
+`FavouriteCommand` takes in an integer as its argument. The command is first being parsed in `AddressBookParser` to be identified as an instance of `FavouriteCommand`. Then it is parsed by `FavouriteCommandParser` to parse the index. Invalid indexes will be handled by throwing an exception. This is how `FavouriteCommandParser` is implemented:
+[source,java]
+----
+public class FavouriteCommandParser implements Parser<FavouriteCommand> {
+    public FavouriteCommand parse(String args) throws ParseException {
+        try {
+            // ... parse index and pass it to `FavouriteCommand`...
+        } catch (IllegalValueException ive) {
+            // ... throw an exception ...
+        }
+    }
+}
+----
+
+To update the `Favourite` field of a `Person`, the other information of the specific `Person` is copied into a newly created `Person` instance. The new `Favourite` value will be set to be opposite of the original one. This is implemented in the following way:
+[source,java]
+----
+public class FavouriteCommand extends UndoableCommand {
+    // ... variables, constructor and other overrided methods ...
+    Boolean changedToFav;
+
+    @Override
+        protected CommandResult executeUndoableCommand() throws CommandException {
+            // ... fetch personToEdit ...
+
+             Favourite favourite = personToEdit.getFavourite();
+             favourite.toggleFavourite();
+             changedToFav = favourite.getFavourite();
+
+             Person editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(), personToEdit.getAddress(), favourite, personToEdit.getBirthday(), personToEdit.getTags());
+
+            // ... try replace personToEdit with editedPerson ...
+        }
+}
+----
+
+It is important to display `Favourite` in the user interface. `PersonCard` is modified to contain a `favouriteLabel` that changes its appearance based on the favourite status of the person. It will first detect the boolean favourite status of the person. If the person is a favourite contact, a yellow star will be shown. Otherwise, a transparent star with black border will be show. The colours of the border and the background of the label are set to transparent, so that only the background picture, which is a star, will be shown.
+
+==== Design Considerations
+
+**Aspect:** Store `Favourite` values +
+**Alternative 1 (current choice):** Add a new `Favourite` class +
+**Pros:** Follows how `Address`, `EMAIL` and all other personal information are stored. It also follows the open-close principle and exercises cohesion, where all matters related to `Favourite` field is dealt in its own class. +
+**Cons:** Need to change a lot of code because adding a new class will affect UI, Logic, Model and Storage. +
+**Alternative 2:** Keep it as a `Boolean` value +
+**Pros:** Does not need to create another class. Easier to implement. +
+**Cons:** Potentially catastrophic because some Boolean methods need to be overwritten. It is also prone to bugs when developers forget to change the ObjectProperty to `String` in UI classes.
+
+---
+
+**Aspect:** Indicating `Favourite` values +
+**Alternative 1 (current choice):** Two indicators: one boolean and one String +
+**Pros:** Using the boolean indicator in conditional loops can reduce the complexity of the code. It is also more natural to have a binary value of the favourite status. It also exercises defensive programming, because passing a String parameter to the constructor may break the application if the argument is illegal (anything besides "True" and "False"). By also having a String indicator, it is much easier to output the value of the favourite status. +
+**Cons:** Need to create one more variable in the `Favourite` class. Also additional attention needs to be given to avoid problems where the two indicators are not synchronised. +
+**Alternative 2:** Only use a String indicator +
+**Pros:** Easier to implement. +
+**Cons:** Dangerous as it is prone to bugs when an illegal String value is passed to the constructor. It is also not natural to have a String indicator for a supposedly binary one. +
+
+---
+
+**Aspect:** Change the `Favourite` value of the selected `Person` +
+**Alternative 1 (current choice):** Copy values from other fields to a newly created `Person` instance. Then add an opposite value of the old `Favourite` to the instance. +
+**Pros:** Easy to understand for new Computer Science student undergraduates. Also by using `ReadOnlyPerson` for the person being selected, we can ensure its original value will be intact. This is crucial if updating person failed in the later stage. +
+**Cons:** Additional space consumed to store a new `Person` instance. +
+**Alternative 2:** Edit `Favourite` field on the spot +
+**Pros:** No additional new instance needs to be instantiated. Even easier to understand. +
+**Cons:** Modifying original values directly can be potentially dangerous. The safer alternative is to create a duplicate, and perform operations on it. +
+// end::favourite[]
+
+
+// tag::filterbytags[]
+=== Filter mechanism
+
+The filter mechanism is facilitated by `FilterCommandParser`, which resides inside the parser folder of the logic component.
+
+Similar to how the find mechanism searches for names of the contacts, the filter mechanism supports the search for specific tags (e.g. `friend`, `professor`).
+
+The `FilterCommand` will inherit from `Command`.
+
+When the command word `filter` is typed into UniCity, `AddressBookParser` will call `FilterCommandParser`.
+
+`FilterCommandParser` then takes in the command argument(s), delimits the arguments if there are more than one keyword separated by spaces, wraps them with
+the `TagContainsKeywordsPredicate` class before parsing them into the FilterCommand constructor.
+
+The figure below shows the sequence diagram when `LogicManager` executes the filter command.
+
+image::filtercommandsequencediagram.png[width="800"]
+
+Upon execution, the `FilterCommand` filters the list of contacts whose tags contains the tag words in the predicates. This is achieved with the help of the `updateFilteredPersonList(predicate)`
+method from the `ModelManager` class.
+
+The test to check for tag compatibility between the searched word and each person's tag(s) are implemented as follows:
+[source,java]
+----
+    public boolean test(ReadOnlyPerson person) {
+        return keywords.stream()
+                .anyMatch(keyword -> StringUtil.containsTag(person.getTags(), keyword));
+    }
+
+----
+
+Naturally, a person may contain a set of tags so the `containsTag` method from `StringUtil` class iterates through the persons tag list and checks for any tag words contained in the searched keyword(s).
+
+[source,java]
+----
+public static boolean containsTag(Set<Tag> tagList, String word) {
+
+
+    //...word is groomed to become preppedWord..
+    //check if there is more than one tag searched.
+    //more than 1 tag searched. split into a list of searches.
+    if (preppedWord.contains(space)) {
+        String[] separateTags = word.split(" ");
+        List<String> tagFilters = Arrays.asList(separateTags);
+        for (Tag tag : tagList) {
+            if (haveMatchedTags(tagFilters, tag)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    //only 1 tag searched. Check if tagList contains word as a tag
+    try {
+        Tag checkTag = new Tag(preppedWord);
+        return tagList.contains(checkTag);
+    //..exceptions caught..
+----
+
+The user has to key in keywords after the filter command word. The filtering process is case-sensitive; it will only match keywords with tags of the exact same case and letters.
+
+[NOTE]
+A contact will be filtered once any of its tag(s) matches the keyword(s), it need match all of the keywords stated.
+
+Should the user decide to be more specific in his tag filtering, he would have to narrow his search to fewer keyword(s).
+
+A successful filter request will show the list of filtered persons under the contact column.
+
+Should there be no contacts whose tags matches the keywords, UniCity will reply with a `0 persons listed!`
+
+==== Design Considerations
+
+**Aspect:** Case and letter tolerance of `containsTag()` method in `StringUtil` +
+**Alternative 1 (current choice):** check for exact keywords, case-sensitive and letter-specific, using the method `List.contains(Object E)` +
+**Pros:** Implementation is easier on the developers' side. Users can avoid unnecessary filtered contacts when a longer tag word containing the keyword exists in another contact. Yet that might not be his desired filter.
+ User may introduce more combinations of tags, possibly the same word but with different cases, that serves different purposes. +
+**Cons:** Users might neglect the discrepancies between words, eg (`friend` versus `friends`). In the situation where the user forgets which tags he stored his contacts under, or
+some of his contacts may have tags that serve the same purpose but spelt differently (as shown in the previous example), he will struggle to filter them. +
+**Alternative 2:** Account for case-insensitive and incomplete words in `containsTag()` method +
+**Pros:** Easier for users to filter tags. Accounts for any minor spelling or case discrepancies and still provides relatively accurate filters for the users. +
+**Cons:** May involve additional code for developers to consider. Users may filter unnecessary contacts that contain some of the keywords.
+
+---
+
+**Aspect:** Filter criteria: Match tolerance between the typed keywords and a person's tags +
+**Alternative 1 (current choice):** A contact will be filtered as long as any of its tag(s) matches any of the keyword(s) stated by the user. +
+**Pros:** User can widen his filter search on his list of contacts regardless of the combination of tags so the user may be able to find his contacts more easily.  +
+**Cons:** The filter command may include unnecessary filtered contacts when the user specifies more than one keyword and expects only the contacts with ALL such tags. Eg. A user may
+ indicate that he wants to filter contacts that has both `tutor` AND `professor` tags instead of contacts with either tutor` OR `professor` tags; the latter will result in more contacts
+  showing, some which may deem unnecessary to the user +
+**Alternative 2:** A contact will be filtered only if all its tags meet the required keyword(s). +
+**Pros:** The user is able to narrow down his filter to specific and more accurate contacts +
+**Cons:** The user might prefer a wider filter for either-or keywords as he might have forgotten which tag a particular contact was saved under. Narrowing down his filter may cause him some difficulties.
+
+---
+// end::filterbytags[]
+// tag::sort[]
+
+=== Sorting mechanism (Since v1.2)
+
+The sorting mechanism is achieved by the `SortCommand`. In order to sort the list of contacts, the default constructor of `SortCommand` creates an empty editable array list of contacts as shown below:
+
+[source,java]
+----
+private ArrayList<ReadOnlyPerson> contactList;
+public SortCommand() {
+    contactList = new ArrayList<>();
+}
+----
+
+The new list will take in a list of contacts from address book, sort the contacts and overwrite the existing list of contacts in address book sorted by alphabetical order.
+The `SortCommand` inherits from `Command` instead of `UndoableCommands` so there is no mechanism for sorting to be undone.
+
+The `SortCommand` is implemented in the following way:
+[source,java]
+----
+public class SortCommand extends Command {
+    @Override
+    public CommandResult execute() {
+        // ... sort logic ....
+    }
+}
+----
+When the command word `sort` or `st` is entered in UniCity, `AddressBookParser` will call `SortCommandParser`.
+
+Upon calling the function, an editable contactList containing ReadOnlyPerson will be empty at the beginning.
+
+When the user executes `SortCommand`, `sort` or `st`, to sort the list of contacts in address book. The current empty ArrayList of contactList will be sent to the model ........
+
+The following sequence diagram shows how the sort operation works:
+
+image::SortCommandSequenceDiagram.png[width="800"]
+
+[source,java]
+----
+public Boolean sortPersonByName(ArrayList<ReadOnlyPerson> contactList) {
+
+    //check the condition of the list of contacts in addressbook currently
+    //different Boolean value will be returned depending on the order of the contacts
+    if (filteredPersons.size() == 0) {
+        return null;
+    }
+    contactList.addAll(filteredPersons);
+    Collections.sort(contactList, Comparator.comparing(p -> p.toString().toLowerCase()));
+
+    if (contactList.equals(filteredPersons)) {
+        return false;
+    }
+    try {
+        addressBook.setPersons(contactList);
+        indicateAddressBookChanged();
+    }
+    //...exceptions caught...
+    return true;
+}
+----
+
+Upon successful sorting, the `SortCommand` will correctly sort the contacts in alphabetical order and display the contacts under the `PersonListPanel`.
+
+If there is an empty list, the address book will show a message saying `No contact to be sorted.` +
+If the list is in correct order, the address book will show a message saying `Already sorted.`
+
+[NOTE]
+The sorting process is case insensitive.
+
+==== Design considerations
+**Aspect:** Implementation of `SortCommand` +
+**Alternative 1 (current choice):** The `SortCommand` will inherit directly from `Command` without the undo/redo mechanism. +
+**Pros:** After the user has finished sorting his list of contacts, it will remain sorted without reverting back to the original list.  +
+**Cons:** The user can no longer obtain the list of contacts with the original order. +
+**Alternative 2:** The `SortCommand` will implement undo/redo mechanism. +
+**Pros:** All contacts will be able to return to the original order when undo is applied. +
+**Cons:** It may be troublesome for the user as he may want to undo a delete/add function but the list of contacts becomes unsorted and he must sort again.
+
+**Aspect:** How sorting is executed +
+**Alternative 1 (current choice):** Sorting is accomplished using the in-built function in `Collections` to sort the arrays according to alphabetical order. +
+**Pros:** This method is straightforward and easy to implement. +
+**Cons:** The algorithm is in-built so it is harder to debug if something goes wrong. +
+**Alternative 2:** Writing my own sorting algorithm. +
+**Pros:** This method can cater to case sensitivity and other exceptions of the list when sorting is involved. +
+**Cons:** The algorithm may be more prone to error and may not be straightforward enough.
+
+**Aspect:** Data structure to support the sort command +
+**Alternative 1 (current choice):** Create an empty array list to obtain the data from the contact list and sort the contacts. It will overwrite the existing array list of unsorted contacts when sorted. +
+**Pros:** This method is easier to understand and the original list of contacts is not changed to prevent any unexpected mistakes from occurring. +
+**Cons:** This method may have performance issues due to additional memory usage and longer time taken to overwrite the given list of contacts. +
+**Alternative 2:** Edit the current list of contacts directly by adding a function to the `AddressBook` class. +
+**Pros:** This method is less time and storage consuming as sorting is achieved in a single array. +
+**Cons:** There is no way to obtain the original list of contacts for other functions. If a mistake is made, the original list of contacts will be compromised. There is a need to update all classes that inherits from `AddressBook` class which may be confusing.
+
+// end::sort[]
+// birthday: birthday[]
+=== Birthday mechanism (Since v1.3)
+The birthday mechanism is achieved by the `AddBirthdayCommand`. In order to add a birthday value to a contact, the default constructor of `AddBirthdayCommand`
+takes in the index of the contact and the birthday value to be added to the contact.
+
+`AddBirthdayCommand` will use the arguments and parse to `AddressBookParser`. This instance is then sent to `AddBirthdayCommandParser` which parse the index and birthday entered.
+Invalid indexes and command format will be handled by throwing an exception as shown below:
+
+[source,java]
+----
+public class AddBirthdayCommandParser implements Parser<BirthdayCommand> {
+    public BirthdayCommand parse(String args) throws ParseException {
+        try {
+            // ... parse index and pass it to `BirthdayCommand`...
+        } catch (IllegalValueException ive) {
+            // ... throw an exception ...
+        }
+    }
+}
+----
+
+The following sequence diagram shows how `AddBirthdayCommand` is processed:
+
+image::BirthdaySequenceDiagram.png[width="800"]
+
+Upon successfully adding of the birthday value to the contact with the given index shown in the list, it will change the value of the `Birthday` field of a `Person`.
+
+At the same time, the `Birthday` class checks for the valid date entered by the user to ensure that it is in the format of DD/MM/YY or DD/MM/YYY. +
+As `Birthday` is an optional field, the default constructor of `Birthday` takes no arguments and set the default birthday to the `Birthday` field for `Person`. The default value to be used will be "No Birthday Added`.
+In some cases, `BirthdayCommand` needs to be initialized with a certain birthday for testing. Hence, another constructor is used to add a certain birthday to the `Birthday` field.
+
+[source,java]
+----
+public Birthday () {
+    this.birthdayNumber = DEFAULT_BIRTHDAY;
+}
+
+public Birthday(String birthday) throws IllegalValueException {
+    String trimmedBirthday = birthday.trim();
+    if (!isValidBirthdayFormat(trimmedBirthday)) {
+        throw new
+            IllegalValueException(MESSAGE_BIRTHDAY_CONSTRAINTS);
+    }
+    this.birthdayNumber = trimmedBirthday;
+}
+----
+
+The `AddBirthdayCommand` inherits from the `UndoableCommand` so that users can undo the command of adding a birthday by accident.
+The birthday value added will be displayed in the `ExtendedPersonListPanel` instead of `PersonCard` as it is additional information for each contact.
+
+==== Design Considerations
+
+**Aspect:** Changing of the `Birthday` value of the selected `Person` +
+**Alternative 1 (current choice):** Copy values from all fields including the newly added birthday value to a newly created `Person`. Then replace this `Person` with the old `Person` in the `AddressBook` class. +
+**Pros:** This is easy to implement and it ensures that the original value will be intact in case any other information is changed. +
+**Cons:** Additional space is used to store the new `Person` instance. +
+**Alternative 2:** Edit the `Birthday` field in the given list of contacts directly.  +
+**Pros:** No additional space is needed to store the `Person` instance and more straightforward. +
+**Cons:** The data can no longer be retrieved if there is any error in the process of adding birthday to the contact.
+
+**Aspect:** Storing of the `Birthday` value of the selected `Person` +
+**Alternative 1 (current choice):** Add a new `Birthday` class. +
+**Pros:** Same coding format stored as `Name`, `Phone` and other information so the coding principle is standardized. It can also perform validation checks for the birthday value easily. +
+**Cons:** Add a new class affects many components of the code and much work needs to be done to make the changes. +
+**Alternative 2:** Use a `String` value to keep track of birthday for each `Person`. +
+**Pros:** This is easier and faster to implement. +
+**Cons:** It is prone to bugs as the `String` value can be overwritten easily.
+
+// end::birthday[]
+// tag::facebook[]
+=== Facebook mechanism
+
+The facebook mechanism is facilitated by `FacebookCommand`, which resides inside the commands folder of the logic component.
+
+The facebook mechanism displays the Facebook search page of the person specified by the index number inputted.
+// end::facebook[]
+
+image::facebook-command-ui.png[width="800"]
+// tag::facebookcont[]
+Upon execution, the `FacebookCommand` posts a `ShowFacebookRequestEvent` event to the `EventCenter` and the event will be dispatched to the `BrowserPanel` to load Facebook page. The `ShowFacebookRequestEvent` takes the name of the person specified by the index number as an argument.
+
+As part of the UI component, the `BrowserPanel` class loads the facebook page using a method called `loadFacebookPage`. It handles the dispatched `ShowFacebookRequestEvent` event and calls the `loadFacebookPage` to mount the Facebook Page on the user interface.
+
+The Facebook search page is the mobile version of it. This is because the desktop version of Facebook search page cannot be displayed properly in the BrowsePanel due to some formatting issues.
+[NOTE]
+The user has to ensure that an internet connection is established to succeed in the command.
+
+==== Design Considerations
+
+**Aspect:** Logging in to Facebook through CLI or GUI +
+**Alternative 1 (current choice):** User enters the command `facebook INDEX` in the command box without his username and password; once the log in page is loaded he will enter his username and password in the page itself.  +
+**Pros:** Easy to implement and hassle-free. No need to import Facebook API, just load the page by parsing its URL into the relevant methods. +
+**Cons:** Defeats the purpose of a CLI application. User needs to navigate the log in page. +
+**Alternative 2:** User enters the command `facebook INDEX`, followed by his username and password in the command box. He is automatically logged into Facebook and is directed to Facebook's newsfeed page.  +
+**Pros:** Saves users the trouble of navigating the facebook log in page. Adheres to the purpose of the application having a CLI. +
+**Cons:** More difficult to implement. May require the use of Facebook API which may cause unexpected regressions that developers may not know how to solve.
+// end::facebookcont[]
+
+// tag::addremovetag[]
+
+=== Add/Remove Tag mechanism
+
+The add/remove tag mechanism is facilitated by the `FilteredList`, which resides in the `ModelManager`. It inherits
+from the `UndoableCommand` and is similar to the add/delete person function but deals with tags instead.
+
+The mechanism performs an addition/removal of a tag using a list of target indexes that is within the range of the
+default list and a tag to add/remove. By using the `FilteredList`, addition and removal of tags when the list is
+unfiltered or filtered by other commands such as the find command is possible. Furthermore tags can be added to/removed
+from multiple people at once.
+
+Suppose the user wants to add the tag "friends" to the first two persons in the list. The user will execute the
+`AddTagCommand`, addtag 1 2 t/friends, to add the tag "friends" to the 1st and 2nd person in the last person indexing
+of UniCity. The same can be done to remove the tags as illustrated by the diagram below:
+
+image::AddRemoveTag.png[width="800"]
+
+[NOTE]
+If the given indexes are out of bounds, the `AddTagCommand` and `RemoveTagCommand` will throw an exception
+
+The following sequence diagram shows how the add tag operation works:
+
+image::AddTagSdLogic.png[width="800"]
+
+The remove tag command works in the same way but with a different command name instead.
+
+[NOTE]
+If the tag to remove doesn't exist, `RemoveTagCommand` will throw an exception while `AddTagCommand` will throw an
+exception if the tag exists in every person in the given list of indexes.
+
+The `addTag` method of the `ModelManager` goes through each person in the list and adds the tag to each of them and
+updates them. This works the same for the `removeTag` method. After which it raises the `indicateAddressBookChanged`
+event which triggers the storage component to save this change. Note that by indicating an event instead of directly
+calling the storage component, coupling is reduced. The implementation of `addTag` is shown below:
+
+[source,java]
+----
+        /**
+             * Adds given tag to the given indexes of the target persons shown in the last person listing.
+             */
+            @Override
+            public synchronized void addTag(ArrayList<Index> targetIndexes, Tag toAdd, String commandWord) throws PersonNotFoundException,
+                    DuplicatePersonException {
+
+                for (Index index : targetIndexes) {
+                    int targetIndex = index.getZeroBased();
+                    ReadOnlyPerson oldPerson = this.getFilteredPersonList().get(targetIndex);
+
+                    Person newPerson = setTagsForNewPerson(oldPerson, toAdd, commandWord);
+
+                    addressBook.updatePerson(oldPerson, newPerson);
+                    indicateAddressBookChanged();
+                }
+            }
+
+----
+
+==== Design Considerations
+
+**Aspect:** Implementation of the `addTag` and `removeTag` method +
+**Alternative 1 (current choice):** Implement the methods in `ModelManager`. +
+**Pros:**  Easier to implement since `ModelManager` has access to all the required methods and variables. +
+**Cons:** Hard for new developers to understand how it works as a large amount of code in the many layers of the Model
+component must be read to understand the mechanism. +
+**Alternative 2:** Implement the `addTag` and `removeTag` method inside `AddTagCommand` and `RemoveTagCommand`
+respectively. +
+**Pros:** Easier for new developers to understand. +
+**Cons:** Involves replication of code, violating the DRY principle. Furthermore, it violates the Single Responsibility
+Principle and the Separation of Concerns as `AddTagCommand` and `RemoveTagCommand` must now update the person and
+raise the address book changed event.
+
+---
+
+**Aspect:** Type of command +
+**Alternative 1 (current choice):** Implement the command as an `UndoableCommand`. +
+**Pros:** More intuitive for the user to type undo when he makes the mistake. +
+**Cons:** New developers must understand the template pattern before they can understand these commands. +
+**Alternative 2:** Implement the command as a normal `Command`. +
+**Pros:** Allows the user to undo a previous add/remove by clicking the up button to bring up the previous command and
+then changing the first letter since the shortcut command for `AddTagCommand` and `RemoveTagCommand` is "at" and "rt"
+respectively. +
+**Cons:** Less intuitive for the user and is not consistent with the design that commands that modify data should be
+undoable.
+
+// end::addremovetag[]
+
+// tag::find[]
+
+=== Find command closest matching name suggestion mechanism
+
+The closest matching name suggestion mechanism is facilitated by the `getClosestMatchingName` function which resides
+inside `ModelManager`. The algorithm used to find the closest matching name is supported by the `JaroWinklerDistance`
+function that is imported from the Apaches Commons-Text library.
+
+This feature provides a decently accurate suggestion of the person the user might have been referring to in UniCity.
+Furthermore, it shows the results of the suggestion to guide the user further. Suppose that the user has just executed
+`FindCommand`, the given name(s) are searched. If a the name is found, the result is shown else the results for the
+name that is the most similar is shown instead. This flow can be summarised by activity diagram below.
+
+image::FindCommandActivityDiagram.png[width="800"]
+
+[NOTE]
+If the given name does not match with any of the names in UniCity, all contacts are shown instead.
+
+The function that facilitates the suggestion feature, `getClosestMatchingName()`, is implemented as shown.
+
+[source,java]
+----
+        /* JaroWinklerDistance method uses double values ranging from 0 to 1. Set initial value to match very similar
+         * names only. Setting the value to any value less than or equal to 0 will match the first name in filteredPersons
+         */
+        private final double initialToleranceValue = 0.5;
+
+        @Override
+            public String getClosestMatchingName(NameContainsKeywordsPredicate predicate) {
+
+                requireNonNull(predicate);
+                ArrayList<String> allNames = getListOfAllFirstAndLastNames(predicate);
+                List<String> keywords = predicate.getKeywords();
+                return keywords.size() == 1 ? getClosestMatchingNameForOneKeyword(keywords, allNames, initialToleranceValue)
+                        : getClosestMatchingNameForMultipleKeywords(keywords, allNames, initialToleranceValue);
+            }
+
+----
+
+
+==== Design Considerations
+
+**Aspect:** Level of `initialTolerance` value. +
+**Alternative 1 (current choice):** Set the level to a predefined value. +
+**Pros:**  Only the most relevant results are found and shown. +
+**Cons:** Depending on the given level, the checks might too stringent, causing no names to be matched at times. +
+**Alternative 2:** Do not set a value for the tolerance level. +
+**Pros:** There will definitely be a result. +
+**Cons:** No results should be returned for a input that is cannot be matched. For example, if the user were to enter
+a phone number as an input, a result will still be returned when no names in UniCity have numbers in them. This
+results in varying accuracy when trying to find a match. This uncertainty is unfavourable when accuracy is of higher
+priority.
+
+
+// end::find[]
+
+
+// tag::windowsize[]
+
+=== Change window size command mechanism
+
+The `ChangeWindowSizeCommand` is an event-driven mechanism. It is complemented by the `WindowSize` model which contains
+the data constants and functions related to the `WindowSize`. The sequence of events is as follows. When the user
+enters the command to change the window size, the logic component executes the `ChangeWindowSizeCommand`
+which in turns posts a `ChangeWindowSizeRequestEvent`. The User Interface component then handles the event
+`ChangeWindowSizeCommand`. This can be summarised by the sequence diagram below.
+
+image::SDChangeWindowSize.png[width="800"]
+
+==== Design Considerations
+
+**Aspect:** Need for `WindowSize` model. +
+**Alternative 1 (current choice):** `WindowSize` model exists. +
+**Pros:**  Better code quality and it is used by other components in place of the `ChangeWindowSizeCommand`. +
+**Cons:**  First time developer must get used to referring to the model instead of the `ChangeWindowSizeCommand` +
+**Alternative 2:** All attributes and functions associated with the `WindowSize` model is placed in the
+`ChangeWindowSizeCommand`. +
+**Pros:** Convenient for first time developers to understand. +
+**Cons:** `ChangeWindowSizeCommand` is crowded with too much information that can be abstracted away as another class.
+Furthermore, the `ChangeWindowSizeCommand` must be imported unnecessarily when in use by other components, increasing
+coupling.
+
+// end::windowsize[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
@@ -364,12 +937,104 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
+// tag::reply[]
+=== Duplicate-checking and reply mechanism for add command
+
+The duplicate-checking mechanism is facilitated by `AddCommand` features which resides inside the commands folder of the logic component.
+This mechanism checks the user's contacts list for any existing fields that corresponds to the contact information that the user has keyed in when he/she wishes to add a contact.
+The algorithm used to find duplicates are supported by the `checkDuplicateField` method in the `AddCommand` class.++
+
+`checkDuplicateField` method relies on the mutable `duplicateFields` and `MESSAGE_DUPLICATE_FIELD` String attribute to check for duplicates and inform the user of any duplicate fields;
+it checks if `duplicateFields` contains any of the predetermined fields such as name, phone, address and email fields before proceeding to check for any of such duplicate field.
+`duplicateFields` only checks a single occurence of the name, phone, address and email duplicate fields. `checkDuplicateField` will stop checking for duplicates for a particular field once
+`duplicateFields` already contains that field. The code snippet below further illustrates this point:
+[source,java]
+----
+    private void checkDuplicateField(Person toAdd) throws DuplicatePersonException {
+
+    //some code here..
+
+    if (duplicateFields.contains(NAME_FIELD) && duplicateFields.contains(PHONE_FIELD) &&
+        duplicateFields.contains(EMAIL_FIELD) && duplicateFields.contains(ADDRESS_FIELD)) {
+            //method found duplicates for all fields, no further concatenation of message. break from loop.
+            break;
+        }
+
+    /* The following conditional statements checks if duplicateFields already covers, or have yet to cover, any
+     * of the fields. It will keep checking the fields which have not been listed as a duplicate until it hits
+     * one or the loop ends.
+     */
+
+    if (!duplicateFields.contains(NAME_FIELD)) {
+        checkDuplicateName(toAdd, contact);
+    }
+
+    if (!duplicateFields.contains(PHONE_FIELD)) {
+        checkDuplicatePhone(toAdd, contact);
+
+    }
+
+    if (!duplicateFields.contains(ADDRESS_FIELD)) {
+        checkDuplicateAddress(toAdd, contact);
+    }
+
+    if (!duplicateFields.contains(EMAIL_FIELD)) {
+        checkDuplicateEmail(toAdd, contact);
+    }
+
+    some code here..
+
+}
+
+----
+
+`checkDuplicateField` is further dissected into methods that check for duplicates for a particular field. A code snippet below is a method to check for duplicate emails:
+
+[source,java]
+----
+    private void checkDuplicateEmail(Person toAdd, ReadOnlyPerson contact) {
+        if ((toAdd.getEmail().toString().trim().equalsIgnoreCase(contact.getEmail().toString().trim()))
+                && (!toAdd.getEmail().toString().trim().equals(DEFAULT_EMAIL))) {
+            isWaitingforReply = true;
+            if (duplicateFields.equals("")) {
+                duplicateFields = EMAIL_FIELD;
+            } else {
+                duplicateFields += ", " + EMAIL_FIELD;
+            }
+        }
+    }
+----
+A boolean attribute `isWaitingforReply` will be used to check if a `ReplyCommand` is required for this operation. The duplicate-checking methods will set this attribute to true once a duplicate field has been found.
+`AddCommand` then returns a prompt for a user reply when it finds that `isWaitingforReply` is set to true. As it prompts the user, `ReplyCommand` holds the `Person` class to be added until the user replys. ++
+
+The user will reply with a `yes` or `no`. This reply is wrapped in the aforementioned `ReplyCommand` class and handles the add feature for duplicate fields. If the user replies with `yes`, `ReplyCommand` will retrieve
+the `Person` class it has stored as an attribute and proceed with add command's execution. Should the user reply with `no`, the add command will be discarded.
+
+[NOTE]
+The check for duplicate fields are case-insensitve. ie `David Li` will match with `david li` under the name field.
+
+==== Design Considerations
+
+**Aspect:** Integration of the reply mechanism +
+**Alternative 1 (current choice):** Create a class solely for reply itself, called the `ReplyCommand` +
+**Pros:**  `ReplyCommand` is abstracted away from `AddCommand` class and could potentially be used for other undoable commands such as `EditCommand` without breaking any abstraction barriers. +
+**Cons:** Developers have to make more considerations when planning and implementing the code.
+Having a reply command may be insignificant and thus contradicts the actual definition of `Command`; while each commands execute complex, unique actions
+and have unique purposes, the reply command merely pauses and repeats the add command according the user's wish. +
+**Alternative 2:** Fix the reply mechanism into `AddCommand` +
+**Pros:**  This makes it easier for developers to code as all the duplicate-checking and reply mechanism will be in one class. +
+**Cons:** This makes it difficult for developers to implement if they decide to include a duplicate-checking and reply mechanism without repeating codes for other commands, such as `EditCommand`.
+Also, that would not be ideal in the context of abstraction layers as it could potentially lead to other commands having to penetrate the `AddCommand` abstraction barrier to retrieve the reply mechanism.+
+
+// end::reply[]
+
 == Documentation
 
 We use asciidoc for writing documentation.
 
 [NOTE]
-We chose asciidoc over Markdown because asciidoc, although a bit more complex than Markdown, provides more flexibility in formatting.
+We chose asciidoc over Markdown because asciidoc, although a bit more complex than Markdown, provides
+more flexibility in formatting.
 
 === Editing Documentation
 
@@ -401,16 +1066,16 @@ _Figure 5.6.1 : Saving documentation as PDF files in Chrome_
 There are three ways to run tests.
 
 [TIP]
-The most reliable way to run tests is the 3rd one. The first two methods might fail some GUI tests due to platform/resolution-specific idiosyncrasies.
+The most reliable way to run tests is the method 3. The first two methods might fail some GUI tests due to platform/resolution-specific idiosyncrasies.
 
 *Method 1: Using IntelliJ JUnit test runner*
 
-* To run all tests, right-click on the `src/test/java` folder and choose `Run 'All Tests'`
-* To run a subset of tests, you can right-click on a test package, test class, or a test and choose `Run 'ABC'`
+* Run all tests, right-click on the `src/test/java` folder and choose `Run 'All Tests'`.
+* Run a subset of tests, you can right-click on a test package, test class, or a test and choose `Run 'ABC'`.
 
 *Method 2: Using Gradle*
 
-* Open a console and run the command `gradlew clean allTests` (Mac/Linux: `./gradlew clean allTests`)
+* Open a console and run the command `gradlew clean allTests` (Mac/Linux: `./gradlew clean allTests`).
 
 [NOTE]
 See <<UsingGradle#, UsingGradle.adoc>> for more info on how to run tests using Gradle.
@@ -419,16 +1084,16 @@ See <<UsingGradle#, UsingGradle.adoc>> for more info on how to run tests using G
 
 Thanks to the https://github.com/TestFX/TestFX[TestFX] library we use, our GUI tests can be run in the _headless_ mode. In the headless mode, GUI tests do not show up on the screen. That means the developer can do other things on the Computer while the tests are running.
 
-To run tests in headless mode, open a console and run the command `gradlew clean headless allTests` (Mac/Linux: `./gradlew clean headless allTests`)
+Run tests in headless mode, open a console and run the command `gradlew clean headless allTests` (Mac/Linux: `./gradlew clean headless allTests`).
 
 === Types of tests
 
 We have two types of tests:
 
-.  *GUI Tests* - These are tests involving the GUI. They include,
-.. _System Tests_ that test the entire App by simulating user actions on the GUI. These are in the `systemtests` package.
+.  *GUI Tests* - These are tests involving the GUI. They include:
+.. _System Tests_ that test the entire UniCity by simulating user actions on the GUI. These are in the `systemtests` package.
 .. _Unit tests_ that test the individual components. These are in `seedu.address.ui` package.
-.  *Non-GUI Tests* - These are tests not involving the GUI. They include,
+.  *Non-GUI Tests* - These are tests not involving the GUI. They include:
 ..  _Unit tests_ targeting the lowest level methods/classes. +
 e.g. `seedu.address.commons.StringUtilTest`
 ..  _Integration tests_ that are checking the integration of multiple code units (those code units are assumed to be working). +
@@ -447,15 +1112,15 @@ e.g. `seedu.address.logic.LogicManagerTest`
 
 === Build Automation
 
-See <<UsingGradle#, UsingGradle.adoc>> to learn how to use Gradle for build automation.
+Refer to <<UsingGradle#, UsingGradle.adoc>> to learn how to use Gradle for build automation.
 
 === Continuous Integration
 
-We use https://travis-ci.org/[Travis CI] and https://www.appveyor.com/[AppVeyor] to perform _Continuous Integration_ on our projects. See <<UsingTravis#, UsingTravis.adoc>> and <<UsingAppVeyor#, UsingAppVeyor.adoc>> for more details.
+We use https://travis-ci.org/[Travis CI] and https://www.appveyor.com/[AppVeyor] to perform _Continuous Integration_ on our projects. Refer to <<UsingTravis#, UsingTravis.adoc>> and <<UsingAppVeyor#, UsingAppVeyor.adoc>> for more details.
 
 === Making a Release
 
-Here are the steps to create a new release.
+Here are the steps to create a new release:
 
 .  Update the version number in link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp.java`].
 .  Generate a JAR file <<UsingGradle#creating-the-jar-file, using Gradle>>.
@@ -464,7 +1129,7 @@ Here are the steps to create a new release.
 
 === Managing Dependencies
 
-A project often depends on third-party libraries. For example, Address Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
+A project often depends on third-party libraries. For example, Address Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives: +
 a. Include those libraries in the repo (this bloats the repo size) +
 b. Require developers to download those libraries manually (this creates extra work for developers)
 
@@ -473,9 +1138,9 @@ b. Require developers to download those libraries manually (this creates extra w
 
 Suggested path for new programmers:
 
-1. First, add small local-impact (i.e. the impact of the change does not go beyond the component) enhancements to one component at a time. Some suggestions are given in this section link:#improving-each-component[Improving a Component].
+Path 1: Add small local-impact (i.e. the impact of the change does not go beyond the component) enhancements to one component at a time. Some suggestions are given in this section link:#improving-each-component[Improving a Component].
 
-2. Next, add a feature that touches multiple components to learn how to implement an end-to-end feature across all components. The section link:#creating-a-new-command-code-remark-code[Creating a new command: `remark`] explains how to go about adding such a feature.
+Path 2: Add a feature that touches multiple components to learn how to implement an end-to-end feature across all components. The section link:#creating-a-new-command-code-remark-code[Creating a new command: `remark`] explains how to go about adding such a feature.
 
 === Improving each component
 
@@ -723,33 +1388,103 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *` |user |add a new person |connect to him or her when I need to
 
 |`* * *` |user |delete a person |remove entries that I no longer need
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |user |edit my friends' contact on UniCity |make changes to their details when necessary
+
+|`* * *` |user |exit UniCity |continue using other functions in my operating system
+
+|`* * *` |forgetful user |I want a suggestion of the closest matching person when I type his name incorrectly |so that I can find that person quickly
+
+|`* *` |user |add a new person simply through their name and phone |stay connected with them
+
+|`* *` |user |I want to undo/redo multiple commands at once |so that I can revert/restore several changes back to a certain point of my choosing
+
+|`* *` |user |As a user who can type fast, I want to be able to change the window size using the CLI |so that I can view UniCity to my liking, conveniently
+
+|`* *` |user |I want to add and remove tags from multiple people at once |so that I can add additional details conveniently
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
+|`* *` |user |access my contacts' social media account through address book |connect with my friends better on social media
+
+|`* *` |user |remove a tag from my friends' contact information |
+
+|`* *` |user |sort my contacts in alphabetical order |I can find my contacts easily
+
+|`* *` |caring user |add birthday to my close friends |celebrate their birthday with them
+
+|`* *` |user |add and edit birthday field of my friends whenever possible |update their birthday when necessary
+
+|`* *` |lazy user |type shorter commands while ignoring their cases |access my friends' contact information faster
+
+|`* *` |curious user |search my contacts' information online with google |read up news about them
+
+|`* *` |careless user |undo my previous commands |retrieve important information that I have accidentally deleted earlier on
+
+|`* *` |indecisive user |redo my undone commands |recover the original state of my address book
+
+|`* *` |careful user |look through my past commands |trace back my actions
+
+|`* *` |bored user |select a person with a certain index number |contact a random person in my contacts I tried
+
+|`* *` |lazy user |select a contact from my address book to call |I do not need to use other phone functions to call
+
+|`* *` |lazy user |better identify tags by viewing them in different colors |
+
+|`*` |careless user |add correct date for my friend's birthday |celebrate with them on the correct date
+
+|`*` |user with many tags in the address book |sort my contact list according to their tags |locate a person easily
+
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*` |forgetful user |include a photo next to my contacts' name |recognize my contacts' better if I forget their names
+
+|`*` |fancy user |set a background wallpaper to my address book | personalise and beautify my address book
+
+|`*` |fancy user |change the color scheme and theme of my address book to my preference | personalise and beautify UniCity
 |=======================================================================
 
-{More to be added}
 
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is the `UniCity` and the *Actor* is the `user`, unless specified otherwise)
+
 
 [discrete]
-=== Use case: Delete person
+=== Use case: Add a person
 
 *MSS*
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1. User requests to add a person with the phone number and email address.
+2. UniCity processes the information and adds the person to the list.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The given information is in an invalid format.
++
+[none]
+** 2a1. UniCity shows an error message and displays a sample input.
++
+Use case resumes at step 1.
+
+[discrete]
+=== Use case: Delete a person
+
+*MSS*
+
+1.  User requests to list persons.
+2.  UniCity shows a list of persons.
+3.  User requests to delete a specific person in the list.
+4.  UniCity deletes the person.
 +
 Use case ends.
 
@@ -763,18 +1498,443 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. UniCity shows an error message.
 +
 Use case resumes at step 2.
 
-{More to be added}
+[discrete]
+=== Use case: Edit a person
+
+*MSS*
+
+1. User requests to edit a person.
+2. UniCity locates that specific person.
+3. User provides new information of that person.
+4. UniCity updates the person with the information provided.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. The person given is not in the list.
++
+[none]
+** 3a1. UniCity shows an error message.
++
+Use case ends.
+
+
+[none]
+* 3b. The given information is in an invalid format.
++
+[none]
+** 3b1. UniCity shows an error message and displays a sample input.
++
+Use case resumes at step 1.
+
+[discrete]
+=== Use case: Find a person
+
+*MSS*
+
+1. User requests to find a person.
+2. UniCity processes the information and lists every person with the name.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The given name does not match anyone in the list.
++
+[none]
+** 2a1. UniCity prompts a message that the person with that name cannot be found.
+** 2a2. UniCity then tries to find the persons that have the closest matching name to the given name.
+** 2a3. If UniCity cannot find the closest matching name, it lists all persons.
+** 2a4. Else the persons with the closest matching name will be shown.
++
+Use case ends.
+
+[discrete]
+=== Use case: Select a person
+
+*MSS*
+
+1. User requests to select a person with a certain index number.
+2. UniCity selects the person with that index number in the current list order.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The index is smaller than 1.
++
+[none]
+** 2a1. UniCity displays an error message and prompts a sample input format.
++
+Use case ends.
+
+[none]
+* 2b. The index is out of bound.
++
+[none]
+** 2b1. UniCity displays an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Find the Facebook profile of a person
+
+*MSS*
+
+1. User requests to view the Facebook profile of a person specified by an index number.
+2. UniCity loads the Facebook search page with the person's name.
++
+Use case ends.
+
+[discrete]
+=== Use case: Display a person's address on Google Maps
+
+*MSS*
+
+1. User requests to view the address of a person specified by an index number on Google Maps.
+2. UniCity displays the address on Google Maps.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The person's address is not entered.
++
+[none]
+** 2a1. UniCity displays an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: List all persons
+
+*MSS*
+
+1. User requests to view all persons in the list.
+2. UniCity displays a list of every person stored.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+[none]
+** 2a1. UniCity displays an empty list.
++
+Use case ends.
+
+[discrete]
+=== Use case: Favourite a person
+
+*MSS*
+
+1. User requests to favourite a person specified by an index number.
+2. UniCity locates the person and marks this person as a favourite contact.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The index number is out of bound.
++
+[none]
+** 2a1. UniCity throws an exception.
++
+Use case ends.
+
+[discrete]
+=== Use case: List all favourite persons
+
+*MSS*
+
+1. User requests to view all favourite persons in the list.
+2. UniCity displays a list of all favourite contacts.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. There are no favourite contacts in UniCity.
++
+[none]
+** 2a1. UniCity displays an empty list.
++
+Use case ends.
+
+[discrete]
+=== Use case: Sort all contacts
+
+*MSS*
+
+1. User requests to sort all persons in the list.
+2. UniCity displays a list of every person sorted by name.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+[none]
+** 2a1. UniCity displays a message on empty list.
++
+Use case ends.
++
+[none]
+* 2b. The list is already sorted in order.
++
+** 2b1. UniCity displays a message on about the sorted list.
++
+Use case ends.
+
+[discrete]
+=== Use case: Undo an action
+
+*MSS*
+
+1. User requests to undo an action or multiple actions.
+2. UniCity reverses the changes of the previous commands depending on the number of commands to undo
+and displays a success message.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The last command is not undoable.
++
+[none]
+** 2a1. UniCity displays a failure message.
++
+Use case ends.
+
+[none]
+* 2b. No command was executed before.
++
+[none]
+** 2b1. UniCity displays a failure message.
++
+Use case ends.
+
+[none]
+* 2c. Number of commands to undo is more than the undoable commands executed.
++
+[none]
+** 2c1. UniCity displays a failure message on how many commands were undone and how many were not.
++
+Use case ends.
+
+[discrete]
+=== Use case: Redo an action
+
+*MSS*
+
+1. User requests to redo a single or multiple previously undone action.
+2. UniCity re-executes the previously undone commands depending on the number of commands to redo before the undo
+command and displays a success message.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. No action was undone.
++
+[none]
+** 2a1. UniCity displays a failure message.
++
+Use case ends.
+
+[none]
+* 2b. Number of commands to redo is more than the commands undone.
++
+[none]
+** 2b1. UniCity displays a failure message on how many commands were redone and how many were not.
++
+Use case ends.
+
+[discrete]
+=== Use case: Add birthday to a contact
+
+*MSS*
+
+1. User requests to list persons.
+2. UniCity shows a list of persons.
+3. User requests to add birthday to a specific contact in the list.
+4. UniCity adds the birthday of that contact to the field.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. the list is empty.
++
+Use case ends.
+
+[none]
+* 3a. the given index is invalid.
++
+[none]
+** 3a1. UniCity displays an error message.
++
+Use case resumes at step 2.
+
+[none]
+* 3b. the given birthday is invalid format.
++
+[none]
+** 3b1. UniCity shows an error message and a sample input.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Add tags
+
+*MSS*
+
+1. User requests to add given tags to given person indexes.
+2. UniCity processes the information adds the given tags to the given persons.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The given information is in an invalid format.
++
+[none]
+** 2a1. UniCity shows an error message and displays a sample input.
++
+Use case resumes at step 1.
+
+[none]
+* 2b. the given index is invalid.
++
+[none]
+** 2b1. UniCity shows an error message and displays a sample input.
++
+Use case resumes at step 1.
+
+[discrete]
+=== Use case: Change window size
+
+*MSS*
+
+1. User requests to change window size.
+2. UniCity changes window size.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. Window size requested is not in the predefined list of sizes.
++
+[none]
+** 2a1. UniCity displays a failure message.
++
+Use case ends.
+
+[discrete]
+=== Use case: View previous commands
+
+*MSS*
+
+1. User requests to view previous commands entered.
+2. UniCity returns a list of commands entered from the most recent to the earliest.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. No command was given.
++
+[none]
+** 2a1. UniCity displays a message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Clear UniCity
+
+*MSS*
+
+1. User requests to clear the UniCity.
+2. UniCity asks the user to confirm clearing the entire address book.
+3. User confirms to proceed.
+4. UniCity deletes everything that has been stored.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. User decides not to proceed to clear UniCity.
++
+[none]
+** 3a1. UniCity displays clearing aborted.
++
+Use case ends.
+
+[discrete]
+=== Use case: Get help
+
+*MSS*
+
+1. User requests to get help with using UniCity.
+2. UniCity opens the user guide.
++
+Use case ends.
+
+[discrete]
+=== Use case: Exit the application
+
+*MSS*
+
+1. User requests to exit UniCity.
+2. UniCity asks the user to confirm.
+3. User confirms to exit the application.
+4. UniCity shuts down.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. User decides not to proceed to exit UniCity by typing another command.
++
+[none]
+** 3a1. UniCity aborts exiting and executes the new command.
++
+Use case ends.
 
 [appendix]
 == Non Functional Requirements
 
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be
+able to accomplish most of the tasks faster using commands than using the mouse.
+.  Should start up within 5 seconds of running the app.
+.  Every command should be documented.
+.  User interface should intuitive for a novice user.
+.  System should not crash when an error has been encountered. Error handling must be dealt with gracefully.
 
 {More to be added}
 
@@ -793,6 +1953,84 @@ Private contact detail
 
 ....
 A contact detail that is not meant to be shared with others
+....
+
+[[API]]
+Application Programming Interface
+
+....
+A specific method prescribed by a computer operating system or by an application program by which a programmer writing
+an application program can make requests of the operating system or another application.
+....
+
+[[bug]]
+Bug
+
+....
+A coding error in a computer program.
+....
+
+[[help-system]]
+Help System
+
+....
+A documentation component of a software program that explains the features of the program and helps the user understand
+its capabilities.
+....
+
+[[information-architecture]]
+Information Architecture
+
+....
+The set of ideas about how all information in a given context should be treated philosophically and, in a general way,
+how it should be organized; this is expressed in an information architecture document.
+....
+
+[[IDE]]
+Integrated Development Environment
+
+....
+A programming environment that has been packaged as an application program, typically consisting of a code editor, a
+compiler, a debugger, and a GUI builder.
+....
+
+[[KISS Principle]]
+Keep It Simple, Stupid
+
+....
+The principle that people want products that are easy to learn and use, and that companies realize time and cost benefits
+ by producing such products.
+....
+
+[[OOP]]
+Object-Oriented Programming
+
+....
+A programming model organized around objects rather than actions and data rather than logic, based on the idea that what
+ we really care about are the objects we want to manipulate, rather than the logic required to manipulate them.
+....
+
+[[SDK]]
+Software Development Kit
+
+....
+A set of programs used by a computer programmer to write application programs.
+....
+
+[[user-acceptance-testing]]
+User Acceptance Testing
+
+....
+A phase of software development in which the software is tested in the "real world" by the intended audience.
+....
+
+[[user-interface]]
+User Interface
+
+....
+Everything designed into an information device with which a human being may interact -- including display screen,
+keyboard, mouse, light pen, the appearance of a desktop, illuminated characters, help messages, and how an application
+program or a Web site invites interaction and responds to it.
 ....
 
 [appendix]

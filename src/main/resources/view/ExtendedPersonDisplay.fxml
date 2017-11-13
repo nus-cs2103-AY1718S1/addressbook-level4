@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- @@author jacoblipech -->
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox id="cardPane" fx:id="cardPane" minHeight="120" minWidth="150" prefHeight="416.0" prefWidth="160.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+    <Label fx:id="name" styleClass="cell_big_label" text="\$name">
+        <graphic>
+            <ImageView fitHeight="20.0" fitWidth="20.0">
+                <image>
+                    <Image url="@../images/name(white).png" />
+                </image>
+            </ImageView>
+        </graphic>
+        <padding>
+            <Insets bottom="5.5" />
+        </padding>
+    </Label>
+    <Label fx:id="phone" styleClass="cell_small_label" text="\$phone">
+      <graphic>
+              <ImageView fitHeight="20.0" fitWidth="20.0">
+                  <image>
+                      <Image url="@../images/phone(white).png" />
+                  </image>
+              </ImageView>
+      </graphic>
+        <padding>
+            <Insets bottom="5.5" />
+        </padding>
+    </Label>
+    <Label fx:id="email" styleClass="cell_small_label" text="\$email">
+      <graphic>
+              <ImageView fitHeight="20.0" fitWidth="20.0">
+                  <image>
+                      <Image url="@../images/email(white).png" />
+                  </image>
+              </ImageView>
+      </graphic>
+        <padding>
+            <Insets bottom="5.5" />
+        </padding>
+    </Label>
+    <Label fx:id="address" styleClass="cell_small_label" text="\$address">
+      <graphic>
+              <ImageView fitHeight="20.0" fitWidth="20.0">
+                  <image>
+                      <Image url="@../images/address(white).png" />
+                  </image>
+              </ImageView>
+      </graphic>
+        <padding>
+            <Insets bottom="5.5" />
+        </padding>
+    </Label>
+    <Label fx:id="birthday" styleClass="cell_small_label" text="\$birthday">
+      <graphic>
+              <ImageView fitHeight="20.0" fitWidth="20.0">
+                  <image>
+                      <Image url="@../images/birthday(white).png" />
+                  </image>
+              </ImageView>
+      </graphic>
+        <padding>
+            <Insets bottom="5.5" />
+        </padding>
+    </Label>
+    </children>
+</VBox>

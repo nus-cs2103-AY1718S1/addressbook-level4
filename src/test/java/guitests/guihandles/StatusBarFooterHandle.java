@@ -12,9 +12,11 @@ public class StatusBarFooterHandle extends NodeHandle<Node> {
 
     private static final String SYNC_STATUS_ID = "#syncStatus";
     private static final String SAVE_LOCATION_STATUS_ID = "#saveLocationStatus";
+    private static final String TOTAL_PEOPLE_ID = "#totalPeople";
 
     private final StatusBar syncStatusNode;
     private final StatusBar saveLocationNode;
+    private final StatusBar totalPeople;
 
     private String lastRememberedSyncStatus;
     private String lastRememberedSaveLocation;
@@ -24,6 +26,7 @@ public class StatusBarFooterHandle extends NodeHandle<Node> {
 
         this.syncStatusNode = getChildNode(SYNC_STATUS_ID);
         this.saveLocationNode = getChildNode(SAVE_LOCATION_STATUS_ID);
+        this.totalPeople = getChildNode(TOTAL_PEOPLE_ID);
     }
 
     /**
@@ -33,6 +36,15 @@ public class StatusBarFooterHandle extends NodeHandle<Node> {
         return syncStatusNode.getText();
     }
 
+    //@@author jacoblipech
+    /**
+     * Returns the text of 'total number of people' in contacts of the status bar
+     */
+    public String getTotalPeople() {
+        return totalPeople.getText();
+    }
+
+    //@@author
     /**
      * Returns the text of the 'save location' portion of the status bar.
      */

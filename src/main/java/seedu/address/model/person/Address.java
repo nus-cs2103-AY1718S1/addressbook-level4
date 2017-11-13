@@ -19,7 +19,13 @@ public class Address {
      */
     public static final String ADDRESS_VALIDATION_REGEX = "[^\\s].*";
 
+    public static final String DEFAULT_ADDRESS = "No Address Added";
+
     public final String value;
+
+    public Address () {
+        this.value = DEFAULT_ADDRESS; //default value
+    }
 
     /**
      * Validates given address.

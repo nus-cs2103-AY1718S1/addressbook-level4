@@ -1,0 +1,121 @@
+= Vivek Lakshmanan - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project:  UniCity
+UniCity is a desktop address book application used to help university students manage their ever-growing network.
+The user interacts with it using a CLI, and it has a GUI created with JavaFX.
+It is written in Java, and has about 16 kLoC (16 000 Lines of Code).
+
+*Code contributed*: [https://github.com/CS2103AUG2017-W13-B1/main/blob/master/collated/main/vivekscl.md[Functional code]] [https://github.com/CS2103AUG2017-W13-B1/main/blob/master/collated/test/vivekscl.md[Test code]]
+
+=== Enhancement Added: Adding/Removing Tags
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=addremove]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Before the addition of this enhancement, the only way to add more tags was to manually edit each person and enter an
+entirely new list of tags. Due to this high level of inconvenience, a specific command to add and remove tags was
+required.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=addremovetag]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Suggestion Feature for Find Command
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=find]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+The find command previously showed results only for names that are found in UniCity. However, when a mistake is made,
+neither are any results shown nor is a suggestion made for the user to realise his mistake. This leaves the user
+confused and thus this enhancement was required. With this enhancement, the user is guided towards finding the
+result he is looking for.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=find]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Changing of Window Size
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=windowsize]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+The target users are university students who are able to type fast and prefer that method of entering commands. As
+such there is a need in having a command to change window size instead of manually dragging the corners.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=windowsize]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Autocomplete feature through analysis of command history
+
+Over time, the user may type repeated commands, as such an autocomplete feature would be convenient for the user.
+After the user closes UniCity the command history which usually becomes empty, will be stored instead. With the memory
+of the command history, an analysis can be done and suggestions as a drop down menu can be made when the user types
+similar commands. As suggested in the forum issue https://github.com/nus-cs2103-AY1718S1/forum/issues/122[#122],
+the ControlFX library in JavaFX will prove useful in implementing this feature.
+
+=== Other contributions
+
+* Updated the GUI to include Window menu item to complement changing of window size.  (Pull request https://github.com/CS2103AUG2017-W13-B1/main/pull/95[#95])
+* Wrote additional GUI automated tests for changing of window size using the window menu item. (Pull request https://github.com/CS2103AUG2017-W13-B1/main/pull/95[#95])
+* Offered enhanced find command in the forum for reuse. (Forum issue https://github.com/nus-cs2103-AY1718S1/forum/issues/189[#189])
+* Added Coveralls to reflect test coverage of UniCity.
+* Updated gradle dependencies to add new libraries and other configurations.
+* Cleared many TODOs in UniCity. (Pull Request https://github.com/CS2103AUG2017-W13-B1/main/pull/112[#112])
+* Increase code coverage by 1.3%. (Pull Request https://github.com/CS2103AUG2017-W13-B1/main/pull/112[#112])
+* Enhanced the `UndoCommand` and `RedoCommand` to undo and redo multiple commands respectively.
+(Pull Request https://github.com/CS2103AUG2017-W13-B1/main/pull/74[#74])

@@ -13,12 +13,18 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
  */
 public class DeleteCommand extends UndoableCommand {
 
-    public static final String COMMAND_WORD = "delete";
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Deletes the person identified by the index number used in the last person listing.\n"
+    //@@author LeeYingZheng
+    public static final String COMMAND_WORDVAR_1 = "delete";
+    public static final String COMMAND_WORDVAR_2 = "d";
+    //@@author
+    public static final String MESSAGE_USAGE = COMMAND_WORDVAR_1
+            + " OR "
+            + "d"
+            + ": Deletes the person identified by the index number used in the last person listing."
+            + " Command is case-insensitive. \n"
             + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " 1";
+            + "Example 1: " + COMMAND_WORDVAR_1 + " 1"
+            + "Example 2: " + COMMAND_WORDVAR_2.toUpperCase() + " 2";
 
     public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
 
