@@ -21,7 +21,7 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.NameStartsWithKeywordsPredicate;
+import seedu.address.model.person.NameContainsPartialKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 //@@author RSJunior37
 /**
@@ -32,10 +32,10 @@ public class PartialFindCommandTest {
 
     @Test
     public void equals() {
-        NameStartsWithKeywordsPredicate firstPredicate =
-                new NameStartsWithKeywordsPredicate(Collections.singletonList("first"));
-        NameStartsWithKeywordsPredicate secondPredicate =
-                new NameStartsWithKeywordsPredicate(Collections.singletonList("second"));
+        NameContainsPartialKeywordsPredicate firstPredicate =
+                new NameContainsPartialKeywordsPredicate(Collections.singletonList("first"));
+        NameContainsPartialKeywordsPredicate secondPredicate =
+                new NameContainsPartialKeywordsPredicate(Collections.singletonList("second"));
 
         PartialFindCommand findFirstCommand = new PartialFindCommand(firstPredicate);
         PartialFindCommand findSecondCommand = new PartialFindCommand(secondPredicate);
@@ -65,17 +65,17 @@ public class PartialFindCommandTest {
     }
 
     @Test
-    public void execute_multipleKeywords_multiplePersonsFound() {
+    public void execute_multiplePartialKeywords_allPersonsFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 3);
-        PartialFindCommand command = prepareCommand("Ca Ell Fio");
+        PartialFindCommand command = prepareCommand("Ca ll Fio");
         assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, ELLE, FIONA));
     }
 
     @Test
-    public void execute_multipleKeywords_onlyReturnFirstNameMatch() {
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
-        PartialFindCommand command = prepareCommand("Ku Mey Fi");
-        assertCommandSuccess(command, expectedMessage, Arrays.asList(FIONA));
+    public void execute_multipleFullKeywords_allPersonsFound() {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 2);
+        PartialFindCommand command = prepareCommand("Kurz Fiona");
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(CARL, FIONA));
     }
 
 
@@ -85,7 +85,7 @@ public class PartialFindCommandTest {
      */
     private PartialFindCommand prepareCommand(String userInput) {
         PartialFindCommand command =
-                new PartialFindCommand(new NameStartsWithKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
+                new PartialFindCommand(new NameContainsPartialKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
