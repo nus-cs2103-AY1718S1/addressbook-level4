@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addressbook>
+<intelli>
     <persons>
         <name>Hans Muster</name>
         <phone isPrivate="false">9482424</phone>
@@ -63,4 +63,4 @@
         <address isPrivate="false">chicago ave</address>
         <remark isPrivate="false"></remark>
     </persons>
-</addressbook>
+</intelli>

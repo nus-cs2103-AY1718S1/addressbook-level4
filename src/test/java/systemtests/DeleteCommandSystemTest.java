@@ -78,6 +78,7 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         /* Case: delete the selected person -> person list panel selects the person before the deleted person */
         showAllPersons();
         expectedModel = getModel();
+
         Index selectedIndex = getLastIndex(expectedModel);
         Index expectedIndex = Index.fromZeroBased(selectedIndex.getZeroBased() - 1);
         selectPerson(selectedIndex);
@@ -86,8 +87,19 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         expectedResultMessage = String.format(MESSAGE_DELETE_PERSON_SUCCESS, deletedPerson);
         assertCommandSuccess(command, expectedModel, expectedResultMessage, expectedIndex);
 
-        /* --------------------------------- Performing invalid delete operation ------------------------------------ */
+        /* --------------------- Performing delete operation while a person card is selected ------------------------ */
+        //@@author wenmogu
+        /* Case: delete a person with relationship -> relationship disappears*/
+        showPersonsWithName(KEYWORD_MATCHING_MEIER);
+        expectedModel = getModel();
+        deletedPerson = removePerson(expectedModel, INDEX_FIRST_PERSON);
+        expectedResultMessage = String.format(MESSAGE_DELETE_PERSON_SUCCESS, deletedPerson);
+        String addRelationshipCommand = "addre 1 2 directed";
+        executeCommand(addRelationshipCommand);
+        assertCommandSuccess("delete 1", expectedModel, expectedResultMessage);
 
+        /* --------------------------------- Performing invalid delete operation ------------------------------------ */
+        //@@author
         /* Case: invalid index (0) -> rejected */
         command = DeleteCommand.COMMAND_WORD + " 0";
         assertCommandFailure(command, MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
