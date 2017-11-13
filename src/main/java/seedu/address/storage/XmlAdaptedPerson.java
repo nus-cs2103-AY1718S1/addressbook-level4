@@ -81,6 +81,7 @@ public class XmlAdaptedPerson {
         note = source.getNote().value;
         photo = source.getPhoto().photoUrl;
         tagged = new ArrayList<>();
+        relation = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
         }

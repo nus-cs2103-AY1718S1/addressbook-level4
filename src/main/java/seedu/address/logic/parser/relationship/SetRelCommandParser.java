@@ -104,7 +104,7 @@ public class SetRelCommandParser implements Parser<SetRelCommand> {
             return Optional.empty();
         }
         Collection<String> relSet = rel.size() == 1 && rel.contains("") ? Collections.emptySet() : rel;
-        return Optional.of(ParserUtil.parseRel(relSet));
+        return Optional.of(ParserUtil.parseRels(relSet));
     }
 
     /**

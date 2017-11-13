@@ -63,9 +63,10 @@ public class SetRelCommand extends UndoableCommand {
     private final boolean addPrefixPresent;
 
     /**
-     * @param indexOne   first index of the person in the filtered person list to add relationship
-     * @param indexTwo   second index of the person in the filtered person list to add relationship
-     * @param editPerson details to edit the person with
+     * @param indexOne          first index of the person in the filtered person list to add relationship
+     * @param indexTwo          second index of the person in the filtered person list to add relationship
+     * @param editPerson        details to edit the person with
+     * @param addPrefixPresent  add prefix present or not present
      */
     public SetRelCommand(Index indexOne, Index indexTwo, EditPerson editPerson, boolean addPrefixPresent) {
         requireNonNull(indexOne);
@@ -76,7 +77,6 @@ public class SetRelCommand extends UndoableCommand {
         this.editPerson = editPerson;
         this.addPrefixPresent = addPrefixPresent;
     }
-    //@@author
     /**
      * Creates and returns a {@code Person} with the details of {@code personToEdit}
      * edited with {@code editPersonDescriptor}.
@@ -107,8 +107,6 @@ public class SetRelCommand extends UndoableCommand {
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedCompany,
         updatedPosition, updatedStatus, updatedPriority, updatedNote, updatedPhoto, updatedTags, updatedRel);
     }
-
-    //@@author huiyiiih
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
@@ -138,6 +136,7 @@ public class SetRelCommand extends UndoableCommand {
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedPersonOne, editedPersonTwo));
     }
     //@@author
+
     @Override
     public boolean equals(Object other) {
         // short circuit if same object

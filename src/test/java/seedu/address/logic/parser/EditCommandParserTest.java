@@ -25,7 +25,7 @@ import static seedu.address.logic.commands.CommandTestUtil.PHOTO_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.PHOTO_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.POSITION_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.PRIORITY_DESC_AMY;
-//import static seedu.address.logic.commands.CommandTestUtil.REL_DESC_COLLEAGUE;
+import static seedu.address.logic.commands.CommandTestUtil.REL_DESC_SIBLINGS;
 import static seedu.address.logic.commands.CommandTestUtil.STATUS_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
@@ -66,6 +66,7 @@ import seedu.address.model.person.Photo;
 import seedu.address.model.person.Position;
 import seedu.address.model.person.Priority;
 import seedu.address.model.person.Status;
+import seedu.address.model.relationship.Relationship;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 
@@ -143,6 +144,21 @@ public class EditCommandParserTest {
                 Name.MESSAGE_NAME_CONSTRAINTS);
     }
 
+    //@@author huiyiiih
+    @Test
+    public void parse_addrelprefixpresent_failure() {
+        // only relationship prefix present
+        assertParseFailure(parser, "1" + REL_DESC_SIBLINGS, EditCommand.MESSAGE_NOT_EDITED);
+
+        // valid inputs and relationship prefix present
+        assertParseFailure(parser, "1" + TAG_DESC_FRIEND + REL_DESC_SIBLINGS,
+            Relationship.MESSAGE_REL_PREFIX_NOT_ALLOWED);
+
+        // invalid phone and relationship present
+        assertParseFailure(parser, "1" + INVALID_PHONE_DESC + REL_DESC_SIBLINGS, Phone.MESSAGE_PHONE_CONSTRAINTS);
+    }
+    //@@author
+
     @Test
     public void parse_allFieldsSpecified_success() {
         Index targetIndex = INDEX_SECOND_PERSON;
@@ -205,12 +221,6 @@ public class EditCommandParserTest {
         descriptor = new EditPersonDescriptorBuilder().withTags(VALID_TAG_FRIEND).build();
         expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
-
-        // relationship
-        /*userInput = targetIndex.getOneBased() + REL_DESC_COLLEAGUE;
-        descriptor = new EditPersonDescriptorBuilder().withRelation(VALID_REL_COLLEAGUE).build();
-        expectedCommand = new EditCommand(targetIndex, descriptor);
-        assertParseSuccess(parser, userInput, expectedCommand);*/
     }
 
     //@@author sebtsh
@@ -229,7 +239,7 @@ public class EditCommandParserTest {
                 .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withCompany(VALID_COMPANY_BOB)
                 .withPosition(VALID_POSITION_BOB).withStatus(VALID_STATUS_AMY).withPriority(VALID_PRIORITY_AMY)
                 .withNote(VALID_NOTE_BOB).withPhoto(VALID_PHOTO_BOB).withTags
-                (VALID_TAG_FRIEND, VALID_TAG_HUSBAND).withRelation().build();
+                (VALID_TAG_FRIEND, VALID_TAG_HUSBAND).build();
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);

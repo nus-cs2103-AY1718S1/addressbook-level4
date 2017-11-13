@@ -1,4 +1,3 @@
-//@@author huiyiiih
 package seedu.address.testutil;
 
 import java.util.Arrays;
@@ -91,7 +90,6 @@ public class EditPersonBuilder {
         return this;
     }
 
-    //@@author sebtsh
     /**
      * Sets the {@code Company} of the {@code EditPerson} that we are building.
      */
@@ -151,7 +149,6 @@ public class EditPersonBuilder {
         }
         return this;
     }
-    //@@author
 
     /**
      * Sets the {@code Photo} of the {@code EditPerson} that we are
@@ -187,7 +184,7 @@ public class EditPersonBuilder {
      */
     public EditPersonBuilder withToAddRel(String... relation) {
         try {
-            editPerson.setToAdd(ParserUtil.parseRel(Arrays.asList(relation)));
+            editPerson.setToAdd(ParserUtil.parseRels(Arrays.asList(relation)));
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("relationships are expected to be unique.");
         }
@@ -195,12 +192,12 @@ public class EditPersonBuilder {
     }
 
     /**
-     * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code EditPerson}
+     * Parses the {@code relation} into a {@code Set<Relationship>} and set it to the {@code EditPerson}
      * that we are building.
      */
     public EditPersonBuilder withToDeleteRel(String... relation) {
         try {
-            editPerson.setToDelete(ParserUtil.parseRel(Arrays.asList(relation)));
+            editPerson.setToDelete(ParserUtil.parseRels(Arrays.asList(relation)));
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("relationships are expected to be unique.");
         }
@@ -208,7 +205,7 @@ public class EditPersonBuilder {
     }
 
     /**
-     * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code EditPerson}
+     * Parses the {@code shouldClear} into a {@code Set<Relatinship>} and set it to the {@code EditPerson}
      * that we are building.
      */
     public EditPersonBuilder withToClearRels(boolean shouldClear) {
@@ -220,5 +217,4 @@ public class EditPersonBuilder {
         return editPerson;
     }
 }
-//@@author
 
