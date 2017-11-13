@@ -358,7 +358,7 @@ This section lists commands that require the Internet to provide services. Ensur
 
 ==== Selecting a contact : `select`
 
-Selects the contact identified by the index number used in the last contact listing. +
+Searches the specified contact's name on google so users can find out more information about their contacts online. +
 Format: +
 `select INDEX` +
 `s INDEX`
@@ -383,7 +383,7 @@ image::select-command-ui.png[width="790"]
 // tag::facebook[]
 ==== Searching Facebook for a contact's profile : `facebook`
 
-Searches on Facebook the profile of the person whose contact is specified by index number. +
+Searches the specified contact's email on Facebook and loads the profile of the contact so users can follow their contacts on social media. +
 Format: +
 `facebook INDEX` +
 `fb INDEX`
