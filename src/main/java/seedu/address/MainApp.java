@@ -10,6 +10,7 @@ import com.google.common.eventbus.Subscribe;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
@@ -40,7 +41,7 @@ import seedu.address.ui.UiManager;
  */
 public class MainApp extends Application {
 
-    public static final Version VERSION = new Version(0, 6, 0, true);
+    public static final Version VERSION = new Version(1, 5, 0, true);
 
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
 
@@ -68,12 +69,21 @@ public class MainApp extends Application {
 
         model = initModelManager(storage, userPrefs);
 
-        logic = new LogicManager(model);
+        logic = new LogicManager(model, storage);
 
         ui = new UiManager(logic, config, userPrefs);
 
         initEventsCenter();
     }
+
+    //@@author alexfoodw
+    /**
+     * Returns the current logic Manager
+     */
+    public Logic getLogic() {
+        return logic;
+    }
+    //@@author
 
     private String getApplicationParameter(String parameterName) {
         Map<String, String> applicationParameters = getParameters().getNamed();
@@ -181,11 +191,19 @@ public class MainApp extends Application {
         EventsCenter.getInstance().registerHandler(this);
     }
 
+    //@@author keithsoc
     @Override
     public void start(Stage primaryStage) {
         logger.info("Starting AddressBook " + MainApp.VERSION);
+        /*
+         * Remove default window decorations
+         * Have to be placed here instead of MainWindow or UiManager to prevent the following exception:
+         * "Cannot set style once stage has been set visible"
+         */
+        primaryStage.initStyle(StageStyle.TRANSPARENT);
         ui.start(primaryStage);
     }
+    //@@author
 
     @Override
     public void stop() {

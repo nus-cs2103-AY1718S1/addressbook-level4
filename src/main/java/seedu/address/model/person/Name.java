@@ -9,15 +9,8 @@ import seedu.address.commons.exceptions.IllegalValueException;
  * Guarantees: immutable; is valid as declared in {@link #isValidName(String)}
  */
 public class Name {
-
-    public static final String MESSAGE_NAME_CONSTRAINTS =
-            "Person names should only contain alphanumeric characters and spaces, and it should not be blank";
-
-    /*
-     * The first character of the address must not be a whitespace,
-     * otherwise " " (a blank string) becomes a valid input.
-     */
-    public static final String NAME_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
+    //@@author alexfoodw
+    public static final String MESSAGE_NAME_CONSTRAINTS = "Person names should not be blank";
 
     public final String fullName;
 
@@ -39,8 +32,9 @@ public class Name {
      * Returns true if a given string is a valid person name.
      */
     public static boolean isValidName(String test) {
-        return test.matches(NAME_VALIDATION_REGEX);
+        return !("").equals(test);
     }
+    //@@author
 
 
     @Override

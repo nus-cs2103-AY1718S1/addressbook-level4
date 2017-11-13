@@ -10,6 +10,8 @@ import java.util.Objects;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
+import seedu.address.logic.commands.FavoriteCommand;
+import seedu.address.model.person.Favorite;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
@@ -42,7 +44,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public AddressBook() {}
 
     /**
-     * Creates an AddressBook using the Persons and Tags in the {@code toBeCopied}
+     * Creates an AddressBook using the Persons and Tags in the {@code toBeCopied}.
      */
     public AddressBook(ReadOnlyAddressBook toBeCopied) {
         this();
@@ -112,6 +114,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
         persons.setPerson(target, editedPerson);
+        indicatePersonAccessed(editedPerson);
     }
 
     /**
@@ -155,6 +158,48 @@ public class AddressBook implements ReadOnlyAddressBook {
             throw new PersonNotFoundException();
         }
     }
+
+    //@@author keithsoc
+    /**
+     * Sets {@code personToFav} favorite field to true or false according to {@code type}.
+     * Replaces the given person {@code target} in the list with {@code personToFav}.
+     *
+     * @throws DuplicatePersonException if updating the person's details causes the person to be equivalent to
+     *      another existing person in the list.
+     * @throws PersonNotFoundException if {@code target} could not be found in the list.
+     */
+    public void toggleFavoritePerson(ReadOnlyPerson target, String type)
+            throws DuplicatePersonException, PersonNotFoundException {
+        if (persons.contains(target)) {
+            Person personToFav = new Person(target);
+            if (type.equals(FavoriteCommand.COMMAND_WORD)) {
+                personToFav.setFavorite(new Favorite(true));  // Favorite
+            } else {
+                personToFav.setFavorite(new Favorite(false)); // UnFavorite
+            }
+            persons.setPerson(target, personToFav);
+            indicatePersonAccessed(personToFav);
+        } else {
+            throw new PersonNotFoundException();
+        }
+    }
+    //@@author
+
+    //@@author marvinchin
+    /**
+     * Indicates that a {@code Person} in the address book has been accessed.
+     */
+    public void indicatePersonAccessed(ReadOnlyPerson target) throws PersonNotFoundException {
+        Person updatedPerson = new Person(target);
+        updatedPerson.setLastAccessDateToNow();
+        try {
+            persons.setPerson(target, updatedPerson);
+        } catch (DuplicatePersonException dpe) {
+            assert false : "Person should be unique";
+        }
+    }
+
+    //@@author
 
     //// tag-level operations
 

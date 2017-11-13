@@ -4,6 +4,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.SelectCommand.MESSAGE_SELECT_PERSON_SUCCESS;
+import static seedu.address.logic.commands.SelectCommand.MESSAGE_SOCIAL_TYPE_NOT_FOUND;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 import static seedu.address.testutil.TypicalPersons.getTypicalPersons;
@@ -82,6 +83,24 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
         assertCommandFailure(SelectCommand.COMMAND_WORD + " 1 abc",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
 
+        //@@author sarahnzx
+        /* Case: valid arguments (social type instagram) -> selected */
+        command = SelectCommand.COMMAND_WORD + " " + validIndex.getOneBased() + " instagram";
+        assertCommandFailure(command, MESSAGE_SOCIAL_TYPE_NOT_FOUND);
+
+        /* Case: valid arguments (social type facebook) -> selected */
+        command = SelectCommand.COMMAND_WORD + " " + validIndex.getOneBased() + " facebook";
+        assertCommandSuccess(command, validIndex);
+
+        /* Case: valid arguments (social type ig) -> selected */
+        command = SelectCommand.COMMAND_WORD + " " + validIndex.getOneBased() + " ig";
+        assertCommandFailure(command, MESSAGE_SOCIAL_TYPE_NOT_FOUND);
+
+        /* Case: valid arguments (social type fb) -> selected */
+        command = SelectCommand.COMMAND_WORD + " " + validIndex.getOneBased() + " fb";
+        assertCommandSuccess(command, validIndex);
+        //@@author
+
         /* Case: mixed case command word -> rejected */
         assertCommandFailure("SeLeCt 1", MESSAGE_UNKNOWN_COMMAND);
 
@@ -120,7 +139,7 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
         }
 
         assertCommandBoxShowsDefaultStyle();
-        assertStatusBarUnchanged();
+        assertStatusBarUnchangedExceptSyncStatus();
     }
 
     /**

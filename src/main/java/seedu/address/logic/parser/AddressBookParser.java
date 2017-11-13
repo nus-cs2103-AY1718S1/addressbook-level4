@@ -12,14 +12,26 @@ import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.ExportCommand;
+import seedu.address.logic.commands.FacebookAddAllFriendsCommand;
+import seedu.address.logic.commands.FacebookAddCommand;
+import seedu.address.logic.commands.FacebookConnectCommand;
+import seedu.address.logic.commands.FacebookLinkCommand;
+import seedu.address.logic.commands.FacebookPostCommand;
+import seedu.address.logic.commands.FavoriteCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
+import seedu.address.logic.commands.ImportCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.SortCommand;
+import seedu.address.logic.commands.ThemeCommand;
+import seedu.address.logic.commands.UnFavoriteCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.ui.BrowserPanel;
 
 /**
  * Parses user input.
@@ -49,39 +61,103 @@ public class AddressBookParser {
         switch (commandWord) {
 
         case AddCommand.COMMAND_WORD:
+        case AddCommand.COMMAND_ALIAS:
             return new AddCommandParser().parse(arguments);
 
+        //@@author alexfoodw
+        case FacebookAddCommand.COMMAND_WORD:
+        case FacebookAddCommand.COMMAND_ALIAS:
+            BrowserPanel.setProcessType(commandWord);
+            return new FacebookAddCommandParser().parse(arguments);
+
+        case FacebookAddAllFriendsCommand.COMMAND_WORD:
+        case FacebookAddAllFriendsCommand.COMMAND_ALIAS:
+            BrowserPanel.setProcessType(commandWord);
+            return new FacebookAddAllFriendsCommand();
+
+        case FacebookConnectCommand.COMMAND_WORD:
+        case FacebookConnectCommand.COMMAND_ALIAS:
+            BrowserPanel.setProcessType(commandWord);
+            return new FacebookConnectCommand();
+
+        case FacebookPostCommand.COMMAND_WORD:
+        case FacebookPostCommand.COMMAND_ALIAS:
+            BrowserPanel.setProcessType(commandWord);
+            return new FacebookPostCommandParser().parse(arguments);
+
+        case FacebookLinkCommand.COMMAND_WORD:
+        case FacebookLinkCommand.COMMAND_ALIAS:
+            BrowserPanel.setProcessType(commandWord);
+            return new FacebookLinkCommandParser().parse(arguments);
+        //@@author
+
         case EditCommand.COMMAND_WORD:
+        case EditCommand.COMMAND_ALIAS:
             return new EditCommandParser().parse(arguments);
 
+        //@@author keithsoc
+        case FavoriteCommand.COMMAND_WORD:
+            return new FavoriteCommandParser().parse(arguments);
+
+        case UnFavoriteCommand.COMMAND_WORD:
+            return new UnFavoriteCommandParser().parse(arguments);
+        //@@author
+
         case SelectCommand.COMMAND_WORD:
+        case SelectCommand.COMMAND_ALIAS:
             return new SelectCommandParser().parse(arguments);
 
         case DeleteCommand.COMMAND_WORD:
+        case DeleteCommand.COMMAND_ALIAS:
             return new DeleteCommandParser().parse(arguments);
 
         case ClearCommand.COMMAND_WORD:
+        case ClearCommand.COMMAND_ALIAS:
             return new ClearCommand();
 
         case FindCommand.COMMAND_WORD:
+        case FindCommand.COMMAND_ALIAS:
             return new FindCommandParser().parse(arguments);
 
+        //@@author keithsoc
         case ListCommand.COMMAND_WORD:
-            return new ListCommand();
+        case ListCommand.COMMAND_ALIAS:
+            return new ListCommand(arguments);
+        //@@author
+
+        //@@author keithsoc
+        case ThemeCommand.COMMAND_WORD:
+        case ThemeCommand.COMMAND_ALIAS:
+            return new ThemeCommandParser().parse(arguments);
+        //@@author
+
+        case SortCommand.COMMAND_WORD:
+        case SortCommand.COMMAND_ALIAS:
+            return new SortCommandParser().parse(arguments);
 
         case HistoryCommand.COMMAND_WORD:
+        case HistoryCommand.COMMAND_ALIAS:
             return new HistoryCommand();
 
+        case ExportCommand.COMMAND_WORD:
+            return new ExportCommandParser().parse(arguments);
+
+        case ImportCommand.COMMAND_WORD:
+            return new ImportCommandParser().parse(arguments);
+
         case ExitCommand.COMMAND_WORD:
+        case ExitCommand.COMMAND_ALIAS:
             return new ExitCommand();
 
         case HelpCommand.COMMAND_WORD:
             return new HelpCommand();
 
         case UndoCommand.COMMAND_WORD:
+        case UndoCommand.COMMAND_ALIAS:
             return new UndoCommand();
 
         case RedoCommand.COMMAND_WORD:
+        case RedoCommand.COMMAND_ALIAS:
             return new RedoCommand();
 
         default:

@@ -9,8 +9,10 @@ import java.util.Objects;
  */
 public class GuiSettings implements Serializable {
 
-    private static final double DEFAULT_HEIGHT = 600;
-    private static final double DEFAULT_WIDTH = 740;
+    //@@author keithsoc
+    private static final double DEFAULT_HEIGHT = 835;
+    private static final double DEFAULT_WIDTH = 1100;
+    //@@author
 
     private Double windowWidth;
     private Double windowHeight;
@@ -45,7 +47,7 @@ public class GuiSettings implements Serializable {
         if (other == this) {
             return true;
         }
-        if (!(other instanceof GuiSettings)) { //this handles null as well.
+        if (!(other instanceof GuiSettings)) { // this handles null as well.
             return false;
         }
 
