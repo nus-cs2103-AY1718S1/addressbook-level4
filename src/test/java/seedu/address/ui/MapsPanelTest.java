@@ -4,12 +4,12 @@ import static guitests.guihandles.WebViewUtil.waitUntilMapLoaded;
 import static org.junit.Assert.assertEquals;
 import static seedu.address.testutil.EventsUtil.postNow;
 import static seedu.address.testutil.TypicalPersons.DANIEL;
-import static seedu.address.ui.MapsPanel.DEFAULT_PAGE;
 import static seedu.address.ui.MapsPanel.MAPS_DEFAULT_ORIGIN;
 import static seedu.address.ui.MapsPanel.MAPS_DEST_PREFIX;
 import static seedu.address.ui.MapsPanel.MAPS_DIR_URL_PREFIX;
+import static seedu.address.ui.MapsPanel.MAPS_SEARCH_ORIGIN;
+import static seedu.address.ui.MapsPanel.MAPS_SEARCH_URL_PREFIX;
 import static seedu.address.ui.MapsPanel.MAPS_SEARCH_URL_SUFFIX;
-import static seedu.address.ui.UiPart.FXML_FILE_FOLDER;
 
 import java.net.URL;
 
@@ -40,7 +40,7 @@ public class MapsPanelTest extends GuiUnitTest {
     @Test
     public void display() throws Exception {
         // default web page
-        URL expectedDefaultPageUrl = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
+        URL expectedDefaultPageUrl = new URL(MAPS_SEARCH_URL_PREFIX + MAPS_SEARCH_ORIGIN);
         assertEquals(expectedDefaultPageUrl, mapsPanelHandle.getLoadedUrl());
 
         // associated web page of a person
