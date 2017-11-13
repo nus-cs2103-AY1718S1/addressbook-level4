@@ -427,7 +427,7 @@ _Figure 4.1.10 : UndoRedoStack activity diagram_
 // end::undoredo[]
 
 // tag::deletemultiple[]
-=== Deleting multiple persons [Since v1.1]
+=== Deleting Multiple Persons [Since v1.1]
 
 In _Figure 3.3.3_, the interactions in the `Logic` component are shown when a person is deleted. Since version 1.1, the `DeleteCommand` has been enhanced in its execution, to delete persons belonging to different indices keyed in by the user.
 
