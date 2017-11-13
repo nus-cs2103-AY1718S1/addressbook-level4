@@ -44,12 +44,44 @@ The expected results for the commands in this test script assumes that the comma
 Any changes may cause differences between the expected and actual result. +
 The tests will be CLI only. This means that all commands are entered through the command box.
 
+=== Add Commands
+
+==== Adding a person
+
+.  Type `add n/Jane Doe p/98765432 e/janed@example.com a/311, Clementi Ave 2, #02-25 b/01/01/1990 t/friends t/owesMoney`.
+.  A new person will be created and displayed in the person list on the left at index 11.
+.  Type the same command given in step 1.
+.  A new person will not be created. The result will display that the person already exists.
+
+==== Adding an event
+
+.  Type `addE en/Project Meeting ed/Discuss how to conduct software demo et/10/12/2017`.
+.  A new event will be created and displayed in the event list on the right at index 14.
+.  Type the same command given in step 1.
+.  A new event will not be created. The result will display that the event already exists.
+
+=== Delete Commands
+
+==== Deleting a person
+
+.  Type `delete 10`.
+.  The person "John Doe" will be deleted from the person list on the left, leaving 9 persons.
+.  Type `delete 3`.
+.  The person "Charlie Poh" will not be deleted. The result will display that the person is participating in an event/s.
+
+==== Deleting an event
+
+.  Type `deleteE 9`.
+.  The event "Final exams first paper" will be deleted from the event list on the right, leaving 12 events.
+.  Type `deleteE 4`.
+.  The event "CS2101 CA3 group meeting" will not be deleted. The result will display that the event has participating persons.
+
 === Help Command
 
 .  Type `help`.
 .  The help window will popup, displaying Planno's user guide.
 .  Close the help window.
-.  The result will display "Opened help window".
+.  The result will display that the help window has been opened.
 
 ====
 *Command Format*
