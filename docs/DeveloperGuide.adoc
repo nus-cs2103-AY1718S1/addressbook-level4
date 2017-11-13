@@ -644,11 +644,14 @@ that this approach was less intuitive to them compared to the approach described
 
 // end::command-syntax[]
 
-// tag::favoriteunfavoriteperson[]
+// tag::favorite[]
 === Favoriting Contacts
 
 The favorite status of each contact is stored as a `boolean`, encapsulated within the `Favorite` class. +
 There are several ways to toggle this `boolean` to change the favorite status of a contact.
+
+.Favorite is one of the members in the Person class
+image::person-class-diagram-favorite.png[width="800"]
 
 ==== Toggle favorites using `add` and/or `edit` command +
 For user's convenience, we are allowing just the input of prefixes i.e. `f/` in `add` command and either `f/` or `uf/` in `edit` command to make a change to a contact's favorite status.
@@ -693,6 +696,9 @@ For both adding and editing person, there is a similar validation for disallowin
     }
 ----
 
+// end::favorite[]
+
+// tag::favorite-command[]
 ==== Toggle favorites using `fav` and/or `unfav` command
 
 To enhance contact management, we implemented these commands to perform batch favoriting or unfavoriting of multiple contacts. They are also capable of performing the operations on a single contact. The implementation involves two major steps.
@@ -737,7 +743,7 @@ After getting the copy of the person e.g. `personToFavorite`, it is easy to call
 **Alternative 2:** Just rely on `fav` and `unfav` commands +
 **Pros:** Easier implementation +
 **Cons:** User would have to remember more commands and their usages
-// end::favoriteunfavoriteperson[]
+// end::favorite-command[]
 
 // tag::sort[]
 === Sorting Contacts
@@ -791,7 +797,7 @@ allow the inheriting classes to define the `Comparator<ReadOnlyPerson>` to be us
 **Cons:** If `sort` commands have similar behavior, then there will be significant amounts of code duplication. +
 // end::sort[]
 
-// tag::theme[]
+// tag::enhance-ui[]
 === Enhancing User Interface
 
 ==== Removing Window Decorations
@@ -883,7 +889,7 @@ The third step was to resize each component to give priority to each of them, es
 
 ==== Using Custom Fonts
 
-The fourth step is to ensure the consistency of fonts displayed across different platforms e.g. Windows, macOS and to allow usage of custom fonts.
+The fourth step is to ensure the consistency of fonts displayed across different platforms e.g. Windows, macOS and to allow usage of custom fonts e.g. `Open Sans`.
 
 All custom fonts are stored in `/resources/fonts` directory and a singleton class `UiFont` is used to embed and load all the fonts into the application at runtime.
 
@@ -930,6 +936,9 @@ To allow user to begin typing immediately upon application launch, we have to se
 Platform.runLater(() -> commandTextField.requestFocus());
 ----
 
+// end::enhance-ui[]
+
+// tag::theme[]
 === Theming Mechanism
 
 The theme mechanism is facilitated by a singleton class `UiTheme` which will be called inside the `MainWindow` constructor where it passes its `scene` into the `UiTheme` class.
@@ -956,6 +965,9 @@ public void changeTheme(String option) {
 }
 ----
 
+.Sequence Diagram for Changing Theme
+image::changing-theme-sequence-diagram.png[width="600"]
+
 To ensure that the user does not have to change their preferred theme every time the application starts, we will save their choice as a user preference. The user preference is stored as a variable of class `ThemeSettings` inside `UserPrefs` class. Essentially, we will store the CSS file path e.g. `view/ThemeDay.css` in `preferences.json`.
 
 Finally, when the application starts, user's theme preference will be read in the `MainWindow` class.
@@ -967,7 +979,158 @@ private void setDefaultTheme(UserPrefs prefs, Scene scene) {
 }
 ----
 
+.Sequence Diagram for Saving Theme as User Preference
+image::saving-theme-preference-seq-diagram.png[width="800"]
+
+==== Design Considerations
+
+**Aspect:** Ways to change the application theme +
+**Alternative 1 (current choice):** Use of singleton class `UiTheme` to change the theme +
+**Pros:** Declutters the `MainWindow` class and provide a dedicated class that manages all the changing of themes. This ensures scalability since `UiTheme` can contain a lot more CSS file paths to more themes for future add-ons. It also dedicates storing of CSS file paths in public `String` which can be called by other many classes. Last but not least, it is easier for `ThemeCommand` class to call its instance and use the `changeTheme` method directly. +
+**Cons:** Causes tighter coupling, and violates the single responsibility principle since `UiTheme` controls its own creation and lifecycle +
+**Alternative 2:** Change the themes in `MainWindow` class directly +
+**Pros:** Decreases coupling +
+**Cons:** Clutters the `MainWindow` class and makes it harder for `ThemeCommand` class to access the methods from `MainWindow`.
 // end::theme[]
+
+// tag::display-photo[]
+=== Display Photo Mechanism
+
+To allow user to find their contacts more easily, we implemented the adding of display photo feature. This would be especially helpful to those users who are visual learners so that they can remember their contacts more easily as well.
+
+.DisplayPhoto is one of the members in the Person class
+image::person-class-diagram-displayphoto.png[width="800"
+
+==== Contacts without Display Photo
+
+We took into consideration that there ought to be some contacts that would not have any display photo, hence instead of display a static default display photo, we decided to make it more intuitive since our goal is to enhance the our user's collective memory of their contacts.
+
+For these contacts, they will have a colored display photo thumbnail with their initials in it.
+
+All display photos will be rounded by setting a circle-shaped clip to the `displayPhotoImageView`.
+
+----
+double value = displayPhotoImageView.getFitWidth() / 2;
+Circle clip = new Circle(value, value, value);
+displayPhotoImageView.setClip(clip);
+----
+
+After which, we will color the rounded thumbnails with random pastel colors. We use yet another random color generator (another was used for coloring tag labels as previously mentioned) as opposed to having one is because we decided that the display photo should use a lighter color so as not to steal the attention away from the main contact details. Pastel colors in this case blends in well with the UI.
+
+----
+private String generateRandomPastelColor() {
+    int red = random.nextInt(256);
+    int green = random.nextInt(256);
+    int blue = random.nextInt(256);
+
+    Color mixer = new Color(235, 235, 235);
+    red = (red + mixer.getRed()) / 2;
+    green = (green + mixer.getGreen()) / 2;
+    blue = (blue + mixer.getBlue()) / 2;
+
+    Color result = new Color(red, green, blue);
+    return String.format("#%02x%02x%02x", result.getRed(), result.getGreen(), result.getBlue());
+}
+----
+
+We will color the rounded thumbnail by using `setFill`.
+
+----
+Circle backgroundCircle = new Circle(value);
+backgroundCircle.setFill(Paint.valueOf(getColorForPerson(nameOfPerson)));
+----
+
+Lastly, to add the contact's initials into the rounded thumbnail, we have to extract their name and use regular expression i.e. `?<=\\w)\\w+(?=\\s)\\s+` to derive only their initials.
+We also limit the number of initials to two.
+
+----
+private String extractInitials (String name) {
+    int noOfInitials = 1;
+    if (name.split("\\s+").length > 1) {
+        noOfInitials = 2;
+    }
+    return name.replaceAll("(?<=\\w)\\w+(?=\\s)\\s+", "").substring(0, noOfInitials);
+}
+----
+
+The text for contact's initials is added programmatically.
+
+----
+Text personInitialsText = new Text(extractInitials(nameOfPerson));
+personInitialsText.setFill(Paint.valueOf("white"));
+----
+
+It is to be noted that instead of adding the coloring and text to display photo's `Image View`, we add it directly into its parent i.e. `Stack Pane`.
+
+----
+displayPhotoStackPane.getChildren().addAll(backgroundCircle, personInitialsText);
+----
+
+==== Contacts with Display Photo
+
+For contacts whom users have added a display photo, the mechanism is pretty straight forward in that we simply point the display photo's `Image View` to the path user has specified to import the dislay photo from.
+
+----
+displayPhotoImageView.setImage(new Image(person.getDisplayPhoto().getAbsoluteFilePath()));
+----
+
+There are a few restrictions to the display photo we have set. The display photo specified by the user has to be:
+
+* Of a legitimate file path
+* Within 1MB of size
+* Of type `jpg` or `jpeg` or `png` only
+
+Failing which, the display photo will not be added. The above restrictions are checked by the `isValidPhoto` method in `DisplayPhoto` class itself.
+
+----
+private static boolean isValidPhoto(String test) {
+    File file = new File(test);
+    return file.exists()
+            && file.length() <= MAX_SIZE
+            && (test.endsWith(ALLOWED_TYPE_JPG)
+            || test.endsWith(ALLOWED_TYPE_JPEG)
+            || test.endsWith(ALLOWED_TYPE_PNG));
+}
+----
+
+If the display photo specified by the user is valid, we will go ahead to:
+
+1. Update the `DisplayPhoto` field of the contact,
+2. Copy the photo into the application's `data` directory,
+3. Set the display photo `Image View` to the file path of the photo in our `data` directory
+
+Before copying the photo to the application's `data` directory, it is important to note that in the instance when the user just launched KayPoh for the first time, and tries to add a display photo to a contact, there will be an `IOException` thrown. This is because `data` directory is not yet created; it will only be created when a user executes a command that will trigger `AddressBookChanged` event. Although changing of `DisplayPhoto` through add or edit commands can trigger the event, the copying of file in `DisplayPhoto` class precedes the event.
+
+Hence, we have to check whether `data` directory exists first. We can simply use `createDirectories` from `java.nio.Files`. This method kills two birds with one stone since it will not re-create the directory and neither will it throw an `exception` even if the directory already exists.
+
+----
+Files.createDirectories(Paths.get(DEFAULT_SAVE_DIR));
+----
+
+Then, we copy the display photo file into the `data` directory using `Files.copy` also from the same package `java.nio.Files`.
+
+----
+// REPLACAE_EXITING: If the target file exists, then the target file is replaced if it is not a non-empty directory.
+Files.copy(from, to, REPLACE_EXISTING);
+----
+
+Finally, the last thing to note would be that for JavaFX's `ImageView` to load an image, it has to be set with a file path that contains `file://` at the beginning of a file path.
+
+----
+"file://" + Paths.get(value).toAbsolutePath().toUri().getPath();
+----
+
+==== Design Considerations
+
+**Aspect:** Copying of display photo image file into application's `data` directory +
+**Alternative 1 (current choice):** Using `Files.copy` from Java's NIO package +
+**Pros:** Does not require adding of third party libraries +
+**Cons:** Has to add an additional check for the existence of the `data` directory first before copying to prevent an `exception` +
+**Alternative 2:** Using `FileUtils.copyFileToDirectory` from a third party library - Apache Commons IO +
+**Pros:** One-liner implementation that checks for both file and directory's existence +
+**Cons:** Require importing of third party libraries into Gradle
+
+// end::display-photo[]
 
 === Logging
 

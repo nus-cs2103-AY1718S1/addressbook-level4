@@ -15,7 +15,7 @@ KayPoh is a desktop address book application with social media integrations. The
 ---
 #Start of extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag=favoriting-a-person-since-v1-2-code-fav-code]
+include::../UserGuide.adoc[tag=favorite]
 
 #End of Extract#
 
@@ -30,7 +30,7 @@ Allow users to mark or unmark contacts whom they are closer with as their favori
 ---
 #Start of extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=toggle-favorites-using-add-andor-edit-command]
+include::../DeveloperGuide.adoc[tag=favorite]
 
 #End of Extract#
 
@@ -45,7 +45,7 @@ See also: Pull Request (with a detailed summary of changes): https://github.com/
 ---
 #Start of extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag=favoriting-a-person-since-v1-2-code-fav-code]
+include::../UserGuide.adoc[tag=favorite]
 
 #End of Extract#
 
@@ -60,7 +60,7 @@ Provides convenience to perform batch adding or removing of contacts as favorite
 ---
 #Start of extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=toggle-favorites-using-fav-andor-unfav-command]
+include::../DeveloperGuide.adoc[tag=favorite-command]
 
 #End of Extract#
 
@@ -75,7 +75,7 @@ See also: Pull Request (with a detailed summary of changes): https://github.com/
 ---
 #Start of extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag=listing-persons-code-list-code]
+include::../UserGuide.adoc[tag=list-favorite]
 
 #End of Extract#
 
@@ -87,15 +87,6 @@ Allows user who might potentially have a large number of contacts to isolate out
 
 ==== Implementation
 
----
-#Start of extract [from: Developer Guide]#
-
-include::../DeveloperGuide.adoc[tag=toggle-favorites-using-fav-andor-unfav-command]
-
-#End of Extract#
-
----
-
 See also: Pull Request: https://github.com/CS2103AUG2017-W10-B2/main/pull/65[#65]
 
 === Enhancement Added: User Interface Overhaul and Theme Command
@@ -105,7 +96,7 @@ See also: Pull Request: https://github.com/CS2103AUG2017-W10-B2/main/pull/65[#65
 ---
 #Start of extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag=changing-themes-code-theme-code-since-v1-4]
+include::../UserGuide.adoc[tag=theme]
 
 #End of Extract#
 
@@ -126,7 +117,9 @@ Theme command allows user to switch between the two aforementioned themes easily
 ---
 #Start of extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=toggle-favorites-using-fav-andor-unfav-command]
+include::../DeveloperGuide.adoc[tag=enhance-ui]
+
+include::../DeveloperGuide.adoc[tag=theme]
 
 #End of Extract#
 
@@ -141,7 +134,7 @@ See also: Pull Request (with a detailed summary of changes): https://github.com/
 ---
 #Start of extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag=adding-a-person-code-add-code]
+include::../UserGuide.adoc[tag=addperson]
 
 #End of Extract#
 
@@ -156,7 +149,7 @@ Allow users to more easily identify their contacts based on photos instead of na
 ---
 #Start of extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=toggle-favorites-using-fav-andor-unfav-command]
+include::../DeveloperGuide.adoc[tag=display-photo]
 
 #End of Extract#
 

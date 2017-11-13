@@ -299,7 +299,7 @@ e.g. `-1`, `0.1`, `abc`
 |===
 // end::editperson[]
 
-// tag::favoriteunfavoriteperson[]
+// tag::favorite[]
 ==== Favoriting a person [Since v1.2]: `fav`
 
 To mark person(s) as a favorite contact, use the `fav` command.
@@ -367,7 +367,7 @@ image::unfavorite-after-find-command-result.png[width="800"]
 e.g. `-1`, `0.1`, `abc`
 |Ensure that the specified `INDEX` is a *positive integer* that is *smaller or equal to the total number of contacts in the person list*.
 |===
-// end::favoriteunfavoriteperson[]
+// end::favorite[]
 
 // tag::deletebyindex[]
 ==== Deleting a person: `delete`
@@ -440,6 +440,7 @@ image::clear-command-result.png[width="350"]
 
 === Navigating KayPoh
 
+// tag::list-favorite[]
 ==== Listing persons: `list`
 
 To have all your contacts displayed in KayPoh, use the `list` command.
@@ -458,6 +459,7 @@ You should see the person list populated with all of your contacts after executi
 
 .Person list populated with all contacts
 image::list-command-result.png[width="350"]
+// end::list-favorite[]
 
 // tag::select[]
 ==== Selecting a person: `select`
@@ -747,6 +749,7 @@ Command format: `[red]#unsync#`
 
 === Miscellaneous
 
+// tag::theme[]
 ==== Changing themes: `theme` [Since v1.4]
 
 To change the theme of the application, use the `theme` command.
@@ -772,6 +775,7 @@ image::Ui-day.png[width="800"]
 * `theme -night`
 
 image::Ui-night.png[width="800"]
+// end::theme[]
 
 ==== Listing entered commands: `history`
 
