@@ -71,7 +71,9 @@ include::../DeveloperGuide.adoc[tag= commandshortcuts]
 ---
 
 #Start of Extract [from: User Guide]#
+
 include::../UserGuide.adoc[tag= findtags]
+
 #End of Extract#
 
 ---
