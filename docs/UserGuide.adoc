@@ -467,9 +467,9 @@ Want to stalk someone's social media feed? Use the `select` command!
 *Alias*: `[red]#s#`
 ====
 
-* The [green]`INDEX` refers to the index number of the person to be stalked in the contacts list.
-* The [green]`SOCIAL_MEDIA_PLATFORM` identifies which social media account belonging to the person you wish to view.
-* If no [green]`SOCIAL_MEDIA_PLATFORM` is specified, the feed of a random social media account associated
+* The `INDEX` refers to the index number of the person to be stalked in the contacts list.
+* The `SOCIAL_MEDIA_PLATFORM` identifies which social media account belonging to the person you wish to view.
+* If no `SOCIAL_MEDIA_PLATFORM` is specified, the feed of a random social media account associated
 with the person will be displayed in the browser window. If there is no social media account associated with
 the person, a Google search of the person's name will be displayed instead.
 
@@ -516,9 +516,9 @@ Finding the person you're looking for doesn't have to be slow and tedious. With 
 *Alias*: `[red]#f#` +
 ====
 
-* Contacts that match *any* of the provided [green]`KEYWORDS` will be displayed in the contacts list.
+* Contacts that match *any* of the provided `KEYWORDS` will be displayed in the contacts list.
 * The search is case insensitive. e.g `john` will match `John`.
-* The order of the [green]`KEYWORDS` does not matter. e.g. `John Doe` will match `Doe John`.
+* The order of the `KEYWORDS` does not matter. e.g. `John Doe` will match `Doe John`.
 * Only full words will be matched e.g. `Jo` will not match `John`.
 
 You should see the persons that meet the provided criteria displayed in the contacts list after executing the command.
@@ -554,8 +554,8 @@ To sort your contacts list, use the `sort` command.
 ====
 
 * The default sort orders contacts first by their `favorite` status, then by their `name` in lexicographic order.
-* Sorting with the [blue]`name` option orders contacts by their `name` in lexicographic order.
-* Sorting with the [blue]`recent` option orders contacts by when they were last added, updated, or stalked.
+* Sorting with the `name` option orders contacts by their `name` in lexicographic order.
+* Sorting with the `recent` option orders contacts by when they were last added, updated, or selected.
 
 The contacts list should be sorted based on the specified option after executing the command.
 
