@@ -16,6 +16,7 @@ By: `Team T09-B1 CS2103AUG2017`      Since: `Sep 2017`      Licence: `MIT` +
 // tag::coverpage[]
 image:CoverPage.png[width="350"]
 // end::coverpage[]
+
 == Introduction
 // tag::introduction[]
 Looking way of keeping track of your contacts? Unsatisfied with ugly clunky designs currently available?
