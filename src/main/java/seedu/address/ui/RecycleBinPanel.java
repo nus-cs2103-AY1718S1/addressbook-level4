@@ -43,7 +43,7 @@ public class RecycleBinPanel extends UiPart<Region> {
 
 
     /**
-     * Custom {@code ListCell} that displays the graphics of a {@code PersonCard}.
+     * Custom {@code ListCell} that displays the graphics of a {@code RecycleBinCard}.
      */
     class PersonListViewCell extends ListCell<RecycleBinCard> {
 

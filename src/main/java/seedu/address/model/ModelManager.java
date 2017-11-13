@@ -19,11 +19,14 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 
 import seedu.address.commons.events.model.RecyclebinChangeEvent;
 import seedu.address.commons.events.ui.CalendarSelectionChangedEvent;
+import seedu.address.commons.events.ui.ClearPersonListEvent;
 import seedu.address.commons.events.ui.EventPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.ScheduleUpdateEvent;
 import seedu.address.model.event.Event;
 
@@ -38,7 +41,7 @@ import seedu.address.ui.EventListPanel;
 
 
 /**
- * Represents the in-memory model of the address book data.
+ * Represents the in-memory model of the address book and recycle bin data.
  * All changes to any model should be synchronized.
  */
 public class ModelManager extends ComponentManager implements Model {
@@ -51,7 +54,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final FilteredList<Event> filteredEvents;
 
     /**
-     * Initializes a ModelManager with the given addressBook and userPrefs.
+     * Initializes a ModelManager with the given addressBook, recycleBin and userPrefs.
      */
     public ModelManager(ReadOnlyAddressBook addressBook, ReadOnlyAddressBook recycleBin, UserPrefs userPrefs) {
         super();
@@ -334,6 +337,12 @@ public class ModelManager extends ComponentManager implements Model {
         updateFilteredPersonList(p ->
                 event.getMemberAsArrayList().contains(p)
         );
+        if (filteredPersons.isEmpty()) {
+            EventsCenter.getInstance().post(new ClearPersonListEvent());
+        } else {
+            Index firstIndex = new Index(0);
+            EventsCenter.getInstance().post(new JumpToListRequestEvent(firstIndex));
+        }
     }
 
     /**

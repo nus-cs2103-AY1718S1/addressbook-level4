@@ -1,0 +1,233 @@
+= `[W09-B3] [iConnect]` Test Script
+
+== Loading of sample data file
+The sample data file `[W09-B3][iConnect]SampleData.xml` is inside the `ManualTesting` folder, the same folder with this test script. +
+
+. Create a new empty folder named `data` within the same folder with `iConnect.jar` file.
+. Copy the sample data file into the `data` folder.
+. Rename the data file as `addressbook.xml`.
+
+== Explanation on user interface
+
+. The menu bar on top contains `File`, `Help`, and `Style`. You can choose three different themes under `Style`.
+. The panel on the left shows a list of contacts inside the address book.
+. The centre panel contains a tab view with the first tab showing person details, followed by a browser tab and lastly a recycle bin tab.
+. The social media icons on the person details page are clickable, and opens up a new tab linking to its default page (personalised link will be available in v2.0).
+. The panel on the right shows an interactive calendar with an event list panel below it.
+. Dates which are greyed-out are clickable and events on the selected date will appear on the top of the event list.
+
+Now we will manually test the functionality in groups.
+
+== Testing of the application
+
+=== Theme
+
+==== Changing the theme according to user input:
+
+`theme Twilight` +
+The current theme will change to Twilight (dark theme).
+
+`theme 2` +
+The current theme will change to Sunburst (bright theme).
+
+`theme default` +
+The current theme will change to Minimalism (default theme).
+
+=== Display
+
+==== Listing all persons:
+
+`list` +
+Shows a list of all persons stored in address book.
+
+==== Finding persons by different attributes:
+
+`find n/li` +
+Four persons with name containing "li" substring will be listed. The first person in the updated list will be selected.
+
+`find p/87438807` +
+One person with phone number "87438807" will be listed. This person will be selected.
+
+`find e/david` +
+One person with email address containing "david" will be listed. This person will be selected.
+
+`find a/jurong east` +
+Two persons with home address containing "jurong east" will be listed. The first person found will be selected.
+
+`find n/li p/87438807 e/david a/jurong east` +
+Seven persons satisfying any of the above keywords will be listed. The first person found will be selected.
+
+==== Sorting list of persons:
+
+`sort` +
+Returns list of persons sorted by name added in ascending order. The first person in the list will be selected.
+
+`sort p/asc` +
+Returns list of persons sorted by phone in ascending order. The first person in the list will be selected.
+
+`sort e/dsc` +
+Returns list of persons sorted by email in descending order. The first person in the list will be selected.
+
+`sort a/asc` +
+Returns list of persons sorted by address in ascending order. The first person in the list will be selected.
+
+`sort t/dsc` +
+Returns list of persons sorted by time added in descending order. The first person in the list will be selected.
+
+==== Selecting a person:
+
+`select 1` +
+Selects the first person in the current person listing. The centre person detail panel will show contact detail of the first person.
+
+=== Manage contacts
+
+==== Adding a person to address book:
+
+`add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` +
+New person "John Doe" will be added to the end of the person list. The person will be selected and his contact details will be displayed in the centre panel.
+
+==== Editing an existing person in address book:
+
+`edit 1 p/91234567` +
+Edits the phone number of the first person to be "91234567". That person will be selected and his contact details will be displayed in the centre panel.
+
+`edit 2 n/Eli` +
+Edits name of the second person to be "Eli". That person will be selected and his contact details will be displayed in the centre panel.
+
+==== Deleting multiple person(s) from address book:
+
+`delete I/1 2 4` +
+Deletes the first, second and fourth person from address book and move them to the recycle bin. First person in the updated person list will be selected.
+
+==== Adding/updating birthday to a person:
+
+`b-add 1 18/10/1993` +
+Edits the birthday of the first person in the current person listing to "18/10/1993". That person will be selected.
+
+`find n/John` +
+`b-add 1 12/04/1998` +
+Adds the birthday of the first person in the current person listing to "12/04/1998". First person in the updated person list will be selected.
+
+==== Removing the birthday from a person:
+
+`find n/John` +
+`b-remove 1` +
+Removes the birthday of the first person in the current person listing. First person in the updated person list will be selected.
+
+==== Clearing all entries:
+
+`clear`
+Clears all entries from the address book. Person list panel, person detail panel and event list panel will be cleared.
+
+=== General commands
+
+==== Undoing previous command:
+
+`undo` +
+Restores the address book to the state before the previous _undoable_ command was executed.
+
+==== Redoing the previously undone command:
+
+`redo` +
+Reverses the most recent "undo" command. +
+`undo` +
+Restores the address book data to the state before the previous _undoable_ command is executed for further testing.
+
+==== Viewing the command usage:
+
+`help clear` +
+The usage of "clear" command will be shown in the result box.
+
+`help` +
+The help window will be shown.
+
+==== Listing entered commands:
+
+`history` +
+Lists all the commands entered in reverse chronological order.
+
+=== Scheduler
+
+==== Adding an Event to Schedule:
+
+`s-add m/1 2 3 n/iConnect Conference t/2017-12-04 08:45 d/2h` +
+A two-hour event "iConnect Conference" on 4th December 2017 at 8:45AM will be added to the specified persons at index 1, 2 and 3 into the calendar. The first person in the updated person list will be selected.
+
+`s-add n/Email Reminder t/2017-12-04 14:30` +
+An event "Email Reminder" on 4th December 2017 at 2:30PM with default zero duration will be added into the calendar and the event detail will be updated and shown in the event list in chronological order.
+
+==== Removing an Event from Schedule:
+
+`s-remove I/1 2` +
+Removes the first and second event in the event list. The result will be shown in the result box, and the event list will be updated.
+
+=== Map
+
+==== Finding the location of a person using Google Map:
+
+`m-show 2` +
+The home address of the second person in the current person listing will be shown in the centre browser panel.
+
+==== Finding the route from user's current location to the person selected:
+
+`m-route 3 a/nus` +
+The route from "nus" to the home address of the third person in the current person listing will be shown in the centre browser panel.
+
+=== Tag
+
+==== Adding a tag to person(s):
+
+`t-add 2 3 CS2103` +
+A tag "CS2103" will be added to the second and third person in the current person listing. Tag list below names in the person list panel will be updated and edited tag list will be shown in the result box. The second person will be selected.
+
+==== Setting person(s) as favourite:
+
+`t-add 2 3 favourite` +
+A tag "favourite" will be added to the second and third person in the current person listing. A coral circle will be shown beside the selected person names and edited tag list will be shown in the result box. Those two persons will come first in the person list. First person will be selected in the current person listing.
+
+==== Listing all person(s) with given tag:
+
+`t-find CS2103` +
+Four persons will be listed in the person list panel. The first person will be selected.
+
+==== Removing a tag to person(s):
+
+`t-remove 1 2 CS2103` +
+Tag "CS2103" will be removed from the first and second person in the current person listing. Tag list below names in the person list panel will be updated and edited tag list will be shown in the result box. The first person on the current list will be selected.
+
+==== Removing person(s) from list of favourites:
+
+`t-remove favourite` +
+All person(s) with tag "favourite" will be removed. No coral circle will be shown besides any person names and edited tag list will be shown in the result box. The person list will be updated, and the first person will be selected in the current person listing.
+
+=== Storage
+
+==== Restore person(s) from recycle bin:
+
+`bin-restore 1 2` +
+The first and second person in the recycle bin will be restored. All the detailed information will be back, except for their tags and relevant events. The last person restored from recycle bin will be selected.
+
+==== Delete person(s) from the recycle bin:
+
+`bin-delete 1 2` +
+The first and second person in the recycle bin will be deleted.
+
+==== Clear the recycle bin:
+
+`bin-fresh` +
+All the person in the recycle bin will be deleted, and the recycle list panel will be cleared.
+
+==== Making a backup address book:
+
+`export C:/Users/sunsh/Desktop/contact_2017sem1.txt` +
+The backup file will be exported and stored under the folder "C:/Users/sunsh/Desktop/", with the name "contact_2017sem1.txt".
+
+[NOTE]
+Please use a valid path for your own computer. Take note of the slashes.
+
+=== Exit
+
+==== Exiting the program:
+
+`exit` +
+Exits the program and finish the manual testing.
