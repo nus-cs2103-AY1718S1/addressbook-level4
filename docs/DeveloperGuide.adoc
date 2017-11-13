@@ -196,7 +196,7 @@ _Figure 2.3.1 : Interactions Inside the Logic Component for the `delete 1` Comma
 
 === Model component
 
-image::ModelClassDiagramupdated.png[width="800"]
+image::ModelClassDiagram.png[width="800"]
 _Figure 2.4.1 : Structure of the Model Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
@@ -974,7 +974,7 @@ The UI has to be edited to include a placeholder for the field in `PersonInfoPan
 To implement `birthday` field, the parameter is added into the Person class as shown below in the model diagram. This is
  implemented as `Birthday.c` +
 
-image::ModelClassDiagramupdated.png[width="800"]
+image::ModelClassDiagram.png[width="800"]
 _Figure 3 : Structure of the Model Component_ +
 
 [source,java]

@@ -57,6 +57,8 @@ e.g. `import C:\users\user\Desktop\SampleData.xml`
 |deletegroup 4|Deleted Group: test (Group 3 members will be displayed)
 |list all|Listed all persons (Group 4 members will NOT have been deleted)
 |find test|4 persons listed
+|export testexport|Contacts list exported successfully. +
+(check directory of jar file for exported file; check contents of file for newly added test users)
 |delete 1,2,3,4|Deleted Person: someone Phone: 12345678 Birthday: 29-02-2000 Email: something@something.com Address: somewhere Tags: [test] +
                 Deleted Person: test user Phone: - Birthday: - Email: - Address: - Tags: [test] +
                 Deleted Person: test user2 Phone: - Birthday: - Email: - Address: - Tags: [test] +

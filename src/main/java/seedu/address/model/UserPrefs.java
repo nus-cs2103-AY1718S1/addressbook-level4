@@ -19,7 +19,7 @@ public class UserPrefs {
     private String addressBookName = "Circles";
 
     public UserPrefs() {
-        this.setGuiSettings(500, 500, 10, 10);
+        this.setGuiSettings(1600, 900, 10, 10);
         colourMap = new HashMap<>();
     }
 
