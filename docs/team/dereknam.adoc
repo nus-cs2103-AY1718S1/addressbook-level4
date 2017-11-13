@@ -4,11 +4,11 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :stylesDir: ../stylesheets
 
 == Project: Personal Information Manager Program (PIMP)
-Personal Information Manager Program (PIMP) is a command line interface (CLI) address book that allows you to store your contacts. You can use PIMP to add friends, add specific tags to them, add their social media accounts (such as Facebook, Twitter, Instagram), or add remarks. You can search through the list of your contacts by typing specific names. For more advanced user, you can use regex to find your friends. Most of the functionality works by typing in single line commands.
+Personal Information Management Program (PIMP) is a command line interface (CLI) address book that allows you to store your contacts. You can use PIMP to add friends, add specific tags to them, add their social media accounts (such as Facebook, Twitter, Instagram), or add remarks. You can search through the list of your contacts by typing specific names. For more advanced user, you can use regex to find your friends. Most of the functionality works by typing in single line commands.
 
 PIMP v1.5 is available on any platform running Java 8.
 
-=== Enhancement Added: Undo/Redo
+=== Enhancement Added: Statistics
 
 ==== External behavior
 
@@ -16,6 +16,32 @@ PIMP v1.5 is available on any platform running Java 8.
 #Start of Extract [from: User Guide]#
 
 include::../UserGuide.adoc[tag=statistics]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+A professional socialite needs information to track his/her career. PIMP allows users an overview of when the contacts were added and which social media platform they are on, so that they can capitalise on it in the future (maybe offer more content on social media platforms where more contacts are active on, or know whether he/she needs to meet more people in the upcoming month).
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=statistics]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Remark
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
 
 include::../UserGuide.adoc[tag=remark]
 
@@ -25,14 +51,12 @@ include::../UserGuide.adoc[tag=remark]
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+The remark allows the user to attach miscellaneous information about a contact. This functionality helps users to recall details of their contacts' life.
 
 ==== Implementation
 
 ---
 #Start of Extract [from: Developer Guide]#
-
-include::../DeveloperGuide.adoc[tag=statistics]
 
 include::../DeveloperGuide.adoc[tag=remark]
 
