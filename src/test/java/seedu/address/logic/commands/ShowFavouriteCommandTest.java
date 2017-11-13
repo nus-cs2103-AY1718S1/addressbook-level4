@@ -47,7 +47,6 @@ public class ShowFavouriteCommandTest {
         return command;
     }
 
-    //@@author taojiashu-reused
     /**
      * Asserts that {@code command} is successfully executed, and<br>
      *     - the command feedback is equal to {@code expectedMessage}<br>
@@ -63,6 +62,4 @@ public class ShowFavouriteCommandTest {
         assertEquals(expectedList, model.getFilteredPersonList());
         assertEquals(expectedAddressBook, model.getAddressBook());
     }
-
-
 }

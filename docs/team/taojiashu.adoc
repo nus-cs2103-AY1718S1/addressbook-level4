@@ -87,7 +87,7 @@ Sometimes, users have no idea where the address of some people are. Thus, it wil
 Similar to `SelectCommand`, `LocateCommand` will raise an event to the event centre. The event will store the address of the selected person as its field.
 Then when loading the Google Maps search page, the address will be added to the Google Maps prefix.
 
-=== Enhancement Enhanced: Facebook
+=== Command Enhanced: Facebook
 
 ==== External behaviour
 The following extract from UserGuide is co-written by my teammate Ying Zheng and me.
@@ -121,7 +121,7 @@ include::../DeveloperGuide.adoc[tag=facebook]
 
 ---
 
-=== Enhancement Enhanced: Exit
+=== Command Enhanced: Exit
 
 ==== External behaviour
 
@@ -163,4 +163,6 @@ https://github.com/CS2103AUG2017-W13-B1/main/blob/master/collated/test/taojiashu
 === Other contributions
 
 * Fixed a few bugs so that Travis can run properly (Pull requests https://github.com/CS2103AUG2017-W13-B1/main/pull/13[#13], https://github.com/CS2103AUG2017-W13-B1/main/pull/23[#23], https://github.com/CS2103AUG2017-W13-B1/main/pull/90[#90], https://github.com/CS2103AUG2017-W13-B1/main/pull/119/commits/6b40f4718d944d98f016417e4b116ffbf6f71d31[#119])
-* UI enhancement on how `Favourite` is diaplayed (Pull requests https://github.com/CS2103AUG2017-W13-B1/main/pull/69[#69], https://github.com/CS2103AUG2017-W13-B1/main/pull/78[#78])
+* Improved how `Favourite` is displayed in the GUI (Pull requests https://github.com/CS2103AUG2017-W13-B1/main/pull/69[#69], https://github.com/CS2103AUG2017-W13-B1/main/pull/78[#78])
+* Set up _Codacy_ to assess the code quality of pull requests (https://github.com/CS2103AUG2017-W13-B1/main/commit/9c100b6bc1e1a733574326804db9f258ef334575#diff-7bd4a925c695c2eb0eced3872b9b965f[See this commit])
+* Set up _AppVeyor_ to perform continuous integration (Pull request https://github.com/CS2103AUG2017-W13-B1/main/pull/128[#128])
