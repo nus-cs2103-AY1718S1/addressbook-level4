@@ -668,7 +668,7 @@ To quickly revert address book data to the state of last use:
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder. +
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous address Book. +
 
 *Q*: What is the difference between `repaid` command and `payback` command? +
 *A*: `repaid` command completely clears a debtor's debt while `payback` clears a specified amount. In both cases, when the debt reaches zero, the person is
@@ -788,16 +788,16 @@ e.g `filter friendly cooperative`
 
 == Features to be included by `V2.0`
 
-* A feature to export a person's contact in another format.
+* Export a person's contact in another format.
 * `Help` command that displays screenshots of positive examples.
-* Able to view the last login time.
-* Able to impose different periods of ban on a specified person in the blacklist
-* 2FA authentication for login and every other important actions.
+* View the last login time.
+* Impose different periods of ban on a specified person in the blacklist
+* 2FA authentication for login and every other important action.
 * Validity checks on client's personal information.
-* Email notifications when the user's account in logged in from an unknown device.
+* Send an email notification to the user when the user's account is logged in from an unknown device.
 * An automated journey scheduler.
-* 'Add-log' button that generates specific date and time.
+* 'Add log' button that generates specific date and time.
 * A file uploading feature.
 * Random generation of a contact from the cleared list.
-* Feature to create a custom field.
-* Have unique tag colors for each tag and have tag colors in the info panel match the ones in the person card.
+* Allow the creation a custom fields.
+* Have unique tag colors for each tag and synchronise tag colors in the info panel with the ones in the person card.
