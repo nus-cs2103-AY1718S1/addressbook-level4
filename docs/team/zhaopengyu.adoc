@@ -6,7 +6,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 == Project: iConnect
 Iconnect is a desktop address book application used for University Students to manage their contacts information and schedule event. It has many attractive features such as using time table to mark up the event, using google map to show the location and using recycle bin to hold deleted person to allow restore.
 
-*Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
+*Code contributed*: [https://github.com/CS2103AUG2017-W09-B3/main/blob/master/collated/main/Pengyuz.md[Functional code]] [https://github.com/CS2103AUG2017-W09-B3/main/blob/master/collated/test/Pengyuz.md[Test code]] {give links to collated code files}
 
 === Enhancement Added: Help/Delete/Export/bin-list/bin-clear/bin-delete/bin-restore
 
