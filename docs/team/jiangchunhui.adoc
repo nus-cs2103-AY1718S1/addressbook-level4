@@ -144,6 +144,7 @@ We should connect to Facebook API to access Facebook login page and import the c
 With the API, all Planno needs to do is to pop up the login page.
 
 === Other contributions
-Setting up the Gradlew tool, maintain the dependencies
-Refactoring model & logic codes
+Setting up the Gradlew tool, maintain the dependencies. +
+Refactoring model & logic codes. +
+Reporting bugs for other teams [https://github.com/CS2103AUG2017-T09-B2/main/issues/180[#180]].
 
