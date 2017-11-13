@@ -129,3 +129,4 @@ include::../DeveloperGuide.adoc[tag=removeTag]
 * Create UI mockup with team (Pull Request https://github.com/CS2103AUG2017-F09-B1/main/pull/12[#12])
 * Create releases(https://github.com/CS2103AUG2017-F09-B1/main/releases[Releases])
 * Wrote the Project description found in Project Portfolio
+* Wrote TestingManual, UserGuide, DeveloperGuide with team

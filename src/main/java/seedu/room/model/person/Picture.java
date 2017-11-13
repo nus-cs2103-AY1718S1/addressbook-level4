@@ -17,7 +17,7 @@ public class Picture {
     public static final String PLACEHOLDER_IMAGE = System.getProperty("user.dir")
             + "/src/main/resources/images/placeholder_person.png";
 
-    public static final String BASE_JAR_URL = System.getProperty("user.dir") + "/";
+    public static final String BASE_JAR_URL = System.getProperty("user.dir") + "/data/contact_images/";
 
     public static final String PLACEHOLDER_JAR_URL = "/images/placeholder_person.png";
 
