@@ -72,7 +72,7 @@ public class DeleteTagCommand extends UndoableCommand {
         if (hasOneOrMoreDeletion) {
             return new CommandResult(String.format(MESSAGE_SUCCESS));
         } else {
-            return new CommandResult(String.format(MESSAGE_NO_TAGS_DELETED));
+            throw new CommandException(MESSAGE_NO_TAGS_DELETED);
         }
     }
 
