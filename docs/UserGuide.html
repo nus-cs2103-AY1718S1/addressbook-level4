@@ -235,7 +235,7 @@ the developers will look into it.</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>Evil Format: curse n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [pic/PATH] [t/TAG]...</pre>
+<pre>Alias: curse n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [pic/PATH] [t/TAG]...</pre>
 </div>
 </div>
 <div class="ulist">
@@ -320,7 +320,7 @@ Removes the remark for the second person.</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>Evil Format: mutate INDEX n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [pic/PATH] [t/TAG]...</pre>
+<pre>Alias: mutate INDEX n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [pic/PATH] [t/TAG]...</pre>
 </div>
 </div>
 <div class="ulist">
@@ -383,7 +383,7 @@ Edits the picture of the 1st person to the picture specified in the path i.e. cl
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>Evil Format: destroy INDEX</pre>
+<pre>Alias: destroy INDEX</pre>
 </div>
 </div>
 <div class="ulist">
@@ -434,25 +434,32 @@ Deletes the 1st person in the results of the <code>find</code> command.</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>Evil Format: summon [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [t/TAG]...</pre>
+<pre>Alias: summon [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [w/WEBSITE] [t/TAG]...</pre>
 </div>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Searches based on the input and prefix.</p>
+<p>The search is case insensitive for <code>NAME</code>. If you want to look for <code>Hans</code>, you can also type <code>hans</code>.</p>
 </li>
 <li>
-<p>The search is case insensitive for NAME. e.g <code>hans</code> will match <code>Hans</code></p>
+<p>The order of the words in <code>NAME</code> does not matter. If you want to look for <code>Hans Bo</code>, you can also type <code>Bo Hans</code>.</p>
 </li>
 <li>
-<p>The order of the keywords for NAME does not matter. e.g. <code>Hans Bo</code> will match <code>Bo Hans</code></p>
+<p>Person must match contains all word in <code>NAME</code> to be returned. If you want type <code>Bo Hans</code>, <code>Hans</code> and <code>Bo</code> will not show up, but <code>Bo Yang Hans</code> will.</p>
 </li>
 <li>
-<p>The other prefixes require the exact words</p>
+<p><code>Phone</code> requires to be a substring of the person. If you want to look for <code>6593759662</code> you can also type <code>93759662</code>.</p>
 </li>
 <li>
-<p>Persons matching at least one keyword will be returned (i.e. <code>OR</code> search). e.g. <code>Hans Bo</code> will return <code>Hans Gruber</code>, <code>Bo Yang</code></p>
+<p><code>TAG</code> is case sensitive. You cannot find person with tag <code>FRIEND</code> if you search for <code>t/friend</code>.</p>
+</li>
+<li>
+<p>Person must match all <code>TAG</code>. If you type <code>t/friends t/colleague</code>, <code>t/friends</code> and <code>t/colleague</code> will not show up, but <code>t/friends t/colleague</code> and
+<code>t/friends t/colleague t/neighbor</code> will.</p>
+</li>
+<li>
+<p>Person must match all fields to be returned. If you type <code>n/Hans p/93759662</code>, <code>n/Hans p/111222</code> will not show up.</p>
 </li>
 </ul>
 </div>
@@ -662,7 +669,7 @@ Selects the 1st person in the results of the <code>find</code> command.</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>Evil Format: purge</pre>
+<pre>Alias: purge</pre>
 </div>
 </div>
 </div>
@@ -1004,7 +1011,7 @@ command that changes the data. There is no need to save manually.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-11-12 10:39:36 +08:00
+Last updated 2017-11-13 08:47:47 +08:00
 </div>
 </div>
 </body>

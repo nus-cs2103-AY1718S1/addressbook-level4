@@ -928,17 +928,6 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 <p>From the sequence diagram, we can see that the workflow is very similar. One thing to note is that even though the
 preprocessing is different, in the end they will post the same <code>SwitchAddressBookRequestEvent</code> to the <code>EventsCenter</code>.</p>
 </div>
-<div class="imageblock">
-<div class="content">
-<img src="images/OpenAddressBookEvent.png" alt="OpenAddressBookEvent" width="800">
-</div>
-</div>
-<div class="paragraph">
-<p>As you can see from the diagram, when the <code>Open</code> button is clicked in the Application, it raises an event and triggers <code>MainApp</code> to update new Application metadata and restart the UI.</p>
-</div>
-<div class="paragraph">
-<p>This loads the selected XML file which opens a new address book with contacts from selected XML file.</p>
-</div>
 <div class="sect3">
 <h4 id="design-considerations-2"><a class="link" href="#design-considerations-2">4.2.1. Design considerations</a></h4>
 <div class="paragraph">
@@ -950,12 +939,16 @@ preprocessing is different, in the end they will post the same <code>SwitchAddre
  that are doing different operations. In this case, the similar part is to finally open a new DeathNote (reset, initialize, restart&#8230;&#8203;).
  Therefore, we use the same RequestEvent for both commands. The preprocessing is different, since one check for existing file and one
  check for the other way round, we separate both of them.<br>
-<strong>Cons:</strong> Slightly harder for developers to get understand how <code>SwitchAddressBookRequestEvent</code> works.<br>
-<strong>Alternative 2:</strong> Separate the two commands totally.<br>
+<strong>Cons:</strong> Slightly harder for developers to get understand how <code>SwitchAddressBookRequestEvent</code> works.<br></p>
+</div>
+<div class="paragraph">
+<p><strong>Alternative 2:</strong> Separate the two commands totally.<br>
 <strong>Pros:</strong> Easier for new developers to understand the underlying mechanism because they can treat them as different operations.<br>
 <strong>Cons:</strong> Hard to maintain. Since two commands are very similar. If a bug is found in one of them, the other one is
-likely to be affected as well. Hence twice amount of work for the same outcome.<br>
-<strong>Alternative 3:</strong> Combine the two commands totally.<br>
+likely to be affected as well. Hence twice amount of work for the same outcome.<br></p>
+</div>
+<div class="paragraph">
+<p><strong>Alternative 3:</strong> Combine the two commands totally.<br>
 <strong>Pros:</strong> Easier to maintain because everything is within the same class.<br>
 <strong>Cons:</strong> Confusing to understand. NewCommand checks that <code>Path</code> is not an existing file but OpenCommand checks that <code>Path</code>
  is an existing file. The implementation is likely to have many conditional statements. Changing one class affects both commands.<br></p>
@@ -1178,9 +1171,62 @@ of new tests. The existing files that need to be modified are as follows:<br></p
 </div>
 <div class="sect2">
 <h3 id="find-command"><a class="link" href="#find-command">4.5. Find Command</a></h3>
+<div class="paragraph">
+<p>The implementation of <code>find</code> is very similar to <code>edit</code>. After the command, both requires the user to describe the target.</p>
+</div>
+<div class="paragraph">
+<p>The matching algorithm is implemented as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>        /**
+         * Check {@code Person} in DeathNote against {@code this} finder target.
+         *
+         * @param person in DeathNote to check
+         * @return true if other all fields matches
+         */
+        public boolean match(ReadOnlyPerson person) {
+            if (this.name != null &amp;&amp; !matchName(this.name, person.getName())) {
+                return false;
+            }
+            if (this.phone != null &amp;&amp; !matchPhone(this.phone, person.getPhone())) {
+                return false;
+            }
+            if (this.email != null &amp;&amp; !this.email.equals(person.getEmail())) {
+                return false;
+            }
+            if (this.address != null &amp;&amp; !this.address.equals(person.getAddress())) {
+                return false;
+            }
+            if (this.website != null &amp;&amp; !this.website.equals(person.getWebsite())) {
+                return false;
+            }
+            if (this.birthday != null &amp;&amp; !this.birthday.equals(person.getBirthday())) {
+                return false;
+            }
+            if (this.tags != null &amp;&amp; !matchTag(this.tags, person.getTags())) {
+                return false;
+            }
+
+            return true;
+        }</pre>
+</div>
+</div>
 <div class="sect3">
 <h4 id="design-considerations-5"><a class="link" href="#design-considerations-5">4.5.1. Design considerations</a></h4>
-
+<div class="paragraph">
+<p><strong>Aspect:</strong> Component that is responsible for <code>matchName</code>, <code>matchPhone</code>.</p>
+</div>
+<div class="paragraph">
+<p><strong>Alternative 1 (current choice):</strong> Implement under <code>FindCommand</code> in <code>Logic</code> component.<br>
+<strong>Pros:</strong> More specific, because only <code>FindCommand</code> uses it and not any other methods.<br>
+<strong>Cons:</strong> Harder to integrate if other components want to use these methods.<br></p>
+</div>
+<div class="paragraph">
+<p><strong>Alternative 2:</strong> Implement under respective <code>Name</code> and <code>Phone</code> class in <code>Model</code> component.<br>
+<strong>Pros:</strong> Easier to integrate into other components.<br>
+<strong>Cons:</strong> Redundant as the only method that is currently using it is the find command.<br></p>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -2026,7 +2072,7 @@ b. Require developers to download those libraries manually (this creates extra w
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-11-12 10:21:01 +08:00
+Last updated 2017-11-13 09:25:05 +08:00
 </div>
 </div>
 </body>

@@ -11,7 +11,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 
 //@@author chrisboo
 /**
- * Open Address Book
+ * Create new DeathNote
  */
 public class NewCommand extends Command {
 

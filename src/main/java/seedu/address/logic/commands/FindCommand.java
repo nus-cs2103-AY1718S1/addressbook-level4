@@ -16,8 +16,8 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
-import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.Website;
 import seedu.address.model.tag.Tag;
 
@@ -71,7 +71,7 @@ public class FindCommand extends Command {
     }
 
     /**
-     * Stores the details to find of the person.
+     * Stores the details of the finder.
      */
     public static class FindPersonDescriptor {
         private Name name;
@@ -109,32 +109,31 @@ public class FindCommand extends Command {
         }
 
         /**
-         * @param other to check
-         * @return true if other matches all fields
+         * Check {@code Person} in DeathNote against {@code this} finder target.
+         *
+         * @param person in DeathNote to check
+         * @return true if other all fields matches
          */
-        public boolean match(Object other) {
-            if (!(other instanceof Person)) {
+        public boolean match(ReadOnlyPerson person) {
+            if (this.name != null && !matchName(this.name, person.getName())) {
                 return false;
             }
-            if (this.name != null && !matchName(this.name, ((Person) other).getName())) {
+            if (this.phone != null && !matchPhone(this.phone, person.getPhone())) {
                 return false;
             }
-            if (this.phone != null && !matchPhone(this.phone, ((Person) other).getPhone())) {
+            if (this.email != null && !this.email.equals(person.getEmail())) {
                 return false;
             }
-            if (this.email != null && !this.email.equals(((Person) other).getEmail())) {
+            if (this.address != null && !this.address.equals(person.getAddress())) {
                 return false;
             }
-            if (this.address != null && !this.address.equals(((Person) other).getAddress())) {
+            if (this.website != null && !this.website.equals(person.getWebsite())) {
                 return false;
             }
-            if (this.website != null && !this.website.equals(((Person) other).getWebsite())) {
+            if (this.birthday != null && !this.birthday.equals(person.getBirthday())) {
                 return false;
             }
-            if (this.birthday != null && !this.birthday.equals(((Person) other).getBirthday())) {
-                return false;
-            }
-            if (this.tags != null && !matchTag(this.tags, ((Person) other).getTags())) {
+            if (this.tags != null && !matchTag(this.tags, person.getTags())) {
                 return false;
             }
 
