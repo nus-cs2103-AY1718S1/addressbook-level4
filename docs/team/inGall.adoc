@@ -9,7 +9,7 @@ Gentleman's Guide is a desktop address book application modified from the Addres
 *Code contributed*: [https://github.com/CS2103AUG2017-T09-B1/main/blob/master/collated/main/inGall.md[Functional code]] [https://github.com/CS2103AUG2017-T09-B1/main/blob/master/collated/test/inGall.md[Test code]]
 
 *Purpose of portfolio*: This portfolio is written to reflect the contributions made by the author to the Gentleman's Guide.
-It shows how all the features implemented by the author work.
+It demonstrates the mechanism behind the features implemented and provides justification to why these features are implemented.
 
 === Enhancement Added : Birthday Feature, Find commands, Sort commands, listReminder command
 
@@ -31,13 +31,13 @@ include::../UserGuide.adoc[tag = listReminder]
 ---
 
 ==== Justification
-For the `birthday` command, tt allows users to store and keep track of their contacts' birthday so that they can
+For the `birthday` command, it allows users to store and keep track of their contacts' birthday so that they can
 be reminded of upcoming birthdays. This enhances relations between individuals.
 
 For the different find commands, it allows users to traverse through the lists and find contacts and reminders easily. +
 
 For  `findPhone` and `findEmail` command, it is very handy when the user receives a call or email from an unknown person.
-The user can use the number or email to search through the contact list using these commands to see if it belongs to any
+The user can use the number or email to search through the contact list with these commands to see if it belongs to any
 one of his or her contact. +
 
 Similarly, the user can use `findReminder` and `findPriority` command to search for reminders that he wants at any moment.
@@ -57,8 +57,10 @@ On the other hand, `sortPriority` allows users to rearrange the list and view re
 that have a high priority at the top.
 
 For the `listReminder` command, it allows users to see all the reminders at a time after they are done searching for specific reminders. +
-For example, a user may search for a specific reminder. It will bring them to the screen with only the reminder. To
+For example, a user may search for a specific reminder. It will bring them to a page with only the reminder. To
 bring them back to the list of all reminders, the `listReminder` command is needed.
+
+All these simple and easy to use commands allow users, especially our target audience(businessmen) to use it with ease.
 
 ==== Implementation
 
@@ -77,7 +79,11 @@ include::../DeveloperGuide.adoc[tag = listReminder]
 
 ---
 
+=== Enhancement Proposed:
+
+- Link birthdays to real time and implement pop-ups to inform users of upcoming birthdays.
+
 === Other Contributions
 
-* Added different colours to tag (Pull requests  https://github.com/CS2103AUG2017-T09-B1/main/pull/25/commits[#25])
-
+- Added test cases to help improve code coverage (Pull Requests https://github.com/CS2103AUG2017-T09-B1/main/pull/77[#77],
+  https://github.com/CS2103AUG2017-T09-B1/main/pull/85[#85], https://github.com/CS2103AUG2017-T09-B1/main/pull/89[89] )

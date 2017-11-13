@@ -660,7 +660,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 /**
  * Sort names of contacts by alphabetical order
  */
-public class SortAgeCommand extends Command {
+public class SortAgeCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "sortAge";
     public static final String COMMAND_ALIAS = "sa";
 
@@ -674,7 +674,7 @@ public class SortAgeCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() throws CommandException {
+    public CommandResult executeUndoableCommand() throws CommandException {
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         Boolean isEmpty = model.checkIfPersonListEmpty(contactList);
         if (!isEmpty) {
@@ -700,7 +700,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 /**
  * Sort names of contacts by alphabetical order
  */
-public class SortBirthdayCommand extends Command {
+public class SortBirthdayCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "sortBirthday";
     public static final String COMMAND_ALIAS = "sb";
 
@@ -714,7 +714,7 @@ public class SortBirthdayCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() throws CommandException {
+    public CommandResult executeUndoableCommand() throws CommandException {
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         Boolean isEmpty = model.checkIfPersonListEmpty(contactList);
         if (!isEmpty) {
@@ -740,7 +740,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 /**
   * Sort names of contacts by alphabetical order
   */
-public class SortCommand extends Command {
+public class SortCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "sort";
     public static final String COMMAND_ALIAS = "s";
 
@@ -754,7 +754,7 @@ public class SortCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() throws CommandException {
+    public CommandResult executeUndoableCommand() throws CommandException {
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         Boolean isEmpty = model.checkIfPersonListEmpty(contactList);
         if (!isEmpty) {
@@ -780,7 +780,7 @@ import seedu.address.model.reminder.ReadOnlyReminder;
 /**
  * Sort reminders in order or priority.
  */
-public class SortPriorityCommand extends Command {
+public class SortPriorityCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "sortPriority";
     public static final String COMMAND_ALIAS = "sp";
 
@@ -794,7 +794,7 @@ public class SortPriorityCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() throws CommandException {
+    public CommandResult executeUndoableCommand() throws CommandException {
         model.updateFilteredReminderList(PREDICATE_SHOW_ALL_REMINDERS);
         Boolean isEmpty = model.checkIfReminderListEmpty(contactList);
         if (!isEmpty) {
@@ -1294,6 +1294,10 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
@@ -1303,8 +1307,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 public class Birthday {
 
     public static final String MESSAGE_BIRTHDAY_CONSTRAINTS =
-            "Person birthdays must be of format DD/MM/YYYY or can be blank";
-    public static final String BIRTHDAY_VALIDATION_REGEX = "[0-9]{2}/[0-9]{2}/[0-9]{4}";
+            "Person birthdays must be either a valid date, of format DD/MM/YYYY or empty";
 
     public final String value;
 
@@ -1316,17 +1319,30 @@ public class Birthday {
     public Birthday(String birthday) throws IllegalValueException {
         requireNonNull(birthday);
         String trimmedBirthday = birthday.trim();
-        if (!isValidBirthday(trimmedBirthday)) {
+        if (!isValidBirthday(birthday)) {
             throw new IllegalValueException(MESSAGE_BIRTHDAY_CONSTRAINTS);
         }
         this.value = trimmedBirthday;
     }
 
     /**
-     * Returns if a given string is a valid person birthday.
+     * Returns true if a given string is a valid date.
      */
-    public static boolean isValidBirthday(String test) {
-        return test.matches(BIRTHDAY_VALIDATION_REGEX) || test.matches("");
+    public static boolean isValidBirthday(String birthday) {
+
+        String trimmedBirthday = birthday.trim();
+
+        if(trimmedBirthday.equals("")) {
+            return true;
+        }
+
+        final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        try {
+            LocalDate.parse(trimmedBirthday, dateFormatter);
+        } catch (DateTimeParseException dtpe) {
+            return false;
+        }
+        return true;
     }
 
     @Override

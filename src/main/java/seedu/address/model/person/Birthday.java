@@ -3,6 +3,10 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
@@ -12,8 +16,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 public class Birthday {
 
     public static final String MESSAGE_BIRTHDAY_CONSTRAINTS =
-            "Person birthdays must be of format DD/MM/YYYY or can be blank";
-    public static final String BIRTHDAY_VALIDATION_REGEX = "[0-9]{2}/[0-9]{2}/[0-9]{4}";
+            "Person birthdays must be either a valid date, of format DD/MM/YYYY or empty";
 
     public final String value;
 
@@ -25,17 +28,30 @@ public class Birthday {
     public Birthday(String birthday) throws IllegalValueException {
         requireNonNull(birthday);
         String trimmedBirthday = birthday.trim();
-        if (!isValidBirthday(trimmedBirthday)) {
+        if (!isValidBirthday(birthday)) {
             throw new IllegalValueException(MESSAGE_BIRTHDAY_CONSTRAINTS);
         }
         this.value = trimmedBirthday;
     }
 
     /**
-     * Returns if a given string is a valid person birthday.
+     * Returns true if a given string is a valid date.
      */
-    public static boolean isValidBirthday(String test) {
-        return test.matches(BIRTHDAY_VALIDATION_REGEX) || test.matches("");
+    public static boolean isValidBirthday(String birthday) {
+
+        String trimmedBirthday = birthday.trim();
+
+        if (trimmedBirthday.equals("")) {
+            return true;
+        }
+
+        final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        try {
+            LocalDate.parse(trimmedBirthday, dateFormatter);
+        } catch (DateTimeParseException dtpe) {
+            return false;
+        }
+        return true;
     }
 
     @Override

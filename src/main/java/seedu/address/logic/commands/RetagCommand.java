@@ -1,3 +1,5 @@
+//@@author duyson98
+
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
@@ -15,7 +17,7 @@ import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
 /**
- * Replace a tag name in the last filtered list by a new tag name from the address book.
+ * Replaces a tag name in person list by a new tag name from the address book.
  */
 public class RetagCommand extends UndoableCommand {
 
@@ -51,12 +53,13 @@ public class RetagCommand extends UndoableCommand {
 
     @Override
     protected CommandResult executeUndoableCommand() throws CommandException {
-        //Todo: Tag not found should be checked in person list only
-        if (!model.getAddressBook().getTagList().contains(targetTag)) {
-            throw new CommandException(String.format(MESSAGE_TAG_NOT_FOUND, targetTag.toString()));
-        }
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
 
         List<ReadOnlyPerson> lastShownListCopy = new ArrayList<>(model.getFilteredPersonList());
+
+        if (!tagUsedInPersonList(lastShownListCopy, targetTag)) {
+            throw new CommandException(String.format(MESSAGE_TAG_NOT_FOUND, targetTag.toString()));
+        }
 
         for (ReadOnlyPerson person : lastShownListCopy) {
             Person retaggedPerson = new Person(person);
@@ -86,8 +89,21 @@ public class RetagCommand extends UndoableCommand {
         }
 
         model.deleteUnusedTag(targetTag);
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         return new CommandResult(String.format(MESSAGE_SUCCESS, targetTag.toString(), newTag.toString()));
+    }
+
+    /**
+     * Checks whether a tag is used inside person list
+     */
+    private boolean tagUsedInPersonList(List<ReadOnlyPerson> personList, Tag tag) {
+        assert personList != null && tag != null;
+
+        for (ReadOnlyPerson person : personList) {
+            if (person.getTags().contains(tag)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override

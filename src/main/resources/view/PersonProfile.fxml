@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<!-- @@author duyson98 -->
+
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.Image?>
@@ -14,11 +16,11 @@
 <HBox id="profilePane" fx:id="profilePane" maxHeight="500.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <AnchorPane id="profilePic">
       <children>
-         <ImageView fitWidth="300.0" layoutX="45.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="45.0" AnchorPane.rightAnchor="45.0" AnchorPane.topAnchor="0.0">
+         <ImageView fitWidth="300.0" layoutX="45.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="45.0" AnchorPane.rightAnchor="45.0" AnchorPane.topAnchor="20.0">
             <image>
                <Image url="@../images/gentleman-profile.png" />
             </image></ImageView>
-          <Label fx:id="profileName" alignment="CENTER" layoutX="60.0" layoutY="178.0" prefHeight="35.0" prefWidth="270.0" styleClass="cell_big_label" text="\$name" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="60.0" />
+          <Label fx:id="profileName" alignment="CENTER" layoutX="60.0" layoutY="178.0" prefHeight="35.0" prefWidth="270.0" styleClass="cell_big_label" text="\$name" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="60.0" />
       </children>
    </AnchorPane>
     <GridPane id="profileInfo" gridLinesVisible="true" HBox.hgrow="ALWAYS">

@@ -1,3 +1,5 @@
+//@@author duyson98
+
 package seedu.address.model.reminder;
 
 import static org.junit.Assert.assertFalse;

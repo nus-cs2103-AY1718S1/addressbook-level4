@@ -406,7 +406,7 @@
 }
 
 .opening-img {
-    height: 584px;
+    height: 745px;
 }
 
 #profilePic {
@@ -438,5 +438,9 @@
 .profile_small_text_area {
     -fx-font-family: "Segoe UI Semibold";
     -fx-font-size: 18px;
+}
+
+.reminder_big_label {
+    -fx-font-size: 15px;
 }
 /* @@author */

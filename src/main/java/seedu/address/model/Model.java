@@ -49,6 +49,8 @@ public interface Model {
     /** Adds the given person */
     void addAccount(ReadOnlyAccount account) throws DuplicateAccountException;
 
+    boolean checkAccount(ReadOnlyAccount account);
+
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
      *

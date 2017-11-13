@@ -1,3 +1,5 @@
+//@@author duyson98
+
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
@@ -85,12 +87,12 @@ public class UntagCommandParserTest {
 
         // remove all tags
         expectedCommand = new UntagCommand(true, Collections.emptyList(), Collections.emptyList());
-        assertParseSuccess(parser, "  -a  ", expectedCommand);
+        assertParseSuccess(parser, "  -all  ", expectedCommand);
 
         // remove a tag from all persons
         expectedCommand = new UntagCommand(true, Collections.emptyList(),
                 Arrays.asList(secondTag, firstTag));
-        assertParseSuccess(parser, " -a  " + " friends/enemies  ", expectedCommand);
+        assertParseSuccess(parser, " -all  " + " friends/enemies  ", expectedCommand);
     }
 
 }
