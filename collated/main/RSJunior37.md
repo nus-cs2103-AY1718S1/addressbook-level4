@@ -315,7 +315,7 @@ public class InsuranceIdLabel extends UiPart<Region> {
         owner.setText(null);
         insured.setText(null);
         beneficiary.setText(null);
-        contractName.setText(null);
+        contractFileName.setText(null);
         premium.setText(null);
         signingDate.setText(null);
         expiryDate.setText(null);
@@ -327,13 +327,16 @@ public class InsuranceIdLabel extends UiPart<Region> {
      * @param insurance
      */
     private void initializeContractFile(ReadOnlyInsurance insurance) {
-        insuranceFile =  new File(PDFFOLDERPATH + insurance.getContractFileName());
+        private void initializeContractFile(ReadOnlyInsurance insurance) {
+                insuranceFile =  new File(PDF_FOLDER_PATH + insurance.getContractFileName()
+                        + (insurance.getContractFileName().toString().endsWith(PDF_EXTENSION) ? "" : PDF_EXTENSION));
+        
         if (isFileExists(insuranceFile)) {
             activateLinkToInsuranceFile();
         } else {
-            contractName.getStyleClass().clear();
-            contractName.getStyleClass().add("missing-file");
-            contractName.setOnMouseClicked(event -> {
+            contractFileName.getStyleClass().clear();
+            contractFileName.getStyleClass().add("missing-file");
+            contractFileName.setOnMouseClicked(event -> {
                 FileChooser.ExtensionFilter extensionFilter =
                         new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf");
                 FileChooser chooser = new FileChooser();
@@ -358,9 +361,9 @@ public class InsuranceIdLabel extends UiPart<Region> {
      *  Enable the link to open contract pdf file and adjusting the text hover highlight
      */
     private void activateLinkToInsuranceFile() {
-        contractName.getStyleClass().clear();
-        contractName.getStyleClass().add("valid-file");
-        contractName.setOnMouseClicked(event -> {
+        contractFileName.getStyleClass().clear();
+        contractFileName.getStyleClass().add("valid-file");
+        contractFileName.setOnMouseClicked(event -> {
             try {
                 Desktop.getDesktop().open(insuranceFile);
             } catch (IOException ee) {
