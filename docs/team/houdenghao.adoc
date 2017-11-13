@@ -111,7 +111,7 @@ include::../UserGuide.adoc[tag=showP]
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+Show participants command will help users to show all the participants of a certain event in the person list. The reason for creating this command is because after users execute join command or disjoin command to manage their participants of a certain event, they may want to check their participants and get their contact information. Therefore, users may need a command to view the participants of their events so that they can easily check participants and their contact information.
 
 ==== Implementation
 
