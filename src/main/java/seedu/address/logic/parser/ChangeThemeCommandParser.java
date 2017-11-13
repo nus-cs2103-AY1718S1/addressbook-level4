@@ -45,8 +45,7 @@ public class ChangeThemeCommandParser implements Parser<ChangeThemeCommand> {
             }
         } catch (URISyntaxException use) {
             throw new ParseException("");
-        }
-        catch (NullPointerException use) {
+        } catch (NullPointerException use) {
             throw new ParseException(String.format(MESSAGE_THEME_NOT_FOUND));
         }
         return new ChangeThemeCommand(trimmedArgs);

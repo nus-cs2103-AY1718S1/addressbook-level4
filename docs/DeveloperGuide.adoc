@@ -754,6 +754,8 @@ In the method `execute()` under `FindTagCommand`, the predicate is then used to 
 
 The filtered list size is then parsed into the `getMessageForPersonListShownSummary(int)` which will return the `CommandResult` to show to the user.
 
+image::FindTagComponentSequenceDiagram.png[width="800"]
+_Figure 4.9.1 : Sequence Diagram of FindTag function_
 [NOTE]
 
 The `FindTag` command is not undoable so it will just override `execute()`.
@@ -771,17 +773,13 @@ Cons: Requires user to type the exact tag name which makes it inconvenient. As c
 // tag::remarks[]
 === Remarks Function
 
-The Remarks function is done by calling `RemarkCommand` that take in a `Remark` and make use of `RemarkCommandParser`that parse two arguments, one index and one with prefix 'r/'.
+The `Remarks` function is done by calling `RemarkCommand` that take in a `Remark` and make use of `RemarkCommandParser`that parse two arguments, one index and one with prefix 'r/'.
 
 `RemarkCommand` that extends `UndoableCommand`.
 
 Three methods `setRemark(Remark)`, `getRemark()` and `remarkProperty()` in `Person`, which implements the `ReadOnlyPerson` interface.
 
 `XmlAdaptedPerson` have a `Remark` field to save `Remark`.
-
-==== Full Solution
-
-See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-by-step solution.
 
 // end::remarks[]
 // tag::theme[]
