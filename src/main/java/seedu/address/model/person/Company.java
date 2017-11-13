@@ -75,7 +75,7 @@ public class Company implements Comparator<Company> {
         if (ORDERED_ENTRIES.contains(this.toString())) {
             return -1;
         }
-        return company.toString().compareTo(this.toString());
+        return company.toString().compareToIgnoreCase(this.toString());
     }
     @Override
     public int compare(Company companyOne, Company companyTwo) {

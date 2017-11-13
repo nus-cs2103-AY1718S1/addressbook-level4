@@ -75,7 +75,7 @@ public class Position implements Comparator<Position> {
         if (ORDERED_ENTRIES.contains(this.toString())) {
             return -1;
         }
-        return position.toString().compareTo(this.toString());
+        return position.toString().compareToIgnoreCase(this.toString());
     }
     @Override
     public int compare(Position positionOne, Position positionTwo) {
