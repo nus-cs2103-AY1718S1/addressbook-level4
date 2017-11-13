@@ -570,3 +570,7 @@ Using a command that does not exist will give an error.
 . `misc`
 
 *Expected Output*: Unknown Command
+
+. `ClEaR`
+
+*Expected Output*: Unknown Command
