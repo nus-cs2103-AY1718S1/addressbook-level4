@@ -1,0 +1,50 @@
+= Henning Frederiksen - Product Portfolio
+fdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: AddressBook - Level 4
+AddressBook - Level 4 is an address book application, that allows the user
+to store all their contacts in a simple manner. It mainly interacts with the user
+through a command line interface, but it also implements a simple GUI. It is written in Java.
+
+*Code contributed*: https://github.com/CS2103AUG2017-T13-B2/main/blob/master/collated/main/Henning.md
+
+=== Enhancement Added: Group score parameter and expanded sort command
+
+The group score parameter allows the user to rate users in the addressbook on a
+scale from 0-9, with 9 being the best and 0 being the worst. +
+This rating is meant to reflect how well the user believes they would work together
+with the given person in a group, and can be based on different criteria such as
+academic ability, personality etc. This score will then be displayed on the person card
+of the individual. +
+Furthermore, the group score parameter has been integrated with the sort command,
+which allows the user to sort their addressbook by group score in descending order.
+
+==== Justification
+
+Our addressbook's target consumer base is mainly university students. In line with this
+vision, the group score parameter was added. Because of its integration with the sort command,
+it is a nice feature for students to have, since it then allows them to sort their entire
+addressbook by group score. This can be essential when students need to form a group
+for an important project, as it allows for a quick overview of the persons that
+would be most desirable to form a group with, such that the best result can be achieved.
+
+==== Implementation
+
+The implementation of the Group Score parameter, is explained in the developer guide: +
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=GroupScore]
+
+#End of Extract#
+
+---
+
+
+==== Other contributions
+
+I was in charge of the necessary project releases, as well as
+creating the accompanying .jar files.

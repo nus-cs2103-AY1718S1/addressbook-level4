@@ -1,0 +1,131 @@
+= Jacob Christopher Vosburgh - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: UniBook - To manage your wonderful uni life
+UniBook is a desktop address book application used for manage your uni friends information. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T13-B2/main/blob/master/collated/main/Jacob.md[Functional code]] [https://github.com/CS2103AUG2017-T13-B2/main/blob/master/collated/test/Jacob.md[Test code]]
+
+=== Enhancement Added: Undo/Redo buttons
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=undoRedoButton]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Allows rapid undo and redo actions, without retyping undo over and over.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=undoRedoButton]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Edit button
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=editButton]
+
+#End of Extract#
+
+---
+
+=== Justification
+
+Makes editing easier and reduces barrier to entry for new and inexperienced users.
+
+=== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=editButton]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Add Button
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=addButton]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Makes it clear how to add without complicated syntax.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=addButton]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: delete buttons
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=deleteButton]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Removes the two step process of locating the index of a person and then typing the command.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=deleteButton]
+
+#End of Extract#
+
+---
+
+
+=== Enhancement Proposed: Replace Edit button with direct edits to the person cards
+
+Instead of opening an edit window, pressing the edit button should turn the person card into a series of text boxes that already have the current values of those characteristics, to allow rapid fixes of typos. Additionally, tags will become removable via a button on the tag, and another button creates an empty text box for a new tag.
+
+=== Other contributions
+
+* Provided feedback to W13-B4 (https://github.com/CS2103AUG2017-W13-B4/main/issues/254)
+* Wrote the team testing guide for manual testing.

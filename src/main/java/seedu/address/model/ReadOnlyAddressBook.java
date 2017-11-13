@@ -13,7 +13,13 @@ public interface ReadOnlyAddressBook {
      * Returns an unmodifiable view of the persons list.
      * This list will not contain any duplicate persons.
      */
-    ObservableList<ReadOnlyPerson> getPersonList();
+    ObservableList<ReadOnlyPerson>getPersonList();
+
+    /**
+     * Returns an unmodifiable view of the favourite persons list.
+     * This list will not contain any duplicate persons.
+     */
+    ObservableList<ReadOnlyPerson>getFavouritePersonList();
 
     /**
      * Returns an unmodifiable view of the tags list.

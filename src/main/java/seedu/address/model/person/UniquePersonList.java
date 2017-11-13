@@ -2,6 +2,10 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -83,6 +87,96 @@ public class UniquePersonList implements Iterable<Person> {
         }
         return personFoundAndDeleted;
     }
+
+    /**
+     * Sorts the list of people by Score, from highest to lowest.
+     */
+    public void sortPersonsByScore() {
+
+        Comparator<ReadOnlyPerson> personComparator = new Comparator<ReadOnlyPerson>() {
+
+            public int compare(ReadOnlyPerson person1, ReadOnlyPerson person2) {
+
+                String personName1 = person1.getScore().toString();
+                String personName2 = person2.getScore().toString();
+
+                return personName2.compareTo(personName1);
+            }
+
+        };
+
+        FXCollections.sort(internalList, personComparator);
+    }
+
+    //@@author siri99
+    /**
+     *Sorts the list alphabetically by name
+     */
+    public void sortPersonsByName() {
+
+        Comparator<ReadOnlyPerson> personComparator = new Comparator<ReadOnlyPerson>() {
+
+            public int compare(ReadOnlyPerson person1, ReadOnlyPerson person2) {
+
+                String personName1 = person1.getName().toString().toLowerCase();
+                String personName2 = person2.getName().toString().toLowerCase();
+
+                return personName1.compareTo(personName2);
+            }
+
+        };
+
+        FXCollections.sort(internalList, personComparator);
+    }
+
+    /**
+     * Sorts the list of people in order of birthdays: Jan to Dec.
+     */
+    public void sortPersonsByBirthday() {
+
+        Comparator<ReadOnlyPerson> personComparator = new Comparator<ReadOnlyPerson>() {
+
+            public int compare(ReadOnlyPerson person1, ReadOnlyPerson person2) {
+
+                SimpleDateFormat sdf = new SimpleDateFormat("MM/dd");
+                String firstBirthday = person1.getBirthday().toString();
+                String secondBirthday = person2.getBirthday().toString();
+
+                /* if birthday is not listed, assigns them the last date of the year so that
+                 *they are sorted to the bottom of the list */
+                if (firstBirthday.equals("No Birthday Listed")) {
+                    firstBirthday = "31/12/1900";
+                }
+                if (secondBirthday.equals("No Birthday Listed")) {
+                    secondBirthday = "31/12/1900";
+                }
+
+                // Split into 3 parts - day, month and year
+                String[] day1 = firstBirthday.split("/");
+                String[] day2 = secondBirthday.split("/");
+
+                String date1 = day1[1] + "/" + day1[0];
+                String date2 = day2[1] + "/" + day2[0];
+
+                Date birthday1 = null;
+                Date birthday2 = null;
+                sdf.setLenient(false);
+                try {
+                    birthday1 = sdf.parse(date1);
+                    birthday2 = sdf.parse(date2);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                return birthday1.compareTo(birthday2);
+
+            }
+
+        };
+
+        FXCollections.sort(internalList, personComparator);
+    }
+
+    //@@author siri99
 
     public void setPersons(UniquePersonList replacement) {
         this.internalList.setAll(replacement.internalList);

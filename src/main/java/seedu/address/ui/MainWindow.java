@@ -4,6 +4,7 @@ import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -22,6 +23,8 @@ import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.ReadOnlyPerson;
+
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -44,6 +47,7 @@ public class MainWindow extends UiPart<Region> {
     private PersonListPanel personListPanel;
     private Config config;
     private UserPrefs prefs;
+    private Scene scene;
 
     @FXML
     private StackPane browserPlaceholder;
@@ -77,7 +81,7 @@ public class MainWindow extends UiPart<Region> {
         setIcon(ICON);
         setWindowMinSize();
         setWindowDefaultSize(prefs);
-        Scene scene = new Scene(getRoot());
+        scene = new Scene(getRoot());
         primaryStage.setScene(scene);
 
         setAccelerators();
@@ -125,22 +129,45 @@ public class MainWindow extends UiPart<Region> {
     /**
      * Fills up all the placeholders of this window.
      */
-    void fillInnerParts() {
+    void fillInnerParts(ObservableList<ReadOnlyPerson> filteredPersonList) {
+
         browserPanel = new BrowserPanel();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
-        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
+        personListPanel = new PersonListPanel(logic.getFilteredPersonList(), logic);
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
+        //@@author Linus
+        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath(), filteredPersonList);
+        //@@author Linus
+
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
     }
+
+    //@@author siri99
+    /**
+     * Changes displayed list accordingly
+     */
+    void fillInnerPartsWithIndicatedList(String listname) {
+        switch(listname) {
+        case "fl":
+        case "favlist":
+            personListPanel = new PersonListPanel(logic.getFilteredFavoritePersonList(), logic);
+            break;
+
+        default:
+            personListPanel = new PersonListPanel(logic.getFilteredPersonList(), logic);
+        }
+        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+    }
+    //@@author siri99
 
     void hide() {
         primaryStage.hide();
@@ -203,6 +230,41 @@ public class MainWindow extends UiPart<Region> {
     private void handleExit() {
         raise(new ExitAppRequestEvent());
     }
+
+    //@@author Linus
+    /**
+     * Changes the theme color to dark of the program
+     */
+    @FXML
+    private void handleDarkTheme() {
+
+        int size = scene.getRoot().getStylesheets().size();
+
+        for (int i = 0; i < size; i++) {
+            scene.getRoot().getStylesheets().remove(0);
+        }
+
+        scene.getRoot().getStylesheets().add("view/DarkTheme.css");
+        scene.getRoot().getStylesheets().add("view/Extensions.css");
+
+    }
+
+    /**
+     * Changes the theme color to light of the program
+     */
+    @FXML
+    private void handleLightTheme() {
+
+        int size = scene.getRoot().getStylesheets().size();
+        for (int i = 0; i < size; i++) {
+
+            scene.getRoot().getStylesheets().remove(0);
+
+        }
+        scene.getRoot().getStylesheets().add("view/LightTheme.css");
+
+    }
+    //@@author Linus
 
     public PersonListPanel getPersonListPanel() {
         return this.personListPanel;

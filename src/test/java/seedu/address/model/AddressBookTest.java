@@ -74,16 +74,23 @@ public class AddressBookTest {
      */
     private static class AddressBookStub implements ReadOnlyAddressBook {
         private final ObservableList<ReadOnlyPerson> persons = FXCollections.observableArrayList();
+        private final ObservableList<ReadOnlyPerson> favouritePersons = FXCollections.observableArrayList();
         private final ObservableList<Tag> tags = FXCollections.observableArrayList();
 
         AddressBookStub(Collection<? extends ReadOnlyPerson> persons, Collection<? extends Tag> tags) {
             this.persons.setAll(persons);
+            this.favouritePersons.setAll(persons);
             this.tags.setAll(tags);
         }
 
         @Override
         public ObservableList<ReadOnlyPerson> getPersonList() {
             return persons;
+        }
+
+        @Override
+        public ObservableList<ReadOnlyPerson>getFavouritePersonList() {
+            return favouritePersons;
         }
 
         @Override

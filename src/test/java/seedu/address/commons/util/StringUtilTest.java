@@ -137,6 +137,45 @@ public class StringUtilTest {
         assertTrue(StringUtil.containsWordIgnoreCase("AAA bBb ccc  bbb", "bbB"));
     }
 
+    //@@author siri99
+    @Test
+    public void containsSubstringOfWord_emptyWord_throwsIllegalArgumentException() {
+        assertExceptionThrown(IllegalArgumentException.class, "Normal sentence", "  ",
+                Optional.of("Word parameter cannot be empty"));
+    }
+
+    @Test
+    public void containsSubstringOfWord_noSentence_throwsNullPointerException() {
+        assertExceptionThrown(NullPointerException.class, null, "Alice", Optional.empty());
+    }
+
+    @Test
+    public void containsSubstringOfWord_multipleWords_throwsIllegalArgumentException() {
+        assertExceptionThrown(IllegalArgumentException.class, "Normal sentence", "Alice John",
+                Optional.of("Word parameter should be a single word"));
+    }
+
+    @Test
+    public void containsSubstringOfWord_validInputs_correctResult() {
+
+        // Empty sentences
+        assertFalse(StringUtil.containsSubstringOfWord("", "Alice"));
+        assertFalse(StringUtil.containsSubstringOfWord("    ", "987"));
+
+        // Matches multiple words
+        assertTrue(StringUtil.containsWordIgnoreCase("Alice John Johnny", "john"));
+
+        // Matches partial words and complete words (finding by substring is also case-insensitive)
+        assertTrue(StringUtil.containsSubstringOfWord("Alice John agatha", "ag"));
+        assertTrue(StringUtil.containsSubstringOfWord("Alice John agatha", "Al")); // First word in sentence
+        assertTrue(StringUtil.containsSubstringOfWord("Alice John agatha", "  agatha ")); // trailing spaces
+        assertTrue(StringUtil.containsSubstringOfWord("Alice John agatha", "agatha")); // Last word
+        assertTrue(StringUtil.containsSubstringOfWord("Alice", "alice")); // one word
+        assertFalse(StringUtil.containsSubstringOfWord("Alicia John carLo", "Johnny"));
+
+    }
+    //@@author siri99
+
     //---------------- Tests for getDetails --------------------------------------
 
     /*

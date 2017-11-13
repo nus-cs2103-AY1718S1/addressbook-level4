@@ -1,0 +1,207 @@
+= Kommareddi Lakshmi Sirisha - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: UniBook
+UniBook is a desktop address book application that allows users to conveniently store and manage their contacts.
+It is mainly targeted towards university students and has various features such as a favourite list, profile picture etc that allows students
+to customise their contacts. There are also useful functions such as sorting by name or birthday that allows
+users to view the contacts in a particular order. Other features include an enhanced find command that allows users to find by tags and substring of name, and a theme change
+function.
+
+The user interacts with it using a CLI, and it has a GUI created with JavaFX.
+It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T13-B2/main/blob/master/collated/main/siri99.md[Functional code]] [https://github.com/CS2103AUG2017-T13-B2/main/blob/master/collated/test/siri99.md[Test code]]
+
+=== Enhancement Added: Favourite List
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=favouritelist]
+
+#End of Extract#
+
+---
+
+==== Justification
+The Favourite List is a useful feature that allows a user to view all his/her favourite contacts in one place. It minimises the time required to search for all the most important/favourite contacts.
+The star button makes it more convenient for the user to view the favourite list as the user can view the list without typing the 'favlist' command on the command line.
+
+There are three commands:
+
+1. favlist - displays the favourite list
+
+2. fav [index] - adds the person at that particular index in the main list to the favourite list.
+
+3. unfav [index] - removes the person at that particular index in the favourite list from the favourite list.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=favouritelist]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Sort Command
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=sort]
+
+#End of Extract#
+
+---
+
+==== Justification
+The Sort command allows a user to view all the favourite contacts in either alphabhetical order of names or ascending order of birthdays.
+
+Sort by name allows the user to view all the contacts with the same alphabhet in one place.
+Eg. If the user only remembers that a person's name starts with a certain alphabhet but does not remember the whole name, the user can sort the list by name and
+search for the contact.
+
+Sort by birthday allows the user to view all the contacts in ascending order of birthdays.
+Eg. The user can view if the birthdays of the people in his contacts are coming up and wish them on time.
+
+There are four ways to use the command:
+
+1. sort - default sorts by name
+
+2. sort name - sorts by name
+
+3. sort birthday - sorts by birthday
+
+4. sort b - sorts by birthday (alias for 'birthday')
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=sort]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Find by Tags, Find by Substring
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=find]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+This feature will make it more convenient for users to find a person
+even if they do not remember the complete name of the person (find by
+substring) or if they do not remember the name at all but remember
+the tags of that person (find by tags) besides the usual find by name
+feature.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=find]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Birthday Field
+
+==== Justification
+As this app is targeted towards university students, it will be very useful for them to store the birthdays of their contacts
+so that they can wish their friends on time. This field becomes more useful with its integration with the sort command which has the option to sort by birthday
+to display the list of birthdays in a sequential order from January to December so that the users can know if the birthdays of their friends are near.
+
+---
+=== Enhancement Proposed: Add command `import`
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=import]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+This feature will make it easier for users who are transitioning from a different contact saving
+application to UniBook as they will not have to lose their old contacts. They can also add contacts from other sources easily
+with the import command.
+
+---
+
+=== Other contributions
+
+* Made Birthday Field optional
+* Synced Favourite List with Main List
+* Added Alias Command to each command.
+* Testing for another team's product. (Issue https://github.com/CS2103AUG2017-W09-B1/main/issues/120)
+* Added few tests to TestScript.
+* Wrote additional tests to increase coverage (SortCommand Test, SortCommandParserTest, BirthdayTest, FavCommandTest,
+FavCommandParserTest, UnfavCommandTest, UnFavCommandParserTest, FavouriteListCommandTest etc.
+* Also expanded tests such
+as AddCommandTest, EditCommandTest, AddCommandParserTest, EditCommandParserTest, CommandTestUtil, ParserUtilTest,
+AddCommandSystemTest and EditCommandSystemTest to include new features such as Birthday Field, Sort Command etc.
+
+(Pull requests https://github.com/CS2103AUG2017-T13-B2/main/pull/75, https://github.com/CS2103AUG2017-T13-B2/main/pull/47)
+
+* Added User Stories (https://github.com/CS2103AUG2017-T13-B2/main/projects/1)
+
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=userstories]
+
+#End of Extract#
+
+---
+
+* Added Use Cases
+
+
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=usecases]
+
+#End of Extract#
+
+---
+
+* Added Non-Functional Requirements
+
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=nfr]
+
+#End of Extract#
+
+---
+
+==== Project: PowerPointLabs
+
+{Optionally (not graded), you may include other projects in your portfolio.}
