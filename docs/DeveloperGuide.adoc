@@ -408,6 +408,8 @@ the 'new' event and an existing event, or if the 'new' event's timing
 exceeds pre-set constraints (eg. extends out of the 24-hour period) the
 'dropping' action cannot be completed.
 
+image::dndSequenceDiagrams.png[width="800"]
+
 ==== Avoid time clash
 
 When a new event is added to the TreeMap, if the `timing` of the event has
