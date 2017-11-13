@@ -100,4 +100,4 @@ User will be able to see very clearly the details of the event(Date, Time, Locat
 * Integrated Google map into Rubrika (Pull requests https://github.com/CS2103AUG2017-W15-B1/Main/pull/42)
 * Use different colors for different tags inside person cards (Pull requests https://github.com/CS2103AUG2017-W15-B1/Main/pull/3)
 * Created UI mock up
-
+* Did Acceptance testing for W-13-B3 https://github.com/CS2103AUG2017-W13-B3/main/issues/100
