@@ -6,18 +6,15 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 == Project: 3W
 3W is a desktop address book and task book application designed for University students, business people and all those who have a busy daily schedule. The user interacts with it using a CLI, and it has a GUI created with JavaFX.
 
-*Code contributed*: [https://github.com/CS2103AUG2017-W15-B4/main/blob/master/collated/main/Qi Kongjia.md[functional code]][https://github.com/CS2103AUG2017-W15-B4/main/blob/master/collated/test/Qi Kongjia.md[test code]]
+*Code contributed*: [https://github.com/CS2103AUG2017-W15-B4/main/blob/master/collated/main/yuzu1209.md[functional code]][https://github.com/CS2103AUG2017-W15-B4/main/blob/master/collated/test/yuzu1209.md[test code]]
 
 === Enhancement Added:
 ==== TaskBook
-. https://github.com/CS2103AUG2017-W15-B4/main/pull/2[Initial Updates on documentation]
-. https://github.com/CS2103AUG2017-W15-B4/main/pull/14[Add TaskBook to our app including storage, model, and logic]
-. https://github.com/CS2103AUG2017-W15-B4/main/pull/15[Add Task Command]
-. https://github.com/CS2103AUG2017-W15-B4/main/pull/19[Delete Task Command]
-. https://github.com/CS2103AUG2017-W15-B4/main/pull/27[Edit Task Command Enhancement]
-. https://github.com/CS2103AUG2017-W15-B4/main/pull/34[Select Task Command]
-. https://github.com/CS2103AUG2017-W15-B4/main/pull/46[Task Priority Functionalities]
-. https://github.com/CS2103AUG2017-W15-B4/main/pull/84[Task DateTime Object Modelling]
+. https://github.com/CS2103AUG2017-W15-B4/main/pull/6[Add Backup AddressBook in Storage]
+. https://github.com/CS2103AUG2017-W15-B4/main/pull/13[Update Google Map URL in Browser]
+. https://github.com/CS2103AUG2017-W15-B4/main/pull/24[Edit Task Command]
+. https://github.com/CS2103AUG2017-W15-B4/main/pull/37[Mark Task Command]
+. https://github.com/CS2103AUG2017-W15-B4/main/pull/49[List Task Command and Mark Icon]
 
 
 ==== External behavior
@@ -25,10 +22,9 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 ---
 #Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag=shaocong1]
-include::../UserGuide.adoc[tag=shaocong2]
-include::../UserGuide.adoc[tag=shaocong3]
-include::../UserGuide.adoc[tag=shaocong4]
+include::../UserGuide.adoc[tag=kongjia1]
+include::../UserGuide.adoc[tag=kongjia2]
+include::../UserGuide.adoc[tag=kongjia3]
 
 #End of Extract#
 
@@ -43,31 +39,27 @@ include::../UserGuide.adoc[tag=shaocong4]
 ==== Implementation
 
 ---
-#Start of Extract [from: Developer Guide]#
-
-include::../DeveloperGuide.adoc[tag=taskbook]
-include::../DeveloperGuide.adoc[tag=shaocong1]
 
 #End of Extract#
 
 ---
 
 === Enhancement Proposed:
-. Add task Book (in parallel with address book)
-. Task book basic Functionalities
-. DateTime of Task better checking logic
+. Enhancement some functions about tasks
+. Add new icon in ui part
+. Name and Description model to check the validness of input
 
 ---
 
 === Other contributions
-    . Generate JAR file for weekly milestones.
-    . Prepare sample data and manual test script.[https://github.com/ShaocongDong/addressbook-level4/commit/beed824f7340ac812ae7c92e9831212da3f9492c[commit]]
-    . Update task model for UI integration[https://github.com/CS2103AUG2017-W15-B4/main/pull/14/commits/a129504f10ea2716ab38b4620cabf35eefd71347[commit]]
-    . Design the fxml and css file for TaskBook panel and task card for our UI.
-    . Make link response message more friendly[https://github.com/CS2103AUG2017-W15-B4/main/pull/70[pull request]]
-    . Debug for markTask][https://github.com/CS2103AUG2017-W15-B4/main/pull/44[pull request]]
-    . Update developer guide diagrams[https://github.com/CS2103AUG2017-W15-B4/main/pull/80[pull request]]
-    . Make the taskBook commands undoable and redoable.[https://github.com/CS2103AUG2017-W15-B4/main/commit/701e15ecf9b15a3d4cff0b6b0f1f6858ad3e1f85[commit]]
-    . Apply Dependency Inversion Principle For Task Model[https://github.com/CS2103AUG2017-W15-B4/main/pull/14/commits/20a33d4d60cfb51e0129b5ce82b9c320414c0950[commit]]
-    . Apply Defensive Programming[https://github.com/CS2103AUG2017-W15-B4/main/pull/46/commits/aa3b5bd407ac32c9d0489b14223d465564218f20[commit]]
-    . Apply Abstraction design pattern[https://github.com/ShaocongDong/addressbook-level4/commit/96ff63452bd2b203cea9307f75c6c528cd041c93[commit]]
+    . Add parser test about mark task and edit task.[https://github.com/CS2103AUG2017-W15-B4/main/commit/c7ed38b7a141fe9f35cf62577dba3e6a0fb1240e[commit]]
+    . Update UI panel that all completed tasks can be listed[https://github.com/CS2103AUG2017-W15-B4/main/commit/a743a2e652353effeb26f43a63ceffec8201c99b[commit]]
+    . Add edit task descriptor[https://github.com/CS2103AUG2017-W15-B4/main/commit/a743a2e652353effeb26f43a63ceffec8201c99b[commit]]
+    . Add task name in model[https://github.com/CS2103AUG2017-W15-B4/main/pull/49[pull request]]
+    . Add task description in model[https://github.com/CS2103AUG2017-W15-B4/main/pull/49[pull request]]
+    . Add new image to src[https://github.com/CS2103AUG2017-W15-B4/main/pull/49[pull request]]
+    . Update task list panel and command test util[https://github.com/CS2103AUG2017-W15-B4/main/pull/49[pull request]]
+    . Add edit task test[https://github.com/CS2103AUG2017-W15-B4/main/pull/49[pull request]]
+    . Add EditTaskDescriptorBuilder and TaskBuilder[https://github.com/CS2103AUG2017-W15-B4/main/pull/49[pull request]]
+    . Mark task test[https://github.com/CS2103AUG2017-W15-B4/main/pull/37[pull request]]
+

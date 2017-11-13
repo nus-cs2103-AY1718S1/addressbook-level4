@@ -69,7 +69,7 @@ include::../DeveloperGuide.adoc[tag=shaocong2]
     . Update task model for UI integration[https://github.com/CS2103AUG2017-W15-B4/main/pull/14/commits/a129504f10ea2716ab38b4620cabf35eefd71347[commit]]
     . Design the fxml and css file for TaskBook panel and task card for our UI.
     . Make link response message more friendly[https://github.com/CS2103AUG2017-W15-B4/main/pull/70[pull request]]
-    . Debug for markTask][https://github.com/CS2103AUG2017-W15-B4/main/pull/44[pull request]]
+    . Debug for markTask[https://github.com/CS2103AUG2017-W15-B4/main/pull/44[pull request]]
     . Update developer guide diagrams[https://github.com/CS2103AUG2017-W15-B4/main/pull/80[pull request]]
     . Make the taskBook commands undoable and redoable.[https://github.com/CS2103AUG2017-W15-B4/main/commit/701e15ecf9b15a3d4cff0b6b0f1f6858ad3e1f85[commit]]
     . Apply Dependency Inversion Principle For Task Model[https://github.com/CS2103AUG2017-W15-B4/main/pull/14/commits/20a33d4d60cfb51e0129b5ce82b9c320414c0950[commit]]

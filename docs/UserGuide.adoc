@@ -296,6 +296,10 @@ Examples:
 * `select 2` +
 Selects the 2nd task in the task book.
 
+// end::shaocong1[]
+
+// tag::kongjia1[]
+
 ==== Editing a new task : `editTask`
 
 Edits an existing task in the address book +
@@ -315,7 +319,7 @@ Edits the name, description, start time, finish time ad tag of the 1st task to b
 * `editTask 2 t/teammates`
 Edits the tag of the 2nd task to be `teammates` only and others remain same.
 
-// end::shaocong1[]
+// end::kongjia1[]
 
 ==== Exporting a task to a string of addTask command: `exportTask`
 
@@ -356,6 +360,7 @@ Deletes the 1st task in the task book.
 
 // end::shaocong2[]
 
+// tag::kongjia2[]
 ==== Marking a task : `markTask`
 
 Marks the specific task from the task book. +
@@ -370,9 +375,17 @@ Details: `markTask INDEX`
 
 Examples:
 
-* `list` +
+* `listTask` +
 * `markTask 1` +
-Marks the 1st task in the task book to be completed.
+Marks the 1st task in the task book to be completed and the marked task will disappear in the result list.
+// end::kongjia2[]
+
+// tag::kongjia3[]
+==== Listing all tasks : `listTask`
+
+Shows a list of all tasks in the task book, including all completed tasks, which are with green click . +
+Format: `listTask`/`lt`
+// end::kongjia3[]
 
 // tag::shaocong3[]
 
@@ -498,7 +511,7 @@ e.g. `find James Jake`
 * *Link* : `link TaskIndex p/personIndex [p/personIndex]... ` +
 e.g. `link 1 p/2`
 * *List Contact* : `list`
-* *List Task* : `list`
+* *List Task* : `listTask`
 * *Mark Task* : `markTask INDEX` +
 e.g. markTask 1
 * *Redo* : `redo`
