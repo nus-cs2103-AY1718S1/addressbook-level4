@@ -16,7 +16,7 @@ By: `Team W09-B03`      Since: `Sep 2017`      Licence: `MIT`
 
 == Introduction
 
-Introducing iConnect, our one-stop student networking application. We aim to serve as your personal secretary to ease your job as a student. Due to the ever-increasing workload, it has become a challenge to keep track of various school commitments while maintaining relationships with peers.
+Introducing iConnect, our one-stop address book application built for students. We aim to serve as your personal secretary to ease your job as a student. Due to the ever-increasing workload, it has become a challenge to keep track of various school commitments while maintaining relationships with peers.
 
 With iConnect, missing schedules and losing contact with friends will be a thing of the past.
 Let’s get connected now!
@@ -789,9 +789,9 @@ e.g. `m-show 1`
 * *MapRoute* : `m-route INDEX a/ADDRESS` +
 e.g. `m-show 1 a/NUS`
 * *ScheduleAdd* : `s-add [m/INDEX INDEX…] n/NAME t/TIME d/DURATION` +
-e.g. `s-add m/1 2 3 n/iConnect Conference t/2017-12-04 08:45 d/120`
-* *ScheduleRemove* : `s-remove e/INDEX INDEX...` +
-e.g. `s-remove e/1 2 3`
+e.g. `s-add m/1 2 3 n/iConnect Conference t/2017-12-04 08:45 d/2h`
+* *ScheduleRemove* : `s-remove I/INDEX INDEX...` +
+e.g. `s-remove I/1 2 3`
 * *Export* : `export PATH` +
 e.g. `export /desktop/new_folder`
 * *Bindelete* : `bin-delete INDEX INDEX...` +
