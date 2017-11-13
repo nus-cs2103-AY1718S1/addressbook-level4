@@ -720,7 +720,7 @@ the file. i.e. the user does not need to type `./data/import/Ark.xml`. +
 
 === Tab autocomplete mechanism
 
-The tab autocomplete mechanism is facilitated by the autocompleter package. The structure of the autocompleter
+The tab autocomplete mechanism is facilitated by the `autocompleter` package. The structure of the `autocompleter`
 package can be seen in the class diagram below:
 
 image::AutocompleterClassDiagram.png[width="900"]
