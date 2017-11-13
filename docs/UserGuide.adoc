@@ -434,7 +434,7 @@ image::backup.png[width='800']
 // tag::import[]
 === Import data : `import` (Since v1.4)
 
-Add contact details from external xml file into current resident book. This can be done through typing commands or selecting from the UI.+
+The import command helps to integerate Resident details from an external XML file with the current ResidenkBook details. This function can be done through typing through CLI or selecting from the UI. It is an undoable function. +
 Format: import FILE_PATH
 
 ****
@@ -460,9 +460,9 @@ This function is useful to remove all deprecated tags. For example, when all res
 Format: `removeTag TAG` +
 Command Alias: `rm`
 
-****
-* The TAG_NAME must be present in the Resident Book.
-****
+[NOTE]
+The TAG_NAME specified must exist in the current ResidentBook. If it does not exist, exception will be thrown and user will be notified that not such tag exist.
+The following shows an example when invalid tag is provided.
 
 Examples:
 
@@ -471,8 +471,7 @@ Remove all "pending" tags from list of residents.
 
 * If Amy has tags "RA" and "CollegeMaster", `removeTag RA` will remove tag from Amy, retaining her other details in the ResidentBook.
 
-The TAG_NAME specified must exist in the current ResidentBook. If it does not exist, exception will be thrown and user will be notified that not such tag exist.
-The following shows an example when invalid tag is provided.
+
 
 image::removeTagCommand_error.png[width='800']
 
@@ -567,6 +566,10 @@ e.g.`select 2`
 * *Undo* : `undo`
 * *Redo* : `redo`
 * *Backup* : `backup`
+* *Import* : `import FILE_PATH` +
+e.g. `import C:\Documents\exchangeStudent.xml`
+* *RemoveTag : `removeTag TAG` or `rm TAG` +
+e.g. `removeTag RA`
 * *Delete by tag*: `deletebytag TAG` +
 e.g. `deletebytag RA`
 * *Switch panel* : `switch`

@@ -620,7 +620,7 @@ image::DeleteTempPersonAD.png[width="700"]
 //tag::import[]
 === Import mechanism
 
-The import mechanism is essentially adding multiple Residents to the ResidentBook automatically by referencing an external xml file. It is implemented by calling add function repeatedly till all the new Residents have been added to the current ResidentBook.
+The import mechanism is essentially adding multiple Residents to the ResidentBook and integrating the current data with an external xml file. It is implemented by calling add function repeatedly till all the new Residents have been added to the current ResidentBook.
 
 ==== Design Considerations
 
@@ -651,7 +651,7 @@ image::import_file_Ui.png[width="800"]
 [NOTE]
 If the filePath is invalid, then there are no file that is readable and hence, an exception will be thrown. Users will be notified to check their filePath.
 
-If the file specified is exactly the same as the current ResidentBook, there is nothing to import. The NoUniqueImport exception will be throw. Users will be notified to check their file.
+If the data in the file specified is exactly the same as the current ResidentBook, there is nothing to import. The NoUniqueImport exception will be throw. Users will be notified to check their file.
 
 The following is the NoUniqueImport Exception:
 [source,java]
@@ -677,24 +677,24 @@ The backup command saves the current ResidentBook into backup.xml located in the
 
 **Aspect:** Implementation of Backup +
 **Alternative 1 (current choice):** Saves entire ResidentBook in a backup file  +
-**Pros:** Simple and straightforward.   +
+**Pros:** Simple and straightforward in achieving objective of keeping another copy of ResidentBook  +
 **Cons:** Requires more storage space +
 **Alternative 2:** Allow user to specify which entries to be added to backup  +
 **Pros:** Flexible level of precision according to the needs of the user +
 **Cons:** User may miss some entries when specifying. Hard to roll back to the latest data during crisis
 
-One consideration for the chosen mechanism is that backup should aid during crisis, such as data corruption or lost.
+One consideration for the chosen mechanism is that backup should aid during crisis, such as data corruption or lost. Hence, backup the entire file is the safest choice for administrator staffs
 
 [source,java]
 ----
 @Override
     public void backupResidentBook(ReadOnlyResidentBook residentBook) throws IOException {
-        saveResidentBook(residentBook, getDirAbsolutePath() + "/backup.xml");
+        saveResidentBook(residentBook, getDirAbsolutePath() + backup_location);
         backupImages();
     }
 ----
 
-Apart from the Resident details, Backup command also includes saving the images uploaded by user previously. It ensures that the backupFolder exists before copying the image files.
+Apart from the Resident details, Backup command also includes saving the images uploaded by user previously.
 
 [source,java]
 ----
@@ -704,6 +704,44 @@ public void backupImages() throws IOException {
 
         handleImageBackupFolder(backupFolder, originalFolder);
         handleImagesBackupFiles(backupFolder, originalFolder);
+    }
+----
+
+Check is done to make sure that folder where images are saved exists before creating a backup folder. If the staff did not save any pictures for the Residents, no backup folder will be created.
+
+[source,java]
+----
+private void handleImageBackupFolder(String backupFolder, String originalFolder) throws IOException {
+        File source = new File(originalFolder);
+        if (source.exists()) {
+            boolean backupExist = new File(backupFolder).exists();
+
+            if (!backupExist) {
+                boolean isSuccess = (new File(backupFolder)).mkdirs();
+                if (!isSuccess) {
+                    throw new IOException();
+                }
+            }
+        }
+    }
+----
+
+If the staff saved images for the Residents, the images will be copied from the source folder to the backup folder as seen below.
+
+[source,java]
+----
+private void handleImagesBackupFiles(String backupFolder, String originalFolder) throws IOException {
+        File source = new File(originalFolder);
+
+        if (source.exists()) {
+            File[] listOfImages = source.listFiles();
+
+            for (int i = 0; i < listOfImages.length; i++) {
+                File dest = new File(backupFolder + File.separator + listOfImages[i].getName());
+                copy(listOfImages[i], dest);
+            }
+        }
+
     }
 ----
 
@@ -780,7 +818,7 @@ The motivation for implementing such a command is that the hostel/hotel administ
 **Cons:** May take a longer time when running through all Residents if the ResidentBook has large amount of data +
 **Alternative 2:** Keep a list of Residents holding the Tag, and update it when necessary  +
 **Pros:** Efficient way, O(1) time in retrieving all Residents holding the Tag.  +
-**Cons:** Redundancy and overhead in keeping another list of Residents. Edit, Add, Delete will require additional checks to prevent outdated data.
+**Cons:** Redundancy and overhead in keeping another list of Residents. Edit, Add, Delete commands will require additional checks to prevent outdated data.
 
 The current choice of design prevents unnecessary overhead in implementation, and is straightforward. While it may take a longer time in operation when handlinng large amount of data,
 it is understood that Residents population does not vary a lot. Since the number of rooms are fixed due to building design, it is safe to assume that all operations are able to complete within a reasonable amount of time.
@@ -817,7 +855,7 @@ private void updateTagList(List<ReadOnlyPerson> lastShownList, int i) throws Com
     }
 ----
 
-This following section shows how the Tag specified is removed. It loops through the TagList each person has, and creates another set of Tags. While there will not be a duplication of tag, this defensive code ensures that indeed all specified tag is removed.
+This following section shows how the Tag specified is removed. It loops through the TagList each person has, and creates another set of updated TagList. While there will not be a duplication of tag, this defensive code ensures that indeed all specified tag is removed.
 [source,java]
 ----
 private Person removedTagFromPerson(ReadOnlyPerson personToEdit) {
