@@ -50,7 +50,7 @@ public class BrowserPanelTest extends GuiUnitTest {
     public void displayPerson() throws Exception {
         // default web page
         URL expectedDefaultPageUrl = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
-        assertEquals(expectedDefaultPageUrl.toString(), browserPanelHandle.getLoadedUrl().toString());
+        assertEquals(expectedDefaultPageUrl, browserPanelHandle.getLoadedUrl());
 
         // associated web page of a person
         postNow(selectionChangedEventStub);
@@ -58,7 +58,7 @@ public class BrowserPanelTest extends GuiUnitTest {
                 + ALICE.getName().fullName.replaceAll(" ", "+") + GOOGLE_SEARCH_URL_SUFFIX);
 
         waitUntilBrowserLoaded(browserPanelHandle);
-        assertEquals(expectedPersonUrl.toString(), browserPanelHandle.getLoadedUrl().toString());
+        assertEquals(expectedPersonUrl, browserPanelHandle.getLoadedUrl());
     }
 
     //@@author dalessr
