@@ -41,9 +41,17 @@ public class BrowserPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
+    /**
+     * Load the given person's website
+     * @param person
+     */
     private void loadPersonPage(ReadOnlyPerson person) {
-        loadPage(GOOGLE_SEARCH_URL_PREFIX + person.getName().fullName.replaceAll(" ", "+")
-                + GOOGLE_SEARCH_URL_SUFFIX);
+        String websiteUrl = person.getWebsite().value;
+        if (websiteUrl.length() > 0) {
+            loadPage(person.getWebsite().toString());
+        } else {
+            loadDefaultPage();
+        }
     }
 
     public void loadPage(String url) {

@@ -1,0 +1,77 @@
+= Javyn Thun - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: TheYellowPage
+TheYellowPage is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T10-B4/main/blob/master/collated/main/JavynThun.md] [https://github.com/CS2103AUG2017-T10-B4/main/blob/master/collated/test/JavynThun.md] {give links to collated code files}
+
+=== Enhancement Added: Remark
+
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[tag=remark]
+
+
+---
+
+==== Justification
+
+As admin staffs in companies usually deal with large group of personals, it would be convenient if they could add personal remarks for each of the contacts. For example, they could put remarks such as "owe project progress report" as a reminder for themselves.
+
+==== Implementation
+
+---
+
+
+include::../DeveloperGuide.adoc[tag=remark]
+
+
+
+---
+
+=== Enhancement Added: Sort
+
+==== External behavior
+
+---
+
+
+include::../UserGuide.adoc[tag=sort]
+
+
+
+---
+
+==== Justification
+
+For admin staff especially in the human resource department, there would usually be a large number of contacts being added at once. Thus, after the large group of contacts is being added with the add multiple contacts feature, the user is then able to properly sort the contacts in TheYellowPage in alphabetical order.
+For example, when the user wants to search for a contact named "Ellie" but is unsure of the spelling of the name but is only sure of the starting alphabet of the name. Thus, the user can just sort and scroll down to names starting with letter E to find individually.
+
+==== Implementation
+
+---
+
+
+include::../DeveloperGuide.adoc[tag=sort]
+
+
+
+---
+
+=== Other contributions
+
+Added occupation and website fields to Person (Pull requests https://github.com[#85], https://github.com[#58])
+
+When a person in the contact list is selected, their website will now be shown instead of their google search page.
+
+At the end of the enhancements, a person class will now contain fields inlcuding occupation, website and remark:
+
+image::Person.jpg[width="800"]
+
+Since TheYellowPage is targeted towards office workers, having occupation and website field helps to identify the job position of each contact, along with their personal website such as facebook, linkedin or github.
+

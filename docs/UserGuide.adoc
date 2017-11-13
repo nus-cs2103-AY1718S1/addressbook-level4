@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= TheYellowPage - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,9 +10,18 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-T10-B4/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `CS2103-T10-B4`      Since: `Sept 2017`      Licence: `MIT`
+
+
+== Product Overview
+
+TheYellowPage is a free-to-use enhanced address book application which you can use to keep track of all your contact details. The application comes in-built with multiple new features not found in regular address books which creates a more user-friendly experience for all.
+
+== About
+
+This user guide will give you a walkthrough on the most commonly used features and commands in the YellowBook AddressBook application.
 
 == Quick Start
 
@@ -57,15 +66,15 @@ Format: `help`
 === Adding a person: `add`
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Format: `add n/NAME o/OCCUPATION p/PHONE_NUMBER e/EMAIL a/ADDRESS w/WEBSITE [t/TAG]...`
 
 [TIP]
 A person can have any number of tags (including 0)
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/John Doe o/Google, CEO p/98765432 e/johnd@example.com a/John street, block 123, #01-01 w/https://github.com/JohnDoe`
+* `add n/Betsy Crowe o/Microsoft, Software Engineer t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 w/https://github.com/BetsyCrowe t/criminal`
 
 === Listing all persons : `list`
 
@@ -75,7 +84,7 @@ Format: `list`
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [o/OCCUPATION] [p/PHONE] [e/EMAIL] [a/ADDRESS] [w/WEBSITE] [t/TAG]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -92,17 +101,21 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Locating persons by name: `find`
+// tag::FindCommand[]
 
-Finds persons whose names contain any of the given keywords. +
+=== Locating persons: `find`
+
+Finds persons whose name, email, address, phone, website, occupation or remark contains any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
+* Any of the following parameters can be searched: Name, email, address, phone number.
 * Only full words will be matched e.g. `Han` will not match `Hans`
+* Only full numbers will be matched (e.g. 6715671 will not match 67156715).
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* You can mix the parameters together in the same command (Refer to final example below).
 ****
 
 Examples:
@@ -111,6 +124,28 @@ Examples:
 Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
+* `find Betsy 85355255 Heinz@example.com 10th street` +
+Returns Betsy, Alice, Carl and Daniel.
+
+// end::FindCommand[]
+
+=== Locating person by number: `findnum`
+
+Finds persons whose phone numbers contain any of the given keywords. +
+Format: `findnum KEYWORD [MORE_KEYWORDS]`
+
+****
+* The order of the keywords does not matter (eg: `98765432 67156715` will match `67156715 98765432`).
+* Only the number is searched.
+* Only full numbers will be matched (eg: `6715671` will not match `67156715`).
+****
+
+Examples:
+
+* `findnum 67156715` +
+Returns the contact whose phone number is `67157615`
+* `findnum 67156715 98765432 67772655` +
+Returns the contacts whose phone numbers are `67156715`, `98765432` and `67772655` respectively.
 
 === Deleting a person : `delete`
 
@@ -217,6 +252,182 @@ The `redo` command fails as there are no `undo` commands executed previously.
 Clears all entries from the address book. +
 Format: `clear`
 
+// tag::findtag[]
+=== Find contacts by tag : `findtag`
+
+Finds persons whose tags contain any of the given keywords. +
+Format: `findtag KEYWORD [MORE_KEYWORDS]`
+
+****
+* The search is case insensitive. e.g `Family` will match `family`
+* Only full words will be matched e.g. `friend` will not match `friends`
+* Persons whose tags matching at least one keyword will be returned (i.e. `OR` search).
+* You can mix the parameters together in the same command (Refer to final example below).
+****
+
+Examples:
+
+* `findtag colleague` +
+Returns: +
+`name` John Doe, `tags` colleague
+
+* `findtag colleague friend` +
+Returns: +
+1. `name` John Doe, `tags` colleague +
+2. `name` Jane Doe, `tags` friend
+// end::findtag[]
+
+// tag::addMultiple[]
+=== Add multiple contacts : `addMul`
+
+Add multiple contacts to TheYellowPage at once, given the list of contacts in a tab-separated file. +
+Format: `addMul TSV_PATH`
+
+****
+* This command adds multiple contacts stored in a file to the YellowPage.
+* TSV_PATH refers to the path to the file containing the contacts to add.
+* Note that the specified file must be in tab-separated format.
+****
+
+Example:
+
+The following is a valid tab-separated file at D:/contact.txt:
+
+|===
+|name  |occupation |phone |email |address |website |tag
+
+|John Doe
+|Google, CEO
+|98765432
+|johnd@example.com
+|John street, block 123, #01-01
+|https://github.com/JohnDoe
+|friend, neighbor
+
+|Betsy Crowe
+|Microsoft, Software Engineer
+|1234567
+|betsycrowe@example.com
+|Newgate Prison
+|https://github.com/BetsyCrowe
+|friend, criminal
+|===
+
+* `addM D:/contacts.txt` +
+Add the list of contacts in contacts.txt into TheYellowPage
+// end::addMultiple[]
+
+// tag::deleteMultipleCommand[]
+
+=== Delete multiple contacts at once: `deleteMul` (Since v1.2)
+
+Deletes multiple specified contacts from addressBook at once. +
+Format: `deleteMul INDEXES`
+
+****
+* Deletes the contacts at the specified `indexes`.
+* The indexes refers to the index number shown in the most recent listing.
+* Note that indexes can refer to multiple indexes (ie: You can list more than one index under this one parameter). See examples below for more clarification.
+* The index *must be a positive integer* 1, 2, 3, .....
+* Note that when listing multiple indexes, you will have to list the indexes *in ascending order*.
+
+Examples:
+
+* `deleteMul 1 3` +
+deletes the contacts with the 1st and 3rd index in the address book.
+
+* `deleteMul 2 4 7 8` +
+deletes the contacts with the 2nd, 4th, 7th and 8th indexes in the address book.
+
+****
+// end::deleteMultipleCommand[]
+
+// tag::changePicture[]
+=== Change Profile Picture : `changePicture`
+
+Add photos to contact profile in addressBook. +
+Format: `changePicture INDEX PICTURE_PATH`
+
+****
+* This command changes the profile picture of the cotact at the specified `index`.
+* INDEX refers to the index number shown in the most recent listing.
+* PICTURE_PATH refers to the path to the picture to change to.
+* The specified picture must be in either .png or . jpg format.
+****
+
+Example:
+
+* `changePicture 1 D://myPicture.png` +
+changes the profile picture of the contact at index 1 to D://myPicture.png.
+// end::changePicture[]
+
+// tag::remark[]
+=== Add remark to a contact: `remark`
+
+Adds a remark to an existing person in the address book.
+Format: remark INDEX r/REMARK
+
+****
+* Adds REMARK to the person at the specified INDEX. The index refers to the index number shown in the last person listing.
+* The index must be a positive integer 1, 2, 3,...
+* A remark can take any values, can even blank.
+****
+
+Examples:
+
+* `remark 1 r/owes money` +
+adds the remark "owes money" to person of index 1 in the address book.
+
+* `remark 4 r/` +
+removes any remark from the person of index 4 in the address book.
+// end::remark[]
+
+// tag::sort[]
+=== Sort: `sort`
+
+Sorts the contacts in the address book in alphabetical order
+Format: sort
+// end::sort[]
+
+=== Delete tag : (Coming in v2.0)
+
+Delete specific tag from all contacts. +
+
+=== Clear tag : (Coming in v2.0)
+
+Clear all tags from specific contact. +
+
+// tag::recentlydeleted[]
+=== Recently deleted : `recentlyDel` (Since v1.2)
+
+Shows recently deleted list of contacts for past 30 contacts. +
+Format: `recentlyDel`
+// end::recentlydeleted[]
+
+// tag::theme[]
+=== Changing theme : `theme` (Since v1.5)
+
+Changes the colour theme of TheYellowPage from `DarkTheme.css` to `LightTheme.css` and vice versa. +
+
+image::DarkTheme.png[width="790"]
+_Figure 4.22.1 : Screenshot of TheYellowPage in DarkTheme.css_ +
+
+image::LightTheme.png[width="790"]
+_Figure 4.22.2 : Screenshot of TheYellowPage in LightTheme.css_ +
+
+Format: `theme`
+// end::theme[]
+
+=== Moving contacts : `move` (Coming in v2.0)
+
+Move designated contacts from one group to another group. +
+Format: `move`
+
+=== Export contact data : `export` (Coming in v2.0)
+
+Export contact data from addressBook to google calendar. +
+Format: `export`
+
 === Exiting the program : `exit`
 
 Exits the program. +
@@ -234,12 +445,14 @@ There is no need to save manually.
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *Add* `add n/NAME o/OCCUPATION p/PHONE_NUMBER e/EMAIL a/ADDRESS w/website [t/TAG]...` +
+e.g. `add n/James o/Apple, Janitor Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 w/https://github.com/JamesHo t/friend t/colleague`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+* *DeleteMul* : `deleteMul INDEXES` +
+e.g. `deleteMul 1 3 5`
+* *Edit* : `edit INDEX [n/NAME] [o/OCCUPATION] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [w/WEBSITE] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
@@ -250,3 +463,6 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Remark* : `remark`
+e.g. `remark INDEX r/REMARK
+* *Sort* : `sort`

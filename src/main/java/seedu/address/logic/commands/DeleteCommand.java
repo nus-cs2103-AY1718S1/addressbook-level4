@@ -2,9 +2,14 @@ package seedu.address.logic.commands;
 
 import java.util.List;
 
+import seedu.address.commons.core.ImageStorageHandler;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.RecentlyDeletedQueue;
+import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.Model;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
@@ -14,7 +19,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 public class DeleteCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "delete";
-
+    public static final String COMMAND_ALIAS = "del";
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the person identified by the index number used in the last person listing.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
@@ -27,7 +32,6 @@ public class DeleteCommand extends UndoableCommand {
     public DeleteCommand(Index targetIndex) {
         this.targetIndex = targetIndex;
     }
-
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
@@ -42,6 +46,10 @@ public class DeleteCommand extends UndoableCommand {
 
         try {
             model.deletePerson(personToDelete);
+            //@@author vmlimshimin
+            queue.offer(personToDelete);
+            //@@author
+            ImageStorageHandler.deleteProfilePicture(personToDelete);
         } catch (PersonNotFoundException pnfe) {
             assert false : "The target person cannot be missing";
         }
@@ -54,5 +62,13 @@ public class DeleteCommand extends UndoableCommand {
         return other == this // short circuit if same object
                 || (other instanceof DeleteCommand // instanceof handles nulls
                 && this.targetIndex.equals(((DeleteCommand) other).targetIndex)); // state check
+    }
+
+    //@@author vmlimshimin
+    @Override
+    public void setData(Model model, CommandHistory commandHistory,
+                        UndoRedoStack undoRedoStack, RecentlyDeletedQueue queue, String theme) {
+        this.model = model;
+        this.queue = queue;
     }
 }

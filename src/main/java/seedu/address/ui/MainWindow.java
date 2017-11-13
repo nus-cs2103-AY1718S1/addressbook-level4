@@ -19,6 +19,7 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.commons.events.ui.ThemeRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
@@ -33,6 +34,7 @@ public class MainWindow extends UiPart<Region> {
     private static final String FXML = "MainWindow.fxml";
     private static final int MIN_HEIGHT = 600;
     private static final int MIN_WIDTH = 450;
+    private static final String CURRENT_THEME = "/view/DarkTheme.css";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -41,12 +43,18 @@ public class MainWindow extends UiPart<Region> {
 
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
+    private ProfilePanel profilePanel;
     private PersonListPanel personListPanel;
     private Config config;
     private UserPrefs prefs;
 
     @FXML
     private StackPane browserPlaceholder;
+
+    //@@author nguyenvanhoang7398
+    @FXML
+    private StackPane profilePlaceholder;
+    //@@author
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -129,6 +137,11 @@ public class MainWindow extends UiPart<Region> {
         browserPanel = new BrowserPanel();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
+        //@@author nguyenvanhoang7398
+        profilePanel = new ProfilePanel(primaryStage);
+        profilePlaceholder.getChildren().add(profilePanel.getRoot());
+        //@@author
+
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
@@ -196,6 +209,18 @@ public class MainWindow extends UiPart<Region> {
         primaryStage.show();
     }
 
+    //@@author vmlimshimin
+    /**
+     * Selects the theme given by user input
+     */
+    public void handleSelectTheme(String theme) {
+        if (getRoot().getStylesheets().size() > 1) {
+            getRoot().getStylesheets().remove(CURRENT_THEME);
+        }
+        getRoot().getStylesheets().add("/view/" + theme);
+    }
+
+    //@@author
     /**
      * Closes the application.
      */
@@ -216,5 +241,12 @@ public class MainWindow extends UiPart<Region> {
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
+    }
+
+    //@@author vmlimshimin
+    @Subscribe
+    private void handleSelectThemeEvent(ThemeRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleSelectTheme(event.theme);
     }
 }

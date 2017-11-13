@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.RecentlyDeletedQueue;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
@@ -13,6 +14,7 @@ import seedu.address.model.Model;
 public class UndoCommand extends Command {
 
     public static final String COMMAND_WORD = "undo";
+    public static final String COMMAND_ALIAS = "ud";
     public static final String MESSAGE_SUCCESS = "Undo success!";
     public static final String MESSAGE_FAILURE = "No more commands to undo!";
 
@@ -28,9 +30,12 @@ public class UndoCommand extends Command {
         return new CommandResult(MESSAGE_SUCCESS);
     }
 
+    //@@author vmlimshimin
     @Override
-    public void setData(Model model, CommandHistory commandHistory, UndoRedoStack undoRedoStack) {
+    public void setData(Model model, CommandHistory commandHistory,
+                        UndoRedoStack undoRedoStack, RecentlyDeletedQueue queue, String theme) {
         this.model = model;
         this.undoRedoStack = undoRedoStack;
+        this.queue = queue;
     }
 }

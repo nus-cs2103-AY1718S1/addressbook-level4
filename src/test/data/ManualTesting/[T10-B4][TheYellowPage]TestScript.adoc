@@ -1,0 +1,194 @@
+= TheYellowPage - Test Script
+
+=== Help
+Open the user guide.
+
+Type "help" in the command box.
+
+A new window of the user guide will be opened.
+
+=== Change Theme
+
+Changes the colour theme of TheYellowPage.
+
+Type "theme" in the command box.
+
+Changes the theme back from dark theme to yellow theme and back if command is entered again.
+
+=== Add
+
+Add a person to TheYellowPage with all required fields using command add.
+
+Type "add n/Tommy o/Google, Script Tester p/98884777 e/tommy@gmail.com a/33 Serangoon Road, #10-20 w/https://facebook.com/Tommy t/friend" in the command box.
+
+A new contact Tommy will be added to TheYellowPage.
+
+=== Clear
+
+Clear all contacts in TheYellowPage.
+
+Type "clear" in the command box.
+
+All the contacts in TheYellowPage will be cleared.
+
+=== Delete
+
+Delete contacts in TheYellowPage with the specified index.
+
+Type "delete 2" in the command box.
+
+Second contact as listed in TheYellowPage will be deleted.
+
+=== Delete Multiple
+
+Delete multiple contacts simultaneously with specified index spearate by a space and in ascending order.
+
+Type "delete 2 5" in the command box.
+
+Second and fifth contact as listed in TheYellowPage will be deleted.
+
+=== Recently Deleted
+
+Past 30 contacts that was recently deleted will be shown.
+
+Type "recentlyDel" in the command box.
+
+Past 30 contacts that was deleted will be displayed with all of their fields.
+
+=== Edit
+
+Edit any one or more fields of a specific contact.
+
+Type "edit 3 n/Tommy Ong w/https://twitter.com/Tommy"
+
+Change the third contact listed name to be Tommy Ong and website to be https://twitter.com/Tommy
+
+=== Find
+
+Find persons whose name, email, address, phone, website, occupation or remark contains any of the given keywords.
+
+Type "find Larry 97356574 dina@example.com" in the command box.
+
+Persons who fields contains "Larry", "90887532", "dina@example.com".
+In this case, Larry, Brian and Dina will be listed.
+
+=== List
+
+List all contacts in TheYellowPage.
+
+Type "list" in the command box.
+
+All contacts in TheYellowPage will be listed.
+
+=== Select
+
+Selects the specified person which would load the website of the specific person.
+
+Type "select 1" in the command box.
+
+Alex will be selected and his twitter page will be loaded.
+
+=== History
+
+Lists all the commands that was previously entered in reverse chronological order.
+
+Type "History" in the command box.
+
+All commands that was previously entered will be showed.
+
+=== Undo
+
+Restores TheYellowPage to the previous state.
+
+Type "undo" in the command box.
+
+Edit command will then be undone.
+
+=== Redo
+
+Reverses the most recent undo.
+
+Type "redo" in the command box.
+
+Undo the previous undo which undo the edit command.
+
+=== Find Tag
+
+List all contacts with the specified tag names
+
+Type "findtag friends classmate" in the command box.
+
+All contacts with friends or classmate tags will be listed in TheYellowPage.
+
+=== Add Multiple
+
+Add multiple contacts at once to TheYellowPage.
+
+Type "addMul FILEPATH" in the command box.
+
+FILEPATH refers to the file path of the text file you have saved in your computer.
+
+Example:
+
+[NOTE]
+====
+the following fields must be separated by a tab-space
+====
+The following is a valid tab-separated file at D:/contact.txt:
+
+|===
+|name  |occupation |phone |email |address |website |tag
+
+|John Doe
+|Google, CEO
+|98765432
+|johnd@example.com
+|John street, block 123, #01-01
+|https://github.com/JohnDoe
+|friend, neighbor
+
+|Betsy Crowe
+|Microsoft, Software Engineer
+|1234567
+|betsycrowe@example.com
+|Newgate Prison
+|https://github.com/BetsyCrowe
+|friend, criminal
+|===
+
+=== Change Photo
+
+Add photo to the specified index in TheYellowPage.
+
+Type "changePicture 1 FILEPATH" in the command box.
+
+FILEPATH refers to the file path of the image on your computer.
+The specified picture must be in either .png or .jpg format.
+
+Example: changePicture 1 D://myPicture.png
+
+This will change the photo of the first person on the list to myPicuture.
+
+=== Remark
+
+Adds a remark to the specified index in TheYellowPage.
+
+Type "remark 1 r/helper" in the command box.
+
+Alex will have a remark which says "helper" shown.
+
+=== Sort
+
+Sorts TheYellowPage by name in alphabetical order.
+
+Type "sort" in the command box.
+
+TheYellowPage will be sorted in alphabetical order.
+
+=== Exit
+
+Exits TheYellowPage.
+
+Type "exit" in the command box.
+
+TheYellowPage closes.

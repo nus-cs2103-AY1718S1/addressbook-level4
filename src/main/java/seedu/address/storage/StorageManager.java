@@ -19,6 +19,8 @@ import seedu.address.model.UserPrefs;
  */
 public class StorageManager extends ComponentManager implements Storage {
 
+    public static final String EMPTY_STORAGE_DEFAULT_PATH = "data/";
+
     private static final Logger logger = LogsCenter.getLogger(StorageManager.class);
     private AddressBookStorage addressBookStorage;
     private UserPrefsStorage userPrefsStorage;
@@ -77,7 +79,13 @@ public class StorageManager extends ComponentManager implements Storage {
         addressBookStorage.saveAddressBook(addressBook, filePath);
     }
 
+    //@@author vmlimshimin
+    @Override
+    public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
+        saveAddressBook(addressBook, addressBookStorage.getAddressBookFilePath() + "-backup.xml");
+    }
 
+    //@@author
     @Override
     @Subscribe
     public void handleAddressBookChangedEvent(AddressBookChangedEvent event) {

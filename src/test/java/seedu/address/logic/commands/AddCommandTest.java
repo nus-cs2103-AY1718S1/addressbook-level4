@@ -15,6 +15,7 @@ import org.junit.rules.ExpectedException;
 
 import javafx.collections.ObservableList;
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.RecentlyDeletedQueue;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
@@ -88,7 +89,8 @@ public class AddCommandTest {
      */
     private AddCommand getAddCommandForPerson(Person person, Model model) {
         AddCommand command = new AddCommand(person);
-        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        command.setData(model, new CommandHistory(),
+                new UndoRedoStack(), new RecentlyDeletedQueue(), new String());
         return command;
     }
 
@@ -128,6 +130,14 @@ public class AddCommandTest {
             fail("This method should not be called.");
             return null;
         }
+
+        //@@author JavynThun
+        @Override
+        public Boolean sortPersonList(ArrayList<ReadOnlyPerson> personlist) {
+            fail("This method should not be called.");
+            return null;
+        }
+        //@@author
 
         @Override
         public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
