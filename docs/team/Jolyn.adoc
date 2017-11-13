@@ -16,7 +16,11 @@ include::../../README.adoc[tag=applicationDescription]
 
 === Enhancement Added: Keyboard Shortcuts
 
-The table below shows the keyboard shortcuts that are added, with the exception of shortcuts with the behavior `Exit the application`
+==== Justification
+
+Having keyboard shortcuts allows the user to navigate around the application with ease and speed.
+This implementation should enable you to access all parts of Rolodex without using the mouse.
+The table below shows the keyboard shortcuts that have been added, with the exception of shortcuts with the behavior `Exit the application`
 and `View help window` which came with the original state of the application.
 
 ==== External Behavior
@@ -25,13 +29,6 @@ and `View help window` which came with the original state of the application.
 
 include::../UserGuide.adoc[leveloffset=2,tag=shortcut]
 
----
-
-==== Justification
-
-The main objective of Rolodex is to facilitate an efficient way of managing contacts for users with a preference for typing.
-Having keyboard shortcuts allows the user to navigate around the application with ease and speed.
-This implementation should enable the user to access all parts of the application without using the mouse.
 
 ==== Implementation
 
@@ -52,6 +49,12 @@ include::../DeveloperGuide.adoc[leveloffset=1, tag=uiImprovements]
 [[detailPanel]]
 === Enhancement Added: Person Detail Panel
 
+==== Justification
+
+The person detail panel aims to reduce cluttering of information in the contact list. With this panel,
+the contact list will only have to store the essential information for identifying a person, whilst
+additional information about the person will be displayed on this panel.
+
 ==== External Behavior
 
 ---
@@ -69,9 +72,11 @@ include::../DeveloperGuide.adoc[leveloffset=1, tag=detailPanelImp]
 
 === Enhancement Added: Remark Field
 
-The remark field allows the user to store miscellaneous notes about their contacts. The field can be added using a standalone `remark` command,
-or added along with other fields when adding a new person using the existing `add` command. Similarly, the field can be modified with the `remark` command,
-or edited along with other fields using the existing `edit` command.
+==== Justification
+
+The remark field allows the user to store miscellaneous notes about their contacts.
+For example, a user might want to note down a hobby of a friend. Such information can be easily added to the contact
+with the remark field.
 
 ==== External Behavior
 
