@@ -22,8 +22,22 @@ public class MonthDateBuilder {
         monthYearArray = new Integer[2];
         setMonthYearArray(calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR)); //Set current month and year
         setNameOfMonth();
-        calendar.set(Calendar.MONTH, monthYearArray[0]);   //Sets month from monthYearArray in Calendar object
-        calendar.set(Calendar.YEAR, monthYearArray[1]);    //Sets year from monthYearArray in Calendar object
+        calendar.set(Calendar.MONTH, monthYearArray[0]);   //Sets the given calendar MONTH to monthYearArray[0]
+        calendar.set(Calendar.YEAR, monthYearArray[1]);    //Sets the given calendar YEAR to monthYearArray[1]
+
+        setMonthAnchors();
+        buildMonthArrays();
+    }
+
+    public MonthDateBuilder(Integer month, Integer year) {
+        calendar = Calendar.getInstance();
+
+        monthDateArray = new String[MAX_NUMBER_DAYS];
+        monthYearArray = new Integer[2];
+        setMonthYearArray(month, year); //Set current month and year
+        setNameOfMonth();
+        calendar.set(Calendar.MONTH, monthYearArray[0]);   //Sets the given calendar MONTH to monthYearArray[0]
+        calendar.set(Calendar.YEAR, monthYearArray[1]);    //Sets the given calendar YEAR to monthYearArray[1]
 
         setMonthAnchors();
         buildMonthArrays();
@@ -31,10 +45,11 @@ public class MonthDateBuilder {
 
     /**
      * Stores desired month and year in monthYearArray
-     * @param month
-     * @param year
+     * @param month the value used to set the <code>MONTH</code> calendar field.
+     * Month value is 0-based. e.g., 0 for January.
+     * @param year the value used to set the <code>YEAR</code> calendar field.
      */
-    public void setMonthYearArray(Integer month, Integer year) {
+    private void setMonthYearArray(Integer month, Integer year) {
         monthYearArray[0] = month;
         monthYearArray[1] = year;
     }
@@ -74,6 +89,10 @@ public class MonthDateBuilder {
         default:
             firstDayOfMonth = 0;
         }
+    }
+
+    public Integer getFirstDayOfMonth() {
+        return firstDayOfMonth;
     }
 
     /**
