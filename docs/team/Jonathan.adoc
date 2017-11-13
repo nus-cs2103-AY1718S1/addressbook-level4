@@ -6,7 +6,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 == Project: cherBook
  cherBook is an address book application used by teachers to monitor students' academic progress.
  The user interacts with it using a CLI, and it has a GUI created with JavaFX.
- It is written in Java, and has about 8 kLoC.
+ It is written in Java, and has about 30 kLoC.
 
 === Enhancement Added: Remark
 
@@ -146,6 +146,9 @@ command is entered.
 * Updated the GUI to include graphs of students either in class or tags (pull request https://github.com[#65], https://github.com[#87])
 * Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
 * Logic tabCommand implementation (Special thanks to Celine who helped me layout tabCommand) (https://github.com/CS2103AUG2017-T16-B2/main/pull/114)
+* Update Manual Testing Script (https://github.com/CS2103AUG2017-T16-B2/main/pull/146)
+* Rearranged panels in FXML such that Student Details Panel, Statistics Panel and Graph Panel are all on the same stack pane. (https://github.com/CS2103AUG2017-T16-B2/main/pull/139/files)
+* Fixed some bugs issues regarding help window (https://github.com/CS2103AUG2017-T16-B2/main/pull/157)
 
 == Project: Tea (Game)
 
