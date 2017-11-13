@@ -1,3 +1,4 @@
+//@@author fustilio
 package seedu.address.bot.parcel;
 
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
@@ -102,3 +103,4 @@ public class ParcelParser {
         return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
 }
+//@@author

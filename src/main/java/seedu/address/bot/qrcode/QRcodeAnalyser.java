@@ -1,3 +1,4 @@
+//@@author fustilio
 package seedu.address.bot.qrcode;
 
 import java.awt.image.BufferedImage;
@@ -62,3 +63,4 @@ public class QRcodeAnalyser {
         }
     }
 }
+//@@author
