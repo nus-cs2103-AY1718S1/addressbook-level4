@@ -1,4 +1,3 @@
-//@@author huiyiiih
 package seedu.address.model.relationship;
 
 import static java.util.Objects.requireNonNull;
@@ -6,6 +5,8 @@ import static java.util.Objects.requireNonNull;
 import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+
+//@@author huiyiiih
 
 /**
  * Represents a Relationship in the address book.

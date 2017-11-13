@@ -1,4 +1,3 @@
-//@@author huiyiiih
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
@@ -8,6 +7,8 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSucces
 import org.junit.Test;
 
 import seedu.address.logic.commands.SortCommand;
+
+//@@author huiyiiih
 
 public class SortCommandParserTest {
     private SortCommandParser parser = new SortCommandParser();

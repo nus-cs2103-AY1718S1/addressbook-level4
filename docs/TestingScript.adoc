@@ -55,7 +55,40 @@ Input: `redo`, `undo`
 
 Expected result: Address book is cleared again, then repopulated again.
 
-=== Test - CheckSchedule command
+=== Test 9 - Sort command
+Input `sort name`
+
+Expected result: Person list sorted alphabetically by name.
+
+Input `sort tag`
+
+Expected result: Person list sorted alphabetically by tag then again by name.
+
+Input: `sort company`
+Input: `sort position`
+
+Expected result: Person list sorted by company/position first and then alphabetically by person name with *NIL*
+company/position at the bottom.
+
+Input: `sort priority`
+
+Expected result: Person list sorted by priority first, in the order of *H, M, L* and then alphabetically by person
+name.
+
+=== Test 10 - Set Relationship Command
+Input: `set 1 2 ar/friends`
+
+Expected result: Adds the relationship between the two indexes if they do not have one.
+
+Input: `set 1 2 dr/friends`
+
+Expected result: Deletes the relationship between the two indexes if it is present.
+
+Input: `set 1 2 cr/`
+
+Expected clears all relationship between the two persons only.
+
+=== Test 11 - CheckSchedule command
 
 Input: `checkschedule`
 
@@ -112,7 +145,7 @@ Expected result:
 * The event, if successfully deleted, should be deleted from the calendar as
 well
 
-=== Test - UpdatePhoto command
+=== Test 12 - UpdatePhoto command
 
 Input: `updatephoto 1` and then choose an image file from your local
 directory (must be jpg/png/jpeg file)
@@ -122,7 +155,7 @@ Expected behavior:
 * After selecting an image file, the person identified by the index should
 have his/her photo changed to the selected image.
 
-=== Test - "Import Photo" button
+=== Test 13 - "Import Photo" button
 
 Input: Click on any person in the person list, and on the detail page that
 shows up, click the "import photo" button, and then choose an image file from
@@ -142,7 +175,7 @@ Expected behavior:
 * The event identified by the index should have its `repeat period` changed
 to 10
 
-=== Test - recurring event scheduling
+=== Test 14 - recurring event scheduling
 
 Input: `eventadd n/test t/13/11/2017 1100-1200 d/This is a test p/7`
 
@@ -162,6 +195,3 @@ Input: `eventedit [index of the previously edited event] p/6`
 Expected behavior:
 
 * A new events will be added: on 18/11/2017
-
-
-

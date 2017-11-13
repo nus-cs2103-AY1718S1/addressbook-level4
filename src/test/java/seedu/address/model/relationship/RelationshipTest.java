@@ -1,10 +1,11 @@
-//@@author huiyiiih
 package seedu.address.model.relationship;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
+
+//@@author huiyiiih
 
 public class RelationshipTest {
 

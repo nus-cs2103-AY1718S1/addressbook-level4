@@ -625,7 +625,7 @@ parsed, the process will be similar to the sequence diagram shown above.
 // tag::Sorting[]
 === Sorting of persons list
 
-The sorting mechanism achieved by creating a new `SortCommand` and `SortCommandParser`. It is also facilitated by
+The sorting mechanism is achieved by creating a new `SortCommand` and `SortCommandParser`. It is also facilitated by
 `UniquePersonList`, which resides in `AddressBook`. It supports
  the rearrangement of the person list which modifies the current arrangement. This command inherits the
 `UndoableCommand` which allows the user to undo/redo the sorting.
@@ -647,17 +647,17 @@ The execution of the command is done in the following method:
 
 [source, java]
 ----
-public CommandResult executeUndoableCommand() {
+public CommandResult executeUndoableCommand() throws CommandException {
     try {
-        model.sortPerson(sortType);
+        model.sortPersonList(sortType);
         return new CommandResult(MESSAGE_SUCCESS + sortType);
     } catch (InvalidSortTypeException iste) {
-            return new CommandResult(MESSAGE_UNKNOWN_SORT_TYPE);
+            throw new CommandException(MESSAGE_UNKNOWN_SORT_TYPE);
         }
     }
 ----
 
-After a series of method calls, the *model.sortPerson()* will eventually call the *sortPerson()* method in
+After a series of method calls, the *model.sortPersonList()* will eventually call the *sortPerson()* method in
 `UniquePersonList`.
 
 
@@ -705,7 +705,7 @@ If sorting type is not found, an error message will to shown in the result displ
 sorting
 type.
 
-Comparators for sorting *Name* and *Tag* are the same, they do not have a custom comparator.
+Sorting *Name* and *Tag* are done using the default comparator as they are only sorted alphabetically.
 
 
 *Company* and *Position* have a default input, _"NIL"_, if it is not specified during the adding of the person,
@@ -721,7 +721,7 @@ Since *Company*, *Position* and *Priority* have specific way of sorting, a custo
 The *_ORDERED_ENTRIES_* indicates how should it should be sorted in both the comparator for *Company*, *Position* and
  *Priority*.
 
-The implementation of the comparator for *Company* and *Position* are the same. For *Position* simply change all the
+The implementation of the comparator for *Company* and *Position* are the same. For *Position*, simply change all the
 variables and data type to be *Position*.
 
 An example of the implementation for *Company* is as follows:
@@ -778,7 +778,7 @@ image::SortCommandSequenceDiagram.png[width="800"]
 ==== Design Considerations:
 *Aspect*: Implementation of Sorting
 
-*Alternative 1*: Just sort all the different methods alphabetically.
+*Alternative 1*: Just sort all the different types alphabetically.
 
 *Pros*: The user is able to see the person list sorted alphabetically for each sorting method
 
@@ -786,20 +786,20 @@ image::SortCommandSequenceDiagram.png[width="800"]
 list should be sorted for example priority should be sorted with *H* and the top, *M* in the middle and *L* at the
 bottom.
 
-*Alternative 2 (current choice)*: Have the sorting method to deal with such specificaitions.
+*Alternative 2 (current choice)*: Have the sorting method to deal with such specifications.
 
-*Pros*: Users is able to sort alphabetically automatically for all the sorting method provided.
+*Pros*: Users is able to sort alphabetically automatically for all the sorting types provided.
 
-*Cons*: Custom comparator will be required to compare the the sorting types that have a specific format.
+*Cons*: Custom comparators will be required to compare the the sorting types that have a specific format.
 
 // end::Sorting[]
 
 // tag::SettingRelationship[]
 === Setting relationship between two persons
 
-The setting of relationship mechanism achieved by creating a new `SetRelCommand`, `SetRelCommandParser`
+The setting of relationship mechanism is achieved by creating a new `SetRelCommand`, `SetRelCommandParser`
 , `UniqueRelList` and `Relationship` classes. `SetRelCommand` and `SetRelCommandParser` classes resides in the `Logic
-Component` facilitated by `UniqueRelList` and `Relationship` classes resides in the `Model Component`.
+Component` and they are facilitated by `Relationship` and `UniqueRelList` classes that resides in the `Model Component`.
 It supports the adding, deleting and clearing of relationship between two different persons. This command inherits the
 `UndoableCommand` which allows the user to undo/redo the adding/deleting/clearing of relationship between two persons.
 
@@ -822,19 +822,21 @@ public Relationship(String name, Set<Relationship> relation) {
 ----
 
 As you can see from the code above, the relationship name has to be validated to make sure it fits the a certain
-format by checking if it matches the regular expression for it. The overloaded constructor forms the relationship
-the string of the other person's name and the relationship.
+format by checking if it matches the regular expression. The overloaded constructor concatenates the relationship
+and the person's name.
 
 Before a new instance of `SetRelCommand` is created,
 
 SetRelCommmandParser ensures that:
 
 1. the relationship prefix is present.
-2. the indexes are the same.
+2. the indexes are the different.
 3. the indexes are an unsigned integer.
-4. the relationships are not empty strings or null for adding and deleting.
+4. there are 2 indexes present.
+5. only one add relationship or delete relationship prefix present.
+5. the relationships are not empty strings or null for adding and deleting.
 
-`SetRelCommandParser` returns a new instance of `SetRelCommand` that takes in two different indexes, an editedPerson
+`SetRelCommandParser` returns a new instance of `SetRelCommand` that takes in two indexes, an editedPerson
 and a boolean value that states whether the add relationship prefix is present.
 
 The implementation of `SetRelCommand` constructor is as follows:
@@ -885,7 +887,7 @@ public CommandResult executeUndoableCommand() throws CommandException {
 }
 ----
 
-The implementation of the adding/deleting and clearing was inspired to be by my course mate, Sim Yan Yu
+The idea of how the adding/deleting and clearing would be done was inspired to me by my course mate, Sim Yan Yu
 (syy94). However, the implementations are modified significantly to fit this feature.
 
 The implementations of adding/deleting are as follows:
@@ -917,7 +919,7 @@ The following sequence diagram shows how the set relationship operation works:
 image::SetRelCommandSequenceDiagram.png[width="800"]
 
 ==== Design Considerations:
-*Aspect*: Settng relationships for contacts
+*Aspect*: Setting relationships for contacts
 
 *Alternative 1*: Manually setting the relationship for each person.
 
@@ -958,7 +960,7 @@ switch (commandWord) {
     return new AddCommandParser().parse(arguments);
 ----
 
-An example of the implementation checking the *add* command in `CheckCommandsParser` is as follows:
+An example of the implementation of checking the *add* command in `CheckCommandsParser` is as follows:
 [source, java]
 ----
 /**
@@ -988,8 +990,8 @@ if (!Collections.disjoint(userInputCommand, commandsForAdd)) {
 The code for the other commands will be the same except for the aliases/synonyms.
 
 [NOTE]
-If the input command does not match with any of the *aliases/synonyms*, an exception will be thrown to notify the
-user that the command entered is *invalid*.
+If the input command does not match with any of the *aliases/synonyms*, an exception will be thrown and an error
+message will be shown to notify the user that the command entered is *invalid*.
 
 ==== Design Considerations:
 *Aspect*: Implementation of aliases/synonyms for each command
