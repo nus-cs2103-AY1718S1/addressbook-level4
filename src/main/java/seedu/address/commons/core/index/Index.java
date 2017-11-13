@@ -1,5 +1,7 @@
 package seedu.address.commons.core.index;
 
+import java.util.Objects;
+
 /**
  * Represents a zero-based or one-based index.
  *
@@ -50,6 +52,12 @@ public class Index implements Comparable {
         return other == this // short circuit if same object
                 || (other instanceof Index // instanceof handles nulls
                 && this.zeroBasedIndex == ((Index) other).zeroBasedIndex); // state check
+    }
+
+    //@@author CT15
+    @Override
+    public int hashCode() {
+        return Objects.hash(zeroBasedIndex);
     }
 
     //@@author 17navasaw
