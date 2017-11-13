@@ -132,7 +132,8 @@ include::../DeveloperGuide.adoc[tag=SettingRelationship]
 
 === Other Contributions
 
-** Updated architecture diagram for Model, Storage Component (Pull request: [][#])
+** Updated architecture diagram for Model, Storage Component
+(Pull request: [https://github.com/CS2103AUG2017-T14-B3/main/pull/108[#108]])
 ** Updated the person panel with relationship information
 (Pull request: [https://github.com/CS2103AUG2017-T14-B3/main/pull/93[#93]])
 
