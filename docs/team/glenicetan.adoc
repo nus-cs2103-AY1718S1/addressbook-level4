@@ -3,7 +3,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
-== Project: Resident Book
+== Project: ResidentBook
 ResidentBook is a newly conceptualised administrative tool catered for staffs handling hostel and college operations. Universities such as NUS, has numerous hostels and colleges. Administrative staff has to handle all the matters regarding check in, check out , and ensuring
 that all Residents have paid for their fees during their stay. However, while the school employs a system with database of Resident details, common administrative staff are unable to read the information due to policies such as PDPA.
 
