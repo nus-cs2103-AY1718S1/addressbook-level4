@@ -8,7 +8,7 @@ The AcquaiNote is a free command line program to manage your personal contact li
 
 *Code contributed*: [https://github.com/CS2103AUG2017-T10-B1/main/blob/master/collated/main/aaronyhsoh.md[Functional code]] [https://github.com/CS2103AUG2017-T10-B1/main/blob/master/collated/test/aaronyhsoh.md[Test code]]
 
-=== Enhancement Added: Favourite
+=== Enhancement Added: `Favourite` command
 
 ==== External behavior
 
@@ -23,7 +23,7 @@ include::../UserGuide.adoc[tag=favourite]
 
 ==== Justification
 
-Users want to set more important contacts at the top of their contact list.
+This allow users to set the more important or more frequently used contacts to be at the top of their list. This removes the need to manually find these users, which saves time for the user.
 
 ==== Implementation
 
@@ -36,7 +36,7 @@ include::../DeveloperGuide.adoc[tag=favourite]
 
 ---
 
-=== Enhancement Added: Add
+=== Enhancement Added: `Add` command with optional inputs
 
 ==== External behavior
 
@@ -51,7 +51,7 @@ include::../UserGuide.adoc[tag=add]
 
 ==== Justification
 
-Users want to save contacts that might have details missing.
+Users might not have all the details of a contact such as address or email. This enhancement will allow users to save contacts and leave certain fields blank, which can be later added via the `edit` command.
 
 ==== Implementation
 
@@ -64,7 +64,7 @@ include::../DeveloperGuide.adoc[tag=add]
 
 ---
 
-=== Enhancement Added: Undo/Redo
+=== Enhancement Added: Undo/Redo multiple commands
 
 ==== External behavior
 
@@ -79,7 +79,7 @@ include::../UserGuide.adoc[tag=undoredo]
 
 ==== Justification
 
-This command allow users to redo/undo multiple commands at one go, which makes it faster if there are alot of commands to be undone/redone.
+This command allow users to redo/undo multiple commands at one go, which makes it faster if there are alot of commands to be undone/redone. 
 
 ==== Implementation
 
@@ -99,6 +99,10 @@ This will allow users to delete more than 1 contacts at the same time. Users wil
 === Enhancement Proposed: Enhance command `todo`
 
 This enhancement will automatically favourite contacts with tasks assigned and shift them to the top of the contact list. This prevents user from overlooking tasks.
+
+=== Enhancement Proposed: Enhance command `undo` and `redo`
+
+This enhancement will allow users to type `undo all` and `redo all`, which will undo all undoable commands and redo all undone commands respectively. This is to make the command more intuitive for the user rather than having to enter an extremely large number to undo or redo all commands.
 
 === Other contributions
 
