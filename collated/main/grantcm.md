@@ -1,5 +1,5 @@
 # grantcm
-###### /java/seedu/address/commons/events/ui/GroupPanelSelectionChangedEvent.java
+###### \java\seedu\address\commons\events\ui\GroupPanelSelectionChangedEvent.java
 ``` java
     public GroupPanelSelectionChangedEvent(GroupCard newSelection) {
         this.newSelection = newSelection;
@@ -14,7 +14,7 @@
         return newSelection;
     }
 ```
-###### /java/seedu/address/logic/commands/CommandCollection.java
+###### \java\seedu\address\logic\commands\CommandCollection.java
 ``` java
     private static Set<String> commandSet = Stream.of(
         AddCommand.COMMAND_WORD, ClearCommand.COMMAND_WORD, DeleteCommand.COMMAND_WORD,
@@ -50,7 +50,7 @@
     }
 
 ```
-###### /java/seedu/address/logic/commands/FilterGroupCommand.java
+###### \java\seedu\address\logic\commands\FilterGroupCommand.java
 ``` java
     /**
      * Updates the filtered list to display only people with the proper group predicate
@@ -79,7 +79,7 @@
                 && predicate.equals(((FilterGroupCommand) other).predicate));
     }
 ```
-###### /java/seedu/address/logic/commands/GroupCommand.java
+###### \java\seedu\address\logic\commands\GroupCommand.java
 ``` java
     @Override
     protected CommandResult executeUndoableCommand() throws CommandException {
@@ -132,7 +132,7 @@
         }
     }
 ```
-###### /java/seedu/address/logic/parser/FilterGroupCommandParser.java
+###### \java\seedu\address\logic\parser\FilterGroupCommandParser.java
 ``` java
     @Override
     public FilterGroupCommand parse (String userInput) throws ParseException {
@@ -145,7 +145,7 @@
         return new FilterGroupCommand(trimmedArgs);
     }
 ```
-###### /java/seedu/address/logic/parser/GroupCommandParser.java
+###### \java\seedu\address\logic\parser\GroupCommandParser.java
 ``` java
     /**
      * Parses the given {@code String} of arguments in the context of the GroupCommand
@@ -177,7 +177,7 @@
         return nameList;
     }
 ```
-###### /java/seedu/address/logic/trie/CommandTrie.java
+###### \java\seedu\address\logic\trie\CommandTrie.java
 ``` java
     public CommandTrie() {
         commandCollection = new CommandCollection();
@@ -334,7 +334,7 @@
     }
 
 ```
-###### /java/seedu/address/logic/trie/Node.java
+###### \java\seedu\address\logic\trie\Node.java
 ``` java
     public Node(char key , Node next, Node child) {
         requireNonNull(key);
@@ -371,7 +371,7 @@
         this.next = next;
     }
 ```
-###### /java/seedu/address/storage/XmlAdaptedGroup.java
+###### \java\seedu\address\storage\XmlAdaptedGroup.java
 ``` java
     /**
      * Converts group to into JAXB usable object
@@ -389,7 +389,7 @@
         return new Group (groupName);
     }
 ```
-###### /java/seedu/address/ui/CommandBox.java
+###### \java\seedu\address\ui\CommandBox.java
 ``` java
     /**
      * Handles the Tab button pressed event.
@@ -405,11 +405,11 @@
             } else if (commandSet.contains(command)) {
                 //Able to autocomplete to a correct command
                 this.replaceText(command);
-                logger.info("Autocomplete successful with input: " + input + " to " + command);
+                logger.info(String.format("Autocomplete successful with input: ", input, " to ", command));
             } else if (commandSet.contains(input)) {
                 //Add parameters
                 this.replaceText(input + command);
-                logger.info("Autocomplete successful with input: " + input + " to " + input + command);
+                logger.info(String.format("Autocomplete successful with input: ", input, " to ", input, command));
             }
         } catch (NullPointerException e) {
             //No command exists in trie or no trie exists
@@ -438,7 +438,7 @@
         autoCompleteBox.show(commandTextField, Side.BOTTOM, 0.0, 0.0);
     }
 ```
-###### /java/seedu/address/ui/GroupCard.java
+###### \java\seedu\address\ui\GroupCard.java
 ``` java
     public GroupCard (Group group) {
         super(FXML);
@@ -464,7 +464,7 @@
                 && group.equals(card.group);
     }
 ```
-###### /java/seedu/address/ui/GroupListPanel.java
+###### \java\seedu\address\ui\GroupListPanel.java
 ``` java
     public GroupListPanel(ObservableList<Group> groupList) {
         super(FXML);
@@ -508,15 +508,15 @@
         }
     }
 ```
-###### /java/seedu/address/ui/MainWindow.java
+###### \java\seedu\address\ui\MainWindow.java
 ``` java
     @Subscribe
     private void handleGroupSelectedEvent (GroupPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        commandBox.handleCommandInputChanged("filter " + event.getNewSelection().group.groupName);
+        commandBox.handleCommandInputChanged(String.format("filter ", event.getNewSelection().group.groupName));
     }
 ```
-###### /resources/view/GroupListCard.fxml
+###### \resources\view\GroupListCard.fxml
 ``` fxml
 <HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
         <padding>
@@ -525,13 +525,13 @@
         <Label fx:id="name" text="\$first" styleClass="cell_big_label" />
 </HBox>
 ```
-###### /resources/view/GroupListPanel.fxml
+###### \resources\view\GroupListPanel.fxml
 ``` fxml
 <VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <ListView fx:id="groupListView" VBox.vgrow="ALWAYS" orientation="HORIZONTAL" />
 </VBox>
 ```
-###### /resources/view/MainWindow.fxml
+###### \resources\view\MainWindow.fxml
 ``` fxml
     <VBox fx:id="groupList" SplitPane.resizableWithParent="false" prefWidth="700" minWidth="700" maxWidth="700"
           maxHeight="55" minHeight="55">

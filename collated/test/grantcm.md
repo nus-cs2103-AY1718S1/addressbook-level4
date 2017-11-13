@@ -1,5 +1,5 @@
 # grantcm
-###### /java/seedu/address/logic/AutoCompleteTest.java
+###### \java\seedu\address\logic\AutoCompleteTest.java
 ``` java
     @Before
     public void setup() {
@@ -34,7 +34,7 @@
                 + "[a/ADDRESS] [t/TAG]\n");
     }
 ```
-###### /java/seedu/address/logic/commands/FilterCommandTest.java
+###### \java\seedu\address\logic\commands\FilterCommandTest.java
 ``` java
     @Test
     public void equals() {
@@ -67,7 +67,7 @@
         assertEquals(result.feedbackToUser, FilterGroupCommand.MESSAGE_GROUP_IS_EMPTY);
     }
 ```
-###### /java/seedu/address/logic/commands/GroupCommandTest.java
+###### \java\seedu\address\logic\commands\GroupCommandTest.java
 ``` java
     @Test
     public void equals() {
@@ -107,7 +107,7 @@
         assertFalse(model.groupExists(trip));
     }
 ```
-###### /java/seedu/address/model/person/GroupTest.java
+###### \java\seedu\address\model\person\GroupTest.java
 ``` java
     @Test
     public void isValidGroup () {

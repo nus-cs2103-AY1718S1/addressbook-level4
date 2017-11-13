@@ -1,5 +1,6 @@
 # aali195
-###### /java/seedu/address/commons/exceptions/ImageException.java
+
+###### \java\seedu\address\commons\exceptions\ImageException.java
 ``` java
 /**
  * Represents an image error encountered by a parser.
@@ -15,7 +16,8 @@ public class ImageException extends IllegalValueException {
     }
 }
 ```
-###### /java/seedu/address/commons/util/CompressUtil.java
+
+###### \java\seedu\address\commons\util\CompressUtil.java
 ``` java
 /**
  * Handles the compression of directories
@@ -90,7 +92,7 @@ public class CompressUtil {
     }
 }
 ```
-###### /java/seedu/address/commons/util/ImageUtil.java
+###### \java\seedu\address\commons\util\ImageUtil.java
 ``` java
 /**
  * Handles the IO for editing persons images
@@ -143,7 +145,7 @@ public class ImageUtil {
 
 }
 ```
-###### /java/seedu/address/logic/commands/ExportCommand.java
+###### \java\seedu\address\logic\commands\ExportCommand.java
 ``` java
 /**
  * This command is used to export a compressed version of the working addressbook and the images saved
@@ -221,7 +223,8 @@ public class ExportCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/ImageCommand.java
+
+###### \java\seedu\address\logic\commands\ImageCommand.java
 ``` java
     public static final String COMMAND_WORD = "image";
 
@@ -251,7 +254,7 @@ public class ExportCommand extends Command {
         this.index = index;
     }
 ```
-###### /java/seedu/address/logic/commands/ImageCommand.java
+###### \java\seedu\address\logic\commands\ImageCommand.java
 ``` java
     /**
      * Generates success messages
@@ -280,7 +283,6 @@ public class ExportCommand extends Command {
         if (other == this) {
             return true;
         }
-
         // instanceof handles nulls
         if (!(other instanceof ImageCommand)) {
             return false;
@@ -306,7 +308,8 @@ public class ExportCommandParser implements Parser<ExportCommand> {
         String[] splitArgs = userInput.trim().split(regex, 2);
 
         String path;
-        if (splitArgs.length > 1) {
+
+        if (splitArgs.length > 0) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ExportCommand.MESSAGE_USAGE));
         } else {
             path = splitArgs[0];
@@ -315,7 +318,7 @@ public class ExportCommandParser implements Parser<ExportCommand> {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/ImageCommandParser.java
+###### \java\seedu\address\logic\parser\ImageCommandParser.java
 ``` java
 /**
  * Parser for the image command
@@ -348,7 +351,7 @@ public class ImageCommandParser implements Parser<ImageCommand> {
     }
 }
 ```
-###### /java/seedu/address/model/person/Image.java
+###### \java\seedu\address\model\person\Image.java
 ``` java
 /**
  * Represents the path of an image for a Person in the address book

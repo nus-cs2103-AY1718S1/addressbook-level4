@@ -473,6 +473,27 @@ For the full list of notations used to define date format, please refer to https
 ===== setLenient
 `setLenient` is a method in `SimpleDateFormat` class. It is used to decide the mode of parsing. +
 
+=======
+
+===== Setting Date Pattern
+Before creating a `SimpleDateFormat` object, a pattern must be defined for parsing and formatting. +
+The pattern (in `String`) is defined as follows:
+----
+public static final String DATE_FORMAT = "yyyy-MM-dd";
+----
+`-` is the separator used. It can also be replaced by `\`, `.`, etc. +
+`yyyy` represents the 4-digit year number (e.g.: '2016') +
+`MM` represents the 2-digit month number (e.g.: '12') +
+One common variation to month indication is `MMMMM`, which is the name of the month (e.g.: 'June') +
+`dd` represents the 2-digit day number (e.g.: '30') +
+
+For the full list of notations used to define date format, please refer to https://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html[the official documentation]. +
+
+`DATE_FORMAT` can then be passed as parameter when creating new `SimpleDateFormat` object.
+
+===== setLenient
+`setLenient` is a method in `SimpleDateFormat` class. It is used to decide the mode of parsing. +
+
 If lenient is set to `true`, the parser will be more tolerant to incorrect input. +
 For example, `2017-02-29` (which is invalid) will be parsed to be `2017-03-01` automatically. +
 

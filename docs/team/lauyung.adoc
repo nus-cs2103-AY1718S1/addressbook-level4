@@ -4,7 +4,8 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :stylesDir: ../stylesheets
 
 == Project: TouristBook
-TouristBook is an addressbook application designed for tour guides. With the newly added expiry date feature, it will be easier for them to manage their large number contacts.
+TouristBook is an addressbook application designed for tour guides. With the newly added expiry date feature, it will be easier for them to manage their large number contacts.=======
+
 
 *Code contributed*: [https://github.com/CS2103AUG2017-T12-B4/main/blob/master/collated/main/lauy99.md[Functional Code]][https://github.com/CS2103AUG2017-T12-B4/main/blob/master/collated/test/lauy99.md[Test Code]]
 

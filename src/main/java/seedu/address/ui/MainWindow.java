@@ -247,7 +247,7 @@ public class MainWindow extends UiPart<Region> {
     @Subscribe
     private void handleGroupSelectedEvent (GroupPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        commandBox.handleCommandInputChanged("filter " + event.getNewSelection().group.groupName);
+        commandBox.handleCommandInputChanged(String.format("filter ", event.getNewSelection().group.groupName));
     }
     //@@author
 }

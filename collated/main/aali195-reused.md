@@ -1,5 +1,5 @@
 # aali195-reused
-###### /java/seedu/address/logic/commands/ImageCommand.java
+###### \java\seedu\address\logic\commands\ImageCommand.java
 ``` java
     /**
      * Executes the command
@@ -58,7 +58,7 @@
         return new CommandResult(generateSuccessMessage(editedPerson));
     }
 ```
-###### /java/seedu/address/ui/PersonCard.java
+###### \java\seedu\address\ui\PersonCard.java
 ``` java
     /**
      *  Assigns URL to the image depending on the path
@@ -104,7 +104,7 @@
         }
     }
 ```
-###### /resources/view/PersonListCard.fxml
+###### \resources\view\PersonListCard.fxml
 ``` fxml
   <ImageView fx:id="pImage" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
     <HBox.margin>

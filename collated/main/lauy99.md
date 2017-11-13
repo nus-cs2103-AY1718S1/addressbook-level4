@@ -89,7 +89,16 @@ public class ExpireCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/EditCommandParser.java
+###### \java\seedu\address\logic\parser\AddCommandParser.java
+``` java
+            ExpiryDate expiryDate;
+            if (arePrefixesPresent(argMultimap, PREFIX_EXPIRE)) {
+                expiryDate = ParserUtil.parseExpiryDate(argMultimap.getValue(PREFIX_EXPIRE)).get();
+            } else {
+                expiryDate = new ExpiryDate("");
+            }
+```
+###### \java\seedu\address\logic\parser\EditCommandParser.java
 ``` java
             ExpiryDate editedDate;
             try {
