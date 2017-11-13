@@ -1,4 +1,3 @@
-//@@author huiyiiih
 package seedu.address.logic.commands.relationship;
 
 import static org.junit.Assert.assertFalse;
@@ -35,6 +34,8 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.testutil.EditPersonBuilder;
 import seedu.address.testutil.PersonBuilder;
+
+//@@author huiyiiih
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for SetRelCommand.
