@@ -10,19 +10,19 @@ import java.util.HashMap;
 
 public class MrtMapUI {
     //radius of circle use to visualise mrt stations in the graph
-    private int DEFAULT_CIRCLE_RADIUS = 3;
-    private int MAX_CIRCLE_RADIUS = 30;
+    private int DEFAULT_CIRCLE_RADIUS = 4;
+    private int MAX_CIRCLE_RADIUS = 35;
 
-    HashMap<String, Point> mrtToPoint = new HashMap<String, Point>();
+    private HashMap<String, Point> mrtToPoint = new HashMap<String, Point>();
 
-    HashMap<String, Integer> mrtNameToIndex = new HashMap<String, Integer>();
-    ArrayList<String> mrtStationNames = new ArrayList<String>();
-    ArrayList<String> mrtStationShortNames = new ArrayList<String>();
-    ArrayList<ArrayList<String>> mrtLineNames = new ArrayList<ArrayList<String>>();
-    ArrayList<ArrayList<Integer>> mrtLineNumbers = new ArrayList<ArrayList<Integer>>();
+    private HashMap<String, Integer> mrtNameToIndex = new HashMap<String, Integer>();
+    private ArrayList<String> mrtStationNames = new ArrayList<String>();
+    private ArrayList<String> mrtStationShortNames = new ArrayList<String>();
+    private ArrayList<ArrayList<String>> mrtLineNames = new ArrayList<ArrayList<String>>();
+    private ArrayList<ArrayList<Integer>> mrtLineNumbers = new ArrayList<ArrayList<Integer>>();
 
-    int canvassWidth = -1;
-    int canvassHeight = -1;
+    private int canvassWidth = -1;
+    private int canvassHeight = -1;
 
     /**
      * Point class to store coordinates on screen/canvass display
@@ -32,15 +32,15 @@ public class MrtMapUI {
     class Point {
         private int x; //the x coordinate
         private int y; //the y coordinate
-        Point(int x, int y) {
+        public Point(int x, int y) {
             this.x = x;
             this.y = y;
         }
 
-        int getX(){
+        public int getX(){
             return x;
         }
-        int getY() {
+        public int getY() {
             return y;
         }
     }
@@ -323,22 +323,29 @@ public class MrtMapUI {
     }
 
     private Color getStationColor(String lineName) {
-        if(lineName.equals("EW") || lineName.equals("CG")) {
+        if("EW".equals(lineName) || "CG".equals(lineName)) {
+            //East West line which is Green in color in mrt map
             return Color.GREEN;
-        }else if(lineName.equals("NS")) {
+
+        }else if("NS".equals(lineName)) {
+            //NorthSouth Line which is red in color on Mrt Map
             return Color.RED;
 
-        }else if(lineName.equals("CC") || lineName.equals("CE")) {
+        }else if("CC".equals(lineName) || ("CE").equals(lineName)) {
+            //Circle line, which is yellow in color in mrt map;
             return Color.YELLOW;
 
         }else if(lineName.equals("NE")) {
+            //Nourth East line which is purple in color in mrt map;
             return Color.MAGENTA;
 
         }else if(lineName.equals("DT")){
+            //Down Town line is blue in color in the mrt map;
             return Color.BLUE;
 
         }else {
             //if reach here, the station lineName is wrong;
+            //just return a black color anyway
             return Color.BLACK;
         }
     }

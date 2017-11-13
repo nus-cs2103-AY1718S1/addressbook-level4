@@ -156,7 +156,6 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
      * @throws a RunTimeException if the width or height is 0 or negative
      */
     public static void setCanvasSize(int w, int h) {
-        if (w < 1 || h < 1) throw new RuntimeException("width and height must be positive");
         width = w;
         height = h;
         init();
@@ -311,7 +310,6 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
      * @throws RuntimeException if r is negative
      */
     public static void setPenRadius(double r) {
-        if (r < 0) throw new RuntimeException("pen radius must be positive");
         penRadius = r;
         float scaledPenRadius = (float) (r * DEFAULT_SIZE);
         BasicStroke stroke = new BasicStroke(scaledPenRadius, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
@@ -409,7 +407,6 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
      * @throws RuntimeException if the radius of the circle is negative
      */
     public static void circle(double x, double y, double r) {
-        if (r < 0) throw new RuntimeException("circle radius can't be negative");
         double xs = scaleX(x);
         double ys = scaleY(y);
         double ws = factorX(2*r);
@@ -427,320 +424,13 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
      * @throws RuntimeException if the radius of the circle is negative
      */
     public static void filledCircle(double x, double y, double r) {
-        if (r < 0) throw new RuntimeException("circle radius can't be negative");
+        //if (r < 0) throw new RuntimeException("circle radius can't be negative");
         double xs = scaleX(x);
         double ys = scaleY(y);
         double ws = factorX(2*r);
         double hs = factorY(2*r);
         if (ws <= 1 && hs <= 1) pixel(x, y);
         else offscreen.fill(new Ellipse2D.Double(xs - ws/2, ys - hs/2, ws, hs));
-        draw();
-    }
-
-
-    /**
-     * Draw an ellipse with given semimajor and semiminor axes, centered on (x, y).
-     * @param x the x-coordinate of the center of the ellipse
-     * @param y the y-coordinate of the center of the ellipse
-     * @param semiMajorAxis is the semimajor axis of the ellipse
-     * @param semiMinorAxis is the semiminor axis of the ellipse
-     * @throws RuntimeException if either of the axes are negative
-     */
-    public static void ellipse(double x, double y, double semiMajorAxis, double semiMinorAxis) {
-        if (semiMajorAxis < 0) throw new RuntimeException("ellipse semimajor axis can't be negative");
-        if (semiMinorAxis < 0) throw new RuntimeException("ellipse semiminor axis can't be negative");
-        double xs = scaleX(x);
-        double ys = scaleY(y);
-        double ws = factorX(2*semiMajorAxis);
-        double hs = factorY(2*semiMinorAxis);
-        if (ws <= 1 && hs <= 1) pixel(x, y);
-        else offscreen.draw(new Ellipse2D.Double(xs - ws/2, ys - hs/2, ws, hs));
-        draw();
-    }
-
-    /**
-     * Draw an ellipse with given semimajor and semiminor axes, centered on (x, y).
-     * @param x the x-coordinate of the center of the ellipse
-     * @param y the y-coordinate of the center of the ellipse
-     * @param semiMajorAxis is the semimajor axis of the ellipse
-     * @param semiMinorAxis is the semiminor axis of the ellipse
-     * @throws RuntimeException if either of the axes are negative
-     */
-    public static void filledEllipse(double x, double y, double semiMajorAxis, double semiMinorAxis) {
-        if (semiMajorAxis < 0) throw new RuntimeException("ellipse semimajor axis can't be negative");
-        if (semiMinorAxis < 0) throw new RuntimeException("ellipse semiminor axis can't be negative");
-        double xs = scaleX(x);
-        double ys = scaleY(y);
-        double ws = factorX(2*semiMajorAxis);
-        double hs = factorY(2*semiMinorAxis);
-        if (ws <= 1 && hs <= 1) pixel(x, y);
-        else offscreen.fill(new Ellipse2D.Double(xs - ws/2, ys - hs/2, ws, hs));
-        draw();
-    }
-
-
-    /**
-     * Draw an arc of radius r, centered on (x, y), from angle1 to angle2 (in degrees).
-     * @param x the x-coordinate of the center of the circle
-     * @param y the y-coordinate of the center of the circle
-     * @param r the radius of the circle
-     * @param angle1 the starting angle. 0 would mean an arc beginning at 3 o'clock.
-     * @param angle2 the angle at the end of the arc. For example, if
-     *        you want a 90 degree arc, then angle2 should be angle1 + 90.
-     * @throws RuntimeException if the radius of the circle is negative
-     */
-    public static void arc(double x, double y, double r, double angle1, double angle2) {
-        if (r < 0) throw new RuntimeException("arc radius can't be negative");
-        while (angle2 < angle1) angle2 += 360;
-        double xs = scaleX(x);
-        double ys = scaleY(y);
-        double ws = factorX(2*r);
-        double hs = factorY(2*r);
-        if (ws <= 1 && hs <= 1) pixel(x, y);
-        else offscreen.draw(new Arc2D.Double(xs - ws/2, ys - hs/2, ws, hs, angle1, angle2 - angle1, Arc2D.OPEN));
-        draw();
-    }
-
-    /**
-     * Draw a square of side length 2r, centered on (x, y).
-     * @param x the x-coordinate of the center of the square
-     * @param y the y-coordinate of the center of the square
-     * @param r radius is half the length of any side of the square
-     * @throws RuntimeException if r is negative
-     */
-    public static void square(double x, double y, double r) {
-        if (r < 0) throw new RuntimeException("square side length can't be negative");
-        double xs = scaleX(x);
-        double ys = scaleY(y);
-        double ws = factorX(2*r);
-        double hs = factorY(2*r);
-        if (ws <= 1 && hs <= 1) pixel(x, y);
-        else offscreen.draw(new Rectangle2D.Double(xs - ws/2, ys - hs/2, ws, hs));
-        draw();
-    }
-
-    /**
-     * Draw a filled square of side length 2r, centered on (x, y).
-     * @param x the x-coordinate of the center of the square
-     * @param y the y-coordinate of the center of the square
-     * @param r radius is half the length of any side of the square
-     * @throws RuntimeException if r is negative
-     */
-    public static void filledSquare(double x, double y, double r) {
-        if (r < 0) throw new RuntimeException("square side length can't be negative");
-        double xs = scaleX(x);
-        double ys = scaleY(y);
-        double ws = factorX(2*r);
-        double hs = factorY(2*r);
-        if (ws <= 1 && hs <= 1) pixel(x, y);
-        else offscreen.fill(new Rectangle2D.Double(xs - ws/2, ys - hs/2, ws, hs));
-        draw();
-    }
-
-
-    /**
-     * Draw a rectangle of given half width and half height, centered on (x, y).
-     * @param x the x-coordinate of the center of the rectangle
-     * @param y the y-coordinate of the center of the rectangle
-     * @param halfWidth is half the width of the rectangle
-     * @param halfHeight is half the height of the rectangle
-     * @throws RuntimeException if halfWidth or halfHeight is negative
-     */
-    public static void rectangle(double x, double y, double halfWidth, double halfHeight) {
-        if (halfWidth  < 0) throw new RuntimeException("half width can't be negative");
-        if (halfHeight < 0) throw new RuntimeException("half height can't be negative");
-        double xs = scaleX(x);
-        double ys = scaleY(y);
-        double ws = factorX(2*halfWidth);
-        double hs = factorY(2*halfHeight);
-        if (ws <= 1 && hs <= 1) pixel(x, y);
-        else offscreen.draw(new Rectangle2D.Double(xs - ws/2, ys - hs/2, ws, hs));
-        draw();
-    }
-
-    /**
-     * Draw a filled rectangle of given half width and half height, centered on (x, y).
-     * @param x the x-coordinate of the center of the rectangle
-     * @param y the y-coordinate of the center of the rectangle
-     * @param halfWidth is half the width of the rectangle
-     * @param halfHeight is half the height of the rectangle
-     * @throws RuntimeException if halfWidth or halfHeight is negative
-     */
-    public static void filledRectangle(double x, double y, double halfWidth, double halfHeight) {
-        if (halfWidth  < 0) throw new RuntimeException("half width can't be negative");
-        if (halfHeight < 0) throw new RuntimeException("half height can't be negative");
-        double xs = scaleX(x);
-        double ys = scaleY(y);
-        double ws = factorX(2*halfWidth);
-        double hs = factorY(2*halfHeight);
-        if (ws <= 1 && hs <= 1) pixel(x, y);
-        else offscreen.fill(new Rectangle2D.Double(xs - ws/2, ys - hs/2, ws, hs));
-        draw();
-    }
-
-
-    /**
-     * Draw a polygon with the given (x[i], y[i]) coordinates.
-     * @param x an array of all the x-coordindates of the polygon
-     * @param y an array of all the y-coordindates of the polygon
-     */
-    public static void polygon(double[] x, double[] y) {
-        int N = x.length;
-        GeneralPath path = new GeneralPath();
-        path.moveTo((float) scaleX(x[0]), (float) scaleY(y[0]));
-        for (int i = 0; i < N; i++)
-            path.lineTo((float) scaleX(x[i]), (float) scaleY(y[i]));
-        path.closePath();
-        offscreen.draw(path);
-        draw();
-    }
-
-    /**
-     * Draw a filled polygon with the given (x[i], y[i]) coordinates.
-     * @param x an array of all the x-coordindates of the polygon
-     * @param y an array of all the y-coordindates of the polygon
-     */
-    public static void filledPolygon(double[] x, double[] y) {
-        int N = x.length;
-        GeneralPath path = new GeneralPath();
-        path.moveTo((float) scaleX(x[0]), (float) scaleY(y[0]));
-        for (int i = 0; i < N; i++)
-            path.lineTo((float) scaleX(x[i]), (float) scaleY(y[i]));
-        path.closePath();
-        offscreen.fill(path);
-        draw();
-    }
-
-
-
-   /*************************************************************************
-    *  Drawing images.
-    *************************************************************************/
-
-    // get an image from the given filename
-    private static Image getImage(String filename) {
-
-        // to read from file
-        ImageIcon icon = new ImageIcon(filename);
-
-        // try to read from URL
-        if ((icon == null) || (icon.getImageLoadStatus() != MediaTracker.COMPLETE)) {
-            try {
-                URL url = new URL(filename);
-                icon = new ImageIcon(url);
-            } catch (Exception e) { /* not a url */ }
-        }
-
-        // in case file is inside a .jar
-        if ((icon == null) || (icon.getImageLoadStatus() != MediaTracker.COMPLETE)) {
-            URL url = StdDraw.class.getResource(filename);
-            if (url == null) throw new RuntimeException("image " + filename + " not found");
-            icon = new ImageIcon(url);
-        }
-
-        return icon.getImage();
-    }
-
-    /**
-     * Draw picture (gif, jpg, or png) centered on (x, y).
-     * @param x the center x-coordinate of the image
-     * @param y the center y-coordinate of the image
-     * @param s the name of the image/picture, e.g., "ball.gif"
-     * @throws RuntimeException if the image is corrupt
-     */
-    public static void picture(double x, double y, String s) {
-        Image image = getImage(s);
-        double xs = scaleX(x);
-        double ys = scaleY(y);
-        int ws = image.getWidth(null);
-        int hs = image.getHeight(null);
-        if (ws < 0 || hs < 0) throw new RuntimeException("image " + s + " is corrupt");
-
-        offscreen.drawImage(image, (int) Math.round(xs - ws/2.0), (int) Math.round(ys - hs/2.0), null);
-        draw();
-    }
-
-    /**
-     * Draw picture (gif, jpg, or png) centered on (x, y),
-     * rotated given number of degrees
-     * @param x the center x-coordinate of the image
-     * @param y the center y-coordinate of the image
-     * @param s the name of the image/picture, e.g., "ball.gif"
-     * @param degrees is the number of degrees to rotate counterclockwise
-     * @throws RuntimeException if the image is corrupt
-     */
-    public static void picture(double x, double y, String s, double degrees) {
-        Image image = getImage(s);
-        double xs = scaleX(x);
-        double ys = scaleY(y);
-        int ws = image.getWidth(null);
-        int hs = image.getHeight(null);
-        if (ws < 0 || hs < 0) throw new RuntimeException("image " + s + " is corrupt");
-
-        offscreen.rotate(Math.toRadians(-degrees), xs, ys);
-        offscreen.drawImage(image, (int) Math.round(xs - ws/2.0), (int) Math.round(ys - hs/2.0), null);
-        offscreen.rotate(Math.toRadians(+degrees), xs, ys);
-
-        draw();
-    }
-
-    /**
-     * Draw picture (gif, jpg, or png) centered on (x, y), rescaled to w-by-h.
-     * @param x the center x coordinate of the image
-     * @param y the center y coordinate of the image
-     * @param s the name of the image/picture, e.g., "ball.gif"
-     * @param w the width of the image
-     * @param h the height of the image
-     * @throws RuntimeException if the width height are negative
-     * @throws RuntimeException if the image is corrupt
-     */
-    public static void picture(double x, double y, String s, double w, double h) {
-        Image image = getImage(s);
-        double xs = scaleX(x);
-        double ys = scaleY(y);
-        if (w < 0) throw new RuntimeException("width is negative: " + w);
-        if (h < 0) throw new RuntimeException("height is negative: " + h);
-        double ws = factorX(w);
-        double hs = factorY(h);
-        if (ws < 0 || hs < 0) throw new RuntimeException("image " + s + " is corrupt");
-        if (ws <= 1 && hs <= 1) pixel(x, y);
-        else {
-            offscreen.drawImage(image, (int) Math.round(xs - ws/2.0),
-                                       (int) Math.round(ys - hs/2.0),
-                                       (int) Math.round(ws),
-                                       (int) Math.round(hs), null);
-        }
-        draw();
-    }
-
-
-    /**
-     * Draw picture (gif, jpg, or png) centered on (x, y), rotated
-     * given number of degrees, rescaled to w-by-h.
-     * @param x the center x-coordinate of the image
-     * @param y the center y-coordinate of the image
-     * @param s the name of the image/picture, e.g., "ball.gif"
-     * @param w the width of the image
-     * @param h the height of the image
-     * @param degrees is the number of degrees to rotate counterclockwise
-     * @throws RuntimeException if the image is corrupt
-     */
-    public static void picture(double x, double y, String s, double w, double h, double degrees) {
-        Image image = getImage(s);
-        double xs = scaleX(x);
-        double ys = scaleY(y);
-        double ws = factorX(w);
-        double hs = factorY(h);
-        if (ws < 0 || hs < 0) throw new RuntimeException("image " + s + " is corrupt");
-        if (ws <= 1 && hs <= 1) pixel(x, y);
-
-        offscreen.rotate(Math.toRadians(-degrees), xs, ys);
-        offscreen.drawImage(image, (int) Math.round(xs - ws/2.0),
-                                   (int) Math.round(ys - hs/2.0),
-                                   (int) Math.round(ws),
-                                   (int) Math.round(hs), null);
-        offscreen.rotate(Math.toRadians(+degrees), xs, ys);
-
         draw();
     }
 
@@ -781,41 +471,6 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
         text(x, y, s);
         offscreen.rotate(Math.toRadians(+degrees), xs, ys);
     }
-
-
-    /**
-     * Write the given text string in the current font, left-aligned at (x, y).
-     * @param x the x-coordinate of the text
-     * @param y the y-coordinate of the text
-     * @param s the text
-     */
-    public static void textLeft(double x, double y, String s) {
-        offscreen.setFont(font);
-        FontMetrics metrics = offscreen.getFontMetrics();
-        double xs = scaleX(x);
-        double ys = scaleY(y);
-        int hs = metrics.getDescent();
-        offscreen.drawString(s, (float) (xs), (float) (ys + hs));
-        draw();
-    }
-
-    /**
-     * Write the given text string in the current font, right-aligned at (x, y).
-     * @param x the x-coordinate of the text
-     * @param y the y-coordinate of the text
-     * @param s the text
-     */
-    public static void textRight(double x, double y, String s) {
-        offscreen.setFont(font);
-        FontMetrics metrics = offscreen.getFontMetrics();
-        double xs = scaleX(x);
-        double ys = scaleY(y);
-        int ws = metrics.stringWidth(s);
-        int hs = metrics.getDescent();
-        offscreen.drawString(s, (float) (xs - ws), (float) (ys + hs));
-        draw();
-    }
-
 
 
     /**

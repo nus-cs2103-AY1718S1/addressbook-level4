@@ -11,21 +11,22 @@ import java.util.PriorityQueue;
  * time. The timing is base on actual mrt data.
  */
 public class MrtMapLogic {
-    public MrtMapLogic(){
-        initialise();
-    }
     //require five minutes to transfer station
     private final int INTERCHANGE_TRANSFER_TIME = 5;
 
-    ArrayList<MrtStation> mrtStations = new ArrayList<MrtStation>();
-    ArrayList<Integer> trainTimings = new ArrayList<Integer>();
+    private ArrayList<MrtStation> mrtStations = new ArrayList<MrtStation>();
+    private ArrayList<Integer> trainTimings = new ArrayList<Integer>();
 
     //the index of the mrt in the mrtList
-    HashMap<String, Integer> stationCodeToIndex = new HashMap<String, Integer>();
-    HashMap<String, Integer> nameToIndex = new HashMap<String, Integer>();
+    private HashMap<String, Integer> stationCodeToIndex = new HashMap<String, Integer>();
+    private HashMap<String, Integer> nameToIndex = new HashMap<String, Integer>();
 
     //adjacency list for DijkStra's Algorithm
-    ArrayList<ArrayList<IntPair>> adjList = new ArrayList<ArrayList<IntPair>>();
+    private ArrayList<ArrayList<IntPair>> adjList = new ArrayList<ArrayList<IntPair>>();
+
+    public MrtMapLogic() {
+        initialise();
+    }
 
     /**
      * MrtStation object represents a physical Mrt Station's information
@@ -110,10 +111,10 @@ public class MrtMapLogic {
      *
      */
     class IntPair implements Comparator<IntPair> {
-        int mrtIndex;
-        int travelDuration;
+        protected int mrtIndex;
+        protected int travelDuration;
 
-        IntPair(int mrtIndex, int travelInterval){
+        public IntPair(int mrtIndex, int travelInterval){
             this.mrtIndex = mrtIndex;
             this.travelDuration = travelInterval;
         }
@@ -459,14 +460,14 @@ public class MrtMapLogic {
             String stationCode = mrtStation.getStationCode(i);
             //the index of the same MrtStation but in line specified by i.
             int stationIndex = stationCodeToIndex.get(stationCode);
-            addNeighbourDetails(edgeList, i, stationIndex);
+            addNeighbourDetails(edgeList, stationIndex);
         }
         adjList.add(edgeList);
     }
 
     //Only used by addEdgeList.
     //Note: addEdgeList is only used by populateAdjList() method
-    private void addNeighbourDetails(ArrayList<IntPair> edgeList, int adjIndex, int stationIndex) {
+    private void addNeighbourDetails(ArrayList<IntPair> edgeList, int stationIndex) {
 
         //add neighbour whose index is lower if neighbour exist.
         if(stationIndex > 0) {
