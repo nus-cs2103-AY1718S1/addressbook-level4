@@ -10,6 +10,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author lincredibleJC
+
 /**
  * Calculates statistics of the persons inside an ObservableList
  */
@@ -31,9 +32,9 @@ public class Statistics {
     }
 
     /**
-     * Takes in a PersonList and initialises the appropriate values to the Statistics instance
+     * Takes in a PersonList, extracts every person's grades, sorts it and stores it in the current Statistics instance
      *
-     * @param personList the list of persons being taken in
+     * @param personList the list of persons to extract the scores from
      */
     public void initScore(ObservableList<ReadOnlyPerson> personList) {
         int listSize = personList.size();
@@ -46,9 +47,9 @@ public class Statistics {
     }
 
     /**
-     * Takes in an array and assigns the appropriate values to the Statistics instance
+     * Takes in an array of scores, sorts it and stores it in the current Statistics instance
      *
-     * @param scoreArray the array of doubles used fo calculating statistics
+     * @param scoreArray the array of doubles used for calculating statistics
      */
     public void initScore(double[] scoreArray) {
         Arrays.sort(scoreArray);
@@ -56,6 +57,9 @@ public class Statistics {
         this.size = scoreArray.length;
     }
 
+    /**
+     * @return the average value in scoreArray
+     */
     private double getMean() {
         return DoubleStream.of(scoreArray).sum() / size;
     }
@@ -68,6 +72,10 @@ public class Statistics {
         }
     }
 
+    /**
+     * @return Returns the middle number in scoreArray. If scoreArray is odd, the middle number is returned.
+     * If scoreArray is even, the average of the two numbers in the middle is returned
+     */
     private double getMedian() {
         return (size % 2 == 1)
                 ? scoreArray[(size - 1) / 2]
@@ -82,13 +90,31 @@ public class Statistics {
         }
     }
 
-    private double getMedianWithIndexes(double[] arr, int startIndex, int endIndex) {
+    /**
+     * Returns the middle number in the array starting at startIndex and ending at endIndex in scoreArray
+     * If scoreArray is odd, the middle number is returned
+     * If scoreArray is even, the average of the two numbers in the middle is returned
+     *
+     * @param arr        the array of numbers
+     * @param startIndex the starting index of the desired array in scoreArray
+     * @param endIndex   the ending index of teh desired array in scoreArray
+     * @return the middle value of the array starting at startIndex and ending at endIndex in scoreArray
+     */
+    private double getMedianWithIndexes(double[] arr, int startIndex, int endIndex) throws NegativeArraySizeException {
         int currSize = endIndex - startIndex + 1;
-        return (currSize % 2 == 0)
-                ? (arr[startIndex + currSize / 2 - 1] + arr[startIndex + currSize / 2]) / 2
-                : arr[startIndex + (currSize - 1) / 2];
+        if (currSize >= 0) {
+            return (currSize % 2 == 0)
+                    ? (arr[startIndex + currSize / 2 - 1] + arr[startIndex + currSize / 2]) / 2
+                    : arr[startIndex + (currSize - 1) / 2];
+        }
+        throw new NegativeArraySizeException("endIndex must not be smaller than startIndex!");
     }
 
+    /**
+     * Returns the smaller number if there is a tie
+     *
+     * @return the double value that appears most frequently in scoreArray
+     */
     private double getMode() {
         double mode = 0;
         double currPersonScore;
@@ -117,6 +143,9 @@ public class Statistics {
         }
     }
 
+    /**
+     * @return the 25th percontile score in the scoreArray
+     */
     private double getQuartile1() {
         return getMedianWithIndexes(scoreArray, 0, size / 2 - 1);
     }
@@ -131,20 +160,9 @@ public class Statistics {
         }
     }
 
-    private double getQuartile2() {
-        return getMedianWithIndexes(scoreArray, 0, size - 1);
-    }
-
-    public String getQuartile2String() {
-        if (size > 1) {
-            return getRoundedStringFromDouble(getQuartile2(), numDecimalPlace);
-        } else if (size > 0) {
-            return INSUFFICIENT_DATA_MESSAGE;
-        } else {
-            return NO_PERSONS_MESSAGE;
-        }
-    }
-
+    /**
+     * @return the 75th percentile score in the scoreArray
+     */
     private double getQuartile3() {
         return (size % 2 == 0)
                 ? getMedianWithIndexes(scoreArray, size / 2, size - 1)
@@ -161,6 +179,9 @@ public class Statistics {
         }
     }
 
+    /**
+     * @return the difference between the 75th and 25th percentile scores in the scoreArray
+     */
     private double getInterQuartileRange() {
         return getQuartile3() - getQuartile1();
     }
@@ -175,6 +196,9 @@ public class Statistics {
         }
     }
 
+    /**
+     * @return the variance of the values in the scoreArray
+     */
     private double getVariance() {
         double temp = 0;
         double mean = getMean();
@@ -194,6 +218,9 @@ public class Statistics {
         }
     }
 
+    /**
+     * @return the standard deviations of the values in the scoreArray
+     */
     private double getStdDev() {
         return Math.sqrt(getVariance());
     }
@@ -209,7 +236,7 @@ public class Statistics {
     }
 
     /**
-     * Formats and returns a double into a fixed number of decimal places and returns it as a string
+     * Formats a double into a fixed number of decimal places and returns it as a string
      *
      * @param value  the double to be formatted
      * @param places number of decimal places of the output string
