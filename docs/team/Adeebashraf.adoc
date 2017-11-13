@@ -39,9 +39,7 @@ This feature allows users to further personalize each contact with more paramete
 ==== Implementation
 
 ---
-#Start of Extract [from: Developer Guide]#
-include::../DeveloperGuide.adoc[tag=parameter]
-#End of Extract#
+https://github.com/CS2103AUG2017-W10-B3/main/pull/8[Refer to this pull request for implementation]
 
 ---
 
@@ -61,4 +59,15 @@ include::../UserGuide.adoc[tag=brem]
 ==== Justification
 
 ---
-This features lets users see birthdays for all the contacts at once glance.
+This features lets users to see upcoming birthdays for all the contacts at once glance.
+
+=== Implementation
+
+---
+https://github.com/CS2103AUG2017-W10-B3/main/pull/101[Refer to this pull request for implementation]
+
+---
+
+=== Other Contributions
+. Added various tests and documentation updates
+. Added Alias to some commands for themeing purposes
