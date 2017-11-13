@@ -97,7 +97,7 @@ Got a meeting with professor or an assignment deadline you need to remember?
 
 === Calendar
 
-_(Coming in v2.0)_
+_(Current calendar is static, dynamic calendar coming in v2.0)_
 
 Calender provides a clearer image for you to view your upcoming link:#events[events]. All events are displayed
 based on their time interval for you to be able to attend to them one by one. However, events without time intervals will not be displayed here.
@@ -819,9 +819,8 @@ Example:
 [NOTE]
 ====
 * Short name is used as the prefix for `add`/`addE` and `edit`/`editE` commands.
-* Full name is used to display the name of each property on the right panel (to show details of the selected person, see `select` command).
-* Constraint message is the string that will be shown in result display box when the input value for this property in
-`add`/`addE` and `edit`/`editE` commands is invalid.
+* Full name is used to display the name of each property on the right panel (to show details of the selected person, use `select` command).
+* Constraint message is the string that will be shown in result display box when the input value for this property is invalid.
 * Regular expression is used to check whether the input value for this property is valid.
 ====
 // end::genericProperty[]

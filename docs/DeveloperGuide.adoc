@@ -407,7 +407,7 @@ kinds of information about their contacts apart from the pre-defined ones.
 Through a brief product survey on other existing similar software in the market, we found that they usually ask users to
 type all other information in the _so-called_ `Description` or `Details` field. This is not a good design because doing
 so will make the information stored messy. The application is used to organize personal information conveniently. It is
-a major drawback if the data are not stored (and thus presented) to users in a well-organized way.
+a major drawback if the data are not stored (and thus presented to users) in a well-organized way.
 
 Learning from many modern database implementations, we should think of the data as two tables: one for *contacts* and the
 other one for *events*. Each table is composed of many rows and many columns. A single contact/event is one row, while
@@ -436,13 +436,13 @@ _Figure 4.3.2.1 : Class Diagram for_ `PropertyManager`
 
 . Create a more general class to capture the common patterns among all columns (all different fields/properties): according to
 the basic OOP concept, a more generic class should become the superclass `Property`; then, other more specific classes
-(like `Name`, `Email`, `Phone`, etc.) can inherit from it. It is shown that such design decreases code duplicate a lot.
+(like `Name`, `Email`, `Phone`, etc.) can inherit from it. This design reduces a lot of code duplicates.
 
 . Find a way to store the metadata of all columns (fields/properties): in popular SQL database implementation, they
 usually have a separate database reserved for the database server system itself. We must store similar information somewhere
 as well. Thus, we create a `PropertyManager` to store these "metadata", including short names, full names, constraint
 messages and regular expressions used for input validation. They are all `static` variables because there should only be
-one copy of these "metadata". We will waste a lot of resources if we store these "metadata" with each instance of the
+one copy of these "metadata". It will waste a lot of resources if we store these "metadata" with each instance of the
 `Property` class.
 
 . _Pre-loaded properties_: Things like `Name`, `Email` and `Phone` are widely used. They should ship with the application

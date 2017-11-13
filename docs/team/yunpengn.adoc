@@ -9,8 +9,8 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 contacts, scheduling for upcoming events, timetable planning as well as a calendar to better organise their campus life.
 
 This project is the result of a semester-long software engineering https://nus-cs2103.github.io/website/[module] at
-http://www.nus.edu.sg/[NUS]. It is built my teammates and me, as listed link:../AboutUs.html[here]. Most of the backend codes
-are written in Java, while https://docs.oracle.com/javase/8/javafx/get-started-tutorial/jfx-overview.htm#JFXST784[JavaFX]
+http://www.nus.edu.sg/[NUS]. It is built my teammates and me, as listed https://cs2103aug2017-t09-b3.github.io/main/AboutUs.html[here].
+Most of the backend codes are written in Java, while https://docs.oracle.com/javase/8/javafx/get-started-tutorial/jfx-overview.htm#JFXST784[JavaFX]
 is adapted as the frontend framework.
 
 *Code contributed*:
