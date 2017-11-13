@@ -34,6 +34,7 @@ public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
     public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
+    public static final String NOT_EXISTING = "---";
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -100,11 +101,21 @@ public class ParserUtil {
 
     /**
      * Parses a {@code Optional<String> phone} into an {@code Optional<Phone>} if {@code phone} is present.
+     * Used for edit command
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Phone> parsePhone(Optional<String> phone) throws IllegalValueException {
         requireNonNull(phone);
         return phone.isPresent() ? Optional.of(new Phone(phone.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> phone} into an {@code Optional<Phone>} if {@code phone} is present.
+     * If {@code Optional<String> phone} does not exist, create an {@code Optional<Phone>} with empty name "---"
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Phone> parsePhoneAdd(Optional<String> phone) throws IllegalValueException {
+        return phone.isPresent() ? Optional.of(new Phone(phone.get())) : Optional.of(new Phone(NOT_EXISTING));
     }
 
     /**
@@ -117,12 +128,30 @@ public class ParserUtil {
     }
 
     /**
+     * Parses a {@code Optional<String> address} into an {@code Optional<Address>} if {@code address} is present.
+     * If {@code Optional<String> address} does not exist, create an {@code Optional<Address>} with empty name "---"
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Address> parseAddressAdd(Optional<String> address) throws IllegalValueException {
+        return address.isPresent() ? Optional.of(new Address(address.get())) : Optional.of(new Address(NOT_EXISTING));
+    }
+
+    /**
      * Parses a {@code Optional<String> email} into an {@code Optional<Email>} if {@code email} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Email> parseEmail(Optional<String> email) throws IllegalValueException {
         requireNonNull(email);
         return email.isPresent() ? Optional.of(new Email(email.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> email} into an {@code Optional<Email>} if {@code email} is present.
+     * If {@code Optional<String> email} does not exist, create an {@code Optional<Email>} with empty name "---"
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Email> parseEmailAdd(Optional<String> email) throws IllegalValueException {
+        return email.isPresent() ? Optional.of(new Email(email.get())) : Optional.of(new Email(NOT_EXISTING));
     }
 
     /**

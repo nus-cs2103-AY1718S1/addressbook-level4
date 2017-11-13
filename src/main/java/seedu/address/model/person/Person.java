@@ -227,7 +227,8 @@ public class Person implements ReadOnlyPerson {
     }
 
     public void setFavourite(Favourite fav) {
-        this.favourite.set(fav); }
+        this.favourite.set(fav);
+    }
 
     @Override
     public ObjectProperty<Favourite> favouriteProperty() {

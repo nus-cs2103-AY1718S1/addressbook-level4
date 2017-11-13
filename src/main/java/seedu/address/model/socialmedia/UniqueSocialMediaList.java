@@ -84,6 +84,7 @@ public class UniqueSocialMediaList implements Iterable<SocialMedia> {
 
     /**
      * Adds a SocialMedia to the list.
+     * throws seedu.address.model.socialmedia.exceptions.DuplicateSocialMediaException
      * if the SocialMedia to add is a duplicate of an existing SocialMedia in the list.
      */
     public void add(ReadOnlySocialMedia toAdd) throws DuplicateSocialMediaException {
