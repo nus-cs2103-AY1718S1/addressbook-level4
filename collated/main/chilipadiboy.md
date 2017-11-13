@@ -149,6 +149,21 @@ public class RemarkCommand extends UndoableCommand {
     }
 }
 ```
+###### \java\seedu\address\logic\Logic.java
+``` java
+    /**
+     *Returns an unmodifiable AddressBook
+     */
+    ReadOnlyAddressBook getReadOnlyAddressBook();
+}
+```
+###### \java\seedu\address\logic\LogicManager.java
+``` java
+    @Override
+    public ReadOnlyAddressBook getReadOnlyAddressBook() {
+        return model.getAddressBook(); }
+}
+```
 ###### \java\seedu\address\logic\parser\AddressBookParser.java
 ``` java
         case BirthdayAlarmCommand.COMMAND_WORD:
@@ -176,7 +191,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
  */
 public class Birthday {
     public static final String MESSAGE_BIRTHDAY_CONSTRAINTS =
-            "Person Birthday should be in the format of DD/MM/YYYY";
+            "Person Birthday should be in the format of DD/MM/YYYY and also valid";
 
     public final String value;
 
@@ -378,10 +393,16 @@ public class Remark {
 package seedu.address.ui;
 
 import java.net.URL;
+import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
@@ -391,6 +412,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -411,16 +433,30 @@ public class BirthdayAlarmWindow extends UiPart<Region> implements Initializable
 
     private final Stage dialogStage;
 
-    public BirthdayAlarmWindow(ObservableList<ReadOnlyPerson> personList) {
+    public BirthdayAlarmWindow(ReadOnlyAddressBook ab) throws ParseException {
         super(FXML);
-        ObservableList<ReadOnlyPerson> pl;
+        ObservableList<ReadOnlyPerson> pl = FXCollections.observableArrayList();
         Scene scene = new Scene(getRoot());
         //Null passed as the parent stage to make it non-modal.
         dialogStage = createDialogStage(TITLE, null, scene);
         dialogStage.setResizable(true);
-        pl = personList;
-        BirthdayTable.setItems(pl);
+        pl.addAll(ab.getPersonList());
+        for (int i = pl.size() - 1; i >= 0; i--) {
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDate storedDate = LocalDate.parse(pl.get(i).getBirthday().value, dtf);
+            LocalDate currentDate = LocalDate.now();
+            int bdayMonth = storedDate.getMonthValue();
+            int currentMonth = currentDate.getMonthValue();
+            if (bdayMonth < currentMonth) {
+                pl.remove(i); //removes entry before current month
+            }
 
+        }
+
+        FilteredList<ReadOnlyPerson> fd = new FilteredList(pl);
+        SortedList<ReadOnlyPerson> sl = new SortedList<>(fd);
+        BirthdayTable.setItems(sl);
+        sl.comparatorProperty().bind(BirthdayTable.comparatorProperty());
     }
 
     /**
@@ -458,15 +494,15 @@ public class BirthdayAlarmWindow extends UiPart<Region> implements Initializable
 ###### \java\seedu\address\ui\MainWindow.java
 ``` java
     @FXML
-    private void handlebirthdayalarms() {
-        BirthdayAlarmWindow birthdayAlarmWindow = new BirthdayAlarmWindow(logic.getFilteredPersonList());
+    private void handlebirthdayalarms() throws ParseException {
+        BirthdayAlarmWindow birthdayAlarmWindow = new BirthdayAlarmWindow(logic.getReadOnlyAddressBook());
         birthdayAlarmWindow.show();
     }
 ```
 ###### \java\seedu\address\ui\MainWindow.java
 ``` java
     @Subscribe
-    private void handleShowBirthdayAlarmEvent (ShowBirthdayAlarmRequestEvent event) {
+    private void handleShowBirthdayAlarmEvent (ShowBirthdayAlarmRequestEvent event) throws ParseException {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handlebirthdayalarms();
     }

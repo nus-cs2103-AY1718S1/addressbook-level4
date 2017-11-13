@@ -654,7 +654,6 @@ public class FindPersonDescriptorBuilder {
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-
         /* Test: find with one attribute with extra constraints */
 
         /*
@@ -786,28 +785,6 @@ public class FindPersonDescriptorBuilder {
         /* Case: find person in address book, name is substring of keyword -> 0 persons found */
         command = FindCommand.COMMAND_WORD + " " + PREFIX_NAME + "Meiers";
         ModelHelper.setFilteredList(expectedModel);
-        assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
-
-        /* Case: find multiple persons in address book, 2 keywords -> 2 persons found */
-        command = FindCommand.COMMAND_WORD + " n/Benson Daniel";
-        ModelHelper.setFilteredList(expectedModel, BENSON, DANIEL);
-        assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
-
-        /* Case: find multiple persons in address book, 2 keywords in reversed order -> 2 persons found */
-        command = FindCommand.COMMAND_WORD + " n/Daniel Benson";
-        assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
-
-        /* Case: find multiple persons in address book, 2 keywords with 1 repeat -> 2 persons found */
-        command = FindCommand.COMMAND_WORD + " n/Daniel Benson Daniel";
-        assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
-
-        /* Case: find multiple persons in address book, 2 matching keywords and 1 non-matching keyword
-         * -> 2 persons found */
-        command = FindCommand.COMMAND_WORD + " n/Daniel Benson NonMatchingKeyWord";
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
