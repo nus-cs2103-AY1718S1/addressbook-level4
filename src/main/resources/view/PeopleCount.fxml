@@ -7,13 +7,13 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import org.controlsfx.control.StatusBar?>
 
-<GridPane styleClass="grid-pane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
-   <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+<GridPane maxWidth="320.0" minWidth="320.0" prefWidth="320.0" styleClass="grid-pane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+  <StatusBar fx:id="totalPersons" maxWidth="290.0" minWidth="290.0" nodeOrientation="RIGHT_TO_LEFT" prefWidth="290.0" styleClass="anchor-pane" text="100" />
+   <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
       <image>
          <Image url="@../images/people.png" />
       </image>
    </ImageView>
-  <StatusBar fx:id="totalPersons" nodeOrientation="LEFT_TO_RIGHT" styleClass="anchor-pane" text="100" GridPane.columnIndex="1" />
    <columnConstraints>
       <ColumnConstraints />
       <ColumnConstraints minWidth="10.0" prefWidth="100.0" />

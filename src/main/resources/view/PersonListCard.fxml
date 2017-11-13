@@ -2,7 +2,6 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.FlowPane?>
@@ -12,7 +11,8 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<?import javafx.scene.image.Image?>
+<HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
   <GridPane HBox.hgrow="ALWAYS">
     <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
@@ -29,6 +29,12 @@
           </minWidth>
         </Label>
         <Label fx:id="name" prefHeight="18.0" prefWidth="230.0" styleClass="cell_big_label" text="\$first" />
+          <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" >
+            <image>
+              <Image url="@../images/heart.png" />
+            </image>
+          </ImageView>
+            <Label fx:id="accesses" prefHeight="18.0" prefWidth="70.0" styleClass="cell_big_label" text="\$accesses" />
       </HBox>
       <FlowPane fx:id="tags" />
       <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" />
@@ -41,14 +47,4 @@
          <RowConstraints />
       </rowConstraints>
   </GridPane>
-   <HBox alignment="TOP_RIGHT">
-      <children>
-       <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-           <Image url="@../images/heart.png" />
-         </image>
-       </ImageView>
-         <Label fx:id="accesses" contentDisplay="RIGHT" prefHeight="18.0" prefWidth="70.0" styleClass="cell_big_label" text="\$accesses" />
-      </children>
-   </HBox>
 </HBox>
