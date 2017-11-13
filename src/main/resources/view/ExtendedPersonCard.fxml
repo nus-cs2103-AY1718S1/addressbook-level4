@@ -8,152 +8,171 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-
-<GridPane fx:id="stackPane" prefHeight="268.0" prefWidth="290.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="315.0" prefWidth="335.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <Label fx:id="name" lineSpacing="10" styleClass="cell_big_label" text="\$name" underline="true" GridPane.columnIndex="1">
-            <font>
-                <Font name="System Bold" size="18.0" />
-            </font>
-         <padding>
-            <Insets bottom="7.0" />
-         </padding>
-        </Label>
-        <Label fx:id="phone" lineSpacing="10.0" styleClass="cell_small_label" text="\$phone" GridPane.columnIndex="2" GridPane.rowIndex="2">
-         <padding>
-            <Insets bottom="5.0" top="7.0" />
-         </padding>
-         <font>
-            <Font size="14.0" />
-         </font>
-        </Label>
-        <Label fx:id="parentPhone" lineSpacing="10.0" styleClass="cell_small_label" text="\$parentPhone" GridPane.columnIndex="2" GridPane.rowIndex="1">
-            <padding>
-                <Insets bottom="5.0" />
-            </padding>
-            <font>
-                <Font size="14.0" />
-            </font>
-         <GridPane.margin>
-            <Insets top="7.0" />
-         </GridPane.margin>
-        </Label>
-        <Label fx:id="address" lineSpacing="10.0" styleClass="cell_small_label" text="\$address" GridPane.columnIndex="2" GridPane.rowIndex="3">
-         <padding>
-            <Insets bottom="5.0" top="7.0" />
-         </padding>
-         <font>
-            <Font size="14.0" />
-         </font>
-        </Label>
-        <Label fx:id="formClass" lineSpacing="10.0" styleClass="cell_small_label" text="\$formClass" GridPane.columnIndex="2" GridPane.rowIndex="4">
-         <padding>
-            <Insets bottom="5.0" top="7.0" />
-         </padding>
-         <font>
-            <Font size="14.0" />
-         </font>
-        </Label>
-        <Label fx:id="grades" lineSpacing="10.0" styleClass="cell_small_label" text="\$grades" GridPane.columnIndex="2" GridPane.rowIndex="5">
-         <padding>
-            <Insets bottom="5.0" top="5.0" />
-         </padding>
-         <font>
-            <Font size="14.0" />
-         </font>
-        </Label>
-        <Label fx:id="postalCode" lineSpacing="10.0" styleClass="cell_small_label" text="\$postalCode" GridPane.columnIndex="2" GridPane.rowIndex="6">
-         <padding>
-            <Insets bottom="5.0" top="5.0" />
-         </padding>
-         <font>
-            <Font size="14.0" />
-         </font>
-        </Label>
-        <Label fx:id="email" lineSpacing="10.0" styleClass="cell_small_label" text="\$email" GridPane.columnIndex="2" GridPane.rowIndex="7">
-         <padding>
-            <Insets bottom="5.0" top="3.0" />
-         </padding>
-         <font>
-            <Font size="14.0" />
-         </font>
-        </Label>
-        <Label fx:id="remark" lineSpacing="10.0" styleClass="cell_small_label" text="\$remark" GridPane.columnIndex="2" GridPane.rowIndex="8">
-         <font>
-            <Font size="14.0" />
-         </font>
-        </Label>
-      <Label text="Parent:" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-      <Label text="Student:" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-      <Label text="Address:" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-          <ImageView GridPane.rowIndex="3">
-              <image>
-                  <Image url="@../images/address.png" />
-              </image>
-          </ImageView>
-          <ImageView GridPane.rowIndex="2">
-              <image>
-                  <Image url="@../images/studentPhone.png" />
-              </image>
-          </ImageView>
-          <ImageView GridPane.rowIndex="1">
-              <image>
-                  <Image url="@../images/parentPhone.png" />
-              </image>
-          </ImageView>
-          <ImageView GridPane.rowIndex="4">
-              <image>
-                  <Image url="@../images/formClass.png" />
-              </image>
-          </ImageView>
-          <ImageView GridPane.rowIndex="5">
-              <image>
-                  <Image url="@../images/grades.png" />
-              </image>
-          </ImageView>
-          <ImageView GridPane.rowIndex="6">
-              <image>
-                  <Image url="@../images/postalCode.png" />
-              </image>
-          </ImageView>
-          <ImageView GridPane.rowIndex="7">
-              <image>
-                  <Image url="@../images/email.png" />
-              </image>
-          </ImageView>
-          <ImageView GridPane.rowIndex="8">
-              <image>
-                  <Image url="@../images/remark.png" />
-              </image>
-          </ImageView>
-      <Label text="FormClass:" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-      <Label text="Grades:" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-      <Label text="PostalCode:" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-      <Label text="Email:" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-      <Label text="Remarks:" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-          <ImageView>
-              <image>
-                  <Image url="@../images/student.png" />
-              </image>
-          </ImageView>
-      <Label GridPane.columnIndex="1" />
+        <HBox prefHeight="57.0" prefWidth="335.0">
+            <children>
+                <ImageView>
+                    <image>
+                        <Image url="@../images/student.png"/>
+                    </image>
+                </ImageView>
+                <Label fx:id="name" lineSpacing="10" styleClass="cell_big_label" text="\$name" underline="true">
+                    <font>
+                        <Font name="System Bold" size="18.0"/>
+                    </font>
+                    <padding>
+                        <Insets left="5.0"/>
+                    </padding>
+                    <HBox.margin>
+                        <Insets/>
+                    </HBox.margin>
+                </Label>
+            </children>
+        </HBox>
+        <GridPane fx:id="stackPane">
+            <children>
+                <Label fx:id="phone" lineSpacing="10.0" styleClass="cell_small_label" text="\$phone"
+                       GridPane.columnIndex="2" GridPane.rowIndex="2">
+                    <padding>
+                        <Insets bottom="5.0" top="7.0"/>
+                    </padding>
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                </Label>
+                <Label fx:id="parentPhone" lineSpacing="10.0" styleClass="cell_small_label" text="\$parentPhone"
+                       GridPane.columnIndex="2" GridPane.rowIndex="1">
+                    <padding>
+                        <Insets bottom="5.0"/>
+                    </padding>
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                    <GridPane.margin>
+                        <Insets top="7.0"/>
+                    </GridPane.margin>
+                </Label>
+                <Label fx:id="address" lineSpacing="10.0" styleClass="cell_small_label" text="\$address"
+                       GridPane.columnIndex="2" GridPane.rowIndex="3">
+                    <padding>
+                        <Insets bottom="5.0" top="7.0"/>
+                    </padding>
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                </Label>
+                <Label fx:id="formClass" lineSpacing="10.0" styleClass="cell_small_label" text="\$formClass"
+                       GridPane.columnIndex="2" GridPane.rowIndex="4">
+                    <padding>
+                        <Insets bottom="5.0" top="7.0"/>
+                    </padding>
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                </Label>
+                <Label fx:id="grades" lineSpacing="10.0" styleClass="cell_small_label" text="\$grades"
+                       GridPane.columnIndex="2" GridPane.rowIndex="5">
+                    <padding>
+                        <Insets bottom="5.0" top="5.0"/>
+                    </padding>
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                </Label>
+                <Label fx:id="postalCode" lineSpacing="10.0" styleClass="cell_small_label" text="\$postalCode"
+                       GridPane.columnIndex="2" GridPane.rowIndex="6">
+                    <padding>
+                        <Insets bottom="5.0" top="5.0"/>
+                    </padding>
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                </Label>
+                <Label fx:id="email" lineSpacing="10.0" styleClass="cell_small_label" text="\$email"
+                       GridPane.columnIndex="2" GridPane.rowIndex="7">
+                    <padding>
+                        <Insets bottom="5.0" top="3.0"/>
+                    </padding>
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                </Label>
+                <Label fx:id="remark" lineSpacing="10.0" styleClass="cell_small_label" text="\$remark"
+                       GridPane.columnIndex="2" GridPane.rowIndex="8">
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                </Label>
+                <Label text="Parent:" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                <Label text="Student:" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                <Label text="Address:" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                <ImageView GridPane.rowIndex="3">
+                    <image>
+                        <Image url="@../images/address.png"/>
+                    </image>
+                </ImageView>
+                <ImageView GridPane.rowIndex="2">
+                    <image>
+                        <Image url="@../images/studentPhone.png"/>
+                    </image>
+                </ImageView>
+                <ImageView GridPane.rowIndex="1">
+                    <image>
+                        <Image url="@../images/parentPhone.png"/>
+                    </image>
+                </ImageView>
+                <ImageView GridPane.rowIndex="4">
+                    <image>
+                        <Image url="@../images/formClass.png"/>
+                    </image>
+                </ImageView>
+                <ImageView GridPane.rowIndex="5">
+                    <image>
+                        <Image url="@../images/grades.png"/>
+                    </image>
+                </ImageView>
+                <ImageView GridPane.rowIndex="6">
+                    <image>
+                        <Image url="@../images/postalCode.png"/>
+                    </image>
+                </ImageView>
+                <ImageView GridPane.rowIndex="7">
+                    <image>
+                        <Image url="@../images/email.png"/>
+                    </image>
+                </ImageView>
+                <ImageView GridPane.rowIndex="8">
+                    <image>
+                        <Image url="@../images/remark.png"/>
+                    </image>
+                </ImageView>
+                <Label text="FormClass:" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+                <Label text="Grades:" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+                <Label text="PostalCode:" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+                <Label text="Email:" GridPane.columnIndex="1" GridPane.rowIndex="7"/>
+                <Label text="Remarks:" GridPane.columnIndex="1" GridPane.rowIndex="8"/>
+            </children>
+            <columnConstraints>
+                <ColumnConstraints maxWidth="25.0" minWidth="25.0" prefWidth="25.0"/>
+                <ColumnConstraints maxWidth="100.0" minWidth="100.0" prefWidth="95.0"/>
+                <ColumnConstraints maxWidth="295.3333435058594" minWidth="164.0" prefWidth="216.0"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0"/>
+            </rowConstraints>
+        </GridPane>
     </children>
-   <columnConstraints>
-      <ColumnConstraints maxWidth="87.56741333007812" minWidth="25.0" prefWidth="25.0" />
-      <ColumnConstraints fillWidth="false" maxWidth="150.49928283691406" minWidth="10.0" prefWidth="100.4809341430664" />
-      <ColumnConstraints maxWidth="200.6175537109375" minWidth="300.0" prefWidth="137.5190658569336" />
-   </columnConstraints>
-   <rowConstraints>
-      <RowConstraints />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" />
-   </rowConstraints>
-</GridPane>
+</VBox>

@@ -46,15 +46,8 @@ public class ScheduleCommandParser implements Parser<ScheduleCommand> {
             // it is a valid Command
             } else if (str.length >= 3 && isNumeric(str[0])) {
                 index = ParserUtil.parseIndex(argMultimap.getPreamble());
-                com.joestelmach.natty.Parser parser = new com.joestelmach.natty.Parser();
-                scheduleToParse = parser.parse(argMultimap.getValue(PREFIX_SCHEDULE).get());
-                // Natty returns no date or returns with more than one date --> invalid
-                if (scheduleToParse.isEmpty() || scheduleToParse.size() > 1) {
-                    throw new ParseException("Please enter a more specific date for your student's consultation.");
-                }
-                Calendar date = Calendar.getInstance();
-                date.setTime(scheduleToParse.get(0).getDates().get(0));
-                return new ScheduleCommand(index, date);
+                ScheduleCommand scheduleCommand = onlyReturnsSchedulesWithSpecificDate(index, argMultimap);
+                return scheduleCommand;
             }
         } catch (IllegalValueException e) {
             throw new ParseException(
@@ -64,7 +57,7 @@ public class ScheduleCommandParser implements Parser<ScheduleCommand> {
     }
 
     /**
-     * Checks if the String contains numeric
+     * Returns true if the string contains numbers, false otherwise
      */
     private static boolean isNumeric(String str) {
         try {
@@ -73,5 +66,23 @@ public class ScheduleCommandParser implements Parser<ScheduleCommand> {
             return false;
         }
         return true;
+    }
+
+    /**
+     * Checks if date given by user is specific
+     * @return ScheduleCommand if date given is specific
+     * @throws ParseException if date given is not specific enough
+     */
+    private ScheduleCommand onlyReturnsSchedulesWithSpecificDate(Index index, ArgumentMultimap argMultimap)
+            throws ParseException {
+        com.joestelmach.natty.Parser parser = new com.joestelmach.natty.Parser();
+        scheduleToParse = parser.parse(argMultimap.getValue(PREFIX_SCHEDULE).get());
+        // Natty returns no date or with more than one date (date entered not specific enough) --> throw exception
+        if (scheduleToParse.isEmpty() || scheduleToParse.size() > 1) {
+            throw new ParseException("Please enter a more specific date for your student's consultation.");
+        }
+        Calendar date = Calendar.getInstance();
+        date.setTime(scheduleToParse.get(0).getDates().get(0));
+        return new ScheduleCommand(index, date);
     }
 }

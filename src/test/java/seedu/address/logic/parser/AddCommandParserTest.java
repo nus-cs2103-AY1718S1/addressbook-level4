@@ -138,6 +138,18 @@ public class AddCommandParserTest {
                         + POSTALCODE_DESC_AMY + TAG_DESC_FRIEND,
                 new AddCommand(expectedPersonWithNoEmail));
 
+        // no student phone
+        Person expectedPersonWithNoStudentPhone = new PersonBuilder().withName(VALID_NAME_AMY)
+                .withPhone("(Student phone not recorded)")
+                .withParentPhone(VALID_PARENTPHONE_AMY)
+                .withAddress(VALID_ADDRESS_AMY).withGrades(VALID_GRADES_AMY).withEmail(VALID_EMAIL_AMY)
+                .withFormClass(VALID_FORMCLASS_AMY).withPostalCode(VALID_POSTALCODE_AMY)
+                .withTags(VALID_TAG_FRIEND).build();
+        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY
+                        + PARENTPHONE_DESC_AMY + ADDRESS_DESC_AMY + FORMCLASS_DESC_AMY + GRADES_DESC_AMY
+                        + POSTALCODE_DESC_AMY + TAG_DESC_FRIEND + EMAIL_DESC_AMY,
+                new AddCommand(expectedPersonWithNoStudentPhone));
+
         // no address
         Person expectedPersonWithNoAddress = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
                 .withParentPhone(VALID_PARENTPHONE_AMY).withAddress("(Address not recorded)")
@@ -184,49 +196,52 @@ public class AddCommandParserTest {
                         + TAG_DESC_FRIEND,
                 new AddCommand(expectedPersonWithNoEmailNoAddressNoPostalCode));
 
-        // no email, no address, no postal code, no tag, meaning don't have all the optional inputs
-        Person expectedPersonWithNoOptionalInputs = new PersonBuilder().withName(VALID_NAME_AMY)
+        // no email, no address, no postal code, no tag.
+        Person expectedPersonWithOptionalPhone = new PersonBuilder().withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_AMY).withParentPhone(VALID_PARENTPHONE_AMY)
                 .withAddress("(Address not recorded)").withGrades(VALID_GRADES_AMY).withEmail("(Email not recorded)")
                 .withFormClass(VALID_FORMCLASS_AMY).withPostalCode("(Postal code not recorded)")
                 .withTags().build();
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
                         + PARENTPHONE_DESC_AMY + FORMCLASS_DESC_AMY + GRADES_DESC_AMY,
+                new AddCommand(expectedPersonWithOptionalPhone));
+
+        // no student phone, no email, no address, no postal code, no tag. Have none of the optional inputs
+        Person expectedPersonWithNoOptionalInputs = new PersonBuilder().withName(VALID_NAME_AMY)
+                .withPhone("(Student phone not recorded)").withParentPhone(VALID_PARENTPHONE_AMY)
+                .withAddress("(Address not recorded)").withGrades(VALID_GRADES_AMY).withEmail("(Email not recorded)")
+                .withFormClass(VALID_FORMCLASS_AMY).withPostalCode("(Postal code not recorded)")
+                .withTags().build();
+        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY
+                        + PARENTPHONE_DESC_AMY + FORMCLASS_DESC_AMY + GRADES_DESC_AMY,
                 new AddCommand(expectedPersonWithNoOptionalInputs));
     }
-    //@@author
+
     @Test
     public void parse_compulsoryFieldMissing_failure() {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE);
 
         // missing name prefix
-        assertParseFailure(parser, AddCommand.COMMAND_WORD + VALID_NAME_BOB + PHONE_DESC_BOB
-                + EMAIL_DESC_BOB + ADDRESS_DESC_BOB, expectedMessage);
+        assertParseFailure(parser, AddCommand.COMMAND_WORD + VALID_NAME_BOB + PARENTPHONE_DESC_BOB
+                + FORMCLASS_DESC_BOB + GRADES_DESC_BOB, expectedMessage);
 
-        // missing phone prefix
-        assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + VALID_PHONE_BOB
-                + EMAIL_DESC_BOB + ADDRESS_DESC_BOB, expectedMessage);
-
-        // missing email prefix
-        assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB
-                + VALID_EMAIL_BOB + ADDRESS_DESC_BOB, expectedMessage);
-
-        // missing address prefix
-        assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB
-                + EMAIL_DESC_BOB + VALID_ADDRESS_BOB, expectedMessage);
+        // missing parentPhone prefix
+        assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + VALID_PARENTPHONE_BOB
+                + FORMCLASS_DESC_BOB + GRADES_DESC_BOB, expectedMessage);
 
         // missing formClass prefix
-        assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB
-                + EMAIL_DESC_BOB + VALID_FORMCLASS_BOB, expectedMessage);
+        assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PARENTPHONE_DESC_BOB
+                + VALID_FORMCLASS_BOB + GRADES_DESC_BOB, expectedMessage);
 
         // missing grades prefix
-        assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB
-                + EMAIL_DESC_BOB + VALID_GRADES_BOB, expectedMessage);
+        assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PARENTPHONE_DESC_BOB
+                + FORMCLASS_DESC_BOB + VALID_GRADES_BOB, expectedMessage);
 
         // all prefixes missing
-        assertParseFailure(parser, AddCommand.COMMAND_WORD + VALID_NAME_BOB + VALID_PHONE_BOB
-                + VALID_EMAIL_BOB + VALID_ADDRESS_BOB, expectedMessage);
+        assertParseFailure(parser, AddCommand.COMMAND_WORD + VALID_NAME_BOB + VALID_PARENTPHONE_BOB
+                + VALID_FORMCLASS_BOB + VALID_GRADES_BOB, expectedMessage);
     }
+    //@@author
 
     @Test
     public void parse_invalidValue_failure() {

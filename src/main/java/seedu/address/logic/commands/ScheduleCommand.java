@@ -21,8 +21,8 @@ import seedu.address.model.schedule.Schedule;
  */
 public class ScheduleCommand extends Command {
 
-    public static final String COMMAND_WORD = "schedule";
-    public static final String COMMAND_ALIAS = "sch";
+    public static final String COMMAND_WORD = "addschedule";
+    public static final String COMMAND_ALIAS = "addsch";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Schedules the selected indexed person to a consultation timeslot.\n"

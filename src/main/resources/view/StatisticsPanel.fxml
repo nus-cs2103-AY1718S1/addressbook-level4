@@ -6,65 +6,66 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-
-<VBox id="stackPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<VBox id="stackPane" prefHeight="315.0" prefWidth="335.0" xmlns="http://javafx.com/javafx/8.0.111"
+      xmlns:fx="http://javafx.com/fxml/1">
     <padding>
-        <Insets bottom="5" left="5" right="15" top="5" />
+        <Insets bottom="5" left="5" right="15" top="5"/>
     </padding>
     <children>
         <Label fx:id="groupStatistics" layoutX="10.0" layoutY="172.0" text="Statistics of the current list">
             <font>
-                <Font size="28.0" />
+                <Font size="28.0"/>
             </font>
-         <graphic>
-            <ImageView fitHeight="31.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/statistics.png" />
-               </image>
-            </ImageView>
-         </graphic>
-        </Label>
-        <Label id="mean" fx:id="mean" text="\$mean">
             <graphic>
-                <Label text="Mean:" />
+                <ImageView fitHeight="31.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../images/statistics.png"/>
+                    </image>
+                </ImageView>
             </graphic>
         </Label>
-        <Label id="median" fx:id="median" text="\$median">
-            <graphic>
-                <Label text="Median" />
-            </graphic>
-        </Label>
-        <Label id="mode" fx:id="mode" layoutX="10.0" layoutY="37.0" text="\$mode">
-            <graphic>
-                <Label text="Mode:" />
-            </graphic>
-        </Label>
-        <Label id="variance" fx:id="variance" layoutX="10.0" layoutY="10.0" text="\$variance">
-            <graphic>
-                <Label text="Variance:" />
-            </graphic>
-        </Label>
-        <Label id="standardDeviation" fx:id="standardDeviation" layoutX="10.0" layoutY="10.0" text="\$standardDeviation">
-            <graphic>
-                <Label text="StandardDeviation" />
-            </graphic>
-        </Label>
-        <Label id="quartile3" fx:id="quartile3" text="\$quartile3">
-            <graphic>
-                <Label text="75th Percentile:" />
-            </graphic>
-        </Label>
-        <Label id="quartile1" fx:id="quartile1" layoutX="10.0" layoutY="37.0" text="\$quartile1">
-            <graphic>
-                <Label text="25th Percentile:" />
-            </graphic>
-        </Label>
-        <Label id="interQuartileRange" fx:id="interquartileRange" layoutX="10.0" layoutY="91.0" text="\$interquartileRange">
-            <graphic>
-                <Label text="Interquartile Range:" />
-            </graphic>
-        </Label>
+        <GridPane>
+            <columnConstraints>
+                <ColumnConstraints hgrow="NEVER" maxWidth="130" minWidth="130.0" prefWidth="150.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="275" minWidth="10.0" prefWidth="275.0"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            </rowConstraints>
+            <children>
+                <Label text="Mean:"/>
+                <Label id="mean" fx:id="mean" text="\$mean" GridPane.columnIndex="1"/>
+                <Label text="Median:" GridPane.rowIndex="1"/>
+                <Label text="Mode:" GridPane.rowIndex="2"/>
+                <Label text="Variance:" GridPane.rowIndex="3"/>
+                <Label text="StandardDeviation:" GridPane.rowIndex="4"/>
+                <Label text="75th Percentile:" GridPane.rowIndex="5"/>
+                <Label text="25th Percentile:" GridPane.rowIndex="6"/>
+                <Label text="Interquartile Range:" GridPane.rowIndex="7"/>
+                <Label id="median" fx:id="median" text="\$median" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                <Label id="mode" fx:id="mode" text="\$mode" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                <Label id="variance" fx:id="variance" text="\$variance" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                <Label id="standardDeviation" fx:id="standardDeviation" text="\$standardDeviation"
+                       GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+                <Label id="quartile3" fx:id="quartile3" text="\$quartile3" GridPane.columnIndex="1"
+                       GridPane.rowIndex="5"/>
+                <Label id="quartile1" fx:id="quartile1" text="\$quartile1" GridPane.columnIndex="1"
+                       GridPane.rowIndex="6"/>
+                <Label id="interQuartileRange" fx:id="interquartileRange" text="\$interquartileRange"
+                       GridPane.columnIndex="1" GridPane.rowIndex="7"/>
+            </children>
+        </GridPane>
     </children>
 </VBox>
