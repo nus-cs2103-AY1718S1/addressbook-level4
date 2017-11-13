@@ -678,7 +678,7 @@ The backup command saves the current ResidentBook into backup.xml located in the
 
 **Aspect:** Implementation of Backup +
 **Alternative 1 (current choice):** Saves the backup file to current location  +
-**Pros:** Only require user to call function, with no additional details needed  +
+**Pros:** Only require user to call function, with no additional details needed. Simple and straightforward  +
 **Cons:** File name is fixed as "backup.xml" and user may need to rename it on the system hard drive +
 **Alternative 2:** Allow user to specify backup file name +
 **Pros:** Flexible level of precision according to the needs of the user +
@@ -707,6 +707,10 @@ public void backupImages() throws IOException {
         handleImagesBackupFiles(backupFolder, originalFolder);
     }
 ----
+
+The following is the activity diagram of Backup Comand.
+
+image::BackupCommandActivityDiagram.png[width="500"]
 
 A future enhancement can allow user to specify backup location and file name.
 
