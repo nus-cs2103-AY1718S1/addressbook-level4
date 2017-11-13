@@ -249,7 +249,49 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 3. Undo success! +
 4. Redo success!
 
-==== 13) About
+==== 13) Undo, Redo
+
+---
+*User actions* +
+1. User decide to remove `family` tag. +
+2. User undo. +
+3. User redo. +
+
+*Command input* +
+1. removetag family +
+2. undo +
+3. redo +
+
+*Command output* +
+1. Tag specified removed from addressbook: [family] +
+2. Undo success! +
+3. Redo success! +
+
+==== 14) Select
+
+---
+*User action* +
+1. User select `Michael Jackson`. +
+
+*Command input* +
+1. select 14
+
+*Command output* +
+1. Selected Person: 14 +
+
+==== 15) Delete
+
+---
+*User actions* +
+1. User decide to delete `Michael Jackson`.
+
+*Command input* +
+1. delete 14
+
+*Command output* +
+1. Deleted Person: Michael Jackson Phone: 98765432 Homepage: http://www.michaeljackson.com/
+
+==== 16) About
 
 ---
 *User actions* +
@@ -257,7 +299,6 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
 *Command input* +
 1. about
-
 
 *Command output* +
 1. Opened about window.
