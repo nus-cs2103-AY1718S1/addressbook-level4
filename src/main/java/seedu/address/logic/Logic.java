@@ -19,9 +19,17 @@ public interface Logic {
      */
     CommandResult execute(String commandText) throws CommandException, ParseException;
 
+    /** Returns an unmodifiable view of all persons */
+    ObservableList<ReadOnlyPerson> getAllPersonList();
+
     /** Returns an unmodifiable view of the filtered list of persons */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
 
     /** Returns the list of input entered by the user, encapsulated in a {@code ListElementPointer} object */
     ListElementPointer getHistorySnapshot();
+
+    // @@author donjar
+    /** Returns the current font size change */
+    int getFontSizeChange();
+    // @@author
 }

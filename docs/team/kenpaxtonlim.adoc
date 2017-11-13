@@ -1,0 +1,146 @@
+= Ken Lim Tien Tze - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: Personal Information Management Program (PIMP)
+
+=== Introduction
+
+Personal Information Management Program (PIMP) is a command line interface (CLI) address book that allows you to store your contacts. You can use PIMP to add friends, add specific tags to them, add their social media accounts (such as Facebook, Twitter, Instagram), or add remarks. You can search through the list of your contacts by typing specific names. For more advanced user, you can use regex to find your friends. Most of the functionality works by typing in single line commands. The software is written in Java.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-W10-B1/main/blob/master/collated/main/kenpaxtonlim.md[Functional code]] [https://github.com/CS2103AUG2017-W10-B1/main/blob/master/collated/test/kenpaxtonlim.md[Test code]]
+
+=== Purpose
+
+The purpose of this Project Portfolio is to showcase the features that I have implemented in PIMP. Each enhancement/feature will have the follow sections: External behavior, Justification, Implementation.
+
+=== Enhancement Added: Quickhelp
+
+==== External behavior
+
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=quickhelp]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+For new users, it can be quite difficult to remember all the commands. Typing in the `HelpCommand` will bring up the help window which may be quite a hassle to do it all the time. The `QuickhelpCommand` allows the user to quickly view all the valid command words that can be used, hence saving time.
+
+---
+
+==== Implementation
+
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=quickhelp]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Add/Remove Tags
+
+==== External behavior
+
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=addremovetags]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+For the existing `EditCommand`, editing tags replaces the entire set of tags with the ones keyed in by user. To makes adding or removing one or few tags simpler, this command is added to add or remove tags from the existing set without completely replacing it.
+
+---
+
+==== Implementation
+
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=addremovetags]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Social Media
+
+==== External behavior
+
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=socialmedia]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+As the target user is a socialite, he/she will be very involved in social media. As such, having access to the social media pages directly from PIMP will be ideal.
+
+---
+
+==== Implementation
+
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=socialmedia]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Sort
+
+==== External behavior
+
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=sort]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Just like any contact list app, the list should be sorted so that it is easier for the user to view. With natural ordering, the list also looks neater.
+
+---
+
+==== Implementation
+
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=sort]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed (for v2.0)
+
+1) Remove specific tags from all persons +
+Imagine there are contacts with the tag "neighbour". If you want to remove this tag from each person, you have to manually invoke "tags remove INDEX neighbour" for every INDEX which can be quite a hassle. The `AddRemoveTagsCommand` shall be enhanced to accept "tags remove all neighbour" to remove the tag "neighbour" from all the contacts in PIMP.
+
+2) Rename existing tags +
+Imagine that you am a student who just graduated from high school, matriculating into university. Your high school classmates are tagged with "classmate". You want to change this tag to "oldclassmate" to reflect the current relationship with them. There shall be a new command that helps to rename existing tag to something else, e.g. "renametag OLD_TAG NEW_TAG".
+
+3) Prompt when adding a contact similar to an existing contact +
+Imagine you have a lot of contacts in PIMP and you can be forgetful of who you have added before. When you add a person that is similar to an existing contact in PIMP, you should receive a prompt to tell me so.
+
+
+=== Other contributions
+
+Help identify bugs in other projects: +
+https://github.com/CS2103AUG2017-T12-B3/main/issues/48 +
+https://github.com/CS2103AUG2017-T12-B3/main/issues/47
