@@ -2,22 +2,29 @@ package systemtests;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
-import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static seedu.address.logic.commands.SelectCommand.MESSAGE_SELECT_PERSON_SUCCESS;
+import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_PARENT_COMMAND;
+import static seedu.address.logic.commands.person.SelectCommand.MESSAGE_SELECT_PERSON_SUCCESS;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 import static seedu.address.testutil.TypicalPersons.getTypicalPersons;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.person.SelectCommand;
 import seedu.address.model.Model;
 
 public class SelectCommandSystemTest extends AddressBookSystemTest {
+
+    @Before
+    public void setParentMode() {
+        executeParentCommand();
+    }
+
     @Test
     public void select() {
         /* Case: select the first card in the person list, command with leading spaces and trailing spaces
@@ -83,7 +90,7 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
 
         /* Case: mixed case command word -> rejected */
-        assertCommandFailure("SeLeCt 1", MESSAGE_UNKNOWN_COMMAND);
+        assertCommandFailure("SeLeCt 1", MESSAGE_UNKNOWN_PARENT_COMMAND);
 
         /* Case: select from empty address book -> rejected */
         executeCommand(ClearCommand.COMMAND_WORD);
@@ -101,6 +108,7 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
      * Also verifies that the command box has the default style class and the status bar remain unchanged. The resulting
      * browser url and selected card will be verified if the current selected card and the card at
      * {@code expectedSelectedCardIndex} are different.
+     *
      * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      * @see AddressBookSystemTest#assertSelectedCardChanged(Index)
      */
@@ -120,7 +128,7 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
         }
 
         assertCommandBoxShowsDefaultStyle();
-        assertStatusBarUnchanged();
+        assertStatusBarUnchangedExceptSyncStatus();
     }
 
     /**
@@ -130,6 +138,7 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
      * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
      * Also verifies that the browser url, selected card and status bar remain unchanged, and the command box has the
      * error style.
+     *
      * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
     private void assertCommandFailure(String command, String expectedResultMessage) {

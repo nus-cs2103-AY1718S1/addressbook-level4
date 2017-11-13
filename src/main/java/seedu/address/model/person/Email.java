@@ -30,6 +30,19 @@ public class Email {
         this.value = trimmedEmail;
     }
 
+    //@@author aziziazfar
+    /**
+     * Provides a default email (" ") when field is empty.
+     *
+     * @throws IllegalValueException if given email string is invalid.
+     */
+    public Email(int checkValue) throws IllegalValueException {
+        if (checkValue != 0) {
+            throw new IllegalValueException(MESSAGE_EMAIL_CONSTRAINTS);
+        }
+        this.value = " ";
+    }
+    //@@author
     /**
      * Returns if a given string is a valid person email.
      */

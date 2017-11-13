@@ -1,0 +1,420 @@
+
+/* @@author deep4k */
+/* ========== FONTS ==========*/
+@font-face {
+    font-family: Old Standard TT;
+    src: url("/fonts/OldStandard-Regular.ttf");
+}
+
+/* ========== JAVAFX ELEMENTS ==========*/
+
+.pane-with-border {
+    -fx-background-color: #1a1e37;
+    -fx-border-color: transparent;
+    -fx-border-top-width: 1px;
+}
+
+/* ========== MENU BAR ==========*/
+.context-menu {
+    -fx-background-color: #1a1e37;
+}
+
+.context-menu .label {
+    -fx-text-fill: white;
+}
+
+.menu-bar {
+    -fx-background-color: #1a1e37;
+}
+
+.menu-bar .label {
+    -fx-background-color: #1a1e37;
+    -fx-font-size: 12pt;
+    -fx-font-family: "Old Standard TT";
+    -fx-text-fill: #fffefd;
+}
+
+.menu:showing{
+    -fx-background-color: transparent;
+}
+
+.menu:hover{
+    -fx-background-color: transparent;
+}
+
+.menu:hover .label {
+    -fx-text-fill: #71ffa0;
+}
+
+.menu:showing .label {
+    -fx-text-fill: #71ffa0;
+}
+
+.menu-item:focused {
+    -fx-background-color: transparent;
+}
+
+.menu-item:focused .label {
+    -fx-text-fill: #71ffa0;
+}
+
+/* ========== COMMAND BOX ==========*/
+
+.command-pane {
+    -fx-background-color: derive(#222646, 10%);
+    -fx-background-radius: 10 10 10 10;
+}
+
+#commandTypeLabel {
+    -fx-font-size: 11px;
+    -fx-text-fill: #F70D1A;
+}
+
+#commandTextField {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-border-insets: 0;
+    -fx-border-width: 1;
+    -fx-font-family: "Old Standard TT";
+    -fx-font-size: 13pt;
+    -fx-text-fill: derive(#71ffa0,-20%);
+}
+
+/* ========== STATUS BAR ==========*/
+.status-bar .label {
+    -fx-font-family: "Old Standard TT";
+    -fx-text-fill: white;
+    -fx-font-size: 10pt;
+}
+
+.status-bar-with-border {
+    -fx-background-color: derive(#1d1d1d, 30%);
+    -fx-border-color: derive(#1d1d1d, 25%);
+    -fx-border-width: 1px;
+}
+
+.status-bar-with-border .label {
+    -fx-text-fill: white;
+}
+
+.grid-pane {
+    -fx-background-color: #1a1e37;
+}
+
+.grid-pane .anchor-pane {
+    -fx-background-color: #1a1e37;
+}
+
+.anchor-pane {
+    -fx-background-color: transparent;
+}
+
+/* ========== SCROLL BAR ==========*/
+
+.status-bar {
+    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-text-fill: black;
+}
+
+
+.scroll-bar {
+    -fx-background-color: derive(#1a1e37, 20%);
+    -fx-background-radius: 10 10 10 10;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: #1a1e37;
+    -fx-background-radius: 10 10 10 10;
+    -fx-background-insets: 3;
+}
+
+.scroll-bar .increment-button, .scroll-bar .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0 0 0 0;
+}
+
+.scroll-bar .increment-arrow, .scroll-bar .decrement-arrow {
+    -fx-shape: " ";
+}
+
+.scroll-bar:vertical .increment-arrow, .scroll-bar:vertical .decrement-arrow {
+    -fx-padding: 1 8 1 8;
+}
+
+.scroll-bar:horizontal .increment-arrow, .scroll-bar:horizontal .decrement-arrow {
+    -fx-padding: 8 1 8 1;
+}
+
+/* ========== SORT/SEARCH  MID-BAR ==========*/
+#sortMenuBox .context.menu {
+    -fx-background-color: #1a1e37;
+}
+
+.menu-button {
+    -fx-background-color: #1a1e37;
+}
+
+.menu-button:hover .label {
+    -fx-text-fill: #71ffa0;
+}
+
+.menu-button:showing .label {
+    -fx-text-fill: #fefdff;
+}
+
+.menu-item:focused .label {
+    -fx-text-fill: #71ffa0;
+}
+
+.menu-button:hover .arrow {
+    -fx-background-color:  #71ffa0;
+}
+
+.menu-button:showing .arrow {
+    -fx-background-color:  #71ffa0;
+}
+
+#sortMenuBox .label {
+    -fx-font-size: 12pt;
+    -fx-font-family: "Old Standard TT";
+}
+
+#searchBox {
+    -fx-background-color: #1a1e37;
+}
+
+#sortMenuBox .text-field {
+    -fx-background-color:#1a1e37;
+    -fx-font-size: 12pt;
+    -fx-font-family: "Old Standard TT";
+    -fx-text-fill: derive(#71ffa0,-20%);
+
+}
+
+/* ========== ORGANIZER PANE ==========*/
+
+#personList {
+    -fx-background-color:#1a1e37;
+    -fx-border-color: transparent;
+}
+
+#personViewLabel {
+    -fx-font-family: "Old Standard TT";
+    -fx-font-size: 10pt;
+}
+
+#taskViewLabel {
+    -fx-font-family: "Old Standard TT";
+    -fx-font-size: 10pt;
+}
+
+#aliasViewLabel {
+    -fx-font-family: "Old Standard TT";
+    -fx-font-size: 10pt;
+}
+
+#listAllLabel {
+    -fx-font-family: "Old Standard TT";
+    -fx-font-size: 10pt;
+}
+
+#listPinLabel {
+    -fx-font-family: "Old Standard TT";
+    -fx-font-size: 10pt;
+}
+
+#organizedByLabel {
+    -fx-font-family: "Old Standard TT";
+    -fx-font-size: 10pt;
+}
+
+#organizerLabel {
+    -fx-font-family: "Old Standard TT";
+    -fx-font-size: 10pt;
+}
+
+/* ========== MAIN SPLIT PANE ==========*/
+.split-pane:horizontal .split-pane-divider {
+    -fx-background-color: #1a1e37;
+    -fx-border-color: transparent;
+}
+
+.split-pane:vertical .split-pane-divider {
+    -fx-background-color: white;
+    -fx-padding: 0.000001;
+}
+
+.split-pane:vertical .label {
+    -fx-text-fill: white;
+}
+
+.split-pane {
+    -fx-background-color: #1a1e37;
+}
+
+/* ========== PERSON LIST PANEL ==========*/
+
+#personListPanelPlaceholder {
+    -fx-border-color: transparent;
+}
+
+#personListView {
+    -fx-background-radius: 10 10 10 10;
+    -fx-border-color: transparent;
+}
+
+#personListPanel {
+    -fx-background-color: derive(#1a1e37, 20%);
+    -fx-background-radius: 10 10 10 10;
+    -fx-border-color: transparent;
+}
+
+/* ========== LIST CARD ==========*/
+
+.list-view {
+    -fx-background-insets: 0;
+    -fx-background-color: derive(#1a1e37, 20%);
+    -fx-border-color: transparent;
+    -fx-padding: 0;
+}
+
+.list-cell {
+    -fx-label-padding: 0 0 0 0;
+    -fx-graphic-text-gap: 0;
+    -fx-padding: 0 0 0 0;
+    -fx-background-color: derive(#1a1e37, 20%);
+}
+
+.list-cell:filled:even {
+    -fx-background-color: derive(#1a1e37, 20%);
+}
+
+.list-cell:filled:odd {
+    -fx-background-color: derive(#1a1e37, 30%);
+}
+
+.list-cell:filled:selected {
+    -fx-background-color: #1a1e37;
+    -fx-background-radius: 10 10 10 10;
+}
+
+.list-cell:filled:selected #cardPane {
+    -fx-border-color: transparent;
+    -fx-border-width: 1;
+}
+
+.list-cell .label {
+    -fx-font-family: "Space mono";
+    -fx-font-size: 12px;
+    -fx-text-fill: white;
+}
+
+.cell_big_label {
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-font-size: 16px;
+    -fx-text-fill: #010504;
+}
+
+.cell_small_label {
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 13px;
+    -fx-text-fill: #010504;
+}
+
+.anchor-pane {
+    -fx-background-color: transparent;
+}
+
+#cardPane {
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+}
+/* ========== PERSON CARD ==========*/
+#name {
+    -fx-font-size: 15px;
+}
+
+#remark {
+    -fx-font-family: "Space Mono Italic";
+    -fx-text-fill: gray;
+}
+
+#tags {
+    -fx-hgap: 7;
+    -fx-vgap: 3;
+}
+
+#tags .label {
+    -fx-text-fill: white;
+    -fx-background-color: #3e7b91;
+    -fx-padding: 1 3 1 3;
+    -fx-border-radius: 2;
+    -fx-background-radius: 2;
+    -fx-font-size: 11;
+}
+
+
+/* ========== TASK CARD ==========*/
+#taskListView {
+    -fx-background-color: derive(#1a1e37, 20%);
+    -fx-background-radius: 10 10 10 10;
+    -fx-border-color: transparent;
+}
+
+#taskListPanel {
+    -fx-background-color: derive(#1a1e37, 20%);
+    -fx-background-radius: 10 10 10 10;
+    -fx-border-color: transparent;
+}
+
+#time {
+    -fx-font-family: "Space Mono Italic";
+    -fx-font-size: 12px;
+
+}
+
+#time {
+    -fx-font-family: "Space Mono Italic";
+    -fx-font-size: 12px;
+    -fx-text-fill: gold;
+
+}
+
+#header {
+    -fx-font-size: 15px;
+}
+
+/* ========== ALIAS CARD ==========*/
+#aliasListView {
+    -fx-background-color: derive(#1a1e37, 20%);
+    -fx-background-radius: 10 10 10 10;
+    -fx-border-color: transparent;
+}
+
+#aliasListPanel {
+    -fx-background-color: derive(#1a1e37, 20%);
+    -fx-background-radius: 10 10 10 10;
+    -fx-border-color: transparent;
+}
+
+#representation {
+    -fx-font-family: "Space Mono Italic";
+    -fx-font-size: 15px;
+}
+
+#keyword {
+    -fx-font-family: "Space Mono Italic";
+    -fx-font-size: 15px;
+}
+
+#representationLabel {
+    -fx-font-family: "Space Mono Italic";
+    -fx-font-size: 15px;
+}
+
+#keywordLabel {
+    -fx-font-family: "Space Mono Italic";
+    -fx-font-size: 15px;
+}
+
+

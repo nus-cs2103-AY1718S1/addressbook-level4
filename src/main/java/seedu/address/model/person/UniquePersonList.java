@@ -15,11 +15,11 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
  * A list of persons that enforces uniqueness between its elements and does not allow nulls.
- *
+ * <p>
  * Supports a minimal set of list operations.
  *
  * @see Person#equals(Object)
- * @see CollectionUtil#elementsAreUnique(Collection)
+ * @see CollectionUtil#elementsAreUnique(java.util.Collection)
  */
 public class UniquePersonList implements Iterable<Person> {
 
@@ -48,11 +48,41 @@ public class UniquePersonList implements Iterable<Person> {
         internalList.add(new Person(toAdd));
     }
 
+    //@@author Alim95
+
+    /**
+     * Sorts the list in order.
+     */
+    public void sort(String toSort) {
+        switch (toSort) {
+        case "name":
+            internalList.sort((p1, p2) -> p1.getName().toString()
+                    .compareToIgnoreCase(p2.getName().toString()));
+            break;
+        case "phone":
+            internalList.sort((p1, p2) -> p1.getPhone().toString()
+                    .compareToIgnoreCase(p2.getPhone().toString()));
+            break;
+        case "email":
+            internalList.sort((p1, p2) -> p1.getEmail().toString()
+                    .compareToIgnoreCase(p2.getEmail().toString()));
+            break;
+        case "address":
+            internalList.sort((p1, p2) -> p1.getAddress().toString()
+                    .compareToIgnoreCase(p2.getAddress().toString()));
+            break;
+        default:
+            break;
+        }
+    }
+
+    //@@author
+
     /**
      * Replaces the person {@code target} in the list with {@code editedPerson}.
      *
      * @throws DuplicatePersonException if the replacement is equivalent to another existing person in the list.
-     * @throws PersonNotFoundException if {@code target} could not be found in the list.
+     * @throws PersonNotFoundException  if {@code target} could not be found in the list.
      */
     public void setPerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException {
@@ -84,6 +114,101 @@ public class UniquePersonList implements Iterable<Person> {
         return personFoundAndDeleted;
     }
 
+    /**
+     * Hides the equivalent person from the list.
+     *
+     * @throws PersonNotFoundException if no such person could be found in the list.
+     */
+    public boolean hide(ReadOnlyPerson toHide) throws PersonNotFoundException {
+        requireNonNull(toHide);
+        final int indexToHide = internalList.indexOf(toHide);
+        final boolean personFoundAndHidden = internalList.get(indexToHide).setPrivate(true);
+        if (!personFoundAndHidden) {
+            throw new PersonNotFoundException();
+        }
+        return personFoundAndHidden;
+    }
+
+    /**
+     * Unhides the equivalent person from the list.
+     *
+     * @throws PersonNotFoundException if no such person could be found in the list.
+     */
+    public boolean unhide(ReadOnlyPerson toUnhide) throws PersonNotFoundException {
+        requireNonNull(toUnhide);
+        final int indexToUnhide = internalList.indexOf(toUnhide);
+        final boolean personFoundAndUnhidden = internalList.get(indexToUnhide).setPrivate(false);
+        if (!personFoundAndUnhidden) {
+            throw new PersonNotFoundException();
+        }
+        return personFoundAndUnhidden;
+    }
+
+    //@@author Alim95
+
+    /**
+     * Pins the equivalent person in the list.
+     *
+     * @throws PersonNotFoundException if no such person could be found in the list.
+     */
+    public boolean pin(ReadOnlyPerson toPin) throws PersonNotFoundException {
+        requireNonNull(toPin);
+        final int indexToPin = internalList.indexOf(toPin);
+        final boolean personFoundAndPinned = internalList.get(indexToPin).setPinned(true);
+        if (!personFoundAndPinned) {
+            throw new PersonNotFoundException();
+        }
+        return personFoundAndPinned;
+    }
+
+    /**
+     * Unpins the equivalent person in the list.
+     *
+     * @throws PersonNotFoundException if no such person could be found in the list.
+     */
+    public boolean unpin(ReadOnlyPerson toUnpin) throws PersonNotFoundException {
+        requireNonNull(toUnpin);
+        final int indexToPin = internalList.indexOf(toUnpin);
+        final boolean personFoundAndUnpinned = internalList.get(indexToPin).setPinned(false);
+        if (!personFoundAndUnpinned) {
+            throw new PersonNotFoundException();
+        }
+        return personFoundAndUnpinned;
+    }
+
+    //@@author deep4k
+    /**
+     * Selects the equivalent person in the list.
+     *
+     * @throws PersonNotFoundException if no such person could be found in the list.
+     */
+    public boolean select(ReadOnlyPerson toSelect) throws PersonNotFoundException {
+        requireNonNull(toSelect);
+        final int indexToSelect = internalList.indexOf(toSelect);
+        final boolean personFoundAndPinned = internalList.get(indexToSelect).setSelected(true);
+        if (!personFoundAndPinned) {
+            throw new PersonNotFoundException();
+        }
+        return personFoundAndPinned;
+    }
+
+    /**
+     * Deselects the equivalent person in the list.
+     *
+     * @throws PersonNotFoundException if no such person could be found in the list.
+     */
+    public boolean deselect(ReadOnlyPerson toDeselect) throws PersonNotFoundException {
+        requireNonNull(toDeselect);
+        final int indexToSelect = internalList.indexOf(toDeselect);
+        final boolean personFoundAndUnpinned = internalList.get(indexToSelect).setSelected(false);
+        if (!personFoundAndUnpinned) {
+            throw new PersonNotFoundException();
+        }
+        return personFoundAndUnpinned;
+    }
+
+
+    //@@author
     public void setPersons(UniquePersonList replacement) {
         this.internalList.setAll(replacement.internalList);
     }
@@ -112,7 +237,7 @@ public class UniquePersonList implements Iterable<Person> {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof UniquePersonList // instanceof handles nulls
-                        && this.internalList.equals(((UniquePersonList) other).internalList));
+                && this.internalList.equals(((UniquePersonList) other).internalList));
     }
 
     @Override

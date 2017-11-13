@@ -4,9 +4,12 @@ import java.io.File;
 import java.io.IOException;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.model.Model;
+import seedu.address.model.alias.ReadOnlyAliasToken;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.task.ReadOnlyTask;
 
 /**
  * A utility class for test cases.
@@ -50,5 +53,28 @@ public class TestUtil {
      */
     public static ReadOnlyPerson getPerson(Model model, Index index) {
         return model.getAddressBook().getPersonList().get(index.getZeroBased());
+    }
+
+    public static ReadOnlyPerson getUnpinPerson(Model model, Index index) {
+        return model.getFilteredPersonList().get(index.getZeroBased());
+    }
+
+    public static ReadOnlyAliasToken getAlias(Model model, String keyword) throws IllegalValueException {
+        ReadOnlyAliasToken foundAliasToken = null;
+
+        for (ReadOnlyAliasToken token : model.getAddressBook().getAliasTokenList()) {
+            if (token.getKeyword().keyword.equalsIgnoreCase(keyword)) {
+                foundAliasToken = token;
+                break;
+            }
+        }
+        return foundAliasToken;
+    }
+
+    /**
+     * Returns the task in the {@code model}'s task list at {@code index}.
+     */
+    public static ReadOnlyTask getTask(Model model, Index index) {
+        return model.getAddressBook().getTaskList().get(index.getZeroBased());
     }
 }

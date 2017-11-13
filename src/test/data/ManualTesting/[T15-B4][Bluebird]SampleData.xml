@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addressbook>
+    <persons>
+        <name>Alex Yeoh</name>
+        <phone>87438807</phone>
+        <email>alexyeoh@example.com</email>
+        <address>Blk 30 Geylang Street 29, #06-40</address>
+        <birthday>01/01/1901</birthday>
+        <isPrivate>false</isPrivate>
+        <remark></remark>
+        <isPinned>true</isPinned>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Bernice Yu</name>
+        <phone>99272758</phone>
+        <email>berniceyu@example.com</email>
+        <address>Blk 30 Lorong 3 Serangoon Gardens, #07-18</address>
+        <birthday>11/11/1995</birthday>
+        <isPrivate>false</isPrivate>
+        <remark>Likes to swim.</remark>
+        <isPinned>false</isPinned>
+        <tagged>colleagues</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Charlotte Oliveiro</name>
+        <phone>93210283</phone>
+        <email>charlotte@example.com</email>
+        <address>Blk 11 Ang Mo Kio Street 74, #11-04</address>
+        <birthday>02/02/1902</birthday>
+        <isPrivate>false</isPrivate>
+        <remark></remark>
+        <isPinned>false</isPinned>
+        <tagged>neighbours</tagged>
+    </persons>
+    <persons>
+        <name>David Li</name>
+        <phone>91031282</phone>
+        <email>lidavid@example.com</email>
+        <address>Blk 436 Serangoon Gardens Street 26, #16-43</address>
+        <birthday>09/08/1993</birthday>
+        <isPrivate>false</isPrivate>
+        <remark>As quick as a leopard.</remark>
+        <isPinned>false</isPinned>
+        <tagged>family</tagged>
+    </persons>
+    <persons>
+        <name>Fenton Elliot</name>
+        <phone>89910293</phone>
+        <email>fentone@example.com</email>
+        <address>Blk 45 Woodlands Street 3, #04-23</address>
+        <birthday>15/09/1990</birthday>
+        <isPrivate>false</isPrivate>
+        <remark></remark>
+        <isPinned>false</isPinned>
+        <tagged>colleagues</tagged>
+    </persons>
+    <persons>
+        <name>Irfan Ibrahim</name>
+        <phone>92492021</phone>
+        <email>irfan@example.com</email>
+        <address>Blk 47 Tampines Street 20, #17-35</address>
+        <birthday>22/10/1985</birthday>
+        <isPrivate>false</isPrivate>
+        <remark></remark>
+        <isPinned>false</isPinned>
+        <tagged>classmates</tagged>
+    </persons>
+    <persons>
+        <name>Jamie Oliveoil</name>
+        <phone>80992010</phone>
+        <email>jamieo@example.com</email>
+        <address>Blk 83 Holly Street 85, #02-13</address>
+        <birthday>01/10/2010</birthday>
+        <isPrivate>false</isPrivate>
+        <remark></remark>
+        <isPinned>false</isPinned>
+        <tagged>niece</tagged>
+    </persons>
+    <persons>
+        <name>Roy Balakrishnan</name>
+        <phone>92624417</phone>
+        <email>royb@example.com</email>
+        <address>Blk 45 Aljunied Street 85, #11-31</address>
+        <birthday>15/12/1991</birthday>
+        <isPrivate>false</isPrivate>
+        <remark></remark>
+        <isPinned>true</isPinned>
+        <tagged>colleagues</tagged>
+    </persons>
+    <persons>
+        <name>Wilson Loh</name>
+        <phone>89102937</phone>
+        <email>wilsonl@example.com</email>
+        <address>Blk 39 Yishun Street 12, #10-11</address>
+        <birthday>03/02/1995</birthday>
+        <isPrivate>false</isPrivate>
+        <remark></remark>
+        <isPinned>false</isPinned>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Zachary Quek</name>
+        <phone>9123417</phone>
+        <email>zacq@example.com</email>
+        <address>Blk 45 Clementi Ave 6, #01-31</address>
+        <birthday>01/12/1980</birthday>
+        <isPrivate>false</isPrivate>
+        <remark></remark>
+        <isPinned>false</isPinned>
+        <tagged>colleagues</tagged>
+    </persons>
+    <tags>niece</tags>
+    <tags>colleagues</tags>
+    <tags>classmates</tags>
+    <tags>neighbours</tags>
+    <tags>family</tags>
+    <tags>friends</tags>
+    <tasks>
+        <header>Pick up a new book</header>
+        <isCompleted>false</isCompleted>
+        <lastUpdatedTime>2017-11-12 18:53:21</lastUpdatedTime>
+    </tasks>
+    <tasks>
+        <header>Learn basic Thai</header>
+        <isCompleted>false</isCompleted>
+        <lastUpdatedTime>2017-11-12 18:53:21</lastUpdatedTime>
+    </tasks>
+    <tasks>
+        <header>Update collation of codes</header>
+        <isCompleted>false</isCompleted>
+        <lastUpdatedTime>2017-11-12 18:53:22</lastUpdatedTime>
+        <endDateTime>2017-11-11 18:53:22</endDateTime>
+    </tasks>
+    <tasks>
+        <header>Go grocery shopping</header>
+        <isCompleted>false</isCompleted>
+        <lastUpdatedTime>2017-11-12 18:53:22</lastUpdatedTime>
+        <endDateTime>2017-11-12 18:53:22</endDateTime>
+    </tasks>
+    <tasks>
+        <header>Help Jimmy with math</header>
+        <isCompleted>false</isCompleted>
+        <lastUpdatedTime>2017-11-12 18:53:22</lastUpdatedTime>
+        <endDateTime>2017-11-12 20:00:00</endDateTime>
+    </tasks>
+    <tasks>
+        <header>Go for fishing trip</header>
+        <isCompleted>false</isCompleted>
+        <lastUpdatedTime>2017-11-12 18:53:22</lastUpdatedTime>
+        <endDateTime>2017-11-13 20:00:00</endDateTime>
+    </tasks>
+    <tasks>
+        <header>Fetch Jimmy from soccer practise</header>
+        <isCompleted>false</isCompleted>
+        <lastUpdatedTime>2017-11-12 18:53:22</lastUpdatedTime>
+        <endDateTime>2017-11-14 18:53:22</endDateTime>
+    </tasks>
+    <tasks>
+        <header>Go to the gym</header>
+        <isCompleted>false</isCompleted>
+        <lastUpdatedTime>2017-11-12 18:53:22</lastUpdatedTime>
+        <endDateTime>2017-11-14 18:53:22</endDateTime>
+    </tasks>
+    <tasks>
+        <header>Clean up house with Jimmy</header>
+        <isCompleted>false</isCompleted>
+        <lastUpdatedTime>2017-11-12 18:53:22</lastUpdatedTime>
+        <endDateTime>2017-11-18 18:53:22</endDateTime>
+    </tasks>
+    <tasks>
+        <header>Go for parent teacher meeting</header>
+        <isCompleted>false</isCompleted>
+        <lastUpdatedTime>2017-11-12 18:53:22</lastUpdatedTime>
+        <endDateTime>2017-11-19 18:53:22</endDateTime>
+    </tasks>
+    <tasks>
+        <header>Pay off debt</header>
+        <isCompleted>false</isCompleted>
+        <lastUpdatedTime>2017-11-12 18:53:22</lastUpdatedTime>
+        <endDateTime>2017-11-19 18:53:22</endDateTime>
+    </tasks>
+    <tasks>
+        <header>Look for new recipes</header>
+        <isCompleted>false</isCompleted>
+        <lastUpdatedTime>2017-11-12 18:53:22</lastUpdatedTime>
+        <endDateTime>2017-11-19 18:53:22</endDateTime>
+    </tasks>
+    <tasks>
+        <header>Finish up project</header>
+        <isCompleted>false</isCompleted>
+        <lastUpdatedTime>2017-11-12 18:53:22</lastUpdatedTime>
+        <endDateTime>2017-11-26 18:53:22</endDateTime>
+    </tasks>
+</addressbook>

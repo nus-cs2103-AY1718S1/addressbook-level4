@@ -14,10 +14,11 @@ public class ResultDisplayTest extends GuiUnitTest {
     private static final NewResultAvailableEvent NEW_RESULT_EVENT_STUB = new NewResultAvailableEvent("Stub");
 
     private ResultDisplayHandle resultDisplayHandle;
+    private ResultDisplay resultDisplay;
 
     @Before
     public void setUp() {
-        ResultDisplay resultDisplay = new ResultDisplay();
+        resultDisplay = new ResultDisplay();
         uiPartRule.setUiPart(resultDisplay);
 
         resultDisplayHandle = new ResultDisplayHandle(getChildNode(resultDisplay.getRoot(),

@@ -31,6 +31,18 @@ public class Phone {
     }
 
     /**
+     * Provides a default phone number (" ") when field is empty.
+     *
+     * @throws IllegalValueException if given phone string is invalid.
+     */
+    public Phone(int checkValue) throws IllegalValueException {
+        if (checkValue != 0) {
+            throw new IllegalValueException(MESSAGE_PHONE_CONSTRAINTS);
+        }
+        this.value = " ";
+    }
+
+    /**
      * Returns true if a given string is a valid person phone number.
      */
     public static boolean isValidPhone(String test) {

@@ -16,9 +16,13 @@ import org.junit.rules.ExpectedException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.model.alias.AliasToken;
+import seedu.address.model.alias.ReadOnlyAliasToken;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.task.ReadOnlyTask;
+import seedu.address.model.task.Task;
 
 public class AddressBookTest {
 
@@ -31,6 +35,8 @@ public class AddressBookTest {
     public void constructor() {
         assertEquals(Collections.emptyList(), addressBook.getPersonList());
         assertEquals(Collections.emptyList(), addressBook.getTagList());
+        assertEquals(Collections.emptyList(), addressBook.getAliasTokenList());
+        assertEquals(Collections.emptyList(), addressBook.getTaskList());
     }
 
     @Test
@@ -51,7 +57,9 @@ public class AddressBookTest {
         // Repeat ALICE twice
         List<Person> newPersons = Arrays.asList(new Person(ALICE), new Person(ALICE));
         List<Tag> newTags = new ArrayList<>(ALICE.getTags());
-        AddressBookStub newData = new AddressBookStub(newPersons, newTags);
+        List<AliasToken> newAliasTokens = new ArrayList<>();
+        List<Task> newTasks = new ArrayList<>();
+        AddressBookStub newData = new AddressBookStub(newPersons, newTags, newAliasTokens, newTasks);
 
         thrown.expect(AssertionError.class);
         addressBook.resetData(newData);
@@ -64,9 +72,21 @@ public class AddressBookTest {
     }
 
     @Test
+    public void getTaskList_modifyList_throwsUnsupportedOperationException() {
+        thrown.expect(UnsupportedOperationException.class);
+        addressBook.getTaskList().remove(0);
+    }
+
+    @Test
     public void getTagList_modifyList_throwsUnsupportedOperationException() {
         thrown.expect(UnsupportedOperationException.class);
         addressBook.getTagList().remove(0);
+    }
+
+    @Test
+    public void getAliasList_modifyList_throwsUnsupportedOperationException() {
+        thrown.expect(UnsupportedOperationException.class);
+        addressBook.getAliasTokenList().remove(0);
     }
 
     /**
@@ -75,10 +95,17 @@ public class AddressBookTest {
     private static class AddressBookStub implements ReadOnlyAddressBook {
         private final ObservableList<ReadOnlyPerson> persons = FXCollections.observableArrayList();
         private final ObservableList<Tag> tags = FXCollections.observableArrayList();
+        private final ObservableList<ReadOnlyAliasToken> aliasTokens =
+                FXCollections.observableArrayList();
+        private final ObservableList<ReadOnlyTask> tasks = FXCollections.observableArrayList();
 
-        AddressBookStub(Collection<? extends ReadOnlyPerson> persons, Collection<? extends Tag> tags) {
+        AddressBookStub(Collection<? extends ReadOnlyPerson> persons, Collection<? extends Tag> tags,
+                        Collection<? extends ReadOnlyAliasToken> aliasTokens,
+                        Collection<? extends ReadOnlyTask> tasks) {
             this.persons.setAll(persons);
             this.tags.setAll(tags);
+            this.aliasTokens.setAll(aliasTokens);
+            this.tasks.setAll(tasks);
         }
 
         @Override
@@ -89,6 +116,16 @@ public class AddressBookTest {
         @Override
         public ObservableList<Tag> getTagList() {
             return tags;
+        }
+
+        @Override
+        public ObservableList<ReadOnlyAliasToken> getAliasTokenList() {
+            return aliasTokens;
+        }
+
+        @Override
+        public ObservableList<ReadOnlyTask> getTaskList() {
+            return tasks;
         }
     }
 

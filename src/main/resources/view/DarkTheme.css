@@ -1,6 +1,18 @@
-.background {
-    -fx-background-color: derive(#1d1d1d, 20%);
-    background-color: #383838; /* Used in the default.html file */
+/* @@author deep4k */
+/* refer to BluebirdTheme.css for clearer separation between regions*/
+@font-face {
+    font-family: Space Mono;
+    src: url("/fonts/SpaceMono-Regular.ttf");
+}
+
+@font-face {
+    font-family: Old Standard TT;
+    src: url("/fonts/OldStandard-Regular.ttf");
+}
+
+@font-face {
+    font-family: Space Mono Italic;
+    src: url("/fonts/SpaceMono-Italic.ttf");
 }
 
 .label {
@@ -56,11 +68,7 @@
     -fx-size: 35;
     -fx-border-width: 0 0 1 0;
     -fx-background-color: transparent;
-    -fx-border-color:
-        transparent
-        transparent
-        derive(-fx-base, 80%)
-        transparent;
+    -fx-border-color: transparent transparent derive(-fx-base, 80%) transparent;
     -fx-border-insets: 0 10 1 0;
 }
 
@@ -77,45 +85,58 @@
 }
 
 .split-pane:horizontal .split-pane-divider {
-    -fx-background-color: derive(#1d1d1d, 20%);
-    -fx-border-color: transparent transparent transparent #4d4d4d;
+    -fx-background-color: #1a1e37;
+    -fx-border-color: transparent;
+}
+
+.split-pane:vertical .split-pane-divider {
+    -fx-background-color: white;
+    -fx-padding: 0.000001;
+}
+
+.split-pane:vertical .label {
+    -fx-text-fill: white;
 }
 
 .split-pane {
-    -fx-border-radius: 1;
-    -fx-border-width: 1;
-    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-background-color: #1a1e37;
 }
 
 .list-view {
     -fx-background-insets: 0;
+    -fx-background-color: derive(#1a1e37, 20%);
+    -fx-border-color: transparent;
     -fx-padding: 0;
 }
 
 .list-cell {
     -fx-label-padding: 0 0 0 0;
-    -fx-graphic-text-gap : 0;
+    -fx-graphic-text-gap: 0;
     -fx-padding: 0 0 0 0;
+    -fx-background-color: derive(#1a1e37, 20%);
 }
 
 .list-cell:filled:even {
-    -fx-background-color: #3c3e3f;
+    -fx-background-color: derive(#1a1e37, 20%);
 }
 
 .list-cell:filled:odd {
-    -fx-background-color: #515658;
+    -fx-background-color: derive(#1a1e37, 30%);
 }
 
 .list-cell:filled:selected {
-    -fx-background-color: #424d5f;
+    -fx-background-color: #1a1e37;
+    -fx-background-radius: 10 10 10 10;
 }
 
 .list-cell:filled:selected #cardPane {
-    -fx-border-color: #3e7b91;
+    -fx-border-color: transparent;
     -fx-border-width: 1;
 }
 
 .list-cell .label {
+    -fx-font-family: "Space mono";
+    -fx-font-size: 12px;
     -fx-text-fill: white;
 }
 
@@ -132,13 +153,13 @@
 }
 
 .anchor-pane {
-     -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-background-color: transparent;
 }
 
 .pane-with-border {
-     -fx-background-color: derive(#1d1d1d, 20%);
-     -fx-border-color: derive(#1d1d1d, 10%);
-     -fx-border-top-width: 1px;
+    -fx-background-color: #1a1e37;
+    -fx-border-color: transparent;
+    -fx-border-top-width: 1px;
 }
 
 .status-bar {
@@ -148,9 +169,13 @@
 
 .result-display {
     -fx-background-color: transparent;
-    -fx-font-family: "Segoe UI Light";
+    -fx-font-family: "Old Standard TT";
     -fx-font-size: 13pt;
     -fx-text-fill: white;
+}
+
+.result-display *.text {
+    -fx-text-alignment: center;
 }
 
 .result-display .label {
@@ -158,8 +183,9 @@
 }
 
 .status-bar .label {
-    -fx-font-family: "Segoe UI Light";
+    -fx-font-family: "PT Serif";
     -fx-text-fill: white;
+    -fx-font-size: 9pt;
 }
 
 .status-bar-with-border {
@@ -173,17 +199,15 @@
 }
 
 .grid-pane {
-    -fx-background-color: derive(#1d1d1d, 30%);
-    -fx-border-color: derive(#1d1d1d, 30%);
-    -fx-border-width: 1px;
+    -fx-background-color: #1a1e37;
 }
 
 .grid-pane .anchor-pane {
-    -fx-background-color: derive(#1d1d1d, 30%);
+    -fx-background-color: #1a1e37;
 }
 
 .context-menu {
-    -fx-background-color: derive(#1d1d1d, 50%);
+    -fx-background-color: #1a1e37;
 }
 
 .context-menu .label {
@@ -191,18 +215,42 @@
 }
 
 .menu-bar {
-    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-background-color: #1a1e37;
 }
 
 .menu-bar .label {
-    -fx-font-size: 14pt;
-    -fx-font-family: "Segoe UI Light";
-    -fx-text-fill: white;
-    -fx-opacity: 0.9;
+    -fx-background-color: #1a1e37;
+    -fx-font-size: 12pt;
+    -fx-font-family: "PT Serif";
+    -fx-text-fill: #fffefd;
 }
 
-.menu .left-container {
-    -fx-background-color: black;
+.menu:showing {
+    -fx-background-color: transparent;
+}
+
+.menu:hover {
+    -fx-background-color: transparent;
+}
+
+.menu:hover .label {
+    -fx-text-fill: #71ffa0;
+}
+
+.menu:showing .label {
+    -fx-text-fill: #fefdff;
+}
+
+.menu-item:focused {
+    -fx-background-color: transparent;
+}
+
+.context-menu .button {
+    -fx-background-color: #1a1e37;
+}
+
+.menu-item:focused .label {
+    -fx-text-fill: #71ffa0;
 }
 
 /*
@@ -227,8 +275,8 @@
 }
 
 .button:pressed, .button:default:hover:pressed {
-  -fx-background-color: white;
-  -fx-text-fill: #1d1d1d;
+    -fx-background-color: white;
+    -fx-text-fill: #1d1d1d;
 }
 
 .button:focused {
@@ -280,12 +328,13 @@
 }
 
 .scroll-bar {
-    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-background-color: derive(#1a1e37, 20%);
 }
 
 .scroll-bar .thumb {
-    -fx-background-color: derive(#1d1d1d, 50%);
-    -fx-background-insets: 3;
+    -fx-background-color: #1a1e37;
+    -fx-background-radius: 18 18 18 18;
+    -fx-background-insets: 1;
 }
 
 .scroll-bar .increment-button, .scroll-bar .decrement-button {
@@ -298,16 +347,21 @@
 }
 
 .scroll-bar:vertical .increment-arrow, .scroll-bar:vertical .decrement-arrow {
-    -fx-padding: 1 8 1 8;
+    -fx-padding: 8 3 8 3;
 }
 
 .scroll-bar:horizontal .increment-arrow, .scroll-bar:horizontal .decrement-arrow {
-    -fx-padding: 8 1 8 1;
+    -fx-padding: 3 8 3 8;
 }
 
 #cardPane {
     -fx-background-color: transparent;
     -fx-border-width: 0;
+}
+
+.command-pane {
+    -fx-background-color: derive(#1a1e37, 20%);
+    -fx-background-radius: 10 10 10 10;
 }
 
 #commandTypeLabel {
@@ -316,22 +370,21 @@
 }
 
 #commandTextField {
-    -fx-background-color: transparent #383838 transparent #383838;
+    -fx-background-color: transparent;
     -fx-background-insets: 0;
-    -fx-border-color: #383838 #383838 #ffffff #383838;
     -fx-border-insets: 0;
     -fx-border-width: 1;
-    -fx-font-family: "Segoe UI Light";
+    -fx-font-family: "Old Standard TT";
     -fx-font-size: 13pt;
-    -fx-text-fill: white;
+    -fx-text-fill: derive(#71ffa0, -20%);
 }
 
-#filterField, #personListPanel, #personWebpage {
-    -fx-effect: innershadow(gaussian, black, 10, 0, 0, 0);
+#resultDisplay {
+    -fx-font-size: 18;
 }
 
 #resultDisplay .content {
-    -fx-background-color: transparent, #383838, transparent, #383838;
+    -fx-background-color: #1a1e37;
     -fx-background-radius: 0;
 }
 
@@ -341,10 +394,205 @@
 }
 
 #tags .label {
-    -fx-text-fill: white;
+    -fx-text-fill: papayawhip;
     -fx-background-color: #3e7b91;
     -fx-padding: 1 3 1 3;
     -fx-border-radius: 2;
     -fx-background-radius: 2;
     -fx-font-size: 11;
 }
+
+#sortMenuBox .context.menu {
+    -fx-background-color: #1a1e37;
+}
+
+.menu-button {
+    -fx-background-color: #1a1e37;
+}
+
+.menu-button:hover .label {
+    -fx-text-fill: #71ffa0;
+}
+
+.menu-button:showing .label {
+    -fx-text-fill: #fefdff;
+}
+
+.menu-item:focused .label {
+    -fx-text-fill: #71ffa0;
+}
+
+.menu-button:hover .arrow {
+    -fx-background-color: #71ffa0;
+}
+
+.menu-button:showing .arrow {
+    -fx-background-color: #71ffa0;
+}
+
+#sortMenuBox .label {
+    -fx-font-size: 12pt;
+    -fx-font-family: "Old Standard TT";
+}
+
+#searchBox {
+    -fx-background-color: #1a1e37;
+}
+
+#sortMenuBox .text-field {
+    -fx-background-color: #1a1e37;
+    -fx-font-size: 12pt;
+    -fx-font-family: "Old Standard TT";
+    -fx-text-fill: derive(#71ffa0, -20%);
+
+}
+
+#personList {
+    -fx-background-color: #1a1e37;
+    -fx-border-color: transparent;
+}
+
+#personViewLabel {
+    -fx-font-family: "Old Standard TT";
+    -fx-font-size: 10pt;
+}
+
+#taskViewLabel {
+    -fx-font-family: "Old Standard TT";
+    -fx-font-size: 10pt;
+}
+
+#aliasViewLabel {
+    -fx-font-family: "Old Standard TT";
+    -fx-font-size: 10pt;
+}
+
+#listAllLabel {
+    -fx-font-family: "Old Standard TT";
+    -fx-font-size: 10pt;
+}
+
+#listPinLabel {
+    -fx-font-family: "Old Standard TT";
+    -fx-font-size: 10pt;
+}
+
+#organizedByLabel {
+    -fx-font-family: "Old Standard TT";
+    -fx-font-size: 10pt;
+}
+
+#organizerLabel {
+    -fx-font-family: "Old Standard TT";
+    -fx-font-size: 10pt;
+}
+
+#personListPanelPlaceholder {
+    -fx-border-color: transparent;
+}
+
+#personListView {
+    -fx-background-color: derive(#1a1e37, 20%);
+    -fx-background-radius: 10 10 10 10;
+    -fx-border-color: transparent;
+}
+
+#personListPanel {
+    -fx-background-color: derive(#1a1e37, 20%);
+    -fx-background-radius: 10 10 10 10;
+    -fx-border-color: transparent;
+}
+
+#name {
+    -fx-font-size: 15px;
+}
+
+#remark {
+    -fx-font-family: "Space Mono Italic";
+    -fx-text-fill: gray;
+}
+
+#taskListView {
+    -fx-background-color: derive(#1a1e37, 20%);
+    -fx-background-radius: 10 10 10 10;
+    -fx-border-color: transparent;
+}
+
+#taskListPanel {
+    -fx-background-color: derive(#1a1e37, 20%);
+    -fx-background-radius: 10 10 10 10;
+    -fx-border-color: transparent;
+}
+
+#time {
+    -fx-font-family: "Space Mono Italic";
+    -fx-font-size: 12px;
+
+}
+
+#time {
+    -fx-font-family: "Space Mono Italic";
+    -fx-font-size: 12px;
+    -fx-text-fill: gold;
+}
+
+#header {
+    -fx-font-size: 15px;
+}
+
+#aliasListView {
+    -fx-background-color: derive(#1a1e37, 20%);
+    -fx-background-radius: 10 10 10 10;
+    -fx-border-color: transparent;
+}
+
+#aliasListPanel {
+    -fx-background-color: derive(#1a1e37, 20%);
+    -fx-background-radius: 10 10 10 10;
+    -fx-border-color: transparent;
+}
+
+#representation {
+    -fx-font-family: "Space Mono Italic";
+    -fx-font-size: 15px;
+}
+
+#keyword {
+    -fx-font-family: "Space Mono Italic";
+    -fx-font-size: 15px;
+}
+
+#representationLabel {
+    -fx-font-family: "Space Mono Italic";
+    -fx-font-size: 15px;
+}
+
+#keywordLabel {
+    -fx-font-family: "Space Mono Italic";
+    -fx-font-size: 15px;
+}
+
+#overlayGrid {
+    -fx-background-color: derive(#1a1e37, 20%);
+    -fx-border-color: transparent;
+}
+
+#helpOverlay {
+    -fx-background-color: derive(#1a1e37, 20%);
+    -fx-border-color: transparent;
+}
+
+#overlayGrid .label {
+    -fx-font-family: "Space Mono";
+    -fx-text-fill: white;
+    -fx-font-size: 12px;
+}
+
+#overlayGrid .text-field {
+    -fx-font-family: "Space Mono";
+    -fx-font-size: 12px;
+}
+
+
+
+

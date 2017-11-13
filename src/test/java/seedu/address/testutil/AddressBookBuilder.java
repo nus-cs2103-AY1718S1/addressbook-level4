@@ -2,14 +2,18 @@ package seedu.address.testutil;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
+import seedu.address.model.alias.ReadOnlyAliasToken;
+import seedu.address.model.alias.exceptions.DuplicateTokenKeywordException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.task.ReadOnlyTask;
+import seedu.address.model.task.exceptions.DuplicateTaskException;
 
 /**
  * A utility class to help with building Addressbook objects.
  * Example usage: <br>
- *     {@code AddressBook ab = new AddressBookBuilder().withPerson("John", "Doe").withTag("Friend").build();}
+ * {@code AddressBook ab = new AddressBookBuilder().withPerson("John", "Doe").withTag("Friend").build();}
  */
 public class AddressBookBuilder {
 
@@ -34,6 +38,31 @@ public class AddressBookBuilder {
         }
         return this;
     }
+
+    /**
+     * Adds a new {@code Task} to the {@code AddressBook} that we are building.
+     */
+    public AddressBookBuilder withTask(ReadOnlyTask task) {
+        try {
+            addressBook.addTask(task);
+        } catch (DuplicateTaskException dpe) {
+            throw new IllegalArgumentException("person is expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
+     * Adds a new
+     */
+    public AddressBookBuilder withAlias(ReadOnlyAliasToken alias) {
+        try {
+            addressBook.addAliasToken(alias);
+        } catch (DuplicateTokenKeywordException dpe) {
+            throw new IllegalArgumentException("person is expected to be unique.");
+        }
+        return this;
+    }
+
 
     /**
      * Parses {@code tagName} into a {@code Tag} and adds it to the {@code AddressBook} that we are building.

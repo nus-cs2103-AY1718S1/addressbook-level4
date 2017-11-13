@@ -4,11 +4,13 @@ import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Birthday;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.Remark;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
@@ -22,6 +24,8 @@ public class PersonBuilder {
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_TAGS = "friends";
+    public static final String DEFAULT_BIRTHDAY = "01/01/1990";
+    public static final String DEFAULT_REMARK = "";
 
     private Person person;
 
@@ -31,8 +35,11 @@ public class PersonBuilder {
             Phone defaultPhone = new Phone(DEFAULT_PHONE);
             Email defaultEmail = new Email(DEFAULT_EMAIL);
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
+            Birthday defaultBirthday = new Birthday(DEFAULT_BIRTHDAY);
+            Remark defaultRemark = new Remark(DEFAULT_REMARK);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
-            this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress, defaultTags);
+            this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress, defaultBirthday,
+                    defaultRemark, defaultTags, false, false, false);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default person's values are invalid.");
         }
@@ -60,7 +67,7 @@ public class PersonBuilder {
     /**
      * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code Person} that we are building.
      */
-    public PersonBuilder withTags(String ... tags) {
+    public PersonBuilder withTags(String... tags) {
         try {
             this.person.setTags(SampleDataUtil.getTagSet(tags));
         } catch (IllegalValueException ive) {
@@ -105,8 +112,38 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code Remark} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withRemark(String remark) {
+        this.person.setRemark(new Remark(remark));
+        return this;
+    }
+
+    /**
+     * Sets the {@code Person} that we are building to be pinned.
+     */
+    public PersonBuilder withPinned(boolean isPinned) {
+        this.person.setPinned(isPinned);
+        return this;
+    }
+
+    //@@author wynkheng
+    /**
+     * Sets the {@code Birthday} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withBirthday(String birthday) {
+        try {
+            this.person.setBirthday(new Birthday(birthday));
+        } catch (IllegalValueException e) {
+            throw new IllegalArgumentException("phone is expected to be unique.");
+        }
+        return this;
+    }
+    //@@author
+
     public Person build() {
         return this.person;
     }
-
 }
+

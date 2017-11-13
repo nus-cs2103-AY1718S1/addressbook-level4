@@ -9,12 +9,14 @@ import org.junit.Rule;
 import org.junit.rules.TestName;
 import org.testfx.api.FxToolkit;
 
-import guitests.guihandles.BrowserPanelHandle;
 import guitests.guihandles.CommandBoxHandle;
+import guitests.guihandles.HelpOverlayHandle;
 import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.MainWindowHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
+import guitests.guihandles.SearchBoxHandle;
+import guitests.guihandles.SortMenuHandle;
 import guitests.guihandles.StatusBarFooterHandle;
 import javafx.stage.Stage;
 import seedu.address.TestApp;
@@ -79,10 +81,6 @@ public abstract class AddressBookGuiTest {
         return mainWindowHandle.getMainMenu();
     }
 
-    protected BrowserPanelHandle getBrowserPanel() {
-        return mainWindowHandle.getBrowserPanel();
-    }
-
     protected StatusBarFooterHandle getStatusBarFooter() {
         return mainWindowHandle.getStatusBarFooter();
     }
@@ -91,8 +89,21 @@ public abstract class AddressBookGuiTest {
         return mainWindowHandle.getResultDisplay();
     }
 
+    protected SearchBoxHandle getSearchField() {
+        return mainWindowHandle.getSearchField();
+    }
+
+    protected SortMenuHandle getSortMenu() {
+        return mainWindowHandle.getSortMenu();
+    }
+
+    protected HelpOverlayHandle getHelpOverlay() {
+        return mainWindowHandle.getHelpOverlay();
+    }
+
     /**
      * Runs {@code command} in the application's {@code CommandBox}.
+     *
      * @return true if the command was executed successfully.
      */
     protected boolean runCommand(String command) {
@@ -111,5 +122,4 @@ public abstract class AddressBookGuiTest {
         EventsCenter.clearSubscribers();
         FxToolkit.cleanupStages();
     }
-
 }

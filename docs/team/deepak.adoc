@@ -1,0 +1,82 @@
+= Buddha Deepak - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: Bluebird
+Bluebird is a desktop based organisational tool for the working parent on the go. Bluebird is suitable
+for a variety of day-to-day management tasks, including managing appointments for both yourself and your
+child, and also organising the contact information from your Address Book. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 15 kLoC. +
+
+This project portfolio serves to provide an insight into how Buddha Deepak has contributed to project Bluebird. Included
+in this portfolio are the enhancements, features, tests and proposed enhancements that Buddha Deepak has contribued to the project.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T15-B4/main/blob/master/collated/main/deep4k.md[Functional code]] [https://github.com/CS2103AUG2017-T15-B4/main/blob/master/collated/test/deep4k.md[Test code]]
+
+=== Enhancement Added: Alias/Unalias
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=alias]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Users will want to have their own preference of commands to use, they will also want to
+add shortcuts to words that they regularly.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=alias]
+
+#End of Extract#
+
+---
+=== Enhancement Added: Remark
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=undoredo]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Users will want to have a remark for their contacts to better identify them.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=undoredo]
+
+#End of Extract#
+
+---
+=== Enhancement Proposed: Add command `task'
+
+{Explain similar to the Undo/Redo feature above.}
+
+=== Other contributions
+
+* Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
+* Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
+
+== Project: PowerPointLabs
+
+{Optionally (not graded), you may include other projects in your portfolio.}

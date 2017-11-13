@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= Bluebird - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,9 +10,17 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-T15-B4/main/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team T15-B4`      Since: `Sep 2017`      Licence: `MIT`
+
+== Overview
+
+Bluebird is a Java-based address book and task organisation software application. With concise and clear
+descriptions, our developer guide aims to provide an inside look as to how the Bluebird team created the software, should
+any fellow developers be interested to contribute to our application. In addition, with diagrams to illustrate
+the architectural flow of how components interact with one another and beginner-friendly explanations, our developer
+guide aims to also serve as an avenue for beginners to software application building.
 
 == Setting up
 
@@ -146,6 +154,9 @@ Note how the event is propagated through the `EventsCenter` to the `Storage` and
 
 The sections below give more details of each component.
 
+==== Model-View-Controller (MVC) pattern
+Model View Components
+
 === UI component
 
 image::UiClassDiagram.png[width="800"]
@@ -153,7 +164,7 @@ _Figure 2.2.1 : Structure of the UI Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
@@ -213,6 +224,40 @@ The `Storage` component,
 === Common classes
 
 Classes used by multiple components are in the `seedu.addressbook.commons` package.
+
+=== Software Design Principles
+Intro
+
+==== Single Responsibility Principle (SRP)
+
+==== Open-Closed Principle (OCP)
+
+ Open-Closed Principle (OCP): A module should be open for extension but closed for modification.
+ That is, modules should be written so that they can be extended, without requiring them to be modified.
+
+
+When different classes interact with one another, coupling is inevitable and and interaction will naturally lead to increased coupling. Bluebird applies OCP in order to reduce coupling and increase cohesion. +
+As shown in Figure 2.7.2.1, if a new command is added to Bluebird, there is no need to modify the `Command` class, the new command can simply just inherit from
+`Command`.
+
+image::OCPLogic.png[width="800"]
+
+
+==== Liskov Substitution Principle (LSP)
+
+ Liskov Substitution Principle (LSP): Derived classes must be substitutable for their base classes.
+
+Bluebird applies the Liskov Substitution Principle to avoid breaking the functionality of the code.
+An example of this can be seen below:
+
+image::LSP-CommandClass.png[width="500"]
+
+The `UndoableCommand` class follows the Liskov Substitution Principle because it fulfills `Command` 's
+expectation of `UndoableCommand` objects. Substituting `DeleteCommand` 's objects for `UndoableCommand` 's objects
+will not break the `Command` class functionality.
+
+
+==== Dependency Inversion Principle (DIP)
 
 == Implementation
 
@@ -364,6 +409,454 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
+// tag::sort[]
+=== Sorting of contacts
+
+The sort command sorts the `People` in `AddressBook` based on their `Name`, `Phone`, `Email` or `Address`. The sort command is also an `UndoableCommand` and users can undo the sort if they wish to.
+`SortCommand` inherits from `UndoableCommand` which inherits from `Command` and the logic is
+shown in Figure 4.4.1 below.
+
+image::sortLogicDiagram.png[width="700"]
+Figure 4.4.1: Logic of SortCommand
+
+There will be a `SortCommandParser` as well to parse out the `KEYWORD` which is either name, phone, email
+or address. This will ensure that users type in the right `KEYWORD` to sort the list however they want.
+
+==== Sorting by name
+
+Suppose a user wants to sort by name, the user will type `sort name` into the command box. This will then be processed by `LogicManager` which executes the command and `AddressBookParser` will
+parse the command accordingly. A `SortCommand` will be returned to the `LogicManager` which will then execute it. Finally, the result of the execution will be returned and displayed
+on the `ResultDisplay` Ui for the user. The sequence diagram for this scenario is shown in Figure 4.4.2 below.
+
+image::sortSD.png[width="800"]
+Figure 4.4.2: Sequence diagram for sorting by name
+
+When `SortCommand` executes,
+
+. It will first call the sortList() method in `ModelManager`
+. Then, it will call the sortList() method in `AddressBook`
+. Finally, it will call the sort() method to sort the internal list in `UniquePersonList`
+
+The code snippet below shows how `SortCommand` calls the different methods.
+
+[source,java]
+----
+public class SortCommand extends UndoableCommand {
+    ...
+    @Override
+    public CommandResult executeUndoableCommand() {
+        model.sortList(toSort);
+        ...
+    }
+    ...
+}
+
+public class ModelManager extends ComponentManager implements Model {
+    ...
+    @Override
+    public void sortList(String toSort) {
+        addressBook.sortList(toSort);
+        ...
+    }
+    ...
+}
+
+public class AddressBook implements ReadOnlyAddressBook {
+    ...
+    public void sortList(String toSort) {
+        persons.sort(toSort);
+    }
+    ...
+}
+----
+
+The sequence diagram for executeUndoableCommand() is given in Figure 4.4.3 below.
+
+image::sortExecuteSD.png[width="750"]
+Figure 4.4.3: Sequence diagram for SortCommand executeUndoableCommand()
+
+
+==== Design Considerations
+
+**Aspect:** Which details to sort +
+**Alternative 1 (current choice):** List of contacts will be able to be sorted by name, phone, email or address +
+**Pros:** This gives users freedom to select how they want it to be sorted by +
+**Cons:** Some users may not find the need to sort by phone, email or address +
+**Alternative 2:** List of contacts will be sorted by name only +
+**Pros:** Majority of users will only sort by name when they want to view their list of contacts +
+**Cons:** For the minority that may want to sort using other details, they do not have the option to do so +
+
+**Aspect:** To sort automatically by name every time Bluebird starts or not +
+**Alternative 1 (current choice):** List of contacts will be sorted by name automatically everytime Bluebird starts +
+**Pros:** Users do not have to sort every single time they add a new contact +
+**Cons:** Some users may only want to sort by other details other than name, therefore they have to sort every time they run Bluebird +
+**Alternative 2:** Not automatically sort +
+**Pros:** This gives users freedom to select how they want their list to be sorted +
+**Cons:** Forgetful users may not be able to find their contact if they forget to sort by name when they add a new contact +
+// end::sort[]
+
+//  tag::find[]
+=== Enhanced find
+
+The old find feature is only capable of finding the target `Person` using his/her name. Furthermore,
+the user has to type out the full name in order to be able to find the `Person`. +
+
+The enhanced find feature allows users to find the `Person` you want using their name, phone, email, address or tag. Keywords need not be typed in full and partial keywords will still be able to find the `Person`
+(e.g find jos will return Josephine).
+
+This is implemented by further refining the `PersonHasKeywordsPredicate` that was originally used.
+`PersonHasKeywordsPredicate` is used to compare the `Person` 's details with the keyword provided. If
+there is a match, the `Person` will be shown on Bluebird as found.
+The code snippet below shows how the refinement was made.
+
+[source,java]
+----
+public class PersonHasKeywordsPredicate implements Predicate<ReadOnlyPerson> {
+    ...
+    private boolean isPersonMatch(ReadOnlyPerson person, String[] nameParts, ArrayList<String> tagParts) {
+        for (String tag : tagParts) {
+            if (keywords.stream().anyMatch(keyword -> tag.startsWith(keyword.toLowerCase()))) {
+                return !isFindPinned || person.isPinned();
+            }
+        }
+        for (String name : nameParts) {
+            if (keywords.stream().anyMatch(keyword -> name.toLowerCase().startsWith(keyword.toLowerCase()))) {
+                return !isFindPinned || person.isPinned();
+            }
+        }
+        if (keywords.size() != 0 && person.getAddress().toString().toLowerCase().contains(fullWord)) {
+            return !isFindPinned || person.isPinned();
+        }
+        if (keywords.stream().anyMatch(keyword -> person.getEmail().toString().toLowerCase()
+                .startsWith(keyword.toLowerCase()))) {
+            return !isFindPinned || person.isPinned();
+        }
+        return keywords.stream().anyMatch(keyword -> person.getPhone()
+                .toString().startsWith(keyword.toLowerCase())) && (!isFindPinned || person.isPinned());
+    }
+}
+----
+
+==== Design Considerations
+
+**Aspect:** Defining how accurate the find command will be +
+**Alternative 1 (current choice):** The person will be found if their names, phone, email or tags start with the
+ keywords typed by the user. The address on the other hand can be found if any part of it contains
+ the keyword. In addition, partial keywords will be able to match the person. +
+**Pros:** If the person's name, phone, email or tags can be found as long as it contains any of the keywords,
+the user may end up with a list full of person they did not want (e.g find br will return Brandon and also Abraham). Hence,
+it is better to find a person if their names start with keywords.
+For the address, users generally tend to type only the street name, hence it is better to find address as long as it contains
+any of the keywords. +
+**Cons:** By finding using partial keywords, users may also end up with a list of people they did not want. +
+**Alternative 2:** The person will be found only if the user type out the details of the person they want in full (e.g
+find Josephine, or find Blk 231, Sembawang Close 221 #02-232, S750231). +
+**Pros:** It is the most accurate way to find the exact person the user wants. +
+**Cons:** The user may forget certain details of the person and be unable to find him.
+//  end::find[]
+
+//  tag::alias[]
+=== Alias / Unalias
+
+The alias and unalias features are implemented by comparing creating a new AliasToken model which contains all created aliases,
+this model is checked against user input in the parser and converts any alias keywords to their representations before other
+commands are parsed. Each AliasToken consists of a keyword (the main alias) and representation (what it means) and they can
+be used for both commands or shortcuts. For example : alias k/disappear s/hide , this makes the hide command
+to work with AliasToken keyword disappear. Unaliasing the AliasToken keyword token simply removes the AliasToken.
+
+==== Design Considerations
+
+**Aspect:** Defining how accurate the alias command will be +
+**Alternative 1 (current choice):** Aliases are parsed based on their keywords which are stored in a UniqueAliasTokenList.
+ All user input will parse for aliases first before dispatching to command parser, including parsing of both the command
+ word as well as the command arguments. +
+**Pros:** If the alias keyword is valid, it can be used as both a command alias and a shortcut alias. The user has the choice
+to choose any word to alias if they desire to do so. +
+**Cons:** It may take longer to parse user input. +
+**Alternative 2:** The alias is only checked for commands words in the parser, without the implementation of a
+ model. +
+**Pros:** The parsing of user input is more straightforward and quicker. +
+**Cons:** The user is very restricted on what to alias and cannot have aliases for shortcut words.
+//  end::alias[]
+
+// tag::delete[]
+=== Enhanced Delete
+
+The enhanced delete feature allows for multiple indices to be accepted by the parser. This is done by splitting the inputs into multiple string tokens,
+each containing the index of the person to be deleted. A list is then used to store all the indices of the personsToDelete.
+This enhancement is then achieved by iterating through the list and deleting the desired persons using the ModelManager.
+The enhanced delete also allows for the user to input a range of indices of persons to be deleted.
+
+==== Design Considerations
+
+**Aspect:** Defining how accurate the delete command will be +
+**Alternative 1 (current choice):** Indices are parsed into a list containing all the index of persons to be deleted. +
+A loop is then used to iterate through the list to delete the persons requested by the user. +
+**Pros:** If the index is valid (within range), the user can delete as many persons as they choose. +
+**Cons:** The use of a loop will increase the time for the code to run. +
+**Alternative 2:** The indices are deleted one by one, without using a list. +
+**Pros:** If the index is valid (within range), the user can delete as many persons as they choose. +
+**Cons:** It has to display the result repeatedly after every every person is deleted successfully. +
+// end::delete[]
+
+// tag::hideunhide[]
+=== Hide / Unhide
+
+The hide feature allows for multiple indices to be accepted by the parser. This is done similar to the enhanced delete
+feature, where inputs are split into multiple string tokens, each containing the index of the person to be hidden. The
+`Person` class has a boolean variable called `isPrivate` that is set to false by default. Only when the `hide` command
+is executed will the variable change to true, and conceal the person contact from the main list of contacts.
+A list, listhidden, is then used to store all the indices of the person(s) to be hidden. Unhide is then done to revert
+the previously hidden indices from the list storing all hidden persons by reverting the `isPrivate` boolean variable to
+false.
+
+==== Design Considerations
+
+**Aspect**: Defining how accurate the hide command will be +
+** Alternative 1 (current choice):** Indices are parsed into a list containing all the index of person to be deleted. +
+**Pros:** If the index is valid (within range), the user can hide as many persons as they choose. +
+**Cons:** The use of a loop will increase the time for the code to run. +
+**Alternative 2**: The indices are hidden one by one, without using a list. +
+**Pros:** If the index is valid (within range), the user can hide as many persons as they choose. +
+**Cons:** User has to repeatedly type the command multiple times, and application has to display the result repeatedly
+after every person is hidden successfully.
+// end::hideunhide[]
+
+// tag::pinunpin[]
+=== Pin / Unpin
+The pin and unpin command allows the user to pin and unpin important `Person` for easy access. The `Person` class has
+a boolean variable called `isPinned` that is set to `false` by default. Only when the `pin` command is executed will the
+variable change to `true`. Similarly, the variable can be changed from `true` to `false` when `unpin` command is executed.
+
+==== Design Considerations
+
+**Aspect**: How pinned person will be displayed on the UI +
+** Alternative 1 (current choice):** A pinned person will have a star symbol next to their name if they are pinned +
+**Pros:** It is easy to see and the Ui is clean +
+**Cons:** It is harder to implement as a new `ObjectProperty` has to be added to the `PersonCard` to update the UI of it +
+**Alternative 2**: The pinned person will just have a `Tag` that says `pinned` +
+**Pros:** It is easier to implement because `Tag` has already been implemented. A new `Tag` called `pinned` can just be added to the `Person` +
+**Cons:** It may not be noticeable if the person already has many `Tag` on them.
+// end::pinunpin[]
+
+// tag::tutorial[]
+=== First time tutorial
+The first time tutorial will be launched when users start the Bluebird app for the very first time. To
+detect that Bluebird is launched for the first time, a boolean variable `isFirstTimeOpen` in `MainApp` is used.
+It is set to `false` by default and will only be set to `true` when Bluebird detects that `addressbook.xml` is not found.
+The code snippet below shows how `isFirstTimeOpen` is set to true.
+
+[source,java]
+----
+public class MainApp extends Application {
+    ...
+    private Model initModelManager(Storage storage, UserPrefs userPrefs) {
+        ...
+        try {
+            addressBookOptional = storage.readAddressBook();
+            if (!addressBookOptional.isPresent()) {
+                logger.info("Data file not found. Will be starting with a sample AddressBook");
+                isFirstTimeOpen = true;
+            }
+            ...
+        }
+        ...
+    }
+----
+
+
+When `isFirstTimeOpen` is detected as `true` by the `MainWindow`, `TutorialPanel` will be added into the tutorial place holder.
+ `TutorialPanel` will be removed at the end of the tutorial.
+The code snippet below shows how `TutorialPanel` is added in the
+`MainWindow` when Bluebird is launched for the first time.
+
+[source,java]
+----
+public class MainWindow extends UiPart<Region> {
+    ...
+    void fillInnerParts() {
+        ...
+        if (MainApp.isFirstTimeOpen()) {
+            TutorialPanel tutorialPanel = new TutorialPanel(this, tutorialPlaceholder);
+            tutorialPlaceholder.getChildren().add(tutorialPanel.getRoot());
+        }
+        ...
+}
+----
+
+Figure 4.10.1 shows the sequence of events that happens.
+
+image::FinalTutSD.png[width="800"]
+Figure 4.10.1: Sequence diagram for first time tutorial
+
+In the reference frame "carry out tutorial", the tutorial will be looped until the end of tutorial. Users can choose
+to click next, back or skip tutorial at any point of the tutorial. The sequence of events that happens in
+"carry out tutorial" is shown in figure 4.10.2 below.
+
+image::sdCarryOutTut.png[width="800"]
+Figure 4.10.2: Sequence diagram for refrence frame "carry out tutorial"
+
+The code snippet below shows how `TutorialPanel` is removed after
+the end of tutorial.
+
+[source,java]
+----
+public class TutorialPanel extends UiPart<Region> {
+    ...
+    private void endTutorial() {
+        mainWindow.unhighlightAll();
+        tutorialPlaceholder.getChildren().remove(this.getRoot());
+    }
+    ...
+}
+----
+
+==== Design Considerations
+
+**Aspect**: What to include in the tutorial +
+** Alternative 1 (current choice):** Introduce the different UI panels in Bluebird and to give a brief
+ overview of the features Bluebird has. Allow user to explore and try out the different commands by themselves +
+**Pros:** Users will decide which feature to try out by themselves and learn how Bluebird works +
+**Cons:** By being brief and letting users try it out for themselves, users will not know the expected outcome of
+ different commands +
+**Alternative 2**: By spoon-feeding users and introduce each features one by one +
+**Pros:** This is the most comprehensive way to teach users of all the features Bluebird has to offer +
+**Cons:** The tutorial will be lengthy and users may just skip it without learning of different features
+// end::tutorial[]
+
+// tag::add[]
+=== Enhanced Add
+The enhanced add feature no longer requires the user to fill in every field as it now only requires the `n/NAME` field
+to be filled. This feature is done by using a constructor to initialize the default field as empty. This is implemented
+using an additional parameter in the ParserUtil class to determine whether the default constructor for an empty field
+should be called.
+
+image::addSD.png[width="800"]
+
+An extract of the code from ParserUtil class shows how this is being implemented. The command parameter determines
+whether or not a field is required in the parser. If the parser is called from the add command, it will call a
+default constructor where the parsed field is empty. +
+
+[source, java]
+----
+public static Optional<Name> parseName(Optional<String> name, String command) throws IllegalValueException {
+        requireNonNull(name);
+        if (command.equals("add")) {
+            return name.isPresent() ? Optional.of(new Name(name.get())) : Optional.of(new Name(0));
+        } else {
+            return name.isPresent() ? Optional.of(new Name(name.get())) : Optional.empty();
+        }
+    }
+----
+
+==== Design Considerations
+
+**Aspect**: Implementing an option to accept and create the empty fields +
+** Alternative 1 (current choice):** By using a command parameter in the ParserUtil class +
+**Pros:** This will allow flexibility in implementing, or calling the necessary constructors in the respective person
+  field classes +
+**Cons:** There will be a need for overloading of constructors in the classes for the person fields +
+**Alternative 2**: By having a new class to initialise empty fields for person added, similar to the EditPersonDescriptor
+ class in the Edit command +
+**Pros:** This is the most comprehensive way to initialise fields without the need of new constructors in the classes for
+ the respective fields +
+**Cons:** The code will be unnecessarily lengthy and may cause features to break +
+// end::add[]
+
+// tag::parentmode[]
+=== Parent Mode
+When Bluebird is launched, the boolean variable `isParentEnabled` in `AddressBookParser` is set to `false`
+by default. This means that Parent Mode will be off by default and the number of commands
+available will be limited. The `ParentModeCommand` will enable all commands for the parent to use by setting
+`isParentEnabled` to `true`.
+
+The code snippet below shows how `AddressBookParser` prevents certain commands such as `DeleteCommand` from
+executing when `isParentEnabled` is `false`. A `ParseException` will be thrown which will display
+"Unknown Command" to the user. If `isParentEnabled` is `true` the `DeleteCommand` will be accepted and
+executed accordingly.
+
+[source, java]
+----
+public class AddressBookParser {
+    ...
+    public AddressBookParser() {
+        ...
+        this.isParentEnabled = false;
+    }
+    ...
+    public Command parseCommand(String userInput) throws ParseException {
+    ...
+        case DeleteCommand.COMMAND_WORD:
+            if (!isParentEnabled) {
+                throw new ParseException(MESSAGE_UNKNOWN_CHILD_COMMAND);
+            }
+            ...
+            if (isPersonEnabled && !isTaskEnabled) {
+                return new DeleteCommandParser().parse(checkedArguments);
+            } else {
+                return new DeleteTaskCommandParser().parse(checkedArguments);
+            }
+    ...
+    }
+
+}
+----
+
+==== Design Considerations
+
+**Aspect**: Which commands will be unavailable for the child to use +
+**Alternative 1 (current choice)**: All commands that modifies Bluebird's contact list or task list will be unavailable +
+**Pros**: This provides maximum safety for the parents +
+**Cons**: If the child adds contacts or tasks wrongly, he has to add a new command and will not be able to
+delete or edit the previous one +
+**Alternative 2**: Only prevent commands that deletes Bluebird's contact list or task list +
+**Pros**: This allows child to edit the contacts or tasks if they were to add wrongly +
+**Cons**: There is a possibility that the child may edit important contacts or tasks.
+// end::parentmode[]
+
+// tag::birthdayfield[]
+=== Birthday Field
+The Birthday field is an additional attribute to the person class for contacts in Bluebird. Since the addition of
+feature 4.11 Enhanced Add, not all fields are compulsory, except for the name field. Therefore the birthday field can be
+added individually in addition to the name field when adding a new contact. Alternatively, an existing person's contact
+card in Bluebird can be edited to add the birth date. There are 2 valid formats for adding birth dates to the birthday
+field, which are `DD/MM/YYYY` or `DD/MM/YY`, where only digits are permitted. Months in the form of alphabets are not
+permitted.
+
+==== Design Considerations
+
+**Aspect**: Format of birth date input +
+**Alternative 1 (current choice)**: Input all commands only the format of `DD/MM/YYYY` and `DD/MM/YY`. +
+**Pros**: This provides standardization of date format where the day comes before the month. +
+**Cons**: Not yet able to accommodate date input in short formed words, such as Nov or Dec. +
+**Alternative 2**: Allows command format to be in alphabets as well in addition to formats in alternative 1. +
+**Pros**: More user friendly as user can enter months in short formed words as well. +
+**Cons**: Tougher to implement as will have to account every permutation of dates entered.
+
+The implementation of the method is credited to Hyma Tiyyagura.
+// end::birthdayfield[]
+
+// tag::showbirthdays[]
+=== Show Birthdays
+The `showbirthdays` command scans through the list of person contacts in Bluebird and displays the person(s) whose
+birthdays fall on the same date as the current day with respect to the user. The `showbirthdays` command is made possible
+with the `CheckBirthdays` class. The CheckBirthdays class determines if a contact's birthday falls on the current day
+by checking if the day and month of the contact's birthday is equal to the current day and month date.
+
+==== Design Considerations
+
+**Aspect**: Whether `showbirthdays` should show birthdays for the day today, or for the week or month.
+**Alternative 1 (current choice)**: `showbirthdays` command only shows for today's birthdays.
+**Pros**: Shows the most relevant and soonest dates.
+**Cons**: User might want to know the upcoming birthdays as well.
+**Alternative 2**: `showbirthdays` command allows the user to set the time duration of birthdays he would like to view.
+**Pros**: Shows the upcoming birthdays so that user can pre-empt.
+**Cons**: Might vary by days, weeks, month, and will be much tougher to implement.
+
+The implementation of the method is credited to Hyma Tiyyagura.
+// end::showbirthdays[]
+
+// tag::documentation[]
 == Documentation
 
 We use asciidoc for writing documentation.
@@ -721,17 +1214,35 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
-
-|`* * *` |user |add a new person |
-
-|`* * *` |user |delete a person |remove entries that I no longer need
-
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
-
-|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
-
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use Bluebird
+|`* * *` |parent |add a new contact | manage contacts for my child and I
+|`* * *` |parent |add a new task | manage my child's schedule
+|`* * *` |parent |limit the commands that my child can use| prevent my child from deleting any important contacts or tasks
+|`* * *` |parent |pin important contacts| ensure my child have easy access to them
+|`* * *` |forgetful user |tag important person |find them easily based on tags
+|`* * *` |user |list out all persons in address book |select which person I want
+|`* * *` |user |delete a contact |remove contacts that I no longer need
+|`* * *` |user |delete a task |remove entries that I no longer need
+|`* * *` |user |find a person and task by name |find the contact or tasks that I want easily
+|`* * *` |user with many persons in the address book |view list of people with a certain tag |identify different groups of contacts.
+|`* * *` |user with many persons in the address book |sort persons by any field |locate a person easily
+|`* * *` |experienced user |input commands using a shortened form |be more efficient when using the application
+|`* * *` |travelling user |save and load my contacts from file |use the app on all my devices
+|`* * *` |user |save the date of birth of my contacts |know when the birthdays of my contacts are
+|`* * *` |heavy user |delete multiple contacts at once |do it at one go and not multiple times
+|`* * *` |heavy user |find persons by any fields |find the person if I forget the name.
+|`* * *` |conservative user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+|`* *` |concerned user |clear all my contacts |not have contacts save in the application if I decide to quit using it
+|`* *` |social user |connect to social media platforms |find contacts in case I forget who they are
+|`* *` |analytical user |view a history of commands I have entered |see what I have done when using the application
+|`* *` |clumsy user |undo any action that modifies the address book |not have to repeat commands if it was a mistake
+|`* *` |efficient user |redo a command |so that I can use the application quicker without retyping the command after undoing
+|`* *` |user |add new tags to a person |update the tags a person will have
+|`* *` |forgetful user |make notes for a person |remember important details about the person
+|`* *` |user |want to change the window size and font size |view the application with comfort and size
+|`* *` |hasty user |customise shortcuts for each command |use the the application at my own pace and comfort
+|`* *` |colorblind user |have a colorblind mode for the application |use the application without difficulty
+|`*` |user |shift the UI around |use the application with the UI to my liking
 |=======================================================================
 
 {More to be added}
@@ -739,7 +1250,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is the `BlueBird` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
 === Use case: Delete person
@@ -747,9 +1258,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 *MSS*
 
 1.  User requests to list persons
-2.  AddressBook shows a list of persons
+2.  Bluebird shows a list of persons
 3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+4.  Bluebird deletes the person
 +
 Use case ends.
 
@@ -763,9 +1274,294 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. Bluebird shows an error message.
 +
 Use case resumes at step 2.
+
+[discrete]
+=== Use case: Select person
+
+*Precondition: Person in question should be saved with 'add' in Bluebird*
+
+*Guarantees: Person in question will be displayed with all fields visible*
+
+*MSS*
+
+1.  User requests to 'find' a specific person by name
+2.  Bluebird shows a list of persons with name entered
+3.  User selects the index of specific person
+4.  Bluebird shows full contact details of person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. The given index is invalid
++
+[none]
+** 3a1. Bluebird shows an error message
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: History
+
+*Guarantees: Displays list of commands entered by user*
+
+*MSS*
+
+1.  User requests to see command history
+2.  Bluebird lists the commands entered in reverse order
+3.  User views previous commands
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty
++
+Use case ends.
+
+[discrete]
+=== Use case: Help window
+
+*Guarantees: Displays instructions for command entered by user*
+
+*MSS*
+
+1.  User enters 'help' command
+2.  Bluebird displays the User Guide on a new window
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. No command was previously entered
++
+Use case ends.
+
+* 3a. User chooses to copy help example text
++
+[none]
+** 3a1. User switches back to main window and pastes the command
++
+Use case ends.
+
+[discrete]
+=== Use case: Find person
+
+*MSS*
+
+1.  User requests to find one or more person(s) in Bluebird
+2.  Bluebird shows a list of persons with the name(s) specified by user
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. Bluebird found 0 person with the name
++
+Use case ends.
+
+[discrete]
+=== Use case: Add person
+
+*MSS*
+
+1.  User input command to add person
+2.  Bluebird adds the person and displays message for successfully adding a person along with the person's details
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. User input command wrongly
++
+[none]
+** 1a1. Bluebird shows an invalid format message and displays the right format to user
++
+Use case resumes at step 1.
+
+* 1b. User tries to add a person already present in Bluebird
++
+[none]
+** 1b1. Bluebird shows duplicate person error message
++
+Use case resumes at step 1.
+
+[discrete]
+=== Use case: List person(s) with specific tag
+
+*MSS*
+
+1.  User requests for a list of person(s) with a specified tag
+2.  Bluebird shows a list of person(s) with the tag specified by user
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. Bluebird found 0 person with specified tag
++
+Use case ends.
+
+[discrete]
+=== Use case: Hide Selected Contact(s)
+
+*MSS*
+
+1.  User requests to hide a contact with the command: hide
+2.  Bluebird displays message for successfully hiding contact(s) from view
+3.  User requests to display list of hidden contact(s) with command: hiddenList
+4.  Bluebird shows the list of hidden contact(s)
++
+Use Case ends.
+
+*Extensions*
+
+[none]
+* 1a. User can hide 1 contact with the command: hide name1
++
+Use case ends.
+
+[none]
+* 1b. User can hide multiple contacts with the command: hide >1
++
+[none]
+** 1b1. User can proceed to enter command: hide name1 name2
++
+Use case ends.
+
+[none]
+* 1c. User can hide contacts under a certain tag: hide exampleTagName
++
+Use case ends.
+
+[none]
+* 1d. User can undo hiding, similar to extension steps 1a, 1b, 1c, with command: unhide
++
+Use case ends.
+
+[discrete]
+=== Use case: Sort Contacts by Tag
+
+*Precondition: Some contacts in user's Bluebird memory has to already have tags under their contact details.*
+
+*MSS*
+
+1.  User requests to sort contacts by command: sort exampleOfTag1 exampleOfTag2
+2.  Bluebird displays contacts that have the respective tag(s) under contact details as initially edited by user
++
+Use case ends.
+
+[discrete]
+=== Use case: Delete Multiple Contacts at Once
+
+*MSS*
+
+1.  User requests to delete multiple contacts with command: delete >1
+2.  Bluebird prompts user to enter multiple names to delete: delete name1 name2 .. etc
+3.  User inputs command to delete multiple contacts
+4.  Bluebird displays message for successfully removing contact(s) from memory
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. If there is no such contact or if user inputs the spelling of the name incorrectly
++
+[none]
+** 2a1. Bluebird will check which name is non-existent (due to incorrect spelling or actually non-existent)
++
+[none]
+** 2a2. Bluebird will prompt user to check accuracy of that particular contact name and re-enter if necessary
++
+[none]
+** 2a3. If not, enter null
++
+Use case ends.
+
+[discrete]
+=== Use case: Redo/Undo previous command
+
+*MSS*
+
+1. User starts Bluebird
+2. User request to deletes the wrong person from List
+3. Bluebird removes person
+4. User request to undo his action
+5. Bluebird reverses the delete command
+6. User decides to delete person again, redo action
+7. Bluebird reapplies delete command
++
+Use case ends
+
+*Extensions*
+
+[none]
+* 2a. User requests person that is not inside the Bluebird
++
+[none]
+** 2a1. Bluebird displays error message
++
+Use case resumes at step 1.
+
+[discrete]
+=== Use case: Editing a person's details
+
+*MSS*
+
+1. User requests to add a person into Bluebird
+2. Bluebird adds new person into List
+3. User requests to edit a person
+4. User provides index of person to be edited to Bluebird
+5. Bluebird returns person's details for user to edit
+6. Bluebird stores new details under person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. User input command wrongly
++
+[none]
+** 1a1. Bluebird shows an error message
++
+Use case resumes at step 1.
+* 1b. User added a person already present in Bluebird
++
+[none]
+** 1b1. Bluebird shows duplicate person error message
++
+Use case resumes at step 1.
+
+* 4a. User provided index that is larger than size of last updated list
++
+[none]
+** 4a1. Bluebird shows undoable command error message
++
+Use case resumes at step 4.
+
+[discrete]
+=== Use case: Load contacts from saved file.
+
+*MSS*
+
+1. User has a file of contacts from Bluebird
+2. User opens Bluebird on a different device
+3. User loads file of contacts onto new device
+4. Bluebird updates list
+5. User has a List of persons from previous Bluebird
++
+Use case ends.
 
 {More to be added}
 
@@ -774,7 +1570,14 @@ Use case resumes at step 2.
 
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  A user with above average typing speed (80 words per minute) for regular English text (i.e. not code, not system admin commands) should be
+   able to accomplish most of the tasks faster using commands than using the mouse to click and select the command they want.
+.  System should be able to respond in 0.5s.
+.  The software should work without requiring an installer.
+.  The data should be stored locally and should be in a human-editable text file. Use of relational or No-SQL databases
+   is not allowed.
+.  Should have a minimum of font size 12 in all window sizes for visibility.
+.  Project code should follow link:#oop[OOP].
 
 {More to be added}
 
@@ -793,6 +1596,114 @@ Private contact detail
 
 ....
 A contact detail that is not meant to be shared with others
+....
+
+[[oop]]
+OOP
+
+....
+Object-oriented programming (OOP) is a programming language model organized around objects rather than "actions" and
+data rather than logic
+....
+
+[[ide]]
+IDE
+
+....
+An integrated development environment (IDE) is a software application that provides comprehensive facilities to computer
+programmers for software development
+....
+
+[[api]]
+API
+
+....
+An Application Programming Interface (API) specifies the interface through which other programs can interact with a
+software component
+....
+
+[[ci]]
+CI
+
+....
+Continuous Integration (CI) is an extreme application of build automation in which integration, building, and testing
+happens automatically after each code change
+....
+
+[[jdk]]
+JDK
+
+....
+The Java Development Kit (JDK) is a software development environment used for developing Java applications and applets
+....
+
+[[index]]
+Index
+
+....
+The specific numbering position of each contact (eg. 1 = 1st, 2 = 2nd , 3 = 3rd etc)
+....
+
+[[help-window]]
+Help window
+
+....
+A web-based window displaying the user-guide within the application
+....
+
+[[pr]]
+PR
+
+....
+Pull Request(PR) is an online submission of committed changes on GitHub
+....
+
+[[xml]]
+XML
+
+....
+XML is a metalanguage which allows users to define their own customized markup languages,especially in order to display
+documents on the Internet
+....
+
+[[jar]]
+JAR
+
+....
+A JAR (Java ARchive) is a package file format typically used to aggregate many Java class files and associated metadata
+and resources (text, images, etc.) into one file for distribution
+....
+
+[[ui]]
+UI
+
+....
+User Interface(UI) is the window displayed to the user when interacting with the application
+....
+
+[[gui]]
+GUI
+
+....
+The graphical user interface (GUI) is a type of user interface that allows users to interact with electronic devices
+through graphical icons and visual indicators such as secondary notation, instead of text-based user interfaces, typed
+command labels or text navigation
+....
+
+[[mss]]
+MSS
+
+....
+The Main Success Scenario (MSS) describes the most straightforward interaction for a given use case, which assumes that
+nothing goes wrong
+....
+
+[[asciidoc]]
+asciidoc
+
+....
+asciidoc is a markup language, which is a system for annotating a document in a way that is syntactically
+distinguishable from the text
 ....
 
 [appendix]

@@ -3,6 +3,7 @@ package guitests;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import guitests.guihandles.HelpWindowHandle;
@@ -14,10 +15,22 @@ public class HelpWindowTest extends AddressBookGuiTest {
             + "that this is a bug with TestFX library that we are using. If this test fails, you have to run your "
             + "tests on headless mode. See UsingGradle.adoc on how to do so.";
 
+    @Before
+    public void executeParentMode() {
+        runCommand("parent");
+    }
+
     @Test
     public void openHelpWindow() {
         //use accelerator
         getCommandBox().click();
+        getMainMenu().openHelpWindowUsingAccelerator();
+        assertHelpWindowOpen();
+
+        getSortMenu().click();
+        assertHelpWindowNotOpen();
+
+        getSearchField().click();
         getMainMenu().openHelpWindowUsingAccelerator();
         assertHelpWindowOpen();
 
@@ -26,11 +39,6 @@ public class HelpWindowTest extends AddressBookGuiTest {
         assertHelpWindowOpen();
 
         getPersonListPanel().click();
-        getMainMenu().openHelpWindowUsingAccelerator();
-        assertHelpWindowOpen();
-
-        getBrowserPanel().click();
-        getMainMenu().openHelpWindowUsingAccelerator();
         assertHelpWindowNotOpen();
 
         //use menu button

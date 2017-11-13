@@ -1,0 +1,123 @@
+= Test Script for Bluebird
+:toc:
+:toc-title:
+:toc-placement: preamble
+:sectnums:
+:imagesDir: images
+:stylesDir: stylesheets
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+endif::[]
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+
+By: `Team T15-B4`
+
+== Setting up Bluebird
+
+.  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
++
+[NOTE]
+Having any Java 8 version is not enough. +
+This app will not work with earlier versions of Java 8.
++
+.  Download from IVLE all files submitted by our team
+(i.e. jar file, user guide, developer guide, sample data, test script, project portfolio pages)into an empty folder.
+. The name of the files are as follows:
+.. Jar file: [T15-B4][Bluebird].jar
+.. User guide: [T15-B4][Bluebird]UserGuide.pdf
+.. Developer guide: [T15-B4][Bluebird]DeveloperGuide.pdf
+.. Portfolio: [T15-B4][NAME]Portfolio.pdf
+.. Sample Data: [T15-B4][Bluebird]SampleData.xml
+.. Test Script: [T15-B4][Bluebird]TestScript.adoc
+
+== Loading up SampleData.xml
+
+. There is no need to load the SampleData.xml as Bluebird already has a preset sample data when you first launch it.
+. If there are any errors loading up Bluebird without the SampleData.xml, simply create a new folder called
+"data" in the folder Bluebird.jar is in, rename the SampleData.xml to "addressbook.xml" and place it in the "data" folder.
+
+== Launching Bluebird for the first time
+
+If there were no "addressbook.xml" detected when you launch Bluebird, a quick start tutorial will be launched as shown in
+the user guide section 2. This tutorial will guide you on Bluebird's UI and Parent Mode(IMPORTANT).
+
+== Important step to enable all commands
+
+By default, when Bluebird is launched it is set to limit the number of commands available.
+In order to enable all the commands, please type "parent" into the command box and press enter.
+
+== Test Cases
+[width="100%",cols="30%,70%",options="header"]
+|===
+|Input|Expected Output
+|add n/test user|New person added: test user Phone:   Email:   Address:   Birthday:   Remark:  Tags:
+|add p/96670667 |Oh no! The format you typed is not correct. Scroll down for the correct format. +
+                 add: Adds a person to the address book. +
+                 n/NAME is a compulsory field  +
+                 Parameters: n/NAME [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [t/TAG]... +
+                 Example: add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 b/22/08/1993 t/friends t/owesMoney  +
+|edit 21 p/96670667 |Chirp! Unknown command!
+                      Want to add a new contact or task? use "add" +
+                     Want to see your contact's full details? use "select" +
+                     Want to view list of contact or tasks? use "list" or "listpin" +
+                     Want to find your contact or tasks? use "find" +
+                     Want to find pinned contact? use "findpinned" +
+                     Want to add remark to your contact? use "remark" +
+                     Made a mistake adding contact or tasks? use "undo" +
+                     Want to view list of tasks? use "task" +
+                     Want to view list of contact? use "person" +
+|parent |All commands are enabled!
+|edit 21 p/96670667 |Oh no! This index provided seems to be invalid. +
+|pin 21|Oh no! This index provided seems to be invalid. +
+|list|Listed all persons +
+|delete 10|Deleted Person:
+           Zachary Quek Phone: 9123417 Email: zacq@example.com Address: Blk 45 Clementi Ave 6, #01-31 Birthday: 01/12/1980 Remark:  Tags: [colleagues]
+|undo|Undo success
+|sort name|List has been sorted by name. (list sorted alphabetically)
+|sort phone|List has been sorted by phone.
+|exit|
+|Run bluebird.jar again|(test user should still be pinned, and bluebird will be in child mode)
+|parent|All commands are enabled!
+|delete 8~10|Deleted Person: +
+             Irfan Ibrahim Phone: 92492021 Email: irfan@example.com Address: Blk 47 Tampines Street 20, #17-35 Birthday: 22/10/1985 Remark:  Tags: [classmates] +
+             Roy Balakrishnan Phone: 92624417 Email: royb@example.com Address: Blk 45 Aljunied Street 85, #11-31 Birthday: 15/12/1991 Remark:  Tags: [colleagues] +
+             Charlotte Oliveiro Phone: 93210283 Email: charlotte@example.com Address: Blk 11 Ang Mo Kio Street 74, #11-04 Birthday: 02/02/1902 Remark:  Tags: [neighbours] +
+|delete 8 9 10|Oh no! This index provided seems to be invalid. (Index 9 and 10 is invalid)
+|edit 1 b/17/11/1995|Edited Person: test user Phone:   Email:   Address:   Birthday: 17/11/1995 Remark:  Tags:  +
+|showbirthdays|Chirp! Here are the birthdays for today. +
+|list|Listed all persons +
+|hide 1|Hidden Person: test user Phone:   Email:   Address:   Birthday: 17/11/1995 Remark:  Tags: +
+|listhidden|Listed all hidden persons +
+|unhide 1|Unhidden Person: test user Phone:   Email:   Address:   Birthday: 17/11/1995 Remark:  Tags: +
+|list|Listed all persons +
+|task|Showing all tasks and only task commands are enabled +
+|mark 1|Marked Task(s): +
+        Pick up a new book +
+|unmark 1|Unmarked Task(s):  +
+          Pick up a new book +
+|add get testing done by tonight|New task added: get testing done +
+|delete 1~4|Deleted Task(s):  +
+            Pick up a new book +
+
+            Learn basic Thai +
+
+            Update collation of codes +
+
+            Go grocery shopping +
+|person|Showing all persons and only person commands are enabled +
+|find test|1 persons listed! +
+|select 1|Selected Person: 1 +
+|list|Listed all persons +
+|alias k/del s/delete|New alias added:  keyword: del representation: delete +
+|del 2|Deleted Person:
+       Jamie Oliveoil Phone: 80992010 Email: jamieo@example.com Address: Blk 83 Holly Street 85, #02-13 Birthday: 01/10/2010 Remark:  Tags: [niece] +
+|undo|Undo success! +
+|redo|Redo success! +
+|unalias k/del|Alias removed:  keyword: del representation: delete +
+|pin 1|Pinned Person: test user Phone:   Email:   Address:   Birthday: 17/11/1995 Remark:  Tags:  +
+|listpin|Listed all pinned person +
+|unpin 1|Unpinned Person: test user Phone:   Email:   Address:   Birthday: 17/11/1995 Remark:  Tags:  +
+|list|Listed all persons +
+
+|===

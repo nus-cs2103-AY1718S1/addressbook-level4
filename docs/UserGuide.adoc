@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= Bluebird - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,11 +10,62 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-T15-B4/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team T15-B4`      Since: `Jun 2016`      Licence: `MIT`
+
+== Introduction
+
+=== Welcome to Bluebird!
+
+Bluebird is a desktop based organisational tool for the working parent on the go. Bluebird is suitable for a variety of
+day-to-day management tasks, including managing appointments for both yourself and your child, and also organising the
+contact information from your Address Book.
+
+Bluebird has many capabilities to suit the different needs of the working parent. It assists in keeping the agendas of
+your working life in order, and simultaneously manages the responsibilities in your personal life.
+
+One of Bluebird's strength's is its ability to accomodate both the working parent and also provide a source of contact
+storing and schedule management that is child-friendly but at the same time child-proof. The team at Bluebird put this
+into action with the Parent Mode and Child Mode Protocol. With Bluebird, parents no longer have to worry about losing
+valuable scheduling information while allowing their child to learn and explore technology.
+
+=== Authors
+
+BlueBird is created by the BlueBird Team of 4 members, namely Deepak Buddha, Alpheus Lim, Azizi Azfar and Wyn K Heng.
+
+=== The Bluebird Help System
+
+Before we get started, the Bluebird Team has provided you with the information necessary to understand how you can
+quickly begin getting things into order with Bluebird through the detailed User Guide. We have also provided the
+Developer's Guide, should you be interested to find out more about how the team at Bluebird made this product possible
+from the backend view of a developer. However, if you are already in the application and in need of help,
+you may easily receive guidance on-the-go by typing `help` into the command field, or by simply pressing the `F1` key.
+Finally, to get a personalised user cheat-sheet, we have compressed the commands into the the command summary in
+Section 5 below. Read on to begin your journey with Bluebird.
+
+=== Features and Capabilities
+
+As mentioned, Bluebird was made to accommodate both the working parent and also provide a source of contact storing and
+management that is child-friendly but at the same time child-proof. This is put into action with the Parent Mode
+Protocol and the Child Mode Protocol. The following list is a short overview of some of the features and capabilities
+Bluebird offers you:
+
+* Seamless contact information management including adding, removing, sorting and locating person(s), etc.
+
+* Ease of updating your Address Book with undo and multiple delete functions
+
+* User friendly interface that is also easy on the eyes with our signature Bluebird icon to guide the user
+
+* Advanced parent safety controls with the 'Parent Mode' Protocol which disables certain commands that might be hazard
+prone in the hands of the child
+
+* Command history log that allows you to track what you have done should you need to refer or undo certain actions
+
+* Load/Save feature that allows for smooth integration of your existing contact books
 
 == Quick Start
+In this section on quick start, we'll help you with the setup of Bluebird on your device with the following simple steps.
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
 +
@@ -22,231 +73,507 @@ By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
+.  Download the latest `Bluebird.jar` link:{repoURL}/releases[here].
+.  Copy the file to the folder you want to use as the home folder for Bluebird.
+// tag::tutorial[]
+.  Double-click the file to start Bluebird. Once started, a quick start tutorial as shown in Figure 2.1 below will pop out to guide you on
+   how to use BlueBird.
 +
-image::Ui.png[width="790"]
+image::TutorialStart.PNG[width="790"]
+Figure 2.1: Quick start tutorial for Bluebird
+// end::tutorial[]
+
+. The different components of Bluebird is shown in Figure 2.2 below.
 +
+image::introUiUG.png[width="790"]
+Figure 2.2: UI components of Bluebird
++
+. The different sections of the UI are as follows:
+.. Command Box - This is where you type your commands
+.. Result Display - The outcome of your commands will display here
+.. Person & Task list - Your list of contacts and tasks will be shown here
+.. Sort menu - You can use this menu to sort the list
+.. Search Box - You can search for your contacts and tasks here
+
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
 * *`list`* : lists all contacts
 * **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
-.  Refer to the link:#features[Features] section below for details of each command.
+.  Refer to the link:#features[Features] section below for details of all commands.
+
+== Get to know Bluebird
+
+In this section, we have provided a screenshot of what your screen would look like, and a quick guide to help you
+navigate our user interface with ease.
 
 == Features
+
+By default, when Bluebird is launched, it will be set to Child Mode. This means that only certain commands
+will be available. This ensures that your important contacts/tasks will not be modified by your child by accident.
+To enable all commands, just type `parent` into the command box and execute it. +
 
 ====
 *Command Format*
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
+* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which
+can be used as `add n/John Doe`.
+* Prefixes in commands follow the first letter of each parameter to be supplied  e.g. `a/ADDRESS`, `e/EMAIL`, `b/BIRTHDAY`.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
-* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]` `...` can be used as `{nbsp}`
+(i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also
+acceptable.
 ====
 
-=== Viewing help : `help`
+=== Basic Commands
 
-Format: `help`
+// tag::add[]
+==== Adds a person: `add`
 
-=== Adding a person: `add`
-
-Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
-
-[TIP]
-A person can have any number of tags (including 0)
+Adds a person's contact information to Bluebird's address book based on the fields declared by the user. +
+Format: `add n/NAME` `[p/PHONE_NUMBER]` `[e/EMAIL]` `[a/ADDRESS]` `[t/TAG]` `...`
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add` `n/John Doe` `p/98765432` `e/johnd@example.com` `a/John street, block 123, #01-01`
+* `add` `n/Johnny Dow`
+* `add` `n/Carl Green` `p/91234765`
+* `add` `n/Betsy Crowe` `t/friend` `e/betsycrowe@example.com` `a/Newgate Prison` `p/1234567` `t/criminal`
 
-=== Listing all persons : `list`
+****
+* A person can have any number of tags (including 0). +
+* Only `n/NAME` field has to be added, the rest are optional. +
+* Fields can be updated in the future using the `EDIT` command. +
+****
+// end::add[]
 
-Shows a list of all persons in the address book. +
+// tag::list[]
+==== Lists all persons : `list`
+
+Shows a list of all persons' contact information currently stored in Bluebird's address book. +
 Format: `list`
+// end::list[]
 
-=== Editing a person : `edit`
+// tag::listpin[]
+==== Lists all pinned person: `listpin`
 
-Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Want to view your list of pinned contacts? Use the `listpin` command! +
+Format: `listpin`
+// end::listpin[]
 
-****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
-****
+// tag::sort[]
+==== Sort the list of contacts : `sort`
+
+Want to sort your contact list based on name, phone, email or address?
+Use the `sort` command! +
+Format: `sort` `KEYWORD`
 
 Examples:
 
-* `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
-
-=== Locating persons by name: `find`
-
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+* `sort` `name` +
+Sorts the list in alphabetical order of their name.
+* `sort` `phone` +
+Sorts the list in numerical order of their phone.
 
 ****
-* The search is case insensitive. e.g `hans` will match `Hans`
+* Sorts the list based on their name, phone, email, or address.
+* The keyword is case-insensitive.
+****
+// end::sort[]
+
+// tag::find[]
+==== Search for contact: `find` / `findpinned`
+
+Trying to find one of your contacts? You can do so easily with the `find` or `findpinned` command! +
+`find` search through all your contacts whereas `findpinned` will search through pinned contacts only.
+
+Format: `find` `KEYWORD` `[MORE_KEYWORDS]` `...`
+
+Examples:
+
+* `find` `John` +
+Returns `john` and `John Doe`.
+* `findpinned` `Roy` +
+Returns pinned contact `Roy`
+* `find` `Betsy` `Tim` `John` +
+Returns any person having names `Betsy`, `Tim`, or `John`.
+* `find` `friend` +
+Returns any person having the tag `friend`.
+* `find` `98291` +
+Returns any person whose phone starts with `98291`
+
+****
+* The search is case insensitive. e.g `hans` will match `Hans`.
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* The person's name, phone, email, address and tags will be searched.
+* Partial starting words for name, phone, email and tags will be matched e.g. `Ha` will match `Hans`, `an` will NOT
+  match `Hans`
+* Address will be matched if the address contains any of the keywords. `eyla` will match `Geylang`
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`,
+`Bo Yang`.
 ****
+// end::find[]
 
-Examples:
+// tag::select[]
+==== Select a person : `select`
 
-* `find John` +
-Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
-
-=== Deleting a person : `delete`
-
-Deletes the specified person from the address book. +
-Format: `delete INDEX`
-
-****
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-****
+Selects the person identified by the index number used in the last person listing. +
+Format: `select` `INDEX`
 
 Examples:
 
 * `list` +
-`delete 2` +
-Deletes the 2nd person in the address book.
-* `find Betsy` +
-`delete 1` +
-Deletes the 1st person in the results of the `find` command.
+`select` `2` +
+Selects the 2nd person in Bluebird's address book.
 
-=== Selecting a person : `select`
-
-Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
+* `find` `Betsy` +
+`select` `1` +
+Selects the 1st person in the results of the `find` command.
 
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
+* Selects the person and expands person's contact card at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
+// end::select[]
 
-Examples:
+// tag::history[]
+==== View previously entered commands : `history`
 
-* `list` +
-`select 2` +
-Selects the 2nd person in the address book.
-* `find Betsy` +
-`select 1` +
-Selects the 1st person in the results of the `find` command.
-
-=== Listing entered commands : `history`
-
-Lists all the commands that you have entered in reverse chronological order. +
+Lists all the commands that the user has entered in reverse chronological order, helping you view your past command log. +
 Format: `history`
 
 [NOTE]
 ====
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
+// end::history[]
 
 // tag::undoredo[]
-=== Undoing previous command : `undo`
+==== Undo previous command : `undo`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
+Restores the address book to the state before the previous _undoable_ command was executed in case the user wants to revert
+when a contact was unintentionally modified in Bluebird. +
 Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify Bluebird's address book content (`add`, `delete`, `edit` and `clear`).
 ====
 
 Examples:
 
-* `delete 1` +
-`list` +
-`undo` (reverses the `delete 1` command) +
-
-* `select 1` +
+* `delete` `1` +
 `list` +
 `undo` +
-The `undo` command fails as there are no undoable commands executed previously.
+The `undo` command here reverses the `delete` `1` command.
 
-* `delete 1` +
+* `select` `1` +
+`list` +
+`undo` +
+The `undo` command here fails as there are no undoable commands executed previously.
+
+* `delete` `1` +
 `clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
+`undo` (reverts the `clear` command) +
+`undo` (reverts the `delete` `1` command) +
 
-=== Redoing the previously undone command : `redo`
+==== Redo the previously undone command : `redo`
 
-Reverses the most recent `undo` command. +
+Reverses the most recent `undo` command, in case you realise it was done well the first time round! +
 Format: `redo`
 
 Examples:
 
-* `delete 1` +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
+* `delete` `1` +
+`undo` (reverses the `delete` `1` command) +
+`redo` (reapplies the `delete` `1` command) +
 
-* `delete 1` +
+* `delete` `1` +
 `redo` +
 The `redo` command fails as there are no `undo` commands executed previously.
 
-* `delete 1` +
+* `delete` `1` +
 `clear` +
 `undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
+`undo` (reverses the `delete` `1` command) +
+`redo` (reapplies the `delete` `1` command) +
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
-=== Clearing all entries : `clear`
+==== Exit the Bluebird program : `exit`
 
-Clears all entries from the address book. +
-Format: `clear`
-
-=== Exiting the program : `exit`
-
-Exits the program. +
+Exits the Bluebird application, we'll see you soon! +
 Format: `exit`
 
-=== Saving the data
+// tag::parentmode[]
+==== Set Bluebird to parent mode : `parent`
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
-There is no need to save manually.
+Sets Bluebird to parent mode which will enable all commands for you. +
+Format: `parent`
+
+****
+* Want to set a different keyword for parent mode? Check out the alias command!
+****
+//end::parentmode[]
+
+=== Parent Mode Commands
+
+==== Viewing help : `help`
+
+A help window will appear on your application, pulling up this very user guide. +
+Format: `help`
+
+// tag::edit[]
+==== Edit a person: `edit`
+
+Edits an existing person's contact information in Bluebird's address book. +
+Format: `edit` `INDEX` `[n/NAME]` `[p/PHONE]` `[e/EMAIL]` `[a/ADDRESS]` `[t/TAG]...`
+
+Examples:
+
+* `edit` `1` `p/91234567` `e/johndoe@example.com` +
+Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+* `edit` `2` `n/Betsy Crower` `t/` +
+Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+* `add` `n/Michael Leblum` +
+`edit` `1` `p/90189056` `t/friend` +
+Adds a phone number `90189056` and tag `friend` to previously empty fields for person `Michael Leblum`.
+
+****
+* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing.
+  The index *must be a positive integer* 1, 2, 3, ...
+* At least one of the optional fields must be provided.
+* Existing values will be updated to the input values.
+* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
+* You can remove all the person's tags by typing `t/` without specifying any tags after it.
+****
+// end::edit[]
+
+// tag::hide[]
+==== Hide a person: `hide`
+
+Hide specified person's contact information according to index from Bluebird's address book. +
+Format: `hide` `INDEX`
+
+Example:
+
+* `hide` `2` +
+Hides the 2nd person in Bluebird's address book.
+* `list` +
+This will show the updated list to reflect remaining persons.
+* `hide` `2` +
+Hides the 2nd person in the updated list in Bluebird's address book.
+
+****
+* Hides the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+// end::hide[]
+
+// tag::unhide[]
+==== Undo hide action: `unhide`
+
+Unhide specific person according to index on the list of hidden contacts in Bluebird. +
+Format: `unhide` `INDEX`
+
+Examples:
+
+* `listhidden` +
+Shows a list of contacts the user has already hidden in Bluebird's address book.
+* `unhide` `2` +
+Reverses `hide` action, unhides 2nd person from the list of hidden contacts in Bluebird's ddress book.
+* `listhidden` +
+Shows the updated list of hidden contacts.
+
+****
+* User can see who has been hidden with the command `listhidden`.
+* User can then undo the hidden command with the command `unhide` from the list of hidden contacts.
+****
+// end::unhide[]
+
+// tag::alias[]
+==== Creates an alias for command or shortcut : `alias`
+
+Creates an alias based on given keyword and representation. +
+Format: `alias` `k/KEYWORD` `s/REPRESENTATION`
+
+Examples:
+
+* `alias` `k/disappear` `s/hide` +
+Creates an alias command 'disappear' that is understood as the 'hide' command word.
+* `alias` `k/ph` `s/Public Holiday` +
+Creates an alias shortcut that translates ph into Public Holiday every time it is entered by user.
+
+****
+* Adds an alias with the keyword as a substitute for the respective representation.
+* The keyword is case-insensitive.
+* This allows the user to create personalised commands for the existing default Bluebird commands for a more user-friendly
+experience.
+****
+// end::alias[]
+
+// tag::unalias[]
+==== Removes an alias for command or shortcut : `unalias`
+
+Removes an existing alias based on given keyword and representation that the user has previously assigned. +
+Format: `unalias` `k/KEYWORD`
+
+Examples:
+
+* `unalias` `k/disappear` +
+Removes the alias command 'disappear'. Next instances of disappear will no longer be a hide command.
+* `unalias` `k/ph` +
+Removes the alias shortcut 'ph'. Next instances of ph will no longer translate to Public Holiday.
+
+****
+* Removes an existing alias that has been made with the same keyword.
+* The keyword is case-insensitive.
+****
+// end::unalias[]
+
+// tag::pinunpin[]
+==== Pin a person : `pin`
+
+Have an important contact that you need for easy access? Use the `pin` command! +
+Format: `pin` `INDEX`
+
+Examples:
+
+* `pin` `1` +
+Pins the person at index 1.
+
+****
+* Pins the person at the specified `INDEX`.
+* A star icon will appear next to the pinned person's contact information.
+* The pinned person(s) will also appear on the pinned persons panel that the user can toggle between.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+
+****
+
+==== Unpin a person: `unpin`
+
+Pinned the wrong contact? Use the `unpin` command! +
+Format: `unpin` `INDEX`
+
+Examples
+
+* `unpin` `1` +
+Unpins the person at index 1.
+
+****
+* Unpins the person at the specified `INDEX`.
+* The star icon next to the person's contact information will disappear.
+* The unpinned person(s) will also disappear from the pinned persons panel.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+// end::pinunpin[]
+
+// tag::delete[]
+==== Delete person(s) : `delete`
+
+Deletes the specified person(s) from Bluebird's address book. +
+Format: `delete` `EXAMPLEINDEX1` `EXAMPLEINDEX2` `INDEX RANGE`
+
+Examples:
+
+* `delete` `2` `3` `4~7` +
+Deletes the 2nd, 3rd and the 4th to 7th (*both inclusive*) person in Bluebird's address book.
+
+* `find` `Betsy` +
+`delete` `1` +
+Deletes the 1st person in the results of the `find` command.
+
+* `list` +
+`delete` `2~5` +
+Deletes 2nd to 5th person (*both inclusive*) in Bluebird's address book.
+
+****
+* Deletes the person at the specified `INDEX` or the specified `INDEX RANGE`.
+* The index refers to the index number shown in the most recent listing.
+* Acceptable inputs:
+** The input *can be a single positive integer* 1, 2, 3, ...
+** The input *can be multiple positive integers with a space in between* 1 2 3 ...
+** The input *can be a range of positive integers, denoted by a "~" in between the minimum and maximum index (both inclusive)* 1~4, 2~7, ...
+****
+// end::delete[]
+
+==== Clear all entries : `clear`
+
+Clears all entries from Bluebird's address book. +
+Format: `clear`
+
+==== Save data
+
+All data in Bluebird's address book is automatically saved in the hard disk, after any data modifying command. +
+There is no need for you to save manually. Yay!
+
+== Command Summary
+
+* *Add* : `add` `n/NAME` `[p/PHONE_NUMBER]` `[e/EMAIL]` `[a/ADDRESS]` `[t/TAG]` `...` +
+e.g. `add` `n/James Ho` `p/22224444` `e/jamesho@example.com` `a/123, Clementi Rd, 1234665` `t/friend` `t/colleague`
+* *Clear* : `clear`
+* *Delete* : `delete` `INDEX` +
+e.g. `delete` `3`
+* *Multi-Delete* : `delete` `INDEX` `[2nd INDEX]` `[INDEX RANGE]` `...` +
+e.g. `delete` `4` `7`
+* *Edit* : `edit` `INDEX` `[n/NAME]` `[p/PHONE_NUMBER]` `[e/EMAIL]` `[a/ADDRESS]` `[t/TAG]` `...` +
+e.g. `edit` `2` `n/James Lee` `e/jameslee@example.com`
+* *Find* : `find` `KEYWORD` `[MORE_KEYWORDS]` +
+e.g. `find` `James` `Jake`
+* *List* : `list`
+* *Help* : `help`
+* *Select* : `select` `INDEX` +
+e.g.`select` `2`
+* *History* : `history`
+* *Sort* : `sort` `KEYWORD` +
+e.g. `sort` `NAME`
+* *Undo* : `undo`
+* *Redo* : `redo`
+* *Hide* : `hide` `INDEX` +
+e.g.`hide` `1`
+* *Alias* : `alias` `k/KEYWORD` `s/REPRESENTATION` +
+e.g. `alias` `k/del` `s/delete`
+* *Unalias* : `unalias` `k/KEYWORD` +
+e.g. `unalias` `k/del`
+* *Pin* : `pin` `INDEX` +
+e.g. `pin` `2`
+* *Unpin* : `unpin` `INDEX` +
+e.g. `pin` `2`
+* *List Pinned* : `listpin` +
+* *Parent Mode* : `parent`
+
+== Since v1.2
+
+. Enhanced find to allow you to search using any of the person's detail
+. Hide feature to enable you to hide sensitive contacts from your child
+. Multi-delete feature which helps you to delete multiple contacts effortlessly
+. Alias and Unalias feature which allows you to set custom keywords for any commands
+
+== Since v1.3
+
+. Pin/Unpin person
+. Add individual fields without restriction to add entire line
+. Each person now has a Birthday field
+. Task feature has been added
+. Introduced basic User Interface
+
+== Coming in v2.0
+
+. Birthday reminders of selected/all contacts
+. Integration with social media for connecting with your contacts
+. Calender to help you manage your schedule
 
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the
+data of your previous Address Book folder.
 
-== Command Summary
-
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX` +
-e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *List* : `list`
-* *Help* : `help`
-* *Select* : `select INDEX` +
-e.g.`select 2`
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`

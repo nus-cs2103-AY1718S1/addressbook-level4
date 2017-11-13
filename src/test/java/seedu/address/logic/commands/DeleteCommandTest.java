@@ -7,7 +7,11 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Test;
 
@@ -15,6 +19,7 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.commands.person.DeleteCommand;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -27,18 +32,40 @@ public class DeleteCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
+    //@@author aziziazfar
     @Test
     public void execute_validIndexUnfilteredList_success() throws Exception {
-        ReadOnlyPerson personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_PERSON);
+        ReadOnlyPerson person1 = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        ReadOnlyPerson person2 = model.getFilteredPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
+        ReadOnlyPerson person3 = model.getFilteredPersonList().get(INDEX_THIRD_PERSON.getZeroBased());
 
-        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, personToDelete);
+        List<ReadOnlyPerson> personsToDelete = new ArrayList<>();
+        personsToDelete.add(person1);
+        personsToDelete.add(person2);
+        personsToDelete.add(person3);
+
+        List<Index> indicesToDelete = new ArrayList<>();
+        indicesToDelete.add(INDEX_FIRST_PERSON);
+        indicesToDelete.add(INDEX_SECOND_PERSON);
+        indicesToDelete.add(INDEX_THIRD_PERSON);
+        DeleteCommand deleteCommand = prepareCommandMulti(indicesToDelete);
+
+        StringBuilder builder = new StringBuilder();
+        for (ReadOnlyPerson toAppend: personsToDelete) {
+            builder.append("\n" + toAppend.toString());
+        }
+
+        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, builder);
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.deletePerson(personToDelete);
 
+        for (int i = 0; i < indicesToDelete.size(); i++) {
+            ReadOnlyPerson personToDelete = model.getFilteredPersonList().get((indicesToDelete.size() - i - 1));
+            expectedModel.deletePerson(personToDelete);
+        }
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
     }
+    //@@author
 
     @Test
     public void execute_invalidIndexUnfilteredList_throwsCommandException() throws Exception {
@@ -54,8 +81,8 @@ public class DeleteCommandTest {
 
         ReadOnlyPerson personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_PERSON);
-
-        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, personToDelete);
+        String message = "\n" + personToDelete.toString();
+        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, message);
 
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.deletePerson(personToDelete);
@@ -108,6 +135,16 @@ public class DeleteCommandTest {
         return deleteCommand;
     }
 
+    //@@author aziziazfar
+    /**
+     * Returns a {@code DeleteCommand} with the parameter {@code index}.
+     */
+    private DeleteCommand prepareCommandMulti(List<Index> indices) {
+        DeleteCommand deleteCommand = new DeleteCommand(indices);
+        deleteCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return deleteCommand;
+    }
+    //@@author
     /**
      * Updates {@code model}'s filtered list to show no one.
      */

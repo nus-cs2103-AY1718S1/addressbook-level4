@@ -1,0 +1,196 @@
+= Alpheus Lim - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: Bluebird
+Bluebird is a desktop based organisational tool for the working parent on the go. Bluebird is suitable
+for a variety of day-to-day management tasks, including managing appointments for both yourself and your
+child, and also organising the contact information from your Address Book. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 15 kLoC. +
+
+This project portfolio serves to provide an insight into how Alpheus Lim Wei Xiang has contributed to project Bluebird. Included
+in this portfolio are the enhancements, features, tests and proposed enhancements that Alpheus Lim Wei Xiang has contribued to the project.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T15-B4/main/blob/master/collated/main/Alim95.md[Functional code]] [https://github.com/CS2103AUG2017-T15-B4/main/blob/master/collated/test/Alim95.md[Test code]]
+
+=== Enhancement Added: Sort
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=sort]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Users will want to view the list of contacts sorted for them based on their name, phone, email or address.
+Some users find the contact they want by scrolling through the list as opposed to typing and this will aid them.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=sort]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: First time tutorial
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=tutorial]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Currently when new users launch Bluebird for the first time, they will be lost as to what Bluebird has to offer and also what different UI panels mean.
+Therefore, there is a need to provide first time users of Bluebird a step-by-step tutorial on how Bluebird works.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=tutorial]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Enhanced Find
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=find]
+
+#End of Extract#
+
+---
+
+==== Justification
+The old find feature is only capable of finding the target `Person` using his/her name. Furthermore,
+users have to type out the full name in order to be able to find the `Person`.
+Users may want to search for the contact not just by their names, but also by their phone number, email
+, address and tags as well. This enhancement gives users the choice to decide how they would want
+to search for the contact they want.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=find]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Pin/Unpin contact
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=pinunpin]
+include::../UserGuide.adoc[tag=listpin]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Users may have some important contacts that they need to have quick access to at all times. Hence,
+this feature will solve the problem for them.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=pinunpin]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Parent Mode Command
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=parentmode]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Parents may be worried that their child will delete or alter any of their important contacts/tasks. Therefore, there
+is a need to limit the number of available commands that the child is able to use.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=parentmode]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Pin/Unpin Task
+Users may have trouble keeping track of important tasks that they have to do. This feature allows them to pin imortant tasks for
+easy access.
+
+=== Enhancement Proposed: Cloud Storage
+Bluebird will prompt user to select if they would like to upload and save their data to a cloud storage
+every time they exit the application. This ensures that users need not worry about losing important
+contacts/tasks should anything happen to their computer.
+
+
+=== Other contributions
+
+Acceptance Testing for other applications
+
+* Found a bug for switch theme (Issue https://github.com/CS2103AUG2017-T09-B3/main/issues/194[#194])
+
+Contribution to Project Bluebird
+
+* Updated the UI of Bluebird
+(Pull requests https://github.com/CS2103AUG2017-T15-B4/main/pull/14[#14], https://github.com/CS2103AUG2017-T15-B4/main/pull/58[#58],
+https://github.com/CS2103AUG2017-T15-B4/main/pull/73[#73], https://github.com/CS2103AUG2017-T15-B4/main/pull/118[#118],
+https://github.com/CS2103AUG2017-T15-B4/main/pull/144[#144], https://github.com/CS2103AUG2017-T15-B4/main/pull/165[#165],
+https://github.com/CS2103AUG2017-T15-B4/main/pull/205[#205], https://github.com/CS2103AUG2017-T15-B4/main/pull/208[#208],
+https://github.com/CS2103AUG2017-T15-B4/main/pull/245[#245], https://github.com/CS2103AUG2017-T15-B4/main/pull/257[#257],
+https://github.com/CS2103AUG2017-T15-B4/main/pull/267[#267])
+* Updated a help overlay for Bluebird (Pull requests https://github.com/CS2103AUG2017-T15-B4/main/pull/189[#189], https://github.com/CS2103AUG2017-T15-B4/main/pull/208[#208],
+https://github.com/CS2103AUG2017-T15-B4/main/pull/262[#262], https://github.com/CS2103AUG2017-T15-B4/main/pull/267[#267])
+* Added Bluebird result image feedback when inputting commands (Pull requests https://github.com/CS2103AUG2017-T15-B4/main/pull/143[#142],
+https://github.com/CS2103AUG2017-T15-B4/main/pull/245[#245])
+* Added toggling of Ui between Person, Task, Alias, Pinned, and All lists (Pull requests https://github.com/CS2103AUG2017-T15-B4/main/pull/205[#205],
+https://github.com/CS2103AUG2017-T15-B4/main/pull/208[#208], https://github.com/CS2103AUG2017-T15-B4/main/pull/216[#216],
+https://github.com/CS2103AUG2017-T15-B4/main/pull/257[#257])
+* Proposed Parent Child Mode for Bluebird

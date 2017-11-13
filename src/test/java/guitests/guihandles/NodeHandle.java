@@ -28,7 +28,7 @@ public abstract class NodeHandle<T extends Node> {
      * Retrieves the {@code query} node owned by the {@code rootNode}.
      *
      * @param query name of the CSS selector for the node to retrieve.
-     * @throws NodeNotFoundException if no such node exists.
+     * throws NodeNotFoundException if no such node exists.
      */
     protected <Q extends Node> Q getChildNode(String query) {
         Optional<Q> node = guiRobot.from(rootNode).lookup(query).tryQuery();

@@ -8,7 +8,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.InvalidResultDisplayEvent;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
+import seedu.address.commons.events.ui.ValidResultDisplayEvent;
 import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
@@ -105,6 +107,7 @@ public class CommandBox extends UiPart<Region> {
             initHistory();
             historySnapshot.next();
             // process result of the command
+            raise(new ValidResultDisplayEvent(commandTextField.getText().split(" ")[0]));
             commandTextField.setText("");
             logger.info("Result: " + commandResult.feedbackToUser);
             raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
@@ -115,6 +118,7 @@ public class CommandBox extends UiPart<Region> {
             setStyleToIndicateCommandFailure();
             logger.info("Invalid command: " + commandTextField.getText());
             raise(new NewResultAvailableEvent(e.getMessage()));
+            raise(new InvalidResultDisplayEvent());
         }
     }
 
@@ -148,4 +152,12 @@ public class CommandBox extends UiPart<Region> {
         styleClass.add(ERROR_STYLE_CLASS);
     }
 
+    //@@author Alim95
+    public void highlight() {
+        this.commandTextField.setStyle("-fx-border-color: lightgreen; -fx-border-width: 2");
+    }
+
+    public void unhighlight() {
+        this.commandTextField.setStyle("-fx-border-color: #383838 #383838 #ffffff #383838; -fx-border-width: 1");
+    }
 }

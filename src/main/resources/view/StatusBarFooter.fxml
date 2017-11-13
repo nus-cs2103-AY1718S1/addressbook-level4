@@ -1,14 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import org.controlsfx.control.StatusBar?>
+<!-- @@author deep4k -->
+
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import org.controlsfx.control.StatusBar?>
 
-<GridPane styleClass="grid-pane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-  <columnConstraints>
-    <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="100" />
-    <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="100" />
-  </columnConstraints>
-  <StatusBar styleClass="anchor-pane" fx:id="syncStatus" />
-  <StatusBar styleClass="anchor-pane" fx:id="saveLocationStatus" GridPane.columnIndex="1" nodeOrientation="RIGHT_TO_LEFT" />
+<GridPane styleClass="grid-pane" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+    <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="80.0" />
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="80.0" />
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="140.0" />
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+      <ColumnConstraints />
+    </columnConstraints>
+    <StatusBar fx:id="syncStatus" styleClass="anchor-pane" />
+    <StatusBar fx:id="saveLocationStatus" nodeOrientation="LEFT_TO_RIGHT" styleClass="anchor-pane" GridPane.columnIndex="1" />
+    <StatusBar fx:id="numberStatus" nodeOrientation="LEFT_TO_RIGHT" styleClass="anchor-pane" GridPane.columnIndex="2" />
+    <StatusBar fx:id="timeStatus" nodeOrientation="RIGHT_TO_LEFT" styleClass="anchor-pane" text="" GridPane.columnIndex="3" />
+   <rowConstraints>
+      <RowConstraints />
+   </rowConstraints>
 </GridPane>

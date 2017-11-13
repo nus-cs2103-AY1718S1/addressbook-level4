@@ -11,7 +11,7 @@ import guitests.guihandles.CommandBoxHandle;
 import javafx.scene.input.KeyCode;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
-import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.person.ListCommand;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 
@@ -24,13 +24,14 @@ public class CommandBoxTest extends GuiUnitTest {
     private ArrayList<String> errorStyleOfCommandBox;
 
     private CommandBoxHandle commandBoxHandle;
+    private CommandBox commandBox;
 
     @Before
     public void setUp() {
         Model model = new ModelManager();
         Logic logic = new LogicManager(model);
 
-        CommandBox commandBox = new CommandBox(logic);
+        commandBox = new CommandBox(logic);
         commandBoxHandle = new CommandBoxHandle(getChildNode(commandBox.getRoot(),
                 CommandBoxHandle.COMMAND_INPUT_FIELD_ID));
         uiPartRule.setUiPart(commandBox);
@@ -125,10 +126,24 @@ public class CommandBoxTest extends GuiUnitTest {
         assertInputHistory(KeyCode.UP, thirdCommand);
     }
 
+    //@@author Alim95
+    @Test
+    public void commandBoxHighlight() {
+        commandBox.highlight();
+        assertEquals(commandBoxHandle.getStyle(), "-fx-border-color: lightgreen; -fx-border-width: 2");
+    }
+
+    @Test
+    public void handleUnhighlight() {
+        commandBox.unhighlight();
+        assertEquals(commandBoxHandle.getStyle(),
+                "-fx-border-color: #383838 #383838 #ffffff #383838; -fx-border-width: 1");
+    }
+    //@@author
     /**
      * Runs a command that fails, then verifies that <br>
-     *      - the text remains <br>
-     *      - the command box's style is the same as {@code errorStyleOfCommandBox}.
+     * - the text remains <br>
+     * - the command box's style is the same as {@code errorStyleOfCommandBox}.
      */
     private void assertBehaviorForFailedCommand() {
         commandBoxHandle.run(COMMAND_THAT_FAILS);
@@ -138,8 +153,8 @@ public class CommandBoxTest extends GuiUnitTest {
 
     /**
      * Runs a command that succeeds, then verifies that <br>
-     *      - the text is cleared <br>
-     *      - the command box's style is the same as {@code defaultStyleOfCommandBox}.
+     * - the text is cleared <br>
+     * - the command box's style is the same as {@code defaultStyleOfCommandBox}.
      */
     private void assertBehaviorForSuccessfulCommand() {
         commandBoxHandle.run(COMMAND_THAT_SUCCEEDS);

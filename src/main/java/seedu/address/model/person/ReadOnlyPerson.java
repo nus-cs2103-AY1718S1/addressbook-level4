@@ -13,15 +13,45 @@ import seedu.address.model.tag.UniqueTagList;
 public interface ReadOnlyPerson {
 
     ObjectProperty<Name> nameProperty();
+
     Name getName();
+
     ObjectProperty<Phone> phoneProperty();
+
     Phone getPhone();
+
     ObjectProperty<Email> emailProperty();
+
     Email getEmail();
+
     ObjectProperty<Address> addressProperty();
+
     Address getAddress();
+
+    ObjectProperty<Birthday> birthdayProperty();
+
+    Birthday getBirthday();
+
+    ObjectProperty<Remark> remarkProperty();
+
+    Remark getRemark();
+
     ObjectProperty<UniqueTagList> tagProperty();
+
     Set<Tag> getTags();
+
+    boolean isPrivate();
+
+    //@@author Alim95
+    ObjectProperty<Boolean> pinProperty();
+
+    boolean isPinned();
+
+    //@@author
+
+    ObjectProperty<Boolean> selectProperty();
+
+    boolean isSelected();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
@@ -32,7 +62,8 @@ public interface ReadOnlyPerson {
                 && other.getName().equals(this.getName()) // state checks here onwards
                 && other.getPhone().equals(this.getPhone())
                 && other.getEmail().equals(this.getEmail())
-                && other.getAddress().equals(this.getAddress()));
+                && other.getAddress().equals(this.getAddress())
+                && other.getBirthday().equals(this.getBirthday()));
     }
 
     /**
@@ -40,13 +71,17 @@ public interface ReadOnlyPerson {
      */
     default String getAsText() {
         final StringBuilder builder = new StringBuilder();
-        builder.append(getName())
-                .append(" Phone: ")
+        builder.append(getName());
+        builder.append(" Phone: ")
                 .append(getPhone())
                 .append(" Email: ")
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
+                .append(" Birthday: ")
+                .append(getBirthday())
+                .append(" Remark: ")
+                .append(getRemark())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();
