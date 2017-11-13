@@ -1,5 +1,15 @@
 # derickjw
-###### /java/seedu/address/commons/events/ui/NewResultAvailableEvent.java
+###### \java\seedu\address\commons\core\Messages.java
+``` java
+    public static final String[] AUTOCOMPLETE_SUGGESTIONS = {"createDefaultAcc", "removeLogin", "changepw",
+                                                             "changeuser", "convenientStation",
+                                                             "visualize", "arrange", "list", "locateMrt", "edit", "find",
+                                                             "findByAddress", "findByPhone", "findByEmail",
+                                                             "findByTags", "delete", "locate", "select", "history",
+                                                             "sort", "undo", "clear", "exit", "schedule", };
+}
+```
+###### \java\seedu\address\commons\events\ui\NewResultAvailableEvent.java
 ``` java
     public final boolean isInvalid;
 
@@ -8,7 +18,7 @@
         this.isInvalid = isInvalid;
     }
 ```
-###### /java/seedu/address/logic/commands/ChangePasswordCommand.java
+###### \java\seedu\address\logic\commands\ChangePasswordCommand.java
 ``` java
 /**
  * Changes a user's password
@@ -17,7 +27,7 @@ public class ChangePasswordCommand extends Command {
     public static final String COMMAND_WORD = "changepw";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Changes user's password.\n"
-            + "format:" + " " + COMMAND_WORD + " " + "username" + " " + "old password" + " " + "new password";
+            + "Example:" + " " + COMMAND_WORD + " " + "username" + " " + "old password" + " " + "new password";
 
     public static final String MESSAGE_CHANGE_SUCCESS = "Password changed successfully!";
     public static final String MESSAGE_WRONG_CREDENTIALS = "Invalid Credentials!";
@@ -42,7 +52,7 @@ public class ChangePasswordCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/ChangeUsernameCommand.java
+###### \java\seedu\address\logic\commands\ChangeUsernameCommand.java
 ``` java
 /**
  * Changes a user's username
@@ -51,7 +61,7 @@ public class ChangeUsernameCommand extends Command {
     public static final String COMMAND_WORD = "changeuser";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Changes a user's username.\n"
-        + "format:" + " " + COMMAND_WORD + " " + "old username" + " " + "new username" + " " + "password";
+        + "Example:" + " " + COMMAND_WORD + " " + "old username" + " " + "new username" + " " + "password";
 
     public static final String MESSAGE_CHANGE_SUCCESS = "Username changed successfully!";
     public static final String MESSAGE_WRONG_CREDENTIALS = "Invalid Credentials!";
@@ -76,7 +86,7 @@ public class ChangeUsernameCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/CreateDefaultAccountCommand.java
+###### \java\seedu\address\logic\commands\CreateDefaultAccountCommand.java
 ``` java
 /**
  * Creates a account with username "admin" and password "admin"
@@ -85,7 +95,7 @@ public class CreateDefaultAccountCommand extends Command {
     public static final String COMMAND_WORD = "createDefaultAcc";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Create a default account where username and "
-            + "password is admin.\n" + "format:" + " " + COMMAND_WORD;
+            + "password is admin.\n" + "Example:" + " " + COMMAND_WORD;
 
     public static final String MESSAGE_CREATE_SUCCESS = "Default account created successfully!";
     public static final String MESSAGE_ACCOUNT_EXISTS = "Account already exists!";
@@ -102,7 +112,7 @@ public class CreateDefaultAccountCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/RemoveAccountCommand.java
+###### \java\seedu\address\logic\commands\RemoveAccountCommand.java
 ``` java
 /**
  * Remove the need to log in
@@ -141,17 +151,17 @@ public class RemoveAccountCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/LogicManager.java
+###### \java\seedu\address\logic\LogicManager.java
 ``` java
     private boolean isLoggedInUsername = false;
     private boolean isLoggedInPassword = false;
 ```
-###### /java/seedu/address/logic/LogicManager.java
+###### \java\seedu\address\logic\LogicManager.java
 ``` java
         isCorrectPassword("");
         isCorrectUsername("");
 ```
-###### /java/seedu/address/logic/LogicManager.java
+###### \java\seedu\address\logic\LogicManager.java
 ``` java
         if (!isLoggedInUsername) {
             if (isCorrectUsername(commandText)) {
@@ -172,7 +182,7 @@ public class RemoveAccountCommand extends Command {
                 return result;
             }
 ```
-###### /java/seedu/address/logic/LogicManager.java
+###### \java\seedu\address\logic\LogicManager.java
 ``` java
     /**
      *
@@ -221,7 +231,7 @@ public class RemoveAccountCommand extends Command {
     }
 
 ```
-###### /java/seedu/address/logic/parser/RemoveAccountCommandParser.java
+###### \java\seedu\address\logic\parser\RemoveAccountCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new ChangePasswordCommand object
@@ -251,32 +261,32 @@ public class RemoveAccountCommandParser implements Parser<RemoveAccountCommand> 
     }
 }
 ```
-###### /java/seedu/address/model/Model.java
+###### \java\seedu\address\model\Model.java
 ``` java
     /** Returns the User Preferences */
     UserPrefs getUserPrefs();
 ```
-###### /java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\model\ModelManager.java
 ``` java
     private final UserPrefs userPrefs;
 ```
-###### /java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\model\ModelManager.java
 ``` java
         this.userPrefs = userPrefs;
 ```
-###### /java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\model\ModelManager.java
 ``` java
     @Override
     public UserPrefs getUserPrefs() {
         return userPrefs;
     }
 ```
-###### /java/seedu/address/model/UserPrefs.java
+###### \java\seedu\address\model\UserPrefs.java
 ``` java
     private String password = "";
     private String username = "";
 ```
-###### /java/seedu/address/model/UserPrefs.java
+###### \java\seedu\address\model\UserPrefs.java
 ``` java
     /**
      *
@@ -351,21 +361,89 @@ public class RemoveAccountCommandParser implements Parser<RemoveAccountCommand> 
     }
 }
 ```
-###### /java/seedu/address/ui/CommandBox.java
+###### \java\seedu\address\ui\CommandBox.java
+``` java
+        TextFields.bindAutoCompletion(commandTextField, Messages.AUTOCOMPLETE_SUGGESTIONS);
+```
+###### \java\seedu\address\ui\CommandBox.java
 ``` java
             raise(new NewResultAvailableEvent(commandResult.feedbackToUser, false));
 ```
-###### /java/seedu/address/ui/CommandBox.java
+###### \java\seedu\address\ui\CommandBox.java
 ``` java
             raise(new NewResultAvailableEvent(e.getMessage(), true));
 ```
-###### /java/seedu/address/ui/PersonCard.java
+###### \java\seedu\address\ui\MapPanel.java
+``` java
+
+/**
+ * The Map Panel of the App.
+ */
+public class MapPanel extends UiPart<Region> {
+
+    public static final String DEFAULT_PAGE = "default.html";
+    public static final String FACEBOOK_SEARCH_URL_PREFIX = "https://www.facebook.com/search/people/?q=";
+    public static final String GOOGLE_MAP_URL_PREFIX = "https://www.google.com.sg/maps/search/";
+    public static final String GOOGLE_MRT_URL_SUFFIX = "+MRT";
+
+    private static final String FXML = "BrowserPanel.fxml";
+
+    private final Logger logger = LogsCenter.getLogger(this.getClass());
+
+    @FXML
+    private WebView browser;
+
+    public MapPanel() {
+        super(FXML);
+
+        // To prevent triggering events for typing inside the loaded Web page.
+        getRoot().setOnKeyPressed(Event::consume);
+
+        loadDefaultPage();
+        registerAsAnEventHandler(this);
+    }
+
+    private void loadPersonPage(ReadOnlyPerson person) {
+        loadPage(FACEBOOK_SEARCH_URL_PREFIX + person.getName().fullName.replaceAll(" ", "+"));
+    }
+
+```
+###### \java\seedu\address\ui\MapPanel.java
+``` java
+
+    public void loadPage(String url) {
+        Platform.runLater(() -> browser.getEngine().load(url));
+    }
+
+    /**
+     * Loads a default HTML file with a background that matches the general theme.
+     */
+    private void loadDefaultPage() {
+        URL defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
+        loadPage(defaultPage.toExternalForm());
+    }
+
+    /**
+     * Frees resources allocated to the browser.
+     */
+    public void freeResources() {
+        browser = null;
+    }
+
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadPersonPage(event.getNewSelection().person);
+    }
+
+```
+###### \java\seedu\address\ui\PersonCard.java
 ``` java
     private static String[] colors = {"red", "blue", "orange", "green", "black", "grey" };
     private static HashMap<String, String> tagColors = new HashMap<String, String>();
     private static Random random = new Random();
 ```
-###### /java/seedu/address/ui/PersonCard.java
+###### \java\seedu\address\ui\PersonCard.java
 ``` java
     private static String getColorForTag(String tagValue) {
         if (!tagColors.containsKey(tagValue)) {
@@ -374,7 +452,7 @@ public class RemoveAccountCommandParser implements Parser<RemoveAccountCommand> 
         return tagColors.get(tagValue);
     }
 ```
-###### /java/seedu/address/ui/PersonCard.java
+###### \java\seedu\address\ui\PersonCard.java
 ``` java
     private void initTags(ReadOnlyPerson person) {
         person.getTags().forEach(tag -> {
@@ -384,11 +462,11 @@ public class RemoveAccountCommandParser implements Parser<RemoveAccountCommand> 
         });
     }
 ```
-###### /java/seedu/address/ui/ResultDisplay.java
+###### \java\seedu\address\ui\ResultDisplay.java
 ``` java
     public static final String ERROR_STYLE_CLASS = "error";
 ```
-###### /java/seedu/address/ui/ResultDisplay.java
+###### \java\seedu\address\ui\ResultDisplay.java
 ``` java
         if (event.isInvalid) {
             setStyleToIndicateCommandFailure();
@@ -414,7 +492,7 @@ public class RemoveAccountCommandParser implements Parser<RemoveAccountCommand> 
 }
 
 ```
-###### /resources/view/BlueTheme.css
+###### \resources\view\BlueTheme.css
 ``` css
 */
 
@@ -769,7 +847,7 @@ public class RemoveAccountCommandParser implements Parser<RemoveAccountCommand> 
     -fx-font-size: 11;
 }
 ```
-###### /resources/view/LoginWindow.fxml
+###### \resources\view\LoginWindow.fxml
 ``` fxml
 <?xml version="1.0" encoding="UTF-8"?>
 
@@ -809,4 +887,74 @@ public class RemoveAccountCommandParser implements Parser<RemoveAccountCommand> 
       </Button>
    </children>
 </AnchorPane>
+```
+###### \resources\view\PersonDetails.fxml
+``` fxml
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox style="-fx-background-color: white;" styleClass="card" stylesheets="@BlueTheme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <GridPane prefHeight="581.0" prefWidth="994.0" VBox.vgrow="ALWAYS">
+            <columnConstraints>
+                <ColumnConstraints halignment="LEFT" minWidth="10.0" prefWidth="100.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="165.0" valignment="CENTER" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="74.0" valignment="CENTER" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="139.0" valignment="CENTER" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+                <GridPane alignment="CENTER" prefHeight="430.0" prefWidth="740.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                    <columnConstraints>
+                        <ColumnConstraints halignment="CENTER" maxWidth="1.7976931348623157E308" minWidth="10.0" />
+                  <ColumnConstraints halignment="CENTER" maxWidth="232.0" minWidth="0.0" prefWidth="0.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints maxHeight="1.7976931348623157E308" valignment="CENTER" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="1.7976931348623157E308" valignment="CENTER" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="1.7976931348623157E308" valignment="CENTER" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="1.7976931348623157E308" valignment="CENTER" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0" valignment="CENTER" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                    <children>
+                        <Label fx:id="phone" alignment="CENTER" prefHeight="83.0" prefWidth="994.0" style="-fx-font-size: 30;" text="Phone" textAlignment="JUSTIFY" GridPane.rowIndex="1">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="address" alignment="CENTER" prefHeight="45.0" prefWidth="947.0" style="-fx-font-size: 30;" text="Address" GridPane.rowIndex="2">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                  <Label fx:id="mrt" alignment="CENTER" prefHeight="45.0" prefWidth="995.0" style="-fx-font-size: 30;" text="MRT" textAlignment="JUSTIFY" GridPane.rowIndex="3">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                        <Label fx:id="email" alignment="CENTER" prefHeight="45.0" prefWidth="917.0" style="-fx-font-size: 30;" text="Email" textAlignment="JUSTIFY" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </GridPane>
+                  <Label fx:id="name" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="165.0" prefWidth="290.0" style="-fx-font-size: 60;" text="Name" textAlignment="JUSTIFY">
+                      <font>
+                          <Font size="53.0" />
+                      </font>
+                  </Label>
+            <Label prefHeight="233.0" prefWidth="290.0" style="-fx-font-size: 60;" />
+            </children>
+        </GridPane>
+    </children>
+</VBox>
 ```

@@ -1,5 +1,5 @@
 # YuchenHe98
-###### /java/seedu/address/logic/commands/AddScheduleCommandTest.java
+###### \java\seedu\address\logic\commands\AddScheduleCommandTest.java
 ``` java
 public class AddScheduleCommandTest {
 
@@ -40,7 +40,7 @@ public class AddScheduleCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/ArrangeCommandTest.java
+###### \java\seedu\address\logic\commands\ArrangeCommandTest.java
 ``` java
 /**
  * Arrange a meeting test. As all the tests for date and time classes are added independently, this test only includes
@@ -72,7 +72,7 @@ public class ArrangeCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/FindByAddressCommandTest.java
+###### \java\seedu\address\logic\commands\FindByAddressCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) for {@code FindCommand}.
@@ -148,7 +148,7 @@ public class FindByAddressCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/LocateCommandTest.java
+###### \java\seedu\address\logic\commands\LocateCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for {@code DeleteCommand}.
@@ -211,7 +211,7 @@ public class LocateCommandTest {
 }
 
 ```
-###### /java/seedu/address/logic/commands/VisualizeCommandTest.java
+###### \java\seedu\address\logic\commands\VisualizeCommandTest.java
 ``` java
 /**
  * test for visualizing a person's schedule
@@ -242,7 +242,7 @@ public class VisualizeCommandTest {
 }
 
 ```
-###### /java/seedu/address/logic/parser/AddScheduleCommandParserTest.java
+###### \java\seedu\address\logic\parser\AddScheduleCommandParserTest.java
 ``` java
 public class AddScheduleCommandParserTest {
     private AddScheduleCommandParser parser = new AddScheduleCommandParser();
@@ -275,7 +275,7 @@ public class AddScheduleCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/ArrangeCommandParserTest.java
+###### \java\seedu\address\logic\parser\ArrangeCommandParserTest.java
 ``` java
 public class ArrangeCommandParserTest {
     private ArrangeCommandParser parser = new ArrangeCommandParser();
@@ -303,7 +303,7 @@ public class ArrangeCommandParserTest {
 }
 
 ```
-###### /java/seedu/address/logic/parser/ClearScheduleCommandParserTest.java
+###### \java\seedu\address\logic\parser\ClearScheduleCommandParserTest.java
 ``` java
 public class ClearScheduleCommandParserTest {
     private ClearScheduleCommandParser parser = new ClearScheduleCommandParser();
@@ -337,7 +337,7 @@ public class ClearScheduleCommandParserTest {
 }
 
 ```
-###### /java/seedu/address/logic/parser/FindByAddressCommandParserTest.java
+###### \java\seedu\address\logic\parser\FindByAddressCommandParserTest.java
 ``` java
 public class FindByAddressCommandParserTest {
 
@@ -362,7 +362,7 @@ public class FindByAddressCommandParserTest {
 
 }
 ```
-###### /java/seedu/address/logic/parser/LocateCommandParserTest.java
+###### \java\seedu\address\logic\parser\LocateCommandParserTest.java
 ``` java
 public class LocateCommandParserTest {
 
@@ -379,7 +379,7 @@ public class LocateCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/VisualizeCommandParserTest.java
+###### \java\seedu\address\logic\parser\VisualizeCommandParserTest.java
 ``` java
 public class VisualizeCommandParserTest {
 
@@ -400,7 +400,7 @@ public class VisualizeCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/model/schedule/DayTest.java
+###### \java\seedu\address\model\schedule\DayTest.java
 ``` java
 public class DayTest {
 
@@ -426,7 +426,7 @@ public class DayTest {
     }
 }
 ```
-###### /java/seedu/address/model/schedule/ScheduleTest.java
+###### \java\seedu\address\model\schedule\ScheduleTest.java
 ``` java
 public class ScheduleTest {
 
@@ -449,7 +449,7 @@ public class ScheduleTest {
     }
 }
 ```
-###### /java/seedu/address/model/schedule/SlotTest.java
+###### \java\seedu\address\model\schedule\SlotTest.java
 ``` java
 public class SlotTest {
 
@@ -464,7 +464,7 @@ public class SlotTest {
     }
 }
 ```
-###### /java/seedu/address/model/schedule/TimeTest.java
+###### \java\seedu\address\model\schedule\TimeTest.java
 ``` java
 public class TimeTest {
 

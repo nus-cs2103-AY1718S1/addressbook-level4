@@ -1,5 +1,5 @@
 # YuchenHe98
-###### /java/seedu/address/commons/core/PossibleDays.java
+###### \java\seedu\address\commons\core\PossibleDays.java
 ``` java
 /**
  * Possible Days.
@@ -14,7 +14,7 @@ public class PossibleDays {
         "Thursday", "Friday", "Saturday", "Sunday" };
 }
 ```
-###### /java/seedu/address/commons/core/PossibleTimes.java
+###### \java\seedu\address\commons\core\PossibleTimes.java
 ``` java
 /**
  * Possible time integer values..
@@ -26,7 +26,7 @@ public class PossibleTimes {
     };
 }
 ```
-###### /java/seedu/address/commons/events/ui/LocateCommandEvent.java
+###### \java\seedu\address\commons\events\ui\LocateCommandEvent.java
 ``` java
 /**
  * An event requesting to view the address of the person specified on Google Map.
@@ -49,7 +49,7 @@ public class LocateCommandEvent extends BaseEvent {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/AddScheduleCommand.java
+###### \java\seedu\address\logic\commands\AddScheduleCommand.java
 ``` java
 /**
  * Add a busy time span for a person identified using it's last displayed index from the address book.
@@ -65,10 +65,10 @@ public class AddScheduleCommand extends UndoableCommand {
             + "(Should be expressed in standard 24 hours time, no more accurate than 30 minutes and no earlier "
             + "than 0600 and no later than 2330\n"
             + "Example: "
-            + COMMAND_WORD + " 1"
-            + PREFIX_DAY + "Monday"
-            + PREFIX_START_TIME + "0700"
-            + PREFIX_END_TIME + "1430";
+            + COMMAND_WORD + " 1 "
+            + PREFIX_DAY + "Monday "
+            + PREFIX_START_TIME + "0700 "
+            + PREFIX_END_TIME + "1430 ";
 
     public static final String MESSAGE_ADD_SCHEDULE_PERSON_SUCCESS = "Free time slot successfully added";
 
@@ -121,7 +121,7 @@ public class AddScheduleCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/ArrangeCommand.java
+###### \java\seedu\address\logic\commands\ArrangeCommand.java
 ``` java
 /**
  * Selects a person identified using it's last displayed index from the address book.
@@ -199,7 +199,7 @@ public class ArrangeCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/ClearScheduleCommand.java
+###### \java\seedu\address\logic\commands\ClearScheduleCommand.java
 ``` java
 /**
  * Clear a time span for a person identified using it's last displayed index from the address book.
@@ -271,7 +271,7 @@ public class ClearScheduleCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/FindByAddressCommand.java
+###### \java\seedu\address\logic\commands\FindByAddressCommand.java
 ``` java
 /**
  * Finds and lists all persons in address book whose address contains any of the argument keywords.
@@ -307,7 +307,7 @@ public class FindByAddressCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/LocateCommand.java
+###### \java\seedu\address\logic\commands\LocateCommand.java
 ``` java
 /**
  * Locate a person's address on Google Map using it's last displayed index from the address book.
@@ -353,7 +353,7 @@ public class LocateCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/VisualizeCommand.java
+###### \java\seedu\address\logic\commands\VisualizeCommand.java
 ``` java
 /**
  * Selects a person identified using it's last displayed index from the address book.
@@ -419,7 +419,7 @@ public class VisualizeCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/AddScheduleCommandParser.java
+###### \java\seedu\address\logic\parser\AddScheduleCommandParser.java
 ``` java
 /**
  *
@@ -471,7 +471,7 @@ public class AddScheduleCommandParser implements Parser<AddScheduleCommand> {
 }
 
 ```
-###### /java/seedu/address/logic/parser/ArrangeCommandParser.java
+###### \java\seedu\address\logic\parser\ArrangeCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new ChangePasswordCommand object
@@ -487,7 +487,7 @@ public class ArrangeCommandParser implements Parser<ArrangeCommand> {
 
         try {
             String[] listOfPerson = args.trim().split("\\s+");
-            // Correct Format: changepw username old_password new_password
+
             int[] listOfIndex = new int[listOfPerson.length];
             for (int i = 0; i < listOfPerson.length; i++) {
                 try {
@@ -509,7 +509,7 @@ public class ArrangeCommandParser implements Parser<ArrangeCommand> {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/ClearScheduleCommandParser.java
+###### \java\seedu\address\logic\parser\ClearScheduleCommandParser.java
 ``` java
 /**
  *
@@ -559,7 +559,7 @@ public class ClearScheduleCommandParser implements Parser<ClearScheduleCommand> 
     }
 }
 ```
-###### /java/seedu/address/logic/parser/FindByAddressCommandParser.java
+###### \java\seedu\address\logic\parser\FindByAddressCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new FindByAddressCommand object
@@ -585,7 +585,7 @@ public class FindByAddressCommandParser implements Parser<FindByAddressCommand> 
 
 }
 ```
-###### /java/seedu/address/logic/parser/LocateCommandParser.java
+###### \java\seedu\address\logic\parser\LocateCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new LocateCommand object
@@ -609,7 +609,7 @@ public class LocateCommandParser implements Parser<LocateCommand> {
 
 }
 ```
-###### /java/seedu/address/logic/parser/ParserUtil.java
+###### \java\seedu\address\logic\parser\ParserUtil.java
 ``` java
     /**
      * Parses a {@code Optional<String> Day} into an {@code Optional<Day>} if {@code day} is present.
@@ -621,7 +621,7 @@ public class LocateCommandParser implements Parser<LocateCommand> {
     }
 
 ```
-###### /java/seedu/address/logic/parser/ParserUtil.java
+###### \java\seedu\address\logic\parser\ParserUtil.java
 ``` java
     /**
      * Parses a {@code Optional<String> Time} into an {@code Optional<Time>} if {@code time} is present.
@@ -649,7 +649,7 @@ public class LocateCommandParser implements Parser<LocateCommand> {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/VisualizeCommandParser.java
+###### \java\seedu\address\logic\parser\VisualizeCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new VisualizeCommand object
@@ -672,16 +672,16 @@ public class VisualizeCommandParser implements Parser<VisualizeCommand> {
     }
 }
 ```
-###### /java/seedu/address/model/Model.java
+###### \java\seedu\address\model\Model.java
 ``` java
     void addScheduleToPerson(Integer index, TreeSet<Integer> schedule) throws PersonNotFoundException;
 
 ```
-###### /java/seedu/address/model/Model.java
+###### \java\seedu\address\model\Model.java
 ``` java
     void clearScheduleForPerson(Integer index, TreeSet<Integer> schedule) throws PersonNotFoundException;
 ```
-###### /java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\model\ModelManager.java
 ``` java
     @Override
     public void addScheduleToPerson(Integer index, TreeSet<Integer> schedule) throws PersonNotFoundException {
@@ -690,7 +690,7 @@ public class VisualizeCommandParser implements Parser<VisualizeCommand> {
     }
 
 ```
-###### /java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\model\ModelManager.java
 ``` java
     @Override
     public void clearScheduleForPerson(Integer index, TreeSet<Integer> schedule) throws PersonNotFoundException {
@@ -698,7 +698,7 @@ public class VisualizeCommandParser implements Parser<VisualizeCommand> {
         indicateAddressBookChanged();
     }
 ```
-###### /java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\model\ModelManager.java
 ``` java
     /**
      * Generate possible meeting time slots based on a list of indices.
@@ -709,7 +709,7 @@ public class VisualizeCommandParser implements Parser<VisualizeCommand> {
     }
 }
 ```
-###### /java/seedu/address/model/person/AddressContainsKeywordsPredicate.java
+###### \java\seedu\address\model\person\AddressContainsKeywordsPredicate.java
 ``` java
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Address} matches any of the keywords given.
@@ -736,7 +736,7 @@ public class AddressContainsKeywordsPredicate implements Predicate<ReadOnlyPerso
 
 }
 ```
-###### /java/seedu/address/model/person/Person.java
+###### \java\seedu\address\model\person\Person.java
 ``` java
     public Person(Name name, Phone phone, Email email, Address address, Mrt mrt, Set<Tag> tags, Schedule schedule) {
         requireAllNonNull(name, phone, email, address, tags, schedule);
@@ -750,7 +750,7 @@ public class AddressContainsKeywordsPredicate implements Predicate<ReadOnlyPerso
         this.schedule = new SimpleObjectProperty<>(schedule);
     }
 ```
-###### /java/seedu/address/model/person/Person.java
+###### \java\seedu\address\model\person\Person.java
 ``` java
     @Override
     public Schedule getSchedule() {
@@ -758,14 +758,14 @@ public class AddressContainsKeywordsPredicate implements Predicate<ReadOnlyPerso
     }
 
 ```
-###### /java/seedu/address/model/person/Person.java
+###### \java\seedu\address\model\person\Person.java
 ``` java
     public ObjectProperty<Schedule> scheduleProperty() {
         return schedule;
     }
 
 ```
-###### /java/seedu/address/model/person/Person.java
+###### \java\seedu\address\model\person\Person.java
 ``` java
     /**
      * Create an empty schedule object
@@ -776,7 +776,7 @@ public class AddressContainsKeywordsPredicate implements Predicate<ReadOnlyPerso
     }
 
 ```
-###### /java/seedu/address/model/person/Person.java
+###### \java\seedu\address\model\person\Person.java
 ``` java
     /**
      * Set the person's schedule based on a given schedule.
@@ -786,7 +786,7 @@ public class AddressContainsKeywordsPredicate implements Predicate<ReadOnlyPerso
     }
 
 ```
-###### /java/seedu/address/model/person/Person.java
+###### \java\seedu\address\model\person\Person.java
 ``` java
     /**
      * Add a time span to a person's schedule to indicate that he is free at this time.
@@ -798,7 +798,7 @@ public class AddressContainsKeywordsPredicate implements Predicate<ReadOnlyPerso
     }
 
 ```
-###### /java/seedu/address/model/person/Person.java
+###### \java\seedu\address\model\person\Person.java
 ``` java
     /**
      *Clear a time span to a person's schedule to indicate that he is busy at this time.
@@ -828,7 +828,7 @@ public class AddressContainsKeywordsPredicate implements Predicate<ReadOnlyPerso
     }
 }
 ```
-###### /java/seedu/address/model/person/UniquePersonList.java
+###### \java\seedu\address\model\person\UniquePersonList.java
 ``` java
     /**
      * Add free time slot based on the index.
@@ -838,7 +838,7 @@ public class AddressContainsKeywordsPredicate implements Predicate<ReadOnlyPerso
     }
 
 ```
-###### /java/seedu/address/model/person/UniquePersonList.java
+###### \java\seedu\address\model\person\UniquePersonList.java
 ``` java
     /**
      * Clear free time slot based on the index.
@@ -848,7 +848,7 @@ public class AddressContainsKeywordsPredicate implements Predicate<ReadOnlyPerso
     }
 }
 ```
-###### /java/seedu/address/model/schedule/Day.java
+###### \java\seedu\address\model\schedule\Day.java
 ``` java
 /**
  * The object representing a day, from Monday to Sunday in a person's schedule.
@@ -906,7 +906,7 @@ public class Day {
     }
 }
 ```
-###### /java/seedu/address/model/schedule/Schedule.java
+###### \java\seedu\address\model\schedule\Schedule.java
 ``` java
 /**
  * Represents a Person's schedule in the address book.
@@ -1033,7 +1033,7 @@ public class Schedule {
     }
 }
 ```
-###### /java/seedu/address/model/schedule/Slot.java
+###### \java\seedu\address\model\schedule\Slot.java
 ``` java
 /**
  * The object representing a slot representing a span of time when a person is busy.
@@ -1074,7 +1074,7 @@ public class Slot {
     }
 }
 ```
-###### /java/seedu/address/model/schedule/Time.java
+###### \java\seedu\address\model\schedule\Time.java
 ``` java
 /**
  * The object representing the time of the start of a 30-minute-span when a person is free.
@@ -1164,13 +1164,13 @@ public class Time {
     }
 }
 ```
-###### /java/seedu/address/ui/BrowserPanel.java
+###### \java\seedu\address\ui\MapPanel.java
 ``` java
     private void loadLocationPage(ReadOnlyPerson person) {
         loadPage(GOOGLE_MAP_URL_PREFIX + person.getAddress().value.replaceAll(" ", "+"));
     }
 ```
-###### /java/seedu/address/ui/BrowserPanel.java
+###### \java\seedu\address\ui\MapPanel.java
 ``` java
     @Subscribe
     private void handleLocateCommandEvent(LocateCommandEvent event) {
@@ -1178,7 +1178,7 @@ public class Time {
         loadLocationPage(event.getPerson());
     }
 ```
-###### /java/seedu/address/ui/ScheduleTable.java
+###### \java\seedu\address\ui\ScheduleTable.java
 ``` java
 /**
  * A ui used in ArrangeCommand and VisualizeCommand to show the schedule available.
