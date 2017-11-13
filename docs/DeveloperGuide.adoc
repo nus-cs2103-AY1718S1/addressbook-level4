@@ -963,7 +963,17 @@ _Figure 4.11.3: interaction storage_
 
 [discrete]
 
-*Disconnecting a person to an event: disjoin*
+===== Design Considerations
+
+**Aspect:** How to implement person-event interaction +
+**Alternative 1 (current choice):** Set `participationList` in Person, and `participantList` in Event. They reference each other +
+**Pros:** This is easy to implement, and fulfill what we need. +
+**Cons:** We need to maintain both lists when operating `join` and `disjoin`. +
+**Alternative 2:** Use association class +
+**Pros:** This allows us to save every participation entry. +
+**Cons:** We need to implement extra storage for association class, and it is costly in terms of time to operate `show person` and `select event`.
+
+*Disconnecting a person to an event: disjoin* +
 This command will call `ModelManager` 's quitEvent() method to disconnect the person and the event. The following code segment from `ModelManager` shows how quitEvent() works:
 [source,java]
 ----
@@ -975,8 +985,10 @@ public void disjoin(Person personToRemove, Event eventToRemove) {
 }
 ----
 `PersonList` and `EventList` will then locate the person/event-to-remove in its list, and perform deletion.
+// end::interaction[]
 
-*Connecting a person to an event: join*
+// tag::join[]
+*Connecting a person to an event: join* +
 Similar to `disjoin` command, `join` event follows the same mechanism. This command will call `ModelManager` ’s joinEvent() method to connect the person and the event, as shown in the following code segment. Subsequently, `PersonList` and `EventList` will then locate the person/event-to-add in its list, and perform addition.
 
 [source,java]
@@ -988,17 +1000,9 @@ public void join(Person personToAdd, Event eventToAdd) {
     // Save changes to the storage.
 }
 ----
+// end::join[]
 
-===== Design Considerations
 
-**Aspect:** How to implement person-event interaction +
-**Alternative 1 (current choice):** Set `participationList` in Person, and `participantList` in Event. They reference each other +
-**Pros:** This is easy to implement, and fulfill what we need. +
-**Cons:** We need to maintain both lists when operating `join` and `disjoin`. +
-**Alternative 2:** Use association class +
-**Pros:** This allows us to save every participation entry. +
-**Cons:** We need to implement extra storage for association class, and it is costly in terms of time to operate `show person` and `select event`.
-// end::interaction[]
 
 // tag::portrait[]
 === Portrait Command mechanism
