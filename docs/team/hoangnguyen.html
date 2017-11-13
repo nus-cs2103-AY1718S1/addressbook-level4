@@ -530,7 +530,7 @@ Returns:<br></p>
 </div>
 </div>
 <div class="paragraph">
-<p><em>Figure 4.1 : Sequence diagram for `AddMultipleByTsvCommand`</em></p>
+<p><em>Figure 4.1 : Sequence diagram for FindTagCommand</em></p>
 </div>
 <div class="paragraph">
 <p>The user specifies the list of tags that he or she wants to search as the arguments of the command. <code>AddressBookParser</code> parses these keywords, and creates a new instance of <code>FindTagCommandParser</code>. <code>FindTagCommandParser</code> initializes a new instance of <code>FindTagCommand</code> with the given keywords as <code>TagsContainKeywordsPredicate</code>. <code>FindTagCommand</code> calls <code>updateFilteredPersonList</code> of model and returns the list of matched contacts.</p>
@@ -743,7 +743,7 @@ Add the list of contacts in contacts.txt into TheYellowPage</p>
 </div>
 </div>
 <div class="paragraph">
-<p>_Figure 4.3 : Sequence diagram for <code>AddMultipleByTsvCommand</code></p>
+<p><em>Figure 4.2 : Sequence diagram for AddMultipleByTsvCommand</em></p>
 </div>
 <div class="paragraph">
 <p>The user specifies the path to his list of contacts as the only argument of the command. <code>AddressBookParser</code> parses this argument and creates a new instance of <code>AddMultipleByTsvCommandParser</code> with the given argument as <code>contactTsvFilePath</code>. <code>AddMultipleByTsvCommandParser</code> then creates a new instance of <code>ContactTsvReader</code> with the given <code>contactTsvFilePath</code> and calls <code>readContactFromFile()</code> to start parsing.</p>
@@ -854,8 +854,8 @@ Format: <code>changePicture INDEX PICTURE_PATH</code></p>
 <div class="ulist">
 <ul>
 <li>
-<p>`changePicture 1 D:/myPicture.png<br>
-Change the profile picture of the first contact shown in the most recent listing to the picture specified at D:/myPicture.png</p>
+<p><code>changePicture 1 D://myPicture.png</code><br>
+changes the profile picture of the contact at index 1 to D://myPicture.png.</p>
 </li>
 </ul>
 </div>
@@ -889,7 +889,7 @@ The following sequence diagram shows how the <code>ChangeProfilePictureCommand</
 </div>
 </div>
 <div class="paragraph">
-<p><em>Figure 4.6 : Sequence diagram for `ChangeProfilePictureCommand`</em></p>
+<p><em>Figure 4.6 : Sequence diagram for ChangeProfilePictureCommand</em></p>
 </div>
 <div class="paragraph">
 <p>When the user keys in the command word <code>changePicture</code> along with <code>INDEX</code> and <code>PICTURE_PATH</code>, <code>AddressBookParser</code> will detect the command word and parse the arguments to a new instance of <code>ChangeProfilePictureCommandParser</code>. <code>ChangeProfilePictureCommandParser</code> then creates a new instance of <code>ChangeProfilePictureCommand</code> with the given <code>INDEX</code> and <code>PICTURE_PATH</code>. This instance finds the <code>person</code> of the given <code>INDEX</code> in the most recent listing, then calls the static function <code>saveImageToStorage</code> with the <code>person</code> and <code>file</code> at <code>PICTURE_PATH</code>. <code>saveImageToStorage</code> creates a copy of the <code>file</code> and stores it under <code>data/</code>
@@ -999,7 +999,7 @@ Return a list of contacts whose profile picture is most similar with the picture
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-11-09 22:43:45 Malay Peninsula Standard Time
+Last updated 2017-11-13 12:14:56 Malay Peninsula Standard Time
 </div>
 </div>
 </body>

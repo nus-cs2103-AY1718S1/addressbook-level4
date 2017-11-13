@@ -340,7 +340,7 @@ deletes the contacts with the 1st and 3rd index in the address book.
 deletes the contacts with the 2nd, 4th, 7th and 8th indexes in the address book.
 
 ****
-
+// end::deleteMultipleCommand[]
 
 // tag::changePicture[]
 === Change Profile Picture : `changePicture`
@@ -356,8 +356,10 @@ Format: `changePicture INDEX PICTURE_PATH`
 ****
 
 Example:
-=======
-// end::deleteMultipleCommand[]
+
+* `changePicture 1 D://myPicture.png` +
+changes the profile picture of the contact at index 1 to D://myPicture.png.
+// end::changePicture[]
 
 // tag::remark[]
 === Add remark to a person
@@ -386,13 +388,6 @@ removes any remark from the person of index 4 in the address book.
 Sorts the contacts in the address book in alphabetical order
 Format: sort
 // end::sort[]
-
-=== Add photos : (Coming in v1.5)
-
-
-* `changePicture 1 D:/myPicture.png +
-Change the profile picture of the first contact shown in the most recent listing to the picture specified at D:/myPicture.png
-// end::changePicture[]
 
 === Delete Tag : (Coming in v1.5)
 

@@ -357,7 +357,7 @@ image::UndoRedoActivityDiagram.png[width="200"]
 `FindTagCommand` allows the user to list those contacts whose tags are in a list of specified tags. The following diagram shows how `FindTagCommand` works:
 
 image::FindTagSequenceDiagram.PNG[width="800"]
-_Figure 4.1 : Sequence diagram for `AddMultipleByTsvCommand`_
+_Figure 4.1 : Sequence diagram for FindTagCommand_
 
 The user specifies the list of tags that he or she wants to search as the arguments of the command. `AddressBookParser` parses these keywords, and creates a new instance of `FindTagCommandParser`. `FindTagCommandParser` initializes a new instance of `FindTagCommand` with the given keywords as `TagsContainKeywordsPredicate`. `FindTagCommand` calls `updateFilteredPersonList` of model and returns the list of matched contacts.
 
@@ -420,7 +420,7 @@ It is highly advisable that the user enter the data in Excel and export as `Text
 The following sequence diagram shows how the `AddMultipleByTsvCommand` works
 
 image::AddMultipleByTsvSequenceDiagram.PNG[width="800"]
-_Figure 4.3 : Sequence diagram for `AddMultipleByTsvCommand`
+_Figure 4.2 : Sequence diagram for AddMultipleByTsvCommand_
 
 The user specifies the path to his list of contacts as the only argument of the command. `AddressBookParser` parses this argument and creates a new instance of `AddMultipleByTsvCommandParser` with the given argument as `contactTsvFilePath`. `AddMultipleByTsvCommandParser` then creates a new instance of `ContactTsvReader` with the given `contactTsvFilePath` and calls `readContactFromFile()` to start parsing.
 [NOTE]
@@ -543,7 +543,7 @@ In the `RecentlyDeletedCommand` class, the `commandResult` method is used which 
 The following sequence diagram shows how the `ChangeProfilePictureCommand` works
 
 image::ChangeProfilePictureSequenceDiagram.PNG[width="800"]
-_Figure 4.6 : Sequence diagram for `ChangeProfilePictureCommand`_
+_Figure 4.6 : Sequence diagram for ChangeProfilePictureCommand_
 
 When the user keys in the command word `changePicture` along with `INDEX` and `PICTURE_PATH`, `AddressBookParser` will detect the command word and parse the arguments to a new instance of `ChangeProfilePictureCommandParser`. `ChangeProfilePictureCommandParser` then creates a new instance of `ChangeProfilePictureCommand` with the given `INDEX` and `PICTURE_PATH`. This instance finds the `person` of the given `INDEX` in the most recent listing, then calls the static function `saveImageToStorage` with the `person` and `file` at `PICTURE_PATH`. `saveImageToStorage` creates a copy of the `file` and stores it under `data/`
 `ChangeProfilePictureCommand` can throw the following exceptions:
