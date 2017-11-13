@@ -163,15 +163,15 @@ public class UniqueMeetingList implements Iterable<Meeting> {
      * @param target
      * @param toAdd
      */
-    public void editPerson(ReadOnlyPerson target, ReadOnlyPerson toAdd) {
-        requireNonNull(toAdd);
-        internalMeetingList.forEach(meeting -> {
-            if (meeting.getPersonsMeet().contains(target)) {
-                meeting.getPersonsMeet().remove(target);
-                meeting.getPersonsMeet().add(toAdd);
-            }
-        });
-    }
+//    public void editPerson(ReadOnlyPerson target, ReadOnlyPerson toAdd) {
+//        requireNonNull(toAdd);
+//        internalMeetingList.forEach(meeting -> {
+//            if (meeting.getPersonsMeet().contains(target)) {
+//                meeting.getPersonsMeet().remove(target);
+//                meeting.getPersonsMeet().add(toAdd);
+//            }
+//        });
+//    }
     //@@author nelsonqyj
     /**
      * Removes the equivalent meeting from the list.

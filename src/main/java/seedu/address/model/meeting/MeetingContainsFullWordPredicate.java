@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 import seedu.address.commons.util.StringUtil;
+import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author kyngyi
 /**
@@ -16,12 +17,22 @@ public class MeetingContainsFullWordPredicate implements Predicate<ReadOnlyMeeti
         this.keywords = keywords;
     }
 
+    /**
+     * Tests if a {@code ReadOnlyMeeting}'s {@code List<ReadOnlyPerson>} contains any persons with name
+     * matching any of the keywords given.
+     */
+    private boolean personListContainsFullWord(String phrase, List<ReadOnlyPerson> target) {
+        for (int indexTarget = 0; indexTarget < target.size(); indexTarget++) {
+            if (StringUtil.containsFullWordIgnoreCase(target.get(indexTarget).getName().fullName, phrase)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public boolean test(ReadOnlyMeeting meeting) {
-        return (keywords.stream()
-                .anyMatch(keyword ->
-                        StringUtil.containsFullWordIgnoreCase(
-                                meeting.getPersonsMeet().get(0).getName().fullName, keyword)));
+        return (personListContainsFullWord(keywords.get(0),meeting.getPersonsMeet()));
     }
 
     @Override

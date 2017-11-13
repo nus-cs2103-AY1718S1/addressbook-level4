@@ -1,7 +1,6 @@
 package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_MEETINGS;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -160,20 +159,20 @@ public class AddressBook implements ReadOnlyAddressBook {
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
 
-        editPersonOfMeeting(target, editedPerson);
+//        editPersonOfMeeting(target, editedPerson);
         persons.setPerson(target, editedPerson);
     }
     //@@author Melvin-leo
-
-    /**
-     * Handle the edited person of persons list in the meeting list
-     * @param target
-     * @param editedReadOnlyPerson
-     */
-    public void editPersonOfMeeting(ReadOnlyPerson target, ReadOnlyPerson editedReadOnlyPerson) {
-        meetings.editPerson(target, editedReadOnlyPerson);
-        EventsCenter.getInstance().post(new UpdateChangeEvent());
-    }
+//
+//    /**
+//     * Handle the edited person of persons list in the meeting list
+//     * @param target
+//     * @param editedReadOnlyPerson
+//     */
+//    public void editPersonOfMeeting(ReadOnlyPerson target, ReadOnlyPerson editedReadOnlyPerson) {
+//        meetings.editPerson(target, editedReadOnlyPerson);
+//        EventsCenter.getInstance().post(new UpdateChangeEvent());
+//    }
     //@@author
 
     /**

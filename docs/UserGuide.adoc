@@ -17,7 +17,7 @@ By: `CS2103AUG2017-T09-B2`      Since: `AUG 2017`      Licence: `MIT`
 image::Quote.png[width="800"]
 
 == Introduction/Product overview
-The __ScheduBook __V1.4 is an application that helps students like you create and store a list of contacts and also helps you schedule your meetings so that you can better manage your time with your friends, peers or even your professors or teachers. You can use __Schedubook __to remind you of a certain meeting you have on a day and __Schedubook __will remind you, further providing you information about the location you planned to meet.
+The __ScheduBook __ is an application that helps students like you create and store a list of contacts and also helps you schedule your meetings so that you can better manage your time with your friends, peers or even your professors or teachers. You can use __Schedubook __to remind you of a certain meeting you have on a day and __Schedubook __will further provide you with the relevant information and the location of the scheduled meeting.
 
 == About
 
@@ -246,7 +246,7 @@ Selects the 1st person in the results of the `find` command.
 If you need to schedule a meeting with the one of your contact in your contact list, you can add meeting with him so that the meeting will be shown at the meeting list panel and when the deadline of the meeting approaches, you will be reminded!
 
 Adds a meeting to the address book +
-Format: `(am)addmeeting INDEX [n/NAME] [d/DATE_TIME] [l/LOCATION] [t/IMPORTANCE]`
+Format: `(am)addmeeting [i/INDEXES] [n/NAME] [d/DATE_TIME] [l/LOCATION] [t/IMPORTANCE]`
 
 [NOTE]
 Input format for Date and Time is "DD-MM-YYYY HH:MM"
@@ -263,8 +263,7 @@ Input format for `IMPORTANCE` is 0-2.
 ** Normal :1
 ** Least important: 0
 * Creation of group meetings
-** You can create meetings with different people at the same timing for a particular event. In this case,
- multiple `Meeting Cards` will be created. A group meeting consists of meetings that have the same event name, date and location but with different people
+** You can create meetings with different people with their individual index from the contact list. `Meeting Card` like _Figure 6A_  will be created. This meeting card consists of the `Name` and `Phone` of the person you are meeting with. You just have to scroll on the `Person` information on the card.
 +
 image::MeetingGroup.png[width="200"]
 +
@@ -280,8 +279,8 @@ _Figure 5.8.2: Clash Meeting Error_
 
 Examples:
 
-* `addmeeting 1 n/Study d/31-10-2017 21:00 l/School of Computing, NUS`
-* `addmeeting 2 n/Project meeting d/27-12-2017 08:30 l/iCube Auditorium, NUS`
+* `addmeeting i/1 n/Study d/31-10-2017 21:00 l/School of Computing, NUS`
+* `addmeeting i/2 3 n/Project meeting d/27-12-2017 08:30 l/iCube Auditorium, NUS`
 
 === Deleting a meeting: `deletemeeting`
 deletemeeting by index of meeting in the Meeting
@@ -308,8 +307,13 @@ Examples:
 
 === Selecting a meeting : `selectmeeting`
 
+You can use this command to search for the location of your destination of the meeting on GoogleMap. From here, you can also add your current location to find out more about the nearest/fastest route to your destination.
+
 Selects the meeting identified by the index number used in the last meeting listing. +
 Format: `(sm)selectmeeting INDEX`
+
+image::googlemaps.png[width="790"]
+_Figure 7: Google Map_
 
 ****
 * Selects the meeting at the specified `INDEX` and loads the GoogleMaps with the location of meeting as the destination.
@@ -329,6 +333,8 @@ Selects the 1st meeting in the results of the `findmeeting` command.
 // end::selectmeeting[]
 
 === Listing all meetings : `listmeeting`
+
+You can show all the list out of your scheduled meetings after you have used `findmeeting` or `findexactmeeting` commands.
 
 Shows a list of all meetings in the address book. +
 Format: `(lm)listmeeting`
@@ -352,7 +358,11 @@ Format: `(em)editmeeting INDEX [n/NAME] [d/DATETIME] [l/LOCATION]`
 +
 image::EditMeetingSuccess.png[width="500"]
 +
+<<<<<<< HEAD
 _Figure 5.12.1: Successful edited Meeting_
+=======
+_Figure 8: Successful edited Meeting_
+>>>>>>> 5d8f76556fa8149fc7685051be83154dad2da591
 
 ****
 
