@@ -103,7 +103,7 @@ image::Reminder.png[width="600"]
 _Figure 4: Pop-up Notification_
 
 . Upon opening up the application, if there is a meeting(s) on the same day, you will be reminded via a pop-up message
-. As Shown to you in the figure 2, the information regarding the next upcoming meeting is displayed in the message
+. As shown to you in the figure 2, the information regarding the next upcoming meeting is displayed in the message
 // end::popUp[]
 
 // tag::autodelete[]
