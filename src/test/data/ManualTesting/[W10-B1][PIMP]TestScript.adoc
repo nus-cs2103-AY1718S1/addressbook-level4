@@ -1,0 +1,145 @@
+= Manual Testing Script
+:toc:
+:toc-placement: preamble
+:imagesDir: images
+:stylesDir: stylesheets
+
+This document explains the steps needed to perform manual testing for PIMP.
+
+== Loading Test Script
+
+== The User Interface
+
+== Basic PIMP Commands
+
+=== Add contact
+
+=== Edit contact
+
+=== Delete contact
+
+== Remarks
+
+== Find Contact
+
+=== Normal find
+
+=== Find by Regex
+
+=== Find by Tags
+
+== Tags Manipulation
+
+== History
+
+Command: `history` +
+Result: the history being displayed in the result box, for example:
+```
+Entered commands (from most recent to earliest):
+(1) undo
+(2) clear
+(3) edit 2 n/Jane Doe
+```
+
+== Clearing the Address Book
+Command: `clear` +
+Result:
+
+- the contacts list at the left pane is empty.
+- status bar shows "0" which reflects that there are now zero contacts in the
+address book.
+- the result box shows "Address book has been cleared!".
+
+== Undo and Redo
+Command: `undo` +
+Result:
+
+- the previous command is undoed. For example, if the previous command is `clear`,
+then the address book is shown again.
+- the result box shows "1 command undoed."
+
+Command: `redo` +
+Result:
+
+- the previous command is redoed. For example, if the previous command before the
+undo is `clear`, then the address book is cleared again.
+- the result box shows "1 command redoed."
+
+Command:
+
+- `add n/John Doe p/98765432 e/johnd@example.com a/Address`
+- `add n/Jane Doe p/98765432 e/johnd@example.com a/Address`
+- `undo 2`
+
+Result:
+
+- the previous 2 add commands are undoed.
+- the result box shows "2 commands undoed."
+
+Command: `redo 2` +
+Result:
+
+- the previous 2 add commands are redoed.
+- the result box shows "2 commands redoed."
+
+Command: `redo` +
+Result:
+
+- the `redo` command fails.
+- the result box shows "No more commands to redo!"
+
+== Changing Font Size
+Command: `size 4` +
+Result:
+
+- the font size of the contacts list sidebar, the command box, and the result
+display is now increased by 4 points.
+- the result box shows "Font size increased by 4! Current change is 4."
+
+Command: `size -3` +
+Result:
+
+- the font size of the contacts list sidebar, the command box, and the result
+display is now decreased by 3 points.
+- the result box shows "Font size decreased by 3! Current change is 1."
+
+Command: `size -10` +
+Result:
+
+- the command fails, and the font size remains unchanged.
+- the result box shows "New font size out of bounds! Current change is 1, the
+command will change it into -9, which is outside [-5, 5]."
+
+Command: `size` +
+Result:
+
+- the font size of the contacts list sidebar, the command box, and the result
+display is reset.
+- the result box shows "Font size successfully reset!"
+
+== Social Media
+
+Command:
+
+- `edit 1 ig/kimkardashian`
+- `socialmedia instagram 1`
+
+Result:
+
+- the Instagram profile of the first contact (in this case, kimkardashian) is
+shown in the browser panel.
+- the result box shows "Social media shown!"
+
+== Accesses
+
+=== Toggling the access display
+
+== Statistics
+
+== Help
+
+=== Opening the Help Window
+
+=== Quick Help
+
+== Exit
