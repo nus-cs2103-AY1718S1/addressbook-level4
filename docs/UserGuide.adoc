@@ -34,6 +34,7 @@ This app will not work with earlier versions of Java 8.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
 image::Ui.png[width="790"]
+_Figure 2.1 : Overview of iConnect_
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
@@ -203,6 +204,9 @@ _Alias:_ `remove` `-`
 
 You can delete a group of people from the address book.
 
+image::multiDeleteCommand.png[width="500"]
+_Figure 3.7.1 : Deleting multiple person_
+
 Format: `delete I/INDEX INDEX ...` (or) `delete n/NAME`
 
 ****
@@ -254,6 +258,9 @@ This command adds the tag friends to the 2nd and 3rd person in the address book
 
 You can mark specified person(s) from the address book as favourite.
 
+image::tAddCommand.png[width="500"]
+_Figure 3.9.1 : Tagging multiple person as favourite_
+
 Format: `t-add INDEX... favourite`
 
 ****
@@ -287,6 +294,9 @@ Format: `t-remove INDEX... TAG`
 * The [TAG] *must not have its first word as a number*.
 ****
 
+image::tRemoveCommand-noIndex.png[width="500"]
+_Figure 3.10.1 : Removing all 'fav' tag_
+
 Examples:
 
 * `list` +
@@ -300,6 +310,9 @@ This command removes the tag `friends` from all person(s) with the tag `friends`
 === Removing a person(s) from favourite : `t-remove` _[Since v1.2]_
 
 You can remove specified person(s) in the address book from your `favourite` list.
+
+image::tRemoveCommand.png[width="500"]
+_Figure 3.11.1 : Removing tag from multiple persons_
 
 Format: `t-remove INDEX... favourite`
 
@@ -324,6 +337,9 @@ This command removes the tag `fav` from all person(s) with the the tag `fav` in 
 
 You can find all persons with the given tag.
 
+image::tFindCommand.png[width="500"]
+_Figure 3.12.1 : Finding all persons tagged 'fav'_
+
 Format: `t-find TAG`
 
 ****
@@ -342,6 +358,15 @@ This command could also list all the people with tag `friend` if any
 === Changing the theme according to user input `theme` _[Since v1.5]_
 
 You can change the current theme into your preferred one.
+
+image::twilightTheme.png[width="790"]
+_Figure 3.13.1 : Twilight Theme_
+
+image::minimalismTheme.png[width="790"]
+_Figure 3.13.2 : Minimalism Theme_
+
+image::sunburstTheme.png[width="790"]
+_Figure 3.13.3 : Sunburst Theme_
 
 Format: `theme [THEME] OR [INDEX]`
 
@@ -368,6 +393,9 @@ This command changed to current theme to Twilight
 
 You might find it not very convenient to only show the contact's location as text. Therefore, iConnect allows you to see the location! By using this command, without typing in the person's address, you can easily find the location of your friend in Google Map, which will show in the centre browser.
 
+image::mShowCommand.png[width="790"]
+_Figure 3.14.1 : Finding the location of a contact_
+
 Format: `m-show INDEX`
 
 ****
@@ -382,9 +410,12 @@ Examples:
 * `m-show 1` +
 Shows the address of person with index 1 on the google map
 
-=== Finding the route from user's current location to the person seleted: `m-route` _[Since v1.3]_
+=== Finding the route from user's current location to the person selected: `m-route` _[Since v1.3]_
 
 Not only can iConnect show the location, it can also show you how to go there! Simply by adding your current location, it will show you the shortest path from your current address to your friend's home in the Google map.
+
+image::mRouteCommand.png[width="790"]
+_Figure 3.15.1 : Finding the route from current location to the address of a contact_
 
 Format: `m-route INDEX a/ADDRESS`
 
@@ -406,18 +437,18 @@ Shows the route from `John street, block 123, #01-01` to the address of person w
 
 === Adding an Event to Schedule: `s-add` _[Since v1.4]_
 
-With many commitments at hand, it is easy to overlook an event in your schedule. `s-add` allows you to add an event to your calendar and also the people who will be involved in the event.
+With many commitments at hand, it is easy to overlook an event in your schedule. `s-add` allows you to add an event to your calendar and include persons from your addressbook as members of the event.
 
-Format: `s-add [m/INDEX INDEX…] n/NAME t/TIME [d/DURATION]`
-
-[TIP]
-You may create an event without any members or create a past event to keep track of your past schedule too.
+image::sAddCommand.png[width="790"]
+_Figure 3.16.1 : Adding an event titled 'Orientation Camp' to address book_
 
 [TIP]
 Mouse over the greyed-out date in your calendar to see your events for the day.
 
 [TIP]
 You will be notified in the result panel if the newly added event clashes with another event in your calendar.
+
+Format: `s-add [m/INDEX INDEX…] n/NAME t/TIME [d/DURATION]`
 
 ****
 * Creates an event with the given event name, event time, duration and members.
@@ -440,6 +471,9 @@ Adds an event called ‘Email Reminder’ on 4th of December 2017 at 2:30PM into
 
 Suppose you want to remove multiple events from your calendar, you can use the `s-remove` command with the indexes of events to be deleted.
 
+image::sRemoveCommand.png[width="790"]
+_Figure 3.17.1 : Removing multiple events from address book_
+
 Format: `s-remove I/INDEX INDEX...`
 
 ****
@@ -456,7 +490,7 @@ Removes a single event with the index 1.
 Removes 3 events with the index 1, 2 and 3.
 
 // tag::export[]
-=== Making a backup address book: `export` _[Coming in v1.4]_
+=== Making a backup address book: `export` _[Since v1.4]_
 
 If you want to keep your address book clean and worry about how to get the contacts back, just export the information.
 
@@ -468,6 +502,7 @@ Format: `export PATH`
 * Export all the information of contacts to the given local address.
 ****
 // end::export[]
+
 === Selecting a person : `select` _[Since v1.1]_
 
 _Alias:_ `choose`
@@ -563,6 +598,9 @@ You find that people you wrongly deleted from address book in recycle bin, you c
 
 You can restore person(s) from bin to address book.
 
+image::multiRestoreCommand.png[width="600"]
+_Figure 3.23.1 : Restoring multiple persons from recycle bin_
+
 Format: `bin-restore INDEX INDEX ...`
 
 ****
@@ -614,7 +652,6 @@ If you find it is uncomfortable to watch the UI because of the font size, you ca
 You can increase or decrease the size of font.
 
 Format: `font -` `font +`
-
 //end::fontsize[]
 
 // tag::birthday[]
@@ -722,11 +759,11 @@ There is no need to save manually.
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
 
 *Q*: Can I use this app without network connection? +
-*A*: You can achieve most of the commands offline except for those features using the browser window (e.g. `select` or `m-show`).
+*A*: You can achieve most of the commands offline except for those features using the browser window (e.g. `select` and `m-show`).
 
 == Command Summary
 
-* *Help* : `help COMMAND_WORD`
+* *Help* : `help COMMAND_WORD` +
 e.g. `help list`
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
@@ -735,12 +772,8 @@ e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 123466
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS]` +
 e.g. `find n/James p/8765 e/jamesho@example.com a/clementi street`
-* *Sort* : `sort [n/(ASC/DSC)] [p/(ASC/DSC)] [e/(ASC/DSC)] [a/(ASC/DSC)]` +
-e.g. `sort n/ASC`
-* *Delete* : `delete I/INDEX INDEX...` +
-e.g. `delete I/3 4`
-* *TagAdd* : `t-add INDEX... TAG` +
-e.g. `t-add 3 4 friends`
+* *Sort* : `sort [n/(asc/dsc)] [p/(asc/dsc)] [e/(asc/dsc)] [a/(asc/dsc)] [t/(asc/dsc)]` +
+e.g. `sort n/asc`
 * *TagAddFavourite* : `t-add INDEX... favourite` +
 e.g. `t-add 3 4 favourite`
 * *TagRemove* : `t-remove INDEX... TAG` +
@@ -757,7 +790,7 @@ e.g. `m-show 1`
 e.g. `m-show 1 a/NUS`
 * *ScheduleAdd* : `s-add [m/INDEX INDEX…] n/NAME t/TIME d/DURATION` +
 e.g. `s-add m/1 2 3 n/iConnect Conference t/2017-12-04 08:45 d/120`
-* *ScheduleRemove* : `s-remove e/INDEX INDEX...` +
+* *ScheduleRemove* : `s-remove I/INDEX INDEX...` +
 e.g. `s-remove e/1 2 3`
 * *Export* : `export PATH` +
 e.g. `export /desktop/new_folder`

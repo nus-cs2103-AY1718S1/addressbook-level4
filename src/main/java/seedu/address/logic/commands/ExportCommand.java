@@ -42,7 +42,7 @@ public class ExportCommand extends Command {
             output.write("End of file");
             output.close();
         } catch (Exception ioe) {
-            throw new CommandException("can't create a file in the path" + filepath);
+            throw new CommandException("Cannot create a file in the path: " + filepath);
         }
     }
 
