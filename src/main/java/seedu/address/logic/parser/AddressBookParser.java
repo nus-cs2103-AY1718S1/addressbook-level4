@@ -170,6 +170,10 @@ public class AddressBookParser {
         case RemoveAccountCommand.COMMAND_WORD:
             return new RemoveAccountCommandParser().parse(arguments);
 
+            case MeetingLocationCommand.COMMAND_WORD:
+            case MeetingLocationCommand.COMMAND_ALIAS:
+                return new MeetingLocationCommandParser().parse(arguments);
+
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }
