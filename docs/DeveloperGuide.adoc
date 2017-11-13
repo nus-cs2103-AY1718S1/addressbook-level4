@@ -482,7 +482,25 @@ The character is concatenated to the buffer string and passed to logic component
 If a user hits backspace, situation differs according to OS. If MacOS is used, a `KeyPressedEvent` is generated and captured in `handleKeyPress()`.
 The handler deletes the last character in the buffer string using `Substring()` and passes the resulting buffer string to logic for processing.
 If Windows is used, because backspace returns a unicode character which would generate both `KeyPressedEvent` and `KeyTypedEvent` that results in double deletion,
-only `KeyTypedEvent` is used to handle user input.
+only `KeyTypedEvent` is used to handle user input. Because the application is Windows constrained, this is handled
+in the Windows way.
+The code snippet for handle user input is as follows:
+
+----
+// If Mac is used, a separate handleKeyPress() is needed
+    private void handleKeyTyped(KeyEvent keyEvent) {
+        String s = keyEvent.getCharacter();
+        if (isDeleteOrBackspace(s)) {
+            if (!searchBuffer.isEmpty()) {
+                searchBuffer = searchBuffer.substring(0, searchBuffer.length() - 1);
+            } else {
+                return;
+            }
+        } else {
+            searchBuffer = searchBuffer + s;
+        }
+    }
+----
 
 ==== Logic
 You are expected to have read `2.3 logic component` (especially the class diagram) before you could understand this part.
@@ -522,7 +540,70 @@ inputs between `CommandBox` and `SearchBox` calls for more modular parsing.
 **Cons:** modularity compromised, can envision the method getting larger as more features are integrated as flags.
 // end::search[]
 
-// tag::additionalPhoneList[]
+// tag::edit[]
+=== A more powerful `edit`
+The old `edit` command could only edit one contact at a time, and when tags need to be refreshed with `t/`
+it will replace all tags with user input. The new `edit` command gets rid of these inconveniences by supporting
+multiple-contact edit, and addition and removal of tags without replacing.
+An advantage of combining these features with the search box is that user now can group and search contacts easily.
+
+==== Multiple contacts edit - parsing and execution
+With reference to `figure 2.3.1`, the sequence diagram for Logic component,
+user input identified as `edit` will go through `EditCommandParser`. Input validation contains the step of parsing
+ONE index using a specially tokenized String using variable delimiters (details in class `ArgumentTokenizer`).
+Delimiters are stored in `argMultimap` as keys, and arguments in between delimiters as values:
+
+----
+// gerPreamble() gets the argument before the legitimate delimiters, which would be the index, e.g. the "1" in
+"edit 1 n/foo"
+Index index;
+index = ParserUtil.parseIndex(argMultimap.getPreamble());
+----
+
+To parse multiple indices `parseIndex()` is invoked several times on a further
+tokenized String[] :
+
+----
+List<Index> indices = new ArrayList<>();
+preambles = argMultimap.getPreamble().split(" +");
+for (String preamble: preambles) {
+    indices.add(ParserUtil.parseIndex(preamble));
+}
+----
+
+The list of indices is then sent to `EditCommand`, in which it is looped to perform multiple updates
+in `Model`.
+
+==== Add/remove tags instead of replacement
+when `edit 1 t/sth` is input, an `EditPersonDescriptor` is instantiated to describe the `editedPerson`. This
+ information is then compared with the `personToEdit` in `EditCommand` to create an `editedPerson` used to update the
+ `Model`. During the comparison the original tags are not preserved:
+
+----
+//updated tags will be just the new tags in the descriptor, unless user does not specify.
+Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+----
+
+In the new version, this mechanism is altered to manage tags added in and tags removed:
+
+----
+public static void updateTags(Set<Tag> updatedTags, EditPersonDescriptor editPersonDescriptor) {
+    editPersonDescriptor.getTagsToAdd().ifPresent(tagsToAdd -> {
+        if (tagsToAdd.isEmpty()) {
+            updatedTags.clear();
+        }
+    });
+
+    //clear when tags to remove is empty too
+
+    //use addAll and removeAll to consolidate old and new sets of tags without throwing away the old tags.
+    editPersonDescriptor.getTagsToAdd().ifPresent(updatedTags::addAll);
+    editPersonDescriptor.getTagsToRemove().ifPresent(updatedTags::removeAll);
+}
+----
+//end::edit[]
+
+//tag::additionalPhoneList[]
 === Multiple phone numbers supported
 (launched in V1.3)
 

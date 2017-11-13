@@ -79,6 +79,7 @@ Examples:
 Shows a list of all persons in the Contact Book. +
 Format: `list`
 
+// tag::gedit[]
 === Editing people : `edit`
 
 Edits an existing person in the Contact Book. +
@@ -104,6 +105,7 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 * `edit 1  2 t/best -t/worst` +
 Removes tag `worst` and adds tag `best` to the first and the second persons.
+// end::gedit[]
 
 // tag::search[]
 === Locating persons: The search box

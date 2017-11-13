@@ -6,8 +6,6 @@ import static seedu.address.logic.commands.CommandTestUtil.DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIENDS;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showFirstPersonOnly;
@@ -66,15 +64,19 @@ public class EditCommandTest {
 
         PersonBuilder personInList = new PersonBuilder(lastPerson);
         Person editedPerson = personInList.withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
-                .withTags(VALID_TAG_FRIENDS, VALID_TAG_HUSBAND).build();
+                .withTags().build();
 
+        //@@author willxujun
+        //clear tags, setting both tags to add and tags to remove to empty
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
-                .withPhone(VALID_PHONE_BOB).withTags(VALID_TAG_HUSBAND).build();
+                .withPhone(VALID_PHONE_BOB).withTags().withTagsToRemove().build();
         EditCommand editCommand = prepareCommand(descriptor, indexLastPerson);
 
+        //save index in a list for new message format
         List<Index> expectedIndices = new ArrayList<>();
         expectedIndices.add(INDEX_SEVENTH_PERSON);
         String expectedMessage = String.format(MESSAGE_EDIT_PERSON_SUCCESS, expectedIndices.toString());
+        //@@author
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updatePerson(lastPerson, editedPerson);

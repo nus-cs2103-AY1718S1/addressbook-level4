@@ -75,6 +75,8 @@ public class EditCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
+        //@@author willxujun
+        //loops indices to edit multiple contacts
         for (Index index: indices) {
             if (index.getZeroBased() >= lastShownList.size()) {
                 throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
@@ -92,6 +94,7 @@ public class EditCommand extends UndoableCommand {
                 throw new AssertionError("The target person cannot be missing");
             }
         }
+        //@@author
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, indices.toString()));
     }
@@ -123,9 +126,8 @@ public class EditCommand extends UndoableCommand {
     }
 
     //@@author willxujun
-
     /**
-     * clears, adds and removes tags according to the descriptor
+     * clears, adds and removes tags according to {@code editPersonDescriptor}.
      * @param updatedTags
      * @param editPersonDescriptor
      */
@@ -241,10 +243,6 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(photo);
         }
 
-        public void setUniquePhoneList(UniquePhoneList uniquePhoneList) {
-            this.uniquePhoneList = uniquePhoneList;
-        }
-
         public Optional<UniquePhoneList> getUniquePhoneList() {
             return Optional.ofNullable(uniquePhoneList);
         }
@@ -266,10 +264,6 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(tagsToRemove);
         }
         //@@author
-
-        public void setCustomFields(Set<CustomField> customFields) {
-            this.customFields = customFields;
-        }
 
         public Optional<Set<CustomField>> getCustomFields() {
             return Optional.ofNullable(customFields);
