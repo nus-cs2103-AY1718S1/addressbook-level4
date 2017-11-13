@@ -37,8 +37,9 @@ import seedu.address.model.module.predicates.ModuleContainsKeywordsPredicate;
 import seedu.address.model.module.predicates.UniqueLocationPredicate;
 import seedu.address.model.module.predicates.UniqueModuleCodePredicate;
 
+//@@author caoliangnus
 /**
- * Represents the in-memory model of the address book data.
+ * Represents the in-memory model of the ModU data.
  * All changes to any model should be synchronized.
  */
 public class ModelManager extends ComponentManager implements Model {
@@ -51,7 +52,7 @@ public class ModelManager extends ComponentManager implements Model {
     private ReadOnlyLesson currentViewingLesson;
     private String currentViewingAttribute;
 
-    //@@author caoliangnus
+
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
@@ -67,7 +68,6 @@ public class ModelManager extends ComponentManager implements Model {
         filteredRemarks.setPredicate(PREDICATE_SHOW_ALL_REMARKS);
         Predicate predicate = new UniqueModuleCodePredicate(getUniqueCodeSet());
         ListingUnit.setCurrentPredicate(predicate);
-        filteredLessons.setPredicate(new UniqueModuleCodePredicate(getUniqueCodeSet()));
         bookedList = new ArrayList<BookedSlot>();
         initializeBookedSlot();
         currentViewingAttribute = "default";
@@ -168,9 +168,14 @@ public class ModelManager extends ComponentManager implements Model {
      * This method initialize the booked slot
      */
     public void initializeBookedSlot() {
+        filteredLessons.setPredicate(PREDICATE_SHOW_ALL_LESSONS);
+
         for (int i = 0; i < filteredLessons.size(); i++) {
             bookedList.add(new BookedSlot(filteredLessons.get(i).getLocation(), filteredLessons.get(i).getTimeSlot()));
         }
+
+        filteredLessons.setPredicate(new UniqueModuleCodePredicate(getUniqueCodeSet()));
+
     }
 
     @Override
@@ -259,8 +264,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     //@@author caoliangnus
     /**
-     * Returns an unmodifiable view of the list of {@code ReadOnlyModule} backed by the internal list of
-     * {@code addressBook}
+     * Returns an unmodifiable view of the list of {@code ReadOnlyLesson}
      */
     @Override
     public ObservableList<ReadOnlyLesson> getFilteredLessonList() {
@@ -330,6 +334,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     //@@author
 
+    //@@author caoliangnus
     @Override
     public void handleListingUnit() {
         ListingUnit unit = ListingUnit.getCurrentListingUnit();

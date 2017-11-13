@@ -15,7 +15,8 @@ public class TimeSlot {
                     + "3 letters abbreviations for the week days, "
                     + " [4 digits 24-hour clock format "
                     + " - "
-                    + " 4 digits 24-hour clock format]";
+                    + " 4 digits 24-hour clock format]"
+                    + " eg. FRI[1000-1200]";
     public static final String TIMESLOT_VALIDATION_REGEX = "[a-zA-Z]{3}\\[[\\d]{4}-[\\d]{4}]";
 
     public final String value;
@@ -23,7 +24,7 @@ public class TimeSlot {
     /**
      * Validates given time slot.
      *
-     * @throws IllegalValueException if given email address string is invalid.
+     * @throws IllegalValueException if given time slot string is invalid.
      */
     public TimeSlot(String timeSlot) throws IllegalValueException {
         requireNonNull(timeSlot);
@@ -72,7 +73,8 @@ public class TimeSlot {
     }
 
     /**
-     *
+     * This method is to check whether for the validity of time.
+     * Start hour should be less than end hour
      * @param sh start hour
      * @param sm start minute
      * @param et end hour

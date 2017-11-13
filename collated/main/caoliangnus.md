@@ -93,11 +93,76 @@ public class ColorKeywordCommandParser implements Parser<ColorKeywordCommand> {
     }
 }
 ```
+###### /java/seedu/address/logic/parser/ParserUtil.java
+``` java
+    /**
+     * Parses a {@code Optional<String> code} into an {@code Optional<Code>} if {@code code} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Code> parseCode(Optional<String> code) throws IllegalValueException {
+        requireNonNull(code);
+        return code.isPresent() ? Optional.of(new Code(code.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> location} into an {@code Optional<Location>} if {@code location} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Location> parseLocation(Optional<String> location) throws IllegalValueException {
+        requireNonNull(location);
+        return location.isPresent() ? Optional.of(new Location(location.get())) : Optional.empty();
+    }
+
+```
+###### /java/seedu/address/logic/parser/ParserUtil.java
+``` java
+    /**
+     * Parses a {@code Optional<String> group} into an {@code Optional<Group>} if {@code group} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Group> parseGroup(Optional<String> group) throws IllegalValueException {
+        requireNonNull(group);
+        return group.isPresent() ? Optional.of(new Group(group.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> timeSlot} into an {@code Optional<TimeSlot>} if {@code timeSlot} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<TimeSlot> parseTimeSlot(Optional<String> timeSlot) throws IllegalValueException {
+        requireNonNull(timeSlot);
+        return timeSlot.isPresent() ? Optional.of(new TimeSlot(timeSlot.get())) : Optional.empty();
+    }
+
+
+    /**
+     * Parses a {@code Optional<String> classType} into an {@code Optional<ClassType>} if {@code classType} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<ClassType> parseClassType(Optional<String> classType) throws IllegalValueException {
+        requireNonNull(classType);
+        return classType.isPresent() ? Optional.of(new ClassType(classType.get())) : Optional.empty();
+    }
+
+
+    /**
+     * Parses {@code Collection<String> lecturer} into a {@code Set<Lecturer>}.
+     */
+    public static Set<Lecturer> parseLecturer(Collection<String> lecturers) throws IllegalValueException {
+        requireNonNull(lecturers);
+        final Set<Lecturer> lecturerSet = new HashSet<>();
+        for (String lecturerName : lecturers) {
+            lecturerSet.add(new Lecturer(lecturerName));
+        }
+        return lecturerSet;
+    }
+}
+```
 ###### /java/seedu/address/model/AddressBook.java
 ``` java
 /**
- * Wraps all data at the address-book level
- * Duplicates are not allowed (by .equals comparison)
+ * The class is Addressbook, but this class wraps all data at module level
+ * A module contains lessons, lecturers and remarks
  */
 public class AddressBook implements ReadOnlyAddressBook {
 
@@ -121,7 +186,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public AddressBook() {}
 
     /**
-     * Creates an AddressBook using the Persons and Tags in the {@code toBeCopied}
+     * Creates an AddressBook in the {@code toBeCopied}
      */
     public AddressBook(ReadOnlyAddressBook toBeCopied) {
         this();
@@ -138,6 +203,163 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.lecturers.setLectuers(lecturers);
     }
 
+```
+###### /java/seedu/address/model/AddressBook.java
+``` java
+    /**
+     * Resets the existing data of this {@code AddressBook} with {@code newData}.
+     */
+    public void resetData(ReadOnlyAddressBook newData) {
+        requireNonNull(newData);
+        try {
+            setLessons(newData.getLessonList());
+            setLecturers(new HashSet<>(newData.getLecturerList()));
+            setRemarks(new HashSet<>(newData.getRemarkList()));
+        } catch (DuplicateLessonException e) {
+            assert false : "AddressBooks should not have duplicate lessons";
+        }
+
+        setLecturers(new HashSet<>(newData.getLecturerList()));
+        setRemarks(new HashSet<>(newData.getRemarkList()));
+        syncMasterLecturerListWith(lessons);
+    }
+
+    //// lesson-level operations
+
+    /**
+     * Adds a lesson to the address book.
+     * Also checks the new lesson's lecturers {@link #lecturers} with any new lecturers found,
+     * and updates the lecturer objects in the lesson to point to those in {@link #lecturers}.
+     *
+     * @throws DuplicateLessonException if an equivalent lesson already exists.
+     */
+    public void addLesson(ReadOnlyLesson m) throws DuplicateLessonException {
+        Lesson newLesson = new Lesson(m);
+        try {
+            lessons.add(newLesson);
+        } catch (DuplicateLessonException e) {
+            throw e;
+        }
+
+        syncMasterLecturerListWith(newLesson);
+    }
+
+```
+###### /java/seedu/address/model/AddressBook.java
+``` java
+    /**
+     * Replaces the given lesson {@code target} in the list with {@code editedReadOnlyLesson}.
+     * {@code AddressBook}'s lecturers list will be updated with the lecturers of {@code editedReadOnlyLesson}.
+     *
+     * @throws DuplicateLessonException if updating the lesson's details causes the lesson to be equivalent to
+     *      another existing lesson in the list.
+     * @throws LessonNotFoundException if {@code target} could not be found in the list.
+     *
+     * @see #syncMasterLecturerListWith(Lesson)
+     */
+    public void updateLesson(ReadOnlyLesson target, ReadOnlyLesson editedReadOnlyLesson)
+            throws DuplicateLessonException, LessonNotFoundException {
+        requireNonNull(editedReadOnlyLesson);
+
+        Lesson editedLesson = new Lesson(editedReadOnlyLesson);
+
+        try {
+            lessons.setLesson(target, editedLesson);
+        } catch (DuplicateLessonException e) {
+            throw e;
+        } catch (LessonNotFoundException e) {
+            throw e;
+        }
+
+        syncMasterLecturerListWith(editedLesson);
+    }
+
+    /**
+     * Ensures that every lecturer in this lesson:
+     *  - exists in the master list {@link #lessons}
+     *  - points to a lecturer object in the master list
+     */
+    private void syncMasterLecturerListWith(Lesson lesson) {
+        final UniqueLecturerList lessonLecturers = new UniqueLecturerList(lesson.getLecturers());
+        lecturers.mergeFrom(lessonLecturers);
+
+        // Create map with values = tag object references in the master list
+        // used for checking lesson lecturers references
+        final Map<Lecturer, Lecturer> masterTagObjects = new HashMap<>();
+        lecturers.forEach(lecturer -> masterTagObjects.put(lecturer, lecturer));
+
+        // Rebuild the list of lesson lecturers to point to the relevant lecturers in the master lecturer list.
+        final Set<Lecturer> correctTagReferences = new HashSet<>();
+        lessonLecturers.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
+        lessonLecturers.setLectuers(correctTagReferences);
+    }
+
+    /**
+     * Ensures that every lecturer in these lessons:
+     *  - exists in the master list {@link #lessons}
+     *  - points to a Lecturer object in the master list
+     *  @see #syncMasterLecturerListWith(Lesson)
+     */
+    private void syncMasterLecturerListWith(UniqueLessonList lessons) {
+        lessons.forEach(this::syncMasterLecturerListWith);
+    }
+
+    /**
+     * Removes {@code key} from this {@code AddressBook}.
+     * @throws LessonNotFoundException if the {@code key} is not in this {@code AddressBook}.
+     */
+    public boolean removeLesson(ReadOnlyLesson key) throws LessonNotFoundException {
+        if (lessons.remove(key)) {
+            return true;
+        } else {
+            throw new LessonNotFoundException();
+        }
+    }
+
+    //// lecturer-level operations
+
+    public void addLecturer(Lecturer t) throws UniqueLecturerList.DuplicateLecturerException {
+        lecturers.add(t);
+    }
+
+```
+###### /java/seedu/address/model/AddressBook.java
+``` java
+    //// util methods
+
+    @Override
+    public String toString() {
+        return lessons.asObservableList().size() + " lessons, " + lecturers.asObservableList().size() +  " lecturers";
+        // TODO: refine later
+    }
+
+    @Override
+    public ObservableList<ReadOnlyLesson> getLessonList() {
+        return lessons.asObservableList();
+    }
+
+    @Override
+    public ObservableList<Lecturer> getLecturerList() {
+        return lecturers.asObservableList();
+    }
+
+```
+###### /java/seedu/address/model/AddressBook.java
+``` java
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof AddressBook // instanceof handles nulls
+                && this.lessons.equals(((AddressBook) other).lessons)
+                && this.lecturers.equalsOrderInsensitive(((AddressBook) other).lecturers));
+    }
+
+    @Override
+    public int hashCode() {
+        // use this method for custom fields hashing instead of implementing your own
+        return Objects.hash(lessons, lecturers);
+    }
+}
 ```
 ###### /java/seedu/address/model/Model.java
 ``` java
@@ -156,8 +378,105 @@ public interface Model {
     Predicate<Remark> PREDICATE_SHOW_ALL_REMARKS = unused -> true;
 
 ```
+###### /java/seedu/address/model/Model.java
+``` java
+    /**
+     * Clears existing backing model and replaces with the provided new data.
+     */
+    void resetData(ReadOnlyAddressBook newData);
+
+    /**
+     * Returns the AddressBook
+     */
+    ReadOnlyAddressBook getAddressBook();
+
+    /**
+     * Deletes the given lesson.
+     */
+    void deleteLesson(ReadOnlyLesson target) throws LessonNotFoundException;
+
+    /**
+     * Deletes the given list of lessons.
+     */
+    void deleteLessonSet(List<ReadOnlyLesson> lessonList) throws LessonNotFoundException;
+
+    /**
+     * Adds the given lesson
+     */
+    void addLesson(ReadOnlyLesson lesson) throws DuplicateLessonException;
+
+    /**
+     * Bookmarks the given lesson into favourite list
+     */
+    void bookmarkLesson(ReadOnlyLesson lesson) throws DuplicateLessonException;
+
+    /**
+     * Unbookmarks the given lesson from favourite list
+     */
+    void unBookmarkLesson(ReadOnlyLesson lesson) throws NotRemarkedLessonException;
+
+```
+###### /java/seedu/address/model/Model.java
+``` java
+    /**
+     * Replaces the given lesson {@code target} with {@code editedLesson}.
+     *
+     * @throws DuplicateLessonException if updating the lesson's details causes the lesson to be equivalent to
+     *                                  another existing lesson in the list.
+     * @throws LessonNotFoundException  if {@code target} could not be found in the list.
+     */
+    void updateLesson(ReadOnlyLesson target, ReadOnlyLesson editedLesson)
+            throws DuplicateLessonException, LessonNotFoundException;
+
+    /**
+     * Returns an unmodifiable view of the filtered lesson list
+     */
+    ObservableList<ReadOnlyLesson> getFilteredLessonList();
+
+    /**
+     * Updates the filter of the filtered lesson list to filter by the given {@code predicate}.
+     *
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void updateFilteredLessonList(Predicate<ReadOnlyLesson> predicate);
+
+```
+###### /java/seedu/address/model/Model.java
+``` java
+    /** Returns an unmodifiable view of the list of remarks */
+    ObservableList<Remark> getFilteredRemarkList();
+
+    /**
+     * Updates location list according to previous predicate.
+     */
+    void updateLocationList();
+
+    /**
+     * Updates module code list according to previous predicate.
+     */
+    void updateModuleList();
+
+
+
+}
+```
 ###### /java/seedu/address/model/ModelManager.java
 ``` java
+/**
+ * Represents the in-memory model of the ModU data.
+ * All changes to any model should be synchronized.
+ */
+public class ModelManager extends ComponentManager implements Model {
+    private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
+
+    private final AddressBook addressBook;
+    private final FilteredList<ReadOnlyLesson> filteredLessons;
+    private final FilteredList<Remark> filteredRemarks;
+    private final ArrayList<BookedSlot> bookedList;
+    private ReadOnlyLesson currentViewingLesson;
+    private String currentViewingAttribute;
+
+
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
@@ -173,7 +492,6 @@ public interface Model {
         filteredRemarks.setPredicate(PREDICATE_SHOW_ALL_REMARKS);
         Predicate predicate = new UniqueModuleCodePredicate(getUniqueCodeSet());
         ListingUnit.setCurrentPredicate(predicate);
-        filteredLessons.setPredicate(new UniqueModuleCodePredicate(getUniqueCodeSet()));
         bookedList = new ArrayList<BookedSlot>();
         initializeBookedSlot();
         currentViewingAttribute = "default";
@@ -233,62 +551,7 @@ public interface Model {
 ###### /java/seedu/address/model/ModelManager.java
 ``` java
     /**
-     * Returns an unmodifiable view of the list of {@code ReadOnlyModule} backed by the internal list of
-     * {@code addressBook}
-     */
-    @Override
-    public ObservableList<ReadOnlyLesson> getFilteredLessonList() {
-        return FXCollections.unmodifiableObservableList(filteredLessons);
-    }
-
-    @Override
-    public ReadOnlyAddressBook getAddressBook() {
-        return addressBook;
-    }
-
-    /**
-     * Raises an event to indicate the model has changed
-     */
-    private void indicateAddressBookChanged() {
-        raise(new AddressBookChangedEvent(addressBook));
-    }
-
-    @Override
-    public synchronized void deleteLesson(ReadOnlyLesson target) throws LessonNotFoundException {
-        addressBook.removeLesson(target);
-        indicateAddressBookChanged();
-    }
-
-    @Override
-    public synchronized void deleteLessonSet(List<ReadOnlyLesson> lessonList) throws LessonNotFoundException {
-
-        for (ReadOnlyLesson lesson : lessonList) {
-            addressBook.removeLesson(lesson);
-        }
-        indicateAddressBookChanged();
-    }
-
-    @Override
-    public synchronized void addLesson(ReadOnlyLesson lesson) throws DuplicateLessonException {
-        addressBook.addLesson(lesson);
-        indicateAddressBookChanged();
-    }
-```
-###### /java/seedu/address/model/ModelManager.java
-``` java
-    @Override
-    public void updateLesson(ReadOnlyLesson target, ReadOnlyLesson editedLesson)
-            throws DuplicateLessonException, LessonNotFoundException {
-        requireAllNonNull(target, editedLesson);
-        addressBook.updateLesson(target, editedLesson);
-        indicateAddressBookChanged();
-    }
-```
-###### /java/seedu/address/model/ModelManager.java
-``` java
-    /**
-     * Returns an unmodifiable view of the list of {@code ReadOnlyModule} backed by the internal list of
-     * {@code addressBook}
+     * Returns an unmodifiable view of the list of {@code ReadOnlyLesson}
      */
     @Override
     public ObservableList<ReadOnlyLesson> getFilteredLessonList() {
@@ -300,6 +563,76 @@ public interface Model {
         requireNonNull(predicate);
         filteredLessons.setPredicate(predicate);
     }
+```
+###### /java/seedu/address/model/ModelManager.java
+``` java
+    @Override
+    public void handleListingUnit() {
+        ListingUnit unit = ListingUnit.getCurrentListingUnit();
+
+        if (unit.equals(LOCATION)) {
+            if (ListingUnit.getCurrentPredicate() instanceof LocationContainsKeywordsPredicate) {
+                updateFilteredLessonList(
+                        new LocationContainsKeywordsPredicate(((LocationContainsKeywordsPredicate)
+                                ListingUnit.getCurrentPredicate()).getKeywords()));
+            } else {
+                UniqueLocationPredicate predicate = new UniqueLocationPredicate(getUniqueLocationSet());
+                updateFilteredLessonList(predicate);
+            }
+        } else if (unit.equals(MODULE)) {
+            if (ListingUnit.getCurrentPredicate() instanceof ModuleContainsKeywordsPredicate) {
+                updateFilteredLessonList(
+                        new ModuleContainsKeywordsPredicate(((ModuleContainsKeywordsPredicate)
+                                ListingUnit.getCurrentPredicate()).getKeywords()));
+            } else {
+                UniqueModuleCodePredicate predicate = new UniqueModuleCodePredicate(getUniqueCodeSet());
+                updateFilteredLessonList(predicate);
+            }
+        } else if (ListingUnit.getCurrentPredicate() instanceof MarkedLessonContainsKeywordsPredicate) {
+            updateFilteredLessonList(
+                    new MarkedLessonContainsKeywordsPredicate(((MarkedLessonContainsKeywordsPredicate)
+                            ListingUnit.getCurrentPredicate()).getKeywords()));
+        } else if (ListingUnit.getCurrentPredicate() instanceof LessonContainsKeywordsPredicate) {
+            LessonContainsKeywordsPredicate predicate =
+                    (LessonContainsKeywordsPredicate) ListingUnit.getCurrentPredicate();
+            updateFilteredLessonList(new LessonContainsKeywordsPredicate(predicate.getKeywords(),
+                    predicate.getTargetLesson(), predicate.getAttribute()));
+        } else {
+            updateFilteredLessonList(ListingUnit.getCurrentPredicate());
+
+            if (getFilteredLessonList().isEmpty()) {
+                UniqueModuleCodePredicate predicate = new UniqueModuleCodePredicate(getUniqueCodeSet());
+                updateFilteredLessonList(predicate);
+                ListingUnit.setCurrentPredicate(predicate);
+                ListingUnit.setCurrentListingUnit(MODULE);
+                EventsCenter.getInstance().post(new RefreshPanelEvent());
+            }
+        }
+    }
+
+
+
+    @Override
+    public boolean equals(Object obj) {
+        // short circuit if same object
+        if (obj == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(obj instanceof ModelManager)) {
+            return false;
+        }
+
+        // state check
+        ModelManager other = (ModelManager) obj;
+        return addressBook.equals(other.addressBook)
+                && filteredLessons.equals(other.filteredLessons)
+                && filteredRemarks.equals(other.filteredRemarks);
+    }
+
+
+}
 ```
 ###### /java/seedu/address/model/module/ClassType.java
 ``` java
@@ -469,7 +802,7 @@ public class Group {
 ###### /java/seedu/address/model/module/Lesson.java
 ``` java
 /**
- * Represents a Lesson in the address book.
+ * Represents a Lesson in the application.
  * Guarantees: details are present and not null, field values are validated.
  */
 public class Lesson implements ReadOnlyLesson {
@@ -771,7 +1104,8 @@ public class TimeSlot {
                     + "3 letters abbreviations for the week days, "
                     + " [4 digits 24-hour clock format "
                     + " - "
-                    + " 4 digits 24-hour clock format]";
+                    + " 4 digits 24-hour clock format]"
+                    + " eg. FRI[1000-1200]";
     public static final String TIMESLOT_VALIDATION_REGEX = "[a-zA-Z]{3}\\[[\\d]{4}-[\\d]{4}]";
 
     public final String value;
@@ -779,7 +1113,7 @@ public class TimeSlot {
     /**
      * Validates given time slot.
      *
-     * @throws IllegalValueException if given email address string is invalid.
+     * @throws IllegalValueException if given time slot string is invalid.
      */
     public TimeSlot(String timeSlot) throws IllegalValueException {
         requireNonNull(timeSlot);
@@ -828,7 +1162,8 @@ public class TimeSlot {
     }
 
     /**
-     *
+     * This method is to check whether for the validity of time.
+     * Start hour should be less than end hour
      * @param sh start hour
      * @param sm start minute
      * @param et end hour
@@ -962,6 +1297,33 @@ public class UniqueLessonList implements Iterable<Lesson> {
     }
 
 ```
+###### /java/seedu/address/model/module/UniqueLessonList.java
+``` java
+    /**
+     * Returns the backing list as an unmodifiable {@code ObservableList}.
+     */
+    public ObservableList<ReadOnlyLesson> asObservableList() {
+        return FXCollections.unmodifiableObservableList(mappedList);
+    }
+
+    @Override
+    public Iterator<Lesson> iterator() {
+        return internalList.iterator();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof UniqueLessonList // instanceof handles nulls
+                && this.internalList.equals(((UniqueLessonList) other).internalList));
+    }
+
+    @Override
+    public int hashCode() {
+        return internalList.hashCode();
+    }
+}
+```
 ###### /java/seedu/address/model/ReadOnlyAddressBook.java
 ``` java
 /**
@@ -970,8 +1332,8 @@ public class UniqueLessonList implements Iterable<Lesson> {
 public interface ReadOnlyAddressBook {
 
     /**
-     * Returns an unmodifiable view of the modules list.
-     * This list will not contain any duplicate modules.
+     * Returns an unmodifiable view of the lesson list.
+     * This list will not contain any duplicate lessons.
      */
     ObservableList<ReadOnlyLesson> getLessonList();
 
@@ -1002,7 +1364,47 @@ public class SampleDataUtil {
                 new Lesson(new ClassType("TUT"), new Location("LT27"), new Group("2"),
                         new TimeSlot("MON[1000-1100]"), new Code("MA1101B"), getLecturerSet("LI Sheng")),
                 new Lesson(new ClassType("LEC"), new Location("LT27"), new Group("2"),
-                        new TimeSlot("THU[1600-1800]"), new Code("MA1101C"), getLecturerSet("Smith"))
+                        new TimeSlot("THU[1600-1800]"), new Code("MA1101C"), getLecturerSet("Smith")),
+
+                new Lesson(new ClassType("LEC"), new Location("LT19"), new Group("71"),
+                        new TimeSlot("WED[1400-1600]"), new Code("CS2103T"), getLecturerSet("Damith")),
+                new Lesson(new ClassType("TUT"), new Location("COM1-0207"), new Group("71"),
+                        new TimeSlot("TUE[1200-1300]"), new Code("CS2103"), getLecturerSet("David")),
+                new Lesson(new ClassType("LEC"), new Location("LT27"), new Group("71"),
+                        new TimeSlot("WED[1800-2000]"), new Code("MA1101R"), getLecturerSet("Ma Siu Lun")),
+                new Lesson(new ClassType("TUT"), new Location("COM1-02-3"), new Group("71"),
+                        new TimeSlot("MON[0800-0900]"), new Code("MA1101A"), getLecturerSet("LI Sheng")),
+                new Lesson(new ClassType("TUT"), new Location("LT27"), new Group("72"),
+                        new TimeSlot("MON[0800-0900]"), new Code("MA1101B"), getLecturerSet("LI Sheng")),
+                new Lesson(new ClassType("LEC"), new Location("LT37"), new Group("72"),
+                        new TimeSlot("THU[1600-1800]"), new Code("MA1101C"), getLecturerSet("Smith")),
+
+                new Lesson(new ClassType("LEC"), new Location("LT19"), new Group("51"),
+                        new TimeSlot("MON[1400-1600]"), new Code("CS2103T"), getLecturerSet("Damith")),
+                new Lesson(new ClassType("TUT"), new Location("COM1-0207"), new Group("51"),
+                        new TimeSlot("WED[1200-1300]"), new Code("CS2103"), getLecturerSet("David")),
+                new Lesson(new ClassType("LEC"), new Location("LT27"), new Group("51"),
+                        new TimeSlot("FRI[1800-2000]"), new Code("MA1101R"), getLecturerSet("Ma Siu Lun")),
+                new Lesson(new ClassType("TUT"), new Location("COM1-02-3"), new Group("51"),
+                        new TimeSlot("THU[0800-0900]"), new Code("MA1101A"), getLecturerSet("LI Sheng")),
+                new Lesson(new ClassType("LEC"), new Location("LT27"), new Group("42"),
+                        new TimeSlot("FRI[1000-1200]"), new Code("MA1101B"), getLecturerSet("LI Sheng")),
+                new Lesson(new ClassType("LEC"), new Location("LT37"), new Group("22"),
+                        new TimeSlot("FRI[1600-1800]"), new Code("MA1101C"), getLecturerSet("Smith")),
+
+                new Lesson(new ClassType("LEC"), new Location("LT19"), new Group("11"),
+                        new TimeSlot("MON[0800-1000]"), new Code("CS2103T"), getLecturerSet("Damith")),
+                new Lesson(new ClassType("LEC"), new Location("LT33"), new Group("11"),
+                        new TimeSlot("WED[1200-1400]"), new Code("CS2103"), getLecturerSet("David")),
+                new Lesson(new ClassType("TUT"), new Location("LT27"), new Group("11"),
+                        new TimeSlot("TUE[0900-1000]"), new Code("MA1101R"), getLecturerSet("Ma Siu Lun")),
+                new Lesson(new ClassType("TUT"), new Location("COM1-02-3"), new Group("11"),
+                        new TimeSlot("THU[1800-1900]"), new Code("MA1101A"), getLecturerSet("LI Sheng")),
+                new Lesson(new ClassType("LEC"), new Location("LT17"), new Group("32"),
+                        new TimeSlot("TUE[0800-1000]"), new Code("MA1101B"), getLecturerSet("LI Sheng")),
+                new Lesson(new ClassType("LEC"), new Location("LT37"), new Group("12"),
+                        new TimeSlot("TUE[1000-1200]"), new Code("MA1101C"), getLecturerSet("Smith")),
+
             };
         } catch (IllegalValueException e) {
             throw new AssertionError("sample data cannot be invalid", e);
@@ -1149,7 +1551,7 @@ public class XmlAdaptedLesson {
 ###### /java/seedu/address/ui/CombinePanel.java
 ``` java
 /**
- * The UI component that is responsible for combining the web browser panel and the timetable panel.
+ * The UI component that is responsible for combining the web browser panel, the timetable panel and sticky notes panel.
  */
 public class CombinePanel extends UiPart<Region> {
 
@@ -1166,6 +1568,8 @@ public class CombinePanel extends UiPart<Region> {
     private static final int ROW = 6;
     private static final int COL = 13;
     private static final int START_TIME = 8;
+
+    private static final Pattern LOCATION_KEYWORD_PATTERN = Pattern.compile(".*(?=-)");
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
     private final Logic logic;
@@ -1209,7 +1613,6 @@ public class CombinePanel extends UiPart<Region> {
 
     }
 
-
     @Subscribe
     private void handleViewedLessonEvent(ViewedLessonEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
@@ -1220,7 +1623,7 @@ public class CombinePanel extends UiPart<Region> {
             noteBox.setVisible(false);
         } else if (ListingUnit.getCurrentListingUnit().equals(ListingUnit.LOCATION)) {
             timeBox.setVisible(false);
-            browser.setVisible(false);
+            browser.setVisible(false); //Only set as visible when location is selected
             noteBox.setVisible(false);
         } else {
             timeBox.setVisible(false);
@@ -1245,10 +1648,9 @@ public class CombinePanel extends UiPart<Region> {
     /**
      * Generate time slot header
      */
-
     public void generateTimeslotHeader() {
         String text;
-        int k = 8;
+        int k = START_TIME;
         for (int i = 1; i < COL + 1; i++) {
 
             if (k < 10) {
@@ -1268,10 +1670,9 @@ public class CombinePanel extends UiPart<Region> {
     /**
      * Generate week day row header
      */
-
     public void generateWeekDay() {
         for (int i = 1; i < ROW; i++) {
-            String dayOfWeek = DayOfWeek.of(i).toString().substring(0, 3);
+            String dayOfWeek = DayOfWeek.of(i).toString().substring(0, 3); //The first 3 characters of WeekDay, eg MON
             Label label = new Label(dayOfWeek);
             label.setId(HEADER);
             timetableGrid.setValignment(label, VPos.CENTER);
@@ -1287,6 +1688,7 @@ public class CombinePanel extends UiPart<Region> {
         ObservableList<ReadOnlyLesson> lessons = logic.getFilteredLessonList();
         initGridData();
 
+        //This code allows the gridline to stay appear
         Node node = timetableGrid.getChildren().get(0);
         timetableGrid.getChildren().clear();
         timetableGrid.getChildren().add(0, node);
@@ -1296,40 +1698,29 @@ public class CombinePanel extends UiPart<Region> {
             String text = lesson.getCode() + " " + lesson.getClassType()
                     + "(" + lesson.getGroup() + ") " + lesson.getLocation();
             String timeText = lesson.getTimeSlot().toString();
-            int weekDayRow = getWeekDay(timeText.substring(0, 3));
-            int startHourCol = getTime(timeText.substring(4, 6));
-            int endHourSpan = getTime(timeText.substring(9, 11)) - startHourCol;
+            int weekDayRow = getWeekDay(timeText.substring(0, 3)); //First 3 characters are Weekday
+            int startHourCol = getTime(timeText.substring(4, 6));  //Next 2 characters are StartHour
+            int endHourSpan = getTime(timeText.substring(9, 11)) - startHourCol; //find the number of hours for lesson
             boolean isAvailable = false;
             if (!isOccupy(weekDayRow, startHourCol, endHourSpan)) {
                 isAvailable = true;
             }
 
             if (isAvailable && gridData[weekDayRow][startHourCol].getCount() == 0) {
-                gridData[weekDayRow][startHourCol] = new GridData(text, weekDayRow, startHourCol, endHourSpan, 1);
+                gridData[weekDayRow][startHourCol] = new GridData(text, weekDayRow, startHourCol,
+                        endHourSpan, 1); //1 represents no other lessons occupy this time slot
             } else {
                 int count = gridData[weekDayRow][startHourCol].getCount();
                 gridData[weekDayRow][startHourCol] = new GridData(text, weekDayRow, startHourCol,
-                        endHourSpan, count + 2);
+                        endHourSpan, count + 2); //count + 2 to indicate another lesson occupying this time slot
             }
 
+            //Update gridDataCheckTable
             for (int j = 0; j < endHourSpan; j++) {
                 gridDataCheckTable[weekDayRow][startHourCol + j] = 1;
             }
         }
     }
-
-    /**
-     * Check for timetable grid.
-     */
-    public boolean isOccupy(int row, int col, int span) {
-        for (int i = 0; i < span; i++) {
-            if (gridDataCheckTable[row][col + i] == 1) {
-                return true;
-            }
-        }
-        return false;
-    }
-
 
     /**
      * Check for timetable grid.
@@ -1407,7 +1798,19 @@ public class CombinePanel extends UiPart<Region> {
     /************* BROWSER PANNEL *********/
 
     private void loadLessonPage(ReadOnlyLesson lesson) {
-        loadPage(NUS_MAP_SEARCH_URL_PREFIX + lesson.getLocation().toString());
+        loadPage(NUS_MAP_SEARCH_URL_PREFIX + getImportantKeywords(lesson.getLocation().toString()));
+    }
+
+    /**
+     * Get substring before hyphen.
+     */
+    private String getImportantKeywords(String location) {
+        Matcher matcher = LOCATION_KEYWORD_PATTERN.matcher(location);
+        if (matcher.find()) {
+            return matcher.group(0);
+        } else {
+            return location;
+        }
     }
 
 
@@ -1468,12 +1871,15 @@ public class CombinePanel extends UiPart<Region> {
         noteGrid.setHgap(20); //horizontal gap in pixels => that's what you are asking for
         noteGrid.setVgap(20); //vertical gap in pixels
 
+        //Only display 9 notes, so 3 x 3 Matrix
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 String text = noteData[i][j];
                 if (text == null) {
                     return;
                 }
+
+                //Generate random RGB color
                 int x = 120 + (int) (Math.random() * 255);
                 int y = 120 + (int) (Math.random() * 255);
                 int z = 120 + (int) (Math.random() * 255);
@@ -1497,8 +1903,170 @@ public class CombinePanel extends UiPart<Region> {
     }
 
 ```
+###### /java/seedu/address/ui/CombinePanel.java
+``` java
+/**
+ * Contains data related to timetable grid object in JavaFX.
+ */
+class GridData {
+    private String text;
+    private Integer weekDayRow;
+    private Integer startHourCol;
+    private Integer endHourSpan;
+    private Integer count;
+
+    public GridData() {
+        this("", -1, -1, -1, 0);
+    }
+
+    public GridData(String text, int weekDayRow, int startHourCol, int endHourSpan, int count) {
+        this.text = text;
+        this.weekDayRow = weekDayRow;
+        this.startHourCol = startHourCol;
+        this.endHourSpan = endHourSpan;
+        this.count = count;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public Integer getEndHourSpan() {
+        return endHourSpan;
+    }
+
+    public Integer getStartHourCol() {
+        return startHourCol;
+    }
+
+    public Integer getWeekDayRow() {
+        return weekDayRow;
+    }
+
+    public Integer getCount() {
+        return count;
+    }
+
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(text, weekDayRow, startHourCol, endHourSpan);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        GridData other = (GridData) obj;
+        if (!text.equals(other.text)) {
+            return false;
+        }
+        if (!weekDayRow.equals(other.weekDayRow)) {
+            return false;
+        }
+        if (!startHourCol.equals(other.startHourCol)) {
+            return false;
+        }
+        if (!endHourSpan.equals(other.endHourSpan)) {
+            return false;
+        }
+        return true;
+    }
+}
+
+```
 ###### /java/seedu/address/ui/CommandBox.java
 ``` java
+/**
+ * The UI component that is responsible for receiving user command inputs.
+ */
+public class CommandBox extends UiPart<Region> {
+
+    public static final String ERROR_STYLE_CLASS = "error";
+    private static final String FXML = "CommandBox.fxml";
+    private static final String TAG_PREFIX = "prefix";
+
+    private static final int CODE = 0;
+    private static final int CLASSTYPE = 1;
+    private static final int VENUE = 2;
+    private static final int GROUP = 3;
+    private static final int TIMESLOT = 4;
+    private static final int LECTURER = 5;
+    private static final int FONT_SIZE = 6;
+
+    private final Logger logger = LogsCenter.getLogger(CommandBox.class);
+    private final Logic logic;
+    private ListElementPointer historySnapshot;
+
+    private final AddressBookParser tester;
+
+    private HashMap<String, String> keywordColorMap;
+    private ArrayList<String> prefixList;
+    private int fontIndex = 0;
+    private boolean enableHighlight = false;
+    private String userPrefFontSize = "-fx-font-size: " + FONT_SIZE_NORMAL_NUMBER + ";";
+
+    private final ImageView tick = new ImageView("/images/tick.png");
+    private final ImageView cross = new ImageView("/images/cross.png");
+
+
+    @FXML
+    private TextField commandTextField;
+
+    @FXML
+    private Text commandTextDefault;
+
+    @FXML
+    private Text commandTextXsmall;
+
+    @FXML
+    private Text commandTextSmall;
+
+    @FXML
+    private Text commandTextLarge;
+
+    @FXML
+    private Text commandTextXLarge;
+
+    @FXML
+    private StackPane stackPane;
+
+    @FXML
+    private Label keywordLabel;
+
+    @FXML
+    private Label checkBox;
+
+    public CommandBox(Logic logic) {
+        super(FXML);
+        this.logic = logic;
+        // calls #setStyleToDefault() whenever there is a change to the text of the command box.
+        commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
+        configInactiveKeyword();
+        configPrefixList();
+        keywordLabel.getStyleClass().add("keyword-label-default");
+        keywordColorMap = getCommandKeywordColorMap();
+        String[] commands = {"help", "add", "list", "edit", "find", "delete", "select", "history", "undo", "redo",
+            "clear", "exit", "customise", "view", "theme", "mark", "unmark", "remark", "color"};
+        TextFields.bindAutoCompletion(commandTextField, commands); // controlsfx
+        tick.setFitHeight(30);
+        tick.setFitWidth(30);
+        cross.setFitHeight(25);
+        cross.setFitWidth(25);
+        historySnapshot = logic.getHistorySnapshot();
+        tester = new AddressBookParser();
+        registerAsAnEventHandler(this);
+    }
+
+
     /**
      * This method create a list of prefix used in the command
      */
@@ -1651,6 +2219,8 @@ public class CombinePanel extends UiPart<Region> {
         keywordLabel.setVisible(true);
 
         keywordLabel.getStyleClass().clear();
+
+        //These magic numbers are used for handling different font size
         Insets leftInset = new Insets(0, 0, 0, 17);
 
         switch (fontIndex) {
@@ -1704,6 +2274,8 @@ public class CombinePanel extends UiPart<Region> {
 
         tagLabel.getStyleClass().clear();
         double margin = computeMargin(0, inputText);
+
+        //These magic numbers are used for handling different font size
         Insets leftInset = new Insets(0, 0, 0, margin + 17);
 
         switch (fontIndex) {

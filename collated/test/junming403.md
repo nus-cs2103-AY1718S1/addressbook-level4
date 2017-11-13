@@ -79,203 +79,9 @@ public class AddCommandTest {
         return command;
     }
 
-    /**
-     * A default model stub that have all of the methods failing.
-     */
-    private class ModelStub implements Model {
-
-        @Override
-        public HashSet<Location> getUniqueLocationSet() {
-            fail("This method should not be called.");
-            return null;
-        }
-
-        @Override
-        public HashSet<Code> getUniqueCodeSet() {
-            fail("This method should not be called.");
-            return null;
-        }
-
-        @Override
-        public void resetData(ReadOnlyAddressBook newData) {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public ReadOnlyAddressBook getAddressBook() {
-            fail("This method should not be called.");
-            return null;
-        }
-
-        @Override
-        public void updateBookedSlotSet() {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void deleteLesson(ReadOnlyLesson target) throws LessonNotFoundException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void deleteLessonSet(List<ReadOnlyLesson> lessonList) throws LessonNotFoundException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void addLesson(ReadOnlyLesson lesson) throws DuplicateLessonException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void bookmarkLesson(ReadOnlyLesson lesson) throws DuplicateLessonException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void unBookmarkLesson(ReadOnlyLesson lesson) {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void bookingSlot(BookedSlot booking) throws DuplicateBookedSlotException {
-        }
-
-        @Override
-        public void unbookBookedSlot(BookedSlot booking) {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void updateBookedSlot(BookedSlot target, BookedSlot newBookingSlot) throws DuplicateBookedSlotException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void unbookAllSlot() {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void updateLesson(ReadOnlyLesson target, ReadOnlyLesson editedLesson)
-                throws DuplicateLessonException, LessonNotFoundException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public ObservableList<ReadOnlyLesson> getFilteredLessonList() {
-            fail("This method should not be called.");
-            return null;
-        }
-
-        @Override
-        public void updateFilteredLessonList(Predicate<ReadOnlyLesson> predicate) {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void updateFilteredRemarkList(Predicate<Remark> predicate) {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void addRemark(Remark r) throws DuplicateRemarkException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void deleteRemark(Remark target) throws RemarkNotFoundException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void updateRemark(Remark target, Remark editedRemark)
-                throws DuplicateRemarkException, RemarkNotFoundException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void handleListingUnit() {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void sortLessons() {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void setCurrentViewingLesson(ReadOnlyLesson lesson) {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public ReadOnlyLesson getCurrentViewingLesson() {
-            return null;
-        }
-
-        @Override
-        public void setViewingPanelAttribute(String attribute) {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public String getCurrentViewingAttribute() {
-            return null;
-        }
-
-        @Override
-        public ObservableList<Remark> getFilteredRemarkList() {
-            return null;
-        }
-
-        @Override
-        public void updateLocationList() {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void updateModuleList() {
-            fail("This method should not be called.");
-        }
-    }
-
-    /**
-     * A Model stub that always throw a DuplicateLessonException when trying to add a lesson.
-     */
-    private class ModelStubThrowingDuplicateLessonException extends ModelStub {
-        @Override
-        public void addLesson(ReadOnlyLesson lesson) throws DuplicateLessonException {
-            throw new DuplicateLessonException();
-        }
-
-        @Override
-        public ReadOnlyAddressBook getAddressBook() {
-            return new AddressBook();
-        }
-    }
-
-    /**
-     * A Model stub that always accept the lesson being added.
-     */
-    private class ModelStubAcceptingLessonAdded extends ModelStub {
-        final ArrayList<Lesson> lessonsAdded = new ArrayList<>();
-
-        @Override
-        public void addLesson(ReadOnlyLesson lesson) throws DuplicateLessonException {
-            lessonsAdded.add(new Lesson(lesson));
-        }
-
-        @Override
-        public void handleListingUnit() {
-
-        }
-
-        @Override
-        public ReadOnlyAddressBook getAddressBook() {
-            return new AddressBook();
-        }
-    }
+```
+###### /java/seedu/address/logic/commands/AddCommandTest.java
+``` java
 
     /**
      * A Model stub that always thrown duplicate time slot exception.
@@ -298,18 +104,9 @@ public class AddCommandTest {
             return new AddressBook();
         }
     }
-
-}
 ```
 ###### /java/seedu/address/logic/commands/DeleteCommandTest.java
 ``` java
-/**
- * Contains integration tests (interaction with the Model) and unit tests for {@code DeleteCommand}.
- */
-public class DeleteCommandTest {
-
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-
     @Test
     public void execute_validIndexUnfilteredList_success() throws Exception {
         ListingUnit.setCurrentListingUnit(ListingUnit.LESSON);
@@ -410,29 +207,9 @@ public class DeleteCommandTest {
 
         assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_DISPLAYED_INDEX);
     }
-
-    @Test
-    public void equals() {
-        DeleteCommand deleteFirstCommand = new DeleteCommand(INDEX_FIRST_LESSON);
-        DeleteCommand deleteSecondCommand = new DeleteCommand(INDEX_SECOND_LESSON);
-
-        // same object -> returns true
-        assertTrue(deleteFirstCommand.equals(deleteFirstCommand));
-
-        // same values -> returns true
-        DeleteCommand deleteFirstCommandCopy = new DeleteCommand(INDEX_FIRST_LESSON);
-        assertTrue(deleteFirstCommand.equals(deleteFirstCommandCopy));
-
-        // different types -> returns false
-        assertFalse(deleteFirstCommand.equals(1));
-
-        // null -> returns false
-        assertFalse(deleteFirstCommand.equals(null));
-
-        // different delete command -> returns false
-        assertFalse(deleteFirstCommand.equals(deleteSecondCommand));
-    }
-
+```
+###### /java/seedu/address/logic/commands/DeleteCommandTest.java
+``` java
     @Test
     public void execute_validIndexDeleteByModule_success() throws Exception {
 
@@ -505,7 +282,6 @@ public class DeleteCommandTest {
 
         assert model.getFilteredLessonList().isEmpty();
     }
-}
 ```
 ###### /java/seedu/address/logic/commands/DeleteRemarkCommandTest.java
 ``` java
@@ -552,18 +328,6 @@ public class DeleteRemarkCommandTest {
 ```
 ###### /java/seedu/address/logic/commands/EditCommandTest.java
 ``` java
-/**
- * Contains integration tests (interaction with the Model) and unit tests for EditCommand.
- */
-public class EditCommandTest {
-
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-
-    @Before
-    public void reset_model() {
-        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-    }
-
     @Test
     public void execute_allFieldsSpecifiedUnfilteredList_success() throws Exception {
 
@@ -751,6 +515,26 @@ public class EditCommandTest {
     }
 
     @Test
+    public void execute_duplicateTimeSlot_failure() {
+
+        model.updateFilteredLessonList(
+                new FixedCodePredicate(model.getFilteredLessonList().get(INDEX_FIRST_LESSON.getZeroBased()).getCode()));
+
+        Lesson firstLesson = new Lesson(model.getFilteredLessonList().get(INDEX_FIRST_LESSON.getZeroBased()));
+        Lesson secondLesson = new Lesson(model.getFilteredLessonList().get(INDEX_SECOND_LESSON.getZeroBased()));
+
+        EditLessonDescriptor descriptor =
+                new EditLessonDescriptorBuilder(secondLesson).withTimeSlot(firstLesson.getTimeSlot().toString())
+                        .withLocation(firstLesson.getLocation().toString()).build();
+
+        EditCommand editCommand = prepareCommand(INDEX_SECOND_LESSON, descriptor);
+        ListingUnit.setCurrentListingUnit(ListingUnit.MODULE);
+        ListingUnit.setCurrentListingUnit(ListingUnit.LESSON);
+
+        assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_BOOKEDSLOT);
+    }
+
+    @Test
     public void execute_duplicateLessonFilteredList_failure() {
         showFirstLessonOnly(model);
 
@@ -760,7 +544,7 @@ public class EditCommandTest {
                 new EditLessonDescriptorBuilder(lessonInList).build());
         ListingUnit.setCurrentListingUnit(ListingUnit.LESSON);
 
-        assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_LESSON);
+        assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_BOOKEDSLOT);
     }
 
     @Test
@@ -794,32 +578,9 @@ public class EditCommandTest {
 
         assertCommandFailure(editCommand, model, Messages.MESSAGE_INVALID_DISPLAYED_INDEX);
     }
-
-    @Test
-    public void equals() {
-        final EditCommand standardCommand = new EditCommand(INDEX_FIRST_LESSON, DESC_MA1101R);
-
-        // same values -> returns true
-        EditLessonDescriptor copyDescriptor = new EditLessonDescriptor(DESC_MA1101R);
-        EditCommand commandWithSameValues = new EditCommand(INDEX_FIRST_LESSON, copyDescriptor);
-        assertTrue(standardCommand.equals(commandWithSameValues));
-
-        // same object -> returns true
-        assertTrue(standardCommand.equals(standardCommand));
-
-        // null -> returns false
-        assertFalse(standardCommand.equals(null));
-
-        // different types -> returns false
-        assertFalse(standardCommand.equals(new ClearCommand()));
-
-        // different index -> returns false
-        assertFalse(standardCommand.equals(new EditCommand(INDEX_SECOND_LESSON, DESC_MA1101R)));
-
-        // different descriptor -> returns false
-        assertFalse(standardCommand.equals(new EditCommand(INDEX_FIRST_LESSON, DESC_CS2101)));
-    }
-
+```
+###### /java/seedu/address/logic/commands/EditCommandTest.java
+``` java
     /**
      * Returns an {@code EditCommand} with parameters {@code index} and {@code descriptor}
      */
@@ -837,7 +598,6 @@ public class EditCommandTest {
         editCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return editCommand;
     }
-}
 ```
 ###### /java/seedu/address/logic/commands/ListCommandTest.java
 ``` java
@@ -2121,70 +1881,6 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + GROUP_DESC_MA1101R + TIMESLOT_DESC_MA1101R + INVALID_LECTURER_DESC;
         assertCommandFailure(command, Lecturer.MESSAGE_LECTURER_CONSTRAINTS);
     }
-
-    /**
-     * Executes the {@code AddCommand} that adds {@code toAdd} to the model and verifies that the command box displays
-     * an empty string, the result display box displays the success message of executing {@code AddCommand} with the
-     * details of {@code toAdd}, and the model related components equal to the current model added with {@code toAdd}.
-     * These verifications are done by
-     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
-     * Also verifies that the command box has the default style class, the status bar's sync status changes,
-     * the browser url and selected card remains unchanged.
-     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
-     */
-    private void assertCommandSuccess(ReadOnlyLesson toAdd) {
-        assertCommandSuccess(LessonUtil.getAddCommand(toAdd), toAdd);
-    }
-
-    /**
-     * Performs the same verification as {@code assertCommandSuccess(ReadOnlyLesson)}. Executes {@code command}
-     * instead.
-     * @see AddCommandSystemTest#assertCommandSuccess(ReadOnlyLesson)
-     */
-    private void assertCommandSuccess(String command, ReadOnlyLesson toAdd) {
-        Model expectedModel = getModel();
-        try {
-            expectedModel.addLesson(toAdd);
-        } catch (DuplicateLessonException dpe) {
-            throw new IllegalArgumentException("toAdd already exists in the model.");
-        }
-        String expectedResultMessage = String.format(AddCommand.MESSAGE_SUCCESS, toAdd);
-
-        assertCommandSuccess(command, expectedModel, expectedResultMessage);
-    }
-
-    /**
-     * Performs the same verification as {@code assertCommandSuccess(String, ReadOnlyLesson)} except that the result
-     * display box displays {@code expectedResultMessage} and the model related components equal to
-     * {@code expectedModel}.
-     * @see AddCommandSystemTest#assertCommandSuccess(String, ReadOnlyLesson)
-     */
-    private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
-        executeCommand(command);
-        assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
-        assertSelectedCardUnchanged();
-        assertCommandBoxShowsDefaultStyle();
-        assertStatusBarUnchangedExceptSyncStatus();
-    }
-
-    /**
-     * Executes {@code command} and verifies that the command box displays {@code command}, the result display
-     * box displays {@code expectedResultMessage} and the model related components equal to the current model.
-     * These verifications are done by
-     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
-     * Also verifies that the browser url, selected card and status bar remain unchanged, and the command box has the
-     * error style.
-     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
-     */
-    private void assertCommandFailure(String command, String expectedResultMessage) {
-        Model expectedModel = getModel();
-        executeCommand(command);
-        assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
-        assertSelectedCardUnchanged();
-        assertCommandBoxShowsErrorStyle();
-        assertStatusBarUnchanged();
-    }
-}
 ```
 ###### /java/systemtests/DeleteCommandSystemTest.java
 ``` java
@@ -2263,6 +1959,7 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
 
         /* ----------------- Performing delete operation while a location list is being shown -------------------- */
 
+        /* list by location */
         String listLocationCommand = ListCommand.COMMAND_WORD + " location";
         executeCommand(listLocationCommand);
 
@@ -2408,65 +2105,6 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(
                 DeleteCommand.COMMAND_WORD + " " + toDelete.getOneBased(), expectedModel, expectedResultMessage);
     }
-
-    /**
-     * Executes {@code command} and in addition,<br>
-     * 1. Asserts that the command box displays an empty string.<br>
-     * 2. Asserts that the result display box displays {@code expectedResultMessage}.<br>
-     * 3. Asserts that the model related components equal to {@code expectedModel}.<br>
-     * 4. Asserts that the browser url and selected card remains unchanged.<br>
-     * 5. Asserts that the status bar's sync status changes.<br>
-     * 6. Asserts that the command box has the default style class.<br>
-     * Verifications 1 to 3 are performed by
-     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.
-     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
-     */
-    private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
-        assertCommandSuccess(command, expectedModel, expectedResultMessage, null);
-    }
-
-    /**
-     * Performs the same verification as {@code assertCommandSuccess(String, Model, String)} except that the browser url
-     * and selected card are expected to update accordingly depending on the card at {@code expectedSelectedCardIndex}.
-     * @see DeleteCommandSystemTest#assertCommandSuccess(String, Model, String)
-     * @see AddressBookSystemTest#assertSelectedCardChanged(Index)
-     */
-    private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage,
-            Index expectedSelectedCardIndex) {
-        executeCommand(command);
-        assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
-
-        if (expectedSelectedCardIndex != null) {
-            assertSelectedCardChanged(expectedSelectedCardIndex);
-        } else {
-            assertSelectedCardUnchanged();
-        }
-
-        assertCommandBoxShowsDefaultStyle();
-        assertStatusBarUnchangedExceptSyncStatus();
-    }
-
-    /**
-     * Executes {@code command} and in addition,<br>
-     * 1. Asserts that the command box displays {@code command}.<br>
-     * 2. Asserts that result display box displays {@code expectedResultMessage}.<br>
-     * 3. Asserts that the model related components equal to the current model.<br>
-     * 4. Asserts that the browser url, selected card and status bar remain unchanged.<br>
-     * 5. Asserts that the command box has the error style.<br>
-     * Verifications 1 to 3 are performed by
-     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
-     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
-     */
-    private void assertCommandFailure(String command, String expectedResultMessage) {
-        Model expectedModel = getModel();
-
-        executeCommand(command);
-        assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
-        assertSelectedCardUnchanged();
-        assertCommandBoxShowsErrorStyle();
-        assertStatusBarUnchanged();
-    }
-}
 ```
 ###### /java/systemtests/EditCommandSystemTest.java
 ``` java
@@ -2794,55 +2432,6 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
                     "edited module code is not valid");
         }
     }
-
-    /**
-     * Performs the same verification as {@code assertCommandSuccess(String, Model, String, Index)} and in addition,<br>
-     * 1. Asserts that result display box displays the success message of executing {@code EditCommand}.<br>
-     * 2. Asserts that the model related components are updated to reflect the lesson at index {@code toEdit} being
-     * updated to values specified {@code editedLesson}.<br>
-     * @param toEdit the index of the current model's filtered list.
-     * @see EditCommandSystemTest#assertCommandSuccess(String, Model, String, Index)
-     */
-    private void assertEditLessonSuccess(String command, Index toEdit, ReadOnlyLesson editedLesson,
-            Index expectedSelectedCardIndex) throws DuplicateBookedSlotException {
-        Model expectedModel = getModel();
-        ReadOnlyLesson lessonToEdit = expectedModel.getFilteredLessonList().get(toEdit.getZeroBased());
-        BookedSlot bookedSlotToEdit = new BookedSlot(lessonToEdit.getLocation(), lessonToEdit.getTimeSlot());
-        BookedSlot editedBookedSlot = new BookedSlot(editedLesson.getLocation(), editedLesson.getTimeSlot());
-        try {
-            expectedModel.updateLesson(lessonToEdit, editedLesson);
-            expectedModel.updateBookedSlot(bookedSlotToEdit, editedBookedSlot);
-            expectedModel.updateFilteredLessonList(MA1101R_CODE_PREDICATE);
-        } catch (DuplicateLessonException | LessonNotFoundException e) {
-            throw new IllegalArgumentException(
-                    "editedLesson is a duplicate in expectedModel, or it isn't found in the model.");
-        }
-        assertCommandSuccess(command, expectedModel,
-                String.format(EditCommand.MESSAGE_EDIT_LESSON_SUCCESS, editedLesson), expectedSelectedCardIndex);
-    }
-
-
-    /**
-     * Executes {@code command} and in addition,<br>
-     * 1. Asserts that the command box displays {@code command}.<br>
-     * 2. Asserts that result display box displays {@code expectedResultMessage}.<br>
-     * 3. Asserts that the model related components equal to the current model.<br>
-     * 4. Asserts that the browser url, selected card and status bar remain unchanged.<br>
-     * 5. Asserts that the command box has the error style.<br>
-     * Verifications 1 to 3 are performed by
-     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
-     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
-     */
-    private void assertCommandFailure(String command, String expectedResultMessage) {
-        Model expectedModel = getModel();
-
-        executeCommand(command);
-        assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
-        assertSelectedCardUnchanged();
-        assertCommandBoxShowsErrorStyle();
-        assertStatusBarUnchanged();
-    }
-}
 ```
 ###### /java/systemtests/MarkCommandSystemTest.java
 ``` java

@@ -27,7 +27,6 @@ import seedu.address.model.module.predicates.MarkedListPredicate;
 import seedu.address.model.module.predicates.UniqueLocationPredicate;
 import seedu.address.model.module.predicates.UniqueModuleCodePredicate;
 
-//@@author junming403
 /**
  * Contains integration tests (interaction with the Model) and unit tests for {@code DeleteCommand}.
  */
@@ -35,6 +34,7 @@ public class DeleteCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
+    //@@author junming403
     @Test
     public void execute_validIndexUnfilteredList_success() throws Exception {
         ListingUnit.setCurrentListingUnit(ListingUnit.LESSON);
@@ -135,6 +135,7 @@ public class DeleteCommandTest {
 
         assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_DISPLAYED_INDEX);
     }
+    //@@author
 
     @Test
     public void equals() {
@@ -158,6 +159,7 @@ public class DeleteCommandTest {
         assertFalse(deleteFirstCommand.equals(deleteSecondCommand));
     }
 
+    //@@author junming403
     @Test
     public void execute_validIndexDeleteByModule_success() throws Exception {
 
@@ -230,4 +232,5 @@ public class DeleteCommandTest {
 
         assert model.getFilteredLessonList().isEmpty();
     }
+    //@@author
 }

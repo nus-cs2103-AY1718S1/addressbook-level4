@@ -111,6 +111,7 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
 
         /* ----------------- Performing delete operation while a location list is being shown -------------------- */
 
+        /* list by location */
         String listLocationCommand = ListCommand.COMMAND_WORD + " location";
         executeCommand(listLocationCommand);
 
@@ -256,6 +257,7 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(
                 DeleteCommand.COMMAND_WORD + " " + toDelete.getOneBased(), expectedModel, expectedResultMessage);
     }
+    //@@author
 
     /**
      * Executes {@code command} and in addition,<br>

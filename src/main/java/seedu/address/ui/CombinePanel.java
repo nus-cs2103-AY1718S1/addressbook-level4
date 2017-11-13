@@ -45,7 +45,7 @@ import seedu.address.model.module.Remark;
 import seedu.address.model.module.predicates.SelectedStickyNotePredicate;
 //@@author caoliangnus
 /**
- * The UI component that is responsible for combining the web browser panel and the timetable panel.
+ * The UI component that is responsible for combining the web browser panel, the timetable panel and sticky notes panel.
  */
 public class CombinePanel extends UiPart<Region> {
 
@@ -107,7 +107,6 @@ public class CombinePanel extends UiPart<Region> {
 
     }
 
-
     @Subscribe
     private void handleViewedLessonEvent(ViewedLessonEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
@@ -118,7 +117,7 @@ public class CombinePanel extends UiPart<Region> {
             noteBox.setVisible(false);
         } else if (ListingUnit.getCurrentListingUnit().equals(ListingUnit.LOCATION)) {
             timeBox.setVisible(false);
-            browser.setVisible(false);
+            browser.setVisible(false); //Only set as visible when location is selected
             noteBox.setVisible(false);
         } else {
             timeBox.setVisible(false);
@@ -143,10 +142,9 @@ public class CombinePanel extends UiPart<Region> {
     /**
      * Generate time slot header
      */
-
     public void generateTimeslotHeader() {
         String text;
-        int k = 8;
+        int k = START_TIME;
         for (int i = 1; i < COL + 1; i++) {
 
             if (k < 10) {
@@ -166,10 +164,9 @@ public class CombinePanel extends UiPart<Region> {
     /**
      * Generate week day row header
      */
-
     public void generateWeekDay() {
         for (int i = 1; i < ROW; i++) {
-            String dayOfWeek = DayOfWeek.of(i).toString().substring(0, 3);
+            String dayOfWeek = DayOfWeek.of(i).toString().substring(0, 3); //The first 3 characters of WeekDay, eg MON
             Label label = new Label(dayOfWeek);
             label.setId(HEADER);
             timetableGrid.setValignment(label, VPos.CENTER);
@@ -185,6 +182,7 @@ public class CombinePanel extends UiPart<Region> {
         ObservableList<ReadOnlyLesson> lessons = logic.getFilteredLessonList();
         initGridData();
 
+        //This code allows the gridline to stay appear
         Node node = timetableGrid.getChildren().get(0);
         timetableGrid.getChildren().clear();
         timetableGrid.getChildren().add(0, node);
@@ -194,22 +192,24 @@ public class CombinePanel extends UiPart<Region> {
             String text = lesson.getCode() + " " + lesson.getClassType()
                     + "(" + lesson.getGroup() + ") " + lesson.getLocation();
             String timeText = lesson.getTimeSlot().toString();
-            int weekDayRow = getWeekDay(timeText.substring(0, 3));
-            int startHourCol = getTime(timeText.substring(4, 6));
-            int endHourSpan = getTime(timeText.substring(9, 11)) - startHourCol;
+            int weekDayRow = getWeekDay(timeText.substring(0, 3)); //First 3 characters are Weekday
+            int startHourCol = getTime(timeText.substring(4, 6));  //Next 2 characters are StartHour
+            int endHourSpan = getTime(timeText.substring(9, 11)) - startHourCol; //find the number of hours for lesson
             boolean isAvailable = false;
             if (!isOccupy(weekDayRow, startHourCol, endHourSpan)) {
                 isAvailable = true;
             }
 
             if (isAvailable && gridData[weekDayRow][startHourCol].getCount() == 0) {
-                gridData[weekDayRow][startHourCol] = new GridData(text, weekDayRow, startHourCol, endHourSpan, 1);
+                gridData[weekDayRow][startHourCol] = new GridData(text, weekDayRow, startHourCol,
+                        endHourSpan, 1); //1 represents no other lessons occupy this time slot
             } else {
                 int count = gridData[weekDayRow][startHourCol].getCount();
                 gridData[weekDayRow][startHourCol] = new GridData(text, weekDayRow, startHourCol,
-                        endHourSpan, count + 2);
+                        endHourSpan, count + 2); //count + 2 to indicate another lesson occupying this time slot
             }
 
+            //Update gridDataCheckTable
             for (int j = 0; j < endHourSpan; j++) {
                 gridDataCheckTable[weekDayRow][startHourCol + j] = 1;
             }
@@ -368,6 +368,7 @@ public class CombinePanel extends UiPart<Region> {
         int count = 0;
         int index = 1;
 
+        //Only display 9 notes, so 3 x 3 matrix
         noteData = new String[3][3];
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -396,12 +397,15 @@ public class CombinePanel extends UiPart<Region> {
         noteGrid.setHgap(20); //horizontal gap in pixels => that's what you are asking for
         noteGrid.setVgap(20); //vertical gap in pixels
 
+        //Only display 9 notes, so 3 x 3 Matrix
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 String text = noteData[i][j];
                 if (text == null) {
                     return;
                 }
+
+                //Generate random RGB color
                 int x = 120 + (int) (Math.random() * 255);
                 int y = 120 + (int) (Math.random() * 255);
                 int z = 120 + (int) (Math.random() * 255);
@@ -508,8 +512,9 @@ public class CombinePanel extends UiPart<Region> {
     //@@author
 }
 
+//@@author caoliangnus
 /**
- * Contains data related to grid object in JavaFX.
+ * Contains data related to timetable grid object in JavaFX.
  */
 class GridData {
     private String text;

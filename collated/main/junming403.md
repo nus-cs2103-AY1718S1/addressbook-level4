@@ -134,6 +134,7 @@ public class ClearCommand extends UndoableCommand {
         EventsCenter.getInstance().post(new RemarkChangedEvent());
         return new CommandResult(MESSAGE_SUCCESS);
     }
+
 }
 ```
 ###### /java/seedu/address/logic/commands/DeleteCommand.java
@@ -453,7 +454,6 @@ public class EditCommand extends UndoableCommand {
             logger.info("---[Edit failure]Editing would results in duplicate time slot.");
             throw new CommandException(MESSAGE_DUPLICATE_BOOKEDSLOT);
         } catch (IllegalValueException ive) {
-
             logger.info("---???Edit failure???Editing illegal value.");
             model.updateLocationList();
             throw new CommandException(ive.getMessage());
@@ -1126,7 +1126,8 @@ public class UnmarkCommand extends UndoableCommand {
                 return new CommandResult(String.format(MESSAGE_UNBOOKMARK_LESSON_SUCCESS, lessonToUnbookmark));
 
             } catch (NotRemarkedLessonException e) {
-                logger.info("---[Unmark failure]The lesson to unbookmark is not in the marked list:" + lessonToUnbookmark);
+                logger.info("---[Unmark failure]The lesson to unbookmark is not in the marked list:"
+                        + lessonToUnbookmark);
                 throw new CommandException(e.getMessage());
             }
         } else {
@@ -1171,8 +1172,8 @@ public class ViewCommand extends Command {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_VIEW_LOCATION_SUCCESS = "lessons(s) founded with location %1$s";
-    public static final String MESSAGE_VIEW_MODULE_SUCCESS = "lessons(s) founded with module code %1$s";
+    public static final String MESSAGE_VIEW_LOCATION_SUCCESS = "Lesson(s) founded with location %1$s.";
+    public static final String MESSAGE_VIEW_MODULE_SUCCESS = "Lesson(s) founded with module code %1$s.";
     public static final String MESSAGE_VIEW_LESSON_FAILURE = "You can only view module or location.";
     public static final String VIEWING_ATTRIBUTE_MODULE = "module";
     public static final String VIEWING_ATTRIBUTE_DEFAULT = "default";
@@ -1230,7 +1231,6 @@ public class ViewCommand extends Command {
             break;
 
         default:
-
             logger.info("---[View success]Viewing failed, invalid listing unit: LESSON");
             throw new CommandException(MESSAGE_VIEW_LESSON_FAILURE);
         }
@@ -1605,7 +1605,7 @@ public class ViewCommandParser implements Parser<ViewCommand> {
 ``` java
     /**
      * Adds a lesson to the marked list.
-     * Only person exists in the ModU can be added into the marked list.
+     * Only lesson exists in the ModU can be added into the marked list.
      *
      * @throws DuplicateLessonException if an equivalent lesson already exists.
      */
@@ -1619,7 +1619,7 @@ public class ViewCommandParser implements Parser<ViewCommand> {
 
     /**
      * Removes a lesson from the marked list.
-     * Only person exists in the marked List can be unbookmarked from the marked list.
+     * Only lesson exists in the marked List can be unbookmarked from the marked list.
      */
     public void unBookmarkLesson(ReadOnlyLesson m) throws NotRemarkedLessonException {
         if (m.isMarked()) {
@@ -2221,8 +2221,7 @@ public class UniqueLocationPredicate implements Predicate<ReadOnlyLesson> {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof UniqueLocationPredicate // instanceof handles nulls
-                && this.uniqueLocationSet.equals(((UniqueLocationPredicate) other).uniqueLocationSet)); // state check
+                || (other instanceof UniqueLocationPredicate); // instanceof handles nulls
     }
 
 }
@@ -2252,9 +2251,9 @@ public class UniqueModuleCodePredicate implements Predicate<ReadOnlyLesson> {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof UniqueModuleCodePredicate // instanceof handles nulls
-                && this.uniqueCodeSet.equals(((UniqueModuleCodePredicate) other).uniqueCodeSet)); // state check
+                || (other instanceof UniqueModuleCodePredicate); // instanceof handles nulls
     }
+
 
 }
 ```
@@ -2554,6 +2553,7 @@ public class XmlAdaptedRemark {
         int count = 0;
         int index = 1;
 
+        //Only display 9 notes, so 3 x 3 matrix
         noteData = new String[3][3];
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -2594,7 +2594,7 @@ public class XmlAdaptedRemark {
 ###### /java/seedu/address/ui/LessonListCard.java
 ``` java
     /**
-     * Change the card state to hide irrelevant information and only show address
+     * Change the card state to hide irrelevant information and only show Module Code
      */
     private void switchToModuleCard() {
         code.setVisible(true);
@@ -2606,7 +2606,7 @@ public class XmlAdaptedRemark {
     }
 
     /**
-     * Change the card state to hide irrelevant information and only show phone
+     * Change the card state to hide irrelevant information and only show Location
      */
     private void switchToLocationCard() {
         code.setVisible(false);
