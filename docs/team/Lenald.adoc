@@ -138,9 +138,7 @@ include::../DeveloperGuide.adoc[tag=studentparentcontact]
 
 ---
 
-
 === Other contributions
-
 
 * Included ParentPhone attribute (Pull request https://github.com/CS2103AUG2017-T16-B2/main/pull/116[#116])
 * Included icons in PersonListCard (Pull request https://github.com/CS2103AUG2017-T16-B2/main/pull/116[#116])
@@ -149,6 +147,8 @@ include::../DeveloperGuide.adoc[tag=studentparentcontact]
 * Improve test quality of several features (Pull requests https://github.com/CS2103AUG2017-T16-B2/main/pull/88[#88]
 , https://github.com/CS2103AUG2017-T16-B2/main/pull/113[#113], https://github.com/CS2103AUG2017-T16-B2/main/pull/121[#121])
 * Remove unused codes to improve coveralls (Pull request https://github.com/CS2103AUG2017-T16-B2/main/pull/129[#129])
+* Update AboutUs section (Pull request https://github.com/CS2103AUG2017-T16-B2/main/pull/25[#25])
+* Create Glossary section (Pull request https://github.com/CS2103AUG2017-T16-B2/main/pull/16[#16])
 
 == Other Projects: NUS Interactive Food Map
 
