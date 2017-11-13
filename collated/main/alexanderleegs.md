@@ -16,7 +16,7 @@ public class AddMeetingCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD + " 1 "
             + "business " + "/ " + "2017-12-20 10:00";
 
-    public static final String MESSAGE_ADD_TAG_SUCCESS = "Added Meeting: %1$s";
+    public static final String MESSAGE_ADD_MEETING_SUCCESS = "Added Meeting: %1$s";
     public static final String MESSAGE_DUPLICATE_MEETING = "This person already has this meeting.";
     public static final String MESSAGE_TIME_CONSTRAINTS = "Time format should be YYYY-MM-DD HH:MM";
 
@@ -69,7 +69,7 @@ public class AddMeetingCommand extends UndoableCommand {
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
         }
-        return new CommandResult(String.format(MESSAGE_ADD_TAG_SUCCESS, newMeeting.meetingName));
+        return new CommandResult(String.format(MESSAGE_ADD_MEETING_SUCCESS, newMeeting.meetingName));
     }
 
     @Override
@@ -666,77 +666,9 @@ public class Meeting {
         }
     }
 
-    /**
-     * Overloaded constructor for creating meeting objects with no proper reference to their person object
-     */
-    public Meeting(String meetingName, String time) throws IllegalValueException {
-        this.meetingName = meetingName;
-        this.displayMeetingName = new SimpleObjectProperty<>(meetingName);
-        if (time == null) {
-            throw new IllegalValueException(MESSAGE_TIME_CONSTRAINTS);
-        }
-        String trimmedTime = time.trim();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        try {
-            LocalDateTime date = LocalDateTime.parse(trimmedTime, formatter);
-            this.date = date;
-            value = date.format(formatter);
-            this.displayValue = new SimpleObjectProperty<>(value);
-        } catch (DateTimeParseException dtpe) {
-            throw new IllegalValueException(MESSAGE_TIME_CONSTRAINTS);
-        }
-    }
-
-    /**
-     * Overloaded constructor to create a new meeting object given a meeting for reference purposes.
-     */
-    public Meeting(Meeting meeting) {
-        this.meetingName = meeting.meetingName;
-        this.date = meeting.date;
-        this.value = meeting.value;
-        this.person = meeting.person;
-        this.displayValue = meeting.displayValue;
-        this.displayMeetingName = meeting.displayMeetingName;
-        this.displayName = meeting.displayName;
-    }
-
-    /**
-     * Set the person attributes of the meeting object.
-     */
-    public void setPerson(ReadOnlyPerson person) {
-        this.person = person;
-        this.displayName = new SimpleObjectProperty<>(person.getName());
-    }
-
-    /**
-     * Returns ReadOnlyPerson of the meeting
-     */
-    public ReadOnlyPerson getPerson() {
-        return person;
-    }
-
-    /**
-     * Return name for use by UI
-     */
-    public ObjectProperty<Name> nameProperty() {
-        return displayName;
-    }
-
-    /**
-     * Return meeting name for use by UI
-     */
-    public ObjectProperty<String> meetingNameProperty() {
-        return displayMeetingName;
-    }
-
-    /**
-     * Return meeting time for use by UI
-     */
-    public ObjectProperty<String> meetingTimeProperty() {
-        return displayValue;
-    }
-
-
+```
+###### \java\seedu\address\model\meeting\Meeting.java
+``` java
     @Override
     public boolean equals(Object other) {
         /* Only happens for testing as name attribute will be set for the main app*/

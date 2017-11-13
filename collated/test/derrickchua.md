@@ -97,9 +97,8 @@ public class LogoutCommandTest {
     public void execute_addLogout_success() throws Exception {
 
         LogoutCommand logoutCommand = prepareCommand();
-
         java.io.File filetoDelete =
-                new java.io.File(System.getProperty("user.home"), ".store/addressbook/StoredCredential");
+                new java.io.File("data/StoredCredential");
         filetoDelete.mkdirs();
         filetoDelete.createNewFile();
         String expectedMessage = String.format(LogoutCommand.MESSAGE_SUCCESS);
@@ -113,7 +112,7 @@ public class LogoutCommandTest {
         LogoutCommand logoutCommand = prepareCommand();
 
         java.io.File filetoDelete =
-                new java.io.File(System.getProperty("user.home"), ".store/addressbook/StoredCredential");
+                new java.io.File("data/StoredCredential");
         filetoDelete.delete();
         String expectedMessage = String.format(LogoutCommand.MESSAGE_FAILURE);
         assertCommandFailure(logoutCommand, model, expectedMessage);
@@ -143,6 +142,7 @@ public class LogoutCommandTest {
      */
     private LogoutCommand prepareCommand() {
         LogoutCommand logoutcommand = new LogoutCommand();
+        logoutcommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return logoutcommand;
     }
 
@@ -267,6 +267,65 @@ public class SyncCommandTest {
     }
 
     @Test
+    public void check_equalPerson() {
+        showFirstPersonOnly(model);
+
+        SyncCommand syncCommand = prepareCommand();
+        Person aliceGoogle = prepareAliceGoogle();
+
+        assertTrue(syncCommand.equalPerson(model.getFilteredPersonList().get(0), aliceGoogle));
+    }
+
+    @Test
+    public void check_convertAPerson() {
+        showFirstPersonOnly(model);
+
+        SyncCommand syncCommand = prepareCommand();
+        ReadOnlyPerson aliceAbc = model.getFilteredPersonList().get(0);
+        Person person = syncCommand.convertAPerson(aliceAbc);
+
+        assertTrue(syncCommand.equalPerson(aliceAbc, person));
+    }
+
+    @Test
+    public void check_convertGPerson() throws Exception {
+        showFirstPersonOnly(model);
+
+        SyncCommand syncCommand = prepareCommand();
+        ReadOnlyPerson aliceAbc = model.getFilteredPersonList().get(0);
+        Person aliceGoogle = prepareAliceGoogle();
+        seedu.address.model.person.Person converted = syncCommand.convertGooglePerson(aliceGoogle, aliceAbc);
+
+        assertEquals(converted, aliceAbc);
+    }
+
+    @Test
+    public void test_getLastUpdated() {
+        showFirstPersonOnly(model);
+
+        SyncCommand syncCommand = prepareCommand();
+        Person aliceGoogle = prepareAliceGoogle();
+
+        assertTrue(syncCommand.getLastUpdated(aliceGoogle).equals("2017-11-12T16:29:49.398001Z"));
+    }
+
+    @Test
+    public void check_linkedContact() throws Exception {
+        showFirstPersonOnly(model);
+
+        SyncCommand syncCommand = prepareCommand();
+        ReadOnlyPerson aliceAbc =  model.getFilteredPersonList().get(0);
+        Person aliceGoogle = prepareAliceGoogle();
+
+        syncCommand.linkContacts(aliceAbc, aliceGoogle);
+
+        aliceAbc =  model.getFilteredPersonList().get(0);
+
+        assertTrue(aliceAbc.getId().getValue().equals("alice")
+                && aliceAbc.getLastUpdated().getValue().equals("2017-11-12T16:29:49.398001Z"));
+    }
+
+    @Test
     public void equals() {
         SyncCommand syncFirstCommand = new SyncCommand();
         SyncCommand syncSecondCommand = new SyncCommand();
@@ -293,25 +352,38 @@ public class SyncCommandTest {
         return synccommand;
     }
 
-    /**
-     * Returns a {@code LoginCommand}
+    /** Prepares a Google Person which is the equivalent of the ABC Person ALICE for testing
+     *
+     * @return
      */
-    private LoginCommand prepareLogin() {
-        LoginCommand logincommand = new LoginCommand();
-        logincommand.setData(model, new CommandHistory(), new UndoRedoStack());
-        logincommand.setExecutor(Executors.newSingleThreadExecutor());
-        return logincommand;
+    private Person prepareAliceGoogle() {
+        Person result  = new Person();
+        PersonMetadata metadata = new PersonMetadata();
+        List<Name>  name = new ArrayList<>();
+        List<Address> address = new ArrayList<Address>();
+        List<EmailAddress> email = new ArrayList<>();
+        List<PhoneNumber> phone = new ArrayList<>();
+        List<Source> source = new ArrayList<>();
+
+
+        name.add(new Name().setGivenName("Alice Pauline"));
+        address.add(new Address().setFormattedValue("123, Jurong West Ave 6, #08-111"));
+        email.add(new EmailAddress().setValue("alice@example.com"));
+        phone.add(new PhoneNumber().setValue("85355255"));
+        source.add(new Source().setUpdateTime("2017-11-12T16:29:49.398001Z"));
+        metadata.setSources(source);
+
+        result.setEmailAddresses(email)
+                .setNames(name)
+                .setPhoneNumbers(phone)
+                .setAddresses(address)
+                .setResourceName("alice")
+                .setMetadata(metadata);
+
+        return result;
     }
 
 
-    /**
-     * Updates {@code model}'s filtered list to show no one.
-     */
-    private void showNoPerson(Model model) {
-        model.updateFilteredPersonList(p -> false);
-
-        assert model.getFilteredPersonList().isEmpty();
-    }
 }
 ```
 ###### \java\seedu\address\logic\parser\AddCommandParserTest.java

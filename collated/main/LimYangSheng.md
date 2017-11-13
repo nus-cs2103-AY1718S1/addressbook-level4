@@ -143,6 +143,79 @@ public class RestoreBackupCommand extends UndoableCommand {
     }
 
 ```
+###### \java\seedu\address\model\meeting\Meeting.java
+``` java
+    /**
+     * Overloaded constructor for creating meeting objects with no proper reference to their person object
+     */
+    public Meeting(String meetingName, String time) throws IllegalValueException {
+        this.meetingName = meetingName;
+        this.displayMeetingName = new SimpleObjectProperty<>(meetingName);
+        if (time == null) {
+            throw new IllegalValueException(MESSAGE_TIME_CONSTRAINTS);
+        }
+        String trimmedTime = time.trim();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        try {
+            LocalDateTime date = LocalDateTime.parse(trimmedTime, formatter);
+            this.date = date;
+            value = date.format(formatter);
+            this.displayValue = new SimpleObjectProperty<>(value);
+        } catch (DateTimeParseException dtpe) {
+            throw new IllegalValueException(MESSAGE_TIME_CONSTRAINTS);
+        }
+    }
+
+    /**
+     * Overloaded constructor to create a new meeting object given a meeting for reference purposes.
+     */
+    public Meeting(Meeting meeting) {
+        this.meetingName = meeting.meetingName;
+        this.date = meeting.date;
+        this.value = meeting.value;
+        this.person = meeting.person;
+        this.displayValue = meeting.displayValue;
+        this.displayMeetingName = meeting.displayMeetingName;
+        this.displayName = meeting.displayName;
+    }
+
+    /**
+     * Set the person attributes of the meeting object.
+     */
+    public void setPerson(ReadOnlyPerson person) {
+        this.person = person;
+        this.displayName = new SimpleObjectProperty<>(person.getName());
+    }
+
+    /**
+     * Returns ReadOnlyPerson of the meeting
+     */
+    public ReadOnlyPerson getPerson() {
+        return person;
+    }
+
+    /**
+     * Return name for use by UI
+     */
+    public ObjectProperty<Name> nameProperty() {
+        return displayName;
+    }
+
+    /**
+     * Return meeting name for use by UI
+     */
+    public ObjectProperty<String> meetingNameProperty() {
+        return displayMeetingName;
+    }
+
+    /**
+     * Return meeting time for use by UI
+     */
+    public ObjectProperty<String> meetingTimeProperty() {
+        return displayValue;
+    }
+
+```
 ###### \java\seedu\address\model\meeting\MeetingContainPersonPredicate.java
 ``` java
 /**
@@ -307,6 +380,23 @@ public class MeetingCard extends UiPart<Region> {
         meetingTime.textProperty().bind(Bindings.convert(meeting.meetingTimeProperty()));
     }
 
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof MeetingCard)) {
+            return false;
+        }
+
+        // state check
+        MeetingCard card = (MeetingCard) other;
+        return id.getText().equals(card.id.getText())
+                && meeting.equals(card.meeting);
+    }
 }
 ```
 ###### \java\seedu\address\ui\MeetingListPanel.java
