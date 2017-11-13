@@ -73,7 +73,9 @@ This section includes the behaviour, justification and implementation of `Switch
 #Start of Extract [from: User Guide]#
 
 include::../UserGuide.adoc[tag=brighttheme]
+
 include::../UserGuide.adoc[tag=themes]
+
 include::../UserGuide.adoc[tag=switch]
 
 #End of Extract#
