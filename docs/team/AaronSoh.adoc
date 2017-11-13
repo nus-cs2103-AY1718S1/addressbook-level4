@@ -6,7 +6,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 == Project: AcquaiNote
 The AcquaiNote is a free command line program to manage your personal contact list easily. Additionally, AcquaNote also helps you to manage your schedule. It is targeted at university students or working adults who have to manage an extremely large pool of contacts.
 
-*Code contributed*: [https://github.com/CS2103AUG2017-T10-B1/main/blob/master/collated/main/aaronyhsoh.md[Functional code]] [https://github.com/CS2103AUG2017-T10-B1/main/blob/master/collated/test/aaronyhsoh.md[Test code]]
+*Code contributed*: [https://github.com/CS2103AUG2017-T10-B1/main/blob/master/collated/main/aaronyhsoh.md[Functional code]] + [https://github.com/CS2103AUG2017-T10-B1/main/blob/master/collated/test/aaronyhsoh.md[Test code]]
 
 === Enhancement Added: `Favourite` command
 
@@ -79,7 +79,7 @@ include::../UserGuide.adoc[tag=undoredo]
 
 ==== Justification
 
-This command allow users to redo/undo multiple commands at one go, which makes it faster if there are alot of commands to be undone/redone. 
+This command allow users to redo/undo multiple commands at one go, which makes it faster if there are alot of commands to be undone/redone.
 
 ==== Implementation
 
