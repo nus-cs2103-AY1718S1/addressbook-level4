@@ -33,7 +33,10 @@ import seedu.address.model.insurance.ReadOnlyInsurance;
 public class InsuranceProfilePanel extends UiPart<Region> {
     private static final String FXML = "InsuranceProfilePanel.fxml";
     private static final String PDFFOLDERPATH = "data/";
+    private static final Double GOLD_INSURANCE_PREMIUM = 2500.0;
+    private static final Double SILVER_INSURANCE_PREMIUM = 1500.0;
     private final Logger logger = LogsCenter.getLogger(this.getClass());
+
 
     private File insuranceFile;
     private ReadOnlyInsurance insurance;
@@ -178,9 +181,9 @@ public class InsuranceProfilePanel extends UiPart<Region> {
     private void setPremiumLevel(Double premium) {
         insuranceName.getStyleClass().clear();
         insuranceName.getStyleClass().add("insurance-profile-header");
-        if (premium > 500.0) {
+        if (premium >= GOLD_INSURANCE_PREMIUM) {
             insuranceName.getStyleClass().add("gold-insurance-header");
-        } else if (premium > 100.0) {
+        } else if (premium >= SILVER_INSURANCE_PREMIUM) {
             insuranceName.getStyleClass().add("silver-insurance-header");
         } else {
             insuranceName.getStyleClass().add("normal-insurance-header");
