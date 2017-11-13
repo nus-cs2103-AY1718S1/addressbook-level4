@@ -4,17 +4,18 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :stylesDir: ../stylesheets
 
 == Project: Resident Book
-Resident Book is a newly conceptualised administrative management system that is secure, efficient and handy for users with ever-changing students list.
+ResidentBook is a newly conceptualised administrative tool catered for staffs handling hostel and college operations. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in OOP style in Java.
+
 *Code contributed*: [https://github.com/CS2103AUG2017-F09-B1/main/tree/master/collated/main/blackroxs.md[Functional code]] [https://github.com/CS2103AUG2017-F09-B1/main/tree/master/collated/test/blackroxs.md[Test code]] {give links to collated code files}
 
-=== Enhancement Added: Backup Storage
+=== Enhancement Added: Backup
 
 ==== External behaviour
 
 ---
 #Start of Backup [from: User Guide]#
 
-include::../UserGuide.adoc[tag=undoredo]
+include::../UserGuide.adoc[tag=backup]
 
 #End of Backup#
 
@@ -22,20 +23,27 @@ include::../UserGuide.adoc[tag=undoredo]
 
 ==== Justification
 
-{Justify the need for, and the current design (i.e. external behavior) of, the feature}
+Backup command helps to save an additional copy of the current ResidentBook data. This is useful during cases of IT failure or data corruption, recovery can be done effortlessly.
 
 ==== Implementation
 
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=improving-each-component]
+include::../DeveloperGuide.adoc[tag=backup]
 
 #End of Extract#
 
 ---
 
-=== Enhancement Proposed: Add command `backup`
+=== Use Case: `backup`
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=backupUseCase]
+
+#End of Extract#
+
+---
 
 {Explain similar to the Undo/Redo feature above.}
 

@@ -421,12 +421,15 @@ Format: `exit`
 Resident book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
+// tag::backup[]
 === Back up of data : `backup`
 
 Resident book data can be stored in a back up file when necessary. This is good in case any the existing resident book is corrupted, or when the semester is over. +
 Format: `backup`
 
 image::backup.png[width='800']
+
+// end::backup[]
 
 === Import data : `import` (Since v1.2)
 
@@ -470,7 +473,6 @@ The following shows an example when invalid tag is provided.
 image::removeTagCommand_error.png[width='800']
 
 // end::removeTag[]
-
 
 // tag::personPanel[]
 === Person Panel (since v1.4)
