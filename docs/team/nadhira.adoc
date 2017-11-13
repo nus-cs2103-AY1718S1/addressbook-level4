@@ -1,0 +1,150 @@
+= Nadhira Salsabila - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: K.N.S. Address Book
+K.N.S. Address Book is a desktop address book application written in Java, created by Team W11-B3 for
+CS2103T: Software Engineering module offered by School of Computing, National University of Singapore,
+in AY 2017/2018 Semester 1. This project portfolio page consists of contributions that I have made to
+K.N.S. Address Book during this semester.
+
+*Code contributed*:
+ [https://github.com/CS2103AUG2017-W11-B3/main/blob/master/collated/main/nadhira15.md[Functional code]]
+ [https://github.com/CS2103AUG2017-W11-B3/main/blob/master/collated/test/nadhira15.md[Test code]]
+
+=== Enhancement Added: Find by All Field
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=findbyallfield1]
+include::../UserGuide.adoc[tag=findbyallfield2]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Previously, the `find` command only enables users to search their contacts with name query. Hence, users who only
+remember some part of their contact details but do not remember their contact's name would find it troublesome when
+searching for their contacts, as they couldn't find their contacts with the contact details that they remember.
+Together with Kevin, we enable the `find` command to accept all field as the query. Kevin implemented the find by tag
+feature, and I implemented find by phone, email, address, and birthday. This feature will help users to find their
+contacts faster and hassle-free.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=findbyallfield]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Add Tag and Delete Tag Command
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=adddeletetagcommand]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Previously, to add or delete a single tag from their contacts, the user can use `edit` command. This `edit` command is
+quite troublesome when user only wants to add or delete some tags from a certain contact's tag list, as the user needs
+to retype all current tags that they wish to keep. Problems may arise when they wrongly retype the tags that they
+wish to keep, or when they forgot to retype it at all. As such, I developed the add tag and delete tag commands, that
+are useful for adding and deleting tags from a contact's tag list, without retyping all the current tags that were not
+changed. Add tag and delete tag also supports add and deleting multiple tags in a single command. This feature will
+help users to add and delete tags faster.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=adddeletetagcommand]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Birthday Field
+
+==== External behavior
+
+---
+In K.N.S. Address Book, users can input the birthday details of their contacts in dd/mm/yyyy format. If the user chooses
+not to specify their contact's birthday details, the birthday field would be automatically filled by the default value
+(`-`). Users can specify their contact's birthday details through `add` and `edit` command.
+
+---
+
+==== Justification
+
+It is important for freelancers to keep a good relation with their clients by remembering their clients' birthday. As
+such, I created a Birthday class which will support the storage of birthday details in K.N.S. Address Book. Users can
+input their contact's birthday details via the `add` command when they add their contact, or via the `edit` command.
+This birthday field is also searchable via the `find` command to make it easier for users to find their contacts whose
+birthday is on a certain day. This feature is also useful for Stanley's proposed enhancement, birthday countdown &
+reminder feature.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=birthday]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Favourite contacts
+
+==== Justification
+
+Some users may have a list of frequently contacted contacts, and in the current version of K.N.S. Address Book, users
+need to search their contacts using the `find` command every time they want to see the contact details of these
+frequently contacted people. Favourite feature will enable users to set these frequently contacted people as their
+favourite contacts, and these contacts will always appear at the top of the contact list and the search result. This
+feature will help users to find their frequently contacted contacts easily, without using the `find` command to search
+for these contacts.
+
+
+=== Enhancement Proposed: Login Page
+
+==== Justification
+
+Some users might use K.N.S. Address Book in a shared computer in their workplace. These users might want to keep
+their contact list in private, and not sharing the Address Book with other people who use the same computer. As such,
+a login page would be useful. When K.N.S Address Book is opened, a login page will appear, and the user can type in
+their login details such as username and password. This feature will enable users to keep their contact details in
+private while using a shared computer, as the address book requires password to be accessed.
+
+
+=== Other contributions
+
+* Shorthand Alias
+** Add shorthand equivalent alias for commands. This feature is useful to increase speed and efficiency while using K.N.S
+Address Book, as users are able to type command with only 1 or 2 alphabets instead of typing the whole word. This feature
+is mainly for professional K.N.S. Address Book users who already memorized the command list.
+** PR : https://github.com/CS2103AUG2017-W11-B3/main/pull/5[#5], https://github.com/CS2103AUG2017-W11-B3/main/pull/51[#51]
+
+* Set up Travis CI configuration for github repo
+
+* Reported bugs in team T17-B4 OneBook Address Book
+** Issue : https://github.com/CS2103AUG2017-T17-B4/main/issues/84[#84]
+** Issue : https://github.com/CS2103AUG2017-T17-B4/main/issues/89[#89]

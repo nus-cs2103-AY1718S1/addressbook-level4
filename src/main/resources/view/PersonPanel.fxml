@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<!-- @@author teclu -->
+<AnchorPane fx:id="personPanel" prefHeight="296.0" prefWidth="975.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <Pane prefHeight="200.0" prefWidth="200.0">
+          <children>
+              <AnchorPane fx:id="primaryDetails" prefHeight="200.0" prefWidth="975.0">
+                  <children>
+                      <HBox prefHeight="200.0" prefWidth="975.0">
+                          <children>
+                              <ImageView fx:id="avatar" fitHeight="150.0" fitWidth="170.0" onMouseClicked="#avatarPrompt" pickOnBounds="true" preserveRatio="true">
+                                  <cursor>
+                                      <Cursor fx:constant="OPEN_HAND" />
+                                  </cursor>
+                                  <HBox.margin>
+                                      <Insets bottom="0.0" left="10.0" right="10.0" top="10.0" />
+                                  </HBox.margin>
+                              </ImageView>
+                              <Region prefHeight="150.0" prefWidth="20.0" />
+                              <VBox prefHeight="195.0" prefWidth="975.0">
+                                  <children>
+                                      <Label fx:id="name" prefHeight="28.0" prefWidth="975.0" wrapText="true">
+                                          <padding>
+                                            <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
+                                          </padding>
+                                      </Label>
+                                      <FlowPane fx:id="tags" alignment="CENTER_LEFT">
+                                          <padding>
+                                              <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
+                                          </padding>
+                                      </FlowPane>
+                                  </children>
+                                  <padding>
+                                      <Insets bottom="0.0" left="10.0" right="10.0" top="10.0" />
+                                  </padding>
+                              </VBox>
+                          </children>
+                      </HBox>
+                  </children>
+              </AnchorPane>
+          </children>
+    </Pane>
+    <AnchorPane fx:id="secondaryDetails" layoutY="170.0" prefHeight="220.0" prefWidth="975.0">
+        <children>
+            <HBox layoutY="-1.0" prefHeight="220.0" prefWidth="975.0">
+                <children>
+                    <VBox prefHeight="150.0" prefWidth="960.0">
+                        <children>
+                            <Region prefHeight="27.0" prefWidth="960.0" />
+                            <Label fx:id="address" prefHeight="50.0" prefWidth="975.0" wrapText="true">
+                                <padding>
+                                    <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
+                                </padding>
+                            </Label>
+                            <Region prefHeight="20.0" prefWidth="49.0" />
+                            <Label fx:id="email" prefHeight="50.0" prefWidth="975.0" wrapText="true">
+                                <padding>
+                                    <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
+                                </padding>
+                            </Label>
+                            <Region prefHeight="20.0" prefWidth="49.0" />
+                            <Label fx:id="phone" prefHeight="50.0" prefWidth="975.0" wrapText="true">
+                                <padding>
+                                    <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
+                                </padding>
+                            </Label>
+                            <Region prefHeight="20.0" prefWidth="49.0" />
+                            <Label fx:id="birthday" prefHeight="50.0" prefWidth="975.0" wrapText="true">
+                                <padding>
+                                    <Insets bottom="20.0" left="10.0" right="5.0" top="5.0" />
+                                </padding>
+                            </Label>
+                        </children>
+                    </VBox>
+                </children>
+            </HBox>
+        </children>
+    </AnchorPane>
+   <effect>
+      <DropShadow color="#333333" height="18.0" radius="8.5" width="18.0" />
+   </effect>
+</AnchorPane>

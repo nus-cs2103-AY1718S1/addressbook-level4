@@ -1,0 +1,151 @@
+= Stanley Tay - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: K.N.S. AddressBook
+K.N.S. AddressBook is a Java desktop address book application created by *Team W11-B3* during the course of *CS2103T
+Software Engineering* in AY2017/8 Semester 1. This portfolio page will show you the contributions I have made to our
+project.
+
+*Code Contributed*:
+ [https://github.com/CS2103AUG2017-W11-B3/main/blob/master/collated/main/teclu.md[Functional Code]]
+ [https://github.com/CS2103AUG2017-W11-B3/main/blob/master/collated/test/teclu.md[Test Code]]
+
+=== Enhancement Added: Avatar
+
+==== External behavior
+
+---
+`Avatar` is the contact's display picture that can be found in the `Person Panel`. When using the `add` or `edit` command,
+you can change the `Avatar` by entering a valid URL or file path on the computer. If no URL or file path is provided,
+a default placeholder `Avatar` is created.
+
+Alternatively, clicking on the display picture in `Person Panel` will bring up a GUI upload window for users to specify
+a picture to be used in their computer.
+
+---
+
+==== Justification
+
+It is important to know what your contact looks like, especially so if you do not meet him/her frequently. Also, most
+freelancers have many clients to keep up with; it is likely that they may forget how their client looks like over time.
+
+The alternative way of editing the `Avatar` is useful for users who are unsure as to how to get the actual file path of
+the image found in their computer. Also, the file path may be very long, and this will cause the command box to be
+overfilled with text (_causing parts of the text to be hidden_). This can be frustrating for users who would want to
+check whether they have entered the correct details in the `add` or `edit` command.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=avatar]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Person Panel
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=personpanel]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Previously, the `Person Card` was the only thing that showed all the details of a contact. It was too small to fit all
+of the text. Aesthetically, this is not good because information should not be crammed into a small area. Thus, I
+created a `Person Panel` which shows all the contact's details in one page in order to improve aesthetic design and
+readability.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=personpanel]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Theme Switcher
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=themeswitcher]
+
+#End of Extract#
+
+---
+
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=themecommand]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Previously, there was only the dark theme in place for the application. We felt that some of the users may not like this
+default colour scheme, and may not like that they cannot personalise the application's appearance to their liking. Thus,
+in order to make the application more attractive visually, we have decided to add more themes for users to choose from.
+It is important for users to have more choices in how their address book looks like, because it gives them a sense of
+ownership and allows them to express themselves in someway.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=themeswitcher]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Notes For Contacts
+
+==== Justification
+
+The current version of K.N.S. AddressBook only displays the predetermined details of a contact. It would be useful for
+a freelancer to be able to note down other miscellaneous details about their clients within the application, so that
+they do not have to save these details elsewhere. For example, a freelancer may want to note down information about when
+and where they are meeting their client the next time.
+
+=== Enhancement Proposed: Birthday Countdown & Reminders
+
+==== Justification
+
+With the inclusion of a birthday field (_implemented by Nadhira_), it would be useful to the user if the AddressBook can
+inform him/her of a contact's upcoming birthday. To a freelancer, this can be very important because he/she would want
+to make themselves appear professional and thoughtful by wishing their clients happy birthday.
+
+=== Other Contributions
+
+* *Small Feature - GUI Design Improvements*
+** Redesigned the AddressBook.
+** Pull Request: https://github.com/CS2103AUG2017-W11-B3/main/pull/50[#50]
+
+* *Modified `add` and `edit` command to support `Avatars`*
+** Pull Request: https://github.com/CS2103AUG2017-W11-B3/main/pull/27[#27]
+
+* *Role - Documentation IC*
+** Proofread Read Me, User Guide, and Developer Guide for the team.
+** Responsible for creating most screenshot images found in the documentation
+(Pull Requests: https://github.com/CS2103AUG2017-W11-B3/main/pull/31/files[#31],
+https://github.com/CS2103AUG2017-W11-B3/main/pull/66/files[#66]).

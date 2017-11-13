@@ -11,10 +11,11 @@ public class UserPrefs {
 
     private GuiSettings guiSettings;
     private String addressBookFilePath = "data/addressbook.xml";
-    private String addressBookName = "MyAddressBook";
+    private String addressBookName = "K.N.S. AddressBook";
+    private String addressBookTheme = "LightTheme.css";
 
     public UserPrefs() {
-        this.setGuiSettings(500, 500, 0, 0);
+        this.setGuiSettings(1366, 768, 0, 0);
     }
 
     public GuiSettings getGuiSettings() {
@@ -45,6 +46,14 @@ public class UserPrefs {
         this.addressBookName = addressBookName;
     }
 
+    public String getAddressBookTheme() {
+        return addressBookTheme;
+    }
+
+    public void setAddressBookTheme(String addressBookTheme) {
+        this.addressBookTheme = addressBookTheme;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {
@@ -58,20 +67,22 @@ public class UserPrefs {
 
         return Objects.equals(guiSettings, o.guiSettings)
                 && Objects.equals(addressBookFilePath, o.addressBookFilePath)
-                && Objects.equals(addressBookName, o.addressBookName);
+                && Objects.equals(addressBookName, o.addressBookName)
+                && Objects.equals(addressBookTheme, o.addressBookTheme);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(guiSettings, addressBookFilePath, addressBookName);
+        return Objects.hash(guiSettings, addressBookFilePath, addressBookName, addressBookTheme);
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Gui Settings : " + guiSettings.toString());
-        sb.append("\nLocal data file location : " + addressBookFilePath);
-        sb.append("\nAddressBook name : " + addressBookName);
+        sb.append("\nLocal Data File Location : " + addressBookFilePath);
+        sb.append("\nAddressBook Name : " + addressBookName);
+        sb.append("\nAddressBook Theme : " + addressBookTheme);
         return sb.toString();
     }
 

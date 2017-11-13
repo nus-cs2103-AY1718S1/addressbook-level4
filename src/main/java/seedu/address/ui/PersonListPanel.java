@@ -14,6 +14,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
+import seedu.address.commons.events.ui.PersonPanelNoSelectionEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -47,6 +48,9 @@ public class PersonListPanel extends UiPart<Region> {
                     if (newValue != null) {
                         logger.fine("Selection in person list panel changed to : '" + newValue + "'");
                         raise(new PersonPanelSelectionChangedEvent(newValue));
+                    } else {
+                        logger.fine("No selection detected.");
+                        raise(new PersonPanelNoSelectionEvent());
                     }
                 });
     }
@@ -57,6 +61,7 @@ public class PersonListPanel extends UiPart<Region> {
     private void scrollTo(int index) {
         Platform.runLater(() -> {
             personListView.scrollTo(index);
+            personListView.getSelectionModel().clearSelection();
             personListView.getSelectionModel().clearAndSelect(index);
         });
     }

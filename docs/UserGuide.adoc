@@ -1,7 +1,7 @@
-= AddressBook Level 4 - User Guide
+= K.N.S. AddressBook v1.5.0 - User Guide
 :toc:
 :toc-title:
-:toc-placement: preamble
+:toc-placement!:
 :sectnums:
 :imagesDir: images
 :stylesDir: stylesheets
@@ -9,73 +9,205 @@
 ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
+:warning-caption: :warning:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-W11-B3/main/
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team W11-B3`      Since: `Sep 2017`      Licence: `MIT`
 
-== Quick Start
+== Introduction
+K.N.S. AddressBook is a free Java desktop application available on link:mainstream-os[mainstream operating systems]. It
+is designed for freelancers who are bound to their desks, making many calls to clients with the office's telephone,
+simultaneously using their computer to find their clients' contact number.
 
-.  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
+Most of the interactions in K.N.S. AddressBook are done through an in-built link:#command-line-interface[Command Line
+Interface] (CLI), which allows you do add, edit and remove contacts quickly with only the use of a keyboard.
+
+This user guide will help you get started on using K.N.S. AddressBook, and show you how you can make use of it.
+
+== Table of Contents
+toc::[]
+
+== Key Features
+K.N.S. AddressBook has many useful features for you to use. Listed below are some key features found in K.N.S.
+AddressBook that can help you out.
+
+// tag::personpanel[]
+=== Person Panel
+This is where you will find a selected contact's information (_name, address, phone number, etc._) displayed neatly on
+a single page. When you click on the currently displayed link:avatar[Avatar] of the contact, a new window will pop-up like so:
+
+image::UiPersonPanel.png[width="497"]
+
+When you click `load`, you will be given the option to select an image (_either in .JPG or .PNG format_) stored on
+your computer. Afterwards, clicking `save` will let you replace the current Avatar of the contact.
+
+// end::personpanel[]
+
+In K.N.S. AddressBook v2.0, you can look forward to the following enhancements to Person Panel:
+
+* *Notes*: You can record down miscellaneous information (_e.g. favourite food, pet peeves_) about a
+contact.
+* *Birthday Countdown & Reminders*: You'll always know whose birthday is coming up soon! You can also get a reminder in
+advance of a contact's upcoming birthday; no more remembering and forgetting needed!
+
+// tag::themeswitcher[]
+=== Theme Switcher
+When you click on 'Theme' in the Menu Bar, you should see 5 preset themes that you can choose for K.N.S. AddressBook:
+
+image::UiThemeOptions.png[width="359"]
+
+[TIP]
+Alternatively, you can use the `theme` command to change the current display theme of K.N.S. AddressBook.
+
+When running K.N.S. AddressBook for the first time, the `Light` theme is the default appearance setting. Clicking on any
+of the other 4 preset themes will result in an immediate appearance change; hopefully one of these preset themes is to
+your liking! Here is what K.N.S. AddressBook look's like in all 5 preset themes:
+
+image::UiAllThemes.gif[width="668"]
+// end::themeswitcher[]
+
+In K.N.S. AddressBook v2.0, you can look forward to the following enhancements to Theme Switcher:
+
+* *More Preset Themes*: 5 preset themes is definitely not enough. We want you to have more appearance options so that
+K.N.S. AddressBook suits your style.
+* *Custom Themes*: For the more tech-savvy users, we plan to let you change the colours of K.N.S. AddressBook via
+import of link:cascading-style-sheets[Cascading Style Sheets] (CSS).
+
+// tag::findbyallfield1[]
+=== Find by All Field
+You can find your contact by using any field as the search query. For example, you can type in a phone number as the search query, and the contact in your address book who has that phone number will appear in the search result.
+
+Find by all field supports find by name, phone number, email, address, birthday, and tags.
+// end::findbyallfield1[]
+
+=== Saving the data
+The Address Book's data is saved in the hard disk automatically after any executable command that changes the data. +
+There is no need for you to save manually.
+
+== Getting Started
+
+=== Installation
+.  If you have not done so, https://java.com/en/download/[download] and install Java version `1.8.0_60` (_or later_) on your computer.
 +
 [NOTE]
-Having any Java 8 version is not enough. +
-This app will not work with earlier versions of Java 8.
+This application will not work with earlier versions of Java 8 (_anything before `1.8.0_60`_).
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
+.  Download the latest `addressbook.jar` release link:{repoURL}/releases[here].
+.  Copy the .jar file into any folder that you want to use as the home folder for your application.
+.  Double-click the file to start the application. The Graphical User Interface (GUI) should appear in a few seconds as
+such:
 +
-image::Ui.png[width="790"]
+image::Ui.png[width="766"]
+
+And that's all, you're now ready to use K.N.S. AddressBook!
+
+=== Layout Overview
+Here are the parts of K.N.S. AddressBook that you should take note of:
+
+image::FirstTimeLaunch.png[width="766"]
+
+* **Menu Bar**: This is where you can find the alternative ways to
+** `Exit` the application,
+** Change the current theme,
+** and open the `Help` window.
+
+* **Contact List**: You will find all your added contacts here. Only the name
+and tag(s) of your contacts will be shown here.
+
+* **Person Panel**: You can view all the saved information of a selected contact
+in the contact list here.
+
+* **Command Box**: Most of the interactions in K.N.S. AddressBook are done here.
+Here, you can type a valid `command` to get things done.
+
+* **Status Bar**: The total number of contacts you have saved, the last updated
+timing, and the data path is shown here.
+
+[NOTE]
+The default window size of K.N.S. AddressBook is 1336 by 178. The window's size cannot be changed or maximised!
+
+=== Warming Up
+. There are 20 example contacts that are already pre-loaded for you to get familiarised with the features and commands
+found in K.N.S. AddressBook. Clicking on any individual contact card will `select` it, showing you the contact's details
+in the PersonPanel like so:
 +
-.  Type the command in the command box and press kbd:[Enter] to execute it. +
-e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
-.  Some example commands you can try:
+image::FirstTimeSelection.png[width="668"]
++
+. Let's start off by clearing all these example contacts. Type the command *`clear`* in the command box at the
+top, and press kbd:[Enter]. You should now see an empty Address Book as such:
++
+image::FirstTimeClear.png[width="668"]
++
+.  Now, you can add in your first contact! For example, type `add n/John Doe p/98765432 e/johnd@example.com a/JohnStreet
+, Block 123, #01-01 b/01/01/1991 t/example` in the command box and press kbd:[Enter]. Click on the new contact; you
+should see the following:
++
+image::FirstTimeAdd.png[width="668"]
++
+.  Uh oh! Looks like we did not type the correct name of the contact. To edit the name of the contact, type `edit n/
+John **Dow**` in the command box and press kbd:[Enter]. You should now see the name change in the PersonPanel.
+. It's time for John to be gone from your Address Book. Type `delete 1` and press kbd:[Enter] in order to remove him.
++
+Congratulations! You have now mastered the basic commands found in the application. In order to have a better
+understanding of all the available commands, you can check them out link:#Available-CLI-Commands[here].
 
-* *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
-* *`exit`* : exits the app
-
-.  Refer to the link:#features[Features] section below for details of each command.
-
-== Features
+== Available Commands
+There are 16 commands that you can use in K.N.S. AddressBook. Do take note of the following:
 
 ====
 *Command Format*
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
-* Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
-* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+* Words in `UPPER_CASE` are the parameters that you need to enter.
+** e.g. For `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
+* Items in square brackets are optional for you to fill in.
+** e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend`, or just `n/John Doe`.
+* Items with `…`​ after them can be used multiple times (including zero times).
+** e.g. `[t/TAG]...` can be used as `{nbsp}`
+(i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+* You can enter parameters in any order.
+** e.g. If the command specifies `n/NAME p/PHONE_NUMBER`, entering `p/PHONE_NUMBER n/NAME`
+insteade also acceptable.
 ====
 
-=== Viewing help : `help`
+=== Viewing Help: `help`
+Launches a small window that displays the user guide for your reference.
 
-Format: `help`
+If you're ever in need of help, or just curious to learn more about K.N.S you can use: `help` +
+This command will open up a help window that contains the guide you're currently reading!
 
-=== Adding a person: `add`
+=== Adding a person: `add` or `a`
+Adds a person to the address book. +
 
-Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+To add a person to K.N.S, you can use the following command: +
+`add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [v/AVATAR] [t/TAG]...` or `a n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [v/AVATAR] [t/TAG]...`
 
 [TIP]
-A person can have any number of tags (including 0)
+You can add a contact with any number of tags (including 0).
+
+[TIP]
+Only the name field is mandatory, all other fields are optional. +
+With the exception of tags, all missing fields will have a placeholder value.
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/John Doe p/98765432 e/johnd@example.com a/John Street, Block 123, #01-01 b/01/01/1991` +
+* `a n/Betsy Crowe t/client e/betsycrowe@example.com a/Newgate Prison p/1234567 b/02/02/1992 t/criminal` +
+* `a n/Charlie Chopin t/boss e/charliec@example.com a/Madysun Triangle Park p/98765432 b/02/03/2000 v/C:\Users\Charlie\Pictures\cc.png` +
+* `add n/Johnny`
 
-=== Listing all persons : `list`
-
+=== Listing all persons: `list` or `l`
 Shows a list of all persons in the address book. +
-Format: `list`
 
-=== Editing a person : `edit`
+To show all persons in your address book, simply enter: +
+`list` or `l` +
 
+
+=== Editing a person: `edit` or `e`
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+
+To edit an existing person in your address book, you can use the command: +
+`edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [t/TAG]...` or `e INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [v/AVATAR] [t/TAG]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -89,33 +221,150 @@ Examples:
 
 * `edit 1 p/91234567 e/johndoe@example.com` +
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+* `e 2 n/Betsy Crower v/http://example.com/profile.png t/` +
+Edits the name of the 2nd person to be `Betsy Crower`, change the avatar and clears all existing tags.
 
-=== Locating persons by name: `find`
+// tag::adddeletetagcommand[]
+=== Adding a Tag: `addtag` or `at`
+Adds tag(s) to an existing person in the address book. +
 
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Format: `addtag INDEX TAG [MORE_TAGS]...`
 
 ****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* Adds the given tag(s) to the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* When adding the tag, the existing tags of the person will NOT be removed i.e. adding the tag is cumulative.
+* The new tag added must be different from existing tags i.e. no duplicate tags will be allowed
+* You are able to add more than 1 tag in a single `addtag` command.
 ****
 
 Examples:
 
-* `find John` +
-Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
+* `addtag 1 owesMoney` +
+Adds a `owesMoney` tag for the 1st person on the list. If previously the 1st person has `friends` tag, now the 1st person has both `friends` and `owesMoney` tag.
+* `addtag 3 friends highSchool` +
+Adds a `friends` tag and a `highSchool` tag for the 3rd person on the list.
 
-=== Deleting a person : `delete`
+=== Deleting a Tag: `deletetag` or `dt`
+Deletes given tag from an existing person in the address book. +
 
-Deletes the specified person from the address book. +
-Format: `delete INDEX`
+Format: `deletetag INDEX TAG [MORE_TAGS]...`
+
+****
+* Deletes given tag(s) from the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* When deleting the tag, only specified tag will be removed.
+* The tag that will be deleted must exist in the person's tag list.
+* You are able to delete more than 1 tag in a single `deletetag` command.
+****
+
+Examples:
+
+* `deletetag 1 owesMoney` +
+Deletes the `owesMoney` tag from the 1st person on the list.
+
+* `deletetag 3 friends highSchool` +
+Deletes the `friends` tag and `highSchool` tag from the 3rd person on the list.
+
+// end::adddeletetagcommand[]
+
+=== Locating persons: `find` or `f`
+
+To locate a person within your address book, you can use: +
+`find [PREFIX]KEYWORD [MORE_KEYWORDS]...` or `f [PREFIX]KEYWORD [MORE_KEYWORDS]...` +
+where prefix indicates the field to search (e.g. name) and keyword is the keyword to match with.
+
+****
+* The search is case insensitive. e.g `hans` will match `Hans`
+* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* Partial words will be matched e.g. `Han` can match `Hans` +
+  See link:#partial-matching[Partial Matching] section for more details.
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+****
+
+==== By Name
+To find by name, you can either use the prefix `n/` or no prefix at all. +
+
+// tag::n[]
+
+[NOTE]
+When finding by name, the result will auto sort according to the position of the match. e.g. `find Bo` will list `Bo Alex` before `Holbo` and `Holbo` before `Alexander Bo`
+
+// end::n[]
+Examples:
+
+ * `find n/ John` +
+ Returns `john` and `John Doe`
+ * `f John` is equivalent with above example.
+ * `find Betsy Tim John` +
+ Returns any person having names `Betsy`, `Tim`, or `John` or that starts with them (e.g. `Timothy`)
+// tag::findbytag[]
+
+==== By Tag
+To find by tag, you can use the prefix `t/`. +
+
+[NOTE]
+When finding by tag, it will match person with any tag matching at least one of the keywords.
+
+Examples:
+
+* `find t/ family` +
+Returns any person with the tag `family`
+* `f t/ friends family colleague` +
+Returns any person with at least one of the tags `friends`, `family`, or `colleague`.
+
+
+// end::findbytag[]
+
+// tag::findbyallfield2[]
+==== By Any Field
+To find by other fields, you can use their respective prefixes. (`p/` for phone, `e/` for email, `b/` for birthday,
+ `a/` for address) +
+You can search all fields, save for avatar (`v/`) as of `v1.4` +
+All prefixes will show contacts with partial matches of the respective information. +
+
+Examples:
+
+* `find p/ 1234567` +
+Returns any person with phone number containing `1234567`.
+* `find a/ Jurong` +
+Returns any person with address containing `Jurong` (case-insensitive) in it.
+* `find b/ 16/02` +
+Returns any person with birthday containing `16/02`.
+* `find e/ johndoe` +
+Returns any person with email containing `johndoe`.
+// end::findbyallfield2[]
+
+// tag::partialfind[]
+
+==== Partial Matching
+The Find command accepts partial matches by default. +
+
+Keywords *will match* entries if they are contained within those entries.
+[NOTE]
+However, vice-versa does not apply!
+i.e. Entries *will not match* keywords if the entries are contained within the keywords.
+
+Examples:
+
+* `find mel` +
+Matches `Melissa` and `Amelia`
+* `find amelia` +
+Matches `Amelia` but not `Melissa` or `Mel`
+* `find leon` +
+Matches `Leonard` but not `Leo`
+* `find t/ frien` +
+Matches any person with a tag that contains `frien`, e.g. `Friends` or `BestFriends`
+// end::partialfind[]
+
+==== By Multiple Fields and Keywords
+`In development for v2.0`
+
+==== Strict Searching (AND search)
+`In development for v2.0`
+
+
+=== Deleting a person: `delete` or `d`
+
+To remove a person from your address book, you can use: `delete INDEX` or `d INDEX` +
 
 ****
 * Deletes the person at the specified `INDEX`.
@@ -129,13 +378,13 @@ Examples:
 `delete 2` +
 Deletes the 2nd person in the address book.
 * `find Betsy` +
-`delete 1` +
+`d 1` +
 Deletes the 1st person in the results of the `find` command.
 
-=== Selecting a person : `select`
-
+=== Selecting a Person: `select` or `s`
 Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
+
+Format: `select INDEX` or `s INDEX`
 
 ****
 * Selects the person and loads the Google search page the person at the specified `INDEX`.
@@ -149,13 +398,57 @@ Examples:
 `select 2` +
 Selects the 2nd person in the address book.
 * `find Betsy` +
-`select 1` +
+`s 1` +
 Selects the 1st person in the results of the `find` command.
 
-=== Listing entered commands : `history`
+// tag::sort[]
+=== Sorting your contact list: `sort`
 
+If you want to view your current list in a better way, you can use the `sort` command to
+sort the current list lexicographically by the given prefix, in the given order. +
+
+To sort the current list, you can use: `sort [PREFIX] [ORDER]` +
+
+****
+* Only the current list is sorted, there is currently no lasting sort on the whole address book. +
+* ORDER can either be `asc` for ascending or `des` for descending. If ORDER is omitted, the list is still sorted ascendingly +
+* PREFIX can be any prefix with the exception of `t/` and `v/`. +
+* If PREFIX is omitted, the current list is sorted in the order of insertion. You can still reverse the order by using `des` without any prefix.
+****
+
+Examples:
+
+* `list` +
+`sort des` +
+Sorts the list in reverse order of insertion (i.e. the previous list is now reversed)
+* `find t/ friends` +
+`sort n/` +
+Sorts the resulting list from the `find` command by name, in ascending order. +
+
+(i.e. the list is now a list of people who has a tag matching `friends`, sorted alphabetically by name.)
+
+// end::sort[]
+
+// tag::themecommand[]
+=== Changing Themes: `theme`
+You can choose from 5 preset themes to change into: Light, Dark, Red, Blue, and Green.
+
+[NOTE]
+The theme names are not case-sensitive!
+
+Format: `theme COLOUR` or `t COLOUR`
+
+Examples:
+
+* `theme Dark`
+* `theme RED`
+* `t blue`
+* `t GrEeN`
+// end::themecommand[]
+
+=== Listing entered commands: `history` or `h`
 Lists all the commands that you have entered in reverse chronological order. +
-Format: `history`
+Format: `history` or `h`
 
 [NOTE]
 ====
@@ -163,10 +456,9 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 ====
 
 // tag::undoredo[]
-=== Undoing previous command : `undo`
-
+=== Undoing previous command: `undo` or `u`
 Restores the address book to the state before the previous _undoable_ command was executed. +
-Format: `undo`
+Format: `undo` or `u`
 
 [NOTE]
 ====
@@ -181,18 +473,17 @@ Examples:
 
 * `select 1` +
 `list` +
-`undo` +
-The `undo` command fails as there are no undoable commands executed previously.
+`u` +
+The `u` command fails as there are no undoable commands executed previously.
 
 * `delete 1` +
 `clear` +
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
 
-=== Redoing the previously undone command : `redo`
-
+=== Redoing the previously undone command: `redo` or `r`
 Reverses the most recent `undo` command. +
-Format: `redo`
+Format: `redo` or `r`
 
 Examples:
 
@@ -208,45 +499,150 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `clear` +
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
-`redo` (reapplies the `clear` command) +
+`r` (reapplies the `delete 1` command) +
+`r` (reapplies the `clear` command) +
 // end::undoredo[]
 
-=== Clearing all entries : `clear`
+// tag::exim[]
 
+=== Saving/Backing up your data: `export` or `ex`
+Exports current address book data to a file with the specified filename in the data folder. +
+
+While K.N.S provides automatic data saving, you can still manually back up your data using the `export` command.
+
+To export your data, you should type: +
+`export` or `ex` `FILENAME.xml` +
+where FILENAME is the name you want to give to the exported data.
+
+This will export your current address book data into a file with the specified filename.
+
+[NOTE]
+Exported data is saved in the `data` folder, which should be in the same folder as the application file, by default.
+
+[WARNING]
+If a file with the filename you entered already exists in the `data` folder, it _**will be overwritten**_ without warning!
+
+Examples: +
+
+* `export backup.xml` +
+Exports your data in the `data` folder as `backup.xml` +
+
+* `ex copy` +
+Fails and will prompt you to add a `.xml` to the end of the file name.
+
+=== Importing data: `import` or `i`
+Imports data from the file in the given filepath, and overwrite current address book data. +
+
+To import data from another application or your own backup data, you can use the `import` command with the format: +
+`import` or `i FILEPATH` +
+where FILEPATH is the relative filepath of the data to be imported. (Usually in the `data` folder)
+
+[NOTE]
+The data file to be imported does not have to be a `.xml` file, as long as the its contents are correctly formatted.
+
+[WARNING]
+When you import data, you cannot get your old data back once you close the application. +
+ (_you can still use `undo` if you haven't_) +
+It is recommended to backup using the `export` command first before importing.
+
+Examples: +
+
+* `import data/backup.xml` +
+Imports the data in the file `backup.xml` in the `data` folder which should be located in the same folder as the application. +
+
+* `i copy` +
+Imports the data in the file `copy` which should be located at the same folder as the application. +
+
+// end::exim[]
+
+=== Clearing all entries: `clear` or `c`
 Clears all entries from the address book. +
-Format: `clear`
 
-=== Exiting the program : `exit`
+To clear all entries from your address book, you can type: +
+`clear` or `c`
 
+
+=== Exiting the program: `exit`
 Exits the program. +
-Format: `exit`
 
-=== Saving the data
+To exit the program, you can use the command: `exit` +
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
-There is no need to save manually.
+=== Set favourite contacts `In development for v2.0`
 
-== FAQ
+Favourite contacts will appear on the top of the contact list.
 
+=== Contacting a person `In development for v2.0`
+
+Directly calls or emails the person(s) identified by index number or otherwise.
+
+== Command Cheat sheet
+
+If you're in a hurry or just looking for a quick and simple overview, you're in the right place! Here you can find the list of commands and how to use them:
+[format="csv"]
+[options="header",cols="1s,^4m,10m,1m"]
+|===========================
+Action,Command | Alias,Format,Example
+Add,"add | a",a n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [v/AVATAR] [t/TAG]... ,"add n/James Ho"
+Clear,"clear | c", clear, clear
+Delete, "delete | d", delete INDEX, delete 3
+Edit, "edit | e", e INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [v/AVATAR] [t/TAG]..., edit 2 n/James Lee
+Add Tag, "addtag | at", at INDEX TAG [MORE_TAGS]..., addtag 2 friends highSchool
+Delete Tag, "deletag | dt", dt INDEX TAG [MORE_TAGS]..., deletetag 2 friends highSchool
+Find, "find | f", find [PREFIX] KEYWORD [MORE_KEYWORDS], find n/ James Jake
+List, "list | l", list, list
+View Help, help, help, help
+Select, "select | s", select INDEX, select 2
+Sort, sort   , sort [PREFIX] [ORDER], sort n/ asc
+Change Theme, "theme | t", theme COLOUR, t Dark
+History, history | h, history, history
+Undo, undo | u, undo, u
+Redo, redo | r, redo, r
+Export Data, export | ex, export FILENAME.xml, ex backup.xml
+Import Data, import | i, import FILEPATH, import data/backup.xml
+|===========================
+
+== F.A.Q.
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+*A*: Install the application in the other computer and overwrite the empty data file it creates with the file that
+contains the data of your previous Address Book folder.
 
-== Command Summary
+*Q*: How often will this application get updated? +
+*A*: Every Wednesday, there will be a new release that you can download so that you can keep the application up-to-date.
+However, do take note that updates will cease permanently on the 15 November 2017.
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX` +
-e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *List* : `list`
-* *Help* : `help`
-* *Select* : `select INDEX` +
-e.g.`select 2`
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
+*Q*: How do I update the application? +
+*A*: Download the latest .jar file and replace the previous one that is placed in the root directory. That's all you
+need to do!
+
+*Q*: I'm having problems with the application that are not addressed in this user guide. Where can I find help? +
+*A*: If you have a GitHub account, you can raise a new issue
+link:https://github.com/CS2103AUG2017-W11-B3/main/issues[here] about your problem.
+
+*Q*: Can I contribute in this project? +
+*A*: Yes, you can! We welcome pull requests. You can submit your pull request to link:https://github.com/CS2103AUG2017-W11-B3/main/pulls[our github repository].
+
+*Q*: Is there a developer guide that I can refer to? +
+*A*: Yes! Click <<DeveloperGuide#, here>> to access it.
+
+== Glossary
+[[avatar]]
+- *Avatar*: A picture representing a particular person in the address book.
+
+[[cascading-style-sheets]]
+- *Cascading Style Sheets (CSS)*: It is a style sheet language used for describing the presentation of a document
+written in a markup language.
+
+[[command-line-interface]]
+- *Command Line Interface (CLI)*: It is an interface which users respond to a visual prompt by typing in a command
+on a specified line, receive a response back from the system, and then enter another command. This goes on back and
+forth.
+
+[[graphical-user-interface]]
+- *Graphical User Interface (GUI)*: It is a graphical (_rather than purely textual_) user interface to a computer.
+
+[[java]]
+- *Java*: It is a general-purpose computer programming language that is used in many products today. To learn more,
+click link:https://go.java/index.html?intcmp=gojava-banner-java-com[here].
+
+[[mainstream-os]]
+- *Mainstream OS*: Examples include Windows, Linux, Unix, Mac OS X.

@@ -123,7 +123,7 @@ tasks.coveralls {
 }
 
 class AddressBookTest extends Test {
-    public AddressBookTest() {
+    AddressBookTest() {
     	  forkEvery = 1
         systemProperty 'testfx.setup.timeout', '60000'
 
@@ -139,7 +139,7 @@ class AddressBookTest extends Test {
         }
     }
 
-    public void setHeadless() {
+    void setHeadless() {
         systemProperty 'java.awt.robot', 'true'
         systemProperty 'testfx.robot', 'glass'
         systemProperty 'testfx.headless', 'true'

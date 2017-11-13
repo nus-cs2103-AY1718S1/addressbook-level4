@@ -47,6 +47,7 @@ public class SystemTestSetupHelper {
     public MainWindowHandle setupMainWindowHandle() {
         try {
             FxToolkit.setupStage((stage) -> {
+                stage.setFullScreen(true);
                 mainWindowHandle = new MainWindowHandle(stage);
                 mainWindowHandle.focus();
             });

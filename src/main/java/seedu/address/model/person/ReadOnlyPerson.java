@@ -3,6 +3,7 @@ package seedu.address.model.person;
 import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
+import seedu.address.model.person.avatar.Avatar;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -20,6 +21,10 @@ public interface ReadOnlyPerson {
     Email getEmail();
     ObjectProperty<Address> addressProperty();
     Address getAddress();
+    ObjectProperty<Birthday> birthdayProperty();
+    Birthday getBirthday();
+    ObjectProperty<Avatar> avatarProperty();
+    Avatar getAvatar();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
 
@@ -32,7 +37,9 @@ public interface ReadOnlyPerson {
                 && other.getName().equals(this.getName()) // state checks here onwards
                 && other.getPhone().equals(this.getPhone())
                 && other.getEmail().equals(this.getEmail())
-                && other.getAddress().equals(this.getAddress()));
+                && other.getAddress().equals(this.getAddress())
+                && other.getBirthday().equals(this.getBirthday())
+                && other.getAvatar().equals(this.getAvatar()));
     }
 
     /**
@@ -40,14 +47,19 @@ public interface ReadOnlyPerson {
      */
     default String getAsText() {
         final StringBuilder builder = new StringBuilder();
-        builder.append(getName())
-                .append(" Phone: ")
+        builder.append("Name: ")
+                .append(getName())
+                .append("\nPhone: ")
                 .append(getPhone())
-                .append(" Email: ")
+                .append("\nEmail: ")
                 .append(getEmail())
-                .append(" Address: ")
+                .append("\nAddress: ")
                 .append(getAddress())
-                .append(" Tags: ");
+                .append("\nBirthday: ")
+                .append(getBirthday())
+                .append("\nAvatar: ")
+                .append(getAvatar())
+                .append("\nTags: ");
         getTags().forEach(builder::append);
         return builder.toString();
     }

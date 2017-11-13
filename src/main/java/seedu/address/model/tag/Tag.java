@@ -2,7 +2,10 @@ package seedu.address.model.tag;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Random;
+
 import seedu.address.commons.exceptions.IllegalValueException;
+
 
 /**
  * Represents a Tag in the address book.
@@ -13,7 +16,10 @@ public class Tag {
     public static final String MESSAGE_TAG_CONSTRAINTS = "Tags names should be alphanumeric";
     public static final String TAG_VALIDATION_REGEX = "\\p{Alnum}+";
 
+    private static final Random colourSelect = new Random();
+
     public final String tagName;
+    public final String tagColour;
 
     /**
      * Validates given tag name.
@@ -27,7 +33,22 @@ public class Tag {
             throw new IllegalValueException(MESSAGE_TAG_CONSTRAINTS);
         }
         this.tagName = trimmedName;
+        this.tagColour = assignTagColour();
     }
+
+    //@@author teclu
+    /**
+     * Assign a random colour to the tag.
+     * @return A random colour hex code.
+     */
+    private String assignTagColour() {
+        TagColours palette = new TagColours();
+        String[] tagColours = palette.getTagColours();
+        int randomIndex = colourSelect.nextInt(tagColours.length);
+
+        return tagColours[randomIndex];
+    }
+    //@@author
 
     /**
      * Returns true if a given string is a valid tag name.

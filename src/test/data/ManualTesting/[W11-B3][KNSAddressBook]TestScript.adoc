@@ -1,0 +1,370 @@
+= K.N.S. AddressBook v1.5.0 - Test Script
+:toc:
+:toc-title:
+:toc-placement!: preamble
+:sectnums:
+:imagesDir: images
+:stylesDir: stylesheets
+:experimental:
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+endif::[]
+:repoURL: https://github.com/CS2103AUG2017-W11-B3/main/
+
+By: `Team W11-B3`      Since: `Sep 2017`      Licence: `MIT`
+
+== Introduction
+This document will help you get started on manually testing K.N.S. AddressBook.
+
+== Table of Contents
+toc::[]
+
+== Setting Up
+. Ensure that you have downloaded the following files from IVLE:
+* **Jar Executable**: `[W11-B3][KNSAddressBook].jar`
+* **Sample Data**: `[W11-B3][KNSAddressBook]SampleData.xml`
+* **User Guide**: `[W11-B3][KNSAddressBook]UserGuide.pdf`
+* **Developer Guide**: `[W11-B3][KNSAddressBook]DeveloperGuide.pdf`
+* **3 Portfolios**: `[W11-B3][Kevin Leonardo Anantha]Portfolio.pdf`, `[W11-B3][Nadhira Salsabila]Portfolio.pdf` and `[W11-B3][Tay Wan Feng Stanley]Portfolio.pdf`
+. Create a new folder called "_KNS_" and place the `.jar` file inside.
+. Inside "_KNS_", create a new folder called "_data_" and place the `.xml` file inside.
+. Inside "_KNS_", create a new folder called "_documentation_" and place all of the `.pdf` files inside.
+. Rename the `.xml` file to `addressbook.xml`.
+. Execute the `.jar` file to launch K.N.S. AddressBook.
+
+== Basic Commands
+
+[TIP]
+You may want to view our https://github.com/CS2103AUG2017-W11-B3/main/blob/master/docs/UserGuide.adoc#command-cheat-sheet[Command Cheat Sheet]. It shows all the commands available in the application!
+
+=== Add
+
+[TIP]
+You can use the alias `a` in place of `add`.
+
+* **Adding without any parameters:**
+.. Type `add` in the command box and press kbd:[Enter].
+.. You should see the error message `Invalid command format! ...`, with instructions on how to use the command.
+
+* **Adding with only the name parameter:**
+.. Type `add n/Damith Rajapakse` in the command box and press kbd:[Enter].
+.. You should see `New person added: Name: Damith Rajapakse ...`; the fields for phone, email, address and birthday should have a "_-_", the field for avatar should be "_No Avatar_", and the field for tags should be empty.
+
+* **Adding with the name parameter and only some parameters:**
+.. Type `add n/Aaron Tan p/91234567 b/01/01/1995` in the command box and press kbd:[Enter].
+[TIP]
+You may try this out with other valid parameters.
+..  You should see `New person added: Name: Aaron Tan ...`; the fields for email and address should have a "_-_", the field for avatar should be "_No Avatar_", and the field for tags should be empty.
+
+* **Adding with the name parameter and the avatar parameter:**
+[NOTE]
+You will need internet connectivity for this!
+
+.. Type `add n/Terence Chok v/https://i.imgur.com/jNNT4LE.jpg` into the command box and press kbd:[Enter].
+[TIP]
+Alternatively, you can use a valid `.JPG` or `.PNG` image filepath found in your computer for the avatar field. This does not require internet connectivity. Also, do take note that some online URLs that do not have the `.JPG` or `.PNG` present at the end of the link will not work; an invalid message will be given.
+.. You should see `New person added: Name: Terence Chok ...`; the fields for phone, email, address and birthday should have a "_-_", the field for avatar should have the file path for the image (_which is stored in the data folder_), and the field for tags should be empty.
+
+* **Adding with all parameters:**
+.. Type `add n/Ben Ten p/98765432 e/ben10@example.com a/42 Omni Road b/12/12/1992 v/https://i.imgur.com/jNNT4LE.jpg t/TestSubject` into the command box and press kbd:[Enter].
+.. You should see `New person added: Name: Ben Ten ...`; all of the fields should not be empty.
+
+=== Edit
+
+[TIP]
+You can use the alias `e` in place of `edit`.
+
+* **Editing without index and any parameters:**
+.. Type `edit` in the command box and press kbd:[Enter].
+.. You should see the error message `Invalid command format! ...`, with instructions on how to use the command.
+
+* **Editing with index but without any parameters:**
+.. Type `edit 1` in the command box and press kbd:[Enter].
+.. You should see the error message `At least one field to edit must be provided`.
+
+* **Editing with index and only 1 parameter:**
+.. Type `edit 1 n/Andy Zhong` and press kbd:[Enter].
+[TIP]
+You may try this out with other valid parameters.
+.. You should see `Edited Person: Name: Andy Zhong ...`, where only the name field has changed. All other fields should remain the same.
+
+* **Editing with index and only avatar parameter:**
+.. Type `edit 1 v/https://i.imgur.com/jNNT4LE.jpg` into the command box and press kbd:[Enter].
+.. You should see `Edited Person: Name: Andy Zhong ...`, where only the avatar field has changed. The `PersonPanel` will also reflect this change in avatar.
+
+* **Editing with index and only empty avatar parameter:**
+[NOTE]
+Do this after doing the previous test!
+
+.. Type `edit 1 v/` into the command box and press kbd:[Enter].
+.. You should see `Edited Person: Name: Andy Zhong ...`, where only the avatar field has changed (_to the default placeholder avatar_). The `PersonPanel` will also reflect this change in avatar.
+
+* **Editing with index and only some parameters:**
+.. Type `edit 1 n/Aaron Tan p/91234567 b/01/01/1995` into the command box and press kbd:[Enter].
+.. You should see `Edited Person: Name: Aaron Tan ...`, where only the name, phone and birthday fields have changed. The `PersonPanel` will also reflect these changes.
+
+* **Editing with index and all parameters:**
+.. Type `edit 1 n/Stanley Tay p/91234567 e/stanley@example.com a/1 Computing Drive b/28/03/1995 v/https://i.imgur.com/jNNT4LE.jpg t/TestSubject` into the command box and press kbd:[Enter].
+.. You should see `Edited Person: Name: Stanley Tay ...`; all of the fields should be changed accordingly. The `PersonPanel` will also reflect these changes.
+
+=== Delete
+
+[TIP]
+You can use the alias `d` in place of `delete`.
+
+. Select the first contact in the `PersonList`.
+. Type `delete 1` in the command box and press kbd:[Enter].
+. You should see the contact removed, and his details should no longer appear in the `PersonPanel`.
+. You should also see the message `Deleted Person: Name: Stanley Tay...`.
+
+[NOTE]
+If you skipped the Edit tests above, you should see `Deleted Person: Name: Alex Zheng ...` instead.
+
+=== Select
+
+[TIP]
+You can use the alias `s` in place of `select`.
+
+. Type `select 1` in the command box and press kbd:[Enter].
+. You should see the selection for the first contact in the `PersonList`, and his details should show in the `PersonPanel`.
+. You should also see the message `Selected Person: 1`.
+
+=== Clear
+
+[TIP]
+You can use the alias `c` in place of `clear`.
+
+. Type `clear` in the command box and press kbd:[Enter].
+. You should see all the contacts in the `PersonList` disappear, and the message `Address book has been cleared!`.
+[TIP]
+Type `undo` in the command box and press kbd:[Enter] to bring back all the cleared contacts.
+
+=== Help
+
+. Type `help` in the command box and press kbd:[Enter].
+. A Help Window should open up immediately.
+
+=== Theme
+
+[TIP]
+You can use the alias `t` in place of `theme`.
+
+. Upon loading the application on the first time, the default theme is `Light`.
+. Type `theme Dark` or `t Dark` in the command box and press kbd:[Enter]. You should see the theme immediately change to the `Dark` theme, with the message `Theme updated to: Dark`.
+[NOTE]
+The input arguments are **case-insensitive**, so `theme DARK` and `theme GrEeN` will work.
+. Repeat step 2 with the themes `Red`, `Blue`, and `Green`.
+[NOTE]
+You can also use the theme switcher found in the menu bar to verify these changes.
+. Type `theme Light` and press kbd:[Enter] twice (_you may use any other theme_). You should see the error message `Theme is already set to Light!`
+
+=== List
+
+[TIP]
+You can use the alias `l` in place of `list`.
+
+[NOTE]
+Typing `list` in the command box twice in succession will still generate the message `Listed all persons`; this is **not a bug** and it has been implemented like this in the source code from AddressBook-Level4.
+
+. Use any of the following commands to change the order of the `PersonList`: `find` and `sort`.
+. Type `list` and press kbd:[Enter]. You should see that `PersonList` shows all the contacts arranged in chronological order (_i.e. least to most recently added contact_), and the message `Listed all persons`.
+
+=== Undo/Redo
+
+[TIP]
+You can use the alias `u` in place of `undo`, and `r` in place of `redo`.
+
+* The following commands are undoable: `add`, `edit`, `delete`, `select`, `clear`, `addtag`, `deletetag`, and `import`.
+* You may verify these checks when doing the other tests found in this test script.
+
+=== Exit
+
+. Type `exit` in the command box and press kbd:[Enter].
+. You should see the application close immediately.
+
+== Advanced Commands
+
+=== Add/Delete Tag
+
+* **Adding a tag without parameter:**
+.. Type `addtag` in the command box and press kbd:[Enter].
+.. You should see `Invalid command format! ...`, with instructions on how to use the command.
+
+* **Deleting a tag without parameter:**
+.. Type `deletetag` in the command box and press kbd:[Enter].
+.. You should see `Invalid command format! ...`, with instructions on how to use the command.
+
+* **Adding 1 tag:**
+.. Type `addtag 1 Project` in the command box and press kbd:[Enter].
+.. You should see a `Project` tag has been added to person number 1.
+
+* **Deleting 1 tag:**
+.. Type `deletetag 1 Project` in the command box and press kbd:[Enter].
+.. You should see a `Project` tag has been removed from person number 1.
+
+* **Adding 1 tag using shorthand alias:**
+.. Type `at 1 Project` in the command box and press kbd:[Enter].
+.. You should see a `Project` tag has been added to person number 1.
+
+* **Deleting 1 tag using shorthand alias:**
+.. Type `dt 1 Project` in the command box and press kbd:[Enter].
+.. You should see a `Project` tag has been removed from person number 1.
+
+* **Adding more than 1 tag:**
+.. Type `addtag 2 VIP Singapore` in the command box and press kbd:[Enter].
+.. You should see a `VIP` tag and a `Singapore` tag has been added to person number 2.
+
+* **Deleting more than 1 tag:**
+.. Type `deletetag 2 VIP Singapore` in the command box and press kbd:[Enter].
+.. You should see a `VIP` tag and a `Singapore` has been removed from person number 2.
+
+=== Find
+
+* **Find a person without parameter:**
+.. Type `find` in the command box and press kbd:[Enter].
+.. You should see `Invalid command format! ...`, with instructions on how to use the command.
+
+* **Find a person without specifying any prefixes:**
+.. Type `find dean` in the command box and press kbd:[Enter].
+.. You should see "_Dean James_" appear in the contact list.
+
+* **Find a person using shorthand alias without specifying any prefixes:**
+.. Type `f dean` in the command box and press kbd:[Enter].
+.. You should see "_Dean James_" appear in the contact list.
+
+* **Find a person by their phone number as a query without specifying any prefixes:**
+.. Type `find 91234567` in the command box and press kbd:[Enter].
+.. You should see no contact appearing in the contact list.
+
+* **Find a person without specifying any prefixes in a filtered list:**
+.. Type `find jacky` in the command box and press kbd:[Enter].
+.. You should see "_Jacky Mao_" appear in the contact list.
+
+* **Find a person by specifying name prefix:**
+.. Type `find n/ dean` in the command box and press kbd:[Enter].
+.. You should see "_Dean James_" appear in the contact list.
+
+* **Find a person by specifying name prefix, with partial name query:**
+.. Type `find n/ shin` in the command box and press kbd:[Enter].
+.. You should see "_Darshini N_" appear in the contact list.
+
+* **Find a person by specifying email prefix:**
+.. Type `find e/ dj@example.com` in the command box and press kbd:[Enter].
+.. You should see "_Dean James_" appear in the contact list.
+
+* **Find a person by specifying email prefix, with partial email query:**
+.. Type `find e/ dj` in the command box and press kbd:[Enter].
+.. You should see "_Dean James_" appear in the contact list.
+
+* **Find a person by specifying phone prefix:**
+.. Type `find p/ 89991234` in the command box and press kbd:[Enter].
+.. You should see "_Fong Wei Zheng_" appear in the contact list.
+
+* **Find a person by specifying phone prefix, with partial phone query:**
+.. Type `find p/ 8999` in the command box and press kbd:[Enter].
+.. You should see "_Fong Wei Zheng_" appear in the contact list.
+
+* **Find a person by specifying address prefix:**
+.. Type `find a/ college` in the command box and press kbd:[Enter].
+.. You should see "_Kevin Leonardo_" and "_Nadhira Salsabila_" appear in the contact list.
+
+* **Find a person by specifying address prefix, with partial address query:**
+.. Type `find a/ coll` in the command box and press kbd:[Enter].
+.. You should see "_Kevin Leonardo_" and "_Nadhira Salsabila_" appear in the contact list.
+
+* **Find a person by specifying birthday prefix:**
+.. Type `find b/ 14/10/1987` in the command box and press kbd:[Enter].
+.. You should see "_Ang Jing Zhe_" appear in the contact list.
+
+* **Find a person by specifying birthday prefix, with partial birthday query:**
+.. Type `find b/ 14/10` in the command box and press kbd:[Enter].
+.. You should see "_Ang Jing Zhe_" appear in the contact list.
+
+* **Find a person by specifying tag prefix:**
+.. Type `find t/ musician` in the command box and press kbd:[Enter].
+.. You should see "_Charlie Lim_" appear in the contact list.
+
+* **Find a person by specifying tag prefix, with partial tag query:**
+.. Type `find t/ music` in the command box and press kbd:[Enter].
+.. You should see "_Charlie Lim_" appear in the contact list.
+
+* **Find a person by specifying a prefix, without space between keyword and prefix:**
+.. Type `find t/musician` in the command box and press kbd:[Enter].
+.. You should see "_Charlie Lim_" appear in the contact list.
+
+=== Import/Export
+
+* **Export without any parameters:**
+.. Type `export` in the command box and press kbd:[Enter].
+.. You should see a `Invalid command format!...` message, with instructions on how to use the command.
+
+* **Export to a filename without .xml extension:**
+.. Type `export backup` in the command box and press kbd:[Enter].
+.. You should see the message `Please end your file name with .xml` and nothing else should change.
+
+* **Export to a valid filename:**
+.. Type `ex backup.xml` in the command box and press kbd:[Enter].
+.. You should see the message `Export successful! Data exported to data/backup.xml`.
+.. You can check the data folder to validate that backup.xml exists.
+
+* **Import without any parameters:**
+.. Type `import` in the command box and press kbd:[Enter].
+.. You should see a `Invalid command format!...` message, with instructions on how to use the command.
+
+* **Import missing file:**
+.. Type `i data/missing.xml` in the command box and press kbd:[Enter].
+.. You should see `File not found at data/missing.xml, Import Failed!` and no other changes.
+
+* **Import valid file:**
+[NOTE]
+Please ensure that you have done the **Export to a valid filename ** test before proceeding with this test.
+
+.. Type `clear` in the command box and press kbd:[Enter].
+.. You should see `Address book has been cleared!` and the contact list should be empty.
+.. Type `import data/backup.xml` in the command box and press kbd:[Enter].
+.. You should see the message `Import successful! Data imported from data/backup.xml`
+.. You should also see the contact list re-populated with the previously exported data.
+
+=== Sort
+
+* **Sort with invalid parameters:**
+.. Type `sort invalid param` in the command box and press kbd:[Enter].
+.. You should see a `Invalid command format!...` message, with instructions on how to use the command.
+
+* **Sort by name ascendingly, without specifying order parameter:**
+.. Type `sort n/` in the command box and press kbd:[Enter].
+.. You should see a `Sorted current list by n/ in asc order.` message.
+.. You should also see the current list sorted by name in alphabetical order.
+
+* **Sort by phone ascendingly:**
+.. Type `sort p/ asc` in the command box and press kbd:[Enter].
+.. You should see a `Sorted current list by p/ in asc order.` message.
+.. You should also see the current list sorted by phone ascendingly, with persons with the smallest leading number listed first.
+
+* **Sort by default descendingly:**
+.. Type `sort des` in the command box and press kbd:[Enter].
+.. You should see a `Sorted current list by default in des order.` message.
+.. You should also see the current list sorted by the reverse default order. (i.e. Reverse of the order they would be in after a `list` command)
+
+* **Sort without any parameters:**
+.. Type `sort` in the command box and press kbd:[Enter].
+.. You should see a `Sorted current list by default in asc order.` message.
+.. You should also see the current list sorted by the default order. (i.e. Exact reverse of previous test case)
+
+== Other Features
+
+=== Avatar GUI Upload
+
+[NOTE]
+You will need any existing `.JPG` or `.PNG` image in your computer to perform this test.
+
+. Click any contact found in the `PersonList`.
+. In the `PersonPanel`, click on the currently displayed avatar of the contact. You should see a new window called "_Avatar Options_".
+. Clicking on `Save` will give you the error message `Avatar should be a valid online URL or local path`, as you have not loaded any image.
+. Click `Load`. You should see a new window prompting you to open a new image.
+. Select the image you intend to use and press `Open`.
+[NOTE]
+There should be an option in the window to choose between `.JPG` or `.PNG` formats.
+. You should now see the new image displayed in the "_Avatar Options_" window.
+. Click `Save`. You should see the reflected changes in the command box and `PersonPanel`.

@@ -13,14 +13,20 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.ChangeThemeRequestEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.UserPrefs;
 
 /**
@@ -29,24 +35,24 @@ import seedu.address.model.UserPrefs;
  */
 public class MainWindow extends UiPart<Region> {
 
-    private static final String ICON = "/images/address_book_32.png";
+    private static final String ICON = "/images/AddressBookIcon.png";
     private static final String FXML = "MainWindow.fxml";
-    private static final int MIN_HEIGHT = 600;
-    private static final int MIN_WIDTH = 450;
-
+    private static final int MIN_HEIGHT = 768;
+    private static final int MIN_WIDTH = 1366;
+    private static String currentTheme;
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     private Stage primaryStage;
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private BrowserPanel browserPanel;
+    private PersonPanel personPanel;
     private PersonListPanel personListPanel;
     private Config config;
     private UserPrefs prefs;
 
     @FXML
-    private StackPane browserPlaceholder;
+    private StackPane personPanelPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -62,6 +68,9 @@ public class MainWindow extends UiPart<Region> {
 
     @FXML
     private StackPane statusbarPlaceholder;
+
+    @FXML
+    private VBox mainWindow;
 
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
@@ -79,7 +88,6 @@ public class MainWindow extends UiPart<Region> {
         setWindowDefaultSize(prefs);
         Scene scene = new Scene(getRoot());
         primaryStage.setScene(scene);
-
         setAccelerators();
         registerAsAnEventHandler(this);
     }
@@ -126,8 +134,12 @@ public class MainWindow extends UiPart<Region> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+        currentTheme = "view/" + prefs.getAddressBookTheme();
+        mainWindow.getStylesheets().add(currentTheme);
+        mainWindow.getStylesheets().add("view/Extensions.css");
+
+        personPanel = new PersonPanel(logic);
+        personPanelPlaceholder.getChildren().add(personPanel.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
@@ -135,7 +147,9 @@ public class MainWindow extends UiPart<Region> {
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
+        StatusBarFooter statusBarFooter = new StatusBarFooter(
+                prefs.getAddressBookFilePath(), logic.getFilteredPersonList().size()
+        );
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
         CommandBox commandBox = new CommandBox(logic);
@@ -152,7 +166,7 @@ public class MainWindow extends UiPart<Region> {
 
     /**
      * Sets the given image as the icon of the main window.
-     * @param iconSource e.g. {@code "/images/help_icon.png"}
+     * @param iconSource e.g. {@code "/images/HelpIcon.png"}
      */
     private void setIcon(String iconSource) {
         FxViewUtil.setStageIcon(primaryStage, iconSource);
@@ -164,6 +178,7 @@ public class MainWindow extends UiPart<Region> {
     private void setWindowDefaultSize(UserPrefs prefs) {
         primaryStage.setHeight(prefs.getGuiSettings().getWindowHeight());
         primaryStage.setWidth(prefs.getGuiSettings().getWindowWidth());
+        primaryStage.setResizable(false);
         if (prefs.getGuiSettings().getWindowCoordinates() != null) {
             primaryStage.setX(prefs.getGuiSettings().getWindowCoordinates().getX());
             primaryStage.setY(prefs.getGuiSettings().getWindowCoordinates().getY());
@@ -175,12 +190,106 @@ public class MainWindow extends UiPart<Region> {
         primaryStage.setMinWidth(MIN_WIDTH);
     }
 
+    //@@author teclu
+    @Subscribe
+    public void handleChangeThemeRequestEvent(ChangeThemeRequestEvent event) throws CommandException, ParseException {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        mainWindow.getStylesheets().remove(currentTheme);
+        prefs.setAddressBookTheme(event.theme + "Theme.css");
+        currentTheme = "view/" + prefs.getAddressBookTheme();
+        mainWindow.getStylesheets().add(currentTheme);
+    }
+
+    @FXML
+    private void setToLightTheme() {
+        if (checkSameTheme("Light")) {
+            return;
+        }
+        mainWindow.getStylesheets().remove(currentTheme);
+        prefs.setAddressBookTheme("LightTheme.css");
+        currentTheme = "view/" + prefs.getAddressBookTheme();
+        mainWindow.getStylesheets().add(currentTheme);
+        EventsCenter.getInstance().post(new ChangeThemeRequestEvent("Light"));
+        raise(new NewResultAvailableEvent("Theme updated to: Light", false));
+    }
+
+    @FXML
+    private void setToDarkTheme() {
+        if (checkSameTheme("Dark")) {
+            return;
+        }
+        mainWindow.getStylesheets().remove(currentTheme);
+        prefs.setAddressBookTheme("DarkTheme.css");
+        currentTheme = "view/" + prefs.getAddressBookTheme();
+        mainWindow.getStylesheets().add(currentTheme);
+        EventsCenter.getInstance().post(new ChangeThemeRequestEvent("Dark"));
+        raise(new NewResultAvailableEvent("Theme updated to: Dark", false));
+    }
+
+    @FXML
+    private void setToRedTheme() {
+        if (checkSameTheme("Red")) {
+            return;
+        }
+        mainWindow.getStylesheets().remove(currentTheme);
+        prefs.setAddressBookTheme("RedTheme.css");
+        currentTheme = "view/" + prefs.getAddressBookTheme();
+        mainWindow.getStylesheets().add(currentTheme);
+        EventsCenter.getInstance().post(new ChangeThemeRequestEvent("Red"));
+        raise(new NewResultAvailableEvent("Theme updated to: Red", false));
+    }
+
+    @FXML
+    private void setToBlueTheme() {
+        if (checkSameTheme("Blue")) {
+            return;
+        }
+        mainWindow.getStylesheets().remove(currentTheme);
+        prefs.setAddressBookTheme("BlueTheme.css");
+        currentTheme = "view/" + prefs.getAddressBookTheme();
+        mainWindow.getStylesheets().add(currentTheme);
+        EventsCenter.getInstance().post(new ChangeThemeRequestEvent("Blue"));
+        raise(new NewResultAvailableEvent("Theme updated to: Blue", false));
+    }
+
+    @FXML
+    private void setToGreenTheme() {
+        if (checkSameTheme("Green")) {
+            return;
+        }
+        mainWindow.getStylesheets().remove(currentTheme);
+        prefs.setAddressBookTheme("GreenTheme.css");
+        currentTheme = "view/" + prefs.getAddressBookTheme();
+        mainWindow.getStylesheets().add(currentTheme);
+        EventsCenter.getInstance().post(new ChangeThemeRequestEvent("Green"));
+        raise(new NewResultAvailableEvent("Theme updated to: Green", false));
+    }
+
+    /**
+     * Returns true if the theme to be set is already in place and raises an event to the user.
+     */
+    private boolean checkSameTheme(String theme) {
+        if (currentTheme.contains(theme)) {
+            raise(new NewResultAvailableEvent("Theme is already set to " + theme + "!", true));
+            return true;
+        }
+        return false;
+    }
+    //@@author
+
     /**
      * Returns the current size and the position of the main Window.
      */
     GuiSettings getCurrentGuiSetting() {
         return new GuiSettings(primaryStage.getWidth(), primaryStage.getHeight(),
                 (int) primaryStage.getX(), (int) primaryStage.getY());
+    }
+
+    /**
+     * Returns the current theme.
+     */
+    public static String getCurrentTheme() {
+        return currentTheme;
     }
 
     /**
@@ -206,10 +315,6 @@ public class MainWindow extends UiPart<Region> {
 
     public PersonListPanel getPersonListPanel() {
         return this.personListPanel;
-    }
-
-    void releaseResources() {
-        browserPanel.freeResources();
     }
 
     @Subscribe

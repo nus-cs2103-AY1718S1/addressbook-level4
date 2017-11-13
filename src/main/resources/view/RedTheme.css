@@ -1,0 +1,217 @@
+/* @@author teclu */
+
+/* Start: Default Settings */
+.root {
+    -fx-font-family: "Calibri Light";
+    -fx-text-fill: #333333;
+    -fx-font-size: 14pt;
+}
+
+.background {
+    -fx-background-color: #f7f5f4;
+    background-color: #ffffff; /* Used in the default.html file */
+}
+
+.scroll-bar {
+    -fx-background-color: #fff4f4;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: #ff8c8c;
+}
+
+.scroll-bar .increment-button, .scroll-bar .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 1 1 1 1;
+}
+
+.scroll-bar .increment-arrow, .scroll-bar .decrement-arrow {
+    -fx-shape: " ";
+}
+
+.scroll-bar:vertical .increment-arrow, .scroll-bar:vertical .decrement-arrow {
+    -fx-padding: 0 8 0 8;
+}
+
+.split-pane-divider {
+    -fx-background-color: transparent;
+}
+
+#tags {
+    -fx-font-family: "Calibri";
+    -fx-font-weight: bold;
+    -fx-hgap: 7;
+    -fx-vgap: 3;
+}
+
+#tags .label {
+    -fx-text-fill: #ffffff;
+    -fx-padding: 1 5 1 5;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+}
+
+#mainWindow .split-pane {
+    -fx-background-color: #f7f5f4;
+    -fx-background-image: url("../images/LightThemeBackground.png") no-repeat center center;
+}
+
+#mainWindow .VBox {
+    -fx-border-width: 5px;
+}
+/* End: Default Settings */
+
+/* Start: Menu Bar */
+.menu-bar {
+    -fx-background-color: #b52735;
+    -fx-border-color: #aa0114;
+    -fx-border-width: 0 0 1 0;
+}
+
+.menu-bar .menu {
+    -fx-background-color: #b52735;
+}
+
+.menu-bar .menu:hover {
+    -fx-background-color: #aa0114;
+}
+
+.menu-bar .menu .label {
+    -fx-text-fill: #eeeeee;
+}
+
+.menu-bar .menu-item {
+    -fx-background-color: #ffffff;
+}
+
+.menu-bar .menu-item:hover {
+    -fx-background-color: #f2f2f2;
+}
+
+.menu-bar .menu-item .label {
+    -fx-text-fill: #333333;
+}
+/* End: Menu Bar */
+
+/* Start: Person List Card */
+#personList {
+    -fx-background-color: #f7f5f4;
+}
+
+#personListView, #personListPanelPlaceholder {
+    -fx-background-color: #f7f5f4;
+}
+
+#cardPane #name, #id {
+    -fx-font-size: 18pt;
+    -fx-text-fill: #333333;
+}
+
+#cardPane #tags .label {
+    -fx-font-size: 13pt;
+}
+
+.list-view {
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+.list-cell {
+    -fx-background-color: #f7f5f4;
+    -fx-label-padding: 0 0 0 0;
+    -fx-graphic-text-gap: 0;
+    -fx-padding: 0 0 0 0;
+}
+
+.list-cell:filled:even {
+    -fx-background-color: #ffeaea;
+}
+
+.list-cell:filled:odd {
+    -fx-background-color: #fff4f4;
+}
+
+.list-cell:filled:selected {
+    -fx-background-color: #ffe2e2;
+    -fx-border-color: #ffd3d3;
+    -fx-border-width: 1px;
+}
+
+/* End: Person List Card */
+
+/* Start: Person Panel */
+#personPanelPlaceholder {
+    -fx-background-color: transparent;
+}
+
+#primaryDetails {
+    -fx-background-color: #c13434;
+}
+
+#secondaryDetails {
+    -fx-font-family: "Calibri Light";
+    -fx-background-color: #f2f2f2;
+}
+
+#personPanel #name {
+    -fx-text-fill: #eeeeee;
+    -fx-font-size: 42pt;
+}
+
+#personPanel #tags .label {
+    -fx-font-family: "Calibri";
+    -fx-font-size: 20pt;
+}
+
+#personPanel #address, #personPanel #email, #personPanel #phone, #personPanel #birthday {
+    -fx-font-size: 18pt;
+}
+
+#personPanel #address, #personPanel #email, #personPanel #phone, #personPanel #birthday {
+    -fx-font-size: 18pt;
+    -fx-label-padding: 0 0 0 42;
+    -fx-background-position: 10 5;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 32px;
+}
+
+#personPanel #address {
+    -fx-background-image: url("../images/AddressIcon.png");
+}
+
+#personPanel #email {
+    -fx-background-image: url("../images/EmailIcon.png");
+}
+
+#personPanel #phone {
+    -fx-background-image: url("../images/PhoneIcon.png");
+}
+
+#personPanel #birthday {
+    -fx-background-image: url("../images/BirthdayIcon.png");
+}
+/* End: Person Panel */
+
+/* Start: Command Box */
+.result-display {
+    -fx-font-family: "Courier New";
+    -fx-font-size: 14pt;
+    -fx-text-fill: #000000;
+}
+
+.text-field {
+    -fx-font-family: "Courier New";
+    -fx-font-size: 14pt;
+}
+/* End: Command Box */
+
+/* Start: Status Bar */
+.status-bar {
+    -fx-background-color: #e0e0e0;
+}
+
+.status-bar .label {
+    -fx-font-size: 12pt;
+    -fx-text-fill: #333333;
+}
+/* End: Status Bar */

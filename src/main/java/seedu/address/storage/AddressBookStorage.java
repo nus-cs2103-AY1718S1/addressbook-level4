@@ -41,4 +41,10 @@ public interface AddressBookStorage {
      */
     void saveAddressBook(ReadOnlyAddressBook addressBook, String filePath) throws IOException;
 
+    /**
+     * Saves a backup of addressbook in a temp location
+     * @param addressBook
+     * @throws IOException
+     */
+    void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException;
 }

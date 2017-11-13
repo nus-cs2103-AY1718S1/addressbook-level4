@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addressbook>
+    <persons>
+        <name>Alex Zheng</name>
+        <phone>87438807</phone>
+        <email>alexzheng@example.com</email>
+        <address>Blk 30 Geylang Street 29, #06-40</address>
+        <birthday>01/01/1991</birthday>
+        <avatar>No Avatar</avatar>
+        <tagged>Wedding</tagged>
+        <tagged>NewClient</tagged>
+    </persons>
+    <persons>
+        <name>Boyce Yang</name>
+        <phone>96648282</phone>
+        <email>boycey@example.com</email>
+        <address>13 Computing Drive</address>
+        <birthday>02/05/1995</birthday>
+        <avatar>No Avatar</avatar>
+        <tagged>NUSComputingClub</tagged>
+    </persons>
+    <persons>
+        <name>Charlie Lim</name>
+        <phone>98761234</phone>
+        <email>clim@example.com</email>
+        <address>462 Crawford Lane</address>
+        <birthday>01/02/1990</birthday>
+        <avatar>No Avatar</avatar>
+        <tagged>Musician</tagged>
+        <tagged>LoyalClient</tagged>
+    </persons>
+    <persons>
+        <name>Darshini R</name>
+        <phone>91231231</phone>
+        <email>darshr@example.com</email>
+        <address>7 Kim Chuan Terrace</address>
+        <birthday>06/06/1966</birthday>
+        <avatar>No Avatar</avatar>
+        <tagged>Wedding</tagged>
+        <tagged>NewClient</tagged>
+    </persons>
+    <persons>
+        <name>Dean James</name>
+        <phone>92838182</phone>
+        <email>dj@example.com</email>
+        <address>43 Sixth Ave</address>
+        <birthday>01/02/1990</birthday>
+        <avatar>No Avatar</avatar>
+        <tagged>Photographer</tagged>
+        <tagged>Work</tagged>
+    </persons>
+    <persons>
+        <name>Jacky Mao</name>
+        <phone>91231337</phone>
+        <email>jlmao@example.com</email>
+        <address>1469 Beaver Creek</address>
+        <birthday>05/05/1995</birthday>
+        <avatar>No Avatar</avatar>
+        <tagged>Work</tagged>
+        <tagged>Overseas</tagged>
+        <tagged>WebsiteDeveloper</tagged>
+    </persons>
+    <persons>
+        <name>Kally Loh</name>
+        <phone>91234567</phone>
+        <email>kloh93@example.com</email>
+        <address>95 Desker Road</address>
+        <birthday>12/12/1993</birthday>
+        <avatar>No Avatar</avatar>
+        <tagged>NUSStudentUnion</tagged>
+        <tagged>LoyalClient</tagged>
+    </persons>
+    <persons>
+        <name>Abcde Qhi</name>
+        <phone>92831111</phone>
+        <email>qigang@example.com</email>
+        <address>50 Chin Swee Road #09-04</address>
+        <birthday>25/12/1967</birthday>
+        <avatar>No Avatar</avatar>
+        <tagged>NewClient</tagged>
+        <tagged>SegarCommunityClub</tagged>
+    </persons>
+    <persons>
+        <name>Ang Jing Zhe</name>
+        <phone>91231231</phone>
+        <email>ajc123@example.com</email>
+        <address>101 Thomson Road</address>
+        <birthday>14/10/1987</birthday>
+        <avatar>No Avatar</avatar>
+        <tagged>NewClient</tagged>
+    </persons>
+    <persons>
+        <name>Hu Buay Song</name>
+        <phone>91231231</phone>
+        <email>ajc123@example.com</email>
+        <address>123 Kappa Drive #06-66</address>
+        <birthday>06/06/1966</birthday>
+        <avatar>No Avatar</avatar>
+        <tagged>Wedding</tagged>
+        <tagged>NewClient</tagged>
+    </persons>
+    <persons>
+        <name>Irsan Khuang</name>
+        <phone>88822773</phone>
+        <email>ikendo@example.com</email>
+        <address>2 Lady Musgrave Ave</address>
+        <birthday>02/04/1993</birthday>
+        <avatar>No Avatar</avatar>
+        <tagged>LoyalClient</tagged>
+    </persons>
+    <persons>
+        <name>Albert Ng</name>
+        <phone>89012345</phone>
+        <email>indogod@example.com</email>
+        <address>7 Warrenton Road</address>
+        <birthday>05/05/1997</birthday>
+        <avatar>No Avatar</avatar>
+        <tagged>LoyalClient</tagged>
+    </persons>
+    <persons>
+        <name>Fong Wei Zheng</name>
+        <phone>89991234</phone>
+        <email>schifix@example.com</email>
+        <address>20 Cecil Street #16-04</address>
+        <birthday>15/08/1995</birthday>
+        <avatar>No Avatar</avatar>
+        <tagged>NUSComputingClub</tagged>
+    </persons>
+    <persons>
+        <name>Umairah S</name>
+        <phone>82737123</phone>
+        <email>archiumi@example.com</email>
+        <address>10 Toh Guan Road #04-09</address>
+        <birthday>19/02/1996</birthday>
+        <avatar>No Avatar</avatar>
+        <tagged>LoyalClient</tagged>
+        <tagged>WorkComplete</tagged>
+    </persons>
+    <persons>
+        <name>Victoria Lim</name>
+        <phone>82557190</phone>
+        <email>vickyly@example.com</email>
+        <address>42 Pasir Panjang</address>
+        <birthday>28/07/1997</birthday>
+        <avatar>No Avatar</avatar>
+        <tagged>WorkComplete</tagged>
+    </persons>
+    <persons>
+        <name>Tracy Shen</name>
+        <phone>92736123</phone>
+        <email>tshenk@example.com</email>
+        <address>6 Boon Lay Drive, Summerdale, #02-09</address>
+        <birthday>28/01/1997</birthday>
+        <avatar>No Avatar</avatar>
+        <tagged>NewClient</tagged>
+        <tagged>WorkPending</tagged>
+    </persons>
+    <persons>
+        <name>Deng Yi Min</name>
+        <phone>92221423</phone>
+        <email>dxingxing@example.com</email>
+        <address>6 Kent Ridge Road, #06-21</address>
+        <birthday>20/09/1997</birthday>
+        <avatar>No Avatar</avatar>
+        <tagged>NewClient</tagged>
+        <tagged>WorkPending</tagged>
+        <tagged>NUS</tagged>
+    </persons>
+    <persons>
+        <name>Kong Ying Xuan</name>
+        <phone>81212355</phone>
+        <email>kangkong@example.com</email>
+        <address>88 Jurong Road, #14-14</address>
+        <birthday>01/04/1997</birthday>
+        <avatar>No Avatar</avatar>
+        <tagged>WorkPending</tagged>
+    </persons>
+    <persons>
+        <name>Kevin Leonardo</name>
+        <phone>95558666</phone>
+        <email>kla@example.com</email>
+        <address>36 College Ave E, North Tower, #22-22</address>
+        <birthday>22/03/1997</birthday>
+        <avatar>No Avatar</avatar>
+        <tagged>NUS</tagged>
+        <tagged>WorkComplete</tagged>
+    </persons>
+    <persons>
+        <name>Nadhira Salsabila</name>
+        <phone>92228321</phone>
+        <email>nadhira@example.com</email>
+        <address>37 College Ave E, South Tower, #11-11</address>
+        <birthday>11/05/1999</birthday>
+        <avatar>No Avatar</avatar>
+        <tagged>NUS</tagged>
+        <tagged>WorkComplete</tagged>
+    </persons>
+    <tags>NewClient</tags>
+    <tags>Overseas</tags>
+    <tags>SegarCommunityClub</tags>
+    <tags>LoyalClient</tags>
+    <tags>NUS</tags>
+    <tags>WebsiteDeveloper</tags>
+    <tags>Wedding</tags>
+    <tags>Musician</tags>
+    <tags>NUSStudentUnion</tags>
+    <tags>Photographer</tags>
+    <tags>WorkPending</tags>
+    <tags>Work</tags>
+    <tags>NUSComputingClub</tags>
+    <tags>WorkComplete</tags>
+</addressbook>

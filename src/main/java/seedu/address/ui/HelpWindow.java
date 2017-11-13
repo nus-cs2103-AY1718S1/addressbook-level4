@@ -18,7 +18,7 @@ public class HelpWindow extends UiPart<Region> {
     public static final String USERGUIDE_FILE_PATH = "/docs/UserGuide.html";
 
     private static final Logger logger = LogsCenter.getLogger(HelpWindow.class);
-    private static final String ICON = "/images/help_icon.png";
+    private static final String ICON = "/images/HelpIcon.png";
     private static final String FXML = "HelpWindow.fxml";
     private static final String TITLE = "Help";
 
@@ -32,7 +32,8 @@ public class HelpWindow extends UiPart<Region> {
         Scene scene = new Scene(getRoot());
         //Null passed as the parent stage to make it non-modal.
         dialogStage = createDialogStage(TITLE, null, scene);
-        dialogStage.setMaximized(true); //TODO: set a more appropriate initial size
+        dialogStage.setHeight(800);
+        dialogStage.setWidth(600);
         FxViewUtil.setStageIcon(dialogStage, ICON);
 
         String userGuideUrl = getClass().getResource(USERGUIDE_FILE_PATH).toString();
