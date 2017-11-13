@@ -252,8 +252,33 @@ The `redo` command fails as there are no `undo` commands executed previously.
 Clears all entries from the address book. +
 Format: `clear`
 
+// tag::findtag[]
+=== Find contacts by tag : `findtag`
+
+Finds persons whose tags contain any of the given keywords. +
+Format: `findtag KEYWORD [MORE_KEYWORDS]`
+
+****
+* The search is case insensitive. e.g `Family` will match `family`
+* Only full words will be matched e.g. `friend` will not match `friends`
+* Persons whose tags matching at least one keyword will be returned (i.e. `OR` search).
+* You can mix the parameters together in the same command (Refer to final example below).
+****
+
+Examples:
+
+* `findtag colleague` +
+Returns: +
+`name` John Doe, `tags` colleague
+
+* `findtag colleague friend` +
+Returns: +
+1. `name` John Doe, `tags` colleague +
+2. `name` Jane Doe, `tags` friend
+// end::findtag[]
+
 // tag::addMultiple[]
-=== Add multiple contacts at once : `addMul`
+=== Add multiple contacts : `addMul`
 
 Add multiple contacts to TheYellowPage at once, given the list of contacts in a tab-separated file. +
 Format: `addMul TSV_PATH`
@@ -330,6 +355,10 @@ Format: `changePicture INDEX PICTURE_PATH`
 * The specified picture must be in either .png or . jpg format.
 ****
 
+Example:
+
+* `changePicture 1 D://myPicture.png` +
+changes the profile picture of the contact at index 1 to D://myPicture.png.
 // end::changePicture[]
 
 // tag::remark[]

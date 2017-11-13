@@ -35,8 +35,14 @@ public class DeleteMultipleCommandParser implements Parser<DeleteMultipleCommand
         for (int n = 0; n < list.size(); n++) {
             String indexString = list.get(n);
             int foo = Integer.parseInt(indexString) - 1;
-            Index index = new Index(foo);
-            arrayOfIndex.add(index);
+            Index index;
+            try {
+                index = new Index(foo);
+                arrayOfIndex.add(index);
+            } catch (IndexOutOfBoundsException iob) {
+                throw new ParseException(
+                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteMultipleCommand.MESSAGE_USAGE));
+            }
         }
 
         return new DeleteMultipleCommand(arrayOfIndex);

@@ -352,6 +352,38 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+// tag::findtag[]
+=== Find contacts by tag
+`FindTagCommand` allows the user to list those contacts whose tags are in a list of specified tags. The following diagram shows how `FindTagCommand` works:
+
+image::FindTagSequenceDiagram.PNG[width="800"]
+
+_Figure 4.1 : Sequence diagram for FindTagCommand_
+
+The user specifies the list of tags that he or she wants to search as the arguments of the command. `AddressBookParser` parses these keywords, and creates a new instance of `FindTagCommandParser`. `FindTagCommandParser` initializes a new instance of `FindTagCommand` with the given keywords as `TagsContainKeywordsPredicate`. `FindTagCommand` calls `updateFilteredPersonList` of model and returns the list of matched contacts.
+
+`TagsContainKeywordsPredicate` implements `Predicate` interface and specifies tag matching criteria. The following code snippets explain the class functionality:
+[source,java]
+----
+public class TagsContainKeywordsPredicate implements Predicate<ReadOnlyPerson> {
+    public TagsContainKeywordsPredicate(List<String> keywords) {
+        this.keywords = keywords;
+    }
+
+    private String stringifySetTags(Set<Tag> setTags) {
+        // ... convert a list of tags to string ...
+    }
+
+    @Override
+    public boolean test(ReadOnlyPerson person) {
+        return keywords.stream()
+                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(
+                stringifySetTags(person.getTags()), keyword));
+    }
+}
+----
+// end::findtag[]
+
 // tag::addMultiple[]
 === Add multiple contacts
 
@@ -386,16 +418,10 @@ It is highly advisable that the user enter the data in Excel and export as `Text
 |friend, criminal
 |===
 
-
-`AddMultipleByTsvCommand` can throw the following exceptions:
-
- * `NoSuchElementException`: This happens when `name`, `occupation`, `phone`, `email`, `address` or `website` is missing, and that specific entry will not be added.
- * `IOException`: This happens when the system cannot find the file specified by users, and no entry will be added.
- * `DuplicatePersonException`: This happens when an entry has already been added, and it will not be added again.
-
 The following sequence diagram shows how the `AddMultipleByTsvCommand` works
 
 image::AddMultipleByTsvSequenceDiagram.PNG[width="800"]
+
 _Figure 4.2 : Sequence diagram for AddMultipleByTsvCommand_
 
 The user specifies the path to his list of contacts as the only argument of the command. `AddressBookParser` parses this argument and creates a new instance of `AddMultipleByTsvCommandParser` with the given argument as `contactTsvFilePath`. `AddMultipleByTsvCommandParser` then creates a new instance of `ContactTsvReader` with the given `contactTsvFilePath` and calls `readContactFromFile()` to start parsing.
@@ -403,6 +429,38 @@ The user specifies the path to his list of contacts as the only argument of the 
 `readContactFromFile` throws `NoSuchElementException` and `IOException`.
 
 After `readContactFromFile` is finished, `AddMultipleByTsvCommandParser` calls `getToAddPeople()` for `toAddPeople` (a list of people to add) and `getFailedEntries` for failedEntries (a list of entries that TheYellowPage failed to add). `AddMultipleByTsvCommandParser` creates a new instance of `addMultipleByTsvCommand` given `toAddPeople` and `failedEntries`. Within this instance, `addPerson` will be called for each person in `toAddPeople`. After this, `addMultipleByTsvCommand` creates a new instance of `CommandResult` and sends the `result` back to `LogicManager`.
+
+`AddMultipleByTsvCommand` can throw the following exceptions:
+
+ * `NoSuchElementException`: This happens when `name`, `occupation`, `phone`, `email`, `address` or `website` is missing, and that specific entry will not be added.
+ * `IOException`: This happens when the system cannot find the file specified by users, and no entry will be added.
+ * `DuplicatePersonException`: This happens when an entry has already been added, and it will not be added again.
+
+`ContactTsvReader` is used as a helper class to manage parsing contact details from a tab-separated file. The following code snippet explains the class functionality:
+[source,java]
+----
+public class ContactTsvReader {
+    private String contactTsvFilePath;
+    private ArrayList<ReadOnlyPerson> toAddPeople;
+    private ArrayList<Integer> failedEntries;
+
+    public void readContactFromFile() throws ParseException, IOException {
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(contactTsvFilePath));
+
+        while(bufferedReader.readLine()) != null) {
+            // ... parse contact fields ...
+            ReadOnlyPerson toAddPerson = new Person(name, occupation, phone, email, address, remark, website, tagList);
+            toAddPeople.add(toAddPerson);
+        } catch (IllegalValueException ive) {
+            // ... throw new ParseException ...
+        } catch (NoSuchElementException nsee) {
+            failedEntries.add(i);
+        }
+    }
+
+    // ... getters for toAddPeople, failedEntries ...
+}
+----
 // end::addMultiple[]
 
 // tag::FindCommand[]
@@ -500,13 +558,30 @@ The order of the contacts in the `RecentlyDeletedQueue` will also be reversed wh
 The following sequence diagram shows how the `ChangeProfilePictureCommand` works
 
 image::ChangeProfilePictureSequenceDiagram.PNG[width="800"]
-_Figure 4.4 : Sequence diagram for `ChangeProfilePictureCommand`_
+_Figure 4.6 : Sequence diagram for ChangeProfilePictureCommand_
 
 When the user keys in the command word `changePicture` along with `INDEX` and `PICTURE_PATH`, `AddressBookParser` will detect the command word and parse the arguments to a new instance of `ChangeProfilePictureCommandParser`. `ChangeProfilePictureCommandParser` then creates a new instance of `ChangeProfilePictureCommand` with the given `INDEX` and `PICTURE_PATH`. This instance finds the `person` of the given `INDEX` in the most recent listing, then calls the static function `saveImageToStorage` with the `person` and `file` at `PICTURE_PATH`. `saveImageToStorage` creates a copy of the `file` and stores it under `data/`
 `ChangeProfilePictureCommand` can throw the following exceptions:
 
  * `IOException`: This happens when the system cannot find the file specified by users, and no picture will be changed.
  * `IllegalArgumentException`: This happens when the parsed arguments are not valid.
+
+`ImageStorageHandler` is used as a helper class to manage saving/deleting images in the storage. The following code snippet shows the class API:
+[source,java]
+----
+public class ImageStorageHandler {
+    private static final String DEFAULT_IMAGE_STORAGE_PREFIX = "data/"; // deafault image storage
+    private static final String DEFAULT_IMAGE_STORAGE_SUFFIX = ".png"; // default stored image format
+
+    public static void saveImageToStorage(File file, ReadOnlyPerson person) throws CommandException {
+        // ... save image to storage ...
+    }
+
+    public static void deleteProfilePicture(ReadOnlyPerson personToDelete) {
+        // ... delete image in storage ...
+    }
+}
+----
 // end::changePicture[]
 
 // tag::remark[]
