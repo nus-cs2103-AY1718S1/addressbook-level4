@@ -134,7 +134,6 @@ public class CalendarView {
                 }
                 if (birthdayExist) {
                     if (dateValue.equals(birthdayValue.substring(0, 5))) {
-                        System.out.println("date value: " + dateValue);
                         ap.getChildren();
                         ap.setStyle("-fx-background-color: #CD5C5C");
                         ap.setAccessibleText(person.getName().toString());
@@ -171,14 +170,16 @@ public class CalendarView {
      * Move the month back by one. Repopulate the calendar with the correct dates.
      */
     public void previousMonth() {
-        populateCalendar(currentYearMonth.minusMonths(1));
+        currentYearMonth = currentYearMonth.minusMonths(1);
+        populateCalendar(currentYearMonth);
     }
 
     /**
      * Move the month forward by one. Repopulate the calendar with the correct dates.
      */
     public void nextMonth() {
-        populateCalendar(currentYearMonth.plusMonths(1));
+        currentYearMonth = currentYearMonth.plusMonths(1);
+        populateCalendar(currentYearMonth);
     }
 
     public VBox getView() {
