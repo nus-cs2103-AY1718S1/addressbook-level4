@@ -66,24 +66,6 @@ public class BirthdayCommandTest {
 
         assertCommandSuccess(birthdayCommand, model, expectedMessage, expectedModel);
     }
-    /*
-    @Test
-    public void execute_filteredList_success() throws Exception {
-                showFirstPersonOnly(model);
-
-        ReadOnlyPerson personInFilteredList = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Person editedPerson = new PersonBuilder(personInFilteredList)
-                .withBirthday("01/01/1991").build();
-        BirthdayCommand birthdayCommand = prepareCommand(INDEX_FIRST_PERSON, editedPerson.getBirthday().value);
-
-        String expectedMessage = String.format(BirthdayCommand.MESSAGE_ADD_BIRTHDAY_SUCCESS, editedPerson);
-
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
-
-        assertCommandSuccess(birthdayCommand, model, expectedMessage, expectedModel);
-    }
-    */
 
     @Test
     public void execute_invalidPersonIndexUnfilteredList_failure() throws Exception {

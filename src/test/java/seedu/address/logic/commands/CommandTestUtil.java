@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.fail;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_BIRTHDAY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MESSAGE;
@@ -47,6 +48,7 @@ public class CommandTestUtil {
     public static final String VALID_TAG_FRIEND = "friend";
     public static final String VALID_BIRTHDAY_AMY = "01/01/1991";
     public static final String VALID_BIRTHDAY_BOB = "02/02/1992";
+    public static final String INVALID_BIRTHDAY_JOHN = "99/99/9999";
     public static final String VALID_USERNAME_PRIVATE = "private";
     public static final String VALID_PASSWORD_PASSWORD = "password";
 
@@ -60,6 +62,7 @@ public class CommandTestUtil {
     public static final String ADDRESS_DESC_BOB = " " + PREFIX_ADDRESS + VALID_ADDRESS_BOB;
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
+    public static final String BIRTHDAY_DESC_JOHN = " " + PREFIX_BIRTHDAY + INVALID_BIRTHDAY_JOHN;
     public static final String USERNAME_DESC_USERNAME = " " + PREFIX_USERNAME + VALID_USERNAME_PRIVATE;
     public static final String PASSWORD_DESC_PASSWORD = " " + PREFIX_PASSWORD + VALID_PASSWORD_PASSWORD;
 

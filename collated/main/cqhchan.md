@@ -1433,9 +1433,15 @@ public class DisplayPanel  extends UiPart<Region> {
 ``` java
 package seedu.address.ui;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -1449,9 +1455,16 @@ import seedu.address.model.reminder.ReadOnlyReminder;
  */
 public class ReminderCard extends UiPart<Region> {
 
+    public static final int TIMER_DELAY = 0; // in milliseconds
+    public static final int TIMER_PERIOD = 3600000; // in milliseconds
+
+    public static final int GREEN_WARNING_DAYS_LEFT = 7;
+    public static final int YELLOW_WARNING_DAYS_LEFT = 3;
+    public static final int ORANGE_WARNING_DAYS_LEFT = 0;
+
     private static final String FXML = "ReminderListCard.fxml";
 
-    private static String[] colors = { "red", "gold", "blue", "purple", "orange", "brown",
+    private static String[] colors = { "red", "blue", "purple", "orange", "brown",
         "green", "magenta", "black", "grey" };
     private static HashMap<String, String> tagColors = new HashMap<String, String>();
     private static Random random = new Random();
@@ -1480,6 +1493,8 @@ public class ReminderCard extends UiPart<Region> {
     private Label message;
     @FXML
     private FlowPane tags;
+    @FXML
+    private Label daysCountdown;
 
     public ReminderCard(ReadOnlyReminder reminder, int displayedIndex) {
         super(FXML);
@@ -1487,6 +1502,7 @@ public class ReminderCard extends UiPart<Region> {
         id.setText(displayedIndex + ". ");
         initTags(reminder);
         bindListeners(reminder);
+        initCountdown(reminder);
     }
 
     private static String getColorForTag(String tagValue) {
@@ -1523,6 +1539,66 @@ public class ReminderCard extends UiPart<Region> {
         });
     }
 
+    /**
+     * @param reminder
+     */
+    private void initCountdown(ReadOnlyReminder reminder) {
+        // Calculates the day difference between the reminder's date and the current date
+        // Todo: Minus 1 day in day difference if the current time passes the reminder's time
+        final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+        LocalDate deadline = LocalDate.parse(reminder.getDate().toString(), dateFormatter);
+        LocalDate currentTime = LocalDate.now();
+        int daysBetween = (int) ChronoUnit.DAYS.between(currentTime, deadline);
+
+        setDaysCountdownBasedOnDays(daysBetween);
+        if (daysBetween >= ORANGE_WARNING_DAYS_LEFT) { // Only start the countdown if the deadline is not overdue
+            startDaysCountdown(deadline);
+        }
+    }
+
+    /**
+     * Starts the countdown.
+     */
+    private void startDaysCountdown(LocalDate date) {
+        final Timer timer = new Timer();
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                LocalDate currentDate = LocalDate.now();
+                int newDaysBetween = (int) ChronoUnit.DAYS.between(currentDate, date);
+                Platform.runLater(() -> setDaysCountdownBasedOnDays(newDaysBetween));
+            }
+        };
+        timer.scheduleAtFixedRate(task, TIMER_DELAY, TIMER_PERIOD);
+    }
+
+    private void setDaysCountdownBasedOnDays(int days) {
+        setDaysCountdownContentBasedOnDays(days);
+        setDaysCountdownColorBasedOnDays(days);
+    }
+
+    private void setDaysCountdownContentBasedOnDays(int days) {
+        if (days > ORANGE_WARNING_DAYS_LEFT) {
+            daysCountdown.setText(days + " day(s)" + " left");
+        } else if (days == ORANGE_WARNING_DAYS_LEFT) {
+            daysCountdown.setText("today");
+        } else {
+            daysCountdown.setText("overdue");
+        }
+    }
+
+    private void setDaysCountdownColorBasedOnDays(int days) {
+        if (days >= GREEN_WARNING_DAYS_LEFT) {
+            daysCountdown.setStyle("-fx-text-fill: " + "greenyellow");
+        } else if (days >= YELLOW_WARNING_DAYS_LEFT) {
+            daysCountdown.setStyle("-fx-text-fill: " + "yellow");
+        } else if (days >= ORANGE_WARNING_DAYS_LEFT) {
+            daysCountdown.setStyle("-fx-text-fill: " + "orange");
+        } else {
+            daysCountdown.setStyle("-fx-text-fill: " + "red");
+        }
+    }
+
     @Override
     public boolean equals(Object other) {
         // short circuit if same object
@@ -1531,7 +1607,7 @@ public class ReminderCard extends UiPart<Region> {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof PersonCard)) {
+        if (!(other instanceof ReminderCard)) {
             return false;
         }
 
@@ -1802,38 +1878,49 @@ public class ReminderListPanel extends UiPart<Region> {
 ```
 ###### \resources\view\ReminderListCard.fxml
 ``` fxml
+
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox id="remindercardPane" fx:id="remindercardPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<HBox id="remindercardPane" fx:id="remindercardPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
     <GridPane HBox.hgrow="ALWAYS">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
         </columnConstraints>
         <VBox alignment="CENTER_LEFT" minHeight="105" GridPane.columnIndex="0">
             <padding>
-                <Insets top="5" right="5" bottom="5" left="15" />
+                <Insets bottom="5" left="15" right="5" top="5" />
             </padding>
-            <HBox spacing="5" alignment="CENTER_LEFT">
-                <Label fx:id="id" styleClass="cell_big_label">
+            <HBox alignment="CENTER_LEFT" spacing="5">
+                <Label fx:id="id" styleClass="reminder_big_label">
                     <minWidth>
                         <!-- Ensures that the label text is never truncated -->
                         <Region fx:constant="USE_PREF_SIZE" />
                     </minWidth>
                 </Label>
-                <Label fx:id="task" text="\$first" styleClass="cell_big_label" />
+                <Label fx:id="task" styleClass="reminder_big_label" text="\$first" />
             </HBox>
             <Label fx:id="priority" styleClass="cell_small_label" text="\$priority" />
             <Label fx:id="datentime" styleClass="cell_small_label" text="\$datentime" />
             <Label fx:id="message" styleClass="cell_small_label" text="\$message" />
             <FlowPane fx:id="tags" />
         </VBox>
+      <rowConstraints>
+         <RowConstraints />
+      </rowConstraints>
     </GridPane>
+   <AnchorPane>
+      <children>
+         <Label fx:id="daysCountdown" layoutY="83.0" />
+      </children>
+   </AnchorPane>
 </HBox>
 ```
