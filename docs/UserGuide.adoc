@@ -591,8 +591,8 @@ The application must be **restarted** before the newly selected theme is activat
 
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Multiple* `multiple FILE_NAME.txt` +
-e.g `multiple personsToAdd.txt`
+* *Multiple* `multiple FILE_PATH` +
+e.g `multiple data/personsToAdd.txt`
 * *Export* `export [FILETYPE] [EXPORT_PATH]` +
 e.g `export .txt C:/Users/This User/Desktop`
 * *Clear* : `clear`
