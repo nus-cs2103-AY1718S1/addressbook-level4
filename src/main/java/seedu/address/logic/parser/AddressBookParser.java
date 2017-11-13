@@ -19,6 +19,7 @@ import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.ExportCommand;
 import seedu.address.logic.commands.ExportTaskCommand;
 import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.FindTaskCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.LinkCommand;
@@ -127,6 +128,11 @@ public class AddressBookParser {
         case FindCommand.COMMAND_ALIAS:
             return new FindCommandParser().parse(arguments);
 
+        //@@author 1moresec
+        case FindTaskCommand.COMMAND_WORD:
+        case FindTaskCommand.COMMAND_ALIAS:
+             return new FindTaskCommandParser().parse(arguments);
+
         case RemarkCommand.COMMAND_WORD:
             return new RemarkCommandParser().parse(arguments);
 
@@ -143,6 +149,7 @@ public class AddressBookParser {
         case ListTaskCommand.COMMAND_ALIAS:
             return new ListTaskCommand();
 
+        //@@author 1moresec
         case ExportCommand.COMMAND_WORD:
         case ExportCommand.COMMAND_ALIAS:
             return new ExportCommandParser().parse(arguments);
@@ -155,6 +162,7 @@ public class AddressBookParser {
         case TaskByPriorityCommand.COMMAND_ALIAS:
             return new TaskByPriorityCommand();
 
+        //@@author 1moresec
         case ExportTaskCommand.COMMAND_WORD:
         case ExportTaskCommand.COMMAND_ALIAS:
             return new ExportTaskCommandParser().parse(arguments);

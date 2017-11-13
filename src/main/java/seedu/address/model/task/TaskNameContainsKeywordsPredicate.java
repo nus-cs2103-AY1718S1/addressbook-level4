@@ -1,4 +1,4 @@
-//@@author ShaocongDong
+//@@author 1moresec
 package seedu.address.model.task;
 
 import java.util.List;
@@ -10,16 +10,19 @@ import seedu.address.commons.util.StringUtil;
  * Tests that a {@code ReadOnlyTask}'s {@code Name} matches any of the keywords given.
  */
 public class TaskNameContainsKeywordsPredicate implements Predicate<ReadOnlyTask> {
-    private final List<Name> keywords;
+    private final List<String> keywords;
 
-    public TaskNameContainsKeywordsPredicate(List<Name> keywords) {
+    public TaskNameContainsKeywordsPredicate(List<String> keywords) {
         this.keywords = keywords;
     }
 
     @Override
     public boolean test(ReadOnlyTask task) {
-        return keywords.stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(task.getName().toString(), keyword.toString()));
+        boolean hasName = keywords.stream()
+                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(task.getName().toString(), keyword));
+        boolean hasDescription = keywords.stream()
+                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(task.getDescription().toString(), keyword));
+        return hasName || hasDescription;
     }
 
     @Override
