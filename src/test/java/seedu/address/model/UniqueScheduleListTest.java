@@ -27,8 +27,11 @@ import seedu.address.testutil.TypicalPersons;
 
 //@@author limcel
 public class UniqueScheduleListTest {
+
     @Rule
     public ExpectedException thrown = ExpectedException.none();
+    private Schedule scheduleOne;
+    private Schedule scheduleTwo;
 
     @Test
     public void asObservableList_modifyList_throwsUnsupportedOperationException() {
@@ -39,28 +42,25 @@ public class UniqueScheduleListTest {
 
     @Test
     public void compareScheduleTest() throws ParseException {
-        Calendar date = Calendar.getInstance();
-        Schedule scheduleOne = new Schedule(TypicalPersons.ALICE.getName().toString(), date);
-        Schedule scheduleTwo = new Schedule(TypicalPersons.BENSON.getName().toString(), date);
+        scheduleOne = new Schedule(TypicalPersons.ALICE.getName().toString(), getDate());
+        scheduleTwo = new Schedule(TypicalPersons.BENSON.getName().toString(), getDate());
         assert !scheduleOne.equals(scheduleTwo);
     }
 
     // Check whether schedule set is non-null
     @Test
     public void scheduleSetUnitTest() {
-        Calendar date = Calendar.getInstance();
         Set<Schedule> scheduleSet = new HashSet<Schedule>();
-        Schedule scheduleOne = new Schedule(TypicalPersons.ALICE.getName().toString(), date);
-        Schedule scheduleTwo = new Schedule(TypicalPersons.BENSON.getName().toString(), date);
+        scheduleOne = new Schedule(TypicalPersons.ALICE.getName().toString(), getDate());
+        scheduleTwo = new Schedule(TypicalPersons.BENSON.getName().toString(), getDate());
         UniqueScheduleList uniqueList = new UniqueScheduleList(scheduleSet);
         scheduleSet.add(scheduleOne);
     }
 
     @Test
     public void ifScheduleListContainsScheduleTest() throws ScheduleNotFoundException {
-        Calendar date = Calendar.getInstance();
         UniqueScheduleList scheduleList = new UniqueScheduleList();
-        Schedule scheduleOne = new Schedule(TypicalPersons.ALICE.getName().toString(), date);
+        scheduleOne = new Schedule(TypicalPersons.ALICE.getName().toString(), getDate());
         scheduleList.add(scheduleOne);
         assertTrue(scheduleList.contains(scheduleOne));
         scheduleList.remove(scheduleOne);
@@ -70,12 +70,12 @@ public class UniqueScheduleListTest {
     @Test
     public void test_chronologicallySortedList() throws ParseException {
         UniqueScheduleList uniqueScheduleList = new UniqueScheduleList();
-        Calendar dateOne = Calendar.getInstance();
-        Calendar dateTwo = Calendar.getInstance();
+        Calendar dateOne = getDate();
+        Calendar dateTwo = getDate();
         dateOne.setTime(ScheduleCommandParser.DATE_FORMAT.parse("2019-12-25 10:00:00"));
         dateTwo.setTime(ScheduleCommandParser.DATE_FORMAT.parse("2018-12-25 10:00:00"));
-        Schedule scheduleOne = new Schedule(ALICE.getName().toString(), dateOne);
-        Schedule scheduleTwo = new Schedule(ELLE.getName().toString(), dateTwo);
+        scheduleOne = new Schedule(ALICE.getName().toString(), dateOne);
+        scheduleTwo = new Schedule(ELLE.getName().toString(), dateTwo);
 
         uniqueScheduleList.add(scheduleOne);
         uniqueScheduleList.add(scheduleTwo);
@@ -121,6 +121,14 @@ public class UniqueScheduleListTest {
             }
         }
         return true;
+    }
+
+    /**
+     * @return the instance of date
+     */
+    private Calendar getDate() {
+        Calendar date = Calendar.getInstance();
+        return date;
     }
     //@@author
 }

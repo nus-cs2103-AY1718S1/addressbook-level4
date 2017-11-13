@@ -39,7 +39,6 @@ public class AddressBookParser {
      */
     private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
 
-    //@@author lincredibleJC
     /**
      * Parses user input into command for execution.
      *
@@ -55,6 +54,7 @@ public class AddressBookParser {
 
         final String commandWord = matcher.group("commandWord");
         final String arguments = matcher.group("arguments");
+        //@@author lincredibleJC
         switch (commandWord) {
 
         case AddCommand.COMMAND_WORD://Fallthrough
@@ -136,6 +136,6 @@ public class AddressBookParser {
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }
+        //@@author
     }
-    //@@author
 }

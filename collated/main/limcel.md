@@ -1,5 +1,24 @@
 # limcel
-###### \java\seedu\address\commons\events\ui\JumpToTabRequestEvent.java
+###### /java/seedu/address/commons/events/model/ScheduleListChangedEvent.java
+``` java
+/**
+ * Represents a change in the current schedule list
+ */
+public class ScheduleListChangedEvent extends BaseEvent {
+
+    private final ObservableList<Schedule> currentList;
+
+    public ScheduleListChangedEvent(ObservableList<Schedule> currentList) {
+        this.currentList = currentList;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+}
+```
+###### /java/seedu/address/commons/events/ui/JumpToTabRequestEvent.java
 ``` java
 public class JumpToTabRequestEvent extends BaseEvent {
 
@@ -16,15 +35,67 @@ public class JumpToTabRequestEvent extends BaseEvent {
 
 }
 ```
-###### \java\seedu\address\logic\commands\ScheduleCommand.java
+###### /java/seedu/address/logic/commands/DeleteScheduleCommand.java
+``` java
+/**
+ * Deletes a schedule identified from the address book's schedule list.
+ */
+public class DeleteScheduleCommand extends Command {
+
+    public static final String COMMAND_WORD = "deleteschedule";
+    public static final String COMMAND_ALIAS = "deletesch";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Deletes the schedule identified by the index number.\n"
+            + "Parameters: INDEX (must be a positive integer)\n"
+            + "Example: " + COMMAND_WORD + " 1";
+
+    public static final String MESSAGE_DELETE_SCHEDULE_SUCCESS = "Deleted Schedule: %1$s";
+
+    private final Index targetIndex;
+
+    public DeleteScheduleCommand(Index targetIndex) {
+        this.targetIndex = targetIndex;
+    }
+
+    @Override
+    public CommandResult execute() throws CommandException {
+        Model modelManager = new ModelManager();
+        ObservableList<Schedule> lastShownList = model.getScheduleList();
+
+        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_SCHEDULE_DISPLAYED_INDEX);
+        }
+
+        Schedule scheduleToDelete = lastShownList.get(targetIndex.getZeroBased());
+
+        try {
+            model.removeSchedule(scheduleToDelete);
+        } catch (ScheduleNotFoundException e) {
+            assert false : "The target schedule cannot be missing";
+        }
+
+        return new CommandResult(String.format(MESSAGE_DELETE_SCHEDULE_SUCCESS, scheduleToDelete));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof DeleteScheduleCommand // instanceof handles nulls
+                && this.targetIndex.equals(((DeleteScheduleCommand) other).targetIndex)); // state check
+    }
+
+}
+```
+###### /java/seedu/address/logic/commands/ScheduleCommand.java
 ``` java
 /**
  * Schedules a consultation timeslot with the person identified using it's last displayed index from the address book.
  */
 public class ScheduleCommand extends Command {
 
-    public static final String COMMAND_WORD = "schedule";
-    public static final String COMMAND_ALIAS = "sch";
+    public static final String COMMAND_WORD = "addschedule";
+    public static final String COMMAND_ALIAS = "addsch";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Schedules the selected indexed person to a consultation timeslot.\n"
@@ -91,11 +162,10 @@ public class ScheduleCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\SortCommand.java
+###### /java/seedu/address/logic/commands/SortCommand.java
 ``` java
 /**
  * Sorts all contacts in alphabetical order by their names from the address book.
- * Command is case-insensitive
  */
 public class SortCommand extends Command {
     public static final String COMMAND_WORD = "sort";
@@ -108,10 +178,7 @@ public class SortCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "All contacts are sorted alphabetically by name.";
 
-    private ArrayList<ReadOnlyPerson> contactList;
-
     public SortCommand() {
-        contactList = new ArrayList<>();
     }
 
     @Override
@@ -122,7 +189,7 @@ public class SortCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\TabCommand.java
+###### /java/seedu/address/logic/commands/TabCommand.java
 ``` java
 public class TabCommand extends Command {
     public static final String COMMAND_WORD = "tab";
@@ -135,12 +202,12 @@ public class TabCommand extends Command {
     public static final String MESSAGE_INVALID_TAB_INDEX = "Invalid Tab Value";
 
     // there are only 2 types of graphs available for display (Graph / Bar)
-    public static final int NUM_TAB = 2;
+    public static final int TAB_NUMBER = 2;
 
     private final Index targetIndex;
 
     /**
-     * @param targetIndex of the TabPane in the graph panel for switching
+     * Selects @param targetIndex of the TabPane in the graph panel for switching
      */
     public TabCommand(Index targetIndex) {
         this.targetIndex = targetIndex;
@@ -148,7 +215,7 @@ public class TabCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
-        if (targetIndex.getZeroBased() >= NUM_TAB) {
+        if (targetIndex.getZeroBased() >= TAB_NUMBER) {
             throw new CommandException(MESSAGE_INVALID_TAB_INDEX);
         }
         EventsCenter.getInstance().post(new JumpToTabRequestEvent(targetIndex));
@@ -163,7 +230,7 @@ public class TabCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\ViewScheduleCommand.java
+###### /java/seedu/address/logic/commands/ViewScheduleCommand.java
 ``` java
 /**
  * Lists all persons in the address book to the user.
@@ -194,18 +261,18 @@ public class ViewScheduleCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\Logic.java
+###### /java/seedu/address/logic/Logic.java
 ``` java
     /** Returns an unmodifiable view of the schedule list */
     ObservableList<Schedule> getScheduleList();
 ```
-###### \java\seedu\address\logic\LogicManager.java
+###### /java/seedu/address/logic/LogicManager.java
 ``` java
     @Override
     public ObservableList<Schedule> getScheduleList() {
         return model.getScheduleList(); }
 ```
-###### \java\seedu\address\logic\parser\ScheduleCommandParser.java
+###### /java/seedu/address/logic/parser/ScheduleCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new ScheduleCommand object
@@ -230,21 +297,14 @@ public class ScheduleCommandParser implements Parser<ScheduleCommand> {
             String[] str = args.split(" ");
             // string length should be at least of length three comprising of command, index and scheduled date,time:
             // e.g. Schedule, 1, d/28October2019 3pm
-            if (str.length == 0 && str.length < 3) {
+            if (str.length == 0 || str.length < 3) {
                 throw new ParseException(
                         String.format(MESSAGE_INVALID_COMMAND_FORMAT, ScheduleCommand.MESSAGE_USAGE));
             // it is a valid Command
             } else if (str.length >= 3 && isNumeric(str[0])) {
                 index = ParserUtil.parseIndex(argMultimap.getPreamble());
-                com.joestelmach.natty.Parser parser = new com.joestelmach.natty.Parser();
-                scheduleToParse = parser.parse(argMultimap.getValue(PREFIX_SCHEDULE).get());
-                // Natty returns no date or returns with more than one date --> invalid
-                if (scheduleToParse.isEmpty() || scheduleToParse.size() > 1) {
-                    throw new ParseException("Please enter a more specific date for your student's consultation.");
-                }
-                Calendar date = Calendar.getInstance();
-                date.setTime(scheduleToParse.get(0).getDates().get(0));
-                return new ScheduleCommand(index, date);
+                ScheduleCommand scheduleCommand = onlyReturnsSchedulesWithSpecificDate(index, argMultimap);
+                return scheduleCommand;
             }
         } catch (IllegalValueException e) {
             throw new ParseException(
@@ -254,7 +314,7 @@ public class ScheduleCommandParser implements Parser<ScheduleCommand> {
     }
 
     /**
-     * Checks if the String contains numeric
+     * Returns true if the string contains numbers, false otherwise
      */
     private static boolean isNumeric(String str) {
         try {
@@ -264,9 +324,27 @@ public class ScheduleCommandParser implements Parser<ScheduleCommand> {
         }
         return true;
     }
+
+    /**
+     * Checks if date given by user is specific
+     * @return ScheduleCommand if date given is specific
+     * @throws ParseException if date given is not specific enough
+     */
+    private ScheduleCommand onlyReturnsSchedulesWithSpecificDate(Index index, ArgumentMultimap argMultimap)
+            throws ParseException {
+        com.joestelmach.natty.Parser parser = new com.joestelmach.natty.Parser();
+        scheduleToParse = parser.parse(argMultimap.getValue(PREFIX_SCHEDULE).get());
+        // Natty returns no date or with more than one date (date entered not specific enough) --> throw exception
+        if (scheduleToParse.isEmpty() || scheduleToParse.size() > 1) {
+            throw new ParseException("Please enter a more specific date for your student's consultation.");
+        }
+        Calendar date = Calendar.getInstance();
+        date.setTime(scheduleToParse.get(0).getDates().get(0));
+        return new ScheduleCommand(index, date);
+    }
 }
 ```
-###### \java\seedu\address\logic\parser\TabCommandParser.java
+###### /java/seedu/address/logic/parser/TabCommandParser.java
 ``` java
 public class TabCommandParser implements Parser<TabCommand> {
 
@@ -286,7 +364,7 @@ public class TabCommandParser implements Parser<TabCommand> {
     }
 }
 ```
-###### \java\seedu\address\model\AddressBook.java
+###### /java/seedu/address/model/AddressBook.java
 ``` java
     //// schedule-level operations
 
@@ -298,13 +376,13 @@ public class TabCommandParser implements Parser<TabCommand> {
         schedules.remove(s);
     }
 ```
-###### \java\seedu\address\model\AddressBook.java
+###### /java/seedu/address/model/AddressBook.java
 ``` java
     public ObservableList<Schedule> getScheduleList() {
         return schedules.asObservableList();
     }
 ```
-###### \java\seedu\address\model\AddressBook.java
+###### /java/seedu/address/model/AddressBook.java
 ``` java
     public ObservableList<ReadOnlyPerson> listOfPersonNameSorted() {
         return persons.asObservableListSortedByName();
@@ -314,7 +392,7 @@ public class TabCommandParser implements Parser<TabCommand> {
         return schedules.asObservableListSortedChronologically();
     }
 ```
-###### \java\seedu\address\model\Model.java
+###### /java/seedu/address/model/Model.java
 ``` java
     /**
      * Deletes the given {@code tag} associated with any person in the addressbook.
@@ -324,7 +402,7 @@ public class TabCommandParser implements Parser<TabCommand> {
      */
     void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException, TagNotFoundException;
 ```
-###### \java\seedu\address\model\Model.java
+###### /java/seedu/address/model/Model.java
 ``` java
     /**
      * Sorts the list in alphabetical order.
@@ -341,7 +419,7 @@ public class TabCommandParser implements Parser<TabCommand> {
     /** Returns an unmodifiable view of the schedules list */
     ObservableList<Schedule> getScheduleList();
 ```
-###### \java\seedu\address\model\ModelManager.java
+###### /java/seedu/address/model/ModelManager.java
 ``` java
     @Override
     public void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException, TagNotFoundException {
@@ -370,12 +448,14 @@ public class TabCommandParser implements Parser<TabCommand> {
         addressBook.addSchedule(schedule);
         addressBook.sortSchedules();
         indicateAddressBookChanged();
+        indicateScheduleListChanged();
     }
 
     @Override
     public void removeSchedule(Schedule schedule) throws ScheduleNotFoundException {
         addressBook.removeSchedule(schedule);
         indicateAddressBookChanged();
+        indicateScheduleListChanged();
     }
 
     /**
@@ -387,7 +467,7 @@ public class TabCommandParser implements Parser<TabCommand> {
         return FXCollections.unmodifiableObservableList(list);
     }
 ```
-###### \java\seedu\address\model\person\PostalCode.java
+###### /java/seedu/address/model/person/PostalCode.java
 ``` java
 /**
  * Represents a Person's postal code in the address book.
@@ -438,22 +518,18 @@ public class PostalCode {
     }
 }
 ```
-###### \java\seedu\address\model\person\UniquePersonList.java
+###### /java/seedu/address/model/person/UniquePersonList.java
 ``` java
     /**
      * Returns an observable list as as an unmodifiable {@code ObservableList}
      */
     public ObservableList<ReadOnlyPerson> asObservableListSortedByName() {
-        internalList.sort(new Comparator<Person>() {
-            @Override
-            public int compare(Person o1, Person o2) {
-                return ((o1.getName().toString().toLowerCase()).compareTo(o2.getName().toString().toLowerCase()));
-            }
-        });
+        internalList.sort((o1, o2) ->((o1.getName().toString().toLowerCase())
+                .compareTo(o2.getName().toString().toLowerCase())));
         return FXCollections.unmodifiableObservableList(mappedList);
     }
 ```
-###### \java\seedu\address\model\ReadOnlyAddressBook.java
+###### /java/seedu/address/model/ReadOnlyAddressBook.java
 ``` java
     /**
      * Returns an unmodifiable view of the schedules list.
@@ -461,14 +537,14 @@ public class PostalCode {
      */
     ObservableList<Schedule> getScheduleList();
 ```
-###### \java\seedu\address\model\schedule\exceptions\ScheduleNotFoundException.java
+###### /java/seedu/address/model/schedule/exceptions/ScheduleNotFoundException.java
 ``` java
 /**
  * Signals that the operation is unable to find the specified schedule.
  */
 public class ScheduleNotFoundException extends Exception {}
 ```
-###### \java\seedu\address\model\schedule\Schedule.java
+###### /java/seedu/address/model/schedule/Schedule.java
 ``` java
 /**
  * Represents the user's schedule in the address book.
@@ -521,7 +597,7 @@ public class Schedule {
     }
 }
 ```
-###### \java\seedu\address\model\schedule\UniqueScheduleList.java
+###### /java/seedu/address/model/schedule/UniqueScheduleList.java
 ``` java
 /**
  * A list of schedules that enforces no nulls between its elements.
@@ -546,15 +622,6 @@ public class UniqueScheduleList implements Iterable<Schedule> {
         internalList.addAll(schedules);
 
         assert CollectionUtil.elementsAreUnique(internalList);
-    }
-
-    /**
-     * Returns all schedules in this list as a Set.
-     * This set is mutable and change-insulated against the internal list.
-     */
-    public Set<Schedule> toSet() {
-        assert CollectionUtil.elementsAreUnique(internalList);
-        return new HashSet<>(internalList);
     }
 
     /**
@@ -626,25 +693,15 @@ public class UniqueScheduleList implements Iterable<Schedule> {
         assert CollectionUtil.elementsAreUnique(internalList);
         return internalList.hashCode();
     }
-
-```
-###### \java\seedu\address\model\schedule\UniqueScheduleList.java
-``` java
     /**
      * Returns an observable list as as an unmodifiable {@code ObservableList}
      */
     public ObservableList<Schedule> asObservableListSortedChronologically() {
-        internalList.sort(new Comparator<Schedule>() {
-
-            @Override
-            public int compare(Schedule date1, Schedule date2) {
-                return (date1.getDate().compareTo(date2.getDate()));
-            }
-        });
+        internalList.sort((date1, date2) -> (date1.getDate().compareTo(date2.getDate())));
         return FXCollections.unmodifiableObservableList(internalList);
     }
 ```
-###### \java\seedu\address\storage\XmlAdaptedSchedule.java
+###### /java/seedu/address/storage/XmlAdaptedSchedule.java
 ``` java
 /**
  * JAXB-friendly adapted version of the Schedule.
@@ -666,37 +723,37 @@ public class XmlAdaptedSchedule {
     /**
      * Converts a given Schedule into this class for JAXB use.
      *
-     * @param source future changes to this will not affect the created XmlAdaptedPerson
+     * @param source future changes to this will not affect the created XmlAdaptedSchedule
      */
     public XmlAdaptedSchedule(Schedule source) {
-        name = source.getPersonName().toString();
+        name = source.getPersonName();
         dateString = DATE_FORMAT.format(source.getDate());
     }
 
     /**
-     * Converts this jaxb-friendly adapted person object into the model's Schedule object.
+     * Converts this jaxb-friendly adapted schedule object into the model's Schedule object.
      *
-     * @throws IllegalValueException if there were any data constraints violated in the adapted person
+     * @throws IllegalValueException if there were any data constraints violated in the adapted schedule
      */
     public Schedule toModelType() throws IllegalValueException {
         final String name = this.name;
         final Schedule schedule;
-        Calendar calendar = null;
+        Calendar calendar;
         calendar = Calendar.getInstance();
         if (calendar != null) {
             try {
                 calendar.setTime(DATE_FORMAT.parse(dateString));
-                return new Schedule(name.toString(), calendar);
+                return new Schedule(name, calendar);
             } catch (java.text.ParseException e) {
                 e.printStackTrace();
             }
         }
-        schedule = new Schedule(name.toString(), calendar);
-        return new Schedule(name.toString(), calendar);
+        schedule = new Schedule(name, calendar);
+        return new Schedule(name, calendar);
     }
 }
 ```
-###### \java\seedu\address\storage\XmlSerializableAddressBook.java
+###### /java/seedu/address/storage/XmlSerializableAddressBook.java
 ``` java
     @Override
     public ObservableList<Schedule> getScheduleList() {
@@ -705,22 +762,16 @@ public class XmlAdaptedSchedule {
                 return s.toModelType();
             } catch (IllegalValueException e) {
                 e.printStackTrace();
-                //TODO: better error handling
                 return null;
             }
         }).collect(Collectors.toCollection(FXCollections::observableArrayList));
         return FXCollections.unmodifiableObservableList(schedules);
     }
 ```
-###### \java\seedu\address\storage\XmlSerializableAddressBook.java
-``` java
-
-}
-```
-###### \java\seedu\address\ui\ExtendedPersonCard.java
+###### /java/seedu/address/ui/ExtendedPersonCard.java
 ``` java
 /**
- * Extended Person Card Panel that displays the details of a Person
+ * An UI component that displays all information of a {@code Person}.
  */
 public class ExtendedPersonCard extends UiPart<Region> {
 
@@ -730,7 +781,7 @@ public class ExtendedPersonCard extends UiPart<Region> {
     private ObservableList<ReadOnlyPerson> people;
 
     @FXML
-    private VBox cardpane;
+    private GridPane gridPane;
     @FXML
     private Label name;
     @FXML
@@ -753,6 +804,7 @@ public class ExtendedPersonCard extends UiPart<Region> {
     public ExtendedPersonCard() {
         super(FXML);
         registerAsAnEventHandler(this);
+        loadIconDescriptionOnStartUp();
     }
 
     /**
@@ -770,6 +822,9 @@ public class ExtendedPersonCard extends UiPart<Region> {
         remark.setText(person.getRemark().toString());
     }
 
+```
+###### /java/seedu/address/ui/ExtendedPersonCard.java
+``` java
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
@@ -778,151 +833,181 @@ public class ExtendedPersonCard extends UiPart<Region> {
 
 }
 ```
-###### \resources\view\ExtendedPersonCard.fxml
+###### /resources/view/ExtendedPersonCard.fxml
 ``` fxml
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-
-
-<VBox fx:id="stackPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="315.0" prefWidth="335.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <Label fx:id="name" lineSpacing="10" styleClass="cell_big_label" text="\$name">
-            <font>
-                <Font name="System Bold" size="18.0" />
-            </font>
-            <graphic>
+        <HBox prefHeight="57.0" prefWidth="335.0">
+            <children>
                 <ImageView>
                     <image>
-                        <Image url="@../images/student.png" />
+                        <Image url="@../images/student.png"/>
                     </image>
                 </ImageView>
-            </graphic>
-         <padding>
-            <Insets bottom="7.0" />
-         </padding>
-        </Label>
-        <Label fx:id="phone" lineSpacing="10.0" styleClass="cell_small_label" text="\$phone">
-            <graphic>
-                <ImageView>
+                <Label fx:id="name" lineSpacing="10" styleClass="cell_big_label" text="\$name" underline="true">
+                    <font>
+                        <Font name="System Bold" size="18.0"/>
+                    </font>
+                    <padding>
+                        <Insets left="5.0"/>
+                    </padding>
+                    <HBox.margin>
+                        <Insets/>
+                    </HBox.margin>
+                </Label>
+            </children>
+        </HBox>
+        <GridPane fx:id="stackPane">
+            <children>
+                <Label fx:id="phone" lineSpacing="10.0" styleClass="cell_small_label" text="\$phone"
+                       GridPane.columnIndex="2" GridPane.rowIndex="2">
+                    <padding>
+                        <Insets bottom="5.0" top="7.0"/>
+                    </padding>
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                </Label>
+                <Label fx:id="parentPhone" lineSpacing="10.0" styleClass="cell_small_label" text="\$parentPhone"
+                       GridPane.columnIndex="2" GridPane.rowIndex="1">
+                    <padding>
+                        <Insets bottom="5.0"/>
+                    </padding>
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                    <GridPane.margin>
+                        <Insets top="7.0"/>
+                    </GridPane.margin>
+                </Label>
+                <Label fx:id="address" lineSpacing="10.0" styleClass="cell_small_label" text="\$address"
+                       GridPane.columnIndex="2" GridPane.rowIndex="3">
+                    <padding>
+                        <Insets bottom="5.0" top="7.0"/>
+                    </padding>
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                </Label>
+                <Label fx:id="formClass" lineSpacing="10.0" styleClass="cell_small_label" text="\$formClass"
+                       GridPane.columnIndex="2" GridPane.rowIndex="4">
+                    <padding>
+                        <Insets bottom="5.0" top="7.0"/>
+                    </padding>
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                </Label>
+                <Label fx:id="grades" lineSpacing="10.0" styleClass="cell_small_label" text="\$grades"
+                       GridPane.columnIndex="2" GridPane.rowIndex="5">
+                    <padding>
+                        <Insets bottom="5.0" top="5.0"/>
+                    </padding>
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                </Label>
+                <Label fx:id="postalCode" lineSpacing="10.0" styleClass="cell_small_label" text="\$postalCode"
+                       GridPane.columnIndex="2" GridPane.rowIndex="6">
+                    <padding>
+                        <Insets bottom="5.0" top="5.0"/>
+                    </padding>
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                </Label>
+                <Label fx:id="email" lineSpacing="10.0" styleClass="cell_small_label" text="\$email"
+                       GridPane.columnIndex="2" GridPane.rowIndex="7">
+                    <padding>
+                        <Insets bottom="5.0" top="3.0"/>
+                    </padding>
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                </Label>
+                <Label fx:id="remark" lineSpacing="10.0" styleClass="cell_small_label" text="\$remark"
+                       GridPane.columnIndex="2" GridPane.rowIndex="8">
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                </Label>
+                <Label text="Parent:" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                <Label text="Student:" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                <Label text="Address:" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                <ImageView GridPane.rowIndex="3">
                     <image>
-                        <Image url="@../images/studentPhone.png" />
+                        <Image url="@../images/address.png"/>
                     </image>
                 </ImageView>
-            </graphic>
-         <padding>
-            <Insets bottom="5.0" />
-         </padding>
-         <font>
-            <Font size="14.0" />
-         </font>
-        </Label>
-        <Label fx:id="parentPhone" lineSpacing="10.0" styleClass="cell_small_label" text="\$parentPhone">
-            <graphic>
-                <ImageView>
+                <ImageView GridPane.rowIndex="2">
                     <image>
-                        <Image url="@../images/parentPhone.png" />
+                        <Image url="@../images/studentPhone.png"/>
                     </image>
                 </ImageView>
-            </graphic>
-            <padding>
-                <Insets bottom="5.0" />
-            </padding>
-            <font>
-                <Font size="14.0" />
-            </font>
-        </Label>
-        <Label fx:id="address" lineSpacing="10.0" styleClass="cell_small_label" text="\$address">
-            <graphic>
-                <ImageView>
+                <ImageView GridPane.rowIndex="1">
                     <image>
-                        <Image url="@../images/address.png" />
+                        <Image url="@../images/parentPhone.png"/>
                     </image>
                 </ImageView>
-            </graphic>
-         <padding>
-            <Insets bottom="5.0" />
-         </padding>
-         <font>
-            <Font size="14.0" />
-         </font>
-        </Label>
-        <Label fx:id="formClass" lineSpacing="10.0" styleClass="cell_small_label" text="\$formClass">
-            <graphic>
-                <ImageView>
+                <ImageView GridPane.rowIndex="4">
                     <image>
-                        <Image url="@../images/formClass.png" />
+                        <Image url="@../images/formClass.png"/>
                     </image>
                 </ImageView>
-            </graphic>
-         <padding>
-            <Insets bottom="5.0" />
-         </padding>
-         <font>
-            <Font size="14.0" />
-         </font>
-        </Label>
-        <Label fx:id="grades" lineSpacing="10.0" styleClass="cell_small_label" text="\$grades">
-            <graphic>
-                <ImageView>
+                <ImageView GridPane.rowIndex="5">
                     <image>
-                        <Image url="@../images/grades.png" />
+                        <Image url="@../images/grades.png"/>
                     </image>
                 </ImageView>
-            </graphic>
-         <padding>
-            <Insets bottom="5.0" />
-         </padding>
-         <font>
-            <Font size="14.0" />
-         </font>
-        </Label>
-        <Label fx:id="postalCode" lineSpacing="10.0" styleClass="cell_small_label" text="\$postalCode">
-            <graphic>
-                <ImageView>
+                <ImageView GridPane.rowIndex="6">
                     <image>
-                        <Image url="@../images/postalCode.png" />
+                        <Image url="@../images/postalCode.png"/>
                     </image>
                 </ImageView>
-            </graphic>
-         <padding>
-            <Insets bottom="5.0" />
-         </padding>
-         <font>
-            <Font size="14.0" />
-         </font>
-        </Label>
-        <Label fx:id="email" lineSpacing="10.0" styleClass="cell_small_label" text="\$email">
-            <graphic>
-                <ImageView>
+                <ImageView GridPane.rowIndex="7">
                     <image>
-                        <Image url="@../images/email.png" />
+                        <Image url="@../images/email.png"/>
                     </image>
                 </ImageView>
-            </graphic>
-         <padding>
-            <Insets bottom="5.0" />
-         </padding>
-         <font>
-            <Font size="14.0" />
-         </font>
-        </Label>
-        <Label fx:id="remark" lineSpacing="10.0" styleClass="cell_small_label" text="\$remark">
-            <graphic>
-                <ImageView>
+                <ImageView GridPane.rowIndex="8">
                     <image>
-                        <Image url="@../images/remark.png" />
+                        <Image url="@../images/remark.png"/>
                     </image>
                 </ImageView>
-            </graphic>
-         <font>
-            <Font size="14.0" />
-         </font>
-        </Label>
+                <Label text="FormClass:" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+                <Label text="Grades:" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+                <Label text="PostalCode:" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+                <Label text="Email:" GridPane.columnIndex="1" GridPane.rowIndex="7"/>
+                <Label text="Remarks:" GridPane.columnIndex="1" GridPane.rowIndex="8"/>
+            </children>
+            <columnConstraints>
+                <ColumnConstraints maxWidth="25.0" minWidth="25.0" prefWidth="25.0"/>
+                <ColumnConstraints maxWidth="100.0" minWidth="100.0" prefWidth="95.0"/>
+                <ColumnConstraints maxWidth="295.3333435058594" minWidth="164.0" prefWidth="216.0"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0"/>
+            </rowConstraints>
+        </GridPane>
     </children>
 </VBox>
 ```

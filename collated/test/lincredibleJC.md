@@ -1,5 +1,5 @@
 # lincredibleJC
-###### \java\guitests\guihandles\StatisticsPanelHandle.java
+###### /java/guitests/guihandles/StatisticsPanelHandle.java
 ``` java
 /**
  * Provides a handle to the Statistics panel.
@@ -72,8 +72,9 @@ public class StatisticsPanelHandle extends NodeHandle<Node> {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\FindTagsCommandTest.java
+###### /java/seedu/address/logic/commands/FindTagsCommandTest.java
 ``` java
+
 /**
  * Contains integration tests (interaction with the Model) for {@code FindTagsCommand}.
  */
@@ -83,15 +84,15 @@ public class FindTagsCommandTest {
     @Test
     public void execute_singleKeyword_singlePersonFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
-        FindTagsCommand command = prepareCommand("owesMoney");
-        assertCommandSuccess(command, expectedMessage, Arrays.asList(BENSON));
+        FindTagsCommand command = prepareCommand("studentcouncil scholarship Track owesMoney");
+        assertCommandSuccess(command, expectedMessage, Collections.singletonList(BENSON));
     }
 
     @Test
     public void execute_multipleKeywords_multiplePersonsFound() {
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 7);
-        FindTagsCommand command = prepareCommand("friends");
-        assertCommandSuccess(command, expectedMessage, Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 2);
+        FindTagsCommand command = prepareCommand("scholarship");
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(BENSON, DANIEL));
     }
 
     /**
@@ -124,7 +125,17 @@ public class FindTagsCommandTest {
 
 }
 ```
-###### \java\seedu\address\logic\parser\AddressBookParserTest.java
+###### /java/seedu/address/logic/commands/SelectCommandTest.java
+``` java
+    @Test
+    public void execute_invalidIndexUnfilteredList_failure() {
+        Index outOfBoundsIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
+
+        assertExecutionFailure(outOfBoundsIndex, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertTrue(eventsCollectorRule.eventsCollector.isEmpty());
+    }
+```
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
 ``` java
     @Test
     public void parseCommand_alias_add() throws Exception {
@@ -133,7 +144,7 @@ public class FindTagsCommandTest {
         assertEquals(new AddCommand(person), command);
     }
 ```
-###### \java\seedu\address\logic\parser\AddressBookParserTest.java
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
 ``` java
     @Test
     public void parseCommand_alias_clear() throws Exception {
@@ -141,7 +152,7 @@ public class FindTagsCommandTest {
         assertTrue(parser.parseCommand(ClearCommand.COMMAND_ALIAS + " 3") instanceof ClearCommand);
     }
 ```
-###### \java\seedu\address\logic\parser\AddressBookParserTest.java
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
 ``` java
     @Test
     public void parseCommand_alias_delete() throws Exception {
@@ -150,7 +161,7 @@ public class FindTagsCommandTest {
         assertEquals(new DeleteCommand(INDEX_FIRST_PERSON), command);
     }
 ```
-###### \java\seedu\address\logic\parser\AddressBookParserTest.java
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
 ``` java
     @Test
     public void parseCommand_alias_edit() throws Exception {
@@ -161,7 +172,7 @@ public class FindTagsCommandTest {
         assertEquals(new EditCommand(INDEX_FIRST_PERSON, descriptor), command);
     }
 ```
-###### \java\seedu\address\logic\parser\AddressBookParserTest.java
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
 ``` java
     @Test
     public void parseCommand_alias_find() throws Exception {
@@ -171,7 +182,7 @@ public class FindTagsCommandTest {
         assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
     }
 ```
-###### \java\seedu\address\logic\parser\AddressBookParserTest.java
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
 ``` java
     @Test
     public void parseCommand_findtags() throws Exception {
@@ -181,7 +192,7 @@ public class FindTagsCommandTest {
         assertEquals(new FindTagsCommand(new TagsContainsKeywordsPredicate(keywords)), command);
     }
 ```
-###### \java\seedu\address\logic\parser\AddressBookParserTest.java
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
 ``` java
     @Test
     public void parseCommand_alias_findtags() throws Exception {
@@ -191,7 +202,7 @@ public class FindTagsCommandTest {
         assertEquals(new FindTagsCommand(new TagsContainsKeywordsPredicate(keywords)), command);
     }
 ```
-###### \java\seedu\address\logic\parser\AddressBookParserTest.java
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
 ``` java
     @Test
     public void parseCommand_alias_history() throws Exception {
@@ -206,7 +217,7 @@ public class FindTagsCommandTest {
         }
     }
 ```
-###### \java\seedu\address\logic\parser\AddressBookParserTest.java
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
 ``` java
     @Test
     public void parseCommand_alias_list() throws Exception {
@@ -214,7 +225,7 @@ public class FindTagsCommandTest {
         assertTrue(parser.parseCommand(ListCommand.COMMAND_ALIAS + " 3") instanceof ListCommand);
     }
 ```
-###### \java\seedu\address\logic\parser\AddressBookParserTest.java
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
 ``` java
     @Test
     public void parseCommand_alias_select() throws Exception {
@@ -223,7 +234,7 @@ public class FindTagsCommandTest {
         assertEquals(new SelectCommand(INDEX_FIRST_PERSON), command);
     }
 ```
-###### \java\seedu\address\logic\parser\AddressBookParserTest.java
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
 ``` java
     @Test
     public void parseCommand_redoCommandAlias_returnsRedoCommand() throws Exception {
@@ -231,7 +242,7 @@ public class FindTagsCommandTest {
         assertTrue(parser.parseCommand("r 1") instanceof RedoCommand);
     }
 ```
-###### \java\seedu\address\logic\parser\AddressBookParserTest.java
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
 ``` java
     @Test
     public void parseCommand_undoCommandAlias_returnsUndoCommand() throws Exception {
@@ -239,7 +250,7 @@ public class FindTagsCommandTest {
         assertTrue(parser.parseCommand("u 3") instanceof UndoCommand);
     }
 ```
-###### \java\seedu\address\logic\parser\EditCommandParserTest.java
+###### /java/seedu/address/logic/parser/EditCommandParserTest.java
 ``` java
     @Test
     public void parse_invalidValue_failure() {
@@ -283,7 +294,7 @@ public class FindTagsCommandTest {
                 + VALID_POSTALCODE_AMY, Name.MESSAGE_NAME_CONSTRAINTS);
     }
 ```
-###### \java\seedu\address\logic\parser\EditCommandParserTest.java
+###### /java/seedu/address/logic/parser/EditCommandParserTest.java
 ``` java
     @Test
     public void parse_allFieldsSpecified_success() {
@@ -302,7 +313,7 @@ public class FindTagsCommandTest {
         assertParseSuccess(parser, userInput, expectedCommand);
     }
 ```
-###### \java\seedu\address\logic\parser\FindTagsCommandParserTest.java
+###### /java/seedu/address/logic/parser/FindTagsCommandParserTest.java
 ``` java
 public class FindTagsCommandParserTest {
     private FindTagsCommandParser parser = new FindTagsCommandParser();
@@ -327,7 +338,7 @@ public class FindTagsCommandParserTest {
 
 }
 ```
-###### \java\seedu\address\logic\parser\ParserUtilTest.java
+###### /java/seedu/address/logic/parser/ParserUtilTest.java
 ``` java
     @Test
     public void parseGrades_null_throwsNullPointerException() throws Exception {
@@ -354,7 +365,7 @@ public class FindTagsCommandParserTest {
         assertEquals(expectedGrades, actualGrades.get());
     }
 ```
-###### \java\seedu\address\logic\statistics\StatisticsTest.java
+###### /java/seedu/address/logic/statistics/StatisticsTest.java
 ``` java
 public class StatisticsTest {
 
@@ -410,14 +421,6 @@ public class StatisticsTest {
     }
 
     @Test
-    public void getQuartile2String() throws Exception {
-        assertEquals(statistics4.getQuartile2String(), "12.0");
-        assertEquals(statistics5.getQuartile2String(), "12.5");
-        assertEquals(statistics6.getQuartile2String(), NO_PERSONS_MESSAGE);
-        assertEquals(statistics7.getQuartile2String(), INSUFFICIENT_DATA_MESSAGE);
-    }
-
-    @Test
     public void getQuartile3String() throws Exception {
         assertEquals(statistics4.getQuartile3String(), "16.0");
         assertEquals(statistics5.getQuartile3String(), "14.0");
@@ -454,7 +457,7 @@ public class StatisticsTest {
 
 }
 ```
-###### \java\seedu\address\model\person\FormClassTest.java
+###### /java/seedu/address/model/person/FormClassTest.java
 ``` java
 public class FormClassTest {
     @Test
@@ -477,7 +480,7 @@ public class FormClassTest {
 
 }
 ```
-###### \java\seedu\address\model\person\GradesTest.java
+###### /java/seedu/address/model/person/GradesTest.java
 ``` java
 public class GradesTest {
     @Test
@@ -503,7 +506,7 @@ public class GradesTest {
     }
 }
 ```
-###### \java\seedu\address\model\person\TagsContainsKeywordsPredicateTest.java
+###### /java/seedu/address/model/person/TagsContainsKeywordsPredicateTest.java
 ``` java
 public class TagsContainsKeywordsPredicateTest {
 
@@ -550,7 +553,7 @@ public class TagsContainsKeywordsPredicateTest {
     @Test
     public void test_tagDoesNotContainKeywords_returnsFalse() {
         // Non-matching keyword
-        TagsContainsKeywordsPredicate predicate = new TagsContainsKeywordsPredicate(Arrays.asList("tag10"));
+        TagsContainsKeywordsPredicate predicate = new TagsContainsKeywordsPredicate(Collections.singletonList("tag10"));
         assertFalse(predicate.test(new PersonBuilder().withName("personName").withTags("tag1").build()));
 
         // Only one matching keyword
@@ -565,7 +568,7 @@ public class TagsContainsKeywordsPredicateTest {
     }
 }
 ```
-###### \java\seedu\address\testutil\EditPersonDescriptorBuilder.java
+###### /java/seedu/address/testutil/EditPersonDescriptorBuilder.java
 ``` java
     /**
      * Sets the {@code FormClass} of the {@code EditPersonDescriptor} that we are building.
@@ -579,7 +582,7 @@ public class TagsContainsKeywordsPredicateTest {
         return this;
     }
 ```
-###### \java\seedu\address\testutil\EditPersonDescriptorBuilder.java
+###### /java/seedu/address/testutil/EditPersonDescriptorBuilder.java
 ``` java
     /**
      * Sets the {@code Grades} of the {@code EditPersonDescriptor} that we are building.
@@ -593,7 +596,7 @@ public class TagsContainsKeywordsPredicateTest {
         return this;
     }
 ```
-###### \java\seedu\address\testutil\PersonBuilder.java
+###### /java/seedu/address/testutil/PersonBuilder.java
 ``` java
     /**
      * Sets the {@code FormClass} of the {@code Person} that we are building.
@@ -607,7 +610,7 @@ public class TagsContainsKeywordsPredicateTest {
         return this;
     }
 ```
-###### \java\seedu\address\testutil\PersonBuilder.java
+###### /java/seedu/address/testutil/PersonBuilder.java
 ``` java
     /**
      * Sets the {@code Grades} of the {@code Person} that we are building.
@@ -621,7 +624,7 @@ public class TagsContainsKeywordsPredicateTest {
         return this;
     }
 ```
-###### \java\seedu\address\testutil\PersonUtil.java
+###### /java/seedu/address/testutil/PersonUtil.java
 ``` java
     /**
      * Returns an add command alias string for adding the {@code person}.
@@ -630,7 +633,7 @@ public class TagsContainsKeywordsPredicateTest {
         return AddCommand.COMMAND_ALIAS + " " + getPersonDetails(person);
     }
 ```
-###### \java\seedu\address\ui\StatisticsPanelTest.java
+###### /java/seedu/address/ui/StatisticsPanelTest.java
 ``` java
 public class StatisticsPanelTest extends GuiUnitTest {
 
@@ -658,11 +661,9 @@ public class StatisticsPanelTest extends GuiUnitTest {
         assertPanelDisplaysStatistics(TYPICAL_PERSONS, statisticsPanelHandle);
     }
 
-    //TODO: Add GUI tests for all commands
-
 }
 ```
-###### \java\seedu\address\ui\testutil\GuiTestAssert.java
+###### /java/seedu/address/ui/testutil/GuiTestAssert.java
 ``` java
     /**
      * Asserts that {@code statisticsPanelHandle} displays the statistics correctly
@@ -680,4 +681,182 @@ public class StatisticsPanelTest extends GuiUnitTest {
         assertEquals(expectedStatistics.getQuartile1String(), actualPanelHandle.getQuartile1Label());
         assertEquals(expectedStatistics.getInterquartileRangeString(), actualPanelHandle.getInterquartileLabel());
     }
+```
+###### /java/systemtests/FindTagsCommandSystemTest.java
+``` java
+public class FindTagsCommandSystemTest extends AddressBookSystemTest {
+
+    @Test
+    public void findtags() {
+        /* Case: find multiple persons in address book, command with leading spaces and trailing spaces
+         * -> 2 persons found
+         */
+        String command = "   " + FindTagsCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_TRACK + "   ";
+        Model expectedModel = getModel();
+        ModelHelper.setFilteredList(expectedModel, BENSON, DANIEL); // Both Benson and Daniel have `friends` tag
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: repeat previous findtags command that is currently being shown
+         * -> 2 persons found
+         */
+        command = FindTagsCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_TRACK;
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find a tag that person list is currently not displaying -> 1 person found */
+        command = FindTagsCommand.COMMAND_WORD + " dance";
+        ModelHelper.setFilteredList(expectedModel, CARL);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find multiple tags, 2 keywords -> 2 persons found */
+        command = FindTagsCommand.COMMAND_WORD + " studentcouncil scholarship";
+        ModelHelper.setFilteredList(expectedModel, BENSON, DANIEL);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find multiple tags, 2 keywords in reversed order -> 2 persons found */
+        command = FindTagsCommand.COMMAND_WORD + " scholarship studentcouncil";
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find multiple persons in address book, 2 keywords with 1 repeat -> 2 persons found */
+        command = FindTagsCommand.COMMAND_WORD + " scholarship studentcouncil studentcouncil";
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+
+
+        /* Case: undo previous findtags command -> rejected */
+        command = UndoCommand.COMMAND_WORD;
+        String expectedResultMessage = UndoCommand.MESSAGE_FAILURE;
+        assertCommandFailure(command, expectedResultMessage);
+
+        /* Case: redo previous findtags command -> rejected */
+        command = RedoCommand.COMMAND_WORD;
+        expectedResultMessage = RedoCommand.MESSAGE_FAILURE;
+        assertCommandFailure(command, expectedResultMessage);
+
+        /* Case: find same tag in address book after deleting 1 of them -> 1 person found */
+        executeCommand(DeleteCommand.COMMAND_WORD + " 1");
+        assert !getModel().getAddressBook().getPersonList().contains(BENSON);
+        command = FindTagsCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_TRACK;
+        expectedModel = getModel();
+        ModelHelper.setFilteredList(expectedModel, DANIEL);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find tag in address book, keyword is same as name but of different case -> 1 person found */
+        command = FindTagsCommand.COMMAND_WORD + " tRaCk";
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find tag in address book, keyword is substring of tag -> 0 persons found */
+        command = FindTagsCommand.COMMAND_WORD + " Trac";
+        ModelHelper.setFilteredList(expectedModel);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find tag in address book, tag is substring of keyword -> 0 persons found */
+        command = FindTagsCommand.COMMAND_WORD + " TrackNField";
+        ModelHelper.setFilteredList(expectedModel);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find tag not in address book -> 0 persons found */
+        command = FindTagsCommand.COMMAND_WORD + " tagNotFound";
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find phone number of person in address book -> 0 persons found */
+        command = FindTagsCommand.COMMAND_WORD + " " + DANIEL.getPhone().value;
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find address of person in address book -> 0 persons found */
+        command = FindTagsCommand.COMMAND_WORD + " " + DANIEL.getAddress().value;
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find email of person in address book -> 0 persons found */
+        command = FindTagsCommand.COMMAND_WORD + " " + DANIEL.getEmail().value;
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find name of person in address book -> 0 persons found */
+        command = FindTagsCommand.COMMAND_WORD + " " + DANIEL.getName().fullName;
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find multiple tags in address book, 2 matching keywords and 1 non-matching keyword
+         * -> 0 persons found
+         */
+        command = FindTagsCommand.COMMAND_WORD + " Daniel Benson NonMatchingKeyWord";
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find while a person is selected -> selected card deselected */
+        showAllPersons();
+        selectPerson(Index.fromOneBased(1));
+        assert !getPersonListPanel().getHandleToSelectedCard().getName().equals(DANIEL.getName().fullName);
+        command = FindTagsCommand.COMMAND_WORD + " studentcouncil scholarship Track";
+        ModelHelper.setFilteredList(expectedModel, DANIEL);
+        assertCommandSuccess(command, expectedModel);
+
+        /* Case: find tag in empty address book -> 0 persons found */
+        executeCommand(ClearCommand.COMMAND_WORD);
+        assert getModel().getAddressBook().getPersonList().size() == 0;
+        command = FindTagsCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_TRACK;
+        expectedModel = getModel();
+        ModelHelper.setFilteredList(expectedModel, DANIEL);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: mixed case command word -> rejected */
+        command = "FiNdtAgS Track";
+        assertCommandFailure(command, MESSAGE_UNKNOWN_COMMAND);
+    }
+
+    /**
+     * Executes {@code command} and verifies that the command box displays an empty string, the result display
+     * box displays {@code Messages#MESSAGE_PERSONS_LISTED_OVERVIEW} with the number of people in the filtered list,
+     * and the model related components equal to {@code expectedModel}.
+     * These verifications are done by
+     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * Also verifies that the status bar remains unchanged, and the command box has the default style class, and the
+     * selected card updated accordingly, depending on {@code cardStatus}.
+     *
+     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     */
+    private void assertCommandSuccess(String command, Model expectedModel) {
+        String expectedResultMessage = String.format(
+                MESSAGE_PERSONS_LISTED_OVERVIEW, expectedModel.getFilteredPersonList().size());
+
+        executeCommand(command);
+        assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
+        assertCommandBoxShowsDefaultStyle();
+        assertStatusBarUnchanged();
+    }
+
+    /**
+     * Executes {@code command} and verifies that the command box displays {@code command}, the result display
+     * box displays {@code expectedResultMessage} and the model related components equal to the current model.
+     * These verifications are done by
+     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * Also verifies that the browser url, selected card and status bar remain unchanged, and the command box has the
+     * error style.
+     *
+     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     */
+    private void assertCommandFailure(String command, String expectedResultMessage) {
+        Model expectedModel = getModel();
+
+        executeCommand(command);
+        assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
+        assertSelectedCardUnchanged();
+        assertCommandBoxShowsErrorStyle();
+        assertStatusBarUnchanged();
+    }
+}
 ```
