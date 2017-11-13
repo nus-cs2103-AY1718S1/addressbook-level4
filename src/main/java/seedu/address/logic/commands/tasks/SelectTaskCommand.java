@@ -64,7 +64,8 @@ public class SelectTaskCommand extends Command {
         if (!tag.isEmpty()) {
             String[] tagArray = tag.split("\\s+");
             model.updateFilteredPersonList(new PersonContainsKeywordsPredicate(Arrays.asList(tagArray)));
-        } else if (tag.isEmpty() || model.getFilteredPersonList().size() < 1) {
+        }
+        if (tag.isEmpty() || model.getFilteredPersonList().size() < 1) {
             model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         }
     }
