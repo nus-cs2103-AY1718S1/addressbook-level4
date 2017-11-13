@@ -69,8 +69,8 @@ public class EditRelationshipCommand extends UndoableCommand {
         } catch (DuplicateRelationshipException dre) {
             throw new CommandException(MESSAGE_DUPLICATED_RELATIONSHIP);
         }
-        return new CommandResult(String.format(MESSAGE_EDIT_RELATIONSHIP_SUCCESS, indexToPerson.toString(),
-                indexFromPerson.toString()));
+        return new CommandResult(String.format(MESSAGE_EDIT_RELATIONSHIP_SUCCESS, indexFromPerson.toString(),
+                indexToPerson.toString()));
     }
 
     @Override
