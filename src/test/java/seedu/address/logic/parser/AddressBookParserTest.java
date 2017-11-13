@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_EVENT_PLATFORM;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_PLATFORM;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
@@ -216,6 +218,38 @@ public class AddressBookParserTest {
         thrown.expectMessage(MESSAGE_UNKNOWN_COMMAND);
         parser.parseCommand("unknownCommand");
     }
+
+    //@@author DarrenCzen
+    @Test
+    public void parseCommand_addevent_throwsParseException() throws Exception {
+        thrown.expect(ParseException.class);
+        thrown.expectMessage(MESSAGE_INVALID_EVENT_PLATFORM);
+        parser.parseCommand(AddEventCommand.COMMAND_WORD
+                + " n/dwedsa d/13/11/2017 a/qedwe");
+
+    }
+
+    @Test
+    public void parseCommand_deleteevent_throwsParseException() throws Exception {
+        thrown.expect(ParseException.class);
+        thrown.expectMessage(MESSAGE_INVALID_EVENT_PLATFORM);
+        parser.parseCommand(DeleteEventCommand.COMMAND_WORD + " 1");
+    }
+
+    @Test
+    public void parseCommand_personCommandsInEventsMode() throws Exception {
+        assertTrue(parser.parseCommand(EventsCommand.COMMAND_WORD) instanceof EventsCommand);
+        thrown.expect(ParseException.class);
+        thrown.expectMessage(MESSAGE_INVALID_PERSON_PLATFORM);
+
+        //commands that should not work in Events Mode
+        parser.parseCommand(AccessCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+        parser.parseCommand(LocationCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+
+
+        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
+    }
+    //@@author
 
     //@@author chernghann
     @Test
