@@ -537,7 +537,7 @@ public class ContactsCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all places whose names contain any of "
             + "the specified keywords (case-sensitive) and displays them as a list with index numbers.\n"
             + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
-            + "Example: " + COMMAND_WORD + COMMAND_WORD_NAME_PREFIX + "alice bob charlie"
+            + "Example: " + COMMAND_WORD + COMMAND_WORD_NAME_PREFIX + "Marina Bay Sands"
             + "Example: " + COMMAND_WORD + COMMAND_WORD_TAG_PREFIX + "[bookmark] [attractions]";
 ```
 ###### \java\seedu\address\logic\parser\AddressBookParser.java
@@ -642,7 +642,7 @@ public class TagContainsKeywordsPredicate implements Predicate<ReadOnlyPlace> {
 ``` java
     @Override
     public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
-        logger.fine("Attempting to create a backup for Tourist Book data file" );
+        logger.fine("Attempting to create a backup for Tourist Book data file");
         addressBookStorage.backupAddressBook(addressBook);
     }
 

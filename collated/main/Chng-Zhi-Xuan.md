@@ -112,12 +112,12 @@ public class ClearBookmarkCommand extends UndoableCommand {
 }
 
 ```
-###### \java\seedu\address\logic\commands\DirCommand.java
+###### \java\seedu\address\logic\commands\DirectionCommand.java
 ``` java
 /**
  * Shows direction from place1 to place2 using their last displayed index in the tourist book
  */
-public class DirCommand extends Command {
+public class DirectionCommand extends Command {
 
     public static final String COMMAND_WORD = "dir";
     public static final String COMMAND_WORD_ALIAS = "Dir";
@@ -136,7 +136,7 @@ public class DirCommand extends Command {
     private final String plus = "+";
     private final String singaporeConcat = "+Singapore+";
 
-    public DirCommand(Index indexFrom, Index indexTo) {
+    public DirectionCommand(Index indexFrom, Index indexTo) {
         this.indexFrom = indexFrom;
         this.indexTo = indexTo;
     }
@@ -146,8 +146,7 @@ public class DirCommand extends Command {
 
         List<ReadOnlyPlace> lastShownList = model.getFilteredPlaceList();
 
-        if (indexFrom.getZeroBased() == indexTo.getZeroBased()
-            || indexFrom.getZeroBased() >= lastShownList.size()
+        if (indexFrom.getZeroBased() >= lastShownList.size()
             || indexTo.getZeroBased() >= lastShownList.size()) {
 
             throw new CommandException(Messages.MESSAGE_INVALID_PLACE_DISPLAYED_INDEX);
@@ -178,8 +177,8 @@ public class DirCommand extends Command {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof DirCommand // instanceof handles nulls
-                && this.indexTo.equals(((DirCommand) other).indexTo)); // state check
+                || (other instanceof DirectionCommand // instanceof handles nulls
+                && this.indexTo.equals(((DirectionCommand) other).indexTo)); // state check
     }
 }
 ```
@@ -206,9 +205,9 @@ public class ShowBookmarkCommand extends Command {
 ```
 ###### \java\seedu\address\logic\parser\AddressBookParser.java
 ``` java
-        case DirCommand.COMMAND_WORD:
-        case DirCommand.COMMAND_WORD_ALIAS:
-            return new DirCommandParser().parse(arguments);
+        case DirectionCommand.COMMAND_WORD:
+        case DirectionCommand.COMMAND_WORD_ALIAS:
+            return new DirectionCommandParser().parse(arguments);
 
         case ShowBookmarkCommand.COMMAND_WORD:
             return new ShowBookmarkCommandParser().parse(arguments);
@@ -272,30 +271,37 @@ public class ClearBookmarkCommandParser implements Parser<ClearBookmarkCommand> 
 
 }
 ```
-###### \java\seedu\address\logic\parser\DirCommandParser.java
+###### \java\seedu\address\logic\parser\DirectionCommandParser.java
 ``` java
 /**
- * Parses input arguments and creates a new DirCommand object
+ * Parses input arguments and creates a new DirectionCommand object
  */
-public class DirCommandParser implements Parser<DirCommand> {
+public class DirectionCommandParser implements Parser<DirectionCommand> {
 
     private final int indexFirst = 0;
     private final int indexSecond = 1;
 
     /**
-     * Parses the given {@code String} of arguments in the context of the DirCommand
-     * and returns an DirCommand object for execution.
+     * Parses the given {@code String} of arguments in the context of the DirectionCommand
+     * and returns an DirectionCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
-    public DirCommand parse(String args) throws ParseException {
+    public DirectionCommand parse(String args) throws ParseException {
 
         try {
             Index fromIndex = ParserUtil.parseIndexFromPosition(args, indexFirst);
             Index toIndex = ParserUtil.parseIndexFromPosition(args, indexSecond);
-            return new DirCommand(fromIndex, toIndex);
+
+            if (fromIndex.getZeroBased() == toIndex.getZeroBased()) {
+                throw new ParseException(
+                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, DirectionCommand.MESSAGE_USAGE)
+                );
+            }
+
+            return new DirectionCommand(fromIndex, toIndex);
         } catch (IllegalValueException ive) {
             throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DirCommand.MESSAGE_USAGE));
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DirectionCommand.MESSAGE_USAGE));
         }
     }
 }
@@ -317,6 +323,10 @@ public class DirCommandParser implements Parser<DirCommand> {
         try {
             String trimmedIndex = oneBasedIndex.trim();
             indexes = trimmedIndex.split(" ");
+
+            if (indexes.length != 2) {
+                throw new IllegalValueException(MESSAGE_REQUIRED_TWO_INDEX);
+            }
 
             indexAtPosition = indexes[zeroBasedPosition];
 

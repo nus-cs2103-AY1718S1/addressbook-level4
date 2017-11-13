@@ -8,24 +8,24 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PLACE;
 
 import org.junit.Test;
 
-import seedu.address.logic.commands.DirCommand;
+import seedu.address.logic.commands.DirectionCommand;
 
 //@@author Chng-Zhi-Xuan-reused
 /**
  * Test scope: similar to {@code DeleteCommandParserTest}.
  * @see DeleteCommandParserTest
  */
-public class DirCommandParserTest {
+public class DirectionCommandParserTest {
 
-    private DirCommandParser parser = new DirCommandParser();
+    private DirectionCommandParser parser = new DirectionCommandParser();
 
     @Test
     public void parse_validArgs_returnsDirCommand() {
-        assertParseSuccess(parser, "1 2", new DirCommand(INDEX_FIRST_PLACE, INDEX_SECOND_PLACE));
+        assertParseSuccess(parser, "1 2", new DirectionCommand(INDEX_FIRST_PLACE, INDEX_SECOND_PLACE));
     }
 
     @Test
     public void parse_invalidArgs_throwsParseException() {
-        assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT, DirCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT, DirectionCommand.MESSAGE_USAGE));
     }
 }
