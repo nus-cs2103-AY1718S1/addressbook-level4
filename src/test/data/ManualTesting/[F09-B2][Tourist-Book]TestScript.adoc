@@ -506,553 +506,666 @@ This is a warning.
 //Put expected output here
 
 == Edit Command
-//Specify the format here: e.g. Format: add n/NAME [ph/PHONE]
-//And also any special requirement, like e.g. the note/warning for add command
+The edit command allows the user to edit an existing place at the specified index in the Tourist-Book. +
+Format: `edit INDEX [n/NAME] [a/ADDRESS] [p/POSTALCODE] [t/TAG]...` or +
+Format: `ed INDEX [n/NAME] [a/ADDRESS] [p/POSTALCODE] [t/TAG]...`
+
 [NOTE]
 ====
-This is a note.
+* The command is **case sensitive**
+* The index must be a positive integer
+* At least one of the optional fields must be provided
+* Existing values will be updated to the input values
+* When editing tags, the existing tags of the place will be removed, i.e. adding of tags is not cumulative
+* You can remove a place's tags by typing `t/` without specifying any tags after it.
 ====
 
-[WARNING]
-====
-This is a warning.
-====
 === Positive Test Cases
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `edit 1 a/20 Bayfront Avenue p/000001 t/bookmarks`
+** *Expected output* +
+The UI will display a message showing the place and the value of the fields which has been edited.
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `ed 2 n/Singapore Zoo t/`
+** *Expected output* +
+The UI will display a message showing the place and the value of the fields which has been edited. +
+The tags of the place would be cleared as well.
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
-
-. Test Case Here
-** *Expected output*
-//Put expected output here
-
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `edit 2 n/Singapore Flyer a/30 Raffles Ave`
+** *Expected output* =
+The UI will display a message showing the place and the value of the fields which has been edited, +
+even if the values are the same.
 
 === Negative Test Cases
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `edit -1 t/`
+** *Expected output* +
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+====
+Invalid command format!
+edit: Edits the details of the place identified by the index number used in the last place listing. Existing values will be overwritten by the input values.
+Parameters: INDEX (must be a positive integer) [n/NAME] [ph/PHONE] [w/WEBSITE] [a/ADDRESS] [p/POSTAL CODE] [t/TAG]...
+Example: edit 1 ph/91234567 w/www.marinabaysands.comp/639304
+====
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `Edit 1 a/20 Bayfront Avenue p/000001 t/bookmarks`
+** *Expected output* +
+The UI will display a `Unknown Command` message.
+
+. `edit 1 a/20 Bayfront Avenue p/1234567`
+** *Expected output* +
+The UI will display a `Singapore Postal Code can only contain numbers, and should be just 6 digits long` message.
+
+. `edit 1 n/123456 a/20 Bayfront Avenue p/123456 t/bookmarks`
+** *Expected output* +
+The UI will display a message telling the user the format of the `name` field is wrong.
+
+. `edit 39 n/Singapore`
+** *Expected output* +
+The UI will display a `The place index provided is invalid` message telling the user the index is invalid.
 
 == Find Command
-//Specify the format here: e.g. Format: add n/NAME [ph/PHONE]
-//And also any special requirement, like e.g. the note/warning for add command
+The find command allows users to find places or tags whose names contain any of the keywords in the input. +
+Format: `find PREFIX KEYWORD` or `fd PREFIX KEYWORD`
+
 [NOTE]
 ====
-This is a note.
+* The search is **case in-sensitive**. e.g. `zoo` will match `Zoo`
+* The command word is **case sensitive**
+* The prefix will determine which field you are searching for +
+`n/` is the prefix for name of the place, `t/` is the prefix for the tag
+* Multiple keywords are allowed, but at least one keyword should be correct to match a place or tag.
+* Order of keywords does not matter. e.g. `Zoo Singapore` will match `Singapore Zoo`
+* Only one field can be searched at a time, i.e. you cannot search both tag and name at the same time
+* Only full words will be matched e.g. `Singa` will not match `Singapore`
+* Output is assuming the user is using the default data values with no modifications done.
 ====
 
-[WARNING]
-====
-This is a warning.
-====
 === Positive Test Cases
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `find n/Singapore`
+** *Expected output* +
+The UI will display `7 places listed!` and will list out the places which has the name `Singapore` in it.
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `find t/nature`
+** *Expected output* +
+The UI will display `6 places listed!` and will list out the places which has the tag `nature`.
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `find t/nature indoors`
+** *Expected output* +
+The UI will display `11 places listed!` and will list out the places which has the tags `nature` and `indoors`.
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
-
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. find `n/Singapore Gardens`
+** *Expected output* +
+The UI will display `8 places listed!` and will list out the places which has the name `Singapore` and `Gardens` in it.
 
 === Negative Test Cases
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `Find n/Singapore`
+** *Expected output* +
+The UI will display a `Unknown Command` message.
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `finds n/Singapore`
+** *Expected output* +
+The UI will display a `Unknown Command` message.
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `find singapore`
+** *Expected output* +
+
+====
+Invalid command format!
+find: Finds all places whose names contain any of the specified keywords (case-sensitive) and displays them as a list with index numbers.
+Parameters: KEYWORD [MORE_KEYWORDS]...
+Example: find n/Marina Bay Sands or Example: find t/[bookmark] [attractions]
+====
+
+. `find n/Singapore t/nature`
+** *Expected output* +
+The UI will still display the places with the name `Singapore` in it, but will ignore the tag `nature`
+
+. `find n/Singa`
+** *Expected output* +
+The UI will display a `0 places listed!` message.
+
+. `find n/Singa t/nature`
+** *Expected output* +
+The UI will display a `0 places listed!` message as it ignores the `nature` tag.
 
 == Go to Command
-//Specify the format here: e.g. Format: add n/NAME [ph/PHONE]
-//And also any special requirement, like e.g. the note/warning for add command
+The goto command displays the place on Google Maps identified by the index number of the place. +
+Format: `goto 1` or `Goto 1`
+
 [NOTE]
 ====
-This is a note.
+Index used in the command input must be positive.
 ====
 
-[WARNING]
-====
-This is a warning.
-====
 === Positive Test Cases
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `goto 1`
+** *Expected output* +
+The UI will display a `Go to: 1` message and displays the place on Google Maps through the browser panel.
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
-
-. Test Case Here
-** *Expected output*
-//Put expected output here
-
-. Test Case Here
-** *Expected output*
-//Put expected output here
-
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `Goto 1`
+** *Expected output* +
+The UI will display a `Go to: 1` message and displays the place on Google Maps through the browser panel.
 
 === Negative Test Cases
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `goto`
+** *Expected output* +
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+====
+Invalid command format! +
+goto: Display the place on Google Map identified by the index number used in the last place listing. +
+Parameters: INDEX (must be a positive integer) +
+Example: goto 1
+====
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `goto 0`
+** *Expected output* +
+
+====
+Invalid command format! +
+goto: Display the place on Google Map identified by the index number used in the last place listing. +
+Parameters: INDEX (must be a positive integer) +
+Example: goto 1
+====
+
+. `goto -1`
+** *Expected output* +
+
+====
+Invalid command format! +
+goto: Display the place on Google Map identified by the index number used in the last place listing. +
+Parameters: INDEX (must be a positive integer) +
+Example: goto 1
+====
+
+. `GOto 3`
+** *Expected output* +
+
+====
+Invalid command format! +
+goto: Display the place on Google Map identified by the index number used in the last place listing. +
+Parameters: INDEX (must be a positive integer) +
+Example: goto 1
+====
+
+. `GoTo 2`
+** *Expected output* +
+
+====
+Invalid command format! +
+goto: Display the place on Google Map identified by the index number used in the last place listing. +
+Parameters: INDEX (must be a positive integer) +
+Example: goto 1
+====
 
 == Select Command
-//Specify the format here: e.g. Format: add n/NAME [ph/PHONE]
-//And also any special requirement, like e.g. the note/warning for add command
+The command allows the user to select a place identified by the index number of the place. +
+Format: `select INDEX` or `s INDEX`
+
 [NOTE]
 ====
-This is a note.
+* Index used in the command input must be positive.
+* The command is **case sensitive**
 ====
 
-[WARNING]
-====
-This is a warning.
-====
 === Positive Test Cases
-. Test Case Here
+. `select 2`
 ** *Expected output*
-//Put expected output here
+The UI will display a message `Selected Place: 2`, the place will be selected and the webpage will be loaded +
+in the browser.
 
-. Test Case Here
+. `s 2`
 ** *Expected output*
-//Put expected output here
-
-. Test Case Here
-** *Expected output*
-//Put expected output here
-
-. Test Case Here
-** *Expected output*
-//Put expected output here
-
-. Test Case Here
-** *Expected output*
-//Put expected output here
+The UI will display a message `Selected Place: 2`, the place will be selected and the webpage will be loaded +
+in the browser.
 
 === Negative Test Cases
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `Select 2`
+** *Expected output* +
+The UI will display an `Unknown command` message.
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `S 2`
+** *Expected output* +
+The UI will display an `Unknown command` message.
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `select`
+** *Expected output* +
+
+====
+Invalid command format!
+select: Selects the place identified by the index number used in the last place listing.
+Parameters: INDEX (must be a positive integer)
+Example: select 1
+====
+
+. `s`
+** *Expected output* +
+
+====
+Invalid command format!
+select: Selects the place identified by the index number used in the last place listing.
+Parameters: INDEX (must be a positive integer)
+Example: select 1
+====
+
+. `s 0`
+** *Expected output* +
+
+====
+Invalid command format!
+select: Selects the place identified by the index number used in the last place listing.
+Parameters: INDEX (must be a positive integer)
+Example: select 1
+====
+
+. `select 0`
+** *Expected output* +
+
+====
+Invalid command format!
+select: Selects the place identified by the index number used in the last place listing.
+Parameters: INDEX (must be a positive integer)
+Example: select 1
+====
+
+. `select -1`
+** *Expected output* +
+
+====
+Invalid command format!
+select: Selects the place identified by the index number used in the last place listing.
+Parameters: INDEX (must be a positive integer)
+Example: select 1
+====
 
 == History Command
-//Specify the format here: e.g. Format: add n/NAME [ph/PHONE]
-//And also any special requirement, like e.g. the note/warning for add command
+This command lists all the commands that the user has entered in reverse chronological order. +
+Format: `history`
+
 [NOTE]
 ====
-This is a note.
+Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
 
-[WARNING]
-====
-This is a warning.
-====
 === Positive Test Cases
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `history`
+** *Expected output* +
+The UI will display a message `Entered commands (from most recent to earliest):` followed by +
+all the commands (irregardless valid or invalid) that the user has entered +
+from most recent to the the earliest (top to bottom).
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
-
-. Test Case Here
-** *Expected output*
-//Put expected output here
-
-. Test Case Here
-** *Expected output*
-//Put expected output here
-
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `history 2`
+** *Expected output* +
+The UI will display a message `Entered commands (from most recent to earliest):` followed by +
+all the commands (irregardless valid or invalid) that the user has entered +
+from most recent to the the earliest (top to bottom).
 
 === Negative Test Cases
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `History`
+** *Expected output* +
+The UI will display an `Unknown command` message.
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `History 2`
+** *Expected output* +
+The UI will display an `Unknown command` message.
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `history`
+** *Expected output* +
+** If `history` is the first command, The UI will display` You have not yet entered any commands.` message.
+** If not, it will attempt to redo or undo the last command ran before the `history` command.
 
 == Weather Command
-//Specify the format here: e.g. Format: add n/NAME [ph/PHONE]
-//And also any special requirement, like e.g. the note/warning for add command
+The weather command allows users to view current weather in Singapore on the browser panel. +
+Format: `weather`
+
 [NOTE]
 ====
-This is a note.
+* The command is **case sensitive**
+* The command will ignore any other parameters after the command word.
+* It is also not an undoable command, hence the `undo` command will not work.
 ====
 
-[WARNING]
-====
-This is a warning.
-====
 === Positive Test Cases
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `weather`
+** *Expected output* +
+The UI will display a `Opened Weather on the Browser.` message and the weather will be loaded on the browser panel.
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `weather 2`
+** *Expected output* +
+The UI will display a `Opened Weather on the Browser.` message and the weather will be loaded on the browser panel.
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
-
-. Test Case Here
-** *Expected output*
-//Put expected output here
-
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `weather [TEXT]`
+** *Expected output* +
+The UI will display a `Opened Weather on the Browser.` message and the weather will be loaded on the browser panel.
 
 === Negative Test Cases
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `WEATHER`
+** *Expected output* +
+The UI will display an `Unknown command` message.
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `Weather`
+** *Expected output* +
+The UI will display an `Unknown command` message.
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `Weather [TEXT]`
+** *Expected output* +
+The UI will display an `Unknown command` message.
+
+. Running `undo` after successful `weather` command
+** *Expected output* +
+** If `weather` command is the only command executed so far, The UI will display an `No more commands to undo!` message.
+** If not, it will attempt to redo or undo the last command ran before the `weather` command.
 
 == MRT Map Command
-//Specify the format here: e.g. Format: add n/NAME [ph/PHONE]
-//And also any special requirement, like e.g. the note/warning for add command
+The mrt map command allows user to view the transit map of Singapore. +
+The list will pop out in a browser window. +
+Format: `mrt`
+
 [NOTE]
 ====
-This is a note.
+* The browser window must be closed before proceeding with any other command. This is a bug that is found in +
+the base https://github.com/se-edu/addressbook-level4/issues/727[Addressbook-level 4].
+* The command is **case sensitive**
+* The command will ignore any other parameters after the command word.
+* It is also not an undoable command, hence the `undo` command will not work.
 ====
 
-[WARNING]
-====
-This is a warning.
-====
 === Positive Test Cases
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `mrt`
+** *Expected output* +
+The browser window will pop up, displaying the transit map.
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `mrt 2`
+** *Expected output* +
+The browser window will pop up, displaying the transit map.
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
-
-. Test Case Here
-** *Expected output*
-//Put expected output here
-
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `mrt [TEXT]`
+** *Expected output* +
+The browser window will pop up, displaying the transit map.
 
 === Negative Test Cases
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `MRT`
+** *Expected output* +
+The UI will display an `Unknown command` message.
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `Mrt`
+** *Expected output* +
+The UI will display an `Unknown command` message.
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `mrts`
+** *Expected output* +
+The UI will display an `Unknown command` message.
+
+. `Mrt [TEXT]`
+** *Expected output* +
+The UI will display an `Unknown command` message.
+
+. Running `undo` and `redo` commands after `mrt` command.
+** *Expected output* +
+** If the browser window is not closed, there will be no response from the application.
+** If the browser widow is closed, it will attempt to redo or undo the last command ran before the `mrt` command.
 
 == PSI Value Command
-//Specify the format here: e.g. Format: add n/NAME [ph/PHONE]
-//And also any special requirement, like e.g. the note/warning for add command
+The PSI command allows users to view current PSI levels in Singapore on the browser panel. +
+Format: `psi`
+
 [NOTE]
 ====
-This is a note.
+* The command is **case sensitive**
+* The command will ignore any other parameters after the command word.
+* It is also not an undoable command, hence the `undo` command will not work.
 ====
 
-[WARNING]
-====
-This is a warning.
-====
 === Positive Test Cases
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `psi`
+** *Expected output* +
+The UI will display a `Latest PSI webpage loaded.` message and the latest PSI will be loaded on the browser panel.
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `psi 2`
+** *Expected output* +
+The UI will display a `Latest PSI webpage loaded.` message and the latest PSI will be loaded on the browser panel.
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
-
-. Test Case Here
-** *Expected output*
-//Put expected output here
-
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `psi [TEXT]`
+** *Expected output* +
+The UI will display a `Latest PSI webpage loaded.` message and the latest PSI will be loaded on the browser panel.
 
 === Negative Test Cases
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `PSI`
+** *Expected output* +
+The UI will display an `Unknown command` message.
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `Psi`
+** *Expected output* +
+The UI will display an `Unknown command` message.
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `Psi [TEXT]`
+** *Expected output* +
+The UI will display an `Unknown command` message.
+
+. Running `undo` after successful `psi` command
+** *Expected output* +
+** If `psi` command is the only command executed so far, The UI will display an `No more commands to undo!` message.
+** If not, it will attempt to redo or undo the last command ran before the `psi` command.
 
 == Export Command
-//Specify the format here: e.g. Format: add n/NAME [ph/PHONE]
-//And also any special requirement, like e.g. the note/warning for add command
+The export command allows users to export their data file to a .csv file format. +
+Format: `export`
+
 [NOTE]
 ====
-This is a note.
+* The command is **case sensitive**
+* The command will ignore any other parameters after the command word.
+* It is also not an undoable command, hence the `undo` command will not work.
 ====
 
 [WARNING]
 ====
-This is a warning.
+Running this command after the first time will overwrite the previous save file that is already in the folder!
 ====
 === Positive Test Cases
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `export`
+** *Expected output* +
+The UI will display a message `Successfully exported data.` and the save file will be created in the folder that holds +
+the jar file, in .csv format.
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+image::exportsuccessful.png[title="Export File Successful", width="400"]
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `export 1`
+** *Expected output* +
+The UI will display a message `Successfully exported data.` and the save file will be created in the folder that holds +
+the jar file, in .csv format.
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+[NOTE]
+====
+Refer to above image at the first test case.
+====
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `export [DATE]
+** *Expected output* +
+The UI will display a message `Successfully exported data.` and the save file will be created in the folder that holds +
+the jar file, in .csv format.
+
+[NOTE]
+====
+Refer to above image at the first test case.
+====
 
 === Negative Test Cases
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `EXPORT`
+** *Expected output* +
+The UI will display an `Unknown command` message.
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `exports`
+** *Expected output* +
+The UI will display an `Unknown command` message.
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `EXPORT Singapore`
+** *Expected output* +
+The UI will display an `Unknown command` message.
+
+. `ExPoRt [TEXT]`
+** *Expected output* +
+The UI will display an `Unknown command` message.
+
+. Running `undo` after successful `export` command
+** *Expected output* +
+** If `export` command is the only command executed so far, The UI will display an `No more commands to undo!` message.
+** If not, it will attempt to redo or undo the last command ran before the `export` command.
 
 == Backup Command
-//Specify the format here: e.g. Format: add n/NAME [ph/PHONE]
-//And also any special requirement, like e.g. the note/warning for add command
+The command allows the user to backup the data to the same folder of the main data file. +
+Format: `backup`
+
 [NOTE]
 ====
-This is a note.
+* The command is **case sensitive**
+* The command will ignore any other parameters after the command word.
+* It is also not an undoable command, hence the `undo` command will not work.
 ====
 
 [WARNING]
 ====
-This is a warning.
+Running this command after the first time will overwrite the previous save file that is already in the folder!
 ====
 === Positive Test Cases
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `backup`
+** *Expected output* +
+The UI will display a message `A Tourist Book backup has been created!` and the save file will be created in the same +
+folder as the main data file.
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+image::backupsuccessful.png[title="Backup File Successful", width="400"]
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `backup 2`
+** *Expected output* +
+The UI will display a message `A Tourist Book backup has been created!` and the save file will be created in the same +
+folder as the main data file.
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+[NOTE]
+====
+Refer to above image at the first test case.
+====
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `backup [DATE]`
+** *Expected output* +
+The UI will display a message `A Tourist Book backup has been created!` and the save file will be created in the same +
+folder as the main data file.
+
+[NOTE]
+====
+Refer to above image at the first test case.
+====
 
 === Negative Test Cases
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `BACKUP`
+** *Expected output* +
+The UI will display an `Unknown command` message.
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `backups`
+** *Expected output* +
+The UI will display an `Unknown command` message.
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `Backup Singapore`
+** *Expected output* +
+The UI will display an `Unknown command` message.
+
+. `BaCkUp [TEXT]`
+** *Expected output* +
+The UI will display an `Unknown command` message.
+
+. Running `undo` after successful `backup` command
+** *Expected output* +
+** If `backup` command is the only command executed so far, The UI will display an `No more commands to undo!` message.
+** If not, it will attempt to redo or undo the last command ran before the `backup` command.
+
 
 == Useful Contacts Command
-//Specify the format here: e.g. Format: add n/NAME [ph/PHONE]
-//And also any special requirement, like e.g. the note/warning for add command
+The useful contacts command allows user to view a list of helpful contact numbers. +
+The list will pop out in a browser window. +
+Format: `sos` or `emergency`
+
 [NOTE]
 ====
-This is a note.
+* The browser window must be closed before proceeding with any other command. This is a bug that is found in +
+the base https://github.com/se-edu/addressbook-level4/issues/727[Addressbook-level 4].
+* The command is **case sensitive**
+* The command will ignore any other parameters after the command word.
+* It is also not an undoable command, hence the `undo` command will not work.
 ====
 
-[WARNING]
-====
-This is a warning.
-====
 === Positive Test Cases
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `sos`
+** *Expected output* +
+The browser window will pop up, displaying a list of useful contact numbers.
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `emergency`
+** *Expected output* +
+The browser window will pop up, displaying a list of useful contact numbers.
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `sos 1`
+** *Expected output* +
+The browser window will pop up, displaying a list of useful contact numbers.
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
-
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `emergency 1`
+** *Expected output* +
+The browser window will pop up, displaying a list of useful contact numbers.
 
 === Negative Test Cases
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `EMERGENCY`
+** *Expected output* +
+The UI will display an `Unknown command` message.
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `SOS`
+** *Expected output* +
+The UI will display an `Unknown command` message.
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. Running `undo` and `redo` commands after `sos` command.
+** *Expected output* +
+** If the browser window is not closed, there will be no response from the application.
+** If the browser widow is closed, it will attempt to redo or undo the last command ran before the `sos` command.
 
 == Sort Command
-//Specify the format here: e.g. Format: add n/NAME [ph/PHONE]
-//And also any special requirement, like e.g. the note/warning for add command
+The sort command allows the user to view the place list in an alphabetical order. +
+Format: `sort`
+
 [NOTE]
 ====
-This is a note.
+* The sort command is temporary and does not permanently sort the places by alphabetical order. +
+* The command is **case sensitive**
+* The command will ignore any other parameters after the command word.
 ====
 
-[WARNING]
-====
-This is a warning.
-====
 === Positive Test Cases
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `sort`
+** *Expected output* +
+The places list will be sorted by alphabetical order.
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `sort 1`
+** *Expected output* +
+The places list will be sorted by alphabetical order.
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `sort Marina Bay Sands`
+** *Expected output* +
+The places list will be sorted by alphabetical order.
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
-
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `sort [TEXT]`
+** *Expected output* +
+The places list will be sorted by alphabetical order.
 
 === Negative Test Cases
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `SORT`
+** *Expected output* +
+The UI will display an `Unknown command` message.
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `sorts`
+** *Expected output* +
+The UI will display an `Unknown command` message.
 
-. Test Case Here
-** *Expected output*
-//Put expected output here
+. `sOrT`
+** *Expected output* +
+The UI will display an `Unknown command` message.
+
+. `SORT Singapore`
+** *Expected output* +
+The UI will display an `Unknown command` message.
+
+. `SORT [TEXT]`
+** *Expected output* +
+The UI will display an `Unknown command` message.
