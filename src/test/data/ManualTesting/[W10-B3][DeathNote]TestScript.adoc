@@ -559,7 +559,7 @@ Checks if the website provided is in the correct format. *
 
 . `add n/James w/www.foobar.com`
 
-Website should contain a prefix of http://www https://www.
+Website should contain a prefix of http:// https://.
 
 === Miscellaneous
 
