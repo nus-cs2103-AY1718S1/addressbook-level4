@@ -89,7 +89,7 @@ and if they wish to see all details of the contact, they can use view command to
 
 ===== LinkedIn integration:
 As the target users of Gentleman's Guide are businessmen, who are most likely to have LinkedIn accounts, it will be convenient if
-users can directly access the LinkedIn profiles of their contacts without having to search for the profiles manually on the LinkedIn website.
+users can directly access the LinkedIn profiles of the contacts from inside the application without having to search for the profiles manually on the LinkedIn website.
 
 === Other Contributions
 

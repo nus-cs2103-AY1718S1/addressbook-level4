@@ -20,7 +20,7 @@
             <image>
                <Image url="@../images/gentleman-profile.png" />
             </image></ImageView>
-          <Label fx:id="profileName" alignment="CENTER" layoutX="60.0" layoutY="178.0" prefHeight="35.0" prefWidth="270.0" styleClass="cell_big_label" text="\$name" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="60.0" />
+          <Label fx:id="profileName" alignment="CENTER" layoutX="60.0" layoutY="178.0" prefHeight="35.0" prefWidth="270.0" styleClass="cell_big_label" text="\$name" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="60.0" />
       </children>
    </AnchorPane>
     <GridPane id="profileInfo" gridLinesVisible="true" HBox.hgrow="ALWAYS">
