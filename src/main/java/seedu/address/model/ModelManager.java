@@ -38,7 +38,7 @@ import seedu.address.ui.EventListPanel;
 
 
 /**
- * Represents the in-memory model of the address book data.
+ * Represents the in-memory model of the address book and recycle bin data.
  * All changes to any model should be synchronized.
  */
 public class ModelManager extends ComponentManager implements Model {
@@ -51,7 +51,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final FilteredList<Event> filteredEvents;
 
     /**
-     * Initializes a ModelManager with the given addressBook and userPrefs.
+     * Initializes a ModelManager with the given addressBook, recycleBin and userPrefs.
      */
     public ModelManager(ReadOnlyAddressBook addressBook, ReadOnlyAddressBook recycleBin, UserPrefs userPrefs) {
         super();

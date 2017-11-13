@@ -54,7 +54,7 @@ public class ParserUtil {
 
     //@@author Pengyuz
     /**
-     * Parses  {@code oneBasedIndex} into an {@code numbers} and return it.the commas will be deleted.
+     * Parses  {@code oneBasedIndexes} into {@code numbers} and return it. The whitespace will be deleted.
      *
      * @throws IllegalValueException if the specified index is invalid.
      */
