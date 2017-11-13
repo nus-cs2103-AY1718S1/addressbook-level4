@@ -2296,8 +2296,7 @@ A contact detail that is not meant to be shared with others
 CI
 
 ....
-Continuous Integration (CI) is the process of automating the build and testing of +
-
+Continuous Integration (CI) is the process of automating the build and testing of
 code every time a team member commits changes to version control
 ....
 
@@ -2305,8 +2304,7 @@ code every time a team member commits changes to version control
 Gradle
 
 ....
-Gradle is an open source build automation system that builds upon +
-
+Gradle is an open source build automation system that builds upon\
 the concepts of Apache Ant and Apache Maven
 ....
 
@@ -2314,7 +2312,7 @@ the concepts of Apache Ant and Apache Maven
 JUnit
 
 ....
-JUnit is a simple framework to write repeatable tests. It is an instance of the xUnit +
+JUnit is a simple framework to write repeatable tests. It is an instance of the xUnit
 architecture for unit testing frameworks
 ....
 
@@ -2322,7 +2320,7 @@ architecture for unit testing frameworks
 JavaFX
 
 ....
-JavaFX is a software platform for creating and delivering desktop applications, +
+JavaFX is a software platform for creating and delivering desktop applications,
 as well as rich internet applications (RIAs) that can run across a wide variety of devices
 ....
 
@@ -2330,7 +2328,7 @@ as well as rich internet applications (RIAs) that can run across a wide variety 
 GUI
 
 ....
-A graphical user interface (GUI) is a human-computer interface that uses windows, +
+A graphical user interface (GUI) is a human-computer interface that uses windows,
 icons and menus and  can be manipulated by a mouse.
 ....
 
