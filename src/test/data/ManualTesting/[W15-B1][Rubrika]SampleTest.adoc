@@ -131,8 +131,115 @@ _Result_ +
 Failure Message Shown : "Tag given does not exist in address book." +
 Addressbook unchanged.
 
-====
+==== More than one tag
+_Test:_ +
+Enter `removetag all prospective Plan4
 
+_Result_ +
+Failure Message Shown : "Invalid command format! Please type one TAG to be removed" +
+Addressbook unchanged.
 
 
 == Testing : Import/Export feature
+
+=== Export
+_Test:_ +
+Enter `export output.xml`
+
+_Result_ +
+Success Message Shown : "Successfully exported contacts." +
+`output.xml` file created a root folder containing contacts of Rubrika.
+Addressbook unchanged.
+
+_Test:_ +
+Enter `export output.vcf`
+
+_Result_ +
+Success Message Shown : "Successfully exported contacts." +
+`output.vcf` file created a root folder containing contacts of Rubrika.
+Addressbook unchanged.
+
+=== Import
+_Test:_ +
+Enter `clear` +
+Enter `import output.vcf`
+
+_Result_ +
+Success Message Shown : "Successfully imported contacts. 0 duplicates were found" +
+Addressbook contains list of contacts found in import file.
+
+_Test:_ +
+Enter `clear` +
+Enter `import output.vcf`
+
+_Result_ +
+Success Message Shown : "Successfully imported contacts. 0 duplicates were found" +
+Addressbook contains list of contacts found in import file.
+
+_Test:_ +
+Enter `clear` +
+Enter `import` +
+Select either output.xml or output.vcf created earlier in the Explorer, and select `Open`.
+
+_Result_ +
+Success Message Shown : "Successfully imported contacts. 0 duplicates were found" +
+Addressbook contains list of contacts found in import file.
+
+_Test:_ +
+Enter `delete 1` +
+Enter `delete 1` +
+Enter `delete 1` +
+Enter `delete 1` +
+Enter `delete 1` +
+Enter `import output.xml`
+
+_Result_ +
+Success Message Shown : "Successfully imported contacts. 21 duplicates were found" +
+Addressbook contains list of contacts found in import file.
+
+=== Invalid Import/Export commands
+
+==== No file type
+
+_Test:_ +
+Enter `export output`
+
+_Result_ +
+Failure Message Shown : "Export only exports .vcf and .xml file." +
+Addressbook unchanged.
+
+_Test:_ +
+Enter `import output`
+
+_Result_ +
+Failure Message Shown : "File chosen is not of .vcf or .xml type" +
+Addressbook unchanged.
+
+==== File does not exist.
+
+_Test:_ +
+Enter `import asd.xml`
+
+_Result_ +
+Failure Message Shown : "File was not found in specified directory." +
+Addressbook unchanged.
+
+==== Exporting Empty AddressBook.
+
+_Test:_ +
+Enter `clear` +
+Enter `import asd.xml`
+
+_Result_ +
+Failure Message Shown : "No contacts found in Rubrika to export." +
+Addressbook unchanged.
+
+==== Cancelling Import Window.
+
+_Test:_ +
+Enter `import` +
+Close the import window
+
+_Result_ +
+Failure Message Shown : "Import cancelled" +
+Addressbook unchanged.
