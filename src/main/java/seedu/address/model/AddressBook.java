@@ -197,8 +197,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         if (!meetDate.isAfter((currDate))) {
             throw new MeetingBeforeCurrDateException();
         }
-
-         syncMasterTagListWith(editedMeeting);
         // TODO: the tags master list will be updated even though the below line fails.
         meetings.setMeeting(target, editedMeeting);
     }
