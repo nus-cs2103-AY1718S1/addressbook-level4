@@ -59,12 +59,12 @@ public class SyncCommand extends Command {
 
     private HashMap<String, ReadOnlyPerson> hashId;
 
-    private HashMap<String, ReadOnlyPerson> hashName;
+    private HashMap<seedu.address.model.person.Person, ReadOnlyPerson> hashAbc;
 
     private List<Person> connections;
 
     private HashMap<String, Person> hashGoogleId;
-    private HashMap<String, Person> hashGoogleName;
+    private HashMap<String, Person> hashGoogle;
 
 
     @Override
@@ -110,14 +110,14 @@ public class SyncCommand extends Command {
                 .execute();
         connections = response.getConnections();
         hashId = constructHashId(personList);
-        hashName = constructHashName(personList);
+        hashAbc = constructHashName(personList);
 
         if (connections != null) {
             hashGoogleId = constructGoogleHashId();
-            hashGoogleName = constructGoogleHashName();
+            hashGoogle = constructGoogleHashName();
         } else {
             hashGoogleId = new HashMap<String, Person>();
-            hashGoogleName = new HashMap<String, Person>();
+            hashGoogle = new HashMap<String, Person>();
         }
     }
 
@@ -155,11 +155,11 @@ public class SyncCommand extends Command {
     private void exportContacts (List<ReadOnlyPerson> personList) throws Exception {
         for (ReadOnlyPerson person : personList) {
             if (person.getId().getValue().equals("")) {
-                if (!hashGoogleName.containsKey(person.getName().fullName)) {
+                if (!hashGoogle.containsKey(person.getName().fullName)) {
                     addGoogleContact(person);
                 } else {
                     // We check if the person is identical, and link them if they are
-                    Person gPerson = hashGoogleName.get(person.getName().fullName);
+                    Person gPerson = hashGoogle.get(person.getName().fullName);
                     if (equalPerson(person, gPerson)) {
                         linkContacts(person, gPerson);
                     } else {
@@ -180,10 +180,10 @@ public class SyncCommand extends Command {
                 String id = person.getResourceName();
                 String gName = retrieveFullGName(person);
                 if (!syncedIDs.contains(id)) {
-                    if (!hashName.containsKey(gName)) {
+                    if (!hashAbc.containsKey(gName)) {
                         addAContact(person);
                     } else {
-                        seedu.address.model.person.ReadOnlyPerson aPerson = hashName.get(gName);
+                        seedu.address.model.person.ReadOnlyPerson aPerson = hashAbc.get(gName);
                         if (equalPerson(aPerson, person)) {
                             linkContacts(aPerson, person);
                         } else {
@@ -582,8 +582,8 @@ public class SyncCommand extends Command {
             if (!result.containsKey(name)) {
                 result.put(name, e);
             } else {
-                if (hashName.containsKey(name)) {
-                    ReadOnlyPerson person = hashName.get(name);
+                if (hashAbc.containsKey(name)) {
+                    ReadOnlyPerson person = hashAbc.get(name);
                     if (equalPerson(person, e)) {
                         result.put(name, e);
                     }
