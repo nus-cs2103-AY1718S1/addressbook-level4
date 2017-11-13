@@ -68,8 +68,9 @@ A person can have any number of tags (including 0)
 
 Examples:
 
-* `add n/John Doe p/98765432 b/21/07/1991 e/johnd@example.com a/John street, block 123, #01-01`
+* `add n/John Doe p/98765432 b/21/07/1991 e/johnd@example.com a/John street, block 123, #01-01 r/likes to swim`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison b/21/07/1991 p/1234567 t/criminal`
+* `add n/Adriana Danny p/98765432`
 // end::add[]
 
 === Listing all persons : `list`
@@ -301,7 +302,7 @@ Returns any person having phone number `91234567` exactly
 Returns any person having phone number `91234567` or `12345678` exactly
 * `finds e/amy@example.com` +
 Returns any person having email `amy@example.com` exactly
-* `finds e/amy@example.com john@example.com` +
+* `finds e/amy@example.com` `john@example.com` +
 Returns any person having email `amy@example.com` or `john@example.com` exactly
 * `finds t/[friends]` +
 Returns any person having tag `[friends]` exactly
@@ -489,6 +490,7 @@ Edits the remark for the first person in the existing to Likes to drink milk.
 * `remark 1 r/` +
 Removes the remark for the first person.
 
+// tag::add2[]
 === Quick adding using improved `add` Command (v1.4)
 
 *Author*: Soh Hong Hwee
@@ -496,8 +498,9 @@ Removes the remark for the first person.
 User can now add a person with just name and phone details. +
 All other details that are not provided will be filled in by default values as shown in `Figure 3.15.1`.
 
-image::Default_for_empty_fields.png[width="250"]
+image::Default_for_empty_fields.png[width="400"]
 _Figure 3.15.1 : Default values for empty fields_
+// end::add2[]
 
 //tag::photo[]
 === Option Menu `Add photo` (v1.4)

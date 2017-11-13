@@ -13,7 +13,7 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 
 === Ng Choon Heng
 image::choonheng.jpg[width="150", align="left"]
-{empty} [https://github.com/Choony93[github]]
+{empty} [https://github.com/Choony93[github]] [https://github.com/CS2103AUG2017-F10-B4/main/blob/master/docs/team/ngchoonheng.adoc[portfolio]]
 
 Role: Project Advisor +
 Responsibilities: Dev Ops + Integration
@@ -23,7 +23,7 @@ Responsibilities: Dev Ops + Integration
 
 === Soh Hong Hwee
 image::honghwee.jpg[width="150", align="left"]
-{empty}[https://github.com/aver0214[github]]
+{empty}[https://github.com/aver0214[github]] [https://github.com/CS2103AUG2017-F10-B4/main/blob/master/docs/team/sohhonghwee.adoc[portfolio]]
 
 Role: Team Lead +
 Responsibilities: Code quality + Assist Members
@@ -32,14 +32,14 @@ Responsibilities: Code quality + Assist Members
 
 === Wei Ren Kai
 image::renkai.jpg[width="150", align="left"]
-{empty}[https://github.com/renkai91[github]]
+{empty}[https://github.com/renkai91[github]] [https://github.com/CS2103AUG2017-F10-B4/main/blob/master/docs/team/weirenkai.adoc[portfolio]]
 
 Role: Developer +
 Responsibilities: Data + Testing
 
 '''
 
-=== Beh Bee Yee
+=== Teh Bee Yee
 image::meiyi.jpg[width="150", align="left"]
 {empty}[https://github.com/meiyi1234[github]]
 
