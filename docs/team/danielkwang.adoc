@@ -3,6 +3,10 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
+== Purpose
+
+The purpose of this portfolio is to help me keep track of progress I made for each project. This will be able to help me learn as I progress to another project. For now, it will help me keep track of `ConnectUs` project for me.  This portfolio marks the start of my first portfolio and I aim to increase the content as I develop more applications.
+
 == Project: ConnectUs
 ConnectUs is a desktop address book application used to store contact information such as name, phone, email and address.
 The user can tag entries for more efficient search and can open up an email client to send an email. The GUI displays the list of contacts as well as additional information
