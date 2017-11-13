@@ -30,7 +30,7 @@ import seedu.address.ui.BrowserPanel;
 /**
  * Adds a facebook contact to the address book.
  */
-public class FacebookAddCommand extends UndoableCommand {
+public class FacebookAddCommand extends Command {
     public static final String COMMAND_WORD = "facebookadd";
     public static final String COMMAND_ALIAS = "fbadd";
     public static final String EXAMPLE_NAME = "Barack Obama";
@@ -129,7 +129,7 @@ public class FacebookAddCommand extends UndoableCommand {
     }
 
     @Override
-    protected CommandResult executeUndoableCommand() throws CommandException {
+    public CommandResult execute() throws CommandException {
         if (!FacebookConnectCommand.isAuthenticated()) {
             BrowserPanel.setProcessType(COMMAND_WORD);
             BrowserPanel.setTrimmedArgs(userName);

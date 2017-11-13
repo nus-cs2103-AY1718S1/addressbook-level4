@@ -18,10 +18,9 @@ import seedu.address.ui.BrowserPanel;
 //@@author alexfoodw
 /**
  * Adds all available friends from a personal Facebook account.
- * Current Maximum friends is set at 30.
  */
 
-public class FacebookAddAllFriendsCommand extends UndoableCommand {
+public class FacebookAddAllFriendsCommand extends Command {
     public static final String COMMAND_WORD = "facebookaddallfriends";
     public static final String COMMAND_ALIAS = "fbaddall";
 
@@ -158,7 +157,7 @@ public class FacebookAddAllFriendsCommand extends UndoableCommand {
     }
 
     @Override
-    protected CommandResult executeUndoableCommand() throws CommandException {
+    public CommandResult execute() throws CommandException {
         if (!FacebookConnectCommand.isAuthenticated()) {
             throw new CommandException(MESSAGE_FACEBOOK_ADD_ALL_FRIENDS_INITIATION_ERROR);
         } else {
