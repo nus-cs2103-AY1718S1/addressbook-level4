@@ -126,8 +126,9 @@ With facilitated transition towards BoNUS, your life can now be better organized
 (Pull request https://github.com/CS2103AUG2017-T09-B3/main/pull/55[#55], https://github.com/CS2103AUG2017-T09-B3/main/pull/73[#73], https://github.com/CS2103AUG2017-T09-B3/main/pull/76[#76])
 * Modified small parts of the UI
 (Pull request https://github.com/CS2103AUG2017-T09-B3/main/pull/90[#90], https://github.com/CS2103AUG2017-T09-B3/main/pull/68[#68])
-* Wrote JUnit tests in various classes
-(Pull request https://github.com/CS2103AUG2017-T09-B3/main/pull/140[#140], https://github.com/CS2103AUG2017-T09-B3/main/pull/55[#55], https://github.com/CS2103AUG2017-T09-B3/main/pull/182[#182])
+* Wrote JUnit tests in various classes to increase coverage.
+(Pull request https://github.com/CS2103AUG2017-T09-B3/main/pull/140[#140], https://github.com/CS2103AUG2017-T09-B3/main/pull/55[#55], https://github.com/CS2103AUG2017-T09-B3/main/pull/182[#182],
+https://github.com/CS2103AUG2017-T09-B3/main/pull/206[#206], https://github.com/CS2103AUG2017-T09-B3/main/pull/207[#207])
 * Assisted Project UNIBOOK in bug reporting
 (Issues https://github.com/CS2103AUG2017-T13-B2/main/issues/73[#73])
 * Assisted Project BlueBird in bug reporting
