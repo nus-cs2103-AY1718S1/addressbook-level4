@@ -397,9 +397,12 @@ Certain properties of the application can be controlled (e.g App name, logging l
 
 The Meeting class is a new class just like the Person class, which resides inside `model`. It features commands that modifies the state of the address book
 such as `addmeeting`, `deletemeeting`, `editmeeting`, `listmeeting` and `findmeeting`.
-The attributes of Meeting class include `NameMeeting`, `DateTime`, `Place`, `Persons` and `MeetingTag`.
+The attributes of Meeting class include `NameMeeting`, `DateTime`, `Place`, `Persons` and `MeetingTag`, as seen in the figure below.
+
+image::MeetingCLass.png[width="300"]
 
 `Persons` are `ReadOnlyPerson` class from the contact list added by the users. In this meeting class, `List<ReadOnlyPerson> personsToMeet` are an object inside `Meeting` class which stores the information of the persons inside the class itself.
+
 
 ==== Design Considerations
 
@@ -688,7 +691,7 @@ The implementation of meeting card starts of from creating 'Meeting' class which
 image::UiMeetingCardSequenceDiagram.png[width="800"]
 _Figure 5.10.1 : Sequence diagram of Ui of Meeting Card_
 
-* The list of meeting cards are assigned to the panel at the right of the program. The list are created with 'UniqueMeetingList'. This list of meetings are always sorted according to date and time, with the nearest date and time first.
+* The list of meeting cards are assigned to the panel at the right of the program. The list are created with 'UniqueMeetingList'. This list of meetings are always sorted according to date and time, with the nearest date and time first. The implementation of the sorting of this `Meeting` cards is by using lambda sort, where the `LocalDateTime` of the `DateTime` in `Meeting` are sorted.
 
 image::MeetingCard.png[width="250"]
 _Figure 5.10.2 : Meeting Card_

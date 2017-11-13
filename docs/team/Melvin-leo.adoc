@@ -6,7 +6,11 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 == Project: ScheduBook
 _ScheduBook_ is a desktop address book application that can be used by students or businessmen to better manage their schedules with their peers or acquaintances. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java and currently has about 9 kLoC. +
  +
-This project is a product of Software Engineering, CS2103T in NUS. _ScheduBook_ is proudly developed by my team based on https://github.com/se-edu/addressbook-level4[AddressBook(Level4)], by https://se-edu.github.io/[SE-EDU] team, initial address book application created to be used for teaching Software Engineering principles.
+This project is a product of Software Engineering, CS2103T in NUS. _ScheduBook_ is proudly developed by my team based on https://github.com/se-edu/addressbook-level4[AddressBook(Level4)], by https://se-edu.github.io/[SE-EDU] team, initial address book application created to be used for teaching Software Engineering principles. Through this project, I gained insights on the work environment of software engineers and experienced how software engineers approach and contribute to a certain software development.
+
+== Purpose
+
+This project portfolio provides the contributions of Melvin Leo towards this project. Furthermore, it provide insights of the implementation of certain features that Melvin implemented in _ScheduBook_.
 
 *Code contributed*: [https://github.com/CS2103AUG2017-T09-B2/main/blob/master/collated/main/Melvin-leo.md[Functional code]] [https://github.com/CS2103AUG2017-T09-B2/main/blob/master/collated/test/Melvin-leo.md[Test code]]
 
@@ -24,7 +28,7 @@ include::../UserGuide.adoc[tag=meetingCard]
 
 ==== Justification
 
-For the ease of the user, the meeting cards are positioned and presented in such a way that the user can retrieve the information he/she wants immediately without much effort. Furthermore, the colours are also implemented for the user to keep track of his/her upcoming meetings. The name and the phone number of the person who the user will be meeting are shown so that if needed, the user can contact that person with ease.
+For the ease of the user, the meeting cards are positioned and presented in such a way that the user can retrieve the information he/she wants immediately without much effort. The meeting cards are also sorted in chronological order so that the user can see the meetings that have higher urgency. Furthermore, the colours are also implemented for the user to keep track of his/her upcoming meetings. The name and the phone number of the person who the user will be meeting are shown so that if needed, the user can contact that person with ease.
 
 ==== Implementation
 
@@ -87,9 +91,18 @@ include::../DeveloperGuide.adoc[tag=autoDelete]
 ---
 
 === Enhancement Proposed: Search command by tags
+This allows user to search contact list by tags. Hence, finding person will be easier.
+
+=== Enhancement Proposed: Import/export Google Contacts
+To better integrate _ScheduBook_ into our users' lives, _ScheduBook_ will be implementing the ability to import google contacts so that users can easily sync their own contact list to _ScheduBook_. Scheduling meeting with his/her contacts will be much more convenient.
+
 
 === Other contributions
 
+Contribution to _ScheduBook_
 
+* Added Meeting Tags for meeting cards to indicate importance of meeting. (Pull requests )
+* Added Junit Test cases (Pull requests )
+* Updated ui of Meeting List (Pull requests )
 
 == Project: FPGA audio Fx (Verilog programming for EE2020 in NUS)
