@@ -98,6 +98,7 @@ Commands have the following format: `[red]#COMMAND_WORD# [blue]#-OPTION# [green]
 
 // end::command-syntax[]
 
+[[representing-persons]]
 === Representing a person as a parameter
 
 When using commands that involve managing contact information, you may be required to enter information about a person as a `[blue]#PARAMETER#`.
@@ -189,19 +190,21 @@ To add a person to KayPoh, use the `add` command.
 *Command format*: +
 `[red]#add# [green]#n/NAME p/PHONE_NUMBER [p/ADDITIONAL_PHONE_NUMBERS]... e/EMAIL a/ADDRESS [f/] [dp/DISPLAY_PHOTO_FILE_PATH] [t/TAG]... [s/SOCIAL_PLATFORM USERNAME]...#` +
 
-*Alias*: `a`
+*Alias*: `[red]#a#`
+====
+[NOTE]
+====
+The person to be added can:
+
+* Have at least one phone number, but possibly more phone numbers [Since v1.2]
+* Have any number (including zero) of tags
+* Have any number (including zero) of social media accounts [Since v1.2]
+** More information about representing social media accounts can be found in the <<social-media-integrations, Social Media Integrations>> section.
+* Be marked as a favorite contact by including the parameter `f/` when executing the command [Since v1.2]
+* Have a display picture added by specifying the `DISPLAY_PHOTO_FILE_PATH` when executing the command [Since v1.5]
 ====
 
-* A person can have more than one phone number (at least one). [Since v1.2] +
-Invalid phone numbers will not be added to the contact,
-and there must be at least one valid phone number entered. +
-* A person can have any number of tags (including zero) +
-* A person can have any number of social media accounts (including zero). [Since v1.2] +
-* More information about representing social media accounts can be found in the <<social-media-integrations, Social Media Integrations>> section.
-* *To mark a person as a favorite contact*:
-** A person can be favorited by including the parameter `f/` [Since v1.2] +
-* *To add a display photo for a person*:
-** A person can have a display photo imported from the location specified by `DISPLAY_PHOTO_FILE_PATH` [Since v1.5]
+You should see the person represented by the parameters added to the contacts list after executing the command.
 
 *Examples*:
 
@@ -213,10 +216,10 @@ address `a/497 Jacob Mare Street, #01-01`.
 .Added a contact with name, phone number, email address and address specified
 image::add-example-1-command-result.png[width="700"]
 
-* `[red]#add# [green]#n/Michael Van Gerwen p/92456877 p/64123456 e/mike@darts.com a/William Hill Drive 180 t/husband f/ s/facebook mvgofficial dp/C:/Users/Keith/Pictures/michael.png[green]#` +
+* `[red]#add# [green]#n/Michael Van Gerwen p/92456877 p/64123456 e/mike@example.com a/William Hill Drive 180 t/husband f/ s/facebook mvgofficial dp/C:/Users/KayPoh/Pictures/michael.png[green]#` +
 +
-Adds a `favorite` contact with the name `Michael Van Gerwen`, phone numbers `92456877` and `64123456`, email address `mike@darts.com`,
-address `William Hill Drive 180`, tag `husband`, a `Facebook` account with the username `mvgofficial`, and adds a `display photo` imported from the location `C:/Users/Keith/Pictures/michael.png`.
+Adds a `favorite` contact with the name `Michael Van Gerwen`, phone numbers `92456877` and `64123456`, email address `mike@example.com`,
+address `William Hill Drive 180`, tag `husband`, a `Facebook` account with the username `mvgofficial`, and adds a `display photo` imported from the location `C:/Users/KayPoh/Pictures/michael.png`.
 
 .Added a contact with name, two phone numbers, email address, address, tag, social media account (Facebook) and display photo specified
 image::add-example-2-command-result.png[width="700"]
@@ -225,9 +228,13 @@ image::add-example-2-command-result.png[width="700"]
 |===
 |Incorrect |Correct
 
-|Input an `INDEX` that is invalid. +
-e.g. `-1`, `0.1`, `abc`
-|Ensure that the specified `INDEX` is a *positive integer* that is *smaller or equal to the total number of contacts in the person list*.
+|Exclude required parameters in the command +
+e.g. `add n/Michael Van Gerwen` is missing the required `PHONE_NUMBER`, `ADDRESS` and `EMAIL` parameters.
+|Ensure that all required parameters as specified in the command format have been added.
+
+|Input invalid parameters in the command +
+|Ensure that all required parameters are valid as specified in the <<representing-persons, Representing Persons>> section.
+
 |===
 // end::addperson[]
 
@@ -240,46 +247,42 @@ To edit an existing person in KayPoh, use the `edit` command.
 *Command format*: +
 `[red]#edit# [green]#INDEX [n/NAME] [p/PHONE]... [e/EMAIL] [a/ADDRESS] [f/ OR uf/] [dp/DISPLAY_PHOTO_FILE_PATH] [t/TAG]... [s/SOCIAL_PLATFORM USERNAME]...#` +
 
-*Alias*: `e`
+*Alias*: `[red]#e#`
 ====
 
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* *To change a favorite status of a person*:
-** You can favorite a person by including the parameter `f/`, or unfavorite by including the parameter `uf/`. [Since v1.2] +
-* *To remove a display photo from a person*:
-** You can remove a person's display photo by including the parameter `dp/` without specifying any file path after it. [Since v1.5]
-* *To change the tags of a person*:
-** When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-** You can remove all the person's tags by including the parameter `t/` without specifying any tags after it.
-* *When editing social media accounts of a person*:
-** The existing social media accounts will be removed i.e. adding social media accounts is not cumulative. [Since v1.2]
-** You can remove all the person's social media accounts by including the parameter `s/` without specifying any social media accounts after it.
+* You can favorite a person by including the parameter `f/`, or unfavorite by including the parameter `uf/`. [Since v1.2] +
+* You can remove a person's display photo by including the parameter `dp/` without specifying the `DISPLAY_PHOTO_FILE_PATH`. [Since v1.5]
+* When editing tags, the person's existing tags will be replaced by the new tags.
+** You can remove all the person's existing tags by including the parameter `t/` without specifying any `TAGS`.
+* When editing social media accounts, the person's existing social media accounts will be replaced by the new social media accounts. [Since v1.2]
+** You can remove all the person's existing social media accounts by including the parameter `s/` without specifying any `SOCIAL_MEDIA_ACCOUNTS`.
 ** More information about representing social media accounts can be found in the <<social-media-integrations, Social Media Integrations>> section.
 
 *Examples*:
 
-* `[red]#edit# [green]#1 p/91234567 e/alex_yeoh@u.nus.edu.sg#` +
+* `[red]#edit# [green]#1 p/91234567 e/alex_yeoh@example.com#` +
 +
-Edits the phone number and email address of the 1st person to be `91234567` and `alex_yeoh@u.nus.edu.sg` respectively.
+Edits the phone number and email address of the first person in the contacts list to be `91234567` and `alex_yeoh@example.com` respectively.
 
-.Edited the phone number and email address of the 1st person
+.Edited the phone number and email address of the first person in the contacts list
 image::edit-example-1-command-result.png[width="700"]
 
-* `[red]#edit# [green]#3 f/ dp/C:/Users/Keith/Pictures/superman.jpg s/facebook clark.kent s/instagram clarkent#` +
+* `[red]#edit# [green]#3 f/ dp/C:/Users/KayPoh/Pictures/superman.jpg s/facebook clark.kent s/instagram clarkent#` +
 +
-Marks the third person a `favorite` contact, changes the existing display photo to the new file specified by `C:/Users/Keith/Pictures/superman.jpg` and edits the social media accounts to be
+Marks the third person a `favorite` contact, changes the existing display photo to the new file specified by `C:/Users/KayPoh/Pictures/superman.jpg` and updates the social media accounts to be
 a `Facebook` account with the username `clark.kent`,
 and an Instagram account with the username `clarkent`.
 
-.Edited the favorite status, display photo, and social media accounts (facebook and instagram) of the 3rd person
+.Edited the favorite status, display photo, and social media accounts (facebook and instagram) of the third person in the contacts list
 image::edit-example-2-command-result.png[width="700"]
 
 * `[red]#edit# [green]#2 n/Clark Kent dp/ t/#` +
 +
-Edits the name of the second person to be `Clark Kent`, removes existing display photo and clears all existing tags.
+Edits the name of the second person in the contacts list to be `Clark Kent`, removes his existing display photo and clears all his existing tags.
 
-.Edited the name, and removed display photo and tags from the second person
+.Edited the name, and removed display photo and tags from the second person in the contacts list
 image::edit-example-3-command-result.png[width="700"]
 
 .Common Mistakes
@@ -289,6 +292,10 @@ image::edit-example-3-command-result.png[width="700"]
 |Input an `INDEX` that is invalid. +
 e.g. `-1`, `0.1`, `abc`
 |Ensure that the specified `INDEX` is a *positive integer* that is *smaller or equal to the total number of contacts in the person list*.
+
+|Input invalid parameters in the command +
+|Ensure that all required parameters are valid as specified in the <<representing-persons, Representing Persons>> section.
+
 |===
 // end::editperson[]
 
