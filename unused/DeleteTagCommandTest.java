@@ -29,6 +29,9 @@ import seedu.address.model.tag.exceptions.TagNotFoundException;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for ListCommand.
+ *
+ * Deprecated in Ark v1.5
+ * See {@link DeleteTagCommand}
  */
 public class DeleteTagCommandTest {
 
