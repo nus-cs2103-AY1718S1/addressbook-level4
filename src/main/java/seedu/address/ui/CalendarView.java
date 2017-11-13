@@ -65,9 +65,8 @@ public class CalendarView {
 
         // Days of the week labels
         Text[] dayNames = new Text[]{
-                new Text("Sun"), new Text("Mon"), new Text("Tue"),
-                new Text("Wed"), new Text("Thu"),
-                new Text("Fri"), new Text("Sat")
+            new Text("Sun"), new Text("Mon"), new Text("Tue"), new Text("Wed"),
+            new Text("Thu"), new Text("Fri"), new Text("Sat")
         };
 
         GridPane dayLabels = new GridPane();
@@ -128,13 +127,13 @@ public class CalendarView {
             String dateValue = getFormatDate(calendarDate.getDayOfMonth() + "", calendarDate.getMonthValue() + "");
             String birthdayValue = Birthday.DEFAULT_BIRTHDAY;
             Boolean birthdayExist = false;
-            for(ReadOnlyPerson person : contactList ) {
-                if(!person.getBirthday().equals(Birthday.DEFAULT_BIRTHDAY)) {
+            for (ReadOnlyPerson person : contactList) {
+                if (!person.getBirthday().equals(Birthday.DEFAULT_BIRTHDAY)) {
                     birthdayValue = person.getBirthday().toString();
                     birthdayExist = true;
                 }
-                if(birthdayExist) {
-                    if(dateValue.equals(birthdayValue.substring(0,5))) {
+                if (birthdayExist) {
+                    if (dateValue.equals(birthdayValue.substring(0, 5))) {
                         System.out.println("date value: " + dateValue);
                         ap.getChildren();
                         ap.setStyle("-fx-background-color: #CD5C5C");
@@ -166,6 +165,9 @@ public class CalendarView {
         calendarTitle.setText(yearMonth.getMonth().toString() + " " + String.valueOf(yearMonth.getYear()));
     }
 
+    /**
+     * Update CalendarView when a new filter list is created.
+     */
     public void populateUpdatedCalendar (ObservableList<ReadOnlyPerson> contactList) {
         this.contactList = contactList;
         populateCalendar(currentYearMonth);
@@ -192,17 +194,15 @@ public class CalendarView {
     }
 
     /**
-     * returns the correct format of the day in String format
+     * Returns the correct format of the day in String format
      */
     private String getFormatDate(String day, String month) {
-        if(day.length() == 1) {
+        if (day.length() == 1) {
             day = "0" + day;
         }
         if (month.length() == 1) {
             month = "0" + month;
         }
         return day + "/" + month;
-
     }
-
 }

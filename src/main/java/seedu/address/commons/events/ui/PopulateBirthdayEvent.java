@@ -4,6 +4,9 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.events.BaseEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
+/**
+ * Indicates a change in any birthday value for any contacts
+ */
 public class PopulateBirthdayEvent extends BaseEvent {
 
     public final ObservableList<ReadOnlyPerson> contactList;

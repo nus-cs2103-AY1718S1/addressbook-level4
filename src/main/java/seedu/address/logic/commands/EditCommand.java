@@ -100,7 +100,7 @@ public class EditCommand extends UndoableCommand {
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
 
-        if(editPersonDescriptor.getBirthday().isPresent()) {
+        if (editPersonDescriptor.getBirthday().isPresent()) {
             EventsCenter.getInstance().post(new PopulateBirthdayEvent(model.getFilteredPersonList()));
         }
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedPerson));
