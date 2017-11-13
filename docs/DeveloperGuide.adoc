@@ -1247,7 +1247,7 @@ _Figure A.1.4b: After modification of `StatusBarFooter`_
 ** link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] needs to initialize the status bar on application start, and to update it accordingly whenever the address book is updated.
 * Solution
 ** Modify the constructor of link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to take in the number of persons when the application just started.
-** Use link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter#handleAddressBookChangedEvent(AddressBookChangedEvent)`] to update the number of persons whenever there are new changes to the addressbook.
+** Use link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter#handleAddressBookChangedEvent(AddressBookChangedEvent)`] to update the number of persons whenever there are new changes to the address book.
 ** See this https://github.com/se-edu/addressbook-level4/pull/596/files[PR] for the full solution.
 ****
 
@@ -1455,7 +1455,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |security-concerned debt collector |view my last login time |ensure that no one else is using my account
 
-|`* *` |security-concerned debt collector |have link:#2FA[2FA] authentication for login and every other important action(exporting contacts) |ensure that no one else is capable of accessing sensitive information
+|`* *` |security-concerned debt collector |have link:#twoFA[2FA] authentication for login and every other important action(exporting contacts) |ensure that no one else is capable of accessing sensitive information
 
 |`* *` |multi-device user |be able to export my contacts in another format (e.g xml, vcf) |store my contacts in another device
 
@@ -1587,14 +1587,14 @@ Use case ends.
 *Extensions*
 
 [none]
-* 1a. The person already exists in the AddressBook.
+* 1a. The person already exists in the address book.
 +
 [none]
 ** 1a1. Codii shows an error message.
 +
 Use case resumes at step 1.
 
-* 1b. The user enters the wrong format into Codii.
+* 1b. The user enters the command in a wrong format into the command box.
 +
 [none]
 ** 1b1. Codii shows an error message.
@@ -1637,7 +1637,7 @@ Use case ends.
 |===
 |Term |Definition
 
-|[[2FA]]2FA
+|[[twoFA]]2FA
 |An extra layer of security that is known as "multi factor authentication" that requires not only a password and username but also a token
 
 |[[ban]]Ban
