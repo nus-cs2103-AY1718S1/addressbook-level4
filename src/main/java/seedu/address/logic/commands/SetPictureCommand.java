@@ -130,4 +130,12 @@ public class SetPictureCommand extends UndoableCommand {
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedFavourite,
                 updatedProfPic, updatedTags, updatedGroups, updatedSchedule, updatedSocialMediaList);
     }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof SetPictureCommand // instanceof handles nulls
+                && this.targetIndex.equals(((SetPictureCommand) other).targetIndex) // targetIndex state check
+                && this.filePath.equals(((SetPictureCommand) other).filePath)); // filePath state check
+    }
 }

@@ -56,10 +56,11 @@ import seedu.address.testutil.PersonUtil;
 
 public class AddCommandSystemTest extends AddressBookSystemTest {
 
+    public static final String MISSING_FIELD = "---";
+
     @Test
     public void add() throws Exception {
         Model model = getModel();
-        final String MISSING_FIELD = "---";
         /* Case: add a person without tags to a non-empty address book, command with leading spaces and trailing spaces
          * -> added
          */

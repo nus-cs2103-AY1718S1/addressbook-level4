@@ -16,4 +16,11 @@ public class ProfPic {
     public String getPath() {
         return path;
     }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ProfPic // instanceof handles nulls
+                && this.path.equals(((ProfPic) other).path)); // state check
+    }
 }

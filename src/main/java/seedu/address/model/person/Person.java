@@ -240,10 +240,10 @@ public class Person implements ReadOnlyPerson {
         return favourite.get();
     }
 
-
     public void setProfPic(ProfPic profPic) {
-        this.profPic.set(profPic); }
-  
+        this.profPic.set(profPic);
+    }
+
     @Override
     public ObjectProperty<ProfPic> profPicProperty() {
         return profPic;
