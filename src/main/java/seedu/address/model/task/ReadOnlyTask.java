@@ -15,10 +15,12 @@ public interface ReadOnlyTask {
 
     ObjectProperty<Description> descriptionProperty();
     Description getDescription();
-    ObjectProperty<StartDate> startDateProperty();
-    StartDate getStartDate();
     ObjectProperty<Deadline> deadlineProperty();
     Deadline getDeadline();
+    ObjectProperty<EventTime> startTimeProperty();
+    EventTime getStartTime();
+    ObjectProperty<EventTime> endTimeProperty();
+    EventTime getEndTime();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
 
@@ -29,8 +31,9 @@ public interface ReadOnlyTask {
         return other == this // short circuit if same object
                 || (other != null // this is first to avoid NPE below
                 && other.getDescription().equals(this.getDescription()) // state checks here onwards
-                && other.getStartDate().equals(this.getStartDate())
-                && other.getDeadline().equals(this.getDeadline()));
+                && other.getDeadline().equals(this.getDeadline()))
+                && other.getStartTime().equals(this.getStartTime())
+                && other.getEndTime().equals(this.getEndTime());
     }
 
     /**
@@ -39,11 +42,17 @@ public interface ReadOnlyTask {
     default String getAsText() {
         final StringBuilder builder = new StringBuilder();
         builder.append(getDescription());
-        if (!getStartDate().isEmpty()) {
-            builder.append(" From: ").append(getStartDate());
-        }
         if (!getDeadline().isEmpty()) {
-            builder.append(" To: ").append(getDeadline());
+            builder.append(" Deadline: ").append(getDeadline());
+        }
+        if (getEndTime().isPresent() && !getStartTime().isPresent()) {
+            builder.append(" At: ").append(getEndTime());
+        }
+        if (getStartTime().isPresent()) {
+            builder.append(" At: ").append(getStartTime());
+        }
+        if (getEndTime().isPresent() && getStartTime().isPresent()) {
+            builder.append(" - ").append(getEndTime());
         }
         if (!getTags().isEmpty()) {
             builder.append(" Tags: ");

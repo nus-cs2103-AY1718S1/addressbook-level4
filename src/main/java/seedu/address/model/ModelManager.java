@@ -119,7 +119,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     //@@author raisa2010
     @Override
-    public synchronized void addTask(ReadOnlyTask task) throws DuplicateTaskException {
+    public synchronized void addTask(ReadOnlyTask task) throws IllegalValueException {
         addressBook.addTask(task);
         updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
         indicateAddressBookChanged();

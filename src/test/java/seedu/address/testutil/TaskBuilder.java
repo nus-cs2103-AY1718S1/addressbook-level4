@@ -1,16 +1,13 @@
 package seedu.address.testutil;
 
-import static seedu.address.logic.parser.CliSyntax.SUFFIX_NO_RECUR_INTERVAL;
-
 import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.parser.Suffix;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.task.Deadline;
 import seedu.address.model.task.Description;
+import seedu.address.model.task.EventTime;
 import seedu.address.model.task.ReadOnlyTask;
-import seedu.address.model.task.StartDate;
 import seedu.address.model.task.Task;
 import seedu.address.model.util.SampleDataUtil;
 
@@ -21,9 +18,9 @@ import seedu.address.model.util.SampleDataUtil;
 public class TaskBuilder {
 
     public static final String DEFAULT_DESCRIPTION = "CS2103T assignment due";
-    public static final String DEFAULT_STARTDATE = "Tue, Oct 24, '17";
     public static final String DEFAULT_DEADLINE = "Thu, Oct 26, '17";
-    public static final Suffix DEFAULT_RECUR_INTERVAL = SUFFIX_NO_RECUR_INTERVAL;
+    public static final String DEFAULT_START_TIME = "10:00";
+    public static final String DEFAULT_END_TIME = "22:00";
     public static final String DEFAULT_TAG = "urgent";
 
     private Task task;
@@ -31,10 +28,11 @@ public class TaskBuilder {
     public TaskBuilder() {
         try {
             Description defaultDescription = new Description(DEFAULT_DESCRIPTION);
-            StartDate defaultStartDate = new StartDate(DEFAULT_STARTDATE, DEFAULT_RECUR_INTERVAL);
-            Deadline defaultDeadline = new Deadline(DEFAULT_DEADLINE, DEFAULT_RECUR_INTERVAL);
+            Deadline defaultDeadline = new Deadline(DEFAULT_DEADLINE);
+            EventTime defaultStartTime = new EventTime(DEFAULT_START_TIME);
+            EventTime defaultEndTime = new EventTime(DEFAULT_END_TIME);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAG);
-            this.task = new Task(defaultDescription, defaultStartDate, defaultDeadline, defaultTags);
+            this.task = new Task(defaultDescription, defaultDeadline, defaultStartTime, defaultEndTime, defaultTags);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default task's values are invalid.");
         }
@@ -60,18 +58,26 @@ public class TaskBuilder {
     }
 
     /**
-     * Sets the {@code StartDate} of the {@code Task} that is being built.
+     * Sets the {@code Deadline} of the {@code Task} that is being built.
      */
-    public TaskBuilder withStartDate(String startDate) {
-        this.task.setStartDate(new StartDate(startDate, DEFAULT_RECUR_INTERVAL));
+    public TaskBuilder withDeadline(String deadline) {
+        this.task.setDeadline(new Deadline(deadline));
         return this;
     }
 
     /**
-     * Sets the {@code Deadline} of the {@code Task} that is being built.
+     * Sets the {@code startTime} of the {@code Task} that is begin built.
      */
-    public TaskBuilder withDeadline(String deadline) {
-        this.task.setDeadline(new Deadline(deadline, DEFAULT_RECUR_INTERVAL));
+    public TaskBuilder withStartTime(String startTime) {
+        this.task.setStartTime(new EventTime(startTime));
+        return this;
+    }
+
+    /**
+     * Sets the {@code endTime} of the {@code Task} that is begin built.
+     */
+    public TaskBuilder withEndTime(String endTime) {
+        this.task.setEndTime(new EventTime(endTime));
         return this;
     }
 
