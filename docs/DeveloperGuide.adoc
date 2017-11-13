@@ -1,4 +1,4 @@
-= TheYellowPage - Developer Guide
+
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -595,7 +595,7 @@ A placeholder is then added to PersonCard which displays the remark for each per
 
 When the user inputs a string of text into the command box, the string of text is then passed on to the AddressbookParser which calls RemarkCommandParser. This will create a new instance of RemarkCommand.
 
-The input string is converted to a remark command object using the following method:
+The input string is converted to a remark command object in the RemarkCommandParser class using the parse method:
 
 [source, java]
 ----

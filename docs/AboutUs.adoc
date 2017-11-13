@@ -27,7 +27,7 @@ Responsibilities: UI
 
 '''
 
-=== Hoang Van Nguyen
+=== Nguyen Van Hoang
 image::hoangvannguyen.jpg[width="150", align="left"]
 {empty}[https://github.com/nguyenvanhoang7398[github]] [<<hoangvannguyen#, portfolio>>]
 
@@ -36,7 +36,7 @@ Responsibilities: Logic
 
 '''
 
-=== Vanessa Lim
+=== Vanessa Lim Shi Min
 image::vanessalimshimin.jpg[width="150", align="left"]
 {empty}[http://github.com/vmlimshimin[github]] [<<vanessalim#, portfolio>>]
 
@@ -45,7 +45,7 @@ Responsibilities: Storage
 
 '''
 
-=== Javyn Thun
+=== Thun Jie Xiang Javyn
 image::javyn.jpg[width="150", align="left"]
 {empty}[http://github.com/JavynThun[github]] [https://github.com/CS2103AUG2017-T10-B4/main/blob/master/docs/team/javyn.adoc]
 
