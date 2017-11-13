@@ -24,8 +24,8 @@ public class ChangeThemeCommandParserTest {
     }
     @Test
     public void parse_validArg_returnsChangeThemeCommand() {
-        ChangeThemeCommand expectecChangeThemeCommand = new ChangeThemeCommand("RedTheme");
-        assertParseSuccess(parser, "RedTheme", expectecChangeThemeCommand);
+        ChangeThemeCommand expectedChangeThemeCommand = new ChangeThemeCommand("RedTheme");
+        assertParseSuccess(parser, "RedTheme", expectedChangeThemeCommand);
     }
 
 }
