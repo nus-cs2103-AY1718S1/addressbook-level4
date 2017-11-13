@@ -6,7 +6,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 == ConTag
 ConTag is an efficient and feature-packed desktop address book application for the most demanding business users and busiest frequent travellers. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java.
 
-*Code contributed*: [https://github.com/CS2103AUG2017-T15-B2/main/blob/master/collated/main/icehawker.md[Functional code]] [https://github.com/CS2103AUG2017-T15-B2/main/blob/master/collated/test/icehawker.md[Test code]]
+*Code contributed*: [https://github.com/CS2103AUG2017-T15-B2/main/blob/master/collated/main/icehawker.md[Functional code]] [https://github.com/CS2103AUG2017-T15-B2/main/blob/master/collated/test/icehawker.md[Test code]] +
 
 === => Enhancement Added 1: Copy email address(es) of selected contacts
 
@@ -193,5 +193,6 @@ include::../DeveloperGuide.adoc[tag=quick_start]
 === Other contributions
 
 * Creating JUnit tests to ensure application is in working order during development.
+* Writing user stories.
 * Revamping User Guide e.g. phrasing, formatting and feature grouping.
 * Continuous integration of above-stated features with other ongoing developments by other team members.
