@@ -111,6 +111,7 @@ public class EditCommand extends UndoableCommand {
 
         if (!editedPerson.getName().toString().equalsIgnoreCase(personToEditName)) {
             while (!lastShownMeetingList.isEmpty()) {
+                int initialListSize = lastShownMeetingList.size();
                 EditMeetingCommand.EditMeetingDescriptor editedMeetingDescriptor =
                         new EditMeetingCommand.EditMeetingDescriptor();
 
@@ -132,6 +133,10 @@ public class EditCommand extends UndoableCommand {
                     throw new CommandException(MESSAGE_MEETING_CLASH);
                 } catch (IllegalValueException ive) {
                     assert false : "Error in deleting first item";
+                }
+                int endListSize = lastShownMeetingList.size();
+                if (initialListSize == endListSize){
+                    break;
                 }
             }
         } else {
