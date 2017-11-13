@@ -374,7 +374,7 @@ You can click and view the attached pull request links to see some of the additi
 * Wrote additional tests to test hashcode of person's attributes to increase test coverage (Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/96[#96])
 * Implemented Aliases for basic commands (Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/34[#34])
 * Increased test coverage of software by 1.5% (Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/153[#153])
-
+* Increased test coverage of software by 0.7% (Pull requests https://github.com/CS2103AUG2017-T15-B3/main/pull/170[#170])
 
 ==== Contributions to software's documentation
 
