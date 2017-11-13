@@ -204,7 +204,57 @@ endif::[]
 
 == Displaying Contact Location
 
+=== Display a person location using command
+
+. Copy the following command onto the command line input: +
+`select 3`
+****
+*Result:* +
+
+* The selected contact's address would be displayed on Google Maps on the right panel.
+
+****
+
 == Email a person
+
+=== Email person with valid index number
+. Copy the following command onto the command line input: +
+`email 2`
+****
+*Result:* +
+
+* The email client will open with the email address of contact number 2
+
+****
+
+=== Email person with positive invalid index number
+. Copy the following command onto the command line input: +
+`email 999`
+****
+*Result:* +
+
+* An error message should appear indicating that the index number is invalid
+
+****
+
+=== Email person with negative invalid index number
+. Copy the following command onto the command line input: +
+`email -1`
+****
+*Result:* +
+
+* An error message should appear indicating that the index number is invalid and should be a positive number
+
+****
+
+=== Email person using email button
+. Select on a contact on the contact list
+. Click on the `Email` button
+****
+*Result:* +
+
+* The email client will open with the email address of contact number 2
+****
 
 == Selecting a person
 
@@ -241,9 +291,45 @@ endif::[]
 
 == History of commands entered
 
+=== List history of commands
+. Copy the following command onto the command line input: +
+`history`
+****
+*Result:* +
+
+* A list of all the latest commands entered will be displayed on the output window
+****
+
 == Undo previous command
 
+=== Undo previous command
+. Copy the following command onto the command line input: +
+`undo`
+****
+*Result:* +
+
+* Previous command entered will undone, a success message will be displayed on the output window
+****
+
 == Redo previously undone command
+
+=== Redo previous command before an undo statement
+. Copy the following command onto the command line input: +
+`redo`
+****
+*Result:* +
+
+* Error message "No more commands to redo!" will be displayed on the output window.
+****
+
+=== Redo previous command following an undo statement
+. Enter the following command onto the command line input in sequence: +
+`delete 1`, `undo`, `redo`
+****
+*Result:* +
+
+* The delete command should have been redone, and first contact should have been deleted.
+****
 
 == Sort contacts in the addressbook
 
