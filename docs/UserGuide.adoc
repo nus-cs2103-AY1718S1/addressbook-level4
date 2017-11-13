@@ -451,7 +451,7 @@ Format: `switch NUMBER`  (1 for Todo list, 2 for browser)
 // end::switch[]
 
 // tag::undoredo[]
-=== Undoing previous command : `undo`
+=== Undoing multiple commands : `undo`
 
 Restores the address book to the state before the previous specified number of _undoable_ commands +
 were executed. If the number entered is more than the available commands to undo, all the +
@@ -493,7 +493,7 @@ Tips
 * You can undo all commands by keying in a ridiculously large index eg. `undo 1000`
 ****
 
-=== Redoing the previously undone command : `redo`
+=== Redoing multiple undone commands : `redo`
 
 Reverses the N most recent `undo` commands, where N refers to the number entered. If the number entered is greater than +
 the number of `undo` commands, all the `undo` commands will be reversed. If no number is given, only the most recent `undo` +
@@ -542,7 +542,7 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 [TIP]
 A person can have any number of tags (including 0) +
 If email, phone number and/or address is not entered, it will appear as a dash.
-Name cannot be left empty.
+Name *cannot* be empty.
 
 Examples:
 
