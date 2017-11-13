@@ -1,6 +1,7 @@
 package seedu.address.model.person.phone;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -36,6 +37,13 @@ public class UniquePhoneList implements Iterable<Phone> {
 
         requireNonNull(phone);
         internalList.add(phone);
+    }
+
+    public UniquePhoneList(Set<Phone> phones) {
+        requireAllNonNull(phones);
+        internalList.addAll(phones);
+
+        assert CollectionUtil.elementsAreUnique(internalList);
     }
 
     /**
@@ -86,8 +94,6 @@ public class UniquePhoneList implements Iterable<Phone> {
     public int getSize() {
         return internalList.size();
     }
-
-
 
     public String getAllPhone() {
 

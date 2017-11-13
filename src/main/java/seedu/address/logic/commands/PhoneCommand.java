@@ -103,18 +103,19 @@ public class PhoneCommand extends UndoableCommand {
         Set<Tag> tags = personToUpdatePhoneList.getTags();
         UniqueCustomFieldList customFields = personToUpdatePhoneList.getCustomFieldList();
 
+        UniquePhoneList updatedList = new UniquePhoneList(uniquePhoneList.toSet());
         if (action.equals(COMMAND_REMOVE)) {
-            uniquePhoneList.remove(phone);
+            updatedList.remove(phone);
         } else if (action.equals(COMMAND_ADD)) {
             if (!phone.equals(primaryPhone)) {
-                uniquePhoneList.add(phone);
+                updatedList.add(phone);
             } else {
                 throw new DuplicatePhoneException();
             }
         }
 
         Person personUpdated = new Person(name, primaryPhone, email, address,
-                photo, uniquePhoneList, tags, customFields.toSet());
+                photo, updatedList, tags, customFields.toSet());
 
         return personUpdated;
     }
