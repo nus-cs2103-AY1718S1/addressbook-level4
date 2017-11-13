@@ -1,58 +1,70 @@
 package seedu.address.logic.commands;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
-import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
- * Deletes a person identified using it's last displayed index from the address book.
+ * Represents a command that deletes {@Person}s from the address book.
  */
-public class DeleteCommand extends UndoableCommand {
+public abstract class DeleteCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "delete";
+    public static final String COMMAND_ALIAS = "d";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Deletes the person identified by the index number used in the last person listing.\n"
-            + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " 1";
+            + ": Deletes the specified persons from the address book\n"
+            + "Alias: " + COMMAND_ALIAS + "\n"
+            + "Parameters: [OPTION] IDENTIFIER [MORE_IDENTIFIERS]...\n"
+            + "Options: \n"
+            + "\tdefault - Deletes the persons identified by the index numbers "
+            + "(must be positive integers) used in the last person listing.\n"
+            + "\t" + DeleteByTagCommand.COMMAND_OPTION
+            + " - Deletes the perons in the last person listing with the specified tags.\n"
+            + "Example:\n"
+            + COMMAND_WORD + " 1 2\n"
+            + COMMAND_WORD + " -" + DeleteByTagCommand.COMMAND_OPTION + " friends colleagues";
 
-    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
 
-    private final Index targetIndex;
+    //@@author sarahnzx
+    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person(s): %1$s";
 
-    public DeleteCommand(Index targetIndex) {
-        this.targetIndex = targetIndex;
-    }
-
+    private List<Index> targetIndexList = new ArrayList<>();
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
+        Collection<ReadOnlyPerson> personsToDelete = getPersonsToDelete();
+        StringBuilder deletedPersons = new StringBuilder();
 
-        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+        for (ReadOnlyPerson personToDelete : personsToDelete) {
+            try {
+                model.deletePerson(personToDelete);
+            } catch (PersonNotFoundException pnfe) {
+                assert false : "The target person cannot be missing";
+            }
 
-        if (targetIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            deletedPersons.append("\n");
+            deletedPersons.append(personToDelete);
         }
-
-        ReadOnlyPerson personToDelete = lastShownList.get(targetIndex.getZeroBased());
-
-        try {
-            model.deletePerson(personToDelete);
-        } catch (PersonNotFoundException pnfe) {
-            assert false : "The target person cannot be missing";
-        }
-
-        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete));
+        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, deletedPersons));
     }
+
+    //@@author marvinchin
+    /**
+     * Returns the collection of {@code Person}s to be deleted.
+     */
+    protected abstract Collection<ReadOnlyPerson> getPersonsToDelete() throws CommandException;
+    //@@author
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof DeleteCommand // instanceof handles nulls
-                && this.targetIndex.equals(((DeleteCommand) other).targetIndex)); // state check
+                && this.targetIndexList.equals(((DeleteCommand) other).targetIndexList)); // state check
     }
 }

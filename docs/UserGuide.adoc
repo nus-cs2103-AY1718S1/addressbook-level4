@@ -1,5 +1,6 @@
-= AddressBook Level 4 - User Guide
+= KayPoh! - User Guide
 :toc:
+:toclevels: 3
 :toc-title:
 :toc-placement: preamble
 :sectnums:
@@ -10,149 +11,682 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-W10-B2/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team W10-B2`      Since: `Aug 2017`      Licence: `MIT`
 
-== Quick Start
+== Introduction
 
-.  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
+=== About
+
+This user guide will provide you with instructions on how to use the KayPoh! application.
+You should not need any prior technical knowledge to make use of this guide. However,
+some knowledge about a command line interface would be helpful.
+
+=== Product Overview
+
+Have you ever gotten curious about what your friends, family, or maybe even
+that old classmate you haven’t spoke to in years have been up to? But perhaps you don’t really
+want to talk to them right now. So, what do you do? You stalk their social media accounts!
+
+KayPoh! is a desktop contact management application designed specifically for social users.
+You can use KayPoh! to store contact and social information information about people,
+and use it to view your contacts' social media feeds at any time.
+
+== Getting Started
+
+=== Set Up
+.  Ensure that you have Java version `1.8.0_60` or later installed in your computer.
+Verify your java version link:https://www.java.com/en/download/installed.jsp[here].
 +
 [NOTE]
 Having any Java 8 version is not enough. +
-This app will not work with earlier versions of Java 8.
+This appplication will not work with earlier versions of Java 8. +
+Download the latest Java version link:https://www.java.com/en/download/manual.jsp[here].
 +
 .  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
+.  Store the `addressbook.jar` file into a folder of your choice. This will be the `home` folder for the application.
+.  Double-click the file to start the application.
+
+=== First Usage
+
+.  Figure 1 below displays the application's starting display.
+
 +
+.User Interface of KayPoh!
 image::Ui.png[width="790"]
 +
-.  Type the command in the command box and press kbd:[Enter] to execute it. +
-e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
-.  Some example commands you can try:
+
+.  Figure 2 below introduces the key panels of the application.
++
+.User Interface of KayPoh!
+image::UiWithMarkings.png[width="790"]
++
+.  Try it yourself! Type some of these commands in the command input box and press kbd:[Enter] to execute it:
 
 * *`list`* : lists all contacts
 * **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
-.  Refer to the link:#features[Features] section below for details of each command.
+.  Refer to the link:#features[Features] section below for the details of each command.
+
+== Using Commands
+
+To perform actions in KayPoh!, you will need to type a command into the command input box, followed by the kbd:[enter] key. +
+
+.Command box
+image::command-box.png[width="790"]
+
+// tag::command-syntax[]
+=== Breaking down the command syntax
+Commands have the following format: `[red]#COMMAND_WORD# [blue]#-OPTION# [green]#PARAMETERS#` +
+
+* The [red]`COMMAND_WORD` is the first word in the command
+** It specifies *what you want to do*
+
+* [blue]`OPTIONS` come after the [red]`COMMAND_WORD`
+** They are prefixed with a dash (e.g. `-tag`)
+** Provides more information on *how the action is to be performed*
+
+* [green]`PARAMETERS` are the last segment of the command
+** They provide the *information required to execute the action*
+
+Example:
+
+* `[red]#find# [blue]#-tag# [green]#friends#` can be understood as "[red]#find contacts# [blue]#with the tag# [green]#friends#"
+
+// end::command-syntax[]
+
+=== Representing a person as a parameter
+
+When using commands that involve managing contact information, you may be required to enter information about a person as a `[blue]#PARAMETER#`.
+
+Each person stored in the address book has the following attributes:
+
+* *Name* (required)
+** Represented with the prefix `n/` followed by the person's name - e.g. `n/John Doe`
+** The name must be composed of alphanumeric characters and spaces
+
+* *Phone Number* (required)
+** Represented with the prefix `p/` followed by the person's phone number - e.g. `p/81231234`
+** The phone can only contain numbers and must be at least 3 digits long
+
+* *Address* (required)
+** Represented with the prefix `a/` followed by the person's address - e.g. `a/123 Clementi Road, Blk 32, #01-01`
+
+* *Email Address* (required)
+** Represented with the prefix `e/` followed by the person's email address - e.g. `e/johndoe@example.com`
+** The email address must be a valid email address
+
+* *Tag* (optional)
+** Used to describe a person (e.g. `friends` or `family`)
+** Represented with the prefix `t/` followed by the description - e.g. `t/friends`
+** The description must be an alphanumeric string
+** A person can have multiple tags
+
+* *Social Media Account* (optional)
+** Used to describe a social media account associated with the person
+** Represented with the prefix `s/` followed by the the social media platform and the username - e.g. `s/facebook john.doe10`
+** More information on the supported social media types can be found in the <<social-media-integrations, Social Media Integrations>> section.
+** A person can have multiple social media accounts, but can only have one for each social media platform
+
+* *Favorite* (optional)
+** Denote that a person is a favorite contact
+** Represented by the presence of the prefix `f/`
+** If the prefix is not present, then the person is assumed not to be a favorite contact
+
+* *Display Picture* (optional)
+** Represented with the prefix `dp/` followed by the path to the image to be used as the person's display picture
+** The specified image must be less than 1MB in size
+** If no image is specified, the default image will be used instead
+
+Example:
+
+* The parameter `n/John Doe p/81234567 a/123 Clementi Road, Blk 32, #01-01 e/johndoe@example.com t/friends t/school s/facebook john.doe10 s/instagram jdoe f/ dp//images/display.png`
+represents a person who has:
+** The name `John Doe`,
+** phone number `81234567`,
+** address `123 Clementi Road, Blk 32, #01-01`,
+** email address `johndoe@example.com`,
+** tags `friends` and `school`,
+** a `facebook` account with the name `john.doe10` and an `instagram` account with the username `jdoe`,
+** been marked as a `favorite` contact,
+** the image at `/images/display.png` used as a display picture.
 
 == Features
 
+=== Understanding command formats
+In this user guide, you will find information about how commands are to be used explained in the form of *command formats*.
+
+These *command formats* will tell you what the [red]`COMMAND_WORD` for the command is, whether [blue]`OPTIONS` are available for the command,
+and what [green]`PARAMETERS` you need to provide the command with.
+
+[NOTE]
 ====
-*Command Format*
-
-* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
-* Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
-* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+* Parameters in *square brackets* are optional
+* Parameters followed by an ellipsis `...` can be repeated multiple times
+* Parameters can be in any order
+* Some commands have an alternative shorter alias that can be used in place of the [red]`COMMAND_WORD`
 ====
 
-=== Viewing help : `help`
+Example:
 
-Format: `help`
+* `[red]#delete# [blue]#[-OPTION]# [green]#INDEX [ADDITIONAL_INDEXES]...#` means that:
+** The [red]`COMMAND_WORD` is `delete`
+** An [blue]`OPTION` can be specified, but it is optional
+** An [green]`INDEX` must be entered
+** Multiple [green]`ADDITIONAL_INDEXES` can be entered, but are optional
 
-=== Adding a person: `add`
+=== Managing Contacts
 
-Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+// tag::addperson[]
+==== Adding a person: `add`
 
-[TIP]
-A person can have any number of tags (including 0)
+Adds a person to the address book. +
+Format: `add n/NAME p/PHONE_NUMBER [p/ADDITIONAL_PHONE_NUMBERS]... e/EMAIL a/ADDRESS [f/] [dp/DISPLAY_PHOTO_FILE_PATH] [t/TAG]... [s/SOCIAL_PLATFORM USERNAME]...` +
+Alias: `a`
+
+****
+* A person can have more than one phone number (at least one). [Since v1.2] +
+Invalid phone numbers will not be added to the contact,
+and there must be at least one valid phone number entered. +
+* A person can be favorited by including the parameter `f/` +
+* A person can have a display photo imported from the location specified by `DISPLAY_PHOTO_FILE_PATH` [Since v1.5rc]
+* A person can have any number of tags (including zero) +
+* A person can have any number of social media accounts (including zero). [Since v1.2] +
+More information about representing social media accounts can be found in the <<social-media-integrations, Social Media Integrations>> section.
+****
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` +
+Adds a contact with the name `John Doe`, phone number `98765432`, email address `johnd@example.com`,
+address `John street, block 123, #01-01`.
+* `add n/Rob Cross p/92456877 p/64123456 e/rob@example.com a/Kent Ridge Drive 23 t/husband f/ s/facebook r.cross10 dp/C:/Users/Seedu/Pictures/batman.png` +
+Adds a `favorite` contact with the name `Rob Cross`, phone numbers `92456877` and `64123456`, email address `rob@example.com`,
+address `Kent Ridge Drive 23`, tag `husband`, a `Facebook` account with the username `r.cross10`, and adds a `display photo` imported from the location `C:/Users/Seedu/Pictures/batman.png`.
+// end::addperson[]
 
-=== Listing all persons : `list`
-
-Shows a list of all persons in the address book. +
-Format: `list`
-
-=== Editing a person : `edit`
+// tag::editperson[]
+==== Editing a person: `edit`
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/PHONE]... [e/EMAIL] [a/ADDRESS] [f/ OR uf/] [dp/DISPLAY_PHOTO_FILE_PATH] [t/TAG]... [s/SOCIAL_PLATFORM USERNAME]...` +
+Alias: `e`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
+* You can favorite a person by including the parameter `f/`, or unfavorite by including the parameter `uf/`. [Since v1.2] +
+* You can remove a person's display photo by including the parameter `dp/` without specifying any file path after it. [Since v1.5rc]
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
+* You can remove all the person's tags by including the parameter `t/` without specifying any tags after it.
+* When editing social media accounts, the existing social media accounts will be removed i.e. adding social media accounts is not cumulative. [Since v1.2]
+* You can remove all the person's social media accounts by including the parameter `s/` without specifying any social media accounts after it.
+* More information about representing social media accounts can be found in the <<social-media-integrations, Social Media Integrations>> section.
 ****
 
 Examples:
 
 * `edit 1 p/91234567 e/johndoe@example.com` +
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+* `edit 2 f/ dp/C:/Users/Seedu/Pictures/superman.png s/instagram janedoe123 s/facebook jane.doe` +
+Marks the 2nd person a `favorite` contact, changes the existing display photo to the new file specified by `C:/Users/Seedu/Pictures/superman.png` and edits the social media accounts to be
+a `Facebook` account with the username `jane.doe`,
+and an Instagram account with the username `janedoe123`.
+* `edit 3 n/Betsy Crower dp/ t/` +
+Edits the name of the 3rd person to be `Betsy Crower`, removes existing display photo and clears all existing tags.
+// end::editperson[]
 
-=== Locating persons by name: `find`
+==== Favoriting a person [Since v1.2]: `fav`
 
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
-
-****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-****
-
-Examples:
-
-* `find John` +
-Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
-
-=== Deleting a person : `delete`
-
-Deletes the specified person from the address book. +
-Format: `delete INDEX`
+Labels the specified person(s) as a favorite contact. +
+Format: `fav INDEX [ADDITIONAL INDEXES]`
 
 ****
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
+* Adds the person(s) as a favorite contact at the specified `INDEX` or `INDEXES`.
+* The index refers to the index number shown in the most recently displayed list.
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
 
 Examples:
 
-* `list` +
-`delete 2` +
-Deletes the 2nd person in the address book.
+* `fav 1 3` +
+Favorites the 1st and 3rd person in the most recently displayed list.
 * `find Betsy` +
-`delete 1` +
-Deletes the 1st person in the results of the `find` command.
+`unfav 1` +
+Favorites the first person in the list of contacts with the name `Betsy`.
 
-=== Selecting a person : `select`
+==== Unfavoriting a person [Since v1.2]: `unfav`
 
-Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
+Removes the the `favorite` label from the specified person(s). +
+Format: `unfav INDEX [ADDITIONAL INDEXES]`
 
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
+* Removes the person(s) from the list of favorite contacts at the specified `INDEX` or `INDEXES`.
+* The index refers to the index number shown in the most recently displayed list.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `unfav 2 4` +
+Unfavorites the 2nd and 4th person in the most recently displayed list.
+* `find Betsy` +
+`unfav 1` +
+Unfavorites the first person in the list of contacts with the name `Betsy`.
+
+
+==== Deleting a person: `delete`
+
+Deletes the specified person(s) from the address book. +
+Format: `delete [OPTION] KEYWORD [MORE_KEYWORDS]...` +
+Alias: `d`
+
+[NOTE]
+The `KEYWORD` for `delete` command depends on which options are used.
+
+Options: +
+
+* Default (no option specified) +
+Deletes persons based on their indexes in the last displayed list.
+* `tag` +
+Deletes persons that have the input tags.
+
+// tag::deletebyindex[]
+===== Deleting persons by index (default):
+Deletes person(s) specified by their indexes in the last displayed list.
+Format: `delete INDEX [ADDITIONAL_INDEXES]...`
+
+****
+* Deletes the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
+* The index *must be a positive integer* 1, 2, 3, ...
+* More than one person can be deleted in the same command by specifying additional indexes. [Since v1.2]
 ****
 
 Examples:
 
 * `list` +
-`select 2` +
-Selects the 2nd person in the address book.
+`delete 2 3` +
+Deletes the 2nd and 3rd persons in the address book.
 * `find Betsy` +
-`select 1` +
-Selects the 1st person in the results of the `find` command.
+`delete 1` +
+Deletes the 1st person in the results of the `find` command.
+// end::deletebyindex[]
 
-=== Listing entered commands : `history`
+===== Deleting persons by tag [Since v1.4]:
+
+Deletes person(s) that have a the input tags. +
+Format: `delete -tag TAG [ADDITIONAL_TAGS]...`
+
+[NOTE]
+All contacts with the input tag will be deleted.
+Make sure that none of the contacts that you do not intend to delete have the input tag.
+You can use the <<find-by-tag, find command>> to view all contacts that have the tag.
+
+Examples:
+* `delete -tag temp`
+Deletes all persons with the tag `temp`
+* `delete -tag school work`
+Deletes all persons with the tags `school` or `work`
+
+==== Clearing all entries: `clear`
+
+Clears all entries from the address book. +
+Format: `clear`
+
+
+=== Navigating KayPoh!
+
+==== Listing persons: `list`
+
+To have all your contacts displayed in the person list, use the `list` command.
+
+====
+
+Command format: `[red]#list#` +
+
+* Listing all persons:
+`[red]#list#`
+* Listing all favorite persons [Since v1.2]:
+`[red]#list# [blue]#-fav#`
+
+Alias: `[red]#l#`
+====
+
+You should see the person list populated with all of your contacts after executing the command.
+
+.Person list populated with all contacts
+image::list-command-result.png[width="790"]
+
+// tag::select[]
+==== Selecting a person: `select`
+
+To view the social media feed of a contact, use the `select` command.
+====
+Command format: `[red]#select# [green]#INDEX [SOCIAL_MEDIA_PLATFORM]#` +
+Alias: `[red]#s#`
+====
+
+* The [green]`INDEX` refers to the index number of the person to be stalked in the person list.
+* The [green]`SOCIAL_MEDIA_PLATFORM` identifies which social media account belonging to the person you wish to view.
+* If no [green]`SOCIAL_MEDIA_PLATFORM` is specified, the feed of a random social media account associated
+with the person will be displayed in the browser window. If there is no social media account associated with
+the person, a Google search of the person's name will be displayed instead.
+
+You should see the person's social media feed displayed in the browser window.
+
+.Social media feed displayed in browser window
+image::stalk-command-result.png[width="790"]
+
+Example:
+
+* `[red]#select# [green]#1 facebook#` +
+Displays the Facebook account of the first person in the current person list
+
+.Common Mistakes
+|===
+|Incorrect |Correct
+
+|Input an `INDEX` that is invalid. +
+e.g. `-1`, `0.1`, `abc`
+|Ensure that the specified `INDEX` is a *positive integer* that is *smaller or equal to the total number of contacts in the person list*.
+
+|Input a `SOCIAL_MEDIA_PLATFORM` that the user does not have an associated account for. +
+e.g. If the first user in the person list does not have an instagram account, and the command `stalk 1 instagram` is entered.
+|Ensure that the selected user has an associated account for the `SOCIAL_MEDIA_PLATFORM` specified. The social media accounts associated with
+a user can be found in the person list.
+
+image:stalk-command-social-info.png[width="300"]
+|===
+// end::select[]
+
+// tag::find-by-tag[]
+[[find-by-tag]]
+==== Finding persons: `find`
+To find contacts by some criteria, use the `find` command.
+
+====
+Command format:
+
+* Finding by `name`:
+`[red]#find# [green]#KEYWORD [ADDITIONAL_KEYWORDS]...#`
+* Finding by `tag` [Since v1.3]:
+`[red]#find# [blue]#-tag# [green]#KEYWORD [ADDITIONAL_KEYWORDS]...#`
+* Finding `favorite` contacts [Coming in v2.0]:
+`[red]#find# [blue]#-fav#`
+
+Alias: `[red]#f#` +
+====
+
+* Contacts that match *any* of the provided [green]`KEYWORDS` will be displayed in the person list.
+* The search is case insensitive. e.g `john` will match `John`.
+* The order of the [green]`KEYWORDS` does not matter. e.g. `John Doe` will match `Doe John`.
+* Only full words will be matched e.g. `Jo` will not match `John`.
+
+You should see the persons that meet the provided criteria displayed in the person list after executing the command.
+
+.Person list after finding contacts with the tag `friends`
+image::find-command-result.png[width="300"]
+
+Examples:
+
+* `[red]#find# [green]#John#` +
+Displays persons with the names `john` and `John Doe` in the person list.
+* `[red]#find# [green]#Betsy Tim John#` +
+Displays persons with names `Betsy`, `Tim`, or `John` in the person list.
+* `[red]#find# [blue]#-tag# [green]#friends colleagues#` +
+Displays persons with tags `friends` or `colleagues` in the person list.
+* `[red]#find# [blue]#-fav#` +
+Displays `favorite` contacts in the person list.
+// end::find-by-tag[]
+
+// tag::sort[]
+==== Sorting the displayed list [Since v1.4]: `sort`
+
+To sort the person list, use the `sort` command.
+
+====
+Command format:
+
+* Default sort:
+`[red]#sort#`
+* Sorting by `name`:
+`[red]#sort# [blue]#-name#`
+* Sorting by `last access date` [Since v1.5]:
+`[red]#sort# [blue]#-recent#`
+
+Alias: `[red]#sr#` +
+====
+
+* The default sort orders contacts first by their `favorite` status, then by their `name` in lexicographic order.
+* Sorting with the [blue]`name` option orders contacts by their `name` in lexicographic order.
+* Sorting with the [blue]`recent` option orders contacts by when they were last added, updated, or stalked.
+
+The person list should be sorted based on the specified option after executing the command.
+
+.Person list after executing a default sort
+image::sort-command-default-result.png[width="300"]
+
+.Person list after executing a sort by `name`
+image::sort-command-name-result.png[width="300"]
+
+Examples:
+
+* `[red]#list#` +
+`[red]#sort#` +
+Lists all person in the address book, sorted first based on their `favorite` status, then by their `name` in lexicographic order.
+* `[red]#find# [green]#john#` +
+`[red]#sort# [blue]#-recent#` +
+Lists all persons whose `names` contain the keyword `john`, sorted based on when they were last added, updated, or stalked.
+// end::sort[]
+
+[[social-media-integrations]]
+=== Social Media Integrations [Since v1.2]
+
+// tag::representing-social-media-accounts[]
+==== Representing Social Media Accounts
+
+Social media accounts are represented in the format `SOCIAL_TYPE USERNAME`.
+
+The social types presently supported are:
+
+* `facebook` (aliases: `fb`)
+* `instagram` (aliases: `ig`)
+
+Example:
+
+* `facebook johnd10` +
+Represents the Facebook account with the username `johnd10`.
+* `ig damyth` +
+represents the Instagram account with the username `damyth`.
+// end::representing-social-media-accounts[]
+
+[[facebook-features]]
+==== Facebook Integrations
+
+// tag::facebookconnect[]
+===== Connecting to Facebook [Since v1.2]: `facebookconnect`
+
+Connects to your Facebook account. +
+Command Format: `[red]#facebookconnect#`
+
+****
+* First ensure that you are added as a test user for the Facebook Application. Add yourself as a test user link:https://developers.facebook.com/apps/131555220900267/roles/[here].
+* Launches a Facebook authorization page in the browser
+* Key in your credentials to connect to your Facebook account
+* Once your Facebook account has been connected, you can use all the other Facebook features.
+****
+// end::facebookconnect[]
+
+// tag::facebookpost[]
+[[facebookpost]]
+=====  Posting a status to Facebook [Since v1.3]: `facebookpost`
+
+Posts a status to your Facebook wall. +
+Command Format `[red]#facebookpost# [green]#STATUS#`
+
+****
+* Your facebook account must be connected to use this feature. If not, the authorization page will automatically be launched in
+the browser.
+* Your status will then be posted to Facebook.
+****
+
+Examples:
+
+* `facebookpost hello world!` +
+Posts the status 'hello world!' to your Facebook wall.
+// end::facebookpost[]
+
+// tag::facebooklink[]
+[[facebooklink]]
+=====  Sharing a Link to Facebook [Since v1.4]: `facebooklink`
+
+Shares a link to your Facebook wall. +
+Command Format `[red]#facebooklink# [green]#URL#`
+
+****
+* Your facebook account must be connected to use this feature. If not, the authorization page will automatically be launched in
+the browser.
+* Your URL will then be shared to Facebook.
+****
+
+Examples:
+
+* `facebook post https://www.google.com` +
+Posts the link to `https://www.google.com` to your Facebook wall.
+// end::facebooklink[]
+
+// tag::facebookadd[]
+[[facebookadd]]
+=====  Adding a contact from Facebook [Since v1.5]: `facebookadd`
+
+Imports a Facebook user as a contact. +
+Command Format `[red]#facebookadd# [green]#USERNAME#`
+
+****
+* Your facebook account must be connected to use this feature. If not, the authorization page will automatically be launched in
+the browser.
+* The Facebook user will then be added as a contact.
+****
+
+
+Examples:
+
+* `facebookadd barack obama` +
+Imports the facebook user 'Barack Obama' to your contacts.
+// end::facebookadd[]
+
+// tag::facebookaddallfriends[]
+[[facebookaddallfriends]]
+===== Adding all your Facebook friends [Since v1.5]: `facebookaddallfriends`
+
+Imports all your Facebook friends as contacts. (Current maximum is set at 30 friends) +
+Command Format `[red]#facebookaddallfriends#`
+
+****
+* Your facebook account must be connected to use this feature. If not, the authorization page will automatically be launched in
+the browser.
+* All your valid facebook friends will then be added as a contact.
+****
+// end::facebookaddallfriends[]
+
+=== Managing Contact Data
+
+Address book data are saved in the hard disk automatically after any command that changes the data. +
+There is no need to save manually.
+
+==== Sharing Contacts
+
+[[export-command]]
+===== Exporting contact data: `export`
+
+Exports all contact data to an external file. +
+Command format: `[red]#export# [green]#FILE_PATH#` +
+
+****
+* `[green]#FILE_PATH#` is the location where the contact data is to be exported to.
+* The input `[green]#FILE_PATH#` must be an absolute file path.
+** `/Users/seedu/Documents/exportData.xml` for macOS and Linux
+** `c:\Users\seedu\Documents\exportData.xml` for Windows
+* You must have *write access* to the specified `[green]#FILE_PATH#`.
+****
+
+You should see the confirmation message in the result display. +
+
+.Confirmation message after exporting contacts
+image::export-contacts.png[width="790"]
+
+Examples:
+
+* `[red]#export# [green]#/Users/seedu/Documents/exportData.xml#` +
+Exports contact data to the location `/Users/seedu/Documents/exportData.xml`
+
+[[import-command]]
+===== Importing contact data: `import`
+
+Imports contact data from an external file. +
+Command format: `[red]#import# [green]#FILE_PATH#`
+
+****
+* `[green]#FILE_PATH#` is the location of the data file from which contact data is to be imported.
+* The input `[green]#FILE_PATH#` must be an absolute file path, e.g.
+** `/Users/seedu/Documents/exportData.xml` for macOS and Linux
+** `c:\Users\seedu\Documents\exportData.xml` for Windows
+* You must have *read access* to the specified `[green]#FILE_PATH#`.
+****
+
+You should see the confirmation message in the result display. +
+
+.Confirmation message after importing contacts
+image::import-contacts.png[width="790"]
+
+Examples:
+
+* `[red]#import# [green]#/Users/seedu/Documents/exportData.xml#` +
+Imports contact data to the location `/Users/seedu/Documents/exportData.xml`
+
+
+==== Synchronizing with the cloud [Coming in v2.0]:
+
+===== Configuring your cloud account: `sync`
+
+Configures the addressbook to synchronize with the cloud using the given user credentials. +
+Command format: `[red]#sync# [green]#u/USERNAME p/PASSWORD#`
+
+===== Synchronizing with the cloud
+
+Address book data is automatically synchronized with cloud when an internet connection is available. +
+There is no need to synchronize manually.
+
+===== Removing your cloud account: `unsync`
+
+Stops synchronizing of contact information with any previously configured cloud accounts. +
+Command format: `[red]#unsync#`
+
+=== Miscellaneous
+
+==== Changing themes: `theme` [Since v1.4]
+
+Changes the color theme of the application. +
+Format: `theme [OPTION]`
+
+Options:
+
+* `day` +
+Changes the application theme to a light color scheme.
+* `night` +
+Changes the application theme to a dark color scheme.
+
+Example:
+
+* `theme -day`
+* `theme -night`
+
+==== Listing entered commands: `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
 Format: `history`
@@ -163,10 +697,11 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 ====
 
 // tag::undoredo[]
-=== Undoing previous command : `undo`
+==== Undoing previous command: `undo`
 
 Restores the address book to the state before the previous _undoable_ command was executed. +
-Format: `undo`
+Format: `undo` +
+Alias: `u`
 
 [NOTE]
 ====
@@ -189,10 +724,11 @@ The `undo` command fails as there are no undoable commands executed previously.
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
 
-=== Redoing the previously undone command : `redo`
+==== Redoing the previously undone command: `redo`
 
 Reverses the most recent `undo` command. +
-Format: `redo`
+Format: `redo` +
+Alias: `r`
 
 Examples:
 
@@ -212,35 +748,34 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
-=== Clearing all entries : `clear`
-
-Clears all entries from the address book. +
-Format: `clear`
-
-=== Exiting the program : `exit`
+==== Exiting the program: `exit`
 
 Exits the program. +
-Format: `exit`
+Format: `exit` +
+Alias: `x`
 
-=== Saving the data
+==== Viewing help: `help`
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
-There is no need to save manually.
+Format: `help`
 
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+*A*: <<export-command, Export>> your data and transfer the exported file to the other computer. Install the application in the other computer, start it up and <<import-command, import>> the data file.
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]... [s/SOCIAL_TYPE USERNAME]...` +
+e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague s/facebook jamesho`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]... [s/SOCIAL_TYPE USERNAME]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
+* *Favorite*: `fav INDEX [ADDITIONAL INDEXES] +
+e.g. `fav 1 2 3`
+* *Unfavorite*: `unfav INDEX [ADDITIONAL INDEXES] +
+e.g. `unfav 1 2 3`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
 * *List* : `list`
@@ -250,3 +785,10 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Export*: `export FILE_PATH` +
+e.g. `export /Users/seedu/Documents/exportData.xml`
+* *Import*: `import FILE_PATH` +
+e.g. `import /Users/seedu/Documents/importData.xml`
+* *Connect to Facebook*: `facebook connect` +
+* *Post to Facebook*: `facebook post STATUS` +
+e.g. `facebook post hello world!`

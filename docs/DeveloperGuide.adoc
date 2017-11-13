@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= KayPoh! - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -12,7 +12,13 @@ endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :repoURL: https://github.com/se-edu/addressbook-level4/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team W10-B2`      Since: `Aug 2017`      Licence: `MIT`
+
+== About
+
+This developer guide provides developers working on the KayPoh! application an in-depth explanation
+of how the application works. A working knowledge of UML diagram notation and familiarity with the Java programming
+language will be helpful in understanding the implementation details discussed in this guide.
 
 == Setting up
 
@@ -91,7 +97,7 @@ When you are ready to start coding,
 === Architecture
 
 image::Architecture.png[width="600"]
-_Figure 2.1.1 : Architecture Diagram_
+_Figure 2.1.1: Architecture Diagram_
 
 The *_Architecture Diagram_* given above explains the high-level design of the App. Given below is a quick overview of each component.
 
@@ -105,15 +111,15 @@ The `.pptx` files used to create diagrams in this document can be found in the l
 
 link:#common-classes[*`Commons`*] represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level.
 
-* `EventsCenter` : This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design)
-* `LogsCenter` : Used by many classes to write log messages to the App's log file.
+* `EventsCenter`: This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design)
+* `LogsCenter`: Used by many classes to write log messages to the App's log file.
 
 The rest of the App consists of four components.
 
-* link:#ui-component[*`UI`*] : The UI of the App.
-* link:#logic-component[*`Logic`*] : The command executor.
-* link:#model-component[*`Model`*] : Holds the data of the App in-memory.
-* link:#storage-component[*`Storage`*] : Reads data from, and writes data to, the hard disk.
+* link:#ui-component[*`UI`*]: The UI of the App.
+* link:#logic-component[*`Logic`*]: The command executor.
+* link:#model-component[*`Model`*]: Holds the data of the App in-memory.
+* link:#storage-component[*`Storage`*]: Reads data from, and writes data to, the hard disk.
 
 Each of the four components
 
@@ -123,7 +129,7 @@ Each of the four components
 For example, the `Logic` component (see the class diagram given below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
 
 image::LogicClassDiagram.png[width="800"]
-_Figure 2.1.2 : Class Diagram of the Logic Component_
+_Figure 2.1.2: Class Diagram of the Logic Component_
 
 [discrete]
 ==== Events-Driven nature of the design
@@ -131,7 +137,7 @@ _Figure 2.1.2 : Class Diagram of the Logic Component_
 The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
 
 image::SDforDeletePerson.png[width="800"]
-_Figure 2.1.3a : Component interactions for `delete 1` command (part 1)_
+_Figure 2.1.3a: Component interactions for `delete 1` command (part 1)_
 
 [NOTE]
 Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
@@ -139,7 +145,7 @@ Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address 
 The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
 image::SDforDeletePersonEventHandling.png[width="800"]
-_Figure 2.1.3b : Component interactions for `delete 1` command (part 2)_
+_Figure 2.1.3b: Component interactions for `delete 1` command (part 2)_
 
 [NOTE]
 Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
@@ -149,9 +155,9 @@ The sections below give more details of each component.
 === UI component
 
 image::UiClassDiagram.png[width="800"]
-_Figure 2.2.1 : Structure of the UI Component_
+_Figure 2.2.1: Structure of the UI Component_
 
-*API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
+*API*: link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
 The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
@@ -166,12 +172,12 @@ The `UI` component,
 === Logic component
 
 image::LogicClassDiagram.png[width="800"]
-_Figure 2.3.1 : Structure of the Logic Component_
+_Figure 2.3.1: Structure of the Logic Component_
 
 image::LogicCommandClassDiagram.png[width="800"]
-_Figure 2.3.2 : Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in Figure 2.3.1_
+_Figure 2.3.2: Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in Figure 2.3.1_
 
-*API* :
+*API*:
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 
 .  `Logic` uses the `AddressBookParser` class to parse the user command.
@@ -182,14 +188,14 @@ link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
 
 image::DeletePersonSdForLogic.png[width="800"]
-_Figure 2.3.1 : Interactions Inside the Logic Component for the `delete 1` Command_
+_Figure 2.3.1: Interactions Inside the Logic Component for the `delete 1` Command_
 
 === Model component
 
 image::ModelClassDiagram.png[width="800"]
-_Figure 2.4.1 : Structure of the Model Component_
+_Figure 2.4.1: Structure of the Model Component_
 
-*API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
+*API*: link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
 The `Model`,
 
@@ -201,9 +207,9 @@ The `Model`,
 === Storage component
 
 image::StorageClassDiagram.png[width="800"]
-_Figure 2.5.1 : Structure of the Storage Component_
+_Figure 2.5.1: Structure of the Storage Component_
 
-*API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
+*API*: link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 
 The `Storage` component,
 
@@ -226,6 +232,8 @@ The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides insi
 `UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
 
 image::LogicCommandClassDiagram.png[width="800"]
+
+_Figure 3.1.1: Structure of Commands in the Logic Component_
 
 As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
 
@@ -286,6 +294,8 @@ The following sequence diagram shows how the undo operation works:
 
 image::UndoRedoSequenceDiagram.png[width="800"]
 
+_Figure 3.1.2: Interactions inside Logic Component for the `undo` Command_
+
 The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
 
 [NOTE]
@@ -302,6 +312,8 @@ image::UndoRedoNewCommand3StackDiagram.png[width="800"]
 The following activity diagram summarize what happens inside the `UndoRedoStack` when a user executes a new command:
 
 image::UndoRedoActivityDiagram.png[width="200"]
+
+_Figure 3.1.3: Flow of activities inside `UndoRedoStack`_
 
 ==== Design Considerations
 
@@ -345,6 +357,411 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+// tag::multiplephonenumbers[]
+=== Multiple Fields
+
+When an `AddCommandParser` or `EditCommandParser` is used to parse a command, an `ArgumentMultimap` object is created which contains a hashmap mapping the prefixes to a list of their respective arguments.
+
+The `ArgumentMultimap` class has a `getValue` method and a `getMultipleValues` method. If there are multiple strings passed as arguments to the prefix, the `getValue` method returns only the last string in the list, while the `getMultipleValues` returns a concatenation of all the strings in the list.
+
+The `ParserUtil` class has various parsing methods, such as `parseName` and `parsePhone`. The method `parseName` returns a `Name` object wrapped in the `Optional` class and the method returns a `Phone` object wrapped in the `Optional` class.
+
+The `parsePhone` method in the `ParserUtil` class calls the `getMultipleValues` method of the `ArgumentMultimap` class instead of the `getValue` method called by the other parsers. This allows multiple phone numbers to be stored in a `Phone` object.
+
+==== Design Considerations
+
+**Aspect:** Display of the multiple phone numbers +
+**Alternative 1 (current choice):** Insert a newline character ("\n") between different phone numbers. +
+**Pros:** Easier to see the different phone numbers. +
+**Cons:** Less flexibility in adding multiple phone numbers (cannot type `p/12345 56789`). +
+**Alternative 2:** Insert a space character (" ") between different phone numbers. +
+**Pros:** More flexibility in adding multiple phone numbers. Can type type `p/12345 56789` to add the two phone numbers with only one "p/" prefix. +
+**Cons:** Harder to see the different phone numbers, makes the display more cluttered. +
+
+**Aspect:** Initialising of `Phone` object +
+**Alternative 1 (current choice):** Constructor of `Phone` takes in a String as parameter, modify current constructor. +
+**Pros:** No need to create a new method. +
+**Cons:** Not so easy to manipulate the string and split the multiple phone numbers. +
+**Alternative 2:** Create a new constructor for `Phone` that takes in a List<String> as parameter. +
+**Pros:** Easier to manipulate the multiple phone numbers in the list. +
+**Cons:** Can cause problems during testing as there are two constructors. +
+
+**Aspect:** Allowing duplicate phone numbers for a contact +
+**Alternative 1 (current choice):** Do not allow duplicate phone numbers. +
+**Pros:** Makes the address book more usable. +
+**Cons:** Need to implement checking of the arguments. +
+**Alternative 2:** Allow duplicate phone numbers. +
+**Pros:** No need to check whether the arguments have been entered already. +
+**Cons:** May cause the address book to be messy if adding duplicate phone numbers was not the user's intention. +
+
+**Aspect:** Dealing with invalid values as well as valid values +
+**Alternative 1 (current choice):** Accept valid values and ignore invalid values. +
+**Pros:** Makes it easier for the user as the invalid value may have been an accident and the valid value may actually be correct. +
+**Cons:** Both values may have been incorrect and an incorrect phone number would have been added. +
+**Alternative 2:** Ignore all values as long as there is one invalid value. +
+**Pros:** No need to continue checking the rest of the arguments once there is one invalid value. +
+**Cons:** The incorrect value may have been an accident and the user may want the valid value to be added as a phone number to the contact. +
+// end::multiplephonenumbers[]
+
+// tag::facebook[]
+=== Facebook Post mechanism
+
+The Facebook Post mechanism is facilitated by the Facebook Graph API and utilised through the Facebook4j unofficial public API.
+Facebook4j supports all facebook related features such as `facebook connect` and `facebook post`.
+
+The Facebook Graph API first required us to set up a Facebook Application on the Facebook for developers website. We did so following this link:https://developers.facebook.com/docs/apps/register/#create-app[`guide`].
+
+Completing the creation led to a page as shown below:
+
+.Facebook Application setup page
+image::facebook_developers_app.png[width="800"]
+
+Since our AddressBook application is, for now, hosted on a private environment and not a website, we need to authenticate `Testers` on the developers platform as follows:
+
+.Facebook Application testers configuration page
+image::facebook_dashboard_testers.png[width="800"]
+
+The Facebook4j API requires us to build a Gradle dependency in the `gradle.properties` file:
+
+----
+compile group: 'org.facebook4j', name: 'facebook4j-core', version: '2.4.10'
+----
+
+Once the above have been set up, we need to attain a user access key from Facebook through a Facebook Login. This is done through a browser.
+
+Once the access key has been attained, we then set the application credentials in the `facebook4j.properties` and `FacebookConnectCommand.java` files respectively as follows:
+
+----
+debug=true
+oauth.appId=*************
+oauth.appSecret=***********************
+----
+
+----
+facebookInstance = new FacebookFactory().getInstance();
+facebookInstance.setOAuthPermissions(commaSeparetedPermissions);
+facebookInstance.setOAuthAccessToken(new AccessToken(accessToken, null));
+----
+
+Lastly, we simply post the status to Facebook through the authenticated `facebookInstance` using the following code:
+
+----
+Facebook facebookInstance = FacebookConnectCommand.getFacebookInstance();
+facebookInstance.postStatusMessage(toPost);
+----
+
+The following diagram displays a summary of the entire process:
+
+.Sequence diagram detailing execution of a `facebook post` command
+image::facebook_post_sequence_diagram.png[width="800"]
+
+
+==== Design Considerations
+
+**Aspect:** Choice of Facebook API Wrapper (Java) +
+**Alternative 1 (current choice):** Use `Facebook4j` wrapper +
+**Pros:** User friendly API, well documented. +
+**Cons:** Less available online support. +
+**Alternative 2:**  Use `Restfb` wrapper +
+**Pros:** Easily available online support. +
+**Cons:** API is well documented, however less user friendly and functionalities compared to Facebook4j.
+
+---
+
+**Aspect:** How User is authenticated +
+**Alternative 1 (current choice):** Manually login to Facebook using a browser +
+**Pros:** Easier to implement given the intended environment of the application (private host rather than website) +
+**Cons:** May not be authenticated to use a few Facebook API functions +
+**Alternative 2:** Host the entire application on a website and attain Facebook approval. +
+**Pros:** Have full access to most features and functions of Graph API +
+**Cons:** As Facebook has a very strict criteria for all their applications, preparing the application for approval requires a lot of work that includes proper hosting, implementing SSH protection, having a privacy and terms document, etc.
+
+---
+
+**Aspect:** Implementation of Facebook commands +
+**Alternative 1 (current choice):** Each Facebook [COMMAND] is task oriented, e.g. Facebook connect, Facebook post, etc. +
+**Pros:** Modular, all commands are separate and taken as blackbox although there are dependencies. +
+**Cons:** Increase in possible dependencies in the software, like how most will depend on `Facebook connect`. +
+**Alternative 2:** Ensure each command is stand-alone and fully independent +
+**Pros:** Will have less dependencies. +
+**Cons:** May incur more code overhead and make the software less 'lean'. +
+
+---
+// end::facebook[]
+
+// tag::social-media-accounts[]
+=== Social Media Accounts
+
+Information about contact's social media accounts are encapsulated by the `SocialInfo` class. The list of `SocialInfo` associated
+with a `Person` is handled by the `UniqueSocialInfoList`, which guarantees that at most one of each type of social media type is
+associated with the contact.
+
+The following class diagram represents the relationship between the `Person`, `UniqueSocialInfoList` and `SocialInfo` classes:
+
+.Class diagram representing relationships between Person, UniqueSocialInfoList and SocialInfo classes
+image::SocialInfoClassDiagram.png[width="800"]
+
+==== Parsing inputs representing social media accounts
+
+The form `SOCIAL_TYPE_IDENTIFIER USERNAME` is used to represent a `SocialInfo` as a CLI parametr for a command,
+A Collection of these raw social info parameters can then be passed to the `parseSocialInfo` method in the `SocialInfoMapping` class for parsing.
+
+The following sequence diagram shows how the `parseSocialInfo` method handles the parsing of the raw social info parameters:
+
+.Sequence diagram detailing how inputs are parsed to form SocialInfos
+image::ParseSocialInfoSequenceDiagram.png[width="800"]
+
+[NOTE]
+As far as possible instantiation of new `SocialInfo` classes should be handled by the `SocialInfoMapping` class.
+The url structures for social media platforms are an external dependency that we do not have control over, thus it is
+inevitable that some issues will inevitably arise due to changes in these external dependencies.
+It is hence essential to isolate the logic pertaining to the generation of these urls so that any issues can easily be identified and resolved.
+
+==== Adding support for new social media platforms
+
+Handling for parsing inputs for new social platforms should be done by adding the following methods to the `SocialInfoMapping` class.
+
+[source,java]
+----
+// The input parameter has been split into two parts - the socialType and the username
+
+private static boolean isPlatformInfo(String[] splitRawSocialInfo) {
+       // ... Check if the platform is identified by the input social info
+    }
+
+private static SocialInfo buildPlatformInfo(String[] splitRawSocialInfo) {
+    // ... Parse the url representing the social media feed using the platform and username
+    // ... Instantiate the SocialInfo represented by the platform, username, and url
+}
+----
+
+and then adding the following logic to the `parseSocialInfos` method:
+
+[source,java]
+----
+public static SocialInfo parseSocialInfo(String rawSocialInfo) throws IllegalValueException {
+    // ... initialization logic here
+
+    if (isFacebookInfo(splitRawSocialInfo)) {
+        return buildFacebookInfo(splitRawSocialInfo);
+    }
+
+    // ... other social platforms here
+
+    } else if (isPlatformInfo(splitRawSocialInfo)) {
+        return buildPlatformInfo(splitRawSocialInfo);
+    }
+
+    // ... other social platforms here
+
+    } else {
+        throw new IllegalValueException(UNRECOGNIZED_SOCIAL_TYPE_MESSAGE);
+    }
+}
+----
+
+==== Design Considerations
+
+**Aspect:** Implementation of `SocialInfo` class +
+**Alternative 1 (current choice):**  Have a class that handles information for all social media platforms. +
+**Pros:** Simple schema that is easily marshalled/unmarshalled by the JAXB library used by the storage component. +
+**Cons:** Assumes that all social media platforms can be represented by the username and the url to the user's page.
+Can be difficult to extend to contain more attributes for social platforms that may need them. +
+**Alternative 2:** Have an abstract class that handles must-have information for all social media platforms,
+which classes designed for each social platform will extend. +
+**Pros:** More flexibility in extending the class to suit the needs of social media types. +
+**Cons:** Difficult to handle marshalling/unmarshalling to XML format using the JAXB library.
+Adds significant complexity to the codebase when number of supported platforms grow. +
+**Additional Info:** An assessment of the major social media platforms shows that the username is sufficient to identify
+users on all the major platforms at present.
+
+---
+
+**Aspect:** Detection of duplicate social types in `UniqueSocialInfoList` +
+**Alternative 1 (current choice):**  Upon every addition of a `SocialInfo` to the list, iterate through each element in the
+existing list to ensure that there are no duplicates. +
+**Pros:** No delay on startup. Computation is performed only on demand. +
+**Cons:** Slight delay may occur upon every operation that involves addition of a `SocialInfo` to a `UniqueSocialInfoList`
+if the number of social platforms supported is high. +
+**Alternative 2:** Precompute the HashSet for every `UniqueSocialInfoList` which contains the social types of each `SocialInfo` in the list
+upon loading from data file. +
+**Pros:** No delay on addition of a `SocialInfo` to a `UniqueSocialInfoList`. +
+**Cons:** Possible delay when starting up the application if number of contacts or number of social platforms supported is high.
+Additional space required to support storing the HashSets in memory. +
+**Additional Info:** Number of social platforms is expected to be a reasonable amount, and thus should not cause much noticable delay.
+In comparison, the startup delay may be more significant when a large number of contacts are present in the address book. Thus the first
+alternative was selected to provide a more pleasant user experience.
+// end::social-media-accounts[]
+
+// tag::command-syntax[]
+=== Command Options
+
+As some functionalities have similar behaviours, we group them under a single `COMMAND_WORD` and allow the user to include
+`OPTIONS` when using the command to specify which functionality is to be executed.
+
+The following command syntax is thus adopted: `COMMAND_WORD [-OPTIONS]... [PARAMETERS]...`, where:
+
+* The `COMMAND_WORD` specifies the *action to be performed*,
+* `OPTIONS` are prefixed with a dash (e.g. `-tag`) and specifies *how the action is to be performed*, and
+* `PARAMETERS` provide *information for the action to be executed with*.
+
+==== Handling Options
+
+Arguments that may include options should be wrapped with the `OptionBearingArgument` class, which abstracts the parsing
+of options and parameters. The following code snippet shows how the `OptionBearingArgument` may be used to parse user inputs:
+
+[source,java]
+----
+// assume that args is a string containing user input with both arguments and parameters
+OptionBearingArgument opArg = new OptionBearingArgument(args);
+// options are returned in the form of a set which contains options that are present in the argument
+Set<String> options = opArg.getOptions();
+// the options are stripped from the argument to give us the parameters
+String parameters = opArg.getFilteredArgs();
+----
+
+==== Design Considerations
+**Aspect:** How commands with similar behaviour should be handled +
+**Alternative 1 (current choice):** Group these commands under a single `COMMAND_WORD` and introduce a new `OPTIONS` syntax
+to allow the user to specify the desired functionality to be executed. +
+**Pros:** Clear distinction between arguments that specify how a command should be executed, and arguments that provide information
+for the command to be executed with. +
+**Cons:** Potentially more initial confusion for the user as there is an additional syntax to learn. To mitigate this a
+section explaining the updated command syntax has been added to the user guide. +
+**Alternative 2:** Group these commands under a single `COMMAND_WORD`, and use the existing `PREFIX/` syntax to identify
+how a command should be executed. +
+**Pros:** User does not need to learn additional syntax. +
+**Cons:** The meaning of the `PREFIX/` syntax becomes unintuitive. This syntax is currently used to denote a property
+in an object (i.e. `p/` denotes a phone number in a person). To extend this syntax to command modifiers makes it confusing
+for the user as the meaning of the syntax becomes diluted. An informal survey conducted with our target users confirms
+that this approach was less intuitive to them compared to the approach described in Alternative 1. +
+**Alternative 3:** Have separate `COMMAND_WORDS` for each command. +
+**Pros:** Simple syntax, with no confusion over what behaviour will be executed. +
+**Cons:** Does not scale well as users have to remember many different commands as the number of features grow.
+
+// end::command-syntax[]
+
+=== Favorite Contacts
+
+The favorite status of each contact is stored as a `boolean`, encapsulated within the `Favorite` class. +
+There are several ways to toggle this `boolean` to change the favorite status of a contact.
+
+==== Toggle favorites using `add` and/or `edit` command +
+For user's convenience, we are allowing just the input of prefixes i.e. `f/` in `add` command and either `f/` or `uf/` in `edit` command to make a change to a contact's favorite status.
+
+As such, at `Parser` level in both `AddCommandParser` and `EditCommandParser`, we simply need to know whether the prefixes are present in the user input. Prefixes in user input can be found in `ArgumentMultimap argMultimap`. Hence, we can utilise the following helper-method by passing in `PREFIX_FAV` or `PREFIX_UNFAV` to return true if the prefix is contained within the user input, false otherwise:
+[usage,java]
+----
+public boolean isPrefixPresent(Prefix prefix) {
+    return argMultimap.containsKey(prefix);
+}
+----
+
+The helper-method above is called within a common method `parseFavorite` (shown below), used by both `AddCommandParser` and `EditCommandParser` classes. The difference in utilisation of the following method by both classes is in the parameters that are passed in. As `AddCommandParser` only needs to check whether `PREFIX_FAV` exists, it will pass in `parseFavorite(argMultimap, PREFIX_FAV, null)` while `EditCommandParser` will pass in `parseFavorite(argMultimap, PREFIX_FAV, PREFIX_UNFAV)` to check for both prefixes.
+[usage,java]
+----
+public static Optional<Favorite> parseFavorite(ArgumentMultimap argMultimap,
+                                     Prefix prefixFav,
+                                     Prefix prefixUnFav) throws ParseException {
+    // ... parser logic ...
+}
+----
+
+For editing person, after obtaining the presence of prefix in user input, we need to perform some input validation by disallowing both `f/` and `uf/` prefixes to be present at the same time. We can check this by using the he:
+[usage,java]
+----
+    // Disallow both f/ and uf/ to be present in the same instance of user input when editing
+    if (argMultimap.isPrefixPresent(prefixFav) && argMultimap.isPrefixPresent(prefixUnFav)) {
+        throw new ParseException(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT,
+                            EditCommand.MESSAGE_USAGE));
+    }
+----
+
+For both adding and editing person, there is a similar validation for disallowing text after prefix e.g. `f/this is a text`. This is achieved by checking whether the any additional `String` exists after prefix.
+[usage,java]
+----
+    if (argMultimap.isPrefixPresent(prefixFav)) {
+        if (!argMultimap.getValue(prefixFav).get().isEmpty()) { // Disallow text after prefix
+            throw new ParseException(Favorite.MESSAGE_FAVORITE_CONSTRAINTS);
+        } else {
+            return Optional.of(new Favorite(true));
+        }
+    }
+----
+
+==== Toggle favorites using `fav` and/or `unfav` command
+
+To enhance contact management, we implemented these commands to perform batch favoriting or unfavoriting of multiple contacts. They are also capable of performing the operations on a single contact. The implementation involves two major steps.
+
+The first step to doing so is to allow parsing of multiple indexes so that a user could specify which contacts they would like to favorite or unfavorite i.e. `fav 1 2 3`. In this case, we use `List` to parse and store every index.
+[usage,java]
+----
+public static List<Index> parseMultipleIndexes(String args) throws IllegalValueException {
+    List<String> argsList = Arrays.asList(args.trim().split("\\s+"));
+    List<Index> indexList = new ArrayList<>();
+    for (String index : argsList) {
+        indexList.add(parseIndex(index));
+    }
+    return indexList;
+}
+----
+Note that trimming `args.trim()` is required since the args passed will usually contain a leading whitespace. The regex `args.trim().split("\\s+")` is used as a form of validation to ignore multiple trailing whitespaces and still allowing such user input to be parsed, preventing an `exception`.
+
+The last step is to create a copy of the person we are favoriting or unfavoriting and change its favorite status via the aforementioned `boolean`. Since the `Person` class takes two constructors, the following constructor allows creating a copy of a given `ReadOnlyPerson`.
+[usage,java]
+----
+public Person(ReadOnlyPerson source) {
+    // ... create copy of all fields ...
+}
+----
+After getting the copy of the person e.g. `personToFavorite`, it is easy to call `personToFavorite.setFavorite(new Favorite(true))` and that sets the person as a favorite. Batch operation of favoriting or unfavoriting multiple contacts simply loops this last step for the amount of indexes specified by the user.
+
+==== Design Considerations
+
+**Aspect:** Storing of favorite status +
+**Alternative 1 (current choice):** Store it as a `boolean` +
+**Pros:** Saves memory, more efficient to call `isFavorite()` to check whether a person is a favorite contact +
+**Cons:** Unable to check for `null` or use any other values apart from `true` or `false` +
+**Alternative 2:** Store it as a `String` +
+**Pros:** Easier for printing its values +
+**Cons:** Requires input validation for `String`, less efficient in checking whether a person is a favorite contact (`O(N)` in the worse case scenario)
+
+**Aspect:** Ways to change the favorite status of a person +
+**Alternative 1 (current choice):** Allowing favoriting and unfavoriting of contacts through adding and editing persons as well as through `fav` and `unfav` commands +
+**Pros:** Creates a more consistent workflow for our user that ties in with other fields, a more straight-foward approach to indicate which are the favorite contacts upon adding a person +
+**Cons:** More tedious implementation +
+**Alternative 2:** Just rely on `fav` and `unfav` commands +
+**Pros:** Easier implementation +
+**Cons:** User would have to remember more commands and their usages
+
+// tag::sort[]
+=== Sorting Contacts
+To make it easier for users to find contacts, the displayed person list is kept sorted. Users can specify how contacts
+are to be ordered in the list using the `sort` command.
+
+The sorting logic makes use of the Observer pattern. Instead of keeping the `personList` itself sorted, a `SortedList`
+backed by the `personList` is constructed. The `SortedList` keeps a list of persons equivalent to that of the `personList`
+in sorted order, and ensures that it remains sorted even as changes are made to the underlying `personList`.
+
+This `SortedList` is in turn observed by the `FilteredList` to ensure that the list remains in sorted order even as filters are applied.
+
+The above relationship is represented by the following class diagram:
+
+.Class diagram representing the Observer pattern used to keep contacts in sorted order
+image::SortObserverClassDiagram.png[width="800"]
+
+==== Design Considerations
+**Aspect:** Where sorting should be handled +
+**Alternative 1 (current choice):** Handle sorts at the `ModelManager` level using the Observer pattern +
+**Pros:** Sorting does not require IO operations, which are computationally more expensive compared to in-memory operations. +
+**Cons:** Slightly longer startup time might be observed as the data file is not sorted and hence has to be sorted upon every startup. +
+**Alternative 2:** Handle sorts at the `AddressBook` level by sorting the `personList` directly +
+**Pros:** Startup might be faster as the data file should have already been sorted. Also reduces complexity of the `Model`
+as there is no need to maintain any additional data structures. +
+**Cons:** Every sort operation will require writing to the data file, which requires IO operations that are slower compared
+to in-memory operations.
+// end::sort[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
@@ -355,10 +772,10 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 *Logging Levels*
 
-* `SEVERE` : Critical problem detected which may possibly cause the termination of the application
-* `WARNING` : Can continue, but with caution
-* `INFO` : Information showing the noteworthy actions by the App
-* `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
+* `SEVERE`: Critical problem detected which may possibly cause the termination of the application
+* `WARNING`: Can continue, but with caution
+* `INFO`: Information showing the noteworthy actions by the App
+* `FINE`: Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
 
 === Configuration
 
@@ -392,7 +809,7 @@ Here are the steps to convert the project documentation files to PDF format.
 .  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For best results, use the settings indicated in the screenshot below.
 
 image::chrome_save_as_pdf.png[width="300"]
-_Figure 5.6.1 : Saving documentation as PDF files in Chrome_
+_Figure 5.6.1: Saving documentation as PDF files in Chrome_
 
 == Testing
 
@@ -729,7 +1146,59 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |user |add a contact picture for my contacts |identify them more easily
+
+|`* * *` |user |categorise my contacts into groups |view my contacts by relevant groups
+
+|`* * *` |user |export and send my own contact information |share my own contact information with my friends more easily
+
+|`* * *` |user |add birthdays to my contacts |remember them easily
+
+|`* * *` |user with many contacts |filter my contacts by tags/groups etc. |find relevant contacts more easily
+
+|`* * *` |user who adds contacts temporarily (for events etc.) |delete all contacts with a given tag |remove contacts associated to a category that is no longer relevant to me
+
+|`* * *` |user with many contacts |sort my contacts alphabetically |find them more easily
+
+|`* * *` |user |favourite a contact |contact the person easily
+
+|`* * *` |user |export/import contacts |share them with other users
+
+|`* * *` |user with many contacts |sort my contacts according to most recently contacted |reach the people that I want to recontact easily
+
+|`* * *` |user |have a confirmation message before clearing/deleting contacts |prevent accidentally removing contacts
+
+|`* * *` |user |edit/delete multiple contacts at once |manage my contacts more efficiently
+
+|`* * *` |user |add nicknames for my contacts |search for/recognise them using their nickname
+
+|`* * *` |user |add multiple fields for my contacts |store multiple pieces of contact information for each person
+
+|`* * *` |user |add social media accounts for my contacts |remember them
+
+|`* * *` |user |integrate my contacts with social media such as Facebook |see their latest updates alongside the contact information.
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+
+|`* *` |non-technical user |use the address book without having to use the command line |learn how to use easily
+
+|`* *` |user |sort my contacts according to the frequency contacted |find my more important contacts easily
+
+|`* *` |user who is more of a visual learner |change the look of my Address Book between a list view and a thumbnail view |see larger contact photos
+
+|`* *` |user who dislikes people |blacklist or block contacts |not be contacted by them
+
+|`* *` |user |synchronise my contacts to the cloud |have the same set of contacts on multiple devices
+
+|`* *` |user |synchronise my contacts to the cloud |have the same set of contacts on multiple devices
+
+|`*` |salesperson |scan a namecard and have the contact automatically be added |add contacts more easily
+
+|`*` |user with sensitive data |protect my contacts with a password |prevent other people from snooping into my contacts
+
+|`*` |organisation admin |restrict access rights of users/user groups |manage their permissions easily
+
+|`*` |professional |share a group of contacts to a new team member |let the new team member can have all the team member's contacts easily
 
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
 |=======================================================================
@@ -767,25 +1236,188 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+[discrete]
+=== Use case: Sort alphabetically
+
+*MSS*
+
+1. User enters 'sort' command
+2. AddressBook prompts for sort type
+3. User enters 'name'
+4. AddressBook sorts addresses in alphabetical order
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The addressbook is empty
++
+Use case ends.
+
+As a user, I want to have a confirmation message before clearing/deleting contacts, so that I do not accidentally remove contacts.
+
+[discrete]
+=== Use case: Clear AddressBook
+
+*MSS*
+
+1. User enters 'clear' command
+2. AddressBook prompts 'Are you sure you want to clear AddressBook? yes/no'
+3. User enters 'yes'
+4. AddressBook clears all persons
++
+Use case ends.
+
+As a user, I want to be able to edit/delete multiple contacts at once, so that I can manage my contacts more efficiently
+
+[discrete]
+=== Use case: Delete multiple persons
+
+*MSS*
+
+1. User enters 'delete many' command
+2. AddressBook shows a list of persons
+3. User requests to delete a set of people
+4. AddressBook deletes the persons
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+As a user, I want to be able to categorise my contacts into groups so that I can view my contacts by relevant groups
+
+[discrete]
+=== Use case: Add person to group
+
+*MSS*
+
+1. User enters 'add to group' command
+2. AddressBook shows a list of groups
+3. User selects a group
+4. AddressBook shows a list of persons
+5. User selects a specific person in the list
+6. AddressBook adds that person to the group
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2 or 4.
+
+[discrete]
+=== Use case: Delete persons of a given tag
+
+*MSS*
+
+1. User enters 'delete tagged' command
+2. AddressBook shows a list of tags
+3. User selects a specific tag in the list
+4. AddressBook prompts 'Are you sure you want to delete contacts tagged "temp"? yes/no'
+5. User enters 'yes'
+6. AddressBook deletes contacts with the tag 'temp'
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+As a user, I want to be able to add multiple fields for my contacts, so that I can store multiple pieces of contact information for each person
+
+[discrete]
+=== Use case: Add field to person
+
+*MSS*
+
+1. User enters 'add field' command
+2. AddressBook shows a list of persons
+3. User selects a specific person
+4. AddressBook prompts for field to add
+5. User enters 'p/12345678'
+6. AddressBook adds another phone number "12345678" to the contact alan
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
 {More to be added}
 
 [appendix]
-== Non Functional Requirements
+== Non-Functional Requirements
 
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-{More to be added}
+.  A user should be able to accomplish all tasks using the GUI, without using the command line.
+.  Startup time should be under 3 seconds.
+.  A user without technical experience should be able to perform most functions using the GUI without much assistance or having to
+read the user guide.
 
 [appendix]
 == Glossary
+
+[[command-line-interface]]
+Command Line Interface (CLI)
+
+....
+User interacts with the address book by issuing commands on a specified line, receives a response and issues another command, and so forth.
+....
+
+[[graphical-user-interface]]
+Graphical User Interface (GUI)
+
+....
+User interacts with the address book through graphical icons and visual indicators.
+....
 
 [[mainstream-os]]
 Mainstream OS
 
 ....
-Windows, Linux, Unix, OS-X
+Windows, Linux, Unix, macOS
 ....
 
 [[private-contact-detail]]
@@ -795,19 +1427,51 @@ Private contact detail
 A contact detail that is not meant to be shared with others
 ....
 
+[[storage]]
+Storage
+
+....
+Saving of all contacts into a single file i.e. addressbook.xml into /data directory.
+....
+
+[[tags]]
+Tags
+
+....
+A label attached to each contact for the purpose of identification and categorization. Tagging will allow users to search for all address book contacts with the specified tag.
+....
+
 [appendix]
 == Product Survey
 
-*Product Name*
+*Contacts*
 
-Author: ...
+Author: Apple
 
 Pros:
 
-* ...
-* ...
+* Intuitive user interface, that makes it easy to add, find and modify contacts.
+* Extensive number of relevant fields for contacts.
+* Cloud integration allows contacts to be shared across multiple devices.
 
 Cons:
 
-* ...
-* ...
+* Limited additional functionality besides storing/finding contact information. Use case
+is thus limited.
+* No way to sort or filter contacts, other than alphabetically.
+* Does not work with all link:#mainstream-os[mainstream-os]. Only works with iOS and OS-X.
+
+*Google Contacts*
+
+Author: Google
+
+Pros:
+
+* Intuitive user interface, that makes it easy to add, find and modify contacts.
+* Labels allow contacts relevant to a specific tag to be found easily.
+* Cloud integration allows contacts to be shared across multiple devices.
+
+Cons:
+
+* Limited additional functionality besides storing/finding contact information. Use case
+is thus limited.

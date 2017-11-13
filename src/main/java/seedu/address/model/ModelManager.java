@@ -3,18 +3,26 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.PersonDefaultComparator;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -24,10 +32,15 @@ public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     private final AddressBook addressBook;
+    private final SortedList<ReadOnlyPerson> sortedPersons;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
 
+    private Predicate<ReadOnlyPerson> lastFilterPredicate;
+    private Comparator<ReadOnlyPerson> lastSortComparator;
+
+    //@@author marvinchin
     /**
-     * Initializes a ModelManager with the given addressBook and userPrefs.
+     * Initializes a {@code ModelManager} with the given {@code addressBook} and {@code userPrefs}.
      */
     public ModelManager(ReadOnlyAddressBook addressBook, UserPrefs userPrefs) {
         super();
@@ -36,8 +49,14 @@ public class ModelManager extends ComponentManager implements Model {
         logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
 
         this.addressBook = new AddressBook(addressBook);
-        filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        sortedPersons = new SortedList<>(this.addressBook.getPersonList());
+        filteredPersons = new FilteredList<>(sortedPersons);
+        // To avoid having to re-sort upon every change in filter, we first sort the list before applying the filter
+        // This was we only need to re-sort when there is a change in the backing person list
+        sortPersons(new PersonDefaultComparator());
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
     }
+    //@@author
 
     public ModelManager() {
         this(new AddressBook(), new UserPrefs());
@@ -72,14 +91,83 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author marvinchin
+    @Override
+    public synchronized void addPersons(Collection<ReadOnlyPerson> persons) {
+        for (ReadOnlyPerson person : persons) {
+            try {
+                addressBook.addPerson(person);
+            } catch (DuplicatePersonException e) {
+                logger.info("Person already in address book: " + person.toString());
+                continue;
+            }
+        }
+
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        indicateAddressBookChanged();
+    }
+
+    //@@author sarahnzx
+    @Override
+    public void removeTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException {
+        for (int i = 0; i < addressBook.getPersonList().size(); i++) {
+            ReadOnlyPerson oldPerson = addressBook.getPersonList().get(i);
+            Person newPerson = new Person(oldPerson);
+            Set<Tag> newTags = newPerson.getTags();
+            newTags.remove(tag);
+            newPerson.setTags(newTags);
+            addressBook.updatePerson(oldPerson, newPerson);
+        }
+    }
+    //@@author
+
     @Override
     public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException {
         requireAllNonNull(target, editedPerson);
-
+        indicatePersonAccessed(target);
         addressBook.updatePerson(target, editedPerson);
         indicateAddressBookChanged();
     }
+
+    //@@author keithsoc
+    @Override
+    public void toggleFavoritePerson(ReadOnlyPerson target, String type)
+            throws DuplicatePersonException, PersonNotFoundException {
+        requireAllNonNull(target, type);
+        addressBook.toggleFavoritePerson(target, type);
+        indicateAddressBookChanged();
+    }
+
+    //@@author marvinchin
+    @Override
+    public Index getPersonIndex(ReadOnlyPerson target) throws PersonNotFoundException {
+        int zeroBasedIndex = filteredPersons.indexOf(target);
+        if (zeroBasedIndex == -1) {
+            throw new PersonNotFoundException();
+        }
+        return Index.fromZeroBased(zeroBasedIndex);
+    }
+
+    @Override
+    public void sortPersons(Comparator<ReadOnlyPerson> comparator) {
+        sortedPersons.setComparator(comparator);
+        lastSortComparator = comparator;
+    }
+
+    @Override
+    public void selectPerson(ReadOnlyPerson target) throws PersonNotFoundException {
+        indicatePersonAccessed(target);
+        // TODO(Marvin): Since IO operations are expensive, consider if we can defer this operation instead of saving
+        // on every access (which includes select)
+        indicateAddressBookChanged();
+    }
+
+    private void indicatePersonAccessed(ReadOnlyPerson target) throws PersonNotFoundException {
+        addressBook.indicatePersonAccessed(target);
+    }
+
+    //@@author
 
     //=========== Filtered Person List Accessors =============================================================
 
@@ -96,7 +184,21 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
+        lastFilterPredicate = predicate;
     }
+
+    //@@author marvinchin
+    @Override
+    public Model makeCopy() {
+        // initialize new UserPrefs for now as address book doesn't make use of it
+        ModelManager copy = new ModelManager(this.getAddressBook(), new UserPrefs());
+        copy.sortPersons(lastSortComparator);
+        copy.updateFilteredPersonList(lastFilterPredicate);
+
+        return copy;
+    }
+
+    //@@author
 
     @Override
     public boolean equals(Object obj) {
