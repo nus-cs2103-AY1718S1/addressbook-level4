@@ -12,8 +12,6 @@ import java.util.Objects;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
-import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.events.ui.UpdateChangeEvent;
 import seedu.address.model.meeting.Meeting;
 import seedu.address.model.meeting.ReadOnlyMeeting;
 import seedu.address.model.meeting.UniqueMeetingList;
@@ -159,20 +157,21 @@ public class AddressBook implements ReadOnlyAddressBook {
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
 
-//        editPersonOfMeeting(target, editedPerson);
+    //    editPersonOfMeeting(target, editedPerson);
         persons.setPerson(target, editedPerson);
     }
     //@@author Melvin-leo
-//
-//    /**
-//     * Handle the edited person of persons list in the meeting list
-//     * @param target
-//     * @param editedReadOnlyPerson
-//     */
-//    public void editPersonOfMeeting(ReadOnlyPerson target, ReadOnlyPerson editedReadOnlyPerson) {
-//        meetings.editPerson(target, editedReadOnlyPerson);
-//        EventsCenter.getInstance().post(new UpdateChangeEvent());
-//    }
+    /**
+     * Handle the edited person of persons list in the meeting list
+     * @param target
+     * @param editedReadOnlyPerson
+     */
+    /*
+    public void editPersonOfMeeting(ReadOnlyPerson target, ReadOnlyPerson editedReadOnlyPerson) {
+        meetings.editPerson(target, editedReadOnlyPerson);
+        EventsCenter.getInstance().post(new UpdateChangeEvent());
+    }
+    */
     //@@author
 
     /**
@@ -199,7 +198,7 @@ public class AddressBook implements ReadOnlyAddressBook {
             throw new MeetingBeforeCurrDateException();
         }
 
-        // syncMasterTagListWith(editedMeeting);
+         syncMasterTagListWith(editedMeeting);
         // TODO: the tags master list will be updated even though the below line fails.
         meetings.setMeeting(target, editedMeeting);
     }

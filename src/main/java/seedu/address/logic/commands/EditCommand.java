@@ -135,7 +135,7 @@ public class EditCommand extends UndoableCommand {
                     assert false : "Error in deleting first item";
                 }
                 int endListSize = lastShownMeetingList.size();
-                if (initialListSize == endListSize){
+                if (initialListSize == endListSize) {
                     break;
                 }
             }

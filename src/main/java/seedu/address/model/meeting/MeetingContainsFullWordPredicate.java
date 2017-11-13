@@ -32,7 +32,7 @@ public class MeetingContainsFullWordPredicate implements Predicate<ReadOnlyMeeti
 
     @Override
     public boolean test(ReadOnlyMeeting meeting) {
-        return (personListContainsFullWord(keywords.get(0),meeting.getPersonsMeet()));
+        return (personListContainsFullWord(keywords.get(0), meeting.getPersonsMeet()));
     }
 
     @Override

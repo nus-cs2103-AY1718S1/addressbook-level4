@@ -69,7 +69,7 @@ public class DeleteCommand extends UndoableCommand {
                 assert false : "Index out of bounds";
             }
             int endListSize = lastShownMeetingList.size();
-            if (initialListSize == endListSize){
+            if (initialListSize == endListSize) {
                 break;
             }
         }
