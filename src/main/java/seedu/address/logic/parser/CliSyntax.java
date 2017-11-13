@@ -2,6 +2,8 @@ package seedu.address.logic.parser;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -28,6 +30,7 @@ public class CliSyntax {
     //@@author Juxarius
     public static final Set<Prefix> PREFIXES_PERSON = new HashSet<>(Arrays.asList(
             PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_DOB, PREFIX_GENDER));
-    public static final Prefix[] PREFIXES_INSURANCE = {PREFIX_NAME, PREFIX_OWNER, PREFIX_INSURED, PREFIX_BENEFICIARY,
-            PREFIX_PREMIUM, PREFIX_CONTRACT_FILE_NAME, PREFIX_SIGNING_DATE, PREFIX_EXPIRY_DATE};
+    public static final List<Prefix> PREFIXES_INSURANCE = new LinkedList<>(Arrays.asList(
+            PREFIX_NAME, PREFIX_OWNER, PREFIX_INSURED, PREFIX_BENEFICIARY,
+            PREFIX_PREMIUM, PREFIX_CONTRACT_FILE_NAME, PREFIX_SIGNING_DATE, PREFIX_EXPIRY_DATE));
 }
