@@ -1,0 +1,124 @@
+= Ark - Test Script
+:toc:
+:toc-title:
+:toc-placement: preamble
+:sectnums:
+:imagesDir: images
+:stylesDir: stylesheets
+:experimental:
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+endif::[]
+:repoURL: https://github.com/CS2103AUG2017-T16-B1/main/tree/master
+
+By: `Team T16-B1`      Since: `Sept 2017`      Licence: `MIT`
+
+== Introduction
+Ark is a parcel delivery management system to help delivery companies manage their parcels and their
+deliveries. This test script is used help testers perform manual testing of Ark.
+
+== Quick Start
+
+
+
+== Features to Test
+
+
+
+=== Startup Test
+
+We have implemented some features that triggered automatically on startup.
+
+==== Manual Testing
+
+*Description:* Startup automatically updates the status of parcels according to their date in Gui. +
+*Input:* - +
+*Expected output:* Download a new copy of the sample data. Check that the parcels in the newly downloaded
+copy have had their Status updated in the running instance of Ark. (Update for PENDING and OVERDUE)
+
+*Description:* Startup also saves the updated Status into the main storage file. +
+*Input:* - +
+*Expected output:* Open the original file that you used as the storage of this running instance.
+Observe that the parcels in the save file will also updated Status. +
+
+*Description:* Backup file stores the originals. +
+*Input:* The backup file will be called `[T16-B1][Ark]SampleData.xml-backup.xml`. It is in the same directory
+ as your main storage file. Open this file. +
+*Expected output:* Observe that the parcels are not updated. Also observe that it is the same
+as the new storage file that you had downloaded previously.
+
+*Description:* Backup file does not backup if there is no storage file to read. +
+*Input:* (Copy your Ark.jar into an empty folder (without any save files). +
+*Expected output:* No backup is created. +
+
+=== Import Command
+
+Command format: `import (FILE_NAME)`. e.g. `import ark_save` +
+Description: This command allows you to add multiple parcels from a valid Ark storage file that is stored
+ in the `./data/import/` directory. e.g. `import ark_save` will import `./data/import/ark_save.xml`. +
+Presently, Ark only supports `.xml` storage files in format. +
+
+Before you use test command, copy the following sample `.xml` files into Ark: +
+
+* [T16-B1][Ark]ark_save.xml
+* [T16-B1][Ark]empty.xml
+* [T16-B1][Ark]notXmlFormatAddressBook.xml
+
+==== Manual Testing
+
+*Description:* Regular import. +
+*Input:* `import ark_save` +
+*Expected output:* Ark should add the new parcels into the running instance of Ark. Duplicate parcels are ignored.
+Duplicate parcels are parcels with the same details (every detail except Status and Tag is used for comparison).
+Non-duplicate parcels are added. Ark should display of parcels added and parcels that are not added in the results box. +
+
+*Description:*  Import the save file (will contain duplicate parcels now). +
+*Input:* `import [T16-B1][Ark]ark_save` +
+*Expected output:* Ark should warn you that all parcels in the save file are duplicate parcels. Nothing happens. +
+
+*Description:* Importing an empty save file +
+*Input:* `import [T16-B1][Ark]empty` +
+*Expected output:* Ark should warn you that the file you want to import is empty.
+
+*Description:* Importing a empty file that is not in a valid Ark save file format+
+*Input:* `import [T16-B1][Ark]notXmlFormatArk` +
+*Expected output:* Ark should give you details on how the import command should be used and inform you that
+the file is not in a valid format. +
+
+*Description:* Appending .xml to the file +
+*Input:* `import [T16-B1][Ark]ark_save.xml` +
+*Expected output:* Ark should give you details on how the import command should be used and inform you that
+ the file should be a valid xml storage file that follows a naming convention of only underscores and
+ alphanumeric characters. +
+
+*Description:* Importing a missing file. +
+*Input:* `import random` +
+*Expected output:* Ark should inform you that the file cannot be found. +
+
+*Description:* Importing a file with non-alphanumeric characters +
+*Input:* `import ../hi` +
+*Expected output:* Ark should give you details on how the import command should be used and inform you that
+the file should be a valid xml storage file that follows a naming convention of only underscores and
+alphanumeric characters. +
+
+*Description:* Undo import command +
+*Input:* `undo` +
+*Expected output:* Previously imported files should be removed.
+
+*Description:* Redo import command +
+*Input:* `redo` +
+*Expected output:* Redo previous command import command.
+
+*Description:* Import command removes selection of previous panel +
+*Input:* `undo` -> `select (any valid index)` -> `import [T16-B1][Ark]ark_save` +
+*Expected output:* Import command removes the selection in the list but browser panel remains unchanged.
+
+
+
+
+
+
+
+
+
