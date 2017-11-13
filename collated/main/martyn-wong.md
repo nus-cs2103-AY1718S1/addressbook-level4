@@ -1,4 +1,26 @@
 # martyn-wong
+###### \java\seedu\address\commons\core\index\Selection.java
+``` java
+/**
+ * To get or set the selection state of the application
+ */
+public class Selection {
+
+    private static boolean isPersonSelected = false;
+
+    public static void setPersonSelected() {
+        isPersonSelected = true;
+    }
+
+    public static void setPersonNotSelected() {
+        isPersonSelected = false;
+    }
+
+    public static boolean getSelectionStatus() {
+        return isPersonSelected;
+    }
+}
+```
 ###### \java\seedu\address\commons\events\ui\MapPersonEvent.java
 ``` java
 /**
@@ -35,7 +57,7 @@ public class MapCommand extends UndoableCommand {
     public static final String MESSAGE_TEMPLATE = COMMAND_WORD + " INDEX";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Shows the address of person on Google Maps "
             + "identified by the index number used in the last person listing. "
-            + "Parameters: INDEX"
+            + "Parameters: INDEX "
             + "Example: " + COMMAND_WORD + " 1 ";
     public static final String MESSAGE_MAP_SHOWN_SUCCESS = "Map Display Successful! Address of: %1$s";
 
@@ -47,7 +69,12 @@ public class MapCommand extends UndoableCommand {
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
+
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+
+        if (Selection.getSelectionStatus() == false && index.getOneBased() <= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_PERSON_NOT_SELECTED);
+        }
 
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
@@ -96,8 +123,15 @@ public class SearchCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() {
+    public CommandResult execute() throws CommandException {
         model.updateFilteredPersonList(predicate);
+
+        int searchResultsCount = model.getFilteredPersonList().size();
+
+        if (searchResultsCount != NO_RESULTS) {
+            model.recordSearchHistory();
+        }
+
         return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
     }
 
@@ -218,6 +252,12 @@ public class PersonContainsKeywordsPredicate implements Predicate<ReadOnlyPerson
     }
 
 }
+```
+###### \java\seedu\address\ui\BrowserPanel.java
+``` java
+    public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/search?safe=off&q=";
+    public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
+    private static final String GOOGLE_MAPS_URL_PREFIX = "https://www.google.com.sg/maps?safe=off&q=";
 ```
 ###### \java\seedu\address\ui\BrowserPanel.java
 ``` java
