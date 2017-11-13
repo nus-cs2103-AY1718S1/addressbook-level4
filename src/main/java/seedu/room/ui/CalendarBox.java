@@ -322,7 +322,7 @@ public class CalendarBox {
     /**
      * Move the month back by one. Repopulate the calendar with the correct dates.
      */
-    private void previousMonth() {
+    public void previousMonth() {
         currentYearMonth = currentYearMonth.minusMonths(1);
         populateCalendar(currentYearMonth, logic.getFilteredEventList());
     }
@@ -334,7 +334,7 @@ public class CalendarBox {
     /**
      * Move the month forward by one. Repopulate the calendar with the correct dates.
      */
-    private void nextMonth() {
+    public void nextMonth() {
         currentYearMonth = currentYearMonth.plusMonths(1);
         populateCalendar(currentYearMonth, logic.getFilteredEventList());
     }
