@@ -30,8 +30,8 @@ public class AddEventTagCommandParser {
         }
 
         try {
-            String name = argMultimap.getValue(PREFIX_DAY).get();
-            String location = argMultimap.getValue(PREFIX_DAY).get();
+            String name = argMultimap.getValue(PREFIX_NAME).get();
+            String location = argMultimap.getValue(PREFIX_LOC).get();
             Day day = ParserUtil.parseDay(argMultimap.getValue(PREFIX_DAY)).get();
             Time startTime = ParserUtil.parseTime(argMultimap.getValue(PREFIX_START_TIME)).get();
             Time endTime = ParserUtil.parseTime(argMultimap.getValue(PREFIX_END_TIME)).get();

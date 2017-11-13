@@ -3,10 +3,7 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.Collections;
-import java.util.Objects;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -160,7 +157,11 @@ public class Person implements ReadOnlyPerson {
     }
 
     public void addEventTag(Tag event) {
-        Set<Tag> tagSet = getTags();
+        Set<Tag> tags = getTags();
+        Set<Tag> tagSet = new HashSet<Tag>();
+        for (Tag t : tags) {
+            tagSet.add(t);
+        }
         tagSet.add(event);
         setTags(tagSet);
     }
