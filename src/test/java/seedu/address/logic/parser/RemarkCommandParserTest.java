@@ -8,10 +8,13 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailur
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
+import java.lang.reflect.Method;
+
 import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.RemarkCommand;
+import seedu.address.model.ModelManager;
 import seedu.address.model.person.Remark;
 
 public class RemarkCommandParserTest {
@@ -50,13 +53,21 @@ public class RemarkCommandParserTest {
 
     @Test
     public void parseArgumentsIndexInArgumentsReturnsArguments() throws Exception {
+        Method setLastRolodexSize = ModelManager.class.getDeclaredMethod("setLastRolodexSize", Integer.TYPE);
+        setLastRolodexSize.setAccessible(true);
+        setLastRolodexSize.invoke(null, 1);
         assertEquals(" 1 r/someStringV4lue", RemarkCommandParser.parseArguments("rmk", "1someStringV4lue"));
+        setLastRolodexSize.invoke(null, 8);
         assertEquals(" 8 r/someStringV4lue", RemarkCommandParser.parseArguments("rmk", "8someStringV4lue"));
     }
 
     @Test
     public void parseArgumentsIndexInCommandWordReturnsArguments() throws Exception {
+        Method setLastRolodexSize = ModelManager.class.getDeclaredMethod("setLastRolodexSize", Integer.TYPE);
+        setLastRolodexSize.setAccessible(true);
+        setLastRolodexSize.invoke(null, 1);
         assertEquals(" 1 r/", RemarkCommandParser.parseArguments("rmk1", ""));
+        setLastRolodexSize.invoke(null, 7);
         assertEquals(" 7 r/", RemarkCommandParser.parseArguments("rmk7", ""));
     }
 

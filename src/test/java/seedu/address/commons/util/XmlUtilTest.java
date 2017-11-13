@@ -84,7 +84,6 @@ public class XmlUtilTest {
         XmlUtil.saveDataToFile(TEMP_FILE, dataToWrite);
         XmlSerializableRolodex dataFromFile = XmlUtil.getDataFromFile(TEMP_FILE, XmlSerializableRolodex.class);
         assertEquals((new Rolodex(dataToWrite)).toString(), (new Rolodex(dataFromFile)).toString());
-        //TODO: use equality instead of string comparisons
 
         RolodexBuilder builder = new RolodexBuilder(new Rolodex());
         dataToWrite = new XmlSerializableRolodex(

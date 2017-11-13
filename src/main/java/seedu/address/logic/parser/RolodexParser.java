@@ -3,6 +3,7 @@ package seedu.address.logic.parser;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,8 +18,8 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
-import seedu.address.logic.commands.NewCommand;
-import seedu.address.logic.commands.OpenCommand;
+import seedu.address.logic.commands.NewRolodexCommand;
+import seedu.address.logic.commands.OpenRolodexCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.SelectCommand;
@@ -39,7 +40,7 @@ public class RolodexParser {
      */
     private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
 
-    private Suggestion suggestion;
+    private Optional<Suggestion> suggestion = Optional.empty();
 
     /**
      * Parses user input into command for execution.
@@ -56,11 +57,11 @@ public class RolodexParser {
 
         String commandWord = matcher.group("commandWord").toLowerCase();
         String arguments = matcher.group("arguments");
-        if (suggestion != null && Suggestion.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
-            commandWord = suggestion.getClosestCommandWord();
-            arguments = suggestion.getFormattedArgs(commandWord);
+        if (suggestion.isPresent() && Suggestion.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
+            commandWord = suggestion.get().getClosestCommandWord();
+            arguments = suggestion.get().getFormattedArgs(commandWord);
         }
-        suggestion = null;
+        suggestion = Optional.empty();
 
         try {
             if (AddCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
@@ -89,10 +90,10 @@ public class RolodexParser {
                 return new UndoCommand();
             } else if (RedoCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
                 return new RedoCommand();
-            } else if (OpenCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
-                return new OpenCommandParser().parse(arguments);
-            } else if (NewCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
-                return new NewCommandParser().parse(arguments);
+            } else if (OpenRolodexCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
+                return new OpenRolodexCommandParser().parse(arguments);
+            } else if (NewRolodexCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
+                return new NewRolodexCommandParser().parse(arguments);
             } else if (RemarkCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
                 return new RemarkCommandParser().parse(arguments);
             }  else if (StarWarsCommand.COMMAND_WORD_ABBREVIATIONS.contains(commandWord)) {
@@ -118,11 +119,11 @@ public class RolodexParser {
      */
     private void handleSuggestion(String commandWord, String arguments)
             throws SuggestibleParseException, ParseException {
-        suggestion = new Suggestion(commandWord, arguments);
-        if (suggestion.isSuggestible()) {
-            throw new SuggestibleParseException(suggestion.getPromptMessage());
+        suggestion = Optional.of(new Suggestion(commandWord, arguments));
+        if (suggestion.get().isSuggestible()) {
+            throw new SuggestibleParseException(suggestion.get().getPromptMessage());
         }
-        suggestion = null;
+        suggestion = Optional.empty();
         throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
     }
 
@@ -137,11 +138,11 @@ public class RolodexParser {
      */
     private void handleSuggestion(String commandWord, String arguments, ParseArgsException pae)
             throws SuggestibleParseException, ParseException {
-        suggestion = new Suggestion(commandWord, arguments);
-        if (suggestion.isSuggestible()) {
-            throw new SuggestibleParseException(suggestion.getPromptMessage());
+        suggestion = Optional.of(new Suggestion(commandWord, arguments));
+        if (suggestion.get().isSuggestible()) {
+            throw new SuggestibleParseException(suggestion.get().getPromptMessage());
         }
-        suggestion = null;
+        suggestion = Optional.empty();
         throw new ParseException(pae.getMessage(), pae);
     }
 

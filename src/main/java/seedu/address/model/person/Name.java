@@ -21,6 +21,7 @@ public class Name {
      * otherwise " " (a blank string) becomes a valid input.
      */
     public static final String NAME_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
+    public static final String NAME_REPLACEMENT_REGEX = "[^A-Za-z0-9 ]";
 
     public final String fullName;
 

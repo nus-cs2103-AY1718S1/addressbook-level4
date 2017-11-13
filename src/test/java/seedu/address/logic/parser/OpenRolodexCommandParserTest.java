@@ -6,39 +6,39 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSucces
 
 import org.junit.Test;
 
-import seedu.address.logic.commands.OpenCommand;
+import seedu.address.logic.commands.OpenRolodexCommand;
 
-public class OpenCommandParserTest {
+public class OpenRolodexCommandParserTest {
 
-    private OpenCommandParser parser = new OpenCommandParser();
+    private OpenRolodexCommandParser parser = new OpenRolodexCommandParser();
 
     @Test
     public void parseEmptyArgThrowsParseException() {
         assertParseFailure(parser, "     ",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, OpenCommand.MESSAGE_USAGE));
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, OpenRolodexCommand.MESSAGE_USAGE));
     }
 
     @Test
     public void parseNonEmptyArgInvalidFilePathThrowsParseException() {
         // needs a root directory as reference for anchored paths (e.g. ./x.rldx)
         assertParseFailure(parser, "default.rldx",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, OpenCommand.MESSAGE_USAGE));
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, OpenRolodexCommand.MESSAGE_USAGE));
         assertParseFailure(parser, "random",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, OpenCommand.MESSAGE_USAGE));
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, OpenRolodexCommand.MESSAGE_USAGE));
         assertParseFailure(parser, "random.rldx",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, OpenCommand.MESSAGE_USAGE));
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, OpenRolodexCommand.MESSAGE_USAGE));
     }
 
     @Test
     public void parseFilePathAllowsSpacing() {
         // spacing should be allowed for directories
         String filePathWithSpacing = "directory with/some spacings/default.rldx";
-        OpenCommand expectedOpenCommand = new OpenCommand(filePathWithSpacing);
-        assertParseSuccess(parser, filePathWithSpacing, expectedOpenCommand);
+        OpenRolodexCommand expectedOpenRolodexCommand = new OpenRolodexCommand(filePathWithSpacing);
+        assertParseSuccess(parser, filePathWithSpacing, expectedOpenRolodexCommand);
 
-        filePathWithSpacing = "56 75/22 3456g 45642345/y5/ bhh3 57y357/ 65467y5 - 0 o1";
-        expectedOpenCommand = new OpenCommand(filePathWithSpacing);
-        assertParseSuccess(parser, filePathWithSpacing, expectedOpenCommand);
+        filePathWithSpacing = "56 75/22 3456g 45642345/y5/ bhh3 57y357/ 65467y5 - 0 o1.rldx";
+        expectedOpenRolodexCommand = new OpenRolodexCommand(filePathWithSpacing);
+        assertParseSuccess(parser, filePathWithSpacing, expectedOpenRolodexCommand);
     }
 
     @Test
@@ -47,7 +47,7 @@ public class OpenCommandParserTest {
         String filePathWithBackSlashes = "C:\\Users\\Rolodex\\Downloads\\default.rldx";
         String filePathWithForwardSlashes = "C:/Users/Rolodex/Downloads/default.rldx";
 
-        OpenCommand expectedOpenCommand = new OpenCommand(filePathWithForwardSlashes);
-        assertParseSuccess(parser, filePathWithBackSlashes, expectedOpenCommand);
+        OpenRolodexCommand expectedOpenRolodexCommand = new OpenRolodexCommand(filePathWithForwardSlashes);
+        assertParseSuccess(parser, filePathWithBackSlashes, expectedOpenRolodexCommand);
     }
 }

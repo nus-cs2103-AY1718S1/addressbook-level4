@@ -21,7 +21,7 @@ public class EmailCommandTest {
 
     /*
     This test is disabled because the Desktop class is not supported on Ubuntu
-    AppVeyor build succees, but Travis build fails because of that
+    AppVeyor build succeeds, but Travis build fails because of the above reason
     This test can be enabled on local (Windows or MacOS)
 
     @Test

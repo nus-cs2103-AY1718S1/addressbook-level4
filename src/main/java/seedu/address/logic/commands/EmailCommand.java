@@ -11,8 +11,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -25,7 +27,7 @@ public class EmailCommand extends Command {
     public static final Set<String> COMMAND_WORD_ABBREVIATIONS =
             new HashSet<>(Arrays.asList(COMMAND_WORD, "mail", "mailto", "m"));
     public static final String COMMAND_HOTKEY = "Ctrl+M";
-    public static final String FORMAT = "email INDEX";
+    public static final String FORMAT = "email INDEX [s/SUBJECT]";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Launch the mail composing window of the default mail client.\n"
@@ -60,6 +62,7 @@ public class EmailCommand extends Command {
             try {
                 mailtoUri = new URI("mailto:" + recipientEmailAddress + "?subject=" + subject);
                 desktop.mail(mailtoUri);
+                selectRecipient(targetIndex);
             } catch (URISyntaxException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -78,5 +81,12 @@ public class EmailCommand extends Command {
                 || (other instanceof EmailCommand // instanceof handles nulls
                 && this.targetIndex.equals(((EmailCommand) other).targetIndex))
                 && this.subject.equals(((EmailCommand) other).subject); // state check
+    }
+
+    /**
+     * Selects the {@code recipient} for the contact details to be displayed
+     */
+    private void selectRecipient(Index index) {
+        EventsCenter.getInstance().post(new JumpToListRequestEvent(index));
     }
 }

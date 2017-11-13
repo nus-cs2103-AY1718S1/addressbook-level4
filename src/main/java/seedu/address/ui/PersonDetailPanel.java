@@ -59,7 +59,7 @@ public class PersonDetailPanel extends UiPart<Region> {
     }
 
     /**
-     * Displays an empty panel
+     * Displays an empty panel.
      */
     private void showEmptyPanel() {
         name.setText("");
@@ -74,28 +74,18 @@ public class PersonDetailPanel extends UiPart<Region> {
     }
 
     /**
-     * Shows the details of the person on the panel
+     * Shows the details of the person on the panel.
      */
     private void showPersonDetails(ReadOnlyPerson person) {
-
-        initial.setText(Avatar.getInitial(person.getName().fullName));
-        avatar.setFill(Paint.valueOf(Avatar.getColor(person.getName().fullName)));
-
+        setAvatar(person);
         setTextFields(person);
         setTags(person);
         showIcons();
     }
 
-    private void hideIcons() {
-        iconPhone.setVisible(false);
-        iconEmail.setVisible(false);
-        iconAddress.setVisible(false);
-    }
-
-    private void showIcons() {
-        iconPhone.setVisible(true);
-        iconEmail.setVisible(true);
-        iconAddress.setVisible(true);
+    private void setAvatar(ReadOnlyPerson person) {
+        initial.setText(Avatar.getInitial(person.getName().fullName));
+        avatar.setFill(Paint.valueOf(Avatar.getColor(person.getName().fullName)));
     }
 
     private void setTextFields(ReadOnlyPerson person) {
@@ -121,8 +111,20 @@ public class PersonDetailPanel extends UiPart<Region> {
         }
     }
 
+    private void hideIcons() {
+        iconPhone.setVisible(false);
+        iconEmail.setVisible(false);
+        iconAddress.setVisible(false);
+    }
+
+    private void showIcons() {
+        iconPhone.setVisible(true);
+        iconEmail.setVisible(true);
+        iconAddress.setVisible(true);
+    }
+
     /**
-     * Shows person details on the panel when a person is selected
+     * Shows person details on the panel when a person is selected.
      */
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
@@ -131,7 +133,7 @@ public class PersonDetailPanel extends UiPart<Region> {
     }
 
     /**
-     * Updates the panel when the details of the selected person is changed
+     * Updates the panel when the details of the selected person is changed.
      */
     @Subscribe
     private void handlePersonDetailsChangedEvent(PersonEditedEvent event) {
@@ -141,6 +143,7 @@ public class PersonDetailPanel extends UiPart<Region> {
 
     @Subscribe
     private void handlePersonListClearedEvent(ClearPersonDetailPanelRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
         showEmptyPanel();
     }
 }

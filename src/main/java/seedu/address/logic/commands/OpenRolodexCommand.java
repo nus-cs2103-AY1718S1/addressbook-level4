@@ -12,16 +12,17 @@ import seedu.address.logic.commands.exceptions.CommandException;
 /**
  * Opens an existing Rolodex in a different directory.
  */
-public class OpenCommand extends Command {
+public class OpenRolodexCommand extends Command {
 
     public static final String COMMAND_WORD = "open";
     public static final Set<String> COMMAND_WORD_ABBREVIATIONS =
             new HashSet<>(Arrays.asList(COMMAND_WORD, "o", "cd", "ls", "<"));
     public static final String COMMAND_HOTKEY = "Ctrl+O";
+    public static final String FORMAT = "open FILEPATH";
 
     public static final String MESSAGE_OPENING = "Opening file: `%1$s`";
     public static final String MESSAGE_NOT_EXIST = "Unable to find `%1$s`. "
-            + "Use the `" + NewCommand.COMMAND_WORD + "` command for creating a new file.";
+            + "Use the `" + NewRolodexCommand.COMMAND_WORD + "` command for creating a new file.";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": "
             + "Reloads the application using the rolodex supplied at the given file path.\n"
             + "Parameters: [FILEPATH]\n"
@@ -29,7 +30,7 @@ public class OpenCommand extends Command {
 
     private final String filePath;
 
-    public OpenCommand(String filePath) {
+    public OpenRolodexCommand(String filePath) {
         this.filePath = filePath;
     }
 
@@ -46,7 +47,7 @@ public class OpenCommand extends Command {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof OpenCommand // instanceof handles nulls
-                && this.filePath.equals(((OpenCommand) other).filePath)); // state check
+                || (other instanceof OpenRolodexCommand // instanceof handles nulls
+                && this.filePath.equals(((OpenRolodexCommand) other).filePath)); // state check
     }
 }

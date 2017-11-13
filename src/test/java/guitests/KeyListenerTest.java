@@ -13,12 +13,14 @@ import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.EmailCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
-import seedu.address.logic.commands.NewCommand;
-import seedu.address.logic.commands.OpenCommand;
+import seedu.address.logic.commands.NewRolodexCommand;
+import seedu.address.logic.commands.OpenRolodexCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 
@@ -66,11 +68,11 @@ public class KeyListenerTest extends RolodexGuiTest {
     }
 
     @Test
-    public void executeKeyEventForOpenCommand() {
+    public void executeKeyEventForOpenRolodexCommand() {
         KeyCodeCombination openKeyCode = (KeyCodeCombination) KeyCombination.valueOf("Ctrl+O");
 
         guiRobot.push(openKeyCode);
-        assertEquals(OpenCommand.COMMAND_WORD + " ", getCommandBox().getInput());
+        assertEquals(OpenRolodexCommand.FORMAT, getCommandBox().getInput());
     }
 
     @Test
@@ -78,7 +80,7 @@ public class KeyListenerTest extends RolodexGuiTest {
         KeyCodeCombination newKeyCode = (KeyCodeCombination) KeyCombination.valueOf("Ctrl+N");
 
         guiRobot.push(newKeyCode);
-        assertEquals(NewCommand.COMMAND_WORD + " ", getCommandBox().getInput());
+        assertEquals(NewRolodexCommand.FORMAT, getCommandBox().getInput());
     }
 
     @Test
@@ -144,7 +146,7 @@ public class KeyListenerTest extends RolodexGuiTest {
 
     @Test
     public void executeKeyEventForAddCommand() {
-        KeyCodeCombination addCommandKeyCode = (KeyCodeCombination) KeyCombination.valueOf("Ctrl+A");
+        KeyCodeCombination addCommandKeyCode = (KeyCodeCombination) KeyCombination.valueOf("Ctrl+Equals");
 
         guiRobot.push(addCommandKeyCode);
         assertEquals(AddCommand.FORMAT, getCommandBox().getInput());
@@ -164,6 +166,27 @@ public class KeyListenerTest extends RolodexGuiTest {
         guiRobot.push(KeyCode.D);
         assertEquals("add n/a p/b e/c a/d", getCommandBox().getInput());
 
+        KeyCodeCombination shiftTab = new KeyCodeCombination(KeyCode.TAB, KeyCombination.SHIFT_DOWN);
+        guiRobot.push(shiftTab);
+        guiRobot.push(KeyCode.E);
+        assertEquals("add n/a p/b e/e a/d", getCommandBox().getInput());
+
+        guiRobot.push(shiftTab);
+        guiRobot.push(KeyCode.F);
+        assertEquals("add n/a p/f e/e a/d", getCommandBox().getInput());
+
+        guiRobot.push(shiftTab);
+        guiRobot.push(KeyCode.G);
+        assertEquals("add n/g p/f e/e a/d", getCommandBox().getInput());
+
+        guiRobot.push(shiftTab);
+        guiRobot.push(KeyCode.H);
+        assertEquals("add n/g p/f e/e a/h", getCommandBox().getInput());
+
+        guiRobot.push(KeyCode.TAB);
+        guiRobot.push(KeyCode.I);
+        assertEquals("add n/i p/f e/e a/h", getCommandBox().getInput());
+
     }
 
     @Test
@@ -178,14 +201,33 @@ public class KeyListenerTest extends RolodexGuiTest {
     }
 
     @Test
+    public void executeKeyEventForEmailCommand() {
+        KeyCodeCombination emailCommandKeyCode = (KeyCodeCombination) KeyCombination.valueOf("Ctrl+M");
+
+        guiRobot.push(emailCommandKeyCode);
+        assertEquals(EmailCommand.FORMAT, getCommandBox().getInput());
+
+        guiRobot.push(KeyCode.A);
+        assertEquals("email a", getCommandBox().getInput());
+    }
+
+    @Test
     public void executeKeyEventForDeleteCommand() {
-        KeyCodeCombination deleteCommandKeyCode = (KeyCodeCombination) KeyCombination.valueOf("Ctrl+Shift+D");
+        KeyCodeCombination deleteCommandKeyCode = (KeyCodeCombination) KeyCombination.valueOf("Ctrl+D");
 
         guiRobot.push(deleteCommandKeyCode);
         assertEquals(DeleteCommand.FORMAT, getCommandBox().getInput());
 
         guiRobot.push(KeyCode.A);
         assertEquals("delete a", getCommandBox().getInput());
+
+        deleteCommandKeyCode = (KeyCodeCombination) KeyCombination.valueOf("Ctrl+Minus");
+        guiRobot.push(deleteCommandKeyCode);
+        assertEquals(DeleteCommand.FORMAT, getCommandBox().getInput());
+
+        guiRobot.push(KeyCode.A);
+        assertEquals("delete a", getCommandBox().getInput());
+
     }
 
     @Test
@@ -199,6 +241,24 @@ public class KeyListenerTest extends RolodexGuiTest {
         assertEquals("find a", getCommandBox().getInput());
     }
 
+    @Test
+    public void executeKeyEventForRemarkCommand() {
+        KeyCodeCombination remarkCommandKeyCode = (KeyCodeCombination) KeyCombination.valueOf("Ctrl+R");
+
+        guiRobot.push(remarkCommandKeyCode);
+        assertEquals(RemarkCommand.FORMAT, getCommandBox().getInput());
+
+        guiRobot.push(KeyCode.A);
+        assertEquals("remark a r/REMARK", getCommandBox().getInput());
+
+        guiRobot.push(KeyCode.TAB);
+        guiRobot.push(KeyCode.B);
+        assertEquals("remark a r/b", getCommandBox().getInput());
+
+        guiRobot.push(KeyCode.TAB);
+        guiRobot.push(KeyCode.C);
+        assertEquals("remark c r/b", getCommandBox().getInput());
+    }
     @Test
     public void executeKeyEventForSelectCommand() {
         KeyCodeCombination selectCommandKeyCode = (KeyCodeCombination) KeyCombination.valueOf("Ctrl+S");
