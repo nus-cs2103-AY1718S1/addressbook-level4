@@ -1164,6 +1164,7 @@ image::LogicCommandClassDiagram_ScheduleCommands.png[width="800"]
 _Figure 4.14.1 : Structure of Schedule-related Commands in the Logic Component_
 
 ****
+
 *Event-Person Relationship* +
 
 Each time an `Event` is created, four other composite objects are created as well:
@@ -1174,6 +1175,7 @@ Each time an `Event` is created, four other composite objects are created as wel
 * `MemberList` stores a list of `Person` who is involved with the event and may be empty. Each element is synced to a `Person` in the master `UniquePersonList` in `AddressBook`.
 
 Each `Person` maintains its own `UniqueEventList` with each element synced to an `Event` in the master `UniqueEventList` in `AddressBook`. In otherwords, both object references each other.
+
 ****
 
 `UniqueEventList` functions as a List of `Events` where every element is unique and the uniqueness of an event is defined by its name, time and duration. If two different events have the same value for the three attributes, it is considered to be a duplicate. You can also check if an `Event` clashes with any of the events in `UniqueEventList`, by running the `hasClashes` function which returns true if a clash exist.
