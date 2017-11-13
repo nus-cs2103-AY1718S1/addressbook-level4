@@ -36,3 +36,10 @@ Role: Developer
 Responsibilities: Logic
 
 '''
+
+== Visrut Sudhakar
+image::visrutsudhakar.jpg[width="150", align="left"]
+{empty}[https://github.com/vsudhakar[github]]<<vsudhakar#, portfolio>>]
+
+Role: Developer
+Responsibilities: UI, Model

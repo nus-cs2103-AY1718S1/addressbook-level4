@@ -20,26 +20,31 @@ public class Avatar {
     public static final String DEFAULT_AVATAR_DIRECTORY = "avatars/";
     public static final String MESSAGE_AVATAR_CONSTRAINTS = "File path provided must point to a valid, readable image.";
 
+    private boolean defaultAvatar;
     private ObjectProperty<Image> avatarImage;
     private String avatarFilePath;
-    private String avatarFileName;
 
     public Avatar() {
         // Default object -> 'generic' avatar
-        this.avatarFilePath = MainApp.class.getResource(DEFAULT_AVATAR_IMAGE_PATH).getFile();
-        Logger.logMsg(Logger.DEBUG, "USING DEFAULT PATH: " + this.avatarFilePath);
+        /*this.avatarFilePath = MainApp.class.getResource(DEFAULT_AVATAR_IMAGE_PATH).toExternalForm();
+        System.out.println("USING DEFAULT PATH: " + this.avatarFilePath);
+        Logger.logMsg(Logger.DEBUG, "USING DEFAULT PATH: " + this.avatarFilePath);*/
+        this.avatarFilePath = "";
+        this.defaultAvatar = true;
     }
 
     public Avatar(String avatarFilePath) throws IllegalValueException {
         if (validFile(avatarFilePath)) {
             File imgFile = new File(avatarFilePath);
             this.avatarFilePath = avatarFilePath;
+            this.defaultAvatar = false;
         } else {
             throw new IllegalValueException(MESSAGE_AVATAR_CONSTRAINTS);
         }
     }
 
     public static String getDirectoryPath(String imageFile) {
+
         return DEFAULT_AVATAR_DIRECTORY + imageFile;
     }
 
@@ -53,8 +58,13 @@ public class Avatar {
      *
      */
     public void constructImageProperty() {
-        File imgFile = new File(this.avatarFilePath);
-        Image imgObj = new Image(imgFile.toURI().toString());
+        String resourcePath;
+        if (this.defaultAvatar) {
+            resourcePath = MainApp.class.getResource(DEFAULT_AVATAR_IMAGE_PATH).toString();
+        } else {
+            resourcePath = new File(this.avatarFilePath).toURI().toString();
+        }
+        Image imgObj = new Image(resourcePath);
         this.avatarImage = new SimpleObjectProperty<Image>(imgObj);
     }
 
