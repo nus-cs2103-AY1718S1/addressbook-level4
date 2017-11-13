@@ -765,9 +765,9 @@ to in-memory operations.
 // end::sort[]
 
 // tag::theme[]
-=== Enhancing User Interface and Theming Mechanism
+=== Enhancing User Interface
 
-==== Remove Window Decorations
+==== Removing Window Decorations
 
 To enhance our user's satisfaction with KayPoh, we improved the user interface by redesigning the color scheme and allowed theming for user to switch between two available themes.
 
@@ -903,7 +903,7 @@ To allow user to begin typing immediately upon application launch, we have to se
 Platform.runLater(() -> commandTextField.requestFocus());
 ----
 
-==== Theme Mechanism
+=== Theming Mechanism
 
 The theme mechanism is facilitated by a singleton class `UiTheme` which will be called inside the `MainWindow` constructor where it passes its `scene` into the `UiTheme` class.
 
