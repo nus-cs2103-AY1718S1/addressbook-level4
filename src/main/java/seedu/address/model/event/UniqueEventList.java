@@ -27,7 +27,7 @@ public class UniqueEventList implements Iterable<Event> {
     private final ObservableList<ReadOnlyEvent> mappedList = EasyBind.map(internalList, (event) -> event);
 
     /**
-     * Returns true if the list contains an equivalent person as the given argument.
+     * Returns true if the list contains an equivalent event as the given argument.
      */
     public boolean contains(ReadOnlyEvent toCheck) {
         requireNonNull(toCheck);
@@ -37,7 +37,7 @@ public class UniqueEventList implements Iterable<Event> {
     /**
      * Adds an event to the list.
      *
-     * @throws DuplicateEventException if the person to add is a duplicate of an existing person in the list.
+     * @throws DuplicateEventException if the person to add is a duplicate of an existing event in the list.
      */
     public void add(ReadOnlyEvent toAdd) throws DuplicateEventException {
         requireNonNull(toAdd);
@@ -45,28 +45,6 @@ public class UniqueEventList implements Iterable<Event> {
             throw new DuplicateEventException();
         }
         internalList.add(new Event(toAdd));
-    }
-
-    /**
-     * Replaces the event {@code target} in the list with {@code editedEvent}.
-     *
-     * @throws DuplicateEventException if the replacement is equivalent to another existing person in the list.
-     * @throws EventNotFoundException if {@code target} could not be found in the list.
-     */
-    public void setEvent(ReadOnlyEvent target, ReadOnlyEvent editedEvent)
-            throws DuplicateEventException, EventNotFoundException {
-        requireNonNull(editedEvent);
-
-        int index = internalList.indexOf(target);
-        if (index == -1) {
-            throw new EventNotFoundException();
-        }
-
-        if (!target.equals(editedEvent) && internalList.contains(editedEvent)) {
-            throw new DuplicateEventException();
-        }
-
-        internalList.set(index, new Event(editedEvent));
     }
 
     public void setEvent(UniqueEventList replacement) {
@@ -84,7 +62,7 @@ public class UniqueEventList implements Iterable<Event> {
     /**
      * Removes the equivalent event from the list.
      *
-     * @throws EventNotFoundException if no such person could be found in the list.
+     * @throws EventNotFoundException if no such event could be found in the list.
      */
     public boolean remove(ReadOnlyEvent toRemove) throws EventNotFoundException {
         requireNonNull(toRemove);
