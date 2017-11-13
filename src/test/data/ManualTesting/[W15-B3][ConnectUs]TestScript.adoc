@@ -1,15 +1,27 @@
 = Test Script for Manual Testing
+:toc:
+:toc-title:
+:toc-placement: preamble
+:sectnums:
+:imagesDir: images
+:stylesDir: stylesheets
+:experimental:
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+endif::[]
 
 == Loading the sample data
 
 ---
 
-. Download the `[W15-B3][ConnectUs]SampleData.xml` from the ManualTesting folder.
+. Download the file `[W15-B3][ConnectUs]SampleData.xml`.
 . Create a folder called `data` and place it on the same directory as the `[W15-B3][ConnectUs].jar` file.
 . Rename the `[W15-B3][ConnectUs]SampleData.xml` to `addressbook.xml` and place it inside the `data` folder.
 . Double click on the `[W15-B3][ConnectUs].jar` file to start our application.
 
-=== Results
+****
+*Results:*
 
 * In the *left most* column of our application, there should be 20 contact details appearing with indices from 1 to 20.
 * In the *middle* column there should be an empty form with the following fields:
@@ -26,30 +38,206 @@
     ** Call
     ** Share
 
-== Help
+****
 
+== Things to take note before starting the test
+. Ensure that your computer has an `internet connection`.
+. Ensure that you have a `QR Reader` mobile application installed in your phone.
+
+== Help
 . Type `help` on the command line on the top of our application with a blinking text cursor.
 . Click on the `Help` tab on the top left corner of our application and select the `Help` function.
 
-=== Results
+****
+*Results:*
 
 * Our user guide should pop up.
+****
 
 == Add a person
 
+=== Add Success
+
+1. Copy the following command onto the command line input: +
+`add n/Alice Tan p/12345678 e/alice@example.com a/13 Computing Drive t/Colleagues`
+
+****
+*Result:* +
+
+* The user should be successfully added into the contacts panel on the left with indices `21`
+
+****
+
+=== Add Duplicate Person
+
+. Copy the following command onto the command line input: +
+`add n/Alice Tan p/12345678 e/alice@example.com a/13 Computing Drive t/Colleagues`
+
+****
+*Result:* +
+
+* An error message will be displayed at the bottom of the input line indicating that `the person already exist`.
+
+****
+
+=== Add invalid phone number
+
+. Copy the following command onto the command line input: +
+`add n/Valid Name p/ invalid number e/testSubject1@example.com a/13 Computing Drive`
+
+****
+*Result:* +
+
+* An error message will be displayed at the bottom of the input line indicating that `The phone number can only contain numbers`.
+
+****
+
+=== Add invalid email
+
+. Copy the following command onto the command line input: +
+`add n/Valid Name p/ 12345678 e/invlaid email a/13 Computing Drive`
+
+****
+*Result:* +
+
+* An error message will be displayed at the bottom of the input line indicating that `The email address is invalid`.
+
+****
+
+
 == List all person
 
+
 == Edit a person
+
+=== Edit the name of the person
+. Copy the following command onto the command line input: +
+`edit 21 n/Bob Tan`
+
+****
+*Result:* +
+
+* Name of the contact in index 21 should have its name change to `Bob Tan`
+
+****
+
+=== Edit phone with invalid value
+. Copy the following command onto the command line input: +
+`edit 21 p/invalid num`
+
+****
+*Result:* +
+
+* An error message will be displayed at the bottom of the input line indicating that `The phone number can only contain numbers`.
+
+****
+
+=== Edit email with invalid value
+. Copy the following command onto the command line input: +
+`edit 21 e/invalid email`
+
+****
+*Result:* +
+
+* An error message will be displayed at the bottom of the input line indicating that `The email address is invalid`.
+
+****
+
+
+=== Edit name in the form field
+. Click on the contact at index 21
+. Enter the following into the text field for the name at the middle panel with `Alice Tan`.
+. Click the `Save` button at the bottom of the panel.
+
+****
+*Result:* +
+
+* Name of the contact in index 21 should have its name change to `Alice Tan`
+
+****
+
+=== Edit contact in the form field with invalid phone number
+. Click on the contact at index 21
+. Enter the following into the text field for the phone at the middle panel with `invalid number`
+. Click the `Save` button at the bottom of the panel.
+
+
+****
+*Result:* +
+
+* A pop up should appear indicating an `invalid Phone number`
+
+****
 
 == Find a person
 
 == Delete a person
+
+=== Delete contact with valid index number
+. Copy the following command onto the command line input: +
+`delete 1`
+****
+*Result:* +
+
+* The contact at index 1 in the contact list panel should be deleted
+****
+
+=== Delete contact with invalid positive index number
+. Copy the following command onto the command line input: +
+`delete 999`
+****
+*Result:* +
+
+* An error message should appear indicating that the index number is invalid
+
+****
+
+=== Delete contact with invalid negative index number
+. Copy the following command onto the command line input: +
+`delete -1`
+****
+*Result:* +
+
+* An error message should appear indicating that the index number is invalid and should be a positive number
+
+****
 
 == Displaying Contact Location
 
 == Email a person
 
 == Selecting a person
+
+=== Select person with valid index number
+. Copy the following command onto the command line input: +
+`select 20`
+****
+*Result:* +
+
+* The contact at index 20 in the contact list panel should have a thin blue line around it
+
+****
+
+=== Select person with positive invalid index number
+. Copy the following command onto the command line input: +
+`select 999`
+****
+*Result:* +
+
+* An error message should appear indicating that the index number is invalid
+
+****
+
+=== Select person with negative invalid index number
+. Copy the following command onto the command line input: +
+`select -1`
+****
+*Result:* +
+
+* An error message should appear indicating that the index number is invalid and should be a positive number
+
+****
+
 
 == History of commands entered
 
@@ -59,11 +247,71 @@
 
 == Sort contacts in the addressbook
 
+=== Sort the name of contact in alphabetical order
+
+. Copy the following command onto the command line input: +
+`sort`
+
+****
+*Result:* +
+
+* The contact list should be sorted in alphabetical order
+
+****
+
 == Filter list by tag
 
 == Importing Contacts from external source
 
+=== Import contacts with all valid attributes successfully
+. Download the file `testImport1.vcf` from the ManualTesting folder
+. In the application, copy the following command onto the command line input: +
+`import testImport1.vcf`
+
+****
+*Result:* +
+
+* The contacts in the file should be successfully added onto the addressbook at the bottom of the list
+
+****
+
+=== Importing contacts with some missing attributes successfully.
+. Download the file `testImport2.vcf` from the ManualTesting folder
+. In the application, copy the following command onto the command line input: +
+`import testImport2.vcf`
+
+****
+*Result:* +
+
+* The contacts in the file should be successfully added onto the addressbook at the bottom of the list, with the tags
+`containsDummyemail` and `containsDummyPhone`.
+
+****
+
+=== Importing contacts with invalid file name.
+. Copy the following command onto the command line input: +
+`import invalidFile.vcf`
+
+****
+*Result:* +
+
+* An error message should occur indicating that the file name is incorrect or file is not found.
+
+****
+
 == Exporting contacts to external source
+
+=== Exporting all contacts in the list successfully
+. Copy the following command onto the command line input: +
+`export`
+
+****
+*Result:* +
+
+* A file called `output.vcf` should be created in the same directory as the `[W15-B3][ConnectUs].jar`
+* You can open the file with any text editor to check if all the contacts are listed inside the file in a vCard format.
+
+****
 
 == Change color theme of our application
 
