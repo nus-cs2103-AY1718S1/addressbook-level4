@@ -18,13 +18,12 @@ public abstract class Phone {
 
     /**
      * Validates given phone number. Only office phone is optional.
-     *
      * @throws IllegalValueException if given phone string is invalid.
      */
     protected Phone(String phone) throws IllegalValueException {
         requireNonNull(phone);
         String trimmedPhone = phone.trim();
-        if (!trimmedPhone.equals(NO_OFFICE_PHONE_SET) && !isValidPhone(trimmedPhone)) {
+        if (!(this instanceof OfficePhone && trimmedPhone.equals(NO_OFFICE_PHONE_SET)) && !isValidPhone(trimmedPhone)) {
             throw new IllegalValueException(MESSAGE_PHONE_CONSTRAINTS);
         }
         this.value = trimmedPhone;

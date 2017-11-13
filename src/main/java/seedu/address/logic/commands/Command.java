@@ -50,7 +50,7 @@ public abstract class Command {
 
     //@@author khooroko
     /**
-     * Retrieves a person based on input for the command to be applied on.
+     * Retrieves a person based on the input {@code Index} for the command to be applied on.
      * @param index must be a positive integer.
      * @return the person in the specified index in the last shown list.
      */

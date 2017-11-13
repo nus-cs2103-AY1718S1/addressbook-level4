@@ -4,18 +4,13 @@ import static java.util.Objects.requireNonNull;
 import static java.util.stream.Collectors.toCollection;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.storage.PasswordSecurity.getSha512SecurePassword;
-import static seedu.address.ui.DebtorProfilePicture.DEFAULT_INTERNAL_PROFILEPIC_FOLDER_PATH;
 import static seedu.address.ui.DebtorProfilePicture.JPG_EXTENSION;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.util.Date;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
-
-import javax.imageio.ImageIO;
 
 import com.google.common.eventbus.Subscribe;
 
@@ -31,6 +26,7 @@ import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.ui.ChangeInternalListEvent;
 import seedu.address.commons.events.ui.DeselectionEvent;
 import seedu.address.commons.events.ui.LoginAppRequestEvent;
+import seedu.address.commons.events.ui.MissingDisplayPictureEvent;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.exceptions.UserNotFoundException;
 import seedu.address.logic.Password;
@@ -40,6 +36,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.person.exceptions.ProfilePictureNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 import seedu.address.model.tag.exceptions.TagNotFoundException;
@@ -306,7 +303,6 @@ public class ModelManager extends ComponentManager implements Model {
      */
     public void syncWhitelist() {
         filteredWhitelistedPersons = new FilteredList<>(this.addressBook.getWhitelistedPersonList());
-        filteredWhitelistedPersons.setPredicate(filteredWhitelistedPersons.getPredicate());
     }
     //@@author
 
@@ -422,35 +418,32 @@ public class ModelManager extends ComponentManager implements Model {
      * @return true if person's picture is successfully added
      */
     @Override
-    public boolean addProfilePicture(ReadOnlyPerson person) {
+    public boolean addProfilePicture(ReadOnlyPerson person) throws ProfilePictureNotFoundException {
         String imageName = person.getName().toString().replaceAll("\\s+", "");
         File imageFile = new File(ProfilePicturesFolder.getPath() + imageName + JPG_EXTENSION);
 
-        BufferedImage bufferedImage;
-
         if (imageFile.exists()) {
             addressBook.addProfilePic(person);
-            try {
-                bufferedImage = ImageIO.read(imageFile);
-                ImageIO.write(bufferedImage, "jpg",
-                        new File(DEFAULT_INTERNAL_PROFILEPIC_FOLDER_PATH
-                                + imageName + JPG_EXTENSION));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
             indicateAddressBookChanged();
             return true;
+        } else {
+            throw new ProfilePictureNotFoundException();
         }
-        return false;
     }
 
     /**
      * Sets the person's display picture boolean status to false
+     * @return true if person's picture is successfully removed
      */
     @Override
-    public void removeProfilePicture(ReadOnlyPerson person) {
-        addressBook.removeProfilePic(person);
-        indicateAddressBookChanged();
+    public boolean removeProfilePicture(ReadOnlyPerson person) throws ProfilePictureNotFoundException {
+        if (person.hasDisplayPicture()) {
+            addressBook.removeProfilePic(person);
+            indicateAddressBookChanged();
+            return true;
+        } else {
+            throw new ProfilePictureNotFoundException();
+        }
     }
     //@@author
 
@@ -652,4 +645,16 @@ public class ModelManager extends ComponentManager implements Model {
         setCurrentListName("list");
         filteredPersons.setPredicate(PREDICATE_SHOW_ALL_PERSONS);
     }
+
+    //@@author jaivigneshvenugopal
+    @Subscribe
+    public void handleMissingDisplayPictureEvent(MissingDisplayPictureEvent event) {
+        try {
+            removeProfilePicture(event.getPerson());
+        } catch (ProfilePictureNotFoundException e) {
+            assert false : "This is not possible as person's hasDisplayPicture boolean value must be true";
+        }
+    }
+
+
 }

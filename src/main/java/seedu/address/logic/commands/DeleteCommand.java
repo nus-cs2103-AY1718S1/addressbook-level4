@@ -36,7 +36,7 @@ public class DeleteCommand extends UndoableCommand {
         personToDelete = selectPersonForCommand(targetIndex);
     }
 
-
+    //@@author khooroko
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         boolean requireJump = personToDelete.equals(model.getSelectedPerson())
@@ -58,6 +58,7 @@ public class DeleteCommand extends UndoableCommand {
         return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete.getName()));
     }
 
+    //@@author
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

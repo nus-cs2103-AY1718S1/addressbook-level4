@@ -11,6 +11,7 @@ import seedu.address.model.person.Debt;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.person.exceptions.ProfilePictureNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.exceptions.TagNotFoundException;
 
@@ -200,11 +201,12 @@ public interface Model {
      * Adds the picture of the person into app database and sets the person's display picture boolean status to true
      * @return true if person's picture is successfully added.
      */
-    boolean addProfilePicture(ReadOnlyPerson person);
+    boolean addProfilePicture(ReadOnlyPerson person) throws ProfilePictureNotFoundException;
 
     /**
      * Sets the person's display picture boolean status to false.
+     * @return true if person's picture is successfully removed.
      */
-    void removeProfilePicture(ReadOnlyPerson person);
+    boolean removeProfilePicture(ReadOnlyPerson person) throws ProfilePictureNotFoundException;
     //@@author
 }

@@ -17,7 +17,7 @@ public class SetPathCommandTest extends CommandTest {
 
     @Test
     public void execute_setPath_success() throws Exception {
-        String path = "C:/Users/acer/Desktop/SE/profilepic/";
+        String path = "src/main/";
         SetPathCommand setPathCommand = prepareSetPathCommand(path);
         setPathCommand.execute();
 
@@ -25,9 +25,9 @@ public class SetPathCommandTest extends CommandTest {
     }
 
     @Test
-    public void execute_setPathBackSlashReplacedToForwardSlash_success() throws Exception {
-        String path = "C:\\Users\\acer\\Desktop\\SE\\profilepic";
-        String expectedPath = "C:/Users/acer/Desktop/SE/profilepic";
+    public void execute_setPathMissingForwardSlashGetsConcatenated_success() throws Exception {
+        String path = "src/main";
+        String expectedPath = "src/main/";
 
         SetPathCommand setPathCommand = prepareSetPathCommand(path);
         setPathCommand.execute();

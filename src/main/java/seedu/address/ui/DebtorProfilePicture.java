@@ -8,6 +8,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
+import seedu.address.commons.core.ProfilePicturesFolder;
+import seedu.address.commons.events.ui.MissingDisplayPictureEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author jaivigneshvenugopal
@@ -16,8 +18,7 @@ import seedu.address.model.person.ReadOnlyPerson;
  */
 public class DebtorProfilePicture extends UiPart<Region> {
     public static final String FXML = "DebtorProfilePicture.fxml";
-    public static final String DEFAULT_INTERNAL_PROFILEPIC_FOLDER_PATH = "src/main/resources/images/profilePics/";
-    public static final String DEFAULT_PROFILEPIC_PATH = "src/main/resources/images/profilePics/unknown.jpg";
+    public static final String DEFAULT_PROFILEPIC_PATH = "/images/profilePics/unknown.jpg";
     public static final String JPG_EXTENSION = ".jpg";
 
     @FXML
@@ -29,19 +30,23 @@ public class DebtorProfilePicture extends UiPart<Region> {
         super(FXML);
         String imageName = person.getName().toString().replaceAll("\\s+", "");
         String imagePath = DEFAULT_PROFILEPIC_PATH;
+        Image image = new Image(getClass().getResource(imagePath).toExternalForm());
 
         if (person.hasDisplayPicture()) {
-            imagePath =  DEFAULT_INTERNAL_PROFILEPIC_FOLDER_PATH + imageName + JPG_EXTENSION;
-        }
 
-        File file = new File(imagePath);
+            imagePath = ProfilePicturesFolder.getPath() + imageName + JPG_EXTENSION;
+            File imageFile = new File(imagePath);
 
-        Image image = null;
-
-        try {
-            image = new Image(file.toURI().toURL().toExternalForm());
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
+            if (!imageFile.exists()) {
+                person.setHasDisplayPicture(false);
+                raise(new MissingDisplayPictureEvent(person));
+            } else {
+                try {
+                    image = new Image(imageFile.toURI().toURL().toExternalForm());
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
 
         profilePic.setImage(image);

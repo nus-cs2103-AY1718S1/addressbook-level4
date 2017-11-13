@@ -109,7 +109,7 @@ public class XmlAddressBookStorage implements AddressBookStorage {
     }
 
     /**
-     * @return address book data, if available and readable, or backup address book data if it is not.
+     * Returns address book data, if available and readable, or backup address book data if it is not.
      * If both are unavailable, a sample address book is returned. If backup address book is in the wrong format
      * or is unreadable, an empty address book is returned.
      */
