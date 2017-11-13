@@ -144,7 +144,7 @@ Example: select 1”
 |M12 |dm 1| Deleted Meeting: Health insurance (deleted on the originallist, not filtered list)
 |M13 |undo| Undo success! (undoes both bernice and abraham’s deletions)
 |M14 |click to select second contact| Alex Lim is selected, with 2 meetings
-|M15 |undo| Undo success!
+|M15 |undo| Undo success! (We undo to reset data to its default state for future tests)
 |M16 |undo| Undo success!
 |M17 |undo| Undo success!
 |=======================================================================
