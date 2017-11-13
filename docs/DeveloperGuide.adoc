@@ -404,10 +404,10 @@ The `parsePhone` method in the `ParserUtil` class calls the `getMultipleValues` 
 // end::multiplephonenumbers[]
 
 // tag::facebook[]
-=== Facebook Post mechanism
+=== Facebook mechanism
 
-The Facebook Post mechanism is facilitated by the Facebook Graph API and utilised through the Facebook4j unofficial public API.
-Facebook4j supports all facebook related features such as `facebook connect` and `facebook post`.
+The Facebook Commands are facilitated by the Facebook Graph API and utilised through the Facebook4j unofficial public API.
+Facebook4j supports all facebook related features such as `facebookconnect` and `facebookpost`.
 
 The Facebook Graph API first required us to set up a Facebook Application on the Facebook for developers website. We did so following this link:https://developers.facebook.com/docs/apps/register/#create-app[`guide`].
 
@@ -450,9 +450,9 @@ Facebook facebookInstance = FacebookConnectCommand.getFacebookInstance();
 facebookInstance.postStatusMessage(toPost);
 ----
 
-The following diagram displays a summary of the entire process:
+The following diagram displays a summary of the entire process, using `facebookpost` as an example:
 
-.Sequence diagram detailing execution of a `facebook post` command
+.Sequence diagram detailing execution of a `facebookpost` command
 image::facebook_post_sequence_diagram.png[width="800"]
 
 
@@ -469,7 +469,7 @@ image::facebook_post_sequence_diagram.png[width="800"]
 ---
 
 **Aspect:** How User is authenticated +
-**Alternative 1 (current choice):** Manually login to Facebook using a browser +
+**Alternative 1 (current choice):** Manually login to Facebook using the browser +
 **Pros:** Easier to implement given the intended environment of the application (private host rather than website) +
 **Cons:** May not be authenticated to use a few Facebook API functions +
 **Alternative 2:** Host the entire application on a website and attain Facebook approval. +
