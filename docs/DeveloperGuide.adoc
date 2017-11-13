@@ -622,6 +622,8 @@ image::DeleteTempPersonAD.png[width="700"]
 
 The import mechanism is essentially adding multiple Residents to the ResidentBook and integrating the current data with an external xml file. It is implemented by calling add function repeatedly till all the new Residents have been added to the current ResidentBook.
 
+This command only import Residents and does not support adding of Events in v1.5.
+
 ==== Design Considerations
 
 **Aspect:** Implementation of Import +
