@@ -2,7 +2,7 @@ package seedu.address.logic.commands;
 
 // @@author HouDenghao
 /**
- * Sorts all events in the address book to the user.
+ * Sorts all events in the address book for the user.
  */
 public class SortEventCommand extends Command {
 

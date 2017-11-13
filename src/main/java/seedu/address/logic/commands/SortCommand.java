@@ -2,7 +2,7 @@ package seedu.address.logic.commands;
 
 // @@author HouDenghao
 /**
- * Sorts all persons in the address book to the user.
+ * Sorts all persons in the address book for the user.
  */
 public class SortCommand extends Command {
 
