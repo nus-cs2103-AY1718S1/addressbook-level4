@@ -378,7 +378,7 @@ _Figure 7.7.1 `find` Result for Find Command_
 Examples:
 
 * `find John` +
-If there was john` and `John Doe` in the person list,
+If there was `john` and `John Doe` in the person list,
 by typing this command, you will be able to find both `john` and `John Doe`.
 
 * `find Betsy Tim John` +
