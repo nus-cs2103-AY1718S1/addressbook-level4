@@ -20,7 +20,7 @@ Responsibilities: UI
 
 '''
 
-=== Emil Koh
+=== Emil Koh Tze Ping
 image::emilkoh.jpg[width="150", align="left"]
 {empty}[https://github.com/LimeFallacie[github]] [<<emilkoh#, portfolio>>]
 
