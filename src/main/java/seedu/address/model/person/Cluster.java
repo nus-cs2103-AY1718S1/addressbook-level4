@@ -7,7 +7,7 @@ import static seedu.address.model.util.ClusterUtil.getCluster;
 
 //@@author khooroko
 /**
- * Represents a Person's cluster in the address book.
+ * Represents a Person's {@code Cluster} in the address book.
  * Guarantees: immutable; can only be declared with a valid {@code PostalCode}
  */
 public class Cluster {
