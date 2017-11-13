@@ -9,6 +9,11 @@
     src: url("/fonts/OldStandard-Regular.ttf");
 }
 
+@font-face {
+    font-family: Space Mono Italic;
+    src: url("/fonts/SpaceMono-Italic.ttf");
+}
+
 /**
     -fx-my-background: #242b51;
     -fx-my-foreground: #222646;
@@ -92,8 +97,8 @@
 }
 
 .split-pane:horizontal .split-pane-divider {
-    -fx-background-color: derive(#1d1d1d, 20%);
-    -fx-border-color: transparent transparent transparent #4d4d4d;
+    -fx-background-color: #1a1e37;
+    -fx-border-color: transparent;
 }
 
 .split-pane:vertical .split-pane-divider {
@@ -106,14 +111,13 @@
 }
 
 .split-pane {
-    -fx-border-radius: 1;
-    -fx-border-width: 1;
-    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-background-color: #1a1e37;
 }
 
 .list-view {
     -fx-background-insets: 0;
-    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-background-color: derive(#1a1e37, 20%);
+    -fx-border-color: transparent;
     -fx-padding: 0;
 }
 
@@ -121,26 +125,30 @@
     -fx-label-padding: 0 0 0 0;
     -fx-graphic-text-gap: 0;
     -fx-padding: 0 0 0 0;
+    -fx-background-color: derive(#1a1e37, 20%);
 }
 
 .list-cell:filled:even {
-    -fx-background-color: #3c3e3f;
+    -fx-background-color: derive(#1a1e37, 20%);
 }
 
 .list-cell:filled:odd {
-    -fx-background-color: #515658;
+    -fx-background-color: derive(#1a1e37, 30%);
 }
 
 .list-cell:filled:selected {
-    -fx-background-color: #424d5f;
+    -fx-background-color: #1a1e37;
+    -fx-background-radius: 10 10 10 10;
 }
 
 .list-cell:filled:selected #cardPane {
-    -fx-border-color: #3e7b91;
+    -fx-border-color: transparent;
     -fx-border-width: 1;
 }
 
 .list-cell .label {
+    -fx-font-family: "Space mono";
+    -fx-font-size: 12px;
     -fx-text-fill: white;
 }
 
@@ -187,9 +195,9 @@
 }
 
 .status-bar .label {
-    -fx-font-family: "Old Standard TT";
+    -fx-font-family: "PT Serif";
     -fx-text-fill: white;
-    -fx-font-size: 10pt;
+    -fx-font-size: 9pt;
 }
 
 .status-bar-with-border {
@@ -225,7 +233,7 @@
 .menu-bar .label {
     -fx-background-color: #1a1e37;
     -fx-font-size: 12pt;
-    -fx-font-family: "Old Standard TT";
+    -fx-font-family: "PT Serif";
     -fx-text-fill: #fffefd;
 }
 
@@ -334,13 +342,12 @@
 
 .scroll-bar {
     -fx-background-color: derive(#1a1e37, 20%);
-    -fx-background-radius: 10 10 10 10;
 }
 
 .scroll-bar .thumb {
-    -fx-background-color: #1a1e37;
-    -fx-background-radius: 10 10 10 10;
-    -fx-background-insets: 3;
+    -fx-background-color: derive(#1a1e37, 5%);
+    -fx-background-radius: 18 18 18 18;
+    -fx-background-insets: 1;
 }
 
 .scroll-bar .increment-button, .scroll-bar .decrement-button {
@@ -353,11 +360,11 @@
 }
 
 .scroll-bar:vertical .increment-arrow, .scroll-bar:vertical .decrement-arrow {
-    -fx-padding: 1 8 1 8;
+    -fx-padding: 8 3 8 3;
 }
 
 .scroll-bar:horizontal .increment-arrow, .scroll-bar:horizontal .decrement-arrow {
-    -fx-padding: 8 1 8 1;
+    -fx-padding: 3 8 3 8;
 }
 
 #cardPane {
@@ -366,7 +373,7 @@
 }
 
 .command-pane {
-    -fx-background-color: derive(#222646, 10%);
+    -fx-background-color: derive(#1a1e37, 20%);
     -fx-background-radius: 10 10 10 10;
 }
 
@@ -383,10 +390,6 @@
     -fx-font-family: "Old Standard TT";
     -fx-font-size: 13pt;
     -fx-text-fill: derive(#71ffa0,-20%);
-}
-
-#filterField, #personListPanel, #personWebpage {
-    -fx-effect: innershadow(gaussian, black, 10, 0, 0, 0);
 }
 
 #resultDisplay {
@@ -460,5 +463,73 @@
     -fx-text-fill: derive(#71ffa0,-20%);
     
 }
+
+#personList {
+    -fx-background-color:#1a1e37;
+    -fx-border-color: transparent;
+}
+
+#personViewLabel {
+    -fx-font-family: "Old Standard TT";
+    -fx-font-size: 10pt;
+}
+
+#taskViewLabel {
+    -fx-font-family: "Old Standard TT";
+    -fx-font-size: 10pt;
+}
+
+#aliasViewLabel {
+    -fx-font-family: "Old Standard TT";
+    -fx-font-size: 10pt;
+}
+
+#listAllLabel {
+    -fx-font-family: "Old Standard TT";
+    -fx-font-size: 10pt;
+}
+
+#listPinLabel {
+    -fx-font-family: "Old Standard TT";
+    -fx-font-size: 10pt;
+}
+
+#organizedByLabel {
+    -fx-font-family: "Old Standard TT";
+    -fx-font-size: 10pt;
+}
+
+#organizerLabel {
+    -fx-font-family: "Old Standard TT";
+    -fx-font-size: 10pt;
+}
+
+#personListPanelPlaceholder {
+    -fx-border-color: transparent;
+}
+
+#personListView {
+    -fx-background-color: derive(#1a1e37, 20%);
+    -fx-background-radius: 10 10 10 10;
+    -fx-border-color: transparent;
+}
+
+#personListPanel {
+    -fx-background-color: derive(#1a1e37, 20%);
+    -fx-background-radius: 10 10 10 10;
+    -fx-border-color: transparent;
+}
+
+#name {
+    -fx-font-size: 15px;
+}
+
+#remark {
+    -fx-font-family: "Space Mono Italic";
+    -fx-text-fill: gray;
+}
+
+
+
 
 

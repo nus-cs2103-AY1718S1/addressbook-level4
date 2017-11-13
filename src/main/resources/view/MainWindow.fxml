@@ -55,8 +55,10 @@
                               <Insets bottom="10" left="10" right="10" top="10" />
                            </padding>
                            <children>
+                              <!-- @@author -->
+                              <StackPane fx:id="personListPanelPlaceholder" minWidth="300.0" VBox.vgrow="ALWAYS" />
                               <!-- @@author Alim95 -->
-                              <GridPane cacheShape="false" centerShape="false" minHeight="-Infinity" prefWidth="601.0">
+                              <GridPane alignment="CENTER" cacheShape="false" centerShape="false" minHeight="-Infinity" prefWidth="601.0">
                                 <columnConstraints>
                                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="310.0" minWidth="0.0" prefWidth="59.0" />
                                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="614.0" minWidth="0.0" prefWidth="47.0" />
@@ -70,7 +72,7 @@
                                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
-                                    <Label fx:id="personViewLabel" onMouseReleased="#handlePersonViewClicked" style="-fx-text-fill: white;" text="Person">
+                                    <Label fx:id="personViewLabel" graphicTextGap="0.0" onMouseReleased="#handlePersonViewClicked" style="-fx-text-fill: white;" text="Person">
                                        <GridPane.margin>
                                           <Insets bottom="5.0" left="5.0" />
                                        </GridPane.margin>
@@ -80,35 +82,36 @@
                                           <Insets bottom="5.0" left="10.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <Label fx:id="listAllLabel" onMouseReleased="#handleListAllClicked" style="-fx-text-fill: white;" text="All" GridPane.columnIndex="3">
+                                    <Label fx:id="listAllLabel" graphicTextGap="0.0" onMouseReleased="#handleListAllClicked" style="-fx-text-fill: white;" text="All" GridPane.columnIndex="3">
                                        <GridPane.margin>
                                           <Insets bottom="5.0" left="10.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <Label fx:id="listPinLabel" onMouseReleased="#handleListPinnedClicked" text="Pinned" GridPane.columnIndex="4">
+                                    <Label fx:id="listPinLabel" graphicTextGap="0.0" onMouseReleased="#handleListPinnedClicked" text="Pinned" GridPane.columnIndex="4">
                                        <GridPane.margin>
                                           <Insets bottom="5.0" left="10.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <Label fx:id="organizerLabel" prefHeight="21.0" prefWidth="76.0" style="-fx-text-fill: white;" text="Sorted By:" GridPane.columnIndex="5">
+                                    <Label fx:id="organizerLabel" alignment="CENTER_RIGHT" graphicTextGap="0.0" style="-fx-text-fill: white;" text="Sorted By:" GridPane.columnIndex="5">
                                        <GridPane.margin>
                                           <Insets bottom="5.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <Label fx:id="organizedByLabel" prefHeight="21.0" prefWidth="149.0" style="-fx-text-fill: white;" text="Name" GridPane.columnIndex="6">
+                                    <Label fx:id="organizedByLabel" graphicTextGap="0.0" style="-fx-text-fill: white;" text="Name" GridPane.columnIndex="6">
                                        <GridPane.margin>
                                           <Insets bottom="5.0" left="2.0" />
                                        </GridPane.margin>
                                     </Label>
-                                    <Label fx:id="aliasViewLabel" onMouseReleased="#handleAliasViewClicked" text="Alias" visible="false" GridPane.columnIndex="2">
+                                    <Label fx:id="aliasViewLabel" graphicTextGap="0.0" onMouseReleased="#handleAliasViewClicked" text="Alias" visible="false" GridPane.columnIndex="2">
                                        <GridPane.margin>
                                           <Insets bottom="5.0" left="10.0" />
                                        </GridPane.margin>
                                     </Label>
                                  </children>
+                                 <padding>
+                                    <Insets right="6.0" top="6.0" />
+                                 </padding>
                               </GridPane>
-                              <!-- @@author -->
-                              <StackPane fx:id="personListPanelPlaceholder" minWidth="300.0" VBox.vgrow="ALWAYS" />
                            </children>
                         </VBox>
                         <StackPane fx:id="tutorialPlaceholder" maxWidth="-Infinity" minHeight="-Infinity" minWidth="0.0" prefHeight="0.0" prefWidth="0.0" StackPane.alignment="CENTER_RIGHT">
