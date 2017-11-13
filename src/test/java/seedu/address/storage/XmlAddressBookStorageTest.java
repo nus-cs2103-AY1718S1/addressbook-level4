@@ -5,7 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.HOON;
 import static seedu.address.testutil.TypicalPersons.IDA;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBookWithRelationships;
 
 import java.io.IOException;
 
@@ -64,13 +64,20 @@ public class XmlAddressBookStorageTest {
     @Test
     public void readAndSaveAddressBook_allInOrder_success() throws Exception {
         String filePath = testFolder.getRoot().getPath() + "TempAddressBook.xml";
-        AddressBook original = getTypicalAddressBook();
+        AddressBook original = getTypicalAddressBookWithRelationships();
         XmlAddressBookStorage xmlAddressBookStorage = new XmlAddressBookStorage(filePath);
 
         //Save in new file and read back
         xmlAddressBookStorage.saveAddressBook(original, filePath);
         ReadOnlyAddressBook readBack = xmlAddressBookStorage.readAddressBook(filePath).get();
         assertEquals(original, new AddressBook(readBack));
+
+        //@@author Xenonym
+        //Backup address book and read back
+        xmlAddressBookStorage.backupAddressBook(original);
+        readBack = xmlAddressBookStorage.readBackupAddressBook().get();
+        assertEquals(original, new AddressBook(readBack));
+        //@@author
 
         //Modify data, overwrite exiting file, and read back
         original.addPerson(new Person(HOON));

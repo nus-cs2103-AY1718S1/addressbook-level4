@@ -140,6 +140,17 @@ public class UndoRedoStackTest {
                 Collections.emptyList());
     }
 
+    //@@author Xenonym
+    @Test
+    public void clear() {
+        undoRedoStack = prepareStack(Collections.singletonList(dummyUndoableCommandOne),
+                Arrays.asList(dummyUndoableCommandOne, dummyUndoableCommandTwo));
+        undoRedoStack.clear();
+        assertFalse(undoRedoStack.canUndo());
+        assertFalse(undoRedoStack.canRedo());
+    }
+    //@@author
+
     @Test
     public void equals() {
         undoRedoStack = prepareStack(Arrays.asList(dummyUndoableCommandTwo, dummyUndoableCommandOne),

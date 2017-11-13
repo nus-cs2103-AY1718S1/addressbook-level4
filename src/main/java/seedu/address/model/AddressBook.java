@@ -10,11 +10,15 @@ import java.util.Objects;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.person.exceptions.TagNotFoundException;
+import seedu.address.model.relationship.Relationship;
+import seedu.address.model.relationship.exceptions.DuplicateRelationshipException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -92,6 +96,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.add(newPerson);
     }
 
+    //@@author wenmogu
     /**
      * Replaces the given person {@code target} in the list with {@code editedReadOnlyPerson}.
      * {@code AddressBook}'s tag list will be updated with the tags of {@code editedReadOnlyPerson}.
@@ -107,6 +112,31 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(editedReadOnlyPerson);
 
         Person editedPerson = new Person(editedReadOnlyPerson);
+
+        Set<Relationship> oldRelationships = target.getRelationships();
+
+        for (Relationship oldRelationship: oldRelationships) {
+            //keep a copy of the original relationship
+            Relationship oldRelationshipCopy = new Relationship(oldRelationship);
+
+            Relationship tempNewRelationship = oldRelationship.replacePerson(target, editedPerson);
+
+            ReadOnlyPerson counterPart = oldRelationshipCopy.counterpartOf(target); //the old counterpart
+            //a copy of counterpart to be modified into new counterpart and put into the new relationship
+            ReadOnlyPerson counterPartCopy = new Person(counterPart);
+            Person counterPartCopyCast = (Person) counterPartCopy;
+
+            counterPartCopyCast.removeRelationship(oldRelationshipCopy);
+            Relationship newRelationship = tempNewRelationship.replacePerson(counterPart,
+                    counterPartCopyCast);
+            try {
+                editedPerson.addRelationship(newRelationship);
+                counterPartCopyCast.addRelationship(newRelationship);
+                persons.setPerson(counterPart, counterPartCopyCast);
+            } catch (DuplicateRelationshipException dre) {
+                assert false : "impossible";
+            }
+        }
         syncMasterTagListWith(editedPerson);
         // TODO: the tags master list will be updated even though the below line fails.
         // This can cause the tags master list to have additional tags that are not tagged to any person
@@ -114,6 +144,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.setPerson(target, editedPerson);
     }
 
+    //@@author
     /**
      * Ensures that every tag in this person:
      *  - exists in the master list {@link #tags}
@@ -156,14 +187,42 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    /**
+     * Sorts the data of the persons object alphanumerically by name.
+     */
+    public void sortData() {
+        persons.sort();
+    }
+
     //// tag-level operations
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
         tags.add(t);
     }
 
+    //@@author wenmogu
+    /**
+     * Remove a Tag from tags and everyone with the tag.
+     * @param tagGettingRemoved
+     * @throws TagNotFoundException
+     * @throws IllegalValueException
+     */
+    public void removeTag(String tagGettingRemoved) throws TagNotFoundException, IllegalValueException {
+        try {
+            Tag tagToRemove = tags.removeTag(tagGettingRemoved);
+            for (Person person : persons) {
+                Person temp = person;
+                person.removeTag(tagToRemove);
+                persons.setPerson(temp, person);
+            }
+        } catch (PersonNotFoundException pnfe) {
+            assert false : "impossible to happen as the person from whom the tag is removed definitely exists.";
+        }
+    }
+
     //// util methods
 
+    //@@author
     @Override
     public String toString() {
         return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags";

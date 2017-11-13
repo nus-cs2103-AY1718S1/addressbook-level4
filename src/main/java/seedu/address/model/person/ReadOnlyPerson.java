@@ -3,6 +3,7 @@ package seedu.address.model.person;
 import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
+import seedu.address.model.relationship.Relationship;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -20,11 +21,16 @@ public interface ReadOnlyPerson {
     Email getEmail();
     ObjectProperty<Address> addressProperty();
     Address getAddress();
+    ObjectProperty<Remark> remarkProperty();
+    Remark getRemark();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
+    Set<Relationship> getRelationships();
+    ReadOnlyPerson copy();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
+     * Relationships and tags of the person are not taking into account.
      */
     default boolean isSameStateAs(ReadOnlyPerson other) {
         return other == this // short circuit if same object
@@ -32,7 +38,8 @@ public interface ReadOnlyPerson {
                 && other.getName().equals(this.getName()) // state checks here onwards
                 && other.getPhone().equals(this.getPhone())
                 && other.getEmail().equals(this.getEmail())
-                && other.getAddress().equals(this.getAddress()));
+                && other.getAddress().equals(this.getAddress())
+                && other.getRemark().equals(this.getRemark()));
     }
 
     /**
@@ -47,6 +54,8 @@ public interface ReadOnlyPerson {
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
+                .append(" Remark: ")
+                .append(getRemark())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();

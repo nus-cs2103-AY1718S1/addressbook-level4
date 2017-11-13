@@ -1,0 +1,97 @@
+= Wen Xin - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: Intelli
+Intelli is a desktop relationship tracker used by private investigators (PI) to manage their information and leads. The PI interacts with it using a CLI, and it has a GUI created with JavaFX and GraphStream. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-F10-B1/main/blob/master/collated/main/wenmogu.md[Functional code]] [https://github.com/CS2103AUG2017-F10-B1/main/blob/master/collated/test/wenmogu.md[Test code]]
+
+=== Enhancement Added: Add Relationships
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=addrelationship]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+This feature allows the user to record information about relationships between the persons in the address book and puts all the persons into a network which can be displayed using a graph.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=addrelationship]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Delete Relationships
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=deleterelationship]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+This feature allows the user to remove a redundant or wrong relationship.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=deleterelationship]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Remove tags
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=removetag]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+This feature allows the user to remove a specific tag from all persons in the address book within a single command.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=removetag]
+
+#End of Extract#
+
+---
+
+=== Other contributions
+
+* Wrote additional tests to increase coverage from 78% to 83% (Pull requests https://github.com/CS2103AUG2017-F10-B1/main/pull/130[#130], https://github.com/CS2103AUG2017-F10-B1/main/pull/133[#133])

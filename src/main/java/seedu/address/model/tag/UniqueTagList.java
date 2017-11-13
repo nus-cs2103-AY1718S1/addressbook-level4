@@ -2,6 +2,7 @@ package seedu.address.model.tag;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.logic.commands.RemoveTagCommand.MESSAGE_TAG_NOT_FOUND;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -10,7 +11,9 @@ import java.util.Set;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.exceptions.DuplicateDataException;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.CollectionUtil;
+import seedu.address.model.person.exceptions.TagNotFoundException;
 
 /**
  * A list of tags that enforces no nulls and uniqueness between its elements.
@@ -77,6 +80,20 @@ public class UniqueTagList implements Iterable<Tag> {
         return internalList.contains(toCheck);
     }
 
+    //@@author wenmogu
+    /**
+     * If the tag name is valid and the tag present in the list.
+     * @param tagName
+     * @return the index of the tag in the list
+     * @throws IllegalValueException
+     */
+    public int indexOfTagWithName(String tagName) throws IllegalValueException {
+        requireNonNull(tagName);
+        Tag temp = new Tag(tagName);
+        return internalList.indexOf(temp);
+    }
+
+    //@@author
     /**
      * Adds a Tag to the list.
      *
@@ -92,6 +109,33 @@ public class UniqueTagList implements Iterable<Tag> {
         assert CollectionUtil.elementsAreUnique(internalList);
     }
 
+    //@@author wenmogu
+    /**
+     * Remove a Tag from the list. The tag is identified by its name.
+     *
+     * throws TagNotFoundException if the Tag to remove is not found in the list.
+     * throws IllegalValueException if the Tag name input is invalid.
+     */
+    public Tag removeTag(String tagGettingRemoved) throws TagNotFoundException, IllegalValueException {
+        requireNonNull(tagGettingRemoved);
+        int tagIndexInList = indexOfTagWithName(tagGettingRemoved);
+        if (tagIndexInList == -1) {
+            throw new TagNotFoundException(MESSAGE_TAG_NOT_FOUND);
+        } else {
+            return internalList.remove(tagIndexInList);
+        }
+    }
+
+    /**
+     * Remove a tag from the list.
+     * @param tagGettingRemoved
+     */
+    public boolean removeTag(Tag tagGettingRemoved) {
+        requireNonNull(tagGettingRemoved);
+        return internalList.remove(tagGettingRemoved);
+    }
+
+    //@@author
     @Override
     public Iterator<Tag> iterator() {
         assert CollectionUtil.elementsAreUnique(internalList);

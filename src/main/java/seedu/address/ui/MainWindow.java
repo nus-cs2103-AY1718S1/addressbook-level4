@@ -31,8 +31,8 @@ public class MainWindow extends UiPart<Region> {
 
     private static final String ICON = "/images/address_book_32.png";
     private static final String FXML = "MainWindow.fxml";
-    private static final int MIN_HEIGHT = 600;
-    private static final int MIN_WIDTH = 450;
+    private static final int DEFAULT_HEIGHT = 600;
+    private static final int DEFAULT_WIDTH = 350;
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -40,13 +40,13 @@ public class MainWindow extends UiPart<Region> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private BrowserPanel browserPanel;
+    private GraphDisplay graphDisplay;
     private PersonListPanel personListPanel;
     private Config config;
     private UserPrefs prefs;
 
     @FXML
-    private StackPane browserPlaceholder;
+    private StackPane graphDisplayPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -75,8 +75,7 @@ public class MainWindow extends UiPart<Region> {
         // Configure the UI
         setTitle(config.getAppTitle());
         setIcon(ICON);
-        setWindowMinSize();
-        setWindowDefaultSize(prefs);
+        setWindowDefaultSize();
         Scene scene = new Scene(getRoot());
         primaryStage.setScene(scene);
 
@@ -122,14 +121,16 @@ public class MainWindow extends UiPart<Region> {
         });
     }
 
+    //@@author joanneong
     /**
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+        graphDisplay = new GraphDisplay(logic);
+        graphDisplayPlaceholder.getChildren().add(graphDisplay.getRoot());
+        graphDisplay.createAndSetSwingContent();
 
-        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
+        personListPanel = new PersonListPanel(logic.getFilteredPersonList(), prefs.getGuiSettings().getTagColours());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
@@ -140,8 +141,12 @@ public class MainWindow extends UiPart<Region> {
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
+        commandBox.setCustomAutoComplete(resultDisplay);
+        resultDisplay.setLinkedInput(commandBox);
     }
 
+    //@@author
     void hide() {
         primaryStage.hide();
     }
@@ -158,21 +163,13 @@ public class MainWindow extends UiPart<Region> {
         FxViewUtil.setStageIcon(primaryStage, iconSource);
     }
 
+    //@@author joanneong
     /**
-     * Sets the default size based on user preferences.
+     * Sets the default size based on default values.
      */
-    private void setWindowDefaultSize(UserPrefs prefs) {
-        primaryStage.setHeight(prefs.getGuiSettings().getWindowHeight());
-        primaryStage.setWidth(prefs.getGuiSettings().getWindowWidth());
-        if (prefs.getGuiSettings().getWindowCoordinates() != null) {
-            primaryStage.setX(prefs.getGuiSettings().getWindowCoordinates().getX());
-            primaryStage.setY(prefs.getGuiSettings().getWindowCoordinates().getY());
-        }
-    }
-
-    private void setWindowMinSize() {
-        primaryStage.setMinHeight(MIN_HEIGHT);
-        primaryStage.setMinWidth(MIN_WIDTH);
+    private void setWindowDefaultSize() {
+        primaryStage.setHeight(DEFAULT_HEIGHT);
+        primaryStage.setWidth(DEFAULT_WIDTH);
     }
 
     /**
@@ -180,7 +177,7 @@ public class MainWindow extends UiPart<Region> {
      */
     GuiSettings getCurrentGuiSetting() {
         return new GuiSettings(primaryStage.getWidth(), primaryStage.getHeight(),
-                (int) primaryStage.getX(), (int) primaryStage.getY());
+                (int) primaryStage.getX(), (int) primaryStage.getY(), prefs.getGuiSettings().getTagColours());
     }
 
     /**
@@ -206,10 +203,6 @@ public class MainWindow extends UiPart<Region> {
 
     public PersonListPanel getPersonListPanel() {
         return this.personListPanel;
-    }
-
-    void releaseResources() {
-        browserPanel.freeResources();
     }
 
     @Subscribe

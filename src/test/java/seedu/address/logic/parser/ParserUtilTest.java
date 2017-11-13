@@ -164,6 +164,17 @@ public class ParserUtilTest {
     }
 
     @Test
+    public void parseRemark_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseRemark(null);
+    }
+
+    @Test
+    public void parseRemark_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseRemark(Optional.empty()).isPresent());
+    }
+
+    @Test
     public void parseTags_null_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
         ParserUtil.parseTags(null);

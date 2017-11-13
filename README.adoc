@@ -1,11 +1,11 @@
-= Address Book (Level 4)
+= Intelli
 ifdef::env-github,env-browser[:relfileprefix: docs/]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
-https://travis-ci.org/se-edu/addressbook-level4[image:https://travis-ci.org/se-edu/addressbook-level4.svg?branch=master[Build Status]]
-https://ci.appveyor.com/project/damithc/addressbook-level4[image:https://ci.appveyor.com/api/projects/status/3boko2x2vr5cc3w2?svg=true[Build status]]
-https://coveralls.io/github/se-edu/addressbook-level4?branch=master[image:https://coveralls.io/repos/github/se-edu/addressbook-level4/badge.svg?branch=master[Coverage Status]]
-https://www.codacy.com/app/damith/addressbook-level4?utm_source=github.com&utm_medium=referral&utm_content=se-edu/addressbook-level4&utm_campaign=Badge_Grade[image:https://api.codacy.com/project/badge/Grade/fc0b7775cf7f4fdeaf08776f3d8e364a[Codacy Badge]]
+https://travis-ci.org/CS2103AUG2017-F10-B1/main[image:https://travis-ci.org/CS2103AUG2017-F10-B1/main.svg?branch=master[Build Status]]
+https://ci.appveyor.com/project/Xenonym/main[image:https://ci.appveyor.com/api/projects/status/nrq6in2rm5uyhyuq?svg=true[Build status]]
+https://coveralls.io/github/CS2103AUG2017-F10-B1/main?branch=master[image:https://coveralls.io/repos/github/CS2103AUG2017-F10-B1/main/badge.svg?branch=master[Coverage Status]]
+https://www.codacy.com/app/CS2103AUG2017-F10-B1/main?utm_source=github.com&utm_medium=referral&utm_content=CS2103AUG2017-F10-B1/main&utm_campaign=Badge_Grade[image:https://api.codacy.com/project/badge/Grade/94d3f4735a874f06bcbf7d9752f66f70[Codacy Badge]]
 
 ifdef::env-github[]
 image::docs/images/Ui.png[width="600"]
@@ -15,19 +15,42 @@ ifndef::env-github[]
 image::images/Ui.png[width="600"]
 endif::[]
 
-* This is a desktop Address Book application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
-* It is a Java sample application intended for students learning Software Engineering while using Java as the main programming language.
-* It is *written in OOP fashion*. It provides a *reasonably well-written* code example that is *significantly bigger* (around 6 KLoC)than what students usually write in beginner-level SE modules.
-* What's different from https://github.com/se-edu/addressbook-level3[level 3]:
-** A more sophisticated GUI that includes a list  panel and an in-built Browser.
-** More test cases, including automated GUI testing.
-** Support for _Build Automation_ using Gradle and for _Continuous Integration_ using Travis CI.
+* This is a relationship tracker based on a desktop Address Book application. It has a GUI but most of the user interactions
+happen using a CLI (Command Line Interface).
+* It is primarily targeted at *private investigators* who wish to find a way to maintain their ever-growing and ever-changing
+information base easily.
+
+== Why Intelli?
+
+Wondering why you should use Intelli? +
+Here are three extra-special features Intelli offers that may convince you why:
+
+* Add named relationships between your contacts
+
+Intelli enables you to easily keep track of who's who in vast and complicated social networks.
+
+* Add and edit confidence estimates to relationships between contacts
+
+Worried about getting the relationship between A and B wrong? Not quite sure
+that A and B are indeed longstanding nemeses? As your relationship tracker, Intelli
+will help to remind you of the uncertainty surrounding a particular relationship,
+so that you can update it in the future when you gain more valuable information.
+
+* Visualise detailed relationships in a graph
+
+Sometimes, even the best private investigators can get entangled in the complex web
+of relationships which they are investigating. However, with Intelli you can obtain a graphic
+overview of these relationships, allowing you to see named relationships coupled with
+confidence estimates so that you no longer have to fear keeping track of the messy networks
+among your contacts.
+
+Still doubting why? Feel free to browse the full catalogue of features in Intelli by
+visiting the <<UserGuide#, user guide>>!
 
 == Site Map
 
 * <<UserGuide#, User Guide>>
 * <<DeveloperGuide#, Developer Guide>>
-* <<LearningOutcomes#, Learning Outcomes>>
 * <<AboutUs#, About Us>>
 * <<ContactUs#, Contact Us>>
 
@@ -35,5 +58,6 @@ endif::[]
 
 * Some parts of this sample application were inspired by the excellent http://code.makery.ch/library/javafx-8-tutorial/[Java FX tutorial] by
 _Marco Jakob_.
+* A large part of this application was built upon the codebase provided by https://github.com/se-edu/addressbook-level4[Address Book application].
 
 == Licence : link:LICENSE[MIT]

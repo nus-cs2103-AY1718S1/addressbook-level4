@@ -14,6 +14,7 @@ import seedu.address.logic.LogicManager;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
+import seedu.address.testutil.StorageStub;
 
 public class CommandBoxTest extends GuiUnitTest {
 
@@ -28,7 +29,7 @@ public class CommandBoxTest extends GuiUnitTest {
     @Before
     public void setUp() {
         Model model = new ModelManager();
-        Logic logic = new LogicManager(model);
+        Logic logic = new LogicManager(model, new StorageStub());
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxHandle = new CommandBoxHandle(getChildNode(commandBox.getRoot(),
@@ -41,6 +42,7 @@ public class CommandBoxTest extends GuiUnitTest {
         errorStyleOfCommandBox.add(CommandBox.ERROR_STYLE_CLASS);
     }
 
+    //@@author
     @Test
     public void commandBox_startingWithSuccessfulCommand() {
         assertBehaviorForSuccessfulCommand();
@@ -125,6 +127,25 @@ public class CommandBoxTest extends GuiUnitTest {
         assertInputHistory(KeyCode.UP, thirdCommand);
     }
 
+    //@@author joanneong
+    @Test
+    public void handleKeyPress_startingWithControl() {
+        // empty input
+        guiRobot.push(KeyCode.CONTROL);
+        assertEmptyCommandBox();
+
+        // single word input
+        commandBoxHandle.enterInput(COMMAND_THAT_SUCCEEDS);
+        guiRobot.push(KeyCode.CONTROL);
+        assertEmptyCommandBox();
+
+        // multi-words input
+        commandBoxHandle.enterInput(COMMAND_THAT_FAILS);
+        guiRobot.push(KeyCode.CONTROL);
+        assertEmptyCommandBox();
+    }
+
+    //@@author
     /**
      * Runs a command that fails, then verifies that <br>
      *      - the text remains <br>
@@ -153,5 +174,13 @@ public class CommandBoxTest extends GuiUnitTest {
     private void assertInputHistory(KeyCode keycode, String expectedCommand) {
         guiRobot.push(keycode);
         assertEquals(expectedCommand, commandBoxHandle.getInput());
+    }
+
+    //@@author joanneong
+    /**
+     * Checks that the input in the {@code commandBox} is empty.
+     */
+    private void assertEmptyCommandBox() {
+        assertEquals("", commandBoxHandle.getInput());
     }
 }

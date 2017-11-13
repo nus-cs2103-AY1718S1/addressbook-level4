@@ -23,6 +23,15 @@ public class CommandHistory {
         userInputHistory.add(userInput);
     }
 
+    //@@author Xenonym
+    /**
+     * Clear the command history.
+     */
+    public void clear() {
+        userInputHistory.clear();
+    }
+    //@@author
+
     /**
      * Returns a defensive copy of {@code userInputHistory}.
      */

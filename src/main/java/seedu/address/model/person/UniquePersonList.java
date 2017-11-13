@@ -2,16 +2,18 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.fxmisc.easybind.EasyBind;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.relationship.Relationship;
 
 /**
  * A list of persons that enforces uniqueness between its elements and does not allow nulls.
@@ -19,7 +21,6 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
  * Supports a minimal set of list operations.
  *
  * @see Person#equals(Object)
- * @see CollectionUtil#elementsAreUnique(Collection)
  */
 public class UniquePersonList implements Iterable<Person> {
 
@@ -69,7 +70,15 @@ public class UniquePersonList implements Iterable<Person> {
 
         internalList.set(index, new Person(editedPerson));
     }
-
+    //@@author TanYikai
+    /**
+     * Sorts the persons object in the list alphanumerically by name.
+     */
+    public void sort() {
+        requireNonNull(internalList);
+        Collections.sort(internalList);
+    }
+    //@@author
     /**
      * Removes the equivalent person from the list.
      *
@@ -77,11 +86,40 @@ public class UniquePersonList implements Iterable<Person> {
      */
     public boolean remove(ReadOnlyPerson toRemove) throws PersonNotFoundException {
         requireNonNull(toRemove);
+        Set<Relationship> relationshipsToRemove = toRemove.getRelationships();
+        for (Relationship relationship: relationshipsToRemove) {
+            removeRelationshipFromAddressBook(relationship);
+        }
         final boolean personFoundAndDeleted = internalList.remove(toRemove);
         if (!personFoundAndDeleted) {
             throw new PersonNotFoundException();
         }
         return personFoundAndDeleted;
+    }
+
+    /**
+     * To remove the existence of this relationship completely
+     * As a single relationship is recorded in double-entries under the two persons involved
+     */
+    public boolean removeRelationshipFromAddressBook(Relationship relationshipToRemove) {
+        ReadOnlyPerson fromPerson = relationshipToRemove.getFromPerson();
+        ReadOnlyPerson toPerson = relationshipToRemove.getToPerson();
+
+        ReadOnlyPerson fromPersonCopy = fromPerson.copy();
+        ReadOnlyPerson toPersonCopy = toPerson.copy();
+
+        boolean removedFromPersonRelationship = ((Person) fromPersonCopy).removeRelationship(relationshipToRemove);
+        boolean removedToPersonRelationship = ((Person) toPersonCopy).removeRelationship(relationshipToRemove);
+        try {
+            setPerson(fromPerson, fromPersonCopy);
+            setPerson(toPerson, toPersonCopy);
+        } catch (DuplicatePersonException dpe) {
+            assert false : "impossible as there must be relationship to be deleted";
+        } catch (PersonNotFoundException psnfe) {
+            assert false : "impossible as the person will definitely be there";
+        }
+
+        return removedFromPersonRelationship && removedToPersonRelationship;
     }
 
     public void setPersons(UniquePersonList replacement) {

@@ -3,12 +3,21 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.model.relationship.Relationship;
+import seedu.address.model.relationship.RelationshipDirection;
+import seedu.address.model.relationship.UniqueRelationshipList;
+
+import seedu.address.model.relationship.exceptions.DuplicateRelationshipException;
+
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -16,34 +25,48 @@ import seedu.address.model.tag.UniqueTagList;
  * Represents a Person in the address book.
  * Guarantees: details are present and not null, field values are validated.
  */
-public class Person implements ReadOnlyPerson {
+public class Person implements ReadOnlyPerson, Comparable<Person> {
 
     private ObjectProperty<Name> name;
     private ObjectProperty<Phone> phone;
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
+    private ObjectProperty<Remark> remark;
 
     private ObjectProperty<UniqueTagList> tags;
+    private ObjectProperty<UniqueRelationshipList> relationships;
 
+    //@@ author wenmogu
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
+    public Person(Name name, Phone phone, Email email, Address address, Remark remark, Set<Tag> tags,
+                  Set<Relationship> relationships) {
+        requireAllNonNull(name, phone, email, address, remark, tags, relationships);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
+        this.remark = new SimpleObjectProperty<>(remark);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+        // protected internal relationships from changes in the arg list
+        this.relationships = new SimpleObjectProperty<>(new UniqueRelationshipList(relationships));
+    }
+
+    /**
+     * For initial construction of a Person.
+     */
+    public Person(Name name, Phone phone, Email email, Address address, Remark remark, Set<Tag> tags) {
+        this(name, phone, email, address, remark, tags, new HashSet<>());
     }
 
     /**
      * Creates a copy of the given ReadOnlyPerson.
      */
     public Person(ReadOnlyPerson source) {
-        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
-                source.getTags());
+        this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(), source.getRemark(),
+                source.getTags(), source.getRelationships());
     }
 
     public void setName(Name name) {
@@ -102,6 +125,20 @@ public class Person implements ReadOnlyPerson {
         return address.get();
     }
 
+    public void setRemark(Remark remark) {
+        this.remark.set(requireNonNull(remark));
+    }
+
+    @Override
+    public ObjectProperty<Remark> remarkProperty() {
+        return remark;
+    }
+
+    @Override
+    public Remark getRemark() {
+        return remark.get();
+    }
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -111,6 +148,7 @@ public class Person implements ReadOnlyPerson {
         return Collections.unmodifiableSet(tags.get().toSet());
     }
 
+    @Override
     public ObjectProperty<UniqueTagList> tagProperty() {
         return tags;
     }
@@ -120,6 +158,63 @@ public class Person implements ReadOnlyPerson {
      */
     public void setTags(Set<Tag> replacement) {
         tags.set(new UniqueTagList(replacement));
+    }
+
+    //@@ author wenmogu
+    /**
+     * Remove a tag from the person's tag list.
+     */
+    public boolean removeTag(Tag tagGettingRemoved) {
+        UniqueTagList tagsList = tags.get();
+        return tagsList.removeTag(tagGettingRemoved);
+    }
+
+    @Override
+    public Set<Relationship> getRelationships() {
+        return Collections.unmodifiableSet(relationships.get().toSet());
+    }
+
+    /**
+     * Add a relationship to a person's relationships
+     */
+    public void addRelationship(Relationship re) throws DuplicateRelationshipException {
+        UniqueRelationshipList reList = relationships.get();
+        ArrayList<Relationship> oppoRelationships = re.oppositeRelationships();
+        for (Relationship oppoRe: oppoRelationships) {
+            if (reList.contains(oppoRe)) {
+                throw new DuplicateRelationshipException();
+            }
+        }
+
+        if (!re.isUndirected()) {
+            Relationship directlyOppoRelationship = new Relationship(re.getToPerson(), re.getFromPerson(),
+                    RelationshipDirection.DIRECTED);
+            if (reList.contains(directlyOppoRelationship)) {
+                throw new DuplicateRelationshipException();
+            }
+        }
+        reList.add(re);
+    }
+
+    /**
+     * Removes a relationship from a person's relationships
+     */
+    public boolean removeRelationship(Relationship re) {
+        UniqueRelationshipList reList = relationships.get();
+        return reList.removeRelationship(re);
+    }
+
+    //@@author
+    @Override
+    public ReadOnlyPerson copy() {
+        Name name = this.getName();
+        Phone phone = this.getPhone();
+        Email email = this.getEmail();
+        Address address = this.getAddress();
+        Remark remark = this.getRemark();
+        Set<Tag> tags = this.getTags();
+        Set<Relationship> relationships = this.getRelationships();
+        return new Person(name, phone, email, address, remark, tags, relationships);
     }
 
     @Override
@@ -132,12 +227,31 @@ public class Person implements ReadOnlyPerson {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(name, phone, email, address, remark, tags);
     }
 
     @Override
     public String toString() {
         return getAsText();
+    }
+
+    @Override
+    public int compareTo(Person o) {
+        return this.getName().toString().compareToIgnoreCase(o.getName().toString());
+    }
+
+    /**
+     * Used in debugging to print out the relationshipList of this person
+     */
+    public void printRelationshipList() {
+        String border = "-----------------------------------------------------" + "\n";
+        String intro = "Intro: " + this.toString() + "\n";
+        String relationshipStr = "";
+        Set<Relationship> relationships = this.getRelationships();
+        for (Relationship relationship: relationships) {
+            relationshipStr = relationshipStr + relationship.toString() + "\n";
+        }
+        LogsCenter.getLogger(Person.class).fine(border + intro + relationshipStr + border);
     }
 
 }

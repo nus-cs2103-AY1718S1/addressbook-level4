@@ -45,6 +45,10 @@ public class Index {
         return new Index(oneBasedIndex - 1);
     }
 
+    public String toString() {
+        return new Integer(zeroBasedIndex + 1).toString();
+    }
+
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

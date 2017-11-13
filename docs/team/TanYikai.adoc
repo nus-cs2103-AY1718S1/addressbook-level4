@@ -1,0 +1,112 @@
+= Tan Yikai - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: Intelli
+Intelli is a desktop relationship tracker used by private investigators (PI) to manage their information and leads. The PI interacts with it using a CLI, and it has a GUI created with JavaFX and GraphStream. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-F10-B1/main/tree/master/collated/main/TanYikai.md[Functional code]] [https://github.com/CS2103AUG2017-F10-B1/main/tree/master/collated/test/TanYikai.md[Test code]] {give links to collated code files}
+
+=== Enhancement Added: Alias
+
+=== Enhancement Added: Sort
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=sort]
+
+#End of Extract#
+
+---
+
+==== Justification
+The Sort command sorts the person list alphanumerically by person's name. +
+It is useful when the addressbook has alot of entries and allows user the option to organize their addressbook for a more pleasant appearance of the addressbook data. +
+
+It is most useful in providing user with the overall content of the addressbook in an organised manner which groups those with similar names together. +
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Enhanced add command
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=EnhancedAdd]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+The original implementation of the add command requires the user to input every field (name, phone, email, address, tag) before enabling the person to be added to the addressbook. +
+This causes inconvenience to the user as the user needs to remember the long sequence of commands before able to successfully implement the add command. +
+In addition, during a practical use, the user may not always know all the fields related to a particular person but may wish to still put some information regarding the person into the addressbook. +
+
+Hence, the Enhanced add command was made which only made the name input of the add command compulsory. +
+The rationale behind deciding on at least a single compulsory field is so that it is more logical to have at least one information before adding into the addressbook and that an empty addressbook is still invalid. +
+Name was chosen as the compulsory field as a person's name is the main information that will identify and distinguish one person input from another in the adressbook. +
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=EnhancedAddCommand]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Integrated remark
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=EnhancedAddCommand]
+
+#End of Extract#
+
+---
+
+==== Justification
+Initially, the remark command was a separate command because the original purpose of remark is add and edit a remark field on 2 person concurrently. +
+The initial idea for the remark field was for the user to put down a common relationship between 2 person in the form of sentences or words describing the relationship. +
+This feature was later made obsolete by the more comprehensive relationship feature and hence the remark command was removed. +
+
+However, we still want the user to be able to store sentences or notes regarding the person entries into the addressbook. +
+The remark could accommodate sentences and has no limitations which is a difference from the existing Tag feature which can only accept single words. +
+The Tag was also not modified as it will defeat the purpose of a tag which should be short and clear for user to remember. +
+Hence a new field which was remark was integrated into the whole addressbook system through the modification of existing add and edit command. +
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=EnhancedAddCommand]
+
+#End of Extract#
+
+---
+
+==== Enhancement Proposed: Enhanced sort command
+
+---
+
+=== Other contributions
+
+* Enhanced Remark Command which was left out of the final product due to the more fitting relationship graph
+
+

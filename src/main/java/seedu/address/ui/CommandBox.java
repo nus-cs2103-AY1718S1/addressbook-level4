@@ -27,15 +27,29 @@ public class CommandBox extends UiPart<Region> {
     private final Logic logic;
     private ListElementPointer historySnapshot;
 
+    private ResultDisplay linkedResultDisplay;
+
     @FXML
     private TextField commandTextField;
 
+    //@@author joanneong
     public CommandBox(Logic logic) {
         super(FXML);
         this.logic = logic;
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
         historySnapshot = logic.getHistorySnapshot();
+    }
+
+    void setCustomAutoComplete(ResultDisplay resultDisplay) {
+        this.linkedResultDisplay = resultDisplay;
+    }
+
+    /**
+     * Returns the {@code TextField} in the command box (i.e. the user input).
+     */
+    protected TextField getCommandTextField() {
+        return commandTextField;
     }
 
     /**
@@ -51,15 +65,28 @@ public class CommandBox extends UiPart<Region> {
 
             navigateToPreviousInput();
             break;
+
         case DOWN:
             keyEvent.consume();
             navigateToNextInput();
             break;
+
+        case TAB:
+            keyEvent.consume();
+            autoCompleteWithTopSuggestion();
+            break;
+
+        case CONTROL:
+            keyEvent.consume();
+            clearInput();
+            break;
+
         default:
             // let JavaFx handle the keypress
         }
     }
 
+    //@@author
     /**
      * Updates the text field with the previous input in {@code historySnapshot},
      * if there exists a previous input in {@code historySnapshot}
@@ -86,6 +113,28 @@ public class CommandBox extends UiPart<Region> {
         replaceText(historySnapshot.next());
     }
 
+    //@@author joanneong
+    /**
+     * Sets the command box to the top valid suggestion that is not an empty string.
+     */
+    private void autoCompleteWithTopSuggestion() {
+        String topSuggestion = linkedResultDisplay.getCurrentTopSuggestion();
+
+        if (!topSuggestion.isEmpty()) {
+            replaceText(topSuggestion);
+        }
+    }
+
+    /**
+     * Sets the command box to be empty.
+     *
+     * This is essentially a shortcut for users to delete typed inputs.
+     */
+    private void clearInput() {
+        replaceText("");
+    }
+
+    //@@author
     /**
      * Sets {@code CommandBox}'s text field with {@code text} and
      * positions the caret to the end of the {@code text}.

@@ -29,6 +29,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
+import seedu.address.testutil.StorageStub;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for EditCommand.
@@ -178,7 +179,7 @@ public class EditCommandTest {
      */
     private EditCommand prepareCommand(Index index, EditPersonDescriptor descriptor) {
         EditCommand editCommand = new EditCommand(index, descriptor);
-        editCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        editCommand.setData(model, new CommandHistory(), new UndoRedoStack(), new StorageStub());
         return editCommand;
     }
 }

@@ -9,20 +9,22 @@ public class MainWindowHandle extends StageHandle {
 
     private final PersonListPanelHandle personListPanel;
     private final ResultDisplayHandle resultDisplay;
+    private final ResultDisplayHandle infoDisplay;
     private final CommandBoxHandle commandBox;
     private final StatusBarFooterHandle statusBarFooter;
     private final MainMenuHandle mainMenu;
-    private final BrowserPanelHandle browserPanel;
+    private final GraphDisplayHandle graphDisplay;
 
     public MainWindowHandle(Stage stage) {
         super(stage);
 
         personListPanel = new PersonListPanelHandle(getChildNode(PersonListPanelHandle.PERSON_LIST_VIEW_ID));
         resultDisplay = new ResultDisplayHandle(getChildNode(ResultDisplayHandle.RESULT_DISPLAY_ID));
+        infoDisplay = new ResultDisplayHandle(getChildNode(ResultDisplayHandle.INFO_DISPLAY_ID));
         commandBox = new CommandBoxHandle(getChildNode(CommandBoxHandle.COMMAND_INPUT_FIELD_ID));
         statusBarFooter = new StatusBarFooterHandle(getChildNode(StatusBarFooterHandle.STATUS_BAR_PLACEHOLDER));
         mainMenu = new MainMenuHandle(getChildNode(MainMenuHandle.MENU_BAR_ID));
-        browserPanel = new BrowserPanelHandle(getChildNode(BrowserPanelHandle.BROWSER_ID));
+        graphDisplay = new GraphDisplayHandle(getChildNode(GraphDisplayHandle.DISPLAY_ID));
     }
 
     public PersonListPanelHandle getPersonListPanel() {
@@ -31,6 +33,10 @@ public class MainWindowHandle extends StageHandle {
 
     public ResultDisplayHandle getResultDisplay() {
         return resultDisplay;
+    }
+
+    public ResultDisplayHandle getInfoDisplay() {
+        return infoDisplay;
     }
 
     public CommandBoxHandle getCommandBox() {
@@ -45,7 +51,7 @@ public class MainWindowHandle extends StageHandle {
         return mainMenu;
     }
 
-    public BrowserPanelHandle getBrowserPanel() {
-        return browserPanel;
+    public GraphDisplayHandle getGraphDisplay() {
+        return graphDisplay;
     }
 }

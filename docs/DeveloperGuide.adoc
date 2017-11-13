@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= Intelli - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,9 +10,10 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-F10-B1/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+Originally By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT` +
+Updated By: `CS2103 F10-B1`
 
 == Setting up
 
@@ -148,20 +149,22 @@ The sections below give more details of each component.
 
 === UI component
 
-image::UiClassDiagram.png[width="800"]
+image::UiComponentClassDiagram.png[width="800"]
 _Figure 2.2.1 : Structure of the UI Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `GraphDisplay` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
-The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
+The `UI` component uses JavaFx UI framework. Additionally, the graph display also involves the dynamic graph library GraphStream. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
 The `UI` component,
 
 * Executes user commands using the `Logic` component.
 * Binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change.
 * Responds to events raised from various parts of the App and updates the UI accordingly.
+
+Note that the `CommandBox` and `ResultDisplay` are coupled components in our design due to the autocompletion feature.
 
 === Logic component
 
@@ -217,6 +220,163 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 == Implementation
 
 This section describes some noteworthy details on how certain features are implemented.
+
+// tag::addrelationship[]
+=== addRelationship command
+
+The addRelationship command adds a directed or undirected relationship between two persons in the address book.
+Name and confidence estimate are the optional fields in this command.
+The user is able to view the changes in the relationships in the graph window.
+
+==== Design Considerations
+
+**Aspect:** Implementation for addRelationship command +
+**Alternative 1 (current choice):** The command is implemented by adding one additional attribute `UniqueRelationshipList` to each person. +
+**Pros:** Implementation is easier as it follows the same logic as having the UniqueTagList. +
+**Cons:** All the relationships in the address book are not organized into a single entity (e.g. an adjacency list) which is more intuitive when the implementation involves a graph. +
+**Alternative 2:** Organize all the relationships into a single entity, instead of making them into lists under persons in the address book. +
+**Pros:** It is more intuitive to organize all the relationships into a single entity when the implementation involves a graph. +
+**Cons:** Maintenance of this single entity of graph can be costly as it can become massive. +
+**Cons:** Currently a person is identified by his/her index in the most recent listing. As the indexes of persons change, matching the relationship to the correct persons involved will be a headache.
+
+---
+
+**Aspect:** Record of the relationship in the address book +
+**Alternative 1 (current choice):** A relationship between two persons are recorded in both persons' `UniqueRelationshipList`. +
+**Pros:** Easy search of the relationship in the address book as both parties involved in the relationship have record of it. +
+**Cons:** Maintenance of the relationships is troublesome as a single relationship has to be added, modified or deleted twice. +
+**Alternative 2:** A relationship between two persons are recorded in the `fromPerson`'s `UniqueRelationshipList`, except that when the relationship is undirected, it is recorded twice under both parties. +
+**Pros:** Easy maintenance of the relationships. +
+**Cons:** More scenarios to consider when performing actions to the relationship. Hence, it will lead to more difficult implementation.
+// end::addrelationship[]
+
+// tag::deleterelationship[]
+=== deleteRelationship command
+
+The deleteRelationship command deletes a relationship between two persons in the address book.
+The user is able to view the disappearance of the relationship in the graph window.
+
+==== Design Considerations
+
+**Aspect:** Implementation for deleteRelationship command +
+**Alternative 1 (current choice):** The indexes of the persons specified in user input does not matter. +
+**Pros:** User only needs to remember the two parties involved in the relationship to be deleted, making this command more user friendly. +
+**Cons:** More memory needed for the double record of relationships under both parties involved. +
+**Alternative 2:** The indexes of the persons specified in user input matters. +
+**Pros:** Less memory needed for recording the relationship. +
+**Cons:** User has to know the specific information of the relationship, making this command not user-friendly.
+// end::deleterelationship[]
+
+// tag::editrelationship[]
+=== `editRelationship` command
+
+The `editRelationship` command edits a relationship between two persons in Intelli. Using this command, users can update the names and confidence estimates of relationships existing in Intelli without having to delete and add a new relationship.
+
+==== Design Considerations
+
+**Aspect:** Implementation for `editRelationship` command +
+**Alternative 1 (current choice):** The command is implemented internally as deleting an existing relationship and then adding a new relationship with the new name and the new confidence estimate. +
+**Pros:** Implementation does not have to access the internal state of a `Relationship`, and allows for immediate updates to the graph. +
+**Cons:** Additional step involved in having to delete and then add a new relationship between the same two persons. +
+**Alternative 2:** The command directly accesses and modifies the internal state of a `Relationship`. +
+**Pros:** The command can be completed in a single operation, which may be faster then deleting and adding a new relationship. +
+**Cons:** The change cannot be reflected dynamically on the graph after a successful edit.
+
+---
+
+**Aspect:** Type of command implemented +
+**Alternative 1 (current choice):** `editRelationship` command extends `UndoableCommand` instead of `Command`. +
+**Pros:** Users can easily undo their changes if they accidentally update the wrong relationship attribute or have mistakes in the updates (i.e. in the new relationship name/ confidence estimate). +
+**Cons:** Additional memory needed for recording the previous stage of the address book. +
+**Alternative 2:** `editRelationship` command extends `Command`. +
+**Pros:** No additional memory needed for recording the previous stage of the address book. +
+**Cons:** Users can do another `editRelationship` command to achieve the `undo` effect.
+// end::editrelationship[]
+
+// tag::removetag[]
+=== removeTag command
+
+The removeTag command removes a tag with the specified name from the address book. All the appearances of the tag in the address book are removed.
+This command is implemented in the style of the `edit` command and `delete` command.
+
+==== Design Considerations
+
+**Aspect:** Implementation for removeTag command +
+**Alternative 1 (current choice):** The command is implemented using methods which remove the tag from each person's tag list. +
+**Pros:** Implementation is modular and less dependent on methods used for other commands. +
+**Cons:** More tedious to implement since it is not making use of the existing resources such as `edit` command. +
+**Alternative 2:** Adapt current `edit` command so that removing the tag is done by editing every person's tag list. +
+**Pros:** Making use of existing resources and easier implementation. +
+**Cons:** More dependency between commands and the relationship between `edit` and `remove` is not clear.
+
+---
+
+**Aspect:** Type of command implemented +
+**Alternative 1 (current choice):** `removeTag` command extends `UndoableCommand` instead of `Command`. +
+**Pros:** Accidental removal of tags can be recovered. +
+**Cons:** Additional memory needed for recording the previous stage of the address book. +
+**Alternative 2:** `removeTag` command extends `Command`. +
+**Pros:** No additional memory needed for recording the previous stage of the address book. +
+**Cons:** As the removal of Tag is from all the persons in address book, an accidental removal can be disastrous if the user does not intend a complete removal.
+
+---
+
+**Aspect:** Removal of the tag from all instead of some by user's choice +
+**Alternative 1 (current choice):** The command currently does not support the removal of a tag from persons specified in the user input. +
+**Pros:** Easier implementation since it does not deal with the parsing of more user input. +
+**Cons:** The user cannot remove the tags from a few specific people in one command.  +
+**Alternative 2:** The command allows the user input to specify the persons from whom the tag should be removed. +
+**Pros:** The user can remove the tags from a few specific people in one command. +
+**Cons:** Implementation is more difficult as parsing of additional user input required. It is also unlikely for user to remove the tag from many persons at once, hence there is a function overlap with `edit` command.
+// end::removetag[]
+
+// tag::find[]
+=== Enhanced `find` command
+
+A basic `find` command is given in the original codebase which allows persons to be found using their names.
+
+In order to enhance the `find` command, the `find` command is extended to support searches by name/email/phone number/address/tag. This is implemented in the style of the `add` command, and restricts the search to a particular aspect through parsing prefixes (`/n`, `/p`, `/e`, `/a`, `/t`). Without a prefix (i.e. `find`), the search is global, and returns any matches in any aspects (name/email/phone number/address/tag).
+
+==== Design Considerations
+
+**Aspect:** Implementation for enhanced `find` command +
+**Alternative 1 (current choice):** Adapt current `FindCommand` and add new predicates for each new type of search. +
+**Pros:** Easier to implement since we can reuse existing resources such as `ArgumentTokenizer` used in `add` command. +
+**Cons:** Implementation is less modular. +
+**Alternative 2:** Add a new subclass inheriting from `FindCommand` for each new type of search. +
+**Pros:** Implementation is more modular, and developers can update code more easily. +
+**Cons:** More tedious to implement since we cannot make use of existing resources such as `ArgumentTokenizer` used in `add` command.
+
+---
+
+**Aspect:** Type of command implemented +
+**Alternative 1 (current choice):** `find` command inherits from `Command` instead of `UndoableCommand.` +
+**Pros:** Easier to implement since we do not need to keep track of previous searches. +
+**Cons:** User has to retype all search fields if user wants to repeat a particular search. +
+**Alternative 2:** `find` command inherits from `UndoableCommand`. +
+**Pros:** `find` becomes undoable, and user can repeat a find easily by undoing the command. +
+**Cons:** It is unlikely that a user will repeat a `find` multiple times in a short period of time, rendering this option somewhat unnecessary.
+
+---
+
+**Aspect:** User input for narrowed search field in enhanced `find` command +
+**Alternative 1 (current choice):** Parse prefix in user input to narrow the search to a particular aspect (e.g. `n/`). +
+**Pros:** Easier for user for learn command since it is similar to the `add` command format. +
+**Cons:** Must remember exact prefix for each search field (i.e. `/n`, `/p`, `/e`, `/a`, `/t`). +
+**Alternative 2:** Parse full keywords in user input to narrow the search to a particular aspect (e.g. `name/`). +
+**Pros:** More intuitive for users as they can simply type what they want to look for. +
+**Cons:** User has to type longer commands.
+
+---
+
+**Aspect:** Scope of narrowed search +
+**Alternative 1 (current choice):** Users can only search within a single narrowed field, or must search through all possible fields (e.g. cannot search for names and emails only). +
+**Pros:** Easier to implement, parser only needs to check for a single prefix type and create corresponding predicate for the prefix type. +
+**Cons:** Fewer search choices available for users. +
+**Alternative 2:** Users can search within an arbitrary number of narrowed fields (e.g. can search for names and emails only, or search for names, emails, and addresses). +
+**Pros:** More search options available for users, more advanced search functions. +
+**Cons:** Harder to implement since the parser will have to handle more prefixes.
+//end::find[]
 
 // tag::undoredo[]
 === Undo/Redo mechanism
@@ -344,6 +504,59 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Pros:** We do not need to maintain a separate stack, and just reuse what is already in the codebase. +
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
+
+// tag::EnhancedAddCommand[]
+=== Enhanced add command mechanism
+A more flexible add command that only requires the name to be specified at the time of its execution. The other fields such as phone, email, address and remark need not be specified at the time of add command execution. +
+A separate parser for phone, email, address and remark are used to accommodate this enhancement to isolate the interdependency between the modified enhanced add command with the other commands. +
+
+
+==== Design Considerations
+
+**Aspect:** Implementation of enhanced 'add command' +
+**Alternative 1 (current choice):** Add new parser methods `parseAddPhone`, `parseAddEmail` and `parseAddAddress`  +
+**Pros:** Able to isolate the behaviour of the add command and the edit command so that editing an existing Person will not overwrite the fields that should not be edited. +
+**Cons:** More difficult to implement as more test cases has to be added for the new parser methods. +
+**Alternative 2:** Modify existing parser method `parsePhone`, `parseEmail` and `parseAddress` +
+**Pros:** Easier to implement as we can re-use existing tests and codes and just add minor modifications +
+**Cons:** The behaviour of edit command overlaps with the behaviour of the add command, causing unintended overwrite of other fields such as address when we don't want to. +
+
+---
+
+**Aspect:** Implement separate remark instead of modifying tag +
+**Alternative 1 (current choice):** Create a new separate remark command +
+**Pros:** Able to provide a cleaner user interface and experience. Also reduces complications in modifying existing working tag system. +
+**Cons:** More work has to be done in testing and creating a new command. +
+**Alternative 2:** update the tag to accept sentences for remarks +
+**Pros:** Easy to implement as we do not need to add a new command. +
+**Cons:** The Tag may be more difficult to find and more work is needed to change the find tag command. Additionally, the user interface of tag command also needs to be changed to accommodate long tags. +
+// end::EnhancedAddCommand[]
+
+// tag::clearHistory[]
+=== `clearHistory` command
+
+The `clearHistory` command is implemented as a regular command that calls `.clear()` methods added to `CommandHistory` and `UndoRedoStack`, which clears the command history and the undo/redo stack respectively.
+
+==== Design Considerations
+
+**Aspect:** Type of `clearHistory` command +
+**Alternative 1 (current choice):** `Command` +
+**Pros:** History is permanently cleared. +
+**Cons:** Impossible to undo accidental clearing of history, meaning all undoable changes become permanent. +
+**Alternative 2:** `UndoableCommand` +
+**Pros:** Possible to undo accidental clearing of history. +
+**Cons:** Since the most likely use for `clearHistory` is for it to be permanent, having it be undoable is counterintuitive to user expectations.
+
+---
+
+**Aspect:** Behaviour of `clearHistory` command on empty history +
+**Alternative 1 (current choice):** Clear anyway and indicate success +
+**Pros:** Simple to implement, no additional cases to take care of. +
+**Cons:** May be confusing to declare an empty history cleared. +
+**Alternative 2:** Indicate that history is empty. +
+**Pros:** Clearer messages about the state of the command history. +
+**Cons:** More complex to implement, and the end result of clearing an empty history also results in a cleared history, meaning the user intention of clearing their history is fufilled regardless of which alternative is chosen.
+// end::clearHistory[]
 
 === Logging
 
@@ -721,20 +934,84 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+4+| Create operations
 
 |`* * *` |user |add a new person |
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |user |add tags to a person |categorise the people I know
+
+|`* * *` |user |add relationships between people |show that two persons know each other
+
+|`* *` |user |add link:#named-relationship[named relationships] between people |show that two persons know each other via a specific method
+
+|`* *` |user |add link:#confidence-estimate[confidence estimate] to a person's attributes |differentiate between verified and unverified pieces of information
+
+|`*` |user |add remarks about a relationship between people |record detailed information about the relationship between two people
+
+|`*` |user with many persons in the address book |add profile pictures to each person |distinguish between people with the same name
+
+4+| Read operations
+
+|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+
+|`* * *` |user |see the network of relationships between people |visualise connections and groups in the network
+
+|`* *` |user |see the history of commands I have typed |keep track of what I have done to my address book
+
+|`*` |user |see the people a person is related to |find people related to a person
+
+|`*` |user |display relationships only above a certain link:#confidence-estimate[confidence estimate] |find a more confident way to know a person
+
+4+| Find operations
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
-|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+|`* * *` |user |find a person by address |locate people who are physically close to each other
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* * *` |user |find a person by tag |locate people who are in the same category
+
+|`* *` |user |find a person by email |locate people who may share the same emails / domains (working for same company)
+
+|`*` |user |find shortest relationship distance between two people |find the most efficient way to know a person
+
+4+| Update operations
+
+|`* * *` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`* * *` |user |update a person's details |update a person's details without having to create a new contact
+
+|`* *` |user |update link:#name[name of the relationship] of a relationship |show that two persons know each other via a specific method
+
+|`* *` |user |update link:#confidence-estimate[confidence estimate] of a relationship |differentiate between verified and unverified pieces of information
+
+|`*` |user |change the colour of the network |personalise my address book
+
+4+| Delete operations
+
+|`* * *` |user |delete a person |remove entries that I no longer need
+
+|`* * *` |user |delete relationships between people |remove relationships between people that are incorrect
+
+|`* * *` |user |delete all persons |reset my address book easily
+
+|`* *` |cautious user |clear my history |hide my previous commands from later users
+
+|`*` |user |remove link:#confidence-estimate[confidence estimate] from a person's attributes |remove unneeded confidence estimates
+
+4+| Other operations
+
+|`* * *` |careless user | undo the last command that I made | revert any mistakes
+
+|`* * *` |careless user | redo the last command that I made | undo my 'undo'
+
+|`* *` |advanced user |type shorter link:#command-alias[command aliases] |do operations faster
+
+|`*` |user |set a password for my address book |keep my address book private
+
+|`*` |user |share my address book with other people |
+
+|`*` |user |have the program autocorrect my commands |input information correctly
 |=======================================================================
-
-{More to be added}
 
 [appendix]
 == Use Cases
@@ -767,6 +1044,195 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+[discrete]
+=== Use case: Edit a person's details
+
+*MSS*
+
+1. User requests to list persons
+2. AddressBook shows a list of persons
+3. User requests to edit the details of a specific person in the list
+4. AddressBook updates details of the specified person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3b. User does not specify field to edit.
++
+[none]
+** 3b1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3c. User updates valid field with new value that is invalid.
++
+[none]
+** 3c1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Undo last undoable command
+
+*MSS*
+
+1. User requests to undo last undoable command
+2. AddressBook undoes the last undoable command
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. The `undo` command is the first command.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Redo most recent undone command
+
+*MSS*
+
+1. User requests to redo most recently undone command
+2. AddressBook redoes the last undone command
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. The `redo` command is the first command
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Add a relationship between two persons
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to link two specific persons in the list
+4.  AddressBook links those two persons
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. Either of the given indices is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Delete a relationship between two persons
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to delete a relationship between two specific persons
+4.  AddressBook deletes the relationship between those two persons
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. Either of the given indices is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Add a remark
+
+*MSS*
+
+1. User requests to list persons
+2. AddressBook shows a list of persons
+3. User requests to add/update the remark to a specific person in the list
+4. AddressBook add/update the remark of the specified person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3b. User does not specify a remark to add.
++
+[none]
+** 3b1. AddressBook overwrites the previous remark and replaced it with an empty remark.
++
+Use case ends.
+
+* 3c. User updates valid remark with new value that is invalid.
++
+[none]
+** 3c1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Sort a list of persons
+
+*MSS*
+
+1.  User requests to sort a list of persons
+2.  AddressBook sorts a list of persons alphanumerically by name
+3.  AddressBook shows all sorted persons in the sorted list
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
 {More to be added}
 
 [appendix]
@@ -775,11 +1241,28 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-{More to be added}
+.  Should be able to give a response within 1 second
+.  Should be able to hide personal information
+.  Should be simple enough for a novice to utilise and navigate
+.  Data should only be read and modified by authorized party
+.  Should be easily maintained by other programmers
 
 [appendix]
 == Glossary
+
+[[command-alias]]
+Command alias
+
+....
+Shorthand form of a command
+....
+
+[[confidence-estimate]]
+Confidence estimate
+
+....
+A percentage that represents how confident the user is in the information of the relationship being accurate
+....
 
 [[mainstream-os]]
 Mainstream OS
@@ -788,11 +1271,11 @@ Mainstream OS
 Windows, Linux, Unix, OS-X
 ....
 
-[[private-contact-detail]]
-Private contact detail
+[[relationship-name]]
+Relationship name
 
 ....
-A contact detail that is not meant to be shared with others
+A specific status for the relationship(eg. lecturer-student)
 ....
 
 [appendix]

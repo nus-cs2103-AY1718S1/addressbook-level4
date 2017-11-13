@@ -1,0 +1,150 @@
+= Joanne Ong - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: Intelli
+Intelli is a desktop relationship tracker used by private investigators (PI) to manage their information and leads. The PI interacts with it using a CLI, and it has a GUI created with JavaFX and GraphStream. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-F10-B1/main/blob/master/collated/main/joanneong.md[Functional code]] [https://github.com/CS2103AUG2017-F10-B1/main/blob/master/collated/test/joanneong.md[Test code]]
+
+=== Enhancement Added: Enhanced find command
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=find]
+
+#End of Extract#
+---
+
+==== Justification
+
+---
+This offers a lot of flexibility for users who wish to find different information, and does not limit them to a simple name search.
+---
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=find]
+
+#End of Extract#
+---
+
+=== Enhancement Added: Edit relationship command
+
+==== External behaviour
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=editrelationship]
+
+#End of Extract#
+---
+
+==== Justification
+
+---
+This allows users to edit relationship attributes using a single operation. This is particularly useful since the target audience is private investigators who are likely to change and update relationship information frequently after they have gathered more intelligence.
+---
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=editrelationship]
+
+#End of Extract#
+---
+
+=== Enhancement Added: Command autocompletion
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=autocomplete]
+
+#End of Extract#
+---
+
+==== Justification
+
+---
+Certain commands are lengthy, and users who would like to enter commands quickly will find this a handy feature.
+
+Additionally, users easily see what commands are supported by Intelli since all commands are displayed as valid suggestions if the user does not input any value in the command box.
+
+
+==== Implementation
+
+---
+This has been implemented by coupling the command box and the result display. When there is a change to the user input in the command box, the suggestion displayed in the result display will change accordingly.
+
+
+=== Enhancement Added: Command information display
+
+==== External behavior
+
+---
+When the user types in the command box, and the input matches a command word, the corresponding usage information will be displayed in a side panel.
+
+
+==== Justification
+
+---
+There are commands which require a number of parameters, and this can be a hassle for users to remember.
+
+
+==== Implementation
+
+---
+This is done by adding a new display component to the main window, and binding changes to the command box to this new component.
+
+
+=== Enhancement Added: Integrated graph display
+
+==== External behavior
+
+---
+This ensures that the graph display is successfully integrated into the application instead of opening an additional window.
+
+
+==== Justification
+
+---
+The application should be a coherent whole instead of splitting into two unsightly windows.
+
+
+==== Implementation
+
+---
+This is done with the help of Java SwingNodes and JComponents. The graph is embedded in a SwingNode and intialised when the application starts up..
+
+
+=== Enhancement Added: Enhanced graph display
+
+==== External behavior
+
+---
+Improves the aesthetics of the integrated graph display.
+
+
+==== Justification
+
+---
+This improves the user interface, making it more convenient for users to view their contacts and relationships on the graph.
+
+Additionally, this adds to the aesthetic appeal of the application.
+
+=== Other contributions
+
+* Tidy up the user guide

@@ -1,6 +1,5 @@
 package guitests;
 
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -29,10 +28,6 @@ public class HelpWindowTest extends AddressBookGuiTest {
         getMainMenu().openHelpWindowUsingAccelerator();
         assertHelpWindowOpen();
 
-        getBrowserPanel().click();
-        getMainMenu().openHelpWindowUsingAccelerator();
-        assertHelpWindowNotOpen();
-
         //use menu button
         getMainMenu().openHelpWindowUsingMenu();
         assertHelpWindowOpen();
@@ -51,13 +46,6 @@ public class HelpWindowTest extends AddressBookGuiTest {
 
         new HelpWindowHandle(guiRobot.getStage(HelpWindowHandle.HELP_WINDOW_TITLE)).close();
         mainWindowHandle.focus();
-    }
-
-    /**
-     * Asserts that the help window isn't open.
-     */
-    private void assertHelpWindowNotOpen() {
-        assertFalse(ERROR_MESSAGE, HelpWindowHandle.isWindowPresent());
     }
 
 }

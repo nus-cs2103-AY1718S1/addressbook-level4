@@ -5,13 +5,13 @@ import static java.util.Objects.requireNonNull;
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
- * Represents a Person's name in the address book.
+ * Represents a Person/Relationship's name in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidName(String)}
  */
 public class Name {
-
+    public static final Name UNSPECIFIED = new Name();
     public static final String MESSAGE_NAME_CONSTRAINTS =
-            "Person names should only contain alphanumeric characters and spaces, and it should not be blank";
+            "Names should only contain alphanumeric characters and spaces, and it should not be blank";
 
     /*
      * The first character of the address must not be a whitespace,
@@ -22,6 +22,14 @@ public class Name {
     public final String fullName;
 
     /**
+     * The default Name constructor when Name is not specified by the user
+     * Special for Relationship
+     */
+    private Name() {
+        this.fullName = "";
+    }
+
+    /**
      * Validates given name.
      *
      * @throws IllegalValueException if given name string is invalid.
@@ -29,7 +37,7 @@ public class Name {
     public Name(String name) throws IllegalValueException {
         requireNonNull(name);
         String trimmedName = name.trim();
-        if (!isValidName(trimmedName)) {
+        if (!isValidName(trimmedName) && !trimmedName.isEmpty()) {
             throw new IllegalValueException(MESSAGE_NAME_CONSTRAINTS);
         }
         this.fullName = trimmedName;

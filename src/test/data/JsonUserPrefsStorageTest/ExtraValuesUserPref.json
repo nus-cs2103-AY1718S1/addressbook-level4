@@ -7,6 +7,12 @@
       "x" : 300,
       "y" : 100,
       "z" : 99
+    },
+    "tagColours" : {
+      "colleagues" : "green",
+      "neighbours" : "blue",
+      "family" : "yellow",
+      "friends" : "red"
     }
   },
   "addressBookFilePath" : "addressbook.xml",

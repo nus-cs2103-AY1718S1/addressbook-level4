@@ -2,6 +2,7 @@ package seedu.address;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.function.Supplier;
 
 import javafx.stage.Screen;
@@ -64,7 +65,7 @@ public class TestApp extends MainApp {
         UserPrefs userPrefs = super.initPrefs(storage);
         double x = Screen.getPrimary().getVisualBounds().getMinX();
         double y = Screen.getPrimary().getVisualBounds().getMinY();
-        userPrefs.updateLastUsedGuiSetting(new GuiSettings(600.0, 600.0, (int) x, (int) y));
+        userPrefs.updateLastUsedGuiSetting(new GuiSettings(600.0, 600.0, (int) x, (int) y, new HashMap<>()));
         userPrefs.setAddressBookFilePath(saveFileLocation);
         userPrefs.setAddressBookName(ADDRESS_BOOK_NAME);
         return userPrefs;

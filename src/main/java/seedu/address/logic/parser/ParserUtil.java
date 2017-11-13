@@ -14,6 +14,9 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Remark;
+import seedu.address.model.relationship.ConfidenceEstimate;
+import seedu.address.model.relationship.RelationshipDirection;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -29,6 +32,7 @@ public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
     public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
+    public static final String MESSAGE_INVALID_DIRECTION = "Direction must be directed or undirected.";
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -53,6 +57,16 @@ public class ParserUtil {
     }
 
     /**
+     * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
+     * If {@code name} is not present, {@code Optional<Name.UNSPECIFIED>} will be returned
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Name> parseRelationshipName(Optional<String> name) throws IllegalValueException {
+        requireNonNull(name);
+        return name.isPresent() ? Optional.of(new Name(name.get())) : Optional.of(Name.UNSPECIFIED);
+    }
+
+    /**
      * Parses a {@code Optional<String> phone} into an {@code Optional<Phone>} if {@code phone} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
@@ -60,7 +74,17 @@ public class ParserUtil {
         requireNonNull(phone);
         return phone.isPresent() ? Optional.of(new Phone(phone.get())) : Optional.empty();
     }
-
+    //@@author TanYikai
+    /**
+     * Parses a {@code Optional<String> phone} into an {@code Optional<Phone>} if {@code phone} is present.
+     * If {@code phone} is not present, {@code String Unspecified phone number} is given
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Phone> parseAddPhone(Optional<String> phone) throws IllegalValueException {
+        requireNonNull(phone);
+        return phone.isPresent() ? Optional.of(new Phone(phone.get())) : Optional.of(Phone.UNSPECIFIED);
+    }
+    //@@author
     /**
      * Parses a {@code Optional<String> address} into an {@code Optional<Address>} if {@code address} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
@@ -69,7 +93,17 @@ public class ParserUtil {
         requireNonNull(address);
         return address.isPresent() ? Optional.of(new Address(address.get())) : Optional.empty();
     }
-
+    //@@author TanYikai
+    /**
+     * Parses a {@code Optional<String> address} into an {@code Optional<Address>} if {@code address} is present.
+     * If {@code address} is not present, {@code String Unspecified address} is given
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Address> parseAddAddress(Optional<String> address) throws IllegalValueException {
+        requireNonNull(address);
+        return address.isPresent() ? Optional.of(new Address(address.get())) : Optional.of(Address.UNSPECIFIED);
+    }
+    //@@author
     /**
      * Parses a {@code Optional<String> email} into an {@code Optional<Email>} if {@code email} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
@@ -78,7 +112,36 @@ public class ParserUtil {
         requireNonNull(email);
         return email.isPresent() ? Optional.of(new Email(email.get())) : Optional.empty();
     }
+    //@@author TanYikai
+    /**
+     * Parses a {@code Optional<String> email} into an {@code Optional<Email>} if {@code email} is present.
+     * If {@code email} is not present, {@code String Unspecified email} is given
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Email> parseAddEmail(Optional<String> email) throws IllegalValueException {
+        requireNonNull(email);
+        return email.isPresent() ? Optional.of(new Email(email.get())) : Optional.of(Email.UNSPECIFIED);
+    }
 
+    /**
+     * Parses a {@code Optional<String> remark} into an {@code Optional<Remark>} if {@code remark} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Remark> parseRemark(Optional<String> remark) throws IllegalValueException {
+        requireNonNull(remark);
+        return remark.isPresent() ? Optional.of(new Remark(remark.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code Optional<String> remark} into an {@code Optional<Remark>} if {@code remark} is present.
+     * If {@code remark} is not present, {@code String Unspecified remark} is given
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Remark> parseAddRemark(Optional<String> remark) throws IllegalValueException {
+        requireNonNull(remark);
+        return remark.isPresent() ? Optional.of(new Remark(remark.get())) : Optional.of(Remark.UNSPECIFIED);
+    }
+    //@@author
     /**
      * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
      */
@@ -89,5 +152,33 @@ public class ParserUtil {
             tagSet.add(new Tag(tagName));
         }
         return tagSet;
+    }
+
+    /**
+     * Parses a String into a RelationshipDirection
+     */
+    public static RelationshipDirection parseDirection(String direction) throws IllegalValueException {
+        requireNonNull(direction);
+        if (direction.compareToIgnoreCase("directed") == 0) {
+            return RelationshipDirection.DIRECTED;
+        } else if (direction.compareToIgnoreCase("undirected") == 0)  {
+            return RelationshipDirection.UNDIRECTED;
+        } else {
+            throw new IllegalValueException(MESSAGE_INVALID_DIRECTION);
+        }
+    }
+
+    /**
+     * Parses a {@code Optional<String> estimate} into an {@code Optional<ConfidenceEstimate>}
+     * if {@code estimate} is present.
+     * If {@code estimate} is not present, {@code Optional<ConfidenceEstimate.Unspecified>} is returned
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<ConfidenceEstimate> parseConfidenceEstimate(Optional<String> estimate)
+            throws IllegalValueException {
+        requireNonNull(estimate);
+        return estimate.isPresent() ? Optional.of(new ConfidenceEstimate(estimate.get()))
+                : Optional.of(ConfidenceEstimate.UNSPECIFIED);
+
     }
 }

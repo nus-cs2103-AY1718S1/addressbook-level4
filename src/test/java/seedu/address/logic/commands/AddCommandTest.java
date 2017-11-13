@@ -13,18 +13,29 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.person.exceptions.RelationshipNotFoundException;
+import seedu.address.model.person.exceptions.TagNotFoundException;
+import seedu.address.model.relationship.ConfidenceEstimate;
+import seedu.address.model.relationship.RelationshipDirection;
+import seedu.address.model.relationship.exceptions.DuplicateRelationshipException;
 import seedu.address.testutil.PersonBuilder;
+import seedu.address.testutil.StorageStub;
 
 public class AddCommandTest {
 
@@ -88,7 +99,7 @@ public class AddCommandTest {
      */
     private AddCommand getAddCommandForPerson(Person person, Model model) {
         AddCommand command = new AddCommand(person);
-        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        command.setData(model, new CommandHistory(), new UndoRedoStack(), new StorageStub());
         return command;
     }
 
@@ -116,6 +127,18 @@ public class AddCommandTest {
         public void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
             fail("This method should not be called.");
         }
+        @Override
+        public void deleteRelationship(Index indexFromPerson, Index indexToPerson) {
+            fail("This method should not be called.");
+        }
+
+        //@@author joanneong
+        @Override
+        public void editRelationship(Index indexFromPerson, Index indexToPerson, Name name,
+                              ConfidenceEstimate confidenceEstimate)
+                throws IllegalValueException, RelationshipNotFoundException, DuplicateRelationshipException {
+            fail("This method should not be called.");
+        };
 
         @Override
         public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
@@ -123,14 +146,36 @@ public class AddCommandTest {
             fail("This method should not be called.");
         }
 
+        public void removeTag(String tagToBeRemoved) throws TagNotFoundException, IllegalValueException {
+            fail("This method should not be called.");
+        }
+        //@@author TanYikai
+        @Override
+        public void sortPersons() {
+            fail("This method should not be called.");
+        }
+        //@@author
+
+        //@@author wenmogu
+        /**
+         * This method is called as the construction of a new graph needs the FilteredPersonList.
+         * Therefore a dummy list is given.
+         */
         @Override
         public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
+            UniquePersonList dummyList = new UniquePersonList();
+            return FXCollections.unmodifiableObservableList(dummyList.asObservableList());
+        }
+
+        //@@author
+        @Override
+        public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
             fail("This method should not be called.");
-            return null;
         }
 
         @Override
-        public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
+        public void addRelationship(Index fromPerson, Index toPerson, RelationshipDirection direction, Name name,
+                                    ConfidenceEstimate confidenceEstimate) {
             fail("This method should not be called.");
         }
     }
