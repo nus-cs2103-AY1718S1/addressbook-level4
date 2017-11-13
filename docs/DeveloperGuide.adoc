@@ -537,9 +537,9 @@ The following is the sequence diagram of how the RemoveTagCommands removes a tag
 image::RemoveOneTagSequenceDiagram.png[width="800"]
 _Figure 4.5.1 : Sequence Diagram of removeTag function_
 
-If the user inputs `all` in the `INDEX` field, instead of removing a tag based on the list displayed in `Model`, the tag is removed from everyone in the `internalList` of `AddressBook`.
+If the user inputs `all` in the `INDEX` field, instead of removing a tag based on the list displayed in `Model`, the tag is removed from everyone in the `internalList` of `AddressBook`. The `TAG` is then deleted from the `UniqueTagList` in `AddressBook`. +
 
-If no `INDEX` is given to the Remove Tag command, the remove tag command will run the following code during execution.
+If the user inputs an `Integer` in the `INDEX` field, the tag is removed from the person as well as the `UniqueTagList` in the `AddressBook`. Thereafter, we re-sync the `Tag` Objects in `UniqueTagList` with all the `Tag` contained within the `Person` Object in the `internalList`. +
 
 [NOTE]
 If more than one tag is given or if `INDEX` out of the range of the shown list is given, `ParseException` will be thrown before execution of the function.
@@ -556,6 +556,17 @@ If more than one tag is given or if `INDEX` out of the range of the shown list i
 **Pros:** User may removetag from only the list of people shown to them.
 **Cons:** Required to sync the `UniqueTagList` of `AddressBook` as `TAGS` removed may still exist in the `AddresBook`.
 
+---
+
+**Aspect:** How to sync `tag` in `UniqueTagList` after deleting from one `Person`
+
+**Alternative 1 (current):** Deletes `TAG` from `UniqueTagList`, then re-sync with `persons` list. +
+**Pros:** Easier to implement. +
+**Cons:** If the `Tag` still exists in another contact, then it is a pointless deletion.
+
+**Alternative 2:** Checks if 'Tag` deleted is contained in another `Person`. +
+**Pros:** Not required to delete `Tag` from `UniqueTagList` if it still exist in any `Person`.
+**Cons:** Uses more resources since Rubrika will need to check check through everyone before deleting from `UniqueTagList`.
 // end::rmtag[]
 
 // tag::sort[]
@@ -638,7 +649,7 @@ Sort Command is an undoable Command.
 // tag::importexport[]
 === Import function
 
-The `import` function supports importing of vCard files (.vcf) and xml files (.xml).
+The `import` function supports importing of vCard files (.vcf) and XML files (.xml).
 
 The diagram below details the sequence of how Rubrika handles the `import` command after the user has entered the command. Note that the diagram assumes the user has included the `FILEPATH` of the import file.
 
@@ -672,16 +683,24 @@ Also, for importing of .vcf files, due to using an inbuilt parser, only vCards c
 **Cons** : Even more coupling between the 3 classes. Also we will need to instantiate a `StorageManager` object within Logic. +
 
 **Alternative 3** : Writing a built-in parser that parses the XML diagram directly into a `List` Object. +
-**Pros** : Less coupling as the parser will on be associated with `ImportCommandParser`. +
+**Pros** : Less coupling as the parser will only be associated with `ImportCommandParser`. +
 **Cons** : Very intensive to implement within the given time frame.
 
 === Export Function
 
-The export function is done by the `ExportCommand` class.
+The export function is done by the `ExportCommand` class, and currently supports vCard files (.vcf) and XML files (.xml).
+
+[NOTE]
+If the file format is not specified by the user during input, ParseException will be thrown before execution of the Command.
 
 After input validation in the `ExportCommandParser` class, the file path is passed to the `ExportCommand` class.
 
 In the `ExportCommand` class, depending on the file type requested by the user, a different method will be used to create the export file.
+
+The following Sequence Diagram will detail the events that occur after a user has entered a valid export Command for a XML file.
+
+image::ExportSequenceDiagram.png[width="800"]
+_Figure 4.8.1 : Sequence Diagram of export command._
 
 If the file defined by the user uses a XML (.xml) file extension then the addressbook is exported into a XML file by using the static method `saveDataToFile` in the `XmlFileStorage` class.
 
@@ -690,9 +709,11 @@ If the file defined by the user uses a vCard (.vcf) file extension, then the add
 ==== Design Considerations
 
 **Aspect**: Choice of export file types. +
+
 **Alternative 1 (current choice)**: vCard and XML files are supported +
 **Pros**: Easy to implement as XML file creation is already built into Address Book 4. vCard files are also relatively easy to create. +
 **Cons**: Limited files types supported +
+
 **Alternative 2**: Include .csv file types +
 **Pros**: More file types to choose from for the users. +
 **Cons**: Relatively harder to create a csv export file.
