@@ -47,18 +47,38 @@ public class ExportCommand extends Command {
         }
         try {
             if (export.getName().endsWith(XML_EXTENSION)) {
-                logger.info("Attempting to write to data file: " + export.getPath());
-                XmlSerializableAddressBook xmlAddressBook = new XmlSerializableAddressBook(addressBook);
-                export.createNewFile();
-                XmlFileStorage.saveDataToFile(export, xmlAddressBook);
+                createXmlFile(export, addressBook);
             } else if (export.getName().endsWith(VCF_EXTENSION)) {
-                logger.info("Attempting to write to data file: " + export.getPath());
-                VcfExport.saveDataToFile(export, addressBook.getPersonList());
+                createVcfFile(export, addressBook);
             }
         } catch (IOException ioe) {
             assert false : "The file should have been created and writable";
         }
         return new CommandResult(MESSAGE_SUCCESS);
+    }
+
+    /**
+     * Creates a .vcf File that contains contacts in addressBook.
+     * @param export the file to be created and exported to.
+     * @param addressBook containing list of contacts to be exported
+     * @throws IOException if export was not found.
+     */
+    private void createVcfFile(File export, ReadOnlyAddressBook addressBook) throws IOException {
+        logger.info("Attempting to write to data file: " + export.getPath());
+        VcfExport.saveDataToFile(export, addressBook.getPersonList());
+    }
+
+    /**
+     * Creates a .xml File that contains contacts in addressBook.
+     * @param export the file to be created and exported to.
+     * @param addressBook containing list of contacts to be exported.
+     * @throws IOException if export was not found.
+     */
+    private void createXmlFile(File export, ReadOnlyAddressBook addressBook) throws IOException {
+        logger.info("Attempting to write to data file: " + export.getPath());
+        XmlSerializableAddressBook xmlAddressBook = new XmlSerializableAddressBook(addressBook);
+        export.createNewFile();
+        XmlFileStorage.saveDataToFile(export, xmlAddressBook);
     }
 
     @Override
