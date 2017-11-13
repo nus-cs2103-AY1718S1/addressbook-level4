@@ -26,6 +26,7 @@ The Myth's Book is a software application that is coded in `Java` programming la
 === Enhancement Added: School Email and Home Number Field
 
 This section includes the behavior and justification of the new fields and explains how it is implemented.
+
 Code on GitHub: Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/65[#65], https://github.com/CS2103AUG2017-T15-B3/main/pull/55[#55]
 
 ==== External behavior
