@@ -818,51 +818,6 @@ public class MrtMapLogic {
     }
 
     /**
-     * For debugging only, will be deleted before final product
-     */
-    private void printAdjList() {
-        for (int i = 0; i < adjList.size(); i++) {
-            MrtStation mrt = mrtStations.get(i);
-            String name = mrt.getName();
-            String stationCode = mrt.getStationCode(0);
-            System.out.print(i + ": " + name + " [" + stationCode + "]: ");
-            ArrayList<IntPair> adjRow = adjList.get(i);
-            for (int j = 0; j < adjRow.size(); j++) {
-                int neighbourIndex = adjRow.get(j).mrtIndex;
-                int travelInterval = adjRow.get(j).travelDuration;
-                String neighbourCode = mrtStations.get(neighbourIndex).getStationCode(0);
-                String neighbourName = mrtStations.get(neighbourIndex).getName();
-                System.out.print("(" + neighbourName +" [" + neighbourCode + "], " + travelInterval + ") ");
-            }
-            System.out.println();
-        }
-    }
-
-    /**
-     * will be deleted before final product
-     * @param sourceIndex
-     */
-    private void printSingleMrtTiming(int sourceIndex) {
-        int[] minTable = getMinTime(sourceIndex);
-        for (int i = 0; i < minTable.length; i++) {
-            MrtStation mrtStation = mrtStations.get(i);
-            String stationName = mrtStation.getName();
-            System.out.println(i + ", " + stationName + ": " + minTable[i]);
-        }
-    }
-
-    /**
-     * Will be deleted before final product
-     * @param stationNames
-     */
-    private void printSortedMrt(ArrayList<String> stationNames) {
-        ArrayList<String> sortedList = getSortedMrtList(stationNames);
-        for (int i = 0; i < sortedList.size(); i++) {
-            System.out.println(i + " = " + sortedList.get(i));
-        }
-    }
-
-    /**
      *
      * @return the station names of all the mrt stations
      */
