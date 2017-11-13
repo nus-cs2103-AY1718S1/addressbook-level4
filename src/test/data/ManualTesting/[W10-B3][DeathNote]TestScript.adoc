@@ -254,11 +254,52 @@ Opens a new instance of DeathNote.
 
   Format: new PATH
 
+* `new` +
+*Expected Output:* Invalid command format!
+new: Open a new DeathNote.
+Paremeters: FILEPATH
+Example: new C:\Users\crispy\Downloads\NewDeathNote.xml
+
+* `new C:\DeathNote\newDeathNote` +
+*Expected Output:* Invalid command format!
+new: Open a new DeathNote.
+Paremeters: FILEPATH
+Example: new C:\Users\crispy\Downloads\NewDeathNote.xml
+
+* `new C:\DeathNote\newDeathNote.xml` +
+*Expected Output:* Opened DeathNote: C:\DeathNote\newDeathNote.xml +
+*Observe:* DeathNote will reload with a new sample list of contacts. +
+In the folder C:\DeathNote there will be an newDeathNote.xml when the application saves
+
+* `new C:\DeathNote\newDeathNote.xml` (On a location where newDeathNote.xml exists) +
+*Expected Output: Unable to create new DeathNote - file already exists*
+
 === Open command
 
 Opens another existing instance of DeathNote.
 
   Format: open PATH
+
+*Ensure that you have another sample data to test with*
+
+    Have another .xml file at C:\DeathNote\newDeathNote.xml
+    Ensure that a data folder is beside DeathNote.jar with pictures that newDeathNote.xml will use
+
+* `open` +
+*Expected Output:* Invalid command format!
+open: Open a different DeathNote.
+Paremeters: LOCATION
+Example: open C:\Users\crispy\Downloads\DeathNote.xml
+
+`open C:\DeathNote\newDeathNote` +
+*Expected output:* Invalid command format!
+open: Open a different DeathNote.
+Paremeters: LOCATION
+Example: open C:\Users\crispy\Downloads\DeathNote.xml
+
+* `open C:\DeathNote\newDeathNote.xml`
+*Expected Output:* Opened DeathNote: C:\DeathNote\newDeathNote.xml
+*Observe:* DeathNote is not reloaded. Nothing happens.
 
 === Exit command
 
@@ -266,11 +307,18 @@ Exits DeathNote. +
 
   Format: exit
 
+`exit`
+*Observe:* Application exits
+
 === Clear command
 
 Clears all entries from DeathNote.
 
   Format: clear
+
+`clear`
+*Expected Output:* Address book has been cleared!
+*Observe:* There will be no listed  contacts
 
 === Undo command
 
@@ -278,10 +326,85 @@ Restores the DeathNote to the state before the previous _undoable_ command was e
 
   Format: undo
 
+*Each test must be done in sequence. Ensure that contact list is empty (To follow our test)*
+
+* Undo test 1 +
+*Ensure that you have have not entered any commands*
+. `undo` +
+*Expected Output:* No more commands to undo!
+
+* Undo test 2 +
+. `add n/Abel` +
+*Expected Output:* New person added: Abel Remarks: +
+*Observe:* Contact list will show Abel after add command. +
+. `undo` +
+*Expected Output:* Undo success!
+*Observe:* Contact list will not show Abel after undo command
+. `undo` +
+*Expected Output:* No more commands to undo! +
+
+* Undo test 3 +
+. `add n/Abel` +
+*Expected Output:* New person added: Abel Remarks: +
+*Observe:* Contact list will show Abel after add command. +
+. `edit 1 n/Bob a/Clementi b/12/12/1969` +
+*Expected Output:* Edited Person: Bob Address: Clementi Birthday: 12/12/1969 Remarks: +
+*Observe:* Contact list will show edited person after edit command. +
+. `undo` +
+*Expected Output:* Undo success! +
+*Observe:* Contact list will show Abel after undo command.
+. `undo` +
+*Expected Output:* Undo success! +
+*Observe:* Contact list will show not Abel after undo command.
+
 === Redo command
 
 Reverses the most recent `undo` command. +
 
   Format: redo
 
-* `redo`
+*Each test must be done in sequence. Ensure that contact list is empty (To follow our test)*
+
+* Redo test 1 +
+*Ensure that you have have not entered any commands*
+. `redo` +
+*Expected Output:* No more commands to redo!
+
+* Redo test 2 +
+. `add n/Abel` +
+*Expected Output:* New person added: Abel Remarks:
+*Observe:* Contact list will show Abel after add command. +
+. `undo` +
+*Expected Output:* Undo success! +
+*Observe:* Contact list will show nothing after undo command. +
+. `redo` +
+*Expected output:* Redo success! +
+*Observe:* Contact list will show Abel after redo command.
+. `redo` +
+*Expected Output:* No more commands to redo!
+
+* Redo test 3 +
+. `add n/Abel` +
+*Expected Output:* New person added: Abel Remarks: +
+*Observe:* Contact list will show Abel after add command. +
+. `edit 1 n/Bob a/Clementi b/12/12/1969` +
+*Expected Output:* Edited Person: Bob Address: Clementi Birthday: 12/12/1969 Remarks: +
+*Observe:* Contact list will show edited person (Bob) after edit command. +
+. `undo` +
+*Expected Output:* Undo success! +
+*Observe:* Contact list will show Abel after undo command. +
+. `redo` +
+*Expected Output:* Redo success! +
+*Observe:* Contact list will show edited person (Bob) after redo command.
+. `undo` +
+*Expected Output:* Undo success! +
+*Observe:* Contact list will show Abel after undo command. +
+. `undo` +
+*Expected Output:* Undo success! +
+*Observe:* Contact list will not show Abel after undo command. +
+. `redo` +
+*Expected Output:* Redo success! +
+*Observe:* Contact list will show Abel after redo command.
+. `redo` +
+*Expected Output:* Redo success! +
+*Observe:* Contact list will show edited person (Bob) after redo command.
