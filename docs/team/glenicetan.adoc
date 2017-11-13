@@ -105,6 +105,6 @@ include::../DeveloperGuide.adoc[tag=removeTag]
 
 * Acceptance Testing for other group (Issues https://github.com/CS2103AUG2017-T10-B3/main/issues/83[#83])
 * Wrote Use Case and Non Functional Requirement for DeveloperGuide (Pull Request https://github.com/CS2103AUG2017-F09-B1/main/pull/4/files[#4])
-* Wrote User Stories for project brainstorming (https://github.com/CS2103AUG2017-F09-B1/main/projects/1[project brainstorm])
-* Create UI mockup with team (Pull Request https://github.com/CS2103AUG2017-F09-B1/main/pull/12)
-* Create releases(https://github.com/CS2103AUG2017-F09-B1/main/releases[releases])
+* Wrote User Stories for project brainstorming (https://github.com/CS2103AUG2017-F09-B1/main/projects/1[Project Brainstorm])
+* Create UI mockup with team (Pull Request https://github.com/CS2103AUG2017-F09-B1/main/pull/12[#12])
+* Create releases(https://github.com/CS2103AUG2017-F09-B1/main/releases[Releases])
