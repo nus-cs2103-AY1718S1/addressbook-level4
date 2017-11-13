@@ -46,7 +46,7 @@ Deletes the 1st person in the results of the `find` command.
 
 ==== Justification
 
-== Multi-delete
+=== Multi-delete
 
 Multi-delete allows users to delete single, as well as multiple persons in one command.
 This prevents the need for executing multiple delete commands to delete multiple persons,
