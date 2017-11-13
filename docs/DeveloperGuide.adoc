@@ -748,10 +748,10 @@ This is useful for users to be able to compare their list of events in the calen
 
 4. There are a maximum of 42 cells to fill up in every month. Create a method (i.e. buildMonthArray method) to store the position of the dates in. Use an algorithm to store all the dates before the first date of the month as a blank, fill up the subsequent dates using the value of the first day of the month and their cell number, and the leftover dates will continue to be blanks until the 42nd cell.
 
-EventCalendarClassDiagram
+image::EventCalendarClassDiagram.png[width="300"]
 _Figure 4.9.1.1 : Class Diagram for `EventCalendar`_
 
-MonthDateBuilderClassDiagram
++image::MonthDateBuilderClassDiagram.png[width="300"]
 _Figure 4.9.1.2 : Class Diagram for `MonthDateBuilder`_
 // end::calendarMech[]
 
