@@ -205,6 +205,44 @@ Arranges a meeting for person 1, person 2 and person 3 based on their free time 
 
 // end::arrange[]
 
+=== Arrange a meeting location for a list of person : `meetingLocation`
+
+Arrange a meeting location for a list of person in the address book.
+It will return the mrt station where the accumulated travelling time
+of all the users will be minimised. It will also display
+the estimated travel time for every users to that mrt station
+This method will automatically display the MrtMap User
+Interface.
+
+****
+*Feature of Mrt Map UI*
+
+* Circle with the name represent the meeting location
+that minimises the travelling time
+* Other non-grey circle shows where the people in the
+list stays in. The size of the circle is proportional
+to the number of people living near that mrt station.
+* The color of the circles correspond to the mrt line
+of that particular station. If that station is an
+interchange, it will display two color. For example,
+Buona Vista will be shown as green (West-East line)
+and yellow (Circle-line)
+* Small grey circle just shows all the other mrt
+stations currenrlyt operating in Singapore
+****
+
+
+Format: meetingLocation `INDEX_1 INDEX_2 INDEX_3...`
+
+
+Example:
+
+* `meetingLocation 1 2 3`
+* `ml 1 2 3`
+
+Show the meeting location for person 1, person2 and person 3 based on their
+nearest mrt station.
+
 === Listing all persons : `list`
 
 Shows a list of all persons in the address book. +
