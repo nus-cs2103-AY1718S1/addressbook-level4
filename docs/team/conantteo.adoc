@@ -5,16 +5,15 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :repoURL: https://github.com/CS2103AUG2017-W14-B3/main
 
 == Project: HitMeUp
-HitMeUp is designed to provide sociable users with a one stop solution for all their needs. A user is able to contact
-others, keep up and organise their contact list.
 
-With the cloud import feature, a user will be able to get HitMeUp
-running in a matter of minutes. Being able to group your contacts and view each group at a glance affords convenience like never before.
+HitMeUp is an address book application designed with the sociable user in mind. It aims to provide a one stop solution for every need: To contact, keep up
+and organise.
+With the cloud import feature, a user would be able to get the application
+up and running a matter of minutes. Being able to group your contacts, and view each group at a glance affords
+convenience like never before. Social integration to Instagram and Twitter is baked in, allowing users to view profiles
+in the application itself without having to switch to a browser or check their phone.
 
-Social integration with Instagram and Twitter also allows users to view their contacts' social media profiles in HitMeUp itself without
-having to switch to another browser or phone.
-
-*Code contributed*: [{repoURL}/tree/master/collated/main/conantteo.md[Functional code]] [{repoURL}/tree/master/collated/test/conantteo.md[[Test code]]
+*Code contributed*: [{repoURL}/tree/master/collated/main/conantteo.md[Functional code]] [{repoURL}/tree/master/collated/test/conantteo.md[Test code]]
 
 === Enhancement Added: vCard Export
 
@@ -29,6 +28,13 @@ include::../UserGuide.adoc[tag=export]
 
 ---
 
+==== Justification
+
+This feature is implemented to allow users to export their contacts information into a commonly used contacts file,
+vCard file. vCard file is also widely used in many platforms where people can share contacts information. Users can also
+decide if they want to export all contacts or only selected contacts depending on their needs. Therefore, this feature
+aims to provide the convenience for users who wish to easily export their contacts from HitMeUp to another platform.
+
 ==== Implementation
 
 ---
@@ -37,14 +43,6 @@ include::../UserGuide.adoc[tag=export]
 include::../DeveloperGuide.adoc[tag=export]
 
 #End of Extract#
-
----
-
-==== Justification
-
-This feature is implemented to allow users to export their contacts information into a commonly used contacts file, vCard file.
-Users can also decide if they want to export all contacts or only selected contacts depending on their needs. Therefore,
-this feature aims to provide the convenience for users who wish to easily export their contacts from HitMeUp to another platform.
 
 ---
 
@@ -61,6 +59,14 @@ include::../UserGuide.adoc[tag=email]
 
 ---
 
+==== Justification
+
+This feature is implemented to allow users to send an email to one or more persons in their list of contacts.
+It allows users to customize their own message with editing tools using their own mail application. In addition, this
+feature also allows user to easily attach documents to send to their contacts or save their message as a draft in their
+email. Hence, this feature helps to create a channel for communication between the users and people in their list of
+contacts.
+
 ==== Implementation
 
 ---
@@ -69,14 +75,6 @@ include::../UserGuide.adoc[tag=email]
 include::../DeveloperGuide.adoc[tag=email]
 
 #End of Extract#
-
----
-
-==== Justification
-
-This feature is implemented to allow users to send an email to one or more persons in their contact list.
-It allows users to customize their own message with editing tools using their own mail application. With this feature,
-users can select a number of persons to share a file or a message through an email.
 
 ---
 

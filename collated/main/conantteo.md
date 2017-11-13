@@ -159,6 +159,33 @@ public class IndexArrayUtil {
     }
 }
 ```
+###### \java\seedu\address\commons\util\StringUtil.java
+``` java
+    /**
+     * Returns a string after removing the first two characters at the start of the string {@code s}
+     * {@code s} string is first trimmed before obtaining its substring.
+     * Example: ", person1, person2" will return "person1, person2"
+     * @throws NullPointerException if {@code s} is null.
+     */
+    public static String getSubstringFromIndexTwo(String s) {
+        requireNonNull(s);
+        String trimmedString = s.trim();
+        return trimmedString.substring(2, trimmedString.length());
+    }
+
+    /**
+     * Returns a string after removing the white spaces in the string {@code s} with a comma
+     * Example: "email1 email2 email3" will return "email1,email2,email3"
+     * @throws NullPointerException if {@code s} is null.
+     */
+    public static String replaceWhiteSpaceWithComma(String s) {
+        requireNonNull(s);
+        return s.trim().replaceAll(" ", ",");
+    }
+}
+```
+###### \java\seedu\address\logic\commands\EmailCommand.java
+=======
 ###### /java/seedu/address/logic/commands/EmailCommand.java
 ``` java
 package seedu.address.logic.commands;
@@ -170,6 +197,7 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.EmailRequestEvent;
 import seedu.address.commons.util.IndexArrayUtil;
+import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -189,8 +217,8 @@ public class EmailCommand extends Command {
 
     private final Index[] targetIndices;
 
-    public EmailCommand(Index[] targetIndexes) {
-        this.targetIndices = targetIndexes;
+    public EmailCommand(Index[] targetIndices) {
+        this.targetIndices = targetIndices;
     }
 
     @Override
@@ -215,10 +243,8 @@ public class EmailCommand extends Command {
             addresses.append(" " + personToEmail.getEmail().toString());
         }
 
-        // Removes the substring ", " at the start of the allPersons string
-        String allPersons = persons.toString().trim().substring(2, persons.length());
-        // Replaces all white spaces in the allEmailAddresses string with commas
-        String allEmailAddresses = addresses.toString().trim().replaceAll(" ", ",");
+        String allPersons = StringUtil.getSubstringFromIndexTwo(persons.toString());
+        String allEmailAddresses = StringUtil.replaceWhiteSpaceWithComma(addresses.toString());
 
         EventsCenter.getInstance().post(new EmailRequestEvent(allEmailAddresses));
         return new CommandResult(String.format(MESSAGE_EMAIL_PERSON_SUCCESS, allPersons));
@@ -250,6 +276,7 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.ExportRequestEvent;
 import seedu.address.commons.util.IndexArrayUtil;
+import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.Vcard;
@@ -279,8 +306,8 @@ public class ExportCommand extends Command {
         this.targetIndices = new Index[0];
     }
 
-    public ExportCommand(Index[] targetIndexes) {
-        this.targetIndices = targetIndexes;
+    public ExportCommand(Index[] targetIndices) {
+        this.targetIndices = targetIndices;
     }
 
     @Override
@@ -315,7 +342,7 @@ public class ExportCommand extends Command {
             persons.append(", ");
             persons.append(person.getName().toString());
         }
-        String allPersons = persons.toString().trim().substring(2, persons.length());
+        String allPersons = StringUtil.getSubstringFromIndexTwo(persons.toString());
 
         // Creates a new vCard file to store all the VCard information.
         File file = new File(DEFAULT_FILE_DIR, DEFAULT_FILE_NAME);
@@ -513,7 +540,7 @@ public class Birthday {
 
     public static final String MESSAGE_BIRTHDAY_CONSTRAINTS =
             "Birthday format should be 'DD/MM/YYYY', and it should not be blank\n"
-                    + "Please check if the birthday is valid and is not a leap day";
+                    + "Please check if the birthday is valid and is a valid leap day";
     // This regex guarantees that a Birthday format is DD/MM/YYYY and is not leap day.
     public static final String BIRTHDAY_VALIDATION_REGEX = "^(?:(?:31(/)(?:0?[13578]|1[02]))\\1|(?:(?:29|30)"
             + "(/)(?:0?[1,3-9]|1[0-2])\\2))(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$|^(?:29(/)0?2\\3(?:(?:"

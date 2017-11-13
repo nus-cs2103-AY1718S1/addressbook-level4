@@ -1,6 +1,10 @@
 = HitMeUp - Test Script
 :sectnums:
 :imagesDir: images
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+endif::[]
 
 == Introduction
 This document provides the steps to perform manual testing and load our sample data.
@@ -53,7 +57,7 @@ For all commands in this test, please remove invalid commands in the command box
 
 . `find 12` +
 This command allows you to search your contacts with the same birthday month.
-The list of contacts should display [Names] with the same birthday month in December.
+The list of contacts should display Taylor Swift with the same birthday month in December.
 
 [NOTE]
 To find a list of persons who have the birthday month, use find MM where MM represents a 2 digit integer from 01 to 12.
@@ -63,33 +67,48 @@ Birthday search cannot be used with other keywords.
 The list of contacts should display no contacts. +
 CommandResult should display that 0 person is listed because there is no such birthday month represented by 00.
 
-. `find [Name] [Tag1]` +
-The list of contacts should display [Name] with the tag [Tag].
+. `find jessica friends` +
+The list of contacts should display Jessica Jung with the tag friends.
 
 [NOTE]
-The find feature is case-insensitive. [Name] will match [name].
+The find feature is case-insensitive. jessica will match Jessica.
 
-. `find [Tag1] [Tag2]` +
-The list of contacts should display [Name] with both tags [Tag1] [Tag2].
+. `find friends colleagues` +
+The list of contacts should display Tiffany Hwang with both tags friends and colleagues.
 
-. `find [Tag1]` +
-The list of contacts should display [Names] with the same tag [Tag1].
+. `find friends` +
+The list of contacts should display Jessica Jung and Tiffany Hwang with the same tag friends.
 
 . `find Superman` +
 The list of contacts should display no contacts. +
 CommandResult should display that 0 person is listed because this person does not exist.
 
-. `find 12 [Name]` +
+. `find 12 jessica` +
 The list of contacts should display no contacts. +
 CommandResult should display that 0 person is listed because birthday search cannot be used with other keywords.
 
-. Click on the Group List Panel.
-The list of contacts should display [Names] with the same tag [SelectedTag].
+. Click on the Group labelled friends on the Group List Panel.
+The list of contacts should display Jessica Jung and Tiffany Hwang with the same tag friends.
 
 [NOTE]
-The Group List Panel is located at the leftmost panel. You should click on the tag name to find
-people who has that tag.
+The Group List Panel is located at the leftmost panel. You should click on the tag name to find people who has that tag.
 
+=== Add
+
+Command: `add n/NAME p/PHONE_NUMBER [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [tw/TWITTER] [ig/INSTAGRAM] [dp/DISPLAY_PIC_CHOICE] [t/TAG]…​`
+
+[NOTE]
+Only name and phone numbers are compulsory. Other fields are optional.
+
+. `add n/Alpha p/1111 b/29/02/2020` +
+The list of contacts should display Alpha with birthday 29/02/2020 because it is a valid leap day.
+
+. `undo` +
+`add n/Alpha p/1111 b/29/02/2019` +
+CommandResult should display that the birthday format is wrong and prompts user to check if it is a valid leap day.
+
+. `undo` +
+Resets the list of contacts.
 
 === Tag Edit/Delete
 
@@ -97,48 +116,48 @@ Command: `tagedit OLD_TAG_NAME NEW_TAG_NAME`
 
 . You should see a list of contacts with the tag name selected earlier.
 
-. `tagedit [SelectedTag] [NewTag]` +
-`search [NewTag]` +
-You should see the same list of contacts with a new tag name [NewTag] in step 1. +
-You should also observe that the Group List Panel [SelectedTag] changes to [NewTag].
+. `tagedit friends enemies` +
+`find enemies` +
+You should see the Jessica Jung and Tiffany Hwang with a new tag name enemies. +
+You should also observe that the Group List Panel friends changes to enemies.
 
-. `tagdelete [NewTag]` +
+. `tagdelete enemies` +
 `list` +
-You should see the list of contacts earlier with their tag [NewTag] deleted.
-You should observe that the [NewTag] is deleted from the Group List Panel.
+You should see the list of contacts earlier with their tag enemies deleted.
+You should observe that the group enemies is deleted from the Group List Panel.
 
-. `tagedit [NewTag] superheroes` +
+. `tagedit enemies superheroes` +
 CommandResult should display that tag to edit does not exist.
 
-. `tagdelete [SelectedTag]` +
+. `tagdelete friends` +
 CommandResult should display that the tag name to delete is invalid.
 
-. At this point, both tags [SelectedTag] and [NewTag] should not appear in HitMeUp.
+. At this point, both tags friends and enemies should not appear in HitMeUp.
 
 === Social
 
 Command: `social INDEX SOCIAL_MEDIA`
 
 . `social 1 ig` +
-You should see the browser panel on the right switched to the Instagram profile of [Name1]. +
-CommandResult should display that [Name2] instagram profile is successfully loaded.
+You should see the browser panel on the right switched to the Instagram profile of Avril Lavigne. +
+CommandResult should display that Avil Lavigne instagram profile is successfully loaded.
 
 . `edit 1 ig/` +
-This command will remove the instagram user of [Name1]. +
+This command will remove the instagram user of Avil Lavigne. +
 CommandResult should display an empty field after ig/.
 
 . `select 1` +
-You should see the browser panel on the right switched to the Twitter profile of [Name1].
+You should see the browser panel on the right switched to the Twitter profile of Avil Lavigne.
 
 [NOTE]
 Browser panel will select the instagram profile of the selected person first. If it does not exist, it should display the
 twitter profile of the selected person.
 
 . `social 2 tw` +
-You should see the browser panel on the right switched to the Twitter profile of [Name2]. +
-CommandResult should display that [Name2] twitter profile is successfully loaded.
+You should see the browser panel on the right switched to the Twitter profile of Beyonce. +
+CommandResult should display that Beyonce twitter profile is successfully loaded.
 
-. `social 1000` +
+. `social 1000 ig` +
 CommandResult should display that the index specified is invalid.
 
 === Email
@@ -147,20 +166,21 @@ Command: `email INDEX [INDEX]...`
 
 [NOTE]
 To ensure that your default mail application opens up, please make sure that your default application settings for Mail
-is a valid mail application. Click link:#email[here] for more information.
+is a valid mail application. Click link:#settingmail[here] for more information.
 
 . `email 1` +
-You should see your default mail application window with the specified [Email1] of [Name1]. +
-CommandResult should display [Name1].
+You should see your default mail application window with the specified avril@avirl.com of Avril Lavigne. +
+CommandResult should display Avril Lavigne.
 
-. `email 1 2 3` +
-You should see your default mail application window with the specified [Email1], [Email2] and [Email3] of [Name1], [Name2] and [Name3]. +
-CommandResult should display all the names [Name1], [Name2] and [Name3].
+. `email 1 2 4` +
+You should see your default mail application window with the specified email addresses avril@avirl.com,
+beyonce@beyonce.com and dtrump@example.com.
+CommandResult should display all the names Avril Lavigne, Beyonce and Donald Trump.
 
 . `email 1000` +
 CommandResult should display that the index specified is invalid.
 
-. `email 10` +
+. `email 3` +
 CommandResult should display that the person at the specified index may have missing email address.
 
 === Export
@@ -177,7 +197,7 @@ Only information such as names and phone numbers are compulsory.
 
 . `export 1 2` +
 You should see the same directory folder popped up with the contacts.vcf file created. +
-CommandResult should display the names of [Name1] and [Name2] exported.
+CommandResult should display the names of Avril Lavigne and Beyonce exported.
 
 . `export 1000` +
 CommandResult should display that the index specified is invalid.
@@ -186,9 +206,9 @@ CommandResult should display that the index specified is invalid.
 
 Command: `location INDEX`
 
-. `location 1`
-You should see the browser panel on the right switched to a Google Map location of [Name1]. +
-CommandResult should display the location of [Name1] loaded.
+. `location 3`
+You should see the browser panel on the right switched to a Google Map location of Damith C Rajapakse. +
+CommandResult should display the location of Damith C Rajapakse loaded.
 
 . `location 1000`
 CommandResult should display that the index specified is invalid.
@@ -200,14 +220,14 @@ Command: `alias USER_ALIAS COMMAND`
 . `alias f find`
 CommandResult should display that the alias f is mapped to the command find.
 
-. `f [Name]` +
-The list of contacts should display [Name].
+. `f donald` +
+The list of contacts should display Donald Trump.
 
 . `alias find findbuddy` +
 CommandResult should display that the command entered is invalid.
 
 === Additional Notes
-[[email]]
+[[settingmail]]
 *Q*: How do I set my default mail application to use the email feature? +
 *A*: For Windows users, go to Settings > Apps & features > Default apps. For MAC users, click https://www.imore.com/how-set-mac-app-default-when-opening-file[here] for instructions.
 For other OS users, please refer to the guides online on how to set your default mail application.

@@ -97,7 +97,8 @@ public class NewImageEvent extends BaseEvent {
     /**
      * Create a unique display pic name by adding all fields of a person together and creating a hashcode
      */
-    private static String createUniqueDisplayPicName(ArgumentMultimap argMultimap, String currentImgPath, Prefix... prefixes) {
+    private static String createUniqueDisplayPicName(ArgumentMultimap argMultimap,
+                                                     String currentImgPath, Prefix... prefixes) {
         String displayPicName = currentImgPath;
         for (Prefix prefix : prefixes) {
             displayPicName += argMultimap.getValue(prefix);
@@ -279,11 +280,22 @@ public class ImageFileStorage {
 ```
 ###### /java/seedu/address/ui/PersonCard.java
 ``` java
+        person.displayPicProperty().addListener((observable, oldValue, newValue) -> {
+            initDisplayPic(person);
+        });
+        person.instagramNameProperty().addListener((observable, oldValue, newValue) -> {
+            initInstaIcon(person);
+        });
+        person.twitterNameProperty().addListener((observable, oldValue, newValue) -> {
+            initTwitterIcon(person);
+        });
+    }
+
     /**
      * Initialise the image in PersonCard display
      * @param person
      */
-    private void initImage(ReadOnlyPerson person) {
+    private void initDisplayPic(ReadOnlyPerson person) {
         Image displayPicture;
         if (person.getDisplayPic().toString().equals(DEFAULT_DP)) {
             displayPicture = AppUtil.getImage(DEFAULT_DP);
@@ -296,23 +308,37 @@ public class ImageFileStorage {
     }
 
     /**
+     * Initialise the twitter icon is the person has a twitter account
+     */
+    private void initTwitterIcon(ReadOnlyPerson person) {
+        String twitterName = person.getTwitterName().value;
+        if (!twitterName.isEmpty()) {
+            Image twitterIconPic = AppUtil.getImage(TWITTER_ICON);
+            twitterIcon.setFill(new ImagePattern(twitterIconPic));
+        }
+    }
+
+    /**
+     * Initialise the instagram icon is the person has a instagram account
+     */
+    private void initInstaIcon(ReadOnlyPerson person) {
+        String instaName = person.getInstagramName().value;
+        if (!instaName.isEmpty()) {
+            Image instaIconPic = AppUtil.getImage(INSTA_ICON);
+            instaIcon.setFill(new ImagePattern(instaIconPic));
+        }
+    }
+
+    /**
      * Create new labels and bind a colour to it
      * @param person
      */
     private void initTags(ReadOnlyPerson person) {
         person.getTags().forEach(tag -> {
             Label newTag = new Label(tag.tagName);
-            newTag.setStyle("-fx-background-color: "
-                    + getTagColours(tag.tagName));
+            newTag.setStyle("#C1D3DD");
             tags.getChildren().add(newTag);
         });
-    }
-
-    private String getTagColours(String tagName) {
-        if (!tagColours.containsKey(tagName)) {
-            tagColours.put(tagName, colours[rand.nextInt(colours.length)]);
-        }
-        return tagColours.get(tagName);
     }
 ```
 ###### /java/seedu/address/ui/PersonDescription.java
@@ -626,6 +652,7 @@ public class PersonDescription extends UiPart<StackPane> {
 ```
 ###### /resources/view/PersonListCard.fxml
 ``` fxml
+
 <VBox xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <HBox id="cardPane" fx:id="cardPane" prefHeight="90.0" prefWidth="230.0" style="-fx-background-color: transparent;">
@@ -662,6 +689,12 @@ public class PersonDescription extends UiPart<StackPane> {
                   <Insets left="10.0" />
                </padding>
             </VBox>
+            <Pane minHeight="25.0" minWidth="70.0" prefHeight="25.0" prefWidth="30.0">
+               <children>
+                  <Circle fx:id="instaIcon" fill="#f5f9fa" layoutX="15.0" layoutY="45.0" radius="12.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+                  <Circle fx:id="twitterIcon" fill="#f5f9fa" layoutX="51.0" layoutY="45.0" radius="12.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" />
+               </children>
+            </Pane>
          </children>
       </HBox>
       <Separator prefWidth="200.0">

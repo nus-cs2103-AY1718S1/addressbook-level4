@@ -13,7 +13,7 @@ public class Birthday {
 
     public static final String MESSAGE_BIRTHDAY_CONSTRAINTS =
             "Birthday format should be 'DD/MM/YYYY', and it should not be blank\n"
-                    + "Please check if the birthday is valid and is not a leap day";
+                    + "Please check if the birthday is valid and is a valid leap day";
     // This regex guarantees that a Birthday format is DD/MM/YYYY and is not leap day.
     public static final String BIRTHDAY_VALIDATION_REGEX = "^(?:(?:31(/)(?:0?[13578]|1[02]))\\1|(?:(?:29|30)"
             + "(/)(?:0?[1,3-9]|1[0-2])\\2))(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$|^(?:29(/)0?2\\3(?:(?:"

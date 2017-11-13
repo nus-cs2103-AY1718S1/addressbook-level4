@@ -2,6 +2,7 @@ package seedu.address.commons.util;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -155,5 +156,40 @@ public class StringUtilTest {
         StringUtil.getDetails(null);
     }
 
+    //@@author conantteo
+    @Test
+    public void getSubstringFromIndexTwo_success() {
+        // valid substring result
+        assertEquals(StringUtil.getSubstringFromIndexTwo("aaa bbb ccc"), "a bbb ccc");
 
+        // valid substring result with white spaces in between
+        assertEquals(StringUtil.getSubstringFromIndexTwo(", aaa bbb ccc"), "aaa bbb ccc");
+
+        // valid substring with trailing white spaces trimmed first
+        assertEquals(StringUtil.getSubstringFromIndexTwo("  aaa bbb ccc"), "a bbb ccc");
+    }
+
+    @Test
+    public void getSubStringFromIndexTwo_throwsNullPointerException() {
+        thrown.expect(NullPointerException.class);
+        StringUtil.getSubstringFromIndexTwo(null);
+    }
+
+    @Test
+    public void replaceWhiteSpaceWithComma_success() {
+        // valid result single white space but trailing white spaces are trimmed first
+        assertEquals(StringUtil.replaceWhiteSpaceWithComma(" "), "");
+
+        // valid result multiple white spaces replaced with commas
+        assertEquals(StringUtil.replaceWhiteSpaceWithComma("  a b c d  "), "a,b,c,d");
+
+        // valid result with no white spaces to replace
+        assertEquals(StringUtil.replaceWhiteSpaceWithComma("abc"), "abc");
+    }
+
+    @Test
+    public void replaceWhiteSpaceWithComma_throwsNullPointerException() {
+        thrown.expect(NullPointerException.class);
+        StringUtil.replaceWhiteSpaceWithComma(null);
+    }
 }

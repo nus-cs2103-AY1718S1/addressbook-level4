@@ -13,6 +13,22 @@ endif::[]
 
 By: `Daniel, Jun Quan, Conant, Bing Hwang`      Since: `Jun 2016`      Licence: `MIT`
 
+== Introduction
+
+HitMeUp is an address book application designed with the sociable user in mind. It aims to provide a one stop solution for every need: To contact, keep up
+and organise.
+With the cloud import feature, a user would be able to get the application
+up and running a matter of minutes. Being able to group your contacts, and view each group at a glance affords
+convenience like never before. Social integration to Instagram and Twitter is baked in, allowing users to view profiles
+in the application itself without having to switch to a browser or check their phone.
+
+== About
+
+This User Guide provides detailed description of each feature that are available in HitMeUp.
+Each feature has its own examples so that you can easily follow through.
+As this is a Command Line Interface (CLI) application, being able to type should help you use HitMeUp without much difficulty.
+Lastly, there will be a command summary which will provide you a quick overview of how each feature can be used.
+
 == Quick Start
 
 The following instructions will help you get started with HitMeUp quickly:
@@ -337,12 +353,11 @@ Allows you to export contacts from HitMeUp into a vCard file.
 Format: `export all` or `export INDEX [INDEX]...`
 
 ****
-* Exports all information of all contacts or the contact at the specified INDEX into a vCard file.
+* Exports information of all contacts or the contact at the specified INDEX into a vCard file.
 * The input 'all' is case-sensitive.
 * The index refers to the index number shown in the most recent listing.
-* The index must be a positive integer 1, 2, 3, ...
+* The index *must be a positive integer* 1, 2, 3, ...
 * The data folder directory where the vCard file ("contacts.vcf") is located will be displayed after a successful export as shown below.
-* If you would like to move this vCard file to another folder, please close HitMeUp first.
 ****
 
 image::ExportDirectory.png[width="790"]
@@ -358,7 +373,7 @@ Exports the 1st and 2nd persons from the list of contacts into a vCard file.
 // end::export[]
 
 // tag::email[]
-=== Sending an email to one or more persons: `email`
+=== Email contacts: `email`
 
 Emails one or more persons identified by the index number used in the last person listing. +
 

@@ -8,6 +8,7 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.EmailRequestEvent;
 import seedu.address.commons.util.IndexArrayUtil;
+import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -27,8 +28,8 @@ public class EmailCommand extends Command {
 
     private final Index[] targetIndices;
 
-    public EmailCommand(Index[] targetIndexes) {
-        this.targetIndices = targetIndexes;
+    public EmailCommand(Index[] targetIndices) {
+        this.targetIndices = targetIndices;
     }
 
     @Override
@@ -53,10 +54,8 @@ public class EmailCommand extends Command {
             addresses.append(" " + personToEmail.getEmail().toString());
         }
 
-        // Removes the substring ", " at the start of the allPersons string
-        String allPersons = persons.toString().trim().substring(2, persons.length());
-        // Replaces all white spaces in the allEmailAddresses string with commas
-        String allEmailAddresses = addresses.toString().trim().replaceAll(" ", ",");
+        String allPersons = StringUtil.getSubstringFromIndexTwo(persons.toString());
+        String allEmailAddresses = StringUtil.replaceWhiteSpaceWithComma(addresses.toString());
 
         EventsCenter.getInstance().post(new EmailRequestEvent(allEmailAddresses));
         return new CommandResult(String.format(MESSAGE_EMAIL_PERSON_SUCCESS, allPersons));

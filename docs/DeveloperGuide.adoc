@@ -14,14 +14,13 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 By: `Daniel, Jun Quan, Conant, Bing Hwang`      Since: `Jun 2016`      Licence: `MIT`
 
 == Introduction
-HitMeUp is designed to provide sociable users with a one stop solution for all their needs. A user is able to contact
-others, keep up and organise their contact list.
 
-With the cloud import feature, a user will be able to get HitMeUp
-running in a matter of minutes. Being able to group your contacts and view each group at a glance affords convenience like never before.
-
-Social integration with Instagram and Twitter also allows users to view their contacts' social media profiles in HitMeUp itself without
-having to switch to another browser or phone.
+HitMeUp is an address book application designed with the sociable user in mind. It aims to provide a one stop solution for every need: To contact, keep up
+and organise.
+With the cloud import feature, a user would be able to get the application
+up and running a matter of minutes. Being able to group your contacts, and view each group at a glance affords
+convenience like never before. Social integration to Instagram and Twitter is baked in, allowing users to view profiles
+in the application itself without having to switch to a browser or check their phone.
 
 == About
 This Developer Guide aims to provide comprehensive information to help both experienced and new developers who are interested in contributing to the
@@ -371,8 +370,8 @@ image::UndoRedoActivityDiagram.png[width="200"]
 // tag::email[]
 === Email mechanism
 
-The email mechanism is facilitated by java `Desktop` class which allows java application to launch default mail client registered on the users' native desktop to handle a Uniform Resource Indentifier `URI`.
-In this case, the link:#uri[URI] is created with reference to the mail command scheme and email addresses to mail to.
+The email mechanism is facilitated by java `Desktop` class which allows java application to launch default mail application registered on the users' native desktop to handle a Uniform Resource Indentifier (link:#uri[URI]).
+In this case, the URI is created with reference to the mail command scheme and email addresses to mail to.
 
 ==== Email command implementation
 
@@ -380,12 +379,12 @@ image::EmailCommandSequenceDiagram.png[width="800"]
 
 _Figure 3.2.1 Email Command Sequence Diagram_
 
-From the diagram above, when users enter the command `email 1` to email a person in their address book.
-`EmailCommandParser` will parse the arguments, which is a single index, provided by the user and stores it
-in an array called `targetIndices` before returning a `EmailCommand`.
+From the diagram above, when users enter the command `email 1` to email a person in the contact list.
+`EmailCommandParser` will parse the arguments, which is a single index provided by the user, and stores it
+in an array called `targetIndices` before returning the `EmailCommand`.
 
-Next, `EmailCommand` will call its method `execute()` as shown below and ensures that `Index` specified is valid.
-It also constructs a String `allEmaillAddresses` which contains the email addresses specified. +
+Next, `EmailCommand` will call its method `execute()` as shown in the code segment below. It ensures that `Index` specified is valid
+and also constructs a string `allEmailAddresses` which contains the email address specified. +
 
 * Code listing:
 +
@@ -408,10 +407,9 @@ public CommandResult execute() throws CommandException {
         persons.append(", " + personToEmail.getName().toString());
         addresses.append(" " + personToEmail.getEmail().toString());
     }
-    // Removes the substring ", " at the start of the allPersons string
-    String allPersons = persons.toString().trim().substring(2, persons.length());
-    // Replaces all white spaces in the allEmailAddresses string with commas
-    String allEmailAddresses = addresses.toString().trim().replaceAll(" ", ",");
+
+    String allPersons = StringUtil.removeCommaInFront(persons.toString());
+    String allEmailAddresses = StringUtil.replaceWhiteSpaceWithComma(addresses.toString());
 
     // Post the EmailRequestEvent
     // Returns CommandResult to display all person that user wants to email
@@ -419,7 +417,7 @@ public CommandResult execute() throws CommandException {
 
 -------------
 [NOTE]
-The String `allEmailAddresses` is constructed by appending a comma after each email address of a contact. This is done to ensure that it follows the mailing scheme required when
+The string `allEmailAddresses` is constructed by appending a comma after each email address of a contact. This is done to ensure that it follows the mailing scheme required when
 constructing a `URI`.
 
 ==== Email request event process
@@ -429,7 +427,7 @@ image::EmailRequestEventSequenceDiagram.png[width="800"]
 _Figure 5.2.1 Email Request Event Sequence Diagram_
 
 With reference to the diagram above, after `EmailCommand` has executed, it will post a new `EmailRequestEvent` and allows the UI to handle this event. In the UI, we are using java `Desktop` class to
-launch the default mail application registered on users' native desktop. A `URI` instance have to be created and pass to the mail method in the `Desktop` class.
+launch the default mail application registered on users' native desktop. A `URI` instance has to be created and pass to the mail method in the `Desktop` class.
 Refer to the code example below: +
 
 * Code listing:
@@ -469,32 +467,36 @@ Lastly, users' desktop will launch a default mail application where they can com
 Moreover, users can also edit their recipients field to include carbon copy or blind carbon copy before sending out
 the email to their recipients.
 
-==== Design Considerations
-**Aspect:** Types of application to send emails +
+*Design Considerations*:
+
+---
+
+**Aspect:** Type of application to send emails +
 **Alternative 1 (current choice):** Use user's default mail application in their desktop +
 **Pros:** The default mail application tends to load faster than the Javafx `WebView` used by the `BrowserPanel` in the `UI`. +
 **Cons:** Some users may have set their default mail application as other applications such as web browser where they have to make changes before it can be used. +
 **Alternative 2:** Use web browsers to access user email services online +
 **Pros:** It is able to support more users as there are more options for different users using different email services. +
 **Cons:** Since all users may not use the same email services such as link:#gmail[Gmail] or link:#outlook[Outlook],
-it is difficult to authorize every email services as some services such as Gmail which requires OAuth 2.0 protocol for authorization. +
+it is difficult to authorize every email services as some services such as Gmail which requires link:#OAuth[OAuth 2.0 protocol] for authorization. +
 
 ---
 
-**Aspect:** Types of API used +
+**Aspect:** Type of API used +
 **Alternative 1 (current choice):** Use `Desktop` API +
-**Pros:** It allows user to format their messages using text editor in default mail application. +
-**Cons:** It does not require authentication if user has already configured so it may be misused if application is used by someone else. +
+**Pros:** It allows user to format their messages using text editor in their default mail application. +
+**Cons:** It does not require authentication if user has already configured their mail application so it may be misused if application is used by someone else.
+On some platforms such as Linux, this API is dependent on the availability of the link:#gnome[Gnome libraries] as well.  +
 **Alternative 2:** Use `JavaMail` API +
-**Pros:** It is able to support most email services such as Outlook. +
-**Cons:** By entering username and password to authorize a session, there may be some security breaches if not encrypted properly.
+**Pros:** It is able to support most email services such as Outlook and also allows users to enter their message within the application itself. +
+**Cons:** By entering username and password to authorize a session, there may be some security breaches if it is not encrypted properly.
 // end::email[]
 
 // tag::import[]
 === Import mechanism
 
 The import mechanism is facilitated by Google's People API. It supports reading up to 1000 contacts from the user's personal Google account and parsing them into a format that can be added to the address book. The import mechanism only supports
-adding contacts from Google but iCloud import is scheduled for release in a later version of the application.
+adding contacts from Google but link:#icloud[iCloud] import is scheduled for release in a later version of the application.
 
 Before any importing can be done, HitMeUp to be authorized to request data from Google's API. This is done using the OAuth 2.0 protocol as it is the standard used by Google for the People API.
 As there are libraries from Google that handle authorization, these libraries have been used in the implementation of the import mechanism.
@@ -616,8 +618,8 @@ authorization URL to be shown in the `BrowserPanel` +
 // tag::export[]
 === Export mechanism
 
-The export mechanism is facilitated by java `File` and `FileOutputStream` class. It supports writing contact information into a link:#vCard[vCard] by creating a vCard format file.
-This file will be created and can be imported it into other platforms such as Google Contacts.
+The export mechanism is facilitated by java `File` and `FileOutputStream` classes. It supports writing contact information into a link:#vCard[vCard] by creating a vCard format file.
+This file will be created and can be imported into other platforms such as Google Contacts.
 
 image::vCardClassDiagram.png[width="400"]
 _Figure 5.4 Vcard Class Diagram_
@@ -645,9 +647,13 @@ public Vcard(ReadOnlyPerson person) {
 }
 --------------
 
-Next, an instance of `File` will be created. In order for the `File` to store all the `cardDetails` created earlier, `writeToFile` method
+[NOTE]
+In vCard version 3.0, only `VERSION`, `BEGIN`, `FN` and `END` properties are required. Other properties can be optional.
+In this case, the application is only exporting important information for each person.
+
+Next, an instance of `File` will be created if it has not been created before. In order for the `File` to store all the `cardDetails` created earlier, `writeToFile` method
 will use `FileOutputStream` to write and saved all `cardDetails` content into the `File` created.
-An example of the process of writing into the `File` is shown below:
+The process of writing into the `File` is shown in the code segment below:
 
 * Creating a `File` and writing to the `File`: +
 
@@ -680,14 +686,17 @@ The `DEFAULT_FILE_DIR` is the data folder found in the application directory and
 
 Finally, the directory that stores the "contacts.vcf" file will be shown to the user and the file can be imported to other platforms that support vCard files.
 
-==== Design Considerations
+*Design Considerations*:
+
+---
+
 **Aspect:** Type of file to create +
 **Alternative 1 (current choice):** Creates vCard file +
-**Pros:** It is more flexible with the types of data that can be stored. Examples of include photos, multiple phone numbers and website information. +
-**Cons:** It does not support importing of multiple contacts in vCard file for applications such as Outlook. +
+**Pros:** It is more flexible with the types of data that can be stored. Some of these data include photos, multiple phone numbers and website information. +
+**Cons:** It does not support importing of multiple contacts into applications such as Outlook. +
 **Alternative 2:** Creates link:#csv[CSV] file +
-**Pros:** It is more readable and allows easy manipulation of the data in the file when used in spreadsheets such as Excel. +
-**Cons:** It lacks of standardization whereby there are no rules in defining how contacts information are being written or read by other programs. It does not support programs such as iCloud as well.
+**Pros:** It is more readable and allows easy manipulation of the data when used in spreadsheets such as link:#excel[Excel]. +
+**Cons:** It lacks of standardization whereby there are no rules in defining how contacts information are being written or read by other programs. It does not support some programs such as iCloud as well.
 // end::export[]
 
 // tag::displayPic[]
@@ -733,7 +742,7 @@ image::SDforDisplayPic.png[width="800"]
 _Figure 5.5.2a shows the interaction between components for `edit 1 dp/` command (part 1)_
 
 The above diagrams shows the series of event when `ArgumentTokenizer` detects the prefix `dp/`. +
-The following code snippets will show how the events are posted within each methods.
+The following code snippets will show how the events are posted within each methods:
 [source, java]
 ---------------
 private static String getCurrentImgPath() {
@@ -1397,117 +1406,116 @@ Shortcuts for the default commands so that the user can customize AddressBook to
 
 App
 ....
-Short for “application”, a program designed to perform a group
-of coordinated functions, tasks or activities for the benefit of
-the user. In the Address Book, the user can keep track of his or
-her contacts.
+Short for “application”, a program designed to perform a group of coordinated functions, tasks or activities for the
+benefit of the user. In the Address Book, the user can keep track of his or her contacts.
 ....
 
 Application Programming Interface (API)
 ....
-The interface that a computer system, library or application
-provides to allow other computer programs to request services
-from it and exchange data.
+The interface that a computer system, library or application provides to allow other computer programs to request
+services from it and exchange data.
 ....
 
 AppVeyor
 ....
-A Continuous Integration platform for GitHub projects. It runs
-its builds on Windows virtual machines. Runs the project’s tests
-automatically whenever new code is pushed to the repository.
+A Continuous Integration platform for GitHub projects. It runs its builds on Windows virtual machines. Runs the
+project’s tests automatically whenever new code is pushed to the repository.
 ....
 
 Build automation
 ....
-Process of automating the creation of a software build and the
-associated processes including: compiling computer source
-code into binary code, packaging binary code and running
-automated tests.
+Process of automating the creation of a software build and the associated processes including: compiling computer source
+code into binary code, packaging binary code and running automated tests.
 ....
 
 Cleanup method
 ....
-A set of code that can be called when unnecessary files or processes are
-to be removed.
+A set of code that can be called when unnecessary files or processes are to be removed.
 ....
 
 Command Line Interface (CLI)
 ....
-Means of interacting with the AddressBook in the form of successive lines
-of text.
+Means of interacting with the AddressBook in the form of successive lines of text.
 ....
 
 [[ci]]
 Continuous Integration (CI)
 ....
-Practice of merging all developer working copies to a shared
-mainline several times a day. Each check-in is then verified by
-an automated build, allowing teams to detect problems early.
+Practice of merging all developer working copies to a shared mainline several times a day. Each check-in is then
+verified by an automated build, allowing teams to detect problems early.
 ....
 
 [[csv]]
 CSV
 ....
-File format used to store tabular data. In AddressBook's case, this would
-be a database of contacts.
+File format used to store tabular data. In AddressBook's case, this would be a database of contacts.
 ....
 
+[[icloud]]
 iCloud
 ....
 An Apple service to keep all Apple devices in sync.
 ....
 
+[[excel]]
+Excel
+....
+It is a spreadsheet developed by Microsoft for Windows, macOS, Android and iOS. It features calculation, graphing tools,
+pivot tables and a macro programming language.
+....
+
 [[gmail]]
 Gmail
 ....
-Google's free web-based email service that provides users with a gigabyte of
-storage for messages and provides the ability to search for specific messages
-It also organizes successively related messages into a conversational thread.
+Google's free web-based email service that provides users with a gigabyte of storage for messages and provides the
+ability to search for specific messages. It also organizes successively related messages into a conversational thread.
+....
+
+[[gnome]]
+Gnome
+....
+It is a desktop environment composed of free and open-source software that runs on most Linux distributions including
+Fedora, Debian, Ubuntu and etc.
 ....
 
 Google Contacts
 ....
-Google's contact management tool that acts as an address book available
-in its free email service Gmail, as a standalone service, and as a part
-of Google's business-oriented suite of web apps Google Apps.
+Google's contact management tool that acts as an address book available in its free email service Gmail, as a standalone
+service, and as a part of Google's business-oriented suite of web apps Google Apps.
 ....
 
 Google Maps
 ....
-Google's web mapping service that offers satellite imagery, street maps,
-route planning and other features.
+Google's web mapping service that offers satellite imagery, street maps, route planning and other features.
 ....
 
 Gradle
 ....
-An open source build automation system designed for multi-project
-builds. Supports incremental builds by intelligently determining
-which parts of the build tree are up-to-date, so that any task
-dependent upon those parts will not need to be re-executed.
+An open source build automation system designed for multi-project builds. Supports incremental builds by intelligently
+determining which parts of the build tree are up-to-date, so that any task dependent upon those parts will not need to
+be re-executed.
 ....
 
 Graphical User Interface (GUI)
 ....
-Where interactions between the user and the Address Book
-occur through the form of graphical icons and visual indicators.
+Where interactions between the user and the Address Book occur through the form of graphical icons and visual
+indicators.
 ....
 
 Hypertext Markup Language (HTML)
 ....
-A standardized system for tagging text files to achieve font, colour,
-graphic, and hyperlink effects on World Wide Web pages.
+A standardized system for tagging text files to achieve font, colour, graphic, and hyperlink effects on World Wide Web
+pages.
 ....
 
 JavaFX
 ....
-Set of graphics and media packages that enables developers to
-design, create, test, debug and deploy rich client applications
-that operate consistently across diverse platforms.
+Set of graphics and media packages that enables developers to design, create, test, debug and deploy rich client
+applications that operate consistently across diverse platforms.
 ....
 
 [[mainstream-os]]
 Mainstream OS
-
 ....
 Windows, Linux, Unix, OS-X
 ....
@@ -1517,55 +1525,57 @@ MSS (Main Success Scenario)
 Action steps of a typical scenario in which the goal is delivered.
 ....
 
+[[OAuth]]
+OAuth 2.0 Protocol
+....
+It is an authorization framework that enables third-party application to obtain limited access to an HTTP service,
+either on behalf of a resource owner by orchestrating an approval interaction between the resource owner and the HTTP
+service, or by allowing third-party application to obtain access on its own behalf.
+....
+
 [[outlook]]
 Outlook
 ....
-A free personal email service from Microsoft that does not scan your email
-for purpose of serving you ads.
+A free personal email service from Microsoft that does not scan your email for purpose of serving you ads.
 ....
 
 Social media
 ....
-Computer-mediated technologies that facilitate the creation and sharing
-of information via virtual communities and networks. In AddressBook, this would refer
-to Instagram and Facebook.
+Computer-mediated technologies that facilitate the creation and sharing of information via virtual communities and
+networks. In AddressBook, this would refer to Instagram and Facebook.
 ....
 
 Tag
 ....
-A label attached to a contact in AddressBook for the purpose of identification or
-to give other information.
+A label attached to a contact in AddressBook for the purpose of identification or to give other information.
 ....
 
 TestFX
 ....
-Framework for use in automating JavaFX Graphical User
-Interface(GUI) tests.
+Framework for use in automating JavaFX Graphical User Interface(GUI) tests.
 ....
 
 Travis
 ....
-A Continuous Integration platform for GitHub projects. Runs
-the project’s tests automatically whenever new code is pushed
-to the repository.
+A Continuous Integration platform for GitHub projects. Runs the project’s tests automatically whenever new code is
+pushed to the repository.
 ....
 
 User Interface (UI)
 ....
-Space where interactions between the user and Address Book
-happens.
+Space where interactions between the user and HitMeUp happens.
 ....
+
 [[uri]]
 Uniform Resource Identifier (URI)
 ....
-A string of characters used to identify a resource over a network, typically
-the World Wide Web, using specific protocols. Schemes specifying a concrete
-syntax and associated protocols define each URI.
+A string of characters used to identify a resource over a network, typically the World Wide Web, using specific
+protocols. Schemes specifying a concrete syntax and associated protocols define each URI.
 ....
+
 [[vCard]]
 vCard
 ....
-Also known as Virtual Contact File (VCF). It is a file format
-standard for electronic business cards and can contain information like
-name and address information for use in AddressBook.
+Also known as Virtual Contact File (VCF). It is a file format standard for electronic business cards and can contain
+information like name and address information for use in any address book.
 ....

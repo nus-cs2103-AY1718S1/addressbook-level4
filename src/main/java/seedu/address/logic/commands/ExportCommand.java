@@ -14,6 +14,7 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.ExportRequestEvent;
 import seedu.address.commons.util.IndexArrayUtil;
+import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.Vcard;
@@ -43,8 +44,8 @@ public class ExportCommand extends Command {
         this.targetIndices = new Index[0];
     }
 
-    public ExportCommand(Index[] targetIndexes) {
-        this.targetIndices = targetIndexes;
+    public ExportCommand(Index[] targetIndices) {
+        this.targetIndices = targetIndices;
     }
 
     @Override
@@ -79,7 +80,7 @@ public class ExportCommand extends Command {
             persons.append(", ");
             persons.append(person.getName().toString());
         }
-        String allPersons = persons.toString().trim().substring(2, persons.length());
+        String allPersons = StringUtil.getSubstringFromIndexTwo(persons.toString());
 
         // Creates a new vCard file to store all the VCard information.
         File file = new File(DEFAULT_FILE_DIR, DEFAULT_FILE_NAME);
