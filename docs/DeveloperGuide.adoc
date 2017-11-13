@@ -384,7 +384,7 @@ The following activity diagram in _Figure 4.1.10_ below summarizes what happens 
 image::UndoRedoActivityDiagram.png[width="200"]
 _Figure 4.1.10 : UndoRedoStack Activity Diagram_
 
-==== Design Considerations for `UndoableCommand`
+==== Design Considerations
 
 **Aspect:** Implementation of `UndoableCommand` +
 **Alternative 1 (current choice):** Add a new abstract method `executeUndoableCommand()`. +
@@ -537,7 +537,7 @@ public class DeleteCommand extends UndoableCommand {
 ----
 _Figure 4.2.4 : Code section in DeleteCommand.java_
 
-==== Design Considerations for Deleting Multiple Persons
+==== Design Considerations
 
 **Aspect:** User input restrictions +
 **Alternative 1 (current choice):** Disallow repeated indices from user, even if indices can be found in the list. +
@@ -650,11 +650,11 @@ _Figure 4.3.3: Enhanced `HelpCommand` execution_
 
 **Aspect:** Enhancement of `HelpCommand` +
 **Alternative 1 (current choice)**: Allowing the `HelpCommand` to take in an optional command identifier argument +
-**Pros:** Users can easily find out about the format of a specific command they want to key in. +
-**Cons:** Users have to know at least the command identifier of the command they want execute. +
+**Pros:** User can easily find out about the format of a specific command they want to key in. +
+**Cons:** User have to know at least the command identifier of the command they want execute. +
 **Alternative 2:** Only allowing `HelpCommand` to open help window  +
 **Pros:** It is simpler and more intuitive for new users. +
-**Cons:** Users have to go through the user guide every time they forget the format of a certain command.
+**Cons:** User have to go through the user guide every time they forget the format of a certain command.
 // end::help[]
 
 //tag::locate[]
@@ -775,7 +775,7 @@ _Figure 4.4.8_ below shows the full UI outcome of selecting a selecting a `Perso
 image::Full UI outcome for LocateCommand.png[width="800"]
 _Figure 4.4.8 : Full UI outcome of locate implementation_
 
-==== Design Considerations for `LocateCommand`
+==== Design Considerations
 
 **Aspect:** Execution of `LocateCommand` +
 **Alternative 1 (current choice):** Posts a new `JumpToListRequestEvent` to `EventBus`. +
@@ -935,13 +935,12 @@ image::CalendarCommand.png[width="800"]
 
 _Figure 4.6.5: Output of `CalendarCommand.java` execution_
 
-==== Design Considerations for `CalendarCommand`
-
+==== Design Considerations
 
 **Aspect:** Implementation of `CalendarCommand` +
 **Alternative 1 (current choice)**: Opening  `Calendar` web page in `BrowserPanel`. +
-**Pros:** To brings about greater convenience for the user as user does not need to navigate between multple webpages to find the calendar.User are able to find out about the public holidays which are not avaliable on desktop calendar. +
-**Cons:** User might bypass the `CalendarCommand` and rely on desktop calendar +
+**Pros:** To brings about greater convenience for the user as user does not need to navigate between multple webpages to find the calendar. User are able to find out about the public holidays which are not avaliable on desktop calendar. +
+**Cons:** User might bypass the `CalendarCommand` and rely on desktop calendar. +
 **Alternative 2:** Opening up of Google calendar +
 **Pros:** User are able to store the events in the google calendar. +
 **Cons:** Unable to view public holidays.User also have to go through the hassle of logging in just to view the calendar. +
@@ -1035,7 +1034,7 @@ public class UniqueEmailList {
 ----
 _Figure 4.7.4: Code section in UniqueEmailList.java_
 
-==== Design Considerations for Adding or Editing contact with Multiple Emails
+==== Design Considerations
 
 **Aspect:** Storing of emails in `Person` +
 **Alternative 1 (current choice)**: Emails stored as `ObjectProperty` of `UniqueEmailList`. +
@@ -1167,7 +1166,7 @@ rejected. The current list of acceptable codes can be listed with the command `h
 image::country_code demo 3.PNG[width="800"]
 _Figure 4.8.8 : Copy from multiple contacts_
 
-==== Design Considerations for `Country`
+==== Design Considerations
 
 Most importantly, this feature allows the user to skip the input of a new contact's country, and makes the country section
 of the Address input optional as well. This reduces the number of steps during contact creation and modification.
@@ -1192,13 +1191,13 @@ many users may skip, we decided to infer this field from existing information in
 the idea of allowing custom user-defined input, concurrent to a default country inference when a contact is first made.
 
 **Aspect:** How to input Country name +
-**Alternative 1 (current choice):** Automatic detection from phone number +
+**Alternative 1 (current choice):** Automatic detection from phone number. +
 **Pros:** Fewer steps by user, ensures all contacts have country. +
 **Cons:** User cannot change a custom country for contact.  +
 **Alternative 2:** Automatic detection from address +
 **Pros:** Fewer steps by user, does not rely on phone prefixes. +
 **Cons:** User may not input country in some addresses. +
-**Alternative 3:** Manual entry of contact's country +
+**Alternative 3:** Manual entry of contact's country. +
 **Pros:** Guarantees satisfactory country field as defined by user. +
 **Cons:** More steps, users may not want to expend the extra time while populating address book over time.
 
@@ -1254,11 +1253,11 @@ _Figure 4.9.3: UI display of a successful `ScheduleCommand` execution_
 ==== Design Considerations
 
 **Aspect:** Valid date format +
-**Alternative 1 (current choice)**: DD-MM-YYYY is the only valid date format +
+**Alternative 1 (current choice)**: DD-MM-YYYY is the only valid date format. +
 **Pros:** It is now possible to arrange the schedules based on which date comes first. +
-**Cons:** Users have lesser flexibility in inputting dates. +
-**Alternative 2:** Allowing users to key in dates in DD-MM format in addition to DD-MM-YYYY format  +
-**Pros:** This gives users a greater flexibility when keying in dates.  +
+**Cons:** User have lesser flexibility in inputting dates. +
+**Alternative 2:** Allowing users to key in dates in DD-MM format in addition to DD-MM-YYYY format.  +
+**Pros:** This gives user a greater flexibility when keying in dates.  +
 **Cons:** This creates ambiguity when arranging the schedules based on dates.
 
 ---
@@ -1269,7 +1268,7 @@ _Figure 4.9.3: UI display of a successful `ScheduleCommand` execution_
 **Cons:** Master schedule list has to be synchronised with all the schedules attached to persons every time a schedule is added. +
 **Alternative 2:** Absence of master schedule list  +
 **Pros:** It is easier to implement.  +
-**Cons:** Users can only search for an activity scheduled by searching the person they have scheduled the activity with.
+**Cons:** User can only search for an activity scheduled by searching the person they have scheduled the activity with.
 
 ---
 
@@ -1419,8 +1418,7 @@ _Figure 4.11.6f : Find by tag [t/TAG]_
 image::FindCommand_Country.PNG[width="400"]
 _Figure 4.11.6g : Find by country [c/COUNTRY]_
 
-==== Design Considerations for `FindCommand`
-
+==== Design Considerations
 
 **Aspect:** Enhancement of `FindCommand` +
 **Alternative 1 (current choice)**: Searching for contact based on the `prefix` of search field given. +
@@ -1567,8 +1565,8 @@ When the `Continue` button is pressed, `WelcomeScreen` will pass the `MainWindow
 ==== Design Considerations
 
 **Aspect:** Nature of `WelcomeScreen` +
-**Alternative 1 (current choice)**: Users' action is required to close the welcome screen. +
-**Pros:** Users will have enough time to read the text on the welcome screen. +
+**Alternative 1 (current choice)**: User action is required to close the welcome screen. +
+**Pros:** User will have enough time to read the text on the welcome screen. +
 **Cons:** A button is required to handle the passing of scenes into the `primaryStage`. +
 **Alternative 2:** Welcome screen closes by itself after a fixed period of time.  +
 **Pros:** It does not require additional button; and hence is more straightforward to implement.  +
@@ -1578,11 +1576,11 @@ When the `Continue` button is pressed, `WelcomeScreen` will pass the `MainWindow
 
 **Aspect:** Disabling welcome screen +
 **Alternative 1 (current choice)**: Users have the choice to enable or disable welcome screen. +
-**Pros:** Users who want the welcome screen to be displayed can save time by skipping the welcome screen.
+**Pros:** User who want the welcome screen to be displayed can save time by skipping the welcome screen.
 **Cons:** A new command must be created to cater to this purpose. +
 **Alternative 2:** Welcome screen is always displayed when the application is run.  +
 **Pros:** This does not require additional command to be implemented.  +
-**Cons:** Users who think that welcome screen is unnecessary cannot skip the welcome screen.
+**Cons:** User who think that welcome screen is unnecessary cannot skip the welcome screen.
 //end::welcomeScreen[]
 
 
@@ -1667,7 +1665,7 @@ public class Schedule {
 _Figure 4.14.3: Code section in Schedule.java_
 
 
-==== Design Considerations for Pop-up Reminder Window
+==== Design Considerations
 
 **Aspect:** Content of reminder window +
 **Alternative 1 (current choice)**: Show list view of schedule cards like the user agenda feature +
@@ -1735,8 +1733,7 @@ image::EmailCommand.PNG[width="800"]
 _Figure 4.15.5: Output of `EmailCommand.java` execution_
 
 
-==== Design Considerations for `EmailCommand`
-
+==== Design Considerations
 
 **Aspect:** Data structure to support `EmailCommand` +
 **Alternative 1 (current choice)**: Use Set for storing of user's input of indices.  +
@@ -1808,7 +1805,7 @@ _Figure 4.16.3 : Quick-start help on application launch_
 image::quick_help demo 1.PNG[width="400"]
 _Figure 4.16.4 : Quick-start help through entering help command_
 
-==== Design Considerations for `Quick-Start Help`
+==== Design Considerations
 
 As there is only about 3 lines' worth of space in the result display box, we needed to prioritize the most important
 information to the user. Since a Command Line Interface (CLI) may have a steeper learning curve stemming from users being
@@ -1822,11 +1819,11 @@ in a long straight line in either direction.
 
 *Alternatives considered*
 
-**Aspect:** Where to display quick-start help information+
-**Alternative 1 (current choice):** Inside result display box +
+**Aspect:** Where to display quick-start help information +
+**Alternative 1 (current choice):** Inside result display box. +
 **Pros:** Space-saving and strategically placed in easy-to-view area. +
 **Cons:** The help info is removed after user's first command entered. +
-**Alternative 2:** In a new box or central main window area +
+**Alternative 2:** In a new box or central main window area. +
 **Pros:** Information can be displayed for a longer time as needed. +
 **Cons:** Less convenient to look at, takes up more precious space and may not be compatible with lower resolution displays.
 
@@ -1906,7 +1903,7 @@ the message shown in Figure 4.17.4 will be displayed instead.
 image::backup demo 2.PNG[width="600"]
 _Figure 4.17.4 : Copy from multiple contacts_
 
-==== Design considerations for `Backup`
+==== Design considerations
 
 The Backup function makes it easier for the user to secure their valuable information, with no room for error.
 As such, the implementation forbids overwriting another addressbook.xml file when writing a new one. Users must
@@ -1934,7 +1931,7 @@ across all devices.
 **Alternative 1 (current choice):** In a local directory on user's PC. +
 **Pros:** Easy to implement, easy for the user to understand. +
 **Cons:** The address book may still be lost in the event of local catastrophic failure, such as a house fire or power surge. +
-**Alternative 2:** On a cloud service +
+**Alternative 2:** On a cloud service. +
 **Pros:** Information is safe as long as user has credentials to their cloud accounts. +
 **Cons:** Not all users have cloud service accounts, or know how to operate one. More difficult to implement.
 
