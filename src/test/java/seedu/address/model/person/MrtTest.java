@@ -22,14 +22,9 @@ public class MrtTest {
         assertFalse(Mrt.isValidMrt("Holland V"));
         assertFalse(Mrt.isValidMrt("CCK"));
 
-        //MRT stations not yet added (Downtown Line)
-        assertFalse(Mrt.isValidMrt("Bukit Panjang"));
-        assertFalse(Mrt.isValidMrt("Beauty World"));
-        assertFalse(Mrt.isValidMrt("King ALbert Park"));
-
         //Valid MRT stations
         assertTrue(Mrt.isValidMrt("Ang Mo Kio"));
         assertTrue(Mrt.isValidMrt("Bukit Gombak"));
-        assertTrue(Mrt.isValidMrt("Kallang"));
+        assertTrue(Mrt.isValidMrt("Yishun"));
     }
 }
