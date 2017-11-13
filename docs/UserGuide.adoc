@@ -655,8 +655,6 @@ You will be able to switch between `Bright Theme` and `Dark Theme` through the c
 
 image::BrightTheme.png[width="800"]
 _Figure 9.3.1 Bright Theme_
-
-link:#the-myths-book---user-guide[Back To Top]
 // end::brighttheme[]
 
 === Enhanced Command Box
@@ -674,6 +672,8 @@ along with a success message in the result display box.
 
 image::validCommandBox.png[width="800"]
 _Figure 9.4.2 Command Box for Valid Command_
+
+link:#the-myths-book---user-guide[Back To Top]
 
 == FAQ
 
