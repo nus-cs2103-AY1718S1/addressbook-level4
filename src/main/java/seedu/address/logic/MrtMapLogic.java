@@ -130,7 +130,16 @@ public class MrtMapLogic {
      * This method acts as data storage.
      */
     private void populateMrtStations() {
-        mrtStations.add(new MrtStation("Jurost East", "JUR", new String[] {"NS1", "EW24"}));
+        populateMrtStationsPartOne();
+        populateMrtStationsPartTwo();
+        populateMrtStationsPartThree();
+    }
+
+    /**
+     * Split to three parts to reduce length of code for each metohd...
+     */
+    private void populateMrtStationsPartOne(){
+        mrtStations.add(new MrtStation("Jurong East", "JUR", new String[] {"NS1", "EW24"}));
         mrtStations.add(new MrtStation("Bukit Batok", "BBT", new String[] {"NS2"}));
         mrtStations.add(new MrtStation("Bukit Gombak", "BGB", new String[] {"NS3"}));
         mrtStations.add(new MrtStation("Choa Chua Kang", "CCK", new String[] {"NS4"}));
@@ -159,6 +168,12 @@ public class MrtMapLogic {
         mrtStations.add(new MrtStation("Pasir Ris", "PSR", new String[] {"EW1"}));
         mrtStations.add(new MrtStation("Tampines", "TAM", new String[] {"EW2", "DT32"}));
         mrtStations.add(new MrtStation("Simei", "SIM", new String[] {"EW3"}));
+    }
+
+    /**
+     * Split to three parts to reduce length of code for each metohd...
+     */
+    private void populateMrtStationsPartTwo(){
         mrtStations.add(new MrtStation("Tanah Merah", "TNM", new String[] {"EW4", "CG0"}));
         mrtStations.add(new MrtStation("Bedok", "BDK", new String[] {"EW5"}));
         mrtStations.add(new MrtStation("Kembangan", "KEM", new String[] {"EW6"}));
@@ -243,6 +258,12 @@ public class MrtMapLogic {
         mrtStations.add(new MrtStation("Cashew", "CSW", new String[] {"DT2"}));
         mrtStations.add(new MrtStation("Hillview", "HVW", new String[] {"DT3"}));
         mrtStations.add(new MrtStation("BeautyWorld", "BTW", new String[] {"DT5"}));
+    }
+
+    /**
+     * Split to three parts to reduce length of code for each metohd...
+     */
+    private void populateMrtStationsPartThree(){
         mrtStations.add(new MrtStation("King Albert Park", "KAP", new String[] {"DT6"}));
         mrtStations.add(new MrtStation("Sixth Avenue", "SAV", new String[] {"DT7"}));
         mrtStations.add(new MrtStation("Tan Kah Kee", "TKK", new String[] {"DT8"}));

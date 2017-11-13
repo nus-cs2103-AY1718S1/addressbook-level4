@@ -335,11 +335,11 @@ public class MrtMapUI {
             //Circle line, which is yellow in color in mrt map;
             return Color.YELLOW;
 
-        }else if(lineName.equals("NE")) {
+        }else if("NE".equals(lineName)) {
             //Nourth East line which is purple in color in mrt map;
             return Color.MAGENTA;
 
-        }else if(lineName.equals("DT")){
+        }else if("DT".equals(lineName)){
             //Down Town line is blue in color in the mrt map;
             return Color.BLUE;
 

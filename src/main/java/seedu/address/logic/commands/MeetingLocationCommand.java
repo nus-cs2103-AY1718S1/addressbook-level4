@@ -81,6 +81,10 @@ public class MeetingLocationCommand extends Command {
 
     /**
      * Returns the info of schedule to be shown to the user later.
+     * peopleNames is the list of people
+     * mrtStations is the list of mrt station. The mrt station of a particular person
+     * is store in the same index as in peopleNames
+     * Meet Station is the Mrt Location to meet
      */
     public String getMrtInfo(ArrayList<String> peopleNames, ArrayList<String> mrtStations,
                               String meetStation) {
