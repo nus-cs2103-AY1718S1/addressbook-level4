@@ -461,7 +461,7 @@ any overlap with an existing event, this will generate a
 === Schedule Recurring Event
 
 Recurring event can be scheduled using either the `repeat` command or by
-specifying the `p/` field in eventedi. As shown in the diagram
+specifying the `p/` field in eventedit. As shown in the diagram
 below, the command will then edit the existing event with the
 specified `repeat period`. When the new event is added, a TimerTask is
 triggered, which will schedule a task to add a new event to AddressBook
@@ -619,28 +619,6 @@ image::photoGUISequenceDiagrams.png[width="1000"]
 When using CLI, the image file to be imported as the photo can be specified
 with the `ph/` field in edit/add commands. After the command is successfully
 parsed, the process will be similar to the sequence diagram shown above.
-
-
-
-==== Command-line implementation
-
-When the image file location is specified in the `add` or `edit` command, the
- `AddCommandParser` and `EditCommandParser` parses the command and copy the
- file specified from the local file system to the
- `/src/main/resources/images` directory. The URL string of the copied image
- file is then stored as the `photoURL` String in the `Photo` field of a
- `Person`.
-
-When the person's details are loaded in the `PersonPanel`, the `photoURL`
-stored in the person is then loaded as an image and displayed in the graphic
-UI.
-
-==== GUI implementation
-
-For every `PersonPanel`, there is an `Import Image` button which allows the
-user to select a file from the local file system to import. Similar to the
-command-line implementation, this file is then copied to the
-`/src/main/resources/images` directory and then loaded in the graphic UI.
 
 //tag::photo[]
 
