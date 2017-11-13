@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= Blast! - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -12,7 +12,7 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/se-edu/addressbook-level4
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team T12-B2`      Since: `Oct 2017`      Licence: `MIT`
 
 == Quick Start
 
@@ -23,7 +23,7 @@ Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
 .  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
+.  Copy the file to the folder you want to use as the home folder for Blast!.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
 image::Ui.png[width="790"]
@@ -593,8 +593,8 @@ The application must be **restarted** before the newly selected theme is activat
 
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Multiple* `multiple FILE_NAME.txt` +
-e.g `multiple personsToAdd.txt`
+* *Multiple* `multiple FILE_PATH` +
+e.g `multiple data/personsToAdd.txt`
 * *Export* `export [FILETYPE] [EXPORT_PATH]` +
 e.g `export .txt C:/Users/This User/Desktop`
 * *Clear* : `clear`
