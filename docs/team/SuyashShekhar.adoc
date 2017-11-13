@@ -78,7 +78,7 @@ include::../DeveloperGuide.adoc[tag=sort]
 ---
 #Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag=addevent]
+include::../UserGuide.adoc[tag=addEvent]
 
 #End of Extract#
 
@@ -94,7 +94,7 @@ include::../UserGuide.adoc[tag=addevent]
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=addevent]
+include::../DeveloperGuide.adoc[tag=addEvent]
 
 #End of Extract#
 
@@ -107,7 +107,7 @@ include::../DeveloperGuide.adoc[tag=addevent]
 ---
 #Start of Extract [from: User Guide]#
 
-include::../UserGuide.adoc[tag=deleteevent]
+include::../UserGuide.adoc[tag=deleteEvent]
 
 #End of Extract#
 
@@ -122,7 +122,7 @@ include::../UserGuide.adoc[tag=deleteevent]
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=deleteevent]
+include::../DeveloperGuide.adoc[tag=deleteEvent]
 
 #End of Extract#
 
@@ -193,7 +193,7 @@ include::../DeveloperGuide.adoc[tag=styling]
 ---
 #Start of Extract [from: Developer Guide]#
 
-include::../DeveloperGuide.adoc[tag=styling]
+include::../DeveloperGuide.adoc[tag=eventbook]
 
 #End of Extract#
 
