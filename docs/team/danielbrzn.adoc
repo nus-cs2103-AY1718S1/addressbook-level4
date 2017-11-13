@@ -60,7 +60,7 @@ include::../UserGuide.adoc[tag=location]
 
 ---
 
-While having the location of a contact is useful, it is an inconvenience to the user to copy the address into Google Maps
+While having the location of a contact is useful, it is inconvenient for the user to copy the address into Google Maps
 manually in order to figure out the directions to a friend's place. As such, the location command allows the user to directly view the location of a contact
 in HitMeUp without having to switch to a browser.
 
@@ -75,14 +75,14 @@ include::../DeveloperGuide.adoc[tag=location]
 
 ---
 
-=== Enhancement Proposed: iCloud Import
+=== Enhancement Proposed: iCloud Contacts Import
 
 ==== External behavior
 
 ---
 The iCloud import would be invoked by typing `iCloud` as the parameter for the import command instead of `Google`.
 
----
+
 
 ==== Justification
 
@@ -102,6 +102,11 @@ provided by Apple for usage, the import would have to be facilitated using HTTP 
 
 A HTTP request would be sent to Apple's servers with the user's credentials for authentication. Once authenticated, another request containing parameters to access the contacts
 of the authenticated user would be sent, and the returned data would be parsed into a `Person` and added to the application if the fields are valid.
+
+The following activity diagram summarizes the flow of the iCloud import:
+
+image::../images/iCloudImportActivityDIagram.png[width="800"]
+
 
 The user's credentials will never be stored in the application.
 

@@ -159,9 +159,6 @@ public class IndexArrayUtil {
     }
 }
 ```
-<<<<<<< HEAD
-###### \java\seedu\address\logic\commands\EmailCommand.java
-=======
 ###### \java\seedu\address\commons\util\StringUtil.java
 ``` java
     /**
@@ -188,9 +185,6 @@ public class IndexArrayUtil {
 }
 ```
 ###### \java\seedu\address\logic\commands\EmailCommand.java
-=======
-###### /java/seedu/address/logic/commands/EmailCommand.java
->>>>>>> bd7f7c248711b469ccd96ffcda72d62ab2bae828
 ``` java
 package seedu.address.logic.commands;
 
@@ -784,13 +778,10 @@ public class Vcard {
 ``` java
 package seedu.address.ui;
 
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
-import seedu.address.commons.events.model.SearchTagEvent;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -811,23 +802,10 @@ public class GroupLabel extends UiPart<Region> {
         this.tag = tag;
         initTags(tag);
         registerAsAnEventHandler(this);
-        setEventHandlerForMouseClick();
     }
 
     private void initTags(Tag tag) {
         groupName.setText(tag.tagName);
-    }
-
-    /**
-     * Register the Label {@tagsName} for MouseEvent to display the persons with the tag that user wants to see.
-     */
-    private void setEventHandlerForMouseClick() {
-        groupName.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                raise(new SearchTagEvent(tag));
-            }
-        });
     }
 
     /** Returns the tag associated with this GroupLabel **/
@@ -854,6 +832,8 @@ public class GroupLabel extends UiPart<Region> {
 ``` java
 package seedu.address.ui;
 
+import java.util.logging.Logger;
+
 import org.fxmisc.easybind.EasyBind;
 
 import javafx.application.Platform;
@@ -862,6 +842,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.model.SearchTagEvent;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -869,6 +851,8 @@ import seedu.address.model.tag.Tag;
  */
 public class GroupListPanel extends UiPart<Region> {
     private static final String FXML = "GroupList.fxml";
+
+    private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     @FXML
     private ListView<GroupLabel> groupListView;
@@ -887,7 +871,17 @@ public class GroupListPanel extends UiPart<Region> {
                 allTagsList, (tag) -> new GroupLabel(tag));
         groupListView.setItems(mappedList);
         groupListView.setCellFactory(listView -> new GroupListViewCell());
+        setEventHandlerForSelectionChangeEvent();
+    }
 
+    private void setEventHandlerForSelectionChangeEvent() {
+        groupListView.getSelectionModel().selectedItemProperty()
+                .addListener((observable, oldValue, newValue) -> {
+                    if (newValue != null) {
+                        logger.fine("Selection in group list panel changed to : '" + newValue + "'");
+                        raise(new SearchTagEvent(newValue.getTag()));
+                    }
+                });
     }
 
     /**
