@@ -147,7 +147,8 @@ Here is an example to illustrate: +
 
 Congratulations, you now have your first contact! +
 
-
+[NOTE]
+Contacts are automatically sorted according to name.
 
 __Constraints:__
 
@@ -382,8 +383,10 @@ Use prefixes:
 . The command follows: +
 Format: `add DESCRIPTION from START DATE by/on DEADLINE t/[TAG]…`
 
-. As the task is added to a new Task Card, the Result Display shows:
+. As the task is added to a new Task Card, the Result Display shows: +
 `Task has been added: DESCRIPTION From: START DATE To: DEADLINE Tags: [TAG]`
+
+. The task added is automatically sorted according to the deadline. With expired tasks coming first, follow by tasks with deadline that are coming up next and lastly tasks without deadline.
 
 [NOTE]
 Dates can be in any format as long as the month precedes the date.
@@ -403,7 +406,7 @@ Sets the description to "recess week" start date to the next day and the deadlin
 * `add get groceries`
 Sets the description to "get groceries" leaving the other parameters blank.
 
-_Constraints_ +
+_Constraints_
 
 ****
 * Dates MUST be preceded by one of the prefixes.
@@ -656,7 +659,9 @@ The corresponding date on the calendar is marked *yellow*. +
 
 __Constraints__
 
-The colour of the date on the calendar is *only updated* when the next/previous button for month/year is clicked or when a date on the calendar is clicked.
+****
+* The colour of the date on the calendar is *only updated* when the next/previous button for month/year is clicked or when a date on the calendar is clicked.
+****
 
 ==== Clicking of date on the calendar
 
@@ -669,9 +674,11 @@ Returns a list of tasks with deadlines on 17th July 2017 and a list of contacts 
 
 __Constraint__
 
-When a clicked date is not a deadline, an empty task list is shown. +
-When a clicked date is not a task, an empty contacts list is shown. +
-When a clicked date contains netiher birthdays nor tasks, both task list and contacts list are emptied.
+****
+* When a clicked date is not a deadline, an empty task list is shown. +
+* When a clicked date is not a task, an empty contacts list is shown. +
+* When a clicked date contains netiher birthdays nor tasks, both task list and contacts list are emptied.
+****
 
 To return to original task list or contacts list, you can use the `list` command.
 // end::calendar[]
