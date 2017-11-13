@@ -8,11 +8,11 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.StackPane?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="330.0" prefWidth="800.0" stylesheets="@BrightTheme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="330.0" prefWidth="800.0" stylesheets="@BrightTheme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ImageView fitHeight="507.0" fitWidth="807.0" opacity="0.15">
+      <ImageView fitHeight="507.0" fitWidth="1085.0" opacity="0.15">
          <image>
-            <Image url="@../../../../../../Desktop/eventpanelbackground.jpg" />
+            <Image url="/images/eventpanelbackground.png" />
          </image>
       </ImageView>
       <StackPane id="eventPeriod" prefHeight="150.0" prefWidth="200.0">
@@ -26,7 +26,7 @@
       </StackPane>
       <StackPane id="eventName" prefHeight="150.0" prefWidth="200.0">
          <children>
-            <Label id="eventName" fx:id="nameLabel" prefHeight="105.0" prefWidth="800.0" text="Event Name Placeholder" StackPane.alignment="TOP_CENTER" />
+            <Label id="eventName" fx:id="nameLabel" prefHeight="105.0" prefWidth="800.0" text="Event Name Placeholder" StackPane.alignment="TOP_LEFT" />
          </children>
       </StackPane>
       <StackPane id="eventTime" prefHeight="150.0" prefWidth="200.0">
