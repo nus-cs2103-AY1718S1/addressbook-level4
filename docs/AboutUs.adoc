@@ -42,7 +42,7 @@ with any Intellij issues. Also in charge of the UI component.
 
 === Lee Ying Zheng
 image::leeyingzheng.png[width="150", align="left"]
-{empty}[http://github.com/m133225[github]]
+{empty}[https://github.com/LeeYingZheng[github]] [<<leeyingzheng#, portfolio>>]
 
 Role: Testing and Java 8 Expert +
 Responsibilities: Ensures every update passes all tests and helps out with any Java 8 issues. Also

@@ -20,12 +20,13 @@ UniCity is a desktop application that is mainly based on the usage of the Comman
 It aims to provide a user-friendly contact management experience for students to better manage their
 ever increasing network.
 
-This user guide comes with a reference for the user if he/she requires extra guidance and provides the following: +
+This user guide provides the following references to further assist users in navigating UniCity should they require so: +
 
-* Detailed explanation of the features in UniCity and how to execute them. +
-* Features that are to be implemented in the future to provide a road map of where UniCity is headed. +
-* Summary of the commands to serve as a cheat sheet. +
-* Dedicated section for Frequently Asked Questions (FAQ). +
+* A walkthrough of UniCity's features and their behaviour. +
+* Instructions on how to execute UniCity's commands. +
+* Future enhancements to be implemented in UniCity. These enhancements highlights the direction and vision of UniCity. +
+* A summary of the commands. +
+* A dedicated section for Frequently Asked Questions (FAQ). +
 
 [NOTE]
 Familiarity with the CLI may be necessary to maximise the usefulness of UniCity.
@@ -34,17 +35,16 @@ Familiarity with the CLI may be necessary to maximise the usefulness of UniCity.
 
 UniCity has the following features categorised according to their uses: +
 
-* Viewing contacts in different views using listing, filtering, finding and sorting contacts. +
-* Modifying contacts by adding, deleting and editing contacts.  +
-* Using web services such as FaceBook and Google. +
-* Managing command sequence and history through undoing and redoing previous commands and viewing a list of
- executed commands. +
+* Commands such as listing, filtering, finding and sorting contacts allow users to view and categorise their contacts differently. +
+* Commands such as adding, deleting and editing contacts allow users to create, modify and delete their contacts.  +
+* Commands such as FaceBook and Google allow users to tap into web services to retrieve more information on their contacts. +
+* Commands such as undoing, redoing and viewing a list of commands allow users to toggle and view their past commands in sequence. +
 
 == Quick Start
 
 This is a brief introduction on how to get started with UniCity.
 
-.  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
+.  Ensure that you have Java version `1.8.0_60` or later installed in your Computer.
 +
 [NOTE]
 This app will not work with earlier versions of Java 8.
@@ -60,7 +60,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Try out these example commands:
 
 * *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
+* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to UniCity's contact list.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 
 Refer to the link:#features[Features] section below for details of each command.
@@ -71,6 +71,7 @@ Refer to the link:#features[Features] section below for details of each command.
 *Command Format*
 
 * Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
+* All command words are case insensitive. Some of these commands can be abbreviated to a single or few letters.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
@@ -78,52 +79,57 @@ Refer to the link:#features[Features] section below for details of each command.
 
 === Viewing contacts
 
-This section lists commands that view a part of UniCity's contact list.
+This section lists commands that partition and view a part of UniCity's contact list.
 
-==== Listing all persons : `list`
+==== Listing all contacts : `list`
 
-Lists all persons in the address book. +
-Format: `list`
+Lists all contacts in UniCity's contact list. +
+Format: +
+`list` +
+`l`
 
 // tag::filterbytags[]
-==== Filtering persons by tags: `filter`
+==== Filtering contacts by tags: `filter`
 
-Filters persons whose tags contain any of the given keywords. +
-Format: `filter KEYWORD [MORE_KEYWORDS]`
+Filters contacts whose tags contain any of the given keywords. +
+Format: +
+`filter KEYWORD [MORE_KEYWORDS]`
 
 ****
-* The search is case sensitive. e.g `Professor` will not match `professor`
-* The order of the keywords does not matter. e.g. `professor tutor` keywords will match `[tutor]` and '[professor]' tags
+* The searched tags are case sensitive. e.g `Professor` will not match `professor`
+* The order of the keywords does not matter. e.g. `professor tutor` keywords will match `[tutor][professor]' tags
 * Only the tags are searched.
 * Only full words will be matched e.g. `friend` will not match `friends`
-* Tags matching at least one keyword will be returned (i.e. `OR` search). e.g. `tutor` will return persons with both `[tutor]` and '[professor]' tags
+* Tags matching at least one keyword will be returned (i.e. `OR` search). e.g. `tutor` will return contacts with both `[tutor]` and '[professor]' tags
 ****
 
 Examples:
 
 * `filter professor` +
 Returns any contacts having at least a `[professor]` tag
-Hides contacts that do not contain a `[professor]` tag. Example: Contacts with `[neighbour]`'[senior]' tags will not be shown.
-* `filter professor tutor` +
+Hides contacts that do not contain a `[professor]` tag. Example: Contacts with `[neighbour][senior]` tags will not be shown.
+* `FILTER professor tutor` +
 Returns any contacts having at least a `[professor]` or `[tutor]` tag, or both.
-Hides contacts that do not contain `[professor]` and `[tutor]`. Example: Contacts with `[coursemate]`'[friend]' tags will not be shown.
+Hides contacts that do not contain `[professor]` and `[tutor]`. Example: Contacts with `[coursemate][friend]` tags will not be shown.
 // end::filterbytags[]
 
 // tag::find[]
 
-==== Locating persons by name: `find`
+==== Locating contacts by name: `find`
 
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Finds contacts whose names contain any of the given keywords. +
+Format: +
+`find KEYWORD [MORE_KEYWORDS]` +
+`f KEYWORD [MORE_KEYWORDS]`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Only the name is searched.
 * Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return
+* Contact names matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return
  `Hans Gruber`, `Bo Yang`
-* When no persons are found, the command will return an accurate suggestion of
+* When no contacts are found, the command will return an accurate suggestion of
   who you might have been referring to, with the results of that suggestion shown as well.
 ****
 
@@ -131,9 +137,9 @@ Examples:
 
 * `find John` +
 Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
-* `find alx` +
+* `f Betsy Tim John` +
+Returns any contact having names `Betsy`, `Tim`, or `John`
+* `FIND alx` +
 Returns `No results for alx. Showing results for Alex instead`
 
 image::FindCommandBeforeAndAfter.png[width="790"]
@@ -144,14 +150,18 @@ image::FindCommandBeforeAndAfter.png[width="790"]
 ==== Listing all favourite contacts : `showFavourite"
 
 Lists all favourite contacts. +
-Format: `showFavourite` or `sf`
+Format: +
+`showFavourite` +
+`sf`
 // end::showfavourite[]
 // tag::sort[]
 
-==== Sorting a person : `sort`
+==== Sorting a contact : `sort`
 
 Sorts the list of contacts in UniCity by name. +
-Format: `sort`
+Format: +
+`sort` +
+`st`
 
 ****
 * Sorts the list of contacts according to alphabetical order.
@@ -162,17 +172,19 @@ Format: `sort`
 Examples:
 
 * `sort` +
-Sort the contacts in Address Book by ascending order.
+Sort the contacts in UniCity by ascending order.
 // end::sort[]
 
 === Modifying contacts
 
 This section lists commands that modify UniCity's contact list.
 
-==== Adding a person: `add`
+==== Adding a contact: `add`
 
-Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BIRTHDAY [t/TAG]...`
+Adds a contact in UniCity +
+Format: +
+`add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BIRTHDAY [t/TAG]...` +
+`a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BIRTHDAY [t/TAG]...`
 
 ****
 * Only the name and phone number field are compulsory. Default value will be entered if other fields are left empty.
@@ -180,43 +192,47 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BIRTHDAY [t/TAG]...`
 ****
 
 [TIP]
-A person can have any number of tags (including 0)
+A contact can have any number of tags (including 0)
 
 Examples:
 
 * `add n/John Doe p/98765432`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 b/030594 t/criminal`
+* `a n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 b/030594 t/criminal`
 
-==== Editing a person : `edit`
+==== Editing a contact : `edit`
 
-Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Edits an existing contact in UniCity's contact list. +
+Format: +
+`edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+`e INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
 ****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* Edits the contact at the specified `INDEX`. The index refers to the index number shown in the last contact listing. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be overwritten.
-* You can remove all the person's tags by typing `t/` without specifying any tag after it.
+* When editing tags, the existing tags of the contact will be overwritten.
+* You can remove all the contact's tags by typing `t/` without specifying any tag after it.
 ****
 
 Examples:
 
 * `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+Edits the phone number and email address of the 1st contact to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+Edits the name of the 2nd contact to be `Betsy Crower` and clears all existing tags.
 
 // tag::favourite[]
-==== Editing a person : `favourite`
+==== Editing a contact : `favourite`
 
-Edits the `favourite` status of an existing person in the address book. +
-Format: `favourite INDEX`
+Edits the `favourite` status of an existing contact in UniCity's contact list. +
+Format: +
+`favourite INDEX` +
+`fav INDEX`
 
 ****
-* Modifies the `favourite` field of the person with the input index.
-* If the person is a favourite person, sets the `favourite` status to false.
-* If the person is not a favourite person, mark it as favourite.
+* Modifies the `favourite` field of the contact with the input index.
+* If the contact is a favourite contact, sets the `favourite` status to false.
+* If the contact is not a favourite contact, mark it as favourite.
 * The index number refers to the order in the latest list.
 * The index number must be a positive integer and cannot exceed the length of the latest list.
 ****
@@ -224,19 +240,21 @@ Format: `favourite INDEX`
 Examples:
 
 * `favourite 1` +
-Changes the `favourite` status of the 1st person in the latest list.
+Changes the `favourite` status of the 1st contact in the latest list.
 
 image::fav-command-ui.png[width="790"]
 // end::favourite[]
 // tag::birthday[]
 
-==== Adding a birthday to select person : `birthday`
+==== Adding a birthday to selected contacts : `birthday`
 
-Adds the given birthday to the specified persons . +
-Format: `birthday INDEX [b/BIRTHDAY]`
+Adds the given birthday to the specified contacts . +
+Format: +
+`birthday INDEX [b/BIRTHDAY]` +
+`bd INDEX [b/BIRTHDAY]`
 
 ****
-* Adds the birthday to the person specified by the `INDEX`.
+* Adds the birthday to the contact specified by the `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
 * The birthday *must be in positive intgers* 1, 2, 3, ...
@@ -247,9 +265,9 @@ Examples:
 
 * `list` +
 `birthday 1 b/21/10/95` +
-Adds the birthday "21 Oct 95" to the 1st person in the address book.
-* `birthday 3 b/21/10/1995` +
-Adds the birthday "21 Oct 1995" to the 3rd person in the address book.
+Adds the birthday "21 Oct 95" to the 1st contact in UniCity's contact list.
+* `bd 3 b/21/10/1995` +
+Adds the birthday "21 Oct 1995" to the 3rd contact in UniCity's contact list.
 
 image::birthday-command-uI.png[width="790"]
 // end::birthday[]
@@ -257,13 +275,15 @@ image::birthday-command-uI.png[width="790"]
 
 // tag::addremove[]
 
-==== Adding a tag to select persons : `addtag`
+==== Adding a tag to selected contacts : `addtag`
 
-Adds the given tag to the specified persons. +
-Format: `addtag INDEX [MORE_INDEXES] [t/TAG]...`
+Adds the given tag to the specified contacts. +
+Format: +
+`addtag INDEX [MORE_INDEXES] [t/TAG]...` +
+'at INDEX [MORE_INDEXES] [t/TAG]...'
 
 ****
-* Adds the tag to every person specified by the `INDEXES`.
+* Adds the tag to every contact specified by the `INDEXES`.
 * The tag is case-sensitive.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
@@ -273,18 +293,20 @@ Examples:
 
 * `list` +
 `addtag 1 2 3 t/friends` +
-Adds the tag "friends" to the 1st, 2nd and 3rd person in the address book.
+Adds the tag "friends" to the 1st, 2nd and 3rd contacts in UniCity's contact list.
 * `find Betsy` +
-`addtag 2 5 t/classmate` +
-Adds the tag "classmate" to the 2nd and 5th person in the results of the `find` command.
+`at 2 5 t/classmate` +
+Adds the tag "classmate" to the 2nd and 5th contacts in the results of the `find` command.
 
-==== Removing a tag from select persons : `removetag`
+==== Removing a tag from selected contacts : `removetag`
 
-Removes the given tag from identified persons. +
-Format: `removetag INDEX [MORE_INDEXES] [t/TAG]...`
+Removes the given tag from identified contacts. +
+Format: +
+`removetag INDEX [MORE_INDEXES] [t/TAG]...` +
+`rt INDEX [MORE_INDEXES] [t/TAG]...`
 
 ****
-* Removes the tag from every person specified by the `INDEXES`.
+* Removes the tag from every contact specified by the `INDEXES`.
 * The tag is case-sensitive.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
@@ -294,20 +316,22 @@ Examples:
 
 * `list` +
 `removetag 1 2 3 t/friends` +
-Removes the tag "friends" from 1st, 2nd and 3rd person in the address book.
+Removes the tag "friends" from 1st, 2nd and 3rd contacts in UniCity's contact list.
 * `find Betsy` +
 `removetag 2 5 t/classmate` +
-Removes the tag "classmate" from the 2nd and 5th person in the results of the `find` command.
+Removes the tag "classmate" from the 2nd and 5th contacts in the results of the `find` command.
 
 // end::addremove[]
 
-==== Deleting a person : `delete`
+==== Deleting a contact : `delete`
 
-Deletes the specified person from the address book. +
-Format: `delete INDEX`
+Deletes the specified contact from UniCity's contact list. +
+Format: +
+`delete INDEX` +
+`d INDEX`
 
 ****
-* Deletes the person at the specified `INDEX`.
+* Deletes the contact at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
@@ -316,27 +340,31 @@ Examples:
 
 * `list` +
 `delete 2` +
-Deletes the 2nd person in the address book.
+Deletes the 2nd contact in UniCity's contact list.
 * `find Betsy` +
-`delete 1` +
-Deletes the 1st person in the results of the `find` command.
+`d 1` +
+Deletes the 1st contact in the results of the `find` command.
 
 ==== Clearing all entries : `clear`
 
-Clears all entries from the address book. +
-Format: `clear`
+Clears all entries from UniCity's contact list. +
+Format: +
+`clear` +
+`c`
 
 === Using web services
 
 This section lists commands that require the Internet to provide services. Ensure Internet connection is established before entering these commands.
 
-==== Selecting a person : `select`
+==== Selecting a contact : `select`
 
-Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
+Selects the contact identified by the index number used in the last contact listing. +
+Format: +
+`select INDEX` +
+`s INDEX`
 
 ****
-* Selects the person and loads the Google search page of the person at the specified `INDEX`.
+* Selects the contact and loads the Google search page of the contact at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
@@ -345,29 +373,31 @@ Examples:
 
 * `list` +
 `select 2` +
-Selects the 2nd person in the address book.
+Selects the 2nd contact in UniCity's contact list.
 * `find Betsy` +
-`select 1` +
-Selects the 1st person in the results of the `find` command.
+`s 1` +
+Selects the 1st contact in the results of the `find` command.
 
 image::select-command-ui.png[width="790"]
 
 // tag::facebook[]
-==== Searching Facebook for a person's profile : `facebook`
+==== Searching Facebook for a contact's profile : `facebook`
 
-Searches Facebook for the profile of the person specified by index number. +
-Format: `facebook INDEX` or `fb INDEX`
+Searches on Facebook the profile of the person whose contact is specified by index number. +
+Format: +
+`facebook INDEX` +
+`fb INDEX`
 
 ****
-* Loads the Facebook search page of the person at the specified `INDEX`. +
-* The index refers to the index number shown in the most recent person listing.
+* Loads the Facebook search page of the person whose contact is at the specified `INDEX`. +
+* The index refers to the index number shown in the most recent contact listing.
 * The index *must be a positive integer* and *within the length of the current listing*.
 ****
 
 Examples:
 
 * `facebook 1`
-Searches Facebook for the profile of the 1st person in the current listing.
+Searches on Facebook the profile of the person whose contact is 1st in the current listing.
 
 image::facebook-command-ui.png[width="790"]
 // end::facebook[]
@@ -375,11 +405,12 @@ image::facebook-command-ui.png[width="790"]
 // tag::locate[]
 ==== Displaying the address of a person on Google Maps : `locate`
 
-Searches Google Maps for the address of the selected person. The location will be displayed in the app. +
-Format: `locate INDEX`
+Searches Google Maps for the address of the selected contact. The location will be displayed in the app. +
+Format: +
+`locate INDEX`
 
 ****
-* Loads the address of the person with the input index number and search for it on Google Maps.
+* Loads the address of the person from a specified contact and searches it on Google Maps.
 * The index refers to the index number shown in the most recent person listing.
 * The index *must be a positive integer* and *within the length of the current listing*.
 * If no address was keyed in for the selected person, a message will pop up and no search will be done.
@@ -388,7 +419,7 @@ Format: `locate INDEX`
 Examples:
 
 * `locate 1`
-Finds the address of the 1st person in the latest listing on Google Maps.
+Finds the address of the person from the 1st contact in the latest listing on Google Maps.
 
 image::locate-command-ui.png[width="790"]
 // end::locate[]
@@ -400,7 +431,9 @@ This section lists commands that toggle with the past and present commands enter
 ==== Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
-Format: `history`
+Format: +
+`history` +
+`h`
 
 [NOTE]
 ====
@@ -410,13 +443,16 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 // tag::undoredo[]
 ==== Undoing previous command : `undo`
 
-Restores the address book to the state before the previous _undoable_ command was executed. Multiple undos can be
+Restores UniCity's contact list to the state before the previous _undoable_ command was executed. Multiple undos can be
 executed at once.  +
-Format: `undo` OR `undomult NUMBER_OF_COMMANDS_TO_UNDO`
+Format: +
+`undo` +
+'u' +
+`undomult NUMBER_OF_COMMANDS_TO_UNDO`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (e.g. `add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify the content of UniCity's contact list (e.g. `add`, `delete`, `edit` and `clear`).
 ====
 
 Examples:
@@ -432,8 +468,8 @@ The `undo` command fails as there are no undoable commands executed previously.
 
 * `delete 1` +
 `clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
+`u` (reverses the `clear` command) +
+`UNDO` (reverses the `delete 1` command) +
 The `undo` command restores the previous state starting from the most recent command made.
 
 * `delete 1` +
@@ -444,7 +480,10 @@ The `undo` command restores the previous state starting from the most recent com
 ==== Redoing the previously undone command : `redo`
 
 Reverses the most recent `undo` command. Multiple redos can be executed at once +
-Format: `redo` OR `redomult NUMBER_OF_COMMANDS_TO_REDO`
+Format: +
+`redo` +
+`r` +
+`redomult NUMBER_OF_COMMANDS_TO_REDO`
 
 Examples:
 
@@ -468,7 +507,8 @@ The `redo` command fails as there are no `undo` commands executed previously.
 ==== Viewing help : `help`
 
 Shows this user guide. +
-Format: `help`
+Format: +
+`help`
 
 // tag::reply[]
 ==== Adding contacts with duplicate fields
@@ -476,7 +516,9 @@ Format: `help`
 Checks and informs user of their actions to add contacts with already existent fields in their contacts list.
 Prompts user to reply `yes` or `no` to proceed with his actions.
 
-Format: `yes` / `no`
+Format: +
+`yes` +
+`no`
 
 Examples:
 
@@ -499,7 +541,8 @@ Otherwise, he may choose to reply with `no` and have the add command ignored.
 ==== Changing the window size : `ws`
 
 Changes the window size according to predefined sizes that the user can choose from.
-Format: `ws WINDOWSIZE`
+Format: +
+`ws WINDOWSIZE`
 
 ****
 * Changes the window size to the specified `WINDOWSIZE`.
@@ -555,8 +598,7 @@ There is no need to save manually.
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
-Alternatively, you may log in as a user into the online version of UniCity and it will fetch your contacts from your addressbook.
+*A*: Install UniCity in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous UniCity folder.
 
 *Q*: Will my contacts disappear after I exit from UniCity? +
 *A*: UniCity saves all your contacts in a local file so that you can always find them after running the application.
@@ -574,7 +616,7 @@ It is safe to enter anything in UniCity.
 *Q*: What do I do if I accidentally cleared my contacts? +
 *A*: Use the undo function implemented in UniCity to go back to the original copy.
 
-== Command Summary
+== Command summary
 
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
