@@ -118,7 +118,7 @@ Examples:
 
 === Listing all persons : `list`
 
-*You is planning a party. As a Gentleman, you would like to invite all your contacts.
+*You are planning a party. As a Gentleman, you would like to invite all your contacts.
 Thus you list all persons in the Gentleman's Guide.*
 
 Shows a list of all persons in the Gentleman's Guide. +
@@ -305,7 +305,7 @@ _Figure 3.12.1 Reminder list before and after the findReminder command_
 === Locating reminders by priority: `findPriority`
 
 *As a Gentleman, you need to prioritise your time. You need to accomplish things of the highest priority first.
-Thus you search for priority high in the Gentleman's Guide to get your next tailor's appointment.*
+Thus you search for "priority high" in the Gentleman's Guide to get your next important meeting.*
 
 Finds reminders whose priority is same as the keyword. +
 Format: `findPriority KEYWORD [MORE_KEYWORDS]`
@@ -329,7 +329,7 @@ Returns reminders with priority `Medium` , `Low`
 === Deleting a person : `delete`
 
 *As a Gentleman, you may need to delete uncultured people from your contact list.
-Thus you can Delete contact in the Gentleman's Guide.*
+Thus you can "delete" contact in the Gentleman's Guide.*
 
 Deletes the specified person from the Gentleman's Guide. +
 Format: `delete INDEX`
@@ -370,7 +370,7 @@ Deletes the 2nd reminder in the Gentleman's Guide.
 
 === Selecting a person : `select`
 
-*While sending The Lady home, you select her contact to open Google Maps to direct you to her house.*
+*While sending The Lady home, you select her contact to open Google Maps and get directions to her house.*
 
 Selects the person identified by the index number used in the last person listing. +
 Format: `select INDEX` +
@@ -405,7 +405,7 @@ Or +
 Formal: Clicking the reminder on the Gui.
 
 image::selectReminder.PNG[width="800"]
-
+_Figure 3.17.1 Detailed information of reminder_
 ****
 * Selects the Reminder and loads the Google search page the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
@@ -457,12 +457,12 @@ Below is an illustration of an unsorted and sort list of contacts.
 **Before**
 
 image::unsortedlist.png[width="300"]
-_Figure 3.17.1 : Unsorted reminder list._
+_Figure 3.19.1 : Unsorted reminder list._
 
 **After**
 
 image::sortedlist.png[width="300"]
-_Figure 3.17.2 : Sorted reminder list (In alphabetical order)._
+_Figure 3.19.2 : Sorted reminder list (In alphabetical order)._
 
 === Sorting all entries by age : `sortAge`
 
@@ -752,13 +752,15 @@ e.g. `findPhone 87654321`
 * *Find Reminder* : `findReminder KEYWORD [MORE_KEYWORDS]` +
 e.g. `findReminder Project`
 * *Find Priority* : `findPriority KEYWORD [MORE_KEYWORDS]` +
-e.g. `findPriority High`
+e.g. `findPriority High` +
 e.g. `findPriority Medium`
 * *List Persons* : `list`
 * *List Reminders* : `listReminder`
 * *Help* : `help`
 * *Select* : `select INDEX` +
-e.g.`select 2`
+e.g. `select 2`
+* *Select Reminder* : `selectReminder INDEX` +
+e.g. `selectReminder 2`
 * *View* : `view INDEX` +
 e.g.`view 2`
 * *Sort by Name* : `sort`
@@ -776,6 +778,8 @@ e.g.`retrieve exColleagues`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
-* *Creating a private database* : `create u/private p/password`
-* *Log in to private database* : `login u/private p/password`
+* *Creating a private database* : `create u/USERNAME p/PASSWORD` +
+e.g. `create u/private p/password`
+* *Log in to private database* :  `login u/USERNAME p/PASSWORD` +
+e.g. `login u/private p/password`
 * *Log out of private database* : `logout`
