@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= Bamboo - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,11 +10,19 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103AUG2017-W09-B4/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `CS2103AUG2017-W09-B4`      Since: `Aug 2017`      Licence: `MIT`
 
-== Quick Start
+== Introduction
+
+=== About Bamboo
+Bamboo is a command-line interface (CLI) based address book application. It is a one-stop solution to help you manage your contacts in an efficient and convenient manner. Using Bamboo, you can organize contacts into groups, obtain your contacts' Google Calendar events and get connected to your contacts’ social media platforms.
+
+=== Purpose
+This document serves as the User Guide for Bamboo. It assumes that you have a basic understanding of how to use simple CLI applications. It describes how to get started with Bamboo and how to use Bamboo’s features by walking you through some examples.
+
+== Getting Started
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
 +
@@ -22,7 +30,7 @@ By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
+.  Download the latest `bamboo.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
@@ -30,17 +38,29 @@ image::Ui.png[width="790"]
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
-.  Some example commands you can try:
+.  6.	You can try the following command examples:
 
 * *`list`* : lists all contacts
 * **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
+* **`delete`**`3 4 5` : deletes the 3rd, 4th and 5th contacts shown in the current list
 * *`exit`* : exits the app
 
 .  Refer to the link:#features[Features] section below for details of each command.
 
 == Features
+In this increasingly connected world that we live in, it is difficult to manage contact information and stay connected to the people that you meet. To help you, Bamboo is designed to show your contacts, groups and contact information in a fuss-free and concise manner.
 
+image::layout.png[width="790"]
+
+Upon launching Bamboo, you will notice that there are three distinct panels - *Contacts*, *Groups* and a *Contact Detail* panel.
+
+* The *Contact* panel shows you all your contacts at a glance. Details such as the contact’s address, email and phone are omitted so you do not get bombarded with a slew of redundant information when you are looking for a person.
+
+* The *Groups* panel shows you all your groups at a glance. You can create groups to help organize and manage your contacts in a more logical and systematic manner.
+
+* The *Contact Detail* panel shows you the details of your contact such as their phone, email and address. You will be able to view a person’s schedule and get connected with their social media accounts.
+
+As Bamboo is primarily a CLI-based application, most of your interaction with Bamboo will be through command inputs.
 ====
 *Command Format*
 
@@ -51,31 +71,39 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 ====
 
 === Viewing help : `help`
-
 Format: `help`
 
 === Adding a person: `add`
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Format: `add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+Alias: `a`
 
 [TIP]
+A person can have 0 or 1 phone number, email and address
 A person can have any number of tags (including 0)
 
 Examples:
 
+* `add n/John Doe`
+* `add n/John Doe p/71625387`
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
 === Listing all persons : `list`
 
-Shows a list of all persons in the address book. +
-Format: `list`
+Shows a list of all persons in the address book. Has the option of showing only favourite contacts +
+Format: `list [f/]` +
+Alias: `l`
+
+* `list` will show all contacts
+* `list f/` will show only contacts that have been marked as favourites
 
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+Alias: `e`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -92,16 +120,18 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Locating persons by name: `find`
+=== Locating persons by name, address, email or phone number: `find` (Since V1.4)
 
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Finds persons whose names or name initials or address or phone number or email contain any of the given keywords. +
+Format: `find [n/] [p/] [e/] [a/] [t/] KEYWORD [MORE_KEYWORDS]` +
+Alias: `f`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
+* The search can be done with initials. e.g. `AY` will match `Alex Yeoh`
+* The search can be done with partial strings. e.g. `Ber` will match `Bernice Yu`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
+* Persons can be searched by name, phone number, email or address.
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ****
 
@@ -111,14 +141,28 @@ Examples:
 Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
+* `find AY` +
+Returns `Alex Yeoh` whose name initial is `AY`
+* `find Ber` +
+Returns `Bernice Yu` whose name contains the partial string `Ber`
+* `find p/83537423` +
+Returns any person with phone number `83537423`
+* `find a/earth` +
+Returns any person with address containing `earth`
+* `find e/gmail` +
+Returns any person with email containing keyword `gmail`
+* `find t/friends` +
+Returns any person with tags containing keyword `friends`
 
-=== Deleting a person : `delete`
 
-Deletes the specified person from the address book. +
-Format: `delete INDEX`
+=== Deleting person(s) : `delete`
+
+Deletes the specified person(s) from the address book. +
+Format: `delete INDEX [INDEX...]` +
+Alias: `d`
 
 ****
-* Deletes the person at the specified `INDEX`.
+* Deletes the person(s) at the specified `INDEX(s)`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
@@ -126,19 +170,21 @@ Format: `delete INDEX`
 Examples:
 
 * `list` +
-`delete 2` +
-Deletes the 2nd person in the address book.
+`delete 2 3 4` +
+Deletes the 2nd, 3rd and 4th persons in the address book.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
-=== Selecting a person : `select`
+=== Selecting a person or a group : `select`
 
-Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
+Selects the person or group identified by the index number used in the last person listing. +
+Format: `select [g/] INDEX` +
+Alias: `sel`
 
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
+* Selects the person and loads the contact card of the person at the specified `INDEX`.
+* If `g/` is specified, selects and loads the group member list of the group at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
@@ -151,11 +197,274 @@ Selects the 2nd person in the address book.
 * `find Betsy` +
 `select 1` +
 Selects the 1st person in the results of the `find` command.
+`select g/2` +
+Selects the 2nd group in the address book.
+
+// tag::faveSystem[]
+=== Marking a person as 'Favourite': `fadd` (Since V1.2)
+
+Marks the person identified by the index number used in the last person listing as a 'Favourite'. +
+Format: `fadd INDEX` +
+Alias: `fa`
+
+****
+* Marks the contact  at the specified `INDEX` as a 'Favourite'.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+* Contact marked as 'Favourite' will move to the top of the contact list in lexographical order.
+****
+
+Examples:
+
+* `fadd 1`
+Marks the 1st contact as a 'Favourite' in the address book.
+* `fa 1`
+
+=== Unmarking a person as 'Favourite': `fremove` (Since V1.2)
+
+Unmarks the person identified by the index number used in the last person listing as a 'Favourite' +
+Format: `fremove INDEX` +
+Alias: `fr`
+
+****
+* Unmarks the contact at the specified `INDEX` as a 'Favourite'.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+* Contact unmarked as 'Favourite' will move down the contact list till there are no 'Favourite' persons above it.
+****
+
+Examples:
+
+* `fremove 1`
+Unmarks the 1st contact as a 'Favourite' in the address book.
+* `fr 1`
+// end::faveSystem[]
+
+// tag::group[]
+=== Creating a group: `gcreate` (Since V1.2)
+
+Adds a group to the address book. +
+Format: `gc n/NAME` +
+Alias: `gc`
+
+Examples:
+
+* `gcreate n/Bamboo`
+* `gc n/W09-B4`
+
+=== Adding a person to a group: `gadd` (Since V1.3)
+
+Adds a person to a group. +
+Format: `gadd g/GROUP INDEX p/PERSON INDEX` +
+Alias: `ga`
+
+****
+* Adds person to the group at the specified `GROUP INDEX` and `PERSON INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `gadd g/1 p/2`
+* `ga g/3 p/2`
+
+=== Removing a person to a group: `gremove` (Since V1.3)
+
+Removes a person from a group. +
+Format: `gremove g/GROUP INDEX p/PERSON INDEX` +
+Alias: `gr`
+
+****
+* Removes person from the group at the specified `GROUP INDEX` and `PERSON INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `gremove g/1 p/2`
+* `gr g/3 p/2`
+
+=== Deleting a group: `gdelete` (Since V1.2)
+
+Deletes a group from address book. +
+Format: `gdelete INDEX` +
+Alias: `gd`
+
+****
+* Deletes the group at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `gdelete 2` +
+Deletes the 2nd group in the address book.
+* `gd 2`
+// end::group[]
+
+// tag::calendar[]
+=== Adding a person's Google Calendar events : `cadd` (Since V1.4)
+
+Adds a person's Google Calendar events to his/her schedule. +
+Format: `cadd p/PERSON INDEX i/GOOGLE CALENDAR ID` +
+Alias: `ca`
+
+****
+* Adds events pulled from `GOOGLE CALENDAR ID` to person at specified `PERSON INDEX`
+* Calendar ID must be from publicly shared Calendar.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `cadd p/2 i/xderek105243x@gmail.com`
+// end::calendar[]
+
+=== Adding an event to a person's schedule : `eadd` (Since V1.5)
+Adds an event to a person's schedule. +
+Format: `eadd p/PERSON INDEX n/EVENT NAME s/EVENT START DATE e/EVENT END DATE [d/EVENT DETAILS]` +
+Alias: `ea`
+
+****
+* Add an event to person's schedule list at specified `PERSON INDEX`
+* `EVENT START DATE` and `EVENT END DATE` must be in *YYYY-MM-DD HH:MM* format.
+* `EVENT START DATE` must come before `EVENT END DATE`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `eadd p/2 n/CS2103 Meeting s/2017-11-23 10:30 e/2017-11-23 11:45 d/Prepare for Demo`
+
+=== Removing event(s) from a person's schedule : `edelete` (Since V1.5)
+Removes event(s) from a person's schedule. +
+Format: `edelete p/PERSON INDEX e/EVENT INDEX [EVENT INDEX...]` +
+Alias: `ed`
+
+****
+* Removes event(s) from a person's schedule list at specified `PERSON INDEX`
+* At least one `EVENT INDEX` must be specified
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `edelete p/1 e/1`
+* `ed p/2 e/4 5 6`
+
+// tag::profPicSystem[]
+=== Setting the photo of a person: `ppset` (Since V1.4)
+
+Sets the photo of a person. +
+Format: `ppset INDEX fp/FILEPATH` +
+Alias: pps
+
+****
+* Adds photo to person at specified `INDEX`
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `ppset 1 fp/C:\Users\nas.png`
+
+=== Resetting the photo of a person: `ppreset` (Since V1.4)
+
+Resets photo of a person to default picture. +
+Format: `ppreset INDEX` +
+Alias: ppr
+
+****
+* Resets photo of person at specified `INDEX`
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `ppreset 1`
+// end::profPicSystem[]
+
+// tag::sort[]
+=== Sorting persons : `sort` (Since V1.1)
+
+Sorts persons based on prefix specified in either ascending or descending order. +
+Format: `sort [PREFIX/[r]]` +
+Alias: `s`
+
+****
+* Sorts persons by PREFIX
+* Adding the optional flag `r` will sort persons in descending order
+* Persons are sorted by name by default (if no `PREFIX` is specified)
+* Persons are sorted in ascending order by default (if no `r` flag is specified)
+* 'Favourite' persons are not subject to sorting and will remain at the top of list.
+****
+
+Examples:
+
+* `sort` +
+Sorts persons by name in ascending order. +
+* `sort p/r` +
+Sorts persons by phone in descending order.
+
+// end::sort[]
+
+// tag::sadd[]
+=== Adding social media profiles : `sadd` (coming in V2.0)
+
+Adds social media profiles to a contact based on prefixes specified.
+Format: `sadd [fb/FacebookURL] [tw/TwitterURL] [in/InstagramURL] [gp/GooglePlusURL]` +
+
+****
+* Adds social media profiles with `PREFIX`-es `fb, tw, in, gp` to a person specified by `INDEX`.
+* At least one of the four prefixes is needed.
+****
+
+Examples:
+
+* `sadd p/1 fb/https://www.facebook.com/samplename123` +
+Adds a Facebook profile page to the person with `INDEX` 1. +
+* `sadd p/2 fb/https://www.facebook.com/samplename123 tw/https://www.twitter.com/samplename123
+ gp/https://plus.google.com/samplename123` +
+Adds a Facebook profile page, Twitter profile page
+ and Google Plus profile page to the person with `INDEX` 2. +
+
+// end::sadd[]
+
+// tag::sshow[]
+=== Showing social media profiles : `sshow` (coming in V2.0)
+
+Shows social media profiles of a contact based on prefixes specified.
+Format: `sshow INDEX [fb tw in gp]` +
+
+****
+* Shows social media profiles with options `fb, tw, in, gp` of the person specified by `INDEX`.
+* Person `INDEX` is mandatory.
+* At least one of the four social media prefixes are needed.
+****
+
+Examples:
+
+* `sshow 1 fb` +
+Shows the Facebook profile page of the person with `INDEX` 1. +
+* `sshow 2 fb tw gp` +
+Shows the Facebook, Twitter and Google Plus profile page
+of the person with `INDEX` 2. +
+
+// end::sshow[]
 
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
-Format: `history`
+Format: `history` +
+Alias: `h`
 
 [NOTE]
 ====
@@ -166,7 +475,8 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 === Undoing previous command : `undo`
 
 Restores the address book to the state before the previous _undoable_ command was executed. +
-Format: `undo`
+Format: `undo` +
+Alias: `u`
 
 [NOTE]
 ====
@@ -192,7 +502,8 @@ The `undo` command fails as there are no undoable commands executed previously.
 === Redoing the previously undone command : `redo`
 
 Reverses the most recent `undo` command. +
-Format: `redo`
+Format: `redo` +
+Alias: `r`
 
 Examples:
 
@@ -215,7 +526,8 @@ The `redo` command fails as there are no `undo` commands executed previously.
 === Clearing all entries : `clear`
 
 Clears all entries from the address book. +
-Format: `clear`
+Format: `clear` +
+Alias: `c`
 
 === Exiting the program : `exit`
 
@@ -237,15 +549,33 @@ There is no need to save manually.
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
 * *Clear* : `clear`
-* *Delete* : `delete INDEX` +
-e.g. `delete 3`
+* *Delete* : `delete INDEX [INDEX...]` +
+e.g. `delete 3 4`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
+* *Find* : `find [n/] [p/] [e/] [a/] [t/] KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
-* *List* : `list`
+* *Mark Favourite Contact* : `fadd INDEX` +
+e.g. `fadd 1`
+* *Unmark Favourite Contact* : `fremove INDEX` +
+e.g. `fremove 2`
+* *Create Group* : `gcreate n/NAME` +
+e.g. `gcreate n/Bamboo`
+* *Add Person To Group* : `gadd g/GROUP INDEX p/PERSON INDEX` +
+e.g. `gadd g/1 p/2`
+* *Remove Person From Group* : `gremove g/GROUP INDEX p/PERSON INDEX` +
+e.g. `gremove g/1 p/2`
+* *Delete Group* : `gdelete INDEX` +
+e.g. `gdelete 2`
+* *Add a person's Google Calendar Events* : `cadd p/PERSON INDEX i/GOOGLE CALENDAR ID` +
+e.g. `cadd p/2 i/nas939@example.com`
+* *Add an Event to a person's schedule* : `eadd p/PERSON INDEX n/EVENT NAME s/EVENT START DATE e/EVENT END DATE d/EVENT DETAILS` +
+e.g `eadd p/2 n/CS2103 Meeting s/2017-11-23 10:30 e/2017-11-23 11:45 d/Prepare for Demo`
+* *Remove Event(s) from a person's schedule* : `edelete p/PERSON INDEX e/EVENT INDEX [EVENT INDEX...]` +
+e.g `edelete p/1 e/4 5 6`
+* *List* : `list [f/]`
 * *Help* : `help`
-* *Select* : `select INDEX` +
+* *Select* : `select [g/] INDEX` +
 e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`

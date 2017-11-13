@@ -3,6 +3,10 @@ package seedu.address.model.person;
 import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
+import seedu.address.model.group.Group;
+import seedu.address.model.group.UniqueGroupList;
+import seedu.address.model.schedule.Schedule;
+import seedu.address.model.schedule.UniqueScheduleList;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -20,8 +24,17 @@ public interface ReadOnlyPerson {
     Email getEmail();
     ObjectProperty<Address> addressProperty();
     Address getAddress();
+    ObjectProperty<Favourite> favouriteProperty();
+    Favourite getFavourite();
+    ObjectProperty<ProfPic> profPicProperty();
+    ProfPic getProfPic();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
+    ObjectProperty<UniqueGroupList> groupProperty();
+    Set<Group> getGroups();
+    ObjectProperty<UniqueScheduleList> scheduleProperty();
+    Set<Schedule> getSchedule();
+
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
@@ -32,7 +45,9 @@ public interface ReadOnlyPerson {
                 && other.getName().equals(this.getName()) // state checks here onwards
                 && other.getPhone().equals(this.getPhone())
                 && other.getEmail().equals(this.getEmail())
-                && other.getAddress().equals(this.getAddress()));
+                && other.getAddress().equals(this.getAddress())
+                && other.getFavourite().equals(this.getFavourite())
+                && other.getProfPic().equals(this.getProfPic()));
     }
 
     /**

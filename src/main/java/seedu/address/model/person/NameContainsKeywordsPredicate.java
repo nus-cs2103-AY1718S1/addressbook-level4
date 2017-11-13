@@ -1,9 +1,10 @@
 package seedu.address.model.person;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
 
-import seedu.address.commons.util.StringUtil;
+import seedu.address.commons.util.PartialSearchUtil;
 
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Name} matches any of the keywords given.
@@ -17,8 +18,9 @@ public class NameContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> 
 
     @Override
     public boolean test(ReadOnlyPerson person) {
-        return keywords.stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword));
+        List baseList = Arrays.asList(person.getName().fullNameInit.split(" "));
+        PartialSearchUtil mySearch = new PartialSearchUtil(keywords, baseList);
+        return mySearch.compare();
     }
 
     @Override

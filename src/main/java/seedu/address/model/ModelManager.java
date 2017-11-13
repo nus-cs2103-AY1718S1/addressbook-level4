@@ -3,17 +3,26 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Comparator;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
+
+import com.google.common.eventbus.Subscribe;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.ui.GroupPanelSelectionChangedEvent;
+import seedu.address.model.group.ReadOnlyGroup;
+import seedu.address.model.group.exceptions.DuplicateGroupException;
+import seedu.address.model.group.exceptions.GroupNotFoundException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.NoPersonsException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
@@ -25,6 +34,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final AddressBook addressBook;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
+    private final FilteredList<ReadOnlyGroup> filteredGroups;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -37,6 +47,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        filteredGroups = new FilteredList<>(this.addressBook.getGroupList());
     }
 
     public ModelManager() {
@@ -65,6 +76,17 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author Procrastinatus
+    @Override
+    public synchronized void deletePersons(ReadOnlyPerson[] targets) throws PersonNotFoundException {
+        for (ReadOnlyPerson target : targets) {
+            addressBook.removePerson(target);
+        }
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        indicateAddressBookChanged();
+    }
+    //@@author
+
     @Override
     public synchronized void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
         addressBook.addPerson(person);
@@ -76,10 +98,57 @@ public class ModelManager extends ComponentManager implements Model {
     public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException {
         requireAllNonNull(target, editedPerson);
-
         addressBook.updatePerson(target, editedPerson);
         indicateAddressBookChanged();
     }
+
+    //@@author cjianhui
+    @Override
+    public void updateFavouritePerson(ReadOnlyPerson target, ReadOnlyPerson favouritePerson)
+            throws DuplicatePersonException, PersonNotFoundException {
+        requireAllNonNull(target, favouritePerson);
+        addressBook.updateFavouriteStatus(target, favouritePerson);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void sortPerson(Comparator<ReadOnlyPerson> sortComparator, boolean isReverseOrder)
+            throws NoPersonsException {
+        addressBook.sortPerson(sortComparator, isReverseOrder);
+    }
+
+    @Override
+    public void addGroup(ReadOnlyGroup group) throws DuplicateGroupException {
+        addressBook.addGroup(group);
+        updateFilteredGroupList(PREDICATE_SHOW_ALL_GROUPS);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void deleteGroup(ReadOnlyGroup target) throws GroupNotFoundException {
+        addressBook.removeGroup(target);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void addPersonToGroup(Index targetGroup, ReadOnlyPerson toAdd)
+            throws GroupNotFoundException, PersonNotFoundException, DuplicatePersonException {
+        addressBook.addPersonToGroup(targetGroup, toAdd);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void deletePersonFromGroup(Index targetGroup, ReadOnlyPerson toRemove)
+            throws GroupNotFoundException, PersonNotFoundException, NoPersonsException {
+        addressBook.deletePersonFromGroup(targetGroup, toRemove);
+        /** Update filtered list with predicate for current group members in group after removing a person */
+        ObservableList<ReadOnlyPerson> personList = addressBook.getGroupList()
+                .get(targetGroup.getZeroBased()).groupMembersProperty().get().asObservableList();
+        updateFilteredPersonList(getGroupMembersPredicate(personList));
+        indicateAddressBookChanged();
+
+    }
+    //@@author
 
     //=========== Filtered Person List Accessors =============================================================
 
@@ -93,10 +162,38 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public ObservableList<ReadOnlyGroup> getFilteredGroupList() {
+        return FXCollections.unmodifiableObservableList(filteredGroups);
+    }
+
+    @Override
     public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
     }
+
+    @Override
+    public void updateFilteredGroupList(Predicate<ReadOnlyGroup> predicate) {
+        requireNonNull(predicate);
+        filteredGroups.setPredicate(predicate);
+    }
+
+    //@@author cjianhui
+    /** Returns predicate that returns true if group member list contains a person */
+    /** Used to update FilteredPersonList whenever there is a need to display group members */
+    public Predicate<ReadOnlyPerson> getGroupMembersPredicate(ObservableList<ReadOnlyPerson> personList) {
+        return personList::contains;
+    }
+
+    /** Handle any GroupPanelSelectionChangedEvent raised and set predicate to show group members only */
+    @Subscribe
+    private void handleGroupPanelSelectionChangedEvent(GroupPanelSelectionChangedEvent event) {
+        ObservableList<ReadOnlyPerson> personList = event.getNewSelection()
+                .group.groupMembersProperty().get().asObservableList();
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        updateFilteredPersonList(getGroupMembersPredicate(personList));
+    }
+    //@@author
 
     @Override
     public boolean equals(Object obj) {
@@ -113,7 +210,10 @@ public class ModelManager extends ComponentManager implements Model {
         // state check
         ModelManager other = (ModelManager) obj;
         return addressBook.equals(other.addressBook)
-                && filteredPersons.equals(other.filteredPersons);
+                && filteredPersons.equals(other.filteredPersons)
+                && filteredGroups.equals(other.filteredGroups);
     }
+
+
 
 }
