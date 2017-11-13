@@ -83,10 +83,10 @@ public class LogicManager extends ComponentManager implements Logic {
      */
     private String getCommandWithFilledPrefixes(String commandText) {
         String filledText = commandText + " ";
-        Set<Prefix> missingPrefixes = PREFIXES_INSURANCE.stream().filter(prefix ->
-                !commandText.contains(prefix.getPrefix())).collect(Collectors.toSet());
-        for (Prefix missingPrefix : missingPrefixes) {
-            filledText += missingPrefix.getPrefix() + " ";
+        for (Prefix prefix : PREFIXES_INSURANCE) {
+            if (!commandText.contains(prefix.getPrefix())) {
+                filledText += prefix.getPrefix() + " ";
+            }
         }
         return filledText;
     }
