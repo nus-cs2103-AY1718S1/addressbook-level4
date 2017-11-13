@@ -417,6 +417,9 @@ The list of options is generated according to several defining characteristics o
 
 An `AutoCompleteParser` will be chosen for the 'stub' based on the characteristics listed above, each of the specialize in fetching and matching different sets of data.
 
+image::AutoCompleteLogicSequenceDiagram.png[width="200"]
+_Figure 4.2.1 : Sequence diagram of `AutoCompleteLogic` in action._
+
 Different implementations of `AutoCompleteParser` to parse different options shall be explained below.
 
 ==== `AutoCompleteCommandParser`
