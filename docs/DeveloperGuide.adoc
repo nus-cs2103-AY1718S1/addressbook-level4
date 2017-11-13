@@ -532,49 +532,14 @@ Certain properties of the application can be controlled (e.g App name, logging l
 
 The remove tag function is done by calling a `removetag` function which resides in the `ModelManager` class. Currently it supports removing the tag from every individual of the addressbook as well as removing a specific tag from a specified person shown on the list.
 
-The following is the sequence diagram of how the RemoveTagCommands removes the tag from the list of persons.
+The following is the sequence diagram of how the RemoveTagCommands removes a tag from a specified person in the list after a person has entered a `removetag` command.
 
-image::RemoveTagAllSequenceDiagram.png[width="800"]
+image::RemoveOneTagSequenceDiagram.png[width="800"]
 _Figure 4.5.1 : Sequence Diagram of removeTag function_
 
+If the user inputs `all` in the `INDEX` field, instead of removing a tag based on the list displayed in `Model`, the tag is removed from everyone in the `internalList` of `AddressBook`.
+
 If no `INDEX` is given to the Remove Tag command, the remove tag command will run the following code during execution.
-----
-    @Override
-    public void removeTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException {
-        ObservableList<ReadOnlyPerson> list = addressBook.getPersonList();
-
-        for (int i = 0; i < list.size(); i++) {
-            ReadOnlyPerson person = list.get(i);
-            Person newPerson = new Person(person);
-            Set<Tag> tagList = newPerson.getTags();
-            tagList = new HashSet<Tag>(tagList);
-            tagList.remove(tag);
-
-            newPerson.setTags(tagList);
-            addressBook.updatePerson(person, newPerson);
-        }
-        indicateAddressBookChanged();
-    }
-----
-Here we obtained the list of `Person` from the AddressBook directly
-
-If a `INDEX` is given, the remove tag command removes the given tag from the specified INDEX by calling the function during execution.
-
-----
-    @Override
-    public void removeTag(Index index, Tag tag) throws PersonNotFoundException, DuplicatePersonException {
-        List<ReadOnlyPerson> list = getFilteredPersonList();
-        ReadOnlyPerson person = list.get(index.getZeroBased());
-        Person newPerson = new Person(person);
-        Set<Tag> tagList = newPerson.getTags();
-        tagList = new HashSet<>(tagList);
-        tagList.remove(tag);
-
-        newPerson.setTags(tagList);
-        addressBook.updatePerson(person, newPerson);
-    }
-----
-For removing tags from a specified Index we use the `getFilteredPersonList` so that the `INDEX` can correspond to the `INDEX` in the list hat is shown to the user.
 
 [NOTE]
 If more than one tag is given or if `INDEX` out of the range of the shown list is given, `ParseException` will be thrown before execution of the function.
@@ -582,10 +547,15 @@ If more than one tag is given or if `INDEX` out of the range of the shown list i
 ==== Design Considerations
 
 **Aspect:** Which tags to remove when removing all tags. +
-**Alternative 1 (current):** Remove all tags from the addressbook regardless of current view. +
+
+**Alternative 1 (current):** Remove all `TAG` s from the addressbook regardless of current view. +
+**Pros:** Completely removes the specified `TAG` from the whole addressbook +
+**Cons:** User may want to remove only from list shown instead of the whole list. +
+
 **Alternative 2:** Remove all tags for the list shown to the user. +
-**Pros:** Completely removes the specified tag from the whole addressbook +
-**Cons:** User may want to remove only from list shown instead of the whole list.
+**Pros:** User may removetag from only the list of people shown to them.
+**Cons:** Required to sync the `UniqueTagList` of `AddressBook` as `TAGS` removed may still exist in the `AddresBook`.
+
 // end::rmtag[]
 
 // tag::sort[]
