@@ -759,14 +759,62 @@ because common details are not abstracted into a parent class and this produces 
 
 ==== Implementation Outline
 
-. Create an `ImportCommand` abstract class and let `ImportXmlCommand` and `ImportNusmodsCommand` inherit from it (as in
+===== `ImportCommand` abstract class
+
+Create an `ImportCommand` abstract class and let `ImportXmlCommand` and `ImportNusmodsCommand` inherit from it (as in
 Figure 4.7.3.1). It is also a good practice to use an enumeration `ImportType` because the possible types of the import
 are within a fixed set of values. This leads to better modularity in `ImportCommandParser` as well.
 
 image::ImportNusmodsClassDiagram.png[width="600"]
-_Figure 4.7.3.1 : Class Diagram for Related Import Commands_
+_Figure 4.7.3.1 : Class Diagram for Related Import Commands_ +
 
-. Implement utility method to validate a given URL and parse the `GET` parameters 
+===== Parsing of NUSMods Timetable URL
+
+Implement utility method to validate a given URL and parse the `GET` parameters. Although it is possible to utilize
+external library like https://hc.apache.org/[Apache HttpComponents], we decide to implement on our own because it is relative
+simple to do so and using external library comes with extra expenses (such as licence, etc).
+
+[source,java]
+----
+public static Map<String, String> fetchUrlParameters(URL url) throws UnsupportedEncodingException {
+    String query = urlDecode(url.getQuery());
+
+    if (Strings.isNullOrEmpty(query)) {
+        return Collections.emptyMap();
+    }
+
+    Map<String, String> pairs = new HashMap<>();
+    for (String pair: query.split("&")) {
+        int index = pair.indexOf("=");
+        pairs.put(pair.substring(0, index), pair.substring(index + 1));
+    }
+
+    return pairs;
+}
+----
+
+===== Fetch information from NUSMods API
+
+The URL parsed just now only contains the module codes and grouping for each module. In order to add upcoming events, we
+need more information such as module names, examination dates, etc. We decide to use API provided by NUSMods to fetch the
+information we need. NUSMods API is in JSON format, which would be very simple for us as we already use
+https://github.com/FasterXML/jackson[Jackson] library in our project.
+
+[source,java]
+----
+/**
+ * Read JSON data from a given URL and convert the data to an instance of the given class.
+ * @param url is the URL to the remote JSON data.
+ */
+public static <T> T fromJsonUrl(URL url, Class<T> instanceClass) throws IOException {
+    return objectMapper.readValue(url, instanceClass);
+}
+----
+
+===== Add upcoming events
+
+After obtaining all the information we need, we can simply use the `addEvent` method `ModelManager` class to add the final
+examinations as upcoming events into *BoNUS*. This should be a similar process as `AddEventCommand`.
 
 === Contacts/event listing order by name/date time mechanism
 
@@ -789,7 +837,7 @@ An in-built calendar is added to the panel beside the list of events. This calen
 current month.
 
 image::Calendar.png[width="600"]
-_Figure 4.9.1 : Calendar for month of November 2017_
+_Figure 4.10.1 : Calendar for month of November 2017_
 
 This is useful for users to be able to compare their list of events in the calendar. It can help users to check what
 day of the week their event is happening on. This is especially useful for NUS students as there is a fixed daily
@@ -834,10 +882,10 @@ blank, fill up the subsequent dates using the value of the first day of the mont
 leftover dates will continue to be blanks until the 42nd cell.
 
 image::EventCalendarClassDiagram.png[width="300"]
-_Figure 4.9.1.1 : Class Diagram for `EventCalendar`_
+_Figure 4.10.1.1 : Class Diagram for `EventCalendar`_
 
 image::MonthDateBuilderClassDiagram.png[width="300"]
-_Figure 4.9.1.2 : Class Diagram for `MonthDateBuilder`_
+_Figure 4.10.1.2 : Class Diagram for `MonthDateBuilder`_
 // end::calendarMech[]
 
 === Configuration
