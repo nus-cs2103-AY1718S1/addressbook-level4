@@ -12,6 +12,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.TodoItem;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -24,6 +25,8 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
     private List<XmlAdaptedPerson> persons;
     @XmlElement
     private List<XmlAdaptedTag> tags;
+    @XmlElement
+    private List<XmlAdapterTodoItem> todoItems;
 
     /**
      * Creates an empty XmlSerializableAddressBook.
@@ -32,6 +35,9 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
     public XmlSerializableAddressBook() {
         persons = new ArrayList<>();
         tags = new ArrayList<>();
+        //@@author qihao27
+        todoItems = new ArrayList<>();
+        //@@author
     }
 
     /**
@@ -41,6 +47,9 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
         this();
         persons.addAll(src.getPersonList().stream().map(XmlAdaptedPerson::new).collect(Collectors.toList()));
         tags.addAll(src.getTagList().stream().map(XmlAdaptedTag::new).collect(Collectors.toList()));
+        //@@author qihao27
+        todoItems.addAll(src.getTodoList().stream().map(XmlAdapterTodoItem::new).collect(Collectors.toList()));
+        //@@author
     }
 
     @Override
@@ -71,4 +80,19 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
         return FXCollections.unmodifiableObservableList(tags);
     }
 
+    //@@author qihao27
+    @Override
+    public ObservableList<TodoItem> getTodoList() {
+        final ObservableList<TodoItem> todoItems = this.todoItems.stream().map(t -> {
+            try {
+                return t.toModelType();
+            } catch (IllegalValueException e) {
+                e.printStackTrace();
+                //TODO: better error handling
+                return null;
+            }
+        }).collect(Collectors.toCollection(FXCollections::observableArrayList));
+        return FXCollections.unmodifiableObservableList(todoItems);
+    }
+    //@@author
 }

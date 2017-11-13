@@ -1,7 +1,10 @@
 package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -12,8 +15,12 @@ import java.util.Set;
 import javafx.collections.ObservableList;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.TodoItem;
 import seedu.address.model.person.UniquePersonList;
+import seedu.address.model.person.UniqueTodoList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.DuplicateTodoItemException;
+import seedu.address.model.person.exceptions.NoPersonFoundException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
@@ -26,6 +33,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
     private final UniqueTagList tags;
+    private final UniqueTodoList todos;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -37,6 +45,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
+        todos = new UniqueTodoList();
     }
 
     public AddressBook() {}
@@ -107,12 +116,103 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(editedReadOnlyPerson);
 
         Person editedPerson = new Person(editedReadOnlyPerson);
+
         syncMasterTagListWith(editedPerson);
         // TODO: the tags master list will be updated even though the below line fails.
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
         persons.setPerson(target, editedPerson);
+
     }
+
+    //@@author aaronyhsoh
+    /**
+     * Replaces the given person {@code target} in the list with {@code favouritedReadOnlyPerson}.
+     * Sorts the list to show favourite contacts first.
+     * {@code AddressBook}'s tag list will be updated with the tags of {@code favouritedReadOnlyPerson}.
+     *
+     * @throws PersonNotFoundException if {@code target} could not be found in the list.
+     *
+     * @see #syncMasterTagListWith(Person)
+     */
+    public void favouritePerson(ReadOnlyPerson target, ReadOnlyPerson favouritedReadOnlyPerson)
+            throws DuplicatePersonException, PersonNotFoundException {
+        requireNonNull(favouritedReadOnlyPerson);
+
+        Person favouritedPerson = new Person(favouritedReadOnlyPerson);
+
+        syncMasterTagListWith(favouritedPerson);
+        // TODO: the tags master list will be updated even though the below line fails.
+        // This can cause the tags master list to have additional tags that are not tagged to any person
+        // in the person list.
+        persons.setPerson(target, favouritedPerson);
+
+        UniquePersonList notFavouriteList = new UniquePersonList();
+        UniquePersonList favouriteList = new UniquePersonList();
+        for (ReadOnlyPerson person : persons) {
+            if (person.getFavourite()) {
+                favouriteList.add(person);
+            } else {
+                notFavouriteList.add(person);
+            }
+        }
+        persons.setPersons(favouriteList);
+        for (ReadOnlyPerson person : notFavouriteList) {
+            persons.add(person);
+        }
+    }
+
+    //@@author Hailinx
+    /**
+     * Adds a todoItem to target person.
+     */
+    public void addTodoItem(ReadOnlyPerson target, TodoItem todoItem)
+            throws PersonNotFoundException, DuplicatePersonException, DuplicateTodoItemException {
+        requireNonNull(target);
+
+        Person person = new Person(target);
+        List<TodoItem> todoItemList = new ArrayList<>(target.getTodoItems());
+
+        if (todoItemList.contains(todoItem)) {
+            throw new DuplicateTodoItemException();
+        }
+
+        todoItemList.add(todoItem);
+        Collections.sort(todoItemList);
+
+        person.setTodoItems(todoItemList);
+
+        persons.setPerson(target, person);
+    }
+
+    /**
+     * Deletes the given todoItem from target person.
+     */
+    public void deleteTodoItem(ReadOnlyPerson target, TodoItem todoItem)
+            throws PersonNotFoundException, DuplicatePersonException {
+        requireAllNonNull(target, todoItem);
+
+        Person person = new Person(target);
+        List<TodoItem> todoItemList = new ArrayList<>(target.getTodoItems());
+
+        todoItemList.remove(todoItem);
+        person.setTodoItems(todoItemList);
+
+        persons.setPerson(target, person);
+    }
+
+    /**
+     * Resets all todoItem for target person.
+     */
+    public void resetTodoItem(ReadOnlyPerson target)
+            throws PersonNotFoundException, DuplicatePersonException {
+        requireNonNull(target);
+        Person person = new Person(target);
+        person.setTodoItems(new ArrayList<>());
+
+        persons.setPerson(target, person);
+    }
+    //@@author
 
     /**
      * Ensures that every tag in this person:
@@ -156,6 +256,16 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    //@@author qihao27
+    /**
+     * Sorts the list by the specified @param parameter.
+     * @throws NoPersonFoundException if no persons found in this {@code AddressBook}.
+     */
+    public void sortPerson(String parameter) throws NoPersonFoundException {
+        persons.sort(parameter);
+    }
+    //@@author
+
     //// tag-level operations
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
@@ -166,7 +276,9 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     @Override
     public String toString() {
-        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags";
+        return persons.asObservableList().size() + " persons, "
+            + tags.asObservableList().size() + " tags, "
+            + todos.asObservableList().size() + " todos";
         // TODO: refine later
     }
 
@@ -180,12 +292,20 @@ public class AddressBook implements ReadOnlyAddressBook {
         return tags.asObservableList();
     }
 
+    //@@author qihao27
+    @Override
+    public ObservableList<TodoItem> getTodoList() {
+        return todos.asObservableList();
+    }
+    //@@author
+
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof AddressBook // instanceof handles nulls
                 && this.persons.equals(((AddressBook) other).persons)
-                && this.tags.equalsOrderInsensitive(((AddressBook) other).tags));
+                && this.tags.equalsOrderInsensitive(((AddressBook) other).tags)
+                && this.todos.equalsOrderInsensitive(((AddressBook) other).todos));
     }
 
     @Override

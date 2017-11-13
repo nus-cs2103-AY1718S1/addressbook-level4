@@ -7,6 +7,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -32,6 +33,9 @@ public class AddCommandParser implements Parser<AddCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public AddCommand parse(String args) throws ParseException {
+
+        args = initialiseEmptyFields(args);
+
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
 
@@ -45,8 +49,9 @@ public class AddCommandParser implements Parser<AddCommand> {
             Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL)).get();
             Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS)).get();
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
+            boolean favourite = false;
 
-            ReadOnlyPerson person = new Person(name, phone, email, address, tagList);
+            ReadOnlyPerson person = new Person(name, phone, email, address, tagList, new ArrayList<>(), favourite);
 
             return new AddCommand(person);
         } catch (IllegalValueException ive) {
@@ -61,5 +66,21 @@ public class AddCommandParser implements Parser<AddCommand> {
     private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
         return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
-
+    //@@author aaronyhsoh
+    /**
+     * Allows certain fields entered to be blank.
+     * Shows a '-' for fields not entered.
+     */
+    private static String initialiseEmptyFields(String args) {
+        if (!args.contains("a/")) {
+            args = args.concat(" a/ -");
+        }
+        if (!args.contains("e/")) {
+            args = args.concat(" e/ -");
+        }
+        if (!args.contains("p/")) {
+            args = args.concat(" p/ -");
+        }
+        return args;
+    }
 }

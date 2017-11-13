@@ -1,0 +1,114 @@
+= Aaron Soh Yu Han - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: AcquaiNote
+The AcquaiNote is a free command line program to manage your personal contact list easily. Additionally, AcquaNote also helps you to manage your schedule. It is targeted at university students or working adults who have to manage an extremely large pool of contacts.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T10-B1/main/blob/master/collated/main/aaronyhsoh.md[Functional code]] + [https://github.com/CS2103AUG2017-T10-B1/main/blob/master/collated/test/aaronyhsoh.md[Test code]]
+
+=== Enhancement Added: `Favourite` command
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=favourite]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+This allow users to set the more important or more frequently used contacts to be at the top of their list. This removes the need to manually find these users, which saves time for the user.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=favourite]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: `Add` command with optional inputs
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=add]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Users might not have all the details of a contact such as address or email. This enhancement will allow users to save contacts and leave certain fields blank, which can be later added via the `edit` command.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=add]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Undo/Redo multiple commands
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=undoredo]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+This command allow users to redo/undo multiple commands at one go, which makes it faster if there are alot of commands to be undone/redone.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=unredo]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Add command `Delete multiple contacts`
+
+This will allow users to delete more than 1 contacts at the same time. Users will not need to type the delete command multiple times.
+
+=== Enhancement Proposed: Enhance command `todo`
+
+This enhancement will automatically favourite contacts with tasks assigned and shift them to the top of the contact list. This prevents user from overlooking tasks.
+
+=== Enhancement Proposed: Enhance command `undo` and `redo`
+
+This enhancement will allow users to type `undo all` and `redo all`, which will undo all undoable commands and redo all undone commands respectively. This is to make the command more intuitive for the user rather than having to enter an extremely large number to undo or redo all commands.
+
+=== Other contributions
+
+* Changed tag colour in PersonCard (Pull request https://github.com/CS2103AUG2017-T10-B1/main/pull/85[#85])
+* Added JUnit tests to improve test coverage (Pull request https://github.com/CS2103AUG2017-T10-B1/main/pull/57[#57])
+* Changed result display panel to print every field in a new line (Pull request https://github.com/CS2103AUG2017-T10-B1/main/pull/57[#57])
+* Removed redundant code (Pull request https://github.com/CS2103AUG2017-T10-B1/main/pull/57[#57])
+* Recfitifed language error in team mate's documentation (Pull request https://github.com/CS2103AUG2017-T10-B1/main/pull/27[#27])
+* Added boolean instance `favourite` to Person (Pull request https://github.com/CS2103AUG2017-T10-B1/main/pull/27[#27])

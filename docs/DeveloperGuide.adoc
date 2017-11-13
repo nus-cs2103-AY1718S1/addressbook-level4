@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= AcquaiNote - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,7 +10,7 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-T10-B1/main/tree/master
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
@@ -108,14 +108,15 @@ link:#common-classes[*`Commons`*] represents a collection of classes used by mul
 * `EventsCenter` : This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design)
 * `LogsCenter` : Used by many classes to write log messages to the App's log file.
 
-The rest of the App consists of four components.
+The rest of the App consists of five components.
 
 * link:#ui-component[*`UI`*] : The UI of the App.
 * link:#logic-component[*`Logic`*] : The command executor.
 * link:#model-component[*`Model`*] : Holds the data of the App in-memory.
 * link:#storage-component[*`Storage`*] : Reads data from, and writes data to, the hard disk.
+* link:#security-component[*`Security`*] : Secures the address book.
 
-Each of the four components
+Each of the five components
 
 * Defines its _API_ in an `interface` with the same name as the Component.
 * Exposes its functionality using a `{Component Name}Manager` class.
@@ -134,7 +135,7 @@ image::SDforDeletePerson.png[width="800"]
 _Figure 2.1.3a : Component interactions for `delete 1` command (part 1)_
 
 [NOTE]
-Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
+Note how the `Model` simply raises a `AddressBookChangedEvent` when the address book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
 
 The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
@@ -194,7 +195,7 @@ _Figure 2.4.1 : Structure of the Model Component_
 The `Model`,
 
 * stores a `UserPref` object that represents the user's preferences.
-* stores the Address Book data.
+* stores the address book data.
 * exposes an unmodifiable `ObservableList<ReadOnlyPerson>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
@@ -208,7 +209,21 @@ _Figure 2.5.1 : Structure of the Storage Component_
 The `Storage` component,
 
 * can save `UserPref` objects in json format and read it back.
-* can save the Address Book data in xml format and read it back.
+* can save the address book data in xml format and read it back.
+
+// tag::lock[]
+=== Security component
+
+image::SecurityClassDiagram.png[width="800"]
+_Figure 2.6.1 : Structure of the Security Component_
+// end::lock[]
+*API* : link:{repoURL}/src/main/java/seedu/address/security/Security.java[`Security.java`]
+// tag::lock[]
+The `Security` component,
+
+* can encrypt address book and decrypt by a given password.
+* can prevent user from executing commands if address book is secured.
+// end::lock[]
 
 === Common classes
 
@@ -217,6 +232,49 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 == Implementation
 
 This section describes some noteworthy details on how certain features are implemented.
+
+// tag::find[]
+=== Find mechanism
+
+The find command is a little bit different from other commands like `AddCommand`. It can specify options in in its arguments. There are three steps for parsing commands with options, which are as follows:
+
+. `LogicManager` passes user input into `AddressBookParser` which distinguishes command word and arguments from user input.
+. `AddressBookParser` creates `FindCommandParser`. `FindCommandParser` uses `CommandOptionUtil` for getting option prefix and option argument.
+. `FindCommandParser` instantiates different kinds of `CommandOption` in its body according to the option prefix. Different `CommandOption` objects create different `FindCommand`.
+
+`CommandOption` is an abstract class representing an optional behavior. It is implemented in this way:
+[source,java]
+----
+public class FindOptionByName extends CommandOption<FindCommand> {
+
+    public FindOptionByName(String optionArgs) {
+        super(optionArgs);
+    }
+
+    @Override
+    public FindCommand parse() throws ParseException {
+        // ... parse optionArgs and creat FindCommand
+    }
+
+    @Override
+    boolean isValidOptionArgs() {
+        // ... check the validity of input arguments
+    }
+}
+----
+
+==== Design Consideration
+
+**Aspect:** Implementation of Command Options +
+**Alternative 1 (current choice):** Extend abstract class `CommandOption`. +
+**Pros:** It is easier to understand the architecture of parsing chain. +
+**Cons:** Using inheritance makes it more troublesome than implementing directly. +
+**Alternative 2:** Just override `execute()` +
+**Pros:** Does not involve inheritance. Only needs to change one file.
+**Cons:** This structure is not clear.
+
+---
+// end::find[]
 
 // tag::undoredo[]
 === Undo/Redo mechanism
@@ -286,7 +344,10 @@ The following sequence diagram shows how the undo operation works:
 
 image::UndoRedoSequenceDiagram.png[width="800"]
 
-The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
+[NOTE]
+The user can also choose to undo multiple commands at the same time. Sequence of commands to be undone for `undo 5` is the same as typing `undo` 5 times.
+
+The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed). Similar to `undo`, user can also choose to redo multiple undo commands at the same time (`redo 5`).
 
 [NOTE]
 If the `redoStack` is empty, then there are no other commands left to be redone, and an `Exception` will be thrown when popping the `redoStack`.
@@ -344,6 +405,406 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Pros:** We do not need to maintain a separate stack, and just reuse what is already in the codebase. +
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
+
+// tag::sort[]
+=== Sort mechanism
+
+The sort mechanism makes use of sort() method in Java 8, which takes in Comparator as parameter. It is written in Lambda expression which makes the code more concise.
+
+The advantage of Lambda expression can be illustrated by the following two code examples.
+
+Example of codes written in pre Java 8 fashion:
+[source,java]
+----
+Collection.sort(fruitList, new Comparator<Fruit>() {
+    @Override
+    public int compare(Fruit a, Fruit b) {
+        return a.getSize().compareTo(b.getSize());
+    }
+});
+----
+
+With Lambda expression:
+[source,java]
+----
+Collection.sort(fruitList, (Fruit a, Fruit b) -> a.getSize().compareTo(b.getSize()));
+----
+
+Both examples sort the fruits in the fruitList according to their size, where smallest on top and largest at the bottom. The amount of verbosity has been reduced by using the Lambda expression. In fact, it can be more concise by removing the variable type from the parameters as the type information is inferred from the context in which the Lambda expression is being used (adopted by sort command):
+[source,java]
+----
+Collection.sort(fruitList, (a, b) -> a.getSize().compareTo(b.getSize()));
+----
+
+[NOTE]
+Lambda expression is equivalent to overriding the 'compare(T o1, T o2)' method in 'Comparator' class.
+
+Sort command takes in command `OPTIONS` to perform sorting by five fields of a person: by name, by phone number, by email, by address and by tag. It determines the user input `OPTION` by string comparision instead of utilising option parser as command options used in `find` command are mode enabling options that enable different modes of finding mechanism.
+
+==== Design Considerations
+
+**Aspect:** Implementation of 'SortCommand' 'OPTION' +
+**Alternative 1 (current choice):** Make use of `CommandOptionUtil` +
+**Pros:** Standardised usage of command options format which can be implemented into other commands. +
+**Cons:** Need to extend abstract class 'CommandOption' if a more complex parsing procedure is involved. e.g. 'find' command. +
+**Alternative 2:** Declare new 'OPTION' format +
+**Pros:** No inheritance required, minimise error. +
+**Cons:** 'SortCommand' class specific, cannot be reused by other commands.
+
+---
+
+**Aspect:** Implementation of sort +
+**Alternative 1 (current choice):** Lambda expression +
+**Pros:** Short and concise. +
+**Cons:** Increase bug occurrence as variable type can be omitted. +
+**Alternative 2:** Pre Java 8 practice +
+**Pros:** Widely practised, minimise error. +
+**Cons:** Long and unclear, need to manually override 'compare' method.
+// end::sort[]
+
+// tag::lock[]
+=== Lock/Unlock mechanism
+
+The lock/unlock mechanism is based on `SecurityManager`. When lock/unlock command is executed, it gets an singleton instance from `SecurityManager` and calls its security methods. +
+
+Some important methods in `SecurityManager` are as follows:
+[source,java]
+----
+public interface Security extends SecureStorage {
+
+    void raise(BaseEvent event);
+
+    boolean isPermittedCommand(String commandWord);
+
+    // ... other methods
+}
+
+public interface SecureStorage {
+
+    boolean isEncrypted() throws IOException;
+
+    void encryptAddressBook(String password)
+            throws IOException, EncryptOrDecryptException;
+
+    void decryptAddressBook(String password)
+            throws IOException, EncryptOrDecryptException;
+}
+
+public class SecurityManager extends ComponentManager implements Security {
+    // ... implementations
+}
+
+----
+
+When methods in interface `SecureStorage` are called, `SecurityManager` will not realize them by itself. Instead, it calls the methods in `Storage` which also implements `SecureStorage`, because component `Secure` should not read and save files. +
+
+The "raise" method is used to communicate with the `UI` component while "isPermittedCommand" is called in `Logic` component to check whether a certain command have enough permission to be executed. The `Security` component acts like a bridge. It fulfills its function by communicating with every component. +
+
+After executing lock and unlock command, they will send `ReloadAddressBookEvent` to `MainApp` to clear all history and undo/redo stacks and then reload the address book from storage.
+
+image::LockSequenceDiagram.png[width="800"]
+
+// end::lock[]
+
+// tag::favourite[]
+=== Favourite mechanism
+
+The favourite mechanism is very similar to the one used in edit command. The feature follows the sequence of steps:
+
+. `AddressBookParser` calls upon `FavouriteCommandParser`, which parses the argument as an index and creates a FavouriteCommand object.
+. The person identified by the index (personToFavourite) in `AddressBook` is replaced with a new person (favouritedPerson) that has its `favourite` instance inverted to either `true` or `false`.
+. The `favouritePerson` method in AddressBook then creates two `UniquePersonList` to implement the sorting. Persons with `favourite` = `true` will be sorted into the `favouriteList`. Persons with `favourite` = `false` will be sorted into the `notFavouriteList`.
+. The two lists will then be merged into the `persons` list in `AddressBook`, with `favouriteList` being at the top.
+
+The following diagram illustrates the sequence described above:
+
+image::FavouriteCommandSequenceDiagram.png[width="800"]
+
+The code below shows how FavouriteCommand is implemented:
+
+[source,java]
+----
+public class FavouriteCommand extends UndoableCommand {
+
+    public FavouriteCommand(Index index) {
+        requireNonNull(index);
+       this.index = index;
+    }
+
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+
+        if (index.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        ReadOnlyPerson personToFavourite = lastShownList.get(index.getZeroBased());
+
+        Person favouritedPerson = createFavouritedPerson(personToFavourite);
+
+        try {
+            model.favouritePerson(personToFavourite, favouritedPerson);
+        } catch (DuplicatePersonException dpe) {
+            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("The target person cannot be missing");
+        }
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+
+        if (!favouritedPerson.getFavourite()) {
+            return new CommandResult(String.format(MESSAGE_UNFAVOURITE_PERSON_SUCCESS, favouritedPerson));
+        } else {
+            return new CommandResult(String.format(MESSAGE_FAVOURITE_PERSON_SUCCESS, favouritedPerson));
+        }
+    }
+
+    @Override
+    private static Person createFavouritePerson(ReadOnlyPerson personToFavourite) {
+        assert personToFavourite != null;
+
+        Name originalName = personToFavourite.getName();
+        Phone originalPhone = personToFavourite.getPhone();
+        Email originalEmail = personToFavourite.getEmail();
+        Address originalAddress = personToFavourite.getAddress();
+        Set<Tag> originalTags = personToFavourite.getTags();
+        List<TodoItem> originalTodoItems = personToFavourite.getTodoItems();
+        boolean newFavourite = !personToFavourite.getFavourite();
+
+        return new Person(originalName, originalPhone, originalEmail, originalAddress,
+                originalTags, originalTodoItems, newFavourite);
+    }
+}
+----
+
+==== Design Considerations
+
+**Aspect:** Sorting of contact list with favourites +
+**Alternative 1 (current choice):** Favourited contacts are sorted separately. +
+**Pros:** Favourite contact remains at the top of the list. +
+**Cons:** Does not preserve the original order of the favourite contacts list. +
+**Alternative 2:** All contacts sorted in order +
+**Pros:** Easy to implement. +
+**Cons:** Favourite contacts are no longer at the top of the list after sorting. +
+**Alternative 3:** Favourite contacts are not included in sorting +
+**Pros:** Preserves original order of favourites. Favourite contacts remain at the top of the list. +
+**Cons:** User may want to sort favourites if list is large. +
+
+---
+
+**Aspect:** Unfavouriting contacts in a sorted list +
+**Alternative 1 (current choice):** Contact removed from favourites is pushed to bottom of favourite list. +
+**Pros:** Easy to implement. +
+**Cons:** Does not follow the order of the sorting. User have to re-enter desired sort command after unfavouriting to get the correct order. +
+**Alternative 2:** Unfavourited contact automatically sorted according to last used sort command +
+**Pros:** Automatically sorts the list without having to type another command. +
+**Cons:** User may not want the unfavourited contact to be sorted. +
+// end::favourite[]
+
+// tag::tdo[]
+=== Todo mechanism
+
+Todo mechanism uses `CommandOptionUtil` to parse its options. The model class for each todo item is `TodoItem`, which has three fields including start, end, task to describe an item. +
+
+According to the option, todo command sends different events to `UI`.  Todo mechanism sends `JumpToListRequestEvent` to both `PersonListPanel` and `TodoPanel` to select one person and load his/her todo list. Meanwhile todo mechanism uses `ClearListSelectionEvent` to clear the selection in `PersonListPanel` and `ShowAllTodoItemsEvent` to show all todo items of all contacts.
+When todo command need to add or delete some items, todo mechanism will call methods in `Model` to add, delete, list and access to storage.
+
+Codes below show how to parse base on options.
+[source,java]
+----
+// returns TodoCommand by parsing {@code optionPrefix}
+        switch (optionPrefix) {
+        case TodoCommand.PREFIX_TODO_ADD:
+            return new TodoOptionAdd(optionArgs, index).parse();
+        case TodoCommand.PREFIX_TODO_DELETE_ONE:
+            return new TodoOptionDeleteOne(optionArgs, index).parse();
+        case TodoCommand.PREFIX_TODO_DELETE_ALL:
+            return new TodoOptionDeleteAll(optionArgs, index).parse();
+        case TodoCommand.PREFIX_TODO_LIST:
+            return new TodoOptionList(optionArgs, index).parse();
+        default:
+            throw new ParseException(PARSE_EXCEPTION_MESSAGE);
+        }
+----
+
+// end::tdo[]
+
+// tag::switch[]
+=== Switch mechanism
+
+Switch mechanism just sends the `SwitchDisplayEvent` to `MainWindow`. It will change the child in `switchablePlaceholder` according to the user input.
+
+The code below shows how switching is done:
+
+[source,java]
+----
+private void switchPlaceholderDisplay(int mode) {
+        switchablePlaceholder.getChildren().clear();
+        switch (mode) {
+        case SwitchCommand.SWITCH_TO_TODOLIST:
+            switchablePlaceholder.getChildren().add(todoPanel.getRoot());
+            break;
+        case SwitchCommand.SWITCH_TO_BROWSER:
+            switchablePlaceholder.getChildren().add(browserPanel.getRoot());
+            break;
+        default:
+            // Only two modes, no default option here.
+            break;
+        }
+    }
+----
+
+==== Design Consideration
+
+**Aspect:** Handle different mode +
+**Alternative 1 (current choice):** Use one command followed by mode string +
+**Pros:** Easy to implement. +
+**Cons:** Hard to remember. +
+**Alternative 2:** Use two commands +
+**Pros:** East to use and remember. +
+**Cons:** More complicated to implement. Become hard to extend if there are more than two modes.
+
+// end::switch[]
+
+// tag::select[]
+=== Select mechanism
+
+Select command also has options. After parsed by `AddressBookParser` and `CommandOptionUtil`, select mechanism sends `ChangeSearchEvent` to `BrowserPanel` in order to change search url. Then, it sends `JumpToListRequestEvent` to change selection in `PersonListPanel` and `PersonListPanel` will send `PersonPanelSelectionChangedEvent` to `BrowserPanel` to indicate which person is selected.
+// end::select[]
+
+// tag::deletebyname[]
+=== Delete by name mechanism
+
+It is an undoable delete command that offers an alternative to the existing `delete` command.
+
+It takes in the user input name and compare it with all persons' name field. Similar to `find` by name, the user input name has to be the entire first/last/full name of the persons stored in the address book. Multiple contacts can be shortlisted by separating names by spaces.
+
+As the command will always call the entire list before execution, there is no need to modify list for the command to be executed.
+
+The code below shows how this command handles different input situations:
+[source,java]
+----
+public CommandResult executeUndoableCommand() throws CommandException {
+    model.updateFilteredPersonList(predicate);
+    List<ReadOnlyPerson> predicateList = model.getFilteredPersonList();
+
+    if (predicateList.size() > 1) {
+        throw new CommandException(MESSAGE_MULTIPLE_PERSON_FOUND);
+    } else if (predicateList.size() == 0) {
+        throw new CommandException(MESSAGE_PERSON_NAME_ABSENT);
+    } else {
+        ReadOnlyPerson personToDelete = predicateList.get(0);
+
+        try {
+            model.deletePerson(personToDelete);
+        } catch (PersonNotFoundException pnfe) {
+            assert false : MESSAGE_PERSON_NAME_ABSENT;
+        }
+
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete));
+    }
+}
+----
+
+After parsing a valid user input name(s), the command will get a `filteredPersonList` using the parsed input:
+
+* The contact is deleted immediately if there is only one result found.
+* A updated list will be shown with multiple persons found.
+* A warning message will be shown if no match can be found with the specified name.
+
+==== Design Consideration
+
+**Aspect:** Parsing of user inputs +
+**Alternative 1 (current choice):** Convert the `String` user input into a `Predicate<ReadOnlyPerson>` object. +
+**Pros:** Able to shortlist contacts with multiple names. +
+**Cons:** Reject inputs that do not match the entire first/last/full name. +
+**Alternative 2:** Utilise the given `String` user inputs +
+**Pros:** Do not need to parse inputs before comparision. +
+**Cons:** Able to delete contacts with a single letter or contacts with short name can not be deleted (set a minimum comparision `String` length, e.g. the input has to be at least 3 characters long).
+// end::deletebyname[]
+
+// tag::export[]
+=== Export mechanism
+
+It first creates a `File` object with the user specified file path.
+
+The command then returns the current address book as a `ReadOnlyAddressBook` object and then serialize it using `XmlSerializableAddressBook` class constructor.
+
+Saving of data is achieved with `XmlFileStorage#saveDataToFile` method which saves the above mentioned serialized address book into the newly created file.
+
+Code fragments to show above mentioned export mechanism:
+[source,java]
+----
+ReadOnlyAddressBook localAddressBook = model.getAddressBook();
+
+File file = new File(userPrefsFilePath);
+
+try {
+    FileUtil.createIfMissing(file);
+} catch (IOException e) {
+    return new CommandResult(MESSAGE_STORAGE_ERROR);
+}
+
+try {
+    XmlFileStorage.saveDataToFile(file, new XmlSerializableAddressBook(localAddressBook));
+} catch (FileNotFoundException e) {
+    return new CommandResult(MESSAGE_STORAGE_ERROR);
+}
+----
+// end::export[]
+
+// tag::add[]
+=== Enhance Add command
+
+The add command is enhanced to allow user to leave certain fields empty (phone, address and email). Mechanism of the command is exactly the same as before, with the addition of a `initialiseEmptyFields` method in `AddCommandParser`. The `initialiseEmptyFields` method appends the prefix of each empty field followed by a '-' instead of throwing a `ParseException` if the fields are empty. Appending an empty field is done using the String.concat() method in the java.lang.String package. The method then returns a new string with the empty fields.
+
+The code below shows how the `initialiseEmptyFields` method is implemented:
+
+[source,java]
+----
+private static String initialiseEmptyFields(String args) {
+    if (!args.contains("a/")) {
+        args = args.concat(" a/ -");
+    }
+    if (!args.contains("e/")) {
+        args = args.concat(" e/ -");
+    }
+    if (!args.contains("p/")) {
+        args = args.concat(" p/ -");
+    }
+    return args;
+}
+----
+// end::add[]
+
+// tag::unredo[]
+=== Enhance Undo/Redo command
+
+The new `undo` and `redo` commands allows the user to specify how many commands to undo or redo (eg. `undo 5`, `redo 5`).
+The sequence of commands to be undone for `undo 5` is the same as executing `undo` 5 times (refer to Section 3.2) . Similarly for `redo`, the number specified simply runs the `redo` command the same number of times. If no index is specified, the `undo` or `redo` command will only execute 1 time. `UndoCommandParser` and `RedoCommandParser` have been added in order to take in the index and `AddressBookParser` now calls upon `UndoCommandParser` and `RedoCommandParser` first instead of `UndoCommand` and `RedoCommand` directly.
+
+The code below shows how the RedoCommandParser differentiate the index:
+
+[source,java]
+----
+public RedoCommand parse(String args) throws ParseException {
+    if (!args.isEmpty()) {
+        try {
+            Index index = ParserUtil.parseIndex(args);
+            return new RedoCommand(index);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, RedoCommand.MESSAGE_USAGE));
+        }
+    } else {
+        return new RedoCommand();
+    }
+}
+----
+[NOTE]
+The UndoCommandParser uses the same code. The only difference is that it returns an UndoCommand object instead.
+// end::unredo[]
 
 === Logging
 
@@ -464,254 +925,9 @@ Here are the steps to create a new release.
 
 === Managing Dependencies
 
-A project often depends on third-party libraries. For example, Address Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
+A project often depends on third-party libraries. For example, AcquaiNote depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
 a. Include those libraries in the repo (this bloats the repo size) +
 b. Require developers to download those libraries manually (this creates extra work for developers)
-
-[appendix]
-== Suggested Programming Tasks to Get Started
-
-Suggested path for new programmers:
-
-1. First, add small local-impact (i.e. the impact of the change does not go beyond the component) enhancements to one component at a time. Some suggestions are given in this section link:#improving-each-component[Improving a Component].
-
-2. Next, add a feature that touches multiple components to learn how to implement an end-to-end feature across all components. The section link:#creating-a-new-command-code-remark-code[Creating a new command: `remark`] explains how to go about adding such a feature.
-
-=== Improving each component
-
-Each individual exercise in this section is component-based (i.e. you would not need to modify the other components to get it to work).
-
-[discrete]
-==== `Logic` component
-
-[TIP]
-Do take a look at the link:#logic-component[Design: Logic Component] section before attempting to modify the `Logic` component.
-
-. Add a shorthand equivalent alias for each of the individual commands. For example, besides typing `clear`, the user can also type `c` to remove all persons in the list.
-+
-****
-* Hints
-** Just like we store each individual command word constant `COMMAND_WORD` inside `*Command.java` (e.g.  link:{repoURL}/src/main/java/seedu/address/logic/commands/FindCommand.java[`FindCommand#COMMAND_WORD`], link:{repoURL}/src/main/java/seedu/address/logic/commands/DeleteCommand.java[`DeleteCommand#COMMAND_WORD`]), you need a new constant for aliases as well (e.g. `FindCommand#COMMAND_ALIAS`).
-** link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] is responsible for analyzing command words.
-* Solution
-** Modify the switch statement in link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser#parseCommand(String)`] such that both the proper command word and alias can be used to execute the same intended command.
-** See this https://github.com/se-edu/addressbook-level4/pull/590/files[PR] for the full solution.
-****
-
-[discrete]
-==== `Model` component
-
-[TIP]
-Do take a look at the link:#model-component[Design: Model Component] section before attempting to modify the `Model` component.
-
-. Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in the address book.
-+
-****
-* Hints
-** The link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model`] API needs to be updated.
-**  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] classes can be used to implement the tag removal logic. link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] allows you to update a person, and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] allows you to update the tags.
-* Solution
-** Add the implementation of `deleteTag(Tag)` method in link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`]. Loop through each person, and remove the `tag` from each person.
-** See this https://github.com/se-edu/addressbook-level4/pull/591/files[PR] for the full solution.
-****
-
-[discrete]
-==== `Ui` component
-
-[TIP]
-Do take a look at the link:#ui-component[Design: UI Component] section before attempting to modify the `UI` component.
-
-. Use different colors for different tags inside person cards. For example, `friends` tags can be all in grey, and `colleagues` tags can be all in red.
-+
-**Before**
-+
-image::getting-started-ui-tag-before.png[width="300"]
-+
-**After**
-+
-image::getting-started-ui-tag-after.png[width="300"]
-+
-****
-* Hints
-** The tag labels are created inside link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard#initTags(ReadOnlyPerson)`] (`new Label(tag.tagName)`). https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html[JavaFX's `Label` class] allows you to modify the style of each Label, such as changing its color.
-** Use the .css attribute `-fx-background-color` to add a color.
-* Solution
-** See this https://github.com/se-edu/addressbook-level4/pull/592/files[PR] for the full solution.
-****
-
-. Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] such that link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] can show a different style on error (currently it shows the same regardless of errors).
-+
-**Before**
-+
-image::getting-started-ui-result-before.png[width="200"]
-+
-**After**
-+
-image::getting-started-ui-result-after.png[width="200"]
-+
-****
-* Hints
-** link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] is raised by link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] which also knows whether the result is a success or failure, and is caught by link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] which is where we want to change the style to.
-** Refer to link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] for an example on how to display an error.
-* Solution
-** Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] 's constructor so that users of the event can indicate whether an error has occurred.
-** Modify link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay#handleNewResultAvailableEvent(event)`] to react to this event appropriately.
-** See this https://github.com/se-edu/addressbook-level4/pull/593/files[PR] for the full solution.
-****
-
-. Modify the link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to show the total number of people in the address book.
-+
-**Before**
-+
-image::getting-started-ui-status-before.png[width="500"]
-+
-**After**
-+
-image::getting-started-ui-status-after.png[width="500"]
-+
-****
-* Hints
-** link:{repoURL}/src/main/resources/view/StatusBarFooter.fxml[`StatusBarFooter.fxml`] will need a new `StatusBar`. Be sure to set the `GridPane.columnIndex` properly for each `StatusBar` to avoid misalignment!
-** link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] needs to initialize the status bar on application start, and to update it accordingly whenever the address book is updated.
-* Solution
-** Modify the constructor of link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to take in the number of persons when the application just started.
-** Use link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter#handleAddressBookChangedEvent(AddressBookChangedEvent)`] to update the number of persons whenever there are new changes to the addressbook.
-** See this https://github.com/se-edu/addressbook-level4/pull/596/files[PR] for the full solution.
-****
-
-[discrete]
-==== `Storage` component
-
-[TIP]
-Do take a look at the link:#storage-component[Design: Storage Component] section before attempting to modify the `Storage` component.
-
-. Add a new method `backupAddressBook(ReadOnlyAddressBook)`, so that the address book can be saved in a fixed temporary location.
-+
-****
-* Hint
-** Add the API method in link:{repoURL}/src/main/java/seedu/address/storage/AddressBookStorage.java[`AddressBookStorage`] interface.
-** Implement the logic in link:{repoURL}/src/main/java/seedu/address/storage/StorageManager.java[`StorageManager`] class.
-* Solution
-** See this https://github.com/se-edu/addressbook-level4/pull/594/files[PR] for the full solution.
-****
-
-=== Creating a new command: `remark`
-
-By creating this command, you will get a chance to learn how to implement a feature end-to-end, touching all major components of the app.
-
-==== Description
-Edits the remark for a person specified in the `INDEX`. +
-Format: `remark INDEX r/[REMARK]`
-
-Examples:
-
-* `remark 1 r/Likes to drink coffee.` +
-Edits the remark for the first person to `Likes to drink coffee.`
-* `remark 1 r/` +
-Removes the remark for the first person.
-
-==== Step-by-step Instructions
-
-===== [Step 1] Logic: Teach the app to accept 'remark' which does nothing
-Let's start by teaching the application how to parse a `remark` command. We will add the logic of `remark` later.
-
-**Main:**
-
-. Add a `RemarkCommand` that extends link:{repoURL}/src/main/java/seedu/address/logic/commands/UndoableCommand.java[`UndoableCommand`]. Upon execution, it should just throw an `Exception`.
-. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to accept a `RemarkCommand`.
-
-**Tests:**
-
-. Add `RemarkCommandTest` that tests that `executeUndoableCommand()` throws an Exception.
-. Add new test method to link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`], which tests that typing "remark" returns an instance of `RemarkCommand`.
-
-===== [Step 2] Logic: Teach the app to accept 'remark' arguments
-Let's teach the application to parse arguments that our `remark` command will accept. E.g. `1 r/Likes to drink coffee.`
-
-**Main:**
-
-. Modify `RemarkCommand` to take in an `Index` and `String` and print those two parameters as the error message.
-. Add `RemarkCommandParser` that knows how to parse two arguments, one index and one with prefix 'r/'.
-. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to use the newly implemented `RemarkCommandParser`.
-
-**Tests:**
-
-. Modify `RemarkCommandTest` to test the `RemarkCommand#equals()` method.
-. Add `RemarkCommandParserTest` that tests different boundary values
-for `RemarkCommandParser`.
-. Modify link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`] to test that the correct command is generated according to the user input.
-
-===== [Step 3] Ui: Add a placeholder for remark in `PersonCard`
-Let's add a placeholder on all our link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] s to display a remark for each person later.
-
-**Main:**
-
-. Add a `Label` with any random text inside link:{repoURL}/src/main/resources/view/PersonListCard.fxml[`PersonListCard.fxml`].
-. Add FXML annotation in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] to tie the variable to the actual label.
-
-**Tests:**
-
-. Modify link:{repoURL}/src/test/java/guitests/guihandles/PersonCardHandle.java[`PersonCardHandle`] so that future tests can read the contents of the remark label.
-
-===== [Step 4] Model: Add `Remark` class
-We have to properly encapsulate the remark in our link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`] class. Instead of just using a `String`, let's follow the conventional class structure that the codebase already uses by adding a `Remark` class.
-
-**Main:**
-
-. Add `Remark` to model component (you can copy from link:{repoURL}/src/main/java/seedu/address/model/person/Address.java[`Address`], remove the regex and change the names accordingly).
-. Modify `RemarkCommand` to now take in a `Remark` instead of a `String`.
-
-**Tests:**
-
-. Add test for `Remark`, to test the `Remark#equals()` method.
-
-===== [Step 5] Model: Modify `ReadOnlyPerson` to support a `Remark` field
-Now we have the `Remark` class, we need to actually use it inside link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`].
-
-**Main:**
-
-. Add three methods `setRemark(Remark)`, `getRemark()` and `remarkProperty()`. Be sure to implement these newly created methods in link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`Person`], which implements the link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`] interface.
-. You may assume that the user will not be able to use the `add` and `edit` commands to modify the remarks field (i.e. the person will be created without a remark).
-. Modify link:{repoURL}/src/main/java/seedu/address/model/util/SampleDataUtil.java/[`SampleDataUtil`] to add remarks for the sample data (delete your `addressBook.xml` so that the application will load the sample data when you launch it.)
-
-===== [Step 6] Storage: Add `Remark` field to `XmlAdaptedPerson` class
-We now have `Remark` s for `Person` s, but they will be gone when we exit the application. Let's modify link:{repoURL}/src/main/java/seedu/address/storage/XmlAdaptedPerson.java[`XmlAdaptedPerson`] to include a `Remark` field so that it will be saved.
-
-**Main:**
-
-. Add a new Xml field for `Remark`.
-. Be sure to modify the logic of the constructor and `toModelType()`, which handles the conversion to/from  link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`].
-
-**Tests:**
-
-. Fix `validAddressBook.xml` such that the XML tests will not fail due to a missing `<remark>` element.
-
-===== [Step 7] Ui: Connect `Remark` field to `PersonCard`
-Our remark label in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] is still a placeholder. Let's bring it to life by binding it with the actual `remark` field.
-
-**Main:**
-
-. Modify link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard#bindListeners()`] to add the binding for `remark`.
-
-**Tests:**
-
-. Modify link:{repoURL}/src/test/java/seedu/address/ui/testutil/GuiTestAssert.java[`GuiTestAssert#assertCardDisplaysPerson(...)`] so that it will compare the remark label.
-. In link:{repoURL}/src/test/java/seedu/address/ui/PersonCardTest.java[`PersonCardTest`], call `personWithTags.setRemark(ALICE.getRemark())` to test that changes in the link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`Person`] 's remark correctly updates the corresponding link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`].
-
-===== [Step 8] Logic: Implement `RemarkCommand#execute()` logic
-We now have everything set up... but we still can't modify the remarks. Let's finish it up by adding in actual logic for our `remark` command.
-
-**Main:**
-
-. Replace the logic in `RemarkCommand#execute()` (that currently just throws an `Exception`), with the actual logic to modify the remarks of a person.
-
-**Tests:**
-
-. Update `RemarkCommandTest` to test that the `execute()` logic works.
-
-==== Full Solution
-
-See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-by-step solution.
 
 [appendix]
 == User Stories
@@ -729,9 +945,19 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |user |have a more flexible addition of contact |add contacts without address or email as compulsory elements
+
+|`* * *` |user |show list of favourite contacts |quickly find people I contact often
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* *` |user |show contact according to categories of labels |access certain group by label
+
+|`* *` |user |copy email address to clipboard |paste it into my email application’s recipients field
+
+|`*` |user with many persons in the address book |sort persons by tag |locate persons categorised under this tag easily
+// will change edit command details in UG if implemented |`* * *` |user |add optional details to a contact other than those compulsory fields |have more information such as birthday available afterwards
+// will be added into use cases if implemented |`* * *` |user |be notified when entering user with same name |avoid confusion in the future
 |=======================================================================
 
 {More to be added}
@@ -742,7 +968,27 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
-=== Use case: Delete person
+=== Use case: Delete person using index
+
+*MSS*
+
+1.  User requests to delete a specific person
+2.  AddressBook deletes the person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The given name is absent.
++
+[none]
+** 1a1. AddressBook shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Delete person using index
 
 *MSS*
 
@@ -767,6 +1013,203 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+[discrete]
+=== Use case: Show contact according to categories of labels
+
+*MSS*
+
+1.  User requests to show all persons with a specific label
+2.  AddressBook shows a list a person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The label does not exist.
++
+[none]
+** 1a1. AddressBook shows a empty list.
++
+Use case ends.
+
+[discrete]
+=== Use case: Flexible contact addition
+
+*MSS*
+
+1.  User requests to add a person with desired details, eg: address, email, birthday, etc...
+2.  AddressBook adds the person to the list
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The user input is invalid.
++
+[none]
+** 1a1.  AddressBook shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Copy email address
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to copy a specific person’s email address to clipboard
+4.  AddressBook copy the person’s email address to clipboard
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The specified person’s email address is empty.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Favourite contacts
+
+*MSS*
+
+1.  User requests to list commonly contacted persons
+2.  AddressBook saves and displays list without command
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The list is empty.
++
+Use case ends.
+
+[discrete]
+=== Use case: Highlight contacts with same name
+
+*MSS*
+
+1.  User requests to add a person
+2.  AddressBook notify if name entered matches any name in list
+3.  User edit the name of contact
+4.  AddressBook removes the notification
++
+Use case ends.
+
+[discrete]
+=== Use case: Add photos to contacts
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User picks a person
+4.  User requests to add a photo to contacts
+5.  AddressBook adds photo to contact
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 4a. Contact already has a photo.
++
+[none]
+** 4a1. AddressBook displays message “already has a photo”.
++
+** 4a2. AddressBook displays a dialogue window asking user if user wants to change the current photo.
++
+Use case resumes at step 5.
+
+[discrete]
+=== Use case: Password feature
+
+*MSS*
+
+1.  User runs the application
+2.  AddressBook displays a window asking user to input password
+3.  User inputs password
+4.  AddressBook displays main window
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. User inputs wrong password.
++
+[none]
+** 3a1. AddressBook displays message “Wrong password”.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Sort all contacts
+
+*MSS*
+
+1.  User requests to sort persons
+2.  AddressBook displays a sorted list of persons
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The list is empty.
++
+[none]
+** 1a1. AddressBook displays message “Empty list.”.
++
+Use case ends.
+
+[discrete]
+=== Use case: Undo/Redo multiple commands
+
+*MSS*
+
+1.  User keys in 4 undoable commands.
+2.  Addressbook updates and displays updated data.
+3.  User requests to undo 4 commands.
+4.  Addressbook reverse the 4 most recent commands.
+5.  User requests to redo 4 commands.
+6.  Addressbook reverses the 4 most recent undo commands.
+
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. No undoable commands in stack.
++
+[none]
+** 1a1. AddressBook displays message “No more commands to undo!”.
++
+[none]
+* 5a. No undo commands in stack.
++
+[none]
+** 5a1. AddressBook displays message “No more commands to redo!”.
++
+Use case ends.
+
 {More to be added}
 
 [appendix]
@@ -775,6 +1218,11 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Should be able to sort within 1 second.
+.  A user with average software using skills should be able to understand the user interface within 20 minutes.
+.  A new user who is able to comprehend simple english can use the application within 20 minutes.
+.  Should only store data locally unless user shares with other applications.
+.  Should link:#high-light[highlight] commands immediately upon encountering link:#wrong-commands[wrong commands].
 
 {More to be added}
 
@@ -793,6 +1241,20 @@ Private contact detail
 
 ....
 A contact detail that is not meant to be shared with others
+....
+
+[[high-light]]
+Highlight
+
+....
+Color of the words changed into red
+....
+
+[[wrong-commands]]
+Wrong commands
+
+....
+Commands words that are not listed in the list of available commands
 ....
 
 [appendix]

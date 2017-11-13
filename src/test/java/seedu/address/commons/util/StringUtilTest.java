@@ -155,5 +155,56 @@ public class StringUtilTest {
         StringUtil.getDetails(null);
     }
 
+    //@@author qihao27
+    //---------------- Tests for isSortOption --------------------------------------
 
+    @Test
+    public void isSortOption() {
+
+        // empty strings
+        assertFalse(StringUtil.isSortOption("")); // Boundary value
+        assertFalse(StringUtil.isSortOption("  "));
+
+        // does not contain a prefix option indicator
+        assertFalse(StringUtil.isSortOption("a"));
+
+        // contains number
+        assertFalse(StringUtil.isSortOption("-1"));
+        assertFalse(StringUtil.isSortOption("-e1"));
+
+        // capital letter
+        assertFalse(StringUtil.isSortOption("-T"));
+
+        // options with white space
+        assertFalse(StringUtil.isSortOption(" -p ")); // Leading/trailing spaces
+        assertFalse(StringUtil.isSortOption("- p"));  // Spaces in the middle
+
+        // EP: valid options, should return true
+        assertTrue(StringUtil.isSortOption("-n"));
+        assertTrue(StringUtil.isSortOption("-p"));
+        assertTrue(StringUtil.isSortOption("-e"));
+        assertTrue(StringUtil.isSortOption("-a"));
+        assertTrue(StringUtil.isSortOption("-t"));
+    }
+
+    //---------------- Tests for isFilePathOption --------------------------------------
+
+    @Test
+    public void isFilePath() {
+
+        // empty strings
+        assertFalse(StringUtil.isFilePath("")); // Boundary value
+        assertFalse(StringUtil.isFilePath("  "));
+
+        // does not contain a suffix ".xml"
+        assertFalse(StringUtil.isFilePath("data/addressbook"));
+
+        // does not contain a file name
+        assertFalse(StringUtil.isFilePath("data/"));
+
+        // EP: valid file path, should return true
+        assertTrue(StringUtil.isFilePath("data/addressbook.xml"));
+        assertTrue(StringUtil.isFilePath("C:\\shakalaka.xml"));
+    }
+    //@@author
 }

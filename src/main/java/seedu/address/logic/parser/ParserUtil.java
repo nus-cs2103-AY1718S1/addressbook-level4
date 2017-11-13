@@ -28,7 +28,11 @@ import seedu.address.model.tag.Tag;
 public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
-    public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
+    //@@author qihao27
+    public static final String MESSAGE_INVALID_OPTION = "String does not contain hyphen and lower case alphabet only.";
+    public static final String MESSAGE_INVALID_FILE_PATH =
+            "String does not contain \".xml\" as suffix or contains invalid file path.";
+    //@@author
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -42,6 +46,34 @@ public class ParserUtil {
         }
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
     }
+
+    //@@author qihao27
+    /**
+     * Parses a String of option into a {@code trimmedString} and returns it. Leading and trailing whitespaces
+     * will be trimmed.
+     * @throws IllegalValueException if the specified option is invalid (not in "-[lower case]" format).
+     */
+    public static String parseOption(String str) throws IllegalValueException {
+        String trimmedString = str.trim();
+        if (!StringUtil.isSortOption(trimmedString)) {
+            throw new IllegalValueException(MESSAGE_INVALID_OPTION);
+        }
+        return trimmedString;
+    }
+
+    /**
+     * Parses a String of file path into a {@code trimmedString} and returns it. Leading and trailing whitespaces
+     * will be trimmed.
+     * @throws IllegalValueException if the specified file path is invalid (not a xml file).
+     */
+    public static String parseFilePath(String filePath) throws IllegalValueException {
+        String trimmedString = filePath.trim();
+        if (!StringUtil.isFilePath(trimmedString)) {
+            throw new IllegalValueException(MESSAGE_INVALID_FILE_PATH);
+        }
+        return trimmedString;
+    }
+    //@@author
 
     /**
      * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.

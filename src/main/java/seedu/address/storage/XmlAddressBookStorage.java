@@ -10,8 +10,10 @@ import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.commons.exceptions.EncryptOrDecryptException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.security.SecurityUtil;
 
 /**
  * A class to access AddressBook data stored as an xml file on the hard disk.
@@ -37,17 +39,18 @@ public class XmlAddressBookStorage implements AddressBookStorage {
 
     /**
      * Similar to {@link #readAddressBook()}
+     *
      * @param filePath location of the data. Cannot be null
      * @throws DataConversionException if the file is not in the correct format.
      */
     public Optional<ReadOnlyAddressBook> readAddressBook(String filePath) throws DataConversionException,
-                                                                                 FileNotFoundException {
+            FileNotFoundException {
         requireNonNull(filePath);
 
         File addressBookFile = new File(filePath);
 
         if (!addressBookFile.exists()) {
-            logger.info("AddressBook file "  + addressBookFile + " not found");
+            logger.info("AddressBook file " + addressBookFile + " not found");
             return Optional.empty();
         }
 
@@ -61,8 +64,10 @@ public class XmlAddressBookStorage implements AddressBookStorage {
         saveAddressBook(addressBook, filePath);
     }
 
+
     /**
      * Similar to {@link #saveAddressBook(ReadOnlyAddressBook)}
+     *
      * @param filePath location of the data. Cannot be null
      */
     public void saveAddressBook(ReadOnlyAddressBook addressBook, String filePath) throws IOException {
@@ -73,5 +78,68 @@ public class XmlAddressBookStorage implements AddressBookStorage {
         FileUtil.createIfMissing(file);
         XmlFileStorage.saveDataToFile(file, new XmlSerializableAddressBook(addressBook));
     }
+
+    //@@author qihao27
+    public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
+        saveAddressBook(addressBook, "backup.fxml");
+    }
+    //@@author
+
+    //@@author Hailinx
+    @Override
+    public boolean isEncrypted() throws IOException {
+        return isEncrypted(filePath);
+    }
+
+    /**
+     * Similar to {@link #isEncrypted()}
+     *
+     * @param filePath location of the data. Cannot be null
+     */
+    public boolean isEncrypted(String filePath) throws IOException {
+        requireNonNull(filePath);
+
+        File file = new File(filePath);
+        return SecurityUtil.isEncrypted(file);
+    }
+
+    @Override
+    public void encryptAddressBook(String password)
+            throws IOException, EncryptOrDecryptException {
+        encryptAddressBook(filePath, password);
+    }
+
+    /**
+     * Similar to {@link #encryptAddressBook(String)}
+     *
+     * @param filePath location of the data. Cannot be null
+     */
+    public void encryptAddressBook(String filePath, String password)
+            throws IOException, EncryptOrDecryptException {
+        requireNonNull(filePath);
+
+        File file = new File(filePath);
+        SecurityUtil.encrypt(file, password);
+    }
+
+    @Override
+    public void decryptAddressBook(String password)
+            throws IOException, EncryptOrDecryptException {
+        decryptAddressBook(filePath, password);
+    }
+
+    /**
+     * Similar to {@link #decryptAddressBook(String)}
+     *
+     * @param filePath location of the data. Cannot be null
+     */
+    public void decryptAddressBook(String filePath, String password)
+            throws IOException, EncryptOrDecryptException {
+        requireNonNull(filePath);
+
+        File file = new File(filePath);
+        SecurityUtil.decrypt(file, password);
+    }
+    //@@author
 
 }

@@ -1,5 +1,7 @@
 package seedu.address.testutil;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Set;
 
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -9,6 +11,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.TodoItem;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
@@ -32,7 +35,8 @@ public class PersonBuilder {
             Email defaultEmail = new Email(DEFAULT_EMAIL);
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
-            this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress, defaultTags);
+            this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress,
+                    defaultTags, new ArrayList<>(), false);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default person's values are invalid.");
         }
@@ -104,6 +108,25 @@ public class PersonBuilder {
         }
         return this;
     }
+
+    /**
+     * Sets the {@code Favourite} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withFavourite() {
+
+        this.person.setFavourite(true);
+        return this;
+    }
+
+    //@@author Hailinx
+    /**
+     * Sets the {@code TodoItem} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withTodoItem(TodoItem... todoItem) {
+        this.person.setTodoItems(Arrays.asList(todoItem));
+        return this;
+    }
+    //@@author
 
     public Person build() {
         return this.person;
