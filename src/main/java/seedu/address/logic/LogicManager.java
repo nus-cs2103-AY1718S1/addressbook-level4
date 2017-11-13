@@ -75,8 +75,8 @@ public class LogicManager extends ComponentManager implements Logic {
     public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
         model.updateFilteredPersonList(predicate);
     }
-    //@@author
 
+    //@@author heiseish
     @Subscribe
     private void handleToggleFavoritePersonEvent(ToggleFavoritePersonEvent event)
             throws CommandException, ParseException {
