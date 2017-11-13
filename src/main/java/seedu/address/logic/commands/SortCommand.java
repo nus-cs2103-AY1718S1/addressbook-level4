@@ -78,31 +78,51 @@ public class SortCommand extends UndoableCommand {
     }
 
     private Comparator<ReadOnlyPerson> getSortComparator(String field) {
-        switch (field) {
-        case PREFIX_NAME_FIELD:
-            this.sortBy = "name";
-            return (o1, o2) -> o1.getName().toString().compareToIgnoreCase(o2.getName().toString()
-            );
-        case PREFIX_PHONE_FIELD:
-            this.sortBy = "phone";
-            return (o1, o2) -> o1.getPhone().toString().compareToIgnoreCase(
-                        o2.getPhone().toString()
-            );
-        case PREFIX_EMAIL_FIELD:
-            this.sortBy = "email";
-            return (o1, o2) -> o1.getEmail().toString().compareToIgnoreCase(
-                        o2.getEmail().toString()
-            );
-        case PREFIX_ADDRESS_FIELD:
-            this.sortBy = "address";
-            return (o1, o2) -> o1.getAddress().toString().compareToIgnoreCase(
-                        o2.getAddress().toString()
-            );
-        default:
-            return (o1, o2) -> o1.getName().toString().compareToIgnoreCase(
-                        o2.getName().toString()
-            );
-        }
+        return (o1, o2) -> {
+            /** Person(s) marked as 'Favourite' will always remain at the top of the list **/
+            if (o1.getFavourite().getStatus()) {
+                if (isReverseOrder) {
+                    /** Ensure 'Favourite' persons is always greater than when sorted in descending order**/
+                    return 1;
+                } else {
+                    /** Ensure 'Favourite' persons is always smaller than when sorted in ascending order**/
+                    return -1;
+                }
+            }
+
+            switch (field) {
+            case PREFIX_NAME_FIELD:
+                this.sortBy = "name";
+                return o1.getName().toString()
+                        .compareToIgnoreCase(o2.getName().toString()
+                        );
+
+            case PREFIX_PHONE_FIELD:
+                this.sortBy = "phone";
+                return o1.getPhone().toString()
+                        .compareToIgnoreCase(o2.getPhone().toString()
+                        );
+
+            case PREFIX_EMAIL_FIELD:
+                this.sortBy = "email";
+                return o1.getEmail().toString()
+                        .compareToIgnoreCase(o2.getEmail().toString()
+                        );
+
+            case PREFIX_ADDRESS_FIELD:
+                this.sortBy = "address";
+                return o1.getAddress().toString()
+                        .compareToIgnoreCase(o2.getAddress().toString()
+                        );
+
+            default:
+                this.sortBy = "name";
+                return o1.getName().toString()
+                        .compareToIgnoreCase(o2.getName().toString()
+                        );
+            }
+        };
+
     }
 
     @Override

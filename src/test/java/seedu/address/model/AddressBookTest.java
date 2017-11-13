@@ -100,10 +100,6 @@ public class AddressBookTest {
             return groups;
         }
 
-        @Override
-        public ObservableList<ReadOnlySchedule> getScheduleList() {
-            return schedules;
-        }
     }
 
 }

@@ -8,7 +8,6 @@ import seedu.address.model.socialmedia.SocialMedia;
 import seedu.address.model.socialmedia.SocialMediaUrl;
 
 
-
 /**
  * JAXB-friendly adapted version of the SocialMedia.
  */
@@ -16,6 +15,7 @@ public class XmlAdaptedSocialMedia {
 
     @XmlElement(required = true)
     private String socialMediaName;
+
     /**
      * Constructs an XmlAdaptedSocialMedia.
      * This is the no-arg constructor that is required by JAXB.

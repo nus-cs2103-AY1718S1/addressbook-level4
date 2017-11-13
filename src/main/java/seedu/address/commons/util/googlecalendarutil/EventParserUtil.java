@@ -19,7 +19,7 @@ public class EventParserUtil {
     private static final String API = "https://www.googleapis.com/calendar/v3/calendars/";
 
     /** Node names for Jackson JSON parser to traverse JSON response */
-    private static final  String EVENTS = "/items";
+    private static final String EVENTS = "/items";
     private static final String EVENT_NAME = "/summary";
     private static final String EVENT_START = "/start";
     private static final String EVENT_DATE_TIME = "/dateTime";
@@ -29,9 +29,6 @@ public class EventParserUtil {
 
     /** Get events ordered by start time */
     private static final String QUERY = "/events?singleEvents=true&orderBy=startTime&key=";
-
-
-
 
     private static Schedule getSingleSchedule(JsonNode event) throws IllegalValueException {
         String name = event.at(EVENT_NAME).asText();

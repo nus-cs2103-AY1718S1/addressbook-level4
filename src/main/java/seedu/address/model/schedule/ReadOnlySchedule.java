@@ -15,7 +15,7 @@ public interface ReadOnlySchedule {
     ScheduleDate getStartDateTime();
     ObjectProperty<ScheduleDate> endDateTimeProperty();
     ScheduleDate getEndDateTime();
-    String getSheduleDuration();
+    String getScheduleDuration();
     SimpleStringProperty scheduleDurationProperty();
     String getScheduleDetails();
     SimpleStringProperty scheduleDetailsProperty();
@@ -31,7 +31,7 @@ public interface ReadOnlySchedule {
                 && other.getName().equals(this.getName())
                 && other.getStartDateTime().equals(this.getStartDateTime())
                 && other.getEndDateTime().equals(this.getEndDateTime())
-                && other.getSheduleDuration().equals(this.getSheduleDuration())); // state checks here onwards
+                && other.getScheduleDuration().equals(this.getScheduleDuration())); // state checks here onwards
     }
 
     /**
