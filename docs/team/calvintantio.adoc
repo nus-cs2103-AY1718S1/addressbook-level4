@@ -52,7 +52,7 @@ include::../UserGuide.adoc[tag=schedule]
 
 ==== Justification
 
-ConTag is targeted towards busy business users and frequent travellers. Hence, it is important for the application to allow the user to schedule activities with his contacts. 
+ConTag is targeted towards busy business users and frequent travellers. Hence, it is important for the application to allow the user to schedule activities with his contacts.
 
 In v1.3, ConTag allow the user to schedule at most one activity with a person in the contact list. Moreover, only one person can be associated with an activity every time schedule command is executed. Starting from v1.4, the user can schedule multiple activities with a contact. Furthermore, an activity can be scheduled for multiple contacts at once. The improvement from v1.3 to v1.4 is based on the reasoning that there exists activities, such as team meetings, that involve more than one people. It is also possible for the user to have multiple different schedules with a single person in the contact list.
 
