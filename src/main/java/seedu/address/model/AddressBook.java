@@ -299,4 +299,4 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void addEventToPerson(Integer index, Tag event) {
         persons.addEventTag(index, event);
     }
- }
+}

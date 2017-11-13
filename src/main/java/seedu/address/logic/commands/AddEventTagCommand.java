@@ -2,6 +2,10 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+
+import java.util.List;
+import java.util.TreeSet;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -12,12 +16,8 @@ import seedu.address.model.schedule.Slot;
 import seedu.address.model.schedule.Time;
 import seedu.address.model.tag.Tag;
 
-import java.util.List;
-import java.util.TreeSet;
-
-//@@author YuchenHe98
 /**
- * Selects a person identified using it's last displayed index from the address book.
+ * Adds a tag to persons who are in an event if the event can be scheduled.
  */
 public class AddEventTagCommand extends UndoableCommand {
 
