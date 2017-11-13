@@ -47,6 +47,7 @@ public class AppointCommand extends UndoableCommand {
                 Calendar current = Calendar.getInstance();
                 SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy h:mm");
                 String currentDate = formatter.format(current.getTime());
+                System.out.println(currentDate);
                 String appointDate = this.appoint.value;
                 Date newDate = formatter.parse(appointDate);
                 Calendar appointCal = Calendar.getInstance();
