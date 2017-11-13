@@ -587,7 +587,7 @@ public void addPersonToGroup(Index targetGroup, ReadOnlyPerson toAdd)
     }
 ----
 `GroupNotFoundException`, `PersonNotFoundException` and `DuplicatePersonException` are thrown
-in the event the `Group` specified does not exist, or if `Person` specified is not found, or 
+in the event the `Group` specified does not exist, or if `Person` specified is not found, or
 if a duplicate `Person` exists in the `UniquePersonList` in the group.
 
 [source,java]
@@ -637,7 +637,7 @@ the addition and removal of 'members'.
 // end::group[]
 
 // start::schedule[]
-=== Schedule 
+=== Schedule
 To allow a user to pull events from Google Calendar, add and remove events, a `Schedule` model is created with its constituent components as shown in the class diagram below:
 
 image::ScheduleClassDiagram.png[width="800"]
@@ -648,8 +648,8 @@ has a `UniqueScheduleList`, which contains a list of `Schedule` objects. A `Sche
 by accessing the `UniqueScheduleList` of a person through the `UniquePersonList` maintained in
 `ModelManager`.
 
-A `googlecalendarutil` package is created and it contains helper methods to query the 
-Google Calendar API, parse `JSON` reponses and the corresponding datetime strings. 
+A `googlecalendarutil` package is created and it contains helper methods to query the
+Google Calendar API, parse `JSON` reponses and the corresponding datetime strings.
 
 ==== Adding events from a person's Google Calendar
 To obtain events from a person's Google Calendar, `EventParserUtil` and `ServiceHandlerUtil` are used.
@@ -689,14 +689,14 @@ public static String makeCall(String url) throws IOException {
     }
 ----
 
-After obtaining a `UniqueScheduleList` from `EventParserUtil`, a call to updatePerson is made 
-with a new `UniqueSheduleList` inserted into the edited person. 
+After obtaining a `UniqueScheduleList` from `EventParserUtil`, a call to updatePerson is made
+with a new `UniqueSheduleList` inserted into the edited person.
 The sequence diagram below captures the program flow when an add calendar command is executed:
 
 image::AddCalendarSdForLogic.png[width="800"]
 _Figure 4.4.2 : Interactions Inside the Logic Component for the `cadd` Command_
 
-==== Adding and removing events 
+==== Adding and removing events
 The add and remove event mechanism is facilitated by `AddEventCommand` and `DeleteEventCommand` respectively.
 A helper method is called in these commands to add or remove an event and is implemented as such:
 ----
@@ -724,7 +724,7 @@ A helper method is called in these commands to add or remove an event and is imp
                 updatedProfPic, updatedTags, updatedGroups, updatedScheduleList.toSet(), updatedSocialMediaList);
     }
 ----
-A `DuplicateScheduleException` is thrown if an identical `Schedule` is present in the 
+A `DuplicateScheduleException` is thrown if an identical `Schedule` is present in the
 person's `UniqueScheduleList`. Afterwhich, `updatePerson` in `ModelManager` is invoked to update
 the person with the updated `UniqueScheduleList`.
 
@@ -768,7 +768,7 @@ private Person removeEventFromPerson(ReadOnlyPerson personToEdit) throws ParseEx
                 updatedScheduleList.toSet(), updatedSocialMediaList);
     }
 ----
-A `ScheduleNotFoundException` is thrown if a specified `Schedule` is not present in the 
+A `ScheduleNotFoundException` is thrown if a specified `Schedule` is not present in the
 person's `UniqueScheduleList`. Afterwhich, `updatePerson` in `ModelManager` is invoked to update
 the person with the updated `UniqueScheduleList`.
 
