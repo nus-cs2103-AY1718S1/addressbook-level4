@@ -228,7 +228,7 @@ Deletes the 1st person in the results of the `find` command.
 
 [NOTE]
 ====
-Deleting a person also deletes all the meetings with people of the same name as the person deleted
+Deleting a person also deletes all the meetings**(Including group meetings)** with people of the same name as the person deleted
 ====
 
 === Selecting a person : `select`
