@@ -461,6 +461,34 @@ public class ContactTsvReader {
 ----
 // end::addMultiple[]
 
+// tag::FindCommand[]
+=== Find contact by multiple parameters
+
+Finding contacts using different parameters is used so as to allow the user to find their contacts without having to rely on just one contact detail.
+
+image::FindCommandSequenceDiagram.PNG[width="800"]
+_Figure 4.3 : Sequence diagram for FindCommand_
+
+Find command extends from commands, and it cannot be undone using the undo function. By keying in the command word `find`, along with the required parameters, the command word will be detected in the `AddressBookParser` class where the arguments will be passed over to the `FindCommandParser` class, as seen from figure 4.3 above.
+
+The find command is implemented this way:
+----
+public class FindCommand extends Command {
+    @Override
+    public CommandResult executeCommand() {
+        // ... find logic ...
+    }
+}
+----
+
+A parse exception is thrown by the FindCommandParser if the user does not input any arguments. Suppose the User inputs `find betsy software engineer`. After the arguments have been detected in the parser classes, the FindCommandPredicate will check through the list to find the contacts whose name, address, email, number, occupation, website or remark contains any of the keywords given. A boolean function is used to check for the type of parameter the user has inputted.
+
+A noteworthy part to mention is that the find function in TheYellowPage is designed to check for every keyword, as such, keying in ambiguous keywords such as `block 42` for address is likely to return many contacts.
+
+// end::FindCommand[]
+
+// tag::deleteMultipleCommand[]
+
 === Delete multiple contacts
 
 Deleting multiple contacts is used so as to allow the user to delete multiple contacts with the use of a single command, saving time and without the need to clear the entire list.
@@ -468,7 +496,17 @@ Deleting multiple contacts is used so as to allow the user to delete multiple co
 image::DeleteMultipleCommandSequenceDiagram.PNG[width="800"]
 _Figure 4.4 : Sequence diagram for deleteMultipleCommand_
 
-Delete multiple contacts extends from undoable commands, and it can be undone using the undo function. By keying in the command word `deleteMul` along with `indexes`, the command word will be detected in the `AddressBookParser` class where the arguments (indexes in this case) will be passed over to the `DeleteMultipleCommandParser` class, as seen from figure 4.3 above.
+Delete multiple contacts extends from undoable commands, and it can be undone using the undo function. By keying in the command word `deleteMul` along with `indexes`, the command word will be detected in the `AddressBookParser` class where the arguments (indexes in this case) will be passed over to the `DeleteMultipleCommandParser` class, as seen from figure 4.4 above.
+
+The deleteMultipleCommand is implemented this way:
+----
+public class DeleteMultipleCommand extends UndoableCommand {
+    @Override
+    public CommandResult executeUndoableCommand() {
+        // ... delete multiple logic ...
+    }
+}
+----
 
 As our indexes are intended to take in multiple index values, we will use a `String[] listOfIndex = trimmedArgs.split("\\s+");` to split the arguments into individual indexes and store them into the String array for use. We will use a `Collections.reverse(list);` to ensure that the user will be able to delete the correct indexes. The `ArrayList<String> list = new ArrayList<String>(Arrays.asList(listOfIndex));` is used to convert the list of index into an arrayList for use by the collections utility.
 
@@ -476,12 +514,27 @@ We will now create a `ArrayList<Index> arrayOfIndex = new ArrayList<Index>();` t
 
 In the `DeleteMultipleCommand` class, the commandResult method is used which compares the index with the `lastShownList` in the model, similar to the method used in the `deleteCommand`. However, as `DeleteMultipleCommand` is designed to take in multiple indexes, a for-loop is used to loop the commandResult method so as to check for every index within the arrayList. The names that are deleted will be stored inside a `String listOfDeletedContacts` which will be used to display the results on the UI.
 
+==== Design Considerations
+
+**Aspect:** Parameter of `DeleteMultipleCommand` +
+**Alternative 1 (current choice):** Keep the original delete by index +
+**Pros:** Keying in the delete multiple command and the required parameters is simple when using indexes as compared to other parameters such as name or address, which makes it simpler for the user to use. +
+**Cons:** Different logic flow as compared to the original delete command, which may make it slightly more difficult for new developers to get started on enhancing the feature. +
+**Alternative 2:** Delete multiple contacts by name +
+**Pros:** Deleting a contact by name might be better for some users as they may be able to remember their contact's name more easily compared to the other parameters. +
+**Cons:** Target users are HR professionals who have a lot of contacts to work with, thus deleting by name may not be the most efficient deletion method.
+
+---
+
+// end::deleteMultipleCommand[]
+
 === Recently Deleted List
 
 Recently deleted command is used to allow the user to have a list of the past 30 recently deleted contacts and their details.
 By keying in the command word `recentlyDel`, the command word will be detected in the `AddressBookParser` class where the arguments (indexes in this case) will be passed over to the `RecentlyDeletedCommand` class.
 We will now create a `LinkedList<Person> RecentlyDeletedQueue = new LinkedList<>();` to store the recently deleted contacts for up to the past 30 contacts.
 In the `RecentlyDeletedCommand` class, the `commandResult` method is used which will show the deleted contacts.
+
 
 // tag::changePicture[]
 === Change Profile Picture
@@ -515,6 +568,41 @@ public class ImageStorageHandler {
 }
 ----
 // end::changePicture[]
+
+// tag::remark[]
+=== Remark Command
+
+Remark command lets the user enter an additional field of text to a specific contact in the Address Book. Remark command extends undo to allow user to undo the changes made to the remark.
+
+NOTE: Remark command can only be used for contacts already in the Address Book.
+
+A placeholder is then added to PersonCard which displays the remark for each person.
+
+When the user inputs a string of text into the command box, the string of text is then passed on to the AddressbookParser which calls RemarkCommandParser. This will create a new instance of RemarkCommand.
+
+The input string is converted to a remark command object using the following method:
+
+[source, java]
+----
+public class RemarkCommandParser implements Parser<RemarkCommand> {
+    public RemarkCommand parse(String args) throws ParseException {
+        // ... parse logic ...
+    }
+}
+----
+// end::remark[]
+
+// tag::sort[]
+=== Sorting mechanism
+
+The sort mechanism is done first by comparing the names of every contact in the address book in lower case.
+
+Sort extends command which makes it an undoable command.
+
+Sort command can only be executed only if the person list is not empty.
+
+It uses the sort method from the collection class to sort the array list of persons in the address book.
+// end::sort[]
 
 === Logging
 
