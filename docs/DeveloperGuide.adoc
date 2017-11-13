@@ -25,6 +25,8 @@ There are many ways to contribute to Planno: coding, testing, improving the buil
 This developer guide aims to give future programmers who hope to modify this application a general description of the architecture and design of the Desktop Application Planno.
 Planno provides users a platform to store and manage people's contact information, and events related to people in Planno. This developer guide consists of the following sections:
 
+toc::[]
+
 == Setting up
 
 === Prerequisites
@@ -866,29 +868,35 @@ After `Model` updates the person list which will be shown in the GUI, the `ShowP
 
 The selectE command is facilitated by the `LogicManager`. This command inherits from `Command`.
 
+<<<<<<< HEAD
+The following *_sequence diagram_* _(Figure 4.8)_ shows how the show all joined events operation works:
+=======
 The following *_sequence diagram_* _(Figure 4.10)_ show how the show all joined events operation works:
+>>>>>>> master
 
 image::ShowAllJoinedEventsSequenceDiagram.png[width="800"]
 _Figure 4.10: sequence diagram for selectE command_
 
 As seen in the *_sequence diagram_* (Figure 4.10) above, when the user enters a selectE command, the input is parsed by the `SelectJoinedEventsCommandParser`.
 A `SelectJoinedEventsCommand` is then created from the parsed user input.
-When the `LogicManager` executes the `SelectJoinedEventsCommand`, the latter calls `getFilteredPersonList()` to get the current person list.
+When the `LogicManager` executes the `SelectJoinedEventsCommand`, the latter calls getFilteredPersonList() to get the current person list.
 The `SelectJoinedEventsCommand` will then check the entered index values and get the names of the events the person/s have participated.
 This is shown in the code snippet below:
 
 [source,java]
-@Override
-public CommandResult execute() throws CommandException {
-    for (Index targetIndex: indexList) {
-                if (targetIndex.getZeroBased() >= lastShownList.size()) {
-                    throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-                }
-                personNames.append(lastShownList.get(targetIndex.getZeroBased()).getName()).append(", ");
-                for (ReadOnlyEvent event: lastShownList.get(targetIndex.getZeroBased()).getParticipation()) {
+public class SelectJoinedEventsCommand extends Command {
+    @Override
+    public CommandResult execute() throws CommandException {
+        for (Index targetIndex: indexList) {
+                    if (targetIndex.getZeroBased() >= lastShownList.size()) {
+                        throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+                    }
+                    personNames.append(lastShownList.get(targetIndex.getZeroBased()).getName()).append(", ");
+                    for (ReadOnlyEvent event: lastShownList.get(targetIndex.getZeroBased()).getParticipation()) {
                     eventNames.append(event.getEventName()).append("[-]");
+                    }
                 }
-            }
+    }
 }
 
 As seen in the code snippet above, the `SelectJoinedEventsCommand` will throw an exception if the entered index values are invalid and will combine the participated event names into a String named "eventNames".
@@ -896,11 +904,13 @@ The `SelectJoinedEventsCommand` will then separate the event names using the com
 This is shown in the code snippet below:
 
 [source,java]
-@Override
-public CommandResult execute() throws CommandException {
-    String[] eventNameKeywords = (eventNames.toString().trim()).split("\\[-]+");
-            EventContainsKeywordPredicate predicate = new EventContainsKeywordPredicate(Arrays.asList(eventNameKeywords));
-            // Update the UI and return result.
+public class SelectJoinedEventsCommand extends Command {
+	@Override
+	public CommandResult execute() throws CommandException {
+		String[] eventNameKeywords = (eventNames.toString().trim()).split("\\[-]+");
+		EventContainsKeywordPredicate predicate = new EventContainsKeywordPredicate(Arrays.asList(eventNameKeywords));
+		// Update the UI and return result.
+	}
 }
 
 As shown in the code snippet above, the event names will be separated and stored in a String[] named "eventNameKeywords".
@@ -2114,7 +2124,7 @@ An Application Programming Interface (API) specifies the interface through which
 Blank information
 
 ....
-An information field with null value. It may happen when a user add a person and does not know some information.
+An information field with null value. It may happen when a user adds a person and does not know some information.
 ....
 
 [[build-automation]]
@@ -2163,7 +2173,7 @@ A contact detail that is not meant to be shared with others.
 Redoable command
 
 ....
-An redoable command is a command which has been undone, and no other commands in between.
+A redoable command is a command which has been undone, and no other commands in between.
 ....
 
 [[travis]]
@@ -2177,5 +2187,5 @@ Travis CI is a hosted, distributed continuous integration service used to build 
 Undoable command
 
 ....
-An undoable command is a command which modifies data in address book. For example, add, delete are undoable commands, while find, list are not.
+An undoable command is a command which modifies data in Planno. For example, add, delete are undoable commands, while find and list are not.
 ....
