@@ -17,7 +17,7 @@ By: `Team PIMP (W10-B1)`      Since: `Sep 2017`      Licence: `MIT`
 
 == Introduction
 
-Personal Information Manager Program (PIMP) is a command line interface (CLI) address book that allows you to store your contacts. You can use PIMP to add friends, add specific tags to them, add their social media accounts (such as Facebook, Twitter, Instagram), or add remarks. You can search through the list of your contacts by typing specific names. For more advanced user, you can use regex to find your friends. Most of the functionality works by typing in single line commands.
+Personal Information Management Program (PIMP) is a command line interface (CLI) address book that allows you to store your contacts. You can use PIMP to add friends, add specific tags to them, add their social media accounts (such as Facebook, Twitter, Instagram), or add remarks. You can search through the list of your contacts by typing specific names. For more advanced user, you can use regex to find your friends. Most of the functionality works by typing in single line commands.
 
 PIMP v1.5 is available on any platform running Java 8.
 
@@ -114,12 +114,8 @@ Examples:
 This adds a person named "John Doe", with phone number 98765432, email johnd@example.com,
 and address "John street, block 123, #01-01".
 
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
-
 * `add n/Bob p/91294232` +
 This adds a person named "Bob" with phone number 91294232. As you can see, all fields are optional.
-
-* `add n/Sally e/friend@casual.com e/colleague@work.com`
 
 * `add n/Allen Walker p/11112222 e/allen@walker.com a/Agate Street 22 fb/allenwalker tw/allenwalker99 ig/iamallen`
 
@@ -215,7 +211,7 @@ Format: `select INDEX` +
 Alias: `s`
 
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
+* Selects the person and loads the Google search page of person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
@@ -237,7 +233,7 @@ Alias example:
 ==== Editing a person: `edit`
 
 Edits an existing person in PIMP. +
-Format: `edit INDEX [n/NAME] [p/PHONE]... [e/EMAIL]... [a/ADDRESS]... [f/FACEBOOK] [t/TWITTER] [i/INSTAGRAM] [t/TAG]...` +
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [f/FACEBOOK] [t/TWITTER] [i/INSTAGRAM] [t/TAG]...` +
 Alias: `e`
 
 ****
@@ -256,7 +252,7 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-* `edit 3 f/becca93` +
+* `edit 3 fb/becca93` +
 Edits the Facebook username of 3rd person.
 
 Alias example:
@@ -319,9 +315,9 @@ Alias: `t`
 ****
 * The TYPE can be either "add" or "remove".
 * Add tag/s to the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
-* At least 1 tag must be added.
+* At least 1 tag must be added/removed.
 * For adding, the command will ignore tags that already exist in that contact.
-* For removing, the command will ignore tags that do not exist in that contact.
+* For removing, the command will show an error if the tag to be removed do not exist in that contact.
 ****
 
 Examples:
@@ -377,28 +373,21 @@ Alias: `sm`
 * Loads the social media page of the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
-* TYPE can be either of the following: 'facebook', 'twitter', 'instagram'
+* TYPE can be either of the following: "facebook", "twitter", "instagram"
 ****
 
 Examples:
 
 * `list` +
 `socialmedia facebook 1` +
-Loads the Facebook account of the 1st person in PIMP.
+Loads the Facebook page of the 1st person in PIMP.
 
 * `find Tony` +
 `socialmedia instagram 2` +
-Loads the Instagram account of the 2nd person returned by the `find` command.
+Loads the Instagram page of the 2nd person returned by the `find` command.
 // end::socialmedia[]
 
-==== Viewing contacts with birthday in current month: `birthday` (Not implemented yet. Coming in v2.0)
-View a list of persons with birthdays in the current month. +
-Format: `birthday` +
-Alias: `bd`
-
-This command takes no arguments.
 // tag::size[]
-
 ==== Increasing/decreasing font size: `size` (Since v1.3)
 
 Increases the font size by the number given, in pts. +
@@ -426,6 +415,7 @@ Resets the font size back to the default.
 
 // tag::accessdisplay[]
 ==== Toggling the display of the access counts: `accessdisplay` (Since v1.4)
+
 Toggles the display option for the access count numbers. +
 Format: `accessdisplay TYPE` +
 Alias: `ad` +
@@ -465,7 +455,7 @@ Alias: `u`
 
 [NOTE]
 =====
-Undoable commands: those commands that modify PIMP's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify PIMP's content (`add`, `delete`, `edit`, `clear`, 'tags', and 'remark').
 =====
 
 Examples:
@@ -494,7 +484,7 @@ The `undo 1` command fails as there are no undoable commands executed previously
 
 Alias example:
 
-* `u 1`
+* `u 2`
 
 ==== Redoing the previously undone command: `redo`
 
@@ -541,21 +531,6 @@ Alias: `st`
 This command takes no arguments.
 // end::statistics[]
 
-==== Exporting all entries: `export` (Not implemented yet. Coming in v2.0)
-
-Exports all entries in PIMP into the given format and stores it at the given location. +
-Format: `export FORMAT LOCATION`
-
-****
-* `FORMAT` can be XML, JSON, CSV, or YAML.
-* `LOCATION` must be writable.
-****
-
-Examples:
-
-* `export JSON ~/contacts.json` +
-Stores all contacts into `~/contacts.json` in JSON format.
-
 === Other Features
 
 These are features that do not have commands but can be helpful to the user.
@@ -566,7 +541,7 @@ These are features that do not have commands but can be helpful to the user.
 The contact list will automatically be sorted in A-Z order. It will refresh and re-sort accordingly when add and edit commands are executed.
 // end::sort[]
 
-==== Viewing total number of persons stored
+==== Viewing total number of persons stored (Since v1.2)
 
 The column with the people icon at the top left of the screen contains a numerical value
 representing the total number of persons in the last person listing.
@@ -582,17 +557,12 @@ At the left side of the screen where entries of PIMP are displayed, we can see a
 Data for PIMP are saved in the hard disk automatically after any command that changes the data.
 There is no need to save manually.
 
-== FAQ
-
-*Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous PIMP folder.
-
 == Command Summary
 
 * *Open Help*: `help`
 * *Open Quick Help*: `quickhelp`
 * *Add*: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [fb/FACEBOOK] [tw/TWITTER] [ig/INSTAGRAM] [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 fb/jamesho t/friend t/colleague`
 * *List*: `list`
 * *Find*: `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
@@ -602,7 +572,7 @@ e.g. `findregex Joh?n`
 e.g. `findtag friends`
 * *Select*: `select INDEX` +
 e.g.`select 2`
-* *Edit*: `edit INDEX [n/NAME] [p/PHONE_NUMBER]... [e/EMAIL]... [a/ADDRESS]... [fb/FACEBOOK] [tw/TWITTER] [ig/INSTAGRAM] [t/TAG]...` +
+* *Edit*: `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [fb/FACEBOOK] [tw/TWITTER] [ig/INSTAGRAM] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Delete*: `delete INDEX` +
 e.g. `delete 3`
@@ -616,9 +586,10 @@ e.g. `tags remove 2 neighbour`
 e.g.`remark 4 r/new remark`
 * *Access social media*: `socialmedia TYPE INDEX` +
 e.g. `socialmedia facebook 1`
-* *Change font size*: `size AMOUNT` +
-* *Toggle access display*: `accessdisplay TYPE` +
+* *Change font size*: `size [AMOUNT]` +
 e.g. `size 3`
+* *Toggle access display*: `accessdisplay TYPE` +
+e.g. `accessdisplay on`
 * *History*: `history`
 * *Undo*: `undo [AMOUNT]`
 * *Redo*: `redo [AMOUNT]`

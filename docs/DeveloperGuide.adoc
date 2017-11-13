@@ -424,7 +424,7 @@ private void updateAccessCount(PersonCard oldValue,PersonCard newValue) {
 
 There is a need for such an unusual condition since edit commands themselves will also change the selected person card.
 
-=== Design Considerations
+==== Design Considerations
 
 **Aspect:** Implementation of `AccessCount`
 
@@ -527,7 +527,7 @@ of people added changed in a more manageable timeframe (such as a month).
 // end::statistics[]
 
 // tag::findregex[]
-=== Searching by Regex
+=== Searching by Regex (Since v1.2)
 Searching contacts using regex is implemented with the `FindRegexCommand` class. It is very similar to the normal find command, which is `FindCommand`; the main difference is that, instead of a predicate which is an instance of `NameContainsKeywordPredicate`, the newly created predicate `NameMatchesRegexPredicate` is used.
 
 This `NameMatchesRegexPredicate`, which is a subclass of `Predicate`, is constructed by passing a string `regex`, which is going to be compiled into a `Pattern`. The `test` method uses the `Pattern` object formed by testing it with the person's full name. Here, the testing is done with the `find` method, and not `matches` method. `find` is preferred as `find` just needs to match a substring of the string passed.
@@ -652,7 +652,7 @@ This command leverages on the `CommandResult` message to display the list of val
 // end::quickhelp[]
 
 // tag::size[]
-=== Changing Font Size
+=== Changing Font Size (Since v1.3)
 The size of the font size change is stored in the model. This is exposed by the
 logic component, so that user interface components can query this data. Additionally,
 when there are changes in the font size, the `FontSizeRefreshRequestEvent` will be

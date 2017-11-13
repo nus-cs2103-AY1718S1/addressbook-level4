@@ -10,7 +10,7 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 
 == Project Team
 
-=== Derek Nam
+=== Nam Jun Jie Derek
 image::500poundbear.png[width="150", align="left"]
 {empty}[http://github.com/500poundbear[github]] [<<dereknam#, portfolio>>]
 
@@ -28,7 +28,7 @@ Responsibilities: Model
 
 '''
 
-=== Ken Lim
+=== Ken Lim Tien Tze
 image::kenpaxtonlim.png[width="150", align="left"]
 {empty}[http://github.com/kenpaxtonlim[github]] [<<kenpaxtonlim#, portfolio>>]
 
@@ -37,7 +37,7 @@ Responsibilities: Logic
 
 '''
 
-=== Lawrence Li
+=== Li Er Lu, Lawrence
 image::zzmobie.png[width="150", align="left"]
 {empty}[http://github.com/zzmobie[github]] [<<lawrence#, portfolio>>]
 
