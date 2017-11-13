@@ -726,11 +726,19 @@ package can be seen in the class diagram below:
 image::AutocompleterClassDiagram.png[width="900"]
 _Figure 4.8.1 : Class diagram of the autocomplete package_
 
+The role of the `CommandBoxParser` Class is to parse the text in the `CommandBox` to extract commands and arguments as well
+as to find missing prefixes. +
+
+The role of the `AutocompleteCommand` Enum is to keep track of the current command that the `Autocompleter`
+recognizes. +
+
+The rote of the `AutocompleteState` Enum is to keep track of the current state of the `Autocompleter`. +
+
 The `Autocompleter` class is the main entry point into the package. An instance of the `Autocompleter` class is
 instantiated inside the `CommandBox` class on start up. Inside the `CommandBox`, an event listener is
-attached to the text field which calls the `updateAutocompleter` method. The `updateAutocompleter` method then calls
-the `updateAutocompleter` method in the `Autocompleter` which updates the state of the `Autocompleter` according
-to the diagram below:
+attached to the `TextField` which calls the `updateAutocompleter` method whenever the text inside it is
+changed. The `updateAutocompleter` method then calls the `updateAutocompleter` method in the `Autocompleter` which
+updates the state of the `Autocompleter` according to the diagram below:
 
 image::AutocompleteStateActivityDiagram.PNG[width="900"]
 _Figure 4.8.2 : Activity diagram of the `updateAutocompleter` method_
