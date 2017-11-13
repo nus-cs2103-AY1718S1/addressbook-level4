@@ -622,7 +622,16 @@ image::DeleteTempPersonAD.png[width="700"]
 
 The import mechanism is essentially adding multiple contacts to the resident book automatically by referencing a xml file. It is implemented by calling add function repeatedly till all the new contacts have been added to the current contact list.
 
-One consideration of this mechanism is that contacts with identical names will not be added as the current resident book is regarded as the most updated version and the import feature aims to only facilitate addition of new contacts.
+==== Design Considerations
+
+**Aspect:** Implementation of Import +
+**Alternative 1 (current choice):** Add all unique Residents currently not found in ResidentBook  +
+**Pros:** Flexible level of precision according to the User and removes redundancy  +
+**Cons:** Current data will not be updated if the Resident details are already entered in the ResidentBook +
+**Alternative 2:** Add all entries found on the file specified by user +
+**Pros:** +
+**Cons:** This implementation may cause an error when searching for Residents. It also violates the ResidentBook Add command as there is duplicated person entries.
+
 
 The following is the Sequence Diagram for Import Command.
 
@@ -663,7 +672,19 @@ image::ImportCommandActivityDiagram.png[width="500"]
 
 // tag::backup[]
 === Backup Command
-The backup command saves the current ResidentBook into backup.xml located in the project location. One consideration for this mechanism is that backup should only happen when necessary, as it will take up a lot of space.
+The backup command saves the current ResidentBook into backup.xml located in the project location.
+
+==== Design Considerations
+
+**Aspect:** Implementation of Backup +
+**Alternative 1 (current choice):** Saves the backup file to current location  +
+**Pros:** Only require user to call function, with no additional details needed  +
+**Cons:** File name is fixed as "backup.xml" and user may need to rename it on the system hard drive +
+**Alternative 2:** Allow user to specify backup file name +
+**Pros:** Flexible level of precision according to the needs of the user +
+**Cons:** May result in unnecessary backup with different names
+
+One consideration for the choosen mechanism is that backup should only happen when necessary, as it will take up a lot of space. 
 
 [source,java]
 ----
