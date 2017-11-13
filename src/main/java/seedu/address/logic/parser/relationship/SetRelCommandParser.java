@@ -1,4 +1,3 @@
-//@@author huiyiiih
 package seedu.address.logic.parser.relationship;
 
 import static java.util.Objects.requireNonNull;
@@ -24,6 +23,8 @@ import seedu.address.logic.parser.ParserUtil;
 import seedu.address.logic.parser.Prefix;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.relationship.Relationship;
+
+//@@author huiyiiih
 
 /**
  * Parses all input arguments and create a new SetRelCommand object
@@ -80,7 +81,7 @@ public class SetRelCommandParser implements Parser<SetRelCommand> {
             || addPrefixPresent) {
             try {
                 emptyInputArg(addPrefixPresent, argMultimap, PREFIX_ADD_RELATIONSHIP,
-                    PREFIX_DELETE_RELATIONSHIP, PREFIX_CLEAR_RELATIONSHIP);
+                    PREFIX_DELETE_RELATIONSHIP);
             } catch (ParseException pe) {
                 throw new ParseException(NULL_RELATION_INPUT);
             }
@@ -133,7 +134,7 @@ public class SetRelCommandParser implements Parser<SetRelCommand> {
      * @param prefixDelete          delete relationship prefix
      */
     private void emptyInputArg(boolean addPrefixPresent, ArgumentMultimap argumentMultimap, Prefix prefixAdd,
-                                        Prefix prefixDelete, Prefix prefixClear) throws ParseException {
+                                        Prefix prefixDelete) throws ParseException {
         String addRelString;
 
         if (addPrefixPresent) {
