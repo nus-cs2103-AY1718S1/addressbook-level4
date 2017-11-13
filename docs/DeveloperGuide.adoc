@@ -751,7 +751,7 @@ This is useful for users to be able to compare their list of events in the calen
 image::EventCalendarClassDiagram.png[width="300"]
 _Figure 4.9.1.1 : Class Diagram for `EventCalendar`_
 
-+image::MonthDateBuilderClassDiagram.png[width="300"]
+image::MonthDateBuilderClassDiagram.png[width="300"]
 _Figure 4.9.1.2 : Class Diagram for `MonthDateBuilder`_
 // end::calendarMech[]
 
