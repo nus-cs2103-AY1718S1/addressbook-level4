@@ -19,7 +19,7 @@ import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 
-
+//@@author limcel
 public class UniquePersonListTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -45,7 +45,7 @@ public class UniquePersonListTest {
         assertTrue(isSorted(sortedList));
     }
 
-    //==== helper methods ======
+    //======================================== HELPER METHODS ============================================
 
     /**
      * @param e
@@ -64,7 +64,6 @@ public class UniquePersonListTest {
             }
         }
         return true;
-
     }
 
     /**
