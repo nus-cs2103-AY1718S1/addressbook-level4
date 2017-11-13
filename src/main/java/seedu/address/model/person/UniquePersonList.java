@@ -85,12 +85,16 @@ public class UniquePersonList implements Iterable<Person> {
      * @throws PersonNotFoundException if {@code target} could not be found in the list.
      */
     public void setPerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
-            throws DuplicatePersonException, PersonNotFoundException {
+            throws DuplicatePersonException, PersonNotFoundException, DeleteOnCascadeException {
         requireNonNull(editedPerson);
 
         int index = internalList.indexOf(target);
         if (index == -1) {
             throw new PersonNotFoundException();
+        }
+
+        if (!target.getParticipation().isEmpty()) {
+            throw new DeleteOnCascadeException();
         }
 
         if (!target.equals(editedPerson) && internalList.contains(editedPerson)) {

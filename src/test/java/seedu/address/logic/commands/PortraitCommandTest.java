@@ -27,6 +27,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.PortraitPath;
 import seedu.address.model.person.ReadOnlyPerson;
 
+// @@author Adoby7
 /**
  * An integration and unit test for portrait command
  */
@@ -56,23 +57,9 @@ public class PortraitCommandTest {
         PortraitPath path = new PortraitPath("");
         Person editedPerson = new Person(personToEdit);
         editedPerson.setPortraitPath(path);
-        Index largeIndex = Index.fromOneBased(10000000);
-        PortraitCommand portraitCommand = prepareCommand(largeIndex, path);
-
+        Index invalidLargeIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
+        PortraitCommand portraitCommand = prepareCommand(invalidLargeIndex, path);
         String expectedMessage = Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
-
-        assertCommandFailure(portraitCommand, model, expectedMessage);
-    }
-
-    @Test
-    public void invalidUrlFailure() throws Exception {
-        ReadOnlyPerson personToEdit = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        PortraitPath path = new PortraitPath(VALID_PORTRAIT_PATH_FIRST);
-        Person editedPerson = new Person(personToEdit);
-        editedPerson.setPortraitPath(path);
-        PortraitCommand portraitCommand = prepareCommand(INDEX_FIRST_PERSON, path);
-
-        String expectedMessage = PortraitCommand.MESSAGE_INVALID_URL;
 
         assertCommandFailure(portraitCommand, model, expectedMessage);
     }

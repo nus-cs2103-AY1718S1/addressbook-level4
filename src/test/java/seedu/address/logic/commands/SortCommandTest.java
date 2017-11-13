@@ -2,7 +2,7 @@ package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertEquals;
 import static seedu.address.testutil.TypicalEvents.FIRST;
-import static seedu.address.testutil.TypicalEvents.FORTH;
+import static seedu.address.testutil.TypicalEvents.FOURTH;
 import static seedu.address.testutil.TypicalEvents.SECOND;
 import static seedu.address.testutil.TypicalEvents.THIRD;
 import static seedu.address.testutil.TypicalEvents.getEmptyEventList;
@@ -59,7 +59,7 @@ public class SortCommandTest {
     public void executeAllFilledListShowSortedList() {
         SortCommand command = prepareCommand(filledModel);
         assertSuccess(command, SortCommand.MESSAGE_SUCCESS, Arrays.asList(ALICE, BENSON, CARL, DANIEL),
-                Arrays.asList(FIRST, SECOND, THIRD, FORTH), filledModel);
+                Arrays.asList(FIRST, SECOND, THIRD, FOURTH), filledModel);
     }
 
     @Test
@@ -70,7 +70,7 @@ public class SortCommandTest {
 
         SortCommand commandTwo = prepareCommand(eventModel);
         assertSuccess(commandTwo, SortCommand.MESSAGE_SUCCESS, Collections.emptyList(),
-                Arrays.asList(FIRST, SECOND, THIRD, FORTH), eventModel);
+                Arrays.asList(FIRST, SECOND, THIRD, FOURTH), eventModel);
     }
 
     /**

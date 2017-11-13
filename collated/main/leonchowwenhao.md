@@ -1,4 +1,34 @@
 # leonchowwenhao
+###### \java\seedu\address\commons\events\ui\TogglePanelEvent.java
+``` java
+
+/**
+ * Indicates a request to toggle between event display and browser.
+ */
+public class TogglePanelEvent extends BaseEvent {
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+
+}
+```
+###### \java\seedu\address\commons\events\ui\ToggleSelectEvent.java
+``` java
+
+/**
+ * Indicates that a select command has been entered and a request to toggle browser to the front.
+ */
+public class ToggleSelectEvent extends BaseEvent {
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+
+}
+```
 ###### \java\seedu\address\logic\commands\DeleteEventCommand.java
 ``` java
 /**
@@ -56,7 +86,6 @@ public class DeleteEventCommand extends UndoableCommand {
     protected void undo() {
         requireAllNonNull(model, eventToDelete);
         model.addEvent(targetIndex.getZeroBased(), eventToDelete);
-        model.updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
     }
 
     @Override
@@ -65,21 +94,12 @@ public class DeleteEventCommand extends UndoableCommand {
         try {
             model.deleteEvent(eventToDelete);
         } catch (EventNotFoundException pnfe) {
-            throw new AssertionError("The command has been successfully executed previously; "
-                    + "it should not fail now");
+            throw new AssertionError(MESSAGE_REDO_ASSERTION_ERROR);
         } catch (DeleteOnCascadeException doce) {
-            throw new AssertionError("The command has been successfully executed previously; "
-                    + "it should not fail now");
+            throw new AssertionError(MESSAGE_REDO_ASSERTION_ERROR);
         }
     }
 
-    /**
-     * Assign a typical event to delete
-     * Can only be used for JUnit test
-     */
-    public void assignEvent(ReadOnlyEvent event) {
-        this.eventToDelete = event;
-    }
 }
 ```
 ###### \java\seedu\address\logic\commands\DisplayCommand.java
@@ -97,7 +117,7 @@ public class DisplayCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Selects the event identified by the index number used in the last event listing "
-            + "and displays the emails of every person that has joined.\n"
+            + "and displays the target particular of every person that has joined.\n"
             + "Parameters: INDEX (must be a positive integer) PARTICULAR (either email, phone, or address)"
             + "Example: " + COMMAND_WORD + " 1 " + PARTICULAR_EMAIL;
     public static final String MESSAGE_NO_PARTICIPANT = "No one has joined this event.";
@@ -185,22 +205,27 @@ public class SelectJoinedEventsCommand extends Command {
     @Override
     public CommandResult execute() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
-        String temp = "";
+        StringBuilder eventNames = new StringBuilder();
+        StringBuilder personNames = new StringBuilder();
+
+        personNames.append("For ");
 
         for (Index targetIndex: indexList) {
             if (targetIndex.getZeroBased() >= lastShownList.size()) {
                 throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
             }
+            personNames.append(lastShownList.get(targetIndex.getZeroBased()).getName()).append(", ");
             for (ReadOnlyEvent event: lastShownList.get(targetIndex.getZeroBased()).getParticipation()) {
-                temp += (event.getEventName()) + "[-]";
+                eventNames.append(event.getEventName()).append("[-]");
             }
         }
 
-        String[] eventNameKeywords = (temp.trim()).split("\\[-]+");
-
+        String[] eventNameKeywords = (eventNames.toString().trim()).split("\\[-]+");
         EventContainsKeywordPredicate predicate = new EventContainsKeywordPredicate(Arrays.asList(eventNameKeywords));
         model.updateFilteredEventList(predicate);
-        return new CommandResult(getMessageForEventListShownSummary(model.getFilteredEventList().size()));
+
+        personNames.append(getMessageForEventListShownSummary(model.getFilteredEventList().size()));
+        return new CommandResult(personNames.toString());
     }
 
     @Override
@@ -228,6 +253,34 @@ public class SelectJoinedEventsCommand extends Command {
         case DisplayCommand.COMMAND_WORD:
             return new DisplayCommandParser().parse(arguments);
 
+```
+###### \java\seedu\address\logic\parser\AddressBookParser.java
+``` java
+        case ToggleCommand.COMMAND_WORD:
+            return new ToggleCommand();
+
+        //@@ author
+        case HistoryCommand.COMMAND_WORD:
+            return new HistoryCommand();
+
+        case ExitCommand.COMMAND_WORD:
+            return new ExitCommand();
+
+        case HelpCommand.COMMAND_WORD:
+            return new HelpCommand();
+
+        case UndoCommand.COMMAND_WORD:
+            return new UndoCommand();
+
+        case RedoCommand.COMMAND_WORD:
+            return new RedoCommand();
+
+        default:
+            throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+        }
+    }
+
+}
 ```
 ###### \java\seedu\address\logic\parser\DeleteEventCommandParser.java
 ``` java
@@ -665,5 +718,101 @@ public class XmlSerializableEventStorage implements ReadOnlyEventList {
         return FXCollections.unmodifiableObservableList(events);
     }
 
+}
+```
+###### \java\seedu\address\ui\BrowserPanel.java
+``` java
+        raise(new ToggleSelectEvent());
+    }
+}
+```
+###### \java\seedu\address\ui\MainWindow.java
+``` java
+        TogglePanel togglePanel = new TogglePanel(browserPanel, informationBoard, eventListPanel);
+        togglePlaceHolder.getChildren().add(togglePanel.getRoot());
+
+```
+###### \java\seedu\address\ui\TogglePanel.java
+``` java
+
+/**
+ * A ui containing browserpanel, informationboard and eventlistpanel.
+ * This UI is also responsible for handling toggle request events, switching between displaying details or the browser.
+ */
+public class TogglePanel extends UiPart<Region> {
+
+    private static final Logger logger = LogsCenter.getLogger(TogglePanel.class);
+    private static final String FXML = "TogglePanel.fxml";
+
+    private boolean browserIsFront;
+
+    @FXML
+    private SplitPane toggleSplitPane;
+
+    @FXML
+    private StackPane browserPlaceHolder;
+
+    @FXML
+    private StackPane informationBoardPlaceHolder;
+
+    @FXML
+    private StackPane eventListPanelPlaceHolder;
+
+    public TogglePanel(BrowserPanel browserPanel, InformationBoard informationBoard,
+                       EventListPanel eventListPanel) {
+        super(FXML);
+        browserPlaceHolder.getChildren().add(browserPanel.getRoot());
+        informationBoardPlaceHolder.getChildren().add(informationBoard.getRoot());
+        eventListPanelPlaceHolder.getChildren().add(eventListPanel.getRoot());
+        browserIsFront = false;
+        registerAsAnEventHandler(this);
+    }
+
+    @Subscribe
+    public void handleToggleSelectEvent(ToggleSelectEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        browserToFront();
+    }
+
+    @Subscribe
+    public void handleTogglePanelEvent(TogglePanelEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        triggerToggle();
+    }
+
+    /**
+    * Triggers the toggling mechanism to switch the browserPlaceHolder and the splitPane.
+    */
+    private void triggerToggle() {
+        if (browserIsFront) {
+            browserToBack();
+        } else {
+            browserToFront();
+        }
+    }
+
+    /**
+     * Sets the browserPlaceHolder to be visible and in front
+     * while setting the splitPane to be invisible and at the back.
+     */
+    private void browserToFront() {
+        browserPlaceHolder.setVisible(true);
+        browserPlaceHolder.toFront();
+        toggleSplitPane.setVisible(false);
+        toggleSplitPane.toBack();
+        browserIsFront = true;
+    }
+
+    /**
+     * Sets the browserPlaceHolder to be invisible and at the back
+     * while setting the splitPane to be visible and in front.
+     */
+    private void browserToBack() {
+        browserPlaceHolder.setVisible(false);
+        browserPlaceHolder.toBack();
+        toggleSplitPane.setVisible(true);
+        toggleSplitPane.toFront();
+        browserIsFront = false;
+    }
 }
 ```

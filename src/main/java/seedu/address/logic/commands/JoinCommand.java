@@ -1,6 +1,8 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.core.Messages.MESSAGE_REDO_ASSERTION_ERROR;
+import static seedu.address.commons.core.Messages.MESSAGE_UNDO_ASSERTION_ERROR;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON;
@@ -34,8 +36,8 @@ public class JoinCommand extends UndoableCommand {
             + PREFIX_PERSON + "1 "
             + PREFIX_EVENT + "2";
     public static final String MESSAGE_JOIN_SUCCESS = "Person \"%1$s\" now participates Event \"%2$s\"";
-    public static final String MESSAGE_DUPLICATE_EVENT = "This person has already participated the event ";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
+    public static final String MESSAGE_DUPLICATE_EVENT = "This person has already participated the event.";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This person has already participated the event.";
 
     private Index personIdx;
     private Index eventIdx;
@@ -62,7 +64,7 @@ public class JoinCommand extends UndoableCommand {
             throw new  CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
         if (eventIdx.getZeroBased() >= lastShownEventList.size()) {
-            throw new  CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new  CommandException(Messages.MESSAGE_INVALID_EVENT_DISPLAYED_INDEX);
         }
         personToJoin = (Person) lastShownPersonList.get(personIdx.getZeroBased());
         eventToJoin = (Event) lastShownEventList.get(eventIdx.getZeroBased());
@@ -81,12 +83,8 @@ public class JoinCommand extends UndoableCommand {
     protected void undo() {
         try {
             model.quitEvent(personToJoin, eventToJoin);
-        } catch (PersonNotParticipateException pnpe) {
-            throw new AssertionError("Undo is to revert a stage; "
-                    + "it should not fail now");
-        } catch (NotParticipateEventException npee) {
-            throw new AssertionError("Undo is to revert a stage; "
-                    + "it should not fail now");
+        } catch (PersonNotParticipateException | NotParticipateEventException e) {
+            throw new AssertionError(MESSAGE_UNDO_ASSERTION_ERROR);
         }
     }
 
@@ -94,12 +92,8 @@ public class JoinCommand extends UndoableCommand {
     protected void redo() {
         try {
             model.joinEvent(personToJoin, eventToJoin);
-        } catch (PersonHaveParticipateException phpe) {
-            throw new AssertionError("The command has been successfully executed previously; "
-                    + "it should not fail now");
-        } catch (HaveParticipateEventException hpee) {
-            throw new AssertionError("The command has been successfully executed previously; "
-                    + "it should not fail now");
+        } catch (PersonHaveParticipateException | HaveParticipateEventException e) {
+            throw new AssertionError(MESSAGE_REDO_ASSERTION_ERROR);
         }
     }
 }
