@@ -16,19 +16,35 @@ H.M.U cares about the security of its users as well. As such, users have to logi
 
 ---
 
+#Start of Extract [from: User Guide]#
+
 include::../UserGuide.adoc[tag=addSchedule]
+
+#End of Extract#
 
 ---
 
 ==== Justification
 
+---
+
+#Start of Extract [from: Developer Guide]#
+
 include::../DeveloperGuide.adoc[tag=scdconsideration]
+
+#End of Extract#
+
+---
 
 ==== Implementation
 
 ---
 
+#Start of Extract [from: Developer Guide]#
+
 include::../DeveloperGuide.adoc[tag=addclearSchedule]
+
+#End of Extract#
 
 ---
 
@@ -38,19 +54,35 @@ include::../DeveloperGuide.adoc[tag=addclearSchedule]
 
 ---
 
+#Start of Extract [from: User Guide]#
+
 include::../UserGuide.adoc[tag=clearSchedule]
+
+#End of Extract#
 
 ---
 
 ==== Justification
 
+---
+
+#Start of Extract [from: Developer Guide]#
+
 include::../DeveloperGuide.adoc[tag=scdconsideration]
+
+#End of Extract#
+
+---
 
 ==== Implementation
 
 ---
 
+#Start of Extract [from: Developer Guide]#
+
 include::../DeveloperGuide.adoc[tag=addclearSchedule]
+
+#End of Extract#
 
 ---
 
@@ -60,20 +92,35 @@ include::../DeveloperGuide.adoc[tag=addclearSchedule]
 
 ---
 
+#Start of Extract [from: User Guide]#
+
 include::../UserGuide.adoc[tag=visualize]
+
+#End of Extract#
 
 ---
 
 ==== Justification
 
+---
+
+#Start of Extract [from: Developer Guide]#
 
 include::../DeveloperGuide.adoc[tag=Vconsideration]
+
+#End of Extract#
+
+---
 
 ==== Implementation
 
 ---
 
+#Start of Extract [from: Developer Guide]#
+
 include::../DeveloperGuide.adoc[tag=VisualizeSchedule]
+
+#End of Extract#
 
 ---
 
@@ -83,19 +130,35 @@ include::../DeveloperGuide.adoc[tag=VisualizeSchedule]
 
 ---
 
+#Start of Extract [from: User Guide]#
+
 include::../UserGuide.adoc[tag=arrange]
+
+#End of Extract#
 
 ---
 
 ==== Justification
 
+---
+
+#Start of Extract [from: Developer Guide]#
+
 include::../DeveloperGuide.adoc[tag=Aconsideration]
+
+#End of Extract#
+
+---
 
 ==== Implementation
 
 ---
 
+#Start of Extract [from: Developer Guide]#
+
 include::../DeveloperGuide.adoc[tag=arrangeMeeting]
+
+#End of Extract#
 
 ---
 
@@ -105,13 +168,25 @@ include::../DeveloperGuide.adoc[tag=arrangeMeeting]
 
 ---
 
+#Start of Extract [from: User Guide]#
+
 include::../UserGuide.adoc[tag=locate]
+
+#End of Extract#
 
 ---
 
 ==== Justification
 
+---
+
+#Start of Extract [from: Developer Guide]#
+
 include::../DeveloperGuide.adoc[tag=locateCon]
+
+#End of Extract#
+
+---
 
 ==== Implementation
 
@@ -131,7 +206,11 @@ include::../DeveloperGuide.adoc[tag=locate]
 
 ---
 
+#Start of Extract [from: User Guide]#
+
 include::../UserGuide.adoc[tag=findByAddress]
+
+#End of Extract#
 
 ---
 
