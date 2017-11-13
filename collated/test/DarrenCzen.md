@@ -1,5 +1,5 @@
 # DarrenCzen
-###### /java/guitests/guihandles/EventsDetailsPanelHandle.java
+###### \java\guitests\guihandles\EventsDetailsPanelHandle.java
 ``` java
 /**
  * A handle to the {@code EventsDetailsPanel} of the application.
@@ -56,7 +56,7 @@ public class EventsDetailsPanelHandle extends NodeHandle<Node> {
     }
 
 ```
-###### /java/seedu/address/logic/commands/AccessCommandTest.java
+###### \java\seedu\address\logic\commands\AccessCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) for {@code AccessCommand}.
@@ -213,7 +213,7 @@ public class AccessCommandTest {
 
 }
 ```
-###### /java/seedu/address/logic/commands/LocationCommandTest.java
+###### \java\seedu\address\logic\commands\LocationCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) for {@code LocationCommand}.
@@ -368,7 +368,7 @@ public class LocationCommandTest {
 
 }
 ```
-###### /java/seedu/address/logic/commands/SortCommandTest.java
+###### \java\seedu\address\logic\commands\SortCommandTest.java
 ``` java
 public class SortCommandTest {
 
@@ -459,7 +459,7 @@ public class SortCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/AccessCommandParserTest.java
+###### \java\seedu\address\logic\parser\AccessCommandParserTest.java
 ``` java
 public class AccessCommandParserTest {
     private AccessCommandParser parser = new AccessCommandParser();
@@ -477,7 +477,7 @@ public class AccessCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/AddCommandParserTest.java
+###### \java\seedu\address\logic\parser\AddCommandParserTest.java
 ``` java
     @Test
     public void parse_compulsoryFieldMissing_failure() {
@@ -574,20 +574,23 @@ public class AccessCommandParserTest {
     }
 
 ```
-###### /java/seedu/address/logic/parser/AddressBookParserTest.java
+###### \java\seedu\address\logic\parser\AddressBookParserTest.java
 ``` java
     @Test
     public void parseCommand_access() throws Exception {
+        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
         AccessCommand command = (AccessCommand) parser.parseCommand(
                 AccessCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new AccessCommand(INDEX_FIRST_PERSON), command);
     }
 
 ```
-###### /java/seedu/address/logic/parser/AddressBookParserTest.java
+###### \java\seedu\address\logic\parser\AddressBookParserTest.java
 ``` java
     @Test
     public void parseCommand_location() throws Exception {
+        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
+
         LocationCommand command = (LocationCommand) parser.parseCommand(
                 LocationCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new LocationCommand(INDEX_FIRST_PERSON), command);
@@ -595,12 +598,191 @@ public class AccessCommandParserTest {
 
     @Test
     public void parseCommand_sort() throws Exception {
+        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
         assertTrue(parser.parseCommand(SortCommand.COMMAND_WORD) instanceof SortCommand);
         assertTrue(parser.parseCommand(SortCommand.COMMAND_WORD + " 3") instanceof SortCommand);
     }
 
 ```
-###### /java/seedu/address/logic/parser/LocationCommandParserTest.java
+###### \java\seedu\address\logic\parser\AddressBookParserTest.java
+``` java
+    @Test
+    public void parseCommand_addevent_throwsParseException() throws Exception {
+        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
+
+        thrown.expect(ParseException.class);
+        thrown.expectMessage(MESSAGE_INVALID_EVENT_PLATFORM);
+        parser.parseCommand(AddEventCommand.COMMAND_WORD
+                + " n/dwedsa d/13/11/2017 a/qedwe");
+
+    }
+
+    @Test
+    public void parseCommand_deleteevent_throwsParseException() throws Exception {
+        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
+
+        thrown.expect(ParseException.class);
+        thrown.expectMessage(MESSAGE_INVALID_EVENT_PLATFORM);
+        parser.parseCommand(DeleteEventCommand.COMMAND_WORD + " 1");
+    }
+
+    @Test
+    public void parseCommand_addCommandInEventsMode_throwsParseException() throws Exception {
+        assertTrue(parser.parseCommand(EventsCommand.COMMAND_WORD) instanceof EventsCommand);
+
+        //commands that should not work in Events Mode
+        thrown.expect(ParseException.class);
+        thrown.expectMessage(MESSAGE_INVALID_PERSON_PLATFORM);
+        parser.parseCommand(AddCommand.COMMAND_WORD + " n/Aaron Chen p/83323322 e/aaron@hotmail.com");
+
+        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
+    }
+
+    @Test
+    public void parseCommand_editCommandInEventsMode_throwsParseException() throws Exception {
+        assertTrue(parser.parseCommand(EventsCommand.COMMAND_WORD) instanceof EventsCommand);
+
+        //command that should not work in Events Mode
+        thrown.expect(ParseException.class);
+        thrown.expectMessage(MESSAGE_INVALID_PERSON_PLATFORM);
+        parser.parseCommand(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + " p/83333322");
+        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
+    }
+
+    @Test
+    public void parseCommand_selectCommandInEventsMode_throwsParseException() throws Exception {
+        assertTrue(parser.parseCommand(EventsCommand.COMMAND_WORD) instanceof EventsCommand);
+
+        //command that should not work in Events Mode
+        thrown.expect(ParseException.class);
+        thrown.expectMessage(MESSAGE_INVALID_PERSON_PLATFORM);
+        parser.parseCommand(SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
+    }
+
+    @Test
+    public void parseCommand_deleteCommandInEventsMode_throwsParseException() throws Exception {
+        assertTrue(parser.parseCommand(EventsCommand.COMMAND_WORD) instanceof EventsCommand);
+
+        //command that should not work in Events Mode
+        thrown.expect(ParseException.class);
+        thrown.expectMessage(MESSAGE_INVALID_PERSON_PLATFORM);
+        parser.parseCommand(DeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
+    }
+
+    @Test
+    public void parseCommand_accessCommandInEventsMode_throwsParseException() throws Exception {
+        assertTrue(parser.parseCommand(EventsCommand.COMMAND_WORD) instanceof EventsCommand);
+
+        //command that should not work in Events Mode
+        thrown.expect(ParseException.class);
+        thrown.expectMessage(MESSAGE_INVALID_PERSON_PLATFORM);
+        parser.parseCommand(AccessCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
+
+    }
+
+    @Test
+    public void parseCommand_locationCommandInEventsMode_throwsParseException() throws Exception {
+        assertTrue(parser.parseCommand(EventsCommand.COMMAND_WORD) instanceof EventsCommand);
+
+        //command that should not work in Events Mode
+        thrown.expect(ParseException.class);
+        thrown.expectMessage(MESSAGE_INVALID_PERSON_PLATFORM);
+        parser.parseCommand(LocationCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
+    }
+
+    @Test
+    public void parseCommand_clearCommandInEventsMode_throwsParseException() throws Exception {
+        assertTrue(parser.parseCommand(EventsCommand.COMMAND_WORD) instanceof EventsCommand);
+
+        //command that should not work in Events Mode
+        thrown.expect(ParseException.class);
+        thrown.expectMessage(MESSAGE_INVALID_PERSON_PLATFORM);
+        parser.parseCommand(ClearCommand.COMMAND_WORD);
+        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
+    }
+
+    @Test
+    public void parseCommand_findCommandInEventsMode_throwsParseException() throws Exception {
+        assertTrue(parser.parseCommand(EventsCommand.COMMAND_WORD) instanceof EventsCommand);
+
+        //command that should not work in Events Mode
+        thrown.expect(ParseException.class);
+        thrown.expectMessage(MESSAGE_INVALID_PERSON_PLATFORM);
+        parser.parseCommand(FindCommand.COMMAND_WORD + " " + "Emil");
+        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
+    }
+
+    @Test
+    public void parseCommand_findTagCommandInEventsMode_throwsParseException() throws Exception {
+        assertTrue(parser.parseCommand(EventsCommand.COMMAND_WORD) instanceof EventsCommand);
+
+        //command that should not work in Events Mode
+        thrown.expect(ParseException.class);
+        thrown.expectMessage(MESSAGE_INVALID_PERSON_PLATFORM);
+        parser.parseCommand(FindTagCommand.COMMAND_WORD + " " + "friends");
+        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
+    }
+
+    @Test
+    public void parseCommand_sortCommandInEventsMode_throwsParseException() throws Exception {
+        assertTrue(parser.parseCommand(EventsCommand.COMMAND_WORD) instanceof EventsCommand);
+
+        //command that should not work in Events Mode
+        thrown.expect(ParseException.class);
+        thrown.expectMessage(MESSAGE_INVALID_PERSON_PLATFORM);
+        parser.parseCommand(SortCommand.COMMAND_WORD);
+        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
+    }
+
+    @Test
+    public void parseCommand_birthdaysCommandInEventsMode_throwsParseException() throws Exception {
+        assertTrue(parser.parseCommand(EventsCommand.COMMAND_WORD) instanceof EventsCommand);
+
+        //command that should not work in Events Mode
+        thrown.expect(ParseException.class);
+        thrown.expectMessage(MESSAGE_INVALID_PERSON_PLATFORM);
+        parser.parseCommand(BirthdaysCommand.COMMAND_WORD);
+        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
+    }
+
+    @Test
+    public void parseCommand_favouriteListCommandInEventsMode_throwsParseException() throws Exception {
+        assertTrue(parser.parseCommand(EventsCommand.COMMAND_WORD) instanceof EventsCommand);
+
+        //command that should not work in Events Mode
+        thrown.expect(ParseException.class);
+        thrown.expectMessage(MESSAGE_INVALID_PERSON_PLATFORM);
+        parser.parseCommand(FavouriteListCommand.COMMAND_WORD);
+        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
+    }
+
+    @Test
+    public void parseCommand_favouriteCommandInEventsMode_throwsParseException() throws Exception {
+        assertTrue(parser.parseCommand(EventsCommand.COMMAND_WORD) instanceof EventsCommand);
+
+        //command that should not work in Events Mode
+        thrown.expect(ParseException.class);
+        thrown.expectMessage(MESSAGE_INVALID_PERSON_PLATFORM);
+        parser.parseCommand(FavouriteCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
+    }
+
+    @Test
+    public void parseCommand_unfavouriteCommandInEventsMode_throwsParseException() throws Exception {
+        assertTrue(parser.parseCommand(EventsCommand.COMMAND_WORD) instanceof EventsCommand);
+
+        //command that should not work in Events Mode
+        thrown.expect(ParseException.class);
+        thrown.expectMessage(MESSAGE_INVALID_PERSON_PLATFORM);
+        parser.parseCommand(UnfavouriteCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
+    }
+```
+###### \java\seedu\address\logic\parser\LocationCommandParserTest.java
 ``` java
 public class LocationCommandParserTest {
     private LocationCommandParser parser = new LocationCommandParser();
@@ -618,7 +800,7 @@ public class LocationCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/ParserUtilTest.java
+###### \java\seedu\address\logic\parser\ParserUtilTest.java
 ``` java
     @Test
     public void parseWebsite_null_throwsNullPointerException() throws Exception {
@@ -647,7 +829,7 @@ public class LocationCommandParserTest {
     }
 
 ```
-###### /java/seedu/address/model/person/AddressTest.java
+###### \java\seedu\address\model\person\AddressTest.java
 ``` java
     @Test
     public void testSymmetricHashCode() throws IllegalValueException {
@@ -659,7 +841,7 @@ public class LocationCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/model/person/BirthdayTest.java
+###### \java\seedu\address\model\person\BirthdayTest.java
 ``` java
     @Test
     public void testSymmetricHashCode() throws IllegalValueException {
@@ -674,7 +856,7 @@ public class LocationCommandParserTest {
 
 
 ```
-###### /java/seedu/address/model/person/EmailTest.java
+###### \java\seedu\address\model\person\EmailTest.java
 ``` java
     @Test
     public void testSymmetricHashCode() throws IllegalValueException {
@@ -686,7 +868,7 @@ public class LocationCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/model/person/HomeNumberTest.java
+###### \java\seedu\address\model\person\HomeNumberTest.java
 ``` java
     @Test
     public void testSymmetricHashCode() throws IllegalValueException {
@@ -698,7 +880,7 @@ public class LocationCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/model/person/NameTest.java
+###### \java\seedu\address\model\person\NameTest.java
 ``` java
     @Test
     public void testSymmetricHashCode() throws IllegalValueException {
@@ -719,7 +901,7 @@ public class LocationCommandParserTest {
         assertEquals(newName.toString(), expectedName.toString());
     }
 ```
-###### /java/seedu/address/model/person/PhoneTest.java
+###### \java\seedu\address\model\person\PhoneTest.java
 ``` java
     @Test
     public void testSymmetricHashCode() throws IllegalValueException {
@@ -731,7 +913,7 @@ public class LocationCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/model/person/SchEmailTest.java
+###### \java\seedu\address\model\person\SchEmailTest.java
 ``` java
     @Test
     public void testSymmetricHashCode() throws IllegalValueException {
@@ -743,7 +925,7 @@ public class LocationCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/model/person/WebsiteTest.java
+###### \java\seedu\address\model\person\WebsiteTest.java
 ``` java
 public class WebsiteTest {
 
@@ -786,7 +968,7 @@ public class WebsiteTest {
     }
 }
 ```
-###### /java/seedu/address/testutil/EditPersonDescriptorBuilder.java
+###### \java\seedu\address\testutil\EditPersonDescriptorBuilder.java
 ``` java
     /**
      * Sets the {@code Website} of the {@code EditPersonDescriptor} that we are building.
@@ -801,7 +983,7 @@ public class WebsiteTest {
     }
 
 ```
-###### /java/seedu/address/testutil/PersonBuilder.java
+###### \java\seedu\address\testutil\PersonBuilder.java
 ``` java
     /**
      * Sets the {@code Website} of the {@code Person} that we are building.
@@ -816,7 +998,7 @@ public class WebsiteTest {
     }
 
 ```
-###### /java/seedu/address/ui/BrowserPanelTest.java
+###### \java\seedu\address\ui\BrowserPanelTest.java
 ``` java
 public class BrowserPanelTest extends GuiUnitTest {
     private static final String ALICE_WEBSITE = "https://twitter.com/alice";
@@ -863,7 +1045,7 @@ public class BrowserPanelTest extends GuiUnitTest {
     }
 }
 ```
-###### /java/seedu/address/ui/EventsDetailsPanelTest.java
+###### \java\seedu\address\ui\EventsDetailsPanelTest.java
 ``` java
 public class EventsDetailsPanelTest extends GuiUnitTest {
     private static final String MESSAGE_EMPTY_STRING = "";

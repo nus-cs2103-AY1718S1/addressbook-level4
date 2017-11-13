@@ -1,5 +1,5 @@
 # archthegit
-###### /java/guitests/guihandles/DetailsPanelHandle.java
+###### \java\guitests\guihandles\DetailsPanelHandle.java
 ``` java
 
 /**
@@ -182,7 +182,7 @@ public class DetailsPanelHandle extends NodeHandle<Node> {
 }
 
 ```
-###### /java/guitests/guihandles/EventsDetailsPanelHandle.java
+###### \java\guitests\guihandles\EventsDetailsPanelHandle.java
 ``` java
     /**
      * Remember the details of the event that was last selected
@@ -203,7 +203,7 @@ public class DetailsPanelHandle extends NodeHandle<Node> {
                 || !getDate().equals(latestDate);
     }
 ```
-###### /java/seedu/address/logic/commands/AddCommandTest.java
+###### \java\seedu\address\logic\commands\AddCommandTest.java
 ``` java
 
         @Override
@@ -229,11 +229,13 @@ public class DetailsPanelHandle extends NodeHandle<Node> {
         }
     }
 ```
-###### /java/seedu/address/logic/parser/AddressBookParserTest.java
+###### \java\seedu\address\logic\parser\AddressBookParserTest.java
 ``` java
 
     @Test
     public void parseCommand_favourite() throws Exception {
+        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
+
         FavouriteCommand command = (FavouriteCommand) parser.parseCommand(
                 FavouriteCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new FavouriteCommand(INDEX_FIRST_PERSON), command);
@@ -241,6 +243,8 @@ public class DetailsPanelHandle extends NodeHandle<Node> {
 
     @Test
     public void parseCommand_unfavourite() throws Exception {
+        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
+
         UnfavouriteCommand command = (UnfavouriteCommand) parser.parseCommand(
                 UnfavouriteCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new UnfavouriteCommand(INDEX_FIRST_PERSON), command);
@@ -248,12 +252,15 @@ public class DetailsPanelHandle extends NodeHandle<Node> {
 
     @Test
     public void parseCommand_favouriteList() throws Exception {
+        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
+
         assertTrue(parser.parseCommand(FavouriteListCommand.COMMAND_WORD) instanceof FavouriteListCommand);
     }
 
     @Test
     public void parseCommand_birthdays() throws Exception {
         assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
+        assertTrue(parser.parseCommand(BirthdaysCommand.COMMAND_WORD) instanceof BirthdaysCommand);
     }
 
     @Test
@@ -270,7 +277,7 @@ public class DetailsPanelHandle extends NodeHandle<Node> {
     }
 
 ```
-###### /java/seedu/address/logic/parser/DeleteEventCommandParserTest.java
+###### \java\seedu\address\logic\parser\DeleteEventCommandParserTest.java
 ``` java
 
 public class DeleteEventCommandParserTest {
@@ -289,7 +296,7 @@ public class DeleteEventCommandParserTest {
 }
 
 ```
-###### /java/seedu/address/logic/parser/ParserUtilTest.java
+###### \java\seedu\address\logic\parser\ParserUtilTest.java
 ``` java
 
     @Test
@@ -318,7 +325,7 @@ public class DeleteEventCommandParserTest {
         ParserUtil.parseSchEmail(null);
     }
 ```
-###### /java/seedu/address/model/person/BirthdayTest.java
+###### \java\seedu\address\model\person\BirthdayTest.java
 ``` java
 
 public class BirthdayTest {
@@ -342,7 +349,7 @@ public class BirthdayTest {
     }
 
 ```
-###### /java/seedu/address/testutil/EditPersonDescriptorBuilder.java
+###### \java\seedu\address\testutil\EditPersonDescriptorBuilder.java
 ``` java
 
     /**
@@ -358,7 +365,7 @@ public class BirthdayTest {
     }
 
 ```
-###### /java/seedu/address/testutil/PersonBuilder.java
+###### \java\seedu\address\testutil\PersonBuilder.java
 ``` java
     /**
      * Sets the {@code Birthday} of the {@code Person} that we are building.
@@ -373,7 +380,7 @@ public class BirthdayTest {
     }
 
 ```
-###### /java/seedu/address/ui/DetailsPanelTest.java
+###### \java\seedu\address\ui\DetailsPanelTest.java
 ``` java
 
     @Test
@@ -435,7 +442,7 @@ public class BirthdayTest {
     }
 
 ```
-###### /java/seedu/address/ui/testutil/GuiTestAssert.java
+###### \java\seedu\address\ui\testutil\GuiTestAssert.java
 ``` java
     /**
      * Asserts that {@code actualInfo} displays the details of {@code expectedPerson}.
