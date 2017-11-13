@@ -224,7 +224,7 @@ public abstract class RolodexSystemTest {
     }
 
     /**
-     * Asserts that the undo redo stack has been cleared on a successful
+     * Asserts that the undo redo stack has been cleared.
      */
     protected void assertUndoRedoStackCleared() {
         UndoRedoStack undoRedoStack = getUndoRedoStack();

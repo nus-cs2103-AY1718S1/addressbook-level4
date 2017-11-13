@@ -3,9 +3,10 @@ package seedu.address.logic.parser;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
-import static seedu.address.logic.parser.ParserUtil.parseFirstInt;
-import static seedu.address.logic.parser.ParserUtil.parseRemoveFirstInt;
-import static seedu.address.logic.parser.ParserUtil.tryParseInt;
+import static seedu.address.logic.parser.ParserUtil.isParsableIndex;
+import static seedu.address.logic.parser.ParserUtil.parseFirstIndex;
+import static seedu.address.logic.parser.ParserUtil.parseRemoveFirstIndex;
+import static seedu.address.model.ModelManager.getLastRolodexSize;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -14,12 +15,13 @@ import seedu.address.logic.parser.exceptions.ParseArgsException;
 import seedu.address.model.person.Remark;
 
 /**
- * Parses input arguments and creates a new RemarkCommand object
+ * Parses input arguments and creates a new RemarkCommand object.
  */
 public class RemarkCommandParser implements Parser<RemarkCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the RemarkCommand
      * and returns an RemarkCommand object for execution.
+     *
      * @throws ParseArgsException if the user input does not conform the expected format
      */
     public RemarkCommand parse(String args) throws ParseArgsException {
@@ -45,12 +47,13 @@ public class RemarkCommandParser implements Parser<RemarkCommand> {
      */
     public static String parseArguments(String commandWord, String rawArgs) {
         // Check if index (number) exists, removes Remark prefix (if it exists) and re-adds it before returning.
-        if (tryParseInt(rawArgs)) {
-            String indexString = Integer.toString(parseFirstInt(rawArgs));
-            String remark = parseRemoveFirstInt(rawArgs).trim().replace(PREFIX_REMARK.toString(), "");
+        if (isParsableIndex(rawArgs, getLastRolodexSize())) {
+            String indexString = Integer.toString(parseFirstIndex(rawArgs, getLastRolodexSize()));
+            String remark = parseRemoveFirstIndex(rawArgs, getLastRolodexSize())
+                    .trim().replace(PREFIX_REMARK.toString(), "");
             return " " + indexString + " " + PREFIX_REMARK + remark;
-        } else if (tryParseInt(commandWord)) {
-            String indexString = Integer.toString(parseFirstInt(commandWord));
+        } else if (isParsableIndex(commandWord, getLastRolodexSize())) {
+            String indexString = Integer.toString(parseFirstIndex(commandWord, getLastRolodexSize()));
             String remark = rawArgs.trim().replace(PREFIX_REMARK.toString(), "");
             return " " + indexString + " " + PREFIX_REMARK + remark;
         }

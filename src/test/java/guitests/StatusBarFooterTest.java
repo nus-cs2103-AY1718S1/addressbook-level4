@@ -21,9 +21,6 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.testutil.PersonUtil;
 import seedu.address.ui.StatusBarFooter;
 
-/**
- * TODO: Remove this class when we have system tests.
- */
 public class StatusBarFooterTest extends RolodexGuiTest {
 
     private Clock originalClock;

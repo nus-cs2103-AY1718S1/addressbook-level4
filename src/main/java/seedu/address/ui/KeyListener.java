@@ -3,8 +3,10 @@ package seedu.address.ui;
 import static seedu.address.ui.util.KeyListenerUtil.KEY_COMBINATION_ADD;
 import static seedu.address.ui.util.KeyListenerUtil.KEY_COMBINATION_CLEAR;
 import static seedu.address.ui.util.KeyListenerUtil.KEY_COMBINATION_DELETE;
+import static seedu.address.ui.util.KeyListenerUtil.KEY_COMBINATION_DELETE_ALTERNATIVE;
 import static seedu.address.ui.util.KeyListenerUtil.KEY_COMBINATION_DELETE_SELECTION;
 import static seedu.address.ui.util.KeyListenerUtil.KEY_COMBINATION_EDIT;
+import static seedu.address.ui.util.KeyListenerUtil.KEY_COMBINATION_EMAIL;
 import static seedu.address.ui.util.KeyListenerUtil.KEY_COMBINATION_FIND;
 import static seedu.address.ui.util.KeyListenerUtil.KEY_COMBINATION_FOCUS_COMMAND_BOX;
 import static seedu.address.ui.util.KeyListenerUtil.KEY_COMBINATION_FOCUS_PERSON_LIST;
@@ -15,6 +17,7 @@ import static seedu.address.ui.util.KeyListenerUtil.KEY_COMBINATION_LIST;
 import static seedu.address.ui.util.KeyListenerUtil.KEY_COMBINATION_NEW_FILE;
 import static seedu.address.ui.util.KeyListenerUtil.KEY_COMBINATION_OPEN_FILE;
 import static seedu.address.ui.util.KeyListenerUtil.KEY_COMBINATION_REDO;
+import static seedu.address.ui.util.KeyListenerUtil.KEY_COMBINATION_REMARK;
 import static seedu.address.ui.util.KeyListenerUtil.KEY_COMBINATION_SELECT;
 import static seedu.address.ui.util.KeyListenerUtil.KEY_COMBINATION_UNDO;
 
@@ -25,12 +28,14 @@ import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.EmailCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
-import seedu.address.logic.commands.NewCommand;
-import seedu.address.logic.commands.OpenCommand;
+import seedu.address.logic.commands.NewRolodexCommand;
+import seedu.address.logic.commands.OpenRolodexCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.RemarkCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 
@@ -53,7 +58,7 @@ public class KeyListener {
     }
 
     /**
-     * Handles key press events
+     * Handles key press events from the user.
      */
     public void handleKeyPress() {
         mainNode.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
@@ -69,8 +74,7 @@ public class KeyListener {
     }
 
     /**
-     * Executes the key event.
-     * Matches {@code keyEvent} with non-command events before handling keys mapped to command words.
+     * Executes the {@code keyEvent} matching an assigned {@code KeyCombination}.
      */
     private void executeKeyEvent(KeyEvent keyEvent) {
 
@@ -103,25 +107,31 @@ public class KeyListener {
             executeCommand(ListCommand.COMMAND_WORD);
 
         } else if (KEY_COMBINATION_OPEN_FILE.match(keyEvent)) {
-            executeCommand(OpenCommand.COMMAND_WORD);
+            displayCommandFormat(OpenRolodexCommand.COMMAND_WORD);
 
         } else if (KEY_COMBINATION_NEW_FILE.match(keyEvent)) {
-            executeCommand(NewCommand.COMMAND_WORD);
+            displayCommandFormat(NewRolodexCommand.COMMAND_WORD);
 
         } else if (KEY_COMBINATION_ADD.match(keyEvent)) {
-            displayCommandFormat(AddCommand.FORMAT);
+            displayCommandFormat(AddCommand.COMMAND_WORD);
 
         } else if (KEY_COMBINATION_EDIT.match(keyEvent)) {
-            displayCommandFormat(EditCommand.FORMAT);
+            displayCommandFormat(EditCommand.COMMAND_WORD);
+
+        } else if (KEY_COMBINATION_EMAIL.match(keyEvent)) {
+            displayCommandFormat(EmailCommand.COMMAND_WORD);
 
         } else if (KEY_COMBINATION_FIND.match(keyEvent)) {
-            displayCommandFormat(FindCommand.FORMAT);
+            displayCommandFormat(FindCommand.COMMAND_WORD);
 
         } else if (KEY_COMBINATION_SELECT.match(keyEvent)) {
-            displayCommandFormat(SelectCommand.FORMAT);
+            displayCommandFormat(SelectCommand.COMMAND_WORD);
 
-        } else if (KEY_COMBINATION_DELETE.match(keyEvent)) {
-            displayCommandFormat(DeleteCommand.FORMAT);
+        } else if (KEY_COMBINATION_DELETE.match(keyEvent) || KEY_COMBINATION_DELETE_ALTERNATIVE.match(keyEvent)) {
+            displayCommandFormat(DeleteCommand.COMMAND_WORD);
+
+        } else if (KEY_COMBINATION_REMARK.match(keyEvent)) {
+            displayCommandFormat(RemarkCommand.COMMAND_WORD);
 
         } else {
                 // no key combination matches, do nothing
@@ -129,28 +139,27 @@ public class KeyListener {
     }
 
     /**
-     * Handles execution of command
+     * Executes command triggered by key presses.
      */
     private void executeCommand(String command) {
-        if (command.equals(OpenCommand.COMMAND_WORD) || command.equals(NewCommand.COMMAND_WORD)) {
-            commandBox.replaceText(command + " ");
-        } else {
-            commandBox.replaceText(command);
-            commandBox.handleCommandInputChanged();
-        }
+        commandBox.replaceText(command);
+        commandBox.handleCommandInputChanged();
     }
 
     /**
-     * display the full command format for commands that require multiple fields
+     * Displays the full command format for commands that require multiple fields
+     * Pressing the hotkey is the same as entering the command and press tab
      */
     private void displayCommandFormat(String command) {
+        //simulate entering the command word and press tab
         commandBox.replaceText(command);
-        commandBox.pressCtrl();
+        commandBox.pressTab();
     }
 
     /**
      * Deletes the selected contact
      * TODO: Implement deletion at selected contact
+     * coming in v2.0
      */
     private String deleteSelectedContact() {
         return null;

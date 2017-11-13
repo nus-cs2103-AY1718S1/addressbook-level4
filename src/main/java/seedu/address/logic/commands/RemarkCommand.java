@@ -26,6 +26,8 @@ public class RemarkCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "remark";
     public static final Set<String> COMMAND_WORD_ABBREVIATIONS =
             new HashSet<>(Arrays.asList(COMMAND_WORD, "note", "rmk", "comment"));
+    public static final String FORMAT = "remark INDEX r/REMARK";
+    public static final String COMMAND_HOTKEY = "Ctrl+R";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
             + "by the index number used in the last person listing. "
@@ -78,7 +80,7 @@ public class RemarkCommand extends UndoableCommand {
     }
 
     /**
-     * @return the success message for the remark command
+     * Returns the success message for the remark command.
      */
     private String generateSuccessMessage(ReadOnlyPerson personToEdit) {
         if (!remark.value.isEmpty()) {

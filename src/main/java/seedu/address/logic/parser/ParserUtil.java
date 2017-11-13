@@ -1,8 +1,16 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.core.index.Index.INDEX_VALIDATION_REGEX;
 import static seedu.address.commons.util.StringUtil.replaceBackslashes;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.model.person.Address.ADDRESS_BLOCK_MATCHING_REGEX;
+import static seedu.address.model.person.Address.ADDRESS_BLOCK_WORD_MATCHING_REGEX;
 import static seedu.address.model.person.Email.EMAIL_VALIDATION_REGEX;
+import static seedu.address.model.person.Name.NAME_REPLACEMENT_REGEX;
 import static seedu.address.model.person.Phone.PHONE_VALIDATION_REGEX;
 import static seedu.address.storage.util.RolodexStorageUtil.FILEPATH_REGEX_NON_STRICT;
 import static seedu.address.storage.util.RolodexStorageUtil.ROLODEX_FILE_EXTENSION;
@@ -10,6 +18,7 @@ import static seedu.address.storage.util.RolodexStorageUtil.isValidRolodexStorag
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -125,9 +134,9 @@ public class ParserUtil {
      * @return {@code true} if successfully parsed,
      * {@code false} otherwise.
      */
-    public static boolean tryParseInt(String value) {
+    public static boolean isParsableIndex(String value, int rolodexSize) {
         try {
-            parseFirstInt(value);
+            parseFirstIndex(value, rolodexSize);
             return true;
         } catch (NumberFormatException e) {
             return false;
@@ -140,13 +149,12 @@ public class ParserUtil {
      * @return {@code int} positive, non-zero value of the integer.
      * @throws NumberFormatException if no integer was found.
      */
-    public static int parseFirstInt(String value) throws NumberFormatException {
-        Pattern numbers = Pattern.compile("-?\\d+");
-        Matcher m = numbers.matcher(value);
-        if (m.find()) {
-            int firstInt = Integer.parseInt(m.group());
-            if (firstInt != 0) {
-                return Math.abs(firstInt);
+    public static int parseFirstIndex(String value, int rolodexSize) throws NumberFormatException {
+        Matcher m = Pattern.compile(INDEX_VALIDATION_REGEX).matcher(value);
+        while (m.find()) {
+            int firstIndex = Math.abs(Integer.parseInt(m.group()));
+            if (firstIndex > 0 && firstIndex <= rolodexSize) {
+                return firstIndex;
             }
         }
         throw new NumberFormatException();
@@ -157,16 +165,56 @@ public class ParserUtil {
      * @param value to be parsed.
      * @return a {@code String} without the first integer.
      */
-    public static String parseRemoveFirstInt(String value) {
-        String firstInt;
+    public static String parseRemoveFirstIndex(String value, int rolodexSize) {
+        String firstIndex;
         try {
-            firstInt = Integer.toString(parseFirstInt(value));
+            firstIndex = Integer.toString(parseFirstIndex(value, rolodexSize));
         } catch (NumberFormatException e) {
-            firstInt = "";
+            firstIndex = "";
         }
-        return value.substring(0, value.indexOf(firstInt)).trim()
+        int startPosition = value.indexOf(firstIndex);
+        if (startPosition > 0 && value.charAt(startPosition - 1) == '-') {
+            startPosition = startPosition - 1;
+            firstIndex = "-" + firstIndex;
+        }
+        return value.substring(0, startPosition).trim()
                 .concat(" ")
-                .concat(value.substring(value.indexOf(firstInt) + firstInt.length()).trim()).trim();
+                .concat(value.substring(startPosition + firstIndex.length()).trim()).trim();
+    }
+
+    /**
+     * Attempts to parse a {@code String} to an {@code Name}.
+     * Uses the {@code parseName} method directly and assert if the {@code String} is parsable.
+     *
+     * @return {@code true} if successfully parsed,
+     * {@code false} otherwise.
+     */
+    public static boolean isParsableName(String value) {
+        try {
+            Optional possible = parseName(Optional.of(parseRemainingName(value)));
+            return possible.isPresent() && possible.get() instanceof Name;
+        } catch (IllegalValueException | IllegalArgumentException e) {
+            return false;
+        }
+    }
+
+    /**
+     * Returns a parsed {@code String} name from
+     * the remaining {@code String} value.
+     */
+    public static String parseRemainingName(String value) throws IllegalArgumentException {
+        Matcher m = Pattern.compile(PREFIX_NAME.toString()).matcher(value);
+        String nonEmptyName;
+        if (m.find()) {
+            nonEmptyName = value.substring(value.indexOf(m.group()) + PREFIX_NAME.toString().length())
+                    .replaceAll(NAME_REPLACEMENT_REGEX, "").trim();
+        } else {
+            nonEmptyName = value.replaceAll(NAME_REPLACEMENT_REGEX, "").trim();
+        }
+        if (nonEmptyName.isEmpty()) {
+            throw new IllegalArgumentException();
+        }
+        return nonEmptyName;
     }
 
     /**
@@ -176,10 +224,10 @@ public class ParserUtil {
      * @return {@code true} if successfully parsed,
      * {@code false} otherwise.
      */
-    public static boolean tryParseFilePath(String value) {
+    public static boolean isParsableFilePath(String value) {
         try {
-            parseFirstFilePath(value);
-            return true;
+            String tryFilepath = parseFirstFilePath(value);
+            return isValidRolodexStorageFilepath(tryFilepath);
         } catch (IllegalArgumentException e) {
             return false;
         }
@@ -192,8 +240,7 @@ public class ParserUtil {
      * @throws IllegalArgumentException if no file path was found.
      */
     public static String parseFirstFilePath(String value) throws IllegalArgumentException {
-        Pattern filepath = Pattern.compile(FILEPATH_REGEX_NON_STRICT);
-        Matcher m = filepath.matcher(replaceBackslashes(value).trim());
+        Matcher m = Pattern.compile(FILEPATH_REGEX_NON_STRICT).matcher(replaceBackslashes(value).trim());
         if (m.find() && isValidRolodexStorageFilepath(m.group())) {
             return m.group().replaceAll(ROLODEX_FILE_EXTENSION, "").trim() + ROLODEX_FILE_EXTENSION;
         }
@@ -207,11 +254,11 @@ public class ParserUtil {
      * @return {@code true} if successfully parsed,
      * {@code false} otherwise.
      */
-    public static boolean tryParsePhone(String value) {
+    public static boolean isParsablePhone(String value) {
         try {
-            parseFirstPhone(value);
-            return true;
-        } catch (IllegalArgumentException e) {
+            Optional possible = parsePhone(Optional.of(parseFirstPhone(value)));
+            return possible.isPresent() && possible.get() instanceof Phone;
+        } catch (IllegalArgumentException | IllegalValueException e) {
             return false;
         }
     }
@@ -223,8 +270,7 @@ public class ParserUtil {
      * @throws IllegalArgumentException if no phone was found.
      */
     public static String parseFirstPhone(String value) throws IllegalArgumentException {
-        Pattern phone = Pattern.compile(PHONE_VALIDATION_REGEX);
-        Matcher m = phone.matcher(value);
+        Matcher m = Pattern.compile(PHONE_VALIDATION_REGEX).matcher(value);
         if (m.find()) {
             return m.group();
         }
@@ -243,7 +289,7 @@ public class ParserUtil {
         } catch (IllegalArgumentException e) {
             firstPhone = "";
         }
-        return value.substring(0, value.indexOf(firstPhone)).trim()
+        return value.substring(0, value.indexOf(firstPhone)).replace(PREFIX_PHONE.toString(), "").trim()
                 .concat(" ")
                 .concat(value.substring(value.indexOf(firstPhone) + firstPhone.length()).trim()).trim();
     }
@@ -255,11 +301,11 @@ public class ParserUtil {
      * @return {@code true} if successfully parsed,
      * {@code false} otherwise.
      */
-    public static boolean tryParseEmail(String value) {
+    public static boolean isParsableEmail(String value) {
         try {
-            parseFirstEmail(value);
-            return true;
-        } catch (IllegalArgumentException e) {
+            Optional possible = parseEmail(Optional.of(parseFirstEmail(value)));
+            return possible.isPresent() && possible.get() instanceof Email;
+        } catch (IllegalArgumentException | IllegalValueException e) {
             return false;
         }
     }
@@ -271,8 +317,7 @@ public class ParserUtil {
      * @throws IllegalArgumentException if no email was found.
      */
     public static String parseFirstEmail(String value) throws IllegalArgumentException {
-        Pattern email = Pattern.compile(EMAIL_VALIDATION_REGEX);
-        Matcher m = email.matcher(value);
+        Matcher m = Pattern.compile(EMAIL_VALIDATION_REGEX).matcher(value);
         if (m.find()) {
             return m.group();
         }
@@ -291,8 +336,72 @@ public class ParserUtil {
         } catch (IllegalArgumentException e) {
             firstEmail = "";
         }
-        return value.substring(0, value.indexOf(firstEmail)).trim()
+        return value.substring(0, value.indexOf(firstEmail)).replace(PREFIX_EMAIL.toString(), "").trim()
                 .concat(" ")
                 .concat(value.substring(value.indexOf(firstEmail) + firstEmail.length()).trim()).trim();
+    }
+
+    /**
+     * Returns a {@code String} after the tags have been removed.
+     * @param value to be parsed.
+     * @param tags that were added.
+     * @return a {@code String} without the tags.
+     */
+    public static String parseRemoveTags(String value, List<String> tags) {
+        String tagString = value;
+        for (String tag : tags) {
+            tagString = tagString.substring(0, tagString.indexOf(tag)).trim()
+                    .concat(" ")
+                    .concat(tagString.substring(tagString.indexOf(tag) + tag.length()).trim()).trim();
+        }
+        return tagString;
+    }
+
+    /**
+     * Attempts to parse a {@code String} to an address.
+     * Looks for a regex given a value and parses the address, until the end of the string.
+     *
+     * @return {@code true} if successfully parsed,
+     * {@code false} otherwise.
+     */
+    public static boolean isParsableAddressTillEnd(String value) {
+        try {
+            Optional possible = parseAddress(Optional.of(parseAddressTillEnd(value)));
+            return possible.isPresent() && possible.get() instanceof Address;
+        } catch (IllegalArgumentException | IllegalValueException e) {
+            return false;
+        }
+    }
+
+    /**
+     * Returns the address found in a {@code String}, until the end of the String.
+     * @param value to be parsed.
+     * @return {@code String} value of the address.
+     * @throws IllegalArgumentException if no file path was found.
+     */
+    public static String parseAddressTillEnd(String value) throws IllegalArgumentException {
+        Matcher m = Pattern.compile(PREFIX_ADDRESS.toString()).matcher(value);
+        if (m.find()) {
+            return value.substring(value.indexOf(m.group()) + PREFIX_ADDRESS.toString().length()).trim();
+        }
+        m = Pattern.compile(ADDRESS_BLOCK_WORD_MATCHING_REGEX).matcher(value);
+        if (m.find()) {
+            return value.substring(value.indexOf(m.group())).trim();
+        }
+        m = Pattern.compile(ADDRESS_BLOCK_MATCHING_REGEX).matcher(value);
+        if (m.find()) {
+            return value.substring(value.indexOf(m.group())).trim();
+        }
+        throw new IllegalArgumentException();
+    }
+
+    /**
+     * Returns a {@code String} after the address has been removed.
+     * @param value to be parsed.
+     * @return a {@code String} without the address.
+     */
+    public static String parseRemoveAddressTillEnd(String value) {
+        String address = parseAddressTillEnd(value);
+        return value.substring(0, value.indexOf(address)).replace(PREFIX_ADDRESS.toString(), "").trim();
     }
 }

@@ -2,13 +2,17 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.util.PersonSortingUtil.generateComparator;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,6 +22,7 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.model.RolodexChangedEvent;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.parser.SortArgument;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -31,6 +36,9 @@ import seedu.address.model.tag.Tag;
  */
 public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
+
+    private static final Set<Tag> KNOWN_TAGS = new HashSet<>();
+    private static int lastRolodexSize = 0;
 
     private final Rolodex rolodex;
     private final FilteredList<ReadOnlyPerson> filteredPersons;
@@ -50,6 +58,8 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons = new FilteredList<>(this.rolodex.getPersonList());
         sortedPersons = new SortedList<>(filteredPersons);
         updateSortComparator(null);
+        KNOWN_TAGS.addAll(this.rolodex.getTagList());
+        setLastRolodexSize(this.rolodex.getPersonList().size());
     }
 
     public ModelManager() {
@@ -69,6 +79,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     /** Raises an event to indicate the model has changed */
     private void indicateRolodexChanged() {
+        setLastRolodexSize(rolodex.getPersonList().size());
         raise(new RolodexChangedEvent(rolodex));
     }
 
@@ -83,6 +94,7 @@ public class ModelManager extends ComponentManager implements Model {
         rolodex.addPerson(person);
         updateSortComparator(null);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        KNOWN_TAGS.addAll(person.getTags());
         indicateRolodexChanged();
     }
 
@@ -92,6 +104,7 @@ public class ModelManager extends ComponentManager implements Model {
         requireAllNonNull(target, editedPerson);
 
         rolodex.updatePerson(target, editedPerson);
+        KNOWN_TAGS.addAll(editedPerson.getTags());
         indicateRolodexChanged();
     }
 
@@ -108,10 +121,42 @@ public class ModelManager extends ComponentManager implements Model {
         }
     }
 
+    /**
+     * Returns true if a given String array as equivalent to any known tags in the Rolodex.
+     */
+    public static boolean hasAnyExistingTags(String[] tags) {
+        return !Collections.disjoint(Arrays.stream(tags).map(s -> {
+            try {
+                return new Tag(s.replaceAll(PREFIX_TAG.toString(), ""));
+            } catch (IllegalValueException e) {
+                return false;
+            }
+        }).collect(Collectors.toList()), KNOWN_TAGS);
+    }
+
+    /**
+     * Returns true if a given String array as equivalent to any known tags in the Rolodex.
+     */
+    public static boolean isKnownTag(String tag) {
+        try {
+            return KNOWN_TAGS.contains(new Tag(tag));
+        } catch (IllegalValueException e) {
+            return false;
+        }
+    }
+
+    public static int getLastRolodexSize() {
+        return lastRolodexSize;
+    }
+
+    private static void setLastRolodexSize(int size) {
+        lastRolodexSize = size;
+    }
+
     //=========== Latest Person List Accessors =============================================================
 
     /**
-     * Returns the index of the given person
+     * Returns the index of the given person.
      */
     public Index getIndex(ReadOnlyPerson target) {
         return Index.fromZeroBased(sortedPersons.indexOf(target));

@@ -26,6 +26,7 @@ public class HelpWindow extends UiPart<Region> {
     private static final String ICON = "/images/help_icon.png";
     private static final String FXML = "HelpWindow.fxml";
     private static final String TITLE = "Help";
+    private static final String USER_AGENT_MAC_REPLACEMENT = "Macintosh; ";
 
     @FXML
     private WebView browser;
@@ -65,10 +66,11 @@ public class HelpWindow extends UiPart<Region> {
         Scene scene = new Scene(getRoot());
         //Null passed as the parent stage to make it non-modal.
         dialogStage = createDialogStage(TITLE, null, scene);
-        dialogStage.setMaximized(true); //TODO: set a more appropriate initial size
+        dialogStage.setMaximized(true);
         FxViewUtil.setStageIcon(dialogStage, ICON);
 
         String userGuideUrl = getClass().getResource(HELP_FILE_PATH).toString();
+        browser.getEngine().setUserAgent(browser.getEngine().getUserAgent().replace(USER_AGENT_MAC_REPLACEMENT, ""));
         browser.getEngine().load(userGuideUrl);
     }
 

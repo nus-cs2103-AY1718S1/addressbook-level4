@@ -12,16 +12,17 @@ import seedu.address.logic.commands.exceptions.CommandException;
 /**
  * Creates a new Rolodex at a specified directory.
  */
-public class NewCommand extends Command {
+public class NewRolodexCommand extends Command {
 
     public static final String COMMAND_WORD = "new";
     public static final Set<String> COMMAND_WORD_ABBREVIATIONS =
             new HashSet<>(Arrays.asList(COMMAND_WORD, "n", ">", "touch"));
     public static final String COMMAND_HOTKEY = "Ctrl+N";
+    public static final String FORMAT = "new FILEPATH";
 
     public static final String MESSAGE_CREATING = "Creating new file: `%1$s`";
     public static final String MESSAGE_ALREADY_EXISTS = "`%1$s` already exists. "
-            + "Use the `" + OpenCommand.COMMAND_WORD + "` command for opening an existing file.";
+            + "Use the `" + OpenRolodexCommand.COMMAND_WORD + "` command for opening an existing file.";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": "
             + "Creates a new Rolodex file at the specified destination and "
             + "reloads the application using the rolodex supplied at the given file path.\n"
@@ -30,7 +31,7 @@ public class NewCommand extends Command {
 
     private final String filePath;
 
-    public NewCommand(String filePath) {
+    public NewRolodexCommand(String filePath) {
         this.filePath = filePath;
     }
 
@@ -47,7 +48,7 @@ public class NewCommand extends Command {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof NewCommand // instanceof handles nulls
-                && this.filePath.equals(((NewCommand) other).filePath)); // state check
+                || (other instanceof NewRolodexCommand // instanceof handles nulls
+                && this.filePath.equals(((NewRolodexCommand) other).filePath)); // state check
     }
 }
