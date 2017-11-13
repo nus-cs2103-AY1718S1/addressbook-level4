@@ -17,9 +17,9 @@ import seedu.address.model.insurance.ReadOnlyInsurance;
 public class InsuranceIdLabel extends UiPart<Region> {
 
     private static final String FXML = "InsuranceIdLabel.fxml";
-
+    private static final Double GOLD_INSURANCE_PREMIUM = 2500.0;
+    private static final Double SILVER_INSURANCE_PREMIUM = 1500.0;
     private final Logger logger = LogsCenter.getLogger(this.getClass());
-
 
     @FXML
     private Label insuranceId;
@@ -33,9 +33,10 @@ public class InsuranceIdLabel extends UiPart<Region> {
 
     //@@author Juxarius
     private void setPremiumLevel(Double premium) {
-        if (premium > 500.0) {
+        insuranceId.getStyleClass().clear();
+        if (premium >= GOLD_INSURANCE_PREMIUM) {
             insuranceId.getStyleClass().add("gold-insurance-header");
-        } else if (premium > 100.0) {
+        } else if (premium >= SILVER_INSURANCE_PREMIUM) {
             insuranceId.getStyleClass().add("silver-insurance-header");
         } else {
             insuranceId.getStyleClass().add("normal-insurance-header");
