@@ -769,31 +769,106 @@ Format: `help`
 *A*: <<export-command, Export>> your data and transfer the exported file to the other computer. Install the application in the other computer, start it up and <<import-command, import>> the data file.
 
 == Command Summary
+[cols="10,5,90"]
+|===
+|Command|Alias|Command Format
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]... [s/SOCIAL_TYPE USERNAME]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague s/facebook jamesho`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX` +
-e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]... [s/SOCIAL_TYPE USERNAME]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Favorite*: `fav INDEX [ADDITIONAL INDEXES] +
-e.g. `fav 1 2 3`
-* *Unfavorite*: `unfav INDEX [ADDITIONAL INDEXES] +
-e.g. `unfav 1 2 3`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *List* : `list`
-* *Help* : `help`
-* *Select* : `select INDEX` +
-e.g.`select 2`
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
-* *Export*: `export FILE_PATH` +
-e.g. `export /Users/seedu/Documents/exportData.xml`
-* *Import*: `import FILE_PATH` +
-e.g. `import /Users/seedu/Documents/importData.xml`
-* *Connect to Facebook*: `facebook connect` +
-* *Post to Facebook*: `facebook post STATUS` +
-e.g. `facebook post hello world!`
+|`add`
+|`a`
+|`[red]#add# [green]#n/NAME p/PHONE_NUMBER [p/ADDITIONAL_PHONE_NUMBERS]... e/EMAIL a/ADDRESS [f/] [dp/DISPLAY_PHOTO_FILE_PATH] [t/TAG]... [s/SOCIAL_PLATFORM USERNAME]...#`
+
+|`edit`
+|`e`
+|`[red]#edit# [green]#INDEX [n/NAME] [p/PHONE]... [e/EMAIL] [a/ADDRESS] [f/ OR uf/] [dp/DISPLAY_PHOTO_FILE_PATH] [t/TAG]... [s/SOCIAL_PLATFORM USERNAME]...#`
+
+|`fav`
+|
+|`[red]#fav# [green]#INDEX [ADDITIONAL_INDEXES]...#`
+
+|`unfav`
+|
+|`[red]#unfav# [green]#INDEX [ADDITIONAL_INDEXES]...#`
+
+|`delete`
+|`d`
+|Deleting by index: `[red]#delete# [green]#INDEX [ADDITIONAL_INDEXES]...#` +
+Deleting by tag: `[red]#delete# [blue]#-tag# [green]#KEYWORD [MORE_KEYWORDS]...#`
+
+|`clear`
+|`c`
+|`[red]#clear#`
+
+|`list`
+|`l`
+|Listing all contacts: `[red]#list#` +
+Listing all favorite contacts: `[red]#list# [blue]#-fav#`
+
+|`select`
+|`s`
+|`[red]#select# [green]#INDEX [SOCIAL_MEDIA_PLATFORM]#`
+
+|`find`
+|`f`
+|Finding contacts by name: `[red]#find# [green]#KEYWORD [ADDITIONAL_KEYWORDS]#` +
+Finding contacts by tag: `[red]#find# [blue]#-tag# [green]#KEYWORD [ADDITIONAL_KEYWORDS]#`
+
+|`sort`
+|`sr`
+|Default sort: `[red]#sort#` +
+Sorting by name: `[red]#sort# [blue]#-name#` +
+Sorting by last access date: `[red]#sort# [blue]#-recent#`
+
+|`facebookconnect`
+|`fbconnect`
+|`[red]#facebookconnect#`
+
+|`facebookpost`
+|`fbpost`
+|`[red]#facebookpost# [green]#STATUS#`
+
+|`facebooklink`
+|`fblink`
+|`[red]#facebooklink# [green]#URL#`
+
+|`facebookadd`
+|`fbadd`
+|`[red]#facebookadd# [green]#NAME#`
+
+|`facebookaddallfriends`
+|`fbaddall`
+|`[red]#facebookaddallfriends#`
+
+|`export`
+|
+|`[red]#export# [green]#FILE_PATH#`
+
+|`import`
+|
+|`[red]#import# [green]#FILE_PATH#`
+
+|`theme`
+|`t`
+|Changing to day theme: `[red]#theme# [blue]#-day#` +
+Changing to night theme: `[red]#theme# [blue]#-night#`
+
+|`history`
+|
+|`[red]#history#`
+
+|`undo`
+|`u`
+|`[red]#undo#`
+
+|`redo`
+|`r`
+|`[red]#redo#`
+
+|`exit`
+|`x`
+|`[red]#exit#`
+
+|`help`
+|
+|`[red]#help#`
+
+|===
