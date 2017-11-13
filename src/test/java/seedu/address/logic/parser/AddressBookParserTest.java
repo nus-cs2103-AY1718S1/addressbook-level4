@@ -228,14 +228,16 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_addevent() throws Exception {
         assertTrue(parser.parseCommand(EventsCommand.COMMAND_WORD) instanceof EventsCommand);
-        assertTrue(parser.parseCommand(AddEventCommand.COMMAND_WORD + " n/dwedsa d/13/11/2017 a/qedwe") instanceof AddEventCommand);
+        assertTrue(parser.parseCommand(AddEventCommand.COMMAND_WORD
+                + " n/dwedsa d/13/11/2017 a/qedwe") instanceof AddEventCommand);
         assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
     }
 
     @Test
     public void parseCommand_deleteevent() throws Exception {
         assertTrue(parser.parseCommand(EventsCommand.COMMAND_WORD) instanceof EventsCommand);
-        assertTrue(parser.parseCommand(DeleteEventCommand.COMMAND_WORD + " 1") instanceof DeleteEventCommand);
+        assertTrue(parser.parseCommand(DeleteEventCommand.COMMAND_WORD + " 1")
+                instanceof DeleteEventCommand);
         assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
     }
 
