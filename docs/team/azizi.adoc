@@ -69,12 +69,11 @@ include::../DeveloperGuide.adoc[tag=add]
 
 ---
 
-////
-=== Enhancement Proposed: Add command `remark`
+=== Enhancement Proposed: Add multiple fields
 
-{Explain similar to the Undo/Redo feature above.}
-////
-
+Users may add multiple instances for any of the Person fields in Bluebird. For example, users can now add multiple
+phone numbers for any of their contacts, and thus make it much more convenient for them to update their friends
+particulars.
 
 === Other contributions
 
