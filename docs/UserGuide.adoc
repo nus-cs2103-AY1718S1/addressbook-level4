@@ -428,6 +428,8 @@ minutes) +
 ****
 // end::schedule[]
 
+// tag::repeat[]
+
 === Schedule recurring event through `recurrence period` field
 
 User can schedule events with a regular period of recurrence through the
@@ -443,7 +445,7 @@ For example, if an event is added with a  `repeat period` of 7 days, when the
 When an event is added without specifying the `recurrence period`, the
 default vlaue is 0, which means it will not be repeated. Event recurrence can
  also be removed by setting the value of the period to be 0.
-
+// end::repeat[]
 
 // tag::timetable[]
 === Displaying user's timetable: `timetable`
