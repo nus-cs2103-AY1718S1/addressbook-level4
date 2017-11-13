@@ -1,5 +1,5 @@
 # ngzuyao
-###### /java/seedu/address/ui/PersonCard.java
+###### \java\seedu\address\ui\PersonCard.java
 ``` java
     /**
      * Binds the individual UI elements to observe their respective {@code Person} properties
@@ -18,30 +18,8 @@
         initPhoto(person);
     }
 ```
-###### /java/seedu/address/ui/PersonInformationPanel.java
+###### \java\seedu\address\ui\PersonInformationPanel.java
 ``` java
-package seedu.address.ui;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
-import java.util.logging.Logger;
-
-import com.google.common.eventbus.Subscribe;
-
-import javafx.beans.binding.Bindings;
-import javafx.beans.property.ListProperty;
-import javafx.beans.property.SimpleListProperty;
-import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
-import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
-import seedu.address.model.person.ReadOnlyPerson;
-
 /**
  * The person information panel of the app.
  */
@@ -53,9 +31,6 @@ public class PersonInformationPanel extends UiPart<Region> {
     private static Random random = new Random();
     private static final int MIN_HEIGHT = 40;
     private static final int MIN_WIDTH = 160;
-
-    protected List<String> optionalPhoneDisplayList = new ArrayList<String>();
-    protected ListProperty<String> listProperty = new SimpleListProperty<>();
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -167,13 +142,16 @@ public class PersonInformationPanel extends UiPart<Region> {
             optionalPhoneList.getChildren().add(otherPhone);
         });
     }
-
-    /**
-     * Initialise custom field display flowpane
-     */
 ```
-###### /java/seedu/address/ui/PersonInformationPanel.java
+###### \java\seedu\address\ui\PersonInformationPanel.java
 ``` java
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadPersonInformation(event.getNewSelection().person, event.getNewSelection().stringid);
+        bindListeners(event.getNewSelection().person, event.getNewSelection().stringid);
+    }
+
     private void setLabelIndentation() {
         phoneLabel.setMinHeight(MIN_HEIGHT);
         phoneLabel.setMinWidth(MIN_WIDTH);
@@ -192,4 +170,23 @@ public class PersonInformationPanel extends UiPart<Region> {
         label.setMinWidth(MIN_WIDTH);
         label.setMinHeight(MIN_HEIGHT);
     }
+
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof PersonInformationPanel)) {
+            return false;
+        }
+
+        // state check
+        PersonInformationPanel card = (PersonInformationPanel) other;
+        return id.getText().equals(card.id.getText())
+                && person.equals(card.person);
+    }
+}
 ```
