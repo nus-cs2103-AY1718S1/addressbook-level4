@@ -564,9 +564,10 @@ _Figure 4.2.4 : Code section in DeleteCommand.java_
 
 === Displaying the Usage of a Specific Command [Since v1.2]
 
-This function is an enhancement of the existing help function, which opens the help window. The modification allows the help command to take in an optional command identifier argument. If the command identifier is specified, the result display panel will display the usage of the command specified. Otherwise, help window will be opened. This enhancement requires modifications in the Logic component of the application.
+This function is an enhancement of the existing help function, which opens the help window. The modification allows the `HelpCommand` to take in an optional `CommandIdentifier` argument. If the command identifier is specified, the result display panel will display the usage of the command specified. Otherwise, help window will be opened. This enhancement requires modifications in the `Logic` component of the application.
 
-`CommandIdentifier` class is created to cater to the new type of argument that users can key in. The code snippet below shows how it is implemented.
+`CommandIdentifier` class is created to cater to the new type of argument that users can key in. The code section in _Figure 4.3.1_ below shows how it is implemented.
+
 [source,java]
 ----
 public class CommandIdentifier {
@@ -586,11 +587,12 @@ public class CommandIdentifier {
     }
 }
 ----
+_Figure 4.3.1 : Code section in CommandIdentifier.java_
 
 [NOTE]
 A valid command identifier includes all existing command and their aliases.
 
-For the Logic component, `HelpCommandParser` has been created to parse user input that follows the `help` command word.
+For the Logic component, `HelpCommandParser` has been created to parse user input that follows the `help` command word. Refer to the code section in _Figure4.3.2_ below to understand how it is implemented.
 
 [source,java]
 ----
@@ -612,8 +614,9 @@ public class HelpCommandParser implements Parser<HelpCommand> {
     }
 }
 ----
+_Figure 4.3.2 : Code section from HelpCommandParser.java_
 
-To accommodate this enhancement, the following method is added into `ParserUtil`. The method takes in user input string and return a `CommandIdentifier` object.
+To accommodate this enhancement, the following method, as shown in _Figure 4.3.3_ is added into `ParserUtil`. The method takes in user input string and return a `CommandIdentifier` object.
 
 [source,java]
 ----
@@ -622,8 +625,9 @@ public static CommandIdentifier parseCommandIdentifier(String commandWord) throw
     return new CommandIdentifier(commandWord.trim());
 }
 ----
+_Figure 4.3.3 : Code section from ParserUtil.java_
 
-Finally, the `CommandIdentifier` is passed into `HelpCommand` to do the command execution. The execute method in the `HelpCommand` is implemented as follows.
+Finally, the `CommandIdentifier` is passed into `HelpCommand` to do the command execution. _Figure 4.3.4_ shows how the help command execution is implemented.
 
 [source,java]
 ----
@@ -633,14 +637,15 @@ public CommandResult execute() {
     // ... default case: opens help window ...
 }
 ----
+_Figure 4.2.4 : Code section from CommandResult.java_
 
-The following sequence diagram shows an example that summarises how the `HelpCommand` is being called and executed.
+The following sequence diagram in _Figure 4.3.5_ shows an example that summarises how the `HelpCommand` is being called and executed.
 
 image::HelpCommandLogicComponent.png[width="800"]
 
-_Figure 4.2.1: Interactions Inside the Logic Component for the `help add` Command_
+_Figure 4.3.5: Interactions Inside the Logic Component for the `help add` Command_
 
-_Figure 4.2.5_ below shows the enhanced help command in action.
+_Figure 4.3.6_ below shows the enhanced help command in action.
 
 image::HelpEnhancementScreenShot.PNG[width="800"]
 
@@ -649,12 +654,12 @@ _Figure 4.2.2: Enhanced `HelpCommand` execution_
 ==== Design Considerations
 
 **Aspect:** Enhancement of `HelpCommand` +
-**Alternative 1 (current choice)**: Allowing the `HelpCommand` to take in an optional command identifier argument +
-**Pros:** Users can easily find out about the format of a specific command they want to key in. +
-**Cons:** Users have to know at least the command identifier of the command they want execute. +
-**Alternative 2:** Only allowing `HelpCommand` to open help window  +
-**Pros:** It is simpler and more intuitive for new users. +
-**Cons:** Users have to go through the user guide every time they forget the format of a certain command.
+**Alternative 1 (current choice)**: `HelpCommand` allows the user to take in an optional `CommandIdentifier` argument. +
+**Pros:** The user can easily find out about the format of a specific command he wants to execute. +
+**Cons:** The users has to know the command identifier to utilise this feature. +
+**Alternative 2:** `HelpCommand` can only allow the user to open help window.  +
+**Pros:** It is simpler and more intuitive for a new user. +
+**Cons:** The user has to go through the User Guide every time he needs to check on the usage of a specific command.
 // end::help[]
 
 //tag::locate[]
