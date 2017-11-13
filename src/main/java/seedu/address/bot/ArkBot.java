@@ -170,7 +170,6 @@ public class ArkBot extends AbilityBot {
                 .privacy(PRIVACY_SETTING)
                 .action((MessageContext ctx) -> Platform.runLater(() -> {
                     try {
-                        model.setActiveList(false);
                         logic.execute(DeleteCommand.COMMAND_WORD + " "
                                 + combineArguments(ctx.arguments()));
                         ObservableList<ReadOnlyParcel> parcels = model.getUncompletedParcelList();

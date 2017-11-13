@@ -16,6 +16,7 @@ By: `CS2103AUG2017 Team T16-B1`      Since: `Sept 2017`      Licence: `M
 
 == Introduction
 
+//tag::intro[]
 === What is Ark?
 Ark is a Command Line Interface software that helps delivery and shipping vendors manage their parcels and deliveries.
 Ark allows these delivery companies to track the parcels that they have to deliver to their customers, and empowers
@@ -35,6 +36,7 @@ This guide contains information pertaining to issues such as: +
 * Adding documentation to document the changes you have made.
 * Running tests for the code in Ark.
 * Details on how to manage the Ark project using Version Control and Continuous Integration.
+//end::intro[]
 
 == Setting up
 
@@ -461,7 +463,6 @@ just its size
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file
 (default: `config.json`).
-
 //tag::browser[]
 
 === Google Maps Search Browser
@@ -481,11 +482,9 @@ to the back of Google Map's search URL prefix to get a URL for the browser to lo
 ** **Pros:** Makes it easier for implementing additional features that utilizes the Maps API which would be required +
  in future versions of the Ark application. +
 ** **Cons:** More difficult to implement and integrate into a command line interface.
-
 //end::browser[]
 
 //tag::tabCommand[]
-
 === Tab change mechanism
 
 The `tab` command is facilitated by the `TabCommand` class within `logic` and is an extension of the abstract class
@@ -505,11 +504,9 @@ and its related files to take in a third argument, and user would have to type a
 * **Alternative 2 (current choice):** Creating a new command called `tab` +
 ** **Pros:** Easier to implement and less words for the user to input +
 ** **Cons:** Just the word "tab" alone is not very descriptive of the commands function.
-
 //end::tabCommand[]
 
 //tag::overduePopup[]
-
 === Overdue parcels popup window
 
 The overdue parcels popup window is facilitated by the `PopupOverdueParcelsWindow` which extends `UiPart<Region>`
@@ -535,121 +532,100 @@ keep their application open constantly +
 ** **Pros:** Users will be immediately notified of overdue parcels whenever parcel list is changed +
 ** **Cons:** May not be necessary since the user themselves would be the ones to `add` or `edit` the parcel
 causing the `OVERDUE` status, hence they would already know of the existence of these overdue parcels.
-
 //end::overduePopup[]
-
-//tag::deleteTag[]
-
-=== Delete Tag mechanism
-
-The delete tag mechanism is facilitated by a `deleteTag` method within the `ModelManager`. It supports the deletion
-of tags from every single parcel in Ark.
-
-We first retrieve the list of parcels in Ark and iterate through each parcel and recreate the parcel object using the
-original parcel. We then check if tag we want to remove is present in the new parcel's list of tags. If the tag is
-present, we remove it, otherwise, we do nothing. We then update the old parcel in Ark with the new parcel with the
-updated list of tags.
-
-==== Design Considerations
-
-**Aspect: Implementation of `deleteTagCommand`** +
-
-* **Alternative 1 (current choice):** Add method to delete tags in `ModelManager` +
-** **Pros:** It is easy to implement a method to remove every instance where the Tag appears, we only have to be able to
-correctly iterate through all the lists of tags. +
-** **Cons:** Might be computationally expensive for large number of parcels as Ark will need to iterate through every
-Tag to delete them. +
-* **Alternative 2:** Maintain a list of tags and where the tags are located +
-** **Pros:** Computationally quicker to just find the tag and remove the tag from every parcel in the list of tags +
-** **Cons:** More difficult to implement as we have to store an additional list of tags which is linked to each parcel
-and has to be updated whenever we edit other parcel details as well.
-
-//end::deleteTag[]
 
 //tag::backup[]
 === Backup Mechanism
 
-The back up mechanism is facilitated by a `backupAddressBook()` method within the `StorageManager`. It supports the
-backing up of AddressBook data in Ark. +
+The back up mechanism is facilitated by a `backup(addressBook:AddressBookStorage)` method within the `StorageManager`
+class. It supports the backup of data in Ark. +
 
 image::BackupSequenceDiagram.png[width="600"]
-_Diagram 4.6.1 : Sequence diagram describing the operation of the `storageManager` when it is initialized_
+_Diagram 4.7.1 : Sequence diagram describing the operation of the `storageManager` when it is initialized_
 
-As seen in the sequence diagram above, the `backupAddressBook()` method is called when `storageManager` is initialised
-in `MainApp#init()`. This method is called when Ark launches. From the diagram above, the backup() method is called.
-This backup method first checks if there is a save file loaded into Ark. If there is a save file loaded into Ark, a
-backup will be called. Otherwise, Ark does not backup the missing save file.
+As seen in the sequence diagram above, the `backup(addressBook:AddressBookStorage)` method is called when
+`storageManager` is initialised in `MainApp#init()`. The `MainApp#init()` is called when Ark launches.
+From the diagram above, the `backup()` method is called when `storageManager` is initialized. This backup method first
+checks if there is a valid save file loaded into Ark. If there is a save file loaded into Ark,
+the `backup(addressBook:AddressBook)` method will be called. Otherwise, Ark does not backup the missing save file.
+
+To save the backup data, Ark first retrieves the backup file path by calling the `getBackupStorageFilePath()` method.
+Then, it will call the `saveAddressBook(addressBook, backupStoragePath)` method to save a backup of Ark at the retrived
+backup file path.
 
 ==== Design Considerations
 
-**Aspect: Implementation of `StorageManager#backupAddressBook`** +
+**Aspect: Implementation of `StorageManager#backup()`** +
 
 * **Alternative 1 (current choice):** use the `saveAddressBook()` method to implement logic. +
-** **Pros:** It becomes easier to implement method rather than writing out a separate logic for `backupAddressBook()`. It
-makes updates easier since enhancements to `saveAddressBook()` will also enhance `backupAddressBook()`. +
-** **Cons:** This implementation increases the coupling of `backupAddressBook()` and
-`saveAddressBook()` where changes in `saveAddressBook()` are likely to cause changes in `backupAddressBook()`. +
-* **Alternative 2:** Separate the implementation of `backupAddressBook()` from `saveAddressBook()` +
-** **Pros:** Reduced coupling of `saveAddressBook()` and `backupAddressBook()` and allows the backup file to be saved at a
+** **Pros:** It becomes easier to implement method rather than writing out a separate logic for `backup()`. It
+makes updates easier since enhancements to saving Ark in `saveAddressBook()` will also enhance `backup()`. +
+** **Cons:** This implementation increases the coupling of `backup()` and `saveAddressBook()` where changes in
+`saveAddressBook()` are likely to cause changes in `backup()`. +
+* **Alternative 2:** Separate the implementation of `backup()` from `saveAddressBook()` +
+** **Pros:** Reduced coupling of `saveAddressBook()` and `backup()` and allows the backup file to be saved at a
 different location from the main save file. This prevents the backup file from being corrupted if the folder of the
 main save file becomes corrupted. +
-** **Cons:** More tedious to implement and maintain `backupAddressBook()` since enhancements to the saving feature has to
-be implemented in both `saveAddressBook()` and `backupAddressBook()` +
+** **Cons:** More tedious to implement and maintain `backup()` since enhancements to the saving feature has to
+be implemented in both `saveAddressBook()` and `backup()` +
 
 ---
 
-**Aspect: Trigger to execute the backup command** +
+**Aspect: Trigger to execute the backup mechanism** +
 
-* **Alternative 1 (current choice):** Automatically backup data on Ark on launch of the software. +
+* **Alternative 1 (current choice):** Automatically backup data on launch. +
 ** **Pros:** This implementation ensures that the if the user corrupts the data of Ark during a session. The user will be
-able to revert to the start of the session, which is ensured to be a workable instance of the Ark software. +
-** **Cons:** This does not give the most recent copy of the data of the Ark if many changes were made in a single session. +
-* **Alternative 2:** Backup data on Ark every few minutes +
+able to revert to the start of the session, which is likely to be a functional copy of his original save file. +
+** **Cons:** This does not give the most recent copy of the data of the Ark if many changes were made in a single
+session. +
+1* **Alternative 2:** Backup data every few minutes +
 ** **Pros:** Provides a very recent copy of the data on Ark. +
-** **Cons:** More tedious and difficult to implement. User may also be running another process at that point of time. This
-could cause a bottleneck if there is a lot of data to be saved, and multiple backup calls are queued one after the
-other. +
-* **Alternative 3:** Backup data after a fixed number of `UndoableCommand`s. +
+** **Cons:** More tedious and difficult to implement. User may also be running another process at that point of time.
+This could cause a bottleneck if there is a lot of data to be saved, and multiple backup calls will be queued one after
+the other if the previous backup process is called even before the current one has finished running. +
+* **Alternative 3:** Backup data after a fixed number of `UndoableCommand`. +
 ** **Pros:** Provides a very recent copy of the data on Ark. +
 ** **Cons:** More tedious and difficult to implement. Difficult to determine the optimal amount of data to restore. If
-the corruption of the data is caused by a several of commands, it becomes difficult to ensure that the backup file
-provides a workable copy of the data of Ark.
+the corruption of the data is caused by a series of commands, it becomes difficult to provide reasonable assurance
+that the backup file provides a functional copy of the data of Ark.
 
 ---
 
-**Aspect: Choice of backing up if there is no save file.** +
+**Aspect: Case: Backup if main storage file is not present** +
 
-* **Alternative 1 (current choice):** Ark does not backup if it cannot read the save file +
+* **Alternative 1 (current choice):** Ark does not backup if it cannot read the main storage file +
 ** **Pros:** Backup data will not be overwritten in the event that Ark is not able to read the designated save file for
-reasons such as the save file being corrupted/missing+
-** **Cons:** Additional overhead to check if Ark is able to read the designated save file. +
-* **Alternative 2:** Ark backs up even if the save file does not exist. +
-** **Pros:** Less overhead needed to check if Ark is able to read the designated save file. +
+reasons such as the save file being corrupted/missing. +
+** **Cons:** Additional overhead to check if Ark is able to read the save file. +
+* **Alternative 2:**Back up even if the main storage file does not exist or cannot be read by Ark. +
+** **Pros:** Less overhead needed to check if Ark is able to read the save file. +
 ** **Cons:** Backup data could be overwritten in the event the designated save file is corrupted/missing. +
 //end::backup[]
 
 //tag::import[]
 === Import Mechanism
 
-To use this command, you can type `import (FILE_NAME)` into the `CommandBox`. e.g. `import ark_save`
+To use this command, you can type `import` and the name of your file into the `CommandBox`. e.g. `import ark_save`
 
-The `Import` mechanism allows users to import parcels from valid `Ark` storage files stored as `.xml` files into the
-current instance of `Ark`. This mechanism is facilitated by a `readAddressBook` method within `XmlAddressBookStorage` to
-load the parcels stored in the `xml` file and an `ModelManager#addAllParcels` to add the parcels in
-the storage file into the current instance of `Ark`. +
+The `import` mechanism allows users to import parcels from valid storage files stored in a `.xml` format. This mechanism
+ allows users to add multiple parcels stored in the imported storage file into the running instance of Ark. This
+ mechanism is facilitated by the `readAddressBook()` method within `AddressBookStorage()` to
+load the parcels stored in the storage file and the `ModelManager#addAllParcels` method to add the parcels in
+the storage file into the running instance of `Ark`. +
 
-Since the `Import` mechanism modifies the data stored in `Ark`, it has to be an undoable command. Thus, it inherits from
-the `UndoableCommands` interface rather than inheriting direclty from the `Command` interface. +
+Since the `import` mechanism modifies the data stored in `Ark`, it should be an extension of the `UndoCommand`. Thus,
+it inherits from the `UndoableCommand` interface rather than inheriting direclty from the `Command` interface. +
 
-The following sequence diagram shows how the `import` operation works:
+The following sequence diagram describes the sequence of events that occur when you enter 'import ark_save' into the
+ `CommandBox`:
 
 image::ImportSequenceDiagram.png[width="1000"]
 _Figure 4.7.1 : Sequence diagram describing the operation of `import` when it is executed_
 
 As seen in the sequence diagram above, the command is first parsed to create an `ImportCommandParser`. This parser
-takes the arguments of the input as the name of the file to import and converts it to a full file path string to
-locate the file to import. Thereafter, it loads the file to import into Ark and reads the data. This returns a list of
-parcels that are used in create an `ImportCommand`.
+takes the arguments of the import command ("ark_save") as the name of the file to import and converts it to a
+full file path string ("./data/import/ark_save.xml") to locate the file to import. Thereafter, it loads the file
+to import into Ark and reads the data. This returns a list of parcels that are used in create an `ImportCommand`.
 
 When the command is executed, the following sequence of events take place:
 
@@ -658,19 +634,19 @@ _Figure 4.7.2 : Reference frame for the execution of the Import Command_
 
 As seen in the diagram above, when the command is executed, the `executeUndoableMethod` methods calls
 `ModelManager#addAllParcels` method. In this method, all unique parcels are added into the running instance of Ark.
-If the parcel is not unique such that it will create a duplicate parcel in the inventory, the parcel is ignored and
-the process continues until the last parcel has been added.
+If the parcel is not unique such that it will create a duplicate parcel in the current instance of Ark,
+the parcel is ignored and the process continues until the last parcel has been added.
 
 [NOTE]
 The file to be imported has to be stored in the `./data/import` folder. i.e. calling `import ark_save` will import the
 file `./data/import/ark_save.xml`. +
-If the user enters a file name that contains characters other than alphanumeric characters or a file name that is
+If the user enters a file name that contains characters other than alphanumeric characters or imports a file that is
 not in a `.xml` format, the command will throw an Exception.
 
 [WARNING]
 The `ImportCommand` will only add non-duplicate parcels. Duplicate parcels are ignored. +
 If all the parcels to be imported into Ark are duplicates, then no parcels are imported and an Exception is thrown. +
-If the file to import is either, a `CommandException` will be thrown
+If the file to import is missing or empty, a `CommandException` will be thrown
 
 ==== Design Considerations
 
@@ -693,7 +669,7 @@ feature has to be manually implemented in `ImportCommand` as well.
 **Aspect: Arguments to import files** +
 
 * **Alternative 1 (current choice):** Imports save files from only one location +
-** **Pros:** User will only stored his save files at one location, he will not store them at random locations and lose
+** **Pros:** User will only store his save files at one location, he will not store them at random locations and lose
 track of them. User only has to type the name of the file and does not need to type the full file path to locate
 the file. i.e. the user does not need to type `./data/import/Ark.xml`. +
 ** **Cons:** The user has restrictions on where he can import files from. +
@@ -707,9 +683,10 @@ the file. i.e. the user does not need to type `./data/import/Ark.xml`. +
 
 * **Alternative 1 (current choice):** File Names can only contain alphanumeric and underscore characters and be in the
 `.xml` format. +
-** **Pros:** Users will constraint their file naming to contain more semantic names rather than having symbols in their
- naming of Ark save files. +
-** **Cons:** The user has restrictions on the file naming conventions he can use to name his import files +
+** **Pros:** Users need to constraint their file naming to contain more semantic names rather than having
+non-alphanumeric or non-underscore characters in their naming of Ark save files. +
+** **Cons:** The user has restrictions on the file naming conventions he can use to name the save files that he wants
+to import. +
 * **Alternative 2:** No file name check +
 ** **Pros:** Allows user to name his files following any conventions and be successfully imported into Ark. +
 ** **Cons:** Makes Ark vulnerable to simple directory traversals where user can access files outside the
@@ -717,7 +694,6 @@ the file. i.e. the user does not need to type `./data/import/Ark.xml`. +
 //end::import[]
 
 //tag::autocomplete[]
-
 === Tab autocomplete mechanism
 
 image::SDforTabAutocomplete.png[width="900"]
@@ -796,9 +772,10 @@ This issue can occur during festive periods such as Christmas when the number of
 //tag::postalCode[]
 === Postal Code Field
 
-The Postal Code field is implemented as part of Address. The `Postal Code` class stores the postal address of locations
-in Singapore. It only accepts values of `s` or `S` followed by 6 digits. The value stored in this class is used to store
- the postal code of the address. The value is used to query Google Maps when the `select` command is executed.
+The postal code field is represented using the `PostalCode` class. The `PostalCode` field is implemented as part of the
+`Address` class. The `PostalCode` class stores the postal address the address text. It only accepts values of
+`s` or `S` followed by 6 digits. The `PostalCode` will generate a `String` to query Google Maps when the `select`
+command is executed or a when a parcel is selected.
 
 [NOTE]
 Presently, the `PostalCode` field still does a very relaxed validation and does not completely ensure that the postal
@@ -811,22 +788,35 @@ code exists even though it might meet the criteria above. The team is working on
 **Implementation of `Postal Code`**
 
 * **Alternative 1 (current choice):** `Postal Code` is designed as a part of the `Address` class.
-** **Pros:** This composition relationship is more intuitive. If an `Address` is deleted, its corresponding `Postal
-Code` is also deleted.
+** **Pros:** This composition relationship is more intuitive. If an `Address` is deleted, its corresponding `PostalCode`
+is also deleted.
 ** **Cons:** - +
 * **Alternative 2:** Separate the `PostalCode` class from the `Address` class
 ** **Pros:** - +
 ** **Cons:** When an `Address` is deleted, its corresponding `PostalCode` has to be searched and deleted as well. This
 results in more overhead.
+
+---
+
+**Valid inputs to the `PostalCode` class**
+
+* **Alternative 1 (current choice):** `Postal code accepts postal district codes above 80. (first two digits of postal code)
+** **Pros:** This ensures that when new postal code districts are added into Singapore, the user will be able to add the
+postal codes from the new postal code district without receiving an error.
+** **Cons:** The user might enter postal codes that belong to a non-existent district e.g. S810000 +
+* **Alternative 2:** Reject postal codes with postal district codes above 80.
+** **Pros:** The user will have a stricter validation of his postal code. +
+** **Cons:** If a new postal district is added, e.g. 81, and there is parcel that has a postal code belonging to the
+district, Ark will reject that parcel from being entered,
 //end::postalCode[]
 
 //tag::status[]
 === Status field
 
 `Status` represents the current stage of delivery that a parcel is at. As seen in the class diagram below,
-`Status` is implemented using `Enumeration` interface and it has the four possible values:
+`Status` is implements an `Enumeration` interface and it has the four possible values:
 
-image::StatusClassDiagram.png[width:"250"]
+image::StatusClassDiagram.png[width:"150"]
 _Figure 4.13: Status Class Diagram_
 
 The following are the descriptions for the four possible values of `Status`:
@@ -843,7 +833,7 @@ delivered by.
 
 As seen in the class diagram, the `getInstance()` method retrieves the static instance of `Status` based on the `status`
 String input. For example, `getInstance("pending")` will return the `PENDING Status`. Additionally, Status is updated
-automatically when a parcel is edited, added. The Status of parcels in Ark will also be updated when Ark first launches.
+automatically when a parcel is edited or added. The `Status` of parcels in Ark will also be updated when Ark first launches.
 This is done through the `getUpdatedInstance(s : Status, d : DeliveryDate)` method and the overloaded method
 `getUpdated(d : DeliveryDate)` method. +
 
@@ -856,7 +846,7 @@ will return an `OVERDUE Status`. Otherwise, it will return a `PENDING Status`. T
 
 **Implementation of `Status`**
 
-* **Alternative 1 (current choice):** Status implements an Enumeration.
+* **Alternative 1 (current choice):** Status implements an Enumeration interface.
 ** **Pros:** `Status` has a fixed number of  values. The user should also not be allowed to create new `Status` objects.
 This also standardizes the naming conventions used to describe the same delivery status in Ark.
 ** **Cons:** Less options for the user to alter the `Status` values +
@@ -875,10 +865,10 @@ checks if the String input is a valid `Status` and returns it. On the other hand
 valid `Status` and returns an updated `Status` with respect to the `DeliveryDate` provided as a parameter. Easier to
 test these methods and integrate the automatic `Status` update into the codebase.
 ** **Cons:** More overhead. +
-* **Alternative 2:** Update `State` in `getInstance()`.
+* **Alternative 2:** Update `Status` in `getInstance()`.
 ** **Pros:** Less overhead and more intuitive.
 ** **Cons:** More tedious to code because a `DeliveryDate` object has to be instantiated before programmer is able to
-retrieve a `Status`.
+retrieve an updated `Status`.
 //end::status[]
 
 //tag::deliveryDate[]
@@ -924,9 +914,9 @@ their delivery dates, with the earliest on top.
 //end::deliveryDate[]
 
 //tag::tags[]
-=== Tags
+=== Tags Field
 
-`Tag`s are used to indicate how the parcel should be handled. Tags can contain one or more of the following `Tag`s:
+`Tags` are used to indicate how the parcel should be handled. The `Tags` field can contain one or more of the following `Tag`:
 
 [width="100%",cols="20%,<80%",options="header",]
 |=======================================================================
@@ -942,7 +932,7 @@ when handling.
 
 **`Implementation of Tag`**
 
-* **Alternative 1 (current choice):** Tag is implements the Enumeration class.
+* **Alternative 1 (current choice):** Tag implements the Enumeration interface.
 ** **Pros:** `Tag`s has fixed values. The user should also not be allowed to create new `Tag` objects.
 ** **Cons:** Less options for the user to alter the `Tag` values +
 * **Alternative 2:** Allow the user to define any `Tag`s they wish.
@@ -952,7 +942,6 @@ use different tag names to refer to the same tag.
 //end::tags[]
 
 //tag::sortedList[]
-
 === Maintain sorted and selection mechanism
 image::AddParcelSdForLogic.png[width="890"]
 _Figure 4.14.1 : Adding Alice to Ark, maintainSorted is actually called and returns void._
