@@ -1,10 +1,37 @@
-package seedu.address.model.person;
+# hymss
+###### \java\seedu\address\logic\commands\person\ShowBirthdaysCommand.java
+``` java
+/**
+ * Lists all persons in Bluebird whose birthday is on the current day with respect to the user.
+ */
 
-import static java.util.Objects.requireNonNull;
+public class ShowBirthdaysCommand extends Command {
 
-import seedu.address.commons.exceptions.IllegalValueException;
+    public static final String COMMAND_WORD = "showbirthdays";
 
-//@@author hymss
+    public static final String MESSAGE_SUCCESS = "Chirp! Here are the birthdays for today.";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Lists all persons whose birthdays are today.\n"
+            + "Parameters: KEYWORD\n"
+            + "Example for showing birthdays: " + COMMAND_WORD;
+
+    private CheckBirthdays checker = new CheckBirthdays();
+
+    public ShowBirthdaysCommand() {
+
+    }
+
+    @Override
+    public CommandResult execute() {
+        model.updateFilteredPersonList(checker);
+        return new CommandResult(MESSAGE_SUCCESS);
+    }
+
+}
+```
+###### \java\seedu\address\model\person\Birthday.java
+``` java
 /**
  * Represents a Person's birthday in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidBirthday(String)}
@@ -79,3 +106,52 @@ public class Birthday {
         return value.hashCode();
     }
 }
+```
+###### \java\seedu\address\model\person\CheckBirthdays.java
+``` java
+/**
+ * Tests that a {@code ReadOnlyPerson}'s {@code Birthday month and day} matches date of current day with respect to
+ * user.
+ */
+
+public class CheckBirthdays implements Predicate<ReadOnlyPerson> {
+
+    public CheckBirthdays() {
+
+    }
+
+    /**
+     * Checks if a person's birthday falls on the current day.
+     *
+     * @param person
+     * @return boolean
+     * @throws ParseException
+     */
+
+    public boolean showBirthdays(ReadOnlyPerson person) throws ParseException {
+        String birthday = person.getBirthday().toString();
+        Date date = new SimpleDateFormat("dd/MM/yyyy").parse(birthday);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        return (((calendar.get(Calendar.MONTH)) == Calendar.getInstance().get(Calendar.MONTH))
+                && ((calendar.get(Calendar.DAY_OF_MONTH) == Calendar.getInstance().get(Calendar.DAY_OF_MONTH))));
+    }
+
+    @Override
+    public boolean test(ReadOnlyPerson person) {
+        boolean index = false;
+        try {
+            index = showBirthdays(person);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return index;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof CheckBirthdays); // instanceof handles nulls
+    }
+}
+```

@@ -4,6 +4,7 @@ import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.model.person.CheckBirthdays;
 
+//@@author hymss
 /**
  * Lists all persons in Bluebird whose birthday is on the current day with respect to the user.
  */
