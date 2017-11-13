@@ -433,7 +433,7 @@ minutes) +
 === Schedule recurring event through `recurrence period` field
 
 User can schedule events with a regular period of recurrence through the
-`recurrence period` field, identified by prefix `re/` when adding or editing
+`recurrence period` field, identified by prefix `p/` when adding or editing
 events. Values put for `recurrence period` can only be positive integers
 indicating interval between two scheduled occurrence of the event.
 

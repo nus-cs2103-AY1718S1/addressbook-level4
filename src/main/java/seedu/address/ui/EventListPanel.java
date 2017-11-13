@@ -15,7 +15,6 @@ import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.ui.EventPanelSelectionChangedEvent;
-import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.ShowCalendarEvent;
 import seedu.address.model.event.ReadOnlyEvent;
@@ -76,13 +75,6 @@ public class EventListPanel extends UiPart<Region> {
             eventListView.scrollTo(index);
             eventListView.getSelectionModel().clearAndSelect(index);
         });
-    }
-
-
-    @Subscribe
-    private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        scrollTo(event.targetIndex);
     }
 
     //@@author sebtsh

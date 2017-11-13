@@ -44,8 +44,7 @@ public class ParserUtilTest {
     private static final String VALID_REL = "siblings";
 
     private static final String s = File.separator;
-    private static final String VALID_PHOTO = "src" + s + "main" + s
-            + "resources" + s + "images" + s + "default.jpg";
+    private static final String VALID_PHOTO = "data" + s + "default.jpg";
 
     @Rule
     public final ExpectedException thrown = ExpectedException.none();
