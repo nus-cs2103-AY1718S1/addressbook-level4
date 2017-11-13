@@ -14,7 +14,6 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import javafx.collections.ObservableList;
-import seedu.address.model.event.Event;
 import seedu.address.model.event.EventList;
 import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.event.exceptions.EventTimeClashException;
@@ -41,8 +40,8 @@ public class EventListTest {
         ReadOnlyEvent toAdd = new EventBuilder().build();
         try {
             eventList.add(toAdd);
-        } catch (Exception e) {
-
+        } catch (EventTimeClashException e) {
+            fail("Exception should not be thrown");
         }
         ReadOnlyEvent added = eventList.asObservableList().get(0);
 
