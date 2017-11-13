@@ -421,7 +421,7 @@ Shows all participants who are involved in the 1st event of event list.
 
 Figure 3.11 shows the result of the example above: +
 
-image::UG_showperson.png[width='790']
+image::UG_show person.png[width='790']
 _Figure 3.11: show persons result_
 
 // end::showP[]
@@ -450,7 +450,7 @@ Shows all events which the 1st person in the results of the `find` command joins
 
 You will see the following after typing `list` and `selectE 2`: +
 
-image::UG_selectevent.png[width='790']
+image::UG_select_event.png[width='790']
 _Figure 3.12: select events result_
 
 // end::selectE[]
