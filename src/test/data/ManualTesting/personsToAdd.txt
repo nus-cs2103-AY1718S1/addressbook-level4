@@ -1,0 +1,12 @@
+n/Casey Teo p/85355255 e/caseyteo@gmail.com a/123, Jurong West Ave 6, #08-111 r/2017 r/T12
+n/Benson Kim p/98765432 e/bensonkim@hotmail.com a/311, Clementi Ave 2, #02-25 r/2017 r/T12
+n/Andrew Lam p/95352563 e/andrewlam@example.com a/wall street 1 r/2017 r/T12
+n/Tom Tan p/8482424 e/tomtan@gmail.com a/little india 1 r/2016 r/T12
+n/Tiffany Chua p/98774621 e/tiffanychua@example.com a/Block 312, Amy Street 1 r/2016 r/T12
+n/Harry Toh p/22222222 e/harrytoh@hotmail.com a/Block 123, Bobby Street 3 r/husband r/friend
+n/Adison Pauline p/85355255 e/adison@gmail.com a/123, Jurong West Ave 6, #08-111 r/T17 r/2016
+n/Henesy Meier p/98765432 e/hene@gmail.com a/311, Clementi Ave 3, #02-25 r/T17 r/2016
+n/Robert Kurz p/95352563 e/kurz@hotmail.com a/wall street 2 r/T17 r/2016
+n/Gerald Dela p/8482424 e/gerald@hotmail.com a/little india 2 r/T17 r/2016
+n/Donavan King p/98374237 e/donavan@gmail.com a/Block 312, Amy Street 1 r/T17 r/2017 i/red_panda_jun.jpg
+n/John Choo p/87635123 e/johnchoo@hotmail.com a/Block 123, Bobby Street 3 r/T17 r/2017

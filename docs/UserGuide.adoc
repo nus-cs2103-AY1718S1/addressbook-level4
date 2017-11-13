@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= Blast! - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -12,7 +12,7 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/se-edu/addressbook-level4
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team T12-B2`      Since: `Oct 2017`      Licence: `MIT`
 
 == Quick Start
 
@@ -23,7 +23,7 @@ Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
 .  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
+.  Copy the file to the folder you want to use as the home folder for Blast!.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
 image::Ui.png[width="790"]
@@ -57,7 +57,7 @@ Format: `help`
 === Adding a person: `add`
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS i/AVATAR FILE PATH [t/TAG]...`
 
 [TIP]
 A person can have any number of tags (including 0)
@@ -66,6 +66,66 @@ Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+
+// tag::addwithavatar[]
+=== Adding a person with an avatar: `add i/`
+
+Adds a person to the address book with a custom avatar displayed +
+Default avatar folder: `./images/avatars` +
+Format: `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 i/john_doe.png`
+// end::addwithavatar[]
+
+// tag::multiple[]
+=== Adding multiple persons: `multiple`
+
+Adds multiple persons to the address book from a given file path of a `.txt` file. +
+Default avatar folder: `./images/avatars` +
+Format: `multiple FILE_PATH`
+
+Examples:
+
+* `multiple ./data/personsToAdd.txt`
+* `multiple ./data/newStudentsToAdd.txt`
+
+'''
+image::MultipleCommand/TypeMultipleCommand.png[width="800]
+
+'''
+The message display box will display successful persons that are added.
+
+image::MultipleCommand/MultipleCommandSuccess.png[width="800]
+'''
+
+Person format in `.txt` file: `n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS i/AVATAR_FILE_PATH [t/TAG]...`
+
+[TIP]
+The format in the `.txt` file is the same as `add` command except without the `add`
+
+Example of `.txt` file:
+
+****
+n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 i/john_doe.png +
+n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 r/criminal +
+n/Mary Jane t/friend e/maryjane@example.com a/Mary drive p/4567123 r/pretty
+****
+
+[TIP]
+Multiple command is an undoable/redoable command
+
+image::MultipleCommand/UndoCommandSuccessAfterMultiple.png[width="800]
+
+// end::multiple[]
+
+// tag::export[]
+=== Export: `export`
+Exports the all contacts to a `.txt` file in a specified location. +
+Format: `export [FILETYPE] [PATH]` +
+
+Example:
+
+* `export .txt C:/New Folder`
+
+// end::export[]
 
 === Listing all persons : `list`
 
@@ -92,25 +152,93 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Locating persons by name: `find`
+// tag::find[]
+=== Locating persons by keywords: `find`
 
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Finds persons whose contain any of the given keywords. +
+Format: `find PREFIX_PERSON_ATTRIBUTE/KEYWORD [MORE_KEYWORDS]... [MORE_PARAMETERS]...`
+
+[TIP]
+Supported prefixes: `n/`, `p/`, `e/`, `a/`, `ap/`, `r/`, `c/`
 
 ****
+* The search is a `OR` search.
+e.g. finding `n/alex r/friends` will display all persons that name contain `alex` along with all persons that have `friends` tag
+* The `OR` rule applies to all other individual attribute except `tags`.
+(i.e. persons matching at least one keyword will be returned except for `tags` field.)
+e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* The `AND` rule for searching applies to `tags` field
+e.g. `r/friends family` will return persons with tags that match both `friends` and `family`
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* When finding name, only full words will be matched e.g. `Han` will not match `Hans`
+* When finding email, any part of the email will be matched with the character sequence of the input e.g. `mail` will match `@gmail.com` and `@hotmail.com`
+* When finding phone, any part of the phone will be matched with the character sequence of the input e.g. `123` will match `91234567` and `81234567`
+* When finding appointment, only date and time with correct format will be matched e.g. `10:30` will match all `10:30` appointments and `20/10/2017` will match all `20/10/2017` appointments
+* When finding comment, only full words will be matched e.g. `swim` will not match `swims`
+* When finding address, any part of the address will be matched
 ****
+
+'''
+Searching for contacts with `friends` tag with the command `find r/friends`.
+
+image::FindCommand/TypeFindCommandOne.png[width="800"]
+
+'''
+The result of `find r/friends` will show all contacts with `friends` tag.
+
+image::FindCommand/FindCommandSuccessListOne.png[width="800"]
+
+'''
+Searching for contacts with `colleagues` and `friends` tags with the command `find r/colleagues friends`.
+
+image::FindCommand/TypeFindCommandTwo.png[width="800"]
+
+'''
+The result of `find r/colleagues friends` will show all contacts have both `colleagues` and `friends` tags.
+
+image::FindCommand/FindCommandSuccessTwo.png[width="800"]
+'''
 
 Examples:
 
-* `find John` +
+* `find n/John` +
 Returns `john` and `John Doe`
-* `find Betsy Tim John` +
+* `find r/friends family` +
+Returns any person with `friends` tag and `family` tag +
+* `find e/@gmail.com` +
+Returns any person whose email contain `@gmail.com`
+* `find n/Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
+* `find n/Betsy Tim John r/friends` +
+Returns any person having names `Betsy`, `Tim`, or `John` or any person with `friends` tag
+* `find n/Betsy Tim John r/friends e/@gmail.com` +
+Returns any person having names `Betsy`, `Tim`, or `John`, any person with `friends` tag
+and any person whose email contain `@gmail.com`
+* `find n/Betsy r/friends e/@gmail.com c/funny ap/10:30 a/clementi p/9123` +
+Returns any person having names `Betsy`, any person with `friends` tag, any person whose email contain `@gmail.com`,
+any person whose comment have the word `funny` in it, any person who have `10:30` appointment, any person whose address contain `clementi`
+and any person whose phone number contain the sequence `9123`
+
+[NOTE]
+Find command currently support finding of name, email, phone, comment, address, appointment and tags.
+
+// end::find[]
+
+// tag::findcontain[]
+=== Find a person without matching the whole keyword: `find_contain`
+
+Finds all persons whose name / phone / address / email contains the given string +
+Format: `find_contain PREFIX_PERSON_ATTRIBUTE/STRING [MORE_PARAMETERS]...`
+
+****
+* The search is an "AND" search.
+* The characters that follow a prefix are treated as one string.
+* A match happens when a person's details contain the given strings
+e.g. "David Li" contains "avid", "93463991" contains "99".
+****
+
+// end::findcontain[]
 
 === Deleting a person : `delete`
 
@@ -151,6 +279,135 @@ Selects the 2nd person in the address book.
 * `find Betsy` +
 `select 1` +
 Selects the 1st person in the results of the `find` command.
+
+// tag::comment[]
+=== Commenting about a person : `comment`
+
+Adds a comment about a specific user. +
+Format: `comment INDEX [c/COMMENT]`
+
+****
+* Comments on the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
+Example:
+
+* `list` +
+`comment 3 c/Likes to play computer games.` +
+Selects the 3rd person in the address book and adds "Likes to play computer games." as comment.
+* `list` +
+`comment 2 c/` +
+Selects the 2nd person in the address book and removes its comment.
+
+'''
+Adding comment "Likes to play computer games." to 3rd contact.
+
+image::CommentCommand/01-2.PNG[width="800"]
+
+'''
+The result of `comment 3 c/Likes to play computer games.` shows the following:
+
+image::CommentCommand/02-2.PNG[width="800"]
+
+'''
+Removing comment from 4th contact.
+
+image::CommentCommand/03-1.PNG[width="800"]
+
+'''
+The result of `comment 4 c/` shows the following:
+
+image::CommentCommand/04-2.PNG[width="800"]
+
+// end::comment[]
+
+// tag::appointment[]
+=== Making Appointment for a person : `appoint`
+
+Adds an appointment time slot for a specific user. +
+Format: `appoint INDEX [ap/APPOINT]`
+
+****
+* Makes an appointment for the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+* The default date format follows the following: `DD/MM/YYYY HR:MN`. However, this format is not enforced and the user has freedom to select his/her own format.
+****
+
+Example:
+
+* `list` +
+`appoint 2 ap/20/10/2017 14:45` +
+Selects the 2nd person in the address book and assigns the above appointment slot.
+* `list` +
+`appoint 4 ap/` +
+Removes the appointment from the 4th contact.
+
+'''
+Adding appointment at `December 28th, 2017 14:45` to 2nd contact.
+
+image::AppointCommand/05-1.PNG[width="800"]
+
+'''
+The result of `appoint 2 ap/28/12/2017 14:45` shows the following:
+
+image::AppointCommand/06-2.PNG[width="800"]
+
+'''
+Removing the appointment from 3rd contact.
+
+image::AppointCommand/07-1.PNG[width="800"]
+
+'''
+The result of `appoint 3 ap/` shows the following:
+
+image::AppointCommand/08-2.PNG[width="800"]
+// end::appointment[]
+
+// tag::emaillogin[]
+=== Login using Gmail or Yahoo Account: `email_login`
+
+Logs in with a Gmail or Yahoo account to allow sending emails +
+Format: `email_login "[EMAIL]" "[PASSWORD]"`
+
+****
+* `"[EMAIL]"` is the email used to login. Example: `"cs2013testacc@gmail.com"`
+* `"[PASSWORD]"` is the passwor. Example: `"testpass"`
+****
+
+Example:
+****
+* `email_login "cs2103testacc@gmail.com" "testpass"`
+****
+
+*Note*: The Login Button in the User Interface will not update automatically if an email is logged in through console. However, clicking on the Login / Logout button will
+update the login status accordingly.
+
+// end::emaillogin[]
+
+// tag::emailsend[]
+=== Sending an email to a list of recipients: `email_send`
+
+Sends an email to a list of recipients. Requires an logged in email using `email_login` +
+Format: `email_send "[RECIPIENTS]" "[TITLE]" "[BODY]"`
+
+****
+* `"[RECIPIENTS]"` is the list of recipients, separated by `;`. Example: `"cs2103testacc@gmail.com;cs2103test@yahoo.com"`
+* `"[TITLE]"` is the title of the email. Example: `"Change of class schedule"`
+* `"[BODY]"` is the body of the message. Example: `"The class schedule is changed to 4 pm"`
+****
+
+Example:
+****
+* `email_send "cs2103testacc@gmail.com" "Test Title" "Test Body"` +
+    send an email with given title and body to a single recipient.
+* `email_send "cs2103testacc@gmail.com;cs2103testacc@yahoo.com" "Test Title" "Test Body"` +
+send  an email with given title and body to a list of recipients.
+****
+
+// end::emailsend[]
 
 === Listing entered commands : `history`
 
@@ -212,6 +469,32 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
+// tag::merge[]
+=== Merging given file to default storage file : `merge`
+
+Merges the given `.xml` file to the default storage `.xml` file specified in `preferences.json`. +
+Format: `merge NEW_FILE_PATH`
+
+Examples:
+
+* `merge ./data/newFile.xml`
+* `merge ./data/otherClass.xml`
+
+'''
+image::MergeCommand/TypeMergeCommand.png[width="800"]
+
+'''
+Unique persons that are successfully merge into the address book will appear in the person card list.
+
+image::MergeCommand/MergeCommandSuccess.png[width="800"]
+'''
+
+[TIP]
+Merge command is an undoable/redoable command
+
+image::MergeCommand/UndoCommandSuccessAfterMerge.png[width="800"]
+
+// end::merge[]
 === Clearing all entries : `clear`
 
 Clears all entries from the address book. +
@@ -227,6 +510,80 @@ Format: `exit`
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
+// tag::searchbar[]
+=== Using the search bar
+
+The search bar above the person panel shows any person whose name / phone / email / address contains the string typed in
+the search boxes (case-insensitive).
+
+*Interface of the search bar*
+
+image::search-bar.png[width="800"]
+
+*Examples*
+
+'''
+Typing "Li" in the name box returns any person whose name contains "li".
+
+image::search-bar-li.png[width="800"]
+
+'''
+Typing "david" in the name box and "9" in the phone box returns any person whose name contains "david" and phone number
+contains "9".
+
+image::search-bar-david.png[width="800"]
+
+// end::searchbar[]
+
+// tag::emailloginwindow[]
+=== Using the email login button
+
+The login button is located under the search bar. Clicking on the login button opens a window for logging email.
+
+*The email login button*
+
+image::email-login-button.png[]
+
+*The email login window*
+
+image::email-login-window.png[]
+
+Any feedback from an login activity will be displayed in the text area at the bottom of the login window, as well as in
+the console.
+
+// end::emailloginwindow[]
+
+// tag::emailsendwindow[]
+=== Using the email send button
+
+The send button is located under the search bar, next to the login button. It will only be available after an email is
+logged in. Clicking on the send button opens a window for sending email.
+
+*The email send button*
+
+image::email-send-button.png[]
+
+*The email send window*
+
+image::email-send-window.png[]
+
+Selecting the check box at the far left of a person card will include his email in the "recipients" field when the send
+button is clicked.
+
+image::email-checkbox.png[]
+
+// end::emailsendwindow[]
+
+// tag::themeselect[]
+=== Selecting an application theme
+From the top menu bar, select `Themes`, and then `Select Themes`.
+
+Click on a theme, the left side label will indicate which theme is currently selected.
+
+*Important!* +
+The application must be **restarted** before the newly selected theme is activated.
+// end::themeselect[]
+
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
@@ -236,17 +593,31 @@ There is no need to save manually.
 
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *Multiple* `multiple FILE_PATH` +
+e.g `multiple data/personsToAdd.txt`
+* *Export* `export [FILETYPE] [EXPORT_PATH]` +
+e.g `export .txt C:/Users/This User/Desktop`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
+e.g. `find n/James Jake r/friends e/@gmail.com p/9123`
+* *Comment* : `comment INDEX [c/COMMENT]` +
+e.g. `comment 4 c/Likes to code`
+* *Appoint* : `appoint INDEX [c/APPOINTMENT]` +
+e.g. `appoint 2 ap/20/10/2017 14:30`
 * *List* : `list`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
+* *Email Login*: `email_login "[EMAIL]" "PASSWORD"` +
+    e.g. `email_login "cs2103testacc@gmail.com" "testpass"`
+* *Email Send*: `email_send "[RECIPIENTS]" "[TITLE]" "[BODY]"` +
+e.g. `email_send "firstemail@gmail.com;secondemail@yahoo.com" "Test title" "Test Body"`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Merge* : `merge FILE_PATH` +
+e.g. `merge data/newfile.xml`

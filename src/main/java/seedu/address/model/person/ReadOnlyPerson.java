@@ -1,5 +1,6 @@
 package seedu.address.model.person;
 
+import java.util.List;
 import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
@@ -13,15 +14,38 @@ import seedu.address.model.tag.UniqueTagList;
 public interface ReadOnlyPerson {
 
     ObjectProperty<Name> nameProperty();
+
     Name getName();
+
     ObjectProperty<Phone> phoneProperty();
+
     Phone getPhone();
+
     ObjectProperty<Email> emailProperty();
+
     Email getEmail();
+
     ObjectProperty<Address> addressProperty();
+
     Address getAddress();
+
+    ObjectProperty<Comment> commentProperty();
+
+    Comment getComment();
+
+    ObjectProperty<Avatar> avatarProperty();
+
+    Avatar getAvatar();
+
+    ObjectProperty<Appoint> appointProperty();
+
+    Appoint getAppoint();
+
     ObjectProperty<UniqueTagList> tagProperty();
+
     Set<Tag> getTags();
+
+    boolean containTags(List<String> tags);
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
@@ -32,7 +56,9 @@ public interface ReadOnlyPerson {
                 && other.getName().equals(this.getName()) // state checks here onwards
                 && other.getPhone().equals(this.getPhone())
                 && other.getEmail().equals(this.getEmail())
-                && other.getAddress().equals(this.getAddress()));
+                && other.getAddress().equals(this.getAddress())
+                && other.getComment().equals(this.getComment())
+                && other.getAppoint().equals(this.getAppoint()));
     }
 
     /**
@@ -47,6 +73,10 @@ public interface ReadOnlyPerson {
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
+                .append(" Comments: ")
+                .append(getComment())
+                .append(" Appointments: ")
+                .append(getAppoint())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();

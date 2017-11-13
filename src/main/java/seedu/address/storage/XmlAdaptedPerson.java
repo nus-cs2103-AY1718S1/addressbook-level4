@@ -9,6 +9,9 @@ import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Appoint;
+import seedu.address.model.person.Avatar;
+import seedu.address.model.person.Comment;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -28,16 +31,24 @@ public class XmlAdaptedPerson {
     @XmlElement(required = true)
     private String email;
     @XmlElement(required = true)
+    private String comment;
+    @XmlElement(required = true)
+    private String appoint;
+    @XmlElement(required = true)
     private String address;
+    @XmlElement
+    private String avatar;
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
+
 
     /**
      * Constructs an XmlAdaptedPerson.
      * This is the no-arg constructor that is required by JAXB.
      */
-    public XmlAdaptedPerson() {}
+    public XmlAdaptedPerson() {
+    }
 
 
     /**
@@ -50,6 +61,10 @@ public class XmlAdaptedPerson {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
+        avatar = source.getAvatar().getAvatarFilePath();
+        System.out.println("Avatar field saved as: " + avatar);
+        comment = source.getComment().value;
+        appoint = source.getAppoint().value;
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
@@ -70,7 +85,18 @@ public class XmlAdaptedPerson {
         final Phone phone = new Phone(this.phone);
         final Email email = new Email(this.email);
         final Address address = new Address(this.address);
+
+        //@@author vsudhakar
+        Avatar avatar = null;
+        try {
+            avatar = new Avatar(this.avatar);
+        } catch (IllegalValueException e) {
+            avatar = new Avatar();
+        }
+        //@@author
+        final Comment comment = new Comment(this.comment);
+        final Appoint appoint = new Appoint(this.appoint);
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, tags);
+        return new Person(name, phone, email, address, comment, appoint, avatar, tags);
     }
 }

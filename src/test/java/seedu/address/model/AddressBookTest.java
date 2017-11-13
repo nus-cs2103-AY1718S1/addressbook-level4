@@ -19,8 +19,9 @@ import javafx.collections.ObservableList;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.Tag;
+import seedu.address.ui.GuiUnitTest;
 
-public class AddressBookTest {
+public class AddressBookTest extends GuiUnitTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();

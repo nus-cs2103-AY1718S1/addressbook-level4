@@ -1,0 +1,58 @@
+.root {
+	-fx-background-color: #353B47;
+}
+
+.textfield {
+	-fx-font-family: "arial";
+	-fx-text-fill: white;
+	-fx-background-radius: 5px;
+	-fx-background-color: #282E3C;
+	-fx-border-color: black;
+	-fx-border-width: 1;
+	-fx-border-radius: 5px;
+}
+
+.textarea .content {
+	-fx-background-radius: 5px;
+	-fx-background-color: #282E3C;
+	-fx-border-color: black;
+	-fx-border-radius: 5px;
+	-fx-border-width: 1;
+}
+
+.textarea {
+	-fx-font-family: "arial";
+	-fx-text-fill: white;
+	-fx-wrap-text: false;
+	-fx-border-color: transparent;
+	-fx-border-radius: 5px;
+	-fx-border-width: 1;
+	-fx-background-color: transparent;
+	-fx-background-radius: 5px;
+}
+
+.textarea .viewport {
+	-fx-border-color: transparent;
+	-fx-background-color: transparent;
+}
+
+.textLabel {
+	-fx-text-alignment: CENTER;
+	-fx-background-radius: 5px;
+	-fx-background-color: #75B0C0;
+	-fx-font-family: "arial";
+	-fx-font-weight: 900;
+	-fx-font-size: 13px;
+	-fx-text-fill: white;
+}
+
+.button {
+	-fx-background-radius: 10px;
+	-fx-background-color: transparent;
+	-fx-border-radius: 10px;
+	-fx-border-color: white;
+	-fx-font-family: "arial";
+	-fx-font-weight: 500;
+	-fx-font-size: 16px;
+	-fx-text-fill: white;
+}

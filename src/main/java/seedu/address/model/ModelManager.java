@@ -3,6 +3,7 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -12,9 +13,11 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -54,10 +57,43 @@ public class ModelManager extends ComponentManager implements Model {
         return addressBook;
     }
 
-    /** Raises an event to indicate the model has changed */
+    /**
+     * Raises an event to indicate the model has changed
+     */
     private void indicateAddressBookChanged() {
         raise(new AddressBookChangedEvent(addressBook));
     }
+
+    //@@author KhorSL
+    @Override
+    public synchronized void mergeAddressBook(ObservableList<ReadOnlyPerson> newFilePersonList) {
+        Boolean isAddressBookChanged = false;
+        ObservableList<ReadOnlyPerson> defaultFilePersonList = addressBook.getPersonList();
+
+        for (ReadOnlyPerson newDataPerson : newFilePersonList) {
+            boolean isSamePerson = false;
+            for (ReadOnlyPerson defaultDataPerson : defaultFilePersonList) {
+                if (defaultDataPerson.equals(newDataPerson)) {
+                    isSamePerson = true;
+                    break;
+                }
+            }
+            if (!isSamePerson) {
+                try {
+                    addressBook.addPerson(new Person(newDataPerson));
+                } catch (DuplicatePersonException dpe) {
+                    assert false : "Unexpected exception " + dpe.getMessage();
+                }
+                isAddressBookChanged = true;
+            }
+        }
+
+        if (isAddressBookChanged) {
+            updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+            indicateAddressBookChanged();
+        }
+    }
+    //@@author
 
     @Override
     public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
@@ -81,6 +117,17 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    @Override
+    public void deleteTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException {
+        for (ReadOnlyPerson oldPerson : addressBook.getPersonList()) {
+            Person newPerson = new Person(oldPerson);
+            Set<Tag> newTags = newPerson.getTags();
+            newTags.remove(tag);
+            newPerson.setTags(newTags);
+            addressBook.updatePerson(oldPerson, newPerson);
+        }
+    }
+
     //=========== Filtered Person List Accessors =============================================================
 
     /**
@@ -90,6 +137,11 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
         return FXCollections.unmodifiableObservableList(filteredPersons);
+    }
+
+    @Override
+    public void updateFilteredListToShowAll() {
+        filteredPersons.setPredicate(null);
     }
 
     @Override

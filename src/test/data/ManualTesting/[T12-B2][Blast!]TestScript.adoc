@@ -1,0 +1,493 @@
+= Blast! - Testing Script
+:toc:
+:toc-title:
+:toc-placement: preamble
+:sectnums:
+:imagesDir: images
+:stylesDir: stylesheets
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+endif::[]
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+
+*Legend:* +
+`Command inputs`
+[TIP]
+`select 1` means to execute ‘select 1’ in the command box +
+```
+Expected results are contained here
+```
+=== Set up
+
+. Download all documents (i.e. all the test files) uploaded on v1.5 release. +
+Or from https://github.com/CS2103AUG2017-T12-B2/main/tree/master/src/test/data/ManualTesting +
+. Create a folder named ‘Blast’ and place the .jar file in +
+. Create a folder named ‘data’ at the root of ‘Blast’ folder +
+. Create a folder named ‘avatars’ at the root of ‘Blast’ folder +
+. Place the downloaded test image into `avatars` folder +
+. Place the downloaded test documents into `data` folder +
+. Rename `[T12-B2][Blast!]SampleData.xml` to `addressbook.xml` +
+. Launch the application
+
+=== Add
+
+`add` +
+```
+Invalid command format!
+add or a: Adds a person to the address book. Parameters: n/NAME p/PHONE e/EMAIL a/ADDRESS i/AVATAR IMAGE FILE [r/TAG]...
+Example: add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 i/john_doe.png r/friends r/owesMoney
+```
+
+---
+`add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 i/john_doe.png r/friends r/owesMoney` +
+```
+File path provided must point to a valid, readable image.
+```
+
+---
+`add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 r/friends r/owesMoney` +
+```
+New person added: John Doe Phone: 98765432 Email: johnd@example.com Address: 311, Clementi Ave 2, #02-25 Comments: 311, Clementi Ave 2, #02-25 Appointments:  Tags: [owesMoney][friends]
+```
+
+---
+`undo`
+```
+Undo success!
+```
+
+---
+`add john`
+```
+Invalid command format!
+add or a: Adds a person to the address book. Parameters: n/NAME p/PHONE e/EMAIL a/ADDRESS i/AVATAR IMAGE FILE [r/TAG]...
+Example: add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 i/john_doe.png r/friends r/owesMoney
+```
+
+---
+`add n/John Doe`
+```
+Invalid command format!
+add or a: Adds a person to the address book. Parameters: n/NAME p/PHONE e/EMAIL a/ADDRESS i/AVATAR IMAGE FILE [r/TAG]...
+Example: add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 i/john_doe.png r/friends r/owesMoney
+```
+
+---
+`add n/John Doe p/98765432`
+```
+Invalid command format!
+add or a: Adds a person to the address book. Parameters: n/NAME p/PHONE e/EMAIL a/ADDRESS i/AVATAR IMAGE FILE [r/TAG]...
+Example: add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 i/john_doe.png r/friends r/owesMoney
+```
+
+---
+`add n/John Doe p/98765432 e/johnd@example.com`
+```
+Invalid command format!
+add or a: Adds a person to the address book. Parameters: n/NAME p/PHONE e/EMAIL a/ADDRESS i/AVATAR IMAGE FILE [r/TAG]...
+Example: add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 i/john_doe.png r/friends r/owesMoney
+```
+
+---
+`add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25`
+```
+New person added: John Doe Phone: 98765432 Email: johnd@example.com Address: 311, Clementi Ave 2, #02-25 Comments: 311, Clementi Ave 2, #02-25 Appointments:  Tags:
+```
+
+---
+`add n/John Doe p/!!!!! e/johnd@example.com a/311, Clementi Ave 2, #02-25`
+```
+Phone numbers can only contain numbers, and should be at least 3 digits long
+```
+
+---
+`add n/John Doe p/98765432 e/johnd!example.com a/311, Clementi Ave 2, #02-25`
+```
+Person emails should be 2 alphanumeric/period strings separated by '@'
+```
+
+=== Edit
+
+`edit`
+```
+Invalid command format!
+edit or e: Edits the details of the person identified by the index number used in the last person listing. Existing values will be overwritten by the input values.
+Parameters: INDEX (must be a positive integer) [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [i/AVATAR] [r/TAG]...
+Example: edit 1 p/91234567 e/johndoe@example.com
+```
+
+---
+`edit 3 p/91234567 e/johndoe@example.com `
+```
+Edited Person: Alex Yeoh Phone: 91234567 Email: johndoe@example.com Address: Blk 30 Geylang Street 29, #06-40 Comments: Blk 30 Geylang Street 29, #06-40 Appointments: 20/10/2017 10:10:50 Tags: [student]
+```
+
+---
+`edit -1 p/91234567`
+```
+Invalid command format!
+edit or e: Edits the details of the person identified by the index number used in the last person listing. Existing values will be overwritten by the input values.
+Parameters: INDEX (must be a positive integer) [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [i/AVATAR] [r/TAG]...
+Example: edit 1 p/91234567 e/johndoe@example.com
+```
+
+=== Delete
+
+`delete 21`
+```
+Deleted Person: John Doe Phone: 98765432 Email: johnd@example.com Address: 311, Clementi Ave 2, #02-25 Comments: 311, Clementi Ave 2, #02-25 Appointments:  Tags:
+```
+
+---
+`delete -1`
+```
+Invalid command format!
+delete: Deletes the person identified by the index number used in the last person listing.
+Parameters: INDEX (must be a positive integer)
+Example: delete 1
+```
+
+---
+`delete 1000`
+```
+The person index provided is invalid
+```
+
+=== Merge
+
+`merge abc`
+```
+File not found.
+```
+
+---
+`merge data/personstoadd.txt`
+```
+Unable to convert file data.
+```
+
+---
+`merge data/newfile.xml`
+```
+File merged successfully.
+```
+
+---
+`undo`
+```
+Undo success!
+```
+
+=== Find
+
+`find`
+```
+Invalid command format!
+find or f: Finds all persons whose names contain any of the specified keywords (case-insensitive) and displays them as a list with index numbers.
+Parameters: PREFIX_PERSON_ATTRIBUTE/KEYWORD [MORE_KEYWORDS]... [MORE_PARAMETERS]...
+Examples:
+1) find n/alice bob charlie
+2) find r/family friends
+3) find n/alice bob charlie r/family friends
+```
+
+---
+`find n/charlotte`
+```
+1 persons listed!
+```
+
+---
+`find ap/15:50`
+```
+2 persons listed!
+```
+
+---
+`find r/2017 T12`
+```
+5 persons listed!
+```
+
+---
+`find r/2016 T12`
+```
+2 persons listed!
+```
+
+---
+`find n/david alex ap/15:50 c/funny r/friends`
+```
+6 persons listed!
+```
+
+=== Add multiple persons with a .txt file
+
+`multiple`
+```
+Invalid command format!
+multiple: Adds multiple person to the address book. Parameters: FILE_PATH
+Example: multiple ./data/personsToAdd.txt
+```
+
+---
+`multiple`
+```
+Invalid person format!
+Person format in .txt file: Parameters: n/NAME p/PHONE e/EMAIL a/ADDRESS i/AVATAR IMAGE FILE [r/TAG]...
+Example: multiple n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 i/john_doe.png r/friends r/owesMoney
+```
+
+---
+`multiple abc`
+```
+Unable to open file 'abc'
+```
+
+---
+`multiple data/personstoadd.txt`
+```
+New person(s) added:
+Casey Teo Phone: 85355255 Email: caseyteo@gmail.com Address: 123, Jurong West Ave 6, #08-111 Comments: 123, Jurong West Ave 6, #08-111 Appointments:  Tags: [2017][T12]
+Benson Kim Phone: 98765432 Email: bensonkim@hotmail.com Address: 311, Clementi Ave 2, #02-25 Comments: 311, Clementi Ave 2, #02-25 Appointments:  Tags: [2017][T12]
+Andrew Lam Phone: 95352563 Email: andrewlam@example.com Address: wall street 1 Comments: wall street 1 Appointments:  Tags: [2017][T12]
+Tom Tan Phone: 8482424 Email: tomtan@gmail.com Address: little india 1 Comments: little india 1 Appointments:  Tags: [2016][T12]
+Tiffany Chua Phone: 98774621 Email: tiffanychua@example.com Address: Block 312, Amy Street 1 Comments: Block 312, Amy Street 1 Appointments:  Tags: [2016][T12]
+Harry Toh Phone: 22222222 Email: harrytoh@hotmail.com Address: Block 123, Bobby Street 3 Comments: Block 123, Bobby Street 3 Appointments:  Tags: [friend][husband]
+Adison Pauline Phone: 85355255 Email: adison@gmail.com Address: 123, Jurong West Ave 6, #08-111 Comments: 123, Jurong West Ave 6, #08-111 Appointments:  Tags: [2016][T17]
+Henesy Meier Phone: 98765432 Email: hene@gmail.com Address: 311, Clementi Ave 3, #02-25 Comments: 311, Clementi Ave 3, #02-25 Appointments:  Tags: [2016][T17]
+Robert Kurz Phone: 95352563 Email: kurz@hotmail.com Address: wall street 2 Comments: wall street 2 Appointments:  Tags: [2016][T17]
+Gerald Dela Phone: 8482424 Email: gerald@hotmail.com Address: little india 2 Comments: little india 2 Appointments:  Tags: [2016][T17]
+Donavan King Phone: 98374237 Email: donavan@gmail.com Address: Block 312, Amy Street 1 Comments: Block 312, Amy Street 1 Appointments:  Tags: [2017][T17]
+John Choo Phone: 87635123 Email: johnchoo@hotmail.com Address: Block 123, Bobby Street 3 Comments: Block 123, Bobby Street 3 Appointments:  Tags: [2017][T17]
+```
+
+---
+`undo`
+```
+Undo success!
+```
+
+=== Export
+`export`
+```
+Invalid command format!
+export: export the address book to a chosen file type
+Parameters: export .txt [PATH]
+Example: export .txt C:/user/user/desktop
+```
+
+---
+`export .txt C:/address book` (on Windows) +
+`export .txt /Users/[YOUR USER NAME]/address book` (on MacOS) +
+`export .txt /home/address book` (on Linux)
+
+```
+Successfully exported
+```
+Also please check that the respective path has an `addressbook.txt` file containing all contacts.
+---
+`export .txt`
+```
+Invalid command format!
+export: export the address book to a chosen file type
+Parameters: export .txt [PATH]
+Example: export .txt C:/user/user/desktop
+```
+
+---
+`export .txt C:\Windows` (on Windows only. Linux and MacOS do not apply)
+```
+Access denied
+```
+
+---
+=== Email Login
+*Note*: UI buttons will not update automatically if logged in (or out) from console. However, clicking the login button will update the login status accordingly.
+`email_login`
+```
+Invalid command format!
+email_login: log in with an email address
+Parameters: email_login "[EMAIL]" "[PASSWORD]"
+Example: email_login "example@gmail.com"" example password"
+```
+
+---
+`email_login cs2103testacc@gmail.com "testpass"` +
+`email_login cs2103testacc@gmail.com testpass` +
+`email_login "cs2103testacc@gmail.com" testpass`
+```
+Invalid command format!
+email_login: log in with an email address
+Parameters: email_login "[EMAIL]" "[PASSWORD]"
+Example: email_login "example@gmail.com"" example password"
+```
+
+---
+`email_login "123@hotmail.com" "password"`
+```
+Log in failed: The email domain is not supported
+```
+
+---
+`email_login "123hotmail" "password"`
+```
+The given email is not valid
+```
+
+---
+`email_login "cs2103testacc@gmail.com" "wrongpass"`
+```
+Log in failed: It could be one of the following reasons:
+1. Your Internet connection is not working
+2. Your email and password combination is not correct
+3. Allow less secure apps is not enable in your email
+```
+
+---
+`email_login "cs2103testacc@gmail.com" "testpass"`
+```
+Successfully logged in as cs2103testacc@gmail.com
+```
+
+---
+=== Email Send
+*Before testing this section please enter this command `email_login "cs2103testacc@gmail.com" "testpass"`*
+---
+`email_send`
+```
+Invalid command format!
+email_send: Send an email to one or more recipients
+Requires an logged in email using email_login
+Parameters: email_send "[RECIPIENTS]" "[TITLE]" "[BODY]"
+Example: email_send "example@gmail.com;example2@yahoo.com" "Test" "Test Body"
+```
+
+---
+`email_send cs2103testacc@gmail.com "Title" "Body"` +
+`email_send "cs2103testacc@gmail.com" Title Body` +
+`email_send cs2103testacc@gmail.com "Title" "Body"`
+```
+Invalid command format!
+email_send: Send an email to one or more recipients
+Requires an logged in email using email_login
+Parameters: email_send "[RECIPIENTS]" "[TITLE]" "[BODY]"
+Example: email_send "example@gmail.com;example2@yahoo.com" "Test" "Test Body"
+```
+
+---
+`email_send "cs2103testacc@gmail.com" "Title" "Body"`
+```
+Successfully sent
+```
+
+---
+*Please substitute `[ANY OF YOUR EMAIL]` with a suitable email address.*
+`email_send "cs2103testacc@gmail.com;[ANY OF YOUR EMAIL]" "Title" "Body"`
+```
+Successfully sent
+```
+Also please check that you have received an email from cs2103testacc@gmail.com with correct title and body.
+---
+=== Email Logout
+`email_logout`
+```
+Logged out
+```
+
+---
+=== Find Without Matching Whole Keyword
+`find_contain`
+```
+Invalid command format!
+find_contain: Finds all persons whose name / phone / address / email contains the given string
+Parameters: find_contain PREFIX_PERSON_ATTRIBUTE/STRING [MORE_PARAMETERS]...Examples:
+1) find_contain n/david li p/91
+2) find_contain e/gmail a/jurong
+```
+
+---
+`find_contain n/David Beckham`
+```
+1 persons listed!
+```
+
+---
+`find_contain n/avid`
+```
+2 persons listed!
+```
+
+---
+`find_contain n/vi p/99`
+```
+2 persons listed
+```
+
+=== Comment
+
+`comment 3 c/Likes programming.`
+```
+Added comment to Person: Alex Yeoh Phone: 87438807 Email: alexyeoh@example.com Address: Blk 30 Geylang Street 29, #06-40 Comments: Likes programming. Appointments:  Tags: [friends]
+```
+
+---
+`comment 4 c/`
+```
+Removed comment from Person: Bernice Yu Phone: 99272758 Email: berniceyu@example.com Address: Blk 30 Lorong 3 Serangoon Gardens, #07-18 Comments:  Appointments: 20/10/2017 15:50 Tags: [colleagues][friends]
+```
+
+---
+`comment 1000`
+```
+The person index provided is invalid
+```
+
+---
+`comment abc`
+```
+Invalid command format!
+comment: Edits the comment of the person identified by the index number used in the last person listing. Existing comment will be overwritten by the input.
+Parameters: INDEX (must be a positive integer) c/[COMMENT]
+Example: comment 1 c/Likes to swim.
+```
+
+=== Appoint
+
+`appoint 2 ap/25/12/2017 14:30`
+```
+Added appoint to Person: Bill Gates Phone: 11122345 Email: bill.g@microsoft.com Address: 311, Clementi Ave 2, #02-25 Comments:  Appointments: 25/12/2017 14:30 Tags: [2016][T12]
+```
+
+---
+`appoint 4 ap/`
+```
+Removed appoint from Person: Bernice Yu Phone: 99272758 Email: berniceyu@example.com Address: Blk 30 Lorong 3 Serangoon Gardens, #07-18 Comments:  Appointments:  Tags: [colleagues][friends]
+```
+
+---
+`appoint 200`
+```
+The person index provided is invalid
+```
+
+---
+`appoint 5 ap/20/08/2017 14:30`
+```
+Invalid Input: The input date is before the current time
+```
+
+---
+`appoint cdf`
+```
+Invalid command format!
+appoint: Edits the appoint of the person identified by the index number used in the last person listing. Existing appoint will be overwritten by the input.
+Parameters: INDEX (must be a positive integer) ap/[APPOINT]
+Example: appoint 1 ap/20/10/2017 14:30
+```
+
+___
+
+

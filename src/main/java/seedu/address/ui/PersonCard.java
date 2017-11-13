@@ -2,7 +2,9 @@ package seedu.address.ui;
 
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
@@ -24,6 +26,7 @@ public class PersonCard extends UiPart<Region> {
      */
 
     public final ReadOnlyPerson person;
+    private PersonListPanel personListPanel;
 
     @FXML
     private HBox cardPane;
@@ -37,12 +40,23 @@ public class PersonCard extends UiPart<Region> {
     private Label address;
     @FXML
     private Label email;
+    //@@author risashindo7
+    @FXML
+    private Label comment;
+    @FXML
+    private Label appoint;
+    //@@author
     @FXML
     private FlowPane tags;
+    @FXML
+    private ImageView avatar;
+    @FXML
+    private CheckBox checkBox;
 
-    public PersonCard(ReadOnlyPerson person, int displayedIndex) {
+    public PersonCard(ReadOnlyPerson person, int displayedIndex, PersonListPanel personListPanel) {
         super(FXML);
         this.person = person;
+        this.personListPanel = personListPanel;
         id.setText(displayedIndex + ". ");
         initTags(person);
         bindListeners(person);
@@ -57,6 +71,9 @@ public class PersonCard extends UiPart<Region> {
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
+        avatar.imageProperty().bind(person.getAvatar().avatarImageProperty());
+        comment.textProperty().bind(Bindings.convert(person.commentProperty()));
+        appoint.textProperty().bind(Bindings.convert(person.appointProperty()));
         person.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
             person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
@@ -83,5 +100,29 @@ public class PersonCard extends UiPart<Region> {
         PersonCard card = (PersonCard) other;
         return id.getText().equals(card.id.getText())
                 && person.equals(card.person);
+    }
+
+    /**
+     * actions when checkbox is clicked: this person is added to tickedPersons in personListPanel
+     */
+    @FXML
+    private void onCheckBoxClicked() {
+        if (checkBox.isSelected()) {
+            personListPanel.getTickedPersons().add(this);
+        } else {
+            personListPanel.getTickedPersons().remove(this);
+        }
+    }
+
+    public String getEmail() {
+        return email.getText();
+    }
+
+    public boolean isTicked() {
+        return checkBox.isSelected();
+    }
+
+    public String getName() {
+        return name.getText();
     }
 }

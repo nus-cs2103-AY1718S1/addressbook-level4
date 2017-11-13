@@ -18,16 +18,16 @@ import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
 public class PersonListPanelTest extends GuiUnitTest {
-    private static final ObservableList<ReadOnlyPerson> TYPICAL_PERSONS =
-            FXCollections.observableList(getTypicalPersons());
 
     private static final JumpToListRequestEvent JUMP_TO_SECOND_EVENT = new JumpToListRequestEvent(INDEX_SECOND_PERSON);
 
+    private ObservableList<ReadOnlyPerson> typicalPersons;
     private PersonListPanelHandle personListPanelHandle;
 
     @Before
     public void setUp() {
-        PersonListPanel personListPanel = new PersonListPanel(TYPICAL_PERSONS);
+        typicalPersons = FXCollections.observableList(getTypicalPersons());
+        PersonListPanel personListPanel = new PersonListPanel(typicalPersons);
         uiPartRule.setUiPart(personListPanel);
 
         personListPanelHandle = new PersonListPanelHandle(getChildNode(personListPanel.getRoot(),
@@ -36,9 +36,9 @@ public class PersonListPanelTest extends GuiUnitTest {
 
     @Test
     public void display() {
-        for (int i = 0; i < TYPICAL_PERSONS.size(); i++) {
-            personListPanelHandle.navigateToCard(TYPICAL_PERSONS.get(i));
-            ReadOnlyPerson expectedPerson = TYPICAL_PERSONS.get(i);
+        for (int i = 0; i < typicalPersons.size(); i++) {
+            personListPanelHandle.navigateToCard(typicalPersons.get(i));
+            ReadOnlyPerson expectedPerson = typicalPersons.get(i);
             PersonCardHandle actualCard = personListPanelHandle.getPersonCardHandle(i);
 
             assertCardDisplaysPerson(expectedPerson, actualCard);

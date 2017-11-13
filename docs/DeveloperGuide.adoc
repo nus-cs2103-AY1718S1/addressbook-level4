@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= Blast! - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -12,7 +12,7 @@ endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :repoURL: https://github.com/se-edu/addressbook-level4/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team T12-B2`      Since: `Oct 2017`      Licence: `MIT`
 
 == Setting up
 
@@ -114,6 +114,7 @@ The rest of the App consists of four components.
 * link:#logic-component[*`Logic`*] : The command executor.
 * link:#model-component[*`Model`*] : Holds the data of the App in-memory.
 * link:#storage-component[*`Storage`*] : Reads data from, and writes data to, the hard disk.
+* link:#email_component[*`Email`*]: Manages emails credentials and sending and checking emails.
 
 Each of the four components
 
@@ -210,6 +211,19 @@ The `Storage` component,
 * can save `UserPref` objects in json format and read it back.
 * can save the Address Book data in xml format and read it back.
 
+=== Email component
+
+image::EmailClassDiagram.png[width="800"]
+_Figure 2.6.1: Structure of the Email Component_
+
+API: `Email.java`
+
+The `Email` component:
+
+* stores a private `Authentication` object that holds user's email credentials.
+* stores the currently logged in email as a `String`.
+* can send and check emails with the current credentials.
+
 === Common classes
 
 Classes used by multiple components are in the `seedu.addressbook.commons` package.
@@ -303,6 +317,7 @@ The following activity diagram summarize what happens inside the `UndoRedoStack`
 
 image::UndoRedoActivityDiagram.png[width="200"]
 
+
 ==== Design Considerations
 
 **Aspect:** Implementation of `UndoableCommand` +
@@ -345,6 +360,24 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+// tag::emailcomponent[]
+=== Email Component
+The email component ultilised the external library `javax.mail` for sending and receiving emails.
+
+The `EmailManager.java` class implementing `Email` manages the login status by keeping an `Autheticator` object along with its email `String`.
+
+As the library `javax.mail` uses `IMAP` protocol for receving emails and `SMTP` for sending emails, the `EmailManager` also holds a `Hashtable` of `IMAP` hosts and `SMTP` hosts / ports for different email providers. This allows future support for more providers.
+
+==== Design Considerations
+**Aspect:** Implementation of `Email` +
+**Alternative 1 (current choice):** Create a new `Email` Component +
+**Pros:** Can be further improved to work with other commands to quickly send emails to a group of people +
+**Cons:** Command line interface is not user friendly +
+**Alternative 2:** Use the built in browser to send emails +
+**Pros:** Already has the GUI which is user friendly, support for all email providers +
+**Cons:** However, it will be more difficult to work with other commands to send to a specific groups of contacts.
+
+// end::emailcomponent[]
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
@@ -363,6 +396,291 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 === Configuration
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
+
+// tag::multiple[]
+=== Add multiple persons feature
+
+The feature to add multiple persons is facilitated by `AddMultipleCommand` which is a command that extends `UndoableCommand` i.e. `AddMultipleCommand` execution method is `executeUndoableCommand`.
+
+`AddMultipleCommand` adds new persons in a similar fashion with the existing `AddCommand`. Both uses the method, `addPerson`, of the model to add a given person. Furthermore, both commands parses the persons particulars similarly.
+
+Nevertheless, there are subtle differences between `AddMultipleCommand` and `AddCommand`. Below are characteristics that pertains to `AddMultipleCommand`:
+
+****
+1.  The `AddMultipleCommand` parses persons' particulars from data of a `.txt` file instead of user argument inputs.
+2.  The `AddMultipleCommand` user argument inputs is a file name of the file that contains persons' particulars.
+3.  The `AddMultipleCommand` is an independent command by itself i.e. calling undo/redo will undo/redo the entire data that was changed in the storage e.g. `Bob`, `Tom` and `Kat` was added, undoing will remove `Bob`, `Tom` and `Kat`.
+****
+
+The following sequence diagram shows how the add multiple persons operation works:
+
+image::AddMultipleCommandSequenceDiagram.png[width="800"]
+
+
+*Parsing of persons' particulars*
+
+The `AddMultipleCommandParser` implements `Parser`, and it handles the parsing of user input file path and the data that contains in the `.txt` file.
+
+As shown in the sequence diagram above, `AddMultipleCommandParser` utilizes the FileUtil to retrieve the data as a String from the `.txt` file. The retrieved data is then transformed to be stored in an array split by `System.lineSeparator()` to be parsed based on each line.
+The result of the parsed data is stored in an `ArrayList`, then it is returned with the construction of `AddMultipleCommand`.
+
+*Implementation as an independent Undoable/Redoable command*
+
+The `AddMultipleCommand` contains two `ArrayList`; One `Person` array list to facilitate adding new persons and one `ReadOnlyPerson` array list to facilitate deletion of persons in the event of unexpected result that requires the command to roll back.
+
+The user executes a new `AddMultipleCommand`, `multiple ./data/personsToAdd.txt`, to add a list of persons' particulars contained in `personsToAdd.txt`.
+
+After the parsing of inputs and construction of a new `AddMultipleCommand`, the `ArrayList`, `readOnlyPeople` will point to the `personsList` that was passed in from `AddMultipleCommandParser`; while `ArrayList`, `toAdd` will contain `Person` that was constructed with `personsList`.
+The below is a graphical representation of two examples `ArrayList`.
+
+image::AddMultipleCommandInitializationDiagram.png[width="800"]
+
+A variable `numberOfPersonsAdded` is used to keep track of `Person` added sequentially to the storage from `toAdd`.
+In the event when an error occur, a loop is initiated to delete the `ReadOnlyPerson` that contain in `readOnlyPeople` sequentially; the number of times the loop runs is based on `numberOfPersonsAdded`.
+As such, no persons will be stored in the storage if the execution fails.
+
+image::AddMultipleCommandExecutionErrorDiagram.png[width="800"]
+
+==== Design Considerations
+
+**Aspect:** Implementation of `AddMultipleCommand` +
+**Alternative 1 (current choice):** Add a new command `AddMultipleCommand` +
+**Pros:** Flexibility in using other data structures to store person data that will be added. +
+**Cons:** Additional data structures that might cost more space. +
+**Alternative 2:** Enhance the current `AddCommand` +
+**Pros:** Uses almost entirely existing methods to implement. +
+**Cons:** Restrictive data structure that do not support adding multiple persons.
+
+// end::multiple[]
+
+// tag::searchbar[]
+=== Search Bar implementation
+
+The Search Bar is a GUI feature that allows users to type into 5 text fields (for name / phone / address / email / tag)
+and filters those whose details contain the string in the respective text fields.
+
+Every text field in the Search Bar listens to changes and calls `onSearchBarChanged` if an input is detected. The `onSearchBarChanged` function then
+collates information in all 5 text fields and calls a `find_contain` command with the collated information.
+
+*Sequence diagram of Search Bar*
+
+image::search-bar-sequence.png[]
+
+* `SearchBar.java` inherits from UIPart and therefore using `FXML` a function `onSearchBarChanged()` that is called every time a text field changes can be attached to each of the search field.
+* `onSearchBarChanged()` reads current texts in all search fields and builds a command input for `find_contain`.
+* The command input is then passed to `LogicManager` and `AddressBookParser` then `FindContainCommandParser` respectively.
+* As such, a new `find_contain` command is executed every time there is a change in the search bar. The `find_contain` passes a new `predicate` to the `ModelManager` to update the filtered person list.
+
+==== Design Considerations
+
+**Aspect:** Implementation of `SearchBar.java` +
+**Alternative 1 (current choice):** Add a new `SearchBar` that inherits `UIPart` +
+**Pros:** Very easy to find and filter desired contacts +
+**Cons:** Additional data structures that might cost more space. +
+**Alternative 2:** Just use the `find_contain` command +
+**Pros:** Uses entirely existing methods to implement. +
+**Cons:** Slow and time consuming for users.
+
+// end::searchbar[]
+
+// tag::checkbox[]
+=== Implemation of check box in contact card for sending email to multiple persons
+
+To the left of every contact card, there is a check box. When the email send window opens, the recipient field will automatically contain all ticked persons' emails.
+
+image::email-checkbox.png[]
+
+The ticked person cards's references are stored in an `ArrayList` in `PersonListPanel.java`. The following sequence happens when a person card is ticked.
+
+image::ticked-persons.png[]
+
+Also, a listener is added to the `ObservableList` containing the filtered persons to show in the panel. When a change in the `ObservableList` is listened, the `TickedPersons` `ArrayList` is reset.
+
+ personList.addListener(new ListChangeListener<ReadOnlyPerson>() {
+             @Override
+             public void onChanged(Change<? extends ReadOnlyPerson> c) {
+                 tickedPersons = new ArrayList<PersonCard>();
+             }
+         });
+
+// end::checkbox[]
+
+// tag::themeing[]
+
+=== Theme Support
+
+Theme support is implemented by leveraging the separation of styling from views since `css` files can be created by the end user, and imported into `fxml` views. +
+
+Currently, v1.2 is shipped with two themes, *Dark* and *Light*.
+
+*Importing Styles at Runtime*
+
+By default, `fxml` files in the AddressBook application contain the line `<URL value="@THEME.css" />` to import CSS stylesheets.
+
+For a user selectable theme, this declaration is removed from each `fxml` file, and replaced by a method call via each model's associated `javafx.scene.Scene` object. Styling is now set in the pattern: +
+`scene.getStylesheets().add(THEME RESOURCE);`
+
+*Saving Theme as User Preference*
+
+User Preferences are saved and loaded by default from the `preferences.json` file in the parent directory. The current user theme is also saved in this file as the key-value pair `currentUserTheme: THEME_NAME`.
+
+The User Preferences wrapper class is then updated to incorporate getters and setters for this new attribute, and each model may now access the current user theme to load the proper stylesheet at runtime.
+
+*Allowing User to Preview Themes*
+
+Theme previews are supported with thumbnails. Each thumbnail is simply a screenshot of the selected theme loaded in the AddressBook application.
+
+These theme preview thumbnails are placed in `/images/theme_thumbnails`.
+
+*GUI Interface for Theme Selection*
+
+Similar to the help window, a *Theme Selection* window has been added to the application to facilitate theme switching.
+
+The view is declared in `ThemeSelectionWindow.fxml` and controlled by `ThemeSelectionWindow.java`. This windows is created and opened after an `onAction` event from a menu button in `MainWindow.java`.
+
+*Improvements for Scalability*
+
+In the next version a format will be incorporated to standardize theme name, resource location, thumbnail. With this, the end user can create and load multiple custom themes into the AddressBook application.
+
+// end::themeing[]
+
+=== Commenting
+The commenting feature was implemented as an end-to-end feature that touched upon all components.
+
+The implementation process consisted of +
+1) Introducing an empty 'comment' command which does nothing, +
+2) making the command accept arguments, +
+3) modify the UI by adding room for 'comment' in the 'PersonCard', +
+4) adding a 'Comment' class, +
+5) making changes to Storage by adding 'comment' field to 'XmlAdaptedPerson' class, and finally, +
+6) implementing 'CommentCommand#execute()' in logic.
+
+==== Design Considerations
+**Aspect:** Implementation of `Comment` +
+**Alternative 1 (current choice):** Simply create a new `Comment` Component +
+**Pros:** Works well with the already existing commands and can be modified easily +
+**Cons:** Command line interface is not user friendly +
+**Alternative 2:** Create the 'comment' feature with a more user-friendly (post-it like) interface +
+**Pros:** This GUI will be user-friendly, being close to our familiar habit of post and scrapping post-it notes +
+**Cons:** The present project lacks the GUI to implement this. It may also be more difficult to work with other commands.
+
+=== Making Appointments
+The appointment feature was implemented as an end-to-end feature that added modifications to all components.
+
+The implementation process consisted of first creating the appoint command which behaves just like the comment command, making the new command accept arguments, adding extra line in Person Card reserved for the appointment information, and implementing the Appoint Command execution in Logic.
+
+An improvement to the Appointment feature have been added so that it catches any invalid date inputs that occur before the current time of usage, as there is no point making an appointment in the past. This was implemented by using the Calendar and Date libraries in Java.
+
+==== Design Considerations
+**Aspect:** Implementation of `Appoint` +
+**Alternative 1 (current choice):** Simply create a new `Appoint` Component which behaves very similarly to the `Comment` feature +
+**Pros:** Works well with the already existing commands and can be modified easily +
+**Cons:** Command line interface is not user friendly & the Appointment acts just like a normal comment +
+**Alternative 2:** Create the 'appoint' feature defined in a more structured class which restricts the formatting of the appointment +
+**Pros:** This restriction of the formatting will prevent the user from inserting any information that are not appointments +
+**Cons:** The formatting restriction may diminish the freedom the user may have when allocating appointments
+
+==== Possible Improvements
+1) Further modify this feature so that every new appointment checks if the time clashes with any pre-existing appointments
+2) Make multiple appointments for one person
+3) Contruct a new GUI where all the appointments can be viewed on one screen
+
+// tag::merge[]
+
+=== Merging AddressBook data file
+
+The feature to merge a new address book data into the current address book default storage file (i.e. `addressBookFilePath` specified in `preferences.json`) is facilitated by `MergeCommand`.
+The `MergeCommand` extends `UndoableCommand` i.e. it execution method is `executeUndoableCommand`.
+
+When the command is executed, the data of the new file is loaded with XmlFileStorage then it is transformed to `Observable<ReadOnlyPerson>`.
+Thereafter, the model will merge the person in `Observable<ReadOnlyPerson>` list with the default data.
+
+In the merging process the model will compare the data (i.e. persons contain inside the `UniquePersonsList`) in `addressBook` with the `ReadOnlyPerson` object.
+While duplicated persons are ignored, unique persons will be added into the default data storage with the `ModelManager` 's `addPerson(ReadOnlyPerson)` method.
+
+The following sequence diagram shows how the merge operation works:
+
+image::MergeCommandSequenceDiagram.png[width="800"]
+
+==== Design Considerations
+
+**Aspect:** Implementation of `MergeCommand` +
+**Alternative 1 (current choice):** Utilizes the `ModelManager` 's `addPerson` method to merge new persons into the default data file +
+**Pros:** Retain the current design of `Model` component without adding new attributes in `ModelManager` . +
+**Cons:** When the new file to merge contain large amount unique persons that can be merged, the `Logger` will log a large number of person added during the merge. +
+**Alternative 2:** Using the `EventsCenter` in `MergeCommand` to post and event to allow the storage to handle the request +
+**Pros:** Allow `Storage` components to handle the merging of data. +
+**Cons:** Hard to catch unexpected exceptions as `EventsCenter` 's `post` method do not throw exceptions.
+**Alternative 3:** Include `AddressBookStorage` as an attribute of `ModelManager` +
+**Pros:** Allow `Storage` components to handle the merging of data. +
+**Cons:** Tighter coupling as now `AddressBookStorage` is associated with `ModelManager` . +
+**Alternative 4:** Include `AddressBookStorage` as an attribute of `LogicManager` +
+**Pros:** Allow `Storage` components to handle the merging of data. +
+**Cons:** Disrupt the design of `Logic` component. +
+
+// end::merge[]
+
+// tag::find[]
+
+=== Filter mechanism for find command
+
+The feature to filter contacts stored in the address book is facilitated by both Logic and Model component.
+The `FindCommand` class contains `PersonContainsKeywordsPredicate` as an attribute. `PersonContainsKeywordsPredicate`
+implements `Predicate<ReadOnlyPerson`, it has a `HashMap<String, List<String>>` with the person's attributes prefix (e.g. `n/`) as the key
+and the keywords entered by the user as the value.
+
+Depending on the user input, the `FindCommandParser` will parse accordingly to the prefix present in the arguments.
+
+Below is a snippet of how the keywords are parsed:
+[source,java]
+----
+private void parseMultiMap(ArgumentMultimap argsMap, HashMap<String, List<String>> mapKeywords, Prefix prefix)
+            throws ParseException {
+        String trimmedArgs;
+        try {
+            if (argsMap.getValue(prefix).isPresent()) {
+                trimmedArgs = ParserUtil.parseKeywords(argsMap.getValue(prefix)).get().trim();
+                if (trimmedArgs.isEmpty()) {
+                    throw new ParseException(...);
+                }
+               ...
+            }
+        } ...
+    }
+----
+
+After execution, `updateFilteredPersonList` will be called by the model and `PersonContainsKeywordsPredicate`
+will test if the user input keywords matches the respective attributes identified by the `HashMap` key.
+The filtered person list will be updated for display.
+
+Below is a snippet on name attribute test:
+[source,java]
+----
+private boolean checkPersonContainsNamePredicate(ReadOnlyPerson person) {
+        boolean result = false;
+        if (keywords.containsKey(PREFIX_NAME.toString()) && !keywords.get(PREFIX_NAME.toString()).isEmpty()) {
+            result = keywords.get(PREFIX_NAME.toString()).stream()
+                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword));
+        }
+        return result;
+    }
+----
+
+The following activity diagram summarize what happens when a user executes a find command:
+
+image::FindCommandActivityDiagram.png[width="500"]
+
+==== Design Considerations
+
+**Aspect:** Data structure of `FindCommand` +
+**Alternative 1 (current choice):** `PersonContainsKeywordsPredicate` which contains a `HashMap` as the underlying data structure +
+**Pros:** Easy to extend if new person attributes are needed to be filtered +
+**Cons:** Need users to enter the attribute prefix as the key  +
+**Alternative 2:** `PersonContainsKeywordsPredicate` which contains a multiple `ArrayList` as the underlying data structure +
+**Pros:** Do not need a key to store the keywords +
+**Cons:** Need to create as many `ArrayList` as the number of person's attributes is needed to be filtered.
+
+// end::find[]
 
 == Documentation
 
@@ -721,17 +1039,62 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+|`* * *` |user |be able to sort my contacts both by their first name or last name |
 
-|`* * *` |user |add a new person |
+|`* * *` |user |have a "comment" section for each contact |record personal/miscellaneous information about the person
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |user |export all saved contacts and print out  |refer to when I can't use the software
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |user |add and create tags and add them to contacts |quickly find related personnel when needs be
 
-|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+|`* * *` |user |be able to edit the contact details |update when my contacts change their particulars
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* * *` |user |have the option to favourite some contacts |retrieve the information of contacts that I will frequently access
+
+|`* * *` |user |able to search my contacts by tags |know my relationship with the contact
+
+|`* * *` |user |add a person's details |use the saved details to contact him/her
+
+|`* * *` |new user |use the graphical interface |easily perform operations
+
+|`* * *` |new user |see tutorial bubbles the first time I use the software |familiarise myself with the features
+
+|`* * *` |forgetful user |use only a small part of a person's details to find his or her contacts|
+
+|`* * *` |forgetful user |attach an image to a contact |remember his name / face later
+
+|`* * *` |salesperson |be able to store the birthday of my customers |remember their birthday
+
+|`* * *` |tutor with many new students each semester |be able add multiple students |update my address book quickly each new semester
+
+|`* * *` |salesperson |be able to email my contacts |update them with the latest products information
+
+|`* *` |user |export my address book to a readable file format (e.g. CSV, Excel spreadsheet)|share the address book contacts with other people
+
+|`* *` |user |link contacts with URLs |easily access their social media profiles
+
+|`* *` |user / businessman |able to create "events" where I set the time/location/content and invite contacts to attend the event |
+
+|`* *` |user |open a sending mail window by clicking on a contact's address |email him / her faster
+
+|`* *` |user |quickly exports a group of contacts into .vcf |load them onto my smartphone
+
+|`* *` |user |have different themes for the address book |use one that suits my preference
+
+|`* *` |main tutor with many assistant tutors |merge the different address book of my assistant tutors |have all the students contact
+
+|`* *` |tutor |keep track of my student's grades as a part of their contact information (maybe the information should be tucked in a relatively "hidden" section)|
+
+|`* *` |tutor |have an option to blast emails to a group of contacts |disseminate informations quickly
+
+|`* *` |tutor or a businessperson |have an option to quickly generate a visual timetable |easily refer to to make new appointment / tutorial slots
+
+|`* *` |tutor of many students |see a notification when I try to add an already occupied time slot |my timetable won't clash
+
+|`* *` |tutor / businessman |have an option to set an alarm before a meeting / tutorial slot |won't forget
+
+|`* *` |salesperson |receive notification of my contacts' birthday |remember to send them well wishes
+
 |=======================================================================
 
 {More to be added}
@@ -742,6 +1105,88 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
+=== Use case: Add person
+
+*MSS*
+
+1.  User requests to add a new person
+2.  User gives details of the information to be added, following the appropriate formatting
+3.  AddressBook adds the person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The user does not follow the specified format.
++
+[none]
+** 2a1. AddressBook shows an error message.
++
+Use case ends.
+
+* 3a. The given name already exists.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case ends.
+
+=== Use case: List persons
+
+*MSS*
+
+1.  User requests to list contacts.
+2.  AddressBook lists all persons in the book.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. The book is empty.
++
+Use case ends.
+
+=== Use case: Edit person
+
+*MSS*
+
+1.  User requests to edit a person
+2.  AddressBook shows a list of persons
+3.  User requests to edit a specific person in the list
+4.  AddressBook updates that person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The AddressBook is empty.
++
+Use case ends.
+
+* 3a. The index provided is invalild
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case ends.
+
+* 3b. The user provides no information to update
++
+[none]
+** 3b1. AddressBook shows an error message.
++
+Use case ends.
+
+* 3c. The iuser violates the specified format
++
+[none]
+** 3c1. AddressBook shows an error message.
++
+Use case ends.
+
 === Use case: Delete person
 
 *MSS*
@@ -767,7 +1212,204 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-{More to be added}
+[discrete]
+=== Use case: Adding multiple persons
+
+*MSS*
+
+1.  User requests to add multiple persons from a `.txt` file
+2.  AddressBook parse persons' particulars from file
+3.  AddressBook adds all persons in the file
+
+*Extensions*
+
+[none]
+* 2a. The file does not exist.
++
+** 2a1. AddressBook shows an error message.
++
+Use case ends.
+
+[none]
+* 2b. The persons' particulars format are invalid.
++
+** 2b1. AddressBook shows an error message.
++
+Use case ends.
+
+* 3a. The file contain person(s) that already exist in AddressBook.
++
+[none]
+** 3a1. AddressBook deletes all successfully added persons prior to duplicated persons.
+** 3a2. AddressBook shows an error message.
++
+Use case ends.
+
+=== Use case:  History
+
+*MSS*
+
+1.  User requests to list the history of commands
+2.  AddressBook lists the history of commands
+
++
+Use case ends.
+
+*Extensions*
+
+[none]
+
+* 2a. There are no previous commands
++
+Use case ends.
+
+=== Use case:  Undo
+
+*MSS*
+
+1.  User requests to undo the previous command
+2.  AddressBook undoes the previous command
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The previous command is not an undoable command (add, delete, edit, clear).
++
+Use case ends.
+
+=== Use case:  Export
+
+*MSS*
+
+1.  User requests to export the addressbook to a `.txt` file
+2.  AddressBook exports the addressbook to a `.txt` file in the specified folder
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The specfied path is not accessible
+** 2a1. AddressBook shows an error message
++
+Use case ends.
+
+=== Use case:  Find
+
+*MSS*
+
+1.  User requests to find persons with keywords
+2.  AddressBook shows a list of person(s) found with the keywords
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The input format is invalid
+** 1a1. AddressBook shows an error message
++
+Use case ends.
+
+* 2a. The addressbook is empty
+** 2a1. AddressBook returns list of 0 person found.
++
+Use case ends.
+
+=== Use case: Email Login
+*MSS*
+
+1. User attempts to log in with an email and password
+2. AddressBook saves the credentials
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The email and password combination is incorrect.
+** 2a1. AddressBook shows an error message
++
+Use case ends.
+* 2b. The Internet connection is not working
+** 2b1. Addressbook shows an error message
++
+Use case ends.
+* 2c. The email does not have "Allow less secure apps" enabled.
+** 2c1. AddressBook shows an error message
++
+Use case ends
+* 2d. The email format is not valid.
+** 2d1. AddressBook shows an error message
++
+Use case ends
+
+=== Use case: Email Send
+*MSS*
+
+1. Users attenpts to send an email with a title and a body to a list of recipients.
+2. AddressBook uses the logged in email and sends the email message.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. There is not email currently logged in.
+** 2a1. AddressBook does not send the email.
+** 2a2. AddressBook shows an error message.
++
+Use case ends
+* 2b. The recipients emails have one or more invalid emails.
+** 2b1. AddressBook does not send the email.
+** 2b2. AddressBook shows an error message.
++
+Use case ends
+* 2c. The Internet connection is not working
+** 2c1. AddressBook does not send the email.
+** 2c2. AddressBook shows an error message.
++
+Use case ends
+
+[discrete]
+=== Use case: Merging storage files
+
+*MSS*
+
+1.  User requests to merge a given file to default storage file
+2.  AddressBook merges the data of into the default storage file
+
+*Extensions*
+
+[none]
+* 2a. The user given file does not exist.
++
+** 2a1. AddressBook shows an error message.
++
+Use case ends.
+
+[none]
+* 2b. The persons' particulars format are invalid.
++
+** 2b1. AddressBook shows an error message.
++
+Use case ends.
+
+[none]
+* 2c. The given file contain person(s) that already exist in AddressBook.
++
+** 2c1. AddressBook ignores the duplicated person(s) and sieve out unique person(s) from the given file.
++
+Use case resumes at step 2.
+
+[none]
+* 2d. The default data file does not exist
++
+** 2d1. AddressBook creates the file
++
+Use case resumes at step 2.
 
 [appendix]
 == Non Functional Requirements
@@ -775,11 +1417,52 @@ Use case resumes at step 2.
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Should be backwards compatible with data stored by earlier version.
+.  Software should be well tested.
+.  Should be able to be used by a novice user who had never use address book application before.
+.  Should be able to respond to any commands within 5 seconds.
+.  Should be able to recover records of address book in event of program crash.
+.  Should have a well documented user guide to facilitate novice user.
+.  The data should be stored locally.
 
 {More to be added}
 
 [appendix]
 == Glossary
+
+[[address-book]]
+Address Book
+
+....
+Collection of all persons data used by application
+....
+
+[[person]]
+Person
+
+....
+Represents a particular collection of data associated with one entry in the address book.
+....
+
+[[command]]
+Command
+....
+An action executed by the application on the address book.
+....
+
+[[keyword]]
+Keyword
+
+....
+Specifier used to query data, (ie. part of name, phone number, address).
+....
+
+[[Tag]]
+Tag
+
+....
+A custom specifier to categorize contacts by similarity, (ie. 'friends', 'family', 'colleagues').
+....
 
 [[mainstream-os]]
 Mainstream OS

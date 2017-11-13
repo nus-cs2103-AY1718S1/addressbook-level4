@@ -1,0 +1,2 @@
+n/Amy Bee p/11111111 e/amy@example.com a/Block 312, Amy Street 1
+n/Bob Choo p/22222222 e/bob@example.com a/Block 123, Bobby Street 3

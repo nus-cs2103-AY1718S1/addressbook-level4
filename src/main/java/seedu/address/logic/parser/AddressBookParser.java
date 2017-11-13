@@ -7,15 +7,25 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AddMultipleCommand;
+import seedu.address.logic.commands.AppointCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
+import seedu.address.logic.commands.CommentCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.EmailLoginCommand;
+import seedu.address.logic.commands.EmailLogoutCommand;
+import seedu.address.logic.commands.EmailSendCommand;
 import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.ExportCommand;
 import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.FindContainCommand;
+import seedu.address.logic.commands.GetEmailCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.MergeCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
@@ -49,27 +59,65 @@ public class AddressBookParser {
         switch (commandWord) {
 
         case AddCommand.COMMAND_WORD:
+        case AddCommand.COMMAND_ALIAS:
             return new AddCommandParser().parse(arguments);
 
+        case AddMultipleCommand.COMMAND_WORD:
+            return new AddMultipleCommandParser().parse(arguments);
+
+        case AppointCommand.COMMAND_WORD:
+            return new AppointCommandParser().parse(arguments);
+
+        case ExportCommand.COMMAND_WORD:
+            return new ExportCommandParser().parse(arguments);
+
         case EditCommand.COMMAND_WORD:
+        case EditCommand.COMMAND_ALIAS:
             return new EditCommandParser().parse(arguments);
 
         case SelectCommand.COMMAND_WORD:
+        case SelectCommand.COMMAND_ALIAS:
             return new SelectCommandParser().parse(arguments);
 
         case DeleteCommand.COMMAND_WORD:
+        case DeleteCommand.COMMAND_ALIAS:
             return new DeleteCommandParser().parse(arguments);
 
         case ClearCommand.COMMAND_WORD:
+        case ClearCommand.COMMAND_ALIAS:
             return new ClearCommand();
 
         case FindCommand.COMMAND_WORD:
+        case FindCommand.COMMAND_ALIAS:
             return new FindCommandParser().parse(arguments);
 
+        case EmailLogoutCommand.COMMAND_WORD:
+            return new EmailLogoutCommand();
+
+        case GetEmailCommand.COMMAND_WORD:
+            return new GetEmailCommand();
+
+        case FindContainCommand.COMMAND_WORD:
+            return new FindContainCommandParser().parse(arguments);
+
+        case CommentCommand.COMMAND_WORD:
+            return new CommentCommandParser().parse(arguments);
+
+        case EmailLoginCommand.COMMAND_WORD:
+            return new EmailLoginParser().parse(arguments);
+
+        case EmailSendCommand.COMMAND_WORD:
+            return new EmailSendParser().parse(arguments);
+
+        case MergeCommand.COMMAND_WORD:
+            return new MergeCommandParser().parse(arguments);
+
         case ListCommand.COMMAND_WORD:
+        case ListCommand.COMMAND_ALIAS:
             return new ListCommand();
 
         case HistoryCommand.COMMAND_WORD:
+        case HistoryCommand.COMMAND_ALIAS:
             return new HistoryCommand();
 
         case ExitCommand.COMMAND_WORD:
@@ -79,9 +127,11 @@ public class AddressBookParser {
             return new HelpCommand();
 
         case UndoCommand.COMMAND_WORD:
+        case UndoCommand.COMMAND_ALIAS:
             return new UndoCommand();
 
         case RedoCommand.COMMAND_WORD:
+        case RedoCommand.COMMAND_ALIAS:
             return new RedoCommand();
 
         default:

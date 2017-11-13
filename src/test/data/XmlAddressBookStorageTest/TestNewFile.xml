@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addressbook>
+    <persons>
+        <name>Alex Yeoh</name>
+        <phone>87438807</phone>
+        <email>alexyeoh@example.com</email>
+        <comment></comment>
+        <appoint></appoint>
+        <address>Blk 30 Geylang Street 29, #06-40</address>
+        <avatar>/images/generic_avatar.png</avatar>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Bernice Yu</name>
+        <phone>99272758</phone>
+        <email>berniceyu@example.com</email>
+        <comment>Likes to swim.</comment>
+        <appoint>20/10/2017 15:50</appoint>
+        <address>Blk 30 Lorong 3 Serangoon Gardens, #07-18</address>
+        <avatar>/images/generic_avatar.png</avatar>
+        <tagged>colleagues</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Charlotte Oliveiro</name>
+        <phone>93210283</phone>
+        <email>charlotte@example.com</email>
+        <comment></comment>
+        <appoint></appoint>
+        <address>Blk 11 Ang Mo Kio Street 74, #11-04</address>
+        <avatar>/images/generic_avatar.png</avatar>
+        <tagged>neighbours</tagged>
+    </persons>
+    <persons>
+        <name>Changed Name</name>
+        <phone>91031282</phone>
+        <email>cf@example.com</email>
+        <comment>As quick as a leopard.</comment>
+        <appoint>27/11/2017 10:00</appoint>
+        <address>Blk 436 Serangoon Gardens Street 26, #16-43</address>
+        <avatar>/images/generic_avatar.png</avatar>
+        <tagged>family</tagged>
+    </persons>
+    <persons>
+        <name>Irfan Ibrahim</name>
+        <phone>92492021</phone>
+        <email>irfan@example.com</email>
+        <comment></comment>
+        <appoint></appoint>
+        <address>Blk 47 Tampines Street 20, #17-35</address>
+        <avatar>/images/generic_avatar.png</avatar>
+        <tagged>classmates</tagged>
+    </persons>
+    <persons>
+        <name>Roy Balakrishnan</name>
+        <phone>92624417</phone>
+        <email>royb@example.com</email>
+        <comment></comment>
+        <appoint></appoint>
+        <address>Blk 45 Aljunied Street 85, #11-31</address>
+        <avatar>/images/generic_avatar.png</avatar>
+        <tagged>colleagues</tagged>
+    </persons>
+    <persons>
+        <name>New I</name>
+        <phone>8172932</phone>
+        <email>ng@example.com</email>
+        <comment></comment>
+        <appoint></appoint>
+        <address>Blk 45 Rage Street 85, #11-31</address>
+        <avatar>/images/generic_avatar.png</avatar>
+        <tagged>rage</tagged>
+    </persons>
+    <persons>
+        <name>New II</name>
+        <phone>92492021</phone>
+        <email>irfan@example.com</email>
+        <comment></comment>
+        <appoint></appoint>
+        <address>Blk 47 Tampines Street 20, #17-35</address>
+        <avatar>/images/generic_avatar.png</avatar>
+        <tagged>derp</tagged>
+    </persons>
+    <persons>
+        <name>New III</name>
+        <phone>92624417</phone>
+        <email>royb@example.com</email>
+        <comment></comment>
+        <appoint></appoint>
+        <address>Blk 45 Aljunied Street 85, #11-31</address>
+        <avatar>/images/generic_avatar.png</avatar>
+        <tagged>seed</tagged>
+    </persons>
+    <tags>colleagues</tags>
+    <tags>classmates</tags>
+    <tags>neighbours</tags>
+    <tags>family</tags>
+    <tags>friends</tags>
+    <tags>rage</tags>
+    <tags>derp</tags>
+    <tags>seed</tags>
+</addressbook>

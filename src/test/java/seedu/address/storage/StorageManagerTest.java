@@ -17,9 +17,10 @@ import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
+import seedu.address.ui.GuiUnitTest;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
-public class StorageManagerTest {
+public class StorageManagerTest extends GuiUnitTest {
 
     @Rule
     public TemporaryFolder testFolder = new TemporaryFolder();

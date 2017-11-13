@@ -13,6 +13,7 @@ import javafx.scene.web.WebView;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.model.UserPrefs;
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -20,7 +21,8 @@ import seedu.address.model.person.ReadOnlyPerson;
  */
 public class BrowserPanel extends UiPart<Region> {
 
-    public static final String DEFAULT_PAGE = "default.html";
+    public static final String DEFAULT_DARK_PAGE = "default.html";
+    public static final String DEFAULT_LIGHT_PAGE = "defaultLight.html";
     public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/search?safe=off&q=";
     public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
 
@@ -28,11 +30,14 @@ public class BrowserPanel extends UiPart<Region> {
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
+    private UserPrefs prefs;
+
     @FXML
     private WebView browser;
 
-    public BrowserPanel() {
+    public BrowserPanel(UserPrefs prefs) {
         super(FXML);
+        this.prefs = prefs;
 
         // To prevent triggering events for typing inside the loaded Web page.
         getRoot().setOnKeyPressed(Event::consume);
@@ -54,7 +59,14 @@ public class BrowserPanel extends UiPart<Region> {
      * Loads a default HTML file with a background that matches the general theme.
      */
     private void loadDefaultPage() {
-        URL defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
+        URL defaultPage;
+
+        if (prefs.getCurrentUserTheme().equals("DarkTheme")) {
+            defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_DARK_PAGE);
+        } else {
+            defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_LIGHT_PAGE);
+        }
+
         loadPage(defaultPage.toExternalForm());
     }
 

@@ -14,6 +14,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import seedu.address.MainApp;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
@@ -63,6 +64,12 @@ public class MainWindow extends UiPart<Region> {
     @FXML
     private StackPane statusbarPlaceholder;
 
+    @FXML
+    private StackPane functionButtonsPanel;
+
+    @FXML
+    private StackPane searchBarPlaceholder;
+
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
 
@@ -78,7 +85,11 @@ public class MainWindow extends UiPart<Region> {
         setWindowMinSize();
         setWindowDefaultSize(prefs);
         Scene scene = new Scene(getRoot());
+        scene.getStylesheets().add(
+                MainApp.class.getResource("/view/" + prefs.getCurrentUserTheme() + ".css").toExternalForm());
         primaryStage.setScene(scene);
+        primaryStage.setMinWidth(1018);
+        primaryStage.setMinHeight(729);
 
         setAccelerators();
         registerAsAnEventHandler(this);
@@ -94,6 +105,7 @@ public class MainWindow extends UiPart<Region> {
 
     /**
      * Sets the accelerator of a MenuItem.
+     *
      * @param keyCombination the KeyCombination value of the accelerator
      */
     private void setAccelerator(MenuItem menuItem, KeyCombination keyCombination) {
@@ -126,7 +138,7 @@ public class MainWindow extends UiPart<Region> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
+        browserPanel = new BrowserPanel(prefs);
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
@@ -140,6 +152,12 @@ public class MainWindow extends UiPart<Region> {
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
+        FunctionButtons functionButtons = new FunctionButtons(logic, primaryStage, this, prefs);
+        functionButtonsPanel.getChildren().add(functionButtons.getRoot());
+
+        SearchBar searchBar = new SearchBar(logic);
+        searchBarPlaceholder.getChildren().add(searchBar.getRoot());
     }
 
     void hide() {
@@ -152,6 +170,7 @@ public class MainWindow extends UiPart<Region> {
 
     /**
      * Sets the given image as the icon of the main window.
+     *
      * @param iconSource e.g. {@code "/images/help_icon.png"}
      */
     private void setIcon(String iconSource) {
@@ -190,6 +209,17 @@ public class MainWindow extends UiPart<Region> {
     public void handleHelp() {
         HelpWindow helpWindow = new HelpWindow();
         helpWindow.show();
+    }
+
+    /**
+     * Opens theme window.
+     */
+    @FXML
+    public void handleTheme() {
+        System.out.println("Entering themeing mode!");
+        ThemeSelectionWindow themeSelectionWindow = new ThemeSelectionWindow(prefs, primaryStage);
+        themeSelectionWindow.show();
+
     }
 
     void show() {

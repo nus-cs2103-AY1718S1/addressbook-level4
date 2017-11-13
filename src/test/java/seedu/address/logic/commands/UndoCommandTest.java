@@ -18,19 +18,26 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.ui.GuiUnitTest;
 
-public class UndoCommandTest {
-    private static final CommandHistory EMPTY_COMMAND_HISTORY = new CommandHistory();
-    private static final UndoRedoStack EMPTY_STACK = new UndoRedoStack();
+public class UndoCommandTest extends GuiUnitTest {
+    private static CommandHistory emptyCommandHistory;
+    private static UndoRedoStack emptyStack;
 
-    private final Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-    private final DeleteCommand deleteCommandOne = new DeleteCommand(INDEX_FIRST_PERSON);
-    private final DeleteCommand deleteCommandTwo = new DeleteCommand(INDEX_FIRST_PERSON);
+    private Model model;
+    private DeleteCommand deleteCommandOne;
+    private DeleteCommand deleteCommandTwo;
 
     @Before
     public void setUp() {
-        deleteCommandOne.setData(model, EMPTY_COMMAND_HISTORY, EMPTY_STACK);
-        deleteCommandTwo.setData(model, EMPTY_COMMAND_HISTORY, EMPTY_STACK);
+        emptyCommandHistory = new CommandHistory();
+        emptyStack = new UndoRedoStack();
+
+        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        deleteCommandOne = new DeleteCommand(INDEX_FIRST_PERSON);
+        deleteCommandTwo = new DeleteCommand(INDEX_FIRST_PERSON);
+        deleteCommandOne.setData(model, emptyCommandHistory, emptyStack, null);
+        deleteCommandTwo.setData(model, emptyCommandHistory, emptyStack, null);
     }
 
     @Test
@@ -38,7 +45,7 @@ public class UndoCommandTest {
         UndoRedoStack undoRedoStack = prepareStack(
                 Arrays.asList(deleteCommandOne, deleteCommandTwo), Collections.emptyList());
         UndoCommand undoCommand = new UndoCommand();
-        undoCommand.setData(model, EMPTY_COMMAND_HISTORY, undoRedoStack);
+        undoCommand.setData(model, emptyCommandHistory, undoRedoStack, null);
         deleteCommandOne.execute();
         deleteCommandTwo.execute();
 

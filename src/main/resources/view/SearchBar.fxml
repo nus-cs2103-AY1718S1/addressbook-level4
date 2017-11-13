@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="47.0" prefWidth="703.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <StackPane prefHeight="47.0" prefWidth="127.0">
+         <children>
+            <Label fx:id="searchBarLabel" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="101.0" styleClass="textLabel" text="Search Bar" />
+         </children></StackPane>
+      <StackPane prefHeight="31.0" prefWidth="105.0">
+         <children>
+            <TextField fx:id="nameField" promptText="Name..." />
+         </children>
+      </StackPane>
+      <StackPane prefHeight="47.0" prefWidth="12.0" />
+      <StackPane prefHeight="31.0" prefWidth="105.0">
+         <children>
+            <TextField fx:id="phoneField" prefWidth="138.0" promptText="Phone..." />
+         </children>
+      </StackPane>
+      <StackPane prefHeight="47.0" prefWidth="12.0" />
+      <StackPane prefHeight="31.0" prefWidth="105.0">
+         <children>
+            <TextField fx:id="addressField" prefWidth="138.0" promptText="Address..." />
+         </children>
+      </StackPane>
+      <StackPane prefHeight="47.0" prefWidth="13.0" />
+      <StackPane prefHeight="31.0" prefWidth="105.0">
+         <children>
+            <TextField fx:id="emailField" prefWidth="138.0" promptText="Email..." />
+         </children>
+      </StackPane>
+      <StackPane prefHeight="47.0" prefWidth="12.0" />
+      <StackPane prefHeight="31.0" prefWidth="105.0">
+         <children>
+            <TextField fx:id="tagsField" prefWidth="138.0" promptText="Tag..." />
+         </children>
+      </StackPane>
+   </children>
+</HBox>

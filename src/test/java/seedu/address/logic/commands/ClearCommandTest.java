@@ -10,8 +10,9 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.ui.GuiUnitTest;
 
-public class ClearCommandTest {
+public class ClearCommandTest extends GuiUnitTest {
 
     @Test
     public void execute_emptyAddressBook_success() {
@@ -30,7 +31,7 @@ public class ClearCommandTest {
      */
     private ClearCommand prepareCommand(Model model) {
         ClearCommand command = new ClearCommand();
-        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        command.setData(model, new CommandHistory(), new UndoRedoStack(), null);
         return command;
     }
 }

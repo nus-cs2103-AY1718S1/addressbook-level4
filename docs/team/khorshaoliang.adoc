@@ -1,0 +1,114 @@
+= Khor Shao Liang - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+=== Purpose
+
+This Project Portfolio page is created to showcase my experiences in Software Engineering to potential employers, academic programs and other interested people my experiences in Software Engineering I acquired thus far.
+If you are keen on contacting me further for possible collaborations, please email me at stephenksl[at]gmail[dot]com.
+
+== Project: Blast!
+*Code contributed*: [https://github.com/KhorSL/main[Functional code]] [https://github.com/KhorSL/main[Test code]]
+
+=== Software Overview
+
+Blast! is a desktop address book application developed with tutors and sales persons in mind. It is written in Java, and more than 6 kLoC.
+Command Line Interface (CLI) is the primary mean of interaction between the user and Blast!.
+The application has a Graphical User Interface (GUI) component created with JavaFX. The GUI will provide the user, visual feedback to commands that are performed.
+
+=== Enhancement Added: Add multiple persons from `.txt` file
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=multiple]
+
+#End of Extract#
+
+---
+
+==== Internal Behaviour
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=multiple]
+
+#End of Extract#
+---
+
+==== Justification
+
+Adding multiple persons will aid users (e.g. tutors) who need to add multiple persons,
+and it would be too tedious to add them one by one.
+With the new feature implemented it would improve such users convenience in using the software.
+
+=== Enhancement Added: Find persons by name, tags and email
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=find]
+
+#End of Extract#
+
+---
+
+==== Internal behavior
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=find]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Allowing users to find persons based on tags will allow users to know the relationship with their contact.
+
+=== Enhancement Added: Merge given XML file to default storage XML file
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=merge]
+
+#End of Extract#
+
+---
+
+==== Internal behavior
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=merge]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Main tutors with many assistant tutors is able to merge the different address book of my assistant tutors
+so as to have all the student contacts.
+
+=== Other contributions
+
+. Done acceptance testing for other team (T14-B3)
+
+== Project: GoPost!
+
+GoPost! is an exciting platform that provide users a one-stop portal for all events needs. The web application offers a spectrum of features and utility. Users will be able to create events, create a registration forms, manage their events schedules, and many more.
+
+image::gopost.png[width="450", align="left"]

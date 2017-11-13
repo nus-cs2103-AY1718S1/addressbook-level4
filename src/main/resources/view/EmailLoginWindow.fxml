@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="392.0" prefWidth="309.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <StackPane prefHeight="35.0" prefWidth="266.0" styleClass="stackpane">
+         <children>
+            <Text fx:id="loginText" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="textLabel" text="Email Address" wrappingWidth="232.115234375" StackPane.alignment="CENTER" />
+         </children>
+      </StackPane>
+      <StackPane prefHeight="60.0" prefWidth="266.0">
+         <children>
+            <TextField fx:id="emailField" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="237.0" promptText="Your email address..." styleClass="textfield" />
+         </children>
+      </StackPane>
+      <StackPane prefHeight="35.0" prefWidth="266.0" styleClass="stackpane">
+         <children>
+            <Text fx:id="passwordText" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="textLabel" text="Password" wrappingWidth="237.61328125" />
+         </children>
+      </StackPane>
+      <StackPane prefHeight="60.0" prefWidth="266.0">
+         <children>
+            <PasswordField fx:id="passwordField" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="237.0" promptText="Your password..." styleClass="textfield" />
+         </children>
+      </StackPane>
+      <StackPane prefHeight="45.0" prefWidth="266.0">
+         <children>
+            <Button fx:id="emailWindowLoginButton" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#onLoginButtonPressed" prefHeight="25.0" prefWidth="76.0" text="Login" />
+         </children>
+      </StackPane>
+      <StackPane prefHeight="157.0" prefWidth="309.0">
+         <children>
+            <TextArea fx:id="feedbackLabel" editable="false" focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="138.0" prefWidth="279.0" promptText="The result of your login attempt will be displayed here." styleClass="textarea" />
+         </children>
+      </StackPane>
+   </children>
+</VBox>

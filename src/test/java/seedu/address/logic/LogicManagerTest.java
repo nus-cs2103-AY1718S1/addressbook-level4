@@ -8,6 +8,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import seedu.address.email.Email;
+import seedu.address.email.EmailManager;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
@@ -23,7 +25,8 @@ public class LogicManagerTest {
     public ExpectedException thrown = ExpectedException.none();
 
     private Model model = new ModelManager();
-    private Logic logic = new LogicManager(model);
+    private Email emailManager = new EmailManager();
+    private Logic logic = new LogicManager(model, emailManager);
 
     @Test
     public void execute_invalidCommandFormat_throwsParseException() {

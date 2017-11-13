@@ -11,6 +11,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Avatar;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
@@ -33,6 +34,7 @@ public class ParserUtil {
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
      * trimmed.
+     *
      * @throws IllegalValueException if the specified index is invalid (not non-zero unsigned integer).
      */
     public static Index parseIndex(String oneBasedIndex) throws IllegalValueException {
@@ -79,6 +81,20 @@ public class ParserUtil {
         return email.isPresent() ? Optional.of(new Email(email.get())) : Optional.empty();
     }
 
+    //@@author vsudhakar
+    /**
+     * Parses a {@code Optional<String> avatarImagePath} into an {@code Optional<Avatar>} if {@code avatarImagePath}
+     * is present.
+     */
+    public static Optional<Avatar> parseAvatar(
+            Optional<String> avatarImagePath) throws IllegalValueException {
+        // Return default Avatar image if empty
+        return avatarImagePath.isPresent() ? Optional.of(
+                new Avatar(Avatar.getDirectoryPath(
+                        avatarImagePath.get()))) : Optional.of(new Avatar());
+    }
+    //@@author
+
     /**
      * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
      */
@@ -89,5 +105,13 @@ public class ParserUtil {
             tagSet.add(new Tag(tagName));
         }
         return tagSet;
+    }
+
+    /**
+     * Parses a {@code Optional<String> keywords} into an {@code Optional<String>} if {@code keywords} is present.
+     */
+    public static Optional<String> parseKeywords(Optional<String> keywords) throws IllegalValueException {
+        requireNonNull(keywords);
+        return keywords.isPresent() ? Optional.of(keywords.get()) : Optional.empty();
     }
 }

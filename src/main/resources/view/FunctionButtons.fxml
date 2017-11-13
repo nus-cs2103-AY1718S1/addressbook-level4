@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+
+<HBox prefHeight="25.0" prefWidth="1206.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <StackPane fx:id="loginPane" prefHeight="25.0" prefWidth="340.0">
+         <children>
+            <Button fx:id="loginButton" mnemonicParsing="false" onAction="#openEmailLoginWindow" text="Login" />
+         </children>
+      </StackPane>
+      <StackPane fx:id="sendPane" prefHeight="25.0" prefWidth="337.0">
+         <children>
+            <Button fx:id="sendButton" mnemonicParsing="false" onAction="#openEmailSendWindow" text="Send" />
+         </children>
+      </StackPane>
+      <StackPane prefHeight="25.0" prefWidth="527.0">
+         <children>
+            <TextField fx:id="loginStatus" editable="false" focusTraversable="false" styleClass="textfield" />
+         </children>
+      </StackPane>
+   </children>
+</HBox>

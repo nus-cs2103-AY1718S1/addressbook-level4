@@ -24,9 +24,11 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
+import seedu.address.ui.GuiUnitTest;
 
-public class AddCommandTest {
+public class AddCommandTest extends GuiUnitTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -88,7 +90,7 @@ public class AddCommandTest {
      */
     private AddCommand getAddCommandForPerson(Person person, Model model) {
         AddCommand command = new AddCommand(person);
-        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        command.setData(model, new CommandHistory(), new UndoRedoStack(), null);
         return command;
     }
 
@@ -130,7 +132,22 @@ public class AddCommandTest {
         }
 
         @Override
+        public void updateFilteredListToShowAll() {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void deleteTag(Tag tag) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void mergeAddressBook(ObservableList<ReadOnlyPerson> newFilePersonList) {
             fail("This method should not be called.");
         }
     }
