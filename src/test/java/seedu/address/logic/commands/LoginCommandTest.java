@@ -9,6 +9,7 @@ import java.util.concurrent.Executors;
 
 import org.junit.Test;
 
+import seedu.address.google.OAuth;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.AddressBook;
@@ -58,7 +59,8 @@ public class LoginCommandTest {
     private LoginCommand prepareCommand() {
         LoginCommand logincommand = new LoginCommand();
         logincommand.setData(model, new CommandHistory(), new UndoRedoStack());
-        logincommand.setExecutor(Executors.newFixedThreadPool(4));
+        logincommand.setOAuth(OAuth.getInstance());
+        logincommand.setExecutor(Executors.newSingleThreadExecutor());
         return logincommand;
     }
 
