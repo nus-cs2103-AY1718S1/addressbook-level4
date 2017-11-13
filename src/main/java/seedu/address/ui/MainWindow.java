@@ -277,8 +277,8 @@ public class MainWindow extends UiPart<Region> {
             personListPanel = new PersonListPanel(persons);
             personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
         } catch (IllegalStateException e) {
-            logger.info("Cannot update profile photo on a non-main thread. "
-                    + "Type 'list' to see the new profile photos. '¯\\_(ツ)_/¯");
+            logger.info("Cannot update profile photo on a non-main thread. ¯\\_(ツ)_/¯ "
+                    + "Type 'list' to see the new profile photos.");
         }
     }
 

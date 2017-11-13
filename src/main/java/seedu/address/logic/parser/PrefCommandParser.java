@@ -25,6 +25,7 @@ public class PrefCommandParser implements Parser<PrefCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the PrefCommand
      * and returns an PrefCommand object for execution.
+     *
      * @throws ParseException if the user input does not conform the expected format
      */
     public PrefCommand parse(String args) throws ParseException {
@@ -48,6 +49,7 @@ public class PrefCommandParser implements Parser<PrefCommand> {
 
     /**
      * Checks whether the given key is a short form for a preference key
+     *
      * @param prefKey User's input value for preference key
      * @return the actual key name if the input was shortcut, otherwise returns the input itself
      */

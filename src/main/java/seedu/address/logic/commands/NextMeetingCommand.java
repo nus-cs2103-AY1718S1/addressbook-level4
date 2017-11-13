@@ -14,6 +14,7 @@ public class NextMeetingCommand extends Command {
     public static final String COMMAND_WORD = "nextMeeting";
     public static final String COMMAND_ALIAS = "nm";
 
+    public static final String NAME_SEPARATOR = ", ";
     public static final String MESSAGE_SUCCESS = "Displays the upcoming meeting";
     public static final String MESSAGE_OUTPUT_PREFIX = "Upcoming meeting with ";
     public static final String MESSAGE_INVALID_PARTICIPANT = "Meeting involves person not present in address book";
@@ -31,12 +32,12 @@ public class NextMeetingCommand extends Command {
         try {
             for (InternalId id : nextMeeting.getListOfPersonsId()) {
                 sb.append(model.getAddressBook().getPersonByInternalIndex(id.getId()).getName().fullName);
-                sb.append(", ");
+                sb.append(NAME_SEPARATOR);
             }
         } catch (PersonNotFoundException e) {
             throw new CommandException(MESSAGE_INVALID_PARTICIPANT);
         }
-        sb.delete(sb.length() - 2, sb.length());
+        sb.delete(sb.length() - NAME_SEPARATOR.length(), sb.length());
         sb.append('\n');
 
         return new CommandResult(sb.toString() + nextMeeting.toString());

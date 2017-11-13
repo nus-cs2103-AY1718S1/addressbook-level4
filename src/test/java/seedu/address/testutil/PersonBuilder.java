@@ -29,7 +29,7 @@ public class PersonBuilder {
 
     public PersonBuilder() {
         try {
-            InternalId id = new InternalId(1);
+            InternalId id = new InternalId(Person.TEMP_ID_VALUE);
             Name defaultName = new Name(DEFAULT_NAME);
             Phone defaultPhone = new Phone(DEFAULT_PHONE);
             Email defaultEmail = new Email(DEFAULT_EMAIL);
@@ -123,6 +123,14 @@ public class PersonBuilder {
         return this;
     }
     //@@author
+
+    /**
+     * Sets the {@code InternalIndex} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withInternalIndex(int id) {
+        this.person.setInternalId(id);
+        return this;
+    }
 
     public Person build() {
         return this.person;

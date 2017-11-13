@@ -9,6 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -50,8 +51,7 @@ public class XmlSerializableAddressBook extends XmlSerializableData implements R
             try {
                 return p.toModelType();
             } catch (IllegalValueException e) {
-                e.printStackTrace();
-                //TODO: better error handling
+                LogsCenter.getLogger("").warning("Convert ReadOnlyPerson to model type failed.");
                 return null;
             }
         }).collect(Collectors.toCollection(FXCollections::observableArrayList));

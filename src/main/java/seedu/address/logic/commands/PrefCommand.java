@@ -32,6 +32,7 @@ public class PrefCommand extends Command {
     private String newPrefValue = "";
 
     /**
+     * Creates a new PrefCommand with the given key and value
      */
     public PrefCommand(String prefKey, String newPrefValue) {
         this.prefKey = prefKey;
@@ -53,7 +54,8 @@ public class PrefCommand extends Command {
     }
 
     /**
-     * Reads current value for the preference key
+     * Reads current value for the given preference key.
+     *
      * @param prefKey Key name of the preference
      * @return Value of the preference
      * @throws CommandException if the preference key is not defined in UserPrefs or not accessible
@@ -75,7 +77,8 @@ public class PrefCommand extends Command {
     }
 
     /**
-     * Modifies the value of preference given by the key
+     * Modifies the value of preference given by the key.
+     *
      * @param prefKey Key name of the preference
      * @param newPrefValue New value of the preference
      * @throws CommandException if the preference key is not defined in UserPrefs or not accessible
