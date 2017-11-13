@@ -758,6 +758,19 @@ Here is a list of shortcuts you can use in cherBook together with some examples.
 *Q*: What happens if I do not input fields that are optional? +
 *A*: A message will appear beside the optional field name in the extended screen, stating that the field is not recorded.
 
+*Q*: Will the list of sample students in the cherBook repopulate again everytime I reopen cherBook? +
+*A*: No, those sample students are generated only when you use cherBook for the first time to show you how
+a populated cherBook looks like, you can remove the list of the sample students immediately using the `clear` command.
+
+*Q*: What happens if I do not input fields that are optional? +
+*A*: A message will appear beside the optional field name in the extended screen, stating that the field is not recorded.
+
+*Q*: I have accidentally deleted/edited my contact! Am I able to retrieve him/her? +
+*A*: There is a `undo` command where you can revert any accidental changes.
+
+*Q*: Is internet connectivity required for cherBook? +
+*A*: No, you are able to utilise all features of cherBook offline.
+
 *Q*: Why does clicking on the contacts not changes the home page to the statistic and graph panels? +
 *A*: There is a 'soft lock' that can only be unlock when the select command is entered. e.g. select 1. Everything can be done normally after that.
 
