@@ -820,8 +820,8 @@ image::AutoCompleteActivityDiagram.png[width="800"]
 **Cons:** Original structure will be disrupted. Command box will no longer be single line text input, which have consequences such as the user cannot backspace or select through the entire line.
 // end::auto-completion[]
 
-// tag::shortcut[]
 === Keyboard Shortcuts Mechanism
+// tag::shortcut[]
 The keyboard shortcuts mechanism is implemented in the `KeyListener` class under the `UI` component of the application.
 It listens for key presses done by the user and executes actions mapped to these key presses, or key events.
 The mapping of actions to key events are found in the `KeyListenerUtil` class.
@@ -1021,7 +1021,7 @@ the user's experience with Rolodex.
 
 image::Ui2.png[width="800"]
 
-Other improvements made to the UI include the following features:
+Some improvements made to the UI include the following features:
 
 ==== Randomized Avatars Colors
 
