@@ -26,9 +26,13 @@ include::../UserGuide.adoc[tag=meetingCard]
 
 ---
 
+include::../UserGuide.adoc[tag=groupmeeting]
+
+---
+
 ==== Justification
 
-For the ease of the user, the meeting cards are positioned and presented in such a way that the user can retrieve the information he/she wants immediately without much effort. The meeting cards are also sorted in chronological order so that the user can see the meetings that have higher urgency. Furthermore, the colours are also implemented for the user to keep track of his/her upcoming meetings. The name and the phone number of the person who the user will be meeting are shown so that if needed, the user can contact that person with ease.
+For the ease of the user, the meeting cards are positioned and presented in such a way that the user can retrieve the information he/she wants immediately without much effort. The meeting cards are also sorted in chronological order so that the user can see the meetings that have higher urgency. Furthermore, the colours are also implemented for the user to keep track of his/her upcoming meetings. The name and the phone number of the person who the user will be meeting are shown so that if needed, the user can contact that person with ease. Group meeting are also easily added by adding meeting with the indexes of the person in the contact list. Users can simply scroll through the list of person in the meeting to get the names and phone numbers of the persons the user meeting with.
 
 ==== Implementation
 
