@@ -190,7 +190,7 @@ endif::[]
 *Result:* +
 
 * The person list panel should list 2 persons. +
-* The result display should show the message `2 persons listed!`.
+* The result display should show the message `2 persons listed!`
 
 ****
 
@@ -202,7 +202,7 @@ endif::[]
 *Result:* +
 
 * The person list panel should list 5 persons. +
-* The result display should show the message `5 persons listed!`.
+* The result display should show the message `5 persons listed!`
 
 ****
 
@@ -214,8 +214,7 @@ endif::[]
 *Result:* +
 
 * The person list panel should show an empty list. +
-* The result display should show the message `0 persons listed!`.
-
+* The result display should show the message `0 persons listed!`
 ****
 
 == Delete a person
@@ -316,7 +315,7 @@ endif::[]
 *Result:* +
 
 * The person list panel should list 5 persons. +
-* The result display should show the message `5 persons listed!`.
+* The result display should show the message `5 persons listed!`
 
 ****
 
@@ -328,7 +327,7 @@ endif::[]
 *Result:* +
 
 * The person list panel should list 3 persons. +
-* The result display should show the message `3 persons listed!`.
+* The result display should show the message `3 persons listed!`
 
 ****
 
@@ -340,7 +339,7 @@ endif::[]
 *Result:* +
 
 * The person list panel should show an empty list. +
-* The result display should show the message `0 persons listed!`.
+* The result display should show the message `0 persons listed!`
 
 ****
 
@@ -355,7 +354,7 @@ endif::[]
 *Result:* +
 
 * The tag `transport` should disappear in the person list panel for the first 5 persons in the list. +
-* The result display should show the message `Removed tag(s)`.
+* The result display should show the message `Removed tag(s)`
 
 ****
 
@@ -367,7 +366,7 @@ endif::[]
 *Result:* +
 
 * The tag `family` and `owesMoney` should disappear in the person list panel where person number 12 and 14 would noticeably have no more tags.+
-* The result display should show the message `Removed tag(s)`.
+* The result display should show the message `Removed tag(s)`
 
 ****
 
@@ -378,7 +377,7 @@ endif::[]
 ****
 *Result:* +
 
-* The result display should show the message `Tag(s) not removed`.
+* The result display should show the message `Tag(s) not removed`
 
 ****
 
@@ -444,7 +443,7 @@ endif::[]
 *Result:* +
 
 * The application should change to the white theme.
-* The result display should show the message `Theme changed`.
+* The result display should show the message `Theme changed`
 
 ****
 
@@ -503,7 +502,7 @@ Example: theme white`
 
 ****
 
-2 . Copy the following command onto the command line input: +
+. Copy the following command onto the command line input: +
 `photo 2 ./SampleImages/nothing.txt`
 
 ****
@@ -580,7 +579,9 @@ Example: theme white`
 
 ****
 
-=== Deletes all images for all people
+== Deletes all images for all people
+
+=== Deletes all images for all people successfully
 
 . To see the full effect of the function, upload an image to person with index 3 first.
 . Copy the following commands onto the command line input in sequence: +
@@ -602,7 +603,7 @@ Example: theme white`
 ****
 *Result:* +
 
-* The result display should show `No photos to delete`.
+* The result display should show `No photos to delete`
 
 ****
 
