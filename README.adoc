@@ -1,6 +1,6 @@
 image::docs/images/logo.png[width="250" align="center"]
 
-= KayPoh!
+= KayPoh
 ifdef::env-github,env-browser[:relfileprefix: docs/]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 

@@ -3,10 +3,10 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
-== Project: KayPoh!
-KayPoh! is a desktop address book application with social media integrations. The user interacts with the application using a command line interface, and it has a GUI created with JavaFX. It is written in Java and has about 14k LoC.
+== Project: KayPoh
+KayPoh is a desktop address book application with social media integrations. The user interacts with the application using a command line interface, and it has a GUI created with JavaFX. It is written in Java and has about 14k LoC.
 
-*Code Contributed*: [https://github.com/CS2103AUG2017-W10-B2/main/blob/master/collated/main/keithsoc.md[Functional code]] [https://github.com/CS2103AUG2017-W10-B2/main/blob/master/collated/test/keithsoc.md[Test code]]
+*Code contributed*: [https://github.com/CS2103AUG2017-W10-B2/main/blob/master/collated/main/keithsoc.md[Functional code]] [https://github.com/CS2103AUG2017-W10-B2/main/blob/master/collated/test/keithsoc.md[Test code]]
 
 === Enhancement Added: Favorite Status in the Person Model
 
@@ -27,8 +27,6 @@ Allow users to mark or unmark contacts whom they are closer with as their favori
 
 ==== Implementation
 
-Pull Request (with a detailed summary of changes): https://github.com/CS2103AUG2017-W10-B2/main/pull/33[#33]
-
 ---
 #Start of extract [from: Developer Guide]#
 
@@ -37,6 +35,8 @@ include::../DeveloperGuide.adoc[tag=toggle-favorites-using-add-andor-edit-comman
 #End of Extract#
 
 ---
+
+See also: Pull Request (with a detailed summary of changes): https://github.com/CS2103AUG2017-W10-B2/main/pull/33[#33]
 
 === Enhancement Added: Favorite and Unfavorite Command
 
@@ -57,8 +57,6 @@ Provides convenience to perform batch adding or removing of contacts as favorite
 
 ==== Implementation
 
-Pull Request (with a detailed summary of changes): https://github.com/CS2103AUG2017-W10-B2/main/pull/38[#38]
-
 ---
 #Start of extract [from: Developer Guide]#
 
@@ -67,6 +65,8 @@ include::../DeveloperGuide.adoc[tag=toggle-favorites-using-fav-andor-unfav-comma
 #End of Extract#
 
 ---
+
+See also: Pull Request (with a detailed summary of changes): https://github.com/CS2103AUG2017-W10-B2/main/pull/38[#38]
 
 === Enhancement Added: List All Favorite Contacts
 
@@ -87,8 +87,6 @@ Allows user who might potentially have a large number of contacts to isolate out
 
 ==== Implementation
 
-Pull Request: https://github.com/CS2103AUG2017-W10-B2/main/pull/65[#65]
-
 ---
 #Start of extract [from: Developer Guide]#
 
@@ -97,6 +95,8 @@ include::../DeveloperGuide.adoc[tag=toggle-favorites-using-fav-andor-unfav-comma
 #End of Extract#
 
 ---
+
+See also: Pull Request: https://github.com/CS2103AUG2017-W10-B2/main/pull/65[#65]
 
 === Enhancement Added: User Interface Overhaul and Theme Command
 
@@ -123,8 +123,6 @@ Theme command allows user to switch between the two aforementioned themes easily
 
 ==== Implementation
 
-Pull Request (with a detailed summary of changes): https://github.com/CS2103AUG2017-W10-B2/main/pull/92[#92]
-
 ---
 #Start of extract [from: Developer Guide]#
 
@@ -133,6 +131,8 @@ include::../DeveloperGuide.adoc[tag=toggle-favorites-using-fav-andor-unfav-comma
 #End of Extract#
 
 ---
+
+See also: Pull Request (with a detailed summary of changes): https://github.com/CS2103AUG2017-W10-B2/main/pull/92[#92]
 
 === Enhancement Added: Contact Display Photos
 
@@ -153,8 +153,6 @@ Allow users to more easily identify their contacts based on photos instead of na
 
 ==== Implementation
 
-Pull Request: https://github.com/CS2103AUG2017-W10-B2/main/pull/153[#153]
-
 ---
 #Start of extract [from: Developer Guide]#
 
@@ -164,3 +162,4 @@ include::../DeveloperGuide.adoc[tag=toggle-favorites-using-fav-andor-unfav-comma
 
 ---
 
+See also: Pull Request: https://github.com/CS2103AUG2017-W10-B2/main/pull/153[#153]

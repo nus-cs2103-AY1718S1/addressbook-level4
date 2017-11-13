@@ -1,4 +1,4 @@
-= KayPoh! - Developer Guide
+= KayPoh - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -16,7 +16,7 @@ By: `Team W10-B2`      Since: `Aug 2017`      Licence: `MIT`
 
 == About
 
-This developer guide provides developers working on the KayPoh! application an in-depth explanation
+This developer guide provides developers working on the KayPoh application an in-depth explanation
 of how the application works. A working knowledge of UML diagram notation and familiarity with the Java programming
 language will be helpful in understanding the implementation details discussed in this guide.
 
@@ -225,7 +225,7 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 This section describes some noteworthy details on how certain features are implemented.
 
 // tag::undoredo[]
-=== Undo/Redo mechanism
+=== Undo/Redo Mechanism
 
 The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the address book (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
 
@@ -404,7 +404,7 @@ The `parsePhone` method in the `ParserUtil` class calls the `getMultipleValues` 
 // end::multiplephonenumbers[]
 
 // tag::facebook[]
-=== Facebook Post mechanism
+=== Facebook Post Mechanism
 
 The Facebook Post mechanism is facilitated by the Facebook Graph API and utilised through the Facebook4j unofficial public API.
 Facebook4j supports all facebook related features such as `facebook connect` and `facebook post`.
@@ -641,7 +641,8 @@ that this approach was less intuitive to them compared to the approach described
 
 // end::command-syntax[]
 
-=== Favorite Contacts
+// tag::favoriteunfavoriteperson[]
+=== Favoriting Contacts
 
 The favorite status of each contact is stored as a `boolean`, encapsulated within the `Favorite` class. +
 There are several ways to toggle this `boolean` to change the favorite status of a contact.
@@ -733,6 +734,7 @@ After getting the copy of the person e.g. `personToFavorite`, it is easy to call
 **Alternative 2:** Just rely on `fav` and `unfav` commands +
 **Pros:** Easier implementation +
 **Cons:** User would have to remember more commands and their usages
+// end::favoriteunfavoriteperson[]
 
 // tag::sort[]
 === Sorting Contacts
@@ -761,6 +763,184 @@ as there is no need to maintain any additional data structures. +
 **Cons:** Every sort operation will require writing to the data file, which requires IO operations that are slower compared
 to in-memory operations.
 // end::sort[]
+
+// tag::theme[]
+=== Enhancing User Interface and Theming Mechanism
+
+==== Remove Window Decorations
+
+To enhance our user's satisfaction with KayPoh, we improved the user interface by redesigning the color scheme and allowed theming for user to switch between two available themes.
+
+The first step to adding a better look was to remove the standard platform window decorations. This will shift the application's user interface from classic to a fancier look that is self-contained, without wasting extra pixels just for the default window decorations. This is done by the following code:
+
+----
+primaryStage.initStyle(StageStyle.TRANSPARENT);
+----
+
+Do note that this line of code has to be placed in the `start()` method of `MainApp.java` instead of `MainWindow.java` or `UiManager.java` so as to specify the removal of window decorations immediately upon the launch of the application. Otherwise, there will be an `exception` thrown: `Cannot set style once stage has been set visible`.
+
+This immediately removes the window's title bar. However, this also removes the default window functionalities such as being able to resize the window, move the window's position, minimise, maximise and exit the application proper.
+
+Hence, the second step is to rebuild these functionalities. The design considered was to bake these functionalities along with the minimise, maximise and exit button into the existing menu bar. The three aforementioned buttons are added in Scene Builder, using the same height as the menu bar so that it would look coherent.
+
+Now that we have added the buttons, we can make use of the buttons' event handlers to trigger the window functionalities.
+
+Moving of window is implemented by setting the menu bar to listen on the events such as `onMousePressed` and `onMouseDragged`:
+
+----
+private void enableMovableWindow() {
+    menuBar.setOnMousePressed((event) -> {
+        xOffset = event.getSceneX();
+        yOffset = event.getSceneY();
+    });
+
+    menuBar.setOnMouseDragged((event) -> {
+        primaryStage.setX(event.getScreenX() - xOffset);
+        primaryStage.setY(event.getScreenY() - yOffset);
+    });
+}
+----
+
+Similarly, minimising of window is implemented by setting the minimise button to listen on `onMouseClicked` event and uses the following method that was found from the JavaFX Stage API.
+
+----
+primaryStage.setIconified(true)
+----
+
+Maximising of window is also implemented in the same way.
+
+----
+maximiseButton.setOnMouseClicked((event) -> {
+    primaryStage.setMaximized(true);
+    maximiseButton.setId("restoreButton");
+});
+----
+
+However, the default behavior of maximising a window is made in a way such that the first time the maximise button is clicked, the window maximises fully (the code above works), but when the second time the button is clicked, it should restore the previous unmaximised state and window size. Hence, we have to utilise `onMousePressed` this time.
+
+----
+maximiseButton.setOnMousePressed((event) -> {
+    primaryStage.setMaximized(false);
+    maximiseButton.setId("maximiseButton");
+});
+----
+
+Exiting the window could make use of the existing `handleExit` method in `MainWindow.java`, hence we just have to set the event handler for exit button in `MainWindow.fxml` itself.
+
+----
+<Button fx:id="closeButton" mnemonicParsing="false" prefHeight="45" prefWidth="60" onAction="#handleExit" />
+----
+
+The last functionality we have to rebuild is resizing of the window. We make use of a helper class called `UiResize` whose methods were adapted from StackOverflow. It is important to note that the `minWidth` and `minHeight` parameters for `enableResizableWindow` window should be the same as the `MIN_WIDTH` and `MIN_HEIGHT` specified in `MainWindow.java` so that the resizing mechanism does not exceed the allowable minimum widths and heights of the window i.e. we disallow window resizing to the point that there is no more pixels to resize which would otherwise become a bug itself.
+
+==== Rounding Borders
+
+The second step was to create rounded borders for the application. Since the entire window is encapsulated within a JavaFX `VBox` container, we can simply style it using its `fx:id` called `rootVBox` in the Cascading Style Sheet (CSS) as follows.
+
+----
+#rootVBox {
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+}
+----
+
+==== Resizing Components
+
+The third step was to resize each component to give priority to each of them, especially enlarging the space of contacts list to make it stand out since it is the one of the most important aspects of our application.
+
+----
+<padding>
+    <Insets bottom="10" left="20" right="20" top="0" />
+</padding>
+----
+
+==== Using Custom Fonts
+
+The fourth step is to ensure the consistency of fonts displayed across different platforms e.g. Windows, macOS and to allow usage of custom fonts.
+
+All custom fonts are stored in `/resources/fonts` directory and a singleton class `UiFont` is used to embed and load all the fonts into the application at runtime.
+
+The following method in the `UiFont` class has to be called in the `start()` method of `UiManager` class as during that instance, most of the other UI components have not been created.
+
+----
+public void embedFonts() {
+    for (String font : fontList) {
+        Font.loadFont(getClass().getResourceAsStream(FONTS_FILE_FOLDER + font), 10);
+    }
+}
+----
+
+==== Enhancing Color Scheme
+
+The last step to enhancing the user interface would be to use subtle colors that would highlight visual controls that users would often interact with such as command box and contacts list. The key is also to use as little colors as possible for the majority background space so as to create a minimalistic interface as well.
+
+The main colors used are full white for the background (`#ffffff`) and a slightly gray tone for command box and contacts list (`#f4f4f4`). This light color scheme is used for the "Day" theme.
+
+Since we allow the user to switch between two themes, we would have to create two CSS with different color schemes.
+
+The main colors used for the "Night" theme dark-greenish black (`#272822`) and a slightly brighter gray tone that matches the aforementioned black (`#4a4b40`).
+
+To maintain consistency between two themes, static (non-changing) components such as the menu bar, footer, scroll bar, favorite icons maintain the same red (`#d13438`) and black (`#2c2c2c`) color combination.
+
+Finally, to increase the overall contrast and to provide an easier way to identify contacts via tags, tag labels are brightly colored. A random color generator is implemented to give each tag a different color. To ensure even distribution of colors are generated, we also make use of the golden ratio conjugate `0.618033988749895`.
+
+----
+private String generateRandomColor() {
+    float randomHue = random.nextFloat();
+    randomHue += GOLDEN_RATIO;
+    randomHue = randomHue % 1;
+
+    Color result = Color.getHSBColor(randomHue, 0.5f, 0.85f);
+    return String.format("#%02x%02x%02x", result.getRed(), result.getGreen(), result.getBlue());
+}
+----
+
+==== Setting Focus on Command Box
+
+To allow user to begin typing immediately upon application launch, we have to set the focus to the command box text field as such.
+
+----
+Platform.runLater(() -> commandTextField.requestFocus());
+----
+
+==== Theme Mechanism
+
+The theme mechanism is facilitated by a singleton class `UiTheme` which will be called inside the `MainWindow` constructor where it passes its `scene` into the `UiTheme` class.
+
+The `scene` is necessary for changing the CSS at runtime e.g.:
+
+----
+scene.getStylesheets().setAll("PATH_TO_CSS_FILE");
+----
+
+When a user executes the `theme` command to change the theme, `ThemeCommand` class will pass the option `String` specified by the user into the following method in `UiTheme` class.
+
+----
+public void changeTheme(String option) {
+    scene.getStylesheets().clear();
+
+    if (option.equals(PREFIX_OPTION + ThemeCommand.COMMAND_OPTION_DAY)) {
+        scene.getStylesheets().setAll(THEME_DAY, THEME_DAY_EXTENSIONS);
+        browserPanel.loadDefaultPage(scene);
+    } else {
+        scene.getStylesheets().setAll(THEME_NIGHT, THEME_NIGHT_EXTENSIONS);
+        browserPanel.loadDefaultPage(scene);
+    }
+}
+----
+
+To ensure that the user does not have to change their preferred theme every time the application starts, we will save their choice as a user preference. The user preference is stored as a variable of class `ThemeSettings` inside `UserPrefs` class. Essentially, we will store the CSS file path e.g. `view/ThemeDay.css` in `preferences.json`.
+
+Finally, when the application starts, user's theme preference will be read in the `MainWindow` class.
+
+----
+private void setDefaultTheme(UserPrefs prefs, Scene scene) {
+    scene.getStylesheets().addAll(prefs.getThemeSettings().getTheme(),
+            prefs.getThemeSettings().getThemeExtensions());
+}
+----
+
+// end::theme[]
 
 === Logging
 
