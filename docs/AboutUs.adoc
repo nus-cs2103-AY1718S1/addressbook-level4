@@ -23,6 +23,8 @@ image::PujithaDesiraju.jpg[width="150", align="left"]
 
 Role: Developer +
 Responsibilities:
+In charge of providing ideas and creative ways of forwarding the project.
+Responsible for including more details regarding the entry.
 
 === Jaryl Tan aka Juxarius
 image::jaryltan.jpg[width="150", align="left"]
@@ -46,5 +48,10 @@ image:githubicon.png[Github Icon, 40, 40, link="https://github.com/arnollim"] im
 
 Role: Developer +
 Responsibilities:
+In charge of exporting address book as a printable document file.
+In charge of improving the user experience with Easter Egg features.
+Responsible for adding miscellaneous enhancements and improvements to existing commands to LISA.
+Responsible for documentation language style review.
+
 
 '''
