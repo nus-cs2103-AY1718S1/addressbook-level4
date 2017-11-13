@@ -106,7 +106,7 @@ The design patterns of the App is shown in the following sections:
 === Architecture
 
 image::Architecture.png[width="600"]
-_Figure 4.1.1 : Architecture Diagram_
+_Figure 4.1.1. Architecture Diagram_
 
 The *_Architecture Diagram_* given above explains the high-level design of the App. Given below is a quick overview of each component.
 
@@ -132,13 +132,13 @@ The rest of the App consists of four components.
 
 Each of the four components:
 
-* Define its _API_ in an `interface` with the same name as the Component.
+* Define its _link:#api[API]_ in an `interface` with the same name as the Component.
 * Expose its functionality using a `{Component Name}Manager` class.
 
 For example, the `Logic` component (see the class diagram given below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
 
 image::LogicClassDiagram.png[width="800"]
-_Figure 4.1.2 : Class Diagram of the Logic Component_
+_Figure 4.1.2. Class Diagram of the Logic Component_
 
 [discrete]
 ==== Events-Driven nature of the design
@@ -146,7 +146,7 @@ _Figure 4.1.2 : Class Diagram of the Logic Component_
 The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
 
 image::SDforDeletePerson.png[width="800"]
-_Figure 4.1.3a : Component interactions for `delete 1` command (part 1)_
+_Figure 4.1.3a. Component interactions for `delete 1` command (part 1)_
 
 [NOTE]
 Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
@@ -154,7 +154,7 @@ Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address 
 The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
 image::SDforDeletePersonEventHandling.png[width="800"]
-_Figure 4.1.3b : Component interactions for `delete 1` command (part 2)_
+_Figure 4.1.3b. Component interactions for `delete 1` command (part 2)_
 
 [NOTE]
 Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
@@ -163,7 +163,7 @@ Note how the event is propagated through the `EventsCenter` to the `Storage` and
 With reference to the diagram below, the UI consists of a `MainWindow` that is made up of parts such as `CommandBox`, `ResultDisplay`, `PersonListPanel`, `GroupListPanel`, `PersonDescriptionPanel`, `StatusBarFooter` and `BrowserPanel`. All these, including the `MainWindow`, inherit the abstract `UiPart` class.
 
 image::UiClassDiagram.png[width="800"]
-_Figure 4.2.1 : Structure of the UI Component_
+_Figure 4.2.1. Structure of the UI Component_
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
@@ -182,15 +182,15 @@ The diagram below illustrates how the Logic uses `AddressBookParser` class to pa
 This results in a `Command` object which is executed by the `LogicManager`.
 
 image::LogicClassDiagram.png[width="800"]
-_Figure 4.3.1 : Structure of the Logic Component_
+_Figure 4.3a. Structure of the Logic Component_
 
 The command execution can affect the `Model` (e.g. adding a person) and/or raise events.
 The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
 
-The figure below shows the finer details concerning `XYZCommand` and `Command` in 4.3.1:
+The figure below shows the finer details concerning `XYZCommand` and `Command` in Figure 4.3b.
 
 image::LogicCommandClassDiagram.png[width="800"]
-_Figure 4.3.2 : Structure of Commands in the Logic Component._
+_Figure 4.3b. Structure of Commands in the Logic Component._
 
 *API* :
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
@@ -203,14 +203,14 @@ The `Logic` is able to:
 Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
 
 image::DeletePersonSdForLogic.png[width="800"]
-_Figure 4.3.3 : Interactions Inside the Logic Component for the `delete 1` Command_
+_Figure 4.3c. Interactions Inside the Logic Component for the `delete 1` Command_
 
 === Model component
 
 The diagram below shows different components and interfaces in the `Model`.
 
 image::ModelClassDiagram.png[width="800"]
-_Figure 4.4.1 : Structure of the Model Component_
+_Figure 4.4. Structure of the Model Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
@@ -226,7 +226,7 @@ The `Model` is able to:
 The diagram below shows different storage classes that store the App's data.
 
 image::StorageClassDiagram.png[width="800"]
-_Figure 4.5.1 : Structure of the Storage Component_
+_Figure 4.5. Structure of the Storage Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 
@@ -239,6 +239,7 @@ The `Storage` component is able to:
 == Implementation
 
 This section describes some noteworthy details on how certain features are implemented.
+The design considerations are also discussed at the end of each feature.
 
 // tag::undoredo[]
 === Undo/Redo mechanism
@@ -248,6 +249,7 @@ The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides insi
 `UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
 
 image::LogicCommandClassDiagram.png[width="800"]
+_Figure 5.1a. Logic Command Class Diagram_
 
 As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
 
@@ -287,10 +289,12 @@ Suppose that the user has just launched the application. The `UndoRedoStack` wil
 The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
 
 image::UndoRedoStartingStackDiagram.png[width="800"]
+_Figure 5.1b. Undo Redo Starting Stack Diagram_
 
 As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person.
 
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
+_Figure 5.1c. Undo Redo New Command Stack Diagram_
 
 [NOTE]
 If a command fails its execution, it will not be pushed to the `UndoRedoStack` at all.
@@ -300,6 +304,7 @@ The user now decides that adding the person was a mistake, and decides to undo t
 We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed.
 
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
+_Figure 5.1d. Undo Redo Execute Undo Stack Diagram_
 
 [NOTE]
 If the `undoStack` is empty, then there are no other commands left to be undone, and an `Exception` will be thrown when popping the `undoStack`.
@@ -307,6 +312,7 @@ If the `undoStack` is empty, then there are no other commands left to be undone,
 The following sequence diagram shows how the undo operation works:
 
 image::UndoRedoSequenceDiagram.png[width="800"]
+_Figure 5.1e. Undo Redo Sequence Diagram_
 
 The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
 
@@ -316,16 +322,19 @@ If the `redoStack` is empty, then there are no other commands left to be redone,
 The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow).
 
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
+_Figure 5.1f. Undo Redo New Command Stack Diagram 2_
 
 Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution:
 
 image::UndoRedoNewCommand3StackDiagram.png[width="800"]
+_Figure 5.1g. Undo Redo New Command Stack Diagram 3_
 
 The following activity diagram summarize what happens inside the `UndoRedoStack` when a user executes a new command:
 
 image::UndoRedoActivityDiagram.png[width="200"]
+_Figure 5.1h. Undo Redo Activity Diagram_
 
-===== Design Considerations
+===== Design Considerations:
 
 **Aspect:** Implementation of `UndoableCommand` +
 **Alternative 1 (current choice):** Add a new abstract method `executeUndoableCommand()` +
@@ -373,11 +382,8 @@ image::UndoRedoActivityDiagram.png[width="200"]
 The email mechanism is facilitated by java `Desktop` class which allows java application to launch default mail application registered on the users' native desktop to handle a Uniform Resource Indentifier (link:#uri[URI]).
 In this case, the URI is created with reference to the mail command scheme and email addresses to mail to.
 
-==== Email command implementation
-
 image::EmailCommandSequenceDiagram.png[width="800"]
-
-_Figure 5.2.1 Email Command Sequence Diagram_
+_Figure 5.2a. Email Command Sequence Diagram_
 
 From the diagram above, when users enter the command `email 1` to email a person in the contact list.
 `EmailCommandParser` will parse the arguments, which is a single index provided by the user, and stores it
@@ -420,13 +426,10 @@ public CommandResult execute() throws CommandException {
 The string `allEmailAddresses` is constructed by appending a comma after each email address of a contact. This is done to ensure that it follows the mailing scheme required when
 constructing a `URI`.
 
-==== Email request event process
-
 image::EmailRequestEventSequenceDiagram.png[width="800"]
+_Figure 5.2b. Email Request Event Sequence Diagram_
 
-_Figure 5.2.1 Email Request Event Sequence Diagram_
-
-With reference to the diagram above, after `EmailCommand` has executed, it will post a new `EmailRequestEvent` and allows the UI to handle this event. In the UI, we are using java `Desktop` class to
+The diagram above illustrates the event driven process of the `EmailCommand`. After `EmailCommand` has executed, it will post a new `EmailRequestEvent` and allows the UI to handle this event. In the UI, we are using java `Desktop` class to
 launch the default mail application registered on users' native desktop. A `URI` instance has to be created and passed to the mail method in the `Desktop` class.
 Refer to the code example below: +
 
@@ -578,7 +581,7 @@ image::ImportSequenceDiagram.png[width="1000"]
 The import mechanism is built upon an `UndoableCommand`, which means that any changes made by the command can be easily reversed by calling the
 `undo` command.
 
-===== Design Considerations
+===== Design Considerations:
 
 **Aspect:** How import executes +
 **Alternative 1 (current choice):** Individually adds each contact. +
@@ -618,8 +621,14 @@ authorization URL to be shown in the `BrowserPanel` +
 The export mechanism is facilitated by java `File` and `FileOutputStream` classes. It supports writing contact information into a link:#vCard[vCard] by creating a vCard format file.
 This file will be created and can be imported into other platforms such as Google Contacts.
 
-image::vCardClassDiagram.png[width="400"]
-_Figure 5.4 Vcard Class Diagram_
+The process when user enters the export command to the creation of the vCard file is summarized using the activity
+diagram shown below.
+
+image::ExportActivityDiagram.png[width="800"]
+_Figure 5.4a. Export Activity Diagram_
+
+image::vCardClassDiagram.png[width="800"]
+_Figure 5.4b. Vcard Class Diagram_
 
 With reference to the class diagram of `Vcard` above, a `Vcard` object created is unique for every person that user wants to export. `Vcard` of each person contains a unique
 string `cardDetails` that stores all information about the person such as `Name` and `Phone`.
@@ -805,7 +814,8 @@ public void copyImage(String currentImagePath, String imageName) throws IOExcept
 This method will copy the chosen image into the designated display picture storage folder and return the path to the copied image.
 The returned path will be stored as the display picture value of a person.
 
-===== Design Considerations
+===== Design Considerations:
+
 **Aspect:** How to implement this feature +
 **Alternative 1 (current choice):** Prompts for display picture when parser detects `dp/` in `add` or `edit` commands +
 **Pros:** It is easier for users to add display picture as they can add a display picture while adding the person. +
@@ -845,13 +855,17 @@ This feature is implemented to provide users the ability to delete tags without 
 The following sequence diagram shows how the tag delete operation works:
 
 image::TagDeleteSequenceDiagram.png[width="800"]
+_Figure 5.6. Tag Delete Sequence Diagram_
 
 The user will have to provide the command `tagdelete friends` to delete the tag `friends` from all persons in HitMeUp.
 `TagDeleteCommandParser` will parse the argument given after `tagdelete` provided by the user and it will return
  `TagDeleteCommand`. Next, `TagDeleteCommand` will call its method `executeUndoableCommand()` and ensure that the tag
  `friends` specified is valid.
 
-==== Design Considerations
+*Design Considerations*:
+
+---
+
 **Aspect:** implementation of `TagDeleteCommand` +
 **Alternative 1 (current choice):** implement it by extending `UndoableCommand` +
 **Pros:** Deleting tags is undoable/redoable +
@@ -868,13 +882,15 @@ This feature is implemented to provide users the ability to edit tags without ha
 The following sequence diagram shows how the tag edit operation works:
 
 image::TagEditLogicDiagramv2.png[width="800"]
+_Figure 5.7. Tag Edit Sequence Diagram_
 
 The user will have to provide the command `tagedit friends losers` to change all persons with the tag `friends` to the
 tag `losers` in the address book. `TagEditCommandParser` will parse the 2 arguments given after `tagedit` (in this case,
 they are `friends` and `losers`) provided by the user and it will return `TagEditCommand`. Next, `TagEditCommand`
 will call its method `executeUndoableCommand()` and ensure that the tag `friends` specified is valid.
 
-===== Design Considerations
+===== Design Considerations:
+
 **Aspect:** Implementation of `TagEditCommand` +
 **Alternative 1 (current choice):** implement it by extending `UndoableCommand` +
 **Pros:** Editing tags is undoable/redoable. +
@@ -950,7 +966,8 @@ return `FindCommand`. In `FindCommand`, the method `PersonContainsKeywordsPredic
 against the existing list of names and tags and return all persons with the matching keyword `Alex` in their names and
 tag `friends`. Finally, `execute()` will run `updateFilteredPersonList` to show the list of persons returned.
 
-===== Design Considerations
+===== Design Considerations:
+
 *Aspect:* How to input arguments for the command +
 *Alternative 1 (current choice):* Flexible input, no prefixes needed +
 *Pros:* It is easy and simple to use for the users. +
@@ -968,8 +985,8 @@ provided that they have their usernames stored. Currently, HitMeUp supports Twit
 
 The diagram below shows the sequence diagram of a typical social command:
 
-image::SocialSequenceDiagram.png[width="800]
-pass:[<div align="center"><b>Figure 5.8.1 Social Command Implementation</b></div>]
+image::SocialSequenceDiagram.png[width="800"]
+_Figure 5.9. Social Sequence Diagram_
 
 As shown above, when the user enters the command `social 1 ig`, `SocialCommandParser` will parse the arguments which
 are an index and the chosen social media platform and return a `SocialCommand`. `SocialCommand` will then check the type
@@ -978,7 +995,8 @@ of social media platform in the 2nd argument of the user input. In this case, th
 posting a new `SocialRequestEvent` to the UI. In the UI, the `MainWindow` calls an instance of the `BrowserPanel` to
 load the Instagram page of the person at index 1.
 
-===== Design Considerations
+===== Design Considerations:
+
 *Aspect:* What the user input for social media field should be +
 *Alternative 1 (current choice):* Use the same prefixes when adding person +
 *Pros:* It feels intuitive since you add people with the prefixes `ig` and `tw` and therefore should be able to invoke
@@ -1036,8 +1054,11 @@ included in the `LocationCommand` class to allow for higher cohesion as this is 
 The following activity diagram summarizes the flow of the location command:
 
 image::LocationActivityDiagram.png[width="800]
+_Figure 5.10. Location Activity Diagram_
 
-===== Design Considerations
+
+===== Design Considerations:
+
 *Aspect:* How the Google Maps URL is passed to the BrowserPanel +
 *Alternative 1 (current choice):* Use a `showUrlEvent` to send the URL to the `MainWindow` subscriber +
 *Pros:* It allows `LocationCommand` to be more cohesive as it does not need to have an extra method to deal with the logic +
@@ -1095,7 +1116,7 @@ Here are the steps to convert the project documentation files to PDF format:
 .  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For best results, use the settings indicated in the screenshot below.
 
 image::chrome_save_as_pdf.png[width="300"]
-_Figure 6.3 : Saving documentation as PDF files in Chrome_
+_Figure 6.3. Saving documentation as PDF files in Chrome_
 
 == Testing
 
@@ -1430,6 +1451,7 @@ Short for “application”, a program designed to perform a group of coordinate
 benefit of the user. In the Address Book, the user can keep track of his or her contacts.
 ....
 
+[[api]]
 Application Programming Interface (API)
 ....
 The interface that a computer system, library or application provides to allow other computer programs to request
