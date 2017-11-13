@@ -1,5 +1,129 @@
 # liuhang0213
-###### \java\seedu\address\logic\commands\NextMeetingCommand.java
+###### /java/seedu/address/ui/PersonCard.java
+``` java
+    /**
+     * Initializes the profile picture using Gravatar
+     */
+    private void initPicture(ReadOnlyPerson person) {
+
+        Image image;
+
+        try {
+            FileInputStream imageFile = StorageManager.loadCacheFile(String.format(PROFILE_PHOTO_FILENAME_FORMAT,
+                    person.getInternalId().value));
+            image = new Image(imageFile);
+            imageFile.close();
+            gravatar.setImage(image);
+        } catch (IOException e) {
+            // Likely download failed, use default
+            LogsCenter.getLogger("").fine("Unable to read profile image file, using default profile photo.");
+        }
+    }
+
+```
+###### /java/seedu/address/ui/MainWindow.java
+``` java
+    private void setPersonListPanel() {
+        try {
+            ObservableList<ReadOnlyPerson> persons = logic.getFilteredPersonList();
+            personListPanel = new PersonListPanel(persons);
+            personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+        } catch (IllegalStateException e) {
+            logger.info("Cannot update profile photo on a non-main thread. ¯\\_(ツ)_/¯ "
+                    + "Type 'list' to see the new profile photos.");
+        }
+    }
+
+```
+###### /java/seedu/address/ui/MainWindow.java
+``` java
+    @Subscribe
+    private void handleDefaultProfilePhotoChangedEvent(PrefDefaultProfilePhotoChangedEvent event) {
+        ObservableList<ReadOnlyPerson> persons = logic.getFilteredPersonList();
+        Task<Void> task = new Task<Void>() {
+            @Override public Void call() {
+                for (ReadOnlyPerson person : persons) {
+                    storage.downloadProfilePhoto(person, prefs.getDefaultProfilePhoto());
+                }
+                return null;
+            }
+        };
+        Thread th = new Thread(task);
+        th.setDaemon(true);
+        th.start();
+    }
+
+    @Subscribe
+    private void handleProfilePhotoChangedEvent(ProfilePhotoChangedEvent event) {
+        setPersonListPanel();
+    }
+}
+```
+###### /java/seedu/address/logic/parser/PrefCommandParser.java
+``` java
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
+import java.util.HashMap;
+import java.util.Objects;
+
+import seedu.address.logic.commands.PrefCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
+
+/**
+ * Parses input arguments and creates a new PrefCommand object
+ */
+public class PrefCommandParser implements Parser<PrefCommand> {
+
+    private HashMap<String, String> prefShortforms;
+    {
+        prefShortforms = new HashMap<>();
+        prefShortforms.put("dp", "DefaultProfilePhoto");
+        prefShortforms.put("theme", "Theme");
+        prefShortforms.put("abpath", "AddressBookFilePath");
+        prefShortforms.put("abname", "AddressBookName");
+    }
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the PrefCommand
+     * and returns an PrefCommand object for execution.
+     *
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public PrefCommand parse(String args) throws ParseException {
+        String[] splitArgs = args.trim().split("\\s+");
+        String prefKey;
+        String newPrefValue;
+        newPrefValue = "";
+
+        if (splitArgs.length > 2 || (splitArgs.length == 1 && Objects.equals(splitArgs[0], ""))) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, PrefCommand.MESSAGE_USAGE));
+        } else if (splitArgs.length == 2) {
+            // The second argument is optional
+            newPrefValue = splitArgs[1].trim();
+        }
+
+        prefKey = parsePrefShortcut(splitArgs[0].trim());
+
+        return new PrefCommand(prefKey, newPrefValue);
+    }
+
+    /**
+     * Checks whether the given key is a short form for a preference key
+     *
+     * @param prefKey User's input value for preference key
+     * @return the actual key name if the input was shortcut, otherwise returns the input itself
+     */
+    private String parsePrefShortcut (String prefKey) {
+        if (prefShortforms.containsKey(prefKey)) {
+            return prefShortforms.get(prefKey);
+        } else {
+            return prefKey;
+        }
+    }
+}
+```
+###### /java/seedu/address/logic/commands/NextMeetingCommand.java
 ``` java
 /**
  * Lists all upcoming meetings to the user.
@@ -9,6 +133,7 @@ public class NextMeetingCommand extends Command {
     public static final String COMMAND_WORD = "nextMeeting";
     public static final String COMMAND_ALIAS = "nm";
 
+    public static final String NAME_SEPARATOR = ", ";
     public static final String MESSAGE_SUCCESS = "Displays the upcoming meeting";
     public static final String MESSAGE_OUTPUT_PREFIX = "Upcoming meeting with ";
     public static final String MESSAGE_INVALID_PARTICIPANT = "Meeting involves person not present in address book";
@@ -26,12 +151,12 @@ public class NextMeetingCommand extends Command {
         try {
             for (InternalId id : nextMeeting.getListOfPersonsId()) {
                 sb.append(model.getAddressBook().getPersonByInternalIndex(id.getId()).getName().fullName);
-                sb.append(", ");
+                sb.append(NAME_SEPARATOR);
             }
         } catch (PersonNotFoundException e) {
             throw new CommandException(MESSAGE_INVALID_PARTICIPANT);
         }
-        sb.delete(sb.length() - 2, sb.length());
+        sb.delete(sb.length() - NAME_SEPARATOR.length(), sb.length());
         sb.append('\n');
 
         return new CommandResult(sb.toString() + nextMeeting.toString());
@@ -42,7 +167,7 @@ public class NextMeetingCommand extends Command {
 
 
 ```
-###### \java\seedu\address\logic\commands\PrefCommand.java
+###### /java/seedu/address/logic/commands/PrefCommand.java
 ``` java
 /**
  * Edits the details of an existing person in the address book.
@@ -54,17 +179,20 @@ public class PrefCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits user preferences "
             + "Parameters: KEY [NEW_VALUE]\n"
-            + "Example: " + COMMAND_WORD + " AddressBookName" + " MyNewAddressBook\n";
+            + "Example: " + COMMAND_WORD + " AddressBookName" + " MyNewAddressBook\n"
+            + "See help page for a list of available preferences";
     public static final String MESSAGE_TEMPLATE = COMMAND_WORD + "KEY [NEW_VALUE]";
 
     public static final String MESSAGE_EDIT_PREF_SUCCESS = "Edited preference: %1$s \nfrom %2$s \nto %3$s";
     public static final String MESSAGE_PREF_KEY_NOT_FOUND = "Invalid preference key: %1$s";
     public static final String MESSAGE_ACCESSING_PREF_ERROR = "Unable to read preference value for %1$s";
+    public static final String MESSAGE_INVALID_VALUE_ERROR = "Invalid value %1$s for preference key %2$s";
 
     private String prefKey;
     private String newPrefValue = "";
 
     /**
+     * Creates a new PrefCommand with the given key and value
      */
     public PrefCommand(String prefKey, String newPrefValue) {
         this.prefKey = prefKey;
@@ -79,13 +207,15 @@ public class PrefCommand extends Command {
         if (!newPrefValue.isEmpty()) {
             // Editing preference
             writePrefValue(prefKey, newPrefValue);
-            return new CommandResult(String.format(MESSAGE_EDIT_PREF_SUCCESS, prefKey, currentPrefValue, newPrefValue));
+            return new CommandResult(String.format(MESSAGE_EDIT_PREF_SUCCESS, prefKey, currentPrefValue,
+                    readPrefValue(prefKey)));
         }
         return new CommandResult(currentPrefValue);
     }
 
     /**
-     * Reads current value for the preference key
+     * Reads current value for the given preference key.
+     *
      * @param prefKey Key name of the preference
      * @return Value of the preference
      * @throws CommandException if the preference key is not defined in UserPrefs or not accessible
@@ -107,7 +237,8 @@ public class PrefCommand extends Command {
     }
 
     /**
-     * Modifies the value of preference given by the key
+     * Modifies the value of preference given by the key.
+     *
      * @param prefKey Key name of the preference
      * @param newPrefValue New value of the preference
      * @throws CommandException if the preference key is not defined in UserPrefs or not accessible
@@ -122,7 +253,7 @@ public class PrefCommand extends Command {
         } catch (NoSuchMethodException e) {
             throw new CommandException(String.format(MESSAGE_PREF_KEY_NOT_FOUND, prefKey));
         } catch (IllegalAccessException | InvocationTargetException e) {
-            throw new CommandException(String.format(MESSAGE_ACCESSING_PREF_ERROR, prefKey));
+            throw new CommandException(String.format(MESSAGE_INVALID_VALUE_ERROR, newPrefValue, prefKey));
         }
     }
 
@@ -148,322 +279,10 @@ public class PrefCommand extends Command {
 
 }
 ```
-###### \java\seedu\address\logic\parser\PrefCommandParser.java
-``` java
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-
-import java.util.Objects;
-
-import seedu.address.logic.commands.PrefCommand;
-import seedu.address.logic.parser.exceptions.ParseException;
-
-/**
- * Parses input arguments and creates a new PrefCommand object
- */
-public class PrefCommandParser implements Parser<PrefCommand> {
-
-    /**
-     * Parses the given {@code String} of arguments in the context of the PrefCommand
-     * and returns an PrefCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
-     */
-    public PrefCommand parse(String args) throws ParseException {
-        String[] splitArgs = args.trim().split("\\s+");
-        String prefKey;
-        String newPrefValue;
-        newPrefValue = "";
-
-        if (splitArgs.length > 2 || (splitArgs.length == 1 && Objects.equals(splitArgs[0], ""))) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, PrefCommand.MESSAGE_USAGE));
-        } else if (splitArgs.length == 2) {
-            // The second argument is optional
-            newPrefValue = splitArgs[1].trim();
-        }
-
-        prefKey = splitArgs[0].trim();
-
-        return new PrefCommand(prefKey, newPrefValue);
-    }
-}
-```
-###### \java\seedu\address\model\AddressBook.java
-``` java
-    /**
-     * Returns the maximum internal index in the unique person list
-     */
-    public int getMaxInternalIndex() {
-        return persons.getMaxInternalIndex();
-    }
-
-    @Override
-    public ReadOnlyPerson getPersonByInternalIndex(int index) throws PersonNotFoundException {
-        return persons.getPersonByInternalIndex(index);
-    }
-
-```
-###### \java\seedu\address\model\Meeting.java
+###### /java/seedu/address/model/UniqueMeetingList.java
 ``` java
 /**
- * Represents a Meeting
- * Guarantees: immutable; meeting time is in the future
- */
-public class Meeting implements ReadOnlyMeeting {
-
-    public static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-    public static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss");
-    public static final String MESSAGE_INVALID_DATE = "The meeting must be in the future.";
-    private LocalDateTime dateTime;
-    private String location;
-    private String notes;
-    private ArrayList<InternalId> listOfPersonsId;
-    private Boolean isMeetingInFuture;
-
-    /**
-     * Validates params given for meeting
-     *
-     * @throws IllegalValueException if the given meeting time is not in the future
-     */
-    public Meeting(LocalDateTime dateTime, String location, String notes, ArrayList<InternalId> listOfPersonsId) {
-        requireNonNull(dateTime);
-        requireNonNull(location);
-        requireNonNull(listOfPersonsId);
-        if (dateTime.isBefore(LocalDateTime.now())) {
-            isMeetingInFuture = false;
-        } else {
-            isMeetingInFuture = true;
-        }
-
-        this.dateTime = dateTime;
-        this.location = location;
-        this.notes = notes.trim();
-        this.listOfPersonsId = listOfPersonsId;
-    }
-
-    /**
-     * Creates a copy of the given meeting
-     */
-    public Meeting(ReadOnlyMeeting source) {
-        this(source.getDateTime(), source.getLocation(), source.getNotes(), source.getListOfPersonsId());
-    }
-
-    // Get methods
-    public String getDate() {
-        return dateTime.format(DATE_FORMATTER);
-    }
-
-    public String getTime() {
-        return dateTime.format(TIME_FORMATTER);
-    }
-
-    public String getDateTimeStr() {
-        return dateTime.toString();
-    }
-
-    public LocalDateTime getDateTime() {
-        return dateTime;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public String getNotes() {
-        return notes;
-    }
-
-    public ArrayList<InternalId> getListOfPersonsId() {
-        return listOfPersonsId;
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof Meeting // instanceof handles nulls
-                && this.dateTime.equals(((Meeting) other).dateTime)
-                && this.location.equals(((Meeting) other).location)
-                && this.notes.equals(((Meeting) other).notes)
-                && this.listOfPersonsId.equals(((Meeting) other).listOfPersonsId)); // state check
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(dateTime, location, notes, listOfPersonsId);
-    }
-
-    /**
-     * Format state as text for viewing.
-     */
-    public String toString() {
-        return "Date: " + dateTime.format(DATE_FORMATTER) + "  Time: " + dateTime.format(TIME_FORMATTER) + '\n'
-                + "Location: " + location + '\n'
-                + "Notes: " + notes;
-    }
-
-    @Override
-    public int compareTo(Meeting other) {
-        return dateTime.compareTo(other.dateTime);
-    }
-
-}
-```
-###### \java\seedu\address\model\ModelManager.java
-``` java
-    /** Raises an event to indicate a person been added */
-    private void indicatePersonAdded(ReadOnlyPerson person) {
-        raise(new PersonChangedEvent(person, PersonChangedEvent.ChangeType.ADD, userPrefs));
-    }
-
-```
-###### \java\seedu\address\model\ModelManager.java
-``` java
-    /** Raises an event to indicate a person been edited */
-    private void indicatePersonEdited(ReadOnlyPerson person) {
-        raise(new PersonChangedEvent(person, PersonChangedEvent.ChangeType.EDIT, userPrefs));
-    }
-
-```
-###### \java\seedu\address\model\ModelManager.java
-``` java
-    /** Raises an event to indicate a person been deleted */
-    private void indicatePersonDeleted(ReadOnlyPerson person) {
-        raise(new PersonChangedEvent(person, PersonChangedEvent.ChangeType.DELETE, userPrefs));
-    }
-
-    @Override
-    public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
-        addressBook.removePerson(target);
-        indicateAddressBookChanged();
-        indicatePersonDeleted(target);
-    }
-```
-###### \java\seedu\address\model\person\InternalId.java
-``` java
-import seedu.address.commons.exceptions.IllegalValueException;
-
-/**
- * Represents a Person's id in the address book.
- * Guarantees: immutable; is valid long as it is a positive integer
- */
-public class InternalId {
-
-    public static final String MESSAGE_ID_CONSTRAINTS = "Id must be a positive interger.";
-    public final int value;
-
-    /**
-     * Validates given address.
-     *
-     * @throws IllegalValueException if given address string is invalid.
-     */
-    public InternalId(int id) throws IllegalValueException {
-        if (id < 0) {
-            throw new IllegalValueException(MESSAGE_ID_CONSTRAINTS);
-        }
-        this.value = id;
-    }
-
-    public int getId() {
-        return value;
-    }
-
-    @Override
-    public String toString() {
-        return Integer.toString(value);
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof InternalId // instanceof handles nulls
-                && this.value == (((InternalId) other).value)); // state check
-    }
-
-    @Override
-    public int hashCode() {
-        return Integer.hashCode(value);
-    }
-
-}
-```
-###### \java\seedu\address\model\person\UniquePersonList.java
-``` java
-    /**
-     * Returns the maximum internal index among all persons in the address book
-     */
-    public int getMaxInternalIndex() {
-        return maxInternalIndex;
-    }
-
-    public ReadOnlyPerson getPersonByInternalIndex(int index) throws PersonNotFoundException {
-        for (Person p : internalList) {
-            if (p.getInternalId().getId() == index) {
-                return p;
-            }
-        }
-        throw new PersonNotFoundException();
-    }
-
-```
-###### \java\seedu\address\model\person\UniquePersonList.java
-``` java
-    /**
-     * Updates the maximum internal index among all persons in the person list
-     * Currently not used; implemented previously for remove(), but it was unnecessary to update
-     * after each deletion
-     * @return the maximum internal index
-     */
-    private int updateMaxInternalIndex() {
-        int maxIndex = 0;
-        for (Person p : internalList) {
-            if (p.getInternalId().getId() > maxIndex) {
-                maxIndex = p.getInternalId().getId();
-            }
-        }
-        return maxIndex;
-    }
-```
-###### \java\seedu\address\model\ReadOnlyAddressBook.java
-``` java
-    /**
-     * Returns an unmodifiable view of a person by the given internal index
-     * @param i internal index of the person
-     *
-     */
-    ReadOnlyPerson getPersonByInternalIndex(int i) throws PersonNotFoundException;
-
-    /**
-     * Returns the maximum index of persons in the address book.
-     * @return
-     */
-    int getMaxInternalIndex();
-
-}
-```
-###### \java\seedu\address\model\ReadOnlyMeetingList.java
-``` java
-/**
- * Unmodifiable view of a meeting list
- */
-public interface ReadOnlyMeetingList {
-
-    /**
-     * Returns an unmodifiable view of the meetings list.
-     * This list will not contain any duplicate meetings.
-     */
-    ObservableList<ReadOnlyMeeting> getMeetingList();
-
-    /**
-     * Returns the next upcoming meeting
-     * This is required for nextMeeting command
-     */
-    ReadOnlyMeeting getUpcomingMeeting();
-}
-```
-###### \java\seedu\address\model\UniqueMeetingList.java
-``` java
-/**
- * A list of meetings that enforces no nulls and uniqueness between its elements.
- *
+ * A list of meetings that enforces no nulls and uniqueness between its elements. *
  * Supports minimal set of list operations for the app's features.
  *
  * @see Meeting#equals(Object)
@@ -512,6 +331,7 @@ public class UniqueMeetingList implements Iterable<ReadOnlyMeeting>, ReadOnlyMee
 
     /**
      * Replaces the Meetings in this list with those in the argument meeting list.
+     *
      * @param meetings
      */
     public void setMeetings(ObservableList<ReadOnlyMeeting> meetings) {
@@ -556,100 +376,301 @@ public class UniqueMeetingList implements Iterable<ReadOnlyMeeting>, ReadOnlyMee
     }
 
 ```
-###### \java\seedu\address\storage\AddressBookStorage.java
-``` java
-    /**
-     * Backs up the current state of addressbook to local storage
-     */
-    void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException;
-
-    /**
-     * Restores an earlier version of address book from local storage
-     * @throws IOException if there was any problem reading the file
-     * @throws DataConversionException if the data in storage is not in the expected format.
-     */
-    Optional<ReadOnlyAddressBook> restoreAddressBook() throws IOException, DataConversionException;
-
-}
-```
-###### \java\seedu\address\storage\MeetingListStorage.java
+###### /java/seedu/address/model/ReadOnlyMeetingList.java
 ``` java
 /**
- * Represents a storage for meetings
+ * Unmodifiable view of a meeting list
  */
-public interface MeetingListStorage {
+public interface ReadOnlyMeetingList {
 
     /**
-     * Returns the file path of the data file.
+     * Returns an unmodifiable view of the meetings list.
+     * This list will not contain any duplicate meetings.
      */
-    String getMeetingsFilePath();
+    ObservableList<ReadOnlyMeeting> getMeetingList();
 
     /**
-     * Returns Meetings data
-     *   Returns {@code Optional.empty()} if storage file is not found.
-     * @throws DataConversionException if the data in storage is not in the expected format.
-     * @throws IOException if there was any problem when reading from the storage.
+     * Returns the next upcoming meeting
+     * This is required for nextMeeting command
      */
-    Optional<ReadOnlyMeetingList> readMeetingList() throws DataConversionException, IOException;
+    ReadOnlyMeeting getUpcomingMeeting();
+}
+```
+###### /java/seedu/address/model/person/InternalId.java
+``` java
+import seedu.address.commons.exceptions.IllegalValueException;
+
+/**
+ * Represents a Person's id in the address book.
+ * Guarantees: immutable; is valid long as it is a positive integer
+ */
+public class InternalId {
+
+    public static final String MESSAGE_ID_CONSTRAINTS = "Id must be a positive interger.";
+    public final int value;
 
     /**
-     * @see #getMeetingsFilePath()
+     * Validates given address.
+     *
+     * @throws IllegalValueException if given address string is invalid.
      */
-    Optional<ReadOnlyMeetingList> readMeetingList(String filePath) throws DataConversionException, IOException;
+    public InternalId(int id) throws IllegalValueException {
+        if (id < 0) {
+            throw new IllegalValueException(MESSAGE_ID_CONSTRAINTS);
+        }
+        this.value = id;
+    }
 
-    /**
-     * Saves the given {@link ReadOnlyMeetingList} to the storage.
-     * @param meetingList cannot be null.
-     * @throws IOException if there was any problem writing to the file.
-     */
-    void saveMeetingList(ReadOnlyMeetingList meetingList) throws IOException;
+    public int getId() {
+        return value;
+    }
 
-    /**
-     * @see #saveMeetingList(ReadOnlyMeetingList)
-     */
-    void saveMeetingList(ReadOnlyMeetingList meetingList, String filePath) throws IOException;
+    @Override
+    public String toString() {
+        return Integer.toString(value);
+    }
 
-    /*
-    /**
-     * Backs up the current state of addressbook to local storage
-     */
-    //void backupMeetingList(ReadOnlyMeetingList meetingList) throws IOException;
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof InternalId // instanceof handles nulls
+                && this.value == (((InternalId) other).value)); // state check
+    }
 
-    /*
-    /**
-     * Restores an earlier version of address book from local storage
-     * @throws IOException if there was any problem reading the file
-     * @throws DataConversionException if the data in storage is not in the expected format.
-     */
-    //Optional<ReadOnlyMeetingList> restoreMeetingList() throws IOException, DataConversionException;
+    @Override
+    public int hashCode() {
+        return Integer.hashCode(value);
+    }
 
 }
 ```
-###### \java\seedu\address\storage\Storage.java
-``` java
-    @Subscribe
-    void handlePersonChangedEvent(PersonChangedEvent event);
-
-    @Override
-    Optional<ReadOnlyMeetingList> readMeetingList() throws IOException, DataConversionException;
-
-    @Override
-    void saveMeetingList(ReadOnlyMeetingList meetingList) throws IOException;
-
-    void saveFileFromUrl(String urlString, String filePath) throws IOException;
-
-```
-###### \java\seedu\address\storage\Storage.java
+###### /java/seedu/address/model/person/UniquePersonList.java
 ``` java
     /**
-     * Downloads gravatar image and save in local storage using each person's email address
-     * @param person The person whose profile photo is requried
-     * @param def The default style of profile photo
+     * Returns the maximum internal index among all persons in the address book
      */
-    void downloadProfilePhoto(ReadOnlyPerson person, String def);
+    public int getMaxInternalIndex() {
+        return maxInternalIndex;
+    }
+
+    public ReadOnlyPerson getPersonByInternalIndex(int index) throws PersonNotFoundException {
+        for (Person p : internalList) {
+            if (p.getInternalId().getId() == index) {
+                return p;
+            }
+        }
+        throw new PersonNotFoundException();
+    }
+
+```
+###### /java/seedu/address/model/person/UniquePersonList.java
+``` java
+    /**
+     * Updates the maximum internal index among all persons in the person list
+     * Currently not used; implemented previously for remove(), but it was unnecessary to update
+     * after each deletion
+     *
+     * @return the maximum internal index
+     */
+    private int updateMaxInternalIndex() {
+        int maxIndex = 0;
+        for (Person p : internalList) {
+            if (p.getInternalId().getId() > maxIndex) {
+                maxIndex = p.getInternalId().getId();
+            }
+        }
+        return maxIndex;
+    }
+```
+###### /java/seedu/address/model/ModelManager.java
+``` java
+    /** Raises an event to indicate a person been added */
+    private void indicatePersonAdded(ReadOnlyPerson person) {
+        raise(new PersonChangedEvent(person, PersonChangedEvent.ChangeType.ADD, userPrefs));
+    }
+
+```
+###### /java/seedu/address/model/ModelManager.java
+``` java
+    /** Raises an event to indicate a person been edited */
+    private void indicatePersonEdited(ReadOnlyPerson person) {
+        raise(new PersonChangedEvent(person, PersonChangedEvent.ChangeType.EDIT, userPrefs));
+    }
+
+```
+###### /java/seedu/address/model/ModelManager.java
+``` java
+    /** Raises an event to indicate a person been deleted */
+    private void indicatePersonDeleted(ReadOnlyPerson person) {
+        raise(new PersonChangedEvent(person, PersonChangedEvent.ChangeType.DELETE, userPrefs));
+    }
+
+    @Override
+    public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
+        addressBook.removePerson(target);
+        indicateAddressBookChanged();
+        indicatePersonDeleted(target);
+    }
+```
+###### /java/seedu/address/model/AddressBook.java
+``` java
+    /**
+     * Returns the maximum internal index in the unique person list
+     */
+    public int getMaxInternalIndex() {
+        return persons.getMaxInternalIndex();
+    }
+
+    @Override
+    public ReadOnlyPerson getPersonByInternalIndex(int index) throws PersonNotFoundException {
+        return persons.getPersonByInternalIndex(index);
+    }
+
+```
+###### /java/seedu/address/model/ReadOnlyAddressBook.java
+``` java
+    /**
+     * Returns an unmodifiable view of a person by the given internal index
+     *
+     * @param i internal index of the person
+     */
+    ReadOnlyPerson getPersonByInternalIndex(int i) throws PersonNotFoundException;
+
+    /**
+     * Returns the maximum index of persons in the address book.
+     */
+    int getMaxInternalIndex();
+
 }
 ```
-###### \java\seedu\address\storage\StorageManager.java
+###### /java/seedu/address/model/Meeting.java
+``` java
+/**
+ * Represents a Meeting
+ * Guarantees: immutable; meeting time is in the future
+ */
+public class Meeting implements ReadOnlyMeeting {
+
+    public static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+    public static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss");
+    public static final String MESSAGE_INVALID_DATE = "The meeting must be in the future.";
+    private LocalDateTime dateTime;
+    private String location;
+    private String notes;
+    private ArrayList<InternalId> listOfPersonsId;
+    private Boolean isMeetingInFuture;
+
+    /**
+     * Validates params given for meeting
+     *
+     * @throws IllegalValueException if the given meeting time is not in the future
+     */
+    public Meeting(LocalDateTime dateTime, String location, String notes, ArrayList<InternalId> listOfPersonsId) {
+        requireNonNull(dateTime);
+        requireNonNull(location);
+        requireNonNull(listOfPersonsId);
+        if (dateTime.isBefore(LocalDateTime.now())) {
+            isMeetingInFuture = false;
+        } else {
+            isMeetingInFuture = true;
+        }
+
+        this.dateTime = dateTime;
+        this.location = location;
+        this.notes = notes.trim();
+        this.listOfPersonsId = listOfPersonsId;
+    }
+
+    /**
+     * Creates a copy of the given meeting
+     */
+    public Meeting(ReadOnlyMeeting source) {
+        this(source.getDateTime(), source.getLocation(), source.getNotes(), source.getListOfPersonsId());
+    }
+
+    // Get methods
+
+    /**
+     * Returns the formatted date for the meeting
+     */
+    public String getDate() {
+        return dateTime.format(DATE_FORMATTER);
+    }
+
+    /**
+     * Returns the formatted time for the meeting
+     */
+    public String getTime() {
+        return dateTime.format(TIME_FORMATTER);
+    }
+
+    /**
+     * Returns the unformatted datetime String for the meeting
+     */
+    public String getDateTimeStr() {
+        return dateTime.toString();
+    }
+
+    /**
+     * Returns the dateTime object for the meeting
+     */
+    public LocalDateTime getDateTime() {
+        return dateTime;
+    }
+
+    /**
+     * Returns the location for the meeting
+     */
+    public String getLocation() {
+        return location;
+    }
+
+    /**
+     * Returns the notes for the meeting
+     */
+    public String getNotes() {
+        return notes;
+    }
+
+    /**
+     * Returns the list of internal id of meeting participants
+     */
+    public ArrayList<InternalId> getListOfPersonsId() {
+        return listOfPersonsId;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof Meeting // instanceof handles nulls
+                && this.dateTime.equals(((Meeting) other).dateTime)
+                && this.location.equals(((Meeting) other).location)
+                && this.notes.equals(((Meeting) other).notes)
+                && this.listOfPersonsId.equals(((Meeting) other).listOfPersonsId)); // state check
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(dateTime, location, notes, listOfPersonsId);
+    }
+
+    /**
+     * Returns the state of the Meeting as string for viewing.
+     */
+    public String toString() {
+        return "Date: " + dateTime.format(DATE_FORMATTER) + "  Time: " + dateTime.format(TIME_FORMATTER) + '\n'
+                + "Location: " + location + '\n'
+                + "Notes: " + notes;
+    }
+
+    @Override
+    public int compareTo(Meeting other) {
+        return dateTime.compareTo(other.dateTime);
+    }
+
+}
+```
+###### /java/seedu/address/storage/StorageManager.java
 ``` java
     @Override
     public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
@@ -661,7 +682,7 @@ public interface MeetingListStorage {
     }
 
 ```
-###### \java\seedu\address\storage\StorageManager.java
+###### /java/seedu/address/storage/StorageManager.java
 ``` java
     @Override
     @Subscribe
@@ -732,6 +753,7 @@ public interface MeetingListStorage {
 
     /**
      * Returns a cache file in the local folder
+     *
      * @param filename of file to be opened
      * @throws IOException if file with given filename is not found
      */
@@ -740,20 +762,6 @@ public interface MeetingListStorage {
             return new FileInputStream(CACHE_DIR + filename);
         } catch (FileNotFoundException e) {
             logger.warning(String.format("Cache file %1$s not found.", filename));
-            throw new IOException();
-        }
-    }
-
-    /**
-     * Returns a image in the resources folder
-     * @param imageFilename of the image file to be opened
-     * @throws IOException if the image with given filename is not found
-     */
-    public static FileInputStream loadResourceImage(String imageFilename) throws IOException {
-        try {
-            return new FileInputStream(IMAGE_RESOURCE_DIR + imageFilename);
-        } catch (FileNotFoundException e) {
-            logger.warning(String.format("Image resource %1$s not found.", imageFilename));
             throw new IOException();
         }
     }
@@ -774,7 +782,7 @@ public interface MeetingListStorage {
     }
 }
 ```
-###### \java\seedu\address\storage\XmlAdaptedMeeting.java
+###### /java/seedu/address/storage/XmlAdaptedMeeting.java
 ``` java
 /**
  * JAXB-friendly version of the Person.
@@ -829,7 +837,57 @@ public class XmlAdaptedMeeting {
     }
 }
 ```
-###### \java\seedu\address\storage\XmlAdaptedPerson.java
+###### /java/seedu/address/storage/XmlSerializableMeetingList.java
+``` java
+/**
+ * An Immutable MeetingList that is serializable to XML format
+ */
+@XmlRootElement(name = "meetingList")
+public class XmlSerializableMeetingList extends XmlSerializableData implements ReadOnlyMeetingList {
+
+    @XmlElement
+    private List<XmlAdaptedMeeting> meetings;
+
+    /**
+     * Creates an empty XmlSerializableMeetingList
+     * This empty constructor is required for marshalling.
+     */
+    public XmlSerializableMeetingList() {
+        meetings = new ArrayList<>();
+    }
+
+    /**
+     * Conversion
+     */
+    public XmlSerializableMeetingList(ReadOnlyMeetingList src) {
+        this();
+        meetings.addAll(src.getMeetingList().stream().map(XmlAdaptedMeeting::new).collect(Collectors.toList()));
+    }
+
+    @Override
+    public ObservableList<ReadOnlyMeeting> getMeetingList() {
+        final ObservableList<ReadOnlyMeeting> meetings = this.meetings.stream().map(m -> {
+            try {
+                return m.toModelType();
+            } catch (IllegalValueException e) {
+                LogsCenter.getLogger("").warning("Convert ReadOnlyMeeting to model type failed.");
+                return null;
+            }
+        }).collect(Collectors.toCollection(FXCollections::observableArrayList));
+        return FXCollections.unmodifiableObservableList(meetings);
+    }
+
+    /**
+     * Should not be reached since the list should be immutable and cannot be sorted
+     */
+    @Override
+    public ReadOnlyMeeting getUpcomingMeeting() {
+        assert false : "This method should not be called from an XmlSerializableMeetingList";
+        return null;
+    }
+}
+```
+###### /java/seedu/address/storage/XmlAdaptedPerson.java
 ``` java
     /**
      * Returns the internal id of the person as read from the xml file
@@ -840,7 +898,89 @@ public class XmlAdaptedMeeting {
     }
 }
 ```
-###### \java\seedu\address\storage\XmlAddressBookStorage.java
+###### /java/seedu/address/storage/MeetingListStorage.java
+``` java
+/**
+ * Represents a storage for meetings
+ */
+public interface MeetingListStorage {
+
+    /**
+     * Returns the file path of the data file.
+     */
+    String getMeetingsFilePath();
+
+    /**
+     * Returns Meetings data
+     *   Returns {@code Optional.empty()} if storage file is not found.
+     *
+     * @throws DataConversionException if the data in storage is not in the expected format.
+     * @throws IOException if there was any problem when reading from the storage.
+     */
+    Optional<ReadOnlyMeetingList> readMeetingList() throws DataConversionException, IOException;
+
+    /**
+     * @see #getMeetingsFilePath()
+     */
+    Optional<ReadOnlyMeetingList> readMeetingList(String filePath) throws DataConversionException, IOException;
+
+    /**
+     * Saves the given {@link ReadOnlyMeetingList} to the storage.
+     *
+     * @param meetingList cannot be null.
+     * @throws IOException if there was any problem writing to the file.
+     */
+    void saveMeetingList(ReadOnlyMeetingList meetingList) throws IOException;
+
+    /**
+     * @see #saveMeetingList(ReadOnlyMeetingList)
+     */
+    void saveMeetingList(ReadOnlyMeetingList meetingList, String filePath) throws IOException;
+
+}
+```
+###### /java/seedu/address/storage/Storage.java
+``` java
+    @Subscribe
+    void handlePersonChangedEvent(PersonChangedEvent event);
+
+    @Override
+    Optional<ReadOnlyMeetingList> readMeetingList() throws IOException, DataConversionException;
+
+    @Override
+    void saveMeetingList(ReadOnlyMeetingList meetingList) throws IOException;
+
+    /**
+     * Downloads a file from a given url and saves it in the cache folder
+     *
+     * @param urlString The url of the file
+     * @param filePath the destination of the file including file name; the root directory is the cache/ folder
+     * @throws IOException
+     */
+    void saveFileFromUrl(String urlString, String filePath) throws IOException;
+
+```
+###### /java/seedu/address/storage/Storage.java
+``` java
+    /**
+     * Downloads gravatar image and save in local storage using each person's email address
+     *
+     * @param person The person whose profile photo is requried
+     * @param def The default style of profile photo
+     */
+    void downloadProfilePhoto(ReadOnlyPerson person, String def);
+}
+```
+###### /java/seedu/address/storage/XmlSerializableData.java
+``` java
+/**
+ * An abstract class for address book and meeting list
+ * Used for storage utils for xml format data
+ */
+public abstract class XmlSerializableData {
+}
+```
+###### /java/seedu/address/storage/XmlAddressBookStorage.java
 ``` java
     @Override
     public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
@@ -854,7 +994,7 @@ public class XmlAdaptedMeeting {
 
 }
 ```
-###### \java\seedu\address\storage\XmlMeetingListStorage.java
+###### /java/seedu/address/storage/XmlMeetingListStorage.java
 ``` java
 /**
  * A class to access Meeting data stored as an xml file on the hard disk.
@@ -862,26 +1002,17 @@ public class XmlAdaptedMeeting {
 public class XmlMeetingListStorage implements MeetingListStorage {
 
     // Creates a new folder for all backup data
-    //private static final String BACKUP_FILE_PREFIX = "backup/";
     private static final Logger logger = LogsCenter.getLogger(XmlMeetingListStorage.class);
 
     private String filePath;
-    //private String backupFilePath;
 
     public XmlMeetingListStorage(String filePath) {
         this.filePath = filePath;
-        //this.backupFilePath = BACKUP_FILE_PREFIX + filePath;
     }
 
     public String getMeetingsFilePath() {
         return filePath;
     }
-
-    /*
-    public String getBackupFilePath() {
-        return backupFilePath;
-    }
-    */
 
     @Override
     public Optional<ReadOnlyMeetingList> readMeetingList() throws DataConversionException, IOException {
@@ -889,6 +1020,7 @@ public class XmlMeetingListStorage implements MeetingListStorage {
     }
 
     /**
+     * Returns a ReadOnlyMeetingList from a given file
      * @param filePath location of the data. Cannot be null
      * @throws DataConversionException if the file is not in the correct format.
      */
@@ -927,21 +1059,9 @@ public class XmlMeetingListStorage implements MeetingListStorage {
         XmlFileStorage.saveDataToFile(file, new XmlSerializableMeetingList(meetingList));
     }
 
-    /*
-    @Override
-    public void backupMeetingList(ReadOnlyMeetingList meetingList) throws IOException {
-        saveMeetingList(meetingList, backupFilePath);
-    }
-
-    public Optional<ReadOnlyMeetingList> restoreMeetingList() throws IOException, DataConversionException {
-        return readMeetingList(backupFilePath);
-    }
-    */
-
-
 }
 ```
-###### \java\seedu\address\storage\XmlSerializableAddressBook.java
+###### /java/seedu/address/storage/XmlSerializableAddressBook.java
 ``` java
     @Override
     public ReadOnlyPerson getPersonByInternalIndex(int index) throws PersonNotFoundException {
@@ -970,128 +1090,20 @@ public class XmlMeetingListStorage implements MeetingListStorage {
     }
 }
 ```
-###### \java\seedu\address\storage\XmlSerializableData.java
+###### /java/seedu/address/storage/AddressBookStorage.java
 ``` java
-/**
- * An abstract class for address book and meeting list
- * Used for storage utils for xml format data
- */
-public abstract class XmlSerializableData {
+    /**
+     * Backs up the current state of addressbook to local storage
+     */
+    void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException;
+
+    /**
+     * Restores an earlier version of address book from local storage
+     *
+     * @throws IOException if there was any problem reading the file
+     * @throws DataConversionException if the data in storage is not in the expected format.
+     */
+    Optional<ReadOnlyAddressBook> restoreAddressBook() throws IOException, DataConversionException;
+
 }
-```
-###### \java\seedu\address\storage\XmlSerializableMeetingList.java
-``` java
-/**
- * An Immutable MeetingList that is serializable to XML format
- */
-@XmlRootElement(name = "meetingList")
-public class XmlSerializableMeetingList extends XmlSerializableData implements ReadOnlyMeetingList {
-
-    @XmlElement
-    private List<XmlAdaptedMeeting> meetings;
-
-    /**
-     * Creates an empty XmlSerializableMeetingList
-     * This empty constructor is required for marshalling.
-     */
-    public XmlSerializableMeetingList() {
-        meetings = new ArrayList<>();
-    }
-
-    /**
-     * Conversion
-     */
-    public XmlSerializableMeetingList(ReadOnlyMeetingList src) {
-        this();
-        meetings.addAll(src.getMeetingList().stream().map(XmlAdaptedMeeting::new).collect(Collectors.toList()));
-    }
-
-    @Override
-    public ObservableList<ReadOnlyMeeting> getMeetingList() {
-        final ObservableList<ReadOnlyMeeting> meetings = this.meetings.stream().map(m -> {
-            try {
-                return m.toModelType();
-            } catch (IllegalValueException e) {
-                e.printStackTrace();
-                //TODO: better error handling
-                return null;
-            }
-        }).collect(Collectors.toCollection(FXCollections::observableArrayList));
-        return FXCollections.unmodifiableObservableList(meetings);
-    }
-
-    /**
-     * Should not be reached since the list should be immutable and cannot be sorted
-     * @return
-     */
-    @Override
-    public ReadOnlyMeeting getUpcomingMeeting() {
-        return null;
-    }
-}
-```
-###### \java\seedu\address\ui\MainWindow.java
-``` java
-    private void setPersonListPanel() {
-        try {
-            ObservableList<ReadOnlyPerson> persons = logic.getFilteredPersonList();
-            personListPanel = new PersonListPanel(persons);
-            personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
-        } catch (IllegalStateException e) {
-            logger.info("Cannot update profile photo on a non-main thread. "
-                    + "Type 'list' to see the new profile photos. '¯\\_(ツ)_/¯");
-        }
-    }
-
-```
-###### \java\seedu\address\ui\MainWindow.java
-``` java
-    @Subscribe
-    private void handleDefaultProfilePhotoChangedEvent(PrefDefaultProfilePhotoChangedEvent event) {
-        ObservableList<ReadOnlyPerson> persons = logic.getFilteredPersonList();
-        Task<Void> task = new Task<Void>() {
-            @Override public Void call() {
-                for (ReadOnlyPerson person : persons) {
-                    storage.downloadProfilePhoto(person, prefs.getDefaultProfilePhoto());
-                }
-                return null;
-            }
-        };
-        Thread th = new Thread(task);
-        th.setDaemon(true);
-        th.start();
-    }
-
-    @Subscribe
-    private void handleProfilePhotoChangedEvent(ProfilePhotoChangedEvent event) {
-        setPersonListPanel();
-    }
-}
-```
-###### \java\seedu\address\ui\PersonCard.java
-``` java
-    /**
-     * Initializes the profile picture using Gravatar
-     */
-    private void initPicture(ReadOnlyPerson person) {
-
-        Image image;
-
-        try {
-            FileInputStream imageFile = StorageManager.loadCacheFile(String.format(PROFILE_PHOTO_FILENAME_FORMAT,
-                    person.getInternalId().value));
-            image = new Image(imageFile);
-            gravatar.setImage(image);
-        } catch (IOException e) {
-            try {
-                FileInputStream defImageFile = StorageManager.loadResourceImage(DEFAULT_PROFILE_PHOTO_FILENAME);
-                image =  new Image(defImageFile);
-                gravatar.setImage(image);
-            } catch (IOException e1) {
-                // Shouldn't happen unless the default profile photo is missing
-                LogsCenter.getLogger("").warning("Missing default profile photo.");
-            }
-        }
-    }
-
 ```

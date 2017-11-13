@@ -1,26 +1,180 @@
 # fongwz
-###### \java\guitests\guihandles\BrowserSelectorCardHandle.java
+###### /java/seedu/address/ui/CommandBoxTest.java
 ``` java
-/**
- * Provides a handle to a person card in the person list panel.
- */
-public class BrowserSelectorCardHandle extends NodeHandle<Node> {
-    private static final String TEXT_FIELD_ID = "#browserCardText";
+    /**
+     * Testing the command box helper
+     */
+    @Test
+    public void commandBoxHelperTest() {
+        // Testing populating command box
+        guiRobot.push(KeyCode.A);
+        guiRobot.push(KeyCode.DOWN);
+        assertInputHistory(KeyCode.TAB, AddCommand.MESSAGE_TEMPLATE);
+        clearCommandBox();
 
-    private final Label textLabel;
+        //Testing DOWN arrow key on command box helper
+        guiRobot.push(KeyCode.E);
+        guiRobot.push(KeyCode.DOWN);
+        assertInputHistory(KeyCode.TAB, EditCommand.MESSAGE_TEMPLATE);
+        clearCommandBox();
 
-    public BrowserSelectorCardHandle(Node cardNode) {
-        super(cardNode);
+        guiRobot.push(KeyCode.E);
+        guiRobot.push(KeyCode.DOWN);
+        guiRobot.push(KeyCode.DOWN);
+        guiRobot.push(KeyCode.DOWN);
+        assertInputHistory(KeyCode.TAB, EditCommand.MESSAGE_TEMPLATE);
+        clearCommandBox();
 
-        this.textLabel = getChildNode(TEXT_FIELD_ID);
+        //Testing UP arrow key on command box helper
+        guiRobot.push(KeyCode.E);
+        guiRobot.push(KeyCode.DOWN);
+        guiRobot.push(KeyCode.DOWN);
+        guiRobot.push(KeyCode.UP);
+        assertInputHistory(KeyCode.TAB, EditCommand.MESSAGE_TEMPLATE);
+        clearCommandBox();
+
+        //Testing whether command box helper disappears or appears appropriately
+        guiRobot.push(KeyCode.E);
+        guiRobot.push(KeyCode.A);
+        guiRobot.push(KeyCode.DOWN);
+        assertInputHistory(KeyCode.TAB, "ea");
+        clearCommandBox();
+
+        guiRobot.push(KeyCode.E);
+        guiRobot.push(KeyCode.D);
+        guiRobot.push(KeyCode.I);
+        guiRobot.push(KeyCode.T);
+        guiRobot.push(KeyCode.DOWN);
+        assertInputHistory(KeyCode.TAB, EditCommand.MESSAGE_TEMPLATE);
+        clearCommandBox();
     }
 
-    public String getBrowserTypeName() {
-        return textLabel.getText();
+    /**
+     * Clears the text in current command field
+     */
+    private void clearCommandBox() {
+        while (!commandBoxHandle.getInput().isEmpty()) {
+            guiRobot.push(KeyCode.BACK_SPACE);
+        }
+    }
+```
+###### /java/seedu/address/ui/testutil/GuiTestAssert.java
+``` java
+    /**
+     * Asserts that {@code actualCard} displays the same values as {@code expectedCard}.
+     */
+    public static void assertBrowserCardEquals(BrowserSelectorCardHandle expectedCard,
+                                               BrowserSelectorCardHandle actualCard) {
+        assertEquals(expectedCard.getBrowserTypeName(), actualCard.getBrowserTypeName());
+    }
+
+    /**
+     * Asserts that {@code actualCard} displays the details of {@code expectedBrowser}.
+     */
+    public static void assertBrowserCardDisplay(BrowserSelectorCard expectedBrowser,
+                                                BrowserSelectorCardHandle actualCard) {
+        assertEquals(expectedBrowser.getImageString(), actualCard.getBrowserTypeName());
+    }
+```
+###### /java/seedu/address/ui/BrowserSettingsSelectorTest.java
+``` java
+public class BrowserSettingsSelectorTest extends GuiUnitTest {
+    private static final JumpToBrowserListRequestEvent JUMP_TO_LINKEDIN_EVENT =
+            new JumpToBrowserListRequestEvent("linkedin");
+
+    private BrowserSettingsSelectorHandle browserSettingsSelectorHandle;
+    private SettingsSelector settingsSelector;
+
+    @Before
+    public void setUp() {
+        settingsSelector = new SettingsSelector();
+        uiPartRule.setUiPart(settingsSelector);
+
+        browserSettingsSelectorHandle = new BrowserSettingsSelectorHandle(settingsSelector.getBrowserSelectorList());
+    }
+
+    @Test
+    public void display() {
+        for (int i = 0; i < 3; i++) {
+            browserSettingsSelectorHandle.navigateToCard(settingsSelector.getBrowserItems().get(i));
+            BrowserSelectorCard expectedBrowser = settingsSelector.getBrowserItems().get(i);
+            BrowserSelectorCardHandle actualCard = browserSettingsSelectorHandle.getBrowserSelectorCardHandle(i);
+
+            assertBrowserCardDisplay(expectedBrowser, actualCard);
+        }
+    }
+
+    @Test
+    public void handleJumpToListRequestEvent() {
+        postNow(JUMP_TO_LINKEDIN_EVENT);
+        guiRobot.pauseForHuman();
+
+        BrowserSelectorCardHandle expectedCard = browserSettingsSelectorHandle.getBrowserSelectorCardHandle(0);
+        BrowserSelectorCardHandle selectedCard = browserSettingsSelectorHandle.getHandleToSelectedCard();
+        assertBrowserCardEquals(expectedCard, selectedCard);
     }
 }
 ```
-###### \java\guitests\guihandles\BrowserSettingsSelectorHandle.java
+###### /java/seedu/address/logic/commands/ChooseCommandTest.java
+``` java
+public class ChooseCommandTest {
+    @Rule
+    public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
+
+    @Test
+    public void execute_validArgs_success() {
+        assertExecutionSuccess("linkedin");
+        assertExecutionSuccess("meeting");
+        assertExecutionSuccess("google");
+        assertExecutionSuccess("maps");
+    }
+
+    @Test
+    public void execute_invalidArgs_failure() {
+        Selection.setPersonSelected();
+        assertExecutionFailure("badargs", Messages.MESSAGE_INVALID_BROWSER_INDEX);
+    }
+
+    /**
+     * Executes a {@code ChooseCommand} with the given {@code arguments},
+     * and checks that {@code JumpToBrowserListRequestEvent}
+     * is raised with the correct index.
+     */
+    private void assertExecutionSuccess(String args) {
+        ChooseCommand chooseCommand = new ChooseCommand(args);
+
+        try {
+            CommandResult commandResult = chooseCommand.execute();
+            assertEquals(ChooseCommand.MESSAGE_SUCCESS + args,
+                    commandResult.feedbackToUser);
+        } catch (CommandException ce) {
+            throw new IllegalArgumentException("Assert Execution Failed: ", ce);
+        }
+
+        JumpToBrowserListRequestEvent event =
+                (JumpToBrowserListRequestEvent) eventsCollectorRule.eventsCollector.getMostRecent();
+        assertEquals(args, event.browserItem);
+    }
+
+    /**
+     * Executes a {@code ChooseCommand} with the given {@code arguments},
+     * and checks that a {@code CommandException}
+     * is thrown with the {@code expectedMessage}.
+     */
+    private void assertExecutionFailure(String args, String expectedMessage) {
+        ChooseCommand chooseCommand = new ChooseCommand(args);
+
+        try {
+            chooseCommand.execute();
+            fail("The expected CommandException was not thrown.");
+        } catch (CommandException ce) {
+            assertEquals(expectedMessage, ce.getMessage());
+            assertTrue(eventsCollectorRule.eventsCollector.isEmpty());
+        }
+    }
+}
+```
+###### /java/guitests/guihandles/BrowserSettingsSelectorHandle.java
 ``` java
 /**
  * Provides a handle for {@code browserSelectorList} containing the list of {@code BrowserSelectorCard}.
@@ -84,174 +238,24 @@ public class BrowserSettingsSelectorHandle extends NodeHandle<ListView<BrowserSe
     }
 }
 ```
-###### \java\seedu\address\logic\commands\ChooseCommandTest.java
+###### /java/guitests/guihandles/BrowserSelectorCardHandle.java
 ``` java
-public class ChooseCommandTest {
-    @Rule
-    public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
+/**
+ * Provides a handle to a person card in the person list panel.
+ */
+public class BrowserSelectorCardHandle extends NodeHandle<Node> {
+    private static final String TEXT_FIELD_ID = "#browserCardText";
 
-    @Test
-    public void execute_validArgs_success() {
-        assertExecutionSuccess("linkedin");
-        assertExecutionSuccess("meeting");
+    private final Label textLabel;
+
+    public BrowserSelectorCardHandle(Node cardNode) {
+        super(cardNode);
+
+        this.textLabel = getChildNode(TEXT_FIELD_ID);
     }
 
-    @Test
-    public void execute_invalidArgs_failure() {
-        assertExecutionFailure("gibberish", Messages.MESSAGE_INVALID_BROWSER_INDEX);
-    }
-
-    /**
-     * Executes a {@code ChooseCommand} with the given {@code arguments},
-     * and checks that {@code JumpToBrowserListRequestEvent}
-     * is raised with the correct index.
-     */
-    private void assertExecutionSuccess(String args) {
-        ChooseCommand chooseCommand = new ChooseCommand(args);
-
-        try {
-            CommandResult commandResult = chooseCommand.execute();
-            assertEquals(ChooseCommand.MESSAGE_SUCCESS + args,
-                    commandResult.feedbackToUser);
-        } catch (CommandException ce) {
-            throw new IllegalArgumentException("Assert Execution Failed: ", ce);
-        }
-
-        JumpToBrowserListRequestEvent event =
-                (JumpToBrowserListRequestEvent) eventsCollectorRule.eventsCollector.getMostRecent();
-        assertEquals(args, event.browserItem);
-    }
-
-    /**
-     * Executes a {@code ChooseCommand} with the given {@code arguments},
-     * and checks that a {@code CommandException}
-     * is thrown with the {@code expectedMessage}.
-     */
-    private void assertExecutionFailure(String args, String expectedMessage) {
-        ChooseCommand chooseCommand = new ChooseCommand(args);
-
-        try {
-            chooseCommand.execute();
-            fail("The expected CommandException was not thrown.");
-        } catch (CommandException ce) {
-            assertEquals(expectedMessage, ce.getMessage());
-            assertTrue(eventsCollectorRule.eventsCollector.isEmpty());
-        }
+    public String getBrowserTypeName() {
+        return textLabel.getText();
     }
 }
-```
-###### \java\seedu\address\ui\BrowserSettingsSelectorTest.java
-``` java
-public class BrowserSettingsSelectorTest extends GuiUnitTest {
-    private static final JumpToBrowserListRequestEvent JUMP_TO_LINKEDIN_EVENT
-            = new JumpToBrowserListRequestEvent("linkedin");
-
-    private BrowserSettingsSelectorHandle browserSettingsSelectorHandle;
-    private SettingsSelector settingsSelector;
-
-    @Before
-    public void setUp() {
-        settingsSelector = new SettingsSelector();
-        uiPartRule.setUiPart(settingsSelector);
-
-        browserSettingsSelectorHandle = new BrowserSettingsSelectorHandle(settingsSelector.getBrowserSelectorList());
-    }
-
-    @Test
-    public void display() {
-        for (int i = 0; i < 3; i++) {
-            browserSettingsSelectorHandle.navigateToCard(settingsSelector.getBrowserItems().get(i));
-            BrowserSelectorCard expectedBrowser = settingsSelector.getBrowserItems().get(i);
-            BrowserSelectorCardHandle actualCard = browserSettingsSelectorHandle.getBrowserSelectorCardHandle(i);
-
-            assertBrowserCardDisplay(expectedBrowser, actualCard);
-        }
-    }
-
-    @Test
-    public void handleJumpToListRequestEvent() {
-        postNow(JUMP_TO_LINKEDIN_EVENT);
-        guiRobot.pauseForHuman();
-
-        BrowserSelectorCardHandle expectedCard = browserSettingsSelectorHandle.getBrowserSelectorCardHandle(0);
-        BrowserSelectorCardHandle selectedCard = browserSettingsSelectorHandle.getHandleToSelectedCard();
-        assertBrowserCardEquals(expectedCard, selectedCard);
-    }
-}
-```
-###### \java\seedu\address\ui\CommandBoxTest.java
-``` java
-    /**
-     * Testing the command box helper
-     */
-    @Test
-    public void commandBoxHelperTest() {
-        // Testing populating command box
-        guiRobot.push(KeyCode.A);
-        guiRobot.push(KeyCode.DOWN);
-        assertInputHistory(KeyCode.TAB, AddCommand.MESSAGE_TEMPLATE);
-        clearCommandBox();
-
-        //Testing DOWN arrow key on command box helper
-        guiRobot.push(KeyCode.E);
-        guiRobot.push(KeyCode.DOWN);
-        assertInputHistory(KeyCode.TAB, EditCommand.MESSAGE_TEMPLATE);
-        clearCommandBox();
-
-        guiRobot.push(KeyCode.E);
-        guiRobot.push(KeyCode.DOWN);
-        guiRobot.push(KeyCode.DOWN);
-        guiRobot.push(KeyCode.DOWN);
-        assertInputHistory(KeyCode.TAB, EditCommand.MESSAGE_TEMPLATE);
-        clearCommandBox();
-
-        //Testing UP arrow key on command box helper
-        guiRobot.push(KeyCode.E);
-        guiRobot.push(KeyCode.DOWN);
-        guiRobot.push(KeyCode.DOWN);
-        guiRobot.push(KeyCode.UP);
-        assertInputHistory(KeyCode.TAB, EditCommand.MESSAGE_TEMPLATE);
-        clearCommandBox();
-
-        //Testing whether command box helper disappears or appears appropriately
-        guiRobot.push(KeyCode.E);
-        guiRobot.push(KeyCode.A);
-        guiRobot.push(KeyCode.DOWN);
-        assertInputHistory(KeyCode.TAB, "ea");
-        clearCommandBox();
-
-        guiRobot.push(KeyCode.E);
-        guiRobot.push(KeyCode.D);
-        guiRobot.push(KeyCode.I);
-        guiRobot.push(KeyCode.T);
-        guiRobot.push(KeyCode.DOWN);
-        assertInputHistory(KeyCode.TAB, EditCommand.MESSAGE_TEMPLATE);
-        clearCommandBox();
-    }
-
-    /**
-     * Clears the text in current command field
-     */
-    private void clearCommandBox() {
-        while (!commandBoxHandle.getInput().isEmpty()) {
-            guiRobot.push(KeyCode.BACK_SPACE);
-        }
-    }
-```
-###### \java\seedu\address\ui\testutil\GuiTestAssert.java
-``` java
-    /**
-     * Asserts that {@code actualCard} displays the same values as {@code expectedCard}.
-     */
-    public static void assertBrowserCardEquals(BrowserSelectorCardHandle expectedCard, BrowserSelectorCardHandle actualCard) {
-        assertEquals(expectedCard.getBrowserTypeName(), actualCard.getBrowserTypeName());
-    }
-
-    /**
-     * Asserts that {@code actualCard} displays the details of {@code expectedBrowser}.
-     */
-    public static void assertBrowserCardDisplay(BrowserSelectorCard expectedBrowser,
-                                                BrowserSelectorCardHandle actualCard) {
-        assertEquals(expectedBrowser.getImageString(), actualCard.getBrowserTypeName());
-    }
 ```

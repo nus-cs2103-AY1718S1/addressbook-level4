@@ -19,26 +19,17 @@ import seedu.address.model.ReadOnlyMeetingList;
 public class XmlMeetingListStorage implements MeetingListStorage {
 
     // Creates a new folder for all backup data
-    //private static final String BACKUP_FILE_PREFIX = "backup/";
     private static final Logger logger = LogsCenter.getLogger(XmlMeetingListStorage.class);
 
     private String filePath;
-    //private String backupFilePath;
 
     public XmlMeetingListStorage(String filePath) {
         this.filePath = filePath;
-        //this.backupFilePath = BACKUP_FILE_PREFIX + filePath;
     }
 
     public String getMeetingsFilePath() {
         return filePath;
     }
-
-    /*
-    public String getBackupFilePath() {
-        return backupFilePath;
-    }
-    */
 
     @Override
     public Optional<ReadOnlyMeetingList> readMeetingList() throws DataConversionException, IOException {
@@ -46,6 +37,7 @@ public class XmlMeetingListStorage implements MeetingListStorage {
     }
 
     /**
+     * Returns a ReadOnlyMeetingList from a given file
      * @param filePath location of the data. Cannot be null
      * @throws DataConversionException if the file is not in the correct format.
      */
@@ -83,17 +75,5 @@ public class XmlMeetingListStorage implements MeetingListStorage {
         FileUtil.createIfMissing(file);
         XmlFileStorage.saveDataToFile(file, new XmlSerializableMeetingList(meetingList));
     }
-
-    /*
-    @Override
-    public void backupMeetingList(ReadOnlyMeetingList meetingList) throws IOException {
-        saveMeetingList(meetingList, backupFilePath);
-    }
-
-    public Optional<ReadOnlyMeetingList> restoreMeetingList() throws IOException, DataConversionException {
-        return readMeetingList(backupFilePath);
-    }
-    */
-
 
 }

@@ -11,7 +11,7 @@ import seedu.address.model.UniqueMeetingList;
 public class ClearCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "clear";
-    public static final String MESSAGE_SUCCESS = "Address book has been cleared!";
+    public static final String MESSAGE_SUCCESS = "Data have been cleared!";
     public static final String MESSAGE_TEMPLATE = COMMAND_WORD;
 
 

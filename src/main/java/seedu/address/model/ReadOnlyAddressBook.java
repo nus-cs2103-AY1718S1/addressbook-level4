@@ -25,14 +25,13 @@ public interface ReadOnlyAddressBook {
     //@@author liuhang0213
     /**
      * Returns an unmodifiable view of a person by the given internal index
-     * @param i internal index of the person
      *
+     * @param i internal index of the person
      */
     ReadOnlyPerson getPersonByInternalIndex(int i) throws PersonNotFoundException;
 
     /**
      * Returns the maximum index of persons in the address book.
-     * @return
      */
     int getMaxInternalIndex();
 
