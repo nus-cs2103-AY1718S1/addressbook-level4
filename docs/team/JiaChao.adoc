@@ -4,25 +4,26 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :stylesDir: ../stylesheets
 
 == Project: cherBook
-cherBook is an address book application used by teachers to monitor students' academic progress.
+cherBook is a desktop application designed to help teachers monitor students' academic performance and manage their schedules.
+My team and I built cherBook as an enhancement to the original https://github.com/se-edu/addressbook-level4[`Addressbook-level4`] by https://github.com/se-edu[`Team SE-EDU`].
+This project was built as part of the software engineering module `CS2103T` offered by the School of Computing (SoC) in the National University of Singapore (NUS).
 The user interacts with it using a CLI, and it has a GUI created with JavaFX.
-It is written in Java, and has about 8 kLoC.
+It is written in Java, and has about 30 kLoC.
 
 *Code contributed*: [https://github.com/CS2103AUG2017-T16-B2/main/blob/master/collated/main/lincredibleJC.md[Functional code]] [https://github.com/CS2103AUG2017-T16-B2/main/blob/master/collated/test/lincredibleJC.md[Test code]]
 
 == Roles and Responsibilities
 * Role: Team Lead
 * Responsibilities:
-** In charge of Logic Component
+** In charge of Logic Component.
 ** Git Expert: Advises the group for git matters.
 ** Integration: Versioning of the code, maintaining the code repository, integrating various parts of the software to create a whole.
 ** Scheduling: and tracking: Defining, assigning, and tracking project tasks.
 
 == List of Enhancements Implemented
-. Add Command aliases for all commands
-. Add Grades and FormClass attributes to the Student
-. Add FindTags Feature to find students by Tags
-. Add Statistics Panel
+. Command aliases for all commands
+. FindTags Command to find students by Tags
+. Statistics Panel Logic and UI
 
 == List of Enhancement Proposed
 . Add Compare command to compare statistics of different student groups
@@ -30,11 +31,11 @@ It is written in Java, and has about 8 kLoC.
 
 ---
 
-=== Enhancement Added: Add Command aliases for all commands
+=== Enhancement Added: Command aliases feature
 
 ==== External behavior
 
-Following the list table of shortcuts below, all commands under the `Shorthand` column will behave exactly like the full full command in the `Command` column.
+Following the list table of shortcuts below, all commands under the `Shorthand` column will behave exactly like the full command in the `Command` column.
 
 ---
 #Start of Extract [from: User Guide]#
@@ -49,58 +50,30 @@ include::../UserGuide.adoc[tag= commandshortcuts]
 
 Being a command line application, there is a need to be able to enter commands quickly and without error.
 Hence, the usage of shorthand commands for the more verbose full commands are needed.
-By adding shorthand commands, it reduces the number of key presses needed for the user to execute commands.
-This also helps reduce the probability of misspelling commands by users who are not touch typists.
+By adding shorthand commands, the number of key presses needed for the user to execute commands is reduced.
+This also reduces the chance of users misspelling commands.
 
 ==== Implementation
 
 ---
 #Start of Extract [from: Developer Guide]#
-//TODO: write up for developer guide
-//include::../DeveloperGuide.adoc[tag= commandshortcuts]
+
+include::../DeveloperGuide.adoc[tag= commandshortcuts]
 
 #End of Extract#
 
 ---
 
-=== Enhancement Added: Add Grades and FormClass attributes to the Student
-
-==== External behavior
-
----
-#Start of Extract [from: User Guide]#
-//TODO: write up for user guide
-//include::../UserGuide.adoc[tag= ]
-
-#End of Extract#
-
----
-
-==== Justification
-
-One of the main features cherBook has is calculating statistics for a list of students, and the Grades attribute is needed for it.
-Similarly, with comparing the statistics of different classes as a upcoming feature, the FormClass attribute is also needed.
-
-==== Implementation
-
----
-
-#Start of Extract [from: Developer Guide]#
-//TODO: write up for developer guide
-//include::../DeveloperGuide.adoc[tag= ]
-
-#End of Extract#
-
----
-
-=== Enhancement Added: FindTags
+=== Enhancement Added: FindTags feature
 
 ==== External behavior
 
 ---
 
 #Start of Extract [from: User Guide]#
+
 include::../UserGuide.adoc[tag= findtags]
+
 #End of Extract#
 
 ---
@@ -125,7 +98,7 @@ include::../DeveloperGuide.adoc[tag= findtags]
 
 ---
 
-=== Enhancement Added: Statistics Panel
+=== Enhancement Added: Statistics Panel feature
 
 ==== External behavior
 
@@ -140,7 +113,8 @@ include::../UserGuide.adoc[tag= statisticspanel ]
 
 ==== Justification
 
-This panel is needed to display the statistics of the students currently in the Students Panel.
+The `StatisticsPanel` is needed to display the statistics of the students currently in the `Students Panel`.
+The statistics provided helps teachers monitor their student's academics and identify the weaker students that need more help.
 
 ==== Implementation
 
@@ -156,11 +130,11 @@ include::../DeveloperGuide.adoc[tag= statisticspanel ]
 === Enhancement Proposed: Add command `compare`
 
 ==== External behavior
-Enter the `compare` command followed by 2 `Tags` or `FormClassNames` to compare statistics of different groups with the compare command.
-The Statistics Panel will have a second set of values for the second group of students.
+Teh user can enter the `compare` command followed by 2 `Tags` or `FormClassNames` to compare statistics of different groups with the compare command.
+The `Statistics Panel` will have a second set of values for the second group of students.
 
-To make the difference more noticeable, the difference in the 2 sets of values will be displayed on the right-hand side.
-The difference will be colored red if the difference is negative and green if the difference is positive to to make it more visually appealing.
+The difference in the 2 sets of values will be displayed on the right of the `StatisticsPanel`.
+The difference will be colored [red]#red# if the difference is negative and [green]#geen# if the difference is positive to to make it noticeable and more visually appealing.
 
 
 ==== Justification
@@ -169,38 +143,43 @@ As the simple statistics can only tell you so much about your data, there is a n
 The `comapre` command gives teachers a more powerful tool to analyse data by allowing them to compare different sets of data .
 The color coded difference values also improve the readability of the statistics so that teachers can get a good idea of the relative performance of two groups of students at a glance.
 
-==== Implementation
+---
 
-=== Enhancement Proposed: Add command `SendEmail`
+=== Enhancement Proposed: Add command `sendemail`
 
 ==== External behavior
-Enter the `sendemail` command followed by the index of the intended recepient and an external email application with the FROM and TO fields already populated.
-This streamlines the process of teachers sending emails to students and parents and allows them to do it directly from  within cherBook
+The user can enter the `sendemail` command followed by the `INDEX` of the intended recepient and an external email application with the _FROM_ and _TO_ fields already populated.
+This streamlines the process of teachers sending emails to students and parents and allows them to do it directly from  within cherBook.
 
 ==== Justification
 It is troublesome for teachers to manually and repeatedly open up their browsers to send emails to students of their parents.
 The `sendemail` command removes this process and streamlines the process by bringing the teacher straight to the compose email page with the relevant fields already filled, removing the trouble of going through a browser.
 
-==== Implementation
+---
 
 === Other contributions
 
-* Set up Travis and Coveralls and updated Badges for the Team Repository ( Pull Request https://github.com/CS2103AUG2017-T16-B2/main/pull/7[#7] )
-* Populated cherBook with a significant amount (40 student contacts) of realistic data ( Pull Request https://github.com/CS2103AUG2017-T16-B2/main/pull/73[#73] )
-* Cleaned up unnecessary nesting in the ExtendedPersonCard UI element ( Commit https://github.com/CS2103AUG2017-T16-B2/main/pull/98/commits/1a6bc459dc455d4e776e48586856734bb7574eba[1a6bc45] in Pull Request https://github.com/CS2103AUG2017-T16-B2/main/pull/98[#98])
-* Cleaning up of code in the whole repository ( Pull Request https://github.com/CS2103AUG2017-T16-B2/main/pull/123[#123] )
+* Added Travis, AppVeyor and Coveralls on the cherBook repository automated deployment and testing. (Pull Request https://github.com/CS2103AUG2017-T16-B2/main/pull/7[#7], https://github.com/CS2103AUG2017-T16-B2/main/pull/152[#152])
+* Added Grades and FormClass attributes to the Student (Pull Requests https://github.com/CS2103AUG2017-T16-B2/main/pull/39[#39], https://github.com/CS2103AUG2017-T16-B2/main/pull/41[#41])
+* Populated cherBook with a significant amount (40 student contacts) of realistic data (Pull Request https://github.com/CS2103AUG2017-T16-B2/main/pull/73[#73])
+* Cleaned up unnecessary nesting in the ExtendedPersonCard UI element (Commit https://github.com/CS2103AUG2017-T16-B2/main/pull/98/commits/1a6bc459dc455d4e776e48586856734bb7574eba[1a6bc45] in Pull Request https://github.com/CS2103AUG2017-T16-B2/main/pull/98[#98])
+* Cleaned up code smells in the whole repository (Pull Request https://github.com/CS2103AUG2017-T16-B2/main/pull/123[#123])
 
 === Helping out other groups
 
-* Found Bugs and gave Suggestions to other groups as acceptance testing.
+* Performed acceptance testing for other teams, reported bugs and gave suggestions
 ** CS2103AUG2017-T09-B3 (Issues https://github.com/CS2103AUG2017-T09-B3/main/issues/150[#150], https://github.com/CS2103AUG2017-T09-B3/main/issues/151[#151], https://github.com/CS2103AUG2017-T09-B3/main/issues/152[#152], https://github.com/CS2103AUG2017-T09-B3/main/issues/153[#153])
-** CS2103AUG2017-T11-B1 (Issues https://github.com/CS2103AUG2017-T11-B1/main/issues/136[#136], https://github.com/CS2103AUG2017-T11-B1/main/issues/137[#137] )
-
+** CS2103AUG2017-T11-B1 (Issues https://github.com/CS2103AUG2017-T11-B1/main/issues/136[#136], https://github.com/CS2103AUG2017-T11-B1/main/issues/137[#137])
 
 == Project: NUShortcuts
 
-https://nushortcuts.herokuapp.com/[NUShortcuts] is a web application to provide step by step picture guides to for shortcuts around NUS.
-This was done for CP2106 - Orbital Programme from May 2017 to Aug 2017. Over the three months, I have implemented all three route types:
-Fastest Route, Sheltered route and Least Stairs. Users can search for their desired locations in NUS, check its details and see the shortest walking path and route by bus to the destination.
-Through the settings menu, users can also customise their choice of transport and their estimated walking speed to get better estimates.
-I also implemented a Ranking system for the most commonly travelled locations and also a feedback page where users can give feedback on how to improve the application.
+https://nushortcuts.herokuapp.com/[`NUShortcuts`] is a web application to provide walking shortcuts around NUS with step by step picture guides .
+This was done from May 2017 to Aug 2017 for `CP2106` - Orbital Programme  offered by the School of Computing (SoC) in the National University of Singapore (NUS).
+This web application was built using the `MeteorJS` framework and is deployed on a `Heroku` server.
+
+https://nushortcuts.herokuapp.com/[`NUShortcuts`] offers three route types: Fastest route, Sheltered route and Least Stairs route.
+Users can search for their destination in NUS, choose their desired path and follow the picture guides to their destination.
+For better travel time estimates, they can indicate their mode of transport and their estimated walking speeds under the settings page.
+My team also implemented a ranking system to track the most popular and frequently searched locations.
+One of the biggest features I implemented was the algorithm behind the calculation of the shortest paths around NUS.
+Some of the other features I implemented include the feedback page where users can give feedback on how to improve NUShortcuts.
