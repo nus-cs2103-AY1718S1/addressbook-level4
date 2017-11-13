@@ -24,6 +24,18 @@ public abstract class Command {
         return String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, displaySize);
     }
 
+    //@@author 1moresec
+    /**
+     * Constructs a feedback message to summarise an operation that displayed a listing of tasks.
+     *
+     * @param displaySize used to generate summary
+     * @return summary message for persons displayed
+     */
+    public static String getMessageForTaskListShownSummary(int displaySize) {
+        return String.format(Messages.MESSAGE_TASKS_LISTED_OVERVIEW, displaySize);
+    }
+    //@@author
+
     /**
      * Executes the command and returns the result message.
      *

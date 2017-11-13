@@ -23,7 +23,6 @@ import seedu.address.model.TaskBook;
 import seedu.address.model.person.ContainsKeywordsPredicate;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.model.task.Name;
 import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.task.TaskNameContainsKeywordsPredicate;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
@@ -178,6 +177,7 @@ public class CommandTestUtil {
         }
     }
 
+    //@@author 1moresec
     /**
      * Updates {@code model}'s filtered person list to show only the first person in the {@code model}'s 3W.
      */
@@ -194,11 +194,12 @@ public class CommandTestUtil {
      */
     public static void showFirstTaskOnly(Model model) {
         ReadOnlyTask task = model.getTaskBook().getTaskList().get(0);
-        List<Name> name = Arrays.asList(task.getName());
-        model.updateFilteredTaskList(new TaskNameContainsKeywordsPredicate(name));
+        final String[] name = task.getName().toString().split("\\s+");
+        model.updateFilteredTaskList(new TaskNameContainsKeywordsPredicate(Arrays.asList(name[0])));
 
         assert model.getFilteredTaskList().size() == 1;
     }
+    //@@author
 
     /**
      * Deletes the first person in {@code model}'s filtered list from {@code model}'s address book.
