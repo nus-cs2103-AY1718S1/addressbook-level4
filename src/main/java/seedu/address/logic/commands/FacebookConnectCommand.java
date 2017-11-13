@@ -145,4 +145,3 @@ public class FacebookConnectCommand extends Command {
                 || (other instanceof FacebookConnectCommand); // instanceof handles null
     }
 }
-//@@author

@@ -167,10 +167,12 @@ public class FacebookAddAllFriendsCommand extends UndoableCommand {
     protected CommandResult executeUndoableCommand() throws CommandException {
         if (!FacebookConnectCommand.isAuthenticated()) {
             throw new CommandException(MESSAGE_FACEBOOK_ADD_ALL_FRIENDS_INITIATION_ERROR);
-            /*BrowserPanel.setProcessType(FacebookConnectCommand.COMMAND_WORD);
+            /*
+            BrowserPanel.setProcessType(COMMAND_WORD);
             FacebookConnectCommand newFacebookConnect = new FacebookConnectCommand();
             newFacebookConnect.execute();
-            return new CommandResult(MESSAGE_FACEBOOK_ADD_ALL_FRIENDS_INITIATED);*/
+            return new CommandResult(MESSAGE_FACEBOOK_ADD_ALL_FRIENDS_INITIATED);
+            */
         } else {
             BrowserPanel.setProcessType(COMMAND_WORD);
             addFirstFriend();
