@@ -82,8 +82,7 @@ public class AddCommandParser implements Parser<AddCommand> {
             Set<Relationship> relationList = new HashSet<>();
             //Initialize photo to the default icon
             String s = File.separator;
-            Photo photo = new Photo("src" + s + "main" + s + "resources" + s
-                    + "images" + s + "default.jpg");
+            Photo photo = new Photo("data" + s + "default.jpg");
 
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
