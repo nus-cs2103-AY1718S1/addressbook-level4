@@ -672,6 +672,7 @@ For `macOS` and `Linux` users, use `/` instead.
 ====
 // end::importScript[]
 
+// tag::importNusmods[]
 ==== From NUSMods URL
 
 _(Exclusive feature for NUS students)_
@@ -697,6 +698,7 @@ Example:
 * Make sure you have stable Internet connection when using this command.
 * You may need to wait for a while as the application is retrieving information from NUSMods.
 ====
+// end::importNusmods[]
 
 //tag::importGoogle[]
 ==== From Google Accounts

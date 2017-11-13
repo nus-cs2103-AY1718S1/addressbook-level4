@@ -705,6 +705,7 @@ the user, while being able to inform users on the mistakes that they have made.
 **Cons:** File path validation may also be required for other purposes.
 // end::importExportXml[]
 
+// tag::importNusmods[]
 === Import timetable from NUSMods
 
 We implement an  `ImportNusmodsCommand` to help users directly import their NUSMods timetable to *BoNUS* by simply copy-paste
@@ -815,6 +816,7 @@ public static <T> T fromJsonUrl(URL url, Class<T> instanceClass) throws IOExcept
 
 After obtaining all the information we need, we can simply use the `addEvent` method `ModelManager` class to add the final
 examinations as upcoming events into *BoNUS*. This should be a similar process as `AddEventCommand`.
+// end::importNusmods[]
 
 === Contacts/event listing order by name/date time mechanism
 

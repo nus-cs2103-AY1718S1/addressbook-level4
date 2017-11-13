@@ -26,9 +26,9 @@ is adapted as the frontend framework.
 
 include::../UserGuide.adoc[tag=genericProperty]
 
----
-
 ==== Justification
+
+---
 
 Our application **BoNUS** will not be able to stand out from all the similar https://nus-cs2103.github.io/website/admin/projectList.html[products]
 if we simply provide users with a few additional fields to store the information of their contacts. Instead, to suit the
@@ -46,6 +46,26 @@ user-defined properties will be added into `PropertyManager` by `config --add-pr
 ---
 
 include::../DeveloperGuide.adoc[tag=genericProperty]
+
+=== Enhancement Added: Import NUSMods Timetable
+
+==== External behavior
+
+---
+
+include::../UserGuide.adoc[tag=importNusmods]
+
+==== Justification
+
+---
+
+Most of the NUS students are currently using NUSMods as their school timetable builder.
+
+==== Implementation
+
+---
+
+include::../DeveloperGuide.adoc[tag=importNusmods]
 
 ---
 
@@ -101,8 +121,6 @@ https://github.com/CS2103AUG2017-T09-B3/main/pull/43[#43], https://github.com/CS
 https://github.com/CS2103AUG2017-T09-B3/main/pull/82[#82], https://github.com/CS2103AUG2017-T09-B3/main/pull/106[#106])
 * Support setting customize colors for tags (Pull requests https://github.com/CS2103AUG2017-T09-B3/main/pull/83[#83],
 https://github.com/CS2103AUG2017-T09-B3/main/pull/101[#101], https://github.com/CS2103AUG2017-T09-B3/main/pull/147[#147])
-* Support importing NUSMods timetable as events (Pull requests https://github.com/CS2103AUG2017-T09-B3/main/pull/123[#123],
-https://github.com/CS2103AUG2017-T09-B3/main/pull/124[#124])
 * Support natural language parsing (Pull request https://github.com/CS2103AUG2017-T09-B3/main/pull/148[#148])
 * Support adding avatar to contacts (Pull request https://github.com/CS2103AUG2017-T09-B3/main/pull/162[#162])
 * Write unit tests for various classes
