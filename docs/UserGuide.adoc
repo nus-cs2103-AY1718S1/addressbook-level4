@@ -259,7 +259,7 @@ Format: `payback [INDEX] AMOUNT`
 * If no index is specified, the debt of the currently selected person is updated instead.
 * `AMOUNT` has to be in dollars and cents. For example: `600.15` which represents $600.15.
 * `AMOUNT` repaid cannot be more than the debt owed by the person at the specifiec `INDEX`.
-* If a person fully repays his/her debts, the date repaid will be set to the day that this command was entered. Also, the person will be listed in the whitelist.
+* If a person fully repays his/her debts, the date repaid will be set to the day that this command was entered. Also, the person will be listed in the whitelist if he/she is not blacklisted.
 ****
 
 Examples:
