@@ -10,9 +10,8 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/CS2103AUG2017-T15-B4/main/tree/master
 
-By: `Team T15-B4`      Since: `Sep 2017`      Licence: `MIT`
+By: `Team T15-B4`
 
 == Setting up Bluebird
 
@@ -24,6 +23,13 @@ This app will not work with earlier versions of Java 8.
 +
 .  Download from IVLE all files submitted by our team
 (i.e. jar file, user guide, developer guide, sample data, test script, project portfolio pages)into an empty folder.
+. The name of the files are as follows:
+.. Jar file: [T15-B4][Bluebird].jar
+.. User guide: [T15-B4][Bluebird]UserGuide.pdf
+.. Developer guide: [T15-B4][Bluebird]DeveloperGuide.pdf
+.. Portfolio: [T15-B4][NAME]Portfolio.pdf
+.. Sample Data: [T15-B4][Bluebird]SampleData.xml
+.. Test Script: [T15-B4][Bluebird]TestScript.adoc
 
 == Loading up SampleData.xml
 

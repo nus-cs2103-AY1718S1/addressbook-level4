@@ -3,10 +3,15 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
-== Project: AddressBook - Level 4
-AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+== Project: Bluebird
+Bluebird is a desktop based organisational tool for the working parent on the go. Bluebird is suitable
+for a variety of day-to-day management tasks, including managing appointments for both yourself and your
+child, and also organising the contact information from your Address Book. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 15 kLoC. +
 
-*Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] {give links to collated code files}
+This project portfolio serves to provide an insight into how Wyn K Heng has contributed to project Bluebird. Included
+in this portfolio are the enhancements, features, tests and proposed enhancements that Wyn K Heng has contribued to the project.
+
+*Code contributed*: [[https://github.com/CS2103AUG2017-T15-B4/main/blob/master/collated/main/wynkheng.md[Functional code]] [https://github.com/CS2103AUG2017-T15-B4/main/blob/master/collated/test/wynkheng.md[Test code]]
 
 === Enhancement Added: Undo/Redo
 

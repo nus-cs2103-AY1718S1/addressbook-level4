@@ -4,11 +4,10 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :stylesDir: ../stylesheets
 
 == Project: Bluebird
-Written in Java language, Bluebird is a desktop based organisational tool for the working parent on the go. Bluebird is suitable
+Bluebird is a desktop based organisational tool for the working parent on the go. Bluebird is suitable
 for a variety of day-to-day management tasks, including managing appointments for both yourself and your
-child, and also organising the contact information from your Address Book. +
+child, and also organising the contact information from your Address Book. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 15 kLoC. +
 
-== Purpose
 This project portfolio serves to provide an insight into how Alpheus Lim Wei Xiang has contributed to project Bluebird. Included
 in this portfolio are the enhancements, features, tests and proposed enhancements that Alpheus Lim Wei Xiang has contribued to the project.
 
@@ -162,8 +161,9 @@ include::../DeveloperGuide.adoc[tag=parentmode]
 
 ---
 
-=== Enhancement Proposed: Import/Export Google contacts
-This allows for easy transfer of contacts from the user's phone when they first use Bluebird.
+=== Enhancement Proposed: Pin/Unpin Task
+Users may have trouble keeping track of important tasks that they have to do. This feature allows them to pin imortant tasks for
+easy access.
 
 === Enhancement Proposed: Cloud Storage
 Bluebird will prompt user to select if they would like to upload and save their data to a cloud storage
