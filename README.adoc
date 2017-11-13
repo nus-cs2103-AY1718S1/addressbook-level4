@@ -12,7 +12,6 @@ image::Ui.png[width="600"]
 
 * Planno is a desktop Java application that helps users to conveniently manage contact as well as event details. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
 * Planno is aimed at helping users with many contacts and events to manage these details conveniently.
-* It is *written in OOP fashion*. It provides a *reasonably well-written* code example that is *significantly bigger* (around 6 KLoC)than what students usually write in beginner-level SE modules.
 
 == Site Map
 
