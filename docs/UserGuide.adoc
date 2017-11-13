@@ -25,7 +25,7 @@ By: `T15-B2`      `Aw Wen Hao`      `Calvin Tantio`      `Cheng Jin 
 
 === Welcome to ConTag!
 
-Contag is an efficient and feature-packed address book desktop application, capable of organizing contacts for even the most demanding business users and busiest frequent travellers.
+ConTag is an efficient and feature-packed address book desktop application, capable of organizing contacts for even the most demanding business users and busiest frequent travellers.
 
 === The ConTag Help System
 
@@ -129,10 +129,36 @@ Examples:
 * `help a` (using alias)
 // end::help[]
 
-=== Modifying contacts
+=== Modifying Contacts
+
+// tag::welcomeScreen[]
+==== Enabling and disabling the welcome screen: `welcome`
+
+=> Alias: `w` <=
+
+Enables or disables the welcome screen.
+Format: `welcome ENABLING_KEYWORD`
+
+Examples:
+
+* `welcome enable`
+
+* `welcome disable` +
+
+[NOTE]
+The welcome screen is disabled by default.
+
+[TIP]
+Try enabling the welcome screen, close and rerun ConTag.
+
+If the welcome screen is successfully enabled, you should be able to see a the following screen, as shown in _Figure 3.5.5.1_ every time ConTag is run. The welcome screen displays 1 out of the 15 default productivity quotes at random to keep you motivated throughout the day.
+
+image::WelcomeScreen.png[width="400"]
+_Figure 3.4.3.1: The welcome screen_
+// end::welcomeScreen[]
 
 // tag::multipleemails[]
-==== Adding a person: `add` [Last updated in v1.3]
+==== Adding a Person: `add`
 
 => Alias: `a` <=
 
@@ -156,10 +182,9 @@ Examples:
 
 * `add n/John Doe p/+1 98765432 e/johnd@example.com a/123, John street, #01-01, Singapore 407989`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/12, Newgate Prison, IL 043 p/12345678 t/criminal`
-
 // end::country_code[]
 
-==== Editing a person : `edit` [Last updated in v1.3]
+==== Editing a Person : `edit`
 
 => Alias: `e` <=
 
@@ -197,7 +222,7 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
 // end::multipleemails[]
 
 // tag::deletemultiple[]
-==== Deleting person(s) : `delete` [Last updated in v1.1]
+==== Deleting Person(s) : `delete`
 
 => Alias: `d` <=
 
@@ -223,17 +248,17 @@ Deletes the 1st and 2nd person in the address book.
 Deletes the 1st person in the results of the `find` command.
 // end::deletemultiple[]
 
-==== Clearing all entries : `clear`
+==== Clearing All Entries : `clear`
 
 => Alias: `c` <=
 
 Clears all entries from the address book. +
 Format: `clear`
 
-=== Key features
+=== Key Features
 
 // tag::find[]
-==== Finding persons by any field : `find` [Since v1.2 and v1.4]
+==== Finding persons by any field : `find`
 
 => Alias: `f` <=
 
@@ -289,7 +314,7 @@ Returns all persons of country code `Singapore`
 // end::find[]
 
 // tag::locate[]
-==== Locating a person's address : `locate` [Since v1.2]
+==== Locating a Person's Address : `locate`
 
 => Alias: `lc` <=
 
@@ -314,7 +339,7 @@ Locates the 1st person's address in the results of the `find` command.
 // end::locate[]
 
 // tag::schedule[]
-==== Scheduling an activity: `schedule` [Since v1.3]
+==== Scheduling an Activity: `schedule`
 
 => Alias: `sc` <=
 
@@ -334,8 +359,9 @@ Associates the specified schedule with the 1st and 3rd persons in the address bo
 `schedule 1 d/25-12-2017 act/Christmas dinner` +
 Associates the specified schedule with the 1st person in the results of the `find` command.
 // end::schedule[]
+
 // tag::agenda[]
-===== Viewing of user's agenda [Since v1.4]
+===== Viewing of user's agenda
 
 A list of all scheduled activities by the user is displayed in the 'My Agenda' section of the application, as shown below in _Figure 3.4.3.1_.
 
@@ -346,7 +372,7 @@ When an activity is scheduled, the agenda list will be immediately updated, with
 // end::agenda[]
 
 // tag::reminder[]
-===== Pop-up reminder window on startup [Since v1.5]
+===== Pop-up reminder window on startup
 
 A pop-up reminder will be appear after the main application window has opened, if there exists scheduled activities by the user which are due the day after the current date. The display of the reminder window can be seen in _Figure 3.4.3.2_ below:
 
@@ -355,7 +381,7 @@ _Figure 3.4.3.2: UI display for pop-up reminder window_
 // end::reminder[]
 
 // tag::copy[]
-==== Getting email addresses : `copy` [Since v1.3]
+==== Getting Email Addresses : `copy`
 
 => Alias: `y` <=
 
@@ -378,7 +404,7 @@ Outputs email addresses of people at index 1, 4 and 5, with a semi-colon between
 // end::copy[]
 
 //tag::calendar[]
-==== Opening calendar : `calendar` [Since v1.3]
+==== Opening Calendar : `calendar`
 
 => Alias: `cl` <=
 
@@ -392,8 +418,9 @@ Opens up calendar browser in the address book. +
 * `cl` (using alias) +
 Opens up calendar browser in the address book.
 // end::calendar[]
+
 //tag::email[]
-==== Emailing persons : `email` [Since v1.5]
+==== Emailing persons : `email`
 
 => Alias: `m` <=
 
@@ -418,7 +445,7 @@ Emails the 1st person in the results of the `find` command.
 // end::email[]
 
 //tag::backup[]
-==== Back up address book : `backup` [Since v1.5, Windows-only]
+==== Back up ConTag : `backup`
 
 => Alias: `b` <=
 
@@ -454,9 +481,9 @@ can take in either format.
 2. The path can include white spaces such as `\Folder 2\`, so do not replace spaces with other characters.
 //end::backup[]
 
-=== Other navigation commands
+=== Other Navigation Commands
 
-==== Listing all persons : `list`
+==== Listing All Persons : `list`
 
 => Alias: `l` <=
 
@@ -464,7 +491,7 @@ Shows a list of all persons in the address book. +
 Format: `list`
 
 
-==== Listing entered commands : `history`
+==== Listing Entered Commands : `history`
 
 => Alias: `his` <=
 
@@ -477,7 +504,7 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 ====
 
 // tag::undoredo[]
-==== Undoing previous command : `undo`
+==== Undoing Previous Command : `undo`
 
 => Alias: `u` <=
 
@@ -505,7 +532,7 @@ The `undo` command fails as there are no undoable commands executed previously.
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
 
-==== Redoing the previously undone command : `redo`
+==== Redoing the Previously Undone Command : `redo`
 
 => Alias: `r` <=
 
@@ -530,40 +557,14 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
-// tag::welcomeScreen[]
-==== Enabling and disabling the welcome screen: `welcome` [Since v1.5]
-
-=> Alias: `w` <=
-
-Enables or disables the welcome screen.
-Format: `welcome ENABLING_KEYWORD`
-
-Examples:
-
-* `welcome enable`
-
-* `welcome disable` +
-
-[NOTE]
-The welcome screen is disabled by default.
-
-[TIP]
-Try enabling the welcome screen, close and rerun ConTag.
-
-If the welcome screen is successfully enabled, you should be able to see a the following screen, as shown in _Figure 3.5.5.1_ every time ConTag is run. The welcome screen displays 1 out of the 15 default productivity quotes at random to keep you motivated throughout the day.
-
-image::WelcomeScreen.png[width="400"]
-_Figure 3.4.3.1: The welcome screen_
-// end::welcomeScreen[]
-
-==== Exiting the program : `exit`
+==== Exiting the Program : `exit`
 
 => Alias: `q` <=
 
 Exits the program. +
 Format: `exit`
 
-=== Saving and transferring data
+=== Saving and Transferring Data
 
 Address book data is *saved in the hard disk automatically* after any command that modifies data. +
 There is no need to save manually.
