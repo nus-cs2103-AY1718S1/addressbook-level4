@@ -1,4 +1,4 @@
-= Dong Shaocong - Project Portfolio
+= Qi Kongjia - Project Portfolio
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: ../images
 :stylesDir: ../stylesheets
@@ -6,7 +6,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 == Project: 3W
 3W is a desktop address book and task book application designed for University students, business people and all those who have a busy daily schedule. The user interacts with it using a CLI, and it has a GUI created with JavaFX.
 
-*Code contributed*: [https://github.com/CS2103AUG2017-W15-B4/main/blob/master/collated/main/ShaocongDong.md[functional code]][https://github.com/CS2103AUG2017-W15-B4/main/blob/master/collated/test/ShaocongDong.md[test code]]
+*Code contributed*: [https://github.com/CS2103AUG2017-W15-B4/main/blob/master/collated/main/Qi Kongjia.md[functional code]][https://github.com/CS2103AUG2017-W15-B4/main/blob/master/collated/test/Qi Kongjia.md[test code]]
 
 === Enhancement Added:
 ==== TaskBook
@@ -46,11 +46,7 @@ include::../UserGuide.adoc[tag=shaocong4]
 #Start of Extract [from: Developer Guide]#
 
 include::../DeveloperGuide.adoc[tag=taskbook]
-include::../DeveloperGuide.adoc[tag=shaocong3]
-include::../DeveloperGuide.adoc[tag=shaocong4]
-include::../DeveloperGuide.adoc[tag=shaocong5]
 include::../DeveloperGuide.adoc[tag=shaocong1]
-include::../DeveloperGuide.adoc[tag=shaocong2]
 
 #End of Extract#
 

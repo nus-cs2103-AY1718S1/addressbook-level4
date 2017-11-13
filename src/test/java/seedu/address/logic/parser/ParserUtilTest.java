@@ -30,6 +30,9 @@ public class ParserUtilTest {
     private static final String INVALID_ADDRESS = " ";
     private static final String INVALID_EMAIL = "example.com";
     private static final String INVALID_TAG = "#friend";
+    private static final String INVALID_DESCRIPTION = " ";
+    private static final String INVALID_START = "19981209";
+    private static final String INVALID_END = "";
 
     private static final String VALID_NAME = "Rachel Walker";
     private static final String VALID_PHONE = "123456";
@@ -37,6 +40,9 @@ public class ParserUtilTest {
     private static final String VALID_EMAIL = "rachel@example.com";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
+    private static final String VALID_DESCRIPTION = "have fun at dinner";
+    private static final String VALID_START = "11-11-2017 09:00am";
+    private static final String VALID_END = "11-11-2017 13:00pm";
 
     @Rule
     public final ExpectedException thrown = ExpectedException.none();
@@ -137,6 +143,41 @@ public class ParserUtilTest {
 
         assertEquals(expectedAddress, actualAddress.get());
     }
+
+    //@@author yuzu1209
+    @Test
+    public void parseDescription_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseString(null);
+    }
+
+    @Test
+    public void parseDescription_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseString(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseStart_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseString(null);
+    }
+
+    @Test
+    public void parseStart_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseString(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseEnd_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseString(null);
+    }
+
+    @Test
+    public void parseEnd_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseString(Optional.empty()).isPresent());
+    }
+
 
     @Test
     public void parseEmail_null_throwsNullPointerException() throws Exception {
