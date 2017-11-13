@@ -243,7 +243,7 @@ public class Person implements ReadOnlyPerson {
 
     public void setProfPic(ProfPic profPic) {
         this.profPic.set(profPic); }
-  
+
     @Override
     public ObjectProperty<ProfPic> profPicProperty() {
         return profPic;
