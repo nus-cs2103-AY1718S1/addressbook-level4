@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1">
+<HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
   <GridPane HBox.hgrow="ALWAYS">
     <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
@@ -46,11 +46,8 @@
     <items>
       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="50.0" prefWidth="50.0" stylesheets="@LightTheme.css">
         <children>
-          <Label fx:id="favourite" alignment="TOP_RIGHT" text="">
-            <graphic>
-              <ImageView fx:id="favouriteIcon" fitHeight="30" fitWidth="30" preserveRatio="true" />
-            </graphic>
-          </Label>
+          <Label fx:id="favourite" alignment="TOP_RIGHT" text="" />
+          <ImageView fx:id="favouriteIcon" fitHeight="30" fitWidth="30" layoutY="10.0" preserveRatio="true" />
         </children>
       </AnchorPane>
       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="50.0" prefWidth="158.0">

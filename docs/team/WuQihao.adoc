@@ -4,7 +4,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :stylesDir: ../stylesheets
 
 == Project: AcquaiNote
-AcquaiNote is a desktop address book application which helps to manage personal contacts easily and safely, with scheduling functionality. The user interacts with it using a command line interface (CLI), and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+AcquaiNote is a desktop address book application which helps to manage personal contacts easily and safely, with scheduling functionality. The user interacts with it using a command line interface (CLI), and it is written in Java and it has a GUI created with JavaFX.
 
 *Code contributed*: [https://github.com/CS2103AUG2017-T10-B1/main/blob/master/collated/main/qihao27.md[Functional code]] [https://github.com/CS2103AUG2017-T10-B1/main/blob/master/collated/test/qihao27.md[Test code]]
 
@@ -95,6 +95,11 @@ include::../DeveloperGuide.adoc[tag=export]
 
 ---
 
+=== Enhancement Proposed: Replace favourite stars with buttons
+
+Users will be able to add/remove any contact to favourite list by clicking on the button.
+Provides an alternative for adding/removing contact to favourite list.
+
 === Enhancement Proposed: Export to cloud storage
 
 With an initial modification of the current `export` command which increases the number of supporting file type, an integration with cloud storage service would be beneficial for users. +
@@ -107,7 +112,10 @@ Both local and cloud import makes AcquaiNote more user friendly and would greatl
 
 === Other contributions
 
+* Added total number of contacts in the status bar footer and highlight result message with the invalid command entered (pull request https://github.com/CS2103AUG2017-T10-B1/main/pull/49[#49])
 * Updated the GUI color scheme (Pull requests https://github.com/CS2103AUG2017-T10-B1/main/pull/53[#53], https://github.com/CS2103AUG2017-T10-B1/main/pull/55[#55])
-* Changed favourite contact display and todo-item count display on contact cards (Pull requests https://github.com/CS2103AUG2017-T10-B1/main/pull/69[#69], https://github.com/CS2103AUG2017-T10-B1/main/pull/78[#78 ])
-* Wrote additional tests to increase coverage (Pull request https://github.com/CS2103AUG2017-T10-B1/main/pull/78[#78])
-* Updated documents constantly (Pull requests https://github.com/CS2103AUG2017-T10-B1/main/pull/11[#11], https://github.com/CS2103AUG2017-T10-B1/main/pull/21[#21], https://github.com/CS2103AUG2017-T10-B1/main/pull/28[#28], https://github.com/CS2103AUG2017-T10-B1/main/pull/46[#46], https://github.com/CS2103AUG2017-T10-B1/main/pull/59[#59])
+* Changed favourite contact display on contact cards (Pull request https://github.com/CS2103AUG2017-T10-B1/main/pull/69[#69])
+* Added todo-item count on contact cards (Pull request https://github.com/CS2103AUG2017-T10-B1/main/pull/78[#78])
+* Added switch buttons below result display panel (Pull request https://github.com/CS2103AUG2017-T10-B1/main/pull/101[#101])
+* Wrote additional tests to increase coverage (Pull requests https://github.com/CS2103AUG2017-T10-B1/main/pull/78[#78], https://github.com/CS2103AUG2017-T10-B1/main/pull/101[#101])
+* Updated documents constantly (Pull requests https://github.com/CS2103AUG2017-T10-B1/main/pull/11[#11], https://github.com/CS2103AUG2017-T10-B1/main/pull/21[#21], https://github.com/CS2103AUG2017-T10-B1/main/pull/28[#28], https://github.com/CS2103AUG2017-T10-B1/main/pull/46[#46], https://github.com/CS2103AUG2017-T10-B1/main/pull/59[#59], https://github.com/CS2103AUG2017-T10-B1/main/pull/64[#64], https://github.com/CS2103AUG2017-T10-B1/main/pull/93[#93], https://github.com/CS2103AUG2017-T10-B1/main/pull/117[#117])

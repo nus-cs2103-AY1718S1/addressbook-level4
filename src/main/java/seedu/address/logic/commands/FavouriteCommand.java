@@ -22,21 +22,21 @@ import seedu.address.model.tag.Tag;
 
 //@@author aaronyhsoh
 /**
- * Favourites an exisiting contact
+ * Favourites an existing contact
  */
 public class FavouriteCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "favourite";
     public static final String COMMAND_ALIAS = "fav";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a person to your favourite contacts "
-            + "by the index number used in the last person listing.\n"
-            + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " 1 ";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds/Removes a person to/from your favourite contacts"
+            + " by the index number used in the last person listing.\n"
+            + "Parameters: [INDEX] (must be a positive integer)\n"
+            + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_FAVOURITE_PERSON_SUCCESS = "Added person to favourites: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
-    public static final String MESSAGE_UNFAVOURITE_PERSON_SUCCESS = "Person removed from favourites: %1$s";
+    public static final String MESSAGE_UNFAVOURITE_PERSON_SUCCESS = "Removed person from favourites: %1$s";
 
     private final Index index;
 

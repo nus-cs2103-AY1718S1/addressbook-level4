@@ -172,6 +172,18 @@ public class TodoCommandTest {
         }
     }
 
+    @Test
+    public void execute_invalidDeleteIndex_throwsException() {
+        try {
+            Index index = Index.fromOneBased(2);
+            Index itemIndex = Index.fromOneBased(2);
+            prepareCommand(TodoCommand.PREFIX_TODO_DELETE_ONE, index, null, itemIndex).execute();
+            Assert.fail("Execute without throwing exception");
+        } catch (CommandException e) {
+            Assert.assertEquals(e.getMessage(), TodoCommand.MESSAGE_INVALID_TODOITEM_INDEX);
+        }
+    }
+
     /**
      * Returns an {@code TodoCommand} with parameters
      */

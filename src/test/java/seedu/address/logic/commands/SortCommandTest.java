@@ -9,10 +9,13 @@ import static seedu.address.testutil.TypicalOptions.OPTION_PHONE;
 import static seedu.address.testutil.TypicalOptions.OPTION_TAG;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -22,6 +25,9 @@ import seedu.address.model.person.exceptions.NoPersonFoundException;
  * Contains integration tests (interaction with the Model) and unit tests for SortCommand.
  */
 public class SortCommandTest {
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
@@ -68,6 +74,17 @@ public class SortCommandTest {
 
         SortCommand sortByName = prepareCommand(OPTION_TAG);
         assertCommandSuccess(sortByName, model, SortCommand.MESSAGE_SUCCESS_BY_TAG, expectedModel);
+    }
+
+    @Test
+    public void execute_emptyList_throwCommandException() throws CommandException {
+        thrown.expect(CommandException.class);
+        thrown.expectMessage(SortCommand.NO_PERSON_FOUND);
+
+        model.resetData((new ModelManager()).getAddressBook());
+
+        SortCommand sortEmptyList = prepareCommand(OPTION_TAG);
+        sortEmptyList.executeUndoableCommand();
     }
 
     /**

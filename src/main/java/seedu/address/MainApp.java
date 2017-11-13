@@ -21,6 +21,7 @@ import seedu.address.commons.util.ConfigUtil;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
+import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.UnlockCommand;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
@@ -122,7 +123,7 @@ public class MainApp extends Application {
     //@@author Hailinx
     private void setUpSecurityManager(Storage storage) {
         Security securityManager = SecurityManager.getInstance(storage);
-        securityManager.configSecurity(UnlockCommand.COMMAND_WORD);
+        securityManager.configSecurity(UnlockCommand.COMMAND_WORD, ExitCommand.COMMAND_WORD);
     }
     //@@author
 
@@ -224,7 +225,7 @@ public class MainApp extends Application {
      */
     private void restart() {
         logger.info("============================ [ Restarting Address Book ] =============================");
-
+        ui.stop();
         try {
             storage.saveUserPrefs(userPrefs);
             init();

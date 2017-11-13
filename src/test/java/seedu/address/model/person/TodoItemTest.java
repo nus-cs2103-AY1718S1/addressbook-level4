@@ -29,6 +29,19 @@ public class TodoItemTest {
     }
 
     @Test
+    public void test_compareTo() throws Exception {
+        TodoItem firstTodoItem = new TodoItem(EARLY_TIME_ONE, null, "task");
+        TodoItem secondTodoItem = new TodoItem(LATE_TIME_ONE, null, "task");
+        TodoItem thirdTodoItem = new TodoItem(EARLY_TIME_ONE, null, "task");
+
+        Assert.assertTrue(firstTodoItem.compareTo(secondTodoItem) < 0);
+
+        Assert.assertTrue(firstTodoItem.compareTo(thirdTodoItem) == 0);
+
+        Assert.assertTrue(secondTodoItem.compareTo(thirdTodoItem) > 0);
+    }
+
+    @Test
     public void test_invalidInput_throwException() {
         try {
             new TodoItem(LATE_TIME_ONE, EARLY_TIME_ONE, "task");

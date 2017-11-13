@@ -19,9 +19,8 @@ public class LockCommand extends Command {
 
     public static final String COMMAND_WORD = "lock";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Encrypts all contact with a input password."
-            + "Parameters: "
-            + "PASSWORD\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Encrypts all contact with a input password.\n"
+            + "Parameters: PASSWORD (at least contains 4 characters)\n"
             + "Example: " + COMMAND_WORD + " mykey";
 
     public static final String MESSAGE_SUCCESS = "Address book is locked successfully.";

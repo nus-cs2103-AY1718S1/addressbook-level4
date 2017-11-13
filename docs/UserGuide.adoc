@@ -22,8 +22,8 @@ By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
+.  Download the latest `AcquaiNote.jar` link:{repoURL}/releases[here].
+.  Copy the file to the folder you want to use as the home folder for your AcquaiNote.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
 image::Ui.png[width="790"]
@@ -54,6 +54,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 Format: `help`
 
+// tag::add[]
 === Adding a person: `add`
 
 Adds a person to the address book +
@@ -68,6 +69,7 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 * `add n/Betsy Crowe t/friend a/Newgate Prison p/1234567 t/criminal` +
+// end::add[]
 
 === Listing all persons : `list`
 
@@ -285,21 +287,22 @@ There is no need to save manually.
 === Deleting a person by name: `del`
 
 Deletes the specified person from the address book using his/her name. +
-Format: `del NAME`
+Format: `del NAME [MORE_NAMES]`
 
 ****
-* Deletes the person with the first occurrence of the specified `NAME`.
+* Deletes the person with the specified `NAME`.
+* Shortlist all persons with specified `NAMES` before deletion.
 * The name refers to the name shown in the contact list (case insensitive).
-* The name *must be more than 3 characters*: john, James, William ...
+* The name *must be the entire first/last/full name*
 ****
 
 Examples:
 
 * `del Alex` +
-Deletes the first person named Alex in the address book contact list.
-* `find Betsy` +
-`del Betsy` +
-Deletes the 1st person in the results of the `find` command.
+Deletes the person named Alex in the address book if it is unique in the contact list. +
+Otherwise, shows all persons with the name Alex for further operation.
+* `del Ben Alex John` +
+Shows all persons with the name Ben or Alex or John for further operation.
 // end::deletebyname[]
 
 // tag::sort[]
@@ -346,6 +349,7 @@ Format: `unlock PASSWORD`
 ****
 // end::lockunlock[]
 
+// tag::favourite[]
 === Favouriting a person : `favourite`
 
 Favourites the person identified by the index number used in the last person listing. +
@@ -372,6 +376,7 @@ Favourites the 1st person in the results of the `find` command.
 Favourites the 1st person in the address book. +
 `favourite 1` +
 Unfavourite the 1st person in the address book.
+// end::favourite[]
 
 Tips
 
@@ -569,6 +574,10 @@ Person with `todo` tasks automatically becomes a favourite and shifts to top of 
 === Undo/redo all commands
 
 Entering `undo all` or `redo all` now undo and redo all commands respectively.
+
+=== Import address book
+
+Import address book into the application.
 
 == FAQ
 

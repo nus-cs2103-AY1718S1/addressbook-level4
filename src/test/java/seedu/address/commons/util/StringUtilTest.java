@@ -156,28 +156,6 @@ public class StringUtilTest {
     }
 
     //@@author qihao27
-    //---------------- Tests for isAlnumOnly --------------------------------------
-
-    @Test
-    public void isAlnumOnly() {
-
-        // empty strings
-        assertFalse(StringUtil.isAlnumOnly("")); // Boundary value
-        assertFalse(StringUtil.isAlnumOnly("  "));
-
-        // string with white space
-        assertFalse(StringUtil.isAlnumOnly(" john ")); // Leading/trailing spaces
-
-        // contains special characters
-        assertFalse(StringUtil.isAlnumOnly("j@hn#"));
-
-        // EP: valid options, should return true
-        assertTrue(StringUtil.isAlnumOnly("john"));
-        assertTrue(StringUtil.isAlnumOnly("John"));
-        assertTrue(StringUtil.isAlnumOnly("Boom Shakalaka"));
-        assertTrue(StringUtil.isAlnumOnly("bOoM ShakAlaKa")); // case insensitive
-    }
-
     //---------------- Tests for isSortOption --------------------------------------
 
     @Test

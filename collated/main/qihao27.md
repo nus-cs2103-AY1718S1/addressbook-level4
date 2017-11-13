@@ -1,10 +1,4 @@
 # qihao27
-###### \java\seedu\address\commons\core\Messages.java
-``` java
-    public static final String MESSAGE_PERSON_NAME_ABSENT = "The person name provided is absent";
-    public static final String MESSAGE_PERSON_NAME_INSUFFICIENT = "The person name provide is too short."
-            + "\nRequire more than 3 characters";
-```
 ###### \java\seedu\address\commons\events\ui\NewResultCheckEvent.java
 ``` java
 package seedu.address.commons.events.ui;
@@ -34,24 +28,6 @@ public class NewResultCheckEvent extends BaseEvent {
 ```
 ###### \java\seedu\address\commons\util\StringUtil.java
 ``` java
-    /**
-     * Returns true if {@code s} represents letters or numbers
-     * e.g. abc, as12, gg, ..., <br>
-     * Will return false for any other non-alnum string input
-     * e.g. empty string, " abc " (untrimmed), "1a#" (contains special character)
-     * Will return false if the input string case does not match the string stored (case sensitive)
-     * @throws NullPointerException if {@code s} is null.
-     */
-    public static boolean isAlnumOnly(String s) {
-        requireNonNull(s);
-
-        try {
-            return s.matches("[\\p{Alnum}][\\p{Alnum} ]*");
-        } catch (IllegalArgumentException iae) {
-            return false;
-        }
-    }
-
     /**
      * Returns true if {@code s} represents lower case [OPTION] String
      * e.g. -n, -p, -t, ..., <br>
@@ -88,80 +64,70 @@ public class NewResultCheckEvent extends BaseEvent {
         }
     }
 ```
-###### \java\seedu\address\logic\commands\DeleteAltCommand.java
+###### \java\seedu\address\logic\commands\DeleteByNameCommand.java
 ``` java
 package seedu.address.logic.commands;
 
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.List;
+import java.util.function.Predicate;
 
-import seedu.address.commons.core.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
- * Deletes a person identified using its last displayed index from the address book.
+ * Deletes a person identified using its name from the address book.
  */
-public class DeleteAltCommand extends UndoableCommand {
+public class DeleteByNameCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "del";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the person identified by the name.\n"
-            + "Parameters: NAME (must be alphabetical letters)\n"
+            + "Parameters: [NAME]\n"
             + "Example: " + COMMAND_WORD + " john";
 
     public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
+    public static final String MESSAGE_MULTIPLE_PERSON_FOUND = "Multiple contacts with specified name found!\n"
+        + "Please add more details for distinction or use the following command:\n" + DeleteCommand.MESSAGE_USAGE;
+    public static final String MESSAGE_PERSON_NAME_ABSENT = "The person's name provided can not be found.";
 
-    private final String targetName;
+    private final Predicate<ReadOnlyPerson> predicate;
 
-    public DeleteAltCommand(String targetName) {
-        this.targetName = targetName.toLowerCase();
+    public DeleteByNameCommand(Predicate<ReadOnlyPerson> predicate) {
+        this.predicate = predicate;
     }
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        model.updateFilteredPersonList(predicate);
+        List<ReadOnlyPerson> predicateList = model.getFilteredPersonList();
 
-        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+        if (predicateList.size() > 1) {
+            throw new CommandException(MESSAGE_MULTIPLE_PERSON_FOUND);
+        } else if (predicateList.size() == 0) {
+            throw new CommandException(MESSAGE_PERSON_NAME_ABSENT);
+        } else {
+            ReadOnlyPerson personToDelete = predicateList.get(0);
 
-        int index = 0;
-
-        for (ReadOnlyPerson p : lastShownList) {
-            if (p.getName().toString().toLowerCase().contains(targetName) && targetName.length() > 3) {
-                index = lastShownList.indexOf(p);
-                break;
-            } else {
-                index = -1;
+            try {
+                model.deletePerson(personToDelete);
+            } catch (PersonNotFoundException pnfe) {
+                throw new CommandException(MESSAGE_PERSON_NAME_ABSENT);
             }
+
+            model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+            return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete));
         }
-
-        if (index >= lastShownList.size() || index == -1) {
-            if (targetName.length() <= 3) {
-                throw new CommandException(Messages.MESSAGE_PERSON_NAME_INSUFFICIENT);
-            } else {
-                throw new CommandException(Messages.MESSAGE_PERSON_NAME_ABSENT);
-            }
-        }
-
-        ReadOnlyPerson personToDelete = lastShownList.get(index);
-
-        try {
-            model.deletePerson(personToDelete);
-        } catch (PersonNotFoundException pnfe) {
-            assert false : "The target person cannot be missing";
-        }
-
-        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete));
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof DeleteAltCommand // instanceof handles nulls
-                && this.targetName.equals(((DeleteAltCommand) other).targetName)); // state check
+                || (other instanceof DeleteByNameCommand // instanceof handles nulls
+                && this.predicate.equals(((DeleteByNameCommand) other).predicate)); // state check
     }
 }
 ```
@@ -259,9 +225,13 @@ public class SortCommand extends UndoableCommand {
     public static final String PREFIX_SORT_BY_ADDRESS = PREFIX_OPTION_INDICATOR + "a";
     public static final String PREFIX_SORT_BY_TAG = PREFIX_OPTION_INDICATOR + "t";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sorts all persons."
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sorts all persons.\n"
             + "Parameters: [OPTION] (must be one of the available field and a String)\n"
-            + "Example: " + COMMAND_WORD + " " + PREFIX_SORT_BY_NAME;
+            + "Example: " + COMMAND_WORD + " " + PREFIX_SORT_BY_NAME + " (sort by name)\n"
+            + "Example: " + COMMAND_WORD + " " + PREFIX_SORT_BY_PHONE + " (sort by phone number)\n"
+            + "Example: " + COMMAND_WORD + " " + PREFIX_SORT_BY_EMAIL + " (sort by email address)\n"
+            + "Example: " + COMMAND_WORD + " " + PREFIX_SORT_BY_ADDRESS + " (sort by address)\n"
+            + "Example: " + COMMAND_WORD + " " + PREFIX_SORT_BY_TAG + " (sort by tag)\n";
 
     public static final String MESSAGE_SUCCESS_BY_NAME = "Persons sorted by name.";
     public static final String MESSAGE_SUCCESS_BY_PHONE = "Persons sorted by phone.";
@@ -295,9 +265,9 @@ public class SortCommand extends UndoableCommand {
             return new CommandResult(MESSAGE_SUCCESS_BY_ADDRESS);
         } else if (option.contains("-t")) {
             return new CommandResult(MESSAGE_SUCCESS_BY_TAG);
-        } else {
-            return new CommandResult(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
         }
+
+        return new CommandResult(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
     }
 
     @Override
@@ -310,8 +280,8 @@ public class SortCommand extends UndoableCommand {
 ```
 ###### \java\seedu\address\logic\parser\AddressBookParser.java
 ``` java
-        case DeleteAltCommand.COMMAND_WORD:
-            return new DeleteAltCommandParser().parse(arguments);
+        case DeleteByNameCommand.COMMAND_WORD:
+            return new DeleteByNameCommandParser().parse(arguments);
 ```
 ###### \java\seedu\address\logic\parser\AddressBookParser.java
 ``` java
@@ -322,34 +292,38 @@ public class SortCommand extends UndoableCommand {
         case ExportCommand.COMMAND_ALIAS:
             return new ExportCommandParser().parse(arguments);
 ```
-###### \java\seedu\address\logic\parser\DeleteAltCommandParser.java
+###### \java\seedu\address\logic\parser\DeleteByNameCommandParser.java
 ``` java
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
-import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.commands.DeleteAltCommand;
+import java.util.Arrays;
+
+import seedu.address.logic.commands.DeleteByNameCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.NameContainsKeywordsPredicate;
 
 /**
- * Parses input arguments and creates a new DeleteAltCommand object
+ * Parses input arguments and creates a new DeleteByNameCommand object
  */
-public class DeleteAltCommandParser implements Parser<DeleteAltCommand> {
+public class DeleteByNameCommandParser implements Parser<DeleteByNameCommand> {
 
     /**
-     * Parses the given {@code String} of arguments in the context of the DeleteAltCommand
-     * and returns an DeleteAltCommand object for execution.
+     * Parses the given {@code String} of arguments in the context of the DeleteByNameCommand
+     * and returns an DeleteByNameCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
-    public DeleteAltCommand parse(String args) throws ParseException {
-        try {
-            String name = ParserUtil.parseString(args);
-            return new DeleteAltCommand(name);
-        } catch (IllegalValueException ive) {
+    public DeleteByNameCommand parse(String args) throws ParseException {
+        String trimmedArgs = args.trim();
+        if (trimmedArgs.isEmpty()) {
             throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteAltCommand.MESSAGE_USAGE));
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteByNameCommand.MESSAGE_USAGE));
         }
+
+        String[] nameKeywords = trimmedArgs.split("\\s+");
+
+        return new DeleteByNameCommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
     }
 
 }
@@ -387,25 +361,12 @@ public class ExportCommandParser implements Parser<ExportCommand> {
 ```
 ###### \java\seedu\address\logic\parser\ParserUtil.java
 ``` java
-    public static final String MESSAGE_INVALID_STRING = "String does not contain alphanum only.";
     public static final String MESSAGE_INVALID_OPTION = "String does not contain hyphen and lower case alphabet only.";
-    public static final String MESSAGE_INVALID_FILE_PATH = "String does not contain \".xml\" as suffix.";
+    public static final String MESSAGE_INVALID_FILE_PATH =
+            "String does not contain \".xml\" as suffix or contains invalid file path.";
 ```
 ###### \java\seedu\address\logic\parser\ParserUtil.java
 ``` java
-    /**
-     * Parses a String of letters into a {@code trimmedString} and returns it. Leading and trailing whitespaces
-     * will be trimmed.
-     * @throws IllegalValueException if the specified string is invalid (not letters only).
-     */
-    public static String parseString(String str) throws IllegalValueException {
-        String trimmedString = str.trim();
-        if (!StringUtil.isAlnumOnly(trimmedString) || trimmedString.length() < 3) {
-            throw new IllegalValueException(MESSAGE_INVALID_STRING);
-        }
-        return trimmedString;
-    }
-
     /**
      * Parses a String of option into a {@code trimmedString} and returns it. Leading and trailing whitespaces
      * will be trimmed.
@@ -685,8 +646,43 @@ public class UniqueTodoList implements Iterable<TodoItem> {
 ```
 ###### \java\seedu\address\ui\MainWindow.java
 ``` java
+    @FXML
+    private Button todoButton;
+
+    @FXML
+    private Button browserButton;
+```
+###### \java\seedu\address\ui\MainWindow.java
+``` java
         StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath(),
                 Integer.toString(logic.getFilteredPersonList().size()));
+```
+###### \java\seedu\address\ui\MainWindow.java
+``` java
+        todoButton = new Button();
+        browserButton = new Button();
+        todoButton.setOnAction(event -> handleTodoButton());
+        browserButton.setOnAction(event -> handleBrowserButton());
+```
+###### \java\seedu\address\ui\MainWindow.java
+``` java
+    /**
+     * Toggle to todolist view.
+     */
+    @FXML
+    private void handleTodoButton() {
+        todoButton = new Button();
+        switchPlaceholderDisplay(1);
+    }
+
+    /**
+     * Toggle to browser view.
+     */
+    @FXML
+    private void handleBrowserButton() {
+        browserButton = new Button();
+        switchPlaceholderDisplay(2);
+    }
 ```
 ###### \java\seedu\address\ui\PersonCard.java
 ``` java
@@ -882,6 +878,7 @@ public class UniqueTodoList implements Iterable<TodoItem> {
 
 .list-view {
     -fx-background-insets: 0;
+    -fx-border-color: derive(#824424, 100%);
     -fx-padding: 0;
 }
 
@@ -936,7 +933,7 @@ public class UniqueTodoList implements Iterable<TodoItem> {
 
 .pane-with-border {
      -fx-background-color: derive(#f3e4c6, 20%);
-     -fx-border-color: derive(#f3e4c6, 10%);
+     -fx-border-color: transparent;
      -fx-border-top-width: 1px;
 }
 
@@ -1010,28 +1007,32 @@ public class UniqueTodoList implements Iterable<TodoItem> {
  * http://pixelduke.wordpress.com/2012/10/23/jmetro-windows-8-controls-on-java/
  */
 .button {
-    -fx-padding: 5 22 5 22;
-    -fx-border-color: #e2e2e2;
+    -fx-padding: 0 0 0 0;
+    -fx-border-color: derive(#824424, 70%);
     -fx-border-width: 2;
     -fx-background-radius: 0;
-    -fx-background-color: #f3e4c6;
+    -fx-background-color: derive(#824424, 100%);
+    -fx-font-weight: bold;
     -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
-    -fx-font-size: 11pt;
-    -fx-text-fill: #d8d8d8;
+    -fx-font-size: 12pt;
+    -fx-text-fill: black;
     -fx-background-insets: 0 0 0 0, 0, 1, 2;
 }
 
 .button:hover {
-    -fx-background-color: #3a3a3a;
+    -fx-background-color: derive(-fx-focus-color, 30%);
+    -fx-border-color: transparent;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
 }
 
 .button:pressed, .button:default:hover:pressed {
-  -fx-background-color: white;
-  -fx-text-fill: #f3e4c6;
+  -fx-background-color: derive(-fx-focus-color, 30%);
+  -fx-text-fill: black;
 }
 
 .button:focused {
-    -fx-border-color: black, black;
+    -fx-background-color: derive(#824424, 70%);
+    -fx-border-color: derive(#824424, 70%);
     -fx-border-width: 1, 1;
     -fx-border-style: solid, segments(1, 1);
     -fx-border-radius: 0, 0;
@@ -1118,7 +1119,7 @@ public class UniqueTodoList implements Iterable<TodoItem> {
     -fx-background-color: transparent #383838 transparent #383838;
     -fx-background-insets: 0;
     -fx-background-radius: 7;
-    -fx-border-color: #383838 #383838 #383838 #383838;
+    -fx-border-color: derive(#824424, 100%);
     -fx-border-insets: 0;
     -fx-border-radius: 7;
     -fx-border-width: 1;
@@ -1132,8 +1133,11 @@ public class UniqueTodoList implements Iterable<TodoItem> {
 }
 
 #resultDisplay .content {
-    -fx-background-color: transparent, #f3e4c6, transparent, #f3e4c6;
+    -fx-background-color: #f3e4c6;
     -fx-background-radius: 5;
+    -fx-border-color: derive(#824424, 100%);
+    -fx-border-radius: 5;
+    -fx-border-width: 1;
 }
 
 #tags {
@@ -1179,11 +1183,8 @@ public class UniqueTodoList implements Iterable<TodoItem> {
     <items>
       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="50.0" prefWidth="50.0" stylesheets="@LightTheme.css">
         <children>
-          <Label fx:id="favourite" alignment="TOP_RIGHT" text="">
-            <graphic>
-              <ImageView fx:id="favouriteIcon" fitHeight="30" fitWidth="30" preserveRatio="true" />
-            </graphic>
-          </Label>
+          <Label fx:id="favourite" alignment="TOP_RIGHT" text="" />
+          <ImageView fx:id="favouriteIcon" fitHeight="30" fitWidth="30" layoutY="10.0" preserveRatio="true" />
         </children>
       </AnchorPane>
       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="50.0" prefWidth="158.0">

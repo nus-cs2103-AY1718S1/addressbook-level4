@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
-import seedu.address.logic.commands.DeleteAltCommand;
+import seedu.address.logic.commands.DeleteByNameCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
@@ -58,12 +58,10 @@ public class AddressBookParser {
         final String commandWord = matcher.group("commandWord");
         final String arguments = matcher.group("arguments");
 
-        //@@author Hailinx
         Security security = SecurityManager.getInstance();
         if (security.isSecured() && !security.isPermittedCommand(commandWord)) {
             throw new ParseException(MESSAGE_IS_ENCRYPTD);
         }
-        //@@author
 
         switch (commandWord) {
 
@@ -84,11 +82,10 @@ public class AddressBookParser {
             return new DeleteCommandParser().parse(arguments);
 
         //@@author qihao27
-        case DeleteAltCommand.COMMAND_WORD:
-            return new DeleteAltCommandParser().parse(arguments);
+        case DeleteByNameCommand.COMMAND_WORD:
+            return new DeleteByNameCommandParser().parse(arguments);
         //@@author
 
-        //@@author Hailinx
         case TodoCommand.COMMAND_WORD:
             return new TodoCommandParser().parse(arguments);
 
@@ -97,7 +94,6 @@ public class AddressBookParser {
 
         case UnlockCommand.COMMAND_WORD:
             return new UnlockCommandParser().parse(arguments);
-        //@@author
 
         case ClearCommand.COMMAND_WORD:
         case ClearCommand.COMMAND_ALIAS:
@@ -111,11 +107,9 @@ public class AddressBookParser {
         case ListCommand.COMMAND_ALIAS:
             return new ListCommand();
 
-        //@@author Hailinx
         case SwitchCommand.COMMAND_WORD:
         case SwitchCommand.COMMAND_ALIAS:
             return new SwitchCommand(arguments);
-        //@@author
 
         case HistoryCommand.COMMAND_WORD:
         case HistoryCommand.COMMAND_ALIAS:
@@ -139,6 +133,7 @@ public class AddressBookParser {
         case FavouriteCommand.COMMAND_WORD:
         case FavouriteCommand.COMMAND_ALIAS:
             return new FavouriteCommandParser().parse(arguments);
+        //@@author
 
         //@@author qihao27
         case SortCommand.COMMAND_WORD:

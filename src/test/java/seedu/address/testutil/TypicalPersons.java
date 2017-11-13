@@ -63,12 +63,12 @@ public class TypicalPersons {
     // Persons with TodoItems fields
     public static final ReadOnlyPerson BILL = new PersonBuilder().withName("Bill")
             .withAddress("PGPR B1").withEmail("bill@example.com")
-            .withPhone("12345678").withTags("friends")
+            .withPhone("12345678").withTags("classmates", "friends")
             .withTodoItem(getTodoItemOne())
             .build();
     public static final ReadOnlyPerson CAT = new PersonBuilder().withName("Cat")
             .withAddress("PGPR B2").withEmail("cat@example.com")
-            .withPhone("23456789").withTags("friends")
+            .withPhone("23456789").withTags("classmates", "friends")
             .withTodoItem(getTodoItemTwo())
             .build();
     public static final ReadOnlyPerson DARWIN = new PersonBuilder().withName("Drawin")
@@ -76,6 +76,7 @@ public class TypicalPersons {
             .withPhone("34567890").withTags("friends")
             .withTodoItem(getTodoItemOne(), getTodoItemTwo())
             .build();
+    //@@author
 
     //@@author qihao27
     // Persons with favourite star
@@ -85,6 +86,7 @@ public class TypicalPersons {
         .withTodoItem(getTodoItemOne())
         .withFavourite()
         .build();
+    //@@author
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
 
