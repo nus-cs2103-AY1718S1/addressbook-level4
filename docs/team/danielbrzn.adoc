@@ -117,5 +117,7 @@ The user's credentials will never be stored in the application.
 * Added alias command (Pull requests https://github.com/CS2103AUG2017-W14-B3/main/pull/19[#19], https://github.com/CS2103AUG2017-W14-B3/main/pull/21[#21])
 * Made fields other than person name and phone number optional (Pull request https://github.com/CS2103AUG2017-W14-B3/main/pull/71[#71])
 * Added fields for Instagram and Twitter accounts (Pull request https://github.com/CS2103AUG2017-W14-B3/main/pull/85[#85])
+* Found 3 bugs for team `T15-B3` during acceptance testing. (Issues https://github.com/CS2103AUG2017-T15-B3/main/issues/111#event-1325939033[#111], https://github.com/CS2103AUG2017-T15-B3/main/issues/112#event-1333200180[#112], https://github.com/CS2103AUG2017-T15-B3/main/issues/116#event-1325924919[#116])
+* Collated the user stories and some use cases (Pull request https://github.com/CS2103AUG2017-W14-B3/main/pull/1[#1])
 * Responsible for managing weekly milestones and releases
 * Set up AppVeyor and Travis CI for the team repository
