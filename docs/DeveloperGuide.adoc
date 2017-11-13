@@ -549,23 +549,13 @@ However, if a `Person` is modified by a command, the modification will be reflec
 
 ==== Design Considerations:
 
-<<<<<<< HEAD
 **Aspect:** Syncing of lists +
 **Alternative 1 (current choice):** Use manual syncing methods to ensure lists are in sync +
 **Pros:** Easy to extend for future implementations. +
 **Cons:** Methods used for syncing are less intuitive and difficult to comprehend. +
 **Alternative 2:** Create new `persons` variable for each list in `Addressbook` class +
-**Pros:** Implemenation is easier to comprehend. +
+**Pros:** Implementation is easier to comprehend. +
 **Cons:** Waste of memory compared to current implementation which only has 1 `persons` variable in `Addressbook` class.
-=======
-**Aspect:** Other commands still work in Blacklist mode(`Add`, `Delete` command) +
-**Alternative 1 (current choice):** Inform user in user guide to use only specific commands for that list +
-**Pros:** Easy to implement. +
-**Cons:** Performance issues as users are bound to make a mistake. +
-**Alternative 2:** Restrict other command usages in certain lists +
-**Pros:** Users will never make a mistake sending the wrong person to the wrong list. +
-**Cons:** Implementation is complicated and thus implementation has to revisited whenever new commands are introduced.
->>>>>>> 970674fa0ea13ccc15e5fff8b7102a05ccf745ee
 // end::list[]
 
 // tag::cluster[]
