@@ -41,46 +41,29 @@ include::../DeveloperGuide.adoc[leveloffset=2, tag=shortcut]
 
 ---
 
-=== Enhancement Added: Renovate UI Color Scheme and Layout
-
-The user interface of the application has been revamped to take on a clean design, which aims to improve
-the user's experience with Rolodex.
-
-==== External Behavior
+=== Enhancement Added: UI Improvements
 
 ---
 
-image::Ui.png[width="800"]
-
-Some features of the UI:
-
-* A keyboard icon in the command box provides visual feedback for certain user events:
-
-** image:keyboard.png[width="30"] : User is idle
-** image:keyboardTyping.png[width="30"] : User is typing
-** image:keyboardError.png[width="30"] : User entered an invalid command
-
-* Split pane which separates the contact list from the other UI components is responsive;
-the divider is automatically maintained at the optimal position
-when window size changes
-* Avatar colors are randomized
+include::../DeveloperGuide.adoc[leveloffset=1, tag=uiImprovements]
 
 ---
 
+[[detailPanel]]
 === Enhancement Added: Person Detail Panel
 
 ==== External Behavior
 
 ---
 
-include::../DeveloperGuide.adoc[leveloffset=2, tag=detailPanelBehavior]
+include::../DeveloperGuide.adoc[leveloffset=1, tag=detailPanelBehavior]
 
 
 ==== Implementation
 
 ---
 
-include::../DeveloperGuide.adoc[leveloffset=2, tag=detailPanelImp]
+include::../DeveloperGuide.adoc[leveloffset=1, tag=detailPanelImp]
 
 ---
 
@@ -109,12 +92,14 @@ include::../UserGuide.adoc[leveloffset=2, tag=picture]
 
 ---
 === Other contributions
-* Added auto-selection to person that is newly added (Pull request https://github.com/CS2103AUG2017-W11-B2/main/pull/123[#123])
-* Added auto-selection to person that is newly edited (Pull request https://github.com/CS2103AUG2017-W11-B2/main/pull/102[#102])
+* Imported the Segoe UI font pack into the application (Pull request https://github.com/CS2103AUG2017-W11-B2/main/pull/136[#136])
+* Added a prompt text to the result display panel (Pull request https://github.com/CS2103AUG2017-W11-B2/main/pull/122[#122])
 * Added the removeTag method (Pull request https://github.com/CS2103AUG2017-W11-B2/main/pull/6[#6])
 * Updated the General Documentation (Pull requests https://github.com/CS2103AUG2017-W11-B2/main/pull/2[#2],
 https://github.com/CS2103AUG2017-W11-B2/main/pull/66[#66],
-https://github.com/CS2103AUG2017-W11-B2/main/pull/112[#112])
+https://github.com/CS2103AUG2017-W11-B2/main/pull/112[#112],
+https://github.com/CS2103AUG2017-W11-B2/main/pull/124[#124],
+https://github.com/CS2103AUG2017-W11-B2/main/pull/134[#134])
 
 endif::[]
 

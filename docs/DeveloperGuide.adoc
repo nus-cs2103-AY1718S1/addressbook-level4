@@ -121,7 +121,6 @@ for the main architecture of Rolodex.
 === Architecture
 
 image::Architecture.png[width="600"]
-_Figure 2.1.1 : Architecture Diagram_
 
 The *_Architecture Diagram_* given above explains the high-level design of the App. Given below is a quick overview of each component.
 
@@ -153,7 +152,7 @@ Each of the four components
 For example, the `Logic` component (see the class diagram given below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
 
 image::LogicClassDiagram.png[width="800"]
-_Figure 2.1.2 : Class Diagram of the Logic Component_
+Above is the _Class Diagram_ of the `logic` component.
 
 [discrete]
 ==== Events-Driven Nature of the Design
@@ -161,7 +160,6 @@ _Figure 2.1.2 : Class Diagram of the Logic Component_
 The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
 
 image::SDforDeletePerson.png[width="800"]
-_Figure 2.1.3a : Component interactions for `delete 1` command (part 1)_
 
 [NOTE]
 Note how the `Model` simply raises a `RolodexChangedEvent` when the link:#rolodex[Rolodex] data are changed, instead of asking the `Storage` to save the updates to the hard disk.
@@ -169,7 +167,6 @@ Note how the `Model` simply raises a `RolodexChangedEvent` when the link:#rolode
 The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
 image::SDforDeletePersonEventHandling.png[width="800"]
-_Figure 2.1.3b : Component interactions for `delete 1` command (part 2)_
 
 [NOTE]
 Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
@@ -179,7 +176,7 @@ The sections below give more details of each component.
 === UI Component
 
 image::UiClassDiagram.png[width="800"]
-_Figure 2.2.1 : Structure of the UI Component_
+Structure of the `UI` component is shown in the above diagram.
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
@@ -196,10 +193,10 @@ The `UI` component,
 === Logic Component
 
 image::LogicClassDiagram.png[width="800"]
-_Figure 2.3.1 : Structure of the Logic Component_
+Structure of the `logic` component is shown in the above diagram.
 
 image::LogicCommandClassDiagram.png[width="800"]
-_Figure 2.3.2 : Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in Figure 2.3.1_
+The above diagram represents the structure of Commands in the `logic` component. It shows finer details concerning `XYZCommand` and `Command` in the previous diagram.
 
 *API* :
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
@@ -212,12 +209,12 @@ link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
 
 image::DeletePersonSdForLogic.png[width="800"]
-_Figure 2.3.1 : Interactions Inside the Logic Component for the `delete 1` Command_
+The above diagram show the interactions inside the `logic` component for the `delete 1` command.
 
 === Model Component
 
 image::ModelClassDiagram.png[width="800"]
-_Figure 2.4.1 : Structure of the Model Component_
+Structure of the `model` component is shown in the above diagram.
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
@@ -231,7 +228,7 @@ The `Model`,
 === Storage Component
 
 image::StorageClassDiagram.png[width="800"]
-_Figure 2.5.1 : Structure of the Storage Component_
+Structure of the `storage` component is shown in the above diagram.
 
 *API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 
@@ -335,30 +332,33 @@ image::UndoRedoActivityDiagram.png[width="200"]
 
 ==== Design Considerations
 
-**Aspect:** Implementation of `UndoableCommand` +
+===== Implementation of `UndoableCommand`
 **Alternative 1 (current choice):** Add a new abstract method `executeUndoableCommand()` +
 **Pros:** We will not lose any undone/redone functionality as it is now part of the default behaviour. Classes that deal with `Command` do not have to know that `executeUndoableCommand()` exist. +
 **Cons:** Hard for new developers to understand the template pattern. +
+
 **Alternative 2:** Just override `execute()` +
 **Pros:** Does not involve the template pattern, easier for new developers to understand. +
 **Cons:** Classes that inherit from `UndoableCommand` must remember to call `super.execute()`, or lose the ability to undo/redo.
 
 ---
 
-**Aspect:** How undo & redo executes +
+===== How undo & redo executes +
 **Alternative 1 (current choice):** Saves the entire rolodex. +
 **Pros:** Easy to implement. +
 **Cons:** May have performance issues in terms of memory usage. +
+
 **Alternative 2:** Individual command knows how to undo/redo by itself. +
 **Pros:** Will use less memory (e.g. for `delete`, just save the person being deleted). +
 **Cons:** We must ensure that the implementation of each individual command are correct.
 
 ---
 
-**Aspect:** Type of commands that can be undone/redone +
+===== Type of commands that can be undone/redone +
 **Alternative 1 (current choice):** Only include commands that modifies the rolodex (`add`, `clear`, `edit`). +
 **Pros:** We only revert changes that are hard to change back (the view can easily be re-modified as no data are lost). +
 **Cons:** User might think that undo also applies when the list is modified (undoing filtering for example), only to realize that it does not do that, after executing `undo`. +
+
 **Alternative 2:** Include all commands. +
 **Pros:** Might be more intuitive for the user. +
 **Cons:** User have no way of skipping such commands if he or she just want to reset the state of the rolodex and not the view. +
@@ -379,7 +379,7 @@ image::UndoRedoActivityDiagram.png[width="200"]
 === Open File and New File Mechanism
 The open new file and creating new file mechanism are handled by two new types of requests under the `EventsCenter`,
 `OpenRolodexRequestEvent` and `RolodexChangedDirectoryEvent`. Upon receiving a new command, the `MainApp` attempts to
-reloads the instance `model` and `logic` but **not the `UI`**.
+reload the instance `model` and `logic` but **not the `UI`**.
 
 The high level sequence diagram for a typical `open` request can be seen below:
 
@@ -387,7 +387,7 @@ image::OpenNewHighLevelSequenceDiagram.png[]
 
 1. A user requests to open `data/default.rldx`.
 2. The command is handled the same way as other commands, by the parser in
-logic, then via the `OpenCommand` object itself, under the `Logic` component of the application.
+logic, then via the `OpenRolodexCommand` object itself, under the `Logic` component of the application.
 3. Upon a successful parsing of the command and execution, the command would raise a new `OpenRolodexRequestEvent` to
 be handled by the `EventsCenter`.
 4. The `EventsCenter` posts a new `OpenRolodexRequestEvent` back to the `MainApp` where the new Rolodex path would be
@@ -454,32 +454,35 @@ public void saveRolodex(ReadOnlyRolodex rolodex, String filePath) throws IOExcep
 ----
 ==== Design Considerations
 
-**Aspect:** General Implementation +
+===== General Implementation +
 **Alternative 1 (current choice):** Reload the current `MainApp` with the new database. +
 **Pros:** The application can be quickly reloaded onto the active window. +
 **Cons:** User might need to switch back and forth between the Rolodex directories. +
+
 **Alternative 2:** Reload `MainApp` with a new application instance. +
 **Constraint:** link:#java-fx[JavaFX] only allows launch(args) to be launched once per execution time on a code level.
 Another approach would be to reload the application with a loaded and built .jar. +
 **Pros:** Easier logic to understand for new developers. +
 **Cons:** Building and debugging with a second .jar will be confusing and problematic to any development workflow. +
+
 **Alternative 3:** Open a new window with the loaded data. +
 **Pros:** The user can continue to operate on the previous Rolodex application. +
 **Cons:** The developer would have to spend time configuring different `EventsCenter` posts for the different application windows.
 
 ---
 
-**Aspect:** Saving only to files with `.rldx` extensions +
+===== Saving only to files with `.rldx` extensions +
 **Alternative 1 (current choice):** Write to the active directory only if it has a `.rldx` extension. +
 **Pros:** The application control becomes stricter, preventing users from writing to a file with say a `.png` extension. +
 **Cons:** Extensions become forced even for valid databases with `.xml` file types. +
+
 **Alternative 2:** Allow writable to all file extensions. +
 **Pros:** Users can have more freedom in choice of file naming. +
 **Cons:** If the user accidentally writes to a file that is not a valid database, the user would corrupt the file data.
 
 ---
 
-**Aspect:** Separating `open` and `new` commands +
+===== Separating `open` and `new` commands +
 **Alternative 1 (current choice):** Two commands, one for opening existing files and one for creating new files. +
 **Pros:** The user can easily be notified if a file exists or if it has been moved. +
 **Cons:** The user would have to take note of two commands instead of one. +
@@ -524,7 +527,7 @@ to the currently examined name word in which the contact will be added.
 
 ==== Design Considerations
 
-**Aspect:** Length of name word +
+===== Length of name word +
 **Alternative 1 (current choice):** Use a global minimum for defining when the link:#fuzzy-finding[fuzzy finding] should execute. +
 **Pros:** Name words have higher minimum hop to length ratio. +
 **Cons:** User might need link:#fuzzy-finding[fuzzy finding] on name words with character length lesser than the global minimum. +
@@ -533,12 +536,13 @@ to the currently examined name word in which the contact will be added.
 
 ---
 
-**Aspect:** Location of fuzzy find settings +
+===== Location of fuzzy find settings +
 **Alternative 1 (current choice):** Use private static constant in a person. +
 **Pros:** User does not need to worry about changing the settings or the intricacies of the link:#fuzzy-finding[fuzzy finding]. +
 **Cons:** User might need stricter or looser limits than the ones defined for them. +
 **Pros:** Developers can easily change and manage settings and limits. +
 **Cons:** Users have no way of accessing the settings and limits. +
+
 **Alternative 2:** Allow user to set fuzzy find settings in a document file. +
 **Pros:** Advanced users can change the settings to suit their needs better. +
 **Cons:** Developers need to spend more work maintaining more components including storage.
@@ -603,22 +607,24 @@ comparator before executing a sort and filter which is handled by the event cons
 
 ==== Design Considerations
 
-**Aspect:** Integrating sort +
+===== Integrating sort +
 **Alternative 1 (current choice):** Integrate sort into existing commands. +
 **Pros:** User can quickly sort and list or find the data as specified without executing another separate command. +
 **Cons:** User might need to use the sort arguments for other purposes (e.g. `find n/` does not return anyone matching `n/`). +
 **Pros:** Adds onto existing functionality and reduces clutter and unnecessary creation of a new command. +
 **Cons:** Bad SLAP on a user level. +
+
 **Alternative 2:** Create a new `sort` command. +
 **Pros:** User can decide when to sort the current list view +
 **Cons:** User needs an additional step before sorting a list.
 
 ---
 
-**Aspect:** Resetting sort comparator on `add` commands +
+===== Resetting sort comparator on `add` commands +
 **Alternative 1 (current choice):** Reset the current displayed list on an `add` command. +
 **Pros:** The displayed list always complies with the model comparator. +
 **Cons:** User might need to continue operating on the previous listing. +
+
 **Alternative 2:** Append added person to the current list view. +
 **Pros:** Users can immediately `edit` the person using the last listing index. +
 **Cons:** The displayed listing will not comply with the model comparator.
@@ -635,7 +641,7 @@ An example as implemented in the open command:
 import java.util.HashSet;
 import java.util.Set;
 
-public class OpenCommand extends Command {
+public class OpenRolodexCommand extends Command {
 
     public static final String COMMAND_WORD = "open";
     public static final Set<String> COMMAND_WORD_ABBREVIATIONS =
@@ -668,13 +674,14 @@ public void parseAllCommandAbbreviationsAreDisjoint() {
 
 ==== Design Considerations
 
-**Aspect:** Implementation +
+===== Implementation +
 **Alternative 1 (current choice):** A https://docs.oracle.com/javase/8/docs/api/java/util/Set.html[Set] of strings +
 **Pros:** Constant access time per command level. Improves performance and reliability significantly. +
 **Pros:** Ease of testing for conflicting abbreviations, particularly where developers forget if they used a
 same abbreviation for two different commands (e.g. assigning `h` to both the `history` and `help` commands). +
 **Cons:** If you have a better suggestion than the above implementation, feel free to create a new issue for discussion
 on https://github.com/CS2103AUG2017-W11-B2/main/issues[github]. +
+
 **Alternative 2 (previous choice):** Manually named string Constants +
 **Pros:** Forces developer to be more prudent in checking through the conflicting abbreviations. +
 **Cons:** Developers would have to manually check through all commands to ensure the accuracy of the abbreviations,
@@ -684,58 +691,130 @@ access on a java https://docs.oracle.com/javase/8/docs/api/java/util/HashSet.htm
 
 // end::commandAbbreviations[]
 
+// tag::dropdownlist[]
+=== Drop-down List of Possible Commands
+The dynamic drop-down list is created using `org.controlsfx.control.textfield.TextFields` https://controlsfx.bitbucket.io/org/controlsfx/control/textfield/TextFields.html#bindAutoCompletion-javafx.scene.control.TextField-javafx.util.Callback-[API] link:#api[(Application Programming Interface)].
+The `bindAutoCompletion` method in the `TestFields` creates a new auto-completion binding between the given textField and the given suggestion provider.
+
+The code below shows the exact implementation.
+
+[source,java]
+----
+TextFields.bindAutoCompletion(commandTextField, sr -> {
+    Set<String> suggestedCommands = new HashSet<>();
+    for (String command: LIST_OF_ALL_COMMANDS) {
+        if (!sr.getUserText().isEmpty() && !command.equals(sr.getUserText())
+            && command.startsWith(sr.getUserText().trim().toLowerCase())) {
+
+            suggestedCommands.add(command);
+        }
+    }
+    return suggestedCommands;
+});
+----
+
+Possible commands are checked against the user input and added to the Set `suggestedCommands` accordingly, which will be displayed as the drop-down list.
+
+A command is added if all three conditions are satisfied:
+
+* The user input is not empty.
+** This is to prevent the drop-down list from appearing every time the command box is cleared after the execution of a command.
+* The user input is not a valid command.
+** There is no need to display the drop-down list of suggestions when the user has typed in a correct command.
+* The command starts with the user input.
+** This is to suggest the possible commands that the user is trying to type.
+
+==== Design Considerations
+
+**Aspect:** Implementation +
+**Alternative 1 (current choice):** Make use of `TestFields` API +
+**Pros:** Easy to implement +
+**Pros:** List is dynamic. +
+**Cons:** User cannot see the full format of the commands in the drop-down list. +
+**Alternative 2:** Use ComboBox +
+**Pros:** User can see the required fields for each command in the drop-down box. +
+**Cons:** As user selects an option, the command is executed with the place holders, resulting in an invalid command. User has to manually select the placeholders and change accordingly.
+
+**Aspect:** Auto-completion binding +
+**Alternative 1 (current choice):** Only suggest commands that starts with user input +
+**Pros:** Suggested commands are accurate. +
+**Cons:** The list usually only display one or two options because not many commands start with the same alphabet. +
+**Alternative 2:** Suggest commands that contain the user input. +
+**Pros:** More suggestions would be displayed. +
+**Pros:** User has a higher chance of finding the desired command when a typo is made. +
+**Cons:** Most of the time, inaccurate suggestions are not necessary.
+// end::dropdownlist[]
+
 // tag::auto-completion[]
 === Auto-completion Mechanism
-Auto-completion mechanism is implemented in `CommandBox` class under UI component.
+Auto-completion mechanism is implemented in `CommandBox` class under `UI` component.
 
-Auto-completion is activated when `TAB` key is pressed. This is done by adding a case in the keypress handler in `CommandBox`.
+Auto-completion is activated when kbd:[Tab] key is pressed. This is done by adding a case in the keypress handler in `CommandBox`.
 [source,java]
 ----
 @FXML
 private void handleKeyPress(KeyEvent keyEvent) {
     switch (keyEvent.getCode()) {
     case TAB:
-        autocomplete(); //checkes the input and performs actions accordingly
+        if (keyEvent.isShiftDown()) {
+            selectPreviousField();
+        } else {
+            autocomplete();
+        }
         break;
     //other cases
     }
 ----
 
-When `TAB` is pressed, the current input in the command box is checked against the list of commands.
+When kbd:[Tab] is pressed, the current input in the command box is checked against the list of commands.
 
 * If the input command is a valid command that requires additional field(s), the full format of the command is displayed in the command box.
 At the same time, the placeholder for the first field that the user needs to key in is selected (as shown below).
 
 image::AutoCompletionAfterTab.png[width="450"]
 
-* If the input is already in the required format of the add command, the `TAB` is meant to navigate to the next input field (only `add` command require multiple fields).
-The current caret position is checked and used to determine the current field the user is at.
+* If the input is already in the required format of `add` or `remark` command, the kbd:[Tab] is meant to navigate to the next input field (only `add` and `remark` require more than one field).
+The  caret position is used to determine the current field the user is at.
 The anchor and caret positions are reset to the start and end of the next field so that the placeholder is selected (as shown below).
 
 image::AutoCompletionNextField.png[width="450"]
 
-Below is an activity diagram for `TAB` keypress which activates autocompletion.
+The above implementation is represented in this code snippet:
+
+[source,java]
+----
+private void autocomplete() {
+    input = commandTextField.getText().trim().toLowerCase();
+    if (isAutoCompleteCommand(input)) {
+        //display the full command format
+
+    } else if (isAddCommandFormat(input)) {
+        //change text selection to the next field
+
+    } else if (isRemarkCommandFormat(input)) {
+        //change text selection to the next field
+    }
+}
+----
+
+When kbd:[Shift+Tab] is pressed, the user wants to navigate to the previous field.
+The caret position is used to determine the current field the user is at. The anchor and caret positions are reset to the start and end of the previous field input in order to update text selection.
+
+Below is an activity diagram for kbd:[Tab] keypress which activates auto-completion.
 
 image::AutoCompleteActivityDiagram.png[width="800"]
 
 ==== Design Considerations
 
-**Aspect:** text input control +
+===== Text Input Control +
 **Alternative 1 (current choice):** Continue to use the original TextField +
 **Pros:** External library enables bindAutocompletion for TextField (the drop down list of suggested commands that appears and updates itself as user types). +
 **Pros:** Minimise changes need to be made to the original text input control structure. +
 **Cons:** Text formatting is limited. All text in the TextField must have the same format. +
+
 **Alternative 2:** Create additional TextField as user request for additional fields +
 **Pros:** Allows for different formatting for different fields (Commands can have a different colour from the fields) +
 **Cons:** Original structure will be disrupted. Command box will no longer be single line text input, which have consequences such as the user cannot backspace or select through the entire line.
-
-**Aspect:** auto-completion drop-down list +
-**Alternative 1 (current choice):** Continue to use the original TextField and use external library to bind auto-completion +
-**Pros:** Easy to implement +
-**Cons:** User cannot see the full format of the commands in the drop-down list +
-**Alternative 2:** Use ComboBox +
-**Pros:** User can see the required fields for each command in the drop-down box +
-**Cons:** As user selects an option, the command is executed with the place holders, resulting in an invalid command. User has to manually select the placeholders and change accordingly.
 // end::auto-completion[]
 
 // tag::shortcut[]
@@ -800,24 +879,58 @@ pressing the kbd:[esc] key will result in the application focusing on the person
 
 ==== Design Considerations
 
-**Aspect:** Location of `KeyCombination` constants for the `KeyListener` class +
+===== Location of `KeyCombination` constants for the `KeyListener` class +
 **Alternative 1 (current choice):** `KeyCombination` constants are stored in a separate utility class, `KeyListenerUtil` +
 **Pros:** Better modularity given that the number of constants is fairly large. +
 **Cons:** The constants have to be imported to be used in the `KeyListener` class. +
+
 **Alternative 2:** Store the constants in the `KeyListener` class itself +
 **Pros:** Straightforward implementation and the constants does not have to be imported. +
 **Cons:** Violates Separation of Concerns as the `KeyListener` class acts as a storage for the constants in addition to handling key events.
 
-**Aspect:** The way commands words are executed +
+---
+
+===== The way commands words are executed +
 **Alternative 1 (current choice):** Pressing the shortcut automatically executes the command +
 **Pros:** Execution of command is faster and more convenient for the user. +
 **Cons:** User may want to check what the shortcut does before executing the command. +
+
 **Alternative 2:** Pressing the shortcut replaces the `TextField` with the command word +
 **Pros:** Allows the user to check the command before executing it. +
 **Cons:**  An extra step for user to execute the command, i.e. pressing `Enter`.
 
 // end::shortcut[]
 
+// tag::auto-complete-shortcut[]
+=== Auto-complete Command Shortcuts
+The link:#shortcut[Keyboard Shortcut Mechanism] is the foundation of this implementation.
+
+When an auto-complete command shortcut is pressed, the corresponding command format will be displayed.
+The following codes shows the example for `add` command shortcut.
+
+[source,java]
+----
+private void executeKeyEvents(KeyEvent keyEvent) {
+    if (KEY_COMBINATION_ADD.match(keyEvent)) {
+        displayCommandFormat(AddCommand.FORMAT);
+    }
+    // … more cases
+}
+----
+
+The `displayCommandFormat` method simulates entering the command word followed by pressing kbd:[Tab].
+The method implementation is shown below.
+
+[source,java]
+----
+private void displayCommandFormat(String command) {
+    commandBox.replaceText(command);
+    commandBox.pressTab();
+}
+----
+// end::auto-complete-shortcut[]
+
+[[detailPanel]]
 === Person Detail Panel
 
 // tag::detailPanelBehavior[]
@@ -825,6 +938,8 @@ pressing the kbd:[esc] key will result in the application focusing on the person
 The person detail panel displays the complete information of a person that is selected.
 
 image::detailPanel.png[width="600"]
+
+image::detailPanelLabeled.png[width="600"]
 
 // end::detailPanelBehavior[]
 
@@ -839,7 +954,8 @@ For example, the sequence diagram below shows the sequence of events to update t
 image::DetailPanelSequenceDiagram.png[width="800"]
 
 The information displayed on the panel is extracted from the `ReadOnlyPerson` that is returned by the `EventsCenter`.
-The details of the implementation can be seen from the following code snippet.
+The details of the implementation can be seen from the following code snippets.
+
 [source, java]
 ----
 /**
@@ -849,6 +965,20 @@ private void showPersonDetails(ReadOnlyPerson person) {
     setAvatar(person);
     setTextFields(person);
     setTags(person);
+}
+----
+
+The `showPersonDetails` method is called when a `PersonEditedEvent` is raised, which occurs when the user edits a person.
+
+[source,java]
+----
+/**
+* Updates the panel when the details of the selected person is changed
+*/
+@Subscribe
+private void handlePersonDetailsChangedEvent(PersonEditedEvent event) {
+    logger.info(LogsCenter.getEventHandlingLogMessage(event));
+    showPersonDetails(event.editedPerson);
 }
 ----
 
@@ -867,7 +997,127 @@ The behavior of the panel is summarized in the table below.
 | Other commands | No change in display
 |===
 
+==== Design Considerations
+
+===== Synchronization of person details with the panel display +
+**Alternative 1 (current choice):** Using the event system to update the panel +
+**Pros:** Allows for custom panel behavior for different user actions. +
+**Cons:** Increase coupling as updating the panel relies on the logic component for user actions involving commands. +
+
+**Alternative 2:** Bind the fields in the panel to their corresponding object properties +
+**Pros:** Less coupling. +
+**Cons:**  Higher implementation overhead to set up the bindings properly and
+difficult to enforce custom panel behaviour for specific user actions.
 // end::detailPanelImp[]
+
+// tag::uiImprovements[]
+=== UI Improvements
+
+The user interface of the application has been revamped to take on a clean design, which aims to improve
+the user's experience with Rolodex.
+
+image::Ui2.png[width="800"]
+
+Other improvements made to the UI include the following features:
+
+==== Randomized Avatars Colors
+
+Avatar colors are randomized and generated over a color range to reduce the chance of two adjacent persons sharing the same avatar color.
+Some results from using this color generator can be seen from the following screenshots.
+
+image:avatars.png[width="300"] image:avatars2.png[width="300"]
+
+The generation of avatar colors involves two steps: +
+
+1. Randomly pick a default color from `ColorsUtil`, which contains a list of selected colors chosen from
+link:https://www.materialui.co/blog/what-is-material-ui/[Google's material ui color palette]. +
+2. Generate a randomized offset value to create a new color which values differ from the default color by this offset.
+
+The code snippet below shows the details of how the color values are manipulated in the color generator.
+[source, java]
+----
+/**
+* Generates a new color with a random offset from {@code Color defaultColor}.
+*
+* @return The new color in hexadecimal {@code String} format
+*/
+private static String generateNewColor(Color defaultColor) {
+    int r = defaultColor.getRed();
+    int g = defaultColor.getGreen();
+    int b = defaultColor.getBlue();
+
+    int newR = Math.max(COLOR_VALUE_MIN, Math.min(COLOR_VALUE_MAX, (r + generateOffset())));
+    int newG = Math.max(COLOR_VALUE_MIN, Math.min(COLOR_VALUE_MAX, (g + generateOffset())));
+    int newB = Math.max(COLOR_VALUE_MIN, Math.min(COLOR_VALUE_MAX, (b + generateOffset())));
+
+    return String.format("#%02x%02x%02x", newR, newG, newB);
+}
+----
+
+An upper bound is applied to the offset to ensure that the new color does not deviate too far from the default color.
+
+==== Keyboard Icon
+
+A keyboard icon is added in the command box to provide visual feedback for certain user events:
+
+** image:keyboard.png[width="30"] : User is idle
+** image:keyboardTyping.png[width="30"] : User is typing
+** image:keyboardError.png[width="30"] : User entered an invalid command
+
+The keyboard icon is updated by setting `ImageView` of the icon to one of the three variations as shown above, whichever is appropriate
+for the current state of the user.
+
+In particular, to check that the user is idle, we measure the time elapsed since any changes made to the
+`CommandBox`. This is done with the `PauseTransition` class from JavaFX, which allows us to execute an event after a set duration.
+For better illustration, below is a simplified code snippet of the implementation.
+
+[source, java]
+----
+private void updateKeyboardIcon() {
+
+    // set icon to typing keyboard
+
+    pause.setOnFinished(event -> {
+        // set icon to idle keyboard
+    });
+    pause.playFromStart(); // reset timer
+}
+----
+`pause` is a `PauseTransition` object, and `setOnFinished` takes in an event handler as its parameter.
+
+==== Autoselection for Newly Added/Edited Person
+
+A newly added, or edited person will automatically be selected in the `PersonListPanel`. This makes it easier for the user to take note
+of changes made to their contacts.
+
+This implementation is done by raising an event whenever the add and edit commands are executed.
+The `PersonListPanel` is registered as an event handler and will subsequently scroll to the person that is newly modified.
+
+This feature is integrated with the link:#detailPanel[Person Detail Panel implementation], and more details on the event handling
+can be found under the section.
+
+==== Responsive Split Pane
+
+The split pane which separates the contact list from the other UI components is responsive.
+Its divider is automatically maintained at the optimal position when the window size changes.
+
+This is achieved by setting up listeners to the property of the window. The divider will be repositioned when the listener
+detects any changes in the window property. The code below illustrates the implementation in greater detail.
+
+[source, java]
+----
+private void setSplitPaneDividerPosition() {
+
+    // repositions divider when window is just showed
+    primaryStage.showingProperty().addListener((observable, oldValue, newValue) ->
+            splitPane.setDividerPositions(SPLIT_PANE_DIVIDER_POSITION));
+
+    // repositions divider when window width changes
+    primaryStage.widthProperty().addListener((observable, oldValue, newValue) ->
+            splitPane.setDividerPositions(SPLIT_PANE_DIVIDER_POSITION));
+}
+----
+// end::uiImprovements[]
 
 // tag::helpWindowHighlight[]
 === Help Window Highlighting
@@ -1010,11 +1260,412 @@ private void clearHighlights(WebEngine engine) {
 ----
 // end::helpWindowHighlight[]
 
+// tag::email[]
+=== Composing Emails
+This functionality is implemented through the `EmailCommand` class under `logic` component.
+
+An email command has the following format: `Email INDEX [s/SUBJECT]` (Subject is an optional field). When the command is executed, the user's default email client will open
+a new compose window. Email address of the contact indicated by `INDEX` will be filled in as the recipient's address. `SUBJECT` (if available) will be filled
+in as the subject of the email. The following shows an example of the compose window on Macs.
+
+image::EmailComposeWindow.png[width="600"]
+
+==== Using `java.awt.Desktop` API
+Requesting the default email client to open a new compose window is achieved with the `java.awt.Desktop` class. However, not all platforms support the `Desktop` https://docs.oracle.com/javase/7/docs/api/java/awt/Desktop.html[API].
+Therefore, it is crucial to check whether the API and the `MAIL` action are supported. A `CommandExecption` will be thrown if they are not supported.
+
+After confirming that the action can be supported on the platform, an URI link:#uri[(Uniform Resource Identifier)] is constructed using the recipient's email address and subject input by the user (if any).
+It is then passed into the `mail` method of `Desktop` class. The following code snippet shows the exact implementation.
+
+[source,java]
+----
+if (Desktop.isDesktopSupported()
+    && Desktop.getDesktop().isSupported(Desktop.Action.MAIL)) {
+
+    Desktop desktop = Desktop.getDesktop();
+    try {
+        mailtoUri = new URI("mailto:" + recipientEmailAddress
+                            + "?subject=" + subject);
+        desktop.mail(mailtoUri);
+        selectRecipient(targetIndex);
+    } catch (URISyntaxException e) {
+        e.printStackTrace();
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+    return new CommandResult(String.format(MESSAGE_SUCCESS));
+} else {
+    throw new CommandException(String.format(MESSAGE_NOT_SUPPORTED));
+}
+----
+==== Auto-selecting the Recipient
+After the `Email` command is executed, the recipient will be auto-selected in the contact list,
+so that the person's details can be displayed at contact detail panel. As an example the following screenshot shows
+the behaviour of Rolodex after executing the command `Email 1`. The contact at index 1 is selected.
+
+image::SelectRecipientAfterEmailCommand.png[width="800"]
+
+This is for the user to confirm that they have typed in the correct index. With the person's name and contact details displayed, it is easy
+to double-check if the contact is the intended recipient.
+
+This action is performed through the `selectRecipient(targetIndex)` method call during the execution of `EmailCommand`, which can be found in the
+code snippet above. The `selectRecipient` method posts a `JumpToListRequestEvent` with the recipient's index, which will perform the selection in `Contact List`.
+The method is shown below.
+
+[source,java]
+----
+private void selectRecipient(Index index) {
+    EventsCenter.getInstance().post(new JumpToListRequestEvent(index));
+}
+----
+==== Email Command Parser
+`EmailCommandParser` class is used to parse input arguments in the context of the `EmailCommand`. It maps the positive integer in the argument to `INDEX`,
+and the string following the prefix `s/` to `SUBJECT`. If the user did not input a subject, the subject would be an empty string.
+
+The `SUBJECT` string must be link:#percent-encoding[percent-encoded], which means all the spaces must be replaced with `%20`. This is to follow the URI syntax standard.
+Otherwise a `java.net.URISyntaxException` would be thrown when sending the URI. Above mentioned implementation is shown in the code snippet below.
+
+[source,java]
+----
+String subject = ParserUtil.parseSubject(argMultimap.getValue(PREFIX_SUBJECT)).orElse("");
+subject = subject.replaceAll(" ", "%20");
+Index index = ParserUtil.parseIndex(argMultimap.getPreamble());
+----
+// end::email[]
+
 // tag::suggestion[]
-== Suggestions Mechanism
-// The suggestion mechanism is implemented at Rolodex's parser level under the logic component.
-// TODO: v1.5
-This feature is a work in progress for v1.5.
+=== Suggestions Mechanism
+The suggestion mechanism is implemented at Rolodex's parser level under the logic component.
+The suggestion is stored as an instance object to be evaluated only if the next command matches any of the suggestion's _affirmation commands_, `y`, `yes`, `k`, `ok`, `yea` or `yeah`, otherwise, the suggestion is destroyed.
+Upon receiving a bogus command, the command string is evaluated by the suggestion object which determines if it can be turned into a valid suggestion to be executed.
+
+For this section's explanation of the suggestions mechanism, the terms _commandWord_, _arguments_ or _rawArgs_ are usually a reference to the following:
+
+image::SuggestionParseLabel.png[]
+
+* _commandWord_: The first resulting word in a whitespace delimited string.
+* _rawArgs_: The raw argument string to be parsed for the suggestion, after excluding the _commandWord_.
+* _arguments_: Can be the same meaning or _rawArgs_ or mean arguments in a broader context. Please adjust to the context if necessary.
+
+The high level sequence diagram for a bogus `udon is yummy` request can be seen below:
+
+image::SuggestionHighLevelSequenceDiagram.png[]
+
+1. User enters a bogus command `udon is yummy`.
+2. `RolodexParser` parses the command and separates the string `udon is yummy` into the commandWord, `udon` and arguments, `is yummy`.
+* `udon` is not a recognized command word
+* The execution is passed on to a new Suggestion instance.
+3. Suggestion determines which command abbreviation `udon` is closest to up to a _specified threshold_, which in this case, is `undo`.
+* Since `undo` does not require any arguments, the supplied arguments `is yummy` are ignored
+* The suggestion is noted as a suggestible exception.
+4. The suggestion is stored as an instance variable in `RolodexParser`.
+5. `RolodexParser` throws a `SuggestibleParseException` to be handled separately from `ParseException` by UI elements.
+* The `CommandBox` is cleared to make way for the user to easily enter any of the suggestion _affirmation commands_.
+* The `ResultDisplay` panel displays a formatted string for the suggestion of the command to be alternatively executed.
+6. At this point, the user enters an _affirmation command_, `k` for the `RolodexParser` to be handled.
+7. As a suggestion is present in `RolodexParser`, the user input `k` is converted into the parsed `Suggestion` and handled as usual.
+
+The behaviour of the `undo` operation remains unchanged, as explained in the <<Undo/Redo Mechanism>> section.
+The suggestions are not limited `undo` commands and are applicable to all commands in the Rolodex. +
+Levenshtein distance is used to determine the closest command to the whitespace delimited first user input.
+If two command abbreviations are of equal distance to the bogus word, an arbitrary command is selected for the suggestion. +
+
+The suggestions are handled differently by different types of `Command`.
+
+==== Commands with No Arguments
+
+The behaviour of commands that are known to have no arguments by default, namely,
+
+* `Clear`
+* `List`
+* `History`
+* `Exit`
+* `Help`
+* `Undo`
+* `Redo`
+
+are handled in a manner similar to `undo` as described above. The arguments are ignored.
+
+==== Commands with a Single Index Type Argument
+
+The commands that hold a single, indexed type argument are
+
+* `Delete`
+* `Select`
+
+These commands require an argument of an index type, within the range from 1 to the total number of persons in the Rolodex.
+The behaviour of index parsing can be seen as such:
+
+[source,java]
+----
+public static int parseFirstIndex(String value, int rolodexSize) throws NumberFormatException {
+    Matcher m = Pattern.compile(INDEX_VALIDATION_REGEX).matcher(value);
+    while (m.find()) {
+        int firstIndex = Math.abs(Integer.parseInt(m.group()));
+        if (firstIndex > 0 && firstIndex <= rolodexSize) {
+            return firstIndex;
+        }
+    }
+    throw new NumberFormatException();
+}
+----
+
+The algorithm searches for instances of an integer in the supplied string and checks if it falls within the possible range of indices.
+If no more integers can be found, the method throws a `NumberFormatException` to be converted into an non-suggestible `ParseException`.
+
+Sometimes users may include the index in the command word, without a whitespace separation. To handle such a case,
+we first look for the index within the arguments, as usual. If no valid indices are found, we search the command word instead.
+
+For example, the invalid command string `s3lect`,
+
+image::SuggestionSelectInvalid.png[width="800"]
+
+1. `RolodexParser` determines that the closest command word to `s3lect` is `select` and use parse logic for single index typed arguments.
+2. The parser would attempt to search for an index in the empty arguments and fail.
+3. The parser then attempts to search for an index in the command word and finds `3`.
+4. The parser builds the arguments into the formatted command string, `select 3` and prompts the user:
+
+image::SuggestionSelectPrompt.png[width="800"]
+
+Should the user choose to execute the prompted command, the person _Alpha Charlie_ would be selected.
+
+==== Commands with Directory Type Arguments
+
+The commands that hold a single file path argument are
+
+* `Open`
+* `New`
+
+Arguments for these commands are parsed by using the same filepath validation as seen in <<Open File and New File Mechanism>>,
+except with looser regex that does not validate from the beginning to the end of the string given.
+
+[source,java]
+----
+public static final String FILEPATH_REGEX_NON_STRICT = "(.+)/([^/]+)";
+----
+
+The rest of the string is then formatted into a valid file path and a `.rldx` extension is added to the end of the string.
+
+[source,java]
+----
+public static String parseFirstFilePath(String value) throws IllegalArgumentException {
+    Matcher m = Pattern.compile(FILEPATH_REGEX_NON_STRICT).matcher(replaceBackslashes(value).trim());
+    if (m.find() && isValidRolodexStorageFilepath(m.group())) {
+        return m.group().replaceAll(ROLODEX_FILE_EXTENSION, "").trim() + ROLODEX_FILE_EXTENSION;
+    }
+    throw new IllegalArgumentException();
+}
+----
+
+==== Find Command Suggestions
+
+The `find` command uses a simpler suggestion format by simply taking all arguments, checking if it is not empty and returning it all together.
+
+[source,java]
+----
+public static String parseArguments(String rawArgs) {
+    // Check if null and is a non-empty string.
+    requireNonNull(rawArgs);
+    if (!rawArgs.trim().isEmpty()) {
+        return " " + rawArgs.trim();
+    }
+    return null;
+}
+----
+
+==== Remark/Email Command Suggestions
+
+The `Remark` and `Email` command are in the format of
+
+1. a command word followed by,
+2. an index then,
+3. a memo field.
+
+For the remark command, the memo is simply the remark to be entered into the person's remark field, preceded by the prefix `r/`. +
+The email command's memo field is the subject of the email to be sent, preceded by the prefix `s/`.
+
+Similar to <<Commands with a Single Index Type Argument>>, if the index does not exist in the arguments, the command word is checked instead.
+
+[source,java]
+----
+public static String parseArguments(String commandWord, String rawArgs) {
+    // Check if index (number) exists, removes Remark prefix (if it exists) and re-adds it before returning.
+    if (isParsableIndex(rawArgs, getLastRolodexSize())) {
+        String indexString = Integer.toString(parseFirstIndex(rawArgs, getLastRolodexSize()));
+        String remark = parseRemoveFirstIndex(rawArgs, getLastRolodexSize()).trim().replace(PREFIX_REMARK.toString(), "");
+        return " " + indexString + " " + PREFIX_REMARK + remark;
+    } else if (isParsableIndex(commandWord, getLastRolodexSize())) {
+        String indexString = Integer.toString(parseFirstIndex(commandWord, getLastRolodexSize()));
+        String remark = rawArgs.trim().replace(PREFIX_REMARK.toString(), "");
+        return " " + indexString + " " + PREFIX_REMARK + remark;
+    }
+    return null;
+}
+----
+
+However, instead of stopping at the index, the remainder of the arguments after the index has been removed is parsed as the memo field's contents.
+
+==== Add Command Suggestions
+
+When adding a new person, we have to note that a `Person` has four compulsory fields, `Name`, `Phone`, `Email` and `Address`.
+`Tag` and `Remark` are optional and have to be handled accordingly.
+
+The implementation for `Add` suggestions follow a decision flow model that can be seen through the following activity diagram, from `AddCommandParser.parseArguments(rawArgs)` execution point of view:
+
+image::SuggestionAddActivityDiagram.png[width="600"]
+
+During the handling of a suggestible command arguments for an `Add` command,
+
+1. `rawArgs` is set to be the initial value of the remaining arguments.
+2. Mandatory `Phone` is checked first. If present, extract, remove and continue. Otherwise stop execution and return as non-suggestible.
+* Phones are expected to match the phone regex,
+* having a minimum of digits, or
+* optionally prepended with a `+`,
+* making it easily distinguishable from other numeric formats like the index, building numbers or postal codes.
+3. Mandatory `Email` is checked. If present, extract, remove and continue. Otherwise stop execution and return as non-suggestible.
+* Emails are expected to have the `@` character inside them and regex matching is straightforward,
+* making emails easily distinguishable from other fields.
+4. Existing `Tag` words are checked. If present, extract, remove and continue. Otherwise continue.
+* Words (remaining string delimited by whitespace) that are also tags in the Rolodex session are _existing tag words_.
+5. Tag prefixes (`t/`) are checked. If present, extract, remove and continue. Otherwise continue.
+* `t/TAG` behavior as per normal.
+6. Remark prefixes (`r/`) are checked. If present, extract, remove and continue. Otherwise continue.
+* `r/REMARKS` behavior as per normal.
+7. Mandatory `Address` is checked. If present, extract, remove and continue. Otherwise stop execution and return as non-suggestible.
+* Addresses commonly begin with `Blk`, `Block` or a short number
+* Addresses are expected to be entered after a name (i.e. `COMMAND NAME ... ADDRESS`),
+making it _highly possible_ to obtain the address by getting the substring from the first occurrence of `Blk`, `Block` or the number to the end of the remaining string.
+8. Mandatory `Name` is checked. If present, extract, remove and continue. Otherwise stop execution and return as non-suggestible.
+* Name is the last mandatory argument to be parsed.
+* Name must be non-empty and matches the defined name regex.
+* The unpredictable nature of name words makes it difficult to identify a person's name.
+* As seen in `Address`, if `Name` is entered after (to the right of) `Address`,
+there would be no remaining words to be parsed. Since `Name` must be non-empty, if it is empty, then `Name` is not present.
+9. Build the arguments into a formatted command argument string.
+
+[NOTE]
+As observed via the decision flow, the suggestion does not always suggest the correct format so it is up to the user to validate the command.
+
+Any missing compulsory fields will result in an immediate failure of the command as specified by a person's requirements.
+Optional arguments, on the other hand, may not be present and are represented as empty strings when sent to the final argument builder.
+
+If any of the prefixes are missing, they will be added when the parsed arguments are built, with the exception of remarks and tags with prefixes.
+
+Given a typical unformatted add command string without prefixes `add Bobby Lee bobby@lee.com 583 Lexington Avenue NY 10048 friends 95849301`:
+
+image::AddBobbyCommand.png[width="800"]
+
+We should receive the following suggestion `Did you mean add n/Bobby Lee p/95849301 e/bobby@lee.com a/583 Lexington Avenue NY 10048 t/friends?`:
+
+image::AddBobbySuggestion.png[width="800"]
+
+Using the decision flow modeled above, we can see that the argument suggestions were parsed in the following order:
+
+1. Bobby's phone, `95849301` is detected as a long number and is extracted first.
+2. The email, `bobby@lee.com` is detected as the `@` character is present and is extracted.
+3. The tag, `friends` is an existing tag in the currently loaded Rolodex and we can extract `friends` as a tag.
+4. The address, `583 Lexington Avenue NY 10048` begins with a short number and will be picked up till the end of the remaining string.
+5. The remainder of the arguments should only contain `Bobby Lee` and is matched as his name.
+
+[IMPORTANT]
+As the `Add` command's decision flow requires many acyclic execution paths to its parser, its corresponding NPath complexity
+is known to be large.
+
+==== Edit Command Suggestions
+
+Unlike the `Add` command, the `Edit` command only requires optional (minimum 1) fields and we handle all fields as such.
+However, the `Edit` command also requires <<Commands with a Single Index Type Argument, a mandatory argument of an index type>>,
+similar to <<Remark/Email Command Suggestions>>.
+
+The implementation for `Edit` suggestions follow a decision flow model that can be seen through the following activity diagram, from `EditCommandParser.parseArguments(commandWord, rawArgs)` execution point of view:
+
+image::SuggestionEditActivityDiagram.png[width="800"]
+
+During the handling of a suggestible command arguments for an `Edit` command,
+
+1. `rawArgs` is set to be the initial value of the remaining arguments.
+2. Mandatory `Index` is checked in the remaining arguments first. If present, extract, remove and continue. Otherwise,
+* Mandatory `Index is checked in command word. If present, extract, remove and continue. Otherwise stop execution and return as non-suggestible.
+* Index extraction is similar to behavior in <<Commands with a Single Index Type Argument>> section.
+3. Optional `Phone` is checked first. If present, extract, remove and continue. Otherwise continue.
+* Phones are expected to match the phone regex,
+* having a minimum of digits, or
+* optionally prepended with a `+`,
+* making it easily distinguishable from other numeric formats like the index, building numbers or postal codes.
+4. Optional `Email` is checked. If present, extract, remove and continue. Otherwise continue.
+* Emails are expected to have the `@` character inside them and regex matching is straightforward,
+* making emails easily distinguishable from other fields.
+5. Existing `Tag` words are checked. If present, extract, remove and continue. Otherwise continue.
+* Words (remaining string delimited by whitespace) that are also tags in the Rolodex session are _existing tag words_.
+6. Tag prefixes (`t/`) are checked. If present, extract, remove and continue. Otherwise continue.
+* `t/TAG` behavior as per normal.
+7. Remark prefixes (`r/`) are checked. If present, extract, remove and continue. Otherwise continue.
+* `r/REMARKS` behavior as per normal.
+8. Optional `Address` is checked. If present, extract, remove and continue. Otherwise continue.
+* Addresses commonly begin with `Blk`, `Block` or a short number
+* Addresses are expected to be entered after a name (i.e. `COMMAND NAME ... ADDRESS`),
+making it _highly possible_ to obtain the address by getting the substring from the first occurrence of `Blk`, `Block` or the number to the end of the remaining string.
+9. Optional `Name` is checked. If present, extract, remove and continue. Otherwise continue.
+* Name is the last mandatory argument to be parsed.
+* Name must be non-empty and matches the defined name regex.
+* The unpredictable nature of name words makes it difficult to identify a person's name.
+* As seen in `Address`, if `Name` is entered after (to the right of) `Address`,
+there would be no remaining words to be parsed. Since `Name` must be non-empty, if it is empty, then `Name` is not present.
+10. If no arguments exist (i.e. `Name`, `Phone`, `Email`, `Address`, `Tag`, `Remark` are all empty strings), return as non-suggestible.
+Otherwise, build the arguments into a formatted command argument string.
+
+[NOTE]
+As observed via the decision flow, the suggestion does not always suggest the correct format so it is up to the user to validate the command.
+
+Any missing or invalid index would result in an immediate failure of the command as specified by the command specifications.
+Optional arguments, on the other hand, may not be present and are represented as empty strings when sent to the final argument builder.
+However, if completely no arguments exist (e.g. `edit 1`), the Edit parser would fail a well, defaulting to the original behavior.
+
+If any of the prefixes are missing, they will be added when the parsed arguments are built, with the exception of remarks and tags with prefixes.
+
+Given a typical unformatted edit command string with an invalid address prefix `edit1 p/911A Lexington Avenue`:
+
+image::EditBobbyCommand.png[width="800"]
+
+We should receive the following suggestion `Did you mean edit 1 a/911A Lexington Avenue?`:
+
+image::EditBobbySuggestion.png[width="800"]
+
+Using the decision flow modeled above, we can see that the argument suggestions were parsed in the following order:
+
+1. The index, `1` is incorrectly placed within the command word. `911` is attempted but since 911 is greater than the Rolodex's size, no index can be found in the arguments.
+2. The index, `1` is matched in the command word and extracted.
+3. No phone is matched. `911` is detected as a short number and is skipped. The prefix `p/` is removed.
+4. No email is matched.
+5. No tags are matched.
+6. No remarks are matched.
+7. The address, `911A Lexington Avenue` begins with a short number and will be picked up till the end of the remaining string.
+8. The remainder of the arguments are empty when trimmed.
+9. Address is the only valid optional field present and the command is suggested as `edit 1 a/911A Lexington Avenue`.
+
+[IMPORTANT]
+As the `Edit` command's decision flow requires many acyclic execution paths to its parser, its corresponding NPath complexity
+is known to be large.
+
+==== Design Considerations
+
+===== Add/Edit Field Matching +
+**Alternative 1 (current choice):** Parsing easy fields first, then parsing address before name in the `Add` command. +
+**Pros:** Application behaves sufficiently well and efficiently in matching field data given certain input assumptions. +
+**Pros:** Shallow learning curve for new users to learn application functions. +
+**Cons:** Extremely high NPath complexity +
+**Cons:** Deviates from the Object-Oriented nature of the codebase into a procedural/functional style. +
+
+**Alternative 2:** Dictionary analysis of field data. +
+**Pros:** Easier logic to understand for new developers. +
+**Cons:** Maintaining dictionary would be taxing on the development team and may get outdated as data keeps getting outdated. +
+**Cons:** Memory performance decreases drastically as memory has to be used to load dictionary into memory for field analysis. +
+**Cons:** Storage performance decreases drastically as space has to be used to store dictionary. +
+
+**Alternative 3:** No suggestions for add/edit +
+**Pros:** Clean codebase. +
+**Cons:** Steep learning curve for new users to learn application functions.
+
 // end::suggestion[]
 
 === Logging
@@ -1064,7 +1715,6 @@ Here are the steps to convert the project documentation files to PDF format.
 .  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For best results, use the settings indicated in the screenshot below.
 
 image::chrome_save_as_pdf.png[width="300"]
-_Figure 5.6.1 : Saving documentation as PDF files in Chrome_
 
 == Testing
 

@@ -4,7 +4,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: images
 :stylesDir: stylesheets
 
-Rolodex was developed by the https://github.com/orgs/CS2103AUG2017-W11-B2/people[Rolodex] team and
+Rolodex was developed by the https://github.com/orgs/CS2103AUG2017-W11-B2/people[Rolodex] team (CS2103 W11-B2) and
 is an extension of the AddressBook - Level 4 developed by the https://se-edu.github.io/docs/Team.html[se-edu] team. +
 {empty} +
 We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
@@ -13,19 +13,19 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 
 === Ang Zhan Yu
 image::zy-ang.jpg[width="150", align="left"]
-{empty}https://ZY-Ang.github.io[homepage] https://github.com/ZY-Ang[github] <<ZhanYu#, portfolio>>
+{empty}https://github.com/ZY-Ang[github] <<ZhanYu#, portfolio>>
 
-Role: Developer +
-Responsibilities: Storage
+Role: FS Developer, DevOps +
+Responsibilities: Storage, Model, Logic
 
 '''
 
-=== Jolyn Tan
+=== Tan Yi Jing, Jolyn
 image::jo-lyn.jpg[width="150", align="left"]
 {empty}https://github.com/jo-lyn[github] <<Jolyn#, portfolio>>
 
-Role: Developer +
-Responsibilities: UI
+Role: FS Developer, Documentation +
+Responsibilities: UI, Model, Logic
 
 '''
 
@@ -33,8 +33,8 @@ Responsibilities: UI
 image::mingruiii.jpg[width="150", align="left"]
 {empty}http://github.com/mingruiii[github] <<Mingrui#, portfolio>>
 
-Role: Developer +
-Responsibilities: Data
+Role: FS Developer, UX Designer +
+Responsibilities: UX, Model, Email
 
 '''
 

@@ -28,7 +28,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox styleClass="main-window-vbox" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<VBox styleClass="v-box" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
   <stylesheets>
     <URL value="@LightTheme.css" />
     <URL value="@Extensions.css" />
@@ -62,7 +62,7 @@
     </VBox>
     <VBox>
       <children>
-        <StackPane fx:id="resultDisplayPlaceholder" prefHeight="450.0">
+        <StackPane fx:id="resultDisplayPlaceholder" minHeight="180.0" prefHeight="180.0">
           <padding>
             <Insets bottom="15.0" left="10.0" right="25.0" top="20.0" />
           </padding>
@@ -70,7 +70,7 @@
             <Insets />
           </VBox.margin>
         </StackPane>
-              <StackPane fx:id="personDetailPlaceholder" minWidth="400.0" prefHeight="630.0">
+              <StackPane fx:id="personDetailPlaceholder" minWidth="400.0" prefHeight="1200.0">
           <opaqueInsets>
             <Insets />
           </opaqueInsets>
@@ -89,6 +89,8 @@
 ``` fxml
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
@@ -98,82 +100,98 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 
-<StackPane fx:id="personDetailPanel" minHeight="100.0" minWidth="200.0" styleClass="person-detail-panel" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane fx:id="personDetailPanel" minHeight="200.0" minWidth="400.0" styleClass="person-detail-pane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <HBox fx:id="cardPane" alignment="CENTER">
+      <GridPane alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
          <children>
-            <GridPane alignment="CENTER" HBox.hgrow="ALWAYS">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
+            <HBox alignment="CENTER_LEFT" spacing="20.0">
                <children>
-                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                  <StackPane>
                      <children>
-                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                        <Circle id="avatarBig" fx:id="avatar" fill="DODGERBLUE" radius="70.0" stroke="TRANSPARENT" strokeType="INSIDE" />
+                        <Label id="initialBig" fx:id="initial" text="Label" textFill="WHITE" />
+                     </children>
+                  </StackPane>
+                  <VBox alignment="CENTER_LEFT">
+                     <children>
+                        <VBox spacing="3.0">
                            <children>
-                              <StackPane>
-                                 <children>
-                                    <Circle fx:id="avatar" fill="DODGERBLUE" radius="40.0" stroke="TRANSPARENT" strokeType="INSIDE" />
-                                    <Label id="initial_big" fx:id="initial" text="Label" textFill="WHITE" />
-                                 </children>
-                              </StackPane>
-                              <VBox alignment="CENTER_LEFT">
-                                 <children>
-                                    <Label fx:id="name" alignment="TOP_LEFT" styleClass="person_big_label" text="\$first" wrapText="true">
-                                       <padding>
-                                          <Insets left="20.0" />
-                                       </padding>
-                                    </Label>
-                                    <FlowPane fx:id="tags">
-                                       <padding>
-                                          <Insets left="20.0" />
-                                       </padding>
-                                    </FlowPane>
-                                 </children>
-                              </VBox>
-                           </children>
-                           <opaqueInsets>
-                              <Insets />
-                           </opaqueInsets>
-                           <padding>
-                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-                           </padding>
-                        </HBox>
-                        <VBox prefHeight="200.0" prefWidth="100.0">
-                           <children>
-                              <Label fx:id="phone" styleClass="person_small_label" text="\$phone">
-                                 <padding>
-                                    <Insets bottom="2.0" right="2.0" top="2.0" />
-                                 </padding>
-                              </Label>
-                              <Label fx:id="email" styleClass="person_small_label" text="\$email">
-                                 <padding>
-                                    <Insets bottom="2.0" right="2.0" top="2.0" />
-                                 </padding>
-                              </Label>
-                              <Label fx:id="address" styleClass="person_small_label" text="\$address">
-                                 <padding>
-                                    <Insets bottom="2.0" right="2.0" top="2.0" />
-                                 </padding>
-                              </Label>
+                              <Label fx:id="name" alignment="TOP_LEFT" styleClass="person-big-label" text="\$first" wrapText="true" />
+                              <FlowPane fx:id="tagsWithBorder" />
                            </children>
                            <padding>
-                              <Insets left="20.0" />
+                              <Insets bottom="20.0" />
                            </padding>
                         </VBox>
+                        <VBox>
+                           <children>
+                              <Label fx:id="phone" graphicTextGap="20.0" styleClass="person-small-label" text="\$phone">
+                                 <padding>
+                                    <Insets bottom="4.0" right="4.0" top="4.0" />
+                                 </padding>
+                                 <graphic>
+                                    <ImageView fx:id="iconPhone" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../images/iconPhone.png" />
+                                       </image></ImageView>
+                                 </graphic>
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                              </Label>
+                              <Label fx:id="email" graphicTextGap="20.0" styleClass="person-small-label" text="\$email">
+                                 <padding>
+                                    <Insets bottom="4.0" right="4.0" top="4.0" />
+                                 </padding>
+                                 <graphic>
+                                    <ImageView fx:id="iconEmail" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../images/iconEmail.png" />
+                                       </image></ImageView>
+                                 </graphic>
+                              </Label>
+                              <Label fx:id="address" graphicTextGap="20.0" styleClass="person-small-label" text="\$address">
+                                 <padding>
+                                    <Insets bottom="4.0" right="4.0" top="4.0" />
+                                 </padding>
+                                 <graphic>
+                                    <ImageView fx:id="iconAddress" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../images/iconAddress.png" />
+                                       </image></ImageView>
+                                 </graphic>
+                              </Label>
+                           </children>
+                           <padding>
+                              <Insets bottom="20.0" />
+                           </padding>
+                        </VBox>
+                        <Label fx:id="remark" text="\$remark" wrapText="true" />
                      </children>
                      <padding>
-                        <Insets bottom="30.0" left="50.0" right="30.0" top="30.0" />
+                        <Insets left="30.0" />
                      </padding>
                   </VBox>
                </children>
-            </GridPane>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <padding>
+                  <Insets bottom="20.0" left="40.0" right="20.0" top="20.0" />
+               </padding>
+            </HBox>
          </children>
-      </HBox>
+      </GridPane>
    </children>
+   <padding>
+      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+   </padding>
 </StackPane>
 ```
 ###### \resources\view\PersonListCard.fxml
@@ -196,20 +214,20 @@
     </columnConstraints>
     <VBox alignment="CENTER_LEFT" minHeight="105" GridPane.columnIndex="0">
       <padding>
-        <Insets bottom="10.0" left="30.0" right="30.0" top="10.0" />
+        <Insets bottom="33.0" left="30.0" right="30.0" top="33.0" />
       </padding>
       <HBox alignment="CENTER_LEFT" spacing="5">
             <StackPane>
                <children>
                   <Circle fx:id="avatar" fill="#4faaff" radius="25.0" stroke="TRANSPARENT" strokeType="INSIDE" />
-                  <Label id="initial_small" fx:id="initial" alignment="CENTER" contentDisplay="CENTER" text="\$initial" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" />
+                  <Label id="initialSmall" fx:id="initial" alignment="CENTER" contentDisplay="CENTER" text="\$initial" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" />
                </children>
             </StackPane>
             <VBox alignment="CENTER_LEFT">
                <children>
                   <HBox>
                      <children>
-                    <Label fx:id="name" minWidth="0.0" styleClass="cell_big_label" text="\$first" wrapText="true" />
+                    <Label fx:id="name" minWidth="0.0" styleClass="cell-name-label" text="\$first" wrapText="true" />
                      </children>
                   </HBox>
                <FlowPane fx:id="tags" />
@@ -226,11 +244,52 @@
   </GridPane>
    <HBox alignment="CENTER_RIGHT">
       <children>
-      <Label fx:id="id" alignment="CENTER_RIGHT" minWidth="0.0" styleClass="cell_id_label" textAlignment="RIGHT" wrapText="true" />
+      <Label fx:id="id" alignment="CENTER_RIGHT" minWidth="0.0" styleClass="cell-id-label" textAlignment="RIGHT" wrapText="true" />
       </children>
       <padding>
          <Insets right="30.0" />
       </padding>
    </HBox>
 </HBox>
+```
+###### \resources\view\PersonListPanel.fxml
+``` fxml
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox fx:id="personListPanel" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+  <ListView fx:id="personListView" VBox.vgrow="ALWAYS">
+      <VBox.margin>
+         <Insets />
+      </VBox.margin></ListView>
+   <opaqueInsets>
+      <Insets />
+   </opaqueInsets>
+   <padding>
+      <Insets bottom="10.0" top="10.0" />
+   </padding>
+</VBox>
+```
+###### \resources\view\ResultDisplay.fxml
+``` fxml
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.StackPane?>
+
+<StackPane fx:id="placeHolder" alignment="CENTER_LEFT" styleClass="result-pane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+  <TextArea fx:id="resultDisplay" editable="false" maxHeight="300.0" styleClass="result-text-area" wrapText="true">
+    <StackPane.margin>
+      <Insets />
+    </StackPane.margin>
+    <padding>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+    </padding></TextArea>
+  <opaqueInsets>
+    <Insets />
+  </opaqueInsets>
+   <padding>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+   </padding>
+</StackPane>
 ```

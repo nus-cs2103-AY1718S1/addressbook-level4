@@ -1,65 +1,76 @@
 [appendix]
 == Glossary
 
+[[api]]
+Application Programming Interface (API)
+****
+An Application Programming Interface specifies the interface through which other programs can interact with a software component. It is a contract between the component and its clients.
+****
+
 [[command-line-interface]]
 Command Line Interface (CLI)
-
-....
+****
 A user interface to a computer's operating system or an application in which the user responds to a visual prompt by typing in a command on a specified line, receives a response back from the system, and then enters another command, and so forth.
-....
+****
 
 [[continuous-integration]]
 Continuous Integration (CI)
-
-....
+****
 The practice of merging all developer working copies to a shared mainline several times a day.
-....
+****
 
 [[fuzzy-finding]]
 Fuzzy Finding
-
-....
+****
 In computer science, approximate string matching (often colloquially referred to as fuzzy string searching) is the technique of finding strings that match a pattern approximately (rather than exactly).
-....
+****
 
 [[java]]
 Java
-
-....
+****
 A general-purpose computer programming language that is used in many products today.
-....
+****
 
 [[java-fx]]
 JavaFX
-
-....
+****
 A software platform for creating and delivering desktop applications, as well as rich internet applications (RIAs) that can run across a wide variety of devices.
-....
+****
 
 [[lexicographic]]
 Lexicographical order
-
-....
+****
 In mathematics, the lexicographic or lexicographical order (also known as lexical order, dictionary order, alphabetical order or lexicographic(al) product) is a generalization of the way words are alphabetically ordered based on the alphabetical order of their component letters. This generalization consists primarily in defining a total order over the sequences (often called words in computer science) of elements of a finite totally ordered set, often called alphabet.
-....
+****
 
 [[mainstream-os]]
 Mainstream OS
-
-....
+****
 Windows, Linux, Unix, OS-X
-....
+****
+
+[[percent-encoding]]
+Percent-encoding
+****
+A mechanism for translating unprintable or special characters to a universally accepted format by web servers and browsers.
+****
 
 [[private-contact-detail]]
 Private contact detail
-
-....
+****
 A contact detail that is not meant to be shared with others
-....
+****
 
 [[rolodex]]
 Rolodex
-
-....
+****
 The name of this application is Rolodex. It is used to refer to the java object of a similar name developed for this application under the application's model component. A Rolodex is also a rotating file device used to store business contact information. Its name is a combination of the words rolling and index.
-....
+****
+
+[[uri]]
+Uniform Resource Identifier (URI)
+
+* Click http://www.ietf.org/rfc/rfc2396.txt[here] to see the full document on URI generic syntax.
+****
+A compact sequence of characters that identifies an abstract or physical resource.
+****
