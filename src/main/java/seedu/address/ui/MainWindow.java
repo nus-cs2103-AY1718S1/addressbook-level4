@@ -26,6 +26,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ChangeImageEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.MapPersonEvent;
+import seedu.address.commons.events.ui.RemoveImageEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
@@ -46,7 +47,7 @@ public class MainWindow extends UiPart<Region> {
     private static final String[] IMAGE_EXTENSIONS = {"*.jpg", "*.png", "*.jpeg"};
     private static final String BUTTON_DESCRIPTION = "Any Image files";
     private static final String MESSAGE_COPY_FAILURE = "Failed to copy image";
-    private static final String PNG = ".png";
+    private static final String MESSAGE_DELETE_FAIL = "Image delete failed";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -253,11 +254,10 @@ public class MainWindow extends UiPart<Region> {
         File result = fileChooser.showOpenDialog(parent);
         if (result != null) {
             try {
-                imageStorage.saveImage(result, person.getName().toString());
+                person.setImage(imageStorage.saveImage(result, person.getName().toString()));
             } catch (IOException io) {
                 logger.warning(MESSAGE_COPY_FAILURE);
             }
-            person.setImage(person.getName().toString() + PNG);
         }
     }
 
@@ -271,6 +271,16 @@ public class MainWindow extends UiPart<Region> {
     private void handleChangeImageEvent(ChangeImageEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleImageEvent(event.getPerson());
+    }
+
+    @Subscribe
+    private void handleRemoveImageEvent(RemoveImageEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        try {
+            imageStorage.removeImage(event.getPerson().getPicture().getLocation());
+        } catch (IOException ioe) {
+            logger.warning(MESSAGE_DELETE_FAIL);
+        }
     }
     //@@author
 

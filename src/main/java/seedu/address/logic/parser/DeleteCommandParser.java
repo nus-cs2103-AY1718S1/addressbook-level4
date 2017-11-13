@@ -22,15 +22,22 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
      */
     public DeleteCommand parse(String args) throws ParseException {
         try {
-            Index[] index = getIndices(args);
+            Index[] index = getIndexs(args);
             return new DeleteCommand(index);
         } catch (IllegalValueException ive) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
         }
     }
 
-    private Index[] getIndices(String args) throws IllegalValueException {
-        String[] arguments = args.trim().split(SPACE);
+    /**
+     * Parses Indexs from the given user input
+     *
+     * @param input User input
+     * @return Index array of parsed Indexs
+     * @throws IllegalValueException If any of the inputs are not positive integers
+     */
+    private Index[] getIndexs(String input) throws IllegalValueException {
+        String[] arguments = input.trim().split(SPACE);
         Index[] index = new Index[arguments.length];
         int count = 0;
         for (String e: arguments) {

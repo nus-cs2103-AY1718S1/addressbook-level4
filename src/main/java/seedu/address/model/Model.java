@@ -72,6 +72,11 @@ public interface Model {
     void changeImage(ReadOnlyPerson target) throws PersonNotFoundException;
 
     /**
+     * Removes the profile picture for selected person
+     */
+    void removeImage(ReadOnlyPerson target) throws PersonNotFoundException;
+
+    /**
      * Clears the info panel
      */
     void clearInfoPanel();

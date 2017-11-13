@@ -60,7 +60,7 @@ public class AddressBookParserTest {
     public void parseCommand_delete() throws Exception {
         DeleteCommand command = (DeleteCommand) parser.parseCommand(
                 DeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
-        assertEquals(new DeleteCommand(command.targetIndex), command);
+        assertEquals(new DeleteCommand(command.targets), command);
     }
 
     @Test

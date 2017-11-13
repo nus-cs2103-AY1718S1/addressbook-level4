@@ -31,13 +31,13 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ProfilePicture;
 import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.testutil.ModelStub;
 
 //@@author liliwei25
 public class ImageCommandTest {
     private static final boolean REMOVE = true;
+    private static final String TEST_IMAGE = "test.png";
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -49,7 +49,7 @@ public class ImageCommandTest {
         ReadOnlyPerson person = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         ImageCommand imageCommand = prepareCommand(INDEX_FIRST_PERSON, !REMOVE);
 
-        String expectedMessage = String.format(ImageCommand.MESSAGE_IMAGE_SUCCESS, person);
+        String expectedMessage = ImageCommand.MESSAGE_CANCELLED;
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.changeImage(person);
@@ -59,13 +59,13 @@ public class ImageCommandTest {
 
     @Test
     public void execute_validIndexFilterListRemoveImage_success() throws Exception {
-        ReadOnlyPerson person = model.getFilteredPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
-        ImageCommand imageCommand = prepareCommand(INDEX_SECOND_PERSON, REMOVE);
+        ReadOnlyPerson person = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        ImageCommand imageCommand = prepareCommand(INDEX_FIRST_PERSON, REMOVE);
 
         String expectedMessage = String.format(ImageCommand.MESSAGE_IMAGE_SUCCESS, person);
-
+        person.setImage(TEST_IMAGE);
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        ReadOnlyPerson personToEdit = expectedModel.getFilteredPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
+        ReadOnlyPerson personToEdit = expectedModel.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         Person editedPerson = getDefaultPerson(personToEdit);
         expectedModel.updatePerson(personToEdit, editedPerson);
 
@@ -95,7 +95,11 @@ public class ImageCommandTest {
 
     @Test
     public void execute_duplicatePerson_failure() throws Exception {
-        ImageCommand imageCommand = prepareCommandForDuplicateException(INDEX_FIRST_PERSON, REMOVE);
+        ReadOnlyPerson person = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        ReadOnlyPerson newPerson = new Person(person);
+        person.setImage(TEST_IMAGE);
+        model.addPerson(newPerson);
+        ImageCommand imageCommand = prepareCommand(INDEX_FIRST_PERSON, REMOVE);
 
         thrown.expect(CommandException.class);
         thrown.expectMessage(MESSAGE_DUPLICATE_PERSON);
@@ -159,17 +163,6 @@ public class ImageCommandTest {
 
     /**
      * Returns an {@code ImageCommand} with parameters {@code index} and {@code remove}
-     * to test {@code DuplicatePersonException}
-     */
-    private ImageCommand prepareCommandForDuplicateException(Index index, boolean remove) {
-        ImageCommand imageCommand = new ImageCommand(index, remove);
-        imageCommand.setData(new ModelStubThrowingDuplicatePersonException(), new CommandHistory(),
-                new UndoRedoStack());
-        return imageCommand;
-    }
-
-    /**
-     * Returns an {@code ImageCommand} with parameters {@code index} and {@code remove}
      * to test {@code PersonNotFoundException}
      */
     private ImageCommand prepareCommandForNotFoundException(Index index) {
@@ -177,27 +170,6 @@ public class ImageCommandTest {
         imageCommand.setData(new ModelStubThrowingPersonNotFoundException(), new CommandHistory(),
                 new UndoRedoStack());
         return imageCommand;
-    }
-
-    /**
-     * A Model stub that always throw a DuplicatePersonException when trying to edit image.
-     */
-    private class ModelStubThrowingDuplicatePersonException extends ModelStub {
-        @Override
-        public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
-            return model.getFilteredPersonList();
-        }
-
-        @Override
-        public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
-                throws DuplicatePersonException {
-            throw new DuplicatePersonException();
-        }
-
-        @Override
-        public ReadOnlyAddressBook getAddressBook() {
-            return new AddressBook();
-        }
     }
 
     /**

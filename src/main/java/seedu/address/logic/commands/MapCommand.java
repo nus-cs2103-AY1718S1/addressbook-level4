@@ -14,7 +14,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 /**
  *  Shows a person's address on Google Maps in browser
  */
-public class MapCommand extends UndoableCommand {
+public class MapCommand extends Command {
     public static final String COMMAND_WORD = "map";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Shows the address on Google Maps of the person "
             + "identified by the index number used in the last person listing. "
@@ -29,7 +29,7 @@ public class MapCommand extends UndoableCommand {
     }
 
     @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
+    public CommandResult execute() throws CommandException {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
         if (index.getZeroBased() >= lastShownList.size()) {

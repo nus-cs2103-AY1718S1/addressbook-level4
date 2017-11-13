@@ -22,7 +22,6 @@ public class PersonInfoPanelHandle extends NodeHandle<Node> {
     private static final String REMARK_FIELD_ID = "#remark";
     private static final String TAGS_FIELD_ID = "#tags";
 
-
     private final Label nameLabel;
     private final Label addressLabel;
     private final Label phoneLabel;
@@ -30,7 +29,6 @@ public class PersonInfoPanelHandle extends NodeHandle<Node> {
     private final Label birthdayLabel;
     private final Label remarkLabel;
     private final List<Label> tagLabels;
-
 
     public PersonInfoPanelHandle(Node cardNode) {
         super(cardNode);

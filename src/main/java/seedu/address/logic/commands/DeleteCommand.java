@@ -27,18 +27,20 @@ public class DeleteCommand extends UndoableCommand {
 
     public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person(s): %1$s";
     private static final String COMMA = ", ";
+    private static final String FAILED = "\nFailed: ";
 
-    public final Index[] targetIndex;
+    public final Index[] targets;
 
-    public DeleteCommand(Index[] targetIndex) {
-        this.targetIndex = targetIndex;
+    public DeleteCommand(Index[] targets) {
+        Arrays.sort(targets);
+        this.targets = targets;
     }
 
     //@@author liliwei25
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-        String deletedPersons = deleteAllSelectedPersonFromAddressBook();
-        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, deletedPersons));
+        String result = deleteAllSelectedPersonFromAddressBook();
+        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, result));
     }
 
     /**
@@ -48,18 +50,51 @@ public class DeleteCommand extends UndoableCommand {
      * @throws CommandException when person selected is not found
      */
     private String deleteAllSelectedPersonFromAddressBook() throws CommandException {
-        StringJoiner joiner = new StringJoiner(COMMA);
+        StringJoiner deletedNames = new StringJoiner(COMMA);
+        StringJoiner failedIndexs = new StringJoiner(COMMA);
+
+        deletePersons(deletedNames, failedIndexs);
+        return getResult(deletedNames, failedIndexs);
+    }
+
+    /**
+     * Deletes Person given by {@code targets}
+     *
+     * @param deletedNames Stores names of successfully deleted Persons
+     * @param failedIndexs Stores invalid indexes
+     */
+    private void deletePersons(StringJoiner deletedNames, StringJoiner failedIndexs) {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
-        for (int i = targetIndex.length - 1; i >= 0; i--) {
-            if (targetIndex[i].getZeroBased() >= lastShownList.size()) {
-                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        for (int i = targets.length - 1; i >= 0; i--) {
+            if (targets[i].getZeroBased() >= lastShownList.size()) {
+                failedIndexs.add(Integer.toString(targets[i].getOneBased()));
+            } else {
+                ReadOnlyPerson personToDelete = lastShownList.get(targets[i].getZeroBased());
+                deletePersonFromAddressBook(deletedNames, personToDelete);
             }
-
-            ReadOnlyPerson personToDelete = lastShownList.get(targetIndex[i].getZeroBased());
-
-            deletePersonFromAddressBook(joiner, personToDelete);
         }
-        return joiner.toString();
+    }
+
+    /**
+     * Create result string
+     *
+     * @param deletedNames Names of successfully deleted Persons
+     * @param failedIndexs Indexes of failed/invalid deletes
+     * @return result string with names and indexes
+     */
+    private String getResult(StringJoiner deletedNames, StringJoiner failedIndexs) throws CommandException {
+        if (isEmpty(deletedNames)) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+        String result = deletedNames.toString();
+        if (!isEmpty(failedIndexs)) {
+            result = result.concat(FAILED + failedIndexs.toString());
+        }
+        return result;
+    }
+
+    private boolean isEmpty(StringJoiner deletedNames) {
+        return deletedNames.length() == 0;
     }
 
     /**
@@ -82,6 +117,6 @@ public class DeleteCommand extends UndoableCommand {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof DeleteCommand // instanceof handles nulls
-                && Arrays.equals(this.targetIndex, ((DeleteCommand) other).targetIndex)); // state check
+                && Arrays.equals(this.targets, ((DeleteCommand) other).targets)); // state check
     }
 }

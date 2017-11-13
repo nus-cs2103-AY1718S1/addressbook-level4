@@ -35,19 +35,50 @@ public class BirthdayCommandParser implements Parser<BirthdayCommand> {
         Birthday birthday;
         try {
             index = ParserUtil.parseIndex(splitArgs[INDEX_POS]);
-            if (splitArgs.length < CORRECT_LENGTH) {
-                throw new IllegalValueException(Birthday.MESSAGE_BIRTHDAY_CONSTRAINTS);
-            }
-            birthday = new Birthday(splitArgs[BIRTHDAY_POS]);
+            birthday = getNewBirthday(splitArgs);
         } catch (IllegalValueException ive) {
-            if (ive.getMessage().equals(Birthday.MESSAGE_BIRTHDAY_CONSTRAINTS)) {
-                throw new ParseException(
-                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, BirthdayCommand.MESSAGE_USAGE), ive);
-            } else {
-                throw new ParseException(ive.getMessage());
-            }
+            return getExceptionMessage(ive);
         }
 
         return new BirthdayCommand(index, birthday);
+    }
+
+    /**
+     * Gets message from IllegalValueException
+     *
+     * @param ive IllegalValueException thrown from creating new Birthday
+     * @throws ParseException With relevant message depending on error message from IllegalValueException
+     */
+    private BirthdayCommand getExceptionMessage(IllegalValueException ive) throws ParseException {
+        if (ive.getMessage().equals(Birthday.MESSAGE_BIRTHDAY_CONSTRAINTS)) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, BirthdayCommand.MESSAGE_USAGE), ive);
+        } else {
+            throw new ParseException(ive.getMessage());
+        }
+    }
+
+    /**
+     * Checks length of arguments and creates new Birthday
+     *
+     * @param splitArgs Input provided by user
+     * @return New Birthday if inputs are valid
+     * @throws IllegalValueException If inputs are invalid
+     */
+    private Birthday getNewBirthday(String[] splitArgs) throws IllegalValueException {
+        if (isIncorrectLength(splitArgs)) {
+            throw new IllegalValueException(Birthday.MESSAGE_BIRTHDAY_CONSTRAINTS);
+        }
+        return new Birthday(splitArgs[BIRTHDAY_POS]);
+    }
+
+    /**
+     * Checks if the length of the arguments are correct
+     *
+     * @param splitArgs Input arguments by user
+     * @return True if length is incorrect
+     */
+    private boolean isIncorrectLength(String[] splitArgs) {
+        return splitArgs.length < CORRECT_LENGTH;
     }
 }

@@ -10,9 +10,9 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-F09-B3/main
 
-By: `F09-B3`      Since: `AUG 2017`      Licence: `MIT`      Referenced from: `AddressBook-Level 4`
+By: `F09-B3`      Since: `AUG 2017`      Licence: `MIT`      Referenced from: `https://github.com/nus-cs2103-AY1718S1/addressbook-level4[AddressBook-Level 4]`
 
 == Setting up
 
@@ -2141,11 +2141,11 @@ Use case resumes at step 2.
 [appendix]
 == Glossary
 
-[[AddressBook]]
+[[PocketBook]]
 Name of the application
 
 ....
-AddressBook
+PocketBook
 ....
 
 

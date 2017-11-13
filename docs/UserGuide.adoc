@@ -34,8 +34,8 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
 * *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
+* **`add`**` n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
+* **`delete`**` 3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
 .  Refer to the link:#features[Features] section below for details of each command.
@@ -316,6 +316,7 @@ Format: `removetag [INDEX] TAG`
 Examples:
 
 * `removetag friends` +
+
 Removes the tag `friends` from all persons
 * `removetag 1 NUS` +
 Removes the tag `NUS` from first person
@@ -540,7 +541,7 @@ Sound will be played whenever an invalid command triggers ParseException or Comm
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous PocketBook folder.
 
 == Command Summary
 
@@ -583,3 +584,15 @@ e.g.`select 2`
 * *Sort* `sort name` + `sort number` + `sort address` + `sort email` + `sort remark` + `sort birthday` + `sort favourite`
 * *Undo* : `undo (Optional:NUMBER)`
 e.g. `Undo 2`
+
+== Coming in V2.0
+
+=== New Functions
+* Toggle between light and dark themes
+* `Person` will be created with `Date Created` and `Date last edited` fields
+* Confirmation when `Clear` is used
+* Function to create backup copies of PocketBook
+* Import contacts from social media sites such as Facebook, Twitter etc.
+* Group function to group contacts
+* Calender to plan events
+* Tutorial function

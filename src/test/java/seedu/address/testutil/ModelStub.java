@@ -18,72 +18,80 @@ import seedu.address.model.tag.Tag;
  * A default model stub that have all of the methods failing.
  */
 public class ModelStub implements Model {
+
+    public static final String MESSAGE_FAIL = "This method should not be called.";
+
     @Override
     public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
-        fail("This method should not be called.");
+        fail(MESSAGE_FAIL);
     }
 
     @Override
     public void resetData(ReadOnlyAddressBook newData) {
-        fail("This method should not be called.");
+        fail(MESSAGE_FAIL);
     }
 
     @Override
     public void updateListToShowAll() {
-        fail("Thi method should not be called.");
+        fail(MESSAGE_FAIL);
     }
 
     @Override
     public ReadOnlyAddressBook getAddressBook() {
-        fail("This method should not be called.");
+        fail(MESSAGE_FAIL);
         return null;
     }
 
     @Override
     public void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
-        fail("This method should not be called.");
+        fail(MESSAGE_FAIL);
     }
 
     @Override
     public String sortPerson(String target) {
-        fail("This method should not be called.");
+        fail(MESSAGE_FAIL);
         return EMPTY_STRING;
     }
 
     @Override
     public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException , PersonNotFoundException {
-        fail("This method should not be called.");
+        fail(MESSAGE_FAIL);
     }
 
     @Override
     public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
-        fail("This method should not be called.");
+        fail(MESSAGE_FAIL);
         return null;
     }
 
     @Override
     public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
-        fail("This method should not be called.");
+        fail(MESSAGE_FAIL);
     }
 
     @Override
     public void removeTag(Tag tag) {
-        fail("This method should not be called.");
+        fail(MESSAGE_FAIL);
     }
 
     @Override
     public void mapPerson(ReadOnlyPerson target) throws PersonNotFoundException {
-        fail("This method should not be called.");
+        fail(MESSAGE_FAIL);
     }
 
     @Override
     public void changeImage(ReadOnlyPerson target) throws PersonNotFoundException {
-        fail("This method should not be called.");
+        fail(MESSAGE_FAIL);
+    }
+
+    @Override
+    public void removeImage(ReadOnlyPerson target) throws PersonNotFoundException {
+        fail(MESSAGE_FAIL);
     }
 
     @Override
     public void clearInfoPanel() {
-        fail("This method should not be called.");
+        fail(MESSAGE_FAIL);
     }
 }

@@ -60,6 +60,7 @@ public class AddressBookParser {
 
         final String commandWord = matcher.group(COMMAND_WORD);
         final String arguments = matcher.group(ARGUMENTS);
+
         switch (commandWord.toLowerCase()) {
 
         case EmailCommand.COMMAND_WORD:

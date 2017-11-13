@@ -59,25 +59,27 @@ public class PersonInfoPanel extends UiPart<Region> {
         setupProfileImage();
     }
 
+    /**
+     * Make ImageView round
+     */
     private void setupProfileImage() {
         profileImage.setClip(circle);
     }
 
     /**
-     * Updates {@code PersonInfoPanel} with new details from {@code person}
-     *
-     * @param person New details for update
+     * Show default values when no Person is selected
      */
-    public void updateConnections(ReadOnlyPerson person) {
-        setConnections(person);
-    }
-
     private void setDefaultConnections() {
         setConnections(EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, null, DEFAULT_TEXT);
     }
 
+    /**
+     * Set connections based on Person selected
+     *
+     * @param person Selected Person
+     */
     private void setConnections(ReadOnlyPerson person) {
-        if (person == null) {
+        if (noPersonSelected(person)) {
             setDefaultConnections();
         } else {
             setConnections(person.getName().fullName, person.getPhone().value, person.getAddress().value,
@@ -86,6 +88,9 @@ public class PersonInfoPanel extends UiPart<Region> {
         }
     }
 
+    /**
+     * Display selected Person's details on PersonInfoPanel
+     */
     private void setConnections(String name, String phone, String address, String email, String birthday,
                                 String remark, Set<Tag> tags, String loc) {
         this.name.setText(name);
@@ -101,10 +106,30 @@ public class PersonInfoPanel extends UiPart<Region> {
         setImage(loc);
     }
 
+    /**
+     * Determines if Person selected is valid
+     *
+     * @param person Selected Person
+     * @return True if selected person is null
+     */
+    private boolean noPersonSelected(ReadOnlyPerson person) {
+        return person == null;
+    }
+
+    /**
+     * Displays selected Person's Tags on PersonInfoPanel
+     *
+     * @param tagList List of selected Person's Tags
+     */
     private void setTags(Set<Tag> tagList) {
         tagList.forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
     }
 
+    /**
+     * Displays the selected Person's Profile picture on PersonInfoPanel
+     *
+     * @param loc Image location of selected Person
+     */
     private void setImage(String loc) {
         try {
             Image image = getProfileImage(loc);
@@ -114,13 +139,35 @@ public class PersonInfoPanel extends UiPart<Region> {
         }
     }
 
+    /**
+     * Gets Image based on image location from selected Person
+     *
+     * @param loc Image location from selected Person
+     * @return Profile Image of selected Person
+     */
     private Image getProfileImage(String loc) {
         Image image;
         if (loc.equals(DEFAULT_TEXT)) {
             image = new Image(DEFAULT);
         } else {
-            File img = new File(loc);
+            image = getImage(loc);
+        }
+        return image;
+    }
+
+    /**
+     * Get image from given location
+     *
+     * @param loc Given location
+     * @return Image at given location or default image if location is invalid
+     */
+    private Image getImage(String loc) {
+        Image image;
+        File img = new File(loc);
+        if (img.exists()) {
             image = new Image(img.toURI().toString());
+        } else {
+            image = new Image(DEFAULT);
         }
         return image;
     }

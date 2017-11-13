@@ -46,7 +46,7 @@ public class MapCommandTest {
         MapCommand mapCommand = prepareCommand(INDEX_FIRST_PERSON);
 
         String expectedMessage = String.format(MapCommand.MESSAGE_MAP_SHOWN_SUCCESS, personToMap);
-        assertEquals(mapCommand.executeUndoableCommand().feedbackToUser, expectedMessage);
+        assertEquals(mapCommand.execute().feedbackToUser, expectedMessage);
     }
 
     @Test

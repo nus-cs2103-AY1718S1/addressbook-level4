@@ -34,15 +34,42 @@ public class ImageCommandParser implements Parser<ImageCommand> {
         }
     }
 
+    /**
+     * Changes profile picture of Person depending on selected mode (remove/edit)
+     *
+     * @param args User input
+     * @return New ImageCommand with correct Index and mode selection (remove/edit)
+     * @throws IllegalValueException If input after index is invalid
+     */
     private ImageCommand getImageCommand(String args) throws IllegalValueException {
         String[] splitArgs = args.trim().split(SPACE);
         Index index = ParserUtil.parseIndex(splitArgs[INDEX_POS]);
-        if (splitArgs.length > 1 && splitArgs[SELECT_POS].toLowerCase().equals(REMOVE)) {
+        if (toRemoveImage(splitArgs)) {
             return new ImageCommand(index, REMOVE_IMAGE);
-        } else if (splitArgs.length <= 1) {
+        } else if (toEditImage(splitArgs)) {
             return new ImageCommand(index, !REMOVE_IMAGE);
         } else {
             throw new IllegalValueException(INVALID_POST_INDEX);
         }
+    }
+
+    /**
+     * If given input is to edit profile picture of Person
+     *
+     * @param inputs User input
+     * @return True if input does not contain "remove" keyword
+     */
+    private boolean toEditImage(String[] inputs) {
+        return inputs.length <= 1;
+    }
+
+    /**
+     * If given input is to remove profile picture of Person
+     *
+     * @param inputs User input
+     * @return True if input contains "remove" keyword
+     */
+    private boolean toRemoveImage(String[] inputs) {
+        return inputs.length > 1 && inputs[SELECT_POS].toLowerCase().equals(REMOVE);
     }
 }

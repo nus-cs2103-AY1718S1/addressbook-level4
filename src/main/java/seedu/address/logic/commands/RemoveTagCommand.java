@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
@@ -26,7 +27,7 @@ public class RemoveTagCommand extends UndoableCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Removes the specified tag from all persons in the addressbook.\n"
-            + "Parameters: TAG (must be a valid tag)\n"
+            + "Parameters: [INDEX] (optional: must be positive integer) TAG (must be a valid tag)\n"
             + "Example: " + COMMAND_WORD + " friends";
 
     public static final String MESSAGE_TAG_NOT_FOUND = "Specified tag is not found";
@@ -55,7 +56,7 @@ public class RemoveTagCommand extends UndoableCommand {
             removeTagFromModel();
             result = ALL;
         } else {
-            result = removeTagFromPerson(Integer.parseInt(index) - 1);
+            result = removeTagFromPerson(Index.fromOneBased(Integer.parseInt(index)).getZeroBased());
         }
         return new CommandResult(String.format(MESSAGE_REMOVE_TAG_SUCCESS, target, FROM, result));
     }
@@ -83,7 +84,7 @@ public class RemoveTagCommand extends UndoableCommand {
      * @throws CommandException when selected Tag is not found
      */
     private boolean removeAndUpdate(ReadOnlyPerson person) throws CommandException {
-        if (person.getTags().contains(target)) {
+        if (containsTag(person)) {
             Set<Tag> updatedTags = new HashSet<>(person.getTags());
 
             updatedTags.remove(target);
@@ -94,6 +95,16 @@ public class RemoveTagCommand extends UndoableCommand {
             return true;
         }
         return false;
+    }
+
+    /**
+     * Checks if selected Person contains target Tag
+     *
+     * @param person Selected person
+     * @return True when selected person contains target Tag
+     */
+    private boolean containsTag(ReadOnlyPerson person) {
+        return person.getTags().contains(target);
     }
 
     /**

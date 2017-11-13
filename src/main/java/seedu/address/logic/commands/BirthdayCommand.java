@@ -53,8 +53,8 @@ public class BirthdayCommand extends UndoableCommand {
 
         ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
         ReadOnlyPerson editedPerson = getEditedPerson(personToEdit);
-
         updateModel(personToEdit, editedPerson);
+
         return new CommandResult(String.format(MESSAGE_BIRTHDAY_PERSON_SUCCESS, editedPerson));
     }
 

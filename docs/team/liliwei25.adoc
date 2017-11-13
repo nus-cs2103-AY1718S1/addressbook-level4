@@ -4,7 +4,8 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :stylesDir: ../stylesheets
 
 == Project: PocketBook
-PocketBook is a desktop address book application targeted at Singaporeans. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
+PocketBook is a desktop address book application targeted at lazy Singaporeans.
+The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
 
 *Code contributed*: +
  [https://github.com/CS2103AUG2017-F09-B3/main/blob/master/collated/main/liliwei25.md[Functional code]] +
@@ -187,7 +188,30 @@ include::../DeveloperGuide.adoc[tag=Image]
 
 === Enhancement Proposed: Add a tutorial function `tutorial`
 
-When the user calls the `tutorial` function, a pop-up will show to guide the user through some basic commands such as add, edit, delete, etc.
+==== External behavior
+
+* `Tutorial` function
+** Opens a pop-up dialog with instructions on how to use the application.
+** Can be called by using the `tutorial` command
+** Also shows when the user opens the application for the first time
+
+==== Justification
+
+When the user calls the `tutorial` function or when the user opens the app for the first time
+, a pop-up will show to guide the user through some basic commands such as add, edit, delete, etc.
+
+==== Implementation
+
+* `UI`
+** Tutorial popup window
+
+* `Logic`
+** Tutorial command parser
+** Tutorial
+
+* Design consideration:
+** Alternative 1: Use buttons for user to choose when to move on to next step.
+** Alternative 2: Detect when the user has entered the correct input and move on to next step.
 
 === Other contributions
 

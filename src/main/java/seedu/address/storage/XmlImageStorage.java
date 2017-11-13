@@ -3,12 +3,13 @@ package seedu.address.storage;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import static java.util.Objects.requireNonNull;
 
+import static seedu.address.commons.util.FileUtil.createDirs;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.logging.Logger;
-
-import seedu.address.commons.core.LogsCenter;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 
 //@@author liliwei25
 /**
@@ -16,37 +17,37 @@ import seedu.address.commons.core.LogsCenter;
  */
 public class XmlImageStorage {
 
-    private static final Logger logger = LogsCenter.getLogger(XmlImageStorage.class);
     private static final String PNG = ".png";
+    private static final String PARENT_DIR = "profiles/";
+    private static final String UNDERSCORE = "_";
 
     /**
      * Save selected image to image folder
      *
+     * @return The file path of the saved image
      * @throws IOException when image copy fails
      */
-    public void saveImage(File image, String name) throws IOException {
+    public String saveImage(File image, String name) throws IOException {
         requireNonNull(image);
         requireNonNull(name);
 
-        File file = new File(name + PNG);
-        Files.copy(image.toPath(), file.toPath(), REPLACE_EXISTING);
+        File filePath = new File(PARENT_DIR);
+        createDirs(filePath);
+        // Create picture file to include time in case there are multiple Person with same name
+        File newImage = new File(PARENT_DIR.concat(name).concat(UNDERSCORE)
+                .concat(Long.toString(LocalDateTime.now().toEpochSecond(ZoneOffset.MAX))).concat(PNG));
+        Files.copy(image.toPath(), newImage.toPath(), REPLACE_EXISTING);
+
+        return newImage.getPath();
     }
 
     /**
-     * Deletes the selected image from folder
-     * @param image to delete
-     * @throws IOException when image deletion fails
+     * Deletes image from directory
+     *
+     * @param location File path of image
+     * @throws IOException If image is not found or delete failed
      */
-    public void removeImage(File image) throws IOException {
-        requireNonNull(image);
-
-        File[] files = new File(this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath())
-                .listFiles();
-
-        for (File file : files) {
-            if (file.getName().equals(image.getName())) {
-                file.delete();
-            }
-        }
+    public void removeImage(String location) throws IOException {
+        Files.delete(new File(location).toPath());
     }
 }

@@ -24,17 +24,38 @@ public class RemoveTagCommandParser implements Parser<RemoveTagCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public RemoveTagCommand parse(String arg) throws ParseException {
-        String[] splitArgs = arg.trim().split(SPACE);
+        String[] inputs = arg.trim().split(SPACE);
         try {
-            if (splitArgs.length < 2) {
-                Tag t = ParserUtil.parseTag(splitArgs[INDEX_POS]);
-                return new RemoveTagCommand(RemoveTagCommand.ALL, t);
-            } else {
-                Tag t = ParserUtil.parseTag(splitArgs[TAG_POS]);
-                return new RemoveTagCommand(splitArgs[INDEX_POS], t);
-            }
+            return getRemoveTagCommand(inputs);
         } catch (IllegalValueException ive) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemoveTagCommand.MESSAGE_USAGE));
         }
+    }
+
+    /**
+     * Creates a new RemoveTagCommand depending on user input
+     *
+     * @param inputs User input
+     * @return New RemoveTagCommand depending on user input
+     * @throws IllegalValueException If Tag specified by user is invalid
+     */
+    private RemoveTagCommand getRemoveTagCommand(String[] inputs) throws IllegalValueException {
+        if (toRemoveAll(inputs)) {
+            Tag t = ParserUtil.parseTag(inputs[INDEX_POS]);
+            return new RemoveTagCommand(RemoveTagCommand.ALL, t);
+        } else {
+            Tag t = ParserUtil.parseTag(inputs[TAG_POS]);
+            return new RemoveTagCommand(inputs[INDEX_POS], t);
+        }
+    }
+
+    /**
+     * Determines if user chooses to remove target Tag from all Persons
+     *
+     * @param inputs User input
+     * @return True if user does not include a Index in the input
+     */
+    private boolean toRemoveAll(String[] inputs) {
+        return inputs.length < 2;
     }
 }

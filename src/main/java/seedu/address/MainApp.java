@@ -102,17 +102,36 @@ public class MainApp extends Application {
      */
     private void startTray() {
         Platform.setImplicitExit(false);
-        if (!SystemTray.isSupported()) {
-            logger.warning(MESSAGE_TRAY_UNSUPPORTED);
+        if (isNotSupported()) {
             return;
         }
         initTrayIcon();
+        addTrayIcon();
+    }
+
+    /**
+     * Adds created tray icon to System tray
+     */
+    private void addTrayIcon() {
         try {
             tray = SystemTray.getSystemTray();
             tray.add(trayIcon);
         } catch (AWTException e) {
             logger.warning(MESSAGE_ADD_TRAY_ICON_FAIL);
         }
+    }
+
+    /**
+     * Checks if System tray is supported by OS
+     *
+     * @return True if system tray is not supported
+     */
+    private boolean isNotSupported() {
+        if (!SystemTray.isSupported()) {
+            logger.warning(MESSAGE_TRAY_UNSUPPORTED);
+            return true;
+        }
+        return false;
     }
 
     /**

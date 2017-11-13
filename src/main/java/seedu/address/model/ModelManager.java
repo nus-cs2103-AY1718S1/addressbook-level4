@@ -16,6 +16,7 @@ import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.ui.ChangeImageEvent;
 import seedu.address.commons.events.ui.MapPersonEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.RemoveImageEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -132,6 +133,11 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void changeImage(ReadOnlyPerson target) throws PersonNotFoundException {
         raise(new ChangeImageEvent(target));
+    }
+
+    @Override
+    public void removeImage(ReadOnlyPerson target) throws PersonNotFoundException {
+        raise(new RemoveImageEvent(target));
     }
 
     @Override

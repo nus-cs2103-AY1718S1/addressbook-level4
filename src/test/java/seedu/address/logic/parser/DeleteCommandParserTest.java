@@ -25,7 +25,7 @@ public class DeleteCommandParserTest {
     public void parse_validArgs_returnsDeleteCommand() {
         try {
             DeleteCommand newCommand = parser.parse(VALID_INPUT);
-            if (newCommand.equals(new DeleteCommand(newCommand.targetIndex))) {
+            if (newCommand.equals(new DeleteCommand(newCommand.targets))) {
                 assert true;
             } else {
                 assert false;
