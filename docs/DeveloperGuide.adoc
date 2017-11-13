@@ -1384,7 +1384,7 @@ public class PredicateUtil {
 }
 
 ----
-_Figure 4.4.3: Code section  in PredicateUtil.java_
+_Figure 4.11.3: Code section  in PredicateUtil.java_
 
 The component diagram in _Figure 4.11.4_ below shows the interactions within the Logic component for the execution of find command.
 
@@ -2171,6 +2171,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 (For all use cases below, the *System* is the `Contag` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
+=== Use case: Schedule an activity
 === Use case: Schedule an activity
 
 *MSS*
