@@ -104,34 +104,34 @@ public class UniquePersonList implements Iterable<Person> {
     /**
      * Sorts the person list according to the type entered by user
      * @param type                          Sorting type entered by user
-     * @throws InvalidSortTypeException     Indicates that the sorting type empty by user is not valid
+     * @throws InvalidSortTypeException     Indicates that the sorting type entered by user is not valid
      */
-    public void sortPersonList(String type) throws InvalidSortTypeException {
+    public void sortPerson(String type) throws InvalidSortTypeException {
         final Comparator<Person> sortByName = (
-                Person a, Person b) -> a.getName().toString().compareToIgnoreCase(b.getName().toString());
+            Person a, Person b) -> a.getName().toString().compareToIgnoreCase(b.getName().toString());
         final Comparator<Person> sortByTags = (Person a, Person b) -> a.getTags().toString().compareToIgnoreCase((b
                 .getTags().toString()));
-        final Comparator<Person> sortByCompany = (Person a, Person b) -> a.getCompany().toString().compareToIgnoreCase(b
-                .getCompany().toString());
+        final Comparator<Person> sortByCompany = (Person a, Person b) -> b.getCompany().compareTo(a
+                .getCompany());
+        final Comparator<Person> sortByPosition = (Person a, Person b) -> b.getPosition().compareTo(a
+                .getPosition());
         final Comparator<Person> sortByPriority = (Person a, Person b) -> a.getPriority()
                 .compareTo(b.getPriority());
-        final Comparator<Person> sortByStatus = (Person a, Person b) -> a.getStatus().compareTo(b
-                .getStatus());
         switch (type) {
         case "name":
             internalList.sort(sortByName);
             break;
         case "tag":
-            internalList.sort(sortByTags);
+            internalList.sort(sortByTags.thenComparing(sortByName));
             break;
         case "company":
-            internalList.sort(sortByCompany);
+            internalList.sort(sortByCompany.thenComparing(sortByName));
             break;
         case "priority":
             internalList.sort(sortByPriority.thenComparing(sortByName));
             break;
-        case "status":
-            internalList.sort(sortByStatus.thenComparing(sortByName));
+        case "position":
+            internalList.sort(sortByPosition.thenComparing(sortByName));
             break;
         default:
             throw new InvalidSortTypeException(

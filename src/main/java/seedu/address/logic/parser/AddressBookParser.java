@@ -42,6 +42,7 @@ import seedu.address.logic.parser.relationship.SetRelCommandParser;
  */
 public class AddressBookParser {
 
+    private static CheckCommandsParser checkCommand = new CheckCommandsParser();
     /**
      * Used for initial separation of command word and args.
      */
@@ -61,7 +62,7 @@ public class AddressBookParser {
         }
 
         String commandWord = matcher.group("commandWord");
-        commandWord = CheckCommandsParser.matchCommand(commandWord);
+        commandWord = checkCommand.matchCommand(commandWord);
         final String arguments = matcher.group("arguments");
         switch (commandWord) {
         case AddCommand.COMMAND_WORD:

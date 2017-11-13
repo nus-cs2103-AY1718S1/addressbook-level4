@@ -12,14 +12,13 @@ import java.util.Set;
  * so that the user does not have to remember specific commands
  */
 public class CheckCommandsParser {
-
     /**
      * Parsers user input command and match it with the synonyms/aliases
      *
      * @param userCommand user input command string
      * @return the relevant command it matches
      */
-    public static String matchCommand(String userCommand) {
+    public String matchCommand(String userCommand) {
         /**
          * sets the initial finalUserCommand to error
          */
@@ -52,11 +51,10 @@ public class CheckCommandsParser {
         final String[] subSelectCommands = new String[] { "select", "s", "choose", "pick" };
         final String[] subSortCommands = new String[] { "sort", "arrange", "organise" };
         final String[] subUndoCommands = new String[] { "undo", "u" };
-        final String[] subCheckScheduleCommands = new String[] {"thisweek",
-            "schedule", "checkschedule", "tw", "cs"};
+        final String[] subCheckScheduleCommands = new String[] {"thisweek", "schedule", "checkschedule", "tw", "cs"};
         final String[] subAddEventsCommands = new String[] { "eventadd", "addevent", "ae", "ea" };
-        final String[] subDeleteEventsCommands = new String[] { "eventdel",
-            "delevent", "deleteevent", "eventdelete", "de", "ed" };
+        final String[] subDeleteEventsCommands =
+                new String[] { "eventdel", "delevent", "deleteevent", "eventdelete", "de", "ed" };
         final String[] subEditEventsCommands = new String[] { "eventedit", "editevent", "ee" };
         final String[] subFindEventsCommands = new String[] { "eventfind", "findevent", "fe", "ef" };
         final String[] subUpdatePhotoCommands = new String[] { "updatephoto", "up" };

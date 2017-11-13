@@ -3,13 +3,15 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Comparator;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
  * Represents a Person's position in the address book.
  */
 
-public class Position {
+public class Position implements Comparator<Position> {
     public static final String MESSAGE_POSITION_CONSTRAINTS =
             "Person position can take any values, and it should not be blank";
 
@@ -19,6 +21,7 @@ public class Position {
      */
     public static final String POSITION_VALIDATION_REGEX = "[^\\s].*";
 
+    private static final String ORDERED_ENTRIES = "NIL";
     public final String value;
 
     /**
@@ -57,5 +60,26 @@ public class Position {
     public int hashCode() {
         return value.hashCode();
     }
-
+    //@@author huiyiiih
+    /**
+     * Comparator to compare the positions to sort them with NIL all the way at the bottom.
+     * @param position      either a work position or NIL
+     */
+    public int compareTo(Position position) {
+        if (ORDERED_ENTRIES.contains(position.toString()) && ORDERED_ENTRIES.contains(this.toString())) {
+            return ORDERED_ENTRIES.indexOf(position.toString()) - ORDERED_ENTRIES.indexOf(this.toString());
+        }
+        if (ORDERED_ENTRIES.contains(position.toString())) {
+            return 1;
+        }
+        if (ORDERED_ENTRIES.contains(this.toString())) {
+            return -1;
+        }
+        return position.toString().compareToIgnoreCase(this.toString());
+    }
+    @Override
+    public int compare(Position positionOne, Position positionTwo) {
+        return positionOne.compareTo(positionTwo);
+    }
+    //@@author
 }

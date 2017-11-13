@@ -1,10 +1,11 @@
 package seedu.address.logic.parser;
 
-import static seedu.address.commons.core.Messages.MESSAGE_ADDREL_PREFIX_NOT_ALLOWED;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADD_RELATIONSHIP;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_CLEAR_RELATIONSHIP;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_COMPANY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DELETE_RELATIONSHIP;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NOTE;
@@ -61,13 +62,10 @@ public class AddCommandParser implements Parser<AddCommand> {
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
                         PREFIX_COMPANY, PREFIX_POSITION, PREFIX_STATUS,
                         PREFIX_PRIORITY, PREFIX_NOTE, PREFIX_PHOTO,
-                        PREFIX_TAG, PREFIX_ADD_RELATIONSHIP);
+                        PREFIX_TAG, PREFIX_ADD_RELATIONSHIP, PREFIX_CLEAR_RELATIONSHIP, PREFIX_DELETE_RELATIONSHIP);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
-        }
-        if (arePrefixesPresent(argMultimap, PREFIX_ADD_RELATIONSHIP)) {
-            throw new ParseException(MESSAGE_ADDREL_PREFIX_NOT_ALLOWED);
         }
 
         try {
@@ -114,7 +112,10 @@ public class AddCommandParser implements Parser<AddCommand> {
             if (arePrefixesPresent(argMultimap, PREFIX_PHOTO)) {
                 photo = ParserUtil.parsePhoto(argMultimap.getValue
                         (PREFIX_PHOTO)).get();
-
+            }
+            if (arePrefixesPresent(argMultimap, PREFIX_ADD_RELATIONSHIP) || arePrefixesPresent(argMultimap,
+                PREFIX_DELETE_RELATIONSHIP) || arePrefixesPresent(argMultimap, PREFIX_CLEAR_RELATIONSHIP)) {
+                throw new ParseException(Relationship.MESSAGE_REL_PREFIX_NOT_ALLOWED);
             }
 
             ReadOnlyPerson person = new Person(name, phone, email, address, company, position, status, priority,

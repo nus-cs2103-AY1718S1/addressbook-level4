@@ -47,7 +47,9 @@ public class AddressBook implements ReadOnlyAddressBook {
     private final EventList events;
     //@@author
     private final UniqueTagList tags;
+    //@@author huiyiiih
     private final UniqueRelList relation;
+    //@@author
 
     private ReadOnlyEvent lastChangedEvent;
     private ReadOnlyEvent newlyAddedEvent;
@@ -64,7 +66,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         tags = new UniqueTagList();
         //@@author reginleiff
         events = new EventList();
-        //@@author
         relation = new UniqueRelList();
     }
 
@@ -95,9 +96,11 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.tags.setTags(tags);
     }
 
+    //@@author huiyiiih
     public void setRel(Set<Relationship> relation) {
         this.relation.setRel(relation);
     }
+    //@@author
     /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
@@ -121,8 +124,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         setTags(new HashSet<>(newData.getTagList()));
         syncMasterTagListWith(persons);
 
+        //@@author huiyiiih
         setRel(new HashSet<>(newData.getRelList()));
         syncMasterRelListWith(persons);
+        //@@author
     }
 
     //// person-level operations
@@ -137,6 +142,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void addPerson(ReadOnlyPerson p) throws DuplicatePersonException {
         Person newPerson = new Person(p);
         syncMasterTagListWith(newPerson);
+        syncMasterRelListWith(newPerson);
         // TODO: the tags master list will be updated even though the below line fails.
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
@@ -146,11 +152,13 @@ public class AddressBook implements ReadOnlyAddressBook {
     /**
      * Replaces the given person {@code target} in the list with {@code editedReadOnlyPerson}.
      * {@code AddressBook}'s tag list will be updated with the tags of {@code editedReadOnlyPerson}.
+     * {@code AddressBook}'s relationship list will be updated with the tags of {@code editedReadOnlyPerson}.
      *
      * @throws DuplicatePersonException if updating the person's details causes the person to be equivalent to
      *                                  another existing person in the list.
      * @throws PersonNotFoundException  if {@code target} could not be found in the list.
      * @see #syncMasterTagListWith(Person)
+     * @see #syncMasterRelListWith(Person)
      */
     public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedReadOnlyPerson)
             throws DuplicatePersonException, PersonNotFoundException {
@@ -161,15 +169,17 @@ public class AddressBook implements ReadOnlyAddressBook {
         // TODO: the tags master list will be updated even though the below line fails.
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
+        syncMasterRelListWith(editedPerson);
         persons.setPerson(target, editedPerson);
     }
-
+    //@@author huiyiiih
     /**
-     * Sorts the list according to name, tag, company, priority and status
+     * Sorts the list according to name, tag, company, priority and position
      */
-    public void sortPerson(String type) throws InvalidSortTypeException {
-        persons.sortPersonList(type);
+    public void sortPersonList(String type) throws InvalidSortTypeException {
+        persons.sortPerson(type);
     }
+    //@@author
 
     /**
      * Ensures that every tag in this person:
@@ -370,7 +380,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(persons, tags);
+        return Objects.hash(persons, tags, relation);
     }
 
     //@@author reginleiff
