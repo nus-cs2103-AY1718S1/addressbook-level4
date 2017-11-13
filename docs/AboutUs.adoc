@@ -28,7 +28,7 @@ Responsibilities: UI + Integration + Deliverables and Deadlines
 
 '''
 
-=== Ernest Ong
+=== Ernest Ong Yuheng
 image::ernestong.png[width="150", align="left"]
 {empty}[http://github.com/ErnestOYH[Github]] [<<ernestong#, Portfolio>>]
 
