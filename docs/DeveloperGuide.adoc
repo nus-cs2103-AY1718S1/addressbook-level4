@@ -644,14 +644,78 @@ The sorting process is case insensitive.
 **Alternative 1 (current choice):** Create an empty array list to obtain the data from the contact list and sort the contacts. It will overwrite the existing array list of unsorted contacts when sorted. +
 **Pros:** This method is easier to understand and the original list of contacts is not changed to prevent any unexpected mistakes from occurring. +
 **Cons:** This method may have performance issues due to additional memory usage and longer time taken to overwrite the given list of contacts. +
-**Alternative 2:** Edit the current list of contacts directly by adding a function to the `AddressBook`. +
+**Alternative 2:** Edit the current list of contacts directly by adding a function to the `AddressBook` class. +
 **Pros:** This method is less time and storage consuming as sorting is achieved in a single array. +
-**Cons:** There is no way to obtain the original list of contacts for other functions. If a mistake is made, the original list of contacts will be compromised. There is a need to update all classes that inherits from `AddressBook` which may be confusing.
+**Cons:** There is no way to obtain the original list of contacts for other functions. If a mistake is made, the original list of contacts will be compromised. There is a need to update all classes that inherits from `AddressBook` class which may be confusing.
 
 // end::sort[]
 // birthday: birthday[]
 === Birthday mechanism (Since v1.3)
+The birthday mechanism is achieved by the `AddBirthdayCommand`. In order to add a birthday value to a contact, the default constructor of `AddBirthdayCommand`
+takes in the index of the contact and the birthday value to be added to the contact.
 
+`AddBirthdayCommand` will use the arguments and parse to `AddressBookParser`. This instance is then sent to `AddBirthdayCommandParser` which parse the index and birthday entered.
+Invalid indexes and command format will be handled by throwing an exception as shown below:
+
+[source,java]
+----
+public class AddBirthdayCommandParser implements Parser<BirthdayCommand> {
+    public BirthdayCommand parse(String args) throws ParseException {
+        try {
+            // ... parse index and pass it to `BirthdayCommand`...
+        } catch (IllegalValueException ive) {
+            // ... throw an exception ...
+        }
+    }
+}
+----
+
+The following sequence diagram shows how `AddBirthdayCommand` is processed:
+
+image::BirthdaySequenceDiagram.png[width="800"]
+
+Upon successfully adding of the birthday value to the contact with the given index shown in the list, it will change the value of the `Birthday` field of a `Person`.
+
+At the same time, the `Birthday` class checks for the valid date entered by the user to ensure that it is in the format of DD/MM/YY or DD/MM/YYY. +
+As `Birthday` is an optional field, the default constructor of `Birthday` takes no arguments and set the default birthday to the `Birthday` field for `Person`. The default value to be used will be "No Birthday Added`.
+In some cases, `BirthdayCommand` needs to be initialized with a certain birthday for testing. Hence, another constructor is used to add a certain birthday to the `Birthday` field.
+
+[source,java]
+----
+public Birthday () {
+    this.birthdayNumber = DEFAULT_BIRTHDAY;
+}
+
+public Birthday(String birthday) throws IllegalValueException {
+    String trimmedBirthday = birthday.trim();
+    if (!isValidBirthdayFormat(trimmedBirthday)) {
+        throw new
+            IllegalValueException(MESSAGE_BIRTHDAY_CONSTRAINTS);
+    }
+    this.birthdayNumber = trimmedBirthday;
+}
+----
+
+The `AddBirthdayCommand` inherits from the `UndoableCommand` so that users can undo the command of adding a birthday by accident.
+The birthday value added will be displayed in the `ExtendedPersonListPanel` instead of `PersonCard` as it is additional information for each contact.
+
+==== Design Considerations
+
+**Aspect:** Changing of the `Birthday` value of the selected `Person` +
+**Alternative 1 (current choice):** Copy values from all fields including the newly added birthday value to a newly created `Person`. Then replace this `Person` with the old `Person` in the `AddressBook` class. +
+**Pros:** This is easy to implement and it ensures that the original value will be intact in case any other information is changed. +
+**Cons:** Additional space is used to store the new `Person` instance. +
+**Alternative 2:** Edit the `Birthday` field in the given list of contacts directly.  +
+**Pros:** No additional space is needed to store the `Person` instance and more straightforward. +
+**Cons:** The data can no longer be retrieved if there is any error in the process of adding birthday to the contact.
+
+**Aspect:** Storing of the `Birthday` value of the selected `Person` +
+**Alternative 1 (current choice):** Add a new `Birthday` class. +
+**Pros:** Same coding format stored as `Name`, `Phone` and other information so the coding principle is standardized. It can also perform validation checks for the birthday value easily. +
+**Cons:** Add a new class affects many components of the code and much work needs to be done to make the changes. +
+**Alternative 2:** Use a `String` value to keep track of birthday for each `Person`. +
+**Pros:** This is easier and faster to implement. +
+**Cons:** It is prone to bugs as the `String` value can be overwritten easily.
 
 // end::birthday[]
 // tag::facebook[]
@@ -661,6 +725,7 @@ The facebook mechanism is facilitated by `FacebookCommand`, which resides inside
 
 The facebook mechanism displays the Facebook search page of the person specified by the index number inputted.
 // end::facebook[]
+
 image::facebook-command-ui.png[width="800"]
 // tag::facebookcont[]
 Upon execution, the `FacebookCommand` posts a `ShowFacebookRequestEvent` event to the `EventCenter` and the event will be dispatched to the `BrowserPanel` to load Facebook page. The `ShowFacebookRequestEvent` takes the name of the person specified by the index number as an argument.
@@ -1001,16 +1066,16 @@ _Figure 5.6.1 : Saving documentation as PDF files in Chrome_
 There are three ways to run tests.
 
 [TIP]
-The most reliable way to run tests is the 3rd one. The first two methods might fail some GUI tests due to platform/resolution-specific idiosyncrasies.
+The most reliable way to run tests is the method 3. The first two methods might fail some GUI tests due to platform/resolution-specific idiosyncrasies.
 
 *Method 1: Using IntelliJ JUnit test runner*
 
-* To run all tests, right-click on the `src/test/java` folder and choose `Run 'All Tests'`
-* To run a subset of tests, you can right-click on a test package, test class, or a test and choose `Run 'ABC'`
+* Run all tests, right-click on the `src/test/java` folder and choose `Run 'All Tests'`.
+* Run a subset of tests, you can right-click on a test package, test class, or a test and choose `Run 'ABC'`.
 
 *Method 2: Using Gradle*
 
-* Open a console and run the command `gradlew clean allTests` (Mac/Linux: `./gradlew clean allTests`)
+* Open a console and run the command `gradlew clean allTests` (Mac/Linux: `./gradlew clean allTests`).
 
 [NOTE]
 See <<UsingGradle#, UsingGradle.adoc>> for more info on how to run tests using Gradle.
@@ -1019,16 +1084,16 @@ See <<UsingGradle#, UsingGradle.adoc>> for more info on how to run tests using G
 
 Thanks to the https://github.com/TestFX/TestFX[TestFX] library we use, our GUI tests can be run in the _headless_ mode. In the headless mode, GUI tests do not show up on the screen. That means the developer can do other things on the Computer while the tests are running.
 
-To run tests in headless mode, open a console and run the command `gradlew clean headless allTests` (Mac/Linux: `./gradlew clean headless allTests`)
+Run tests in headless mode, open a console and run the command `gradlew clean headless allTests` (Mac/Linux: `./gradlew clean headless allTests`).
 
 === Types of tests
 
 We have two types of tests:
 
-.  *GUI Tests* - These are tests involving the GUI. They include,
-.. _System Tests_ that test the entire App by simulating user actions on the GUI. These are in the `systemtests` package.
+.  *GUI Tests* - These are tests involving the GUI. They include:
+.. _System Tests_ that test the entire UniCity by simulating user actions on the GUI. These are in the `systemtests` package.
 .. _Unit tests_ that test the individual components. These are in `seedu.address.ui` package.
-.  *Non-GUI Tests* - These are tests not involving the GUI. They include,
+.  *Non-GUI Tests* - These are tests not involving the GUI. They include:
 ..  _Unit tests_ targeting the lowest level methods/classes. +
 e.g. `seedu.address.commons.StringUtilTest`
 ..  _Integration tests_ that are checking the integration of multiple code units (those code units are assumed to be working). +
@@ -1047,15 +1112,15 @@ e.g. `seedu.address.logic.LogicManagerTest`
 
 === Build Automation
 
-See <<UsingGradle#, UsingGradle.adoc>> to learn how to use Gradle for build automation.
+Refer to <<UsingGradle#, UsingGradle.adoc>> to learn how to use Gradle for build automation.
 
 === Continuous Integration
 
-We use https://travis-ci.org/[Travis CI] and https://www.appveyor.com/[AppVeyor] to perform _Continuous Integration_ on our projects. See <<UsingTravis#, UsingTravis.adoc>> and <<UsingAppVeyor#, UsingAppVeyor.adoc>> for more details.
+We use https://travis-ci.org/[Travis CI] and https://www.appveyor.com/[AppVeyor] to perform _Continuous Integration_ on our projects. Refer to <<UsingTravis#, UsingTravis.adoc>> and <<UsingAppVeyor#, UsingAppVeyor.adoc>> for more details.
 
 === Making a Release
 
-Here are the steps to create a new release.
+Here are the steps to create a new release:
 
 .  Update the version number in link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp.java`].
 .  Generate a JAR file <<UsingGradle#creating-the-jar-file, using Gradle>>.
@@ -1064,7 +1129,7 @@ Here are the steps to create a new release.
 
 === Managing Dependencies
 
-A project often depends on third-party libraries. For example, Address Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
+A project often depends on third-party libraries. For example, Address Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives: +
 a. Include those libraries in the repo (this bloats the repo size) +
 b. Require developers to download those libraries manually (this creates extra work for developers)
 
@@ -1073,9 +1138,9 @@ b. Require developers to download those libraries manually (this creates extra w
 
 Suggested path for new programmers:
 
-1. First, add small local-impact (i.e. the impact of the change does not go beyond the component) enhancements to one component at a time. Some suggestions are given in this section link:#improving-each-component[Improving a Component].
+Path 1: Add small local-impact (i.e. the impact of the change does not go beyond the component) enhancements to one component at a time. Some suggestions are given in this section link:#improving-each-component[Improving a Component].
 
-2. Next, add a feature that touches multiple components to learn how to implement an end-to-end feature across all components. The section link:#creating-a-new-command-code-remark-code[Creating a new command: `remark`] explains how to go about adding such a feature.
+Path 2: Add a feature that touches multiple components to learn how to implement an end-to-end feature across all components. The section link:#creating-a-new-command-code-remark-code[Creating a new command: `remark`] explains how to go about adding such a feature.
 
 === Improving each component
 
@@ -1323,17 +1388,19 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *` |user |add a new person |connect to him or her when I need to
 
 |`* * *` |user |delete a person |remove entries that I no longer need
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
-|`* * *` |user |edit my friends' contact on UniCity |
+|`* * *` |user |edit my friends' contact on UniCity |make changes to their details when necessary
 
 |`* * *` |user |exit UniCity |continue using other functions in my operating system
 
 |`* * *` |forgetful user |I want a suggestion of the closest matching person when I type his name incorrectly |so that I can find that person quickly
+
+|`* *` |user |add a new person simply through their name and phone |stay connected with them
 
 |`* *` |user |I want to undo/redo multiple commands at once |so that I can revert/restore several changes back to a certain point of my choosing
 
@@ -1343,17 +1410,19 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
-|`* *` |user |access my contacts' social media account through address book |
+|`* *` |user |access my contacts' social media account through address book |connect with my friends better on social media
 
 |`* *` |user |remove a tag from my friends' contact information |
 
-|`* *` |user |sort my contacts in alphabetical order |I can find my contacts easier
+|`* *` |user |sort my contacts in alphabetical order |I can find my contacts easily
 
 |`* *` |caring user |add birthday to my close friends |celebrate their birthday with them
 
+|`* *` |user |add and edit birthday field of my friends whenever possible |update their birthday when necessary
+
 |`* *` |lazy user |type shorter commands while ignoring their cases |access my friends' contact information faster
 
-|`* *` |curious user |search my contacts' information online with google |
+|`* *` |curious user |search my contacts' information online with google |read up news about them
 
 |`* *` |careless user |undo my previous commands |retrieve important information that I have accidentally deleted earlier on
 
@@ -1364,6 +1433,10 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* *` |bored user |select a person with a certain index number |contact a random person in my contacts I tried
 
 |`* *` |lazy user |select a contact from my address book to call |I do not need to use other phone functions to call
+
+|`* *` |lazy user |better identify tags by viewing them in different colors |
+
+|`*` |careless user |add correct date for my friend's birthday |celebrate with them on the correct date
 
 |`*` |user with many tags in the address book |sort my contact list according to their tags |locate a person easily
 
