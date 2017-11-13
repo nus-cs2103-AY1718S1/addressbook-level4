@@ -36,7 +36,7 @@ include::../DeveloperGuide.adoc[tag=backup]
 
 ---
 
-==== Use Case: `backup`
+==== Use Case
 #Start of Extract [from: Developer Guide]#
 
 include::../DeveloperGuide.adoc[tag=backupUseCase]
