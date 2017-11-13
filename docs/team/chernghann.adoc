@@ -25,6 +25,9 @@ The Myth's Book is a software application that is coded in `Java` programming la
 
 === Enhancement Added: School Email and Home Number Field
 
+This section includes the behavior and justification of the new fields and explains how it is implemented.
+Code on GitHub: Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/65[#65], https://github.com/CS2103AUG2017-T15-B3/main/pull/55[#55]
+
 ==== External behavior
 
 ---
@@ -45,6 +48,10 @@ that the particular user can be contacted at a different email.
 Same idea applies to having an additional Home Number Field to be implemented for adding of a person into The Myth's Book.
 
 === Enhancement Added: Add Events
+
+This section includes the behaviour and justification of the `Add Event Command` and explains how it is implemented.
+
+Code on GitHub: Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/70[#70]
 
 ==== External behavior
 
@@ -75,6 +82,9 @@ include::../DeveloperGuide.adoc[tag=addevent]
 ---
 
 === Enhancement Added: Calendar
+
+This section includes the behaviour and justification of the Calendar enhancement and how it is implemented.
+Code on GitHub: Pull request https://github.com/CS2103AUG2017-T15-B3/main/pull/89[#89]
 
 ==== External behavior
 
