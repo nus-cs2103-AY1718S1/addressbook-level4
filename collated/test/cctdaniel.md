@@ -1,5 +1,5 @@
 # cctdaniel
-###### /java/seedu/address/logic/commands/CustomiseCommandTest.java
+###### \java\seedu\address\logic\commands\CustomiseCommandTest.java
 ``` java
 public class CustomiseCommandTest {
 
@@ -90,7 +90,7 @@ public class CustomiseCommandTest {
 
 }
 ```
-###### /java/seedu/address/logic/commands/ThemeCommandTest.java
+###### \java\seedu\address\logic\commands\ThemeCommandTest.java
 ``` java
 public class ThemeCommandTest {
 
@@ -117,7 +117,7 @@ public class ThemeCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/AddCommandParserTest.java
+###### \java\seedu\address\logic\parser\AddCommandParserTest.java
 ``` java
 public class AddCommandParserTest {
     private AddCommandParser parser = new AddCommandParser();
@@ -256,7 +256,7 @@ public class AddCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/CustomiseCommandParserTest.java
+###### \java\seedu\address\logic\parser\CustomiseCommandParserTest.java
 ``` java
 public class CustomiseCommandParserTest {
 
@@ -293,7 +293,7 @@ public class CustomiseCommandParserTest {
 
 }
 ```
-###### /java/seedu/address/logic/parser/ThemeCommandParserTest.java
+###### \java\seedu\address\logic\parser\ThemeCommandParserTest.java
 ``` java
 public class ThemeCommandParserTest {
     private ThemeCommandParser parser = new ThemeCommandParser();
@@ -313,41 +313,7 @@ public class ThemeCommandParserTest {
 
 }
 ```
-###### /java/seedu/address/ui/BrowserPanelTest.java
-``` java
-public class BrowserPanelTest extends GuiUnitTest {
-    private LessonPanelSelectionChangedEvent selectionChangedEventStub;
-
-    private BrowserPanel browserPanel;
-    private BrowserPanelHandle browserPanelHandle;
-
-    @Before
-    public void setUp() {
-        selectionChangedEventStub = new LessonPanelSelectionChangedEvent(new LessonListCard(MA1101R_L1, 0));
-
-        guiRobot.interact(() -> browserPanel = new BrowserPanel());
-        uiPartRule.setUiPart(browserPanel);
-
-        browserPanelHandle = new BrowserPanelHandle(browserPanel.getRoot());
-    }
-
-    @Test
-    public void display() throws Exception {
-        // default web page
-        URL expectedDefaultPageUrl = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
-        assertEquals(expectedDefaultPageUrl, browserPanelHandle.getLoadedUrl());
-
-        // associated web page of a lesson
-        postNow(selectionChangedEventStub);
-        URL expectedLessonUrl = new URL(GOOGLE_SEARCH_URL_PREFIX
-                + MA1101R_L1.getCode().fullCodeName.replaceAll(" ", "+") + GOOGLE_SEARCH_URL_SUFFIX);
-
-        waitUntilBrowserLoaded(browserPanelHandle);
-        assertEquals(expectedLessonUrl, browserPanelHandle.getLoadedUrl());
-    }
-}
-```
-###### /java/seedu/address/ui/LessonListPanelTest.java
+###### \java\seedu\address\ui\LessonListPanelTest.java
 ``` java
 public class LessonListPanelTest extends GuiUnitTest {
     private static final ObservableList<ReadOnlyLesson> TYPICAL_LESSONS =
@@ -390,7 +356,7 @@ public class LessonListPanelTest extends GuiUnitTest {
     }
 }
 ```
-###### /java/seedu/address/ui/testutil/GuiTestAssert.java
+###### \java\seedu\address\ui\testutil\GuiTestAssert.java
 ``` java
 /**
  * A set of assertion methods useful for writing GUI tests.
@@ -456,7 +422,7 @@ public class GuiTestAssert {
     }
 }
 ```
-###### /java/seedu/address/ui/testutil/StageRule.java
+###### \java\seedu\address\ui\testutil\StageRule.java
 ``` java
 /**
  * Properly sets up and tears down a JavaFx stage for our testing purposes.
@@ -486,7 +452,7 @@ public class StageRule implements TestRule {
     }
 }
 ```
-###### /java/systemtests/CustomiseCommandSystemTest.java
+###### \java\systemtests\CustomiseCommandSystemTest.java
 ``` java
 public class CustomiseCommandSystemTest extends AddressBookSystemTest {
     @Test
@@ -567,7 +533,7 @@ public class CustomiseCommandSystemTest extends AddressBookSystemTest {
     }
 }
 ```
-###### /java/systemtests/SelectCommandSystemTest.java
+###### \java\systemtests\SelectCommandSystemTest.java
 ``` java
 public class SelectCommandSystemTest extends AddressBookSystemTest {
     @Test
@@ -700,7 +666,7 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
 
 }
 ```
-###### /java/systemtests/ThemeCommandSystemTest.java
+###### \java\systemtests\ThemeCommandSystemTest.java
 ``` java
 public class ThemeCommandSystemTest extends AddressBookSystemTest {
     @Test
