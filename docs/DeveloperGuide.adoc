@@ -610,23 +610,23 @@ all the way back to `LogicManager`.
 
 ==== Design Considerations
 
-**Aspect:** Construction of Strings
-**Alternative 1 (current choice):** Using `StringBuilder`
-**Pros:** Able to easily construct the `String` due to the mutability of `StringBuilder`.
-**Cons:** Dependency on the `StringBuilder` class.
-**Alternative 2:** Using `String` only.
-**Pros:** Reduced dependency on additional classes.
-**Cons:** Constant re-assignment of resultant `String` is required as it is not mutable.
+**Aspect:** Construction of Strings +
+**Alternative 1 (current choice):** Using `StringBuilder` +
+**Pros:** Able to easily construct the `String` due to the mutability of `StringBuilder`. +
+**Cons:** Dependency on the `StringBuilder` class. +
+**Alternative 2:** Using `String` only. +
+**Pros:** Reduced dependency on additional classes. +
+**Cons:** Constant re-assignment of resultant `String` is required as it is not mutable. +
 
 ---
 
-**Aspect:** Generating Place Data
-**Alternative 1 (current choice):** "Hard-code" the data to obtain from a `ReadOnlyPlace`.
-**Pros:** Code is executed at a faster rate.
-**Cons:** Coupling is increased with `ReadOnlyPlace` / Code is not adaptable if new fields are added to `ReadOnlyPlace`.
-**Alternative 2:** Generate place data according to the fields present in `ReadOnlyPlace`.
-**Pros:** Code is adaptable should new fields be added to `ReadOnlyPlace`.
-**Cons:** Additional processing overhead / Difficult and time-consuming to implement.
+**Aspect:** Generating Place Data +
+**Alternative 1 (current choice):** "Hard-code" the data to obtain from a `ReadOnlyPlace`. +
+**Pros:** Code is executed at a faster rate. +
+**Cons:** Coupling is increased with `ReadOnlyPlace`/Code is not adaptable if new fields are added to `ReadOnlyPlace`. +
+**Alternative 2:** Generate place data according to the fields present in `ReadOnlyPlace`. +
+**Pros:** Code is adaptable should new fields be added to `ReadOnlyPlace`. +
+**Cons:** Additional processing overhead / Difficult and time-consuming to implement. +
 
 The implementation of the method is credited to link:https://github.com/AceCentury[Ryan Teo] and +
 link:https://github.com/nus-cs2103-AY1718S1/forum/issues/158[this issue].
