@@ -396,12 +396,14 @@ You can set your own default mail application. Please refer to instructions in t
 
 Examples:
 
+=======
 * `list` +
 `email 2 3` +
 Opens the default mail application to send an email to the 2nd and 3rd persons from the list of contacts.
 * `find Betsy` +
 `email 1` +
 Opens the default mail application to send an email to the 1st person in the results of the `find` command.
+=======
 // end::email[]
 
 // tag::tagdelete[]
@@ -441,19 +443,20 @@ Changes the tag 'friends' into 'losers' for all persons with that tag.
 // end::tagedit[]
 
 // tag::find[]
-=== Find persons : `find`
+=== Find persons (improved) : `find`
 
-Searches for persons whose name or tags contain any of the given keywords. +
+Searches for persons whose name, tags, birthday or initials contain any of the given keywords. +
+
 
 Format: `find KEYWORD [MORE_KEYWORDS]` +
 
 ****
 * The search is case insensitive. e.g. `hans` will match `Hans` (example below)
 * The order of keywords does not matter. (example below)
-* Name, tags and the first alphabet of a name can be searched.
 * For names, only full words will be matched. e.g. `Han` will not match `Hans`
 ****
 
+=======
 Examples with explanation:
 
 * `find` only supports searching for 1 name. +
@@ -471,6 +474,10 @@ e.g.:  `find Alex colleagues`
 `find Alex colleagues` returns all persons with the word `Alex` in their names (either first name or last name) and
 are `colleagues`.
 
+* `find` supports searching for a birthday month. +
+e.g.: `find 12` +
+`find 12` will return all persons whose birthdays are in the month of December.
+
 * `find` supports searching for an initial. +
 e.g.:  `find a` +
 `find a` will return all persons whose last names or first names begin with the letter `a`.
@@ -480,8 +487,9 @@ e.g.: `find Alex colleagues` is the same as `find colleagues Alex`. +
 
 * `find` is case insensitive for all inputs. +
 e.g.: `find BeRnICe FrIEnDs` is the same as `find Bernice friends`. +
-
+=======
 // end::find[]
+
 
 // tag::social[]
 === Viewing a contact's Twitter/Instagram profile : `social`

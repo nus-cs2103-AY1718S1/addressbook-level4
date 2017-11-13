@@ -1,12 +1,12 @@
 # conantteo
-###### /java/guitests/AddressBookGuiTest.java
+###### \java\guitests\AddressBookGuiTest.java
 ``` java
     protected GroupListPanelHandle getGroupListPanel() {
         return mainWindowHandle.getGroupListPanel();
     }
 
 ```
-###### /java/guitests/guihandles/GroupLabelHandle.java
+###### \java\guitests\guihandles\GroupLabelHandle.java
 ``` java
 package guitests.guihandles;
 
@@ -45,7 +45,7 @@ public class GroupLabelHandle extends NodeHandle<Node> {
     }
 }
 ```
-###### /java/guitests/guihandles/GroupListPanelHandle.java
+###### \java\guitests\guihandles\GroupListPanelHandle.java
 ``` java
 package guitests.guihandles;
 
@@ -101,7 +101,7 @@ public class GroupListPanelHandle extends NodeHandle<ListView<GroupLabel>> {
     }
 }
 ```
-###### /java/seedu/address/commons/util/IndexArrayUtilTest.java
+###### \java\seedu\address\commons\util\IndexArrayUtilTest.java
 ``` java
 package seedu.address.commons.util;
 
@@ -182,6 +182,8 @@ public class IndexArrayUtilTest {
     }
 }
 ```
+<<<<<<< HEAD
+=======
 ###### \java\seedu\address\commons\util\StringUtilTest.java
 ``` java
     @Test
@@ -221,6 +223,7 @@ public class IndexArrayUtilTest {
     }
 }
 ```
+>>>>>>> bd7f7c248711b469ccd96ffcda72d62ab2bae828
 ###### \java\seedu\address\logic\commands\EmailCommandTest.java
 ``` java
 package seedu.address.logic.commands;
@@ -390,7 +393,7 @@ public class EmailCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/ExportCommandTest.java
+###### \java\seedu\address\logic\commands\ExportCommandTest.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -567,7 +570,7 @@ public class ExportCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/FindCommandTest.java
+###### \java\seedu\address\logic\commands\FindCommandTest.java
 ``` java
     @Test
     public void execute_birthdayMonth_personFound() {
@@ -586,7 +589,7 @@ public class ExportCommandTest {
     }
 
 ```
-###### /java/seedu/address/logic/parser/EmailCommandParserTest.java
+###### \java\seedu\address\logic\parser\EmailCommandParserTest.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -649,7 +652,7 @@ public class EmailCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/ExportCommandParserTest.java
+###### \java\seedu\address\logic\parser\ExportCommandParserTest.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -701,7 +704,7 @@ public class ExportCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/model/ModelManagerTest.java
+###### \java\seedu\address\model\ModelManagerTest.java
 ``` java
     @Test
     public void handleSearchTagEvent_updateFilteredPersonList_success() {
@@ -717,7 +720,7 @@ public class ExportCommandParserTest {
         assertTrue(modelManager.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()).equals(BENSON));
     }
 ```
-###### /java/seedu/address/model/person/BirthdayTest.java
+###### \java\seedu\address\model\person\BirthdayTest.java
 ``` java
 package seedu.address.model.person;
 
@@ -728,6 +731,8 @@ import org.junit.Test;
 
 public class BirthdayTest {
 
+    private boolean validBirthday;
+
     @Test
     public void isValidBirthday() {
         // invalid birthday format
@@ -736,7 +741,7 @@ public class BirthdayTest {
         assertFalse(Birthday.isValidBirthday("02/03/190")); // less than 8 digits
         assertFalse(Birthday.isValidBirthday("02/03/19000")); // more than 8 digits
         assertFalse(Birthday.isValidBirthday("phone")); // non-numeric
-        assertFalse(Birthday.isValidBirthday("9011p041")); // alphanumeric
+        assertFalse(validBirthday); // alphanumeric
         assertFalse(Birthday.isValidBirthday("02.03-1990")); // invalid characters between digits
         assertFalse(Birthday.isValidBirthday("02031990")); // exactly 8 digits without any forward slash
         assertFalse(Birthday.isValidBirthday("29/02/1900")); // invalid leap day
@@ -759,7 +764,7 @@ public class BirthdayTest {
     }
 }
 ```
-###### /java/seedu/address/model/person/VcardTest.java
+###### \java\seedu\address\model\person\VcardTest.java
 ``` java
 package seedu.address.model.person;
 
@@ -820,7 +825,7 @@ public class VcardTest {
     }
 }
 ```
-###### /java/seedu/address/storage/XmlAddressBookStorageTest.java
+###### \java\seedu\address\storage\XmlAddressBookStorageTest.java
 ``` java
         //Save in a backup file and read back
         xmlAddressBookStorage.backupAddressBook(original);
@@ -829,7 +834,7 @@ public class VcardTest {
 
     }
 ```
-###### /java/seedu/address/testutil/TagBuilder.java
+###### \java\seedu\address\testutil\TagBuilder.java
 ``` java
 package seedu.address.testutil;
 
@@ -872,12 +877,12 @@ public class TagBuilder {
 
 }
 ```
-###### /java/seedu/address/testutil/TypicalIndexes.java
+###### \java\seedu\address\testutil\TypicalIndexes.java
 ``` java
     public static final Index[] MULTIPLE_INDEX = {INDEX_FIRST_PERSON, INDEX_SECOND_PERSON, INDEX_THIRD_PERSON};
 }
 ```
-###### /java/seedu/address/testutil/TypicalTags.java
+###### \java\seedu\address\testutil\TypicalTags.java
 ``` java
 package seedu.address.testutil;
 
@@ -909,7 +914,7 @@ public class TypicalTags {
     }
 }
 ```
-###### /java/seedu/address/ui/GroupLabelTest.java
+###### \java\seedu\address\ui\GroupLabelTest.java
 ``` java
 package seedu.address.ui;
 
@@ -991,7 +996,7 @@ public class GroupLabelTest extends GuiUnitTest {
     }
 }
 ```
-###### /java/seedu/address/ui/GroupListPanelTest.java
+###### \java\seedu\address\ui\GroupListPanelTest.java
 ``` java
 package seedu.address.ui;
 
@@ -1032,7 +1037,7 @@ public class GroupListPanelTest extends GuiUnitTest {
     }
 }
 ```
-###### /java/seedu/address/ui/testutil/GuiTestAssert.java
+###### \java\seedu\address\ui\testutil\GuiTestAssert.java
 ``` java
     /**
      * Asserts that the list in {@code groupListPanelHandle} displays the name of the {@code tags} correctly.
@@ -1067,7 +1072,7 @@ public class GroupListPanelTest extends GuiUnitTest {
     }
 
 ```
-###### /java/seedu/address/ui/testutil/GuiTestAssert.java
+###### \java\seedu\address\ui\testutil\GuiTestAssert.java
 ``` java
     public static void assertGroupLabelDisplayTag(Tag expectedTag, GroupLabelHandle groupLabel) {
         assertEquals(expectedTag.tagName, groupLabel.getGroupName());

@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
-import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.tag.Tag;
 
@@ -18,6 +17,7 @@ import seedu.address.model.tag.Tag;
 public class PersonContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> {
     private final List<String> keywords;
     private List<String> keywordsLower;
+    private List<String> personTagsLower;
     private String[] nameArr;
     private List<Tag> tagList = new ArrayList<>();
     private List<String> masterList = new ArrayList<>();
@@ -25,6 +25,7 @@ public class PersonContainsKeywordsPredicate implements Predicate<ReadOnlyPerson
     public PersonContainsKeywordsPredicate(List<String> keywords) {
         this.keywords = keywords;
         keywordsLower = new ArrayList<>();
+        personTagsLower = new ArrayList<>();
         setUpCaseInsensitiveKeywords();
     }
 
@@ -36,8 +37,6 @@ public class PersonContainsKeywordsPredicate implements Predicate<ReadOnlyPerson
 
         if (keywords.size() == 1) {
 
-            setUpTagList(); // prepares the keyword in tag form to compare with persons
-
             /* Case 1: keyword is a character (aka initial)
              * searches for people with names (Both first and last names) that start with the character
              */
@@ -48,10 +47,9 @@ public class PersonContainsKeywordsPredicate implements Predicate<ReadOnlyPerson
             /* Case 2: keyword can either be a name or a tag
              * searches for the keyword in the person's name or tags
              */
-            return keywords.stream()
+            return keywordsLower.stream()
                     .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword))
-                    || tagList.stream().anyMatch(tag -> person.getTags().contains(tag));
-
+                    || personTagsLower.contains(keywordsLower.get(0));
         }
 
         /* Case 3: more than 1 keyword
@@ -71,7 +69,6 @@ public class PersonContainsKeywordsPredicate implements Predicate<ReadOnlyPerson
 
     private boolean findNamesWithFirstChar(char firstChar) {
         return (nameStartsWith(firstChar));
-
     }
 
     /**
@@ -102,32 +99,32 @@ public class PersonContainsKeywordsPredicate implements Predicate<ReadOnlyPerson
     }
 
     private void setUpCaseInsensitiveKeywords() {
+        keywordsLower.clear();
         for (int i = 0; i < keywords.size(); i++) {
             keywordsLower.add(keywords.get(i).toLowerCase());
         }
     }
 
-    private void setUpTagList() {
+    private void setUpTagList(ReadOnlyPerson person) {
         tagList.clear();
-        try {
-            tagList.add(new Tag(keywords.get(0)));
-        } catch (IllegalValueException ive) {
-            assert false : "target tag cannot exist";
-        }
-    }
-
-    private void setUpMasterList(ReadOnlyPerson person) {
-
+        personTagsLower.clear();
         tagList.addAll(person.getTags());
         for (int i = 0; i < tagList.size(); i++) {
             String tagNameToAdd = tagList.get(i).toString().substring(1, tagList.get(i).toString().length() - 1);
+            personTagsLower.add(tagNameToAdd.toLowerCase());
             masterList.add(tagNameToAdd.toLowerCase());
         }
+    }
 
+    private void setUpNameList(ReadOnlyPerson person) {
         nameArr = person.getName().toString().split("\\s+");
         for (int i = 0; i < nameArr.length; i++) {
             masterList.add(nameArr[i].toLowerCase());
         }
     }
 
+    private void setUpMasterList(ReadOnlyPerson person) {
+        setUpTagList(person);
+        setUpNameList(person);
+    }
 }
