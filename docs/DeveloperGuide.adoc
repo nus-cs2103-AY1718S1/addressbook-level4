@@ -1191,6 +1191,17 @@ This idea started with creating a field for standalone input of Country name. Ho
 many users may skip, we decided to infer this field from existing information instead. Depending on user feedback, we may want to re-open
 the idea of allowing custom user-defined input, concurrent to a default country inference when a contact is first made.
 
+**Aspect:** How to input Country name +
+**Alternative 1 (current choice):** Automatic detection from phone number +
+**Pros:** Fewer steps by user, ensures all contacts have country. +
+**Cons:** User cannot change a custom country for contact.  +
+**Alternative 2:** Automatic detection from address +
+**Pros:** Fewer steps by user, does not rely on phone prefixes. +
+**Cons:** User may not input country in some addresses. +
+**Alternative 3:** Manual entry of contact's country +
+**Pros:** Guarantees satisfactory country field as defined by user. +
+**Cons:** More steps, users may not want to expend the extra time while populating address book over time.
+
 ---
 //end::country_code[]
 
