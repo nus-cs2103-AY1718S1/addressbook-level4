@@ -43,9 +43,13 @@ There are two ways to load sample data.
 *Observe* will be what you are able to observe.
 
 === Help command
+Opens a window with a help document +
+
+    Format:help
 
 * `help` +
-Observe: A new window appears showing a guide on how all commands are used.
+*Expected Output:* Opened help window.
+*Observe:* A new window appears showing a guide on how all commands are used.
 
 === Add command
 
@@ -408,3 +412,58 @@ Reverses the most recent `undo` command. +
 . `redo` +
 *Expected Output:* Redo success! +
 *Observe:* Contact list will show edited person (Bob) after redo command.
+
+=== History Command
+
+Lists all the commands entered by user from the start of app launch. +
+
+  Format: history
+
+*History Test 1* +
+*Ensure you have not entered any commands*
+
+. `history` +
+
+*Expected Output:* You have not yet entered any commands. +
+
+History Test 2* +
+
+. `history` +
+
+*Expected Output:* +
+Entered commands (from most recent to earliest): +
+history
+
+=== Birthday Alarm Command
+
+Opens a window showing a table of upcoming birthdays corresponding to names. *
+
+    Format: reminders
+
+*Birthday Alarm Command Test 1* +
+*Ensure you have at least one person added during or after the current month*
+
+.`reminders` +
+
+*Expected Output:* Opened Reminders Window +
+*Observe:* The Reminders Window will popup showing the upcoming birthdays of your contacts*
+
+=== Theme Command
+
+Changes the current theme of Deathnote
+
+    Format: theme THEMENAME
+
+*Theme Command Test 1* +
+
+. `theme holy `
+
+*Expected Output:* Theme has been changed. +
+*Observe:* The window theme changes to the holy theme.
+
+. `theme evil`
+
+*Expected Output:* Theme evil. +
+*Observe: * The window theme changes to the evil theme.
+
+==
