@@ -28,7 +28,7 @@ Finally, if ever the need arises, student's parent contact details can be found 
 
 This developer guide  provides future contributors and maintainers of cherBook with the necessary information to understand
 the cherBook source code and guidelines for contributing to the repository.
-Such information include cherBook's software architecture, mojor components, APIs, Documentation and contributing guidelines.
+Such information include cherBook's software architecture, major components, APIs, Documentation and contributing guidelines.
 
 == Setting up
 
