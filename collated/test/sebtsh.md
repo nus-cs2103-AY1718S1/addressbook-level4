@@ -72,15 +72,14 @@
                 .withCompany(VALID_COMPANY_AMY).withPosition(VALID_POSITION_AMY)
                 .withStatus(VALID_STATUS_AMY).withPriority(VALID_PRIORITY_AMY)
                 .withNote(VALID_NOTE_AMY).withPhoto(VALID_PHOTO_AMY).withTags
-                (VALID_TAG_FRIEND).withRelation(VALID_REL_SIBLINGS).build();
+                (VALID_TAG_FRIEND).build();
 
         DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
                 .withCompany(VALID_COMPANY_BOB).withPosition(VALID_POSITION_BOB)
                 .withStatus(VALID_STATUS_BOB).withPriority(VALID_PRIORITY_BOB)
                 .withNote(VALID_NOTE_BOB).withPhoto(VALID_PHOTO_BOB).withTags
-                (VALID_TAG_FRIEND).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
-                .withRelation(VALID_REL_SIBLINGS).build();
+                (VALID_TAG_FRIEND).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
 ```
 ###### \java\seedu\address\logic\parser\AddCommandParserTest.java
 ``` java
@@ -236,22 +235,6 @@
                 Name.MESSAGE_NAME_CONSTRAINTS);
     }
 
-    @Test
-    public void parse_allFieldsSpecified_success() {
-        Index targetIndex = INDEX_SECOND_PERSON;
-        String userInput = targetIndex.getOneBased() + PHONE_DESC_BOB + TAG_DESC_HUSBAND
-                + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + NAME_DESC_AMY + TAG_DESC_FRIEND + COMPANY_DESC_BOB
-                + POSITION_DESC_BOB + STATUS_DESC_AMY + PRIORITY_DESC_AMY + NOTE_DESC_BOB;
-
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
-                .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
-                .withCompany(VALID_COMPANY_BOB).withPosition(VALID_POSITION_BOB)
-                .withStatus(VALID_STATUS_AMY).withPriority(VALID_PRIORITY_AMY)
-                .withNote(VALID_NOTE_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
-        EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
-
-        assertParseSuccess(parser, userInput, expectedCommand);
-    }
 ```
 ###### \java\seedu\address\logic\parser\EditCommandParserTest.java
 ``` java
@@ -270,7 +253,7 @@
                 .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withCompany(VALID_COMPANY_BOB)
                 .withPosition(VALID_POSITION_BOB).withStatus(VALID_STATUS_AMY).withPriority(VALID_PRIORITY_AMY)
                 .withNote(VALID_NOTE_BOB).withPhoto(VALID_PHOTO_BOB).withTags
-                (VALID_TAG_FRIEND, VALID_TAG_HUSBAND).withRelation().build();
+                (VALID_TAG_FRIEND, VALID_TAG_HUSBAND).build();
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);
@@ -397,68 +380,6 @@ public class StatusTest {
         assertTrue(Status.isValidStatus("Was wondering if he wanted follow up or not but have not decided"));
     }
 }
-```
-###### \java\seedu\address\testutil\EditPersonBuilder.java
-``` java
-    /**
-     * Sets the {@code Company} of the {@code EditPerson} that we are building.
-     */
-    public EditPersonBuilder withCompany(String company) {
-        try {
-            ParserUtil.parseCompany(Optional.of(company)).ifPresent(editPerson::setCompany);
-        } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("company is expected to be unique.");
-        }
-        return this;
-    }
-
-    /**
-     * Sets the {@code Position} of the {@code EditPerson} that we are building.
-     */
-    public EditPersonBuilder withPosition(String position) {
-        try {
-            ParserUtil.parsePosition(Optional.of(position)).ifPresent(editPerson::setPosition);
-        } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("position is expected to be unique.");
-        }
-        return this;
-    }
-
-    /**
-     * Sets the {@code Status} of the {@code EditPerson} that we are building.
-     */
-    public EditPersonBuilder withStatus(String status) {
-        try {
-            ParserUtil.parseStatus(Optional.of(status)).ifPresent(editPerson::setStatus);
-        } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("status is expected to be unique.");
-        }
-        return this;
-    }
-
-    /**
-     * Sets the {@code Priority} of the {@code EditPerson} that we are building.
-     */
-    public EditPersonBuilder withPriority(String priority) {
-        try {
-            ParserUtil.parsePriority(Optional.of(priority)).ifPresent(editPerson::setPriority);
-        } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("priority is expected to be unique.");
-        }
-        return this;
-    }
-
-    /**
-     * Sets the {@code Note} of the {@code EditPerson} that we are building.
-     */
-    public EditPersonBuilder withNote(String note) {
-        try {
-            ParserUtil.parseNote(Optional.of(note)).ifPresent(editPerson::setNote);
-        } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("note is expected to be unique.");
-        }
-        return this;
-    }
 ```
 ###### \java\seedu\address\testutil\EditPersonDescriptorBuilder.java
 ``` java

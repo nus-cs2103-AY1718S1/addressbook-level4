@@ -32,8 +32,7 @@ public class AddEventCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John's 21st Birthday "
             + PREFIX_TIMESLOT + "22/10/2017 1900-2200 "
-            + PREFIX_DESCRIPTION + "johnd@example.com "
-            + PREFIX_PERIOD + "14";
+            + PREFIX_DESCRIPTION + "johnd@example.com ";
 
     public static final String MESSAGE_SUCCESS = "New event added: %1$s";
     public static final String MESSAGE_TIME_CLASH = "This event has time clash with an existing event";
@@ -382,6 +381,55 @@ public class ToggleTimetableCommand extends Command {
     }
 }
 ```
+###### \java\seedu\address\logic\commands\ListCommand.java
+``` java
+/**
+ * Lists all persons and/or events in Sales Navigator to the user.
+ */
+public class ListCommand extends Command {
+
+    public static final String COMMAND_WORD_ALL = "listall";
+    public static final String COMMAND_WORD_PERSONS = "listpersons";
+    public static final String COMMAND_WORD_EVENTS = "listevents";
+    public static final String MESSAGE_SUCCESS_PERSONS = "Listed all persons.";
+    public static final String MESSAGE_SUCCESS_EVENTS = "Listed all events.";
+    public static final String MESSAGE_SUCCESS_ALL = "Listed all persons and events.";
+    public static final String MESSAGE_ERROR = "Error: Invalid Option for ListCommand";
+
+    /**
+     * Options available for a list command: list all persons, all events or all persons and events
+     */
+    public enum Option { PERSONS, EVENTS, ALL }
+
+    private Option option;
+
+    public ListCommand (Option op) {
+        this.option = op;
+    }
+
+
+    @Override
+    public CommandResult execute() {
+        switch(option) {
+        case ALL:
+            model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+            model.updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
+            return new CommandResult(MESSAGE_SUCCESS_ALL);
+
+        case PERSONS:
+            model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+            return new CommandResult(MESSAGE_SUCCESS_PERSONS);
+
+        case EVENTS:
+            model.updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
+            return new CommandResult(MESSAGE_SUCCESS_EVENTS);
+
+        default:
+            return new CommandResult(MESSAGE_ERROR);
+        }
+    }
+}
+```
 ###### \java\seedu\address\logic\Logic.java
 ``` java
     /**
@@ -448,6 +496,26 @@ public class DateParser {
 ###### \java\seedu\address\model\AddressBook.java
 ``` java
         events = new EventList();
+        relation = new UniqueRelList();
+    }
+
+    public AddressBook() { }
+
+    /**
+     * Creates an AddressBook using the Persons and Tags in the {@code toBeCopied}
+     */
+    public AddressBook(ReadOnlyAddressBook toBeCopied) {
+        this();
+        this.currentDate = toBeCopied.getCurrentDate();
+        resetData(toBeCopied);
+    }
+
+    //// list overwrite operations
+
+    public void setPersons(List<? extends ReadOnlyPerson> persons) throws DuplicatePersonException {
+        this.persons.setPersons(persons);
+    }
+
 ```
 ###### \java\seedu\address\model\AddressBook.java
 ``` java
@@ -462,6 +530,7 @@ public class DateParser {
         } catch (EventTimeClashException e) {
             assert false : "AddressBooks should not have time-clashing events";
         }
+        logger.info("EVENT SIZE AT UNDO" + newData.getEventList().size());
 ```
 ###### \java\seedu\address\model\AddressBook.java
 ``` java
@@ -632,6 +701,9 @@ public class Event implements ReadOnlyEvent, Comparable<Event> {
     //The template event that this event is created from
     private Optional<ReadOnlyEvent> templateEvent;
 
+    //The scheduled recurring event in the next period
+    private Event nextScheduledEvent;
+
 
     /**
      * Every field must be present and not null.
@@ -752,7 +824,6 @@ public class EventList implements Iterable<Event> {
         internalMap.addListener(new MapChangeListener<Timeslot, Event>() {
             @Override
             public void onChanged(Change<? extends Timeslot, ? extends Event> change) {
-                logger.info("Heard change.");
                 boolean removed = change.wasRemoved();
                 if (removed != change.wasAdded()) {
                     if (removed) {
@@ -1590,12 +1661,13 @@ public class TimetableListPanel extends UiPart<Region> {
 ```
 ###### \resources\view\TimetableListCard.fxml
 ``` fxml
+
 <HBox fx:id="cardPane" minHeight="60.0" mouseTransparent="true" prefHeight="60.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
     <padding>
         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
     </padding>
     <children>
-        <VBox prefHeight="200.0" prefWidth="100.0">
+        <VBox minHeight="40.0" minWidth="180.0">
             <children>
                 <Label fx:id="title" text="title" />
                 <Label fx:id="timing" text="timing" />

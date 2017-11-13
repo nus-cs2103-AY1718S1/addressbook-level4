@@ -11,7 +11,7 @@
             + "[" + PREFIX_POSITION + "POSITION] "
             + "[" + PREFIX_STATUS + "STATUS] "
             + "[" + PREFIX_PRIORITY + "PRIORITY] "
-            + "[" + PREFIX_PHOTO + "PRIORITY] "
+            + "[" + PREFIX_PHOTO + "PHOTO] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "
@@ -210,13 +210,10 @@
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
                         PREFIX_COMPANY, PREFIX_POSITION, PREFIX_STATUS,
                         PREFIX_PRIORITY, PREFIX_NOTE, PREFIX_PHOTO,
-                        PREFIX_TAG, PREFIX_ADD_RELATIONSHIP);
+                        PREFIX_TAG, PREFIX_ADD_RELATIONSHIP, PREFIX_CLEAR_RELATIONSHIP, PREFIX_DELETE_RELATIONSHIP);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
-        }
-        if (arePrefixesPresent(argMultimap, PREFIX_ADD_RELATIONSHIP)) {
-            throw new ParseException(MESSAGE_ADDREL_PREFIX_NOT_ALLOWED);
         }
 
         try {
@@ -233,8 +230,7 @@
             Set<Relationship> relationList = new HashSet<>();
             //Initialize photo to the default icon
             String s = File.separator;
-            Photo photo = new Photo("src" + s + "main" + s + "resources" + s
-                    + "images" + s + "default.jpg");
+            Photo photo = new Photo("data" + s + "default.jpg");
 
             Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
@@ -263,7 +259,10 @@
             if (arePrefixesPresent(argMultimap, PREFIX_PHOTO)) {
                 photo = ParserUtil.parsePhoto(argMultimap.getValue
                         (PREFIX_PHOTO)).get();
-
+            }
+            if (arePrefixesPresent(argMultimap, PREFIX_ADD_RELATIONSHIP) || arePrefixesPresent(argMultimap,
+                PREFIX_DELETE_RELATIONSHIP) || arePrefixesPresent(argMultimap, PREFIX_CLEAR_RELATIONSHIP)) {
+                throw new ParseException(Relationship.MESSAGE_REL_PREFIX_NOT_ALLOWED);
             }
 
             ReadOnlyPerson person = new Person(name, phone, email, address, company, position, status, priority,
@@ -298,12 +297,9 @@
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
                         PREFIX_COMPANY, PREFIX_POSITION, PREFIX_STATUS,
                         PREFIX_PRIORITY, PREFIX_NOTE, PREFIX_PHOTO,
-                        PREFIX_TAG, PREFIX_ADD_RELATIONSHIP);
+                        PREFIX_TAG, PREFIX_ADD_RELATIONSHIP, PREFIX_CLEAR_RELATIONSHIP, PREFIX_DELETE_RELATIONSHIP);
 
         Index index;
-        if (arePrefixesPresent(argMultimap, PREFIX_ADD_RELATIONSHIP)) {
-            throw new ParseException(MESSAGE_ADDREL_PREFIX_NOT_ALLOWED);
-        }
         try {
             index = ParserUtil.parseIndex(argMultimap.getPreamble());
         } catch (IllegalValueException ive) {
@@ -331,6 +327,10 @@
 
         if (!editPersonDescriptor.isAnyFieldEdited()) {
             throw new ParseException(EditCommand.MESSAGE_NOT_EDITED);
+        }
+        if (arePrefixesPresent(argMultimap, PREFIX_ADD_RELATIONSHIP) || arePrefixesPresent(argMultimap,
+            PREFIX_DELETE_RELATIONSHIP) || arePrefixesPresent(argMultimap, PREFIX_CLEAR_RELATIONSHIP)) {
+            throw new ParseException(Relationship.MESSAGE_REL_PREFIX_NOT_ALLOWED);
         }
 
         return new EditCommand(index, editPersonDescriptor);
@@ -417,13 +417,15 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Comparator;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
  * Represents a Person's company in the address book.
  */
 
-public class Company {
+public class Company implements Comparator<Company> {
     public static final String MESSAGE_COMPANY_CONSTRAINTS =
             "Person company can take any values, and it should not be blank";
 
@@ -433,6 +435,7 @@ public class Company {
      */
     public static final String COMPANY_VALIDATION_REGEX = "[^\\s].*";
 
+    private static final String ORDERED_ENTRIES = "NIL";
     public final String value;
 
     /**
@@ -471,8 +474,6 @@ public class Company {
     public int hashCode() {
         return value.hashCode();
     }
-
-}
 ```
 ###### \java\seedu\address\model\person\Note.java
 ``` java
@@ -747,13 +748,15 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Comparator;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
  * Represents a Person's position in the address book.
  */
 
-public class Position {
+public class Position implements Comparator<Position> {
     public static final String MESSAGE_POSITION_CONSTRAINTS =
             "Person position can take any values, and it should not be blank";
 
@@ -763,6 +766,7 @@ public class Position {
      */
     public static final String POSITION_VALIDATION_REGEX = "[^\\s].*";
 
+    private static final String ORDERED_ENTRIES = "NIL";
     public final String value;
 
     /**
@@ -801,8 +805,6 @@ public class Position {
     public int hashCode() {
         return value.hashCode();
     }
-
-}
 ```
 ###### \java\seedu\address\model\person\Priority.java
 ``` java
@@ -910,7 +912,8 @@ public class Priority implements Comparator<Priority> {
                 && other.getStatus().equals(this.getStatus())
                 && other.getPriority().equals(this.getPriority())
                 && other.getNote().equals(this.getNote())
-                && other.getPhoto().equals(this.getPhoto()));
+                && other.getPhoto().equals(this.getPhoto()))
+                && other.getRelation().equals(this.getRelation());
     }
 
     /**
@@ -1105,6 +1108,7 @@ public class Status implements Comparator<Status> {
         note = source.getNote().value;
         photo = source.getPhoto().photoUrl;
         tagged = new ArrayList<>();
+        relation = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
         }
@@ -1235,11 +1239,8 @@ public class EventPanel extends UiPart<Region> {
         nameLabel.setText(event.getTitle().toString());
         timeslotLabel.setText(event.getTimeslot().toString());
         descriptionLabel.setText(event.getDescription().toString());
+        periodLabel.setText("Repeat: Every " + event.getPeriod().toString() + " days.");
 
-        int period = Integer.parseInt(event.getPeriod().toString());
-        if (period != 0) {
-            periodLabel.setText("Repeat: Every " + event.getPeriod().toString() + " days.");
-        }
     }
 
     /**
@@ -1293,12 +1294,8 @@ public class EventPanel extends UiPart<Region> {
 ```
 ###### \java\seedu\address\ui\MainWindow.java
 ``` java
-                if(browserPlaceholder.getChildren().contains(personPanel.getRoot())) {
-                    browserPlaceholder.getChildren().remove(personPanel.getRoot());
-                }
-                if(browserPlaceholder.getChildren().contains(eventPanel.getRoot())) {
-                    browserPlaceholder.getChildren().remove(eventPanel.getRoot());
-                }
+        personPanel.setDimensions(personListPanel.getRoot().getHeight(),
+                primaryStage.getWidth() - personListPanel.getRoot().getWidth());
 ```
 ###### \java\seedu\address\ui\MainWindow.java
 ``` java
@@ -1323,6 +1320,9 @@ public class EventPanel extends UiPart<Region> {
     public void handleEventPanelSelected() {
         if (browserPlaceholder.getChildren().contains(personPanel.getRoot())) {
             browserPlaceholder.getChildren().remove(personPanel.getRoot());
+        }
+        if (browserPlaceholder.getChildren().contains(eventPanel.getRoot())) {
+            browserPlaceholder.getChildren().remove(eventPanel.getRoot());
         }
         if (browserPlaceholder.getChildren().contains(calendarView.getRoot())) {
             browserPlaceholder.getChildren().remove(calendarView.getRoot());
@@ -1414,6 +1414,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Region;
+import javafx.scene.shape.Line;
 import javafx.stage.FileChooser;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
@@ -1430,6 +1431,10 @@ import seedu.address.model.person.ReadOnlyPerson;
  * The main panel of the app that displays all the details of a person in the address book.
  */
 public class PersonPanel extends UiPart<Region> {
+    private static final double EMAIL_NAME_WIDTH = 42;
+    private static final double STATUS_NAME_WIDTH = 47;
+    private static final double HORIZONTAL_SCALE = 0.55;
+    private static final double HORIZONTAL_SCALE_EXTENDED = HORIZONTAL_SCALE + 0.05;
     private static final String FXML = "PersonPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(this.getClass());
     private ReadOnlyPerson storedPerson;
@@ -1448,6 +1453,9 @@ public class PersonPanel extends UiPart<Region> {
     private Label phoneLabel;
 
     @FXML
+    private Label emailName;
+
+    @FXML
     private Label emailLabel;
 
     @FXML
@@ -1458,6 +1466,9 @@ public class PersonPanel extends UiPart<Region> {
 
     @FXML
     private Label positionLabel;
+
+    @FXML
+    private Label statusName;
 
     @FXML
     private Label statusLabel;
@@ -1476,6 +1487,8 @@ public class PersonPanel extends UiPart<Region> {
     @FXML
     private ImageView imageView;
 
+    @FXML
+    private Line line;
 
     public PersonPanel(Logic logic) {
         super(FXML);
@@ -1510,6 +1523,22 @@ public class PersonPanel extends UiPart<Region> {
 ```
 ###### \java\seedu\address\ui\PersonPanel.java
 ``` java
+
+    /**
+     * Called by MainWindow. Sets the dimensions of the various elements for relative scaling once primaryStage
+     * dimensions are known.
+     * @param height
+     * @param width
+     */
+    public void setDimensions(double height, double width) {
+        emailLabel.setLayoutX(width * HORIZONTAL_SCALE);
+        emailName.setLayoutX(emailLabel.getLayoutX() - EMAIL_NAME_WIDTH);
+        statusName.setLayoutX(emailName.getLayoutX());
+        statusLabel.setLayoutX(statusName.getLayoutX() + STATUS_NAME_WIDTH);
+        photo.setLayoutX(width * HORIZONTAL_SCALE);
+        photoSelectionButton.setLayoutX(width * HORIZONTAL_SCALE);
+        photoSelectionButton.setLayoutY(photo.getLayoutY() + photo.getFitHeight());
+        line.setEndX(width * HORIZONTAL_SCALE_EXTENDED);
     }
 
     /**
@@ -1528,6 +1557,7 @@ public class PersonPanel extends UiPart<Region> {
         logger.fine(LogsCenter.getEventHandlingLogMessage
                 (event) + " for index " + index.getZeroBased());
         showPersonDetails(person);
+
     }
 
     /**
@@ -1602,11 +1632,11 @@ public class PersonPanel extends UiPart<Region> {
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.StackPane?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="330.0" prefWidth="800.0" stylesheets="@BrightTheme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="330.0" prefWidth="800.0" stylesheets="@BrightTheme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ImageView fitHeight="507.0" fitWidth="807.0" opacity="0.15">
+      <ImageView fitHeight="507.0" fitWidth="1085.0" opacity="0.15" StackPane.alignment="CENTER_LEFT">
          <image>
-            <Image url="@../../../../../../Desktop/eventpanelbackground.jpg" />
+            <Image url="/images/eventpanelbackground.png" />
          </image>
       </ImageView>
       <StackPane id="eventPeriod" prefHeight="150.0" prefWidth="200.0">
@@ -1620,7 +1650,7 @@ public class PersonPanel extends UiPart<Region> {
       </StackPane>
       <StackPane id="eventName" prefHeight="150.0" prefWidth="200.0">
          <children>
-            <Label id="eventName" fx:id="nameLabel" prefHeight="105.0" prefWidth="800.0" text="Event Name Placeholder" StackPane.alignment="TOP_CENTER" />
+            <Label id="eventName" fx:id="nameLabel" prefHeight="105.0" prefWidth="800.0" text="Event Name Placeholder" StackPane.alignment="TOP_LEFT" />
          </children>
       </StackPane>
       <StackPane id="eventTime" prefHeight="150.0" prefWidth="200.0">
@@ -1633,7 +1663,7 @@ public class PersonPanel extends UiPart<Region> {
       </StackPane>
       <StackPane id="eventDescription" prefHeight="150.0" prefWidth="200.0">
          <children>
-            <Label id="eventDescription" fx:id="descriptionLabel" prefHeight="158.0" prefWidth="278.0" text="Event Description Placeholder" wrapText="true" StackPane.alignment="BOTTOM_LEFT">
+            <Label id="eventDescription" fx:id="descriptionLabel" prefHeight="181.0" prefWidth="802.0" text="Event Description Placeholder" wrapText="true" StackPane.alignment="BOTTOM_LEFT">
                <padding>
                   <Insets bottom="150.0" />
                </padding>
@@ -1655,15 +1685,15 @@ public class PersonPanel extends UiPart<Region> {
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="330.0" prefWidth="846.0" stylesheets="@BrightTheme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
-   <AnchorPane layoutX="-1.0" prefHeight="407.0" prefWidth="1043.0">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="330.0" prefWidth="846.0" stylesheets="@BrightTheme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <AnchorPane layoutX="-1.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="265.0" prefWidth="846.0">
    <children>
-      <Label fx:id="nameLabel" layoutX="14.0" layoutY="14.0" prefHeight="62.0" prefWidth="346.0" styleClass="label-header">
+      <Label fx:id="nameLabel" layoutX="14.0" layoutY="14.0" prefHeight="62.0" prefWidth="563.0" styleClass="label-header">
          <font>
             <Font size="28.0" />
          </font>
       </Label>
-      <ImageView fx:id="photo" fitHeight="100" layoutX="428.0" layoutY="14.0" preserveRatio="true" AnchorPane.leftAnchor="428.0">
+      <ImageView fx:id="photo" fitHeight="100" layoutX="725.0" layoutY="14.0" preserveRatio="true">
       </ImageView>
       <!--<Button fx:id="photoSelectionButton" layoutX="438" layoutY="125"-->
               <!--prefWidth="80" prefHeight="25" text="import..."-->
@@ -1680,7 +1710,7 @@ public class PersonPanel extends UiPart<Region> {
          </font>
       </Label>
       <FlowPane id="tags" fx:id="tagsPane" layoutX="14.0" layoutY="119.0" prefHeight="40.0" prefWidth="200.0" />
-      <Label layoutX="385.0" layoutY="170.0" text="Email: " AnchorPane.leftAnchor="385.0">
+      <Label fx:id="emailName" layoutX="579.0" layoutY="170.0" prefHeight="21.0" prefWidth="49.0" text="Email: ">
          <font>
             <Font size="14.0" />
          </font>
@@ -1690,7 +1720,7 @@ public class PersonPanel extends UiPart<Region> {
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="emailLabel" layoutX="428.0" layoutY="170.0" AnchorPane.leftAnchor="428.0">
+      <Label fx:id="emailLabel" layoutX="428.0" layoutY="170.0">
          <font>
             <Font size="14.0" />
          </font>
@@ -1720,7 +1750,7 @@ public class PersonPanel extends UiPart<Region> {
             <Font size="14.0" />
          </font>
       </Label>
-      <Label layoutX="383.0" layoutY="200.0" text="Status: " AnchorPane.leftAnchor="383.0">
+      <Label fx:id="statusName" layoutX="383.0" layoutY="200.0" text="Status: ">
          <font>
             <Font size="14.0" />
          </font>

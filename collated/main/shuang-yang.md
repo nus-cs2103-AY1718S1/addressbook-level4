@@ -40,6 +40,7 @@ public class ShowCalendarEvent extends BaseEvent {
 ``` java
 package seedu.address.commons.events.ui;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.BaseEvent;
 
 /**
@@ -47,9 +48,9 @@ import seedu.address.commons.events.BaseEvent;
  */
 public class ShowPhotoSelectionEvent extends BaseEvent {
 
-    public final int index;
+    public final Index index;
 
-    public ShowPhotoSelectionEvent(int index) {
+    public ShowPhotoSelectionEvent(Index index) {
         this.index = index;
     }
 
@@ -64,14 +65,21 @@ public class ShowPhotoSelectionEvent extends BaseEvent {
 package seedu.address.logic.commands.event;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_EVENTS;
 
+import java.util.List;
 import java.util.Optional;
 
+import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.UndoableCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.event.Event;
 import seedu.address.model.event.Period;
+import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.model.event.exceptions.EventNotFoundException;
+import seedu.address.model.event.exceptions.EventTimeClashException;
 
 
 /**
@@ -88,8 +96,7 @@ public class RepeatCommand extends UndoableCommand {
             + "[PERIOD OF REPEAT] "
             + "Example: " + COMMAND_WORD + " 1 " + " 7 ";
 
-    public static final String MESSAGE_REPEAT_EVENT_SUCCESS = "Scheduled repeated Event: %1$s";
-    public static final String MESSAGE_NOT_REPEATED = "Period of repetition must be provided.";
+    public static final String MESSAGE_REPEAT_EVENT_SUCCESS = "Scheduled event for future recurrence: %1$s";
     public static final String MESSAGE_TIME_CLASH = "The repeated event has time clash with an existing event";
 
     private final Index index;
@@ -107,11 +114,60 @@ public class RepeatCommand extends UndoableCommand {
         this.period = period;
     }
 
-    @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
-        return new CommandResult(String.format(MESSAGE_REPEAT_EVENT_SUCCESS, period));
+    /**
+     * Creates and returns a {@code Event} with the details of {@code eventToEdit}
+     * edited with new {@code period}.
+     */
+    private static Event createEditedEvent(ReadOnlyEvent eventToEdit, Optional<Period> period) {
+        assert eventToEdit != null;
+
+        Event editedEvent = new Event(eventToEdit);
+        period.ifPresent(editedEvent::setPeriod);
+
+        return editedEvent;
     }
 
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        List<ReadOnlyEvent> lastShownList = model.getFilteredEventList();
+
+        if (index.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_EVENT_DISPLAYED_INDEX);
+        }
+
+        ReadOnlyEvent eventToEdit = lastShownList.get(index.getZeroBased());
+        Event editedEvent = createEditedEvent(eventToEdit, period);
+
+        try {
+            model.updateEvent(eventToEdit, editedEvent);
+        } catch (EventNotFoundException enfe) {
+            throw new AssertionError("The target event cannot be missing");
+        } catch (EventTimeClashException etce) {
+            throw new CommandException(MESSAGE_TIME_CLASH);
+        }
+
+        model.updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
+
+        return new CommandResult(String.format(MESSAGE_REPEAT_EVENT_SUCCESS, editedEvent));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof RepeatCommand)) {
+            return false;
+        }
+
+        // state check
+        RepeatCommand r = (RepeatCommand) other;
+        return index.equals(r.index)
+                && period.equals(r.period);
+    }
 }
 ```
 ###### \java\seedu\address\logic\commands\UpdatePhotoCommand.java
@@ -123,6 +179,7 @@ import static java.util.Objects.requireNonNull;
 import java.util.List;
 
 import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.ShowPhotoSelectionEvent;
 import seedu.address.model.person.ReadOnlyPerson;
 
@@ -140,9 +197,9 @@ public class UpdatePhotoCommand extends Command {
 
     public static final String MESSAGE_UPDATE_PHOTO_SUCCESS = "Updated photo of person: %1$s";
 
-    private final int index;
+    private final Index index;
 
-    public UpdatePhotoCommand(int index) {
+    public UpdatePhotoCommand(Index index) {
         requireNonNull(index);
         this.index = index;
     }
@@ -151,7 +208,7 @@ public class UpdatePhotoCommand extends Command {
     public CommandResult execute() {
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
         EventsCenter.getInstance().post(new ShowPhotoSelectionEvent(index));
-        return new CommandResult(String.format(MESSAGE_UPDATE_PHOTO_SUCCESS, lastShownList.get(index)));
+        return new CommandResult(String.format(MESSAGE_UPDATE_PHOTO_SUCCESS, lastShownList.get(index.getZeroBased())));
     }
 }
 ```
@@ -191,7 +248,6 @@ import java.util.Optional;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.commands.event.EditEventCommand;
 import seedu.address.logic.commands.event.RepeatCommand;
 import seedu.address.logic.parser.Parser;
 import seedu.address.logic.parser.ParserUtil;
@@ -213,14 +269,18 @@ public class RepeatCommandParser implements Parser<RepeatCommand> {
         String trimmedArgs = args.trim();
         String[] tokens = trimmedArgs.split("\\s+");
 
+        if (tokens.length < 2) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RepeatCommand.MESSAGE_USAGE));
+        }
+
         Index index;
         Optional<Period> period;
 
         try {
             index = ParserUtil.parseIndex(tokens[0]);
-            period = ParserUtil.parsePeriod(Optional.of(tokens[1]));
+            period = ParserUtil.parsePeriod(Optional.of(tokens[tokens.length - 1]));
         } catch (IllegalValueException ive) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditEventCommand.MESSAGE_USAGE));
+            throw new ParseException(ive.getMessage(), ive);
         }
 
         return new RepeatCommand(index, period);
@@ -255,8 +315,7 @@ public class RepeatCommandParser implements Parser<RepeatCommand> {
                 throw new IllegalValueException(Photo.MESSAGE_PHOTO_CONSTRAINTS);
             } else {
                 try {
-                    destFilePath = "src" + s + "main" + s + "resources" + s
-                            + "images" + s + fileName;
+                    destFilePath = "data" + s + fileName;
                     File originalFile = new File(originalFilePath);
                     File destFile = new File(destFilePath);
 
@@ -320,7 +379,7 @@ public class UpdatePhotoCommandParser implements Parser<UpdatePhotoCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, UpdatePhotoCommand.MESSAGE_USAGE));
         }
 
-        return new UpdatePhotoCommand(index.getOneBased());
+        return new UpdatePhotoCommand(index);
     }
 }
 ```
@@ -336,6 +395,7 @@ public class UpdatePhotoCommandParser implements Parser<UpdatePhotoCommand> {
         return period.get();
     }
 
+    @Override
     public void setPeriod(Period period) {
         this.period.set(requireNonNull(period));
     }
@@ -421,6 +481,18 @@ public class UpdatePhotoCommandParser implements Parser<UpdatePhotoCommand> {
         return false;
     }
 
+    /**
+     * Adds a given number of days to the timeslot of the event
+     * @param days number of days to add
+     */
+
+    public Event plusDays(int days) {
+        Timeslot newSlot = this.getTimeslot().plusDays(days);
+        Event newEvent = this;
+        newEvent.setTimeslot(newSlot);
+        return newEvent;
+    }
+
     @Override
     public int compareTo(Event other) {
         return this.getTimeslot().compareTo(other.getTimeslot());
@@ -477,6 +549,7 @@ public class UpdatePhotoCommandParser implements Parser<UpdatePhotoCommand> {
      * Returns the backing tree map as an {@code ObservableList}.
      */
     public ObservableList<ReadOnlyEvent> asObservableList() {
+        //logger.info("====== Current eventlist has " + mappedList.size() + " events.");
         return FXCollections.unmodifiableObservableList(mappedList);
     }
 
@@ -1239,7 +1312,10 @@ package seedu.address.model.event;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Optional;
+
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.parser.ParserUtil;
 
 /**
  * Represents an Event's period of repetition in the address book.
@@ -1272,9 +1348,25 @@ public class Period {
 
     /**
      * Returns true if a given string is a valid event period.
+     * @param test string
      */
     public static boolean isValidPeriod(String test) {
         return !test.equals("") && test.matches(PERIOD_VALIDATION_REGEX);
+    }
+
+    /**
+     * Generate an Optional Period object based on given string.
+     * @param periodString
+     * @return an Optional Period object
+     */
+    public static Optional<Period> generatePeriod(String periodString) {
+        Optional<Period> period;
+        try {
+            period = ParserUtil.parsePeriod(Optional.of(periodString));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("Period not recognized.");
+        }
+        return period;
     }
 
 
@@ -1303,6 +1395,8 @@ public class Period {
 
     Period getPeriod();
 
+    void setPeriod(Period period);
+
     Optional<ReadOnlyEvent> getTemplateEvent();
 
     void setTemplateEvent(Optional<ReadOnlyEvent> templateEvent);
@@ -1316,6 +1410,13 @@ public class Period {
     LocalTime getStartTime();
 
     java.util.Date getEndDateTime();
+
+    Event plusDays(int days);
+
+    Event getNextScheduledEvent();
+
+    void setNextScheduledEvent(Event nextScheduledEvent);
+
 ```
 ###### \java\seedu\address\model\event\RepeatEventTimerTask.java
 ``` java
@@ -1341,7 +1442,7 @@ public class RepeatEventTimerTask extends TimerTask {
 
     /**
      * @param event event to edit
-     * @param int period of repetition
+     * @param period period of repetition
      */
     public RepeatEventTimerTask(Model model, ReadOnlyEvent event, int period) {
         requireNonNull(event);
@@ -1349,6 +1450,7 @@ public class RepeatEventTimerTask extends TimerTask {
         this.model = model;
         this.targetEvent = event;
         this.period = period;
+        System.out.println("New timer task created: " + event);
     }
 
     /**
@@ -1359,7 +1461,7 @@ public class RepeatEventTimerTask extends TimerTask {
         Event event = new Event(eventToEdit);
         Timeslot currentTimeslot = event.getTimeslot();
 
-        // If the eventToEdit is far in the past, only add the repeated event in the next week to avoid adding too
+        // If the eventToEdit is far in the past, only add the repeated event in the next period to avoid adding too
         // many event at the same time
         while (currentTimeslot.isBefore(Timeslot.getNow())) {
             currentTimeslot = currentTimeslot.plusDays(period);
@@ -1378,7 +1480,10 @@ public class RepeatEventTimerTask extends TimerTask {
                 try {
                     model.addEvent(editedEvent);
                 } catch (EventTimeClashException etce) {
-                    model.scheduleRepeatedEvent(editedEvent);
+                    Event newEvent = editedEvent.plusDays(period);
+                    System.out.println("Timer task - new event created: " + newEvent);
+                    model.scheduleRepeatedEvent(newEvent);
+                    //RepeatEventTimerTask newTask = new RepeatEventTimerTask(model, editedEvent, period);
                 }
             }
         });
@@ -1603,7 +1708,7 @@ public class CalendarView extends UiPart<Region> {
         initPageTurnerButtons(headers);
         initDateHeader(headers);
         initDateTimeHeader(calendarView);
-        initEvents(calendarView, eventList, null);
+        initEvents(calendarView, eventList, null, null);
         initScrollPanes();
     }
 
@@ -1664,7 +1769,7 @@ public class CalendarView extends UiPart<Region> {
                 currentEndOfWeek = currentEndOfWeek.minusDays(7);
                 initSlots(calendarView);
                 initDateHeader(headers);
-                initEvents(calendarView, eventList, null);
+                initEvents(calendarView, eventList, null, null);
             }
         });
         nextPage.setOnAction(new EventHandler<ActionEvent>() {
@@ -1674,7 +1779,7 @@ public class CalendarView extends UiPart<Region> {
                 currentEndOfWeek = currentEndOfWeek.plusDays(7);
                 initSlots(calendarView);
                 initDateHeader(headers);
-                initEvents(calendarView, eventList, null);
+                initEvents(calendarView, eventList, null, null);
             }
         });
 
@@ -1741,7 +1846,7 @@ public class CalendarView extends UiPart<Region> {
      * @param eventList list of all events
      */
     private void initEvents(GridPane calendarView, ObservableList<ReadOnlyEvent> eventList, ReadOnlyEvent
-            lastChangedEvent) {
+            lastChangedEvent, ReadOnlyEvent newlyAddedEvent) {
         this.eventList = eventList;
         initStartEndOfWeek();
         ObservableList<ReadOnlyEvent> eventsThisWeek = extractEvents(eventList);
@@ -1750,7 +1855,7 @@ public class CalendarView extends UiPart<Region> {
 
         //Iteratively add the events to the calendar view
         for (ReadOnlyEvent event:eventsThisWeek) {
-            if (!addedEvents.containsKey(event)) {
+            if (!addedEvents.containsKey(event) && !event.equals(lastChangedEvent) && !event.equals(newlyAddedEvent)) {
                 StackPane eventPane = createPane(event);
                 addEventPaneToCalendarView(calendarView, event, eventPane);
             }
@@ -1810,7 +1915,7 @@ public class CalendarView extends UiPart<Region> {
 
         try {
             startOfWeekTimeslot = new Timeslot(startofWeekTokens[2] + "/" + startofWeekTokens[1] + "/"
-                    + startofWeekTokens[0] + " " + "0700-0701");
+                    + startofWeekTokens[0] + " " + "0658-0659");
             endOfWeekTimeslot = new Timeslot(endofWeekTokens[2] + "/" + endofWeekTokens[1] + "/"
                     + endofWeekTokens[0] + " " + "2358-2359");
         } catch (IllegalValueException ive) {
@@ -1858,9 +1963,6 @@ public class CalendarView extends UiPart<Region> {
      * @return the stack pane created
      */
     private StackPane createPane(ReadOnlyEvent event) {
-        String[] colors = {"#81C7D4", "#FEDFE1", "#D7C4BB", "#D7B98E"};
-        int randomColor = (int) (Math.random() * 4);
-
         //Create the label
         Label eventTitle = new Label();
         eventTitle.setWrapText(true);
@@ -1870,7 +1972,7 @@ public class CalendarView extends UiPart<Region> {
         //Create the pane
         StackPane eventPane = new StackPane();
         eventPane.setMaxWidth(135.0);
-        eventPane.setStyle("-fx-background-color: " + colors[randomColor] + "; -fx-alignment: CENTER; "
+        eventPane.setStyle("-fx-background-color: #81C7D4; -fx-alignment: CENTER; "
                 + "-fx-border-color: " + "white");
 
         //Add listener to mouse-click event to show detail of the event
@@ -2010,10 +2112,15 @@ public class CalendarView extends UiPart<Region> {
      */
     @Subscribe
     public void handleAddressBookChangedEvent(AddressBookChangedEvent abce) {
-        logger.info("LastChangedEvent is " + abce.data.getLastChangedEvent());
-        logger.info("NewlyAddedEvent is " + abce.data.getNewlyAddedEvent());
-        updateEvents(calendarView, abce.data.getEventList(), abce.data.getLastChangedEvent(), abce.data
-                .getNewlyAddedEvent());
+        ReadOnlyEvent lastChangedEvent = abce.data.getLastChangedEvent();
+        ReadOnlyEvent newlyAddedEvent = abce.data.getNewlyAddedEvent();
+        logger.info("LastChangedEvent is " + lastChangedEvent);
+        logger.info("NewlyAddedEvent is " + newlyAddedEvent);
+        initEvents(calendarView, abce.data.getEventList(), lastChangedEvent, newlyAddedEvent);
+        if (abce.data.getEventList().size() != 0) {
+            updateEvents(calendarView, abce.data.getEventList(), lastChangedEvent, newlyAddedEvent);
+        }
+
     }
 
 
@@ -2252,7 +2359,7 @@ public class EventListPanel extends UiPart<Region> {
         eventListView.getSelectionModel().selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> {
                     if (newValue != null) {
-                        logger.fine("Selection in event list panel changed to : '" + newValue + "'");
+                        logger.info("Selection in event list panel changed to : '" + newValue + "'");
                         raise(new EventPanelSelectionChangedEvent(newValue));
                     }
                 });
@@ -2266,13 +2373,6 @@ public class EventListPanel extends UiPart<Region> {
             eventListView.scrollTo(index);
             eventListView.getSelectionModel().clearAndSelect(index);
         });
-    }
-
-
-    @Subscribe
-    private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        scrollTo(event.targetIndex);
     }
 
 ```
@@ -2291,6 +2391,8 @@ public class EventListPanel extends UiPart<Region> {
                 } else {
                     browserPlaceholder.getChildren().remove(calendarView.getRoot());
                 }
+            }
+        });
 ```
 ###### \java\seedu\address\ui\MainWindow.java
 ``` java
@@ -2323,6 +2425,12 @@ public class EventListPanel extends UiPart<Region> {
     @Subscribe
     private void handleShowCalendarEvent(ShowCalendarEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        if (browserPlaceholder.getChildren().contains(personPanel.getRoot())) {
+            browserPlaceholder.getChildren().remove(personPanel.getRoot());
+        }
+        if (browserPlaceholder.getChildren().contains(eventPanel.getRoot())) {
+            browserPlaceholder.getChildren().remove(eventPanel.getRoot());
+        }
         handleShowCalendar();
     }
 
@@ -2355,8 +2463,8 @@ public class EventListPanel extends UiPart<Region> {
         File file = fileChooser.showOpenDialog(primaryStage.getScene().getWindow());
 
         try {
-            logic.execute("edit " + event.index + " ph/"
-                    + file.toURI().getPath());
+            logic.execute("edit " + event.index.getOneBased() + " ph/"
+                    + file.getAbsolutePath());
         } catch (CommandException | ParseException e) {
             raise(new NewResultAvailableEvent(e.getMessage(), true));
         }
@@ -2394,7 +2502,7 @@ public class EventListPanel extends UiPart<Region> {
                     logger.fine("Person Panel register button for index "
                             + index.getZeroBased());
                     CommandResult commandResult = logic.execute("edit " + index.getZeroBased() + " ph/"
-                            + file.toURI().getPath());
+                            + file.getAbsolutePath());
                     raise(new NewResultAvailableEvent(commandResult.feedbackToUser, false));
                 } catch (CommandException | ParseException e) {
                     raise(new NewResultAvailableEvent(e.getMessage(), true));
@@ -2410,6 +2518,9 @@ public class EventListPanel extends UiPart<Region> {
         Image image = new Image(new File(imagePath).toURI().toString());
         photo.setImage(image);
         storedPerson = person;
+
+    }
+
 ```
 ###### \resources\view\BrightTheme.css
 ``` css
@@ -2741,37 +2852,44 @@ public class EventListPanel extends UiPart<Region> {
 ```
 ###### \resources\view\EventListCard.fxml
 ``` fxml
+
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
-<HBox xmlns:fx="http://javafx.com/fxml/1" id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/8">
+
+<HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
     <GridPane HBox.hgrow="ALWAYS">
         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150"/>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
         </columnConstraints>
         <VBox alignment="CENTER_LEFT" minHeight="105" GridPane.columnIndex="0">
             <padding>
-                <Insets top="5" right="5" bottom="5" left="15"/>
+                <Insets bottom="5" left="15" right="5" top="5" />
             </padding>
-            <HBox spacing="5" alignment="CENTER_LEFT">
+            <HBox alignment="CENTER_LEFT" spacing="5">
                 <Label fx:id="id" styleClass="cell_big_label">
                     <minWidth>
                         <!-- Ensures that the label text is never truncated -->
-                        <Region fx:constant="USE_PREF_SIZE"/>
+                        <Region fx:constant="USE_PREF_SIZE" />
                     </minWidth>
                 </Label>
-                <Label fx:id="title" styleClass="cell_big_label" text="\$title"/>
+                <Label fx:id="title" styleClass="cell_big_label" text="\$title" />
             </HBox>
             <HBox>
-                <Label fx:id="date" styleClass="cell_small_label" text="\$date"/>
-                <Label fx:id="timing" text="\$timing" styleClass="cell_small_label"/>
+                <Label fx:id="date" styleClass="cell_small_label" text="\$date" />
+            <Label text="   " />
+                <Label fx:id="timing" styleClass="cell_small_label" text="\$timing" />
             </HBox>
-            <Label fx:id="description" styleClass="cell_small_label" text="\$description"/>
+            <Label fx:id="description" styleClass="cell_small_label" text="\$description" />
         </VBox>
+      <rowConstraints>
+         <RowConstraints />
+      </rowConstraints>
     </GridPane>
 </HBox>
 ```
@@ -2780,8 +2898,9 @@ public class EventListPanel extends UiPart<Region> {
 
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.VBox?>
-<VBox xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" VBox.vgrow="ALWAYS">
-    <ListView fx:id="eventListView"/>
+
+<VBox prefHeight="1000.0" VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+    <ListView fx:id="eventListView" prefHeight="1000.0" />
 </VBox>
 ```
 ###### \resources\view\MainWindow.fxml
@@ -2810,7 +2929,7 @@ public class EventListPanel extends UiPart<Region> {
         <URL value="@CalendarView.css" />
     </stylesheets>
 
-<VBox xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="2000.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
     <stylesheets>
         <URL value="@BrightTheme.css" />
         <URL value="@Extensions.css" />
@@ -2846,11 +2965,7 @@ public class EventListPanel extends UiPart<Region> {
                 <padding>
                     <Insets bottom="10" left="10" right="20" top="10" />
                 </padding>
-                <AnchorPane fx:id="notificationButton" maxWidth="35" prefHeight="30">
-                    <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                        <Image url="/images/notification.png" />
-                    </ImageView>
-                </AnchorPane>
+                <AnchorPane fx:id="notificationButton" maxWidth="35" prefHeight="30" />
             </StackPane>
         </items>
     </SplitPane>

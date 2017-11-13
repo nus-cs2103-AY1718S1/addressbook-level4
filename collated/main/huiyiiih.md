@@ -1,28 +1,169 @@
 # huiyiiih
-###### /resources/view/BrightTheme.css
-``` css
-.scroll-pane > .viewport {
-   -fx-background-color: transparent;
-}
+###### \java\seedu\address\logic\commands\relationship\SetRelCommand.java
+``` java
+/**
+ * Sets the relationship between two persons
+ */
+public class SetRelCommand extends UndoableCommand {
+    public static final String COMMAND_WORD = "set";
 
-.scroll-pane {
-   -fx-background-color: transparent;
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sets the relationship between two persons "
+        + "by the index number used in the last person listing.\n"
+        + "For adding of relationship, only one relationship is allowed. This command is able to add and delete\n "
+        + "specifc relationship between two persons and clear deletes all relationships the two persons have.\n"
+        + "Parameters: INDEX (must be a positive integer) "
+        + "[" + PREFIX_ADD_RELATIONSHIP + "RELATIONSHIP]\n"
+        + "Example: " + COMMAND_WORD + " 1 2 "
+        + PREFIX_ADD_RELATIONSHIP + "colleagues\n"
+        + "Example: " + COMMAND_WORD + " 1 2 "
+        + PREFIX_DELETE_RELATIONSHIP + "colleagues\n"
+        + "Example: " + COMMAND_WORD + " 1 2 "
+        + PREFIX_CLEAR_RELATIONSHIP + "\n";
+    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Relationship Changed for Person: %1$s\n"
+        + "& Person: %2$s";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
+    public static final String MESSAGE_NO_MULTIPLE_REL = "These two persons cannot have multiple relationships"
+        + " please edit the relationship between them instead.";
+
+    private final Index indexOne;
+    private final Index indexTwo;
+    private final EditPerson editPerson;
+    private final boolean addPrefixPresent;
+
+    /**
+     * @param indexOne          first index of the person in the filtered person list to add relationship
+     * @param indexTwo          second index of the person in the filtered person list to add relationship
+     * @param editPerson        details to edit the person with
+     * @param addPrefixPresent  add prefix present or not present
+     */
+    public SetRelCommand(Index indexOne, Index indexTwo, EditPerson editPerson, boolean addPrefixPresent) {
+        requireNonNull(indexOne);
+        requireNonNull(indexTwo);
+
+        this.indexOne = indexOne;
+        this.indexTwo = indexTwo;
+        this.editPerson = editPerson;
+        this.addPrefixPresent = addPrefixPresent;
+    }
+    /**
+     * Creates and returns a {@code Person} with the details of {@code personToEdit}
+     * edited with {@code editPersonDescriptor}.
+     */
+    private static Person createEditedPerson(ReadOnlyPerson personToEdit, EditPerson editPerson,
+                                             ReadOnlyPerson personTwo) {
+        assert personToEdit != null;
+
+        Name updatedName = editPerson.getName().orElse(personToEdit.getName());
+        Phone updatedPhone = editPerson.getPhone().orElse(personToEdit.getPhone());
+        Email updatedEmail = editPerson.getEmail().orElse(personToEdit.getEmail());
+        Address updatedAddress = editPerson.getAddress().orElse(personToEdit.getAddress());
+        Company updatedCompany = editPerson.getCompany().orElse(personToEdit.getCompany());
+        Position updatedPosition = editPerson.getPosition().orElse(personToEdit.getPosition());
+        Status updatedStatus = editPerson.getStatus().orElse(personToEdit.getStatus());
+        Priority updatedPriority = editPerson.getPriority().orElse(personToEdit.getPriority());
+        Note updatedNote = editPerson.getNote().orElse(personToEdit.getNote());
+        Photo updatedPhoto = editPerson.getPhoto().orElse(personToEdit
+            .getPhoto());
+        Set<Tag> updatedTags = editPerson.getTags().orElse(personToEdit.getTags());
+        Set<Relationship> relation = personToEdit.getRelation();
+        final Set<Relationship> updatedRel = new HashSet<>();
+        if (!editPerson.shouldClear()) {
+            updatedRel.addAll(relation);
+        }
+        editPerson.getToAddRel(personTwo).ifPresent(updatedRel::addAll);
+        editPerson.getToDeleteRel(personTwo).ifPresent(updatedRel::removeAll);
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedCompany,
+        updatedPosition, updatedStatus, updatedPriority, updatedNote, updatedPhoto, updatedTags, updatedRel);
+    }
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+
+        if ((indexOne.getZeroBased() >= lastShownList.size()) || (indexTwo.getZeroBased() >= lastShownList.size())) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        ReadOnlyPerson personToEditOne = lastShownList.get(indexOne.getZeroBased());
+        ReadOnlyPerson personToEditTwo = lastShownList.get(indexTwo.getZeroBased());
+        Person editedPersonOne = createEditedPerson(personToEditOne, editPerson, personToEditTwo);
+        Person editedPersonTwo = createEditedPerson(personToEditTwo, editPerson, personToEditOne);
+
+        if (addPrefixPresent && (personToEditOne.getRelation().toString().contains(personToEditTwo.getName().toString())
+            || personToEditTwo.getRelation().toString().contains(personToEditOne.getName().toString()))) {
+            throw new CommandException(MESSAGE_NO_MULTIPLE_REL);
+        }
+        try {
+            model.updatePerson(personToEditOne, editedPersonOne);
+            model.updatePerson(personToEditTwo, editedPersonTwo);
+        } catch (DuplicatePersonException dpe) {
+            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("The target person cannot be missing");
+        }
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedPersonOne, editedPersonTwo));
+    }
+```
+###### \java\seedu\address\logic\commands\relationship\SetRelCommand.java
+``` java
+        public Optional<Set<Relationship>> getToAddRel(ReadOnlyPerson person) {
+            Set<Relationship> relWithName = new HashSet<>();
+            if ((addRel == null)) {
+                return Optional.ofNullable(null);
+            }
+            relWithName.add(new Relationship(person.getName().toString(), addRel));
+
+            return Optional.of(relWithName);
+        }
+```
+###### \java\seedu\address\logic\commands\relationship\SetRelCommand.java
+``` java
+        public Optional<Set<Relationship>> getToDeleteRel(ReadOnlyPerson person) {
+            Set<Relationship> relWithName = new HashSet<>();
+            relWithName.add(new Relationship(person.getName().toString(), deleteRel));
+            return Optional.of(relWithName);
+        }
+```
+###### \java\seedu\address\logic\commands\SortCommand.java
+``` java
+
+/**
+ * Lists all persons in the address book to the user.
+ */
+public class SortCommand extends UndoableCommand {
+
+    public static final String COMMAND_WORD = "sort";
+    public static final String MESSAGE_UNKNOWN_SORT_TYPE = "Sorting type not found";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sorts the list according to either name, tag, "
+            + "company, priority, status\n"
+            + "Parameters: TYPE  (name, tag, company, priority, status)\n"
+            + "Example: " + COMMAND_WORD + " name";
+    public static final String MESSAGE_SUCCESS = "Sorted according to ";
+    private final String type;
+
+    public SortCommand(String type) {
+        this.type = type;
+    }
+
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        try {
+            model.sortPersonList(type);
+            return new CommandResult(MESSAGE_SUCCESS + type);
+        } catch (InvalidSortTypeException iste) {
+            throw new CommandException(MESSAGE_UNKNOWN_SORT_TYPE);
+        }
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof SortCommand // instanceof handles nulls
+                && this.type == (((SortCommand) other).type)); // state check
+    }
 }
 ```
-###### /resources/view/PersonPanel.fxml
-``` fxml
-         <Label layoutX="14.0" layoutY="255.0" prefHeight="100.0" prefWidth="275.0" styleClass="label-header" text="Relationships" AnchorPane.leftAnchor="14.0">
-         <font>
-            <Font name="System Bold" size="21.0" />
-         </font>
-      </Label>
-         <ScrollPane fx:id="scrollPane" layoutX="383.0" layoutY="287.0" prefHeight="40.0" prefWidth="212.0">
-            <content>
-               <FlowPane fx:id="relationshipPane" prefHeight="52.0" prefWidth="181.0" />
-            </content>
-         </ScrollPane>
-```
-###### /java/seedu/address/logic/parser/ArgumentMultimap.java
+###### \java\seedu\address\logic\parser\ArgumentMultimap.java
 ``` java
     /**
      * Returns true if there is only one prefix present
@@ -45,181 +186,7 @@
         return argMultimap.containsKey(prefix);
     }
 ```
-###### /java/seedu/address/logic/parser/ParserUtil.java
-``` java
-    /**
-     * Parses {@code Collection<String> relationship} into a {@code Set<Relationship>}.
-     */
-    public static Set<Relationship> parseRels(Collection<String> relation) throws IllegalValueException {
-        requireNonNull(relation);
-        final Set<Relationship> relationSet = new HashSet<>();
-        for (String relationType : relation) {
-            relationSet.add(new Relationship(relationType));
-        }
-        return relationSet;
-    }
-```
-###### /java/seedu/address/logic/parser/CliSyntax.java
-``` java
-    /* Prefix definitions for Relationship*/
-    public static final Prefix PREFIX_ADD_RELATIONSHIP = new Prefix("ar/");
-    public static final Prefix PREFIX_DELETE_RELATIONSHIP = new Prefix("dr/");
-    public static final Prefix PREFIX_CLEAR_RELATIONSHIP = new Prefix("cr/");
-    //@author
-}
-```
-###### /java/seedu/address/logic/parser/relationship/SetRelCommandParser.java
-``` java
-
-/**
- * Parses all input arguments and create a new SetRelCommand object
- */
-public class SetRelCommandParser implements Parser<SetRelCommand> {
-
-    public static final String ONE_RELATIONSHIP_ALLOWED = "Only one relationship allowed when adding or deleting "
-        + "relationship between two persons.";
-    public static final String NULL_RELATION_INPUT = "Relationship entered should not be empty.";
-    public static final String SAME_INDEX_ERROR = "Index of the two persons must be different.";
-    public static final String INVALID_INDEX = "Indexes entered is invalid or there must be at least two indexes";
-    private static final int size = 3;
-    /**
-     * Parses the given {@code String} of arguments in the context of the SetRelCommand
-     * and returns an SetRelCommand object for execution.
-     *
-     * @throws ParseException if the user input does not conform the expected format
-     */
-    public SetRelCommand parse(String args) throws ParseException {
-        requireNonNull(args);
-        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_ADD_RELATIONSHIP,
-            PREFIX_DELETE_RELATIONSHIP, PREFIX_CLEAR_RELATIONSHIP);
-        Index indexOne;
-        Index indexTwo;
-        String value;
-        String[] indexes;
-        boolean addPrefixPresent = false;
-        value = argMultimap.getPreamble();
-        if (!areAnyPrefixesPresent(argMultimap, PREFIX_ADD_RELATIONSHIP, PREFIX_DELETE_RELATIONSHIP,
-            PREFIX_CLEAR_RELATIONSHIP)) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SetRelCommand.MESSAGE_USAGE));
-        }
-        if (value.length() < size && !value.isEmpty()) {
-            throw new ParseException(INVALID_INDEX);
-        }
-        try {
-            indexes = value.split("\\s+");
-            indexOne = ParserUtil.parseIndex(indexes[0]);
-            indexTwo = ParserUtil.parseIndex(indexes[1]);
-        } catch (IllegalValueException ive) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SetRelCommand.MESSAGE_USAGE));
-        }
-        if (indexOne.equals(indexTwo)) {
-            throw new ParseException(SAME_INDEX_ERROR);
-        }
-        if (!argMultimap.containsOnePrefix(PREFIX_ADD_RELATIONSHIP)
-            || !argMultimap.containsOnePrefix(PREFIX_DELETE_RELATIONSHIP)) {
-            throw new ParseException(String.format(ONE_RELATIONSHIP_ALLOWED, SetRelCommand.MESSAGE_USAGE));
-        }
-        if (areAnyPrefixesPresent(argMultimap, PREFIX_ADD_RELATIONSHIP)) {
-            addPrefixPresent = true;
-        }
-        if (areAnyPrefixesPresent(argMultimap, PREFIX_ADD_RELATIONSHIP, PREFIX_DELETE_RELATIONSHIP)
-            || addPrefixPresent) {
-            try {
-                emptyInputArg(addPrefixPresent, argMultimap, PREFIX_ADD_RELATIONSHIP,
-                    PREFIX_DELETE_RELATIONSHIP);
-            } catch (ParseException pe) {
-                throw new ParseException(NULL_RELATION_INPUT);
-            }
-        }
-        EditPerson editPerson = new EditPerson();
-        try {
-            parseRelForEdit(argMultimap.getAllValues(PREFIX_ADD_RELATIONSHIP)).ifPresent
-                (editPerson::setToAdd);
-            parseRelForEdit(argMultimap.getAllValues(PREFIX_DELETE_RELATIONSHIP)).ifPresent
-                (editPerson::setToDelete);
-            editPerson.setClearRels(argMultimap.containsPrefix(PREFIX_CLEAR_RELATIONSHIP));
-        } catch (IllegalValueException ive) {
-            throw new ParseException(ive.getMessage(), ive);
-        }
-
-        return new SetRelCommand(indexOne, indexTwo, editPerson, addPrefixPresent);
-    }
-    /**
-     * Parses {@code Collection<String> relationships} into a {@code Set<Relationship>}
-     * if {@code relationships} is non-empty.
-     * If {@code relationship} contain only one element which is an empty string, it will be parsed into a
-     * {@code Set<Relationship>} containing zero relationships.
-     */
-    private Optional<Set<Relationship>> parseRelForEdit(Collection<String> rel) throws IllegalValueException {
-        assert rel != null;
-        if (rel.isEmpty()) {
-            return Optional.empty();
-        }
-        Collection<String> relSet = rel.size() == 1 && rel.contains("") ? Collections.emptySet() : rel;
-        return Optional.of(ParserUtil.parseRels(relSet));
-    }
-
-    /**
-     * Checks if any of the prefixes are present
-     * return true if the certain prefix is present and false if the certain prefix is not present
-     * @param argumentMultimap      argumentMultiMap of the input string
-     * @param prefixes              any of the set relationship prefix(es)
-     * @return true || false
-     */
-    private static boolean areAnyPrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
-        return Stream.of(prefixes).anyMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
-    }
-
-    /**
-     * Checks if the argumentMultimap is empty for either the add relationship prefix if present
-     * and the delete relationship prefix
-     * @param addPrefixPresent      to indicate if add prefix is present
-     * @param argumentMultimap      input string
-     * @param prefixAdd             add relationship prefix
-     * @param prefixDelete          delete relationship prefix
-     */
-    private void emptyInputArg(boolean addPrefixPresent, ArgumentMultimap argumentMultimap, Prefix prefixAdd,
-                                        Prefix prefixDelete) throws ParseException {
-        String addRelString;
-
-        if (addPrefixPresent) {
-            addRelString = argumentMultimap.getValue(prefixAdd).get();
-        } else {
-            addRelString = argumentMultimap.getValue(prefixDelete).get();
-        }
-        requireNonNull(addRelString);
-        if (addRelString.length() == 0) {
-            throw new ParseException(NULL_RELATION_INPUT);
-        }
-    }
-}
-```
-###### /java/seedu/address/logic/parser/SortCommandParser.java
-``` java
-
-/**
- * Parses input arguments and creates a new SortCommand object
- */
-public class SortCommandParser implements Parser<SortCommand> {
-    /**
-     * Parses the given {@code String} of arguments in the context of the DeleteCommand
-     * and returns an DeleteCommand object for execution.
-     *
-     * @throws ParseException if the user input does not conform the expected format
-     */
-    public SortCommand parse(String args) throws ParseException {
-        requireNonNull(args);
-        String trimmedValue = args.trim();
-        if (trimmedValue.isEmpty()) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
-        }
-        return new SortCommand(trimmedValue);
-    }
-
-}
-```
-###### /java/seedu/address/logic/parser/CheckCommandsParser.java
+###### \java\seedu\address\logic\parser\CheckCommandsParser.java
 ``` java
 
 /**
@@ -364,213 +331,380 @@ public class CheckCommandsParser {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/SortCommand.java
+###### \java\seedu\address\logic\parser\CliSyntax.java
+``` java
+    /* Prefix definitions for Relationship*/
+    public static final Prefix PREFIX_ADD_RELATIONSHIP = new Prefix("ar/");
+    public static final Prefix PREFIX_DELETE_RELATIONSHIP = new Prefix("dr/");
+    public static final Prefix PREFIX_CLEAR_RELATIONSHIP = new Prefix("cr/");
+    //@author
+}
+```
+###### \java\seedu\address\logic\parser\ParserUtil.java
+``` java
+    /**
+     * Parses {@code Collection<String> relationship} into a {@code Set<Relationship>}.
+     */
+    public static Set<Relationship> parseRels(Collection<String> relation) throws IllegalValueException {
+        requireNonNull(relation);
+        final Set<Relationship> relationSet = new HashSet<>();
+        for (String relationType : relation) {
+            relationSet.add(new Relationship(relationType));
+        }
+        return relationSet;
+    }
+```
+###### \java\seedu\address\logic\parser\relationship\SetRelCommandParser.java
 ``` java
 
 /**
- * Lists all persons in the address book to the user.
+ * Parses all input arguments and create a new SetRelCommand object
  */
-public class SortCommand extends UndoableCommand {
+public class SetRelCommandParser implements Parser<SetRelCommand> {
 
-    public static final String COMMAND_WORD = "sort";
-    public static final String MESSAGE_UNKNOWN_SORT_TYPE = "Sorting type not found";
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sorts the list according to either name, tag, "
-            + "company, priority, status\n"
-            + "Parameters: TYPE  (name, tag, company, priority, status)\n"
-            + "Example: " + COMMAND_WORD + " name";
-    public static final String MESSAGE_SUCCESS = "Sorted according to ";
-    private final String type;
-
-    public SortCommand(String type) {
-        this.type = type;
-    }
-
-    @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
-        try {
-            model.sortPersonList(type);
-            return new CommandResult(MESSAGE_SUCCESS + type);
-        } catch (InvalidSortTypeException iste) {
-            throw new CommandException(MESSAGE_UNKNOWN_SORT_TYPE);
+    public static final String ONE_RELATIONSHIP_ALLOWED = "Only one relationship allowed when adding or deleting "
+        + "relationship between two persons.";
+    public static final String NULL_RELATION_INPUT = "Relationship entered should not be empty.";
+    public static final String SAME_INDEX_ERROR = "Index of the two persons must be different.";
+    public static final String INVALID_INDEX = "There must be at least two indexes";
+    private static final int size = 3;
+    /**
+     * Parses the given {@code String} of arguments in the context of the SetRelCommand
+     * and returns an SetRelCommand object for execution.
+     *
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public SetRelCommand parse(String args) throws ParseException {
+        requireNonNull(args);
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_ADD_RELATIONSHIP,
+            PREFIX_DELETE_RELATIONSHIP, PREFIX_CLEAR_RELATIONSHIP);
+        Index indexOne;
+        Index indexTwo;
+        String value;
+        String[] indexes;
+        boolean addPrefixPresent = false;
+        value = argMultimap.getPreamble();
+        if (!areAnyPrefixesPresent(argMultimap, PREFIX_ADD_RELATIONSHIP, PREFIX_DELETE_RELATIONSHIP,
+            PREFIX_CLEAR_RELATIONSHIP)) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SetRelCommand.MESSAGE_USAGE));
         }
+        if (value.length() < size && !value.isEmpty()) {
+            throw new ParseException(INVALID_INDEX);
+        }
+        try {
+            indexes = value.split("\\s+");
+            indexOne = ParserUtil.parseIndex(indexes[0]);
+            indexTwo = ParserUtil.parseIndex(indexes[1]);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SetRelCommand.MESSAGE_USAGE));
+        }
+        if (indexOne.equals(indexTwo)) {
+            throw new ParseException(SAME_INDEX_ERROR);
+        }
+        if (!argMultimap.containsOnePrefix(PREFIX_ADD_RELATIONSHIP)
+            || !argMultimap.containsOnePrefix(PREFIX_DELETE_RELATIONSHIP)) {
+            throw new ParseException(String.format(ONE_RELATIONSHIP_ALLOWED, SetRelCommand.MESSAGE_USAGE));
+        }
+        if (areAnyPrefixesPresent(argMultimap, PREFIX_ADD_RELATIONSHIP)) {
+            addPrefixPresent = true;
+        }
+        if (areAnyPrefixesPresent(argMultimap, PREFIX_ADD_RELATIONSHIP, PREFIX_DELETE_RELATIONSHIP)
+            || addPrefixPresent) {
+            try {
+                emptyInputArg(addPrefixPresent, argMultimap, PREFIX_ADD_RELATIONSHIP,
+                    PREFIX_DELETE_RELATIONSHIP);
+            } catch (ParseException pe) {
+                throw new ParseException(NULL_RELATION_INPUT);
+            }
+        }
+        EditPerson editPerson = new EditPerson();
+        try {
+            parseRelForEdit(argMultimap.getAllValues(PREFIX_ADD_RELATIONSHIP)).ifPresent
+                (editPerson::setToAdd);
+            parseRelForEdit(argMultimap.getAllValues(PREFIX_DELETE_RELATIONSHIP)).ifPresent
+                (editPerson::setToDelete);
+            editPerson.setClearRels(argMultimap.containsPrefix(PREFIX_CLEAR_RELATIONSHIP));
+        } catch (IllegalValueException ive) {
+            throw new ParseException(ive.getMessage(), ive);
+        }
+
+        return new SetRelCommand(indexOne, indexTwo, editPerson, addPrefixPresent);
+    }
+    /**
+     * Parses {@code Collection<String> relationships} into a {@code Set<Relationship>}
+     * if {@code relationships} is non-empty.
+     * If {@code relationship} contain only one element which is an empty string, it will be parsed into a
+     * {@code Set<Relationship>} containing zero relationships.
+     */
+    private Optional<Set<Relationship>> parseRelForEdit(Collection<String> rel) throws IllegalValueException {
+        assert rel != null;
+        if (rel.isEmpty()) {
+            return Optional.empty();
+        }
+        Collection<String> relSet = rel.size() == 1 && rel.contains("") ? Collections.emptySet() : rel;
+        return Optional.of(ParserUtil.parseRels(relSet));
     }
 
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof SortCommand // instanceof handles nulls
-                && this.type == (((SortCommand) other).type)); // state check
+    /**
+     * Checks if any of the prefixes are present
+     * return true if the certain prefix is present and false if the certain prefix is not present
+     * @param argumentMultimap      argumentMultiMap of the input string
+     * @param prefixes              any of the set relationship prefix(es)
+     * @return true || false
+     */
+    private static boolean areAnyPrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
+        return Stream.of(prefixes).anyMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
+    }
+
+    /**
+     * Checks if the argumentMultimap is empty for either the add relationship prefix if present
+     * and the delete relationship prefix
+     * @param addPrefixPresent      to indicate if add prefix is present
+     * @param argumentMultimap      input string
+     * @param prefixAdd             add relationship prefix
+     * @param prefixDelete          delete relationship prefix
+     */
+    private void emptyInputArg(boolean addPrefixPresent, ArgumentMultimap argumentMultimap, Prefix prefixAdd,
+                                        Prefix prefixDelete) throws ParseException {
+        String addRelString;
+
+        if (addPrefixPresent) {
+            addRelString = argumentMultimap.getValue(prefixAdd).get();
+        } else {
+            addRelString = argumentMultimap.getValue(prefixDelete).get();
+        }
+        requireNonNull(addRelString);
+        if (addRelString.length() == 0) {
+            throw new ParseException(NULL_RELATION_INPUT);
+        }
     }
 }
 ```
-###### /java/seedu/address/logic/commands/relationship/SetRelCommand.java
+###### \java\seedu\address\logic\parser\SortCommandParser.java
 ``` java
+
 /**
- * Sets the relationship between two persons
+ * Parses input arguments and creates a new SortCommand object
  */
-public class SetRelCommand extends UndoableCommand {
-    public static final String COMMAND_WORD = "set";
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sets the relationship between two persons "
-        + "by the index number used in the last person listing.\n"
-        + "For adding of relationship, only one relationship is allowed. This command is able to add and delete\n "
-        + "specifc relationship between two persons and clear deletes all relationships the two persons have.\n"
-        + "Parameters: INDEX (must be a positive integer) "
-        + "[" + PREFIX_ADD_RELATIONSHIP + "RELATIONSHIP]\n"
-        + "Example: " + COMMAND_WORD + " 1 2 "
-        + PREFIX_ADD_RELATIONSHIP + "colleagues\n"
-        + "Example: " + COMMAND_WORD + " 1 2 "
-        + PREFIX_DELETE_RELATIONSHIP + "colleagues\n"
-        + "Example: " + COMMAND_WORD + " 1 2 "
-        + PREFIX_CLEAR_RELATIONSHIP + "\n";
-    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Relationship Changed for Person: %1$s\n"
-        + "& Person: %2$s";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
-    public static final String MESSAGE_NO_MULTIPLE_REL = "These two persons cannot have multiple relationships"
-        + " please edit the relationship between them instead.";
-
-    private final Index indexOne;
-    private final Index indexTwo;
-    private final EditPerson editPerson;
-    private final boolean addPrefixPresent;
-
+public class SortCommandParser implements Parser<SortCommand> {
     /**
-     * @param indexOne          first index of the person in the filtered person list to add relationship
-     * @param indexTwo          second index of the person in the filtered person list to add relationship
-     * @param editPerson        details to edit the person with
-     * @param addPrefixPresent  add prefix present or not present
+     * Parses the given {@code String} of arguments in the context of the DeleteCommand
+     * and returns an DeleteCommand object for execution.
+     *
+     * @throws ParseException if the user input does not conform the expected format
      */
-    public SetRelCommand(Index indexOne, Index indexTwo, EditPerson editPerson, boolean addPrefixPresent) {
-        requireNonNull(indexOne);
-        requireNonNull(indexTwo);
+    public SortCommand parse(String args) throws ParseException {
+        requireNonNull(args);
+        String trimmedValue = args.trim();
+        if (trimmedValue.isEmpty()) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
+        }
+        return new SortCommand(trimmedValue);
+    }
 
-        this.indexOne = indexOne;
-        this.indexTwo = indexTwo;
-        this.editPerson = editPerson;
-        this.addPrefixPresent = addPrefixPresent;
+}
+```
+###### \java\seedu\address\model\AddressBook.java
+``` java
+    private final UniqueRelList relation;
+```
+###### \java\seedu\address\model\AddressBook.java
+``` java
+    public void setRel(Set<Relationship> relation) {
+        this.relation.setRel(relation);
+    }
+```
+###### \java\seedu\address\model\AddressBook.java
+``` java
+        setRel(new HashSet<>(newData.getRelList()));
+        syncMasterRelListWith(persons);
+```
+###### \java\seedu\address\model\AddressBook.java
+``` java
+    /**
+     * Sorts the list according to name, tag, company, priority and position
+     */
+    public void sortPersonList(String type) throws InvalidSortTypeException {
+        persons.sortPerson(type);
+    }
+```
+###### \java\seedu\address\model\AddressBook.java
+``` java
+    /**
+     * Ensures that every relationships in this person:
+     * - exists in the master list {@link #relation}
+     * - points to a Relationship object in the master list
+     */
+    private void syncMasterRelListWith(Person person) {
+        final UniqueRelList personRel = new UniqueRelList(person.getRelation());
+        relation.mergeFrom(personRel);
+
+        // Create map with values = Relationship object references in the master list
+        // used for checking person relation references
+        final Map<Relationship, Relationship> masterRelObjects = new HashMap<>();
+        relation.forEach(rel -> masterRelObjects.put(rel, rel));
+
+        // Rebuild the list of person relations to point to the relevant relations in the master relation list.
+        final Set<Relationship> correctRelReferences = new HashSet<>();
+        personRel.forEach(rel -> correctRelReferences.add(masterRelObjects.get(rel)));
+        person.setRel(correctRelReferences);
     }
     /**
-     * Creates and returns a {@code Person} with the details of {@code personToEdit}
-     * edited with {@code editPersonDescriptor}.
+     * Ensures that every relation in these persons:
+     * - exists in the master list {@link #relation}
+     * - points to a Relationship object in the master list
+     *
+     * @see #syncMasterRelListWith(Person)
      */
-    private static Person createEditedPerson(ReadOnlyPerson personToEdit, EditPerson editPerson,
-                                             ReadOnlyPerson personTwo) {
-        assert personToEdit != null;
-
-        Name updatedName = editPerson.getName().orElse(personToEdit.getName());
-        Phone updatedPhone = editPerson.getPhone().orElse(personToEdit.getPhone());
-        Email updatedEmail = editPerson.getEmail().orElse(personToEdit.getEmail());
-        Address updatedAddress = editPerson.getAddress().orElse(personToEdit.getAddress());
-        Company updatedCompany = editPerson.getCompany().orElse(personToEdit.getCompany());
-        Position updatedPosition = editPerson.getPosition().orElse(personToEdit.getPosition());
-        Status updatedStatus = editPerson.getStatus().orElse(personToEdit.getStatus());
-        Priority updatedPriority = editPerson.getPriority().orElse(personToEdit.getPriority());
-        Note updatedNote = editPerson.getNote().orElse(personToEdit.getNote());
-        Photo updatedPhoto = editPerson.getPhoto().orElse(personToEdit
-            .getPhoto());
-        Set<Tag> updatedTags = editPerson.getTags().orElse(personToEdit.getTags());
-        Set<Relationship> relation = personToEdit.getRelation();
-        final Set<Relationship> updatedRel = new HashSet<>();
-        if (!editPerson.shouldClear()) {
-            updatedRel.addAll(relation);
-        }
-        editPerson.getToAddRel(personTwo).ifPresent(updatedRel::addAll);
-        editPerson.getToDeleteRel(personTwo).ifPresent(updatedRel::removeAll);
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedCompany,
-        updatedPosition, updatedStatus, updatedPriority, updatedNote, updatedPhoto, updatedTags, updatedRel);
-    }
-    @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
-        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
-
-        if ((indexOne.getZeroBased() >= lastShownList.size()) || (indexTwo.getZeroBased() >= lastShownList.size())) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        }
-
-        ReadOnlyPerson personToEditOne = lastShownList.get(indexOne.getZeroBased());
-        ReadOnlyPerson personToEditTwo = lastShownList.get(indexTwo.getZeroBased());
-        Person editedPersonOne = createEditedPerson(personToEditOne, editPerson, personToEditTwo);
-        Person editedPersonTwo = createEditedPerson(personToEditTwo, editPerson, personToEditOne);
-
-        if (addPrefixPresent && (personToEditOne.getRelation().toString().contains(personToEditTwo.getName().toString())
-            || personToEditTwo.getRelation().toString().contains(personToEditOne.getName().toString()))) {
-            throw new CommandException(MESSAGE_NO_MULTIPLE_REL);
-        }
-        try {
-            model.updatePerson(personToEditOne, editedPersonOne);
-            model.updatePerson(personToEditTwo, editedPersonTwo);
-        } catch (DuplicatePersonException dpe) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
-        } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("The target person cannot be missing");
-        }
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedPersonOne, editedPersonTwo));
+    private void syncMasterRelListWith(UniquePersonList persons) {
+        persons.forEach(this::syncMasterRelListWith);
     }
 ```
-###### /java/seedu/address/logic/commands/relationship/SetRelCommand.java
-``` java
-        public Optional<Set<Relationship>> getToAddRel(ReadOnlyPerson person) {
-            Set<Relationship> relWithName = new HashSet<>();
-            if ((addRel == null)) {
-                return Optional.ofNullable(null);
-            }
-            relWithName.add(new Relationship(person.getName().toString(), addRel));
-
-            return Optional.of(relWithName);
-        }
-```
-###### /java/seedu/address/logic/commands/relationship/SetRelCommand.java
-``` java
-        public Optional<Set<Relationship>> getToDeleteRel(ReadOnlyPerson person) {
-            Set<Relationship> relWithName = new HashSet<>();
-            relWithName.add(new Relationship(person.getName().toString(), deleteRel));
-            return Optional.of(relWithName);
-        }
-```
-###### /java/seedu/address/storage/XmlSerializableAddressBook.java
-``` java
-    @XmlElement
-    private List<XmlAdaptedRelationship> relation;
-```
-###### /java/seedu/address/storage/XmlSerializableAddressBook.java
-``` java
-        relation = new ArrayList<>();
-```
-###### /java/seedu/address/storage/XmlSerializableAddressBook.java
-``` java
-        relation.addAll(src.getRelList().stream().map(XmlAdaptedRelationship::new).collect(Collectors.toList()));
-```
-###### /java/seedu/address/storage/XmlSerializableAddressBook.java
+###### \java\seedu\address\model\AddressBook.java
 ``` java
     @Override
     public ObservableList<Relationship> getRelList() {
-        final ObservableList<Relationship> rel = this.relation.stream().map(r -> {
-            try {
-                return r.toModelType();
-            } catch (IllegalValueException e) {
-                e.printStackTrace();
-                //TODO: better error handling
-                return null;
-            }
-        }).collect(Collectors.toCollection(FXCollections::observableArrayList));
-        return FXCollections.unmodifiableObservableList(rel);
+        return relation.asObservableList();
     }
 ```
-###### /java/seedu/address/model/util/SampleDataUtil.java
+###### \java\seedu\address\model\Model.java
 ``` java
     /**
-     * Returns a relationship set containing the list of strings given.
+     * Sorts the person list according to user input option
      */
-    public static Set<Relationship> getRelSet(String... strings) throws IllegalValueException {
-        HashSet<Relationship> rel = new HashSet<>();
-        for (String s : strings) {
-            rel.add(new Relationship(s));
-        }
-        return rel;
+    void sortPersonList(String type) throws InvalidSortTypeException;
+    //@author
+    /**
+     * Returns an unmodifiable view of the filtered person list
+     */
+    ObservableList<ReadOnlyPerson> getFilteredPersonList();
+
+    /**
+     * Updates the filter of the filtered person list to filter by the given {@code predicate}.
+     *
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
+
+```
+###### \java\seedu\address\model\ModelManager.java
+``` java
+    @Override
+    public void sortPersonList(String type) throws InvalidSortTypeException {
+        addressBook.sortPersonList(type);
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        indicateAddressBookChanged();
     }
 ```
-###### /java/seedu/address/model/person/Status.java
+###### \java\seedu\address\model\person\Company.java
+``` java
+    /**
+     * Comparator to compare the company to sort them with NIL all the way at the bottom.
+     * @param company       either a company name or NIL
+     */
+    public int compareTo(Company company) {
+        if (ORDERED_ENTRIES.contains(company.toString()) && ORDERED_ENTRIES.contains(this.toString())) {
+            return ORDERED_ENTRIES.indexOf(this.toString()) - ORDERED_ENTRIES.indexOf(company.toString());
+        }
+        if (ORDERED_ENTRIES.contains(company.toString())) {
+            return 1;
+        }
+        if (ORDERED_ENTRIES.contains(this.toString())) {
+            return -1;
+        }
+        return company.toString().compareToIgnoreCase(this.toString());
+    }
+    @Override
+    public int compare(Company companyOne, Company companyTwo) {
+        return companyOne.compareTo(companyTwo);
+    }
+```
+###### \java\seedu\address\model\person\exceptions\InvalidSortTypeException.java
+``` java
+package seedu.address.model.person.exceptions;
+
+import seedu.address.commons.exceptions.IllegalValueException;
+
+/**
+ * Signals that some given data does not fulfill some constraints.
+ */
+public class InvalidSortTypeException extends IllegalValueException {
+    public InvalidSortTypeException(String message) {
+        super(message);
+    }
+}
+```
+###### \java\seedu\address\model\person\Person.java
+``` java
+    /**
+     * Returns an immutable relationship set, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
+    @Override
+    public Set<Relationship> getRelation() {
+        return Collections.unmodifiableSet(relation.get().toSet());
+    }
+
+    /**
+     * Replaces this person's relationship with the relationships in the argument relationship set.
+     */
+    public void setRel(Set<Relationship> replacement) {
+        relation.set(new UniqueRelList(replacement));
+    }
+```
+###### \java\seedu\address\model\person\Position.java
+``` java
+    /**
+     * Comparator to compare the positions to sort them with NIL all the way at the bottom.
+     * @param position      either a work position or NIL
+     */
+    public int compareTo(Position position) {
+        if (ORDERED_ENTRIES.contains(position.toString()) && ORDERED_ENTRIES.contains(this.toString())) {
+            return ORDERED_ENTRIES.indexOf(position.toString()) - ORDERED_ENTRIES.indexOf(this.toString());
+        }
+        if (ORDERED_ENTRIES.contains(position.toString())) {
+            return 1;
+        }
+        if (ORDERED_ENTRIES.contains(this.toString())) {
+            return -1;
+        }
+        return position.toString().compareToIgnoreCase(this.toString());
+    }
+    @Override
+    public int compare(Position positionOne, Position positionTwo) {
+        return positionOne.compareTo(positionTwo);
+    }
+```
+###### \java\seedu\address\model\person\Priority.java
+``` java
+    /**
+     * Comparator to compare the priorities to sort them according to H, M, L.
+     * H being the top and L being the bottom.
+     * @param priority      either H, M or L.
+     */
+    public int compareTo(Priority priority) {
+        if (ORDERED_ENTRIES.contains(priority.toString()) && ORDERED_ENTRIES.contains(this.toString())) {
+            return ORDERED_ENTRIES.indexOf(priority.toString()) - ORDERED_ENTRIES.indexOf(this.toString());
+        }
+        if (ORDERED_ENTRIES.contains(priority.toString())) {
+            return -1;
+        }
+        if (ORDERED_ENTRIES.contains(this.toString())) {
+            return 1;
+        }
+        return priority.toString().compareTo(this.toString());
+    }
+    @Override
+    public int compare(Priority priorityOne, Priority priorityTwo) {
+        return priorityOne.compareTo(priorityTwo);
+    }
+```
+###### \java\seedu\address\model\person\ReadOnlyPerson.java
+``` java
+    Set<Relationship> getRelation();
+```
+###### \java\seedu\address\model\person\Status.java
 ``` java
     /**
      * Comparator to compare the statuses to sort them with NIL all the way at the bottom.
@@ -592,11 +726,7 @@ public class SetRelCommand extends UndoableCommand {
         return statusOne.compareTo(statusTwo);
     }
 ```
-###### /java/seedu/address/model/person/ReadOnlyPerson.java
-``` java
-    Set<Relationship> getRelation();
-```
-###### /java/seedu/address/model/person/UniquePersonList.java
+###### \java\seedu\address\model\person\UniquePersonList.java
 ``` java
     /**
      * Sorts the person list according to the type entered by user
@@ -636,110 +766,7 @@ public class SetRelCommand extends UndoableCommand {
         }
     }
 ```
-###### /java/seedu/address/model/person/exceptions/InvalidSortTypeException.java
-``` java
-package seedu.address.model.person.exceptions;
-
-import seedu.address.commons.exceptions.IllegalValueException;
-
-/**
- * Signals that some given data does not fulfill some constraints.
- */
-public class InvalidSortTypeException extends IllegalValueException {
-    public InvalidSortTypeException(String message) {
-        super(message);
-    }
-}
-```
-###### /java/seedu/address/model/person/Position.java
-``` java
-    /**
-     * Comparator to compare the positions to sort them with NIL all the way at the bottom.
-     * @param position      either a work position or NIL
-     */
-    public int compareTo(Position position) {
-        if (ORDERED_ENTRIES.contains(position.toString()) && ORDERED_ENTRIES.contains(this.toString())) {
-            return ORDERED_ENTRIES.indexOf(position.toString()) - ORDERED_ENTRIES.indexOf(this.toString());
-        }
-        if (ORDERED_ENTRIES.contains(position.toString())) {
-            return 1;
-        }
-        if (ORDERED_ENTRIES.contains(this.toString())) {
-            return -1;
-        }
-        return position.toString().compareToIgnoreCase(this.toString());
-    }
-    @Override
-    public int compare(Position positionOne, Position positionTwo) {
-        return positionOne.compareTo(positionTwo);
-    }
-```
-###### /java/seedu/address/model/person/Person.java
-``` java
-    /**
-     * Returns an immutable relationship set, which throws {@code UnsupportedOperationException}
-     * if modification is attempted.
-     */
-    @Override
-    public Set<Relationship> getRelation() {
-        return Collections.unmodifiableSet(relation.get().toSet());
-    }
-
-    /**
-     * Replaces this person's relationship with the relationships in the argument relationship set.
-     */
-    public void setRel(Set<Relationship> replacement) {
-        relation.set(new UniqueRelList(replacement));
-    }
-```
-###### /java/seedu/address/model/person/Company.java
-``` java
-    /**
-     * Comparator to compare the company to sort them with NIL all the way at the bottom.
-     * @param company       either a company name or NIL
-     */
-    public int compareTo(Company company) {
-        if (ORDERED_ENTRIES.contains(company.toString()) && ORDERED_ENTRIES.contains(this.toString())) {
-            return ORDERED_ENTRIES.indexOf(this.toString()) - ORDERED_ENTRIES.indexOf(company.toString());
-        }
-        if (ORDERED_ENTRIES.contains(company.toString())) {
-            return 1;
-        }
-        if (ORDERED_ENTRIES.contains(this.toString())) {
-            return -1;
-        }
-        return company.toString().compareToIgnoreCase(this.toString());
-    }
-    @Override
-    public int compare(Company companyOne, Company companyTwo) {
-        return companyOne.compareTo(companyTwo);
-    }
-```
-###### /java/seedu/address/model/person/Priority.java
-``` java
-    /**
-     * Comparator to compare the priorities to sort them according to H, M, L.
-     * H being the top and L being the bottom.
-     * @param priority      either H, M or L.
-     */
-    public int compareTo(Priority priority) {
-        if (ORDERED_ENTRIES.contains(priority.toString()) && ORDERED_ENTRIES.contains(this.toString())) {
-            return ORDERED_ENTRIES.indexOf(priority.toString()) - ORDERED_ENTRIES.indexOf(this.toString());
-        }
-        if (ORDERED_ENTRIES.contains(priority.toString())) {
-            return -1;
-        }
-        if (ORDERED_ENTRIES.contains(this.toString())) {
-            return 1;
-        }
-        return priority.toString().compareTo(this.toString());
-    }
-    @Override
-    public int compare(Priority priorityOne, Priority priorityTwo) {
-        return priorityOne.compareTo(priorityTwo);
-    }
-```
-###### /java/seedu/address/model/ReadOnlyAddressBook.java
+###### \java\seedu\address\model\ReadOnlyAddressBook.java
 ``` java
     /**
      * Returns an unmodifiable view of the relationships list.
@@ -747,70 +774,72 @@ public class InvalidSortTypeException extends IllegalValueException {
      */
     ObservableList<Relationship> getRelList();
 ```
-###### /java/seedu/address/model/AddressBook.java
+###### \java\seedu\address\model\relationship\Relationship.java
 ``` java
-    private final UniqueRelList relation;
-```
-###### /java/seedu/address/model/AddressBook.java
-``` java
-    public void setRel(Set<Relationship> relation) {
-        this.relation.setRel(relation);
-    }
-```
-###### /java/seedu/address/model/AddressBook.java
-``` java
-        setRel(new HashSet<>(newData.getRelList()));
-        syncMasterRelListWith(persons);
-```
-###### /java/seedu/address/model/AddressBook.java
-``` java
-    /**
-     * Sorts the list according to name, tag, company, priority and position
-     */
-    public void sortPersonList(String type) throws InvalidSortTypeException {
-        persons.sortPerson(type);
-    }
-```
-###### /java/seedu/address/model/AddressBook.java
-``` java
-    /**
-     * Ensures that every relationships in this person:
-     * - exists in the master list {@link #relation}
-     * - points to a Relationship object in the master list
-     */
-    private void syncMasterRelListWith(Person person) {
-        final UniqueRelList personRel = new UniqueRelList(person.getRelation());
-        relation.mergeFrom(personRel);
 
-        // Create map with values = Relationship object references in the master list
-        // used for checking person relation references
-        final Map<Relationship, Relationship> masterRelObjects = new HashMap<>();
-        relation.forEach(rel -> masterRelObjects.put(rel, rel));
+/**
+ * Represents a Relationship in the address book.
+ * Guarantees: immutable; name is valid as declared in
+ */
+public class Relationship {
 
-        // Rebuild the list of person relations to point to the relevant relations in the master relation list.
-        final Set<Relationship> correctRelReferences = new HashSet<>();
-        personRel.forEach(rel -> correctRelReferences.add(masterRelObjects.get(rel)));
-        person.setRel(correctRelReferences);
-    }
+    public static final String MESSAGE_REL_CONSTRAINTS = "Relationship types should be alphabetical";
+    public static final String MESSAGE_REL_PREFIX_NOT_ALLOWED =
+        "Relationship prefix(es) is/are not allowed in this command.";
+    public static final String REL_VALIDATION_REGEX = "[a-zA-Z0-9\\- ]+\\[[a-zA-Z0-9\\-]+.\\]|[a-zA-Z0-9\\-]+";
+
+    public final String relType;
+
     /**
-     * Ensures that every relation in these persons:
-     * - exists in the master list {@link #relation}
-     * - points to a Relationship object in the master list
+     * Validates given relationship name.
      *
-     * @see #syncMasterRelListWith(Person)
+     * @throws IllegalValueException if the given relationship name string is invalid.
      */
-    private void syncMasterRelListWith(UniquePersonList persons) {
-        persons.forEach(this::syncMasterRelListWith);
+    public Relationship(String name) throws IllegalValueException {
+        requireNonNull(name);
+        String trimmedName = name.trim();
+        if (!isValidRelType(trimmedName)) {
+            throw new IllegalValueException(MESSAGE_REL_CONSTRAINTS);
+        }
+        this.relType = name;
     }
-```
-###### /java/seedu/address/model/AddressBook.java
-``` java
+    /**
+     * Concatenates the name of the given person and the relationship to form a string
+     * @param name          Name of the person
+     * @param relation      Relationship of the person
+     */
+    public Relationship(String name, Set<Relationship> relation) {
+        this.relType = name + " " +  relation;
+    }
+    /**
+     * Returns true if a given string is a valid relationship name.
+     */
+    public static boolean isValidRelType(String test) {
+        return test.matches(REL_VALIDATION_REGEX);
+    }
+
     @Override
-    public ObservableList<Relationship> getRelList() {
-        return relation.asObservableList();
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+            || (other instanceof Relationship // instanceof handles nulls
+            && this.relType.equals(((Relationship) other).relType)); // state check
     }
+
+    @Override
+    public int hashCode() {
+        return relType.hashCode();
+    }
+
+    /**
+     * Format state as text for viewing.
+     */
+    public String toString() {
+        return relType;
+    }
+
+}
 ```
-###### /java/seedu/address/model/relationship/UniqueRelList.java
+###### \java\seedu\address\model\relationship\UniqueRelList.java
 ``` java
 package seedu.address.model.relationship;
 
@@ -967,97 +996,68 @@ public class UniqueRelList implements Iterable<Relationship> {
     }
 }
 ```
-###### /java/seedu/address/model/relationship/Relationship.java
+###### \java\seedu\address\model\util\SampleDataUtil.java
 ``` java
-
-/**
- * Represents a Relationship in the address book.
- * Guarantees: immutable; name is valid as declared in
- */
-public class Relationship {
-
-    public static final String MESSAGE_REL_CONSTRAINTS = "Relationship types should be alphabetical";
-    public static final String MESSAGE_REL_PREFIX_NOT_ALLOWED =
-        "Relationship prefix(es) is/are not allowed in this command.";
-    public static final String REL_VALIDATION_REGEX = "[a-zA-Z0-9\\- ]+\\[[a-zA-Z0-9\\-]+.\\]|[a-zA-Z0-9\\-]+";
-
-    public final String relType;
-
     /**
-     * Validates given relationship name.
-     *
-     * @throws IllegalValueException if the given relationship name string is invalid.
+     * Returns a relationship set containing the list of strings given.
      */
-    public Relationship(String name) throws IllegalValueException {
-        requireNonNull(name);
-        String trimmedName = name.trim();
-        if (!isValidRelType(trimmedName)) {
-            throw new IllegalValueException(MESSAGE_REL_CONSTRAINTS);
+    public static Set<Relationship> getRelSet(String... strings) throws IllegalValueException {
+        HashSet<Relationship> rel = new HashSet<>();
+        for (String s : strings) {
+            rel.add(new Relationship(s));
         }
-        this.relType = name;
+        return rel;
     }
-    /**
-     * Concatenates the name of the given person and the relationship to form a string
-     * @param name          Name of the person
-     * @param relation      Relationship of the person
-     */
-    public Relationship(String name, Set<Relationship> relation) {
-        this.relType = name + " " +  relation;
-    }
-    /**
-     * Returns true if a given string is a valid relationship name.
-     */
-    public static boolean isValidRelType(String test) {
-        return test.matches(REL_VALIDATION_REGEX);
-    }
-
+```
+###### \java\seedu\address\storage\XmlSerializableAddressBook.java
+``` java
+    @XmlElement
+    private List<XmlAdaptedRelationship> relation;
+```
+###### \java\seedu\address\storage\XmlSerializableAddressBook.java
+``` java
+        relation = new ArrayList<>();
+```
+###### \java\seedu\address\storage\XmlSerializableAddressBook.java
+``` java
+        relation.addAll(src.getRelList().stream().map(XmlAdaptedRelationship::new).collect(Collectors.toList()));
+```
+###### \java\seedu\address\storage\XmlSerializableAddressBook.java
+``` java
     @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-            || (other instanceof Relationship // instanceof handles nulls
-            && this.relType.equals(((Relationship) other).relType)); // state check
+    public ObservableList<Relationship> getRelList() {
+        final ObservableList<Relationship> rel = this.relation.stream().map(r -> {
+            try {
+                return r.toModelType();
+            } catch (IllegalValueException e) {
+                e.printStackTrace();
+                //TODO: better error handling
+                return null;
+            }
+        }).collect(Collectors.toCollection(FXCollections::observableArrayList));
+        return FXCollections.unmodifiableObservableList(rel);
     }
+```
+###### \resources\view\BrightTheme.css
+``` css
+.scroll-pane > .viewport {
+   -fx-background-color: transparent;
+}
 
-    @Override
-    public int hashCode() {
-        return relType.hashCode();
-    }
-
-    /**
-     * Format state as text for viewing.
-     */
-    public String toString() {
-        return relType;
-    }
-
+.scroll-pane {
+   -fx-background-color: transparent;
 }
 ```
-###### /java/seedu/address/model/ModelManager.java
-``` java
-    @Override
-    public void sortPersonList(String type) throws InvalidSortTypeException {
-        addressBook.sortPersonList(type);
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        indicateAddressBookChanged();
-    }
-```
-###### /java/seedu/address/model/Model.java
-``` java
-    /**
-     * Sorts the person list according to user input option
-     */
-    void sortPersonList(String type) throws InvalidSortTypeException;
-    //@author
-    /**
-     * Returns an unmodifiable view of the filtered person list
-     */
-    ObservableList<ReadOnlyPerson> getFilteredPersonList();
-
-    /**
-     * Updates the filter of the filtered person list to filter by the given {@code predicate}.
-     *
-     * @throws NullPointerException if {@code predicate} is null.
-     */
-    void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
-
+###### \resources\view\PersonPanel.fxml
+``` fxml
+         <Label layoutX="14.0" layoutY="255.0" prefHeight="100.0" prefWidth="275.0" styleClass="label-header" text="Relationships" AnchorPane.leftAnchor="14.0">
+         <font>
+            <Font name="System Bold" size="21.0" />
+         </font>
+      </Label>
+         <ScrollPane fx:id="scrollPane" layoutX="383.0" layoutY="287.0" prefHeight="40.0" prefWidth="212.0">
+            <content>
+               <FlowPane fx:id="relationshipPane" prefHeight="52.0" prefWidth="181.0" />
+            </content>
+         </ScrollPane>
 ```
