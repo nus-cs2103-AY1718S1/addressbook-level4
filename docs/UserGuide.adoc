@@ -499,10 +499,10 @@ can take in either format.
 2. The path can include white spaces such as `\Folder 2\`, so do not replace spaces with other characters.
 
 
-image::backup demo 1.PNG[width="800"]
+image::backup demo 1.PNG[width="700"]
 _Figure 3.4.7.1 : UI display for BackupCommand1_
 
-image::backup demo 2.PNG[width="800"]
+image::backup demo 2.PNG[width="700"]
 _Figure 3.4.7.2 : UI display for BackupCommand2_
 
 //end::backup[]
