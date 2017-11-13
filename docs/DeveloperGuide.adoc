@@ -445,18 +445,49 @@ An `ExpiryDate` class contains a `Date` Value.
 Date validation is implemented in two steps:
 
 . Validating the date format with regular expression +
-Where the date format is "YYYY-MM-DD"
+Where the date format is "YYYY-MM-DD".
 
 . Validating the date value with `SimpleDateFormat` object +
-`DATE_FORMATTER`, a `SimpleDateFormat` object, is created and used for:
+Making sure that the input year-month-day combination is valid.
 
-Parsing String (from user input) to Date
+==== Brief Introduction to SimpleDateFormat
+SimpleDateFormat is the Java class used to transform a date to and from `Date` and `String`.
+It also provides normalization and validation of date when parsing.
+
+===== Setting Date Pattern
+Before creating a `SimpleDateFormat` object, a pattern must be defined for parsing and formatting. +
+The pattern (in `String`) is defined as follows:
+----
+public static final String DATE_FORMAT = "yyyy-MM-dd";
+----
+`-` is the separator used. It can also be replaced by `\`, `.`, etc. +
+`yyyy` represents the 4-digit year number (e.g.: '2016') +
+`MM` represents the 2-digit month number (e.g.: '12') +
+One common variation to month indication is `MMMMM`, which is the name of the month (e.g.: 'June') +
+`dd` represents the 2-digit day number (e.g.: '30') +
+
+For the full list of notations used to define date format, please refer to https://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html[the official documentation]. +
+
+`DATE_FORMAT` can then be passed as parameter when creating new `SimpleDateFormat` object.
+
+===== setLenient
+`setLenient` is a method in `SimpleDateFormat` class. It is used to decide the mode of parsing. +
+
+If lenient is set to `true`, the parser will be more tolerant to incorrect input. +
+For example, `2017-02-29` (which is invalid) will be parsed to be `2017-03-01` automatically. +
+
+In this case, since the object is used to check date validity, lenient is set to be  `falase`.
+
+===== Parsing
+Transforming `String` (from user input) to `Date`
 ----
 ParsePosition parsePos = new ParsePosition(0);
 this.value = DATE_FORMATTER.parse(date, parsePos);
 ----
 
-Formatting Date to String (for printing)
+===== Formatting
+Transforming `Date` to `String` +
+Used for printing
 ----
 public String toString() {
     return DATE_FORMATTER.format(value);
@@ -473,6 +504,18 @@ public String toString() {
 **Alternative 2:** Store value as String +
 **Pros:** Easy to implement. Easy to print. +
 **Cons:** Validation of date as String is complicated. Need to implement all ExpiryDate methods from scratch.
+
+---
+
+**Aspect:** Date validation method +
+**Alternative 1 (current choice):** Use external library +
+**Pros:** Promising performance. +
+**Cons:** Need to get to know the methods available. +
+**Alternative 2:** Implement validation ourselves. +
+**Pros:** Can add more constraints to validation algorithm (e.g.: Cannot set date that has passed).
+Can check for both format and valid day-month combination at the same time. +
+**Cons:** May miss some leap year rules while implementing, leading to future bugs. +
+
 // end::expire[]
 
 
