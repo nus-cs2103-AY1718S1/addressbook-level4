@@ -37,7 +37,7 @@ This implementation should enable the user to access all parts of the applicatio
 
 ---
 
-include::../DeveloperGuide.adoc[leveloffset=2, tag=shortcut]
+include::../DeveloperGuide.adoc[leveloffset=1, tag=shortcut]
 
 ---
 
