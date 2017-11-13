@@ -44,4 +44,5 @@ public class SampleDataTest extends AddressBookGuiTest {
         Person[] expectedList = SampleDataUtil.getSamplePersons();
         assertListMatching(getPersonListPanel(), expectedList);
     }
+
 }

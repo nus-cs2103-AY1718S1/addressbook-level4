@@ -21,6 +21,7 @@ import seedu.address.model.person.ReadOnlyPerson;
  * Panel containing the list of persons.
  */
 public class PersonListPanel extends UiPart<Region> {
+    private static ObservableList<ReadOnlyPerson> personList;
     private static final String FXML = "PersonListPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(PersonListPanel.class);
 
@@ -31,6 +32,7 @@ public class PersonListPanel extends UiPart<Region> {
         super(FXML);
         setConnections(personList);
         registerAsAnEventHandler(this);
+        this.personList = personList;
     }
 
     private void setConnections(ObservableList<ReadOnlyPerson> personList) {
@@ -51,6 +53,17 @@ public class PersonListPanel extends UiPart<Region> {
                 });
     }
 
+    //@@author nelsonqyj
+    /**
+     * Opens the person window.
+     */
+    @FXML
+    public void handlePersonWindow(PersonCard personCard) {
+        PersonWindow personWindow = new PersonWindow(personList, personCard);
+        personWindow.show();
+    }
+    //@@author
+
     /**
      * Scrolls to the {@code PersonCard} at the {@code index} and selects it.
      */
@@ -66,6 +79,14 @@ public class PersonListPanel extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         scrollTo(event.targetIndex);
     }
+
+    //@@author nelsonqyj
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handlePersonWindow(event.getNewSelection());
+    }
+    //@@author
 
     /**
      * Custom {@code ListCell} that displays the graphics of a {@code PersonCard}.

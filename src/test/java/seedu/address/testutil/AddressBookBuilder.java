@@ -2,6 +2,10 @@ package seedu.address.testutil;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
+import seedu.address.model.meeting.ReadOnlyMeeting;
+import seedu.address.model.meeting.exceptions.DuplicateMeetingException;
+import seedu.address.model.meeting.exceptions.MeetingBeforeCurrDateException;
+import seedu.address.model.meeting.exceptions.MeetingClashException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.tag.Tag;
@@ -43,6 +47,22 @@ public class AddressBookBuilder {
             addressBook.addTag(new Tag(tagName));
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("tagName is expected to be valid.");
+        }
+        return this;
+    }
+
+    /**
+     * Adds a new {@code Person} to the {@code AddressBook} that we are building.
+     */
+    public AddressBookBuilder withMeeting(ReadOnlyMeeting meeting) {
+        try {
+            addressBook.addMeeting(meeting);
+        } catch (DuplicateMeetingException dme) {
+            throw new IllegalArgumentException("meeting is expected to be unique.");
+        } catch (MeetingClashException mce) {
+            throw new IllegalArgumentException("meeting must not clash.");
+        } catch (MeetingBeforeCurrDateException mbcde) {
+            throw new IllegalArgumentException("meeting must be after current time.");
         }
         return this;
     }

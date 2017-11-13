@@ -1,0 +1,93 @@
+= Nelson Quek Yee Jiel - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Purpose
+The Project Portfolio Page introduces the application, _ScheduBook_, and highlights the contributions that Nelson Quek Yee Jiel have done for the _ScheduBook_. It includes the implementation and justification for each enhancement implemented, as well as proposed future enhancements and other relevant contributions.
+
+== Project: ScheduBook
+_ScheduBook_ a desktop address book application designed primarily for University students to plan and schedule their meetings with their peers, tutors or professors. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 9 kLoC(Lines of Code).
+
+This project is a product of the module, Software Engineering, CS2103T, in NUS. _ScheduBook_ is proudly developed by my team based on https://github.com/se-edu/addressbook-level4[AddressBook(Level4)], and by https://se-edu.github.io/[SE-EDU] team, whose initial address book application was created to be used for teaching Software Engineering principles.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-T09-B2/main/blob/master/collated/main/nelsonqyj.md[Functional code]] [https://github.com/CS2103AUG2017-T09-B2/main/blob/master/collated/test/nelsonqyj.md[Test code]] {give links to collated code files}
+
+
+=== Enhancement Added: AddMeeting command
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=addmeeting]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+There is a need for users, especially University students, to properly plan their important meetings. The need becomes more apparent for
+students as they are constantly occupied with enormous amount of commitments and deadlines.
+Hence, it becomes tedious for them to recall each and every meeting that they might have planned ahead of time. Thus, the `addmeeting` feature is implemented to allow users
+to create meetings effortlessly with existing contacts and to be conveniently reminded of the meeting when it is due. Users will also have the choice to flag the importance of each meeting and this would help to save time
+when scrolling through the meeting list to search for urgent and important meetings. Last but not least, users will be prompted of a meeting clash whenever an attempt to add conflicting meeting arises. In conclusion, this feature
+addresses the need for users to properly organize their meetings as well as getting reminders for each of the upcoming meeting.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=addmeeting]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: SelectMeeting command, GoogleMaps
+
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=selectmeeting]
+
+include::../UserGuide.adoc[tag=googlemaps]
+
+#End of Extract#
+
+==== Justification
+
+University Students in the modernised era often find themselves travelling to multiple locations daily to meet people for various reasons.
+Thus, in order to reduce the user's need to toggle between navigational applications and our application, Google Maps is integrated into our application for their convenience.
+By using the `selectmeeting` command, the location of the meeting will be automatically loaded into Google Maps as the destination and all the user
+needs to do is just to input their current location and the directions to the meeting location will be shown. This allows the
+user to properly plan their time needed and route to meeting locations.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=selectmeeting]
+
+#End of Extract#
+
+=== Enhancement Proposed: Add follow-up meetings
+
+This enhancement allows user to continue to add on from the original meeting which keeps track and archive the previous meeting details
+such as location and meeting partners.
+
+==== Enhancement Proposed: To drop multiple pins on Google Maps to suggest meeting location for group meetings
+
+This enhancement allows user to make use of Google Maps's ability to drop pins and find the most suitable meeting location for a group meeting.
+
+=== Other contributions
+
+* Updated the GUI color scheme (Pull requests https://github.com/CS2103AUG2017-T09-B2/main/pull/103[#103], https://github.com/CS2103AUG2017-T09-B2/main/pull/110[#110])
+* Wrote additional tests to improve coverage (Pull requests https://github.com/CS2103AUG2017-T09-B2/main/pull/125[#125], https://github.com/CS2103AUG2017-T09-B2/main/pull/127[#127])
+* Carried out acceptance testing on other groups to discover bugs (Pull requests https://github.com/CS2103AUG2017-W13-B2/main/issues/111[#111], https://github.com/CS2103AUG2017-W13-B2/main/issues/109[#109], https://github.com/CS2103AUG2017-W13-B2/main/issues/103[#103])
+
+== Project: FPGA Design Project: Real-Time Audio Effects (Verilog Programming in Digital Fundamentals EE2020)
+

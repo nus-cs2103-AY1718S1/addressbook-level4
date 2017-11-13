@@ -1,10 +1,14 @@
 package seedu.address.ui;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
 
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
@@ -17,6 +21,7 @@ import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.meeting.ReadOnlyMeeting;
 
 /**
  * The manager of the UI component.
@@ -56,12 +61,36 @@ public class UiManager extends ComponentManager implements Ui {
             mainWindow = new MainWindow(primaryStage, config, prefs, logic);
             mainWindow.show(); //This should be called before creating other UI parts
             mainWindow.fillInnerParts();
+            if (meetingToday(logic.getFilteredMeetingList())) {
+                MeetingAlert meetingAlert = new MeetingAlert(logic.getFilteredMeetingList());
+                meetingAlert.show();
+            }
 
         } catch (Throwable e) {
             logger.severe(StringUtil.getDetails(e));
             showFatalErrorDialogAndShutdown("Fatal error during initializing", e);
         }
     }
+
+    //@@author Melvin-leo
+    /**
+     * To check if there is a meeting on the day of logging in, only shows reminder if there is a meeting
+     * @param meetingList
+     * @return
+     */
+    private boolean meetingToday (ObservableList<ReadOnlyMeeting> meetingList) {
+        for (ReadOnlyMeeting meeting : meetingList) {
+            DateTimeFormatter formatter  = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+            LocalDateTime currDate = LocalDateTime.now();
+            LocalDateTime meetDate = LocalDateTime.parse(meeting.getDate().toString(), formatter);
+            long daysBet = ChronoUnit.DAYS.between(currDate, meetDate);
+            if (daysBet == 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+    //@@author
 
     @Override
     public void stop() {

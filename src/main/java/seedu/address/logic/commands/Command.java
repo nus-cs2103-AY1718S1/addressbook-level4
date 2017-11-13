@@ -24,6 +24,11 @@ public abstract class Command {
         return String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, displaySize);
     }
 
+    //@@author nelsonqyj
+    public static String getMessageForMeetingListShownSummary (int displaySize) {
+        return String.format(Messages.MESSAGE_MEETING_LISTED_OVERVIEW, displaySize);
+    }
+
     /**
      * Executes the command and returns the result message.
      *

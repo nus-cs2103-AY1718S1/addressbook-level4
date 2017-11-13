@@ -13,6 +13,7 @@ import guitests.guihandles.BrowserPanelHandle;
 import guitests.guihandles.CommandBoxHandle;
 import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.MainWindowHandle;
+import guitests.guihandles.MeetingListPanelHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.StatusBarFooterHandle;
@@ -73,6 +74,10 @@ public abstract class AddressBookGuiTest {
 
     protected PersonListPanelHandle getPersonListPanel() {
         return mainWindowHandle.getPersonListPanel();
+    }
+
+    protected MeetingListPanelHandle getMeetingListPanel() {
+        return mainWindowHandle.getMeetingListPanel();
     }
 
     protected MainMenuHandle getMainMenu() {

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.StackPane?>
+
+<!-- @@author Melvin-leo -->
+
+<StackPane fx:id="helpWindowRoot" styleClass="background" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <StackPane prefHeight="600.0" prefWidth="1000.0" styleClass="background" stylesheets="@DarkTheme.css">
+         <children>
+            <Button layoutX="750.0" layoutY="500.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onKeyPressed="#handleExit" onMouseClicked="#handleExit" prefHeight="40.0" prefWidth="90.0" stylesheets="@DarkTheme.css" text="Got it!" StackPane.alignment="BOTTOM_CENTER">
+               <StackPane.margin>
+                  <Insets bottom="20.0" />
+               </StackPane.margin>
+            </Button>
+            <Label fx:id="warningMessage" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="700.0" styleClass="label-warning" stylesheets="@DarkTheme.css" text="\$Warning" StackPane.alignment="TOP_CENTER">
+               <StackPane.margin>
+                  <Insets top="60.0" />
+               </StackPane.margin></Label>
+            <Label fx:id="firstMeeting" alignment="CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="800.0" styleClass="label-warning" stylesheets="@DarkTheme.css" text="\$PersonName" StackPane.alignment="CENTER">
+               <StackPane.margin>
+                  <Insets bottom="80.0" />
+               </StackPane.margin>
+            </Label>
+            <Label fx:id="nameMeeting" alignment="CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="700.0" styleClass="label-warning" stylesheets="@DarkTheme.css" text="\$Meeting" StackPane.alignment="CENTER">
+               <StackPane.margin>
+                  <Insets top="100.0" />
+               </StackPane.margin>
+            </Label>
+         </children>
+      </StackPane>
+   </children>
+</StackPane>

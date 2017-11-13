@@ -2,14 +2,21 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+//import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
+
+import seedu.address.model.meeting.DateTime;
+import seedu.address.model.meeting.MeetingTag;
+import seedu.address.model.meeting.NameMeeting;
+import seedu.address.model.meeting.Place;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -52,6 +59,36 @@ public class ParserUtil {
         return name.isPresent() ? Optional.of(new Name(name.get())) : Optional.empty();
     }
 
+    //@@author nelsonqyj
+    /**
+     * Parses a {@code Optional<String> name} into an {@code Optional<NameMeeting>} if {@code name} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<NameMeeting> parseNameMeeting(Optional<String> name) throws IllegalValueException {
+        requireNonNull(name);
+        return name.isPresent() ? Optional.of(new NameMeeting(name.get())) : Optional.empty();
+    }
+
+    //@@author nelsonqyj
+    /**
+     * Parses a {@code Optional<String> date} into an {@code Optional<Date>} if {@code date} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<DateTime> parseDate(Optional<String> date) throws IllegalValueException {
+        requireNonNull(date);
+        return date.isPresent() ? Optional.of(new DateTime(date.get())) : Optional.empty();
+    }
+
+    //@@author nelsonqyj
+    /**
+     * Parses a {@code Optional<String> Place} into an {@code Optional<Place>} if {@code place} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Place> parsePlace(Optional<String> place) throws IllegalValueException {
+        requireNonNull(place);
+        return place.isPresent() ? Optional.of(new Place(place.get())) : Optional.empty();
+    }
+
     /**
      * Parses a {@code Optional<String> phone} into an {@code Optional<Phone>} if {@code phone} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
@@ -78,6 +115,14 @@ public class ParserUtil {
         requireNonNull(email);
         return email.isPresent() ? Optional.of(new Email(email.get())) : Optional.empty();
     }
+    /**
+     * Parses a {@code Optional<String> tagname} into an {@code Optional<MeetingTag>} if {@code ntagame} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<MeetingTag> parseMeetTag(Optional<String> meetingTag) throws IllegalValueException {
+        requireNonNull(meetingTag);
+        return meetingTag.isPresent() ? Optional.of(new MeetingTag(meetingTag.get())) : Optional.empty();
+    }
 
     /**
      * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
@@ -90,4 +135,21 @@ public class ParserUtil {
         }
         return tagSet;
     }
+    /**
+     * Parses {@code oneBasedIndex} into an {@code Index} and returns it.
+     * @throws IllegalValueException if the specified index is invalid (not non-zero unsigned integer).
+     */
+    public static ArrayList<Index> parseIndexes(String indexes) throws IllegalValueException {
+        ArrayList<Index> listOfIndex = new ArrayList<>();
+        String trimmedIndex = indexes.trim();
+        String[] indexs = trimmedIndex.split("\\s+");
+        for (String index : indexs) {
+            if (!StringUtil.isNonZeroUnsignedInteger(index)) {
+                throw new IllegalValueException(MESSAGE_INVALID_INDEX);
+            }
+            listOfIndex.add(Index.fromOneBased(Integer.parseInt(index)));
+        }
+        return listOfIndex;
+    }
+
 }

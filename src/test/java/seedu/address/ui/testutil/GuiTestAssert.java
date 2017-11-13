@@ -5,10 +5,14 @@ import static org.junit.Assert.assertEquals;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import guitests.guihandles.MeetingCardHandle;
+import guitests.guihandles.MeetingListPanelHandle;
 import guitests.guihandles.PersonCardHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
+import seedu.address.model.meeting.ReadOnlyMeeting;
 import seedu.address.model.person.ReadOnlyPerson;
+
 
 /**
  * A set of assertion methods useful for writing GUI tests.
@@ -25,7 +29,17 @@ public class GuiTestAssert {
         assertEquals(expectedCard.getPhone(), actualCard.getPhone());
         assertEquals(expectedCard.getTags(), actualCard.getTags());
     }
-
+    //@@author Melvin-leo
+    /**
+     * Asserts that {@code actualCard} displays the same values as {@code expectedCard}.
+     */
+    public static void assertCardEquals(MeetingCardHandle expectedCard, MeetingCardHandle actualCard) {
+        assertEquals(expectedCard.getId(), actualCard.getId());
+        assertEquals(expectedCard.getNameMeeting(), actualCard.getNameMeeting());
+        assertEquals(expectedCard.getPlace(), actualCard.getPlace());
+        assertEquals(expectedCard.getDateTime(), actualCard.getDateTime());
+    }
+    //@@author
     /**
      * Asserts that {@code actualCard} displays the details of {@code expectedPerson}.
      */
@@ -37,6 +51,16 @@ public class GuiTestAssert {
         assertEquals(expectedPerson.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
                 actualCard.getTags());
     }
+    //@@author Melvin-leo
+    /**
+     * Asserts that {@code actualCard} displays the details of {@code expectedMeeting}.
+     */
+    public static void assertCardDisplaysMeeting(ReadOnlyMeeting expectedMeeting, MeetingCardHandle actualCard) {
+        assertEquals(expectedMeeting.getName().fullName, actualCard.getNameMeeting());
+        assertEquals(expectedMeeting.getPlace().value, actualCard.getPlace());
+        assertEquals(expectedMeeting.getDate().value, actualCard.getDateTime());
+    }
+    //@@author
 
     /**
      * Asserts that the list in {@code personListPanelHandle} displays the details of {@code persons} correctly and
@@ -55,6 +79,27 @@ public class GuiTestAssert {
     public static void assertListMatching(PersonListPanelHandle personListPanelHandle, List<ReadOnlyPerson> persons) {
         assertListMatching(personListPanelHandle, persons.toArray(new ReadOnlyPerson[0]));
     }
+
+    //@@author Melvin-leo
+    /**
+     * Asserts that the list in {@code meetingListPanelHandle} displays the details of {@code meetings} correctly and
+     * in the correct order.
+     */
+    public static void assertListMatching(MeetingListPanelHandle meetingListPanelHandle, ReadOnlyMeeting... meetings) {
+        for (int i = 0; i < meetings.length; i++) {
+            assertCardDisplaysMeeting(meetings[i], meetingListPanelHandle.getMeetingCardHandle(i));
+        }
+    }
+
+    /**
+     * Asserts that the list in {@code personListPanelHandle} displays the details of {@code persons} correctly and
+     * in the correct order.
+     */
+    public static void assertListMatching(MeetingListPanelHandle meetingListPanelHandle,
+                                          List<ReadOnlyMeeting> meetings) {
+        assertListMatching(meetingListPanelHandle, meetings.toArray(new ReadOnlyMeeting[0]));
+    }
+    //@@author
 
     /**
      * Asserts the size of the list in {@code personListPanelHandle} equals to {@code size}.

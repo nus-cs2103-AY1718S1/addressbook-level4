@@ -2,6 +2,8 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -10,6 +12,13 @@ import java.util.Objects;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.meeting.Meeting;
+import seedu.address.model.meeting.ReadOnlyMeeting;
+import seedu.address.model.meeting.UniqueMeetingList;
+import seedu.address.model.meeting.exceptions.DuplicateMeetingException;
+import seedu.address.model.meeting.exceptions.MeetingBeforeCurrDateException;
+import seedu.address.model.meeting.exceptions.MeetingClashException;
+import seedu.address.model.meeting.exceptions.MeetingNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.UniquePersonList;
@@ -26,6 +35,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
     private final UniqueTagList tags;
+    private final UniqueMeetingList meetings;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -37,12 +47,13 @@ public class AddressBook implements ReadOnlyAddressBook {
     {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
+        meetings = new UniqueMeetingList();
     }
 
     public AddressBook() {}
 
     /**
-     * Creates an AddressBook using the Persons and Tags in the {@code toBeCopied}
+     * Creates an AddressBook using the Persons, Meetings and Tags in the {@code toBeCopied}
      */
     public AddressBook(ReadOnlyAddressBook toBeCopied) {
         this();
@@ -53,6 +64,11 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     public void setPersons(List<? extends ReadOnlyPerson> persons) throws DuplicatePersonException {
         this.persons.setPersons(persons);
+    }
+
+    public void setMeetings(List<? extends ReadOnlyMeeting> meetings) throws DuplicateMeetingException,
+            MeetingClashException {
+        this.meetings.setMeetings(meetings);
     }
 
     public void setTags(Set<Tag> tags) {
@@ -69,6 +85,13 @@ public class AddressBook implements ReadOnlyAddressBook {
         } catch (DuplicatePersonException e) {
             assert false : "AddressBooks should not have duplicate persons";
         }
+        try {
+            setMeetings(newData.getMeetingList());
+        } catch (DuplicateMeetingException | MeetingClashException e) {
+            assert false : "AddressBooks should not have duplicate or clashing meetings";
+        }
+
+
 
         setTags(new HashSet<>(newData.getTagList()));
         syncMasterTagListWith(persons);
@@ -92,6 +115,28 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.add(newPerson);
     }
 
+    //@@author Melvin-leo
+    /**
+     * Adds a meeting to the address book.
+     * Also checks the new person's tags and updates {@link #tags} with any new tags found,
+     * and updates the Tag objects in the person to point to those in {@link #tags}.
+     *
+     * @throws DuplicateMeetingException if an equivalent meeting of the same date and time already exists.
+     */
+    public void addMeeting(ReadOnlyMeeting m) throws DuplicateMeetingException, MeetingBeforeCurrDateException,
+            MeetingClashException {
+        Meeting newMeeting = new Meeting(m);
+        DateTimeFormatter formatter  = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        LocalDateTime currDate = LocalDateTime.now();
+        LocalDateTime meetDate = LocalDateTime.parse(newMeeting.getDate().toString(), formatter);
+        if (meetDate.isAfter((currDate))) {
+            meetings.add(newMeeting);
+        } else {
+            throw new MeetingBeforeCurrDateException();
+        }
+    }
+    //@@author
+
     /**
      * Replaces the given person {@code target} in the list with {@code editedReadOnlyPerson}.
      * {@code AddressBook}'s tag list will be updated with the tags of {@code editedReadOnlyPerson}.
@@ -111,7 +156,35 @@ public class AddressBook implements ReadOnlyAddressBook {
         // TODO: the tags master list will be updated even though the below line fails.
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
+
         persons.setPerson(target, editedPerson);
+    }
+
+    /**
+     * Replaces the given meeting {@code target} in the list with {@code editedReadOnlyMeeting}.
+     * {@code AddressBook}'s tag list will be updated with the tags of {@code editedReadOnlyMeeting}.
+     *
+     * @throws DuplicateMeetingException if updating the person's details causes the meeting to be equivalent to
+     *      another existing meeting in the list.
+     * @throws MeetingNotFoundException if {@code target} could not be found in the list.
+     *
+     */
+    public void updateMeeting(ReadOnlyMeeting target, ReadOnlyMeeting editedReadOnlyMeeting)
+            throws DuplicateMeetingException, MeetingNotFoundException, MeetingBeforeCurrDateException,
+            MeetingClashException {
+        requireNonNull(editedReadOnlyMeeting);
+
+        Meeting editedMeeting = new Meeting(editedReadOnlyMeeting);
+
+        DateTimeFormatter formatter  = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        LocalDateTime currDate = LocalDateTime.now();
+        LocalDateTime meetDate = LocalDateTime.parse(editedMeeting.getDate().toString(), formatter);
+
+        if (!meetDate.isAfter((currDate))) {
+            throw new MeetingBeforeCurrDateException();
+        }
+        // TODO: the tags master list will be updated even though the below line fails.
+        meetings.setMeeting(target, editedMeeting);
     }
 
     /**
@@ -156,6 +229,19 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    /**
+     *
+     * Removes {@code key} from this {@code AddressBook}
+     * @throws MeetingNotFoundException if the  {@code key} is not this {@code AddressBook}.
+     */
+    public boolean removeMeeting(ReadOnlyMeeting key) throws MeetingNotFoundException {
+        if (meetings.remove(key)) {
+            return true;
+        } else {
+            throw new MeetingNotFoundException();
+        }
+    }
+
     //// tag-level operations
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
@@ -173,6 +259,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     @Override
     public ObservableList<ReadOnlyPerson> getPersonList() {
         return persons.asObservableList();
+    }
+
+    @Override
+    public ObservableList<ReadOnlyMeeting> getMeetingList() {
+        return meetings.asObservableList();
     }
 
     @Override

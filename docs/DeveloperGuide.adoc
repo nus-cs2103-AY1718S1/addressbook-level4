@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= ScheduBook- Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,9 +10,29 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-T09-B2/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `CS2103AUG2017-T09-B2`      Since: `AUG 2017`      Licence: `MIT`
+
+== Introduction
+
+Welcome to _ScheduBook_! The aim of __ScheduBook __is to allow users with busy and hectic schedules to better plan meetings and be reminded of high priority meetings, in addition to the conventional AddressBook functionalities.
+Upon starting the application, a Graphical User Interface that is completely functional using a command-line interface will be launched.
+
+This developer guide is intended get you up-and-running with our application. We will cover everything you need to know,
+from setting up, to the implementation of commands, to troubleshooting testing. This guide is written in a top-down approach which will help you to better understand the overall design
+before diving into the detailed explanation of each component.
+
+== Contribution
+There are plenty of ways for you to contribute to this project such as (list is not exhaustive):
+
+* Implementing new features
+* Enhancing overall code quality
+* Integrating external Application Programming Interfaces(API)
+* Testing of codes
+
+You do not have to worry about being an inexperienced programmer as this guide will not only will help you to get started as a __ScheduBook __contributor,
+but also allow you to learn and understand the basic concepts behind Object-oriented programming(OOP) in Java.
 
 == Setting up
 
@@ -91,7 +111,7 @@ When you are ready to start coding,
 === Architecture
 
 image::Architecture.png[width="600"]
-_Figure 2.1.1 : Architecture Diagram_
+_Figure 4.1.1 : Architecture Diagram_
 
 The *_Architecture Diagram_* given above explains the high-level design of the App. Given below is a quick overview of each component.
 
@@ -123,7 +143,7 @@ Each of the four components
 For example, the `Logic` component (see the class diagram given below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
 
 image::LogicClassDiagram.png[width="800"]
-_Figure 2.1.2 : Class Diagram of the Logic Component_
+_Figure 4.1.2 : Class Diagram of the Logic Component_
 
 [discrete]
 ==== Events-Driven nature of the design
@@ -131,7 +151,7 @@ _Figure 2.1.2 : Class Diagram of the Logic Component_
 The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
 
 image::SDforDeletePerson.png[width="800"]
-_Figure 2.1.3a : Component interactions for `delete 1` command (part 1)_
+_Figure 4.1.3a : Component interactions for `delete 1` command (part 1)_
 
 [NOTE]
 Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
@@ -139,7 +159,7 @@ Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address 
 The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
 image::SDforDeletePersonEventHandling.png[width="800"]
-_Figure 2.1.3b : Component interactions for `delete 1` command (part 2)_
+_Figure 4.1.3b : Component interactions for `delete 1` command (part 2)_
 
 [NOTE]
 Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
@@ -149,11 +169,11 @@ The sections below give more details of each component.
 === UI component
 
 image::UiClassDiagram.png[width="800"]
-_Figure 2.2.1 : Structure of the UI Component_
+_Figure 4.2.1 : Structure of the UI Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `MeetingListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
@@ -166,10 +186,10 @@ The `UI` component,
 === Logic component
 
 image::LogicClassDiagram.png[width="800"]
-_Figure 2.3.1 : Structure of the Logic Component_
+_Figure 4.3.1 : Structure of the Logic Component_
 
 image::LogicCommandClassDiagram.png[width="800"]
-_Figure 2.3.2 : Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in Figure 2.3.1_
+_Figure 4.3.2 : Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in Figure 2.3.1_
 
 *API* :
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
@@ -182,12 +202,12 @@ link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
 
 image::DeletePersonSdForLogic.png[width="800"]
-_Figure 2.3.1 : Interactions Inside the Logic Component for the `delete 1` Command_
+_Figure 4.3.1 : Interactions Inside the Logic Component for the `delete 1` Command_
 
 === Model component
 
-image::ModelClassDiagram.png[width="800"]
-_Figure 2.4.1 : Structure of the Model Component_
+image::ModelComponentClassDiagram.png[width="800"]
+_Figure 4.4.1 : Structure of the Model Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
@@ -195,13 +215,13 @@ The `Model`,
 
 * stores a `UserPref` object that represents the user's preferences.
 * stores the Address Book data.
-* exposes an unmodifiable `ObservableList<ReadOnlyPerson>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* exposes an unmodifiable `ObservableList<ReadOnlyPerson>` and `ObservableList<ReadOnlyMeeting>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
 === Storage component
 
 image::StorageClassDiagram.png[width="800"]
-_Figure 2.5.1 : Structure of the Storage Component_
+_Figure 4.5.1 : Structure of the Storage Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 
@@ -226,6 +246,7 @@ The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides insi
 `UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
 
 image::LogicCommandClassDiagram.png[width="800"]
+_Figure 5.1.1 : Inheritance Diagram for commands_
 
 As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
 
@@ -265,10 +286,12 @@ Suppose that the user has just launched the application. The `UndoRedoStack` wil
 The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
 
 image::UndoRedoStartingStackDiagram.png[width="800"]
+_Figure 5.1.2 : Diagram to show stack_
 
 As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person.
 
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
+_Figure 5.1.3 : Diagram to show stack with another command_
 
 [NOTE]
 If a command fails its execution, it will not be pushed to the `UndoRedoStack` at all.
@@ -278,6 +301,7 @@ The user now decides that adding the person was a mistake, and decides to undo t
 We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed.
 
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
+_Figure 5.1.3 : Diagram to show how undo works_
 
 [NOTE]
 If the `undoStack` is empty, then there are no other commands left to be undone, and an `Exception` will be thrown when popping the `undoStack`.
@@ -285,6 +309,7 @@ If the `undoStack` is empty, then there are no other commands left to be undone,
 The following sequence diagram shows how the undo operation works:
 
 image::UndoRedoSequenceDiagram.png[width="800"]
+_Figure 5.1.4 : Sequence diagram for undo_
 
 The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
 
@@ -294,14 +319,17 @@ If the `redoStack` is empty, then there are no other commands left to be redone,
 The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow).
 
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
+_Figure 5.1.5 : Diagram to show stack with more commands_
 
 Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution:
 
 image::UndoRedoNewCommand3StackDiagram.png[width="800"]
+_Figure 5.1.6 : Diagram to show undoable command not added to stack_
 
 The following activity diagram summarize what happens inside the `UndoRedoStack` when a user executes a new command:
 
 image::UndoRedoActivityDiagram.png[width="200"]
+_Figure 5.1.7 : Activity diagram to show UndoRedoStack_
 
 ==== Design Considerations
 
@@ -363,6 +391,404 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 === Configuration
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
+// tag::meetingClass[]
+
+=== Implementing Meeting Class
+
+The Meeting class is a new class just like the Person class, which resides inside `model`. It features commands that modifies the state of the address book
+such as `addmeeting`, `deletemeeting`, `editmeeting`, `listmeeting` and `findmeeting`.
+The attributes of Meeting class include `NameMeeting`, `DateTime`, `Place`, `Persons` and `MeetingTag`, as seen in the figure below.
+
+image::MeetingCLass.png[width="300"]
+_Figure 5.4.1 Meeting Class_
+
+`Persons` are `ReadOnlyPerson` class from the contact list added by the users. In this meeting class, `List<ReadOnlyPerson> personsToMeet` are an object inside `Meeting` class which stores the information of the persons inside the class itself.
+
+
+==== Design Considerations
+
+**Aspect:** Creation of Meeting class +
+**Alternative 1 (current choice):** Input a person class in Meeting class to retrieve their name and phone number +
+**Pros:** Allows developers to be more flexible to implement with meeting class, also simplify the creation of group meetings  +
+**Cons:** It is difficult to implement.
+**Alternative 2:** Meeting class that is created with 'PersonToMeet' and 'PhoneNum' class +
+**Pros:** Easy to implement +
+**Cons:** More codes for developers to write and change.
+//end::meetingClass[]
+
+// tag::addmeeting[]
+=== Add Meeting
+
+The add meeting command inherits from UndoableCommand which allows user to add meeting with the following parameters: 'INDEX' of person in the last person listing,
+'Name' of Meeting, 'Date and Time' of Meeting, 'Location' of Meeting, and lastly, 'Importance' of Meeting.
+
+Implementation:
+
+When the `addmeeting` command is called with the appropriate parameters, an instance of the `Meeting` object is created with the
+corresponding parameters. For example,
+
+[source,java]
+----
+addmeeting 7 n/Shopping d/31-10-2017 16:00 l/Hillion Mall t/1
+----
+
+Creates an object with the following parameters
+[source,java]
+----
+MeetingName: Shopping
+DateTime: 31-10-2017 16:00
+PersonName: Alex Yeo
+PhoneNum: 87438807
+Location: Hillion Mall
+MeetingTag: 1
+----
+
+Furthermore, the `INDEX` of person provided would allow the newly-created `Meeting` object to get the name as well as phone number
+of the corresponding contact as shown in the example above.
+
+The following sequence diagram below shows how AddMeeting operation works:
+
+image::addMeetingSequenceDiagram.png[width="800"]
+_Figure 5.5.1 : Sequence diagram of Add Meeting_
+
+// end::addmeeting[]
+
+// tag::deletemeeting[]
+=== Delete Meeting
+
+The delete meeting command inherits from UndoableCommand which allows user to delete meeting with the following parameters: 'INDEX' of meeting in the meeting list.
+
+Implementation:
+
+When the `deletemeeting` command is called with the appropriate parameters, the instance of the `Meeting` object created during addmeeting
+is called upon and removed.
+For example,
+
+[source,java]
+----
+deletemeeting 1
+----
+
+Deletes an object with the following parameters
+[source,java]
+----
+INDEX: 1
+----
+
+The `INDEX` of meeting provides the name, date and location of the meeting which is used to remove it
+from the meeting list.
+
+// end::deletemeeting[]
+
+// tag::findmeeting[]
+=== Find Meeting
+
+The find meeting command inherits from Command which allows users to find meeting with the following parameters: [KEYWORD] of the meeting in the meeting list.
+
+Implementation:
+
+When the `findmeeting` command is called with the appropriate parameters, a search for the instance of the `Meeting` object created during addmeeting
+with keywords are listed.
+For example,
+
+[source,java]
+----
+findmeeting makan
+----
+
+Finds an object with the following parameters
+[source,java]
+----
+KEYWORD: makan
+----
+
+The `KEYWORD` of meeting provides the name, date and location of the meeting which is used to list it.
+
+If none of the meetings contains the `KEYWORD`, the results would show "No meetings found".
+// end::findmeeting[]
+
+// tag::findexactmeeting[]
+=== Find Exact Meeting
+
+The find exact meeting command inherits from Command which allows users to find meetings in the meeting list with persons whose name matches the [PHRASE].
+
+Implementation:
+
+When the `findexactmeeting` command is called with the appropriate parameters, a search for the instance of the `Meeting` object.
+
+The following sequence diagram shows how the command works:
+
+image::FindExactMeetingSequence.png[width="800"]
+_Figure 5.8.1 : Find Exact Meeting Sequence Diagram_
+
+For example,
+
+[source,java]
+----
+findexactmeeting john tan
+----
+
+Finds a meeting(s) with the following parameter as the name of the person stored in meeting
+[source,java]
+----
+PHRASE: john tan
+----
+
+If none of the meetings contains the `PHRASE`, the results would show "No meetings found".
+
+==== Design Considerations
+
+**Aspect:** How to narrow down search results +
+**Alternative 1:** reducing the number of search results when more keywords are added +
+**Pros:** Allows more flexibility when searching for a specific meeting +
+**Cons** Might not be able to sufficiently narrow down search results when there is a large amount of meetings stored
+
+**Current Choice :** Searching based on the entire name of a person +
+**Pros:** Able to significantly reduce the amount of meetings listed +
+**Cons** Restricts user to only search using one field
+
+
+---
+// end::findexactmeeting[]
+
+// tag::editmeeting[]
+=== Edit Meeting
+
+The edit meeting command is an undoable command which allows the user to edit the `MeetingName`, `DateTime` or `Place` of
+a created `Meeting` object.
+
+Implementation:
+
+When the `editmeeting` command is called with the appropriate parameters given, an instance of the `Meeting` object is created
+with the corresponding parameters. For example,
+
+[source,java]
+----
+editmeeting 2 n/Lunch l/Jurong East Mall
+----
+
+Creates an object with the following parameters
+[source,java]
+----
+MeetingName:Lunch
+DateTime: null
+Place: Jurong East Mall
+----
+
+This instance of the object `Meeting` is then compared to the preexisting `Meetings` in the addressbook corresponding
+to the index that was given in the command line which for the example above is `Index` 2. The respective parameters
+will then be replaced accordingly with the ones that were instantiated. As shown also, parameters that were not declared
+(in the case of the example, it was DateTime), are defaulted to be null and will not be changed in the actual `Meeting`
+object.
+
+When given invalid inputs, the `editmeeting` command shares some of the  exceptions
+which are also thrown by the `addmeeting` command. They are:
+
+* `DuplicateMeetingException`: Compares the edited Meeting object with the other Meeting objects in the address book
+and this exception is thrown when there is a duplicate object with the same parameters.
+* `MeetingNotFoundException` : Exception is thrown when the index provided to the `editmeeting` command
+is referring to the invalid index of a `Meeting` object in the addressbook
+* `MeetingBeforeCurrDateException` : Exception is thrown when the date of the edited
+Meeting is earlier than that of the current system time, this exception is thrown.
+* `MeetingClashException` : Exception is thrown when the DateTime of the editedmeeting is
+the same as one of the preexisting Meetings in the addressbook.
+
+==== Design Considerations
+
+**Aspect:** how `EditMeetingCommand` executes +
+**Alternative 1 :** Comparing the different parameters individually without the creation
+ of a new instance of a `Meeting` +
+**Pros:** More direct and faster way of editing the different parameters of the `Meeting` object +
+
+---
+// end::editmeeting[]
+
+
+=== Edit Meeting
+
+The edit meeting command is an undoable command which allows the user to edit the `MeetingName`, `DateTime` or `Place` of
+a created `Meeting` object.
+
+Implementation:
+
+When the `editmeeting` command is called with the appropriate parameters given, an instance of the `Meeting` object is created
+with the corresponding parameters. For example,
+
+[source,java]
+----
+editmeeting 2 n/Lunch l/Jurong East Mall
+----
+
+Creates an object with the following parameters
+[source,java]
+----
+MeetingName:Lunch
+DateTime: null
+Place: Jurong East Mall
+----
+
+This instance of the object `Meeting` is then compared to the preexisting `Meetings` in the addressbook corresponding
+to the index that was given in the command line which for the example above is `Index` 2. The respective parameters
+will then be replaced accordingly with the ones that were instantiated. As shown also, parameters that were not declared
+(in the case of the example, it was DateTime), are defaulted to be null and will not be changed in the actual `Meeting`
+object.
+
+When given invalid inputs, the `editmeeting` command shares some of the  exceptions
+which are also thrown by the `addmeeting` command. They are:
+
+* `DuplicateMeetingException`: Compares the edited Meeting object with the other Meeting objects in the address book
+and this exception is thrown when there is a duplicate object with the same parameters.
+* `MeetingNotFoundException` : Exception is thrown when the index provided to the `editmeeting` command
+is referring to the invalid index of a `Meeting` object in the addressbook
+* `MeetingBeforeCurrDateException` : Exception is thrown when the date of the edited
+Meeting is earlier than that of the current system time, this exception is thrown.
+* `MeetingClashException` : Exception is thrown when the DateTime of the editedmeeting is
+the same as one of the preexisting Meetings in the addressbook.
+
+==== Design Considerations
+
+**Aspect:** how `EditMeetingCommand` executes +
+**Alternative 1:** Comparing the different parameters individually without the creation
+ of a new instance of a `Meeting` +
+**Pros:** More direct and faster way of editing the different parameters of the `Meeting` object +
+**Cons:** Unable to check for invalid fields of later inputs
+
+**Current Choice:** Creating a new edited meeting object before modifying the one in the database. +
+**Pros:** Able to check if edited fields are valid +
+**Cons:** Involves the creation of new objects, possibly longer run time
+
+// tag::selectmeeting[]
+
+=== Select Meeting
+
+The select meeting command inherits from Command which allows user to select a meeting with the following parameters:
+'INDEX' of meeting in the last meeting listing.
+
+Implementation:
+
+When the `selectmeeting` is called with the appropriate parameters given, the Events center would create and post an instance of this as a new request event.
+This request event is then handled by the Browser Panel which loads the designated meeting page, Google Maps, with the meeting location loaded into the
+destination.
+
+==== Design Considerations
+
+**Aspect:** Purpose and use for selecting a meeting +
+**Alternative 1 (current implementation):** Google Maps is loaded in the browser panel +
+**Pros:** Allows developer to make use of the already established Google Maps. +
+**Cons:** Requires user to input valid addresses instead of user-based inputs like "Alex's Home". +
+**Alternative 2 (future option):** Allows user to choose what to load at the browser panel such as connecting to social media platforms to interact with meeting partners +
+**Pros:** Improve flexibility and choices to suit different needs of users.
+
+// end::selectmeeting[]
+
+// tag::meetingCard[]
+=== Meeting Card
+
+The implementation of meeting card starts of from creating 'Meeting' class which resides in the Model component of this application. This meeting card also requires the UI component for this cards to be properly shown to the users.
+
+* Firstly, the Meeting class is created with object properties like `MeetingName`, `DateTime`, `Place`, `PersonToMeet` and `PhoneNum` . We want all these object properties to facilitate the users' ability to retrieve these information of his/her scheduled meeting. This is handled by ModelManager.
+* These object properties of the meeting class are assigned to the labels in the Meeting card of MeetingCard.java, handled by UI manager.
+
+image::UiMeetingCardSequenceDiagram.png[width="800"]
+_Figure 5.12.1 : Sequence diagram of Ui of Meeting Card_
+
+* The list of meeting cards are assigned to the panel at the right of the program. The list are created with 'UniqueMeetingList'. This list of meetings are always sorted according to date and time, with the nearest date and time first. The implementation of the sorting of this `Meeting` cards is by using lambda sort, where the `LocalDateTime` of the `DateTime` in `Meeting` are sorted.
+
+image::MeetingCard.png[width="250"]
+_Figure 5.12.2 : Meeting Card_
+
+To show the urgency of the meeting, as you can see from the examples below, colours are assigned to the card by comparing the date and time in the meeting class to the date and time of the log in.
+
+* `darkRed` : Meeting is in next 24 hours.
+
+image::MeetingCard1.png[width="250"]
+_Figure 5.12.3 : Meeting card that due within 24 hours_
+
+* `red` : Meeting is in next 48 hours.
+
+image::MeetingCard2.png[width="250"]
+_Figure 5.12.4 : Meeting Card that due within 48 hours_
+
+* `orangeRed` : Meeting is in next 72 hours.
+
+image::MeetingCard3.png[width="250"]
+_Figure 5.12.5 : Meeting Card that due within 72 hours_
+
+==== Design Considerations
+
+**Aspect:** Ways to be implemented as a reminder of the urgency of the meeting +
+**Alternative 1 (current choice):** Colour is applied to meeting card +
+**Pros:** Easy to implement but further developers can enhance the colors easily. +
+**Cons:** Might not be as appealing to some users. +
+**Alternative 2 (future choice):** A pop-up reminder to show meeting on the current day and with the colours applied to meeting card +
+**Pros:** Will be a better reminder to users.
+// end::meetingCard[]
+
+// tag::meetingPopup[]
+=== Meeting pop up reminder
+
+To maximise the ability to remind the users of their meetings, a pop up reminder with the details of the meetings are shown to the user. The user will just have to acknowledge it. The pop up reminder activates and provides the details of the users' next meeting in 24 hours. As you can see from the Figure 5.8.1, there are sufficient details of the next meeting and the extra button is for the user to confirm the reminder.
+
+image::Reminder.png[width="600"]
+_Figure 5.13.1 : Reminder for single meeting_
+
+Implementation: +
+The creation of the pop up starts if there is a meeting on the day itself by the calling of `MeetingAlert` class during the opening of the application. The implementation of meeting pop up reminder ultilises `javafx.stage.Stage`. Before the instantiation of the `MeetingAlert` class, there will be a check if the next meeting is a group meeting or normal meeting. Subsequently, the results will be shown on the reminder itself, shown in Figure 5.8.2.
+
+image::Reminder(1).png[width="600"]
+_Figure 5.13.2 : Reminder for group meeting_
+
+==== Design Considerations
+
+**Aspect:** Ways to be implemented as a reminder of the urgency of the meeting +
+**Alternative 1 (current choice):** A pop-up reminder to show meeting on the current day, furthermore working with the colours applied to meeting card +
+**Pros:** Will be a better reminder to users and easy to implement +
+**Cons:** Might not be as appealing to some users. +
+**Alternative 2 :** Scrap the colours indicators for individual cards +
+**Pros:** Might be more appealing to some users. +
+**Cons:** Colour cards itself might not be significant enough to remind the users
+// end::meetingPopup[]
+
+// tag::autoDelete[]
+=== Automatic Deletions of Meetings
+Since, meetings that have been attended or missed are not needed in the meeting reminders anymore, we found a need for _ScheduBook_ to manage the meetings and delete them, without the need for user to manually delete them.
+
+Implementation: +
+When _ScheduBook_ is being booted up, the application loads up `addressbook`.xml file which stores the record of the saved file from the previous boot up of _ScheduBook_. Hence, using `LocalDateTime` classes and methods, any meetings that have dates before the time the user boot up _ScheduBook_ will not be added to the `filteredMeetingList` that is used to replace the pre-loaded list as you can see in the code snippet below. Hence, the newest list will not include those meetings and further saved back to the `addressbook`.xml file when user shut down _ScheduBook_.
+
+----
+for (final ReadOnlyMeeting meeting : meetings) {
+            if (dateIsAfter((meeting.getDate().toString()))) {
+            //to delete meetings that have passed automatically
+                replacement.add(new Meeting(meeting));
+            }
+        }
+----
+
+----
+private boolean dateIsAfter (String date) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        LocalDateTime currDate = LocalDateTime.now();
+        LocalDateTime meetDate = LocalDateTime.parse(date, formatter);
+        if (meetDate.isAfter((currDate))) {
+            return true;
+        }
+        return false;
+    }
+----
+
+==== Design Considerations
+
+**Aspect:** Ways to handle meetings that have passed the scheduled date and time +
+**Alternative 1 (current choice):** Application automatically deletes all meetings that have passed the scheduled time +
+**Pros:** User-friendly, past meetings will not obstruct the user's usage, hence being more organised +
+**Cons:** Some users might want to save some meetings that they missed +
+**Alternative 2 (future choice) :** Have an extra tabs that stores and saves meetings that user indicates to +
+**Pros:** Satisfy the need for some user to store 'missed' meetings +
+**Alternative 3 :** Let the users handle the meetings themselves +
+**Pros:** More freedom of choice, to manage the meetings +
+**Cons:** More troublesome for users, less user-friendly
+// end::autoDelete[]
 
 == Documentation
 
@@ -392,7 +818,7 @@ Here are the steps to convert the project documentation files to PDF format.
 .  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For best results, use the settings indicated in the screenshot below.
 
 image::chrome_save_as_pdf.png[width="300"]
-_Figure 5.6.1 : Saving documentation as PDF files in Chrome_
+_Figure 6.3.1 : Saving documentation as PDF files in Chrome_
 
 == Testing
 
@@ -727,11 +1153,49 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |delete a person |remove entries that I no longer need
 
+|`* * *` |user |view the history of commands |check my previous commands
+
+|`* * *` |user |undo the previous command |revert my changes
+
+|`* * *` |user |edit the particulars of a person |I can update or make amendments to the particulars of any contact
+
+|`* * *` |user |add multiple Tags to a person |I can filter and search for contacts with a particular keyword in their tagNames
+
+|`* * *` |user |list out every contact's information at once |retrieve information of all my contacts
+
+|`* * *` |user |clear all contacts |have an empty AddressBook
+
+|`* * *` |lazy user |I want my meeting list to clear outdated meeting |I do not have to delete them myself
+
+|`* * *` |user |I want my meetings to be sorted according to nearest date | I don't have to find the more important meetings ( which have the closer dates)
+
+|`* * *` |lazy user |I want to be reminded by Meeting cards |I know I have meeting for the next few days
+
+|`* * *` |user |redo the previously undone command |retrieve the previous change
+
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+
+|`* * *` |heavy user |use commands in short forms |input and execute my commands faster
+
+|`* * *` |heavy user |schedule meetings with the contacts |have a record and be reminded on when I am meeting them
 
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
+|`* *` |new user |view the list of all commands available |I can understand the functions of each command
+
+|`* *` |forgetful user |add multiple Tags to each contact |in case I forget the person's name, his or her contact can still be found through keywords in their Tags
+
+|`* *` |frequent user |save School Email Address(sub-email) to a contact |I can access the person's school email if required
+
+|`* *` |frequent user |create groups for contacts according to the keywords in their Tags |I can view all the contacts of each group with one search
+
+|`*` |user that is bad at recalling people by their name|insert(or link) a picture of the person |I can double check that I retrieved the correct contact and also help me to recall how the person looks like
+
+|`* *` |lazy and forgetful user |filter contacts by certain fields with keywords |still filter and search with certain keywords of other field instead of name only
+
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*` |heavy user |save Office address (sub-address) to a contact |have information about his/her office address if I need it
 |=======================================================================
 
 {More to be added}
@@ -767,7 +1231,128 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+[discrete]
+=== Use case: View history
+
+*MSS*
+
+1.  User requests to view history of commands
+2.  AddressBook shows a list of previously entered commands
++
+Use case ends.
+
+[discrete]
+=== Use case: Undo
+
+*MSS*
+
+1.  User requests to undo the previous command
+2.  AddressBook undo the previous command
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. There are no more commands to undo.
++
+** 1a1. AddressBook shows an error message.
++
+Use case ends.
+
 {More to be added}
+
+[discrete]
+=== Use case: List
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+[discrete]
+=== Use case: Clear
+
+*MSS*
+
+1.  User request to clear AddressBook
+2.  AddressBook clears the list of person
++
+Use case ends.
+
+[discrete]
+=== Use case: Redo
+
+*MSS*
+
+1.  User request to redo previous undone command
+2.  AddressBook redo the previous undone command
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. There is no previous undone command to redo
++
+[none]
+** 2a1. AddressBook shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Schedule meeting with person
+
+*MSS*
+
+1.  User requests to find person with name keywords
+2.  AddressBook shows a list of persons with keywords
+3.  User requests to add meeting of a specific person in the list
+4.  AddressBook adds the meeting
+5.  AddressBook sorts the meeting list
+6.  AddressBook shows lists of meetings
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: ListMeeting
+
+*MSS*
+
+1.  User requests to list meetings
+2.  AddressBook shows a list of meetings
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
 
 [appendix]
 == Non Functional Requirements

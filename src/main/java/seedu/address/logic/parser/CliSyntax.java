@@ -1,5 +1,6 @@
 package seedu.address.logic.parser;
 
+//@@author nelsonqyj
 /**
  * Contains Command Line Interface (CLI) syntax definitions common to multiple commands
  */
@@ -11,5 +12,8 @@ public class CliSyntax {
     public static final Prefix PREFIX_EMAIL = new Prefix("e/");
     public static final Prefix PREFIX_ADDRESS = new Prefix("a/");
     public static final Prefix PREFIX_TAG = new Prefix("t/");
+    public static final Prefix PREFIX_LOCATION = new Prefix("l/");
+    public static final Prefix PREFIX_DATE = new Prefix("d/");
+    public static final Prefix PREFIX_INDEX = new Prefix("i/");
 
 }

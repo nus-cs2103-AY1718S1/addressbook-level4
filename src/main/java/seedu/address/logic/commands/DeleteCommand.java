@@ -1,12 +1,21 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_MEETINGS;
+
+import java.util.Arrays;
 import java.util.List;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.ParserUtil;
+import seedu.address.model.meeting.MeetingContainsFullWordPredicate;
+import seedu.address.model.meeting.ReadOnlyMeeting;
+import seedu.address.model.meeting.exceptions.MeetingNotFoundException;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+
 
 /**
  * Deletes a person identified using it's last displayed index from the address book.
@@ -14,6 +23,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 public class DeleteCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "delete";
+    public static final String COMMAND_ALIAS = "d";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the person identified by the index number used in the last person listing.\n"
@@ -38,7 +48,34 @@ public class DeleteCommand extends UndoableCommand {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
+        //@@author kyngyi
         ReadOnlyPerson personToDelete = lastShownList.get(targetIndex.getZeroBased());
+        String personToDeleteName = personToDelete.getName().toString();
+        String[] nameArray = {personToDeleteName};
+        model.updateFilteredMeetingList(new MeetingContainsFullWordPredicate(Arrays.asList(nameArray)));
+        List<ReadOnlyMeeting> lastShownMeetingList = model.getFilteredMeetingList();
+
+        while (!lastShownMeetingList.isEmpty()) {
+            int initialListSize = lastShownMeetingList.size();
+            try {
+                Index firstIndex = ParserUtil.parseIndex("1");
+                ReadOnlyMeeting meetingToDelete = lastShownMeetingList.get(firstIndex.getZeroBased());
+                model.deleteMeeting(meetingToDelete);
+            } catch (IllegalValueException ive) {
+                assert false : "Error in deleting first item";
+            } catch (MeetingNotFoundException mnfe) {
+                assert false : "The target meeting cannot be missing";
+            } catch (IndexOutOfBoundsException ioobe) {
+                assert false : "Index out of bounds";
+            }
+            int endListSize = lastShownMeetingList.size();
+            if (initialListSize == endListSize) {
+                break;
+            }
+        }
+
+        model.updateFilteredMeetingList(PREDICATE_SHOW_ALL_MEETINGS);
+        //@@author
 
         try {
             model.deletePerson(personToDelete);
