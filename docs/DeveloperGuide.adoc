@@ -419,7 +419,6 @@ A new label will be displaced for each person for each custom field.
 
 ==== Sequence Diagram
 image::CustomCommandSequenceDiagram.png[width="800"]
-image::CustomCommandSequenceDiagramForStorage[width="800"]
 // end:: customField[]
 
 // tag::photo[]
