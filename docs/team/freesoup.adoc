@@ -2,9 +2,15 @@
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: ../images
 :stylesDir: ../stylesheets
+---
+
+== Purpose:
+
 
 == Project: Rubrika
-Rubrika is a desktop address book application targeted at Self-employed professionals and freelancers to help the manage their contacts that they use in their day to day life.  The user interacts with it using a CLI, and it has a GUI created with JavaFX. Rubrika is written in java.
+Rubrika is a desktop address book application targeted at Self-employed professionals and freelancers to help the manage their contacts that they use in their day to day life. +
+
+Rubrika is a java application that uses a command line interface for most interaction, and it has a simple user interface.
 
 *Code contributed*: [https://github.com/CS2103AUG2017-W15-B1/Main/blob/master/collated/main/freesoup.md[Functional code]] [https://github.com/CS2103AUG2017-W15-B1/Main/blob/master/collated/test/freesoup.md[Test code]]
 
