@@ -76,6 +76,180 @@ The tests will be CLI only. This means that all commands are entered through the
 .  Type `deleteE 4`.
 .  The event "CS2101 CA3 group meeting" will not be deleted. The result will display that the event has participating persons.
 
+=== Edit Commands
+
+==== Editing a person
+
+.  Type `edit 10 n/Jane Doe e/Janed@gmail.com`.
+.  The person "John Doe" will be edited to "Jane Doe".
+
+==== Editing an event
+
+.  Type `edit 5 en/GER1000 midterm ed/GER1000 midterm`.
+.  The event "MA1101 miterm" will be edited to "GER1000 midterm".
+
+=== Join Command
+
+.  Type `join p/1 e/1`.
+.  The person "Alex Lee" will join event "CS2010" as a participant. The display will show accordingly.
+.  Type the same command given in step 1.
+.  The result will display that the person is already a participant of the event.
+
+=== Disjoin Command
+
+.  Type `disjoin p/2 e/7`.
+.  The person "Byran Koh" will no longer be a participant of event "Lunch with Byran". The display will show accordingly.
+.  Type the same command given in step 1.
+.  The result will display that the person is not a participant of the event.
+
+=== Portrait Command
+
+[NOTE]
+For this command, there will not be a image provided.
+For the `FILEPATH` displayed in the command, please use a file path to one of your own images.
+
+.  Type `portrait 1 FILEPATH`.
+.  The person "Alex Lee" will have an updated portrait with the image indicated in `FILEPATH`.
+
+=== List Commands
+
+==== Listing all persons
+
+.  Type `list`.
+.  The app will display all 10 persons in the person list at the left.
+
+==== Listing all events
+
+.  Type `listE`.
+.  The app will display all 13 events in the event list at the right.
+
+=== Sort Command
+
+.  Type `sort`.
+.  The person list on the left will display 10 persons sorted in alphabetical lexicographical order. The order is as follows:
+.. "Alex Lee"
+.. "Byran Koh"
+.. "Charlie Poh"
+.. "Debbie Yeo"
+.. "Eddie Wong"
+.. "Fiona Goh"
+.. "Gavin Oh"
+.. "Helena Lee"
+.. "Ireta Chow"
+.. "John Doe"
+
+. The event list on the right will display 13 events sorted in descending order with the earliest event at the top. The order is as follows:
+.. "CS2010 midterm"
+.. "MA1101 midterm"
+.. "CS2103T project meeting 1"
+.. "CS2103T project meeting 2"
+.. "CS2103T project meeting 3"
+.. "CS2101 CA3 group meeting"
+.. "Lunch with Byran"
+.. "Meet up with Gavin"
+.. "Financial consultation"
+.. "Final exams first paper"
+.. "Music lesson"
+.. "Cindy wedding"
+.. "Family dinner"
+
+=== Find Commands
+
+==== Finding person/s by name
+
+.  Type `find gavin`.
+.  The person "Gavin Oh" will be displayed in index 1 in the person list at the left.
+.  Type `find lee`.
+.  The persons "Alex Lee" and "Helena Lee" will be displayed in index 1 and 2 of the person list respectively.
+.  Type `find gav`.
+.  No person will be displayed in the person list.
+
+==== Finding person/s by tag
+
+.  Type `find t/cousin`.
+.  The person "Fiona Goh" will be displayed in the person list at index 1.
+.  Type `find t/friends`.
+.  5 persons will be displayed in the person list at the left in this order:
+.. "Alex Lee"
+.. "Byran Koh"
+.. "Charlie Poh"
+.. "Debbie Yeo"
+.. "Gavin Oh"
+
+==== Finding person/s by name and tag
+
+.  Type `find Alex t/cousin`.
+.  The persons "Alex Lee" and "Fiona Goh" will be displayed at index 1 and 2 of the person list on the left respectively.
+
+==== Finding event/s by name
+
+.  Type `findE music`.
+.  The event "Music lesson" will be displayed in the event list on the right at index 1.
+.  Type `findE midterm`.
+.  The events "CS2010 midterm" and "MA1101 midterm" will be displayed at index 1 and 2 of the event list respectively.
+
+=== ShowP Command
+
+. Type `showP 2`.
+. No person will be displayed as no one is a participant of event `MA1101 midterm`. The person list on the left be blank.
+. Type `showP 3`.
+. 3 persons who are participating in event "CS2103T project meeting 1" will be displayed in the person list. The order is as follows:
+.. "Alex Lee"
+.. "Charlie Poh"
+.. "Debbie Yeo"
+
+=== SelectE Command
+
+.  Type `selectE 10`.
+.  No event will be displayed as person "John Doe" is not a participant of any event. The event list on the right will be blank.
+.  Type `selectE 4`.
+.  4 events which person "Debbie Yeo" is participating in will be displayed in the event list. The order is as follows:
+.. "CS2103T Project Meeting 1"
+.. "CS2103T Project Meeting 2"
+.. "CS2103T Project Meeting 3"
+.. "CS2101 CA3 group meeting"
+
+=== Display Commands
+
+==== Displaying emails of every participant of an event
+
+.  Type `display 1 email`.
+.  The result will display that no one has joined the event.
+.  Type `display 12 email`.
+.  The information board in the middle will display the email of person "Eddie Wong", `Eddiew@gmail.com`.
+.  Type `display 13 email`.
+.  The information board in the middle will display the emails of persons "Fiona Goh" and "Eddie Wong", `Fionag@gmail.com`, `Eddiew@gmail.com`.
+
+==== Displaying phone numbers of every participant of an event
+
+.  Type `display 1 phone`.
+.  The result will display that no one has joined the event.
+.  Type `display 12 phone`.
+.  The information board in the middle will display the phone number of person "Eddie Wong", `92891021`.
+.  Type `display 13 phone`.
+.  The information board in the middle will display the phone numbers of persons "Fiona Goh" and "Eddie Wong", `94618211`, `92891021`.
+
+==== Displaying addresses of every participant of an event
+
+.  Type `display 1 address`.
+.  The result will display that no one has joined the event.
+.  Type `display 12 address`.
+.  The information board in the middle will display the address of person "Eddie Wong", `Blk 399, Yishun Ave 2, #06-178`.
+.  Type `display 13 address`.
+.  The information board in the middle will display the addresses of persons "Fiona Goh" and "Eddie Wong", `Blk 88, Bukit Batok Ave 1, #03-72`, `Blk 399, Yishun Ave 2, #06-178`.
+
+=== Select Command
+
+.  Type `select 10`.
+.  A browser with a Google search page of person "John Doe" will appear in front of the information board (middle) and the event list (right).
+
+=== Toggle Command
+
+.  Type `select 10`.
+.  A browser with a Google search page of person "John Doe" will appear in front of the information board (middle) and the event list (right).
+.  Type `toggle`.
+.  The app will remove the browser and display the information board and event list.
+
 === Help Command
 
 .  Type `help`.
@@ -83,686 +257,39 @@ The tests will be CLI only. This means that all commands are entered through the
 .  Close the help window.
 .  The result will display that the help window has been opened.
 
-====
-*Command Format*
+=== History Command
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
-* Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
-* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
-* Command key wards are *case sensitive*. e.g. only `help` means help command, while `HELP`, `HElp`, `hElP` are not.
-====
+.  Close the app.
+.  Reopen the app.
+.  Type `history`.
+.  The result will display that no commands have been entered.
+.  Type the same command given in step 3.
+.  The result will display a list of entered commands from most recent to the earliest. The result should only have a "history" command.
 
-****
-* Unless otherwise stated, all the example screenshots are operated based on the following stage:
+=== Clear Command
 
-image::UG_add.png[width="790"]
-_Figure 3.1: base stage_
-****
+.  Type `clear`.
+.  The app will be cleared of both person and event data. The person list and event list on the left and right respectively will be blank.
 
-=== Adding
+=== Undo Command
 
-==== Adding a person : `add`
+.  Type `clear`.
+.  The app will be cleared of both person and event data. The person list and event list on the left and right respectively will be blank.
+.  Type `list`.
+.  The person and event list will both still be blank.
+.  Type `undo`.
+.  The person and event data will be restored. The person list will display 10 persons and the event list will display 13 events.
 
-You can use it to add a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+=== Undo Command
 
-****
-* A person can have any number of tags (including 0)
-****
+.  Type `clear`.
+.  The app will be cleared of both person and event data. The person list and event list on the left and right respectively will be blank.
+.  Type `undo`.
+.  The person and event data will be restored. The person list will display 10 persons and the event list will display 13 events.
+.  Type `redo`.
+.  The app will be cleared of both person and event data. The person list and event list on the left and right respectively will be blank.
 
-Examples:
+=== Exit Command
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
-
-// tag::addE[]
-==== Adding an event : `addE`
-You can use it to add an event to the event list +
-Format: `addE en/EVENT_NAME ed/EVENT_DESCRIPTION et/EVENT_TIME`
-
-****
-* You need to type EVENT_TIME as a date format DD/MM/YYYY (Use "/" insetead of "-")
-* Every event will have a number indicating the of days till or since the event date.
-** If the event date has passed, an up arrow will be appended to the numbr to indicate how many days have passed since the evnet date.
-** If the event date is not yet reached, a down arrow will be appended to the number to indicate the number of days till the event.
-****
-
-****
-* If the evnet to be add in an addE command is `out-dated` (ie. event date has passed), an alert dialog will pop up.
-This dialog (shown in Figure 3.1.1) will ask you whether you want to add this out-dated event into Planno.
-** If you want to add this event, click `OK`.
-** If you do not want to add this event anymore, click `CANCEL`.
-
-image::alert_dialog.png[width="790"]
-_Figure 3.2.1: alert dialog for adding out-dated events_
-****
-
-Example:
-
-* `addE en/CS2101 meeting ed/Discuss how to conduct software demo. et/30/10/2017` +
-* `addE en/Submit assignment ed/Submit programming assignment 2 et/23/10/2017`
-
-You will see the following after typing 4 above example add command to
-*an empty address book and an empty event list*:
-
-image::UG_add.png[width="790"]
-_Figure 3.2.2: add command result_
-// end::addE[]
-
-=== Listing
-
-==== Listing all persons : `list`
-
-Shows a list of all persons in the address book. +
-Format & Example: `list`
-
-// tag::listE[]
-==== Listing all events : `listE`
-
-Shows a list of all events in the event list. +
-Format & Example: `listE`
-
-You will see the following after typing 2 above example list command:
-
-image::UG_list.png[width="790"]
-_Figure 3.3: list command result_
-// end::listE[]
-
-// tag::sort[]
-=== Sorting all persons and events: `sort`
-
-You can use it to view a list of sorted persons in the address book according to the alphabetical order of their names,
- and a list of sorted events in the event list according to the event time. +
-Format & Example: `sort`
-****
-* The sorting of person names is case-insensitive.
-* event is sorted in ascending order
-****
-
-You will see the following after typing sort command:
-
-image::UG_sort.png[width="790"]
-_Figure 3.4: sort command result_
-// end::sort[]
-
-=== Editing
-==== Editing a person : `edit`
-You can use it to edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
-
-****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
-****
-
-Examples:
-
-* `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
-
-// tag::editE[]
-==== Editing an event : `editE`
-You can use it to edits an existing event in the event list. +
-Format: `editE INDEX [en/NAME] [ed/DESCRIPTION] [et/TIME]`
-
-****
-* Edits the event at the specified `INDEX`. The index refers to the index number shown in the last event listing. The index *must be a positive integer* 1, 2, 3, ...
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-* You need to type TIME as a date format DD/MM/YYYY.
-****
-
-Examples:
-
-* `editE 1 en/CS2103 project meeting et/03/11/2017` +
-Edits the event name and event time of 1st event to be `CS2103 project meeting` and `/03/11/2017` respectively.
-* `editE 2 ed/Submit handwritten assignment.` +
-Edits the event description of 2nd event to be `Submit handwritten assignment`
-
-You will see the following after typing 4 above edit command:
-
-image::UG_edit.png[width="790"]
-_Figure 3.5: edit command result_
-// end::editE[]
-
-// tag::find[]
-=== Finding
-==== Locating persons by name: `find`
-
-Finds persons whose names contain any of the given keywords. +
-Finds persons who have any of the given tags. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
-
-****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* The name and tag names searched.
-* Tags should be indicated by prefix `t/`
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-****
-
-Examples:
-
-* `find John` +
-Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
-* `find t/friends`
-Returns any person having tag `friends`
-* `find t/colleagues John`
-Returns any person having name `John` or having tag `colleagues`
-
-You will see the following after typing `find John`:
-
-image::UG_find_1.png[width="790"]
-_Figure 3.6.1: find command result 1_
-
-Subsequently, you will see the following after typing `find Betsy john`:
-
-image::UG_find_2.png[width="790"]
-_Figure 3.6.2: find command result 2_
-// end::find[]
-
-
-// tag::findE[]
-==== Locating events by name: `findE`
-
-Finds events whose names contain any of the given keywords. +
-Format: `findE KEYWORD [MORE_KEYWORDS]`
-
-****
-* The search is case insensitive. e.g `meeting` will match `Meeting`
-* The order of the keywords does not matter. e.g. `First Meeting` will match `Meeting First`
-* The name searched.
-* Only full words will be matched e.g. `Meetin` will not match `Meeting`
-* Events matching at least one keyword will be returned (i.e. `OR` search). e.g. `First Meeting` will return `Second Meeting`, `First Event`
-****
-
-Examples:
-
-* `find meeting` +
-Returns `Meeting` and `meeting`
-* `find Sports Meeting` +
-Returns any event having names `Sports`or `Meeting`
-
-// end::findE[]
-
-=== Deleting
-==== Deleting a person : `delete`
-
-Deletes the specified person from the address book. +
-Format: `delete INDEX`
-
-****
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-****
-
-Examples:
-
-* `list` +
-`delete 2` +
-Deletes the 2nd person in the address book.
-* `find Betsy` +
-`delete 1` +
-Deletes the 1st person in the results of the `find` command.
-
-==== Deleting an event : `deleteE`
-
-Deletes the specified event from the event list. +
-Format: `deleteE INDEX`
-****
-* Deletes the event at the specified `INDEX`.
-* The index refers to the index number shown in the most recent event listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-****
-
-Example:
-
-* `listE` +
-`deleteE 2` +
-Deletes the 2nd event in the event list.
-
-You will see the following after typing `delete 1` and `deleteE 1`:
-
-image::UG_delete.png[width="790"]
-_Figure 3.7: delete command result_
-
-=== Selecting a person : `select`
-
-Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
-
-****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
-* The browser will be displayed when the command is used.
-****
-
-Examples:
-
-* `list` +
-`select 2` +
-Selects the 2nd person in the Planno.
-* `find Betsy` +
-`select 1` +
-Selects the 1st person in the results of the `find` command.
-
-You will see the following after typing `select 1`:
-
-image::UG_Select.png[width="790"]
-_Figure 3.8: select command result_
-
-// tag::join[]
-=== Connecting a person to an event : `join`
-You can use it to show a person is involved in an event. +
-Format : `join p/INDEX_P e/INDEX_E` +
-****
-* The person at position `INDEX_P` will be involved in the event at position `INDEX_E` .
-* The index *must be a positive integer* `1, 2, 3, ...`
-* Make sure you type the prefixes `p/` and `e/` to distinguish person index and event index.
-****
-
-Example:
-
-* `list` +
-`listE` +
-`join p/2 e/1` +
-The 2nd person in the address book will be involved in the 1st event in the event list.
-
-This command only displays a successful message. You cannot see explicit change in the panel. +
-You will see the following after typing above commands: +
-
-image::UG_join.png[width='790']
-_Figure 3.9: join result_
-// end::join[]
-
-// tag::disjoin[]
-=== Disconnecting a person to an event : `disjoin`
-You can use it to show a person is not involved in an event any more. +
-Format : `disjoin p/INDEX_P e/INDEX_E` +
-****
-* The person at position `INDEX_P` will be involved in the event at position `INDEX_E` .
-* The index *must be a positive integer* `1, 2, 3, ...`
-* Make sure you type the prefixes `p/` and `e/` to distinguish person index and event index.
-* This person *must be already involved in this event*.
-****
-
-Example: +
-Assuming that you have typed `join p/2 e/1` before this example.
-
-* `list` +
-`listE` +
-`disjoin p/2 e/1` +
-The 2nd person in the address book will not be involved in the 1st event in the event list any more.
-
-This command only displays a successful message. You cannot see explicit change in the panel. +
-You will see the following after typing above commands: +
-
-image::UG_disjoin.png[width='790']
-_Figure 3.10: disjoin result_
-// end::disjoin[]
-
-// tag::showP[]
-=== Showing all participants of an event : `showP`
-
-You can use it to view all participants who join a certain event. +
-Format: `showP EVENT_INDEX`
-
-****
-* Shows all persons who join the event at the specified `EVENT_INDEX`.
-* The index refers to the index number shown in the most recent event listing.
-* The index *must be a positive integer* `1, 2, 3, ...`.
-****
-
-Example: +
-Assuming that you have typed `join p/2 e/1` before this example.
-
-* `listE` +
-`showP 1` +
-Shows all participants who are involved in the 1st event of event list.
-
-You will see the following after typing above commands: +
-
-image::UG_showPerson.png[width='790']
-_Figure 3.11: show persons result_
-
-// end::showP[]
-
-// tag::selectE[]
-=== Selecting and showing all events which a person joins : `selectE`
-
-You can use it to view all events which a certain person joins. +
-Format: `selectE PERSON_INDEX`
-
-****
-* Selects and shows all events which the person at the specified `PERSON_INDEXS` joins.
-* The index/s refers to the index number/s shown in the most recent person listing.
-* The index/s *must be a positive integer* `1, 2, 3, ...`.
-****
-
-Examples: +
-Assuming that you have typed `join p/2 e/1` before this example.
-
-* `list` +
-`selectE 2` +
-Shows all events which the 2nd person in Planno joins.
-* `find Betsy` +
-`selectE 1` +
-Shows all events which the 1st person in the results of the `find` command joins.
-
-You will see the following after typing `list` and `selectE 2`: +
-
-image::UG_selectEvent.png[width='790']
-_Figure 3.12: select events result_
-
-// end::selectE[]
-
-=== Displaying emails of every person in an event : `displayEmails`
-
-You can use it to view the emails of every person in an event. +
-Format: `displayEmails INDEX`
-
-****
-* Shows emails of every person in the event specified by `INDEX`.
-* The index refers to the index number shown in the most recent event listing.
-* The index *must be a positive integer* `1, 2, 3, ...`.
-****
-
-Examples: +
-Assuming that you have typed `join p/1 e/1` and `join p/2 e/1` before this example.
-
-* `list` +
-`displayEmails 1` +
-Shows the email of every person who is in the first event in the address book.
-
-You will see the following after typing `list` and `displayEmails 1`: +
-
-image::UG_displayEmails.png[width='790']
-_Figure 3.13:  display emails result_
-
-// tag::portrait[]
-=== Attaching a portrait to a person: `portrait`
-
-You can use this command to attach a portrait to a person so that you can identify him easily.
-
-[NOTE]
-`portrait` command is the only way to change a person's portrait. +
-The default portrait for every person is the following picture:
-
-image::portraitDefault.png[]
-_Figure 3.14.1 default portrait_
-
-Format: `portrait PERSON_INDEX p/IMAGE_FILE_PATH`
-
-****
-* The `image file path` should be in this format: +
- `HARD_DISK_NAME:/[FOLDER_NAME]/FILE_NAME` +
-* The application only supports .jpg and .png images.
-****
-
-Example: +
-
-* `portrait 1 p/C:/Users/My Profile/Images/sample picture.png` +
-The image named `sample picture.png` and located at `C:/Users/My Profile/Images/` will be attached to the first person.
-
-****
-* You can use either '\' or '/' to separate two subfolders.
-* The app will report an error if it cannot find the file by the path you provide.
-****
-Assume the `sample picture.png` looks like this:
-
-image::portraitSample.png[]
-_Figure 3.14.2 the sample.png_
-
-Then you will see the following after typing the example portrait command
-
-image::UG_portrait.png[]
-_Figure 3.14.3 attach a portrait_
-
-// end::portrait[]
-
-// tag::toggle[]
-=== Toggling between details and browser: `toggle`
-
-You can use this command to toggle between displaying the information board and events list, or a browser.
-
-Format & Example: `toggle`
-
-****
-* Toggling when the information board and events list are displayed will have a browser replace them. +
-* Toggling when the browser is displayed will have the information board and events list replace them. +
-* After toggling to the browser, it will not be visible unless a `select` command has been entered once before.
-****
-
-You will see the following after typing the toggle command when the information board and events list are displayed but a `select` command has not been entered:
-
-image::UG_Toggle1.png[]
-_Figure 3.15.1 toggle result when browser is displayed_
-
-You will see the following after typing the toggle command when the browser is displayed:
-
-image::UG_Toggle2.png[]
-_Figure 3.15.2 toggle result when information board and events list are displayed_
-
-You will see the following after typing the toggle command when the information board and events list are displayed and a `select` command:
-
-image::UG_Toggle3.png[]
-_Figure 3.15.3 toggle result when information board and events list are displayed and a `select` command is entered before_
-
-// end::toggle[]
-
-=== Listing entered commands : `history`
-
-Lists all the commands that you have entered in reverse chronological order. +
-Format & Example: `history`
-
-****
-* Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
-****
-
-You will see the following after typing history command: +
-
-image::UG_history.png[width='790']
-_Figure 3.16: history result_
-
-// tag::undoredo[]
-=== Undoing previous command : `undo`
-
-Restores the address book or event list to the state before the previous _undoable_ command was executed. +
-Format: `undo`
-
-****
-* Undoable commands: those commands that modify the content in address book or event list(`add`, `delete`, `edit`, `clear`, `join` and `disjoin`).
-****
-
-Examples:
-
-* `delete 1` +
-`list` +
-`undo` (reverses the `delete 1` command) +
-
-* `select 1` +
-`list` +
-`undo` +
-The `undo` command fails as there are no undoable commands executed previously.
-
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-
-You will see the following after typing `delete 1` and `clear`:
-
-image::UG_clear.png[width='790']
-_Figure 3.17.1: before undo_
-
-You will see the following after typing `undo` (undo `clear`):
-
-image::UG_undo1.png[width='790']
-_Figure 3.17.2: undo once_
-
-You will see the following after typing `undo` again (undo `delete 1`):
-
-image::UG_undo2.png[width='790']
-_Figure 3.17.3: undo twice_
-
-=== Redoing the previously undone command : `redo`
-
-Reverses the most recent `undo` command. +
-Format: `redo`
-
-Examples:
-
-* `delete 1` +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
-
-* `delete 1` +
-`redo` +
-The `redo` command fails as there are no `undo` commands executed previously.
-
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
-`redo` (reapplies the `clear` command) +
-
-You will see the following after typing `delete 1`, `clear`, `undo` and `undo`:
-
-image::UG_undo2.png[width='790']
-_Figure 3.18.1: before redo_
-
-You will see the following after typing `redo` (redo `delete 1`):
-
-image::UG_redo1.png[width='790']
-_Figure 3.18.2: redo once_
-
-You will see the following after typing `redo` again (redo `clear`):
-
-image::UG_redo2.png[width='790']
-_Figure 3.18.2: redo twice
-
-// end::undoredo[]
-
-=== Clearing all entries : `clear`
-
-Clears all entries from the address book and the event list. +
-Format & Example: `clear`
-
-****
-* You will clear both persons and events by typing this command.
-****
-
-You will see the following after clear command:
-
-image::UG_clear.png[width="790"]
-_Figure 3.19: clear result_
-
-=== Viewing help : `help`
-
-Format & Example: `help` +
-The help window is same as this user guide. +
-
-=== Exiting the program : `exit`
-
-Exits the program. +
-Format & Example: `exit`
-
-=== Saving the data
-
-Address book data are saved in the hard disk automatically after any command that changes the data. +
-There is no need to save manually.
-
-== Features coming in V2.0
-
-[discrete]
-=== The following features are coming for version 2.0
-
-. Users can connect this app with several social media platforms, and import data from them. +
-. Users can send messages through this app. +
-. Users can be alarmed when an event is going to take place. +
-. Users can design their own GUI appearances (e.g colour, font). +
-
-== Command Summary
-
-* *Adding an event* `addE en/EVENT_NAME ed/EVENT_DESCRIPTION et/EVENTTIME` +
-e.g. `adde en/Project Meeting ed/Project meeting with CS2103 Team Members et/20/10/2017`
-
-* *Adding a person* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-
-* *Attach a portrait to a person* : `portrait PERSON_INDEX p/IMAGE_FILE_PATH`
-e.g. `portrait 1 p/C:/Users/My Profile/Images/sample picture.png`
-
-* *Clear* : `clear`
-
-* *Deleting an event* : `deleteE INDEX` +
-e.g. `deleteE 5`
-
-* *Deleting a person* : `delete INDEX` +
-e.g. `delete 3`
-
-* *Disjoining an event* : `disjoin p/PERSON_INDEX e/EVENT_INDEX` +
-e.g. `disjoin p/4 e/6`
-
-* *Editing an event* : `editE INDEX [en/NAME] [ed/DESCRIPTION] [et/TIME]` +
-e.g. `edit 1 en/Lunch ed/Lunch with Albert at Bishan`
-
-* *Editing a person* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
-
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-e.g. `find t/friends`
-e.g. `find t/neighbors alex`
-
-* *Help* : `help`
-
-* *History* : `history`
-
-* *Joining an event* `join p/PERSON_INDEX e/EVENT_INDEX` +
-e.g. `join p/3 e/1`
-
-* *Listing every person* : `list`
-
-* *Listing every event* : `listE`
-
-* *Redo* : `redo`
-
-* *Selecting a person* : `select INDEX` +
-e.g. `select 4`
-
-* *Selecting and showing every event a person has joined* : `selectE p/INDEX` +
-e.g. `selectE p/1`
-
-* *Showing every participant in an event* : `showP EVENT_INDEX` +
-e.g.`showP 2`
-
-* *Sort* : `sort`
-
-* *Undo* : `undo`
-
-== FAQ
-*Q*: Do I need to install anything else other than Java 1.8.0_60? +
-*A*: No. Planno only needs Java 1.8.0_60 or any later versions to work.
-
-*Q*: How do i run/open Planno with the jar file? +
-*A*: Double click the jar file to run Planno.
-
-*Q*: Can I run Planno with a older version of Java? +
-*A*: No. You will not be able to run Planno.
-
-*Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
-
+.  Type `exit`.
+.  The app will close/exit.

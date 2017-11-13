@@ -316,12 +316,12 @@
     <events>
         <eventName>MA1101 midterm</eventName>
         <eventDesc>MA1101 midterm</eventDesc>
-        <eventTime>5/10/2017</eventTime>
+        <eventTime>05/10/2017</eventTime>
     </events>
     <events>
         <eventName>CS2103T project meeting 1</eventName>
         <eventDesc>Meeting with team members at 3pm, Com1</eventDesc>
-        <eventTime>5/10/2017</eventTime>
+        <eventTime>05/10/2017</eventTime>
         <participants>
             <name>Charlie Poh</name>
             <phone>91287984</phone>
@@ -401,7 +401,7 @@
     <events>
         <eventName>Music lesson</eventName>
         <eventDesc>Music lesson with Ms Chow</eventDesc>
-        <eventTime>2/12/2017</eventTime>
+        <eventTime>02/12/2017</eventTime>
         <participants>
             <name>Ireta Chow</name>
             <phone>92910485</phone>
