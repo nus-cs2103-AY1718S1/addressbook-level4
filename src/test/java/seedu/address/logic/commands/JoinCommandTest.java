@@ -1,12 +1,10 @@
 package seedu.address.logic.commands;
 
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.logic.commands.CommandTestUtil.joinEvents;
-import static seedu.address.logic.commands.CommandTestUtil.quitEvent;
+// @@author HuWanqing
+
+import static seedu.address.logic.commands.CommandTestUtil.*;
 import static seedu.address.testutil.TypicalEvents.getTypicalEventList;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_EVENT;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
+import static seedu.address.testutil.TypicalIndexes.*;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.Before;
@@ -56,23 +54,23 @@ public class JoinCommandTest {
         final Index validIndex = INDEX_FIRST_EVENT;
         final Index invalidIndex = Index.fromOneBased(2);
         Model actualModel = new ModelManager(model.getAddressBook(), model.getEventList(), new UserPrefs());
-        JoinCommand noParticipantCommand = prepareCommand(invalidIndex, validIndex, actualModel);
+        JoinCommand haveParticipatedCommand = prepareCommand(invalidIndex, validIndex, actualModel);
 
-        assertCommandFailure(noParticipantCommand, actualModel, expectedMessage);
+        assertCommandFailure(haveParticipatedCommand, actualModel, expectedMessage);
 
     }
 
     @Test
     public void testSuccess() {
         Index personIndex = INDEX_SECOND_PERSON;
-        Index eventIndex = INDEX_FIRST_EVENT;
+        Index eventIndex = INDEX_THIRD_PERSON;
         Model expectedModel = new ModelManager(model.getAddressBook(), model.getEventList(), new UserPrefs());
         Person person = (Person) expectedModel.getFilteredPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
-        Event event = (Event) expectedModel.getFilteredEventList().get(INDEX_FIRST_EVENT.getZeroBased());
+        Event event = (Event) expectedModel.getFilteredEventList().get(INDEX_THIRD_EVENT.getZeroBased());
         String expectedMessage = String.format(JoinCommand.MESSAGE_JOIN_SUCCESS, person.getName(),
                 event.getEventName());
         JoinCommand command = prepareCommand(personIndex, eventIndex, model);
-        quitEvent(expectedModel, INDEX_SECOND_PERSON, INDEX_FIRST_EVENT);
+        joinEvent(expectedModel, INDEX_SECOND_PERSON, INDEX_THIRD_EVENT);
 
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
     }
