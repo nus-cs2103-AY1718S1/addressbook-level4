@@ -651,6 +651,7 @@ public class MrtMapLogic {
         return getSortedMrtList(mrtStations);
     }
 
+
     //Return a sorted list of mrt Stations base on minMrtTimes array
     private ArrayList<String> getSortedMrtListFromTotalTimeList(int[] minMrtTimes) {
         ArrayList<String> sortedMrtStations = new ArrayList<String>();
@@ -754,14 +755,47 @@ public class MrtMapLogic {
         }
     }
 
-    public static void main (String[] args){
-        MrtMapLogic mrtMapLogic = new MrtMapLogic();
-       // mrtMapLogic.printSingleMrtTiming(141);
+    public ArrayList<String> getMrtStationNames (){
         ArrayList<String> stationNames = new ArrayList<String>();
-        stationNames.add("Changi Airport");
-        stationNames.add("Tuas Link");
-        stationNames.add("Dhoby Ghaut");
-        stationNames.add("adofmalkf");
-        mrtMapLogic.printSortedMrt(stationNames);
+        for(int i = 0; i < mrtStations.size(); i++){
+            stationNames.add(mrtStations.get(i).getName());
+        }
+        return stationNames;
     }
+
+    public ArrayList<String> getMrtStationShortNames (){
+        ArrayList<String> stationShortNames = new ArrayList<String>();
+        for(int i = 0; i < mrtStations.size(); i++){
+            stationShortNames.add(mrtStations.get(i).getShortName());
+        }
+        return stationShortNames;
+    }
+
+    public ArrayList<ArrayList<String>> getMrtLineNames(){
+        ArrayList<ArrayList<String>> stationLineNames = new ArrayList<ArrayList<String>>();
+        for(int i = 0; i < mrtStations.size(); i++){
+            MrtStation mrtStation = mrtStations.get(i);
+            ArrayList<String> singleStationLines = new ArrayList<String>();
+            for(int j = 0; j < mrtStation.getNumInterchange(); j++){
+                singleStationLines.add(mrtStation.getMrtLine(j));
+            }
+            stationLineNames.add(singleStationLines);
+        }
+        return stationLineNames;
+    }
+
+    public ArrayList<ArrayList<Integer>> getMrtLineNumbers(){
+        ArrayList<ArrayList<Integer>> stationLineNumbers = new ArrayList<ArrayList<Integer>>();
+        for(int i = 0; i < mrtStations.size(); i++){
+            MrtStation mrtStation = mrtStations.get(i);
+            ArrayList<Integer> singleStationLineNumbers = new ArrayList<Integer>();
+            for(int j = 0; j < mrtStation.getNumInterchange(); j++){
+                singleStationLineNumbers.add(mrtStation.getStationNumber(j));
+            }
+            stationLineNumbers.add(singleStationLineNumbers);
+        }
+        return stationLineNumbers;
+    }
+
+
 }
