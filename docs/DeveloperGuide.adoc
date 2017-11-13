@@ -1097,6 +1097,7 @@ is specifically concerned in deleting a person's photo while `DeletesAllPhotosCo
 === LoggingCommand Function
 (added in v1.2)
 // tag::loggingcom[]
+
 In this section, we explain how logging is done in the application whenever an important action is taken by user.
 
 Whenever an action such as "Add", "Clear", "Delete", "Edit", "Email", "Import", "List", "Redo", "RemoveTag", "Undo", "UploadPhoto", "DeletePhoto" & "DeletesAllPhotos" is executed, the LoggingCommand method will be called and information of the action is recorded in ConnectUsLog.txt with a timestamp.

@@ -348,7 +348,7 @@ Action is irreversible
 ****
 
 == Genering QR Code
-[NOTE}
+[NOTE]
 Internet Access is required for this feature. +
 Smartphone with QRScanner Application Installed.
 
@@ -406,7 +406,7 @@ Smartphone with QRScanner Application Installed.
 ****
 
 === QRCode to save a person's contact to phone
-[NOTE}
+[NOTE]
 Currently only available on Android Devices
 
 1. Copy the following command onto the command line input: +
