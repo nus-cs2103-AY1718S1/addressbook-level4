@@ -43,13 +43,13 @@ public class DeleteCommandTest {
     @Test
     public void excute_duplicatePerson_sucess() throws Exception {
 
-        String DUPLICATEPERSON = "Alice Pauline";
+        String duplicatePerosnName = "Alice Pauline";
         model.addPerson(DUPLICATE);
 
-        List<String> duplicatePerson = Arrays.asList(DUPLICATEPERSON);
+        List<String> duplicatePerson = Arrays.asList(duplicatePerosnName);
         NameContainsKeywordsPredicate updatedpredicate = new NameContainsKeywordsPredicate(duplicatePerson);
 
-        DeleteCommand deleteCommand = prepareCommand(DUPLICATEPERSON);
+        DeleteCommand deleteCommand = prepareCommand(duplicatePerosnName);
 
         String expectedMessage = "Duplicate persons exist, please choose one to delete.";
 
