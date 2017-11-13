@@ -430,6 +430,8 @@ e.g. `add n/James o/Apple, Janitor Ho p/22224444 e/jamesho@example.com a/123, Cl
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
+* *DeleteMul* : `deleteMul INDEXES` +
+e.g. `deleteMul 1 3 5`
 * *Edit* : `edit INDEX [n/NAME] [o/OCCUPATION] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [w/WEBSITE] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +

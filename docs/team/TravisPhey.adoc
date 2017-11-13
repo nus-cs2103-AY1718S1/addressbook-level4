@@ -73,9 +73,11 @@ include::../DeveloperGuide.adoc[tag=FindCommand]
 
 === Enhancement Proposed: Add command `FindByExactAddress`
 
-{Explain similar to the Undo/Redo feature above.}
+==== Justification
+
+The current findCommand is able to check for a contact's address as a parameter. However, the command checks for each individual keyword in the address field, which makes it cumbersome for a user when they type in a contact's full address as there may be common keywords. Although finding by exact address is not as efficient in the context of a HR professional as explained in the FindCommand design considerations above, it could still be useful in the event the HR agent really needs the exact address of the contact.
 
 === Other contributions
 
-* Updated the GUI background image (Pull requests https://github.com/CS2103AUG2017-T10-B4/main/[#94])
-* Wrote additional tests to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
+* Updated the GUI background image (https://github.com/CS2103AUG2017-T10-B4/main/blob/master/docs/images/IncompleteUi.png)
+* Did an acceptance test for another group and found bugs which have been submitted as issues (https://github.com/CS2103AUG2017-T11-B4/main/issues/[#87])
