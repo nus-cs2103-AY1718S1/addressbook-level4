@@ -61,8 +61,9 @@ public class XmlAdaptedPerson {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
+        //@@author vsudhakar
         avatar = source.getAvatar().getAvatarFilePath();
-        System.out.println("Avatar field saved as: " + avatar);
+        //@@author
         comment = source.getComment().value;
         appoint = source.getAppoint().value;
         tagged = new ArrayList<>();

@@ -211,6 +211,7 @@ public class MainWindow extends UiPart<Region> {
         helpWindow.show();
     }
 
+    //@@author vsudhakar
     /**
      * Opens theme window.
      */
@@ -221,6 +222,7 @@ public class MainWindow extends UiPart<Region> {
         themeSelectionWindow.show();
 
     }
+    //@@author
 
     void show() {
         primaryStage.show();

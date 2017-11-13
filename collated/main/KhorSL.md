@@ -1,5 +1,5 @@
 # KhorSL
-###### /java/seedu/address/commons/util/StringUtil.java
+###### \java\seedu\address\commons\util\StringUtil.java
 ``` java
     /**
      * Returns true if the {@code sentence} contains the {@code word}.
@@ -194,7 +194,7 @@
         return false;
     }
 ```
-###### /java/seedu/address/logic/commands/AddMultipleCommand.java
+###### \java\seedu\address\logic\commands\AddMultipleCommand.java
 ``` java
 /**
  * Adds multiple persons to the address book.
@@ -283,7 +283,7 @@ public class AddMultipleCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/FindCommand.java
+###### \java\seedu\address\logic\commands\FindCommand.java
 ``` java
     public static final String MESSAGE_USAGE = COMMAND_WORD + " or " + COMMAND_ALIAS
             + ": Finds all persons whose names contain any of "
@@ -301,7 +301,7 @@ public class AddMultipleCommand extends UndoableCommand {
         this.predicate = predicate;
     }
 ```
-###### /java/seedu/address/logic/commands/MergeCommand.java
+###### \java\seedu\address\logic\commands\MergeCommand.java
 ``` java
 /**
  * Merge the file given with the default storage file
@@ -356,7 +356,7 @@ public class MergeCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/AddMultipleCommandParser.java
+###### \java\seedu\address\logic\parser\AddMultipleCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new AddMultipleCommand object
@@ -453,7 +453,7 @@ public class AddMultipleCommandParser implements Parser<AddMultipleCommand> {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/FindCommandParser.java
+###### \java\seedu\address\logic\parser\FindCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new FindCommand object
@@ -526,7 +526,7 @@ public class FindCommandParser implements Parser<FindCommand> {
 
 }
 ```
-###### /java/seedu/address/logic/parser/MergeCommandParser.java
+###### \java\seedu\address\logic\parser\MergeCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new MergeCommand object
@@ -551,12 +551,12 @@ public class MergeCommandParser implements Parser<MergeCommand> {
 
 }
 ```
-###### /java/seedu/address/model/Model.java
+###### \java\seedu\address\model\Model.java
 ``` java
     /** Merges new file data {@code newFilePersonList} to default addressbook storage **/
     void mergeAddressBook(ObservableList<ReadOnlyPerson> newFilePersonList);
 ```
-###### /java/seedu/address/model/ModelManager.java
+###### \java\seedu\address\model\ModelManager.java
 ``` java
     @Override
     public synchronized void mergeAddressBook(ObservableList<ReadOnlyPerson> newFilePersonList) {
@@ -587,7 +587,7 @@ public class MergeCommandParser implements Parser<MergeCommand> {
         }
     }
 ```
-###### /java/seedu/address/model/person/PersonContainsKeywordsPredicate.java
+###### \java\seedu\address\model\person\PersonContainsKeywordsPredicate.java
 ``` java
 /**
  * Tests that a {@code ReadOnlyPerson}'s {@code Name}, {@code Tag}, {@code Email}, {@code Phone},
@@ -728,11 +728,11 @@ public class PersonContainsKeywordsPredicate implements Predicate<ReadOnlyPerson
 
 }
 ```
-###### /java/seedu/address/storage/XmlSerializableAddressBook.java
+###### \java\seedu\address\storage\XmlSerializableAddressBook.java
 ``` java
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 ```
-###### /java/seedu/address/storage/XmlSerializableAddressBook.java
+###### \java\seedu\address\storage\XmlSerializableAddressBook.java
 ``` java
     @Override
     public ObservableList<ReadOnlyPerson> getPersonList() {
