@@ -1,0 +1,77 @@
+= Test Script for Manual Testing
+:stylesDir: stylesheets
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+endif::[]
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+
+== Loading the SampleData.xml file
+
+1. Take note of the directory location of SampleData.xml
+2. Copy SampleData.xml and paste it into /data
+3. Rename the SampleData.xml to addressBook.xml
+
+<<<
+
+=== Test cases
+
+[width="100%",cols="30%,70%",options="header"]
+|===
+|Input|Expected Output
+|run ScheduBook.jar|(Expected reminder pop up about meeting with David Li on 23:59 for Dinner)
+ +
+ *note that this occurrence only happen if test is done on 17-11-2017, the preset meeting triggering this pop-up reminder in SampleData.xml will be deleted
+|Press 'Enter'| Pop up closes
+|add n/test user p/96969696 e/user@gmail.com a/NUS School of Computing t/Tester|New person added: test user Phone: 96969696 Email: user@gmail.com Address: NUS School of Computing Tags: [Tester]
+|addmeeting i/1 n/Dinner d/12-01-2019 15:00 l/Clementi Mall t/1|New meeting added: Dinner +
+                                                         Meeting with: Alex Yeoh +
+                                                         Contact Number: 87438807 +
+                                                         Date and Time: 12-01-2019 15:00 +
+                                                         Location: Clementi Mall
+|am i/1 2 n/Shopping d/15-01-2019 15:00 l/Clementi Mall t/2|New meeting added: Shopping +
+                                                        Meeting with: Group +
+                                                        Date and Time: 15-01-2019 15:00 +
+                                                        Location: Clementi Mall +
+                                                       (Notice the 'Alert' sign to show high importance)
+|undo|Undo success!
+|redo|Redo success!
+|am i/3 n/Soccer d/15-01-2019 15:00 l/NUS field t/1|Meeting Clashes! Please choose another date and time.(No meeting will be added)
+|am i/2 n/Dinner d/17-01-2019 15:00 l/Clementi Mall t/0|New meeting added: Dinner +
+                                                        Meeting with: Bernice Yu +
+                                                        Contact Number: 99272758 +
+                                                        Date and Time: 17-01-2019 15:00 +
+                                                        Location: Clementi Mall +
+                                                        (Notice the 'thumb down' sign to show low importance)
+|findmeeting Shopping|1 meetings listed!
+|editmeeting 1 n/Project Meeting l/NUS Faculty of Engineering|Edited Meeting: Project Meeting +
+                                                              Meeting with: Group +
+                                                              Date and Time: 15-01-2019 15:00 +
+                                                              Location: NUS Faculty of Engineering
+|findexactmeeting Alex Yeoh|4 meetings listed!
+|listmeeting|Listed all meetings
+|addmeeting i/2 n/Birthday Party d/17-07-2019 19:00 l/Hillview Condominium t/1|New meeting added: Birthday Party +
+                                                                               Meeting with: Bernice Yu +
+                                                                               Contact Number: 99272758 +
+                                                                               Date and Time: 17-07-2019 19:00 +
+                                                                               Location: Hillview Condominium
+|selectmeeting 1|Selected Meeting: 1(Note that browser panel now loads google map to the destination of scheduled meeting)
+|edit 1 n/Alex Tan p/99999999|Edited Person: Alex Tan Phone: 99999999 Email: alexyeoh@example.com Address: Blk 30 Geylang Street 29, #06-40 Tags: [friends]
+  +
+(Notice at the meeting card that 'Alex Yeoh' changed to 'Alex Tan', the phone number have also changed)
+|deletemeeting 1|Delete meeting: Dinner +
+                 Meeting with: Alex Tan +
+                 Contact Number: 99999999 +
+                 Date and Time: 12-01-2019 15:00 +
+                 Location: Clementi Mall
+|delete 1|Deleted Person: Alex Tan Phone: 99999999 Email: alexyeoh@example.com Address: Blk 30 Geylang Street 29, #06-40 Tags: [friends]
+ +
+(Note that the all meetings with Alex is deleted)
+|undo|Undo success!
+|select 1|(A pop-up window "Contact Details" will show with the information of Alex Tan)
+|Press 'Enter'|(to close the pop up)
+|exit(and change system time to year 2020)|-
+|run ScheduBook.jar again|Observe that the meetings added before 2020 is deleted
+
+
+|===
