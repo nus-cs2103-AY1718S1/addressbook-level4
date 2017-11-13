@@ -214,6 +214,7 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        //@@author duyson98
         logger.info("Loading custom fonts.");
         Font timeFont = Font.loadFont(MainApp.class.getClassLoader().getResourceAsStream(
                 "fonts/NovaSquare.ttf"), 10);
@@ -224,6 +225,7 @@ public class MainApp extends Application {
         if (dateFont == null || timeFont == null || profileNameFont == null) {
             logger.warning("Failed to load custom fonts.");
         }
+        //@@author
 
         logger.info("Starting AddressBook " + MainApp.VERSION);
         ui.start(primaryStage);

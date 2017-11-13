@@ -159,12 +159,14 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD + " 3") instanceof ListCommand);
     }
 
+    //@@author duyson98
     @Test
     public void parseCommand_view() throws Exception {
         ViewCommand command = (ViewCommand) parser.parseCommand(
                 ViewCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new ViewCommand(INDEX_FIRST_PERSON), command);
     }
+    //@@author
 
     @Test
     public void parseCommand_select() throws Exception {
@@ -183,7 +185,6 @@ public class AddressBookParserTest {
         assertEquals(new TagCommand(Arrays.asList(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON, INDEX_THIRD_PERSON),
                 new Tag("friends")), command);
     }
-    //@@author
 
     @Test
     public void parseCommand_untag() throws Exception {
@@ -200,11 +201,11 @@ public class AddressBookParserTest {
         assertEquals(new UntagCommand(false, Arrays.asList(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON,
                 INDEX_THIRD_PERSON), Collections.emptyList()), command);
 
-        command = (UntagCommand) parser.parseCommand(UntagCommand.COMMAND_WORD + " -a " + "friends/enemies");
+        command = (UntagCommand) parser.parseCommand(UntagCommand.COMMAND_WORD + " -all " + "friends/enemies");
         assertEquals(new UntagCommand(true, Collections.emptyList(),
                 Arrays.asList(secondTag, firstTag)), command);
 
-        command = (UntagCommand) parser.parseCommand(UntagCommand.COMMAND_WORD + " -a");
+        command = (UntagCommand) parser.parseCommand(UntagCommand.COMMAND_WORD + " -all");
         assertEquals(new UntagCommand(true, Collections.emptyList(), Collections.emptyList()), command);
     }
 
@@ -214,6 +215,7 @@ public class AddressBookParserTest {
                 + "enemies" + " " + "friends");
         assertEquals(new RetagCommand(new Tag("enemies"), new Tag("friends")), command);
     }
+    //@@author
 
     @Test
     public void parseCommand_redoCommandWord_returnsRedoCommand() throws Exception {

@@ -105,7 +105,11 @@ public class CreateAccountCommandTest {
         public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
             fail("This method should not be called.");
         }
-
+        @Override
+        public boolean checkAccount(ReadOnlyAccount account) {
+            fail("This method should not be called");
+            return true;
+        }
         @Override
         public void addAccount(ReadOnlyAccount account) throws DuplicateAccountException {
             fail("This method should not be called");

@@ -7,6 +7,8 @@ import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
 import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_RETRIEVETESTER;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.StringJoiner;
 
 import org.junit.Test;
@@ -16,6 +18,7 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RetrieveCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
+import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.Tag;
 
 public class RetrieveCommandSystemTest extends AddressBookSystemTest {
@@ -97,13 +100,15 @@ public class RetrieveCommandSystemTest extends AddressBookSystemTest {
      * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
     private void assertAnotherCommandSuccess(String command, Model expectedModel) {
+        Set<Tag> uniqueTags = new HashSet<>();
+        for (ReadOnlyPerson person : expectedModel.getAddressBook().getPersonList()) {
+            uniqueTags.addAll(person.getTags());
+        }
         StringJoiner joiner = new StringJoiner(", ");
-        for (Tag tag: getModel().getAddressBook().getTagList()) {
+        for (Tag tag: uniqueTags) {
             joiner.add(tag.toString());
         }
-        String expectedResultMessage = (MESSAGE_NOT_FOUND + "\n"
-                + "You may want to refer to the following existing tags: "
-                + joiner.toString());
+        String expectedResultMessage = String.format(MESSAGE_NOT_FOUND, joiner.toString());
         executeCommand(command);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
         assertCommandBoxShowsDefaultStyle();

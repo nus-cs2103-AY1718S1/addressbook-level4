@@ -3,60 +3,64 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
-== Project: AddressBook - Level 4
+== Project: Gentleman's Guide
 Gentleman's Guide is a desktop address book application modified from the Address Book - Level 4 to store person contacts and reminders.
 The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
 
 *Code contributed*: [https://github.com/CS2103AUG2017-T09-B1/main/blob/master/collated/main/cqhchan.md[Functional code]] [https://github.com/CS2103AUG2017-T09-B1/main/blob/master/collated/test/cqhchan.md[Test code]]
 
-*Purpose of portfolio*: This portfolio is written to reflect the contributions made by the author to the Gentleman's Guide.
-It shows how all the features implemented by the author work.
+*Portfolio*: This portfolio is a summary of the work that I contributed to the Gentleman's Guide and a brief explanation
+of the functions and implementations of those enhancements.
 
-=== Enhancement Added : Private Database System
-==== External Behaviour
-===== Create Account Function `create`
+== Enhancement Added : Private Database System
+=== External Behaviour
+#Start of extract [from: User Guide]#
 
-==== External Behaviour
-*Start of Extract[from: Developers Guide]*
+include::../UserGuide.adoc[tag = create]
 
-===== Login Function `login`
+include::../UserGuide.adoc[tag = login]
 
-The Login function work by using many different components. To facilitated its implementation there is a `LoginCommand` inside the `LogicManager` and `AddressBook Parser`. The `LoginCommand` works by taking the input and checking it with a database of accounts. If the inputs are verified, it will call upon the `UI` to restart the addressbook application with the new filepath.
+include::../UserGuide.adoc[tag = logout]
 
-The process of how the feature functions and what would happen is as follows:
+#End of extract [from: User Guide]#
 
-image::LoginSequenceDiagram.JPG[width="800"]
-_Figure 4.2.1 : Interactions in the Login Command._
+=== Justification
 
+Privacy is a integral part of daily life. By adding a simple password system. One can prevent majority of unauthorised access
+by snooping eyes. This also allows the user a piece of mind that his private database cannot be recklessly and easily accessed by others.
 
-
-As it can be seen, when the `logincommand` is called, if the credentials are correct, it would call on the `UiManager` to restart the application with the user database and model. The `Restart()` method created new user configs, preferences and storage according to the username. It then called on the current `Mainwindow` to close and closes the `primarystage` that the current `Mainwindow` is using. From there, it will call on the `UiManager` to initialise with the user `logic`, user `storage`, user `preferences` and user `config`.
-
-The User can choose to Create an account if he does not already have one, but he will not be able to access the other users database.
-
-Similiarly, the user can choose to implement the `logoutcommand` which would call on the `restart()` method with the parememter addressbook. The application would then restart and load the public addressbook.
-
-===== Design Considerations
-
-**Aspect:** Implementation of `LoginFunction` +
-**Alternative 1:** Create a whole new `LoginFunction` interface, with its own GUI etc +
-**Pros:** `LoginFunction will have seperate Userprofile and database. It would be a more versatile application +
-**Cons:** Diffiult to implement and even harder to test +
-**Alternative 2 (current choice):** Implement a `LoginCommand` function at the `CommandBox` +
-**Pros:** Easier to implement. Achieves the basic functions of security +
-**Cons:** Doesnt look as good.
-
-*End of Extract*
-
-===== Logout Function `logout`
-
-=== Enhancement Added : Select Reminder
-==== External Behaviour
-===== Select Reminder Function `selectreminder`
+=== Private Database Implementation
 
 
-=== Enhancement Proposed
+#Start of extract [from: Developer Guide]#
 
-=== Other Contributions
+include::../DeveloperGuide.adoc[tag = PrivateDatabase]
 
-== Project
+#End of extract [from: Developer Guide]#
+
+
+
+== Enhancement Added : Select Reminder
+
+=== External Behaviour
+#Start of extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag = selectReminder]
+
+
+#End of extract [from: User Guide]#
+
+=== Justification
+
+As the user may include long messages and the reminder card is unable to view the entire message due to space constrains,
+thus selecting the reminder allows for easy viewing of the reminder.
+
+=== Select Reminder Function `selectreminder`
+
+include::../DeveloperGuide.adoc[tag = selectReminder]
+
+== Enhancement Proposed
+
+== Other Contributions
+
+
