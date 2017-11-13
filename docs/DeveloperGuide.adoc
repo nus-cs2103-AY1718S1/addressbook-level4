@@ -561,7 +561,7 @@ backup file path.
 ** **Pros:** It becomes easier to implement method rather than writing out a separate logic for `backup()`. It
 makes updates easier since enhancements to saving Ark in `saveAddressBook()` will also enhance `backup()`. +
 ** **Cons:** This implementation increases the coupling of `backup()` and `saveAddressBook()` where changes in
-`saveAddressBook()` are likely to cause changes in `backup()`. +
+`saveAddressBook()` are likely to cause changes in `backup()` . +
 * **Alternative 2:** Separate the implementation of `backup()` from `saveAddressBook()` +
 ** **Pros:** Reduced coupling of `saveAddressBook()` and `backup()` and allows the backup file to be saved at a
 different location from the main save file. This prevents the backup file from being corrupted if the folder of the
@@ -620,17 +620,17 @@ The following sequence diagram describes the sequence of events that occur when 
  `CommandBox`:
 
 image::ImportSequenceDiagram.png[width="1000"]
-_Figure 4.7.1 : Sequence diagram describing the operation of `import` when it is executed_
+_Figure 4.8.1 : Sequence diagram describing the operation of `import` when it is executed_
 
 As seen in the sequence diagram above, the command is first parsed to create an `ImportCommandParser`. This parser
-takes the arguments of the import command ("ark_save") as the name of the file to import and converts it to a
-full file path string ("./data/import/ark_save.xml") to locate the file to import. Thereafter, it loads the file
+takes the arguments of the import command `("ark_save")` as the name of the file to import and converts it to a
+full file path string `("./data/import/ark_save.xml")` to locate the file to import. Thereafter, it loads the file
 to import into Ark and reads the data. This returns a list of parcels that are used in create an `ImportCommand`.
 
 When the command is executed, the following sequence of events take place:
 
 image::ImportCommandExecutionFrame.png[width="1200"]
-_Figure 4.7.2 : Reference frame for the execution of the Import Command_
+_Figure 4.8.2 : Reference frame for the execution of the Import Command_
 
 As seen in the diagram above, when the command is executed, the `executeUndoableMethod` methods calls
 `ModelManager#addAllParcels` method. In this method, all unique parcels are added into the running instance of Ark.
@@ -652,7 +652,7 @@ If the file to import is missing or empty, a `CommandException` will be thrown
 
 **Aspect: Implementation of `ImportCommand`** +
 
-* **Alternative 1 (current choice): using `readAddressBook()` to implement the logic `ImportCommand`** +
+* **Alternative 1 (current choice):** using `readAddressBook()` to implement the logic `ImportCommand`** +
 ** **Pros:** It becomes easier to implement method rather than writing out a separate logic to import files. It
 makes updates easier since enhancements to `readAddressBook()` will also enhance the import command such as
 more supported save file formats. +
