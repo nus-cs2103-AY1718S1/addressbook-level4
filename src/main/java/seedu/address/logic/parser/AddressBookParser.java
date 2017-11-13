@@ -26,12 +26,14 @@ import seedu.address.logic.commands.event.CheckScheduleCommand;
 import seedu.address.logic.commands.event.DeleteEventCommand;
 import seedu.address.logic.commands.event.EditEventCommand;
 import seedu.address.logic.commands.event.FindEventCommand;
+import seedu.address.logic.commands.event.RepeatCommand;
 import seedu.address.logic.commands.event.ToggleTimetableCommand;
 import seedu.address.logic.commands.relationship.SetRelCommand;
 import seedu.address.logic.parser.event.AddEventCommandParser;
 import seedu.address.logic.parser.event.DeleteEventCommandParser;
 import seedu.address.logic.parser.event.EditEventCommandParser;
 import seedu.address.logic.parser.event.FindEventCommandParser;
+import seedu.address.logic.parser.event.RepeatCommandParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.logic.parser.relationship.SetRelCommandParser;
 
@@ -127,6 +129,9 @@ public class AddressBookParser {
 
         case UpdatePhotoCommand.COMMAND_WORD:
             return new UpdatePhotoCommandParser().parse(arguments);
+
+        case RepeatCommand.COMMAND_WORD:
+            return new RepeatCommandParser().parse(arguments);
 
         case ToggleTimetableCommand.COMMAND_WORD:
             return new ToggleTimetableCommand();

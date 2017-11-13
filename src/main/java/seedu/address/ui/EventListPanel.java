@@ -62,7 +62,7 @@ public class EventListPanel extends UiPart<Region> {
         eventListView.getSelectionModel().selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> {
                     if (newValue != null) {
-                        logger.fine("Selection in event list panel changed to : '" + newValue + "'");
+                        logger.info("Selection in event list panel changed to : '" + newValue + "'");
                         raise(new EventPanelSelectionChangedEvent(newValue));
                     }
                 });

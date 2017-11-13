@@ -158,6 +158,7 @@ public class EventList implements Iterable<Event> {
      * Returns the backing tree map as an {@code ObservableList}.
      */
     public ObservableList<ReadOnlyEvent> asObservableList() {
+        //logger.info("====== Current eventlist has " + mappedList.size() + " events.");
         return FXCollections.unmodifiableObservableList(mappedList);
     }
 
