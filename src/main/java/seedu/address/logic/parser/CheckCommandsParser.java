@@ -42,11 +42,11 @@ public class CheckCommandsParser {
         final String[] subHelpCommands = new String[] { "help", "info" };
         final String[] subHistoryCommands = new String[] { "history", "h", "past" };
         final String[] subListAllCommands =
-            new String[] { "listall", "list all", "la", "show all", "display all", "list", "refresh" };
+                new String[] { "listall", "list all", "la", "show all", "display all", "list", "refresh" };
         final String[] subListPersonsCommands =
-            new String[] { "listpersons", "list persons", "lp", "show persons", "display persons" };
+                new String[] { "listpersons", "list persons", "lp", "show persons", "display persons" };
         final String[] subListEventsCommands =
-            new String[] { "listevents", "list events", "le", "show events", "display events" };
+                new String[] { "listevents", "list events", "le", "show events", "display events" };
         final String[] subRedoCommands = new String[] { "redo", "r" };
         final String[] subSelectCommands = new String[] { "select", "s", "choose", "pick" };
         final String[] subSortCommands = new String[] { "sort", "arrange", "organise" };
@@ -54,7 +54,7 @@ public class CheckCommandsParser {
         final String[] subCheckScheduleCommands = new String[] {"thisweek", "schedule", "checkschedule", "tw", "cs"};
         final String[] subAddEventsCommands = new String[] { "eventadd", "addevent", "ae", "ea" };
         final String[] subDeleteEventsCommands =
-            new String[] { "eventdel", "delevent", "deleteevent", "eventdelete", "de", "ed" };
+                new String[] { "eventdel", "delevent", "deleteevent", "eventdelete", "de", "ed" };
         final String[] subEditEventsCommands = new String[] { "eventedit", "editevent", "ee" };
         final String[] subFindEventsCommands = new String[] { "eventfind", "findevent", "fe", "ef" };
         final String[] subUpdatePhotoCommands = new String[] { "updatephoto", "up" };
