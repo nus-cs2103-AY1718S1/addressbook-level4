@@ -143,12 +143,12 @@ include::../DeveloperGuide.adoc[tag=studentparentcontact]
 * Included ParentPhone attribute (Pull request https://github.com/CS2103AUG2017-T16-B2/main/pull/116[#116])
 * Included icons in PersonListCard (Pull request https://github.com/CS2103AUG2017-T16-B2/main/pull/116[#116])
 * Icon text descriptors in ExtendedPersonCard on startup of cherBook (Pull request https://github.com/CS2103AUG2017-T16-B2/main/pull/121[#121])
-* Improve sample data (Pull requests https://github.com/CS2103AUG2017-T16-B2/main/pull/79[#79], https://github.com/CS2103AUG2017-T16-B2/main/pull/120[#120])
-* Improve test quality of several features (Pull requests https://github.com/CS2103AUG2017-T16-B2/main/pull/88[#88]
+* Improved sample data (Pull requests https://github.com/CS2103AUG2017-T16-B2/main/pull/79[#79], https://github.com/CS2103AUG2017-T16-B2/main/pull/120[#120])
+* Improved test quality of several features (Pull requests https://github.com/CS2103AUG2017-T16-B2/main/pull/88[#88]
 , https://github.com/CS2103AUG2017-T16-B2/main/pull/113[#113], https://github.com/CS2103AUG2017-T16-B2/main/pull/121[#121])
-* Remove unused codes to improve coveralls (Pull request https://github.com/CS2103AUG2017-T16-B2/main/pull/129[#129])
-* Update AboutUs section (Pull request https://github.com/CS2103AUG2017-T16-B2/main/pull/25[#25])
-* Create Glossary section (Pull request https://github.com/CS2103AUG2017-T16-B2/main/pull/16[#16])
+* Removed unused codes to improve coveralls (Pull request https://github.com/CS2103AUG2017-T16-B2/main/pull/129[#129])
+* Updated AboutUs section (Pull request https://github.com/CS2103AUG2017-T16-B2/main/pull/25[#25])
+* Created Glossary section in DeveloperGuide (Pull request https://github.com/CS2103AUG2017-T16-B2/main/pull/16[#16])
 
 == Other Projects: NUS Interactive Food Map
 
