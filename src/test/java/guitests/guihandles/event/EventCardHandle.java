@@ -8,10 +8,10 @@ import javafx.scene.control.Label;
  * Provides a handle to an event card in the {@code EventListPanel}.
  */
 public class EventCardHandle extends NodeHandle<Node> {
-    private static final String ID_FIELD_ID = "#id";
+    private static final String ID_FIELD_ID = "#idEvent";
     private static final String NAME_FIELD_ID = "#name";
     private static final String VENUE_FIELD_ID = "#venue";
-    private static final String TIME_FIELD_ID = "#time";
+    private static final String TIME_FIELD_ID = "#dateTime";
 
 
     private final Label idLabel;
