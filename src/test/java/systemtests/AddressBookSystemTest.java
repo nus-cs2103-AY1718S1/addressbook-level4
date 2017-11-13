@@ -175,8 +175,8 @@ public abstract class AddressBookSystemTest {
     //@@author
     /**
      * Asserts that the {@code CommandBox} displays {@code expectedCommandInput}, the {@code ResultDisplay} displays
-     * {@code expectedResultMessage}, the model and storage contains the same person objects as {@code expectedModel}
-     * and the person list panel displays the persons in the model correctly.
+     * {@code expectedResultMessage}, the model and storage contains the same person and task objects as
+     * {@code expectedModel} and the person and task list panels displays the persons and tasks in the model correctly.
      */
     protected void assertApplicationDisplaysExpected(String expectedCommandInput, String expectedResultMessage,
             Model expectedModel) {

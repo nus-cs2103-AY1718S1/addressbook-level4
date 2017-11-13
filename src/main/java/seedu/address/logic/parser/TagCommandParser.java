@@ -30,10 +30,15 @@ public class TagCommandParser implements Parser<TagCommand> {
         Set<Tag> tagList;
 
         try {
-            parsedIndices = ParserUtil.parseIndices(argMultimap.getPreamble().split(","));
-            tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
+            parsedIndices =  ParserUtil.parseIndices(argMultimap.getPreamble().split(","));
         } catch (IllegalValueException ive) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, TagCommand.MESSAGE_USAGE));
+        }
+
+        try {
+            tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
+        } catch (IllegalValueException ive) {
+            throw new ParseException(ive.getMessage());
         }
         return new TagCommand(parsedIndices, tagList);
     }

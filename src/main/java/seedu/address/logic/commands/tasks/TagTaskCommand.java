@@ -18,6 +18,7 @@ import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.task.exceptions.DuplicateTaskException;
 import seedu.address.model.task.exceptions.TaskNotFoundException;
 
+//@@author raisa2010
 /**
  * Tags multiple people in the address book.
  */
@@ -59,7 +60,7 @@ public class TagTaskCommand extends UndoableCommand {
         Index[] validIndices = CommandUtil.filterValidIndices(lastShownList.size(), indices);
 
         if (validIndices.length == 0) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
         }
 
         for (Index currentIndex : validIndices) {
@@ -91,6 +92,7 @@ public class TagTaskCommand extends UndoableCommand {
 
         //state check
         for (int i = 0; i < indices.length; i++) {
+            assert(indices.length == ((TagTaskCommand) other).indices.length);
             if (!indices[i].equals(((TagTaskCommand) other).indices[i])) {
                 return false;
             }

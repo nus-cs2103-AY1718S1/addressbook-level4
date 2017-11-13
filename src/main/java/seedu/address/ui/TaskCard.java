@@ -1,6 +1,7 @@
 package seedu.address.ui;
 
 import java.text.DateFormat;
+import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -9,6 +10,7 @@ import java.util.HashMap;
 import java.util.Random;
 
 import javafx.beans.binding.Bindings;
+import javafx.beans.binding.StringBinding;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
@@ -44,10 +46,10 @@ public class TaskCard extends UiPart<Region> {
     private Label description;
 
     @FXML
-    private Label startDate;
+    private Label deadline;
 
     @FXML
-    private Label deadline;
+    private Label time;
 
     @FXML
     private FlowPane tags;
@@ -66,11 +68,20 @@ public class TaskCard extends UiPart<Region> {
      */
     private void bindListeners(ReadOnlyTask task) {
         description.textProperty().bind(Bindings.convert(task.descriptionProperty()));
-        startDate.textProperty().bind(Bindings.convert(task.startDateProperty()));
         deadline.textProperty().bind(Bindings.convert(task.deadlineProperty()));
+        if (task.getStartTime().isPresent() && task.getEndTime().isPresent()) {
+            StringBinding binding = Bindings.createStringBinding(() -> MessageFormat.format("{0} - {1}",
+                task.getStartTime(), task.getEndTime(), task.startTimeProperty()), task.endTimeProperty());
+            time.textProperty().bind(binding);
+        } else if (task.getStartTime().isPresent()) {
+            time.textProperty().bind(Bindings.convert(task.startTimeProperty()));
+        } else {
+            time.textProperty().bind(Bindings.convert(task.endTimeProperty()));
+        }
         task.tagProperty().addListener((observable, oldValue, newValue) -> {
             tags.getChildren().clear();
             initTags(task);
+
         });
         setColour();
     }

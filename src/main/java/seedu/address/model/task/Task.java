@@ -14,25 +14,27 @@ import seedu.address.model.tag.UniqueTagList;
 
 //@@author raisa2010
 /**
- * Represents a Task in the application.
+ * Represents a Task in the task manager.
  * Guarantees: details are present and not null, field values are validated.
  */
 public class Task implements ReadOnlyTask {
 
     private ObjectProperty<Description> description;
-    private ObjectProperty<StartDate> startDate;
     private ObjectProperty<Deadline> deadline;
+    private ObjectProperty<EventTime> startTime;
+    private ObjectProperty<EventTime> endTime;
     private ObjectProperty<UniqueTagList> taskTags;
 
     /**
      * Description must be present and not null.
      */
-    public Task(Description description, StartDate startDate, Deadline deadline,
-                Set<Tag> taskTags) {
-        requireAllNonNull(description, startDate, deadline);
+    public Task(Description description, Deadline deadline, EventTime startTime,
+                EventTime endTime, Set<Tag> taskTags) {
+        requireAllNonNull(description, startTime, endTime, deadline);
         this.description = new SimpleObjectProperty<>(description);
-        this.startDate = new SimpleObjectProperty<>(startDate);
         this.deadline = new SimpleObjectProperty<>(deadline);
+        this.startTime = new SimpleObjectProperty<>(startTime);
+        this.endTime = new SimpleObjectProperty<>(endTime);
         // protect internal tags from changes in the arg list
         this.taskTags = new SimpleObjectProperty<>(new UniqueTagList(taskTags));
     }
@@ -41,7 +43,8 @@ public class Task implements ReadOnlyTask {
      * Creates a copy of the given ReadOnlyTask.
      */
     public Task(ReadOnlyTask source) {
-        this(source.getDescription(), source.getStartDate(), source.getDeadline(), source.getTags());
+        this(source.getDescription(), source.getDeadline(), source.getStartTime(),
+                source.getEndTime(), source.getTags());
     }
 
     public void setDescription(Description description) {
@@ -58,20 +61,6 @@ public class Task implements ReadOnlyTask {
         return description.get();
     }
 
-    public void setStartDate(StartDate startDate) {
-        this.startDate.set(requireNonNull(startDate));
-    }
-
-    @Override
-    public ObjectProperty<StartDate> startDateProperty() {
-        return startDate;
-    }
-
-    @Override
-    public StartDate getStartDate() {
-        return startDate.get();
-    }
-
     public void setDeadline(Deadline deadline) {
         this.deadline.set(requireNonNull(deadline));
     }
@@ -84,6 +73,34 @@ public class Task implements ReadOnlyTask {
     @Override
     public Deadline getDeadline() {
         return deadline.get();
+    }
+
+    @Override
+    public ObjectProperty<EventTime> startTimeProperty() {
+        return startTime;
+    }
+
+    @Override
+    public EventTime getStartTime() {
+        return startTime.get();
+    }
+
+    public void setStartTime(EventTime startTime) {
+        this.startTime.set(requireNonNull(startTime));
+    }
+
+    @Override
+    public ObjectProperty<EventTime> endTimeProperty() {
+        return endTime;
+    }
+
+    @Override
+    public EventTime getEndTime() {
+        return endTime.get();
+    }
+
+    public void setEndTime(EventTime endTime) {
+        this.endTime.set(requireNonNull(endTime));
     }
 
     /**
@@ -115,7 +132,7 @@ public class Task implements ReadOnlyTask {
 
     @Override
     public int hashCode() {
-        return Objects.hash(description, startDate, deadline);
+        return Objects.hash(description, deadline, startTime, endTime);
     }
 
     @Override

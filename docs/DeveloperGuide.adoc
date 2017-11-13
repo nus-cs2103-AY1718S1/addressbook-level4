@@ -305,7 +305,7 @@ The current detag mechanism does not support multiple tag removal, i.e. remove 2
 // tag::findtag[]
 === FindTag mechanism
 
-The FindTag mechanism is facilitated by the `FindCommand` class which inherits from `Command` class. It allows the user to find persons using tags. Users can search using multiple tags too.
+The FindTag mechanism is facilitated by the `FindCommand` class which inherits from the `Command` class. It allows the user to find contacts using tags. Users can search using multiple tags too.
 
 Suppose the user has just executed the `FindCommand` using:
 
@@ -341,7 +341,8 @@ public class PersonContainsKeywordsPredicate implements Predicate<ReadOnlyPerson
 ----
 // end::findtag[]
 
-tag::tag[]
+// tag::tag[]
+
 === Tag mechanism
 
 The Tag mechanism is a specialised form of the edit feature that allows users to tag multiple contacts with multiple tags.
@@ -362,9 +363,10 @@ The `ModelManager` class in the `Model` component is then called to update all t
 
 The Storage and UI are subsequently updated with the new information.
 
-end::tag[]
+// end::tag[]
 
-tag::addtask[]
+// tag::addtask[]
+
 === AddTask mechanism
 
 The Add Task mechanism is facilitated by the `AddTaskCommand` class which inherits from the `UndoableCommand` class. It allows for the addition of new tasks to the application with a starting date and a deadline. Both dates are optional and may be omitted.
@@ -429,7 +431,7 @@ there are only two types of task dates. +
 **Cons** Description might contain slashes. t/ (to) would clash with t/ prefix for tags so to/ would have to be used.
 Limits possibilities of adding new prefixes and making the format more flexible in the future. +
 
-end::addtask[]
+// end::addtask[]
 
 
 // tag::deletetask[]
@@ -478,6 +480,37 @@ Suppose the user has just executed the `FindTaskCommand` using:
 
 At first, the `execute()` function of the `LogicManager` class is called, which goes on to pass the command string into the `parseCommand()` function of the `AddressBookParser` class. This, in turn, determines that the `FindTaskCommand` feature is being evoked and calls the `FindTaskCommandParser` to parse the string and compare the descriptions. These are validated and formatted by the `TaskContainsKeywordsPredicate` and return as a `TaskContainsKeywordsPredicate` object to be used to call the `FindTaskCommand` class. The `LogicManager` then calls the `execute()` in the `FindTaskCommand` class which creates and return a `CommandResult` object.
 
+[source,java]
+----
+public class TaskContainsKeywordsPredicate implements Predicate<ReadOnlyTask> {
+    private final List<String> keywords;
+
+    public TaskContainsKeywordsPredicate(List<String> keywords) {
+        this.keywords = keywords;
+    }
+
+    @Override
+    public boolean test(ReadOnlyTask task) {
+        String testDate = "";
+        String tag = Arrays.toString(task.getTags().toArray())
+                .replaceAll("[\\[\\](),{}]", "");
+
+        if (!task.getDeadline().isEmpty()) {
+            try {
+                Date date = ParserUtil.parseDate(task.getDeadline().date);
+                DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+                testDate = dateFormat.format(date);
+            } catch (IllegalValueException e) {
+                e.printStackTrace();
+            }
+        }
+        String finalTestDate = testDate;
+        return keywords.stream()
+                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(task.getDescription().taskDescription, keyword)
+                || StringUtil.containsWordIgnoreCase(finalTestDate, keyword)
+                || StringUtil.containsWordIgnoreCase(tag, keyword));
+    }
+----
 [discrete]
 ==== Design Considerations
 **Aspect:** Implementation of FindTaskCommand +
@@ -489,6 +522,7 @@ At first, the `execute()` function of the `LogicManager` class is called, which 
 **Cons:** The search result might not be accurate. For e.g. if the user searches using the keyword 'a' all the tasks'descriptions that contains the character 'a' will appear.
 // end::find[]
 // tag::list[]
+
 === ListTask mechanism
 
 The ListTask mechanism is facilitated by the `ListTaskCommand` class which inherits from `Command` class. It allows the user to list out all the current tasks.
@@ -502,6 +536,7 @@ Suppose the user has just executed the `ListTaskCommand` using:
 At first, the `execute()` function of the `LogicManager` class is called, which goes on to pass the command string into the `parseCommand()` function of the `AddressBookParser` class. This, in turn, determines that the `ListTaskCommand` feature is being evoked and calls the `execute()` in the `ListTaskCommand` class which update the current list to show all tasks creates and return a `CommandResult` object.
 // end::list[]
 // tag::select[]
+
 === SelectTask mechanism
 
 The SelectTask mechanism is facilitated by the `SelectTaskCommand` class which inherits from `Command` class. It allows the user to select the task at specific index.
@@ -515,6 +550,7 @@ Suppose the user has just executed the `SelectTaskCommand` using:
 At first, the `execute()` function of the `LogicManager` class is called, which goes on to pass the command string into the `parseCommand()` function of the `AddressBookParser` class. This, in turn, determines that the `SelectTaskCommand` feature is being evoked and calls the `SelectTaskCommandParser` to parse the string and check if the index is valid. After validation the `SelectTaskCommand` class is been called. `SelectTaskCommand` will then paraphrase the tag of selected task and pass it through `conductSearch`. `conductSearch` will call `model.updateFilteredPersonList()` with `PersonContainsKeywordsPredicate` with keyword `tag` as parameter to find the tag among person list and update person list. If there are no match found, all person will be listed. Then `LogicManager` then calls the `execute()` in the `SelectTaskCommand` class which calls `EventCenter` with the parameter of `JumpToTaskListRequestEvent` class to highlight selected task card in Ui at target index. Then `execute()` creates and return a `CommandResult` object.
 // end::select[]
 // tag::calendar[]
+
 === Calendar mechanism
 
 The calendar mechanism is facilitated by the `DatePickerSkin` skin instance which capture the pop-up content from the `DatePicker` control in `JavaFX`. It allows the user to have a calendar view of all contacts' `Birthday`  and tasks' `Deadline`.

@@ -3,31 +3,32 @@ package systemtests;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.ChangeModeCommand.MESSAGE_CHANGE_MODE_SUCCESS;
-import static seedu.address.logic.commands.CommandTestUtil.DEADLINE_DESC_GRAD_SCHOOL;
 import static seedu.address.logic.commands.CommandTestUtil.DEADLINE_DESC_INTERNSHIP;
+import static seedu.address.logic.commands.CommandTestUtil.DESCRIPTION_QUOTED_PAPER;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_DEADLINE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_DESCRIPTION;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_STARTDATE_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_STARTTIME_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.STARTDATE_DESC_GRAD_SCHOOL;
-import static seedu.address.logic.commands.CommandTestUtil.STARTDATE_DESC_INTERNSHIP;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_TIME_DESC_CORRECT_ORDER;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_TIME_DESC_INCORRECT_ORDER;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_NOT_URGENT;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_URGENT;
+import static seedu.address.logic.commands.CommandTestUtil.TIME_DESC_INTERNSHIP;
 import static seedu.address.logic.commands.CommandTestUtil.UNQUOTED_DESCRIPTION_PAPER;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DEADLINE_INTERNSHIP;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_GRAD_SCHOOL;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_INTERNSHIP;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_STARTDATE_INTERNSHIP;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ENDTIME_INTERNSHIP;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_STARTTIME_INTERNSHIP;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_NOT_URGENT;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_URGENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE_BY;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_STARTDATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME_AT;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_TASKS;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_TASK;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_TASK;
-import static seedu.address.testutil.TypicalTasks.GRAD_SCHOOL;
+import static seedu.address.testutil.TypicalTasks.GYM;
 import static seedu.address.testutil.TypicalTasks.INTERNSHIP;
 import static seedu.address.testutil.TypicalTasks.KEYWORD_MATCHING_FINISH;
 
@@ -41,10 +42,10 @@ import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.tasks.EditTaskCommand;
 import seedu.address.model.Model;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.task.DateTimeValidator;
 import seedu.address.model.task.Description;
 import seedu.address.model.task.ReadOnlyTask;
 import seedu.address.model.task.Task;
-import seedu.address.model.task.TaskDates;
 import seedu.address.model.task.exceptions.DuplicateTaskException;
 import seedu.address.model.task.exceptions.TaskNotFoundException;
 import seedu.address.testutil.TaskBuilder;
@@ -67,11 +68,11 @@ public class EditTaskCommandSystemTest extends AddressBookSystemTest {
          */
         Index index = INDEX_FIRST_TASK;
         String command = " " + EditTaskCommand.COMMAND_WORD + "  " + index.getOneBased() + "  "
-                + VALID_DESCRIPTION_INTERNSHIP + "  " + STARTDATE_DESC_INTERNSHIP + " " + DEADLINE_DESC_INTERNSHIP
+                + VALID_DESCRIPTION_INTERNSHIP + "  " + TIME_DESC_INTERNSHIP + " " + DEADLINE_DESC_INTERNSHIP
                 + "  " + TAG_DESC_URGENT + " ";
         Task editedTask = new TaskBuilder().withDescription(VALID_DESCRIPTION_INTERNSHIP)
-                .withStartDate(VALID_STARTDATE_INTERNSHIP).withDeadline(VALID_DEADLINE_INTERNSHIP)
-                .withTags(VALID_TAG_URGENT).build();
+                .withStartTime(VALID_STARTTIME_INTERNSHIP).withEndTime(VALID_ENDTIME_INTERNSHIP)
+                .withDeadline(VALID_DEADLINE_INTERNSHIP).withTags(VALID_TAG_URGENT).build();
         assertCommandSuccess(command, index, editedTask);
 
         /* Case: undo editing the last task in the list -> last task restored */
@@ -88,7 +89,7 @@ public class EditTaskCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: edit a task with new values same as existing values -> edited */
         command = EditTaskCommand.COMMAND_WORD + " " + index.getOneBased() + VALID_DESCRIPTION_INTERNSHIP
-                + STARTDATE_DESC_INTERNSHIP + DEADLINE_DESC_INTERNSHIP + TAG_DESC_URGENT;
+                + TIME_DESC_INTERNSHIP + DEADLINE_DESC_INTERNSHIP + TAG_DESC_URGENT;
         assertCommandSuccess(command, index, INTERNSHIP);
 
         /* Case: edit some fields -> edited */
@@ -104,30 +105,24 @@ public class EditTaskCommandSystemTest extends AddressBookSystemTest {
         editedTask = new TaskBuilder(taskToEdit).withTags().build();
         assertCommandSuccess(command, index, editedTask);
 
-        /* Case: clear start dates -> cleared */
+        /* Case: clear times -> cleared */
         index = INDEX_FIRST_TASK;
-        command = EditTaskCommand.COMMAND_WORD + " " + index.getOneBased() + " " + PREFIX_STARTDATE.getPrefix()
-                + TAG_DESC_URGENT;
-        editedTask = new TaskBuilder(taskToEdit).withStartDate("").build();
+        command = EditTaskCommand.COMMAND_WORD + " " + index.getOneBased() + " " + PREFIX_TIME_AT.getPrefix();
+        editedTask = new TaskBuilder(editedTask).withStartTime("").withEndTime("").build();
         assertCommandSuccess(command, index, editedTask);
 
         /* Case: clear deadlines -> cleared */
         index = INDEX_FIRST_TASK;
-        command = EditTaskCommand.COMMAND_WORD + " " + index.getOneBased() + " " + PREFIX_DEADLINE_BY.getPrefix()
-                + STARTDATE_DESC_INTERNSHIP;
-        editedTask = new TaskBuilder(taskToEdit).withDeadline("").build();
+        command = EditTaskCommand.COMMAND_WORD + " " + index.getOneBased() + " " + PREFIX_DEADLINE_BY.getPrefix();
+        editedTask = new TaskBuilder(editedTask).withDeadline("").build();
         assertCommandSuccess(command, index, editedTask);
 
-        // TODO: 1/11/17 Look into how changing of task card order affect this code, especially null date @Raisa
         /* Case: deadline prefix inside quoted description -> only description edited */
-        /*
-        index = INDEX_FIRST_TASK;
-        ReadOnlyTask taskToEdit2 = new TaskBuilder(QUIZ).build();
-        command = EditTaskCommand.COMMAND_WORD + " " + index.getOneBased() + " " + DESCRIPTION_QUOTED_PAPER
-                + DEADLINE_DESC_INTERNSHIP;
-        editedTask = new TaskBuilder(taskToEdit2).withDescription(UNQUOTED_DESCRIPTION_PAPER).build();
+        index = INDEX_SECOND_TASK;
+        command = EditTaskCommand.COMMAND_WORD + " " + index.getOneBased() + " " + DESCRIPTION_QUOTED_PAPER;
+        editedTask = new TaskBuilder(GYM).withDescription(UNQUOTED_DESCRIPTION_PAPER).build();
         assertCommandSuccess(command, index, editedTask);
-        */
+
 
         /* ------------------ Performing edit operation while a filtered list is being shown ------------------------ */
 
@@ -156,7 +151,7 @@ public class EditTaskCommandSystemTest extends AddressBookSystemTest {
         index = INDEX_FIRST_TASK;
         selectTask(index);
         command = EditTaskCommand.COMMAND_WORD + " " + index.getOneBased() + VALID_DESCRIPTION_INTERNSHIP
-                + STARTDATE_DESC_INTERNSHIP + DEADLINE_DESC_INTERNSHIP + TAG_DESC_URGENT;
+                + TIME_DESC_INTERNSHIP + DEADLINE_DESC_INTERNSHIP + TAG_DESC_URGENT;
         assertCommandSuccess(command, index, INTERNSHIP, index);
 
         /* --------------------------------- Performing invalid edit operation -------------------------------------- */
@@ -186,37 +181,44 @@ public class EditTaskCommandSystemTest extends AddressBookSystemTest {
         assertCommandFailure(EditTaskCommand.COMMAND_WORD + " " + INDEX_FIRST_TASK.getOneBased()
                         + INVALID_DESCRIPTION, Description.MESSAGE_DESCRIPTION_CONSTRAINTS);
 
-        /* Case: invalid start date -> rejected */
-        assertCommandFailure(EditTaskCommand.COMMAND_WORD + " " + INDEX_FIRST_TASK.getOneBased()
-                + INVALID_STARTDATE_DESC, TaskDates.MESSAGE_DATE_CONSTRAINTS);
-
         /* Case: invalid deadline -> rejected */
         assertCommandFailure(EditTaskCommand.COMMAND_WORD + " " + INDEX_FIRST_TASK.getOneBased()
-                        + INVALID_DEADLINE_DESC, TaskDates.MESSAGE_DATE_CONSTRAINTS);
+                        + INVALID_DEADLINE_DESC, DateTimeValidator.MESSAGE_DATE_CONSTRAINTS);
+
+        /* Case: invalid single time -> rejected */
+        assertCommandFailure(EditTaskCommand.COMMAND_WORD + " " + INDEX_FIRST_TASK.getOneBased()
+                + INVALID_STARTTIME_DESC, DateTimeValidator.MESSAGE_TIME_CONSTRAINTS);
+
+        /* Case: invalid start and end times -> rejected */
+        assertCommandFailure(EditTaskCommand.COMMAND_WORD + " " + INDEX_FIRST_TASK.getOneBased()
+                + INVALID_TIME_DESC_CORRECT_ORDER, DateTimeValidator.MESSAGE_TIME_CONSTRAINTS);
+
+        /* Case: invalid start time after end time -> rejected */
+        assertCommandFailure(EditTaskCommand.COMMAND_WORD + " " + INDEX_FIRST_TASK.getOneBased()
+                + INVALID_TIME_DESC_INCORRECT_ORDER, DateTimeValidator.MESSAGE_TIME_CONSTRAINTS);
 
         /* Case: invalid tag -> rejected */
         assertCommandFailure(EditTaskCommand.COMMAND_WORD + " " + INDEX_FIRST_TASK.getOneBased()
                         + INVALID_TAG_DESC, Tag.MESSAGE_TAG_CONSTRAINTS);
 
         /* Case: edit a task with new values same as another task's values -> rejected */
-        executeCommand(TaskUtil.getAddTaskCommand(GRAD_SCHOOL));
-        assertTrue(getModel().getAddressBook().getTaskList().contains(GRAD_SCHOOL));
-        index = INDEX_FIRST_TASK;
-        assertFalse(getModel().getFilteredTaskList().get(index.getZeroBased()).equals(GRAD_SCHOOL));
-        command = EditTaskCommand.COMMAND_WORD + " " + index.getOneBased() + VALID_DESCRIPTION_GRAD_SCHOOL
-                + STARTDATE_DESC_GRAD_SCHOOL + DEADLINE_DESC_GRAD_SCHOOL + TAG_DESC_URGENT;
+        executeCommand(TaskUtil.getAddTaskCommand(INTERNSHIP));
+        assertTrue(getModel().getAddressBook().getTaskList().contains(INTERNSHIP));
+        index = INDEX_SECOND_TASK;
+        assertFalse(getModel().getFilteredTaskList().get(index.getZeroBased()).equals(INTERNSHIP));
+        command = EditTaskCommand.COMMAND_WORD + " " + index.getOneBased() + VALID_DESCRIPTION_INTERNSHIP
+                + DEADLINE_DESC_INTERNSHIP + TIME_DESC_INTERNSHIP + TAG_DESC_URGENT;
         assertCommandFailure(command, EditTaskCommand.MESSAGE_DUPLICATE_TASK);
 
         /* Case: edit a task with new values same as another task's values but with different tags -> rejected */
         index = INDEX_SECOND_TASK;
         command = EditTaskCommand.COMMAND_WORD + " " + index.getOneBased() + VALID_DESCRIPTION_INTERNSHIP
-                + STARTDATE_DESC_INTERNSHIP + DEADLINE_DESC_INTERNSHIP + TAG_DESC_NOT_URGENT;
+                + TIME_DESC_INTERNSHIP + DEADLINE_DESC_INTERNSHIP + TAG_DESC_NOT_URGENT;
         assertCommandFailure(command, EditTaskCommand.MESSAGE_DUPLICATE_TASK);
 
         /* Case: description contains deadline prefix but without quotes -> rejected */
-        command = EditTaskCommand.COMMAND_WORD + " " + index.getOneBased() + UNQUOTED_DESCRIPTION_PAPER;
-        assertCommandFailure(command, String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT,
-                EditTaskCommand.MESSAGE_USAGE));
+        command = EditTaskCommand.COMMAND_WORD + " " + index.getOneBased() + " " + UNQUOTED_DESCRIPTION_PAPER;
+        assertCommandFailure(command, DateTimeValidator.MESSAGE_DATE_CONSTRAINTS);
     }
 
     //@@author

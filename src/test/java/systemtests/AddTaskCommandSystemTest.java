@@ -6,29 +6,36 @@ import static seedu.address.logic.commands.CommandTestUtil.DEADLINE_DESC_GRAD_SC
 import static seedu.address.logic.commands.CommandTestUtil.DEADLINE_DESC_INTERNSHIP;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_DEADLINE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_DESCRIPTION;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_STARTDATE_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_STARTTIME_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_STARTTIME_VALID_ENDTIME_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.STARTDATE_DESC_GRAD_SCHOOL;
-import static seedu.address.logic.commands.CommandTestUtil.STARTDATE_DESC_INTERNSHIP;
-import static seedu.address.logic.commands.CommandTestUtil.STARTDATE_DESC_PAPER;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_TIME_DESC_INCORRECT_ORDER;
+import static seedu.address.logic.commands.CommandTestUtil.MIXED_TIME_DESC_GRAD_SCHOOL;
+import static seedu.address.logic.commands.CommandTestUtil.MIXED_TIME_DESC_INTERNSHIP;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_URGENT;
+import static seedu.address.logic.commands.CommandTestUtil.TIME_DESC_GYM;
+import static seedu.address.logic.commands.CommandTestUtil.TIME_DESC_INTERNSHIP;
 import static seedu.address.logic.commands.CommandTestUtil.UNQUOTED_DESCRIPTION_PAPER;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DEADLINE_GRAD_SCHOOL;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DEADLINE_INTERNSHIP;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_GRAD_SCHOOL;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_GYM;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DESCRIPTION_INTERNSHIP;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_STARTDATE_GRAD_SCHOOL;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_STARTDATE_INTERNSHIP;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ENDTIME_GRAD_SCHOOL;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ENDTIME_INTERNSHIP;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_STARTTIME_GRAD_SCHOOL;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_STARTTIME_INTERNSHIP;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_URGENT;
 import static seedu.address.testutil.TypicalTasks.BUY_PRESENTS;
-import static seedu.address.testutil.TypicalTasks.GRAD_SCHOOL;
 import static seedu.address.testutil.TypicalTasks.GYM;
 import static seedu.address.testutil.TypicalTasks.INTERNSHIP;
+import static seedu.address.testutil.TypicalTasks.MEETUP;
 import static seedu.address.testutil.TypicalTasks.SUBMISSION;
 
 import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.ChangeModeCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.RedoCommand;
@@ -36,10 +43,9 @@ import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.tasks.AddTaskCommand;
 import seedu.address.model.Model;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.task.DateTimeValidator;
 import seedu.address.model.task.Description;
 import seedu.address.model.task.ReadOnlyTask;
-import seedu.address.model.task.TaskDates;
-import seedu.address.model.task.exceptions.DuplicateTaskException;
 import seedu.address.testutil.TaskBuilder;
 import seedu.address.testutil.TaskUtil;
 
@@ -49,19 +55,17 @@ public class AddTaskCommandSystemTest extends AddressBookSystemTest {
     @Test
     public void add() throws Exception {
 
-        /* Case: change the current command mode to task manager -> success */
-        Model expectedModel = getModel();
+        /* Change the current command mode to task manager */
         String commandMode = ChangeModeCommand.COMMAND_WORD + " tm";
         String expectedResultMessage = String.format(MESSAGE_CHANGE_MODE_SUCCESS, "TaskManager");
-        assertCommandSuccess(commandMode, expectedModel, expectedResultMessage);
-
         Model model = getModel();
+        assertCommandSuccess(commandMode, model, expectedResultMessage);
 
-        /* Case: add a task without tags to a non-empty address book, command with leading spaces and trailing spaces
+        /* Case: add a task to a non-empty address book, command with leading spaces and trailing spaces
          * -> added */
         ReadOnlyTask toAdd = INTERNSHIP;
         String command = "   " + AddTaskCommand.COMMAND_WORD + "  " + VALID_DESCRIPTION_INTERNSHIP + "  "
-                + STARTDATE_DESC_INTERNSHIP + " " + DEADLINE_DESC_INTERNSHIP + " " + TAG_DESC_URGENT;
+                + DEADLINE_DESC_INTERNSHIP + " " + TIME_DESC_INTERNSHIP + " " + TAG_DESC_URGENT;
         assertCommandSuccess(command, toAdd);
 
         /* Case: undo adding Internship to the list -> Internship deleted */
@@ -77,49 +81,68 @@ public class AddTaskCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: add a duplicate task -> rejected */
         command = "   " + AddTaskCommand.COMMAND_WORD + "  " + VALID_DESCRIPTION_INTERNSHIP + "  "
-                + STARTDATE_DESC_INTERNSHIP + " " + DEADLINE_DESC_INTERNSHIP + " ";
+                 + DEADLINE_DESC_INTERNSHIP + " " + TIME_DESC_INTERNSHIP;
         assertCommandFailure(command, AddTaskCommand.MESSAGE_DUPLICATE_TASK);
 
         /* Case: add a task with all fields same as another task in the address book except description -> added */
         toAdd = new TaskBuilder().withDescription(VALID_DESCRIPTION_GRAD_SCHOOL)
-                .withStartDate(VALID_STARTDATE_INTERNSHIP).withDeadline(VALID_DEADLINE_INTERNSHIP)
-                .withTags(VALID_TAG_URGENT).build();
-        command = AddTaskCommand.COMMAND_WORD + VALID_DESCRIPTION_GRAD_SCHOOL + STARTDATE_DESC_INTERNSHIP
-                + DEADLINE_DESC_INTERNSHIP + TAG_DESC_URGENT;
-        assertCommandSuccess(command, toAdd);
-
-        /* Case: add a task with all fields same as another task in the address book except start date -> added */
-        toAdd = new TaskBuilder().withDescription(VALID_DESCRIPTION_INTERNSHIP)
-                .withStartDate(VALID_STARTDATE_GRAD_SCHOOL).withDeadline(VALID_DEADLINE_INTERNSHIP)
-                .withTags(VALID_TAG_URGENT).build();
-        command = AddTaskCommand.COMMAND_WORD + VALID_DESCRIPTION_INTERNSHIP + STARTDATE_DESC_GRAD_SCHOOL
-                + DEADLINE_DESC_INTERNSHIP + TAG_DESC_URGENT;
+                .withDeadline(VALID_DEADLINE_INTERNSHIP).withStartTime(VALID_STARTTIME_INTERNSHIP)
+                .withEndTime(VALID_ENDTIME_INTERNSHIP).withTags(VALID_TAG_URGENT).build();
+        command = AddTaskCommand.COMMAND_WORD + VALID_DESCRIPTION_GRAD_SCHOOL + DEADLINE_DESC_INTERNSHIP
+                + TIME_DESC_INTERNSHIP + TAG_DESC_URGENT;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a task with all fields same as another task in the address book except deadline -> added */
         toAdd = new TaskBuilder().withDescription(VALID_DESCRIPTION_INTERNSHIP)
-                .withStartDate(VALID_STARTDATE_INTERNSHIP).withDeadline(VALID_DEADLINE_GRAD_SCHOOL)
-                .withTags(VALID_TAG_URGENT).build();
-        command = AddTaskCommand.COMMAND_WORD + VALID_DESCRIPTION_INTERNSHIP + STARTDATE_DESC_INTERNSHIP
-                + DEADLINE_DESC_GRAD_SCHOOL + TAG_DESC_URGENT;
+                .withDeadline(VALID_DEADLINE_GRAD_SCHOOL).withStartTime(VALID_STARTTIME_INTERNSHIP)
+                .withEndTime(VALID_ENDTIME_INTERNSHIP).withTags(VALID_TAG_URGENT).build();
+        command = AddTaskCommand.COMMAND_WORD + VALID_DESCRIPTION_INTERNSHIP + DEADLINE_DESC_GRAD_SCHOOL
+                + TIME_DESC_INTERNSHIP + TAG_DESC_URGENT;
+        assertCommandSuccess(command, toAdd);
+
+        /* Case: add a task with all fields same as another task in the address book except start time -> added */
+        toAdd = new TaskBuilder().withDescription(VALID_DESCRIPTION_INTERNSHIP)
+                .withDeadline(VALID_DEADLINE_INTERNSHIP).withStartTime(VALID_STARTTIME_GRAD_SCHOOL)
+                .withEndTime(VALID_ENDTIME_INTERNSHIP).withTags(VALID_TAG_URGENT).build();
+        command = AddTaskCommand.COMMAND_WORD + VALID_DESCRIPTION_INTERNSHIP + DEADLINE_DESC_INTERNSHIP
+                + MIXED_TIME_DESC_GRAD_SCHOOL + TAG_DESC_URGENT;
+        assertCommandSuccess(command, toAdd);
+
+        /* Case: add a task with all fields same as another task in the address book except end time -> added */
+        toAdd = new TaskBuilder().withDescription(VALID_DESCRIPTION_INTERNSHIP)
+                .withDeadline(VALID_DEADLINE_INTERNSHIP).withStartTime(VALID_STARTTIME_INTERNSHIP)
+                .withEndTime(VALID_ENDTIME_GRAD_SCHOOL).withTags(VALID_TAG_URGENT).build();
+        command = AddTaskCommand.COMMAND_WORD + VALID_DESCRIPTION_INTERNSHIP + DEADLINE_DESC_INTERNSHIP
+                + MIXED_TIME_DESC_INTERNSHIP + TAG_DESC_URGENT;
+        assertCommandSuccess(command, toAdd);
+
+        /* Case: add a task with an invalid start time and a valid end time -> only end time accepted */
+        toAdd = new TaskBuilder().withDescription(VALID_DESCRIPTION_INTERNSHIP).withDeadline(VALID_DEADLINE_INTERNSHIP)
+                .withStartTime("").withEndTime(VALID_ENDTIME_INTERNSHIP).withTags(VALID_TAG_URGENT).build();
+        command = AddTaskCommand.COMMAND_WORD + VALID_DESCRIPTION_INTERNSHIP + DEADLINE_DESC_INTERNSHIP
+                + INVALID_STARTTIME_VALID_ENDTIME_DESC + TAG_DESC_URGENT;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add to empty address book -> added */
         executeCommand(ClearCommand.COMMAND_WORD);
         assert getModel().getAddressBook().getTaskList().size() == 0;
-        assertCommandSuccess(GRAD_SCHOOL);
+        assertCommandSuccess(INTERNSHIP);
 
-        /* Case: add a task, missing task dates -> added */
+        /* Case: add a task, missing deadline -> current day added as deadline */
+        command = AddTaskCommand.COMMAND_WORD + VALID_DESCRIPTION_GYM + TIME_DESC_GYM + TAG_DESC_URGENT;
+        assertCommandSuccess(command, GYM);
+
+        /* Case: add a task, missing date and time -> added */
         assertCommandSuccess(BUY_PRESENTS);
 
-        /* Case: add a task, missing start date -> added */
+        /* Case: add a task, missing start time -> added */
         assertCommandSuccess(SUBMISSION);
 
-        /* Case: add a task, missing deadline -> added */
-        assertCommandSuccess(GYM);
+        /* Case: add a task, missing end time -> added */
+        assertCommandSuccess(MEETUP);
 
         /* Case: missing description -> rejected */
-        command = AddTaskCommand.COMMAND_WORD + " " + STARTDATE_DESC_INTERNSHIP + DEADLINE_DESC_INTERNSHIP;
+        command = AddTaskCommand.COMMAND_WORD + " " + DEADLINE_DESC_INTERNSHIP + TIME_DESC_INTERNSHIP;
         assertCommandFailure(command, String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTaskCommand.MESSAGE_USAGE));
 
         /* Case: invalid keyword -> rejected */
@@ -127,26 +150,31 @@ public class AddTaskCommandSystemTest extends AddressBookSystemTest {
         assertCommandFailure(command, Messages.MESSAGE_UNKNOWN_COMMAND);
 
         /* Case: invalid description -> rejected */
-        command = AddTaskCommand.COMMAND_WORD + INVALID_DESCRIPTION + STARTDATE_DESC_INTERNSHIP
-                + DEADLINE_DESC_INTERNSHIP + TAG_DESC_URGENT;
+        command = AddTaskCommand.COMMAND_WORD + INVALID_DESCRIPTION + DEADLINE_DESC_INTERNSHIP
+                + TIME_DESC_INTERNSHIP + TAG_DESC_URGENT;
         assertCommandFailure(command, Description.MESSAGE_DESCRIPTION_CONSTRAINTS);
 
         /* Case: invalid unquoted description containing deadline prefix -> rejected for invalid deadline */
-        command = AddTaskCommand.COMMAND_WORD + " " + UNQUOTED_DESCRIPTION_PAPER + STARTDATE_DESC_PAPER;
-        assertCommandFailure(command, TaskDates.MESSAGE_DATE_CONSTRAINTS);
+        command = AddTaskCommand.COMMAND_WORD + " " + UNQUOTED_DESCRIPTION_PAPER + TIME_DESC_INTERNSHIP;
+        assertCommandFailure(command, DateTimeValidator.MESSAGE_DATE_CONSTRAINTS);
 
-        /* Case: invalid start date -> rejected */
-        command = AddTaskCommand.COMMAND_WORD + VALID_DESCRIPTION_INTERNSHIP + INVALID_STARTDATE_DESC
-                + DEADLINE_DESC_INTERNSHIP + TAG_DESC_URGENT;
-        assertCommandFailure(command, TaskDates.MESSAGE_DATE_CONSTRAINTS);
+        /* Case: invalid start time -> rejected */
+        command = AddTaskCommand.COMMAND_WORD + VALID_DESCRIPTION_INTERNSHIP + DEADLINE_DESC_INTERNSHIP
+                + INVALID_STARTTIME_DESC + TAG_DESC_URGENT;
+        assertCommandFailure(command, DateTimeValidator.MESSAGE_TIME_CONSTRAINTS);
+
+        /* Case: add a task with start time after end time -> rejected */
+        command = AddTaskCommand.COMMAND_WORD + " " + VALID_DESCRIPTION_INTERNSHIP + DEADLINE_DESC_INTERNSHIP
+                + INVALID_TIME_DESC_INCORRECT_ORDER;
+        assertCommandFailure(command, DateTimeValidator.MESSAGE_TIME_CONSTRAINTS);
 
         /* Case: invalid deadline -> rejected */
-        command = AddTaskCommand.COMMAND_WORD + VALID_DESCRIPTION_INTERNSHIP + STARTDATE_DESC_INTERNSHIP
+        command = AddTaskCommand.COMMAND_WORD + VALID_DESCRIPTION_INTERNSHIP + TIME_DESC_INTERNSHIP
                 + INVALID_DEADLINE_DESC + TAG_DESC_URGENT;
-        assertCommandFailure(command, TaskDates.MESSAGE_DATE_CONSTRAINTS);
+        assertCommandFailure(command, DateTimeValidator.MESSAGE_DATE_CONSTRAINTS);
 
         /* Case: invalid tag -> rejected */
-        command = AddTaskCommand.COMMAND_WORD + VALID_DESCRIPTION_INTERNSHIP + STARTDATE_DESC_INTERNSHIP
+        command = AddTaskCommand.COMMAND_WORD + VALID_DESCRIPTION_INTERNSHIP + TIME_DESC_INTERNSHIP
                 + DEADLINE_DESC_INTERNSHIP + INVALID_TAG_DESC;
         assertCommandFailure(command, Tag.MESSAGE_TAG_CONSTRAINTS);
     }
@@ -175,7 +203,7 @@ public class AddTaskCommandSystemTest extends AddressBookSystemTest {
         Model expectedModel = getModel();
         try {
             expectedModel.addTask(toAdd);
-        } catch (DuplicateTaskException dpe) {
+        } catch (IllegalValueException dpe) {
             throw new IllegalArgumentException("toAdd already exists in the model.");
         }
         String expectedResultMessage = String.format(AddTaskCommand.MESSAGE_SUCCESS, toAdd);

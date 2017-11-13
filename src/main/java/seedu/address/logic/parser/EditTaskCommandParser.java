@@ -3,10 +3,10 @@ package seedu.address.logic.parser;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE_BY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE_FROM;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE_ON;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_STARTDATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.address.logic.parser.CliSyntax.SUFFIX_NO_RECUR_INTERVAL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME_AT;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,10 +16,10 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.tasks.EditTaskCommand;
 import seedu.address.logic.commands.tasks.EditTaskCommand.EditTaskDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.task.DateTimeValidator;
 import seedu.address.model.task.Deadline;
 import seedu.address.model.task.Description;
-import seedu.address.model.task.StartDate;
-import seedu.address.model.task.TaskDates;
+import seedu.address.model.task.EventTime;
 
 //@@author raisa2010
 /**
@@ -35,7 +35,8 @@ public class EditTaskCommandParser implements Parser<EditTaskCommand> {
     public EditTaskCommand parse(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_STARTDATE, PREFIX_DEADLINE_BY, PREFIX_DEADLINE_ON, PREFIX_TAG);
+                ArgumentTokenizer.tokenize(args, PREFIX_DEADLINE_BY, PREFIX_DEADLINE_ON, PREFIX_DEADLINE_FROM,
+                        PREFIX_TIME_AT, PREFIX_TAG);
 
         Index index;
 
@@ -45,21 +46,27 @@ public class EditTaskCommandParser implements Parser<EditTaskCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditTaskCommand.MESSAGE_USAGE));
         }
 
+        if (!AddTaskCommandParser.isSinglePrefixPresent(argMultimap)) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditTaskCommand.MESSAGE_USAGE));
+        }
+
         EditTaskDescriptor editTaskDescriptor = new EditTaskCommand.EditTaskDescriptor();
         try {
             parseDescriptionForEdit(argMultimap.getPreamble()).ifPresent(editTaskDescriptor::setDescription);
-            parseStartDateForEdit(argMultimap.getAllValues(PREFIX_STARTDATE))
-                    .ifPresent(editTaskDescriptor::setStartDate);
-            parseDeadlineForEdit(argMultimap.getAllValues(PREFIX_DEADLINE_BY, PREFIX_DEADLINE_ON))
+            parseDeadlineForEdit(argMultimap.getAllValues(PREFIX_DEADLINE_BY, PREFIX_DEADLINE_FROM, PREFIX_DEADLINE_ON))
                     .ifPresent(editTaskDescriptor::setDeadline);
+            parseEventTimesForEdit(argMultimap.getAllValues(PREFIX_TIME_AT))
+                    .ifPresent(editTaskDescriptor::setEventTimes);
             ParserUtil.parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editTaskDescriptor::setTags);
+
+            if (editTaskDescriptor.getStartTime().isPresent() && editTaskDescriptor.getEndTime().isPresent()
+                    && !DateTimeValidator.isStartTimeBeforeEndTime(editTaskDescriptor.getStartTime().get(),
+                    editTaskDescriptor.getEndTime().get())) {
+                throw new IllegalValueException(DateTimeValidator.MESSAGE_TIME_CONSTRAINTS);
+            }
 
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
-        }
-
-        if (!TaskDates.isStartDateBeforeDeadline(editTaskDescriptor.getStartDate(), editTaskDescriptor.getDeadline())) {
-            throw new ParseException(TaskDates.MESSAGE_DATE_CONSTRAINTS);
         }
 
         if (!editTaskDescriptor.isAnyFieldEdited()) {
@@ -67,24 +74,6 @@ public class EditTaskCommandParser implements Parser<EditTaskCommand> {
         }
 
         return new EditTaskCommand(index, editTaskDescriptor);
-    }
-
-    /**
-     * Parses {@code List<String> dates} into a {@code Optional<StartDate>} containing the last date in the list,
-     * if {@code dates} is non-empty.
-     * If {@code dates} contain only one element which is an empty string, it will be parsed into a
-     * {@code Optional<StartDate>} containing an empty date.
-     */
-    public Optional<StartDate> parseStartDateForEdit(List<String> dates) throws IllegalValueException {
-        assert dates != null;
-
-        if (dates.isEmpty()) {
-            return Optional.empty();
-        }
-
-        return dates.size() == 1 && dates.contains("")
-                ? Optional.of(new StartDate("", SUFFIX_NO_RECUR_INTERVAL))
-                : ParserUtil.parseStartDate(Optional.of(dates.get(dates.size() - 1)));
     }
 
     /**
@@ -100,9 +89,27 @@ public class EditTaskCommandParser implements Parser<EditTaskCommand> {
             return Optional.empty();
         }
         return dates.size() == 1 && dates.contains("")
-                ? Optional.of(new Deadline("", SUFFIX_NO_RECUR_INTERVAL))
+                ? Optional.of(new Deadline(""))
                 : ParserUtil.parseDeadline(Optional.of(dates.get(dates.size() - 1)));
 
+    }
+
+    /**
+     * Parses {@code List<String> times} into a {@code Optional<EventTime[]>} containing the last two times in
+     * the list if the {@code times} is non-empty. All single times are counted as end times.
+     *  If {@code times} contain only one element which is an empty string, it will be parsed into a
+     * {@code Optional<EventTime[]>} containing empty times.
+     */
+    public Optional<EventTime[]> parseEventTimesForEdit(List<String> times) throws IllegalValueException {
+        assert times != null;
+
+        if (times.isEmpty()) {
+            return Optional.empty();
+        }
+
+        return times.size() == 1 && times.contains("")
+                ? Optional.of(new EventTime[]{new EventTime(""), new EventTime("")})
+                : ParserUtil.parseEventTimes(Optional.of(times.get(times.size() - 1)));
     }
 
     /**
