@@ -153,7 +153,7 @@ _Figure 2.2.1 : Structure of the UI Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `MapsPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
@@ -362,7 +362,7 @@ image::SortCommandActivityDiagram.png[width="400"]
 ==== Design Considerations
 
 **Aspect:** Implementation of `SortCommand` +
-**Alternative 1 (current choice):** Sort list by triggering an event to sort the current ObservableList<ReadOnlyPerson> person list. +
+**Alternative 1 (current choice):** Sort list by the sort command parser to sort the current ObservableList<ReadOnlyPerson> person list. +
 **Pros:** We will not make any changes to the current `internalList` thus will not affect any other commands that we have implemented. +
 **Cons:** Hard for new developers to understand the way we sort the read only person list. +
 **Alternative 2:** Just sort the `internalList` +
@@ -384,7 +384,7 @@ The following activity diagram shows what happens when a user executes a new lis
 
 image::ListCommandActivityDiagram.png[width="400"]
 
-=== Design Considerations
+==== Design Considerations
 
 **Aspect:** Implementation of `ListCommand` +
 **Alternative 1 (current choice):** Add a new class ListCommandParser +
@@ -394,6 +394,27 @@ image::ListCommandActivityDiagram.png[width="400"]
 **Pros:** Easier for new developers to understand +
 **Cons:** All contacts are listed every time which may be an issue if user is trying to filter contacts by tags
 //end::listcommand[]
+
+// tag::locatecommand[]
+=== Locate mechanism
+
+The locate mechanism is facilitated by an `PersonPanelSelectionChangedEvent` which resides in `Events`. +
+It supports locating an address on Google maps based on the person selected based on the index chosen.
+
+The following sequence diagram shows how the locate operation works:
+
+image::LocateCommandSequenceDiagram.png[width="800"]
+
+==== Design Considerations
+
+**Aspect:** Implementation of `LocateCommand` +
+**Alternative 1 (current choice):** Add a new class LocateCommandParser +
+**Pros:** We will be able to provide arguments to locate a specific person +
+**Cons:** Hard for new developers to understand why we used `locate` command instead of using mouse to select a specific person. +
+**Alternative 2:** No locate command parser class +
+**Pros:** Easier for new developers to understand +
+**Cons:** Increase mouse usage instead of making full use of the Command Line Interface(CLI)
+//end::locatecommand[]
 
 === Logging
 
