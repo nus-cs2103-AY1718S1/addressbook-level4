@@ -69,13 +69,15 @@ public class Person implements ReadOnlyPerson {
 
     /**
      * Creates a {@code UniqueSocialInfoList} based on the {@code SocialInfo} belonging to the {@code source}.
+     * Helper method for {@code Person(ReadOnlyPerson)} constructor to handle the {@code DuplicateDataException}
+     * that might be thrown by {@code UniqueSocialInfoList}'s constructor.
      */
     private static UniqueSocialInfoList createUniqueSocialInfoList(ReadOnlyPerson source) {
         UniqueSocialInfoList uniqueSocialInfoList = null;
         try {
             uniqueSocialInfoList = new UniqueSocialInfoList(source.getSocialInfos());
         } catch (DuplicateDataException dde) {
-            assert false: "The ReadOnlyPerson should not have duplicate social types in it's social infos";
+            assert false: "A ReadOnlyPerson should not have duplicate social types in it's social infos";
         }
 
         return uniqueSocialInfoList;
