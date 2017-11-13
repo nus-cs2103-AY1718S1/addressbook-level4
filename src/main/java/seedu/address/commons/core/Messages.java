@@ -9,6 +9,7 @@ public class Messages {
             + "Press F2 for a list of commands and ESC to close it.";
     public static final String MESSAGE_UNKNOWN_CHILD_COMMAND = "Chirp! Unknown command!\n "
             + "Want to add a new contact or task? use \"add\"\n"
+            + "Want to see your contact's full details? use \"select\"\n"
             + "Want to view list of contact or tasks? use \"list\" or \"listpin\"\n"
             + "Want to find your contact or tasks? use \"find\"\n"
             + "Want to find pinned contact? use \"findpin\"\n"

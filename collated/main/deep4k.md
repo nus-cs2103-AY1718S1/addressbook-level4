@@ -75,6 +75,42 @@ public class ModelToggleEvent extends BaseEvent {
     }
 }
 ```
+###### \java\seedu\address\commons\events\ui\PersonPanelSelectionChangedEvent.java
+``` java
+
+/**
+ * Represents a selection change in the Person List Panel
+ */
+public class PersonPanelSelectionChangedEvent extends BaseEvent {
+
+    private final PersonCard newSelection;
+    private final PersonCard oldSelection;
+    private final String selectedIndex;
+
+    public PersonPanelSelectionChangedEvent(PersonCard oldSelection, PersonCard newSelection) {
+        this.oldSelection = oldSelection;
+        this.newSelection = newSelection;
+        this.selectedIndex = newSelection.getPersonCardIndex();
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+
+    public PersonCard getNewSelection() {
+        return newSelection;
+    }
+
+    public PersonCard getOldSelection() {
+        return oldSelection;
+    }
+
+    public String getSelectedIndex() {
+        return selectedIndex;
+    }
+}
+```
 ###### \java\seedu\address\logic\commands\alias\AliasCommand.java
 ``` java
 /**
@@ -309,7 +345,7 @@ public class RemarkCommand extends UndoableCommand {
         ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
         Person editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
                 personToEdit.getAddress(), personToEdit.getBirthday(), remark, personToEdit.getTags(),
-                personToEdit.isPrivate(), personToEdit.isPinned());
+                personToEdit.isPrivate(), personToEdit.isPinned(), personToEdit.isSelected());
 
         try {
             model.updatePerson(personToEdit, editedPerson);
@@ -354,8 +390,55 @@ public class RemarkCommand extends UndoableCommand {
     }
 }
 ```
+###### \java\seedu\address\logic\commands\person\SelectCommand.java
+``` java
+
+    @Override
+    public CommandResult execute() throws CommandException {
+
+        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+
+        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        for (ReadOnlyPerson person : lastShownList) {
+            try {
+                model.deselectPerson(person);
+            } catch (PersonNotFoundException pnfe) {
+                assert false : "The target person cannot be missing";
+            }
+
+        }
+
+        ReadOnlyPerson personToSelect = lastShownList.get(targetIndex.getZeroBased());
+
+        if (personToSelect.isSelected()) {
+            throw new CommandException(Messages.MESSAGE_PERSON_ALREADY_SELECTED);
+        }
+
+        try {
+            model.selectPerson(personToSelect);
+        } catch (PersonNotFoundException pnfe) {
+            assert false : "The target person cannot be missing";
+        }
+
+        EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex));
+        return new CommandResult(String.format(MESSAGE_SELECT_PERSON_SUCCESS, targetIndex.getOneBased()));
+
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof SelectCommand // instanceof handles nulls
+                && this.targetIndex.equals(((SelectCommand) other).targetIndex)); // state check
+    }
+}
+```
 ###### \java\seedu\address\logic\commands\task\AddTaskCommand.java
 ``` java
+
 /**
  * Adds the given user input as a task in the application
  */
@@ -432,6 +515,9 @@ public class AddTaskCommand extends UndoableCommand {
 
         try {
             model.addTask(toAdd);
+```
+###### \java\seedu\address\logic\commands\task\AddTaskCommand.java
+``` java
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
         } catch (DuplicateTaskException e) {
             throw new CommandException(MESSAGE_DUPLICATE_TASK);
@@ -889,6 +975,7 @@ public class UnmarkTaskCommand extends UndoableCommand {
         addressBookParser.registerCommandParser(new AliasCommandParser());
         addressBookParser.registerCommandParser(new SortCommandParser());
         addressBookParser.registerCommandParser(new HideCommandParser());
+        addressBookParser.registerCommandParser(new UnhideCommandParser());
         addressBookParser.registerCommandParser(new RemarkCommandParser());
         addressBookParser.registerCommandParser(new UnaliasCommandParser());
         addressBookParser.registerCommandParser(new SelectCommandParser());
@@ -1201,6 +1288,20 @@ public class AddressBookParser {
                 throw new ParseException(MESSAGE_PERSON_MODEL_MODE);
             }
 
+        case UnhideCommand.COMMAND_WORD:
+            if (!isParentEnabled) {
+                throw new ParseException(MESSAGE_UNKNOWN_CHILD_COMMAND);
+            }
+            if (isAliasEnabled) {
+                throw new ParseException(MESSAGE_ALIAS_MODEL_MODE);
+            }
+            if (isPersonEnabled && !isTaskEnabled) {
+                return new UnhideCommandParser().parse(checkedArguments);
+            } else {
+                throw new ParseException(MESSAGE_PERSON_MODEL_MODE);
+            }
+
+
         case FindCommand.COMMAND_WORD:
             if (isAliasEnabled) {
                 throw new ParseException(MESSAGE_ALIAS_MODEL_MODE);
@@ -1251,8 +1352,24 @@ public class AddressBookParser {
                 throw new ParseException(MESSAGE_PERSON_MODEL_MODE);
             }
 
+        case ListHiddenCommand.COMMAND_WORD:
+            if (!isParentEnabled) {
+                throw new ParseException(MESSAGE_UNKNOWN_CHILD_COMMAND);
+            }
+            if (isAliasEnabled) {
+                throw new ParseException(MESSAGE_ALIAS_MODEL_MODE);
+            }
+            if (isPersonEnabled && !isTaskEnabled) {
+                return new ListHiddenCommand();
+            } else {
+                throw new ParseException(MESSAGE_PERSON_MODEL_MODE);
+            }
+
         case HistoryCommand.COMMAND_WORD:
             return new HistoryCommand();
+
+        case ShowBirthdaysCommand.COMMAND_WORD:
+            return new ShowBirthdaysCommand();
 
         case ExitCommand.COMMAND_WORD:
             return new ExitCommand();
@@ -1478,7 +1595,9 @@ public class AddressBookParser {
         commandMap.put("redo", null);
         commandMap.put("undo", null);
         commandMap.put("parent", null);
-        commandMap.put("disable.p", null);
+        commandMap.put("child", null);
+        commandMap.put("listhidden", null);
+        commandMap.put("showbirthdays", null);
     }
 
     public boolean isCommandRegistered(String header) {
@@ -2893,6 +3012,40 @@ public class Remark {
     }
 }
 ```
+###### \java\seedu\address\model\person\UniquePersonList.java
+``` java
+    /**
+     * Selects the equivalent person in the list.
+     *
+     * @throws PersonNotFoundException if no such person could be found in the list.
+     */
+    public boolean select(ReadOnlyPerson toSelect) throws PersonNotFoundException {
+        requireNonNull(toSelect);
+        final int indexToSelect = internalList.indexOf(toSelect);
+        final boolean personFoundAndPinned = internalList.get(indexToSelect).setSelected(true);
+        if (!personFoundAndPinned) {
+            throw new PersonNotFoundException();
+        }
+        return personFoundAndPinned;
+    }
+
+    /**
+     * Deselects the equivalent person in the list.
+     *
+     * @throws PersonNotFoundException if no such person could be found in the list.
+     */
+    public boolean deselect(ReadOnlyPerson toDeselect) throws PersonNotFoundException {
+        requireNonNull(toDeselect);
+        final int indexToSelect = internalList.indexOf(toDeselect);
+        final boolean personFoundAndUnpinned = internalList.get(indexToSelect).setSelected(false);
+        if (!personFoundAndUnpinned) {
+            throw new PersonNotFoundException();
+        }
+        return personFoundAndUnpinned;
+    }
+
+
+```
 ###### \java\seedu\address\model\task\exceptions\DuplicateTaskException.java
 ``` java
 /**
@@ -3647,6 +3800,97 @@ public class XmlAdaptedTask {
         return FXCollections.unmodifiableObservableList(tasks);
     }
 ```
+###### \java\seedu\address\ui\MainWindow.java
+``` java
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+
+        if (event.getOldSelection() != null) {
+            try {
+                model.deselectPerson(event.getOldSelection().person);
+            } catch (PersonNotFoundException pnfe) {
+                assert false : "The target person cannot be missing";
+                logger.warning("Failed to DESELECT person card based on clicks");
+            }
+        }
+        try {
+            model.selectPerson(event.getNewSelection().person);
+            raise(new NewResultAvailableEvent(String.format(SelectCommand.MESSAGE_SELECT_PERSON_SUCCESS,
+                    event.getSelectedIndex())));
+            raise(new ValidResultDisplayEvent(SelectCommand.COMMAND_WORD));
+        } catch (PersonNotFoundException pnfe) {
+            assert false : "The target person cannot be missing";
+            logger.warning("Failed to SELECT person card based on clicks");
+        }
+    }
+    //author
+
+```
+###### \java\seedu\address\ui\PersonCard.java
+``` java
+    /**
+     * Sets the additional info needed for their respective {@code person } properties
+     * and adds it inside Hbox details. Hbox details will be added to PersonCard parent
+     * node if {@code person} is selected
+     */
+    private void initDetails(ReadOnlyPerson person) {
+
+        phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
+        address.textProperty().bind(Bindings.convert(person.addressProperty()));
+        email.textProperty().bind(Bindings.convert(person.emailProperty()));
+        birthday.textProperty().bind(Bindings.convert(person.birthdayProperty()));
+
+        phone.setMaxHeight(Control.USE_COMPUTED_SIZE);
+        phone.setWrapText(true);
+
+        address.setMaxHeight(Control.USE_COMPUTED_SIZE);
+        address.setWrapText(true);
+
+        email.setMaxHeight(Control.USE_COMPUTED_SIZE);
+        email.setWrapText(true);
+
+        birthday.setMaxHeight(Control.USE_COMPUTED_SIZE);
+        birthday.setWrapText(true);
+
+        phoneImage.setImage(new Image("/images/telephone.png"));
+        phoneImage.setSmooth(true);
+        phoneImage.setPreserveRatio(true);
+        phoneImage.setFitHeight(80);
+        phoneImage.setFitWidth(40);
+
+        locationImage.setImage(new Image("/images/location.png"));
+        locationImage.setSmooth(true);
+        locationImage.setPreserveRatio(true);
+        locationImage.setFitHeight(100);
+        locationImage.setFitWidth(40);
+
+        giftImage.setImage(new Image("/images/gift.png"));
+        giftImage.setSmooth(true);
+        giftImage.setPreserveRatio(true);
+        giftImage.setFitHeight(100);
+        giftImage.setFitWidth(40);
+
+        emailImage.setImage(new Image("/images/email.png"));
+        emailImage.setSmooth(true);
+        emailImage.setPreserveRatio(true);
+        emailImage.setFitHeight(100);
+        emailImage.setFitWidth(40);
+
+        details.getChildren().add(phoneImage);
+        details.getChildren().add(phone);
+        details.getChildren().add(locationImage);
+        details.getChildren().add(address);
+        details.getChildren().add(emailImage);
+        details.getChildren().add(email);
+        details.getChildren().add(giftImage);
+        details.getChildren().add(birthday);
+        details.setSpacing(10);
+        details.setMaxSize(Control.USE_COMPUTED_SIZE, Control.USE_COMPUTED_SIZE);
+        details.setAlignment(Pos.CENTER_LEFT);
+
+    }
+```
 ###### \java\seedu\address\ui\StatusBarFooter.java
 ``` java
 /**
@@ -3763,7 +4007,7 @@ public class TaskCard extends UiPart<Region> {
             taskVbox.getChildren().add(time);
             taskVbox.setAlignment(Pos.CENTER_LEFT);
             time.setAlignment(Pos.CENTER_LEFT);
-            time.setFont(Font.font("Segoe UI Semibold", FontPosture.ITALIC, 11));
+            time.setFont(Font.font("Verdana", FontPosture.ITALIC, 11));
         }
 
     }
@@ -3885,7 +4129,7 @@ public class TaskListPanel extends UiPart<Region> {
     }
 
     @Subscribe
-    private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
+    private void handleJumpToNewTaskRequestEvent(JumpToNewTaskRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         scrollTo(event.targetIndex);
     }
@@ -3918,4 +4162,70 @@ public class TaskListPanel extends UiPart<Region> {
         }
     }
 }
+```
+###### \resources\view\StatusBarFooter.fxml
+``` fxml
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import org.controlsfx.control.StatusBar?>
+
+<GridPane styleClass="grid-pane" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+    <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="80.0" />
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="80.0" />
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="140.0" />
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+      <ColumnConstraints />
+    </columnConstraints>
+    <StatusBar fx:id="syncStatus" styleClass="anchor-pane" />
+    <StatusBar fx:id="saveLocationStatus" nodeOrientation="RIGHT_TO_LEFT" styleClass="anchor-pane" GridPane.columnIndex="1" />
+    <StatusBar fx:id="numberStatus" nodeOrientation="RIGHT_TO_LEFT" styleClass="anchor-pane" GridPane.columnIndex="2" />
+    <StatusBar fx:id="timeStatus" nodeOrientation="RIGHT_TO_LEFT" styleClass="anchor-pane" text="" GridPane.columnIndex="3" />
+   <rowConstraints>
+      <RowConstraints />
+   </rowConstraints>
+</GridPane>
+```
+###### \resources\view\TaskListCard.fxml
+``` fxml
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<HBox fx:id="cardPane" alignment="CENTER_LEFT" styleClass="hbox" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <GridPane alignment="CENTER_LEFT" style="-fx-background-color: transparent;">
+         <HBox.margin>
+            <Insets />
+         </HBox.margin>
+         <columnConstraints>
+            <ColumnConstraints hgrow="ALWAYS" />
+            <ColumnConstraints hgrow="ALWAYS" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <Label fx:id="id" minWidth="40.0" styleClass="cell_big_label" stylesheets="@../../../../../sampletesta/src/main/resources/view/TasksPanel.css" text="\$ID" wrapText="true" />
+            <VBox fx:id="taskVbox" alignment="CENTER" styleClass="vbox" GridPane.columnIndex="1">
+               <children>
+                  <Label fx:id="header" styleClass="cell_big_label" stylesheets="@../../../../../sampletesta/src/main/resources/view/TasksPanel.css" text="\$task" wrapText="true">
+                     <padding>
+                        <Insets right="20.0" />
+                     </padding>
+                  </Label>
+               </children>
+            </VBox>
+         </children>
+      </GridPane>
+   </children>
+   <padding>
+      <Insets bottom="3.0" left="5.0" right="3.0" top="3.0" />
+   </padding>
+</HBox>
 ```

@@ -8,8 +8,9 @@ Written in Java language, Bluebird is a desktop based organisational tool for th
 for a variety of day-to-day management tasks, including managing appointments for both yourself and your
 child, and also organising the contact information from your Address Book. +
 
-Included in this portfolio are all the enhancements, features and tests that Alpheus Lim Wei Xiang has contributed to the project.
-
+== Purpose
+This project portfolio serves to provide an insight into how Alpheus Lim Wei Xiang has contributed to project Bluebird. Included
+in this portfolio are the enhancements, features, tests and proposed enhancements that Alpheus Lim Wei Xiang has contribued to the project.
 
 *Code contributed*: [https://github.com/CS2103AUG2017-T15-B4/main/blob/master/collated/main/Alim95.md[Functional code]] [https://github.com/CS2103AUG2017-T15-B4/main/blob/master/collated/test/Alim95.md[Test code]]
 
@@ -85,7 +86,8 @@ include::../UserGuide.adoc[tag=find]
 ---
 
 ==== Justification
-
+The old find feature is only capable of finding the target `Person` using his/her name. Furthermore,
+users have to type out the full name in order to be able to find the `Person`.
 Users may want to search for the contact not just by their names, but also by their phone number, email
 , address and tags as well. This enhancement gives users the choice to decide how they would want
 to search for the contact they want.
@@ -160,18 +162,35 @@ include::../DeveloperGuide.adoc[tag=parentmode]
 
 ---
 
+=== Enhancement Proposed: Import/Export Google contacts
+This allows for easy transfer of contacts from the user's phone when they first use Bluebird.
+
+=== Enhancement Proposed: Cloud Storage
+Bluebird will prompt user to select if they would like to upload and save their data to a cloud storage
+every time they exit the application. This ensures that users need not worry about losing important
+contacts/tasks should anything happen to their computer.
+
+
 === Other contributions
+
+Acceptance Testing for other applications
+
+* Found a bug for switch theme (Issue https://github.com/CS2103AUG2017-T09-B3/main/issues/194[#194])
+
+Contribution to Project Bluebird
 
 * Updated the UI of Bluebird
 (Pull requests https://github.com/CS2103AUG2017-T15-B4/main/pull/14[#14], https://github.com/CS2103AUG2017-T15-B4/main/pull/58[#58],
 https://github.com/CS2103AUG2017-T15-B4/main/pull/73[#73], https://github.com/CS2103AUG2017-T15-B4/main/pull/118[#118],
-https://github.com/CS2103AUG2017-T15-B4/main/pull/134[#134], https://github.com/CS2103AUG2017-T15-B4/main/pull/143[#143],
-https://github.com/CS2103AUG2017-T15-B4/main/pull/144[#144], https://github.com/CS2103AUG2017-T15-B4/main/pull/205[#205],
-https://github.com/CS2103AUG2017-T15-B4/main/pull/208[#208], https://github.com/CS2103AUG2017-T15-B4/main/pull/245[#245],
-https://github.com/CS2103AUG2017-T15-B4/main/pull/257[#257])
-* Updated a help overlay for Bluebird (Pull requests https://github.com/CS2103AUG2017-T15-B4/main/pull/189[#189], https://github.com/CS2103AUG2017-T15-B4/main/pull/208[#208])
+https://github.com/CS2103AUG2017-T15-B4/main/pull/144[#144], https://github.com/CS2103AUG2017-T15-B4/main/pull/165[#165],
+https://github.com/CS2103AUG2017-T15-B4/main/pull/205[#205], https://github.com/CS2103AUG2017-T15-B4/main/pull/208[#208],
+https://github.com/CS2103AUG2017-T15-B4/main/pull/245[#245], https://github.com/CS2103AUG2017-T15-B4/main/pull/257[#257],
+https://github.com/CS2103AUG2017-T15-B4/main/pull/267[#267])
+* Updated a help overlay for Bluebird (Pull requests https://github.com/CS2103AUG2017-T15-B4/main/pull/189[#189], https://github.com/CS2103AUG2017-T15-B4/main/pull/208[#208],
+https://github.com/CS2103AUG2017-T15-B4/main/pull/262[#262], https://github.com/CS2103AUG2017-T15-B4/main/pull/267[#267])
 * Added Bluebird result image feedback when inputting commands (Pull requests https://github.com/CS2103AUG2017-T15-B4/main/pull/143[#142],
 https://github.com/CS2103AUG2017-T15-B4/main/pull/245[#245])
 * Added toggling of Ui between Person, Task, Alias, Pinned, and All lists (Pull requests https://github.com/CS2103AUG2017-T15-B4/main/pull/205[#205],
 https://github.com/CS2103AUG2017-T15-B4/main/pull/208[#208], https://github.com/CS2103AUG2017-T15-B4/main/pull/216[#216],
 https://github.com/CS2103AUG2017-T15-B4/main/pull/257[#257])
+* Proposed Parent Child Mode for Bluebird
