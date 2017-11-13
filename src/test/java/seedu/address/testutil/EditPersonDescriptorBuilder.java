@@ -32,7 +32,7 @@ public class EditPersonDescriptorBuilder {
         descriptor.setPhone(person.getPhone());
         descriptor.setEmail(person.getEmail());
         descriptor.setAddress(person.getAddress());
-        descriptor.setTags(person.getTags());
+        descriptor.setTagsToAdd(person.getTags());
     }
 
     /**
@@ -71,6 +71,7 @@ public class EditPersonDescriptorBuilder {
         return this;
     }
 
+
     /**
      * Sets the {@code Address} of the {@code EditPersonDescriptor} that we are building.
      */
@@ -89,12 +90,27 @@ public class EditPersonDescriptorBuilder {
      */
     public EditPersonDescriptorBuilder withTags(String... tags) {
         try {
-            descriptor.setTags(ParserUtil.parseTags(Arrays.asList(tags)));
+            descriptor.setTagsToAdd(ParserUtil.parseTags(Arrays.asList(tags)));
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("tags are expected to be unique.");
         }
         return this;
     }
+
+    //@@author willxujun
+    /**
+     * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code EditPersonDescriptor}
+     * that we are building.
+     */
+    public EditPersonDescriptorBuilder withTagsToRemove(String... tags) {
+        try {
+            descriptor.setTagsToRemove(ParserUtil.parseTags(Arrays.asList(tags)));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("tags are expected to be unique.");
+        }
+        return this;
+    }
+    //@@author
 
     public EditPersonDescriptor build() {
         return descriptor;

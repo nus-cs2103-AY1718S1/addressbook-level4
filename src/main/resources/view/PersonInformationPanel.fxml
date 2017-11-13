@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.control.ScrollPane?>
+<AnchorPane minWidth="1000.0" prefHeight="650.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <SplitPane dividerPositions="0.5" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                   <ScrollPane style="-fx-background-color: transparent;" prefHeight="450" prefWidth="450">
+                       <VBox>
+                         <children>
+                            <Label fx:id="id" styleClass="label-header" />
+                            <Label fx:id="name" styleClass="name" />
+                                 <HBox>
+                                   <children>
+                                       <VBox prefHeight="200.0" prefWidth="100.0">
+                                           <children>
+                                               <VBox fx:id="customFieldNameList" prefHeight="0.0" prefWidth="400.0" styleClass="label-bright" />
+                                           </children>
+                                       </VBox>
+                                       <VBox prefHeight="0.0" prefWidth="400.0">
+                                           <children>
+                                               <VBox fx:id="customFieldValueList" prefHeight="0.0" prefWidth="400.0" styleClass="label-bright" />
+                                           </children>
+                                       </VBox>
+                                   </children>
+                                </HBox>
+                         </children>
+                      </VBox>
+                   </ScrollPane>
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                   <ScrollPane prefHeight="450" prefWidth="450">
+                       <VBox minHeight="30">
+                         <children>
+                             <VBox minHeight="10">
+                               <children>
+                                  <HBox>
+                                     <children>
+                                        <FlowPane fx:id="tags" />
+                                         <VBox minHeight="10" />
+                                     </children>
+                                  </HBox>
+                               </children>
+                            </VBox>
+                            <HBox>
+                               <children>
+                                  <Label fx:id="addressLabel" styleClass="label-bright" text="Address: " />
+                                  <Label fx:id="address" styleClass="label-bright" />
+                               </children>
+                            </HBox>
+                             <HBox>
+                                 <children>
+                                     <VBox minHeight="30" />
+                                     <Label fx:id="emailLabel" styleClass="label-bright" text="Email: " />
+                                     <Label fx:id="email" styleClass="label-bright" />
+                                 </children>
+                             </HBox>
+
+                                <HBox prefHeight="20.0" prefWidth="400.0">
+                                   <children>
+                                      <VBox prefHeight="200.0" prefWidth="100.0">
+                                         <children>
+                                            <Label fx:id="phoneLabel" prefHeight="17.0" prefWidth="111.0" styleClass="label-bright" text="Phone: " />
+                                            <VBox fx:id="optionalPhoneLabel" prefHeight="0.0" prefWidth="400.0" styleClass="label-bright" />
+                                         </children>
+                                      </VBox>
+                                      <VBox prefHeight="0.0" prefWidth="400.0">
+                                         <children>
+                                            <Label fx:id="phone" styleClass="label-bright" />
+                                            <VBox fx:id="optionalPhoneList" prefHeight="0.0" prefWidth="400.0" styleClass="label-bright" />
+                                         </children>
+                                      </VBox>
+                                   </children>
+                                </HBox>
+                         </children>
+                      </VBox>
+                   </ScrollPane>
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>

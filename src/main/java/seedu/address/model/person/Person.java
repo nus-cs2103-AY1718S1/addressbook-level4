@@ -9,6 +9,10 @@ import java.util.Set;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import seedu.address.model.customField.CustomField;
+import seedu.address.model.customField.UniqueCustomFieldList;
+import seedu.address.model.person.phone.Phone;
+import seedu.address.model.person.phone.UniquePhoneList;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -16,26 +20,87 @@ import seedu.address.model.tag.UniqueTagList;
  * Represents a Person in the address book.
  * Guarantees: details are present and not null, field values are validated.
  */
-public class Person implements ReadOnlyPerson {
+public class Person implements ReadOnlyPerson, Comparable<Person> {
 
     private ObjectProperty<Name> name;
-    private ObjectProperty<Phone> phone;
+    private ObjectProperty<Phone> primaryPhone;
+    private ObjectProperty<UniquePhoneList> uniquePhoneList;
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
+    private ObjectProperty<Photo> photo;
 
     private ObjectProperty<UniqueTagList> tags;
+    private ObjectProperty<UniqueCustomFieldList> customFields;
+
 
     /**
-     * Every field must be present and not null.
+     * Every field must be present and not null except Phone list, Custom Field and Photo.
      */
     public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = new SimpleObjectProperty<>(name);
-        this.phone = new SimpleObjectProperty<>(phone);
+        this.primaryPhone = new SimpleObjectProperty<>(phone);
+        this.uniquePhoneList = new SimpleObjectProperty<>(new UniquePhoneList());
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
+        this.photo = new SimpleObjectProperty<>(new Photo());
+
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+        this.customFields = new SimpleObjectProperty<>(new UniqueCustomFieldList());
+    }
+
+    /**
+     * Every field must be present and not null except Phone list, Custom Field and Photo.
+     */
+    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, UniquePhoneList list) {
+        requireAllNonNull(name, phone, email, address, tags);
+        this.name = new SimpleObjectProperty<>(name);
+        this.primaryPhone = new SimpleObjectProperty<>(phone);
+        this.uniquePhoneList = new SimpleObjectProperty<>(list);
+        this.email = new SimpleObjectProperty<>(email);
+        this.address = new SimpleObjectProperty<>(address);
+        this.photo = new SimpleObjectProperty<>(new Photo());
+
+        // protect internal tags from changes in the arg list
+        this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+        this.customFields = new SimpleObjectProperty<>(new UniqueCustomFieldList());
+    }
+
+    /**
+     * Every field must be present and not null.
+     */
+    public Person(Name name, Phone phone, Email email, Address address, Photo photo,
+                  UniquePhoneList uniquePhoneList, Set<Tag> tags, Set<CustomField> customFields) {
+        requireAllNonNull(name, phone, email, address, tags, customFields);
+        this.name = new SimpleObjectProperty<>(name);
+        this.primaryPhone = new SimpleObjectProperty<>(phone);
+        this.email = new SimpleObjectProperty<>(email);
+        this.address = new SimpleObjectProperty<>(address);
+        this.photo = new SimpleObjectProperty<>(photo);
+        this.uniquePhoneList = new SimpleObjectProperty<>(uniquePhoneList);
+        // protect internal tags from changes in the arg list
+        this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+        // protect internal custom fields from changes in the arg list
+        this.customFields = new SimpleObjectProperty<>(new UniqueCustomFieldList(customFields));
+    }
+
+    /**
+     * Every field must be present and not null except Custom Field List.
+     */
+    public Person(Name name, Phone phone, Email email, Address address, Photo photo,
+                  UniquePhoneList uniquePhoneList, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, tags);
+        this.name = new SimpleObjectProperty<>(name);
+        this.primaryPhone = new SimpleObjectProperty<>(phone);
+        this.uniquePhoneList = new SimpleObjectProperty<>(uniquePhoneList);
+        this.email = new SimpleObjectProperty<>(email);
+        this.address = new SimpleObjectProperty<>(address);
+        this.photo = new SimpleObjectProperty<>(photo);
+        // protect internal tags from changes in the arg list
+        this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
+        // protect internal custom fields from changes in the arg list
+        this.customFields = new SimpleObjectProperty<>(new UniqueCustomFieldList());
     }
 
     /**
@@ -43,7 +108,21 @@ public class Person implements ReadOnlyPerson {
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
-                source.getTags());
+                source.getPhoto(), source.getPhoneList(), source.getTags(), source.getCustomFields());
+    }
+
+    public void setPhone(Phone phone) {
+        this.primaryPhone.set(requireNonNull(phone));
+    }
+
+    @Override
+    public ObjectProperty<Phone> phoneProperty() {
+        return primaryPhone;
+    }
+
+    @Override
+    public Phone getPhone() {
+        return primaryPhone.get();
     }
 
     public void setName(Name name) {
@@ -60,18 +139,28 @@ public class Person implements ReadOnlyPerson {
         return name.get();
     }
 
-    public void setPhone(Phone phone) {
-        this.phone.set(requireNonNull(phone));
+    public void setPhoneList(UniquePhoneList list) {
+        this.uniquePhoneList.set(requireNonNull(list));
     }
 
     @Override
-    public ObjectProperty<Phone> phoneProperty() {
-        return phone;
+    public UniquePhoneList getPhoneList() {
+        return uniquePhoneList.get();
     }
 
+    //@@author willxujun
+    /**
+     * Returns an immutable phone set, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
     @Override
-    public Phone getPhone() {
-        return phone.get();
+    public Set<Phone> getPhones() {
+        return Collections.unmodifiableSet(uniquePhoneList.get().toSet());
+    }
+    //@@author
+
+    public ObjectProperty<UniquePhoneList> phoneListProperty() {
+        return uniquePhoneList;
     }
 
     public void setEmail(Email email) {
@@ -102,6 +191,22 @@ public class Person implements ReadOnlyPerson {
         return address.get();
     }
 
+    //@@author LuLechuan
+    public void setPhoto(Photo photo) {
+        this.photo.set(requireNonNull(photo));
+    }
+
+    @Override
+    public ObjectProperty<Photo> photoProperty() {
+        return photo;
+    }
+
+    @Override
+    public Photo getPhoto() {
+        return photo.get();
+    }
+    //@@author
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -122,6 +227,38 @@ public class Person implements ReadOnlyPerson {
         tags.set(new UniqueTagList(replacement));
     }
 
+    //@@author LuLechuan
+    /**
+     * Returns an immutable custom field set, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
+    @Override
+    public Set<CustomField> getCustomFields() {
+        return Collections.unmodifiableSet(customFields.get().toSet());
+    }
+
+    /**
+     * Returns the list of custom fields of the person
+     *
+     * @return customFields.get()
+     */
+    @Override
+    public UniqueCustomFieldList getCustomFieldList() {
+        return customFields.get();
+    }
+
+    public ObjectProperty<UniqueCustomFieldList> customFieldProperty() {
+        return customFields;
+    }
+
+    /**
+     * Replaces this person's custom fields with the custom fields in the argument custom fields set.
+     */
+    public void setCustomFields(Set<CustomField> replacement) {
+        customFields.set(new UniqueCustomFieldList(replacement));
+    }
+    //@@author
+
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
@@ -130,9 +267,14 @@ public class Person implements ReadOnlyPerson {
     }
 
     @Override
+    public int compareTo(Person other) {
+        return this.getName().toString().compareToIgnoreCase(other.getName().toString());
+    }
+
+    @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(name, primaryPhone, email, address, tags);
     }
 
     @Override

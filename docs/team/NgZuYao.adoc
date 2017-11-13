@@ -1,0 +1,75 @@
+= Ng Zu Yao - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: NUS Contact
+
+The NUS Contact is a desktop address book application designed for NUS students, with its enhancements being done with their interests in mind. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+[NOTE]
+====
+Most enhancements added by me in the NUS Contact are on the UI side
+====
+
+*Code contributed:* link:https://github.com/CS2103AUG2017-T14-B1/main/blob/master/collated/main/ngzuyao.md[functional code] link:https://google.com[unused code]
+
+=== Enhancement Added: Person Information Panel
+
+==== External behaviour
+
+The Person Information Panel is a section of the GUI where it displays the selected contact's detailed information in a more presentable way.
+
+The Person Information Panel displays the specific class of the information before the value of the information. (e.g. Nickname: Ah Chuang)
+
+Values of the information are indented equally.
+
+The name and custom fields of the contact are displayed on one side of the panel while the rest of the information is displayed on the other side.
+
+Allows scrolling up/down in case there is too much information to be displayed on screen.
+
+==== Justification
+
+Taking up a larger section of the GUI, the information is displayed with a larger font size than it was previously displayed in the Person Card, which allows the user to easily identify the information he/she is looking for.
+
+As one of the features of the NUS Contact is supporting custom information about a contact, there are more information of each contact to be displayed. Thus the need for the larger space taken up by the panel.
+
+Also, by supporting the custom information, there is a need for NUS Contact to display the class of the information before the value of the information.
+
+Splitting up the panel into two sides makes for easier identification of essential/non-essential information about a contact (barring the name and index of the contact).
+
+==== Implementation
+
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=personinformationpanel]
+
+#End of Extract#
+
+=== Enhancement unused: Nickname field
+
+==== External Behaviour
+
+Allows adding of nickname for a contact. Allows deleting of the nickname of the contact too.
+
+*Pull request:* https://github.com/CS2103AUG2017-T14-B1/main/pull/21[Nickname code]
+
+==== Justification
+
+Unused because of the addition of a more generalised custom field command.
+
+=== Features I propose
+
+==== Make the size of Person Information Panel scale based on the size of the app.
+
+Users might not want the app to be used on full screen mode all the time. Perhaps allowing it to scale will enhance the user experience more.
+
+==== Allow users to choose which theme they want for their NUS Contact.
+
+More variety of themes attract users who are interested in customization of the app to their own liking.
+
+=== Other contributions
+
+* Random tags background colours (https://github.com/CS2103AUG2017-T14-B1/main/pull/7[Tags Background])
+* Documentation of README.adoc (https://github.com/CS2103AUG2017-T14-B1/main/pull/13[README])
+

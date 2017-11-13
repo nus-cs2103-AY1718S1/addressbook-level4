@@ -13,6 +13,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.util.SampleDataUtil;
 import seedu.address.testutil.TestUtil;
 
+
 public class SampleDataTest extends AddressBookGuiTest {
     @Override
     protected AddressBook getInitialData() {
@@ -31,6 +32,7 @@ public class SampleDataTest extends AddressBookGuiTest {
     /**
      * Deletes the file at {@code filePath} if it exists.
      */
+
     private void deleteFileIfExists(String filePath) {
         try {
             Files.deleteIfExists(Paths.get(filePath));
@@ -44,4 +46,5 @@ public class SampleDataTest extends AddressBookGuiTest {
         Person[] expectedList = SampleDataUtil.getSamplePersons();
         assertListMatching(getPersonListPanel(), expectedList);
     }
+
 }

@@ -29,4 +29,5 @@ public class ErrorDialogGuiTest extends AddressBookGuiTest {
                 alertDialog.getContentText());
     }
 
+
 }

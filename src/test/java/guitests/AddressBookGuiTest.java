@@ -9,7 +9,6 @@ import org.junit.Rule;
 import org.junit.rules.TestName;
 import org.testfx.api.FxToolkit;
 
-import guitests.guihandles.BrowserPanelHandle;
 import guitests.guihandles.CommandBoxHandle;
 import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.MainWindowHandle;
@@ -25,9 +24,10 @@ import seedu.address.testutil.TypicalPersons;
 /**
  * A GUI Test class for AddressBook.
  */
+
 public abstract class AddressBookGuiTest {
 
-    /* The TestName Rule makes the current test name available inside test methods */
+    /* The TestName Rule makes the current test name available inside test methods*/
     @Rule
     public TestName name = new TestName();
 
@@ -79,9 +79,9 @@ public abstract class AddressBookGuiTest {
         return mainWindowHandle.getMainMenu();
     }
 
-    protected BrowserPanelHandle getBrowserPanel() {
+    /*protected BrowserPanelHandle getBrowserPanel() {
         return mainWindowHandle.getBrowserPanel();
-    }
+    }*/
 
     protected StatusBarFooterHandle getStatusBarFooter() {
         return mainWindowHandle.getStatusBarFooter();

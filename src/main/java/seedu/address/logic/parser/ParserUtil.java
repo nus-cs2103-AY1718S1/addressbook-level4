@@ -13,7 +13,7 @@ import seedu.address.commons.util.StringUtil;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
-import seedu.address.model.person.Phone;
+import seedu.address.model.person.phone.Phone;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -41,6 +41,16 @@ public class ParserUtil {
             throw new IllegalValueException(MESSAGE_INVALID_INDEX);
         }
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
+    }
+
+    /**
+     * Parses {@code oneBasedName} into an {@code String} and returns it. Leading and trailing whitespaces will be
+     * trimmed.
+     * @throws IllegalValueException if the specified index is invalid (not non-zero unsigned integer).
+     */
+    public static String parseNameString(String oneBasedName) throws IllegalValueException {
+        String trimmedName = oneBasedName.trim();
+        return trimmedName;
     }
 
     /**
