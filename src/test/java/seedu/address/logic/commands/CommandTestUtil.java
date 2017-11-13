@@ -56,6 +56,16 @@ public class CommandTestUtil {
     //@@author huiyiiih
     public static final String VALID_NAME_JOE = "Joe Smith";
     public static final String VALID_NAME_JANE = "Jane Smith";
+    public static final String VALID_PRIORITY = "L";
+    public static final String VALID_POSITION = "NIL";
+    public static final String VALID_REL_SIBLINGS = "siblings";
+    public static final String VALID_REL_COLLEAGUE = "colleague";
+    public static final String VALID_ALICE_REL = "Alice Pauline [siblings]";
+    public static final String VALID_BENSON_REL = "Benson Meier [siblings]";
+    public static final String VALID_CARL_REL = "Carl Kurz [siblings]";
+    public static final String VALID_DANIEL_REL = "Daniel Meier [siblings]";
+    public static final String VALID_JANE_REL = "Joe Smith [siblings]";
+    public static final String VALID_JOE_REL = "Jane Smith [siblings]";
     //@@author
     //@@author sebtsh
     public static final String VALID_COMPANY_AMY = "Microsoft";
@@ -75,9 +85,7 @@ public class CommandTestUtil {
     public static final String VALID_PHOTO_BOB = "src" + FILE_SEPARATOR + "main" + FILE_SEPARATOR + "resources"
             + FILE_SEPARATOR + "images" + FILE_SEPARATOR + "mad-men.jpg";
     public static final String VALID_TAG_HUSBAND = "husband";
-    public static final String VALID_TAG_FRIEND = "friend";
-    public static final String VALID_REL_SIBLINGS = "siblings";
-    public static final String VALID_REL_COLLEAGUE = "colleague";
+    public static final String VALID_TAG_FRIEND = "friends";
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
@@ -106,10 +114,10 @@ public class CommandTestUtil {
     //@@author huiyiiih
     public static final String REL_DESC_SIBLINGS = " " + PREFIX_ADD_RELATIONSHIP + VALID_REL_SIBLINGS;
     public static final String REL_DESC_COLLEAGUE = " " + PREFIX_ADD_RELATIONSHIP + VALID_REL_COLLEAGUE;
-    public static final String REL_DESC_JOE_SIBLINGS = " " + PREFIX_ADD_RELATIONSHIP + "Joe Smith" + " ["
-        + VALID_REL_COLLEAGUE + "]";
     public static final String REL_DESC_JANE_SIBLINGS = " " + PREFIX_ADD_RELATIONSHIP + "Jane Smith" + " ["
         + VALID_REL_COLLEAGUE + "]";
+    public static final String POSITION_DESC = " " + PREFIX_POSITION + VALID_POSITION;
+    public static final String PRIORITY_DESC = " " + PREFIX_PRIORITY + VALID_PRIORITY;
     //@@author
 
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
@@ -175,15 +183,14 @@ public class CommandTestUtil {
                 .withCompany(VALID_COMPANY_AMY).withPosition(VALID_POSITION_AMY)
                 .withStatus(VALID_STATUS_AMY).withPriority(VALID_PRIORITY_AMY)
                 .withNote(VALID_NOTE_AMY).withPhoto(VALID_PHOTO_AMY).withTags
-                (VALID_TAG_FRIEND).withRelation(VALID_REL_SIBLINGS).build();
+                (VALID_TAG_FRIEND).build();
 
         DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
                 .withCompany(VALID_COMPANY_BOB).withPosition(VALID_POSITION_BOB)
                 .withStatus(VALID_STATUS_BOB).withPriority(VALID_PRIORITY_BOB)
                 .withNote(VALID_NOTE_BOB).withPhoto(VALID_PHOTO_BOB).withTags
-                (VALID_TAG_FRIEND).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
-                .withRelation(VALID_REL_SIBLINGS).build();
+                (VALID_TAG_FRIEND).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
         //@@author
 
         DESC_MIDTERM = new EditEventDescriptorBuilder().withTitle(VALID_TITLE_MIDTERM)
@@ -198,13 +205,13 @@ public class CommandTestUtil {
             .withCompany(VALID_COMPANY_AMY).withPosition(VALID_POSITION_AMY)
             .withStatus(VALID_STATUS_AMY).withPriority(VALID_PRIORITY_AMY)
             .withNote(VALID_NOTE_AMY).withPhoto(VALID_PHOTO_AMY).withTags
-            (VALID_TAG_FRIEND).withToAddRel(VALID_REL_SIBLINGS).build();
+            (VALID_TAG_FRIEND).withToAddRel(VALID_JOE_REL).build();
         DESC_JANE = new EditPersonBuilder().withName(VALID_NAME_JANE)
             .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
             .withCompany(VALID_COMPANY_AMY).withPosition(VALID_POSITION_AMY)
             .withStatus(VALID_STATUS_AMY).withPriority(VALID_PRIORITY_AMY)
             .withNote(VALID_NOTE_AMY).withPhoto(VALID_PHOTO_AMY).withTags
-            (VALID_TAG_FRIEND).withToAddRel(VALID_REL_COLLEAGUE).build();
+            (VALID_TAG_FRIEND).withToAddRel(VALID_JANE_REL).build();
         //@@author
     }
 
