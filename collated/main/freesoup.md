@@ -35,13 +35,15 @@ public class ExportCommand extends Command {
             + "Parameters: FileName.xml Or FileName.vcf\n"
             + "Example: export sample.xml OR export sample.vcf";
     public static final String MESSAGE_WRONG_FILE_TYPE = "Export only exports .vcf and .xml file.";
-    public static final String MESSAGE_FILE_NOT_FOUND = "File was not found in specified directory.";
     public static final String MESSAGE_EMPTY_BOOK = "No contacts found in Rubrika to export.";
 
     public static final String MESSAGE_SUCCESS = "Successfully exported contacts.";
     public static final String XML_EXTENSION = ".xml";
     public static final String VCF_EXTENSION = ".vcf";
+
     public final String filePath;
+
+    private final Logger logger = LogsCenter.getLogger(ExportCommand.class);
 
     public ExportCommand(String path) {
         this.filePath = path;
@@ -57,16 +59,38 @@ public class ExportCommand extends Command {
         }
         try {
             if (export.getName().endsWith(XML_EXTENSION)) {
-                XmlSerializableAddressBook xmlAddressBook = new XmlSerializableAddressBook(addressBook);
-                export.createNewFile();
-                XmlFileStorage.saveDataToFile(export, xmlAddressBook);
+                createXmlFile(export, addressBook);
             } else if (export.getName().endsWith(VCF_EXTENSION)) {
-                VcfExport.saveDataToFile(export, addressBook.getPersonList());
+                createVcfFile(export, addressBook);
             }
         } catch (IOException ioe) {
             assert false : "The file should have been created and writable";
         }
         return new CommandResult(MESSAGE_SUCCESS);
+    }
+
+    /**
+     * Creates a .vcf File that contains contacts in addressBook.
+     * @param export the file to be created and exported to.
+     * @param addressBook containing list of contacts to be exported
+     * @throws IOException if export was not found.
+     */
+    private void createVcfFile(File export, ReadOnlyAddressBook addressBook) throws IOException {
+        logger.info("Attempting to write to data file: " + export.getPath());
+        VcfExport.saveDataToFile(export, addressBook.getPersonList());
+    }
+
+    /**
+     * Creates a .xml File that contains contacts in addressBook.
+     * @param export the file to be created and exported to.
+     * @param addressBook containing list of contacts to be exported.
+     * @throws IOException if export was not found.
+     */
+    private void createXmlFile(File export, ReadOnlyAddressBook addressBook) throws IOException {
+        logger.info("Attempting to write to data file: " + export.getPath());
+        XmlSerializableAddressBook xmlAddressBook = new XmlSerializableAddressBook(addressBook);
+        export.createNewFile();
+        XmlFileStorage.saveDataToFile(export, xmlAddressBook);
     }
 
     @Override
@@ -95,6 +119,8 @@ public class ImportCommand extends UndoableCommand {
     public static final String MESSAGE_FILE_CORRUPT = "File is corrupted. Please check.";
     public static final String MESSAGE_FILE_NOT_FOUND = "File was not found in specified directory.";
     public static final String MESSAGE_IMPORT_CANCELLED = "Import cancelled";
+    public static final String MESSAGE_FILE_INVALID = "File might not have been exported from Rubrika"
+            + " and contains missing fields.";
     public static final String XML_EXTENSION = ".xml";
     public static final String VCF_EXTENSION = ".vcf";
 
@@ -283,6 +309,8 @@ public class ExportCommandParser implements Parser<ExportCommand> {
  */
 public class ImportCommandParser implements Parser<ImportCommand> {
 
+    private final Logger logger = LogsCenter.getLogger(ImportCommandParser.class);
+
     @Override
     public ImportCommand parse(String userInput) throws ParseException {
         File file;
@@ -310,6 +338,8 @@ public class ImportCommandParser implements Parser<ImportCommand> {
      */
     private ImportCommand importByVcf(File file) throws ParseException {
         try {
+
+            logger.info("Attempting to read data from file: " + file.getPath());
             List<ReadOnlyPerson> importList = VcfImport.getPersonList(file);
 
             return new ImportCommand(importList);
@@ -317,6 +347,8 @@ public class ImportCommandParser implements Parser<ImportCommand> {
             throw new ParseException(ImportCommand.MESSAGE_FILE_CORRUPT);
         } catch (IOException ioe) {
             throw new ParseException(ImportCommand.MESSAGE_FILE_NOT_FOUND);
+        } catch (NullPointerException npe) {
+            throw new ParseException(ImportCommand.MESSAGE_FILE_INVALID);
         }
     }
 
@@ -328,6 +360,8 @@ public class ImportCommandParser implements Parser<ImportCommand> {
      */
     private ImportCommand importByXml(File file) throws ParseException {
         try {
+
+            logger.info("Attempting to read data from file: " + file.getPath());
             ReadOnlyAddressBook importingBook = XmlFileStorage.loadDataFromSaveFile(file);
             List<ReadOnlyPerson> importList = importingBook.getPersonList();
 
@@ -557,14 +591,11 @@ public class FileWrapper {
  * Parses a list of {@code ReadOnlyPerson} into a .vcf file.
  */
 public class VcfExport {
-    private static final Logger logger = LogsCenter.getLogger(VcfExport.class);
-
     /**
      * Parses a .vcf file into a list of {@code ReadOnlyPerson}.
      * Throws a IOException if file is not found.
      */
     public static void saveDataToFile(File file, List<ReadOnlyPerson> list) throws IOException {
-        logger.fine("Attempting to write to data file: " + file.getPath());
         BufferedWriter bw = new BufferedWriter(new FileWriter(file));
 
         for (ReadOnlyPerson person : list) {
@@ -600,10 +631,8 @@ public class VcfExport {
  * Parses a .vcf file into a list of {@code ReadOnlyPerson}.
  */
 public class VcfImport {
-    private static final Logger logger = LogsCenter.getLogger(VcfImport.class);
 
     public static List<ReadOnlyPerson> getPersonList(File file) throws IOException, IllegalValueException {
-        logger.fine("Attempting to read data from file: " + file.getPath());
         BufferedReader br = new BufferedReader(
                 new InputStreamReader(new FileInputStream(file)));
         String newLine = br.readLine();

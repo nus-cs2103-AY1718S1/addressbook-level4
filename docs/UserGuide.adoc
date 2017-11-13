@@ -210,9 +210,11 @@ Deletes the 1st person in the results of the `find` command.
 
 [NOTE]
 Remove Tag command available since v1.1 +
-Option to remove a tag for selected people since V1.2
+Option to remove a tag for selected people available since V1.2
 
 If you want to remove a certain tag from the address book or from a specific person in your addressbook, you can use the removetag function to perform this action. +
+
+Format: `removetag all TAGNAME` OR `removetag INDEX TAGNAME`
 
 To do so simply follow these steps
 
@@ -235,13 +237,11 @@ The `TAG` that you have given should now be removed from the addressbook or from
 
 Do take note that:
 ****
-* The tag must exist in any person.
-* `INDEX` must be a positive integer
+* The tag *must exist* in any person.
+* `INDEX` *must be a positive integer*. e.g 1,2,3.
 * `INDEX` of the person refers to his/her `INDEX` in the list displayed.
 * `removetag` is an undoable command, and you can restore your deleted tags.
 ****
-
-Format: `removetag all TAGNAME` OR `removetag INDEX TAGNAME`
 
 Examples:
 
@@ -264,7 +264,11 @@ Sort feature available since v1.3
 
 To help keep your contact list in an organise manner, you can choose to rearrange your contacts in a specified order. +
 
-Currently, Rubrika allows you to list your clients by your client's name, email or phone in ascending or descending order.
+Format: `sort FIELD ORDER` +
+
+Currently, Rubrika allows you to list your clients by `FIELD` (*name, email or phone*) following an `ORDER` (*[asc]* ascending, *[dsc]* descending). +
+
+To re-arrange your contact list follow these steps.
 
 . Type `sort` followed by the `FIELD` followed by the `ORDER` that you wish to list your contacts. An example is shown below.
 +
@@ -280,12 +284,10 @@ Your list of contacts should now be displayed in the specified order based on yo
 
 Do take note that:
 ****
-* The available `FIELD` are name, email or phone.
-* The available `ORDER` are be asc (ascending) or dsc (descending)
+* The available `FIELD` are *name, email or phone*.
+* The available `ORDER` are be *asc* (ascending) or *dsc* (descending)
 * Sort is not an undoable command.
 ****
-
-Format: `sort FIELD ORDER` +
 
 Examples:
 
@@ -336,8 +338,10 @@ Import feature available since v1.4.
 
 To help you add your contacts from a pre-existing list of contact, you can choose to use the import function of Rubrika to automate the process.
 
+Format: `import` or `import FILENAME`
+
 [NOTE]
-Currently the import feature only supports vCards and XML files exported by Rubrika. +
+Currently the import feature *only supports* vCards and XML files exported by Rubrika. +
 To create the export file, please refer to link:#export[Exporting Contacts]
 
 . Type `import` into your command box. The following window will appear.
@@ -366,10 +370,8 @@ Do take note that:
 ****
 
 [TIP]
-You may choose to skip the file selection process if you place the export file directly in the same folder as your Rubrika application. +
+You may choose to skip the file selection process if you place the export file *directly in the same folder* as your Rubrika application. +
 You can do so by typing `import FILENAME`. +
-
-Format: `import FILENAME` or `import`
 
 Examples:
 
@@ -389,6 +391,8 @@ Imports the sample.xml file found in the root folder.
 Export feature available since v1.4. +
 
 If you wish to export your contacts in your Rubrika to add to another Rubrika application, you can use the export function of Rubrika.
+
+Format: `export FILENAME` +
 
 [NOTE]
 Currently, Rubrika's export feature only support vCards or XML files. +
@@ -414,8 +418,6 @@ _Figure 4.11.2 : Save location of the export file_
 [TIP]
 You may use use an absolute path of a folder if you want to save your export to a separate folder. +
 For e.g `export C:\Users\(username)\Desktop\output.vcf`
-
-Format: `export FILENAME`
 
 Examples:
 

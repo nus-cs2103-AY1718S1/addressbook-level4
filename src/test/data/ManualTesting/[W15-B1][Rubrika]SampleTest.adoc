@@ -1,5 +1,249 @@
 = Manual Testing Script
 
+== Testing : Sort feature
+
+=== Sorting the whole address book.
+
+_Test:_ +
+Enter `sort name asc` and then press `ENTER`.
+
+_Result_ +
+Success Message Shown : "List has been sorted". +
+AddressBook should now be sorted based on name in ascending order.
+
+=== Sorting a list of contact after a findtag command.
+
+_Test:_ +
+Enter `findtag prospective` and press `ENTER`
+Enter `sort phone dsc` and press `ENTER`
+
+_Result_ +
+Success Message Shown : "List has been sorted". +
+AddressBook should now show a list of person with prospective tags sorted based on their phone numbers in descending order.
+
+=== Sorting a list of contact after a find command
+
+_Test:_ +
+Enter `find John` and press `ENTER`
+Enter `sort email asc` and press `ENTER`
+
+_Result:_ +
+Success Message Shown : "List has been sorted." +
+AddressBook should now show a list of person named John, sorted based on their email in ascending order.
+
+=== Sorting a list does not change the original order
+
+_Test:_ +
+Enter `sort phone asd`
+Enter `list`
+
+_Result:_ +
+Success Message Shown : "Listed all persons" +
+AddressBook should now show the original ordering of the contacts in addressbook.
+
+=== Invalid sort commands
+
+_Test:_ +
+Enter `sort phone asd`
+
+_Result:_ +
+Failure Message Shown : "Invalid command format." +
+AddressBook should not change.
+
+_Test:_ +
+Enter `sort qwe asc`
+
+_Result:_ +
+Failure Message Shown : "Invalid command format." +
+AddressBook should not change.
+
+== Testing : Removetag feature
+
+=== Remove tag from specific person.
+_Test:_ +
+Enter `find Lydia` +
+Enter `removetag 1 Plan4`
+
+_Result:_ +
+Failure Message Shown : "Tag Removed" +
+Plan4 Tag has been removed from Lydia Bunz.
+
+=== Undo Remove tag from specific person.
+_Test:_ +
+Enter `undo`
+
+_Result:_ +
+Failure Message Shown : "Undo Success" +
+AddressBook shows full list again +
+Plan4 Tag has been returned to Lydia Bunz.
+
+=== Remove tag from whole addressbook.
+
+_Test:_ +
+Enter `removetag all important`
+
+_Result:_ +
+Failure Message Shown : "Tag Removed" +
+`important` tag has been removed from addressbook.
+
+=== Undo Remove tag from all person.
+_Test:_ +
+Enter `undo`
+
+_Result:_ +
+Failure Message Shown : "Undo Success" +
+AddressBook shows full list again +
+`important` tag has been returned to all its original owners.
+
+=== Incorrect RemoveTag Commands
+
+==== Invalid Index
+_Test:_ +
+Enter `removetag 99 important`
+
+_Result_ +
+Failure Message Shown : "The person index provided is invalid" +
+Addressbook unchanged.
+
+==== Negative Index
+
+_Test:_ +
+Enter `removetag -5 important`
+
+_Result_ +
+Failure Message Shown : "Invalid command format!" +
+Addressbook unchanged.
+
+==== Non-existant tags
+_Test:_ +
+Enter `list`
+Enter `removetag 1 friends`
+
+_Result_ +
+Failure Message Shown : "Index 1 does not have the given tag." +
+Addressbook unchanged.
+
+_Test:_ +
+Enter `list`
+Enter `removetag all friends`
+
+_Result_ +
+Failure Message Shown : "Tag given does not exist in address book." +
+Addressbook unchanged.
+
+==== More than one tag
+_Test:_ +
+Enter `removetag all prospective Plan4
+
+_Result_ +
+Failure Message Shown : "Invalid command format! Please type one TAG to be removed" +
+Addressbook unchanged.
+
+
+== Testing : Import/Export feature
+
+=== Export
+_Test:_ +
+Enter `export output.xml`
+
+_Result_ +
+Success Message Shown : "Successfully exported contacts." +
+`output.xml` file created a root folder containing contacts of Rubrika.
+Addressbook unchanged.
+
+_Test:_ +
+Enter `export output.vcf`
+
+_Result_ +
+Success Message Shown : "Successfully exported contacts." +
+`output.vcf` file created a root folder containing contacts of Rubrika.
+Addressbook unchanged.
+
+=== Import
+_Test:_ +
+Enter `clear` +
+Enter `import output.vcf`
+
+_Result_ +
+Success Message Shown : "Successfully imported contacts. 0 duplicates were found" +
+Addressbook contains list of contacts found in import file.
+
+_Test:_ +
+Enter `clear` +
+Enter `import output.vcf`
+
+_Result_ +
+Success Message Shown : "Successfully imported contacts. 0 duplicates were found" +
+Addressbook contains list of contacts found in import file.
+
+_Test:_ +
+Enter `clear` +
+Enter `import` +
+Select either output.xml or output.vcf created earlier in the Explorer, and select `Open`.
+
+_Result_ +
+Success Message Shown : "Successfully imported contacts. 0 duplicates were found" +
+Addressbook contains list of contacts found in import file.
+
+_Test:_ +
+Enter `delete 1` +
+Enter `delete 1` +
+Enter `delete 1` +
+Enter `delete 1` +
+Enter `delete 1` +
+Enter `import output.xml`
+
+_Result_ +
+Success Message Shown : "Successfully imported contacts. 21 duplicates were found" +
+Addressbook contains list of contacts found in import file.
+
+=== Invalid Import/Export commands
+
+==== No file type
+
+_Test:_ +
+Enter `export output`
+
+_Result_ +
+Failure Message Shown : "Export only exports .vcf and .xml file." +
+Addressbook unchanged.
+
+_Test:_ +
+Enter `import output`
+
+_Result_ +
+Failure Message Shown : "File chosen is not of .vcf or .xml type" +
+Addressbook unchanged.
+
+==== File does not exist.
+
+_Test:_ +
+Enter `import asd.xml`
+
+_Result_ +
+Failure Message Shown : "File was not found in specified directory." +
+Addressbook unchanged.
+
+==== Exporting Empty AddressBook.
+
+_Test:_ +
+Enter `clear` +
+Enter `import asd.xml`
+
+_Result_ +
+Failure Message Shown : "No contacts found in Rubrika to export." +
+Addressbook unchanged.
+
+==== Cancelling Import Window.
+
+_Test:_ +
+Enter `import` +
+Close the import window
+
+_Result_ +
+Failure Message Shown : "Import cancelled" +
+Addressbook unchanged.
+
 == Testing : ChangeTheme feature
 
 === Theme Command

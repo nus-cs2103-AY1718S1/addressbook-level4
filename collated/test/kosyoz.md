@@ -270,12 +270,12 @@ public class ChangeThemeCommandParserTest {
     }
     @Test
     public void parse_invalidArg_throwParseException() {
-        assertParseFailure(parser, "YellowTheme", String.format(MESSAGE_THEME_NOT_FOUND));
+        assertParseFailure(parser, "YellowTheme", MESSAGE_THEME_NOT_FOUND);
     }
     @Test
     public void parse_validArg_returnsChangeThemeCommand() {
-        ChangeThemeCommand expectecChangeThemeCommand = new ChangeThemeCommand("RedTheme");
-        assertParseSuccess(parser, "RedTheme", expectecChangeThemeCommand);
+        ChangeThemeCommand expectedChangeThemeCommand = new ChangeThemeCommand("RedTheme");
+        assertParseSuccess(parser, "RedTheme", expectedChangeThemeCommand);
     }
 
 }

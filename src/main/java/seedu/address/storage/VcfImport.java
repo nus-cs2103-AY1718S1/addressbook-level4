@@ -9,9 +9,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.logging.Logger;
 
-import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
@@ -27,10 +25,8 @@ import seedu.address.model.tag.Tag;
  * Parses a .vcf file into a list of {@code ReadOnlyPerson}.
  */
 public class VcfImport {
-    private static final Logger logger = LogsCenter.getLogger(VcfImport.class);
 
     public static List<ReadOnlyPerson> getPersonList(File file) throws IOException, IllegalValueException {
-        logger.fine("Attempting to read data from file: " + file.getPath());
         BufferedReader br = new BufferedReader(
                 new InputStreamReader(new FileInputStream(file)));
         String newLine = br.readLine();
