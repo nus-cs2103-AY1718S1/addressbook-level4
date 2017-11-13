@@ -54,3 +54,114 @@ Expected result: Address book repopulated with all persons and events.
 Input: `redo`, `undo`
 
 Expected result: Address book is cleared again, then repopulated again.
+
+=== Test - CheckSchedule command
+
+Input: `checkschedule`
+
+Expected result:
+
+* A Calendar view is shown in the main window
+* The date and time headers are correct to the current week
+* Each event pane corresponds to an existing event
+* Upon clicking "last page" and "next page", it shows the last week and next
+week's event respectively
+
+Input: `eventadd n/test t/17/11/2017 1100-1200 d/This is a test p/7`
+
+Expected result:
+
+* The event, if successfully added, should be scheduled in the calendar
+
+Input: `eventedit 1 t/16/11/2017 1100-1200`
+
+Expected result:
+
+* The new event, if successfully edited, should reflect the change correctly in
+the
+calendar
+
+Input: `eventedit 1 n/test2`
+
+Expected result:
+
+* The new event, if successfully edited, should reflect the change correctly in
+the
+calendar
+
+Input: `eventedit 1 d/new description`
+
+Expected result:
+
+* The new event, if successfully edited, should reflect the change correctly in
+the
+calendar
+
+Input: `eventedit 1 p/3`
+
+Expected result:
+
+* The new event, if successfully edited, should reflect the change correctly in
+the
+calendar
+
+Input: `eventdelete 1`
+
+Expected result:
+
+* The event, if successfully deleted, should be deleted from the calendar as
+well
+
+=== Test - UpdatePhoto command
+
+Input: `updatephoto 1` and then choose an image file from your local
+directory (must be jpg/png/jpeg file)
+
+Expected behavior:
+
+* After selecting an image file, the person identified by the index should
+have his/her photo changed to the selected image.
+
+=== Test - "Import Photo" button
+
+Input: Click on any person in the person list, and on the detail page that
+shows up, click the "import photo" button, and then choose an image file from
+your local directory (must be jpg/png/jpeg file)
+
+Expected behavior:
+
+* After selecting an image file, the person should
+have his/her photo changed to the selected image.
+
+=== Test - "Repeat" command
+
+Input: `repeat 1 10`
+
+Expected behavior:
+
+* The event identified by the index should have its `repeat period` changed
+to 10
+
+=== Test - recurring event scheduling
+
+Input: `eventadd n/test t/13/11/2017 1100-1200 d/This is a test p/7`
+
+Expected behavior:
+
+* Two events will be added: one on 13/11/2017, another one on 20/11/2017
+
+Input: `eventedit [index of the previously added event] t/12/11/2017
+1100-1200`
+
+Expected behavior:
+
+* Two events will be added: one on 12/11/2017, another one on 19/11/2017
+
+Input: `eventedit [index of the previously edited event] p/6`
+
+Expected behavior:
+
+* A new events will be added: on 18/11/2017
+
+
+
