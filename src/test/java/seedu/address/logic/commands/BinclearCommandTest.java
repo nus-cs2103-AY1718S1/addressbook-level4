@@ -27,7 +27,7 @@ public class BinclearCommandTest {
     }
 
     /**
-     * Generates a new {@code ClearCommand} which upon execution, clears the contents in {@code model}.
+     * Generates a new {@code BinclearCommand} which upon execution, clears the contents in bin in {@code model}.
      */
     private BinclearCommand prepareCommand(Model model) {
         BinclearCommand command = new BinclearCommand();

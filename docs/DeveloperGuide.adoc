@@ -97,7 +97,7 @@ When you are ready to start coding,
 === Architecture
 
 image::Architecture.png[width="600"]
-_Figure 2.1.1 : Architecture Diagram_
+_Figure 3.1.1 : Architecture Diagram_
 
 The *_Architecture Diagram_* given above explains the high-level design of the App. Given below is a quick overview of each component.
 
@@ -129,7 +129,7 @@ Each of the four components
 For example, the `Logic` component (see the class diagram given below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
 
 image::LogicClassDiagram.png[width="800"]
-_Figure 2.1.2 : Class Diagram of the Logic Component_
+_Figure 3.1.2 : Class Diagram of the Logic Component_
 
 [discrete]
 ==== Events-Driven nature of the design
@@ -137,7 +137,7 @@ _Figure 2.1.2 : Class Diagram of the Logic Component_
 The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
 
 image::SDforDeletePerson.png[width="800"]
-_Figure 2.1.3a : Component interactions for `delete 1` command (part 1)_
+_Figure 3.1.3a : Component interactions for `delete 1` command (part 1)_
 
 [NOTE]
 Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
@@ -145,7 +145,7 @@ Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address 
 The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
 image::SDforDeletePersonEventHandling.png[width="800"]
-_Figure 2.1.3b : Component interactions for `delete 1` command (part 2)_
+_Figure 3.1.3b : Component interactions for `delete 1` command (part 2)_
 
 [NOTE]
 Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
@@ -155,7 +155,7 @@ The sections below give more details of each component.
 === UI component
 
 image::UiClassDiagram.png[width="800"]
-_Figure 2.2.1 : Structure of the UI Component_
+_Figure 3.2.1 : Structure of the UI Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
@@ -172,10 +172,10 @@ The `UI` component,
 === Logic component
 
 image::LogicClassDiagram.png[width="800"]
-_Figure 2.3.1 : Structure of the Logic Component_
+_Figure 3.3.1 : Structure of the Logic Component_
 
 image::LogicCommandClassDiagram.png[width="800"]
-_Figure 2.3.2 : Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in Figure 2.3.1_
+_Figure 3.3.2 : Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in Figure 3.3.1_
 
 *API* :
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
@@ -188,12 +188,12 @@ link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
 
 image::DeletePersonSdForLogic.png[width="800"]
-_Figure 2.3.1 : Interactions Inside the Logic Component for the `delete 1` Command_
+_Figure 3.3.3 : Interactions Inside the Logic Component for the `delete 1` Command_
 
 === Model component
 
 image::ModelClassDiagram.png[width="800"]
-_Figure 2.4.1 : Structure of the Model Component_
+_Figure 3.4.1 : Structure of the Model Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
@@ -207,7 +207,7 @@ The `Model`,
 === Storage component
 
 image::StorageClassDiagram.png[width="800"]
-_Figure 2.5.1 : Structure of the Storage Component_
+_Figure 3.5.1 : Structure of the Storage Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 
@@ -234,6 +234,7 @@ You are only allowed to search by `Name`, `Phone`, `Email` or `Address`. Searchi
 The following diagram shows the inheritance diagram for Find command:
 
 image::LogicCommandClassDiagram.png[width="800"]
+_Figure 4.1.1 : Structure of Find Command in the Logic Component_
 
 When you are using the find command, you need to provided at least one keyword for any available attribute. Keywords of the same attribute need to be grouped together with a prefix (e.g. `n/`, `p/`, `e/`, `a/`). In this case, each prefix is allowed to appear at most once.
 
@@ -295,6 +296,7 @@ model.updateFilteredPersonList(updatedPredicate);
 The following sequence diagram shows how the find command works:
 
 image::FindCommandSequenceDiagram.png[width="800"]
+_Figure 4.1.2 : Interactions Inside the Logic Component for the `find n/john p/1234 e/example.com` Command_
 
 [NOTE]
 If no argument is provided after the command word, an invalid format message will be shown.
@@ -336,6 +338,7 @@ You are not allowed to find the locations of multiple persons by using this feat
 The following diagram shows the inheritance diagram for the Map commands:
 
 image::MapCommandClassDiagram.png[width="800"]
+_Figure 4.2.1 : Structure of Map Commands in the Logic Component_
 
 When you are using the map-show `(m-show)` command, you need to specify the index number of the person whom you would like to see the location of. As for the map-route `(m-route)` command, apart from specifying the index number, you also need to add a prefix `a/` before you enter your current location. The prefix should appear only once.
 
@@ -437,8 +440,10 @@ private  void handleBrowserPanelFindRouteEvent(BrowserPanelFindRouteEvent event)
 The following sequence diagrams show you how the Map commands work:
 
 image::MapShowCommandSequenceDiagram.png[width="800"]
+_Figure 4.2.2 : Interactions Inside the Logic Component for the `m-show 1` Command_
 
 image::MapRouteCommandSequenceDiagram.png[width="800"]
+_Figure 4.2.3 : Interactions Inside the Logic Component for the `m-route 1 a/nus` Command_
 
 [NOTE]
 If no argument is provided after the command word, an invalid format message will be shown.
@@ -472,6 +477,7 @@ When you are executing the birthday related commands, only one person is allowed
 The following diagram shows the inheritance diagram for Birthday commands:
 
 image::BirthdayCommandClassDiagram.png[width="800"]
+_Figure 4.3.1 : Structure of Birthday Commands in the Logic Component_
 
 During the implementation, birthday commands parser classes extracts the index number of the person as well as birthday value, and passes them to the corresponding birthday classes. The default birthday value of each person is `01/01/1900`. To add birthday to a person, we actually updated the person's birthday with the new birthday value. To delete a person's birthday, we just update the person's birthday and set it as default value. Updating a person's birthday is similar to adding birthday to the person. The two functions are the same in implementation.
 
@@ -535,8 +541,10 @@ List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 The following sequence diagrams show you how the birthday commands work:
 
 image::BirthdayAddCommandSequenceDiagram.png[width="800"]
+_Figure 4.3.2 : Interactions Inside the Logic Component for the `b-add 1 01/01/2000` Command_
 
 image::BirthdayRemoveCommandSequenceDiagram.png[width="800"]
+_Figure 4.3.3 : Interactions Inside the Logic Component for the `b-remove 1` Command_
 
 [NOTE]
 If no argument is provided after the command word, an invalid format message will be shown.
@@ -568,6 +576,7 @@ The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides insi
 `UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
 
 image::LogicCommandClassDiagram.png[width="800"]
+_Figure 4.4.1 : Structure of Undo/Redo Command in the Logic Component_
 
 As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
 
@@ -607,10 +616,12 @@ Suppose that the user has just launched the application. The `UndoRedoStack` wil
 The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
 
 image::UndoRedoStartingStackDiagram.png[width="800"]
+_Figure 4.4.2a : UndoRedoStack Typing Delete Command_
 
 As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person.
 
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
+_Figure 4.4.2b : UndoRedoStack Typing Add Command_
 
 [NOTE]
 If a command fails its execution, it will not be pushed to the `UndoRedoStack` at all.
@@ -620,6 +631,7 @@ The user now decides that adding the person was a mistake, and decides to undo t
 We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed.
 
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
+_Figure 4.4.2c : UndoRedoStack Typing Undo Command_
 
 [NOTE]
 If the `undoStack` is empty, then there are no other commands left to be undone, and an `Exception` will be thrown when popping the `undoStack`.
@@ -627,6 +639,7 @@ If the `undoStack` is empty, then there are no other commands left to be undone,
 The following sequence diagram shows how the undo operation works:
 
 image::UndoRedoSequenceDiagram.png[width="800"]
+_Figure 4.4.3 : Interactions Inside the Logic Component for the `undo` Command_
 
 The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
 
@@ -636,14 +649,17 @@ If the `redoStack` is empty, then there are no other commands left to be redone,
 The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow).
 
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
+_Figure 4.4.4a : UndoRedoStack Typing Redo Command_
 
 Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution:
 
 image::UndoRedoNewCommand3StackDiagram.png[width="800"]
+_Figure 4.4.4b : UndoRedoStack Typing List Command_
 
 The following activity diagram summarize what happens inside the `UndoRedoStack` when a user executes a new command:
 
 image::UndoRedoActivityDiagram.png[width="200"]
+_Figure 4.4.5 : UndoRedoStack Entering New Commands_
 
 ==== Design Considerations
 
@@ -699,6 +715,7 @@ The `PREFIX` can be any of the following: `n/` for sorting persons by name, `p/`
 Upon execution of `SortCommand`, a `Comparator<ReadOnlyPerson>` will be initialised based on the sort type and sort order it receives. A `sortPerson` function call will be made to `Model`, which propagates down to `UniquePersonList`, where the sorting of the `internalList` occurs. Since sorting of `internalList` results in the change of state to address book, `SortCommand` is to be implemented as an `UndoableCommand`.
 
 image::LogicCommandClassDiagram_Sort.png[width="800"]
+_Figure 4.5.1 : Structure of Sort Command in the Logic Component_
 
 [NOTE]
 Implementation of Sorting Mechanism requires both the manipulation of `Logic` and `Model` component of address book.
@@ -706,6 +723,7 @@ Implementation of Sorting Mechanism requires both the manipulation of `Logic` an
 The following sequence diagram shows the flow of operation from the point the address book receives an input to the output of the result.
 
 image::SortPersonSdForLogic.png[width="800"]
+_Figure 4.5.2 : Interactions Inside the Logic Component for the `sort n/asc` Command_
 
 [NOTE]
 If the list is found to be empty, an `EmptyListException` will be thrown from `UniquePersonList`. The command should be terminated without any state change, keeping the redoStack clean of changes.
@@ -838,6 +856,7 @@ Adding a tag to multiple people is facilitated by `TagAddCommand`, which extends
 The following sequence diagram shows the flow of operation from the point the address book receives an input to the output of the result.
 
 image::TagAddCommandSequenceDiagram.png[width="800"]
+_Figure 4.6.1 : Interactions Inside the Logic Component for the `t-add 1 2 CS2103` Command_
 
 TagAddCommand is implemented in this way:
 [source,java]
@@ -928,6 +947,7 @@ You can remove a tag from multiple people. This is realized using `TagRemoveComm
 The following sequence diagram shows the flow of operation from the point the address book receives an input to the output of the result.
 
 image::TagRemoveCommandSequenceDiagram.png[width="800"]
+_Figure 4.7.1 : Interactions Inside the Logic Component for the `t-remove CS2103` Command_
 
 TagRemoveCommand is implemented in this way:
 [source,java]
@@ -999,6 +1019,7 @@ You can find out person(s) with the given `tagName`. This is realized using `Tag
 The following sequence diagram shows the flow of operation from the point the address book receives an input to the output of the result.
 
 image::TagFindCommandSequenceDiagram.png[width="800"]
+_Figure 4.8.1 : Interactions Inside the Logic Component for the `t-find CS2103` Command_
 
 `t-find` command shows all person(s) with tag containing or contained in the given `tagName`. TagFindCommandParser passes a TagMatchingKeywordPredicate to TagFindCommand to update filteredPersonList.
 //end::tagfind[]
@@ -1017,14 +1038,17 @@ If you only key in `theme`, an error message suggesting the use of this command 
 You can just key in the index of your theme of choice instead of the words. +
 
 image::SwitchThemeCommandErrorMessage.png[width="500"]
+_Figure 4.9.1a : Theme Command Typing Valid Index Number_
 
 If you key in an invalid index, an error message suggesting invalid index will be shown in the `result box`.
 
 image::SwitchThemeCommandInvalidIndex.png[width="300"]
+_Figure 4.9.1b : Theme Command Typing Invalid Index Number_
 
 If you key in an unknown theme word, an error message suggesting unknown theme word will be shown in the `result box`.
 
 image::SwitchThemeCommandInvalidWord.png[width="300"]
+_Figure 4.9.1c : Theme Command Typing Invalid Theme Name_
 
 The `SwitchThemeParser` returns `SwitchThemeCommand` after execution, which will be further processed by `logic` component.
 
@@ -1047,6 +1071,7 @@ We have improved the delete command to let it be able to delete by multiple inde
 The following sequence diagram shows how the delete command works:
 
 image::DeleteCommandSequenceDiagram.png[width="800"]
+_Figure 4.10.1 : Interactions Inside the Logic Component for the `delete I/1` Command_
 
 You can see that the way we implemented this is to change the DeleteCommandParser and DeleteCommand.
 
@@ -1147,6 +1172,7 @@ The way we do it is to make the help command paser to identify the command word 
 The following sequence diagram shows how help command works:
 
 image::HelpCommandSequenceDiagram.png[width="800"]
+_Figure 4.11.1 : Interactions Inside the Logic Component for the `help add` Command_
 
 For example, you can see the implementation of the help command parser as follow:
 [source,java]
@@ -1212,6 +1238,7 @@ We are using 'java.io.File' and 'java.io.FileWriter' to export address book data
 The following sequence diagram shows how export command works:
 
 image::ExportCommandSequenceDiagram.png[width="800"]
+_Figure 4.13.1 : Interactions Inside the Logic Component for the `export path` Command_
 
 * The filepath should be a complete path to a specific location of a empty txt file in your computer.
 * The order of the output information is 'person', 'event';
@@ -1266,7 +1293,7 @@ Here are the steps to convert the project documentation files to PDF format.
 .  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For best results, use the settings indicated in the screenshot below.
 
 image::chrome_save_as_pdf.png[width="300"]
-_Figure 5.6.1 : Saving documentation as PDF files in Chrome_
+_Figure 5.3.1 : Saving documentation as PDF files in Chrome_
 
 == Testing
 

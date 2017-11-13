@@ -61,6 +61,7 @@ public class BrowserPanelTest extends GuiUnitTest {
         assertEquals(expectedPersonUrl, browserPanelHandle.getLoadedUrl());
     }
 
+    //@@author dalessr
     @Test
     public void displayLocation() throws Exception {
         // default web page
