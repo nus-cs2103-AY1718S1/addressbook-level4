@@ -109,8 +109,8 @@ public class InsuranceProfilePanel extends UiPart<Region> {
      * @param insurance
      */
     private void initializeContractFile(ReadOnlyInsurance insurance) {
-        insuranceFile =  new File(PDF_FOLDER_PATH + insurance.getContractFileName() +
-                (insurance.getContractFileName().toString().contains(PDF_EXTENSION) ? "" : PDF_EXTENSION));
+        insuranceFile =  new File(PDF_FOLDER_PATH + insurance.getContractFileName()
+                + (insurance.getContractFileName().toString().endsWith(PDF_EXTENSION) ? "" : PDF_EXTENSION));
 
         if (isFileExists(insuranceFile)) {
             activateLinkToInsuranceFile();
