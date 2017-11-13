@@ -147,7 +147,7 @@ public class ClearBookmarkCommandTest {
     @Test
     public void parseIndexPosition_outOfRangeInput_throwsIllegalValueException() throws Exception {
         thrown.expect(IllegalValueException.class);
-        thrown.expectMessage(MESSAGE_INVALID_INDEX);
+        thrown.expectMessage(MESSAGE_REQUIRED_TWO_INDEX);
         ParserUtil.parseIndexFromPosition(" 0 1 2 3 4", 5);
     }
 ```

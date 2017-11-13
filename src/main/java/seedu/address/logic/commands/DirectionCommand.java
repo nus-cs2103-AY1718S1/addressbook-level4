@@ -13,7 +13,7 @@ import seedu.address.ui.MainWindow;
 /**
  * Shows direction from place1 to place2 using their last displayed index in the tourist book
  */
-public class DirCommand extends Command {
+public class DirectionCommand extends Command {
 
     public static final String COMMAND_WORD = "dir";
     public static final String COMMAND_WORD_ALIAS = "Dir";
@@ -32,7 +32,7 @@ public class DirCommand extends Command {
     private final String plus = "+";
     private final String singaporeConcat = "+Singapore+";
 
-    public DirCommand(Index indexFrom, Index indexTo) {
+    public DirectionCommand(Index indexFrom, Index indexTo) {
         this.indexFrom = indexFrom;
         this.indexTo = indexTo;
     }
@@ -42,8 +42,7 @@ public class DirCommand extends Command {
 
         List<ReadOnlyPlace> lastShownList = model.getFilteredPlaceList();
 
-        if (indexFrom.getZeroBased() == indexTo.getZeroBased()
-            || indexFrom.getZeroBased() >= lastShownList.size()
+        if (indexFrom.getZeroBased() >= lastShownList.size()
             || indexTo.getZeroBased() >= lastShownList.size()) {
 
             throw new CommandException(Messages.MESSAGE_INVALID_PLACE_DISPLAYED_INDEX);
@@ -74,7 +73,7 @@ public class DirCommand extends Command {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof DirCommand // instanceof handles nulls
-                && this.indexTo.equals(((DirCommand) other).indexTo)); // state check
+                || (other instanceof DirectionCommand // instanceof handles nulls
+                && this.indexTo.equals(((DirectionCommand) other).indexTo)); // state check
     }
 }

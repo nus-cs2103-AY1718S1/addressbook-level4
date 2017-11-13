@@ -5,6 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
+import static seedu.address.logic.parser.ParserUtil.MESSAGE_REQUIRED_TWO_INDEX;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PLACE;
 
 import java.util.Arrays;
@@ -67,7 +68,7 @@ public class ParserUtilTest {
     @Test
     public void parseIndexPosition_outOfRangeInput_throwsIllegalValueException() throws Exception {
         thrown.expect(IllegalValueException.class);
-        thrown.expectMessage(MESSAGE_INVALID_INDEX);
+        thrown.expectMessage(MESSAGE_REQUIRED_TWO_INDEX);
         ParserUtil.parseIndexFromPosition(" 0 1 2 3 4", 5);
     }
     //@@author

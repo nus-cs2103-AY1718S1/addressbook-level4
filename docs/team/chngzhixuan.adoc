@@ -74,6 +74,17 @@ code data found in the Tourist-Book to help the tourist search for the direction
 
 (Pull request https://github.com/CS2103AUG2017-F09-B2/main/pull/62[#62])
 
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=directionDesign]
+
+#End of Extract#
+
+---
+
 === Enhancement Proposed: Add place attribute : "Description"
 
 Currently, there isn't a short summary on what the various places offer, the tourist would need to select a place and visit
