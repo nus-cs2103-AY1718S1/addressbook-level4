@@ -61,12 +61,12 @@ Expected result: No results for asdkh. Showing results for Kathy instead.
 `Kathy Forest` will be displayed.
 
 [NOTE]
-The suggestion of the closest matching name is just a prediction.If the given name is too ambiguous,
-it will return closest name it can find.
+The suggestion of the closest matching name is just a prediction.If the given name is ambiguous,
+it will return closest mtaching name even though no such name can can be found for such an ambiguous input.
 
 * `find` +
 Expected result:
-Invalid command format!
+Invalid command format! +
 find OR f: Finds all persons whose names contain any of the specified keywords (case-sensitive) and displays them as a
 list with index numbers. Command is case-insensitive. +
 Parameters: KEYWORD [MORE_KEYWORDS]... +
@@ -88,15 +88,11 @@ Expected result: Added Tag: [groupmates]
 +
 First two persons in the list will have the tag [groupmates] added to them.
 
-* `addtag 1 t/cs2103` +
-Expected result: Added Tag: [cs2103]
-+
-First person in the list will have the tag [cs2103] added to him/her.
-
 * `addtag 1 2 t/colleagues` +
 Expected result: Added Tag: [colleagues]
 +
-Only second person in the list will have the tag [colleagues] added to them since the first person already has the tag.
+Only the second person in the list will have the tag [colleagues] added to him/her since the first person in the list
+already has the specified tag.
 
 * `find Kathy` +
 `addtag 1 t/cs2103` +
@@ -110,25 +106,139 @@ Expected result: The person index provided is invalid
 +
 Since the filtered list only contains one person, the index 2 will be out of bounds.
 
-
 * `addtag 21 2 t/cs2103` +
 Expected result: The person index provided is invalid
 
 * `addtag 1 3 t/colleagues` +
 Expected result: This tag already exists in all of the given persons.
 
+* `addtag t/friends` +
+Expected result: Index is not a non-zero unsigned integer.
+
+* `addtag 2` +
+Expected result:
+Invalid command format! +
+addtag OR at: Adds the given tag to the persons identified by the list of index numbers used in the last person
+listing. Command is case-sensitive. +
+Parameters: [INDEX] [MORE INDEXES] (every index must be a positive integer) [t/TAG]... +
+Example 1: addtag 1 2 3 t/friends +
+Example 2: AT 2 5 t/classmate
+
 
 === Remove tags command
 
 Command usage: `removetag INDEX [MORE_INDEXES] [t/TAG]...`
 
+* `removetag 1 3 t/colleagues` +
+Expected result: Removed Tag: [colleagues]
++
+The first and third persons in the list will have the tag [colleagues] remove from them.
+
+* `removetag 1 2 t/colleagues` +
+Expected result: Removed Tag: [colleagues]
++
+Only the first person in the list will have the tag [colleagues] removed from him/her since the second person
+in the list does not have the specified tag.
+
+* `find Kathy` +
+`removetag 1 t/classmates` +
+Expected result: Removed Tag: [classmates]
++
+First person in the filtered list (Kathy Forest) will have the tag [classmates] removed from her.
+
+* `find Kathy` +
+`removetag 1 2 t/classmates` +
+Expected result: The person index provided is invalid
++
+Since the filtered list only contains one person, the index 2 will be out of bounds.
+
+* `removetag 21 2 t/family` +
+Expected result: The person index provided is invalid
+
+* `removetag 2 3 t/friends` +
+Expected result: This tag does not exist in any of the given persons.
+
+* `removetag t/friends` +
+Expected result: Index is not a non-zero unsigned integer.
+
+* `removetag 2` +
+Expected result:
+Invalid command format! +
+removetag OR rt: Removes the given tag from identified person by the list of index numbers used in the last person
+listing. Command is case-sensitive. +
+Parameters: [INDEX] [MORE INDEXES] (every index must be a positive integer) [t/TAG]... +
+Example 1: removetag 1 2 3 t/friends +
+Example 2: RT 2 5 t/classmate
+
 
 === Multiple undo/redo
 
-Command usage: `undomult NUMBER_OF_COMMANDS_TO_UNDO`
+Command usage for multiple undo: `undomult NUMBER_OF_COMMANDS_TO_UNDO` +
+Command usage for multiple redo: `redomult NUMBER_OF_COMMANDS_TO_REDO`
 
+* `removetag 1 3 t/colleagues` +
+`removetag 2 t/family` +
+`undomult 2` +
+Expected result: Undo Success!
++
+2 commands have been undone.
+
+* `removetag 1 3 t/colleagues` +
+`removetag 2 t/family` +
+`undomult 2` +
+`redomult 2` +
+Expected result: Redo Success!
++
+2 commands have been redone.
+
+* `removetag 1 3 t/colleagues` +
+`removetag 2 t/family` +
+`undomult 4` +
+Expected result: There were only 2 commands to undo. Cannot undo 2 more commands!
++
+2 commands have been undone. But no commands can be undone after that.
+
+* `removetag 1 3 t/colleagues` +
+`removetag 2 t/family` +
+`undomult 2` +
+`redomult 4` +
+Expected result: There were only 2 commands to redo. Cannot redo 2 more commands!
++
+2 commands have been redone. But no commands can be redone after that.
+
+* `undomult` +
+Expected result:
+Invalid command format! +
+undo OR u OR undomult: Undo the number of commands identified by the given number. If undo OR u is used, only
+the previous command will be undone. +
+Parameters: NUMBER (must be a positive integer) if undomult is used. +
+Example 1: undo  +
+Example 2: undomult 2
+
+* `redomult` +
+Expected result:
+Invalid command format! +
+redo OR r OR redomult: Redo the number of commands identified by the given number. If redo OR r is used, only
+the previous command will be redone. +
+Parameters: NUMBER (must be a positive integer) if redomult is used. +
+Example 1: redo  +
+Example 2: redomult 3
 
 === Change window size command
 
 Command usage: `ws WINDOWSIZE`
+
+* `ws big` +
+Expected result: Window sized has been changed to: 1600.0 x 1024.0
++
+The window size has been changed to big.
+
+* `ws` +
+Expected result:
+Invalid command format! +
+ws: Changes window size. Command is case insensitive. +
+Parameters: WINDOWSIZE (Allowed sizes are small, med, big) +
+Example 1: ws small +
+Example 2: ws big
+
 
