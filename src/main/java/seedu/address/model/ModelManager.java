@@ -31,6 +31,7 @@ import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.ui.ChangeInternalListEvent;
 import seedu.address.commons.events.ui.DeselectionEvent;
 import seedu.address.commons.events.ui.LoginAppRequestEvent;
+import seedu.address.commons.events.ui.LogoutAppRequestEvent;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.exceptions.UserNotFoundException;
 import seedu.address.logic.Password;
@@ -343,6 +344,7 @@ public class ModelManager extends ComponentManager implements Model {
     public void logout() {
         deselectPerson();
         raise(new LoginAppRequestEvent(false));
+        raise(new LogoutAppRequestEvent(true));
     }
 
     public String getUsernameFromUserPref() {
