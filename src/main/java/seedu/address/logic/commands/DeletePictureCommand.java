@@ -6,6 +6,7 @@ import seedu.address.commons.core.ListObserver;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.exceptions.ProfilePictureNotFoundException;
 
 //@@author jaivigneshvenugopal
 /**
@@ -21,7 +22,7 @@ public class DeletePictureCommand extends UndoableCommand {
             + "Parameters: INDEX (optional, must be a positive integer if present)\n"
             + "Example: " + COMMAND_WORD + " 1";
     public static final String MESSAGE_DELETE_PICTURE_SUCCESS = "%1$s profile picture has been removed!";
-    public static final String MESSAGE_DELPIC_FAILURE = "Unable to remove %1$s profile picture!";
+    public static final String MESSAGE_DELETE_PICTURE_FAILURE = "%1$s does not have a profile picture!";
 
     private final ReadOnlyPerson personToUpdate;
 
@@ -35,7 +36,11 @@ public class DeletePictureCommand extends UndoableCommand {
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-        model.removeProfilePicture(personToUpdate);
+        try {
+            model.removeProfilePicture(personToUpdate);
+        } catch (ProfilePictureNotFoundException e) {
+            throw new CommandException(String.format(MESSAGE_DELETE_PICTURE_FAILURE, personToUpdate.getName()));
+        }
 
         ListObserver.updateCurrentFilteredList(PREDICATE_SHOW_ALL_PERSONS);
         reselectPerson(personToUpdate);
@@ -51,4 +56,5 @@ public class DeletePictureCommand extends UndoableCommand {
                 || (other instanceof DeletePictureCommand // instanceof handles nulls
                 && this.personToUpdate.equals(((DeletePictureCommand) other).personToUpdate));
     }
+
 }
