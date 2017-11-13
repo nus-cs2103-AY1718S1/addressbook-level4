@@ -1,6 +1,7 @@
 //@@author huiyiiih
 package seedu.address.logic.commands;
 
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.exceptions.InvalidSortTypeException;
 
 /**
@@ -22,12 +23,12 @@ public class SortCommand extends UndoableCommand {
     }
 
     @Override
-    public CommandResult executeUndoableCommand() {
+    public CommandResult executeUndoableCommand() throws CommandException {
         try {
             model.sortPersonList(type);
             return new CommandResult(MESSAGE_SUCCESS + type);
         } catch (InvalidSortTypeException iste) {
-            return new CommandResult(MESSAGE_UNKNOWN_SORT_TYPE);
+            throw new CommandException(MESSAGE_UNKNOWN_SORT_TYPE);
         }
     }
 

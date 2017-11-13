@@ -49,41 +49,41 @@ public class SortCommandTest {
 
     // Interaction with model
     @Test
-    public void execute_listIsSorted_showsEverything() {
+    public void execute_listIsSorted_showsEverything() throws Exception {
         SortCommand command = prepareCommand(name);
         assertCommandSuccess(command, model, SortCommand.MESSAGE_SUCCESS + name, expectedModel);
     }
 
     @Test
-    public void execute_nameValue_listSorted() {
+    public void execute_nameValue_listSorted() throws Exception {
         SortCommand command = prepareCommand(name);
         assertSortSuccess(command, SortCommand.MESSAGE_SUCCESS + name, Arrays.asList(ALICE, BENSON, CARL,
             DANIEL, ELLE, FIONA, GEORGE));
     }
 
     @Test
-    public void execute_tagValue_listSorted() {
+    public void execute_tagValue_listSorted() throws Exception {
         SortCommand command = prepareCommand(tag);
         assertSortSuccess(command, SortCommand.MESSAGE_SUCCESS + tag, Arrays.asList(ALICE, CARL, DANIEL,
             ELLE, FIONA, GEORGE, BENSON));
     }
 
     @Test
-    public void execute_positionValue_listSorted() {
+    public void execute_positionValue_listSorted() throws Exception {
         SortCommand command = prepareCommand(position);
         assertSortSuccess(command, SortCommand.MESSAGE_SUCCESS + position, Arrays.asList(ALICE, BENSON, GEORGE,
             ELLE, CARL, DANIEL, FIONA));
     }
 
     @Test
-    public void execute_priorityValue_listSorted() {
+    public void execute_priorityValue_listSorted() throws Exception {
         SortCommand command = prepareCommand(priority);
         assertSortSuccess(command, SortCommand.MESSAGE_SUCCESS + priority, Arrays.asList(BENSON, ELLE,
             ALICE, CARL, DANIEL, FIONA, GEORGE));
     }
 
     @Test
-    public void execute_companyValue_listSorted() {
+    public void execute_companyValue_listSorted() throws Exception {
         SortCommand command = prepareCommand(company);
         assertSortSuccess(command, SortCommand.MESSAGE_SUCCESS + company, Arrays.asList(GEORGE, ELLE, DANIEL, ALICE,
             BENSON, CARL, FIONA));
@@ -128,7 +128,7 @@ public class SortCommandTest {
      * - the {@code AddressBook} in model remains the same after executing the {@code command}
      */
     private void assertSortSuccess(SortCommand command, String expectedMessage, List<ReadOnlyPerson>
-            expectedList) {
+            expectedList) throws Exception {
         CommandResult commandResult = command.executeUndoableCommand();
 
         assertEquals(expectedMessage, commandResult.feedbackToUser);
