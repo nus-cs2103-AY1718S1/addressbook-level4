@@ -266,29 +266,313 @@ Priority can only be Low / Medium / High +
 *Expected Output:* +
 Message error
 
+=== Tag persons
+*Positive Test Case*
+
+`(Valid details)` +
+*Command:* +
+tag 1,2,3 dummyTag
+*Expected Message:* +
+3 persons successfully tagged with [dummyTag]: ...
+
+*Positive Test Case*
+
+`(Valid details)` +
+*Command:* +
+tag 1,4 dummyTag
+*Expected Message:* +
+1 persons successfully tagged with [dummyTag]:
+1 person(s) already have this tag:
+
+*Negative Test Case*
+
+`(Invalid indexes)` +
+*Command:* +
+tag 40,50,60 dummyTag
+*Expected Message:* +
+One or more person indexes provided are invalid.
+
+*Negative Test Case*
+
+`(Indexes not provided)` +
+*Command:* +
+tag ,,,, dummyTag
+*Expected Message:* +
+Please provide one or more indexes!
+tag: Tags one or more persons identified by the index numbers used in the last person listing.
+Parameters: INDEX,[MORE_INDEXES]... (must be positive integers) + TAGNAME
+Example: tag 1,2,3 friends
+
+*Negative Test Case*
+
+`(Missing arguments)` +
+*Command:* +
+tag dummyTag
+*Expected Message:* +
+Invalid command format!
+tag: Tags one or more persons identified by the index numbers used in the last person listing.
+Parameters: INDEX,[MORE_INDEXES]... (must be positive integers) + TAGNAME
+Example: tag 1,2,3 friends
+
+=== Untag persons
+*Positive Test Case*
+
+`(Valid details)` +
+*Command:* +
+untag 1,2,3 friends/enemies
+*Expected Message:* +
+3 person(s) successfully untagged from [enemies], [friends]: ...
+
+*Positive Test Case*
+
+`(Valid details)` +
+*Command:* +
+untag 1,2,3 friends/randomTag
+*Expected Message:* +
+2 person(s) successfully untagged from [randomTag], [friends]: ...
+1 person(s) do not have any of the specified tags:...
+
+*Positive Test Case*
+
+`(Valid details)` +
+*Command:* +
+untag -all friends/enemies
+*Expected Message:* +
+[enemies], [friends] tag(s) successfully removed from person list.
+
+*Positive Test Case*
+
+`(Valid details)` +
+*Command:* +
+untag -all friends/randomTag
+*Expected Message:* +
+[randomTag], [friends] tag(s) successfully removed from person list.
+
+*Positive Test Case*
+
+`(Valid details)` +
+*Command:* +
+untag 1,2,3
+*Expected Message:* +
+3 person(s) sucessfully untagged: ...
+
+*Positive Test Case*
+
+`(Valid details)` +
+*Command:* +
+untag 1,2,3
+*Expected Message:* +
+3 person(s) sucessfully untagged: ...
+
+*Positive Test Case*
+
+`(Valid details)` +
+*Command:* +
+untag -all
+*Expected Message:* +
+All tags in person list successfully removed.
+
+*Negative Test Case*
+
+`(Tags not found)` +
+*Command:* +
+untag 1,2,3 randomTag1/randomTag2
+*Expected Message:* +
+[randomTag1], [randomTag2] tag(s) not found in person list.
+You may want to refer to the following existing tags inside the unfiltered person list: ...
+
+*Negative Test Case*
+
+`(Invalid indexes)` +
+*Command:* +
+untag 40,50,60 friends/enemies
+*Expected Message:* +
+One or more person indexes provided are invalid.
+
+*Negative Test Case*
+
+`(Empty index list)` +
+*Command:* +
+untag ,,,, friends
+*Expected Message:* +
+Please provide one or more indexes!
+untag: Untags one or more persons in the last person listing.
+- Untag all tags of persons identified by the index numbers used
+Parameters: INDEX,[MORE_INDEXES]... (must be positive integers)
+Example: untag 1,2,3
+- Untag one or more tags of persons identified by the index numbers used
+Parameters: INDEX,[MORE_INDEXES]... (must be positive integers) + TAGNAME
+Example: untag 1,2,3 friends/colleagues
+- Untag all tags of all persons in the last person listing
+Parameters: -all
+Example: untag -all
+- Untag one or more tags of all persons in the last person listing
+Parameters: -all + TAGNAME
+Example: untag -all friends/colleagues
+
+*Negative Test Case*
+
+`(Missing arguments)` +
+*Command:* +
+untag friends/enemies
+*Expected Message:* +
+Invalid command format!
+untag: Untags one or more persons in the last person listing.
+- Untag all tags of persons identified by the index numbers used
+Parameters: INDEX,[MORE_INDEXES]... (must be positive integers)
+Example: untag 1,2,3
+- Untag one or more tags of persons identified by the index numbers used
+Parameters: INDEX,[MORE_INDEXES]... (must be positive integers) + TAGNAME
+Example: untag 1,2,3 friends/colleagues
+- Untag all tags of all persons in the last person listing
+Parameters: -all
+Example: untag -all
+- Untag one or more tags of all persons in the last person listing
+Parameters: -all + TAGNAME
+Example: untag -all friends/colleagues
+
+=== Retag persons
+*Positive Test Case*
+
+`(Valid details)` +
+*Command:* +
+retag enemies friends
+*Expected Message:* +
+[enemies] tag in person list successfully replaced by [friends].
+
+*Negative Test Case*
+
+`(Tag not found)` +
+*Command:* +
+retag randomTag friends
+*Expected Message:* +
+[randomTag] tag not found in person list.
+
+*Negative Test Case*
+
+`(Invalid tag name)` +
+*Command:* +
+retag !@#$ friends
+*Expected Message:* +
+Tags names should be alphanumeric
+
+*Negative Test Case*
+
+`(Missing arguments)` +
+*Command:* +
+retag enemies
+*Expected Message:* +
+Invalid command format!
+retag: Retags all person having the old tag name to the new tag name.
+Parameters: OLDTAGNAME + NEWTAGNAME
+Example: retag friends enemies
+
+=== Retrieve persons
+*Positive Test Case*
+
+`(Valid details)` +
+*Command:* +
+retrieve friends
+*Expected Message:* +
+... persons listed!
+
+*Negative Test Case*
+
+`(Invalid tag name)` +
+*Command:* +
+retrieve !@#$
+*Expected Message:* +
+Tags names should be alphanumeric
+
+*Negative Test Case*
+
+`(Tag not found)` +
+*Command:* +
+retrieve randomTag
+*Expected Message:* +
+Tag not found in person list.
+You may want to refer to the following existing tags inside the unfiltered person list: ...
+
+*Negative Test Case*
+
+`(Missing arguments)` +
+*Command:* +
+retrieve
+*Expected Message:* +
+Please provide a tag name!
+retrieve: Retrieves all persons belonging to an existing tag and displays them as a list with index numbers.
+Parameters: TAGNAME
+Example: retrieve friends
+
+=== List persons
+*Positive Test Case*
+
+`(Valid details)` +
+*Command:* +
+list
+*Expected Message:* +
+Listed all persons
+
+=== List reminders
+*Positive Test Case*
+
+`(Valid details)` +
+*Command:* +
+*Expected Message:* +
+Listed all reminders
+
+=== Birthday
+*Positive Test Case*
+
+`(Valid details)` +
+*Command:* +
+birthday 1 10/13/2017
+*Expected Message:* +
+Added birthday to Person: ...
+
+*Positive Test Case*
+
+`(Empty birthday)` +
+*Command:* +
+birthday 1
+*Expected Message:* +
+Removed birthday from Person: ...
+
+*Negative Test Case*
+
+`(Invalid date)` +
+*Command:* +
+birthday 1 35/13/2017
+*Expected Message:* +
+Person birthdays must be either a valid date, of format DD/MM/YYYY or empty
+
+*Negative Test Case*
+
+`(Invalid date)` +
+*Command:* +
+birthday
+*Expected Message:* +
+Invalid command format!
+birthday: Edits the birthday of the person identified by the index number used in the last person listing. Existing birthday will be overwritten by the input.
+Parameters: INDEX (must be a positive integer) b/dd/mm/yyyy
+Example: birthday 1 b/02/03/1994
+
+
+(NOTE)
+Execute `undo` command twice to revert back to original list +
+
+
+
 
 *Positive Test Case*
 
 `()` +
 *Command:* +
 *Expected Message:* +
-*Expected Output:* +
 
 
-
-*Positive Test Case*
+*Negative Test Case*
 
 `()` +
 *Command:* +
 *Expected Message:* +
-*Expected Output:* +
-
-
-
-
-*Positive Test Case*
-
-`()` +
-*Command:* +
-*Expected Message:* +
-*Expected Output:* +
