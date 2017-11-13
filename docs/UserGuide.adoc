@@ -741,13 +741,13 @@ You can synchronize contact list on your computer with the contact list in the `
 Format: `sync`
 // end::sync[]
 
-// tag::s-nusmods[]
+// tag::snusmods[]
 === Fetching NUSMods timetable into calendar : `s-nusmods` _[Coming in v2.0]_
 
 By using this command, you can fetch your timetable from NUSMods into your calendar
 
 Format: `s-nusmods l/LINK`
-// end::s-nusmods[]
+// end::snusmods[]
 
 === Clearing all entries : `clear`
 

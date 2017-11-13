@@ -38,10 +38,14 @@ include::../DeveloperGuide.adoc[tag=schedule]
 
 ---
 
-=== Enhancement Proposed: Add command `remark`
+=== Enhancement Proposed:
 
-{Explain similar to the Undo/Redo feature above.}
+#Start of Extract [from: User Guide]#
 
+include::../UserGuide.adoc[tag=snusmods]
+
+
+#End of Extract#
 === Other contributions
 
 * Add interactive Calendar and Event list panel (Pull requests https://github.com/CS2103AUG2017-W09-B3/main/pull/88[#88])
