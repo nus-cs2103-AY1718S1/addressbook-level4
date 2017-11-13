@@ -620,18 +620,17 @@ image::DeleteTempPersonAD.png[width="700"]
 //tag::import[]
 === Import mechanism
 
-The import mechanism is essentially adding multiple contacts to the resident book automatically by referencing a xml file. It is implemented by calling add function repeatedly till all the new contacts have been added to the current contact list.
+The import mechanism is essentially adding multiple Residents to the ResidentBook automatically by referencing an external xml file. It is implemented by calling add function repeatedly till all the new Residents have been added to the current ResidentBook.
 
 ==== Design Considerations
 
 **Aspect:** Implementation of Import +
 **Alternative 1 (current choice):** Add all unique Residents currently not found in ResidentBook  +
-**Pros:** Flexible level of precision according to the User and removes redundancy  +
-**Cons:** Current data will not be updated if the Resident details are already entered in the ResidentBook +
-**Alternative 2:** Add all entries found on the file specified by user +
-**Pros:** +
-**Cons:** This implementation may cause an error when searching for Residents. It also violates the ResidentBook Add command as there is duplicated person entries.
-
+**Pros:** Removes redundancy and prevents duplication of data  +
+**Cons:** Current data will not be updated if there are exisiting Resident details in the ResidentBook +
+**Alternative 2:** Add all entries found on the file specified by user, and update the details when there is a difference +
+**Pros:** Get the most updated ResidentBook with each import +
+**Cons:** Import file may be outdated and not accurate, this results in inconsistency of data.
 
 The following is the Sequence Diagram for Import Command.
 
@@ -652,7 +651,7 @@ image::import_file_Ui.png[width="800"]
 [NOTE]
 If the filePath is invalid, then there are no file that is readable and hence, an exception will be thrown. Users will be notified to check their filePath.
 
-If the file specified is exactly the same as the current ResidentBook, there is nothing to import. The NoUniqueImport Exception will be throw. Users will be notified to check their file.
+If the file specified is exactly the same as the current ResidentBook, there is nothing to import. The NoUniqueImport exception will be throw. Users will be notified to check their file.
 
 The following is the NoUniqueImport Exception:
 [source,java]

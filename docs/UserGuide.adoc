@@ -469,7 +469,7 @@ Examples:
 * `rm pending` +
 Remove all "pending" tags from list of residents.
 
-* If Alice has tags "RA" and "CollegeMaster", `removeTag RA` will remove tag from Alice, retaining her other details in the ResidentBook.
+* If Amy has tags "RA" and "CollegeMaster", `removeTag RA` will remove tag from Amy, retaining her other details in the ResidentBook.
 
 The TAG_NAME specified must exist in the current ResidentBook. If it does not exist, exception will be thrown and user will be notified that not such tag exist.
 The following shows an example when invalid tag is provided.
