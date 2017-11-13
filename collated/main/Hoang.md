@@ -1,578 +1,68 @@
 # Hoang
-###### /src/main/java/seedu/address/ui/EmailSendWindow.java
+###### \java\seedu\address\email\Email.java
 ``` java
-package seedu.address.ui;
+package seedu.address.email;
 
-import java.util.logging.Logger;
-
-import javafx.fxml.FXML;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.layout.Region;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.NewResultAvailableEvent;
-import seedu.address.logic.Logic;
-import seedu.address.logic.commands.CommandResult;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.email.exceptions.EmailSendFailedException;
+import seedu.address.email.exceptions.LoginFailedException;
+import seedu.address.email.exceptions.NotAnEmailException;
 
 /**
- * A pop up Window for email sending
+ * API of Email component
  */
-public class EmailSendWindow extends UiPart<Region> {
-    private static final String FXML = "EmailSendWindow.fxml";
-    private final Logger logger = LogsCenter.getLogger(EmailSendWindow.class);
 
-    private Stage primaryStage;
-    private Logic logic;
-
-    @FXML
-    private Label recipientsLabel;
-
-    @FXML
-    private Label titleLabel;
-
-    @FXML
-    private Label bodyLabel;
-
-    @FXML
-    private TextField recipientsField;
-
-    @FXML
-    private TextField titleField;
-
-    @FXML
-    private TextArea bodyField;
-
-    @FXML
-    private Button sendButton;
-
-    @FXML
-    private Label feedbackLabel;
-
-    public EmailSendWindow(Logic logic, Stage parentStage, String recipients, String feedback) {
-        super(FXML);
-
-        this.primaryStage = new Stage();
-        Scene scene = new Scene(getRoot());
-        this.primaryStage.setScene(scene);
-        this.primaryStage.initOwner(parentStage);
-        this.primaryStage.initModality(Modality.WINDOW_MODAL);
-        this.primaryStage.setResizable(false);
-        this.primaryStage.getIcons().add(new Image("/images/address_book_32.png"));
-        this.primaryStage.setTitle("Send Emails");
-        this.logic = logic;
-        recipientsField.setText(recipients);
-        feedbackLabel.setText(feedback);
-        setOnCloseEvent();
-    }
+public interface Email {
+    /**
+     * Returns a log-in session object that can be used to send and receive email
+     *
+     * @param email    The email address that needs to be logged in
+     * @param password Password
+     * @throws LoginFailedException if login fails
+     */
+    void login(String email, String password) throws LoginFailedException;
 
     /**
-     * Enable the login / logout button when this window closes
+     * Checks emails from the logged in email
+     *
+     * @return A String array in which each element is an email
      */
-    public void setOnCloseEvent() {
-
-    }
+    String[] checkEmails();
 
     /**
-     * Show the window
+     * @param recipients Recipients' emails
+     * @param title      Title of the email
+     * @param message    Message to be included in email
+     * @throws NotAnEmailException      if the given emails is/are not valid
+     * @throws EmailSendFailedException if the emails were failed to send
      */
-    public void show() {
-        primaryStage.show();
-    }
+    void sendEmail(String[] recipients, String title, String message) throws NotAnEmailException,
+            EmailSendFailedException;
 
     /**
-     * action for clicking send button
+     * Return the current logged in email
+     *
+     * @return Email address
      */
-    @FXML
-    private void onSendButtonClicked() {
-        String recipients = recipientsField.getText();
-        String title = titleField.getText();
-        String body = bodyField.getText();
+    String getEmail();
 
-        try {
-            CommandResult commandResult = logic.execute("email_send "
-                    + "\"" + recipients + "\"" + " "
-                    + "\"" + title + "\"" + " "
-                    + "\"" + body + "\"");
-            logger.info("Result: " + commandResult.feedbackToUser);
-            raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
-            feedbackLabel.setText(commandResult.feedbackToUser);
-        } catch (ParseException e) {
-            raise(new NewResultAvailableEvent(e.getMessage()));
-            feedbackLabel.setText(e.getMessage());
-        } catch (CommandException e) {
-            raise(new NewResultAvailableEvent(e.getMessage()));
-            feedbackLabel.setText(e.getMessage());
-        }
-    }
+    /**
+     * Check if there is an email logged in or not
+     *
+     * @return whether there is an email logged in
+     */
+    boolean isLoggedIn();
+
+    /**
+     * Log out from any currently logged in email
+     */
+    void logout();
 }
 ```
-
-###### /src/main/java/seedu/address/ui/EmailLoginWindow.java
+###### \java\seedu\address\email\Email.java
 ``` java
-package seedu.address.ui;
 
-import java.util.logging.Logger;
-
-import javafx.fxml.FXML;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.layout.Region;
-import javafx.scene.text.Text;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.NewResultAvailableEvent;
-import seedu.address.logic.Logic;
-import seedu.address.logic.commands.CommandResult;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.parser.exceptions.ParseException;
-
-/**
- * Pop up window for email login
- */
-public class EmailLoginWindow extends UiPart<Region> {
-    private static final String FXML = "EmailLoginWindow.fxml";
-
-    private final Logger logger = LogsCenter.getLogger(EmailLoginWindow.class);
-    private Stage primaryStage;
-    private Logic logic;
-    private FunctionButtons functionButtonsPanel;
-
-    @FXML
-    private Text loginText;
-
-    @FXML
-    private Text passwordText;
-
-    @FXML
-    private TextField emailField;
-
-    @FXML
-    private PasswordField passwordField;
-
-    @FXML
-    private Button emailWindowLoginButton;
-
-    @FXML
-    private Label feedbackLabel;
-
-    public EmailLoginWindow(Logic logic, Stage parentStage, FunctionButtons functionButtonsPanel) {
-        super(FXML);
-
-        this.primaryStage = new Stage();
-        Scene scene = new Scene(getRoot());
-        this.primaryStage.setScene(scene);
-        this.primaryStage.initOwner(parentStage);
-        this.primaryStage.initModality(Modality.WINDOW_MODAL);
-        this.primaryStage.setResizable(false);
-        this.primaryStage.getIcons().add(new Image("/images/address_book_32.png"));
-        this.primaryStage.setTitle("Login");
-        this.logic = logic;
-        this.functionButtonsPanel = functionButtonsPanel;
-
-        setOnCloseEvent();
-    }
-
-    /**
-     * When the login button is pressed
-     */
-    @FXML
-    private void onLoginButtonPressed() {
-        String emailString = emailField.getText();
-        String passwordString = passwordField.getText();
-
-        try {
-            CommandResult commandResult = logic.execute("email_login "
-                    + "\"" + emailString + "\"" + " "
-                    + "\"" + passwordString + "\"");
-            logger.info("Result: " + commandResult.feedbackToUser);
-            raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
-            functionButtonsPanel.updateLoginStatus();
-            feedbackLabel.setText(commandResult.feedbackToUser);
-
-            if (commandResult.feedbackToUser.contains("Success")) {
-                functionButtonsPanel.toggleLoginLogout();
-            }
-        } catch (CommandException e) {
-            raise(new NewResultAvailableEvent(e.getMessage()));
-            feedbackLabel.setText(e.getMessage());
-        } catch (ParseException e) {
-            raise(new NewResultAvailableEvent(e.getMessage()));
-            feedbackLabel.setText(e.getMessage());
-        }
-    }
-
-    /**
-     * Enable the login / logout button when this window closes
-     */
-    public void setOnCloseEvent() {
-
-    }
-
-    /**
-     * Show the window
-     */
-    public void show() {
-        primaryStage.show();
-    }
-}
 ```
-
-###### /src/main/java/seedu/address/ui/SearchBar.java
-``` java
-package seedu.address.ui;
-
-import java.util.logging.Logger;
-
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.fxml.FXML;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.Region;
-import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.NewResultAvailableEvent;
-import seedu.address.logic.Logic;
-import seedu.address.logic.commands.CommandResult;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.parser.exceptions.ParseException;
-
-/**
- * Search bar on the GUI to filter contacts
- */
-public class SearchBar extends UiPart<Region> {
-
-    private static final String FXML = "SearchBar.fxml";
-
-    private final Logger logger = LogsCenter.getLogger(SearchBar.class);
-    private Logic logic;
-
-    @FXML
-    private TextField nameField;
-
-    @FXML
-    private TextField phoneField;
-
-    @FXML
-    private TextField emailField;
-
-    @FXML
-    private TextField addressField;
-
-    @FXML
-    private TextField tagsField;
-
-    public SearchBar(Logic logic) {
-        super(FXML);
-        this.logic = logic;
-
-        nameField.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                onSearchbarChanged();
-            }
-        });
-
-        phoneField.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                onSearchbarChanged();
-            }
-        });
-
-        addressField.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                onSearchbarChanged();
-            }
-        });
-
-        emailField.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                onSearchbarChanged();
-            }
-        });
-
-        tagsField.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                onSearchbarChanged();
-            }
-        });
-    }
-
-    /**
-     * Fires a new FindContainsCommand everytime search bar changes
-     */
-    @FXML
-    private void onSearchbarChanged() {
-        String commandString = "find_contain ";
-
-        if (!nameField.getText().equals("")) {
-            commandString += "n/" + nameField.getText() + " ";
-        }
-
-        if (!phoneField.getText().equals("")) {
-            commandString += "p/" + phoneField.getText() + " ";
-        }
-
-        if (!emailField.getText().equals("")) {
-            commandString += "e/" + emailField.getText() + " ";
-        }
-
-        if (!addressField.getText().equals("")) {
-            commandString += "a/" + addressField.getText() + " ";
-        }
-
-        if (!tagsField.getText().equals("")) {
-            commandString += "r/" + tagsField.getText() + " ";
-        }
-
-        if (commandString.equals("find_contain ")) {
-            try {
-                CommandResult commandResult = logic.execute("list");
-                logger.info("Result: " + commandResult.feedbackToUser);
-                raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
-            } catch (ParseException e) {
-                //wont happen
-            } catch (CommandException e) {
-                //wont happen
-            }
-        } else {
-            try {
-                CommandResult commandResult = logic.execute(commandString);
-                logger.info("Result: " + commandResult.feedbackToUser);
-                raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
-            } catch (ParseException e) {
-                //wont happen
-            } catch (CommandException e) {
-                //wont happen
-            }
-        }
-    }
-}
-```
-
-###### /src/main/java/seedu/address/ui/FunctionButtons.java
-``` java
-package seedu.address.ui;
-
-import java.util.ArrayList;
-
-import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
-import seedu.address.commons.events.ui.NewResultAvailableEvent;
-import seedu.address.logic.Logic;
-import seedu.address.logic.commands.CommandResult;
-import seedu.address.logic.commands.EmailLogoutCommand;
-import seedu.address.logic.commands.GetEmailCommand;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.parser.exceptions.ParseException;
-
-/**
- * A panel for function button on the main window
- */
-public class FunctionButtons extends UiPart<Region> {
-    private static final String FXML = "FunctionButtons.fxml";
-    private Logic logic;
-    private Stage stage;
-    private MainWindow mainWindow;
-
-    @FXML
-    private StackPane loginPane;
-    @FXML
-    private Button loginButton;
-    @FXML
-    private StackPane sendPane;
-    @FXML
-    private Button sendButton;
-    @FXML
-    private Label loginStatus;
-
-    public FunctionButtons(Logic logic, Stage stage, MainWindow mainWindow) {
-        super(FXML);
-        this.logic = logic;
-        this.stage = stage;
-        this.mainWindow = mainWindow;
-
-        updateLoginStatus();
-    }
-
-    /**
-     * Open the email login window
-     */
-    @FXML
-    private void openEmailLoginWindow() {
-        if (loginButton.getText().equals("Login")) {
-            EmailLoginWindow emailLoginWindow = new EmailLoginWindow(logic, stage, this);
-            emailLoginWindow.show();
-        } else {
-            try {
-                CommandResult commandResult = logic.execute(EmailLogoutCommand.COMMAND_WORD);
-                raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
-                toggleLoginLogout();
-                updateLoginStatus();
-            } catch (CommandException e) {
-                raise(new NewResultAvailableEvent(e.getMessage()));
-            } catch (ParseException e) {
-                raise(new NewResultAvailableEvent(e.getMessage()));
-            }
-        }
-    }
-
-    /**
-     * Open the email send window
-     */
-    @FXML
-    private void openEmailSendWindow() {
-        ArrayList<PersonCard> tickedPersons = mainWindow.getPersonListPanel().getTickedPersons();
-        String recipients = new String();
-        ArrayList<PersonCard> cardWithOutEmail = new ArrayList<PersonCard>();
-        for (PersonCard card : tickedPersons) {
-            if (card.isTicked()) {
-                if (card.getEmail() != null) {
-                    recipients += card.getEmail() + ";";
-                } else {
-                    cardWithOutEmail.add(card);
-                }
-            }
-        }
-
-        String feedbackPersonsWithoutEmail = "";
-
-        if (cardWithOutEmail.size() != 0) {
-            feedbackPersonsWithoutEmail = "The following person(s) do not have emails or have private emails:\n";
-
-            for (PersonCard card : cardWithOutEmail) {
-                feedbackPersonsWithoutEmail += card.getName() + "\n";
-            }
-        }
-
-        EmailSendWindow emailSendWindow = new EmailSendWindow(logic, stage, recipients, feedbackPersonsWithoutEmail);
-        emailSendWindow.show();
-    }
-
-    /**
-     * update the current login status label
-     */
-    public void updateLoginStatus() {
-        try {
-            CommandResult commandResult = logic.execute(GetEmailCommand.COMMAND_WORD);
-            if (commandResult.feedbackToUser.equals(GetEmailCommand.MESSAGE_NOT_LOGGED_IN)) {
-                loginStatus.setText("Currently not logged in");
-            } else {
-                loginStatus.setText("Currently logged in as " + commandResult.feedbackToUser);
-            }
-        } catch (CommandException e) {
-            raise(new NewResultAvailableEvent(e.getMessage()));
-        } catch (ParseException e) {
-            raise(new NewResultAvailableEvent(e.getMessage()));
-        }
-    }
-
-    /**
-     * toggle state of login / logout button
-     */
-    public void toggleLoginLogout() {
-        if (loginButton.getText().equals("Login")) {
-            loginButton.setText("Logout");
-        } else {
-            loginButton.setText("Login");
-        }
-    }
-}
-```
-
-###### /src/main/java/seedu/address/model/person/PersonContainsLettersPredicate.java
-``` java
-package seedu.address.model.person;
-
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-
-import java.util.HashMap;
-import java.util.Set;
-import java.util.function.Predicate;
-
-import seedu.address.model.tag.Tag;
-
-/**
- * Tests that a {@code ReadOnlyPerson}'s {@code Name} or {@code Tag} or {@code Address} or {@code Phone}
- * or {@code Email} contains any string given
- */
-public class PersonContainsLettersPredicate implements Predicate<ReadOnlyPerson> {
-    private final HashMap<String, String> keywords;
-
-    public PersonContainsLettersPredicate(HashMap<String, String> keywords) {
-        this.keywords = keywords;
-    }
-
-    @Override
-    public boolean test(ReadOnlyPerson readOnlyPerson) {
-        boolean result = true;
-        if (keywords.containsKey(PREFIX_NAME.toString())) {
-            String keyword = keywords.get(PREFIX_NAME.toString());
-            String name = readOnlyPerson.getName().fullName;
-            result = name.toLowerCase().contains(keyword.toLowerCase());
-        }
-
-        if (keywords.containsKey(PREFIX_PHONE.toString())) {
-            String keyword = keywords.get(PREFIX_PHONE.toString());
-            String phone = readOnlyPerson.getPhone().toString();
-            result = result && phone.toLowerCase().contains(keyword.toLowerCase());
-        }
-
-        if (keywords.containsKey(PREFIX_EMAIL.toString())) {
-            String keyword = keywords.get(PREFIX_EMAIL.toString());
-            String email = readOnlyPerson.getEmail().toString();
-            result = result && email.toLowerCase().contains(keyword.toLowerCase());
-        }
-
-        if (keywords.containsKey(PREFIX_ADDRESS.toString())) {
-            String keyword = keywords.get(PREFIX_ADDRESS.toString());
-            String address = readOnlyPerson.getAddress().toString();
-            result = result && address.toLowerCase().contains(keyword.toLowerCase());
-        }
-
-        if (keywords.containsKey(PREFIX_TAG.toString())) {
-            String keyword = keywords.get(PREFIX_TAG.toString());
-            Set<Tag> tagSet = readOnlyPerson.getTags();
-            result = result && tagSet.stream().anyMatch(tag -> tag.toString().toLowerCase()
-                    .contains(keyword.toLowerCase()));
-        }
-
-        return result;
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof PersonContainsLettersPredicate // instanceof handles nulls
-                && this.keywords.equals(((PersonContainsLettersPredicate) other).keywords)); // state check
-    }
-}
-```
-
-###### /src/main/java/seedu/address/email/EmailManager.java
+###### \java\seedu\address\email\EmailManager.java
 ``` java
 package seedu.address.email;
 
@@ -601,7 +91,7 @@ public class EmailManager implements Email {
     public static final String MESSAGE_LOGIN_FAILED = "It could be one of the following reasons: \n"
             + "1. Your Internet connection is not working\n"
             + "2. Your email and password combination is not correct\n"
-            + "3. Allow less secure apps is not enable in your Gmail account";
+            + "3. Allow less secure apps is not enable in your email";
     private String currentEmail;
     private String currentEmailProvider;
     private Authenticator currentAuthenticator;
@@ -742,68 +232,31 @@ public class EmailManager implements Email {
     }
 }
 ```
-
-###### /src/main/java/seedu/address/email/Email.java
+###### \java\seedu\address\email\EmailManager.java
 ``` java
-package seedu.address.email;
 
-import seedu.address.email.exceptions.EmailSendFailedException;
-import seedu.address.email.exceptions.LoginFailedException;
-import seedu.address.email.exceptions.NotAnEmailException;
+```
+###### \java\seedu\address\email\exceptions\EmailSendFailedException.java
+``` java
+package seedu.address.email.exceptions;
 
 /**
- * API of Email component
+ * Represents an error when an email fails to send
  */
-
-public interface Email {
+public class EmailSendFailedException extends Exception {
     /**
-     * Returns a log-in session object that can be used to send and receive email
-     *
-     * @param email    The email address that needs to be logged in
-     * @param password Password
-     * @throws LoginFailedException if login fails
+     * @param message should contain relevant information on the failed constraint(s)
      */
-    void login(String email, String password) throws LoginFailedException;
-
-    /**
-     * Checks emails from the logged in email
-     *
-     * @return A String array in which each element is an email
-     */
-    String[] checkEmails();
-
-    /**
-     * @param recipients Recipients' emails
-     * @param title      Title of the email
-     * @param message    Message to be included in email
-     * @throws NotAnEmailException      if the given emails is/are not valid
-     * @throws EmailSendFailedException if the emails were failed to send
-     */
-    void sendEmail(String[] recipients, String title, String message) throws NotAnEmailException,
-            EmailSendFailedException;
-
-    /**
-     * Return the current logged in email
-     *
-     * @return Email address
-     */
-    String getEmail();
-
-    /**
-     * Check if there is an email logged in or not
-     *
-     * @return whether there is an email logged in
-     */
-    boolean isLoggedIn();
-
-    /**
-     * Log out from any currently logged in email
-     */
-    void logout();
+    public EmailSendFailedException(String message) {
+        super(message);
+    }
 }
 ```
+###### \java\seedu\address\email\exceptions\EmailSendFailedException.java
+``` java
 
-###### /src/main/java/seedu/address/email/exceptions/LoginFailedException.java
+```
+###### \java\seedu\address\email\exceptions\LoginFailedException.java
 ``` java
 package seedu.address.email.exceptions;
 
@@ -820,25 +273,11 @@ public class LoginFailedException extends Exception {
     }
 }
 ```
-
-###### /src/main/java/seedu/address/email/exceptions/EmailSendFailedException.java
+###### \java\seedu\address\email\exceptions\LoginFailedException.java
 ``` java
-package seedu.address.email.exceptions;
 
-/**
- * Represents an error when an email fails to send
- */
-public class EmailSendFailedException extends Exception {
-    /**
-     * @param message should contain relevant information on the failed constraint(s)
-     */
-    public EmailSendFailedException(String message) {
-        super(message);
-    }
-}
 ```
-
-###### /src/main/java/seedu/address/email/exceptions/NotAnEmailException.java
+###### \java\seedu\address\email\exceptions\NotAnEmailException.java
 ``` java
 package seedu.address.email.exceptions;
 
@@ -851,8 +290,11 @@ public class NotAnEmailException extends Exception {
     }
 }
 ```
+###### \java\seedu\address\email\exceptions\NotAnEmailException.java
+``` java
 
-###### /src/main/java/seedu/address/logic/commands/EmailLoginCommand.java
+```
+###### \java\seedu\address\logic\commands\EmailLoginCommand.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -903,8 +345,11 @@ public class EmailLoginCommand extends Command {
     }
 }
 ```
+###### \java\seedu\address\logic\commands\EmailLoginCommand.java
+``` java
 
-###### /src/main/java/seedu/address/logic/commands/EmailLogoutCommand.java
+```
+###### \java\seedu\address\logic\commands\EmailLogoutCommand.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -942,8 +387,75 @@ public class EmailLogoutCommand extends Command {
     }
 }
 ```
+###### \java\seedu\address\logic\commands\EmailLogoutCommand.java
+``` java
 
-###### /src/main/java/seedu/address/logic/commands/ExportCommand.java
+```
+###### \java\seedu\address\logic\commands\EmailSendCommand.java
+``` java
+package seedu.address.logic.commands;
+
+import seedu.address.email.Email;
+import seedu.address.email.exceptions.EmailSendFailedException;
+import seedu.address.email.exceptions.NotAnEmailException;
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.Model;
+
+/**
+ * Sends an email with a logged in email
+ */
+public class EmailSendCommand extends Command {
+    public static final String COMMAND_WORD = "email_send";
+    public static final String MESSAGE_SUCCESS = "Successfully sent";
+    public static final String MESSAGE_FAILED = "Failed to send: ";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Send an email to one or more recipients\n"
+            + "Requires an logged in email using email_login\n"
+            + "Parameters: email_send \"[RECIPIENTS]\" \"[TITLE]\" \"[BODY]\" \n"
+            + "Example: email_send \"example@gmail.com;example2@yahoo.com\" \"Test\" \"Test Body\"";
+
+    private String[] recipients;
+    private String body;
+    private String title;
+
+    public EmailSendCommand(String[] recipients, String title, String body) {
+        this.recipients = recipients;
+        this.body = body;
+        this.title = title;
+    }
+
+    @Override
+    public CommandResult execute() throws CommandException {
+        if (!emailManager.isLoggedIn()) {
+            return new CommandResult("No email logged in");
+        }
+
+        try {
+            emailManager.sendEmail(recipients, title, body);
+        } catch (NotAnEmailException e) {
+            return new CommandResult(e.getMessage());
+        } catch (EmailSendFailedException e) {
+            return new CommandResult(MESSAGE_FAILED + e.getMessage());
+        }
+
+        return new CommandResult(MESSAGE_SUCCESS);
+    }
+
+    /**
+     * Overridden as access to email manager is needed
+     */
+    @Override
+    public void setData(Model model, CommandHistory history, UndoRedoStack undoRedoStack, Email emailManager) {
+        this.emailManager = emailManager;
+    }
+}
+```
+###### \java\seedu\address\logic\commands\EmailSendCommand.java
+``` java
+
+```
+###### \java\seedu\address\logic\commands\ExportCommand.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -1021,8 +533,54 @@ public class ExportCommand extends Command {
     }
 }
 ```
+###### \java\seedu\address\logic\commands\ExportCommand.java
+``` java
 
-###### /src/main/java/seedu/address/logic/commands/GetEmailCommand.java
+```
+###### \java\seedu\address\logic\commands\FindContainCommand.java
+``` java
+package seedu.address.logic.commands;
+
+import seedu.address.model.person.PersonContainsLettersPredicate;
+
+/**
+ * Find a person whose name / phone / email / address / tag contains given string
+ */
+public class FindContainCommand extends Command {
+
+    public static final String COMMAND_WORD = "find_contain";
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Finds all persons whose name / phone / address / email contains the given string\n"
+            + "Parameters: " + COMMAND_WORD + " PREFIX_PERSON_ATTRIBUTE/STRING [MORE_PARAMETERS]..."
+            + "Examples: \n"
+            + "1) find_contain n/david li p/91\n"
+            + "2) find_contain e/gmail a/jurong";
+
+    private final PersonContainsLettersPredicate predicate;
+
+    public FindContainCommand(PersonContainsLettersPredicate predicate) {
+        this.predicate = predicate;
+    }
+
+    @Override
+    public CommandResult execute() {
+        model.updateFilteredPersonList(predicate);
+        return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof FindContainCommand // instanceof handles nulls
+                && this.predicate.equals(((FindContainCommand) other).predicate)); // state check
+    }
+}
+```
+###### \java\seedu\address\logic\commands\FindContainCommand.java
+``` java
+
+```
+###### \java\seedu\address\logic\commands\GetEmailCommand.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -1064,104 +622,11 @@ public class GetEmailCommand extends Command {
     }
 }
 ```
-
-###### /src/main/java/seedu/address/logic/commands/FindContainCommand.java
+###### \java\seedu\address\logic\commands\GetEmailCommand.java
 ``` java
-package seedu.address.logic.commands;
 
-import seedu.address.model.person.PersonContainsLettersPredicate;
-
-/**
- * Find a person whose name / phone / email / address / tag contains given string
- */
-public class FindContainCommand extends Command {
-
-    public static final String COMMAND_WORD = "find_contain";
-    public static final String MESSAGE_USAGE = "do later";
-
-    private final PersonContainsLettersPredicate predicate;
-
-    public FindContainCommand(PersonContainsLettersPredicate predicate) {
-        this.predicate = predicate;
-    }
-
-    @Override
-    public CommandResult execute() {
-        model.updateFilteredPersonList(predicate);
-        return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof FindContainCommand // instanceof handles nulls
-                && this.predicate.equals(((FindContainCommand) other).predicate)); // state check
-    }
-}
 ```
-
-###### /src/main/java/seedu/address/logic/commands/EmailSendCommand.java
-``` java
-package seedu.address.logic.commands;
-
-import seedu.address.email.Email;
-import seedu.address.email.exceptions.EmailSendFailedException;
-import seedu.address.email.exceptions.NotAnEmailException;
-import seedu.address.logic.CommandHistory;
-import seedu.address.logic.UndoRedoStack;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.Model;
-
-/**
- * Sends an email with a logged in email
- */
-public class EmailSendCommand extends Command {
-    public static final String COMMAND_WORD = "email_send";
-    public static final String MESSAGE_SUCCESS = "Successfully sent";
-    public static final String MESSAGE_FAILED = "Failed to send: ";
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Send an email to one or more recipients\n"
-            + "Requires an logged in email using email_login\n"
-            + "Parameters: email_send \"[RECIPIENTS]\" \"[TITLE]\" \"[BODY]\" \n"
-            + "Example: email_send \"example@gmail.com;example2@yahoo.com\" \"Test\" \"Test Body\"";
-
-    private String[] recipients;
-    private String body;
-    private String title;
-
-    public EmailSendCommand(String[] recipients, String title, String body) {
-        this.recipients = recipients;
-        this.body = body;
-        this.title = title;
-    }
-
-    @Override
-    public CommandResult execute() throws CommandException {
-        if (!emailManager.isLoggedIn()) {
-            return new CommandResult("No email logged in");
-        }
-
-        try {
-            emailManager.sendEmail(recipients, title, body);
-        } catch (NotAnEmailException e) {
-            return new CommandResult(e.getMessage());
-        } catch (EmailSendFailedException e) {
-            return new CommandResult(MESSAGE_FAILED + e.getMessage());
-        }
-
-        return new CommandResult(MESSAGE_SUCCESS);
-    }
-
-    /**
-     * Overridden as access to email manager is needed
-     */
-    @Override
-    public void setData(Model model, CommandHistory history, UndoRedoStack undoRedoStack, Email emailManager) {
-        this.emailManager = emailManager;
-    }
-}
-```
-
-###### /src/main/java/seedu/address/logic/parser/EmailLoginParser.java
+###### \java\seedu\address\logic\parser\EmailLoginParser.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -1204,8 +669,45 @@ public class EmailLoginParser implements Parser<EmailLoginCommand> {
     }
 }
 ```
+###### \java\seedu\address\logic\parser\EmailLoginParser.java
+``` java
 
-###### /src/main/java/seedu/address/logic/parser/ExportCommandParser.java
+```
+###### \java\seedu\address\logic\parser\EmailSendParser.java
+``` java
+package seedu.address.logic.parser;
+
+import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
+import seedu.address.logic.commands.EmailSendCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
+
+/**
+ * Parses input arguments and creates a new EmailSendParser object
+ */
+public class EmailSendParser implements Parser<EmailSendCommand> {
+
+    @Override
+    public EmailSendCommand parse(String userInput) throws ParseException {
+        requireNonNull(userInput);
+
+        String[] arguments = userInput.split("\"");
+
+        if (arguments.length != 6) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EmailSendCommand.MESSAGE_USAGE));
+        } else {
+            String[] email = arguments[1].split(";");
+            return new EmailSendCommand(email, arguments[3], arguments[5]);
+        }
+    }
+}
+```
+###### \java\seedu\address\logic\parser\EmailSendParser.java
+``` java
+
+```
+###### \java\seedu\address\logic\parser\ExportCommandParser.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -1258,39 +760,11 @@ public class ExportCommandParser implements Parser<ExportCommand> {
     }
 }
 ```
-
-###### /src/main/java/seedu/address/logic/parser/EmailSendParser.java
+###### \java\seedu\address\logic\parser\ExportCommandParser.java
 ``` java
-package seedu.address.logic.parser;
 
-import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-
-import seedu.address.logic.commands.EmailSendCommand;
-import seedu.address.logic.parser.exceptions.ParseException;
-
-/**
- * Parses input arguments and creates a new EmailSendParser object
- */
-public class EmailSendParser implements Parser<EmailSendCommand> {
-
-    @Override
-    public EmailSendCommand parse(String userInput) throws ParseException {
-        requireNonNull(userInput);
-
-        String[] arguments = userInput.split("\"");
-
-        if (arguments.length != 6) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EmailSendCommand.MESSAGE_USAGE));
-        } else {
-            String[] email = arguments[1].split(";");
-            return new EmailSendCommand(email, arguments[3], arguments[5]);
-        }
-    }
-}
 ```
-
-###### /src/main/java/seedu/address/logic/parser/FindContainCommandParser.java
+###### \java\seedu\address\logic\parser\FindContainCommandParser.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -1391,4 +865,635 @@ public class FindContainCommandParser implements Parser<FindContainCommand> {
         return new FindContainCommand(new PersonContainsLettersPredicate(mapKeywords));
     }
 }
+```
+###### \java\seedu\address\logic\parser\FindContainCommandParser.java
+``` java
+
+```
+###### \java\seedu\address\model\person\PersonContainsLettersPredicate.java
+``` java
+package seedu.address.model.person;
+
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+
+import java.util.HashMap;
+import java.util.Set;
+import java.util.function.Predicate;
+
+import seedu.address.model.tag.Tag;
+
+/**
+ * Tests that a {@code ReadOnlyPerson}'s {@code Name} or {@code Tag} or {@code Address} or {@code Phone}
+ * or {@code Email} contains any string given
+ */
+public class PersonContainsLettersPredicate implements Predicate<ReadOnlyPerson> {
+    private final HashMap<String, String> keywords;
+
+    public PersonContainsLettersPredicate(HashMap<String, String> keywords) {
+        this.keywords = keywords;
+    }
+
+    @Override
+    public boolean test(ReadOnlyPerson readOnlyPerson) {
+        boolean result = true;
+        if (keywords.containsKey(PREFIX_NAME.toString())) {
+            String keyword = keywords.get(PREFIX_NAME.toString());
+            String name = readOnlyPerson.getName().fullName;
+            result = name.toLowerCase().contains(keyword.toLowerCase());
+        }
+
+        if (keywords.containsKey(PREFIX_PHONE.toString())) {
+            String keyword = keywords.get(PREFIX_PHONE.toString());
+            String phone = readOnlyPerson.getPhone().toString();
+            result = result && phone.toLowerCase().contains(keyword.toLowerCase());
+        }
+
+        if (keywords.containsKey(PREFIX_EMAIL.toString())) {
+            String keyword = keywords.get(PREFIX_EMAIL.toString());
+            String email = readOnlyPerson.getEmail().toString();
+            result = result && email.toLowerCase().contains(keyword.toLowerCase());
+        }
+
+        if (keywords.containsKey(PREFIX_ADDRESS.toString())) {
+            String keyword = keywords.get(PREFIX_ADDRESS.toString());
+            String address = readOnlyPerson.getAddress().toString();
+            result = result && address.toLowerCase().contains(keyword.toLowerCase());
+        }
+
+        if (keywords.containsKey(PREFIX_TAG.toString())) {
+            String keyword = keywords.get(PREFIX_TAG.toString());
+            Set<Tag> tagSet = readOnlyPerson.getTags();
+            result = result && tagSet.stream().anyMatch(tag -> tag.toString().toLowerCase()
+                    .contains(keyword.toLowerCase()));
+        }
+
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof PersonContainsLettersPredicate // instanceof handles nulls
+                && this.keywords.equals(((PersonContainsLettersPredicate) other).keywords)); // state check
+    }
+}
+```
+###### \java\seedu\address\model\person\PersonContainsLettersPredicate.java
+``` java
+
+```
+###### \java\seedu\address\ui\EmailLoginWindow.java
+``` java
+package seedu.address.ui;
+
+import java.util.logging.Logger;
+
+import javafx.fxml.FXML;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.layout.Region;
+import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.NewResultAvailableEvent;
+import seedu.address.logic.Logic;
+import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.UserPrefs;
+
+/**
+ * Pop up window for email login
+ */
+public class EmailLoginWindow extends UiPart<Region> {
+    private static final String FXML = "EmailLoginWindow.fxml";
+
+    private final Logger logger = LogsCenter.getLogger(EmailLoginWindow.class);
+    private Stage primaryStage;
+    private Logic logic;
+    private FunctionButtons functionButtonsPanel;
+    private UserPrefs prefs;
+
+    @FXML
+    private Text loginText;
+
+    @FXML
+    private Text passwordText;
+
+    @FXML
+    private TextField emailField;
+
+    @FXML
+    private PasswordField passwordField;
+
+    @FXML
+    private Button emailWindowLoginButton;
+
+    @FXML
+    private TextArea feedbackLabel;
+
+    public EmailLoginWindow(Logic logic, Stage parentStage, FunctionButtons functionButtonsPanel, UserPrefs prefs) {
+        super(FXML);
+
+        this.primaryStage = new Stage();
+        Scene scene = new Scene(getRoot());
+
+        if (prefs.getCurrentUserTheme().equals("DarkTheme")) {
+            scene.getStylesheets().add("view/CSS/EmailLoginWindowDark.css");
+        } else {
+            scene.getStylesheets().add("view/CSS/EmailLoginWindowLight.css");
+        }
+
+        this.primaryStage.setScene(scene);
+        this.primaryStage.initOwner(parentStage);
+        this.primaryStage.initModality(Modality.WINDOW_MODAL);
+        this.primaryStage.setResizable(false);
+        this.primaryStage.getIcons().add(new Image("/images/address_book_32.png"));
+        this.primaryStage.setTitle("Login");
+        this.logic = logic;
+        this.functionButtonsPanel = functionButtonsPanel;
+
+        setOnCloseEvent();
+    }
+
+    /**
+     * When the login button is pressed
+     */
+    @FXML
+    private void onLoginButtonPressed() {
+        String emailString = emailField.getText();
+        String passwordString = passwordField.getText();
+
+        try {
+            CommandResult commandResult = logic.execute("email_login "
+                    + "\"" + emailString + "\"" + " "
+                    + "\"" + passwordString + "\"");
+            logger.info("Result: " + commandResult.feedbackToUser);
+            raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
+            functionButtonsPanel.updateLoginStatus();
+            feedbackLabel.setText(commandResult.feedbackToUser);
+
+            if (commandResult.feedbackToUser.contains("Success")) {
+                functionButtonsPanel.toggleLoginLogout();
+            }
+        } catch (CommandException e) {
+            raise(new NewResultAvailableEvent(e.getMessage()));
+            feedbackLabel.setText(e.getMessage());
+        } catch (ParseException e) {
+            raise(new NewResultAvailableEvent(e.getMessage()));
+            feedbackLabel.setText(e.getMessage());
+        }
+    }
+
+    /**
+     * Enable the login / logout button when this window closes
+     */
+    public void setOnCloseEvent() {
+
+    }
+
+    /**
+     * Show the window
+     */
+    public void show() {
+        primaryStage.show();
+    }
+}
+```
+###### \java\seedu\address\ui\EmailLoginWindow.java
+``` java
+
+```
+###### \java\seedu\address\ui\EmailSendWindow.java
+``` java
+package seedu.address.ui;
+
+import java.util.logging.Logger;
+
+import javafx.fxml.FXML;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.layout.Region;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.NewResultAvailableEvent;
+import seedu.address.logic.Logic;
+import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.UserPrefs;
+
+/**
+ * A pop up Window for email sending
+ */
+public class EmailSendWindow extends UiPart<Region> {
+    private static final String FXML = "EmailSendWindow.fxml";
+    private final Logger logger = LogsCenter.getLogger(EmailSendWindow.class);
+
+    private Stage primaryStage;
+    private Logic logic;
+    private UserPrefs prefs;
+
+    @FXML
+    private Label recipientsLabel;
+
+    @FXML
+    private Label titleLabel;
+
+    @FXML
+    private Label bodyLabel;
+
+    @FXML
+    private TextField recipientsField;
+
+    @FXML
+    private TextField titleField;
+
+    @FXML
+    private TextArea bodyField;
+
+    @FXML
+    private Button sendButton;
+
+    @FXML
+    private TextArea feedbackLabel;
+
+    public EmailSendWindow(Logic logic, Stage parentStage, String recipients, String feedback, UserPrefs prefs) {
+        super(FXML);
+
+        this.primaryStage = new Stage();
+        Scene scene = new Scene(getRoot());
+
+        if (prefs.getCurrentUserTheme().equals("DarkTheme")) {
+            scene.getStylesheets().add("view/CSS/EmailSendWindowDark.css");
+        } else {
+            scene.getStylesheets().add("view/CSS/EmailSendWindowLight.css");
+        }
+
+        this.primaryStage.setScene(scene);
+        this.primaryStage.initOwner(parentStage);
+        this.primaryStage.initModality(Modality.WINDOW_MODAL);
+        this.primaryStage.setResizable(false);
+        this.primaryStage.getIcons().add(new Image("/images/address_book_32.png"));
+        this.primaryStage.setTitle("Send Emails");
+        this.logic = logic;
+        recipientsField.setText(recipients);
+        feedbackLabel.setText(feedback);
+        setOnCloseEvent();
+    }
+
+    /**
+     * Enable the login / logout button when this window closes
+     */
+    public void setOnCloseEvent() {
+
+    }
+
+    /**
+     * Show the window
+     */
+    public void show() {
+        primaryStage.show();
+    }
+
+    /**
+     * action for clicking send button
+     */
+    @FXML
+    private void onSendButtonClicked() {
+        String recipients = recipientsField.getText();
+        String title = titleField.getText();
+        String body = bodyField.getText();
+
+        try {
+            CommandResult commandResult = logic.execute("email_send "
+                    + "\"" + recipients + "\"" + " "
+                    + "\"" + title + "\"" + " "
+                    + "\"" + body + "\"");
+            logger.info("Result: " + commandResult.feedbackToUser);
+            raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
+            feedbackLabel.setText(commandResult.feedbackToUser);
+        } catch (ParseException e) {
+            raise(new NewResultAvailableEvent(e.getMessage()));
+            feedbackLabel.setText(e.getMessage());
+        } catch (CommandException e) {
+            raise(new NewResultAvailableEvent(e.getMessage()));
+            feedbackLabel.setText(e.getMessage());
+        }
+    }
+}
+```
+###### \java\seedu\address\ui\EmailSendWindow.java
+``` java
+
+```
+###### \java\seedu\address\ui\FunctionButtons.java
+``` java
+package seedu.address.ui;
+
+import java.util.ArrayList;
+
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
+import seedu.address.commons.events.ui.NewResultAvailableEvent;
+import seedu.address.logic.Logic;
+import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.EmailLogoutCommand;
+import seedu.address.logic.commands.GetEmailCommand;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.UserPrefs;
+
+/**
+ * A panel for function button on the main window
+ */
+public class FunctionButtons extends UiPart<Region> {
+    private static final String FXML = "FunctionButtons.fxml";
+    private Logic logic;
+    private Stage stage;
+    private MainWindow mainWindow;
+    private UserPrefs prefs;
+
+    @FXML
+    private StackPane loginPane;
+    @FXML
+    private Button loginButton;
+    @FXML
+    private StackPane sendPane;
+    @FXML
+    private Button sendButton;
+    @FXML
+    private TextField loginStatus;
+
+    public FunctionButtons(Logic logic, Stage stage, MainWindow mainWindow, UserPrefs prefs) {
+        super(FXML);
+        this.logic = logic;
+        this.stage = stage;
+        this.mainWindow = mainWindow;
+        this.prefs = prefs;
+
+        updateLoginStatus();
+    }
+
+    /**
+     * Open the email login window
+     */
+    @FXML
+    private void openEmailLoginWindow() {
+        boolean isLoggedIn = false;
+        try {
+            if (!(logic.execute("email_address")).feedbackToUser.equals("Not logged in")) {
+                isLoggedIn = true;
+            }
+        } catch (ParseException e) {
+            raise(new NewResultAvailableEvent(e.getMessage()));
+        } catch (CommandException e) {
+            raise(new NewResultAvailableEvent(e.getMessage()));
+        }
+
+        if (!isLoggedIn && loginButton.getText().equals("Login")) {
+            EmailLoginWindow emailLoginWindow = new EmailLoginWindow(logic, stage, this, prefs);
+            emailLoginWindow.show();
+        } else if (isLoggedIn && loginButton.getText().equals("Login")) {
+            loginButton.setText("Logout");
+            updateLoginStatus();
+        } else if (!isLoggedIn && loginButton.getText().equals("Logout")) {
+            loginButton.setText("Login");
+            updateLoginStatus();
+        } else {
+            try {
+                CommandResult commandResult = logic.execute(EmailLogoutCommand.COMMAND_WORD);
+                raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
+                toggleLoginLogout();
+                updateLoginStatus();
+            } catch (CommandException e) {
+                raise(new NewResultAvailableEvent(e.getMessage()));
+            } catch (ParseException e) {
+                raise(new NewResultAvailableEvent(e.getMessage()));
+            }
+        }
+    }
+
+    /**
+     * Open the email send window
+     */
+    @FXML
+    private void openEmailSendWindow() {
+        ArrayList<PersonCard> tickedPersons = mainWindow.getPersonListPanel().getTickedPersons();
+        String recipients = new String();
+        ArrayList<PersonCard> cardWithOutEmail = new ArrayList<PersonCard>();
+        for (PersonCard card : tickedPersons) {
+            if (card.isTicked()) {
+                if (card.getEmail() != null) {
+                    recipients += card.getEmail() + ";";
+                } else {
+                    cardWithOutEmail.add(card);
+                }
+            }
+        }
+
+        String feedbackPersonsWithoutEmail = "";
+
+        if (cardWithOutEmail.size() != 0) {
+            feedbackPersonsWithoutEmail = "The following person(s) do not have emails or have private emails:\n";
+
+            for (PersonCard card : cardWithOutEmail) {
+                feedbackPersonsWithoutEmail += card.getName() + "\n";
+            }
+        }
+
+        EmailSendWindow emailSendWindow = new EmailSendWindow(logic, stage, recipients, feedbackPersonsWithoutEmail,
+                prefs);
+        emailSendWindow.show();
+    }
+
+    /**
+     * update the current login status label
+     */
+    public void updateLoginStatus() {
+        try {
+            CommandResult commandResult = logic.execute(GetEmailCommand.COMMAND_WORD);
+            if (commandResult.feedbackToUser.equals(GetEmailCommand.MESSAGE_NOT_LOGGED_IN)) {
+                loginStatus.setText("Currently not logged in");
+            } else {
+                loginStatus.setText("Currently logged in as " + commandResult.feedbackToUser);
+            }
+        } catch (CommandException e) {
+            raise(new NewResultAvailableEvent(e.getMessage()));
+        } catch (ParseException e) {
+            raise(new NewResultAvailableEvent(e.getMessage()));
+        }
+    }
+
+    /**
+     * toggle state of login / logout button
+     */
+    public void toggleLoginLogout() {
+        if (loginButton.getText().equals("Login")) {
+            loginButton.setText("Logout");
+        } else {
+            loginButton.setText("Login");
+        }
+    }
+}
+```
+###### \java\seedu\address\ui\FunctionButtons.java
+``` java
+
+```
+###### \java\seedu\address\ui\SearchBar.java
+``` java
+package seedu.address.ui;
+
+import java.util.logging.Logger;
+
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.fxml.FXML;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.Region;
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.NewResultAvailableEvent;
+import seedu.address.logic.Logic;
+import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.exceptions.ParseException;
+
+/**
+ * Search bar on the GUI to filter contacts
+ */
+public class SearchBar extends UiPart<Region> {
+
+    private static final String FXML = "SearchBar.fxml";
+
+    private final Logger logger = LogsCenter.getLogger(SearchBar.class);
+    private Logic logic;
+
+    @FXML
+    private TextField nameField;
+
+    @FXML
+    private TextField phoneField;
+
+    @FXML
+    private TextField emailField;
+
+    @FXML
+    private TextField addressField;
+
+    @FXML
+    private TextField tagsField;
+
+    public SearchBar(Logic logic) {
+        super(FXML);
+        this.logic = logic;
+
+        nameField.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                onSearchbarChanged();
+            }
+        });
+
+        phoneField.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                onSearchbarChanged();
+            }
+        });
+
+        addressField.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                onSearchbarChanged();
+            }
+        });
+
+        emailField.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                onSearchbarChanged();
+            }
+        });
+
+        tagsField.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                onSearchbarChanged();
+            }
+        });
+    }
+
+    /**
+     * Fires a new FindContainsCommand everytime search bar changes
+     */
+    @FXML
+    private void onSearchbarChanged() {
+        String commandString = "find_contain ";
+
+        if (!nameField.getText().equals("")) {
+            commandString += "n/" + nameField.getText() + " ";
+        }
+
+        if (!phoneField.getText().equals("")) {
+            commandString += "p/" + phoneField.getText() + " ";
+        }
+
+        if (!emailField.getText().equals("")) {
+            commandString += "e/" + emailField.getText() + " ";
+        }
+
+        if (!addressField.getText().equals("")) {
+            commandString += "a/" + addressField.getText() + " ";
+        }
+
+        if (!tagsField.getText().equals("")) {
+            commandString += "r/" + tagsField.getText() + " ";
+        }
+
+        if (commandString.equals("find_contain ")) {
+            try {
+                CommandResult commandResult = logic.execute("list");
+                logger.info("Result: " + commandResult.feedbackToUser);
+                raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
+            } catch (ParseException e) {
+                //wont happen
+            } catch (CommandException e) {
+                //wont happen
+            }
+        } else {
+            try {
+                CommandResult commandResult = logic.execute(commandString);
+                logger.info("Result: " + commandResult.feedbackToUser);
+                raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
+            } catch (ParseException e) {
+                //wont happen
+            } catch (CommandException e) {
+                //wont happen
+            }
+        }
+    }
+}
+```
+###### \java\seedu\address\ui\SearchBar.java
+``` java
+
 ```

@@ -1,5 +1,5 @@
 # KhorSL
-###### /java/seedu/address/commons/util/StringUtilTest.java
+###### \java\seedu\address\commons\util\StringUtilTest.java
 ``` java
     //---------------- Tests for containsWordIgnoreCaseAndCharacters --------------------------------------
 
@@ -392,7 +392,7 @@
         assertTrue(actual.equals(expected));
     }
 ```
-###### /java/seedu/address/logic/commands/AddMultipleCommandIntegrationTest.java
+###### \java\seedu\address\logic\commands\AddMultipleCommandIntegrationTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) for {@code AddMultipleCommand}.
@@ -499,7 +499,7 @@ public class AddMultipleCommandIntegrationTest extends GuiUnitTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/AddMultipleCommandTest.java
+###### \java\seedu\address\logic\commands\AddMultipleCommandTest.java
 ``` java
 public class AddMultipleCommandTest extends GuiUnitTest {
 
@@ -685,7 +685,7 @@ public class AddMultipleCommandTest extends GuiUnitTest {
 
 }
 ```
-###### /java/seedu/address/logic/commands/FindCommandTest.java
+###### \java\seedu\address\logic\commands\FindCommandTest.java
 ``` java
 
 /**
@@ -815,7 +815,7 @@ public class FindCommandTest extends GuiUnitTest {
 
     }
 ```
-###### /java/seedu/address/logic/commands/MergeCommandTest.java
+###### \java\seedu\address\logic\commands\MergeCommandTest.java
 ``` java
 
 /**
@@ -994,7 +994,7 @@ public class MergeCommandTest extends GuiUnitTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/FindCommandParserTest.java
+###### \java\seedu\address\logic\parser\FindCommandParserTest.java
 ``` java
 public class FindCommandParserTest {
 
@@ -1086,7 +1086,7 @@ public class FindCommandParserTest {
 
 }
 ```
-###### /java/seedu/address/logic/parser/MergeCommandParserTest.java
+###### \java\seedu\address\logic\parser\MergeCommandParserTest.java
 ``` java
 public class MergeCommandParserTest {
     private MergeCommandParser parser = new MergeCommandParser();
@@ -1107,7 +1107,7 @@ public class MergeCommandParserTest {
 
 }
 ```
-###### /java/seedu/address/model/person/PersonContainsKeywordsPredicateTest.java
+###### \java\seedu\address\model\person\PersonContainsKeywordsPredicateTest.java
 ``` java
 public class PersonContainsKeywordsPredicateTest extends GuiUnitTest {
 
@@ -1214,7 +1214,7 @@ public class PersonContainsKeywordsPredicateTest extends GuiUnitTest {
     }
 }
 ```
-###### /java/systemtests/AddMultipleCommandSystemTest.java
+###### \java\systemtests\AddMultipleCommandSystemTest.java
 ``` java
 public class AddMultipleCommandSystemTest extends AddressBookSystemTest {
 
@@ -1304,7 +1304,7 @@ public class AddMultipleCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
     }
 ```
-###### /java/systemtests/MergeCommandSystemTest.java
+###### \java\systemtests\MergeCommandSystemTest.java
 ``` java
 public class MergeCommandSystemTest extends AddressBookSystemTest {
 
