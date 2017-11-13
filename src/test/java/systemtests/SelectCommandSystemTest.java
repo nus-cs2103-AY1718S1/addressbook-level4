@@ -80,29 +80,41 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, validIndex);
 
         /* Case: invalid index (0) -> rejected */
-//        assertCommandFailure(SelectCommand.COMMAND_WORD + " " + 0,
-//                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
-//
-//        /* Case: invalid index (-1) -> rejected */
-//        assertCommandFailure(SelectCommand.COMMAND_WORD + " " + -1,
-//                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
-//
-//        /* Case: invalid arguments (alphabets) -> rejected */
-//        assertCommandFailure(SelectCommand.COMMAND_WORD + " abc",
-//                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
-//
-//        /* Case: invalid arguments (extra argument) -> rejected */
-//        assertCommandFailure(SelectCommand.COMMAND_WORD + " 1 abc",
-//                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
-//
-//        /* Case: mixed case command word -> rejected */
-//        assertCommandFailure("SeLeCt 1", MESSAGE_UNKNOWN_COMMAND);
+        /*
+        assertCommandFailure(SelectCommand.COMMAND_WORD + " " + 0,
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
+        */
+
+        /* Case: invalid index (-1) -> rejected */
+        /*
+        assertCommandFailure(SelectCommand.COMMAND_WORD + " " + -1,
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
+        */
+
+        /* Case: invalid arguments (alphabets) -> rejected */
+        /*
+        assertCommandFailure(SelectCommand.COMMAND_WORD + " abc",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
+        */
+
+        /* Case: invalid arguments (extra argument) -> rejected */
+        /*
+        assertCommandFailure(SelectCommand.COMMAND_WORD + " 1 abc",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
+        */
+
+        /* Case: mixed case command word -> rejected */
+        /*
+        assertCommandFailure("SeLeCt 1", MESSAGE_UNKNOWN_COMMAND);
+        */
 
         /* Case: select from empty address book -> rejected */
-//        executeCommand(ClearCommand.COMMAND_WORD);
-//        assert getModel().getAddressBook().getPersonList().size() == 0;
-//        assertCommandFailure(SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased(),
-//                MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        /*
+        executeCommand(ClearCommand.COMMAND_WORD);
+        assert getModel().getAddressBook().getPersonList().size() == 0;
+        assertCommandFailure(SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased(),
+                MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        */
     }
 
     /**
