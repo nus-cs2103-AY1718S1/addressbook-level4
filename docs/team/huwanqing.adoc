@@ -86,7 +86,16 @@ include::../DeveloperGuide.adoc[tag=model]
 === Other contributions
 
 * Code refinement in Model and Logic component.
-* Design of Planno Data
+* Suggestion report to other teams in acceptance testing. +
+    (issue: [https://github.com/CS2103AUG2017-T15-B3/main/issues/121[#121]])
+* Optimization in UI segment. +
+    (pull requests: [https://github.com/CS2103AUG2017-W14-B4/main/pull/127[#127]] [https://github.com/CS2103AUG2017-W14-B4/main/pull/88[#88]])
+* Wrote tests for Model component. +
+    (pull request: [https://github.com/CS2103AUG2017-W14-B4/main/pull/126[#126]])
+
+=== Enhancement Proposed:
+
+Users can send messages through this app.
 
 == Project: PowerPointLabs
 
