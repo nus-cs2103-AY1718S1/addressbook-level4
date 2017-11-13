@@ -194,7 +194,7 @@ Returns list of persons sorted by name added in ascending order
 Returns list of persons sorted by phone in ascending order
 * `sort t/dsc` +
 Returns list of persons sorted by time added in descending order
-// tag::sort[]
+// end::sort[]
 
 // tag::delete[]
 === Deleting a person : `delete` _[Since v1.2]_
@@ -735,6 +735,14 @@ You can synchronize contact list on your computer with the contact list in the `
 
 Format: `sync`
 // end::sync[]
+
+// tag::s-nusmods[]
+=== Fetching NUSMods timetable into calendar : `s-nusmods` _[Coming in v2.0]_
+
+By using this command, you can fetch your timetable from NUSMods into your calendar
+
+Format: `s-nusmods l/LINK`
+// end::s-nusmods[]
 
 === Clearing all entries : `clear`
 
