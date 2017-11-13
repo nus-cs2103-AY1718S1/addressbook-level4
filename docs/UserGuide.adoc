@@ -169,7 +169,7 @@ Returns any name starting with Jo, eg: `John`, `Joe` or `Joy`
 
 Alternatively, this command can perform by directly inputting `PARTIALNAME` into the search box right above the contact panel.
 
-image::searchbox.png[width="380"]
+image::searchBox.png[width="380"]
 
 // end::pfind[]
 === Deleting a person : `delete`
@@ -336,14 +336,14 @@ Person name will be highlighted upon hover to indicate it is a link
 === Finding insurance from insurance panel list on the right
 `since v1.4`
 
-image::insurancePanel.PNG[width="380"]
+image::insurancePanel.png[width="380"]
 
 Specific insurance contract can be displayed directly by selecting them on this panel
 
 === Tracing all insurance files the current person selected is involved in
 `since v1.4`
 
-image::linkToInsurance.PNG[width="380"]
+image::linkToInsurance.png[width="380"]
 List of all related insurance contracts are now displayed on person profile page. These entries can be clicked on which will switch up the selected insurance page
 // end::linkAllProfileAndInsurance[]
 

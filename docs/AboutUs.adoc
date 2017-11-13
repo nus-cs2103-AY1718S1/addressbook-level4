@@ -39,7 +39,7 @@ PR review, system tester and bug searching/debugging.
 image::rsjunior37.jpg[width="150", align="left"]
 image:githubicon.png[Github Icon, 40, 40, link="https://github.com/RSJunior37"] image:portfolio.png[Portfolio Icon, 40, 40, link="team/rattaninsiripornpitak.adoc"]
 
-Role: Developer +
+Role: In charge of `Ui` component and documentation +
 Responsibilities:
 Oversees features related to Ui Component, providing skeletons, giving suggestions and ensuring all the different parts fit together, including guitest handlers. Also updates Ui-related images and diagrams regularly.
 

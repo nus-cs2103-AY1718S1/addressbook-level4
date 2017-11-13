@@ -32,7 +32,7 @@
                               <Label fx:id="owner" styleClass="dynamic-labels" text="\$owner" />
                               <Label fx:id="insured" styleClass="dynamic-labels" text="\$insured" />
                               <Label fx:id="beneficiary" styleClass="dynamic-labels" text="\$beneficiary" />
-                              <Label fx:id="contractName" styleClass="dynamic-labels" text="\$contractName" />
+                              <Label fx:id="contractFileName" styleClass="dynamic-labels" text="\$contractName" />
                               <Label fx:id="premium" styleClass="dynamic-labels" text="\$premium" />
                               <Label fx:id="signingDate" styleClass="dynamic-labels" text="\$signingDate" />
                               <Label fx:id="expiryDate" styleClass="dynamic-labels" text="\$expiryDate" />

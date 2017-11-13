@@ -30,7 +30,8 @@ import seedu.address.model.insurance.ReadOnlyInsurance;
  */
 public class InsuranceProfilePanel extends UiPart<Region> {
     private static final String FXML = "InsuranceProfilePanel.fxml";
-    private static final String PDFFOLDERPATH = "data/";
+    private static final String PDF_FOLDER_PATH = "data/";
+    private static final String PDF_EXTENSION = ".pdf";
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     private File insuranceFile;
@@ -55,7 +56,7 @@ public class InsuranceProfilePanel extends UiPart<Region> {
     @FXML
     private Label expiryDate;
     @FXML
-    private Label contractName;
+    private Label contractFileName;
 
     public InsuranceProfilePanel() {
         super(FXML);
@@ -96,7 +97,7 @@ public class InsuranceProfilePanel extends UiPart<Region> {
         owner.setText(null);
         insured.setText(null);
         beneficiary.setText(null);
-        contractName.setText(null);
+        contractFileName.setText(null);
         premium.setText(null);
         signingDate.setText(null);
         expiryDate.setText(null);
@@ -108,13 +109,15 @@ public class InsuranceProfilePanel extends UiPart<Region> {
      * @param insurance
      */
     private void initializeContractFile(ReadOnlyInsurance insurance) {
-        insuranceFile =  new File(PDFFOLDERPATH + insurance.getContractFileName());
+        insuranceFile =  new File(PDF_FOLDER_PATH + insurance.getContractFileName()
+                + (insurance.getContractFileName().toString().endsWith(PDF_EXTENSION) ? "" : PDF_EXTENSION));
+
         if (isFileExists(insuranceFile)) {
             activateLinkToInsuranceFile();
         } else {
-            contractName.getStyleClass().clear();
-            contractName.getStyleClass().add("missing-file");
-            contractName.setOnMouseClicked(event -> {
+            contractFileName.getStyleClass().clear();
+            contractFileName.getStyleClass().add("missing-file");
+            contractFileName.setOnMouseClicked(event -> {
                 FileChooser.ExtensionFilter extensionFilter =
                         new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf");
                 FileChooser chooser = new FileChooser();
@@ -139,13 +142,13 @@ public class InsuranceProfilePanel extends UiPart<Region> {
      *  Enable the link to open contract pdf file and adjusting the text hover highlight
      */
     private void activateLinkToInsuranceFile() {
-        contractName.getStyleClass().clear();
-        contractName.getStyleClass().add("valid-file");
-        contractName.setOnMouseClicked(event -> {
+        contractFileName.getStyleClass().clear();
+        contractFileName.getStyleClass().add("valid-file");
+        contractFileName.setOnMouseClicked(event -> {
             try {
                 Desktop.getDesktop().open(insuranceFile);
             } catch (IOException ee) {
-                logger.info("File do not exist: " + PDFFOLDERPATH + insurance.getContractFileName());
+                logger.info("File do not exist: " + PDF_FOLDER_PATH + insurance.getContractFileName());
             }
         });
     }
@@ -161,7 +164,7 @@ public class InsuranceProfilePanel extends UiPart<Region> {
         owner.textProperty().bind(Bindings.convert(insurance.getOwner().nameProperty()));
         insured.textProperty().bind(Bindings.convert(insurance.getInsured().nameProperty()));
         beneficiary.textProperty().bind(Bindings.convert(insurance.getBeneficiary().nameProperty()));
-        contractName.textProperty().bind(Bindings.convert(insurance.contractFileNameProperty()));
+        contractFileName.textProperty().bind(Bindings.convert(insurance.contractFileNameProperty()));
         premium.textProperty().bind(Bindings.convert(insurance.premiumProperty()));
         signingDate.textProperty().bind(Bindings.convert(insurance.signingDateStringProperty()));
         expiryDate.textProperty().bind(Bindings.convert(insurance.expiryDateStringProperty()));
