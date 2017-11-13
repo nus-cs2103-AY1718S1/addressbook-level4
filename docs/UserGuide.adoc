@@ -516,23 +516,6 @@ Deletes the 2nd parcel in the Ark.
 `delete 1` +
 Deletes the 1st parcel in the results of the `find` command.
 
-//tag::deleteTag[]
-=== Deleting a tag : `deleteTag`
-
-Deletes the specified tag from all parcels in Ark. +
-Format: `deleteTag TAG`
-
-****
-* The tag to delete is case sensitive.
-* The tag to delete must actually be tagged to a parcel.
-****
-
-Examples:
-
-* `deleteTag urgent`
-Deletes the tag "urgent" from each parcel in the address book.
-//end::deleteTag[]
-
 === Selecting a parcel : `select`
 
 Selects the parcel identified by the index number used in the last parcel listing
