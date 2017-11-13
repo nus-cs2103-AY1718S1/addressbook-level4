@@ -121,6 +121,8 @@ Format: `addE en/EVENT_NAME ed/EVENT_DESCRIPTION et/EVENT_TIME`
 
 ****
 * You need to type EVENT_TIME as a date format DD/MM/YYYY (Use "/" insetead of "-")
+* If the day or month have only 1 digit, please append '0' before it (e.g. For 2017 April 2nd, please type 02/04/2017 instead of 2/4/2017)
+* The EVENT_TIME must be after 01/01/1900
 * Every event will have a number indicating the of days till or since the event date.
 ** If the event date has passed, an up arrow will be appended to the numbr to indicate how many days have passed since the evnet date.
 ** If the event date is not yet reached, a down arrow will be appended to the number to indicate the number of days till the event.
