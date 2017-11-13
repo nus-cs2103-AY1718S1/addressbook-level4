@@ -578,24 +578,24 @@ New XML element for UniquePhoneList and new XmlAdaptedPhone class with XML value
 ==== Ui
 All the additional phone numbers in the UniquePhoneList will be displayed on the PersonalInformationPanel.
 
-image::afterAdd.jpg[width="800"]
+image::afterAdd.jpg[width="500"]
 After each command, the result will be show in the `ResultDisplay` box. +
 
 * If `add` is successful, the following message will be on the `ResultDisplay` box.
 
-image::addSuccess.jpg[width="800"]
+image::addSuccess.jpg[width="500"]
 
 * If `add` fails due to duplicate number, the following error message will be shown to users.
 
-image::addFailed.jpg[width="800"]
+image::addFailed.jpg[width="500"]
 
 * If `remove` is successful, the following message will be on the `ResultDisplay` box.
 
-image::removeSuccess.jpg[width="800"]
+image::removeSuccess.jpg[width="500"]
 
 * If `remove` fails due to number cannot be found, the following error message will be shown to users.
 
-image::removeFailed.jpg[width="800"]
+image::removeFailed.jpg[width="500"]
 
 ==== Design Consideration
 
@@ -654,7 +654,7 @@ is simply no internet connection.
 **Aspect:** UI +
 **Alternative 1 (current choice):** Display the weather information on the statusBarFooter. +
 **Pros:** Users can see the weather report instantly when they open the Contact Book, without having to go through the trouble to use command to search or click open a new window. +
-**Cons:** Unable to show a detailed weather report due to the limited space on the statusBarFooter.+
+**Cons:** Unable to show a detailed weather report due to the limited space on the statusBarFooter. +
 **Alternative 2:** Display on a new window when search for command word/click open the window. +
 **Pros:** More detailed report available. +
 **Cons:** Inconvenient and slow.
