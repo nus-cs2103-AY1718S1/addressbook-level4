@@ -674,7 +674,7 @@ destination.
 
 **Aspect:** Purpose and use for selecting a meeting +
 **Alternative 1 (current implementation):** Google Maps is loaded in the browser panel +
-**Pros:** Allows developer to make use of the already established maps. +
+**Pros:** Allows developer to make use of the already established Google Maps. +
 **Cons:** Requires user to input valid addresses instead of user-based inputs like "Alex's Home". +
 **Alternative 2 (future option):** Allows user to choose what to load at the browser panel such as connecting to social media platforms to interact with meeting partners +
 **Pros:** Improve flexibility and choices to suit different needs of users.

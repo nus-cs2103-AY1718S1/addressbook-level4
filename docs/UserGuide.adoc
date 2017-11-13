@@ -127,8 +127,8 @@ longer be shown.
 // tag::googlemaps[]
 === Loading of Meeting Location in Google Maps
 
-Upon selecting a meeting, the location of meeting will be automatically entered as the destination in Google Maps. The detailed navigational route and directions can be obtained thereafter.
-The screenshot below shows the loaded Google Maps upon entering the `selectmeeting` command.
+Upon selecting a meeting, the location of your meeting will be automatically entered as the destination in Google Maps. You can then obtain the detailed navigational route and directions.
+The screenshot below shows you the loaded Google Maps upon entering the `selectmeeting` command.
 
 image::googlemaps.png[width="800"]
 _Figure 4.6.1: GoogleMaps_
@@ -293,7 +293,7 @@ _Figure 5.8.1: Meeting Cards for Group Meeting_
 +
 // end::groupmeeting[]
 * When you are attempting to add a meeting with the same date and time as a pre-existing one in ScheduBook, the following
-error will be shown, preventing you from having 2 different meetings with exactly the same date and time
+error will be shown, preventing you from creating 2 different meetings with exactly the same date and time
 +
 image::MeetingClash.png[width="500"]
 +
