@@ -1919,6 +1919,9 @@ public class SampleDataUtil {
  * JAXB-friendly version of the Person.
  */
 public class XmlAdaptedPerson {
+    private static final Logger logger = LogsCenter.getLogger(XmlAdaptedPerson.class);
+    private static final String IMAGE_NOT_FOUND = "One avatar has been deleted or moved.\n%1$s";
+
     @XmlElement
     private String avatar;
 
@@ -1982,8 +1985,7 @@ public class XmlAdaptedPerson {
             try {
                 person.setAvatar(new Avatar(avatar));
             } catch (IllegalValueException ive) {
-                // TODO: Better error handling
-                ive.printStackTrace();
+                logger.warning(String.format(IMAGE_NOT_FOUND, ive.getMessage()));
             }
         }
 

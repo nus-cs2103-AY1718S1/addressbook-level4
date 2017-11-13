@@ -791,6 +791,42 @@ public class EditEventCommandParserTest {
     }
 }
 ```
+###### \java\seedu\address\logic\parser\person\FbCommandParserTest.java
+``` java
+public class FbCommandParserTest {
+    private final FbCommandParser parser = new FbCommandParser();
+
+    @Test
+    public void parse_validIndex_checkCorrectness() {
+        Command expected = new FbCommand(Index.fromOneBased(1));
+        assertParseSuccess(parser, " 1 ", expected);
+    }
+
+    @Test
+    public void parse_invalidIndex_expectException() {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT , MESSAGE_USAGE);
+        assertParseFailure(parser, " -1 ", expectedMessage);
+    }
+}
+```
+###### \java\seedu\address\logic\parser\person\GMapCommandParserTest.java
+``` java
+public class GMapCommandParserTest {
+    private final GMapCommandParser parser = new GMapCommandParser();
+
+    @Test
+    public void parse_validIndex_checkCorrectness() {
+        Command expected = new GMapCommand(Index.fromOneBased(1));
+        assertParseSuccess(parser, " 1 ", expected);
+    }
+
+    @Test
+    public void parse_invalidIndex_expectException() {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT , MESSAGE_USAGE);
+        assertParseFailure(parser, " -1 ", expectedMessage);
+    }
+}
+```
 ###### \java\seedu\address\model\AddressBookTest.java
 ``` java
     @Test
@@ -852,6 +888,7 @@ public class EventTest {
     private static DateTime dateTime;
     private static Address address;
     private static Set<Property> properties;
+    private static List<Reminder> reminders;
 
     @BeforeClass
     public static void setUp() throws Exception {
@@ -865,6 +902,8 @@ public class EventTest {
         properties.add(name);
         properties.add(dateTime);
         properties.add(address);
+
+        reminders = new ArrayList<>();
     }
 
     @Test
@@ -995,6 +1034,18 @@ public class UniqueEventListTest {
         assertEquals(1, events.get(0).getReminders().size());
     }
 
+```
+###### \java\seedu\address\model\person\PersonTest.java
+``` java
+    @Test
+    public void hashCode_checkCorrectness() {
+        Person person = new Person(name, phone, email, address, Collections.emptySet());
+        assertNotNull(person);
+
+        assertEquals(Objects.hash(person.nameProperty(), person.phoneProperty(), person.emailProperty(),
+                person.addressProperty(), person.tagProperty()), person.hashCode());
+    }
+}
 ```
 ###### \java\seedu\address\model\property\DateTimeTest.java
 ``` java
