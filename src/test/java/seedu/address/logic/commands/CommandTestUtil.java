@@ -101,7 +101,12 @@ public class CommandTestUtil {
     public static final String VALID_URL = "https://www.google.com.sg/contacts?day=monday";
     public static final String VALID_URL_ENCODED = "https%3A%2F%2Fwww.google.com.sg%2Fcontacts%3Fday%3Dmonday";
     public static final String INVALID_URL_COMMA = " https://123,tg/";
+    public static final String INVALID_URL_MALFORMED = " https,://ww/";
     public static final String IMPORT_NO_PATH = "--nusmods ";
+
+    public static final String VALID_IMPORT_XML_PATH = "something.xml";
+    public static final String VALID_IMPORT_SCRIPT_PATH = "something.bo";
+    public static final String VALID_EXPORT_PATH = "something.xml";
 
     public static final String NUSMODS_VALID_URL =
             " https://nusmods.com/timetable/2017-2018/sem1?CS2103T[TUT]=C01";
@@ -113,8 +118,10 @@ public class CommandTestUtil {
             " https://nusmods.com/timetable/2017-2019/sem1?CS2103T[TUT]=C01";
     public static final String NUSMODS_VALID_IMPORT = "--nusmods " + NUSMODS_VALID_URL;
     public static final String NUSMODS_INVALID_IMPORT = "--nusmods " + NUSMODS_INVALID_URL;
+    public static final String NUSMODS_MALFORMED_URL = "--nusmods " + INVALID_URL_MALFORMED;
     public static final String NOT_FROM_NUSMODS_IMPORT = "--nusmods " + VALID_URL;
-    public static final String VALID_EXPORT_PATH = "something.xml";
+    public static final String XML_VALID_IMPORT = "--xml " + VALID_IMPORT_XML_PATH;
+    public static final String SCRIPT_VALID_IMPORT = "--script " + VALID_IMPORT_SCRIPT_PATH;
 
     static {
         PropertyManager.initializePropertyManager();

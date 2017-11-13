@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Logger;
 
 import javax.xml.bind.annotation.XmlElement;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Avatar;
 import seedu.address.model.person.Person;
@@ -21,6 +23,9 @@ import seedu.address.model.tag.Tag;
  * JAXB-friendly version of the Person.
  */
 public class XmlAdaptedPerson {
+    private static final Logger logger = LogsCenter.getLogger(XmlAdaptedPerson.class);
+    private static final String IMAGE_NOT_FOUND = "One avatar has been deleted or moved.\n%1$s";
+
     @XmlElement
     private String avatar;
 
@@ -82,8 +87,7 @@ public class XmlAdaptedPerson {
             try {
                 person.setAvatar(new Avatar(avatar));
             } catch (IllegalValueException ive) {
-                // TODO: Better error handling
-                ive.printStackTrace();
+                logger.warning(String.format(IMAGE_NOT_FOUND, ive.getMessage()));
             }
         }
 

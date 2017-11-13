@@ -551,6 +551,18 @@ public class ImportCommandParserTest {
     public void parse_allFieldsPresent_success() throws Exception {
         ImportCommand expected = new ImportNusmodsCommand(new URL(NUSMODS_VALID_URL));
         assertParseSuccess(parser, NUSMODS_VALID_IMPORT, expected);
+
+        expected = new ImportXmlCommand(VALID_IMPORT_XML_PATH.trim());
+        assertParseSuccess(parser, XML_VALID_IMPORT, expected);
+
+        // This is because ImportScriptCommand has not been implemented, coming in v2.0
+        assertParseSuccess(parser, SCRIPT_VALID_IMPORT, null);
+    }
+
+    @Test
+    public void parse_noDoubleHyphen_expectXmlCommand() {
+        ImportCommand expected = new ImportXmlCommand(VALID_IMPORT_XML_PATH.trim());
+        assertParseSuccess(parser, VALID_IMPORT_XML_PATH, expected);
     }
 
     @Test
@@ -566,11 +578,14 @@ public class ImportCommandParserTest {
     }
 
     @Test
-    public void parse_invalidUrlForNusMods_expectException() {
+    public void  checkNusmodsImport_invalidUrlForNusMods_expectException() {
         assertParseFailure(parser, NOT_FROM_NUSMODS_IMPORT,
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, ImportNusmodsCommand.MESSAGE_USAGE));
 
         assertParseFailure(parser, NUSMODS_INVALID_IMPORT, String.format(INVALID_URL, ""));
+
+        assertParseFailure(parser, NUSMODS_MALFORMED_URL, String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                ImportNusmodsCommand.MESSAGE_USAGE));
     }
 }
 ```
@@ -755,6 +770,116 @@ public class ArgumentMultimapTest {
     }
 }
 ```
+###### \java\seedu\address\model\event\UniqueEventListTest.java
+``` java
+    @Test
+    public void add_allPresent_checkCorrectness() throws Exception {
+        UniqueEventList list = new UniqueEventList();
+        assertEquals(0, list.asObservableList().size());
+
+        list.add(EVENT1);
+        assertEquals(1, list.asObservableList().size());
+
+        list.add(EVENT2);
+        assertEquals(2, list.asObservableList().size());
+    }
+
+    @Test
+    public void add_haveDuplicate_expectException() throws Exception {
+        UniqueEventList list = new UniqueEventList();
+        assertEquals(0, list.asObservableList().size());
+
+        list.add(EVENT1);
+        assertEquals(1, list.asObservableList().size());
+
+        thrown.expect(DuplicateEventException.class);
+        list.add(EVENT1);
+        assertEquals(1, list.asObservableList().size());
+    }
+
+    @Test
+    public void addEvents_success_checkCorrectness() throws Exception {
+        UniqueEventList list1 = new UniqueEventList();
+        list1.add(EVENT1);
+        list1.add(EVENT2);
+
+        UniqueEventList list2 = new UniqueEventList();
+        list2.addEvents(Arrays.asList(EVENT1, EVENT2));
+
+        assertEquals(list1, list2);
+    }
+
+    @Test
+    public void sort_basedOnTime_checkCorrectness() throws Exception {
+        UniqueEventList list = new UniqueEventList();
+        list.add(EVENT1);
+        list.add(EVENT2);
+        assertEquals(2, list.asObservableList().size());
+
+        list.sortEvents();
+        assertEquals(EVENT1, list.asObservableList().get(0));
+        assertEquals(EVENT2, list.asObservableList().get(1));
+    }
+
+    @Test
+    public void setEvent_changeSingleEvent_checkCorrectness() throws Exception {
+        UniqueEventList list = new UniqueEventList();
+        list.add(EVENT1);
+        assertEquals(1, list.asObservableList().size());
+
+        list.setEvent(EVENT1, EVENT2);
+        assertEquals(EVENT2, list.asObservableList().get(0));
+    }
+
+    @Test
+    public void setEvent_newEventAlreadyExist_expectException() throws Exception {
+        UniqueEventList list = new UniqueEventList();
+        list.add(EVENT1);
+        list.add(EVENT2);
+        assertEquals(2, list.asObservableList().size());
+
+        thrown.expect(DuplicateEventException.class);
+        list.setEvent(EVENT1, EVENT2);
+        assertEquals(2, list.asObservableList().size());
+        assertEquals(EVENT1, list.asObservableList().get(0));
+    }
+
+    @Test
+    public void setEvent_eventNotFound_expectException() throws Exception {
+        UniqueEventList list = new UniqueEventList();
+        list.add(EVENT1);
+        assertEquals(1, list.asObservableList().size());
+
+        thrown.expect(EventNotFoundException.class);
+        list.setEvent(EVENT2, EVENT1);
+        assertEquals(1, list.asObservableList().size());
+        assertEquals(EVENT1, list.asObservableList().get(0));
+    }
+
+    @Test
+    public void remove_success_checkCorrectness() throws Exception {
+        UniqueEventList list = new UniqueEventList();
+        list.add(EVENT1);
+        list.add(EVENT2);
+        assertEquals(2, list.asObservableList().size());
+
+        list.remove(EVENT1);
+        assertEquals(1, list.asObservableList().size());
+        assertEquals(EVENT2, list.asObservableList().get(0));
+    }
+
+    @Test
+    public void equal_checkCorrectness() {
+        UniqueEventList list1 = new UniqueEventList();
+        UniqueEventList list2 = new UniqueEventList();
+
+        assertEquals(list1, list1);
+        assertEquals(list1, list2);
+        assertNotEquals(list1, null);
+        assertNotEquals(list1, 1);
+    }
+}
+```
 ###### \java\seedu\address\model\ModelManagerTest.java
 ``` java
     @Test
@@ -903,6 +1028,32 @@ public class PersonTest {
     public void create_viaNaturalLanguage_checkCorrectness() throws Exception {
         assertEquals(new DateTime(VALID_DATE_EVENT1), new DateTime(VALID_NATURAL_DATE_EVENT1));
         assertEquals(new DateTime(VALID_DATE_EVENT2), new DateTime(VALID_NATURAL_DATE_EVENT2));
+    }
+}
+```
+###### \java\seedu\address\model\property\NameContainsKeywordsPredicateTest.java
+``` java
+    @Test
+    public void testForEvent_nameContainsKeywords_returnsTrue() {
+        // One keyword
+        NameContainsKeywordsPredicate predicate = generatePredicate("CS2103T");
+        assertTrue(predicate.test(new EventBuilder().withName("CS2103T Tutorial").build()));
+
+        // Multiple keywords
+        predicate = generatePredicate("CS2103T", "Tutorial");
+        assertTrue(predicate.test(new EventBuilder().withName("CS2103T Tutorial").build()));
+
+        // Only one matching keyword
+        predicate = generatePredicate("CS2103T", "Examination");
+        assertTrue(predicate.test(new EventBuilder().withName("CS2103T Tutorial").build()));
+
+        // Mixed-case keywords
+        predicate = generatePredicate("cs2103T", "tutorial");
+        assertTrue(predicate.test(new EventBuilder().withName("CS2103T Tutorial").build()));
+    }
+
+    private NameContainsKeywordsPredicate generatePredicate(String... names) {
+        return new NameContainsKeywordsPredicate(Arrays.asList(names));
     }
 }
 ```
