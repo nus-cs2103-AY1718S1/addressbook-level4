@@ -632,7 +632,7 @@ Format: `exit`
 // tag::saveload[]
 === Saving the data
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
+Address book data is saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually. +
 If address book data can be loaded successfully, backup address book data is saved upon starting the program.
 
