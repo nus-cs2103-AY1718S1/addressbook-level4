@@ -77,7 +77,7 @@ public class Person implements ReadOnlyPerson {
         try {
             uniqueSocialInfoList = new UniqueSocialInfoList(source.getSocialInfos());
         } catch (DuplicateDataException dde) {
-            assert false: "A ReadOnlyPerson should not have duplicate social types in it's social infos";
+            assert false : "A ReadOnlyPerson should not have duplicate social types in it's social infos";
         }
 
         return uniqueSocialInfoList;
