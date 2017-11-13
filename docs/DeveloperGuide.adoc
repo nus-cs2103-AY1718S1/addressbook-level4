@@ -1057,7 +1057,6 @@ image::LocationActivityDiagram.png[width="800]
 _Figure 5.10. Location Activity Diagram_
 
 ===== Design Considerations:
-
 *Aspect:* How the Google Maps URL is passed to the BrowserPanel +
 *Alternative 1 (current choice):* Use a `showUrlEvent` to send the URL to the `MainWindow` subscriber +
 *Pros:* It allows `LocationCommand` to be more cohesive as it does not need to have an extra method to deal with the logic +
