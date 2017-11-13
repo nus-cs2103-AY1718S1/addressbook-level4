@@ -17,7 +17,6 @@ import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.meeting.exceptions.DuplicateMeetingException;
 import seedu.address.model.meeting.exceptions.MeetingClashException;
 import seedu.address.model.meeting.exceptions.MeetingNotFoundException;
-import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author nelsonqyj
 /**
@@ -163,6 +162,7 @@ public class UniqueMeetingList implements Iterable<Meeting> {
      * @param target
      * @param toAdd
      */
+    /*
     public void editPerson(ReadOnlyPerson target, ReadOnlyPerson toAdd) {
         requireNonNull(toAdd);
         internalMeetingList.forEach(meeting -> {
@@ -172,6 +172,7 @@ public class UniqueMeetingList implements Iterable<Meeting> {
             }
         });
     }
+    */
     //@@author nelsonqyj
     /**
      * Removes the equivalent meeting from the list.

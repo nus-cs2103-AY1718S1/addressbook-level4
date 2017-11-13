@@ -41,7 +41,7 @@ This app will not work with earlier versions of Java 8.
 +
 image::AddresbookLabels.png[width="790"]
 +
-_Figure 1: Application GUI_
+_Figure 3.1: Application GUI_
 +
 &#160;a. Command Box  &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; b. Message Box +
 &#160;c. Contacts List &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
@@ -68,7 +68,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 The meeting card provides you the information of the meetings that you have scheduled. As you can see from the Figure 2, the `NameMeeting`, `DateTime`, `PersonToMeet`, `PhoneNum` and `Location` are all shown to remind you of your certain meeting.
 
 image::MeetingCard.png[width="200"]
-_Figure 2: Meeting Card_
+_Figure 4.1.1: Meeting Card_
 
 === Meeting Card Colours
 
@@ -79,19 +79,19 @@ To show you the nearing of upcoming meetings, colours are assigned to the card b
 +
 image::MeetingCard1.png[width="200"]
 +
-_Figure 3A: Dark red Meeting Card_
+_Figure 4.2.1: Dark red Meeting Card_
 +
     * `red` : Meeting is in next 48 hours.
 +
 image::MeetingCard2.png[width="200"]
 +
-_Figure 3B: Red Meeting Card_
+_Figure 4.2.2: Red Meeting Card_
 +
     * `orangeRed` : Meeting is in next 72 hours.
 +
 image::MeetingCard3.png[width="200"]
 +
-_Figure 3C: Orange Meeting Card_
+_Figure 4.2.3: Orange Meeting Card_
 
 // end::meetingCard[]
 
@@ -100,7 +100,7 @@ _Figure 3C: Orange Meeting Card_
 
 
 image::Reminder.png[width="600"]
-_Figure 4: Pop-up Notification_
+_Figure 4.3.1: Pop-up Notification_
 
 . Upon opening up the application, if there is a meeting(s) on the same day, you will be reminded via a pop-up message
 . As shown to you in the figure 2, the information regarding the next upcoming meeting is displayed in the message
@@ -120,7 +120,7 @@ Upon selecting a meeting, the location of meeting will be automatically entered 
 The screenshot below shows the loaded Google Maps upon entering the `selectmeeting` command.
 
 image::googlemaps.png[width="800"]
-_Figure 5: GoogleMaps_
+_Figure 4.5.1: GoogleMaps_
 
 // end::googlemaps[]
 
@@ -267,14 +267,14 @@ Input format for `IMPORTANCE` is 0-2.
 +
 image::MeetingGroup.png[width="200"]
 +
-_Figure 6A: Meeting Cards for Group Meeting_
+_Figure 5.8.1: Meeting Cards for Group Meeting_
 +
 * When you are attempting to add a meeting with the same date and time as a pre-existing one in ScheduBook, the following
 error will be shown, preventing you from having 2 different meetings with exactly the same date and time
 +
 image::MeetingClash.png[width="500"]
 +
-_Figure 6B: Clash Meeting Error_
+_Figure 5.8.2: Clash Meeting Error_
 ****
 
 Examples:
@@ -346,25 +346,32 @@ Meetings are always sorted according to the closest date
 // tag::editmeeting[]
 === Editing a meeting : `editmeeting`
 
-Edits an existing meeting in the address book. +
+Allows you to edits an existing meeting in the address book. +
 Format: `(em)editmeeting INDEX [n/NAME] [d/DATETIME] [l/LOCATION]`
 
 ****
-* Edits the meeting at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-* Once a meeting is successfully edited, a message showing the edited meeting will be displayed as shown below
+* Edits the meeting at the specified `INDEX`. The index refers to the index number shown in the last person listing
+ of your contact list. The index *must be a positive integer* 1, 2, 3, ...
+* You must provide at least one of the optional fields.
+* Existing values will be updated to the values that you input.
+* Once a meeting is successfully edited, you will be shown the following message
 +
 image::EditMeetingSuccess.png[width="500"]
 +
+<<<<<<< HEAD
+_Figure 5.12.1: Successful edited Meeting_
+=======
 _Figure 8: Successful edited Meeting_
+>>>>>>> 5d8f76556fa8149fc7685051be83154dad2da591
 
 ****
 
 Examples:
 
-* `editmeeting 1 n/John l/Clementi` +
-Edits the name and location of the 1st meeting to be `John` and `Clementi` respectively.
+* `editmeeting 1 n/Shopping l/Clementi` +
+Edits the name and location of the 1st meeting to be `Shopping` and `Clementi` respectively.
+* `em 3 d/31-12-2017 00:00` +
+Edits the date of the 3rd meeting in the meeting list to the respective date.
 // end::editmeeting[]
 
 === Locating meetings by name: `findmeeting`
@@ -391,19 +398,24 @@ Returns any meeting having `John` as the person to meet and any meetings having 
 
 // tag::findexactmeeting[]
 === Locating meetings with a particular person: `findexactmeeting`
-Finds meetings with people whose names match exactly with the phrase entered.
+Finds and lists to you the meeting(s) with people whose names match exactly with the phrase entered. +
 Format: `(fem)findexactmeeting PHRASE`
 
 ****
 * The search is case insensitive. +
 e.g `john tan` will match `John Tan`
-* Only meetings with the full name of the person will be found
+* You will not be shown meeting(s) with only part of the person's name matching the phrase. +
+e.g meetings with `Alex Soh` will not be found when the phrase you input is `Alex`.
 ****
 
 Example:
 
 * `findexactmeeting John Tan` +
 returns only the meetings with people named `John Tan`
++
+image::FindExactMeeting.png[width="500"]
++
+_Figure 5.14.1: Find exact meeting john tan_
 // end::findexactmeeting[]
 
 === Listing entered commands : `history`
