@@ -23,14 +23,6 @@ public class NameContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> 
                 .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getName().getValue(), keyword));
     }
 
-    /**
-     * Overrides method test for ReadOnlyEvent
-     */
-    public boolean test(ReadOnlyEvent event) {
-        return keywords.stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(event.getName().getValue(), keyword));
-    }
-
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
