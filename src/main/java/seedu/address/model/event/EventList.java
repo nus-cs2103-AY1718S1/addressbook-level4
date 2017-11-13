@@ -120,6 +120,7 @@ public class EventList implements Iterable<Event> {
     }
 
     public void setEvents(EventList replacement) {
+        this.internalMap.clear();
         this.internalMap.putAll(replacement.internalMap);
     }
 
