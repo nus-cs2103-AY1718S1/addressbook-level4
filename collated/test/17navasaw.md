@@ -325,6 +325,8 @@ public class ScheduleCardHandle extends NodeHandle<Node> {
 ```
 ###### \java\seedu\address\logic\commands\ScheduleCommandTest.java
 ``` java
+    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+
     @Test
     public void constructor_nullSchedule_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
@@ -342,18 +344,14 @@ public class ScheduleCardHandle extends NodeHandle<Node> {
         Set<Index> indices = new HashSet<>();
         indices.add(INDEX_FIRST_PERSON);
 
-        ModelManager modelStub = new ModelManager();
-        Person validPerson = new PersonBuilder().build();
-        modelStub.addPerson(validPerson);
-
-        CommandResult commandResult = getScheduleCommandForPerson(indices, validSchedule, modelStub).execute();
+        CommandResult commandResult = getScheduleCommandForPerson(indices, validSchedule, model).execute();
 
         assertEquals(String.format(ScheduleCommand.MESSAGE_SCHEDULE_SUCCESS, indices.size()),
                 commandResult.feedbackToUser);
     }
 
     /**
-     * Generates a new AddCommand with the details of the given person.
+     * Generates a new ScheduleCommand with the details of the given schedule.
      */
     private ScheduleCommand getScheduleCommandForPerson(Set<Index> indices, Schedule validSchedule, Model model) {
         ScheduleCommand command =
@@ -674,6 +672,28 @@ public class UniqueEmailListTest {
         UniqueEmailList uniqueEmailList = new UniqueEmailList();
         thrown.expect(UnsupportedOperationException.class);
         uniqueEmailList.asObservableList().remove(0);
+    }
+}
+```
+###### \java\seedu\address\model\UniquePersonNameListTest.java
+``` java
+package seedu.address.model;
+
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
+import seedu.address.model.person.UniquePersonNameList;
+
+public class UniquePersonNameListTest {
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    @Test
+    public void asObservableList_modifyList_throwsUnsupportedOperationException() {
+        UniquePersonNameList uniquePersonNameList = new UniquePersonNameList();
+        thrown.expect(UnsupportedOperationException.class);
+        uniquePersonNameList.asObservableList().remove(0);
     }
 }
 ```

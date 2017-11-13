@@ -69,7 +69,7 @@
             this.emails = emails;
         }
 
-        public Optional<Set<Email>> getEmail() {
+        public Optional<Set<Email>> getEmails() {
             return Optional.ofNullable(emails);
         }
 
@@ -96,46 +96,6 @@ public class LocateCommand extends Command {
 ###### \java\seedu\address\logic\commands\ScheduleCommand.java
 ``` java
     /**
-     * Updates address book model with new schedule set for each person.
-     * @param model Model of address book.
-     * @param indices Set of indices indicating the people from last shown list.
-     * @param schedulePersonNames Set of names associated with the schedule.
-     * @param date Date of activity.
-     * @param activity Activity to be scheduled.
-     * @throws CommandException
-     */
-    private void updateModelWithUpdatedSchedules(Model model, Set<Index> indices, Set<Name> schedulePersonNames,
-                                                 ScheduleDate date, Activity activity) throws CommandException {
-        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
-
-        for (Index index: indices) {
-            if (index.getZeroBased() >= lastShownList.size()) {
-                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-            }
-
-            ReadOnlyPerson schedulePerson = lastShownList.get(index.getZeroBased());
-            Schedule schedule = new Schedule(date, activity, schedulePersonNames);
-
-            Set<Schedule> schedules = new HashSet<>(schedulePerson.getSchedules());
-
-            if (!schedulePerson.getSchedules().contains(schedule)) {
-                schedules.add(schedule);
-            }
-
-            Person scheduleAddedPerson = new Person(schedulePerson.getName(), schedulePerson.getPhone(),
-                    schedulePerson.getCountry(), schedulePerson.getEmails(), schedulePerson.getAddress(), schedules,
-                    schedulePerson.getTags());
-            try {
-                model.updatePerson(schedulePerson, scheduleAddedPerson);
-            } catch (DuplicatePersonException dpe) {
-                throw new CommandException(MESSAGE_DUPLICATE_PERSON);
-            } catch (PersonNotFoundException pnfe) {
-                throw new AssertionError("The target person cannot be missing");
-            }
-        }
-    }
-
-    /**
      * Returns a set of person names involved in the scheduling of the activity.
      * @param model Model of address book.
      * @param indices Set of indices indicating the people from last shown list.
@@ -158,16 +118,6 @@ public class LocateCommand extends Command {
         return schedulePersonNames;
     }
 
-    //@@ CT15
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof ScheduleCommand // instanceof handles nulls
-                && date.equals(((ScheduleCommand) other).date)
-                && activity.equals(((ScheduleCommand) other).activity));
-    }
-}
-
 ```
 ###### \java\seedu\address\logic\parser\DeleteCommandParser.java
 ``` java
@@ -182,7 +132,7 @@ public class LocateCommand extends Command {
                 Index index = ParserUtil.parseIndex(indicesInString[i]);
 
                 // Check if there are repeated indices
-                if (i >= 1) {
+                if (i >= secondParsedIndex) {
                     for (Index indexInList: indices) {
                         if (indexInList.equals(index)) {
                             throw new ParseException(invalidCommandString);
@@ -199,24 +149,6 @@ public class LocateCommand extends Command {
     }
 
 }
-```
-###### \java\seedu\address\logic\parser\EditCommandParser.java
-``` java
-    /**
-     * Parses {@code Collection<String> emails} into a {@code Set<Email>} if {@code emails} is non-empty.
-     * If {@code emails} contain only one element which is an empty string, it will be parsed into a
-     * {@code Set<Email>} containing zero emails.
-     */
-    private Optional<Set<Email>> parseEmailsForEdit(Collection<String> emails) throws IllegalValueException {
-        assert emails != null;
-
-        if (emails.isEmpty()) {
-            return Optional.empty();
-        }
-        Collection<String> emailSet = emails.size() == 1 && emails.contains("") ? Collections.emptySet() : emails;
-        return Optional.of(ParserUtil.parseEmails(emailSet));
-    }
-
 ```
 ###### \java\seedu\address\logic\parser\LocateCommandParser.java
 ``` java
@@ -511,7 +443,7 @@ public class UniqueEmailList {
     public UniqueEmailList() {}
 
     /**
-     * Creates a UniqueEmailList using given tags.
+     * Creates a UniqueEmailList using given emails.
      * Enforces no nulls.
      */
     public UniqueEmailList(Set<Email> emails) {
@@ -601,6 +533,11 @@ import seedu.address.commons.util.CollectionUtil;
  */
 public class UniquePersonNameList {
     private final ObservableList<Name> internalList = FXCollections.observableArrayList();
+
+    /**
+     * Constructs empty PersonNameList.
+     */
+    public UniquePersonNameList() {}
 
     /**
      * Creates a UniquePersonNameList using given names.
@@ -700,14 +637,14 @@ public class UniquePersonNameList {
         final Set<Schedule> alreadyInside = this.toSet();
 
         for (Schedule scheduleFrom : from.internalList) {
-            int flag = 1;
+            boolean doesScheduleAlreadyExist = false;
             for (Schedule scheduleInside : alreadyInside) {
                 if (scheduleFrom.equals(scheduleInside)) {
-                    flag = 0;
+                    doesScheduleAlreadyExist = true;
                     break;
                 }
             }
-            if (flag == 1) {
+            if (!doesScheduleAlreadyExist) {
                 this.internalList.add(scheduleFrom);
             }
         }
@@ -741,33 +678,6 @@ public class UniquePersonNameList {
             int schedule2Day = DateUtil.getDay(schedule2DateInString);
             return schedule1Day - schedule2Day;
         });
-    }
-
-    /**
-     * Returns true if schedule list contains activity to be done within 1 day from the current date.
-     */
-    public boolean haveScheduleToRemind() {
-        LocalDate currentDate = LocalDate.now();
-
-        for (Schedule schedule : internalList) {
-            String scheduleDateString = schedule.getScheduleDate().value;
-
-            LocalDate scheduleDateToAlter = currentDate;
-            LocalDate scheduleDate = scheduleDateToAlter.withDayOfMonth(DateUtil.getDay(scheduleDateString))
-                    .withMonth(DateUtil.getMonth(scheduleDateString))
-                    .withYear(DateUtil.getYear(scheduleDateString));
-
-            LocalDate dayBeforeSchedule = scheduleDate.minusDays(1);
-            final boolean isYearEqual = (dayBeforeSchedule.getYear() == currentDate.getYear());
-            final boolean isMonthEqual = (dayBeforeSchedule.getMonthValue() == currentDate.getMonthValue());
-            final boolean isDayEqual = (dayBeforeSchedule.getDayOfMonth() == currentDate.getDayOfMonth());
-
-            if (isYearEqual && isMonthEqual && isDayEqual) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
 ```
@@ -865,7 +775,7 @@ public class XmlAdaptedEmail {
         final Country country = new Country(phone.getCountryCode());
         final Set<Email> emails = new HashSet<>(personEmails);
         final Address address = new Address(this.address);
-        final Set<Schedule> schedules = new HashSet<>(personSchedules);
+        final List<Schedule> schedules = new ArrayList<>(personSchedules);
         final Set<Tag> tags = new HashSet<>(personTags);
 
         logger.info("Name: " + name.toString()
@@ -951,6 +861,7 @@ import org.fxmisc.easybind.EasyBind;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
@@ -965,11 +876,15 @@ public class AgendaPanel extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(AgendaPanel.class);
 
     @FXML
+    private Label agendaHeader;
+    @FXML
     private ListView<ScheduleCard> scheduleCardListView;
 
     public AgendaPanel(ObservableList<Schedule> scheduleList) {
         super(FXML);
+        agendaHeader.getStyleClass().remove("label");
         setConnections(scheduleList);
+        scheduleCardListView.setPlaceholder(new Label("No Schedules Available!"));
     }
 
     /**
@@ -1019,6 +934,37 @@ public class AgendaPanel extends UiPart<Region> {
         loadPage(GOOGLE_MAPS_URL_PREFIX
                 + urlEncodedAddressFinal
                 + GOOGLE_MAPS_URL_SUFFIX);
+    }
+
+```
+###### \java\seedu\address\ui\MainWindow.java
+``` java
+    /**
+     * Shows reminder pop-up if there exists upcoming activities the next day.
+     */
+    public void openReminderWindowIfRequired() {
+        ReadOnlyAddressBook addressBook = model.getAddressBook();
+        ObservableList<Schedule> schedulesToRemindList = addressBook.getScheduleToRemindList();
+        for (Schedule schedule : schedulesToRemindList) {
+            logger.info("Schedules for reminder: " + schedule);
+        }
+        if (!schedulesToRemindList.isEmpty()) {
+            ReminderWindow reminderWindow = new ReminderWindow(schedulesToRemindList);
+            reminderWindow.show();
+        }
+    }
+
+```
+###### \java\seedu\address\ui\PersonCard.java
+``` java
+    /**
+     * Sets the styles for id and name in the PersonCard.
+     */
+    private void setStylesToNameAndId() {
+        id.getStyleClass().removeAll();
+        id.getStyleClass().add("headers");
+        name.getStyleClass().removeAll();
+        name.getStyleClass().add("headers");
     }
 
 ```
@@ -1246,34 +1192,17 @@ public class ScheduleCard extends UiPart<Region> {
     }
 }
 ```
-###### \java\seedu\address\ui\WelcomeScreen.java
-``` java
-    /**
-     * Shows reminder pop-up if there exists upcoming activities the next day.
-     */
-    private void openReminderWindowIfRequired() {
-        ReadOnlyAddressBook addressBook = model.getAddressBook();
-        ObservableList<Schedule> schedulesToRemindList = addressBook.getScheduleToRemindList();
-        for (Schedule schedule : schedulesToRemindList) {
-            logger.info("Schedules for reminder: " + schedule);
-        }
-        if (!schedulesToRemindList.isEmpty()) {
-            ReminderWindow reminderWindow = new ReminderWindow(schedulesToRemindList);
-            reminderWindow.show();
-        }
-    }
-}
-```
 ###### \resources\view\AgendaPanel.fxml
 ``` fxml
+
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox stylesheets="@AgendaTheme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
-   <Label alignment="CENTER" contentDisplay="TOP" text="My Agenda" textFill="#16afcc">
+<VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <Label fx:id="agendaHeader" alignment="CENTER" contentDisplay="TOP" text="My Agenda" textFill="#f7d0af">
       <font>
          <Font name="Calibri Bold Italic" size="25.0" />
       </font>
@@ -1284,37 +1213,11 @@ public class ScheduleCard extends UiPart<Region> {
   <ListView fx:id="scheduleCardListView" VBox.vgrow="ALWAYS" />
 </VBox>
 ```
-###### \resources\view\AgendaTheme.css
-``` css
-.background {
-    -fx-background-color: derive(#40593c, 20%);
-    background-color: #40593c; /* Used in the default.html file */
-}
-
-.label {
-    -fx-font-size: 14pt;
-    -fx-font-family: "Comic Sans MS";
-    -fx-text-fill: #00c1a7;
-    -fx-opacity: 0.9;
-}
-
-.list-cell:filled:even {
-    -fx-background-color: #025b87;
-}
-
-.list-cell:filled:odd {
-    -fx-background-color: #19a1e5;
-}
-
-.list-cell:filled:selected {
-    -fx-background-color: #808080;
-}
-```
 ###### \resources\view\MainWindow.fxml
 ``` fxml
-      <VBox alignment="TOP_RIGHT" maxWidth="285.0" minWidth="175.0" prefHeight="20.0" prefWidth="225.0">
+      <VBox alignment="TOP_RIGHT" maxWidth="285.0" minWidth="175.0" prefWidth="225.0">
          <children>
-            <StackPane fx:id="agendaPanelPlaceholder" />
+            <StackPane fx:id="agendaPanelPlaceholder" VBox.vgrow="ALWAYS" />
          </children>
       </VBox>
     </SplitPane>
@@ -1324,17 +1227,11 @@ public class ScheduleCard extends UiPart<Region> {
 ```
 ###### \resources\view\ReminderTheme.css
 ``` css
-.anchor-pane {
-    -fx-background-color: derive(#e5c97e, 20%);
-    background-color: #e5c97e;
-}
-
-.list-cell:filled:even {
-    -fx-background-color: #a04a00;
-}
-
-.list-cell:filled:odd {
-    -fx-background-color: #ef9a51;
+.label {
+    -fx-font-size: 24pt;
+    -fx-font-family: "Arial Narrow";
+    -fx-text-fill: "white";
+    -fx-opacity: 0.9;
 }
 ```
 ###### \resources\view\ReminderWindow.fxml
@@ -1347,13 +1244,13 @@ public class ScheduleCard extends UiPart<Region> {
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<SplitPane dividerPositions="0.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="400.0" prefWidth="600.0" stylesheets="@ReminderTheme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<SplitPane dividerPositions="0.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="400.0" prefWidth="600.0" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
   <items>
-    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="192.0" prefWidth="598.0" style="-fx-background-color: #e5c97e;">
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="192.0" prefWidth="598.0" stylesheets="@ReminderTheme.css">
          <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="227.0" layoutY="20.0" prefHeight="23.0" prefWidth="136.0" text="REMINDER!" AnchorPane.bottomAnchor="152.0" AnchorPane.leftAnchor="227.0" AnchorPane.rightAnchor="235.0" AnchorPane.topAnchor="20.0">
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="227.0" layoutY="20.0" prefHeight="37.0" prefWidth="152.0" text="REMINDER!" AnchorPane.bottomAnchor="138.0" AnchorPane.leftAnchor="227.0" AnchorPane.rightAnchor="219.0" AnchorPane.topAnchor="20.0">
                <font>
-                  <Font name="Arial Narrow" size="24.0" />
+                  <Font name="Arial Narrow" size="30.0" />
                </font>
             </Label>
             <Label alignment="CENTER" contentDisplay="CENTER" layoutX="141.0" layoutY="66.0" prefHeight="29.0" prefWidth="350.0" text="1 more day to these activities: " AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="130.0">
@@ -1362,7 +1259,7 @@ public class ScheduleCard extends UiPart<Region> {
                </font>
             </Label>
          </children></AnchorPane>
-      <StackPane fx:id="reminderWindowBottom" prefHeight="150.0" prefWidth="200.0" stylesheets="@ReminderTheme.css">
+      <StackPane fx:id="reminderWindowBottom" prefHeight="150.0" prefWidth="200.0">
          <children>
             <ListView fx:id="reminderSchedulesListView" prefHeight="200.0" prefWidth="200.0" />
          </children>
@@ -1423,7 +1320,7 @@ public class ScheduleCard extends UiPart<Region> {
 .headers {
     -fx-text-fill: #f7d0af;
     -fx-font-style: italic;
-    -fx-font-size: 14pt;
-    -fx-font-family: "Comic Sans MS";
+    -fx-font-size: 11pt;
+    -fx-font-family: "Segoe UI Semibold";
 }
 ```

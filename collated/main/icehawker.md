@@ -1,4 +1,62 @@
 # icehawker
+###### \java\seedu\address\logic\commands\BackupCommand.java
+``` java
+/**
+ * Backs up user's address book in their designated directory.
+ */
+public class BackupCommand extends Command {
+
+    public static final String COMMAND_WORD = "backup";
+
+    public static final String COMMAND_ALIAS = "b";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " (alias: " + COMMAND_ALIAS + ")"
+            + ": Backs up your address book to the directory of your choice. Note that existing backups in the same "
+            + "location must be removed or renamed as file overwriting is OFF. \n"
+            + "Parameters: "
+            + "Location of target directory.";
+
+    // if input does not contain "\addressbook.xml", it will be appended by parser.
+    public static final String BACKUP_DIR_SUFFIX = "addressbook.xml";
+    public static final String BACKUP_DIR_SUFFIX_ALT = "\\addressbook.xml";
+
+    public static final String BACKUP_SUCCESS_MESSAGE = "Address Book backed up at directory: %1$s.";
+    public static final String BACKUP_FAILURE_MESSAGE = "Address Book could not be backed up at directory: %1$s. "
+            + "Please check target path.";
+    private String address;
+
+    public BackupCommand(String targetAddress) {
+        this.address = targetAddress;
+    }
+
+    @Override
+    public CommandResult execute() throws CommandException {
+        // source expected to stay in default directory
+        Path source = Paths.get("data/addressbook.xml");
+        // user defined target directory
+        Path target = Paths.get(address);
+        try {
+            // clone addressbook into target
+            Files.copy(source, target);
+        } catch (IOException e1) {
+            return new CommandResult(String.format(BACKUP_FAILURE_MESSAGE, address));
+        }
+
+        return new CommandResult(String.format(BACKUP_SUCCESS_MESSAGE, address));
+    }
+
+    public String getLocation() {
+        return this.address;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof BackupCommand // instanceof handles nulls
+                && this.address.equals(((BackupCommand) other).address)); // state check
+    }
+}
+```
 ###### \java\seedu\address\logic\commands\CopyCommand.java
 ``` java
 /**
@@ -88,22 +146,58 @@ public class CopyCommand extends Command {
                     + CalendarCommand.COMMAND_WORD + " / " + CalendarCommand.COMMAND_ALIAS + ";     "
                     + EditCommand.COMMAND_WORD + " / " + EditCommand.COMMAND_ALIAS + ";     "
                     + ExitCommand.COMMAND_WORD + " / " + ExitCommand.COMMAND_ALIAS + ";     "
-                    + FindCommand.COMMAND_WORD + " / " + FindCommand.COMMAND_ALIAS + "; \n"
-                    + HelpCommand.COMMAND_WORD + " / " + HelpCommand.COMMAND_ALIAS + ";     "
+                    + FindCommand.COMMAND_WORD + " / " + FindCommand.COMMAND_ALIAS + ";     "
+                    + HelpCommand.COMMAND_WORD + " / " + HelpCommand.COMMAND_ALIAS + "; \n"
                     + HistoryCommand.COMMAND_WORD + " / " + HistoryCommand.COMMAND_ALIAS + ";     "
                     + ListCommand.COMMAND_WORD + " / " + ListCommand.COMMAND_ALIAS + ";     "
                     + RedoCommand.COMMAND_WORD + " / " + RedoCommand.COMMAND_ALIAS + ";     "
                     + ScheduleCommand.COMMAND_WORD + " / " + ScheduleCommand.COMMAND_ALIAS + ";     "
                     + LocateCommand.COMMAND_WORD + " / " + LocateCommand.COMMAND_ALIAS + ";     "
                     + UndoCommand.COMMAND_WORD + " / " + UndoCommand.COMMAND_ALIAS + ";     "
+                    + BackupCommand.COMMAND_WORD + " / " + BackupCommand.COMMAND_ALIAS + ";     "
                     + Country.COMMAND_WORD;
 
 ```
 ###### \java\seedu\address\logic\commands\HelpCommand.java
 ``` java
-    public HelpCommand(String startUpHelp) throws IllegalValueException {
-        this.commandIdentifier = new CommandIdentifier(startUpHelp);
+        case Country.COMMAND_WORD:
+            commandResult = Country.getCodeList();
+            break;
+
+        case HelpCommand.COMMAND_QUICK_HELP_WORD:
+            commandResult = COMMAND_QUICK_HELP;
+            break;
+
+        case BackupCommand.COMMAND_ALIAS:
+            //fallthrough
+
+        case BackupCommand.COMMAND_WORD:
+            commandResult = BackupCommand.MESSAGE_USAGE;
+            break;
+
+```
+###### \java\seedu\address\logic\parser\BackupCommandParser.java
+``` java
+/**
+ * Parses input arguments to create directory String used in BackupCommand
+ */
+public class BackupCommandParser implements Parser<BackupCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the BackupCommand
+     * and returns a BackupCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    @Override
+    public BackupCommand parse(String args) throws ParseException {
+        try {
+            String targetAddress = ParserUtil.parseBackup(args);
+            return new BackupCommand(targetAddress);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(ive.getMessage(), ive);
+        }
     }
+}
 ```
 ###### \java\seedu\address\logic\parser\CopyCommandParser.java
 ``` java
@@ -159,6 +253,28 @@ public class CopyCommandParser implements Parser<CopyCommand> {
         return country.isPresent() ? Optional.of(new Country(country.get())) : Optional.empty();
     }
 ```
+###### \java\seedu\address\logic\parser\ParserUtil.java
+``` java
+    /**
+     * Parses {@code address} returns a cleaned version, in case user has not included the file name in input.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the input address is invalid.
+     */
+    public static String parseBackup(String address) throws IllegalValueException {
+        requireNonNull(address);
+        if (!address.contains(BACKUP_DIR_SUFFIX)) {
+            // if input ends with '\' character, concat without '\' symbol
+            if (address.contains("/(?:\\)$/")) {
+                return address.trim().concat(BACKUP_DIR_SUFFIX);
+            } else {
+                return address.trim().concat(BACKUP_DIR_SUFFIX_ALT);
+            }
+        }
+        return address.trim();
+    }
+
+```
 ###### \java\seedu\address\model\person\Country.java
 ``` java
 /**
@@ -171,8 +287,9 @@ public class Country {
     public static final String DEFAULT_COUNTRY_CODE = "";
     public static final String DEFAULT_COUNTRY = "Country Unavailable";
     private static List<String> codeList;
+    private static Map <String, String> countryMap;
     public final String value;
-    public final Map <String, String> countryMap;
+
 
     /**
      * Converts a country code to country name.
@@ -453,7 +570,10 @@ public class Country {
         return output;
     }
 
-    public String getName(String code) {
+    /**
+     * Generic code-to-name lookup (Does not require Country object instantiation).
+     */
+    public static String getName(String code) {
         return countryMap.getOrDefault(code, DEFAULT_COUNTRY);
     }
 
@@ -496,6 +616,53 @@ public class Country {
     }
 
 ```
+###### \java\seedu\address\model\person\Phone.java
+``` java
+    // without prefix
+    public static final String CODE_VALIDATION_REGEX =
+            "^(9[976]\\d|8[987530]\\d|6[987]\\d|5[90]\\d|42\\d|3[875]\\d|2[98654321]\\d|9[8543210]|8[6421]|"
+            + "6[6543210]|5[87654321]|4[987654310]|3[9643210]|2[70]|7|1)$";
+    private static final String PHONE_VALIDATION_REGEX = "\\d{4,16}";
+    // with country code prefix
+    // current regex DOES NOT INCLUDE codes from 1000 onwards!
+    private static final String PHONE_VALIDATION_REGEX_ALT =
+            "\\+(9[976]\\d|8[987530]\\d|6[987]\\d|5[90]\\d|42\\d|3[875]\\d|2[98654321]\\d|9[8543210]|8[6421]|"
+            + "6[6543210]|5[87654321]|4[987654310]|3[9643210]|2[70]|7|1)\\s\\d{4,16}$";
+    public final String value;
+    private String countryCode;
+```
+###### \java\seedu\address\model\person\Phone.java
+``` java
+    /**
+     * Extracts country code from a valid phone number, otherwise returns a default code.
+     * Note that any unacceptable input has already been rejected upstream by {@link #isValidPhone(String)}.
+     */
+    public static String trimCode(String trimmedPhone) {
+        // only attempt to extract country code if regex is ALT
+        if (trimmedPhone.matches(PHONE_VALIDATION_REGEX_ALT)) {
+            // take pattern: end with whitespace (expected for ALT regex)
+            String[] split = trimmedPhone.split("\\s+");
+            return (split[0].trim()).substring(1);
+        } else {
+            return DEFAULT_COUNTRY_CODE.trim();
+        }
+    }
+
+    /**
+     * Returns true if a given string is a valid person country code. Only for JUnit tests.
+     */
+    public static boolean isValidCode(String test) {
+        return test.matches(CODE_VALIDATION_REGEX);
+    }
+
+    /**
+     * Returns requested country code String.
+     * Note that any unacceptable input has already been rejected upstream by {@link #isValidPhone(String)}.
+     */
+    public String getCountryCode() {
+        return countryCode;
+    }
+```
 ###### \java\seedu\address\model\util\SampleDataUtil.java
 ``` java
                 // Phone, Country fields edited to ensure sample persons are populated with Country information
@@ -530,7 +697,7 @@ public class Country {
                     getScheduleSet(asList("15-01-2017", "25-12-2017"), asList("Team meeting", "Christmas dinner"),
                             asList("Roy Balakrishnan", "Roy Balakrishnan")), getTagSet("colleagues"))
 ```
-###### \java\seedu\address\ui\UiManager.java
+###### \java\seedu\address\ui\WelcomeScreen.java
 ``` java
-            raise(new NewResultAvailableEvent(COMMAND_QUICK_HELP, false));
+        raise(new NewResultAvailableEvent(COMMAND_QUICK_HELP, false));
 ```

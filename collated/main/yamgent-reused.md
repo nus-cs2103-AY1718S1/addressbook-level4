@@ -21,22 +21,6 @@ public class NewResultAvailableEvent extends BaseEvent {
 
 }
 ```
-###### \java\seedu\address\storage\AddressBookStorage.java
-``` java
-    /**
-     * @see #backupAddressBook
-     */
-    void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException;
-}
-```
-###### \java\seedu\address\storage\StorageManager.java
-``` java
-    @Override
-    public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
-        saveAddressBook(addressBook, addressBookStorage.getAddressBookFilePath() + "-backup.xml");
-    }
-}
-```
 ###### \java\seedu\address\ui\ResultDisplay.java
 ``` java
 /**
