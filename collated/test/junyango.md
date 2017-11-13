@@ -668,6 +668,56 @@ public class SwitchThemeTest {
         assertTrue(parser.parseCommand(ListEventCommand.COMMAND_WORD + " 3") instanceof ListEventCommand);
     }
 ```
+###### \java\seedu\address\logic\parser\event\AddEventCommandParserTest.java
+``` java
+
+public class AddEventCommandParserTest {
+    private final AddEventParser parser = new AddEventParser();
+
+    @Test
+    public void parse_allFieldsPresent_success() {
+        Event expectedEvent = new EventBuilder().withName(VALID_NAME_EVENT1).withDateTime(VALID_DATE_EVENT1)
+                .withAddress(VALID_VENUE_EVENT1).withReminder().build();
+
+        // multiple names - last name accepted
+        assertParseSuccess(parser, AddEventCommand.COMMAND_WORD +  NAME_DESC_EVENT2  + NAME_DESC_EVENT1
+                + DATE_DESC_EVENT1 + VENUE_DESC_EVENT1, new AddEventCommand(expectedEvent));
+
+        // multiple phones - last date accepted
+        assertParseSuccess(parser, AddEventCommand.COMMAND_WORD + NAME_DESC_EVENT1 + DATE_DESC_EVENT2
+                + DATE_DESC_EVENT1 + VENUE_DESC_EVENT1, new AddEventCommand(expectedEvent));
+
+        // multiple addresses - last address accepted
+        assertParseSuccess(parser, AddEventCommand.COMMAND_WORD + NAME_DESC_EVENT1 + DATE_DESC_EVENT1
+                + VENUE_DESC_EVENT2 + VENUE_DESC_EVENT1, new AddEventCommand(expectedEvent));
+    }
+
+    @Test
+    public void parse_compulsoryFieldMissing_failure() {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddEventCommand.MESSAGE_USAGE);
+
+        // missing name prefix
+        assertParseFailure(parser, AddEventCommand.COMMAND_WORD + VALID_NAME_EVENT1 + DATE_DESC_EVENT1
+                + VENUE_DESC_EVENT1, expectedMessage);
+
+        // missing phone prefix
+        assertParseFailure(parser, AddEventCommand.COMMAND_WORD + NAME_DESC_EVENT1 + VALID_DATE_EVENT1
+                + VENUE_DESC_EVENT1, expectedMessage);
+
+        // missing email prefix
+        assertParseFailure(parser, AddEventCommand.COMMAND_WORD + NAME_DESC_EVENT2 + PHONE_DESC_BOB
+                + VALID_EMAIL_BOB + ADDRESS_DESC_BOB, expectedMessage);
+
+        // missing address prefix
+        assertParseFailure(parser, AddEventCommand.COMMAND_WORD + NAME_DESC_EVENT1 + DATE_DESC_EVENT1
+                + VALID_VENUE_EVENT1, expectedMessage);
+
+        // all prefixes missing
+        assertParseFailure(parser, AddEventCommand.COMMAND_WORD + VALID_NAME_EVENT1 + VALID_DATE_EVENT1
+                + VALID_VENUE_EVENT1, expectedMessage);
+    }
+}
+```
 ###### \java\seedu\address\logic\parser\event\DeleteEventCommandParserTest.java
 ``` java
 /**
@@ -879,6 +929,20 @@ public class GMapCommandParserTest {
         }
     }
 
+}
+```
+###### \java\seedu\address\model\event\EventNotFoundExceptionTest.java
+``` java
+
+public class EventNotFoundExceptionTest {
+    private ExpectedException thrown = ExpectedException.none();
+
+    @Test
+    public void createException_toString_checkCorrectness() throws Exception {
+        thrown.expect(EventNotFoundException.class);
+        Exception exception = new EventNotFoundException("Some message here");
+        assertEquals("Some message here", exception.toString());
+    }
 }
 ```
 ###### \java\seedu\address\model\event\EventTest.java
@@ -1129,6 +1193,20 @@ public class EventNameContainsKeywordsPredicateTest {
         // Non-matching keyword
         predicate = new EventNameContainsKeywordsPredicate(Arrays.asList("Carol"));
         assertFalse(predicate.test(new EventBuilder().withName("Alice Bob").build()));
+    }
+}
+```
+###### \java\seedu\address\model\reminder\exceptions\DuplicateReminderExceptionTest.java
+``` java
+
+public class DuplicateReminderExceptionTest {
+    private ExpectedException thrown = ExpectedException.none();
+
+    @Test
+    public void createException_getMessage_checkCorrectness() throws Exception {
+        thrown.expect(ReminderNotFoundException.class);
+        Exception exception = new DuplicateReminderException();
+        assertEquals(DuplicateReminderException.MESSAGE, exception.getMessage());
     }
 }
 ```
@@ -1415,6 +1493,96 @@ public class TypicalEvents {
 
     public static List<ReadOnlyEvent> getTypicalEvents() {
         return new ArrayList<>(Arrays.asList(EVENT1, EVENT2));
+    }
+}
+```
+###### \java\seedu\address\ui\EventCardTest.java
+``` java
+
+public class EventCardTest extends GuiUnitTest {
+    @Test
+    public void equals() {
+        Event event = new EventBuilder().build();
+        EventCard eventCard = new EventCard(event, 0);
+
+        // same event, same index -> returns true
+        EventCard copy = new EventCard(event, 0);
+        assertTrue(eventCard.equals(copy));
+
+        // same object -> returns true
+        assertTrue(eventCard.equals(eventCard));
+
+        // null -> returns false
+        assertFalse(eventCard.equals(null));
+
+        // different types -> returns false
+        assertFalse(eventCard.equals(0));
+
+        // different event, same index -> returns false
+        Event differentEvent = new EventBuilder().withName("differentName").build();
+        assertFalse(eventCard.equals(new EventCard(differentEvent, 0)));
+
+        // same event, different index -> returns false
+        assertFalse(eventCard.equals(new EventCard(event, 1)));
+    }
+
+    /**
+     * Asserts that {@code eventCard} displays the details of {@code expectedEvent} correctly and matches
+     * {@code expectedId}.
+     */
+    private void assertCardDisplay(EventCard eventCard, ReadOnlyEvent expectedEvent, int expectedId) {
+        guiRobot.pauseForHuman();
+
+        EventCardHandle eventCardHandle = new EventCardHandle(eventCard.getRoot());
+
+        // verify id is displayed correctly
+        assertEquals(Integer.toString(expectedId) + ". ", eventCardHandle.getId());
+
+        // verify event details are displayed correctly
+        assertCardDisplaysEvent(expectedEvent, eventCardHandle);
+    }
+}
+```
+###### \java\seedu\address\ui\EventListPanelTest.java
+``` java
+
+public class EventListPanelTest extends GuiUnitTest {
+    private static final ObservableList<ReadOnlyEvent> TYPICAL_EVENTS =
+            FXCollections.observableList(getTypicalEvents());
+
+    private static final JumpToListRequestEvent JUMP_TO_SECOND_EVENT = new JumpToListRequestEvent(INDEX_SECOND_PERSON);
+
+    private EventListPanelHandle eventListPanelHandle;
+
+    @Before
+    public void setUp() {
+        EventListPanel eventListPanel = new EventListPanel(TYPICAL_EVENTS);
+        uiPartRule.setUiPart(eventListPanel);
+
+        eventListPanelHandle = new EventListPanelHandle(getChildNode(eventListPanel.getRoot(),
+                EventListPanelHandle.EVENT_LIST_VIEW_ID));
+    }
+
+    @Test
+    public void display() {
+        for (int i = 0; i < TYPICAL_EVENTS.size(); i++) {
+            eventListPanelHandle.navigateToCard(TYPICAL_EVENTS.get(i));
+            ReadOnlyEvent expectedEvent = TYPICAL_EVENTS.get(i);
+            EventCardHandle actualCard = eventListPanelHandle.getEventCardHandle(i);
+
+            assertCardDisplaysEvent(expectedEvent, actualCard);
+            assertEquals(Integer.toString(i + 1) + ". ", actualCard.getId());
+        }
+    }
+
+    @Test
+    public void handleJumpToListRequestEvent() {
+        postNow(JUMP_TO_SECOND_EVENT);
+        guiRobot.pauseForHuman();
+
+        EventCardHandle expectedCard = eventListPanelHandle.getEventCardHandle(INDEX_SECOND_PERSON.getZeroBased());
+        EventCardHandle selectedCard = eventListPanelHandle.getHandleToSelectedCard();
+        assertCardEquals(expectedCard, selectedCard);
     }
 }
 ```

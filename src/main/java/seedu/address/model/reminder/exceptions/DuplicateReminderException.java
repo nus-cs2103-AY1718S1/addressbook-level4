@@ -2,6 +2,8 @@ package seedu.address.model.reminder.exceptions;
 
 import seedu.address.commons.exceptions.DuplicateDataException;
 
+//@@author junyango
+
 /**
  * Signals that the operation will result in duplicate Reminder objects.
  */

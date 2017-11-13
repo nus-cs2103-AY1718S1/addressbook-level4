@@ -569,6 +569,209 @@ public class EditEventParser implements Parser<EditEventCommand> {
         events.sortEvents();
     }
 ```
+###### \java\seedu\address\model\event\Event.java
+``` java
+
+/**
+ * Represents an Event in the address book.
+ * Guarantees: details are present and not null, field values are validated.
+ */
+public class Event implements ReadOnlyEvent {
+
+    private ObjectProperty<Name> name;
+    private ObjectProperty<DateTime> time;
+    private ObjectProperty<Address> address;
+    private ObjectProperty<UniqueReminderList> reminders;
+    private ObjectProperty<UniquePropertyMap> properties;
+
+    public Event(Name name, DateTime time, Address address) {
+        this(name, time, address, new ArrayList<>());
+    }
+
+    /**
+     * Every field must be present and not null.
+     */
+    public Event(Name name, DateTime time, Address address, List<Reminder> reminders) {
+        requireAllNonNull(name, time, address);
+        this.name = new SimpleObjectProperty<>(name);
+        this.time = new SimpleObjectProperty<>(time);
+        this.address = new SimpleObjectProperty<>(address);
+
+        Set<Property> properties = new HashSet<>();
+        properties.add(time);
+        properties.add(name);
+        properties.add(address);
+        this.properties = new SimpleObjectProperty<>();
+        try {
+            setProperties(properties);
+        } catch (DuplicatePropertyException e) {
+            e.printStackTrace();
+            System.err.println("This should never happen");
+        }
+        try {
+            this.reminders = new SimpleObjectProperty<>(new UniqueReminderList(reminders));
+        } catch (DuplicateReminderException e) {
+            e.printStackTrace();
+            System.err.println("This should never happen");
+        }
+    }
+
+    public Event(Set<Property> properties, ArrayList<Reminder> reminders) throws DuplicateReminderException,
+            DuplicatePropertyException {
+        requireAllNonNull(properties, reminders);
+        this.properties = new SimpleObjectProperty<>();
+        setProperties(properties);
+
+        try {
+            this.name = new SimpleObjectProperty<>(new Name(getProperty("n")));
+            this.time = new SimpleObjectProperty<>(new DateTime(getProperty("dt")));
+            this.address = new SimpleObjectProperty<>(new Address(getProperty("a")));
+        } catch (IllegalValueException | PropertyNotFoundException e) {
+            // TODO: Better error handling
+            e.printStackTrace();
+            System.err.println("This should never happen.");
+        }
+        this.reminders = new SimpleObjectProperty<>((new UniqueReminderList(reminders)));
+    }
+
+    /**
+     * Creates a copy of the given ReadOnlyEvent.
+     */
+    public Event(ReadOnlyEvent source) {
+        this(source.getName(), source.getTime(), source.getAddress(), source.getReminders());
+        try {
+            setProperties(source.getProperties());
+            setReminders(source.getReminders());
+        } catch (DuplicatePropertyException | DuplicateReminderException e) {
+            // TODO: Better error handling
+            e.printStackTrace();
+            System.err.println("This should never happen.");
+        }
+    }
+
+    public void setName(Name name) {
+        requireNonNull(name);
+        setProperty(name);
+        this.name.set(requireNonNull(name));
+    }
+
+    @Override
+    public ObjectProperty<Name> nameProperty() {
+        return name;
+    }
+
+    @Override
+    public Name getName() {
+        return name.get();
+    }
+
+    public void setDateTime(DateTime time) {
+        requireNonNull(time);
+        setProperty(time);
+        this.time.set(time);
+    }
+
+    @Override
+    public DateTime getTime() {
+        return time.get();
+    }
+    @Override
+    public ObjectProperty<DateTime> timeProperty() {
+        return time;
+    }
+
+    public void setAddress(Address address) {
+        requireNonNull(address);
+        setProperty(address);
+        this.address.set(address);
+    }
+
+    @Override
+    public ObjectProperty<Address> addressProperty() {
+        return address;
+    }
+
+    @Override
+    public Address getAddress() {
+        return address.get();
+    }
+
+    @Override
+    public ObjectProperty<UniqueReminderList> reminderProperty() {
+        return reminders;
+    }
+    /**
+     * Returns an immutable property set, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
+    @Override
+    public void addReminder(ReadOnlyReminder r) throws DuplicateReminderException {
+        reminders.get().add(r);
+    }
+    @Override
+    public ArrayList<Reminder> getReminders() {
+        return reminders.get().toList();
+    }
+
+    /**
+     * Replaces this event's reminders with the reminders in the argument tag set.
+     */
+    public void setReminders(List<? extends ReadOnlyReminder> replacement) throws DuplicateReminderException {
+        reminders.set(new UniqueReminderList(replacement));
+    }
+
+    @Override
+    public ObjectProperty<UniquePropertyMap> properties() {
+        return properties;
+    }
+
+    /**
+     * Returns an immutable property set, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
+    @Override
+    public Set<Property> getProperties() {
+        return Collections.unmodifiableSet(properties.get().toSet());
+    }
+
+    /**
+     * Replaces this event's properties with the properties in the argument tag set.
+     */
+    public void setProperties(Set<Property> replacement) throws DuplicatePropertyException {
+        properties.set(new UniquePropertyMap(replacement));
+    }
+
+    private String getProperty(String shortName) throws PropertyNotFoundException {
+        return properties.get().getPropertyValue(shortName);
+    }
+    /**
+     * Updates the value of the property if there already exists a property with the same shortName, otherwise
+     * adds a new property.
+     */
+    public void setProperty(Property toSet) {
+        properties.get().addOrUpdate(toSet);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ReadOnlyEvent // instanceof handles nulls
+                && this.isSameStateAs((ReadOnlyEvent) other));
+    }
+
+    @Override
+    public int hashCode() {
+        // use this method for custom fields hashing instead of implementing your own
+        return Objects.hash(name, time, address, reminders);
+    }
+
+    @Override
+    public String toString() {
+        return getAsText();
+    }
+}
+
+```
 ###### \java\seedu\address\model\event\exceptions\DuplicateEventException.java
 ``` java
 /**
@@ -878,6 +1081,265 @@ public class EventNameContainsKeywordsPredicate implements Predicate<ReadOnlyEve
     }
 
 }
+```
+###### \java\seedu\address\model\reminder\exceptions\DuplicateReminderException.java
+``` java
+
+/**
+ * Signals that the operation will result in duplicate Reminder objects.
+ */
+public class DuplicateReminderException extends DuplicateDataException {
+    public static final String MESSAGE = "Operation would result in duplicate reminder";
+
+    public DuplicateReminderException() {
+        super(MESSAGE);
+    }
+}
+```
+###### \java\seedu\address\model\reminder\exceptions\ReminderNotFoundException.java
+``` java
+
+/**
+ * Signals that the operation is unable to find the specified reminder.
+ */
+public class ReminderNotFoundException extends Exception {
+    public ReminderNotFoundException(String message) {
+        super(message);
+    }
+
+    @Override
+    public String toString() {
+        return getMessage();
+    }
+}
+
+```
+###### \java\seedu\address\model\reminder\ReadOnlyReminder.java
+``` java
+
+/**
+ * A read-only immutable interface for a Reminder in the addressBook.
+ * Implementations should guarantee: details are present and not null, field values are validated.
+ */
+public interface ReadOnlyReminder {
+    ObjectProperty<String> messageProperty();
+    String getMessage();
+    ObjectProperty<ReadOnlyEvent> eventProperty();
+    ReadOnlyEvent getEvent();
+
+    /**
+     * Returns true if both have the same state. (interfaces cannot override .equals)
+     *
+     * TODO: Should we include comparision of {@code getProperties} here?
+     */
+    default boolean isSameStateAs(ReadOnlyReminder other) {
+        return other == this // short circuit if same object
+                || (other != null // this is first to avoid NPE below
+                && other.getEvent().equals(this.getEvent()) // state checks here onwards
+                && other.getMessage().equals(this.getMessage()));
+    }
+
+    /**
+     * Formats the reminder as text, showing all contact details.
+     */
+    default String getAsText() {
+        return "Message: " + getMessage();
+    }
+
+}
+```
+###### \java\seedu\address\model\reminder\Reminder.java
+``` java
+
+/**
+ * Represents an Reminder in the address book.
+ * Guarantees: details are present and not null, field values are validated.
+ */
+public class Reminder implements ReadOnlyReminder {
+    private ObjectProperty<ReadOnlyEvent> event;
+    private ObjectProperty<String> message;
+    private ObjectProperty<String> name;
+
+    /**
+     * Every field must be present and not null.
+     */
+    public Reminder(ReadOnlyEvent event, String message) {
+        requireAllNonNull(message, event);
+        this.event = new SimpleObjectProperty<>(event);
+        this.message = new SimpleObjectProperty<>(message);
+    }
+
+    public Reminder(String name, String message) {
+        requireAllNonNull(name, message);
+        this.name = new SimpleObjectProperty<>(name);
+        this.message = new SimpleObjectProperty<>(message);
+    }
+
+    /**
+     * Creates a copy of the given ReadOnlyReminder.
+     */
+    public Reminder(ReadOnlyReminder source) {
+        this(source.getEvent(), source.getMessage());
+    }
+
+    @Override
+    public ObjectProperty<ReadOnlyEvent> eventProperty() {
+        return event;
+    }
+
+    @Override
+    public ReadOnlyEvent getEvent() {
+        return event.get();
+    }
+
+    public void setMessage(String message) {
+        this.message.set(requireNonNull(message));
+    }
+
+    @Override
+    public ObjectProperty<String> messageProperty() {
+        return message;
+    }
+
+    @Override
+    public String getMessage() {
+        return message.get();
+    }
+
+    public String getName() {
+        return name.get();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ReadOnlyReminder // instanceof handles nulls
+                && this.isSameStateAs((ReadOnlyReminder) other));
+    }
+
+    @Override
+    public int hashCode() {
+        // use this method for custom fields hashing instead of implementing your own
+        return Objects.hash(event, message);
+    }
+
+    @Override
+    public String toString() {
+        return getAsText();
+    }
+
+}
+
+```
+###### \java\seedu\address\model\reminder\UniqueReminderList.java
+``` java
+
+/**
+ * A list of reminders that enforces uniqueness between its elements and does not allow nulls.
+ *
+ * Supports a minimal set of list operations.
+ *
+ * @see Reminder#equals(Object)
+ * @see CollectionUtil#elementsAreUnique(Collection)
+ */
+public class UniqueReminderList implements Iterable<Reminder> {
+    private final ObservableList<Reminder> internalList = FXCollections.observableArrayList();
+
+    /**
+     * Constructs empty UniqueReminderList
+     */
+    public UniqueReminderList(List<? extends ReadOnlyReminder> reminders) throws DuplicateReminderException {
+        for (ReadOnlyReminder reminder: reminders) {
+            add(reminder);
+        }
+    }
+
+    public UniqueReminderList() {
+
+    }
+
+    /**
+     * Returns true if the list contains an equivalent reminder as the given argument.
+     */
+    public boolean contains(ReadOnlyReminder toCheck) {
+        requireNonNull(toCheck);
+        return internalList.contains(toCheck);
+    }
+
+    /**
+     * Adds an reminder to the list.
+     *
+     * @throws DuplicateReminderException if the reminder to add is a duplicate of an existing reminder in the list.
+     */
+    public void add(ReadOnlyReminder toAdd) throws DuplicateReminderException {
+        requireNonNull(toAdd);
+        if (contains(toAdd)) {
+            throw new DuplicateReminderException();
+        }
+        internalList.add(new Reminder(toAdd));
+    }
+
+    /**
+     * Returns all properties (collection of values in all entries) in this map as a Set. This set is mutable
+     * and change-insulated against the internal list.
+     */
+    public ArrayList<Reminder> toList() {
+        assert CollectionUtil.elementsAreUnique(internalList);
+        return new ArrayList<>(internalList);
+    }
+
+    @Override
+    public Iterator<Reminder> iterator() {
+        return internalList.iterator();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof UniqueReminderList // instanceof handles nulls
+                && this.internalList.equals(((UniqueReminderList) other).internalList));
+    }
+
+    @Override
+    public int hashCode() {
+        return internalList.hashCode();
+    }
+}
+
+
+```
+###### \java\seedu\address\model\UserPrefs.java
+``` java
+
+    public String getAddressBookTheme() {
+        return addressBookTheme;
+    }
+    public void setAddressBookTheme(String theme) {
+        this.addressBookTheme = theme;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+        if (!(other instanceof UserPrefs)) { //this handles null as well.
+            return false;
+        }
+
+        UserPrefs o = (UserPrefs) other;
+
+        return Objects.equals(guiSettings, o.guiSettings)
+                && Objects.equals(addressBookFilePath, o.addressBookFilePath)
+                && Objects.equals(addressBookName, o.addressBookName)
+                && Objects.equals(addressBookTheme, o.addressBookTheme);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(guiSettings, addressBookFilePath, addressBookName, addressBookTheme);
+    }
+
 ```
 ###### \java\seedu\address\storage\elements\XmlAdaptedEvent.java
 ``` java
