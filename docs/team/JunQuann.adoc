@@ -26,6 +26,8 @@ An user interface based on material design will allow a good user experience as 
 
 === Enhancement Added: Display Picture for contacts
 
+==== External behavior
+
 ---
 #Start of Extract [from: User Guide]#
 
@@ -54,6 +56,20 @@ include::../DeveloperGuide.adoc[tag=displayPic]
 === Enhancement Proposed:
 
 Delete the picture in display picture storage directory when the image is not used anymore.
+
+==== External behavior
+
+When the display picture of the person is edited or when the person is deleted, the image that is no longer in used should be deleted as well.
+
+==== Justification
+
+Images that are no longer in used will not use up space in the storage.
+
+==== Implementation
+
+When editing the display picture of a person or deleting a person, we can check the display picture path that is stored as the `DisplayPic` field and delete the image. +
+However, this will cause the image to not render properly if we undo the `Edit` the `Delete` command. +
+Possible solution is to store images that are no longer in use in a back up folder. Whenever the application closes, delete all the images in the back up folder.
 
 === Other contributions
 * Added DisplayPic field for person (Pull request https://github.com/CS2103AUG2017-W14-B3/main/pull/59[#59])

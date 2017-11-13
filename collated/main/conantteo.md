@@ -1,5 +1,5 @@
 # conantteo
-###### \java\seedu\address\commons\core\Messages.java
+###### /java/seedu/address/commons/core/Messages.java
 ``` java
     public static final String MESSAGE_INVALID_PERSON_DISPLAYED_INDEX = "The person index provided is invalid: ";
     public static final String MESSAGE_INVALID_PERSON_TO_EMAIL = "The person may have missing email address "
@@ -8,7 +8,7 @@
 
 }
 ```
-###### \java\seedu\address\commons\events\model\SearchTagEvent.java
+###### /java/seedu/address/commons/events/model/SearchTagEvent.java
 ``` java
 package seedu.address.commons.events.model;
 
@@ -30,7 +30,7 @@ public class SearchTagEvent extends BaseEvent {
     }
 }
 ```
-###### \java\seedu\address\commons\events\ui\EmailRequestEvent.java
+###### /java/seedu/address/commons/events/ui/EmailRequestEvent.java
 ``` java
 package seedu.address.commons.events.ui;
 
@@ -57,7 +57,7 @@ public class EmailRequestEvent extends BaseEvent {
     }
 }
 ```
-###### \java\seedu\address\commons\events\ui\ExportRequestEvent.java
+###### /java/seedu/address/commons/events/ui/ExportRequestEvent.java
 ``` java
 package seedu.address.commons.events.ui;
 
@@ -74,7 +74,7 @@ public class ExportRequestEvent extends BaseEvent {
     }
 }
 ```
-###### \java\seedu\address\commons\util\IndexArrayUtil.java
+###### /java/seedu/address/commons/util/IndexArrayUtil.java
 ``` java
 package seedu.address.commons.util;
 
@@ -159,7 +159,7 @@ public class IndexArrayUtil {
     }
 }
 ```
-###### \java\seedu\address\commons\util\StringUtil.java
+###### /java/seedu/address/commons/util/StringUtil.java
 ``` java
     /**
      * Returns a string after removing the first two characters at the start of the string {@code s}
@@ -184,7 +184,7 @@ public class IndexArrayUtil {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\EmailCommand.java
+###### /java/seedu/address/logic/commands/EmailCommand.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -257,7 +257,7 @@ public class EmailCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\ExportCommand.java
+###### /java/seedu/address/logic/commands/ExportCommand.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -377,25 +377,25 @@ public class ExportCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\FindCommand.java
+###### /java/seedu/address/logic/commands/FindCommand.java
 ``` java
     public FindCommand(PersonContainsBirthdayPredicate searchPredicate) {
         this.searchPredicate = searchPredicate;
     }
 ```
-###### \java\seedu\address\logic\Logic.java
+###### /java/seedu/address/logic/Logic.java
 ``` java
     /** Returns an unmodifiable view of all tags in the address book */
     ObservableList<Tag> getAllTags();
 ```
-###### \java\seedu\address\logic\LogicManager.java
+###### /java/seedu/address/logic/LogicManager.java
 ``` java
     @Override
     public ObservableList<Tag> getAllTags() {
         return model.getAddressBook().getTagList();
     }
 ```
-###### \java\seedu\address\logic\parser\EmailCommandParser.java
+###### /java/seedu/address/logic/parser/EmailCommandParser.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -441,7 +441,7 @@ public class EmailCommandParser implements Parser<EmailCommand> {
 
 }
 ```
-###### \java\seedu\address\logic\parser\ExportCommandParser.java
+###### /java/seedu/address/logic/parser/ExportCommandParser.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -490,7 +490,7 @@ public class ExportCommandParser implements Parser<ExportCommand> {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\ParserUtil.java
+###### /java/seedu/address/logic/parser/ParserUtil.java
 ``` java
     /**
      * Parses a {@code Optional<String> birthday} into an {@code Optional<Birthday>} if {@code birthday} is present.
@@ -502,7 +502,7 @@ public class ExportCommandParser implements Parser<ExportCommand> {
     }
 
 ```
-###### \java\seedu\address\model\AddressBook.java
+###### /java/seedu/address/model/AddressBook.java
 ``` java
     /**
      * Ensures that all tags of a {@code person} is deleted away from the master tag list.
@@ -512,7 +512,7 @@ public class ExportCommandParser implements Parser<ExportCommand> {
         tags.deleteFrom(personTags);
     }
 ```
-###### \java\seedu\address\model\ModelManager.java
+###### /java/seedu/address/model/ModelManager.java
 ``` java
     @Subscribe
     private void handleSearchTagEvent(SearchTagEvent event)  {
@@ -522,7 +522,7 @@ public class ExportCommandParser implements Parser<ExportCommand> {
         updateFilteredPersonList(predicate);
     }
 ```
-###### \java\seedu\address\model\person\Birthday.java
+###### /java/seedu/address/model/person/Birthday.java
 ``` java
 package seedu.address.model.person;
 
@@ -603,7 +603,7 @@ public class Birthday {
     }
 }
 ```
-###### \java\seedu\address\model\person\Person.java
+###### /java/seedu/address/model/person/Person.java
 ``` java
     @Override
     public ObjectProperty<Birthday> birthdayProperty() {
@@ -619,7 +619,7 @@ public class Birthday {
         this.birthday.set(requireNonNull(birthday));
     }
 ```
-###### \java\seedu\address\model\person\PersonContainsBirthdayPredicate.java
+###### /java/seedu/address/model/person/PersonContainsBirthdayPredicate.java
 ``` java
 package seedu.address.model.person;
 
@@ -650,7 +650,7 @@ public class PersonContainsBirthdayPredicate implements Predicate<ReadOnlyPerson
 
 }
 ```
-###### \java\seedu\address\model\person\Vcard.java
+###### /java/seedu/address/model/person/Vcard.java
 ``` java
 package seedu.address.model.person;
 
@@ -737,7 +737,7 @@ public class Vcard {
 
 }
 ```
-###### \java\seedu\address\model\tag\UniqueTagList.java
+###### /java/seedu/address/model/tag/UniqueTagList.java
 ``` java
     /**
      * Deletes the Tags in this list with those in the argument tag list.
@@ -748,7 +748,7 @@ public class Vcard {
         assert CollectionUtil.elementsAreUnique(internalList);
     }
 ```
-###### \java\seedu\address\storage\AddressBookStorage.java
+###### /java/seedu/address/storage/AddressBookStorage.java
 ``` java
     /**
     * Saves the given {@link ReadOnlyAddressBook} in a temporary location
@@ -758,14 +758,14 @@ public class Vcard {
     void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException;
 }
 ```
-###### \java\seedu\address\storage\StorageManager.java
+###### /java/seedu/address/storage/StorageManager.java
 ``` java
     @Override
     public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
         saveAddressBook(addressBook, addressBookStorage.getAddressBookFilePath() + "-backup.xml");
     }
 ```
-###### \java\seedu\address\storage\XmlAddressBookStorage.java
+###### /java/seedu/address/storage/XmlAddressBookStorage.java
 ``` java
     @Override
     public void backupAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
@@ -774,7 +774,7 @@ public class Vcard {
 
 }
 ```
-###### \java\seedu\address\ui\GroupLabel.java
+###### /java/seedu/address/ui/GroupLabel.java
 ``` java
 package seedu.address.ui;
 
@@ -828,7 +828,7 @@ public class GroupLabel extends UiPart<Region> {
     }
 }
 ```
-###### \java\seedu\address\ui\GroupListPanel.java
+###### /java/seedu/address/ui/GroupListPanel.java
 ``` java
 package seedu.address.ui;
 
@@ -907,7 +907,7 @@ public class GroupListPanel extends UiPart<Region> {
     }
 }
 ```
-###### \java\seedu\address\ui\MainWindow.java
+###### /java/seedu/address/ui/MainWindow.java
 ``` java
     /**
      * This method will call the user's default mail application and set the recipients field with all the
@@ -937,7 +937,7 @@ public class GroupListPanel extends UiPart<Region> {
     }
 
 ```
-###### \java\seedu\address\ui\MainWindow.java
+###### /java/seedu/address/ui/MainWindow.java
 ``` java
     /**
      * Opens a file directory which shows the folder where contacts.vcf file is located.
@@ -957,7 +957,7 @@ public class GroupListPanel extends UiPart<Region> {
         }
     }
 ```
-###### \java\seedu\address\ui\MainWindow.java
+###### /java/seedu/address/ui/MainWindow.java
 ``` java
     @Subscribe
     private void handleEmailRequestEvent(EmailRequestEvent event) {
@@ -966,7 +966,7 @@ public class GroupListPanel extends UiPart<Region> {
     }
 
 ```
-###### \java\seedu\address\ui\MainWindow.java
+###### /java/seedu/address/ui/MainWindow.java
 ``` java
     @Subscribe
     private void handleExportRequestEvent(ExportRequestEvent event) {

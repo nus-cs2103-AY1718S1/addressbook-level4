@@ -1,5 +1,5 @@
 # danielbrzn
-###### \java\guitests\guihandles\ProgressWindowHandle.java
+###### /java/guitests/guihandles/ProgressWindowHandle.java
 ``` java
 package guitests.guihandles;
 
@@ -34,7 +34,7 @@ public class ProgressWindowHandle extends StageHandle {
     }
 }
 ```
-###### \java\seedu\address\commons\util\GoogleUtilTest.java
+###### /java/seedu/address/commons/util/GoogleUtilTest.java
 ``` java
 package seedu.address.commons.util;
 
@@ -130,7 +130,7 @@ public class GoogleUtilTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\AddCommandTest.java
+###### /java/seedu/address/logic/commands/AddCommandTest.java
 ``` java
         @Override
         public void addAlias(String alias, String command) {
@@ -144,7 +144,7 @@ public class GoogleUtilTest {
         }
 
 ```
-###### \java\seedu\address\logic\commands\AddCommandTest.java
+###### /java/seedu/address/logic/commands/AddCommandTest.java
 ``` java
         @Override
         public void resetAlias(HashMap<String, String> prevAliasMap) {
@@ -152,7 +152,7 @@ public class GoogleUtilTest {
         }
 
 ```
-###### \java\seedu\address\logic\commands\AddCommandTest.java
+###### /java/seedu/address/logic/commands/AddCommandTest.java
 ``` java
         @Override
         public UserPrefs getUserPrefs() {
@@ -161,7 +161,7 @@ public class GoogleUtilTest {
         }
 
 ```
-###### \java\seedu\address\logic\commands\AliasCommandTest.java
+###### /java/seedu/address/logic/commands/AliasCommandTest.java
 ``` java
 
 package seedu.address.logic.commands;
@@ -259,7 +259,7 @@ public class AliasCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\ImportCommandTest.java
+###### /java/seedu/address/logic/commands/ImportCommandTest.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -357,7 +357,7 @@ public class ImportCommandTest {
 
 }
 ```
-###### \java\seedu\address\logic\commands\LocationCommandTest.java
+###### /java/seedu/address/logic/commands/LocationCommandTest.java
 ``` java
 
 package seedu.address.logic.commands;
@@ -511,7 +511,7 @@ public class LocationCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\AddCommandParserTest.java
+###### /java/seedu/address/logic/parser/AddCommandParserTest.java
 ``` java
         // no email
         expectedPerson = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
@@ -543,7 +543,7 @@ public class LocationCommandTest {
                 + EMAIL_DESC_AMY + TWITTER_DESC_AMY + INSTAGRAM_DESC_AMY
                 + ADDRESS_DESC_AMY, new AddCommand(expectedPerson));
 ```
-###### \java\seedu\address\logic\parser\AliasCommandParserTest.java
+###### /java/seedu/address/logic/parser/AliasCommandParserTest.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -580,7 +580,7 @@ public class AliasCommandParserTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\ImportCommandParserTest.java
+###### /java/seedu/address/logic/parser/ImportCommandParserTest.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -620,7 +620,7 @@ public class ImportCommandParserTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\LocationCommandParserTest.java
+###### /java/seedu/address/logic/parser/LocationCommandParserTest.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -652,7 +652,7 @@ public class LocationCommandParserTest {
     }
 }
 ```
-###### \java\seedu\address\storage\StorageManagerTest.java
+###### /java/seedu/address/storage/StorageManagerTest.java
 ``` java
     @Test
     public void getUserPrefsFilePath() {
@@ -660,7 +660,7 @@ public class LocationCommandParserTest {
     }
 
 ```
-###### \java\seedu\address\testutil\GooglePersonBuilder.java
+###### /java/seedu/address/testutil/GooglePersonBuilder.java
 ``` java
 package seedu.address.testutil;
 
@@ -811,7 +811,7 @@ public class GooglePersonBuilder {
 
 }
 ```
-###### \java\seedu\address\testutil\PersonBuilder.java
+###### /java/seedu/address/testutil/PersonBuilder.java
 ``` java
     /**
      * Sets the Twitter {@code UserName} of the {@code Person} that we are building.
@@ -838,7 +838,7 @@ public class GooglePersonBuilder {
     }
 
 ```
-###### \java\seedu\address\ui\ProgressWindowTest.java
+###### /java/seedu/address/ui/ProgressWindowTest.java
 ``` java
 package seedu.address.ui;
 
