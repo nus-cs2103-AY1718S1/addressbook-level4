@@ -13,7 +13,7 @@ import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.model.ReadOnlyEventList;
 
-//@@author leonchowwenhao
+//@@author LeonChowWenHao
 /**
  * A class to access EventStorage data stored as an xml file on the hard disk.
  */
