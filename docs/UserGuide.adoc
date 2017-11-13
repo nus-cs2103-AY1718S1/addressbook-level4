@@ -89,7 +89,7 @@ It is advisable to use the GUI login instead of the CLI login. +
 The current implementation for password masking in the CLI login is less sophisticated than the GUI login.
 This can lead to unexpected or incorrect behaviors such as inconsistent masking of password or being unable to log in when username and password are entered correctly. +
 To reduce unexpected behaviors, users are advised to add or delete characters from the end of the command only. +
-*The CLI login option is available for convenience only.*
+*The CLI login option is available for convenience only given that we want the user to be able to accomplish tasks faster using CLI than a GUI.*
 
 Examples:
 
