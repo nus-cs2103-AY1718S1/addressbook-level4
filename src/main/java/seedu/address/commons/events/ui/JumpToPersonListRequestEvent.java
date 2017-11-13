@@ -6,11 +6,11 @@ import seedu.address.commons.events.BaseEvent;
 /**
  * Indicates a request to jump to the list of persons
  */
-public class JumpToListRequestEvent extends BaseEvent {
+public class JumpToPersonListRequestEvent extends BaseEvent {
 
     public final int targetIndex;
 
-    public JumpToListRequestEvent(Index targetIndex) {
+    public JumpToPersonListRequestEvent(Index targetIndex) {
         this.targetIndex = targetIndex.getZeroBased();
     }
 

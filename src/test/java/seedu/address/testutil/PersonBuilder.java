@@ -5,9 +5,11 @@ import java.util.Set;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Favourite;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.ProfPic;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
@@ -32,7 +34,8 @@ public class PersonBuilder {
             Email defaultEmail = new Email(DEFAULT_EMAIL);
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
             Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
-            this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress, defaultTags);
+            this.person = new Person(defaultName, defaultPhone, defaultEmail, defaultAddress,
+                    defaultTags);
         } catch (IllegalValueException ive) {
             throw new AssertionError("Default person's values are invalid.");
         }
@@ -70,6 +73,18 @@ public class PersonBuilder {
     }
 
     /**
+     * Parses the {@code groups} into a {@code Set<Group>} and set it to the {@code Person} that we are building.
+     */
+    public PersonBuilder withGroups(String ... groups) {
+        try {
+            this.person.setGroups(SampleDataUtil.getGroupSet(groups));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("groups are expected to be unique.");
+        }
+        return this;
+    }
+
+    /**
      * Sets the {@code Address} of the {@code Person} that we are building.
      */
     public PersonBuilder withAddress(String address) {
@@ -102,6 +117,22 @@ public class PersonBuilder {
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("email is expected to be unique.");
         }
+        return this;
+    }
+
+    /**
+     * Sets the {@code Favourite} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withFavourite(Boolean value) {
+        this.person.setFavourite(new Favourite(value));
+        return this;
+    }
+
+    /**
+     * Sets the {@code ProfPic} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withProfPic(String path) {
+        this.person.setProfPic(new ProfPic(path));
         return this;
     }
 

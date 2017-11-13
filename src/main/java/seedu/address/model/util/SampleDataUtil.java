@@ -6,6 +6,9 @@ import java.util.Set;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.group.Group;
+import seedu.address.model.group.GroupName;
+import seedu.address.model.group.exceptions.DuplicateGroupException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -13,6 +16,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.tag.Tag;
+
 
 /**
  * Contains utility methods for populating {@code AddressBook} with sample data.
@@ -45,15 +49,34 @@ public class SampleDataUtil {
         }
     }
 
+    public static Group[] getSampleGroups() {
+        try {
+            return new Group[] {
+                new Group(new GroupName("Bamboo")),
+                new Group(new GroupName("W09-B4")),
+                new Group(new GroupName("Night Owls")),
+                new Group(new GroupName("Avengers")),
+                new Group(new GroupName("Uni Friends"))
+            };
+        } catch (IllegalValueException e) {
+            throw new AssertionError("sample data cannot be invalid", e);
+        }
+    }
+
     public static ReadOnlyAddressBook getSampleAddressBook() {
         try {
             AddressBook sampleAb = new AddressBook();
             for (Person samplePerson : getSamplePersons()) {
                 sampleAb.addPerson(samplePerson);
             }
+            for (Group sampleGroup : getSampleGroups()) {
+                sampleAb.addGroup(sampleGroup);
+            }
             return sampleAb;
         } catch (DuplicatePersonException e) {
             throw new AssertionError("sample data cannot contain duplicate persons", e);
+        } catch (DuplicateGroupException e) {
+            throw new AssertionError("sample data cannot contain duplicate groups", e);
         }
     }
 
@@ -67,6 +90,18 @@ public class SampleDataUtil {
         }
 
         return tags;
+    }
+
+    /**
+     * Returns a group set containing the list of strings given.
+     */
+    public static Set<Group> getGroupSet(String... strings) throws IllegalValueException {
+        HashSet<Group> groups = new HashSet<>();
+        for (String s : strings) {
+            groups.add(new Group(s));
+        }
+
+        return groups;
     }
 
 }

@@ -13,6 +13,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import seedu.address.model.AddressBook;
@@ -28,9 +29,19 @@ public class TypicalPersons {
             .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")
             .withPhone("85355255")
             .withTags("friends").build();
+    public static final ReadOnlyPerson ALICEALT = new PersonBuilder().withName("Alice Pauline")
+            .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")
+            .withPhone("85355255")
+            .withProfPic("Alice Pauline.png")
+            .withTags("friends").build();
     public static final ReadOnlyPerson BENSON = new PersonBuilder().withName("Benson Meier")
             .withAddress("311, Clementi Ave 2, #02-25")
             .withEmail("johnd@example.com").withPhone("98765432")
+            .withTags("owesMoney", "friends").build();
+    public static final ReadOnlyPerson BENSONALT = new PersonBuilder().withName("Benson Meier")
+            .withAddress("311, Clementi Ave 2, #02-25")
+            .withEmail("johnd@example.com").withPhone("98765432")
+            .withFavourite(true)
             .withTags("owesMoney", "friends").build();
     public static final ReadOnlyPerson CARL = new PersonBuilder().withName("Carl Kurz").withPhone("95352563")
             .withEmail("heinz@example.com").withAddress("wall street").build();
@@ -75,7 +86,81 @@ public class TypicalPersons {
         return ab;
     }
 
+    /**
+     * Returns an {@code AddressBook} with all the typical persons.
+     */
+    public static AddressBook getAltAddressBook() {
+        AddressBook ab = new AddressBook();
+        for (ReadOnlyPerson person : getAltPersons()) {
+            try {
+                ab.addPerson(person);
+            } catch (DuplicatePersonException e) {
+                assert false : "not possible";
+            }
+        }
+        return ab;
+    }
+
     public static List<ReadOnlyPerson> getTypicalPersons() {
         return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
     }
+
+    public static List<ReadOnlyPerson> getAltPersons() {
+        return new ArrayList<>(Arrays.asList(ALICEALT, BENSONALT, CARL, DANIEL, ELLE, FIONA, GEORGE));
+    }
+
+    public static AddressBook getEmptyAddressBook() {
+        AddressBook ab = new AddressBook();
+        return ab;
+    }
+
+    public static AddressBook getSortedAddressBook(String type, boolean isReverseOrder) {
+        AddressBook ab = new AddressBook();
+        List<ReadOnlyPerson> personList;
+
+        switch(type) {
+        case "name":
+            personList = getTypicalPersons();
+            break;
+        case "phone":
+            personList = getTypicalPersonsSortedByPhone();
+            break;
+        case "email":
+            personList = getTypicalPersonsSortedByEmail();
+            break;
+        case "address":
+            personList = getTypicalPersonsSortedByAddress();
+            break;
+        default:
+            personList = getTypicalPersons();
+        }
+
+        if (isReverseOrder) {
+            Collections.reverse(personList);
+        }
+
+        for (ReadOnlyPerson person : personList) {
+            try {
+                ab.addPerson(person);
+            } catch (DuplicatePersonException e) {
+                assert false : "not possible";
+            }
+        }
+
+        return ab;
+    }
+
+    public static List<ReadOnlyPerson> getTypicalPersonsSortedByPhone() {
+        return new ArrayList<>(Arrays.asList(ALICE, DANIEL, ELLE, FIONA, GEORGE, CARL, BENSON));
+    }
+
+    public static List<ReadOnlyPerson> getTypicalPersonsSortedByEmail() {
+        return new ArrayList<>(Arrays.asList(ALICE, GEORGE, DANIEL, CARL, BENSON, FIONA, ELLE));
+    }
+
+    public static List<ReadOnlyPerson> getTypicalPersonsSortedByAddress() {
+        return new ArrayList<>(Arrays.asList(DANIEL, ALICE, BENSON, GEORGE, FIONA, ELLE, CARL));
+    }
+
+
 }

@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= Bamboo - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,11 +10,30 @@ ifdef::env-github[]
 :note-caption: :information_source:
 endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103AUG2017-W09-B4/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `CS2103AUG2017-W09-B4`      Since: `Aug 2017`      Licence: `MIT`
+
+== Introduction
+
+=== About Bamboo
+
+Bamboo is a command-line interface (CLI) based address book application directed at students.
+It is a one-stop solution to help you manage your contacts in an efficient and
+convenient manner. Using Bamboo, you can organize contacts into groups,
+find common schedules and get connected to your contacts’ social media platforms.
+
+=== Purpose
+
+This document serves as the developers' guide for developing Bamboo.
+It assumes that you have an intermediate level of understanding of Java.
+It describes how to start developing Bamboo with the Intellij IDE,
+as well as the structure of various components in the Bamboo application.
 
 == Setting up
+
+This section provides you with the steps required to set up everything before beginning development
+on Bamboo.
 
 === Prerequisites
 
@@ -34,37 +53,37 @@ Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plu
 
 === Setting up the project in your computer
 
-. Fork this repo, and clone the fork to your computer
-. Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
-. Set up the correct JDK version for Gradle
-.. Click `Configure` > `Project Defaults` > `Project Structure`
-.. Click `New...` and find the directory of the JDK
-. Click `Import Project`
-. Locate the `build.gradle` file and select it. Click `OK`
-. Click `Open as Project`
-. Click `OK` to accept the default settings
+. Fork this repo, and clone the fork to your computer.
+. Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first).
+. Set up the correct JDK version for Gradle.
+.. Click `Configure` > `Project Defaults` > `Project Structure`.
+.. Click `New...` and find the directory of the JDK.
+. Click `Import Project`.
+. Locate the `build.gradle` file and select it. Click `OK`.
+. Click `Open as Project`.
+. Click `OK` to accept the default settings.
 . Open a console and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message. +
 This will generate all resources required by the application and tests.
 
 === Verifying the setup
 
-. Run the `seedu.address.MainApp` and try a few commands
-. link:#testing[Run the tests] to ensure they all pass.
+. Run `seedu.address.MainApp` and try a few commands.
+. link:#testing[Run the tests] to ensure all of them pass.
 
 === Configurations to do before writing code
 
 ==== Configuring the coding style
 
-This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.md[oss-generic coding standards]. IntelliJ's default style is mostly compliant with ours but it uses a different import order from ours. To rectify,
+This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.md[oss-generic coding standards]. IntelliJ's default style is mostly compliant with ours but it uses a different import order. To rectify this,
 
-. Go to `File` > `Settings...` (Windows/Linux), or `IntelliJ IDEA` > `Preferences...` (macOS)
-. Select `Editor` > `Code Style` > `Java`
-. Click on the `Imports` tab to set the order
+. Go to `File` > `Settings...` (Windows/Linux), or `IntelliJ IDEA` > `Preferences...` (macOS).
+. Select `Editor` > `Code Style` > `Java`.
+. Click on the `Imports` tab to set the order.
 
-* For `Class count to use import with '\*'` and `Names count to use static import with '*'`: Set to `999` to prevent IntelliJ from contracting the import statements
-* For `Import Layout`: The order is `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, `import all other imports`. Add a `<blank line>` between each `import`
+* For `Class count to use import with '\*'` and `Names count to use static import with '*'`: Set both to `999` to prevent IntelliJ from contracting the import statements.
+* For `Import Layout`: The order is `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, `import all other imports`. Add a `<blank line>` between each `import`.
 
-Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure Intellij to check style-compliance as you write code.
+Optionally, you can follow <<UsingCheckstyle#, UsingCheckstyle.adoc>> to configure Intellij to check for style-compliance as you write code.
 
 ==== Updating documentation to match your fork
 
@@ -83,7 +102,7 @@ Having both Travis and AppVeyor ensures your App works on both Unix-based platfo
 
 When you are ready to start coding,
 
-1. Get some sense of the overall design by reading the link:#architecture[Architecture] section.
+1. Understand the overall design by reading the link:#architecture[Architecture] section.
 2. Take a look at the section link:#suggested-programming-tasks-to-get-started[Suggested Programming Tasks to Get Started].
 
 == Design
@@ -93,34 +112,34 @@ When you are ready to start coding,
 image::Architecture.png[width="600"]
 _Figure 2.1.1 : Architecture Diagram_
 
-The *_Architecture Diagram_* given above explains the high-level design of the App. Given below is a quick overview of each component.
+The *_Architecture Diagram_* given above explains the high-level design of the application. Given below is a quick overview of each component.
 
 [TIP]
 The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
 
-`Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for,
+`Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for the following:
 
-* At app launch: Initializes the components in the correct sequence, and connects them up with each other.
-* At shut down: Shuts down the components and invokes cleanup method where necessary.
+* *At app launch*: Initializes the components in the correct sequence, and connects them up with each other.
+* *At shut down*: Shuts down the components and invokes cleanup method where necessary.
 
 link:#common-classes[*`Commons`*] represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level.
 
-* `EventsCenter` : This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design)
+* `EventsCenter` : This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design).
 * `LogsCenter` : Used by many classes to write log messages to the App's log file.
 
-The rest of the App consists of four components.
+The rest of the App consists of four components:
 
-* link:#ui-component[*`UI`*] : The UI of the App.
+* link:#ui-component[*`UI`*] : The user interface of the application.
 * link:#logic-component[*`Logic`*] : The command executor.
 * link:#model-component[*`Model`*] : Holds the data of the App in-memory.
 * link:#storage-component[*`Storage`*] : Reads data from, and writes data to, the hard disk.
 
-Each of the four components
+Each of the four components:
 
 * Defines its _API_ in an `interface` with the same name as the Component.
 * Exposes its functionality using a `{Component Name}Manager` class.
 
-For example, the `Logic` component (see the class diagram given below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
+For example, the `Logic` component (refer to the class diagram given below) defines its API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
 
 image::LogicClassDiagram.png[width="800"]
 _Figure 2.1.2 : Class Diagram of the Logic Component_
@@ -148,28 +167,41 @@ The sections below give more details of each component.
 
 === UI component
 
+The `UI` component, or user interface, houses all the different front-end components that you see upon running
+Bamboo. It allows you to interact with Bamboo through its components, such as buttons and input boxes.
+
 image::UiClassDiagram.png[width="800"]
 _Figure 2.2.1 : Structure of the UI Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+The UI consists of a `MainWindow` that is made up of parts (e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `GroupListPanel`, `StatusBarFooter`, `MainContactPanel`, etc.). All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
-The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
+The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`].
+`.fxml` files should only be used to *define the basic layout or content placeholders* in the UI. *Actual content values should be instantiated by code* as much as possible.
 
-The `UI` component,
+The `.fxml` files may not immediately reflect all the UI parts that are seen in `Scene Builder`. This is because some UI parts are instantiated by code only on run-time, so opening the `.fxml` files in `Scene Builder` will not show certain parts of the UI
+(e.g. the circular contact image in the contact details panel, instantiated inside `setContactImage()` in link:{repoURL}/src/main/java/seedu/address/ui/ContactDetailsPanel.java[`ContactDetailsPanel.java`]).
 
-* Executes user commands using the `Logic` component.
-* Binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change.
-* Responds to events raised from various parts of the App and updates the UI accordingly.
+The `UI` component does the following things:
+
+* Uses `.fxml` and resource files (e.g. images, fonts) in `src\main\resources` that gives the application its look.
+
+* Executes your commands using the `Logic` component.
+* Binds itself to some data in the `Model` so that the UI can automatically update when data in the `Model` component changes.
+* Responds to events raised from various parts of the application (through event subscribers such as `handlePersonPanelSelectionChangedEvent` in link:{repoURL}/src/main/java/seedu/address/ui/ContactDetailsPanel.java[`ContactDetailsPanel.java`]) and updates the UI accordingly.
+* Animates certain parts of the application, mostly in the contact details panel.
 
 === Logic component
+
+The `Logic` component houses the main logical components of the application, which processes commands
+entered by users and handles them accordingly.
 
 image::LogicClassDiagram.png[width="800"]
 _Figure 2.3.1 : Structure of the Logic Component_
 
 image::LogicCommandClassDiagram.png[width="800"]
-_Figure 2.3.2 : Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in Figure 2.3.1_
+_Figure 2.3.2 : Structure of Commands in the Logic Component_
 
 *API* :
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
@@ -186,6 +218,8 @@ _Figure 2.3.1 : Interactions Inside the Logic Component for the `delete 1` Comma
 
 === Model component
 
+The `Model` component houses all the main data of Bamboo (e.g. contact details, schedules, numbers, etc.).
+
 image::ModelClassDiagram.png[width="800"]
 _Figure 2.4.1 : Structure of the Model Component_
 
@@ -199,6 +233,9 @@ The `Model`,
 * does not depend on any of the other three components.
 
 === Storage component
+
+The `Storage` component reads data from the hard disk and writes to it as well. This gives
+Bamboo data persistence, so that data does not disappear upon closing Bamboo.
 
 image::StorageClassDiagram.png[width="800"]
 _Figure 2.5.1 : Structure of the Storage Component_
@@ -345,24 +382,209 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+// tag::sort[]
+=== Sorting
+The sorting mechanism is facilitated by `SortCommand`, which extends `UndoableCommand`.
+It supports the sorting of persons in the address book by the `PREFIX` specified.
+If the `r` flag is specified, the list of persons will be sorted in descending order.
+
+The sorting of persons occur in `UniquePersonList`, where a call to `Collections.sort` is
+made with the respective comparator and a `isReverse` boolean flag as parameters.
+
+The sequence diagram below details the flow the execution of a `sort n/r` command.
+
+image::SortSequenceDiagram.png[width="800"]
+
+The execution of `sort` results in the reordering of the in-memory `UniquePersonList`.
+However, the change is transient and the order of the list will return to its
+original starting order as when the App initializes.
+
+=== Finding
+The finding mechanism is facilitated by `FindCommand`, which extends `Command`.
+It supports finding a list of specific persons by entering any substring of a person's contact field.
+This includes a person's name, phone number, email, address or even their tags with `PREFIX` specified.
+
+Finding a person is facilitated using `PartialSearchUtil`, which examines whether a base list contains any word whose
+substring appears in the target list. It maps each attribute to the `find` parser and returns a list of persons
+matching find condition.
+
+==== Design Considerations
+
+**Aspect:** Implementation of `sort` +
+**Alternative 1 (current choice):** Sort persons through `UniquePersonList` +
+**Pros:** Imputes responsibility of sorting to `UniquePersonList`, which is the class person list is declared from. +
+This results in fine-grained, total control over anything to do with a person list and future implementations
+will be easier and more complete. +
+**Cons:** Hard for new developers to understand the flow of sorting execution. +
+**Alternative 2:** Perform `sort` at `ModelManager` or `AddressBook` level +
+**Pros:** New developers will have an easier time tracing the sort execution flow. +
+**Cons:** `ModelManager` or `AddressBook` will be highly coupled with the sort function and
+any future changes to these classes may be more contrived and difficult.
+
+---
+
+**Aspect:** Sort Persistence +
+**Alternative 1 (current choice):** The address book is not saved after sorting. +
+**Pros:** Users may want to sort for their current session only. +
+**Cons:** Sorting order is not retained when the program exits. +
+**Alternative 2:** Save address book after every sort +
+**Pros:** Sorting order is preserved after program exits. +
+**Cons:** The original order of the address book is lost during every sort.
+// end::sort[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
 
-* The logging level can be controlled using the `logLevel` setting in the configuration file (See link:#configuration[Configuration])
-* The `Logger` for a class can be obtained using `LogsCenter.getLogger(Class)` which will log messages according to the specified logging level
+* The logging level can be controlled using the `logLevel` setting in the configuration file (See link:#configuration[Configuration]).
+* The `Logger` for a class can be obtained using `LogsCenter.getLogger(Class)` which will log messages according to the specified logging level.
 * Currently log messages are output through: `Console` and to a `.log` file.
 
 *Logging Levels*
 
-* `SEVERE` : Critical problem detected which may possibly cause the termination of the application
-* `WARNING` : Can continue, but with caution
-* `INFO` : Information showing the noteworthy actions by the App
-* `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
+* `SEVERE` : Critical problem detected which may possibly cause the termination of the application.
+* `WARNING` : Can continue, but with caution.
+* `INFO` : Information showing the noteworthy actions by the application.
+* `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size.
 
 === Configuration
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
+
+// tag::faveSystem[]
+=== Favourite Contact System
+
+The commands related to the Favourite system rely on the `Favourite` attribute class which is a `Person` component.
+
+==== Add & Remove contact from Favourites (since V1.2)
+**Adding a Favourite:** This feature's functions are mainly contained in the command class `AddFavouriteCommand` with its
+supporting parser class `AddFavouriteCommandParser`:
+
+* `AddFaveCommandParser`: This class is called by `AddressBookParser` and handles the parsing of the index argument and
+passes the parsed index into an initialised **AddFavouriteCommand** object.
+
+* `AddFavouriteCommand`: You may modify the command word (fadd), usage instructions and all other functions necessary for
+the command to mark a `Person` as a Favourite in this class. +
+The current implementation takes in the parsed index, retrieves the `Person` object of the parsed index, sets the
+`Favourite` attribute to true and updates the in-memory model list of **Persons** with the updated **Person**.
+
+**Removing a Favourite:** This feature's functions are mainly contained in the command class `RemoveFavouriteCommand` with
+ its supporting parser class `RemoveFavouriteCommandParser`:
+
+* `RemoveFaveCommandParser`: This class is called by `AddressBookParser` and handles the parsing of the index argument and
+passes the parsed index into an initialised **RemoveFavouriteCommand** object.
+
+* `RemoveFavouriteCommand`: You may modify the command word (fremove), usage instructions and all other functions necessary for
+the command to unmark a `Person` as a Favourite in this class. +
+The current implementation of this function works exactly like it does in `AddFavouriteCommand` except that the `Person`
+retreived from the parsed index has their `Favourite` attribute updated to false.
+
+==== Listing of only Favourite contacts (since V1.3)
+
+**List command option:** The **list** command now has an option to list only contacts marked as favourites with
+"list /f". This feature works by updating the model's `filteredList` of `Person` objects with the predicate
+**isFavourite()** in `ListCommand`.
+
+==== Other modifications to existing components to handle favourites (since V1.4)
+
+`UniquePersonList`: The **setPerson()** function (that is called whenever a **Person** object has been modified)
+also changes a `Person`'s order in the model list if their **Favourite** attribute's value has been changed.
+
+* If the **Favourite**'s value has been changed to true, the modified **Person** is removed from the internal model list and
+reinserted at the top of the list among the other favourites in lexicographical order.
+
+* If the **Favourite**'s value has been changed to false, the modified **Person** is moved from its position among the favourites
+and inserted into the position after the last favourite person in the internal model list.
+
+==== Design Considerations
+
+**Aspect:** Storage of `Favourite` status +
+**Alternative 1 (current choice):** Add a new attribute class to Person, `Favourite` +
+**Pros:** No need for additional overhead from maintaining a second list of Persons in model. +
+**Cons:** Have to manually arrange contacts when they are added/removed from favourite status as favourite
+ contacts must be at top of normal listings +
+**Alternative 2:** Create and maintain a list in `model` containing favourite contacts +
+**Pros:** No need to organise favourite contacts in original list, just present favourite list before normal contact list when executing `list` +
+**Cons:** Tedious to manage secondary list of Persons, additional overhead when searching favourite list for specific contact
+// end::faveSystem[]
+
+// tag::profPicSystem[]
+=== Profile Picture Feature
+A user's profile picture is retrieved by and displayed in the UI class `MainContactPanel` with **setContactImage(Person)**.
+A contact's path stored in a contact's `ProfPic` person attribute can be modified with the use of 2 commands
+explained below.
+
+==== Setting profile picture (since V1.4)
+**Setting a new profile picture**: This feature's functions are mainly contained in the command class `SetPictureCommand`
+with its supporting parser class `SetPictureCommandParser`:
+
+* `SetPictureCommandParser`: This class is called by `AddressBookParser` and handles the parsing of the index argument
+and provided filepath, then passes the parsed index and filepath into an initialised **SetPictureCommand** object.
+
+* `SetPictureCommand`: You may modify the command word (ppset) and its syntax, usage instructions and all other functions necessary for
+the set picture command in this class. +
+The current implementation takes in the parsed index and filepath and stores them. Then,
+
+** The given filepath is checked to see if there exists a .png or .jpg image file with **Files.probeContentType(filepath)**
+
+** The verified .png/.jpg is then copied to the local folder **images** of the application and stored under the contact name of the
+ provided index as **images\contactName.png** or **images\contactName.jpg** if the set file is a .jpg
+
+** The **Person** provided by the index has its `ProfPic` attribute's path var modified to **contactName.png/.jpg** and
+the modified **Person** saved to the in-memory model list of **Persons**
+
+==== Resetting profile picture (since V1.4)
+**Resetting a contact's profile picture** This feature's functions are mainly contained in the command class `ResetPictureCommand`
+with it's supporting parser class `ResetPictureCommandParser`:
+
+* `ResetPictureCommandParser`: This class is called by `AddressBookParser` and handles the parsing of the index argument
+and passes the parsed index on to an initialised **ResetPictureCommand** object.
+
+* `ResetPictureCommand`: You may modify the command word (ppreset), usage instructions and all other functions necessary for
+the reset picture command in this class. +
+The current implementation takes in the parsed index, retrieves the **Person** at that index and modifies their `ProfPic`
+attribute's path var to the default "maleIcon.png before saving the modified **Person** to the in-memory model list of **Persons**
+// end::profPicSystem[]
+
+// tag::UISystem[]
+=== User Interface (UI)
+
+==== Layout of the user interface (since V1.1)
+
+The application uses various panels such as `StackPanes` and `BorderPanes` inside `.fxml` files that define the basic layout, with no content inside of it.
+Content is usually created or instantiated by code.
+
+==== Layout of the contact details panel (since V1.2)
+
+The main contact panel (MainContactPanel.fxml) uses a 2x2 `GridPane` to show the following:
+
+ * Contact's image
+ * Contact's details
+ * Four social media icons
+ * Contact's schedule
+
+==== Layout of contact's image and social icons (since V1.2)
+
+The (0, 0) and (1, 0) cells of the main contact panel contain nested `BorderPane` objects. These `BorderPanes` then create `Circle` objects.
+
+These `Circle` objects are created when the `setContactImage()` and `setIcons()` methods are run. These two methods run inside `handlePersonPanelSelectionChangedEvent()` when you select a person in the person list panel.
+
+The reason for using `BorderPane` objects is to allow centering and resizing of the `Circle` objects. Using a `Pane` will not allow positioning of objects, while using a `StackPane` will not allow resizing of objects inside of it.
+A `BorderPane` supports both positioning and resizing of objects inside of it.
+
+==== Layout of the contact's details (since V1.2)
+
+The (1,0) cell of the main contact panel contains a `VBox` object that creates four empty `Label` objects in `setupContactDetailsBox()`.
+
+The values of these `Label` objects are updated in `setContactDetails()` when you select a person in the person list panel.
+
+The `setContactDetails()` method takes in a `ReadOnlyPerson` object as an argument, which holds the values of a person's contact details that are used to update the `Label` objects.
+
+==== Animation in the contact details panel (since V1.2)
+
+UI parts (nodes) in link:{repoURL}/src/main/java/seedu/address/ui/ContactDetailsPanel.java[`ContactDetailsPanel.java`] are passed into a method called `easeIn` in the same file. This method takes in `Node` objects and animates them through the use of various `Transitions` objects.
+
+`ParallelTransition` is used to play multiple `Transition` objects simultaneously. In this case, it plays `FadeTransition` and `TranslateTransition` together, resulting in what you see - text and images fading in from nothing.
 
 == Documentation
 
@@ -401,16 +623,16 @@ _Figure 5.6.1 : Saving documentation as PDF files in Chrome_
 There are three ways to run tests.
 
 [TIP]
-The most reliable way to run tests is the 3rd one. The first two methods might fail some GUI tests due to platform/resolution-specific idiosyncrasies.
+The most reliable way to run tests is the third one. The first two methods might fail some GUI tests due to platform/resolution-specific idiosyncrasies. Refer to `5.3 Troubleshooting Testing` if test failures occur.
 
 *Method 1: Using IntelliJ JUnit test runner*
 
 * To run all tests, right-click on the `src/test/java` folder and choose `Run 'All Tests'`
-* To run a subset of tests, you can right-click on a test package, test class, or a test and choose `Run 'ABC'`
+* To run a subset of tests, right-click on a test package or test class and choose `Run 'ABC'`, where `ABC` is your desired test.
 
 *Method 2: Using Gradle*
 
-* Open a console and run the command `gradlew clean allTests` (Mac/Linux: `./gradlew clean allTests`)
+* Open a console and run the command `gradlew clean allTests` (Mac/Linux: `./gradlew clean allTests`).
 
 [NOTE]
 See <<UsingGradle#, UsingGradle.adoc>> for more info on how to run tests using Gradle.
@@ -419,16 +641,16 @@ See <<UsingGradle#, UsingGradle.adoc>> for more info on how to run tests using G
 
 Thanks to the https://github.com/TestFX/TestFX[TestFX] library we use, our GUI tests can be run in the _headless_ mode. In the headless mode, GUI tests do not show up on the screen. That means the developer can do other things on the Computer while the tests are running.
 
-To run tests in headless mode, open a console and run the command `gradlew clean headless allTests` (Mac/Linux: `./gradlew clean headless allTests`)
+To run tests in headless mode, open a console and run the command `gradlew clean headless allTests` (Mac/Linux: `./gradlew clean headless allTests`).
 
 === Types of tests
 
 We have two types of tests:
 
-.  *GUI Tests* - These are tests involving the GUI. They include,
+.  *GUI Tests* - These are tests involving the GUI. They include:
 .. _System Tests_ that test the entire App by simulating user actions on the GUI. These are in the `systemtests` package.
 .. _Unit tests_ that test the individual components. These are in `seedu.address.ui` package.
-.  *Non-GUI Tests* - These are tests not involving the GUI. They include,
+.  *Non-GUI Tests* - These are tests not involving the GUI. They include:
 ..  _Unit tests_ targeting the lowest level methods/classes. +
 e.g. `seedu.address.commons.StringUtilTest`
 ..  _Integration tests_ that are checking the integration of multiple code units (those code units are assumed to be working). +
@@ -442,6 +664,11 @@ e.g. `seedu.address.logic.LogicManagerTest`
 
 * Reason: One of its dependencies, `UserGuide.html` in `src/main/resources/docs` is missing.
 * Solution: Execute Gradle task `processResources`.
+
+**Problem: `HelpWindowTest` fails with a `BoundsLocatorException`.**
+
+* Reason: The window size of the test application is too small.
+* Solution: Open `src/test/java/seedu/address/TestApp.java` and find the `initPrefs` method. Find `new GuiSettings` inside the method and enlarge the window size accordingly.
 
 == Dev Ops
 
@@ -469,251 +696,6 @@ a. Include those libraries in the repo (this bloats the repo size) +
 b. Require developers to download those libraries manually (this creates extra work for developers)
 
 [appendix]
-== Suggested Programming Tasks to Get Started
-
-Suggested path for new programmers:
-
-1. First, add small local-impact (i.e. the impact of the change does not go beyond the component) enhancements to one component at a time. Some suggestions are given in this section link:#improving-each-component[Improving a Component].
-
-2. Next, add a feature that touches multiple components to learn how to implement an end-to-end feature across all components. The section link:#creating-a-new-command-code-remark-code[Creating a new command: `remark`] explains how to go about adding such a feature.
-
-=== Improving each component
-
-Each individual exercise in this section is component-based (i.e. you would not need to modify the other components to get it to work).
-
-[discrete]
-==== `Logic` component
-
-[TIP]
-Do take a look at the link:#logic-component[Design: Logic Component] section before attempting to modify the `Logic` component.
-
-. Add a shorthand equivalent alias for each of the individual commands. For example, besides typing `clear`, the user can also type `c` to remove all persons in the list.
-+
-****
-* Hints
-** Just like we store each individual command word constant `COMMAND_WORD` inside `*Command.java` (e.g.  link:{repoURL}/src/main/java/seedu/address/logic/commands/FindCommand.java[`FindCommand#COMMAND_WORD`], link:{repoURL}/src/main/java/seedu/address/logic/commands/DeleteCommand.java[`DeleteCommand#COMMAND_WORD`]), you need a new constant for aliases as well (e.g. `FindCommand#COMMAND_ALIAS`).
-** link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] is responsible for analyzing command words.
-* Solution
-** Modify the switch statement in link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser#parseCommand(String)`] such that both the proper command word and alias can be used to execute the same intended command.
-** See this https://github.com/se-edu/addressbook-level4/pull/590/files[PR] for the full solution.
-****
-
-[discrete]
-==== `Model` component
-
-[TIP]
-Do take a look at the link:#model-component[Design: Model Component] section before attempting to modify the `Model` component.
-
-. Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in the address book.
-+
-****
-* Hints
-** The link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model`] API needs to be updated.
-**  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] classes can be used to implement the tag removal logic. link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] allows you to update a person, and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] allows you to update the tags.
-* Solution
-** Add the implementation of `deleteTag(Tag)` method in link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`]. Loop through each person, and remove the `tag` from each person.
-** See this https://github.com/se-edu/addressbook-level4/pull/591/files[PR] for the full solution.
-****
-
-[discrete]
-==== `Ui` component
-
-[TIP]
-Do take a look at the link:#ui-component[Design: UI Component] section before attempting to modify the `UI` component.
-
-. Use different colors for different tags inside person cards. For example, `friends` tags can be all in grey, and `colleagues` tags can be all in red.
-+
-**Before**
-+
-image::getting-started-ui-tag-before.png[width="300"]
-+
-**After**
-+
-image::getting-started-ui-tag-after.png[width="300"]
-+
-****
-* Hints
-** The tag labels are created inside link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard#initTags(ReadOnlyPerson)`] (`new Label(tag.tagName)`). https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html[JavaFX's `Label` class] allows you to modify the style of each Label, such as changing its color.
-** Use the .css attribute `-fx-background-color` to add a color.
-* Solution
-** See this https://github.com/se-edu/addressbook-level4/pull/592/files[PR] for the full solution.
-****
-
-. Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] such that link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] can show a different style on error (currently it shows the same regardless of errors).
-+
-**Before**
-+
-image::getting-started-ui-result-before.png[width="200"]
-+
-**After**
-+
-image::getting-started-ui-result-after.png[width="200"]
-+
-****
-* Hints
-** link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] is raised by link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] which also knows whether the result is a success or failure, and is caught by link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] which is where we want to change the style to.
-** Refer to link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] for an example on how to display an error.
-* Solution
-** Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] 's constructor so that users of the event can indicate whether an error has occurred.
-** Modify link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay#handleNewResultAvailableEvent(event)`] to react to this event appropriately.
-** See this https://github.com/se-edu/addressbook-level4/pull/593/files[PR] for the full solution.
-****
-
-. Modify the link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to show the total number of people in the address book.
-+
-**Before**
-+
-image::getting-started-ui-status-before.png[width="500"]
-+
-**After**
-+
-image::getting-started-ui-status-after.png[width="500"]
-+
-****
-* Hints
-** link:{repoURL}/src/main/resources/view/StatusBarFooter.fxml[`StatusBarFooter.fxml`] will need a new `StatusBar`. Be sure to set the `GridPane.columnIndex` properly for each `StatusBar` to avoid misalignment!
-** link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] needs to initialize the status bar on application start, and to update it accordingly whenever the address book is updated.
-* Solution
-** Modify the constructor of link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to take in the number of persons when the application just started.
-** Use link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter#handleAddressBookChangedEvent(AddressBookChangedEvent)`] to update the number of persons whenever there are new changes to the addressbook.
-** See this https://github.com/se-edu/addressbook-level4/pull/596/files[PR] for the full solution.
-****
-
-[discrete]
-==== `Storage` component
-
-[TIP]
-Do take a look at the link:#storage-component[Design: Storage Component] section before attempting to modify the `Storage` component.
-
-. Add a new method `backupAddressBook(ReadOnlyAddressBook)`, so that the address book can be saved in a fixed temporary location.
-+
-****
-* Hint
-** Add the API method in link:{repoURL}/src/main/java/seedu/address/storage/AddressBookStorage.java[`AddressBookStorage`] interface.
-** Implement the logic in link:{repoURL}/src/main/java/seedu/address/storage/StorageManager.java[`StorageManager`] class.
-* Solution
-** See this https://github.com/se-edu/addressbook-level4/pull/594/files[PR] for the full solution.
-****
-
-=== Creating a new command: `remark`
-
-By creating this command, you will get a chance to learn how to implement a feature end-to-end, touching all major components of the app.
-
-==== Description
-Edits the remark for a person specified in the `INDEX`. +
-Format: `remark INDEX r/[REMARK]`
-
-Examples:
-
-* `remark 1 r/Likes to drink coffee.` +
-Edits the remark for the first person to `Likes to drink coffee.`
-* `remark 1 r/` +
-Removes the remark for the first person.
-
-==== Step-by-step Instructions
-
-===== [Step 1] Logic: Teach the app to accept 'remark' which does nothing
-Let's start by teaching the application how to parse a `remark` command. We will add the logic of `remark` later.
-
-**Main:**
-
-. Add a `RemarkCommand` that extends link:{repoURL}/src/main/java/seedu/address/logic/commands/UndoableCommand.java[`UndoableCommand`]. Upon execution, it should just throw an `Exception`.
-. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to accept a `RemarkCommand`.
-
-**Tests:**
-
-. Add `RemarkCommandTest` that tests that `executeUndoableCommand()` throws an Exception.
-. Add new test method to link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`], which tests that typing "remark" returns an instance of `RemarkCommand`.
-
-===== [Step 2] Logic: Teach the app to accept 'remark' arguments
-Let's teach the application to parse arguments that our `remark` command will accept. E.g. `1 r/Likes to drink coffee.`
-
-**Main:**
-
-. Modify `RemarkCommand` to take in an `Index` and `String` and print those two parameters as the error message.
-. Add `RemarkCommandParser` that knows how to parse two arguments, one index and one with prefix 'r/'.
-. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to use the newly implemented `RemarkCommandParser`.
-
-**Tests:**
-
-. Modify `RemarkCommandTest` to test the `RemarkCommand#equals()` method.
-. Add `RemarkCommandParserTest` that tests different boundary values
-for `RemarkCommandParser`.
-. Modify link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`] to test that the correct command is generated according to the user input.
-
-===== [Step 3] Ui: Add a placeholder for remark in `PersonCard`
-Let's add a placeholder on all our link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] s to display a remark for each person later.
-
-**Main:**
-
-. Add a `Label` with any random text inside link:{repoURL}/src/main/resources/view/PersonListCard.fxml[`PersonListCard.fxml`].
-. Add FXML annotation in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] to tie the variable to the actual label.
-
-**Tests:**
-
-. Modify link:{repoURL}/src/test/java/guitests/guihandles/PersonCardHandle.java[`PersonCardHandle`] so that future tests can read the contents of the remark label.
-
-===== [Step 4] Model: Add `Remark` class
-We have to properly encapsulate the remark in our link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`] class. Instead of just using a `String`, let's follow the conventional class structure that the codebase already uses by adding a `Remark` class.
-
-**Main:**
-
-. Add `Remark` to model component (you can copy from link:{repoURL}/src/main/java/seedu/address/model/person/Address.java[`Address`], remove the regex and change the names accordingly).
-. Modify `RemarkCommand` to now take in a `Remark` instead of a `String`.
-
-**Tests:**
-
-. Add test for `Remark`, to test the `Remark#equals()` method.
-
-===== [Step 5] Model: Modify `ReadOnlyPerson` to support a `Remark` field
-Now we have the `Remark` class, we need to actually use it inside link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`].
-
-**Main:**
-
-. Add three methods `setRemark(Remark)`, `getRemark()` and `remarkProperty()`. Be sure to implement these newly created methods in link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`Person`], which implements the link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`] interface.
-. You may assume that the user will not be able to use the `add` and `edit` commands to modify the remarks field (i.e. the person will be created without a remark).
-. Modify link:{repoURL}/src/main/java/seedu/address/model/util/SampleDataUtil.java/[`SampleDataUtil`] to add remarks for the sample data (delete your `addressBook.xml` so that the application will load the sample data when you launch it.)
-
-===== [Step 6] Storage: Add `Remark` field to `XmlAdaptedPerson` class
-We now have `Remark` s for `Person` s, but they will be gone when we exit the application. Let's modify link:{repoURL}/src/main/java/seedu/address/storage/XmlAdaptedPerson.java[`XmlAdaptedPerson`] to include a `Remark` field so that it will be saved.
-
-**Main:**
-
-. Add a new Xml field for `Remark`.
-. Be sure to modify the logic of the constructor and `toModelType()`, which handles the conversion to/from  link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`].
-
-**Tests:**
-
-. Fix `validAddressBook.xml` such that the XML tests will not fail due to a missing `<remark>` element.
-
-===== [Step 7] Ui: Connect `Remark` field to `PersonCard`
-Our remark label in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] is still a placeholder. Let's bring it to life by binding it with the actual `remark` field.
-
-**Main:**
-
-. Modify link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard#bindListeners()`] to add the binding for `remark`.
-
-**Tests:**
-
-. Modify link:{repoURL}/src/test/java/seedu/address/ui/testutil/GuiTestAssert.java[`GuiTestAssert#assertCardDisplaysPerson(...)`] so that it will compare the remark label.
-. In link:{repoURL}/src/test/java/seedu/address/ui/PersonCardTest.java[`PersonCardTest`], call `personWithTags.setRemark(ALICE.getRemark())` to test that changes in the link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`Person`] 's remark correctly updates the corresponding link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`].
-
-===== [Step 8] Logic: Implement `RemarkCommand#execute()` logic
-We now have everything set up... but we still can't modify the remarks. Let's finish it up by adding in actual logic for our `remark` command.
-
-**Main:**
-
-. Replace the logic in `RemarkCommand#execute()` (that currently just throws an `Exception`), with the actual logic to modify the remarks of a person.
-
-**Tests:**
-
-. Update `RemarkCommandTest` to test that the `execute()` logic works.
-
-==== Full Solution
-
-See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-by-step solution.
-
-[appendix]
 == User Stories
 
 Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
@@ -729,17 +711,177 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |careless user |undo a previous command |undo commands with typing mistakes
+
+|`* * *` |user |sort persons by desired attribute |list persons in desired order
+
+|`* * *` |user |see when a person was added |list persons by date added
+
+|`* * *` |user |redo a previous command |repeatedly launch frequent commands
+
+|`* * *` |lazy user |type shorthand commands |save time
+
+|`* * *` |lazy user |mark a person as "Favourite" |always find "Favourited" contacts easily
+
+|`* * *` |impatient user |delete multiple persons |save time
+
+|`* * *` |organised user |create a group |organise persons by groups
+
+|`* * *` |organised user |edit a group |change details of a group
+
+|`* * *` |organised user |add a person to a group |
+
+|`* * *` |organised user |delete a person in a group |remove a person that is longer in a group
+
+|`* * *` |organised user |list persons in a group |see persons in the same group
+
+|`* * *` |organised user |delete a group |remove groups that are no longer needed
+
+|`* * *` |organised user |list groups |see all groups that I have
+
+|`* * *` |forgetful user |add a person's photo |remember a person's face
+
+|`* *` |organised user |move a person to another group |shift a person when he/she changes group
+
+|`* *` |user |add a person's calendar |see their schedule
+
+|`* *` |busy user |find a common schedule with a person |meet them without schedule conflicts
+
+|`* *` |user | customize the look and feel of the applicaiton |use the application with a comfortable UI
+
 |`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
-|=======================================================================
+|`* *` |user |add in contacts even if missing info for some fields |administrate contacts with only part of info known
 
-{More to be added}
+|`* *` |user |import/export saved contact-list to/from the address book |allow for contact transfers to other address books and/or backups
+
+|`* *` |forgetful user |see commands suggestions when I input wrong commands |enter the right commands
+
+|`* *` |forgetful user |look up contacts with partial name or initials |view list of contacts with eligible information
+
+|`* *` |careless user |get a list of possible contacts similiar to search keywords used |find correct contacts even with command typos
+
+|`* *` |social user |be able to connect the application to social media |see social media information related to my contacts
+
+|`*` |user |have a text search bar for contacts |find contacts faster instead of using "find" command
+
+|`*` |user |keep track of and display frequently looked up contacts |quick access to frequently viewed contacts
+
+|`*` |user |amend contact information |all information can be updated
+
+|`*` |user |clean up all contacts immediately |fast construct a new list of contacts
+
+|`*` |user |have an auto-complete command function in CLI |enter commands faster, increasing convenience
+
+|`*` |user |have each contact have a "comments" field |take notes for specific contacts
+
+|`*` |user |have displayed list of contacts display only "phone number" or "all info" |browse through contact list faster
+
+|`*` |user |link the application to online contact backup services |manage contact backups and synchronisation between devices
+
+|`*` |paranoid user |have application and it's data file locked with a password |feel safe knowing my contact list will not be stolen and copied
+
+|`*` |user |selectively import/export contacts to/from a file |transfer contacts to or recieve contacts from another application user
+
+|`*` |fellow developer |have a plug-in system to allow new modules to be used |plug in new functionalities such as a calender and/or appointment system
+|=======================================================================
 
 [appendix]
 == Use Cases
 
 (For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+
+[discrete]
+=== Use case: Add person
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to add person to list
+4.  AddressBook adds and shows updated list of persons
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given person detail is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Edit person
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to edit details of a specific person in the list
+4.  AddressBook edits the person details and shows the updated person details
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3b. The given detail or value is invalid.
++
+[none]
+** 3b1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Find person
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to find person whose name matches any given keywords
+4.  AddressBook retrieves and displays the person(s)
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. No keyword is given.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3b. No person matches keyword
++
+[none]
+** 3b1. AddressBook shows no person.
++
+Use case resumes at step 2.
 
 [discrete]
 === Use case: Delete person
@@ -767,47 +909,106 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-{More to be added}
-
 [appendix]
 == Non Functional Requirements
 
 .  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-{More to be added}
+.  The GUI should complement the command line by providing a clean and easy to read interface.
+.  The addressbook should never encounter a single error while in use.
+.  A new user should be able to pick up and be able to use the application easily.
 
 [appendix]
 == Glossary
+
+[[checkstyle]]
+Checkstyle
+
+....
+A development tool to help programmers write Java code that adheres to a coding standard by automatically checking Java code.
+....
+
+[[command]]
+Command(s)
+
+....
+Keywords that are used to do certain tasks. The list of commands for the application can be accessed by typing "help" in the application. All commands extend the "Command" class
+....
+
+[[eventscenter]]
+Events Center
+
+....
+The events center is a module in the application that handles any user inputs or events that occur, reducing direct coupling between components.
+....
+
+[[forking]]
+Forking
+
+....
+The cloning/copying of a repository.
+....
+
+[[jdk]]
+Java Development Kit.
+
+....
+The development kit that is required for developing the application (default location is "C:\Program Files\Java\jdkx.x.x_xxx", where the x's denote the version number).
+....
+
+[[json]]
+JavaScript Object Notation
+
+....
+An easy-to-read data storage format.
+....
 
 [[mainstream-os]]
 Mainstream OS
 
 ....
-Windows, Linux, Unix, OS-X
+Windows, Linux, Unix, OS-X.
+....
+
+[[parser]]
+Parser
+
+....
+Parsers are used to verify the format of commands used. e.g. Adding a contact while parsing given parameters such as email and tags.
 ....
 
 [[private-contact-detail]]
 Private contact detail
 
 ....
-A contact detail that is not meant to be shared with others
+A contact detail that is not meant to be shared with others.
 ....
 
-[appendix]
-== Product Survey
+[[tag]]
+Tag(s)
 
-*Product Name*
+....
+The label(s) attached to a contact for the purpose of identification or related groupings.
+....
 
-Author: ...
+[[travisci]]
+Continuous Integration (CI)
 
-Pros:
+....
+Build automation tool that helps developers understand if their application is working by building, testing and reporting on the build sequences the developer has configured. This project uses Travis and AppVeyor.
+....
 
-* ...
-* ...
+[[ui]]
+User Interface (UI)
 
-Cons:
+....
+The user interface is a front-facing component and is what the user sees. It is used to show information, as well as get user input for different operations such as adding and deleting contacts.
+....
 
-* ...
-* ...
+[[undoredostack]]
+Undo/redo stack mechanism
+
+....
+The application's state(s) that are stored on two stacks, which allow undo's and redo's, reverting the state of the application to before or after commands are run respectively.
+....
