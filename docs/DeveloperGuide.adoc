@@ -245,7 +245,7 @@ A brute force approach is applied where the `commandWord` is compared against ev
 // tag::prefixAutofill[]
 === Prefix Autofill
 
-When adding a new insurance, all fields are require as a contract needs to be complete before it is valid.
+When adding a new insurance, all fields are required as a contract needs to be complete before it is valid.
 However, due to the multitude of information required, users should have the convenience of
 pressing enter with an unfilled command to trigger the autofill to prompt you with the prefixes
 required and move the the caret to the next field.
@@ -407,7 +407,7 @@ which is removed from the constructor of the exception.
 
 The `add` command follows the format below:
 
-`add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [d/DATE_OF_BIRTH] [t/TAG]...`
+`add n/NAME [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [d/DATE_OF_BIRTH] [g/GENDER] [t/TAG]...`
 
 This means when adding a new person in LISA, the user only needs to provide value for the compulsory `NAME` field. Every other field is optional.
 
@@ -448,7 +448,7 @@ public Phone() {
 }
 ----
 
-The logic provided above can be applied to other optional fields, namely `[p/PHONE_NUMBER]`, `[e/EMAIL]`, `[a/ADDRESS]`, and `[d/DATE_OF_BIRTH]`.
+The logic provided above can be applied to other optional fields, namely `[p/PHONE_NUMBER]`, `[e/EMAIL]`, `[a/ADDRESS]`, `[g/GENDER]` and `[d/DATE_OF_BIRTH]`.
 `[t/TAG]...` uses a different implementation and will not be covered in this section.
 
 Due to this implementation, the field attribute of a `Person` object can never be `null`.
@@ -600,7 +600,7 @@ Therefore, in the above example, `"m"` is passed as the argument.
 As can be seen from the above code snippet , the given argument is converted to lower case and then given a value amongst
 the available enumerated constants : FEMALE , MALE and NOT_SPECIFIED (when no gender is specified)
 
-The genderset variable is specified to know if the user has entered the gender of the entry
+The `genderset` variable is specified to know if the user has entered the gender of the entry
 or not. If not , instead of displaying the default enum type :NOT_SPECIFIED , we can display
 a blank string. If specified , we can display the actual gender of the entry in a string format.
 
@@ -677,11 +677,12 @@ image::AfterAddingKelvin.png["width="800"]
 // tag::tagManagement[]
 === Improved Tag Management
 
-The original tag system management with the edit function have several difficulties which cause the user to too much trouble,
- inconvenience and inefficiency in managing their tags. This is mainly due to how the editing of a tag works. When using the
+The original tag system management within the edit function has several difficulties
+which cause the user inconvenience and inefficiency in managing
+their tags. This is mainly due to how the editing of a tag works. When using the
  edit function, just like how entering a new name will replace the existing name,
- using the tag prefix to add tags on to a user will end up overwriting all the existing tags and replace it
- with the new tag(s). For example, entering the `edit 1 t/Awesome` results in the following: +
+ using the tag prefix to add tags to a user will end up overwriting all the existing tags
+  and replace it with the new tag(s). For example, entering the `edit 1 t/Awesome` results in the following: +
 Command entered:
 
 image::addtagui.jpg[]
@@ -1014,7 +1015,7 @@ They are: name, owner, insured, beneficiary, premium, signing date, expiry date,
 
 // tag::print[]
 === Addition of Print Command
-The print command enables the user to save his/her addressbook into a printable .txt file
+The print command enables the user to save his/her addressbook in the form of a printable .txt file
 
 The print command has the following format:
 print [FILENAME]
@@ -1866,6 +1867,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+
+|`* * *` |user |Include gender as a field in record entry|
 
 |`* * *` |user |Include date of birth as a field in record entry|
 
