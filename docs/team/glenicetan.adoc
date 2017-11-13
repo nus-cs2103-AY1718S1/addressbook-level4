@@ -4,7 +4,23 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :stylesDir: ../stylesheets
 
 == Project: Resident Book
-ResidentBook is a newly conceptualised administrative tool catered for staffs handling hostel and college operations. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in OOP style in Java.
+ResidentBook is a newly conceptualised administrative tool catered for staffs handling hostel and college operations. Universities such as NUS, has numerous hostels and colleges. Administrative staff has to handle all the matters regarding check in, check out , and ensuring
+that all Residents have paid for their fees during their stay. However, while the school employs a system with database of Resident details, common administrative staff are unable to read the information due to policies such as PDPA.
+
+Simple day to day operations can be carried out with minimal critical and private data. For example, Residents' NRIC is unnecessary when checking in, as the matriculation card is sufficient in proving his identity.
+
+Also, while the University welcomes exchange students and guests during the semester, some data cannot be found in the school's database if the guests approaches the college or hall directly. The temporary person feature is implemented, where the details will be automatically deleted after the timing specified by the staff.
+The feature also help to prevent storing redundant and unnecessary details in the ResidentBook. Additionally, for exchange students, the staff can easily import and export the details into the current ResidentBook.
+
+Colleges and Halls are famous for their vibrant community life. CCAs, dance classes and interest groups are just some example of weekly events Residents can participate in. Administrators are required to keep a calendar of upcoming events when queries by Professors or Guests who are interested in the events.
+However, with so many events happening every week, it will be hard to keep track without a calendar that shows the overview of events during the month. This also helps administrators in finding clashes of events.
+
+Keeping these in mind, ResidentBook is developed to ease the overhead and trouble of handling hostel or college administration matters. Showing only necessary details such as Room number and Contact number, administrators are able to perform day-to-day operations.
+ResidentBook uses Command line interface (CLI) as the primary source of input. Accompanied with features such as auto-complete, ResidenkBook aim to increase the efficiency and effectiveness of Hostel and College life.
+
+image::../images/Ui.png[width="900"]
+
+A simple, clean and minimalist design is adopted for the GUI. One glance through the application will give staff the most vital details required for their daily operations.
 
 *Code contributed*: [https://github.com/CS2103AUG2017-F09-B1/main/tree/master/collated/main/blackroxs.md[Functional code]] [https://github.com/CS2103AUG2017-F09-B1/main/tree/master/collated/test/blackroxs.md[Test code]]
 
@@ -22,8 +38,9 @@ include::../UserGuide.adoc[tag=backup]
 ---
 
 ==== Justification
+For administrators, the worst nightmare that can happen is when the data is corrupted, causing operations to be immediately affected. Without a working past record, it is close to impossible for staff to perform recovery and employ disaster control methods.
 
-Backup command helps to save an additional copy of the current ResidentBook data. This is useful during cases of IT failure or data corruption, recovery can be done effortlessly.
+Hence, the Backup command helps to save an additional copy of the current ResidentBook data. It works hand in hand together with the import command. When required, staff can clear the corrupted data from the ResidentBook application and import the backup.xml.
 
 ==== Implementation
 
@@ -60,7 +77,10 @@ include::../UserGuide.adoc[tag=import]
 
 ==== Justification
 
-Import command helps when there is an external list of Resident that needs to be added into the list. For example, Exchange students details may reside in another list. For fast operations, the import command will retrieve all unique details and add to the current ResidentBook.
+Import command helps when there is an external list of Resident that needs to be added into the ResidentBook storage. For example, exchange students details may reside in another list. For smoother operations, the import command will retrieve all unique details and add to the current ResidentBook.
+
+This command works well together with the Backup command. For example, there is a master copy of ResidentBook managed by a senior administration staff. The senior staff would like his intern to deal with a smaller pool of Residents, and tasks him to manage the guests list.
+The intern can thus import the list of guests into his ResidentBook application without going through the trouble of repeatedly adding entries.
 
 ==== Implementation
 
@@ -88,7 +108,7 @@ include::../UserGuide.adoc[tag=removeTag]
 
 ==== Justification
 
-This function is useful to remove all deprecated tags. For example, when all residents have moved in, all the tags can be removed as "Pending".
+This function is useful to remove all deprecated tags. For example, when all residents have moved in, all the tags can be removed as "Pending". Instead of editing each entries one by one, this command provides an efficient and effective alternative to removing tags.
 
 ==== Implementation
 
@@ -108,3 +128,4 @@ include::../DeveloperGuide.adoc[tag=removeTag]
 * Wrote User Stories for project brainstorming (https://github.com/CS2103AUG2017-F09-B1/main/projects/1[Project Brainstorm])
 * Create UI mockup with team (Pull Request https://github.com/CS2103AUG2017-F09-B1/main/pull/12[#12])
 * Create releases(https://github.com/CS2103AUG2017-F09-B1/main/releases[Releases])
+* Wrote the Project description found in Project Portfolio

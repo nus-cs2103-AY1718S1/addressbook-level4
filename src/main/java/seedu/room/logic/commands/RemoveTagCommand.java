@@ -96,7 +96,6 @@ public class RemoveTagCommand extends UndoableCommand {
                 continue;
             } else {
                 updatedTags.add(t);
-                System.out.println(t.tagName);
             }
         }
 

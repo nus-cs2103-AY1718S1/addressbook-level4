@@ -32,6 +32,7 @@ public class ImportCommand extends UndoableCommand {
             + "Example: " + COMMAND_WORD + " friendsContacts.xml";
 
     public static final String NAME_SEPERATOR = ", ";
+    public static final String NAME_ADDED = " Added: ";
     public static final String MESSAGE_FILE_NOT_UNIQUE = "No unique residents found.";
     private String filePath;
 
@@ -50,7 +51,7 @@ public class ImportCommand extends UndoableCommand {
             addUniquePerson(newList, namesAdded);
             String namesFeedback = getNamesFeedback(namesAdded);
 
-            return new CommandResult(String.format(MESSAGE_SUCCESS + " Added: " + namesFeedback));
+            return new CommandResult(String.format(MESSAGE_SUCCESS + NAME_ADDED + namesFeedback));
         } catch (NullPointerException e) {
             throw new CommandException(MESSAGE_ERROR);
         } catch (DataConversionException e) {
