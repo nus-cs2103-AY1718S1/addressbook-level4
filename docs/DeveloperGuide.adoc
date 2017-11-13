@@ -225,12 +225,12 @@ This section describes some noteworthy details on how certain features are imple
 
 The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modify the state of the application (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
 
-`UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram, Figure 3.1.1, shows the inheritance diagram for commands:
+`UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram, Figure 3.1.1.1, shows the inheritance diagram for commands:
 
 image::LogicCommandClassDiagram.png[width="800"]
-_Figure 3.1.1 : Logic Command Class Diagram_
+_Figure 3.1.1.1 : Logic Command Class Diagram_
 
-As seen from Figure 3.1.1, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as `DeleteCommand`. Note that extra tasks need to be done when executing a command that can be undone, such as saving the state of the application before execution. `UndoableCommand` contains the high-level algorithm for these extra tasks while the child classes implement the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
+As seen from Figure 3.1.1.2, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as `DeleteCommand`. Note that extra tasks need to be done when executing a command that can be undone, such as saving the state of the application before execution. `UndoableCommand` contains the high-level algorithm for these extra tasks while the child classes implement the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
 
 Commands that are not undoable are implemented this way:
 [source,java]
@@ -265,33 +265,33 @@ public class DeleteCommand extends UndoableCommand {
 
 Suppose that the user has just launched the application. The `UndoRedoStack` will be empty at the start.
 
-The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command). This is illustrated by Figure 3.1.2.
+The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command). This is illustrated by Figure 3.1.1.2.
 
 image::UndoRedoStartingStackDiagram.png[width="800"]
-_Figure 3.1.2 : Execute Delete Command Stack Diagram_
+_Figure 3.1.1.2 : Execute Delete Command Stack Diagram_
 
-As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person. This is shown in Figure 3.1.3.
+As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person. This is shown in Figure 3.1.1.3.
 
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
-_Figure 3.1.3 : Execute Add Command Stack Diagram_
+_Figure 3.1.1.3 : Execute Add Command Stack Diagram_
 
 [NOTE]
 If a command fails its execution, it will not be pushed to the `UndoRedoStack` at all.
 
 The user now decides that adding the person was a mistake, and executes `undo` to undo his previous command.
 
-As can be seen from Figure 3.1.4, the most recent command is popped out of the `undoStack` and pushed back to the `redoStack`. The address book is then restored to the state before the `add` command executed.
+As can be seen from Figure 3.1.1.4, the most recent command is popped out of the `undoStack` and pushed back to the `redoStack`. The address book is then restored to the state before the `add` command executed.
 
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
-_Figure 3.1.4 : Execute Undo Command Stack Diagram_
+_Figure 3.1.1.4 : Execute Undo Command Stack Diagram_
 
 [NOTE]
 If the `undoStack` is empty, then there are no other commands left to be undone, and an `Exception` will be thrown when popping the `undoStack`.
 
-The following sequence diagram, Figure 3.1.5, shows how the undo operation works:
+The following sequence diagram, Figure 3.1.1.5, shows how the undo operation works:
 
 image::UndoRedoSequenceDiagram.png[width="800"]
-_Figure 3.1.5 : Undo/Redo Sequence Diagram_
+_Figure 3.1.1.5 : Undo/Redo Sequence Diagram_
 
 The redo does the exact opposite (pops from `redoStack`, pushes to `undoStack`, and restores the address book to the state after the command is executed).
 
@@ -301,17 +301,17 @@ If the `redoStack` is empty, there are no other commands left to be redone, and 
 The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. The `redoStack` is no longer empty. It will be purged as it no longer makes sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow). This is shown in Figure 3.1.6.
 
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
-_Figure 3.1.6 : Execute Clear Command Stack Diagram_
+_Figure 3.1.1.6 : Execute Clear Command Stack Diagram_
 
-Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution, as shown in Figure 3.1.7.
+Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution, as shown in Figure 3.1.1.7.
 
 image::UndoRedoNewCommand3StackDiagram.png[width="800"]
 _Figure 3.1.7 : Execute List Command Stack Diagram_
 
-The following activity diagram, Figure 3.1.8,  summarizes what happens inside the `UndoRedoStack` when a user executes a new command:
+The following activity diagram, Figure 3.1.1.8,  summarizes what happens inside the `UndoRedoStack` when a user executes a new command:
 
 image::UndoRedoActivityDiagram.png[width="200"]
-_Figure 3.1.8 : Undo/Redo Activity Diagram_
+_Figure 3.1.1.8 : Undo/Redo Activity Diagram_
 
 ==== Design Considerations
 
@@ -363,10 +363,10 @@ _Figure 3.1.8 : Undo/Redo Activity Diagram_
 The backing up of ABC is done by `BackupCommand` and the restoring of data from a backup file is done by `RestoreBackupCommand`.
 `BackupCommand` inherits from `Command` as it does not support the undoing and redoing of user actions, whereas `RestoreBackupCommand` inherits from `UndoableCommand`.
 These commands require access to `Storage` from `Logic` and this is accomplished by posting an event to `EventsCenter`. `Subscribers` in `StorageManager` will handle these events and respond correspondingly.
-The sequence diagram below (Figure 3.1.2) shows how the `BackupCommand` is carried out.
+The sequence diagram below (Figure 3.2.1.1) shows how the `BackupCommand` is carried out.
 
 image::BackupCommandSequenceDiagram.png[width="800"]
-_Figure 3.2.1 : Backup Command Sequence Diagram_
+_Figure 3.2.1.1 : Backup Command Sequence Diagram_
 
 [NOTE]
 `RestoreBackupCommand` shares a similar flow for its sequence diagram.
@@ -479,10 +479,10 @@ public class AddTagCommand extends UndoableCommand {
 }
 
 ----
-The diagram below (Figure 3.3.1) shows how `AddTagCommand` works.
+The diagram below (Figure 3.3.1.1) shows how `AddTagCommand` works.
 
 image::AddTagSequenceDiagram.png[]
-_Figure 3.3.1 : AddTag Command Sequence Diagram_
+_Figure 3.3.1.1 : AddTag Command Sequence Diagram_
 
 `RemoveTagCommand` works in a similar way. Note that `AddTagCommand` will throw an exception if the `Tag` already exists for the `Person` selected. `DeleteTagCommand` throws an exception if the `Tag` is not found on the `Person`.
 
@@ -527,10 +527,10 @@ A `Person` is added to the displayed list if `predicate.test(person)` is evaluat
 Therefore, all `Person` instances that fulfill the conditions specified in `predicate` are displayed.
 
 ==== Filtering the displayed list
-Note that all `Person` instances in the displayed list satisfy a Predicate `currentPredicate`. Given a new Predicate `newPredicate`, filtering the displayed list of contacts is equivalent to selecting `Person` instances that satisfy both `currentPredicate` and `newPredicate`. From Figure 3.4.1, it can also be viewed as the intersection of two lists of `Person` objects, each satisfying one of the two predicates respectively.
+Note that all `Person` instances in the displayed list satisfy a Predicate `currentPredicate`. Given a new Predicate `newPredicate`, filtering the displayed list of contacts is equivalent to selecting `Person` instances that satisfy both `currentPredicate` and `newPredicate`. From Figure 3.4.2.1, it can also be viewed as the intersection of two lists of `Person` objects, each satisfying one of the two predicates respectively.
 
 image::venn_diagram.png[height = 200, width = 250]
-_Figure 3.4.1 : Venn Diagram for Filtering_
+_Figure 3.4.2.1 : Venn Diagram for Filtering_
 
 ==== Implementation
 The actual implementation of filtering the displayed list involves three steps. +
@@ -539,10 +539,10 @@ The actual implementation of filtering the displayed list involves three steps. 
 .  Use [https://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html#and-java.util.function.Predicate-[Predicate.and()]] to generated the logical AND of the two predicates.
 .  Update the list using the predicate generated in step 2.
 
-For more detail, refer to the sequence diagram(Figure 3.4.2) below.
+For more detail, refer to the sequence diagram(Figure 3.4.3.1) below.
 
 image::FindCommandSequenceDiagram.png[]
-_Figure 3.4.2 : Sequence Diagram for Find_
+_Figure 3.4.3.1 : Sequence Diagram for Find_
 
 ==== Design consideration
 The design for filtering the displayed list applies the [https://en.wikipedia.org/wiki/Open/closed_principle[Open/Close Principle]].
@@ -561,10 +561,10 @@ A `PeopleService` instance is required and obtained via the `LoginCommand` befor
 `PeopleService` is then used to perform Create, Read, Update, and Delete (CRUD) operations on the user's Google Contacts,
 which is used in `SyncCommand`. The four primary methods in `SyncCommand` are `checkContacts`, `updateContacts`, `importContacts` and `exportContacts`. +
 
-The sequence diagram for the command can be seen below, in Figure 3.5.1:
+The sequence diagram for the command can be seen below, in Figure 3.5.1.1:
 
 image::SyncCommandSequenceDiagram.png[width="1000"]
-_Figure 3.5.1: Sync Command Sequence Diagram
+_Figure 3.5.1.1: Sync Command Sequence Diagram_
 
 ==== Methods
 
@@ -845,7 +845,7 @@ b. Require developers to download those libraries manually (this creates extra w
 
 Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
 
-[width="59%",cols="22%,<23%,<25%,<30%",options="header",]
+[width="100%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the application
