@@ -54,6 +54,7 @@ include::../UserGuide.adoc[tag=import]
 
 * Updated the GUI color scheme and appearance (Pull requests https://github.com/CS2103AUG2017-T10-B2/main/pull/76[#76], https://github.com/CS2103AUG2017-T10-B2/main/pull/87[#87])
 * Designed the PEERSONAL icon (Pull request https://github.com/CS2103AUG2017-T10-B2/main/pull/44/files[#44])
+* Added test cases for addphoto enchancement (Pull request https://github.com/CS2103AUG2017-T10-B2/main/pull/75/files[#75])
 
 == Project: PowerPointLabs
 
