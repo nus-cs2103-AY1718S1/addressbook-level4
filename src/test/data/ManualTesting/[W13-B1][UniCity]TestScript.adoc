@@ -10,7 +10,15 @@ Deatils on how to load the sample data is included as well.
 [NOTE]
 This is by no means an exhaustive list of tests.
 
-== Loading the Sample Data
+== Instructions on how to load the sample data
 
+[start=1]
+. Add a folder called `data` to the same directory where the jar file is located.
+. Copy the `[W13-B1][UniCity]SampleData.xml` file from IVLE into the data folder.
+. Rename it `addressbook.xml`.
+
+[NOTE]
+A common mistake is renaming the file name as `addressbook.xml` making the entire file to be read as
+`addressbook.xml.xml`. Make sure that the name is simply addressbook and the file type is xml.
 
 == Commands

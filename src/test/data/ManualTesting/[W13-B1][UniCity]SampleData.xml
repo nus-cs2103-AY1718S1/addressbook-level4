@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addressbook>
+    <persons>
+        <name>Alex Yeoh</name>
+        <phone>87438807</phone>
+        <email>alexyeoh@example.com</email>
+        <address>Blk 30 Geylang Street 29, #06-40</address>
+        <favourite>True</favourite>
+        <birthday>04/05/1995</birthday>
+        <tagged>colleagues</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Charlotte Oliverio</name>
+        <phone>91031282</phone>
+        <email>charoli@example.com</email>
+        <address>Blk 436 Serangoon Gardens Street 26, #16-43</address>
+        <favourite>False</favourite>
+        <birthday>02/03/1994</birthday>
+        <tagged>family</tagged>
+    </persons>
+    <persons>
+        <name>Roy Banner</name>
+        <phone>92624417</phone>
+        <email>royb@example.com</email>
+        <address>Blk 45 Aljunied Street 85, #11-31</address>
+        <favourite>False</favourite>
+        <birthday>06/04/1995</birthday>
+        <tagged>colleagues</tagged>
+    </persons>
+    <tags>help</tags>
+    <tags>colleagues</tags>
+    <tags>helpers1</tags>
+    <tags>classmates</tags>
+    <tags>neighbours</tags>
+    <tags>family</tags>
+    <tags>friends</tags>
+</addressbook>
