@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import static seedu.address.testutil.EventsUtil.postNow;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.ui.BrowserPanel.DEFAULT_PAGE;
+import static seedu.address.ui.BrowserPanel.FACEBOOK_PREFIX;
 import static seedu.address.ui.BrowserPanel.GOOGLE_MAP_DIR_URL_PREFIX;
 import static seedu.address.ui.BrowserPanel.GOOGLE_MAP_URL_END;
 import static seedu.address.ui.BrowserPanel.GOOGLE_MAP_URL_PREFIX;
@@ -78,27 +79,56 @@ public class BrowserPanelTest extends GuiUnitTest {
         waitUntilBrowserLoaded(browserPanelHandle);
         assertEquals(expectedPersonUrl, browserPanelHandle.getLoadedUrl());
 
-        /* Due to facebook data security, the url might sometimes leads to a captcha page, resulting in negative test
-        case
+
         // associated facebook page of a person
         postNow(facebookOpenEventStub);
         expectedPersonUrl = new URL(FACEBOOK_PREFIX + StringUtil.partiallyEncode(dummy.getFacebook().value));
 
         waitUntilBrowserLoaded(browserPanelHandle);
         assertEquals(expectedPersonUrl, browserPanelHandle.getLoadedUrl());
-        */
+    }
+
+    @Test
+    public void displayFacxebook() throws Exception {
+        // default web page
+        URL expectedDefaultPageUrl = new URL(DEFAULT_PAGE);
+        assertEquals(expectedDefaultPageUrl, browserPanelHandle.getLoadedUrl());
+
+        // associated facebook page of a person
+        postNow(facebookOpenEventStub);
+        URL expectedPersonUrl = new URL(FACEBOOK_PREFIX + StringUtil.partiallyEncode(dummy.getFacebook().value));
+
+        waitUntilBrowserLoaded(browserPanelHandle);
+        assertEquals(expectedPersonUrl, browserPanelHandle.getLoadedUrl());
+    }
+
+
+
+    @Test
+    public void displayName() throws Exception {
+        // default web page
+        URL expectedDefaultPageUrl = new URL(DEFAULT_PAGE);
+        assertEquals(expectedDefaultPageUrl, browserPanelHandle.getLoadedUrl());
+
 
         // search name of a person
         postNow(searchNameEvent);
-        expectedPersonUrl = new URL(GOOGLE_URL_PREFIX
+        URL expectedPersonUrl = new URL(GOOGLE_URL_PREFIX
                 + StringUtil.partiallyEncode(dummy.getName().fullName) + GOOGLE_URL_SUFFIX);
 
         waitUntilBrowserLoaded(browserPanelHandle);
         assertEquals(expectedPersonUrl, browserPanelHandle.getLoadedUrl());
+    }
+
+    @Test
+    public void displayMajor() throws Exception {
+        // default web page
+        URL expectedDefaultPageUrl = new URL(DEFAULT_PAGE);
+        assertEquals(expectedDefaultPageUrl, browserPanelHandle.getLoadedUrl());
 
         // search major of a person
         postNow(searchMajorEvent);
-        expectedPersonUrl = new URL(GOOGLE_URL_PREFIX
+        URL expectedPersonUrl = new URL(GOOGLE_URL_PREFIX
                 + StringUtil.partiallyEncode("NUS " + dummy.getMajor().value) + GOOGLE_URL_SUFFIX);
 
         waitUntilBrowserLoaded(browserPanelHandle);
