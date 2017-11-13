@@ -17,7 +17,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import guitests.guihandles.MapsPanelHandle;
-import seedu.address.MainApp;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 
 public class MapsPanelTest extends GuiUnitTest {
