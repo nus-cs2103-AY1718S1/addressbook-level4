@@ -11,6 +11,7 @@ public class AliasCommandHint extends Hint {
         this.userInput = userInput;
         this.arguments = arguments;
         argumentHint = "";
+        parse();
     }
 
     @Override
@@ -19,8 +20,12 @@ public class AliasCommandHint extends Hint {
         return userInput + whitespace;
     }
 
-    @Override
-    public void parse() {
+    /**
+     * parses {@code userInput} and {@code arguments}
+     * sets appropriate {@code argumentHint}, {@code description}
+     * for an Alias Command
+     */
+    private void parse() {
 
         if (arguments.length() == 0 && !userInput.endsWith(" ")) {
             description = " shows all aliases";

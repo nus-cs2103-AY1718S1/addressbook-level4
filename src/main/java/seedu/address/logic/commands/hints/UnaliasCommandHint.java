@@ -11,6 +11,7 @@ public class UnaliasCommandHint extends Hint {
         this.userInput = userInput;
         this.arguments = arguments;
         this.argumentHint = "";
+        parse();
     }
 
     @Override
@@ -19,8 +20,12 @@ public class UnaliasCommandHint extends Hint {
         return userInput + whitespace;
     }
 
-    @Override
-    public void parse() {
+    /**
+     * parses {@code userInput} and {@code arguments}
+     * sets appropriate {@code argumentHint}, {@code description}
+     * for Unalias Command
+     */
+    private void parse() {
         String[] args = arguments.trim().split("\\s+");
 
         if (args[0].isEmpty()) {

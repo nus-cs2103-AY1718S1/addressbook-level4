@@ -11,5 +11,6 @@ public class HelpCommandHint extends NoArgumentsHint {
     public HelpCommandHint(String userInput) {
         this.userInput = userInput;
         this.description = HELP_COMMAND_DESC;
+        parse();
     }
 }

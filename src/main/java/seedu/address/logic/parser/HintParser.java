@@ -59,11 +59,8 @@ public class HintParser {
         String userInput = input;
         String commandWord = command[0];
         String arguments = command[1];
-        Hint hint = generateParsedHint(userInput, arguments, commandWord);
-        if (hint == null) {
-            return " type help for user guide";
-        }
-
+        Hint hint = generateHint(userInput, arguments, commandWord);
+        hint.requireFieldsNonNull();
         return hint.getArgumentHint() + hint.getDescription();
     }
 
@@ -72,7 +69,7 @@ public class HintParser {
      * userInput and arguments are referenced to decide whether whitespace should be added to
      * the front of the hint
      */
-    private static Hint generateHint(String userInput, String arguments, String commandWord) {
+    public static Hint generateHint(String userInput, String arguments, String commandWord) {
 
         switch (commandWord) {
         case AddCommand.COMMAND_WORD:
@@ -111,16 +108,5 @@ public class HintParser {
         default:
             return new CommandHint(userInput, commandWord);
         }
-    }
-
-    /**
-     * returns a parsedHint if generated hint is non null, else return null
-     */
-    public static Hint generateParsedHint(String userInput, String arguments, String commandWord) {
-        Hint generatedHint = generateHint(userInput, arguments, commandWord);
-        if (generatedHint != null) {
-            generatedHint.parse();
-        }
-        return generatedHint;
     }
 }

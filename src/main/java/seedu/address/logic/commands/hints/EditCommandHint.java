@@ -35,10 +35,15 @@ public class EditCommandHint extends ArgumentsHint {
     public EditCommandHint(String userInput, String arguments) {
         this.userInput = userInput;
         this.arguments = arguments;
+        parse();
     }
 
-    @Override
-    public void parse() {
+    /**
+     * parses {@code userInput} and {@code arguments}
+     * sets appropriate {@code argumentHint}, {@code description}, {@code onTab}
+     * for Edit Command
+     */
+    private void parse() {
         //case : edit *|
         if (!HintUtil.hasPreambleIndex(arguments)) {
             handleOfferIndex(userInput);

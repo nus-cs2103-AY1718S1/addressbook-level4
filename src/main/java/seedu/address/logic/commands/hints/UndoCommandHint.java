@@ -11,5 +11,6 @@ public class UndoCommandHint extends NoArgumentsHint {
     public UndoCommandHint(String userInput) {
         this.userInput = userInput;
         this.description = UNDO_COMMAND_DESC;
+        parse();
     }
 }

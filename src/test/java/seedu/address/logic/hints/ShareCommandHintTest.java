@@ -1,6 +1,6 @@
 package seedu.address.logic.hints;
 
-import static seedu.address.logic.hints.AddCommandHintTest.parseAndAssertHint;
+import static seedu.address.logic.hints.AddCommandHintTest.assertHintContent;
 
 import org.junit.Test;
 
@@ -11,63 +11,63 @@ public class ShareCommandHintTest {
     @Test
     public void shareCommandHint() {
         ShareCommandHint shareCommandHint = new ShareCommandHint("share", "");
-        parseAndAssertHint(
+        assertHintContent(
                 shareCommandHint,
                 " 1",
                 " index",
                 "share 1");
 
         shareCommandHint = new ShareCommandHint("share ", "");
-        parseAndAssertHint(
+        assertHintContent(
                 shareCommandHint,
                 "1",
                 " index",
                 "share 1");
 
         shareCommandHint = new ShareCommandHint("share 1", " 1");
-        parseAndAssertHint(
+        assertHintContent(
                 shareCommandHint,
                 "",
                 " index",
                 "share 2");
 
         shareCommandHint = new ShareCommandHint("share 1 ", " 1");
-        parseAndAssertHint(
+        assertHintContent(
                 shareCommandHint,
                 "s/",
                 "email or index",
                 "share 1 s/");
 
         shareCommandHint = new ShareCommandHint("share 1 s", " 1 s");
-        parseAndAssertHint(
+        assertHintContent(
                 shareCommandHint,
                 "/",
                 "email or index",
                 "share 1 s/");
 
         shareCommandHint = new ShareCommandHint("share 1 s/", " 1 s/");
-        parseAndAssertHint(
+        assertHintContent(
                 shareCommandHint,
                 "",
                 "email or index",
                 "share 1 s/");
 
         shareCommandHint = new ShareCommandHint("share 1 s/s", " 1 s/s");
-        parseAndAssertHint(
+        assertHintContent(
                 shareCommandHint,
                 " ",
                 "next email or index",
                 "share 1 s/s ");
 
         shareCommandHint = new ShareCommandHint("share 1 s/s ", " 1 s/s ");
-        parseAndAssertHint(
+        assertHintContent(
                 shareCommandHint,
                 "",
                 "next email or index",
                 "share 1 s/s ");
 
         shareCommandHint = new ShareCommandHint("share 1 s/s s", " 1 s/s s");
-        parseAndAssertHint(
+        assertHintContent(
                 shareCommandHint,
                 " ",
                 "next email or index",

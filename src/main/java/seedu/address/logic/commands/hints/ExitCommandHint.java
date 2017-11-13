@@ -11,5 +11,6 @@ public class ExitCommandHint extends NoArgumentsHint {
     public ExitCommandHint(String userInput) {
         this.userInput = userInput;
         this.description = EXIT_COMMAND_DESC;
+        parse();
     }
 }

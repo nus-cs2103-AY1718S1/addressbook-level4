@@ -11,8 +11,12 @@ public abstract class NoArgumentsHint extends Hint {
         argumentHint = "";
     }
 
-    @Override
-    public void parse() {
+    /**
+     * parses {@code userInput}
+     * sets appropriate {@code description}
+     * for any No Argument Command
+     */
+    protected void parse() {
         String whitespace = userInput.endsWith(" ") ? "" : " ";
         this.description = whitespace + this.description;
     }

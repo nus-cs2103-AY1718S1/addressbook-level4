@@ -11,5 +11,6 @@ public class ListCommandHint extends NoArgumentsHint {
     public ListCommandHint(String userInput) {
         this.userInput = userInput;
         this.description = LIST_COMMAND_DESC;
+        parse();
     }
 }

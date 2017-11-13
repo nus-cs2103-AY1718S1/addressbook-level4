@@ -101,7 +101,6 @@ public class NoArgumentsHintTest {
 
 
     private void assertNoArgHint(NoArgumentsHint noArgumentsHint, String description, String autocomplete) {
-        noArgumentsHint.parse();
         assertEquals(description, noArgumentsHint.getDescription());
         assertEquals(autocomplete, noArgumentsHint.autocomplete());
     }

@@ -29,7 +29,6 @@ public abstract class ArgumentsHint extends Hint {
         Prefix p = HintUtil.findPrefixOfCompletionHint(arguments, possiblePrefixesToComplete);
         description = getDescription(p);
         onTab = userInput + argumentHint;
-        assertRequiredIsNonNull();
         LOGGER.info("ArgumentsHint - Handled Prefix Completion");
     }
 
@@ -46,7 +45,6 @@ public abstract class ArgumentsHint extends Hint {
         description = getDescription(currentPrefix);
         Prefix nextPrefix = generateNextPrefix(currentPrefix, prefixList, possiblePrefixesToComplete);
         onTab = userInput.substring(0, userInput.length() - 2) + nextPrefix.toString();
-        assertRequiredIsNonNull();
         LOGGER.info("ArgumentsHint - Handled Prefix Tabbing");
     }
 
@@ -78,7 +76,6 @@ public abstract class ArgumentsHint extends Hint {
         argumentHint = whitespace + offeredPrefix.toString();
         description = getDescription(offeredPrefix);
         onTab = userInput + argumentHint;
-        assertRequiredIsNonNull();
         LOGGER.info("ArgumentsHint - Handled Prefix Offer");
     }
 
@@ -92,7 +89,6 @@ public abstract class ArgumentsHint extends Hint {
         argumentHint = whitespace + "1";
         description = " index";
         onTab = userInput + argumentHint;
-        assertRequiredIsNonNull();
         LOGGER.info("ArgumentsHint - Handled Index Offer");
     }
 
@@ -108,7 +104,6 @@ public abstract class ArgumentsHint extends Hint {
 
         int newIndex = currentIndex + 1;
         onTab = userInput.substring(0, userInput.length() - length) + newIndex;
-        assertRequiredIsNonNull();
         LOGGER.info("ArgumentsHint - Handled Index Tabbing");
     }
 

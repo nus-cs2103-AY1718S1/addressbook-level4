@@ -12,10 +12,16 @@ public class DeleteCommandHint extends ArgumentsHint {
     public DeleteCommandHint(String userInput, String arguments) {
         this.userInput = userInput;
         this.arguments = arguments;
+        parse();
+
     }
 
-    @Override
-    public void parse() {
+    /**
+     * parses {@code userInput} and {@code arguments}
+     * sets appropriate {@code argumentHint}, {@code description}, {@code onTab}
+     * for Delete Command
+     */
+    private void parse() {
         //case : delete *|
         if (!HintUtil.hasIndex(arguments)) {
             handleOfferIndex(userInput);
@@ -31,6 +37,5 @@ public class DeleteCommandHint extends ArgumentsHint {
         description = "";
         argumentHint = "";
         onTab = userInput;
-        assertRequiredIsNonNull();
     }
 }

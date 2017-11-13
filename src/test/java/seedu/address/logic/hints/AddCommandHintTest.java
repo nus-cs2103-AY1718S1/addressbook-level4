@@ -13,42 +13,42 @@ public class AddCommandHintTest {
     public void parseTest() {
         //offer hint
         AddCommandHint addCommandHint = new AddCommandHint("add", "");
-        parseAndAssertHint(addCommandHint, " n/", "name", "add n/");
+        assertHintContent(addCommandHint, " n/", "name", "add n/");
         addCommandHint = new AddCommandHint("add n/ ", " n/ ");
-        parseAndAssertHint(addCommandHint, "p/", "phone", "add n/ p/");
+        assertHintContent(addCommandHint, "p/", "phone", "add n/ p/");
         addCommandHint = new AddCommandHint("add n/nicholas p/321 e/email@e.com a/address",
                 " n/nicholas p/321 e/email@e.com a/address");
-        parseAndAssertHint(addCommandHint, " r/", "remark (optional)",
+        assertHintContent(addCommandHint, " r/", "remark (optional)",
                 "add n/nicholas p/321 e/email@e.com a/address r/");
         //prefix completion
         addCommandHint = new AddCommandHint("add n", " n");
-        parseAndAssertHint(addCommandHint, "/", "name", "add n/");
+        assertHintContent(addCommandHint, "/", "name", "add n/");
         addCommandHint = new AddCommandHint("add p", " p");
-        parseAndAssertHint(addCommandHint, "/", "phone", "add p/");
+        assertHintContent(addCommandHint, "/", "phone", "add p/");
         addCommandHint = new AddCommandHint("add e", " e");
-        parseAndAssertHint(addCommandHint, "/", "email", "add e/");
+        assertHintContent(addCommandHint, "/", "email", "add e/");
 
         //prefix cycle
         addCommandHint = new AddCommandHint("add i/", " i/");
-        parseAndAssertHint(addCommandHint, "", "avatar file path (optional)", "add n/");
+        assertHintContent(addCommandHint, "", "avatar file path (optional)", "add n/");
         addCommandHint = new AddCommandHint("add a/", " a/");
-        parseAndAssertHint(addCommandHint, "", "address", "add r/");
+        assertHintContent(addCommandHint, "", "address", "add r/");
 
         //exhausted all prefix
         addCommandHint = new AddCommandHint("add n/nicholas p/321 e/email@e.com a/address t/tag i/picture.png r/remark",
                 " n/nicholas p/321 e/email@e.com a/address t/tag i/picture.png r/remark");
-        parseAndAssertHint(addCommandHint, " ", "",
+        assertHintContent(addCommandHint, " ", "",
                 "add n/nicholas p/321 e/email@e.com a/address t/tag i/picture.png r/remark ");
     }
 
     /**
      * parses {@code hint} and checks if the the hint generated has the expected fields
      */
-    public static void parseAndAssertHint(Hint hint,
-                                          String expectedArgumentHint,
-                                          String expectedDescription,
-                                          String expectedAutocomplete) {
-        hint.parse();
+    public static void assertHintContent(Hint hint,
+                                         String expectedArgumentHint,
+                                         String expectedDescription,
+                                         String expectedAutocomplete) {
+
         assertEquals(expectedArgumentHint, hint.getArgumentHint());
         assertEquals(expectedDescription, hint.getDescription());
         assertEquals(expectedAutocomplete, hint.autocomplete());

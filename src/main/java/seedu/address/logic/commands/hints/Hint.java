@@ -1,5 +1,7 @@
 package seedu.address.logic.commands.hints;
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
@@ -16,30 +18,35 @@ public abstract class Hint {
     protected String userInput;
     protected String arguments;
 
-    public abstract void parse();
+    /**
+     * returns the new user input when user presses tab
+     */
     public abstract String autocomplete();
+
+    /**
+     * returns the argument hint of current user input
+     */
+    public String getArgumentHint() {
+        return argumentHint;
+    }
+
+    /**
+     * returns the description of current user input
+     */
+    public String getDescription() {
+        return description;
+    }
 
     /**
      * asserts that require info is non null
      * should be called after parse()
      */
-    protected final void assertRequiredIsNonNull() {
-
-        if ((argumentHint == null)
-                || (description == null)
-                || (userInput == null)
-                || (autocomplete() == null)) {
-            assert false;
-        }
-
-
+    public final void requireFieldsNonNull() {
+        requireNonNull(argumentHint);
+        requireNonNull(description);
+        requireNonNull(userInput);
+        requireNonNull(autocomplete());
     }
 
-    public String getArgumentHint() {
-        return argumentHint;
-    }
 
-    public String getDescription() {
-        return description;
-    }
 }

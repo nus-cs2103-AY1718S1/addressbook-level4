@@ -35,9 +35,9 @@ public class Autocomplete {
         String commandWord = command[0];
         String arguments = command[1];
 
-        Hint hint = HintParser.generateParsedHint(input, arguments, commandWord);
-        String autoCompletedHint = hint.autocomplete();
-        return autoCompletedHint != null ? autoCompletedHint : input;
+        Hint hint = HintParser.generateHint(input, arguments, commandWord);
+        hint.requireFieldsNonNull();
+        return hint.autocomplete();
     }
 
     /**

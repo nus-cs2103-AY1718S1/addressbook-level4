@@ -11,5 +11,6 @@ public class HistoryCommandHint extends NoArgumentsHint {
     public HistoryCommandHint(String userInput) {
         this.userInput = userInput;
         this.description = HISTORY_COMMAND_DESC;
+        parse();
     }
 }

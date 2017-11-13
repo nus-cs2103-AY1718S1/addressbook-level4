@@ -11,6 +11,7 @@ public class RedoCommandHint extends NoArgumentsHint {
     public RedoCommandHint(String userInput) {
         this.userInput = userInput;
         this.description = REDO_COMMAND_DESC;
+        parse();
     }
 
 }

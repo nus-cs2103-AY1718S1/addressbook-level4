@@ -1,6 +1,6 @@
 package seedu.address.logic.hints;
 
-import static seedu.address.logic.hints.AddCommandHintTest.parseAndAssertHint;
+import static seedu.address.logic.hints.AddCommandHintTest.assertHintContent;
 
 import org.junit.Test;
 
@@ -16,55 +16,55 @@ public class MusicCommandHintTest {
         MusicCommandHint musicCommandHint;
         if (!MusicCommand.isMusicPlaying()) {
             musicCommandHint = new MusicCommandHint("music", "");
-            parseAndAssertHint(musicCommandHint,
+            assertHintContent(musicCommandHint,
                     " play",
                     " plays music",
                     "music play");
 
             musicCommandHint = new MusicCommandHint("music ", "");
-            parseAndAssertHint(musicCommandHint,
+            assertHintContent(musicCommandHint,
                     "play",
                     " plays music",
                     "music play");
 
             musicCommandHint = new MusicCommandHint("music p", " p");
-            parseAndAssertHint(musicCommandHint,
+            assertHintContent(musicCommandHint,
                     "lay",
                     " plays music",
                     "music play");
 
             musicCommandHint = new MusicCommandHint("music play po", " play po");
-            parseAndAssertHint(musicCommandHint,
+            assertHintContent(musicCommandHint,
                     "p",
                     " plays pop",
                     "music play pop");
         } else {
             musicCommandHint = new MusicCommandHint("music", "");
-            parseAndAssertHint(musicCommandHint,
+            assertHintContent(musicCommandHint,
                     " stop",
                     " stops music",
                     "music stop");
 
             musicCommandHint = new MusicCommandHint("music ", " ");
-            parseAndAssertHint(musicCommandHint,
+            assertHintContent(musicCommandHint,
                     "stop",
                     " stops music",
                     "music stop");
 
             musicCommandHint = new MusicCommandHint("music s", " s");
-            parseAndAssertHint(musicCommandHint,
+            assertHintContent(musicCommandHint,
                     "top",
                     " stops music",
                     "music stop");
 
             musicCommandHint = new MusicCommandHint("music p", " p");
-            parseAndAssertHint(musicCommandHint,
+            assertHintContent(musicCommandHint,
                     "lay",
                     " plays music",
                     "music stop");
 
             musicCommandHint = new MusicCommandHint("music play po", " play po");
-            parseAndAssertHint(musicCommandHint,
+            assertHintContent(musicCommandHint,
                     "p",
                     " plays pop",
                     "music stop ");
@@ -72,38 +72,38 @@ public class MusicCommandHintTest {
 
 
         musicCommandHint = new MusicCommandHint("music play", " play");
-        parseAndAssertHint(musicCommandHint,
+        assertHintContent(musicCommandHint,
                 " pop",
                 " plays pop",
                 "music play pop");
 
         musicCommandHint = new MusicCommandHint("music play pop", " play pop");
-        parseAndAssertHint(musicCommandHint,
+        assertHintContent(musicCommandHint,
                 "",
                 " plays pop",
                 "music play dance");
 
         musicCommandHint = new MusicCommandHint("music play dance", " play dance");
-        parseAndAssertHint(musicCommandHint,
+        assertHintContent(musicCommandHint,
                 "",
                 " plays dance tracks",
                 "music play classic");
 
         musicCommandHint = new MusicCommandHint("music play classic", " play classic");
-        parseAndAssertHint(musicCommandHint,
+        assertHintContent(musicCommandHint,
                 "",
                 " plays the classics",
                 "music play pop");
 
         musicCommandHint = new MusicCommandHint("music play s", " play s");
-        parseAndAssertHint(musicCommandHint,
+        assertHintContent(musicCommandHint,
                 " pop",
                 " plays pop",
                 "music play pop");
 
 
         musicCommandHint = new MusicCommandHint("music stop", " stop");
-        parseAndAssertHint(musicCommandHint,
+        assertHintContent(musicCommandHint,
                 "",
                 " stops music",
                 "music stop");

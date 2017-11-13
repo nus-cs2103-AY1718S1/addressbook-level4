@@ -34,10 +34,15 @@ public class FindCommandHint extends ArgumentsHint {
     public FindCommandHint(String userInput, String arguments) {
         this.userInput = userInput;
         this.arguments = arguments;
+        parse();
     }
 
-    @Override
-    public void parse() {
+    /**
+     * parses {@code userInput} and {@code arguments}
+     * sets appropriate {@code argumentHint}, {@code description}, {@code onTab}
+     * for Find Command
+     */
+    private void parse() {
         Optional<String> prefixCompletionOptional = HintUtil.findPrefixCompletionHint(arguments, PREFIXES);
 
         // are we completing a hint?
@@ -68,7 +73,6 @@ public class FindCommandHint extends ArgumentsHint {
 
         //TODO: never exhaust the prefix offers
         handleOfferHint(PREFIXES);
-        assertRequiredIsNonNull();
     }
 
     @Override

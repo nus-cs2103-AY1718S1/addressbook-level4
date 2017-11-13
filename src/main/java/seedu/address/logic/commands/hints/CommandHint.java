@@ -23,7 +23,7 @@ import seedu.address.model.Aliases;
 import seedu.address.model.UserPrefs;
 
 /**
- * Generates hint and autocompletion for command words
+ * Generates hint and autocompletion for any uncompleted command word
  */
 public class CommandHint extends Hint {
 
@@ -32,6 +32,7 @@ public class CommandHint extends Hint {
     public CommandHint(String userInput, String commandWord) {
         this.userInput = userInput;
         this.commandWord = commandWord;
+        parse();
     }
 
     @Override
@@ -39,8 +40,12 @@ public class CommandHint extends Hint {
         return userInput.trim() + argumentHint;
     }
 
-    @Override
-    public void parse() {
+    /**
+     * parses {@code userInput} and {@code commandWord}
+     * sets appropriate {@code argumentHint}, {@code description}
+     * for any uncompleted command word
+     */
+    private void parse() {
         String autocompleted = Autocomplete.autocompleteCommand(commandWord);
 
         if (autocompleted == null) {

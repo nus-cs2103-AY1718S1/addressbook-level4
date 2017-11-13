@@ -9,26 +9,26 @@ public class UnaliasCommandHintTest {
     @Test
     public void unaliasCommandHint() {
         UnaliasCommandHint unaliasCommandHint = new UnaliasCommandHint("unalias", "");
-        parseAndAssertHint(
+        assertHint(
                 unaliasCommandHint,
                 " removes alias",
                 "unalias ");
 
         unaliasCommandHint = new UnaliasCommandHint("alias ", "");
-        parseAndAssertHint(
+        assertHint(
                 unaliasCommandHint,
                 " alias to remove",
                 "alias ");
 
         unaliasCommandHint = new UnaliasCommandHint("alias s", " s");
-        parseAndAssertHint(
+        assertHint(
                 unaliasCommandHint,
                 " removes s from aliases",
                 "alias s ");
 
 
         unaliasCommandHint = new UnaliasCommandHint("alias aaa ", " aaa ");
-        parseAndAssertHint(
+        assertHint(
                 unaliasCommandHint,
                 " removes aaa from aliases",
                 "alias aaa ");
@@ -38,10 +38,10 @@ public class UnaliasCommandHintTest {
     /**
      * parses {@code unaliasCommandHint} and checks if the the hint generated has the expected fields
      */
-    private void parseAndAssertHint(UnaliasCommandHint unaliasCommandHint,
-                                    String expectedDesc,
-                                    String expectedAutocomplete) {
-        AddCommandHintTest.parseAndAssertHint(
+    private void assertHint(UnaliasCommandHint unaliasCommandHint,
+                            String expectedDesc,
+                            String expectedAutocomplete) {
+        AddCommandHintTest.assertHintContent(
                 unaliasCommandHint,
                 "",
                 expectedDesc,

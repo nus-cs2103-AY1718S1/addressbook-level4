@@ -24,11 +24,15 @@ public class ShareCommandHint extends ArgumentsHint {
     public ShareCommandHint(String userInput, String arguments) {
         this.userInput = userInput;
         this.arguments = arguments;
+        parse();
     }
 
-    @Override
-    public void parse() {
-
+    /**
+     * parses {@code userInput} and {@code arguments}
+     * sets appropriate {@code argumentHint}, {@code description}, {@code onTab}
+     * for Share Command
+     */
+    private void parse() {
         if (!HintUtil.hasPreambleIndex(arguments)) {
             handleOfferIndex(userInput);
             return;
@@ -76,8 +80,6 @@ public class ShareCommandHint extends ArgumentsHint {
             onTab = userInput + argumentHint;
             description = getDescription(offeredPrefix);
         }
-
-        assertRequiredIsNonNull();
         LOGGER.info("ArgumentsHint - Handled Prefix Offer");
     }
 

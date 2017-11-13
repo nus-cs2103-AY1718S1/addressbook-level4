@@ -39,10 +39,15 @@ public class AddCommandHint extends ArgumentsHint {
     public AddCommandHint(String userInput, String arguments) {
         this.userInput = userInput;
         this.arguments = arguments;
+        parse();
     }
 
-    @Override
-    public void parse() {
+    /**
+     * parses {@code userInput} and {@code arguments}
+     * sets appropriate {@code argumentHint}, {@code description}, {@code onTab}
+     * for Add Command
+     */
+    private void parse() {
         possiblePrefixesToComplete = HintUtil.getUncompletedPrefixes(arguments, PREFIXES);
 
         Optional<String> prefixCompletionOptional =

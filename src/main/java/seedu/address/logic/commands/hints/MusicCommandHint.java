@@ -16,11 +16,15 @@ public class MusicCommandHint extends FixedArgumentsHint {
     public MusicCommandHint(String userInput, String arguments) {
         this.userInput = userInput;
         this.arguments = arguments;
+        parse();
     }
 
-
-    @Override
-    public void parse() {
+    /**
+     * parses {@code userInput} and {@code arguments}
+     * sets appropriate {@code argumentHint}, {@code description}, {@code autoCorrectInput}
+     * for Music Command
+     */
+    private void parse() {
 
         String[] args = arguments.trim().split("\\s+");
 

@@ -11,6 +11,7 @@ public class ClearCommandHint extends NoArgumentsHint {
     public ClearCommandHint(String userInput) {
         this.userInput = userInput;
         this.description = CLEAR_COMMAND_DESC;
+        parse();
     }
 
 }
