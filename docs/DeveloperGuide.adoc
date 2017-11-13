@@ -520,19 +520,19 @@ Code of `AddEventCommand`:
 ----
 
 ----
-public class UniqueEventList implements Iterable<Event> {
+    public class UniqueEventList implements Iterable<Event> {
 
-    private final ObservableList<Event> internalList = FXCollections.observableArrayList();
-    ...
-    public void add(ReadOnlyEvent toAdd) throws DuplicateEventException {
-        requireNonNull(toAdd);
-        if (contains(toAdd)) {
-            throw new DuplicateEventException();
+        private final ObservableList<Event> internalList = FXCollections.observableArrayList();
+        ...
+        public void add(ReadOnlyEvent toAdd) throws DuplicateEventException {
+            requireNonNull(toAdd);
+            if (contains(toAdd)) {
+                throw new DuplicateEventException();
+            }
+            internalList.add(new Event(toAdd));
         }
-        internalList.add(new Event(toAdd));
+        ...
     }
-    ...
-}
 ----
 
 Code from `ModelManager`
@@ -1886,7 +1886,8 @@ shows the key implementation of how an Event object is added to the addressbook.
 ----
    dialog.setResultConverter(dialogButton -> {
         if (dialogButton == button) {
-                return new BuildEvent().withName(text1.getText()).withDate(date).withAddress(text2.getText()).build();
+                return new BuildEvent().withName(text1.getText())
+                                       .withDate(date).withAddress(text2.getText()).build();
             }
             return null;
         });
