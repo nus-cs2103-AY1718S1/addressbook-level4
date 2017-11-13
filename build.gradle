@@ -87,7 +87,7 @@ allprojects {
     }
 
     shadowJar {
-        archiveName = "addressbook.jar"
+        archiveName = "touristbook.jar"
 
         destinationDir = file("${buildDir}/jar/")
     }
@@ -220,10 +220,21 @@ task deployOfflineDocs(type: Copy) {
         include 'stylesheets/*'
         include 'images/*'
         include 'UserGuide.html'
+        include 'UsefulContacts.html'
     }
+}
+
+task copyDataFile (type: Copy) {
+    into('build/jar/data')
+
+    from('data/') {
+        include 'addressbook.xml'
+    }
+
 }
 
 deployOfflineDocs.dependsOn asciidoctor
 processResources.dependsOn deployOfflineDocs
+shadowJar.dependsOn copyDataFile
 
 defaultTasks 'clean', 'headless', 'allTests', 'coverage', 'asciidoctor'

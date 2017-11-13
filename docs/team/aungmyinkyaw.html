@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.3">
+<title>Aung Myin Kyaw - Project Portfolio</title>
+<link rel="stylesheet" href="../stylesheets/gh-pages.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="../stylesheets/coderay-asciidoctor.css">
+</head>
+<body class="article">
+<div id="header">
+<h1>Aung Myin Kyaw - Project Portfolio</h1>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="project-tourist-book"><a class="link" href="#project-tourist-book">Project: Tourist-Book</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>Code contributed</strong>: [<a href="https://github.com/CS2103AUG2017-F09-B2/main/blob/master/collated/main/aungmyin23.md">Functional code</a>] [<a href="https://github.com/CS2103AUG2017-F09-B2/main/blob/master/collated/test/aungmyin23.md">Test code</a>]</p>
+</div>
+<div class="sect2">
+<h3 id="enhancement-added-displaying-of-mrt-map"><a class="link" href="#enhancement-added-displaying-of-mrt-map">Enhancement Added: Displaying of Mrt Map</a></h3>
+<div class="sect3">
+<h4 id="external-behavior"><a class="link" href="#external-behavior">External behavior</a></h4>
+<hr>
+<div class="paragraph">
+<p><mark>Start of Extract [from: User Guide]</mark></p>
+</div>
+<div class="paragraph">
+<p>Display MRT map of Singapore by clicking on <code>MRT Map</code> &#8594; <code>MRT Map</code><br></p>
+</div>
+<div class="paragraph">
+<p>or</p>
+</div>
+<div class="paragraph">
+<p>Display MRT map of Singapore by using the CLI.<br>
+Format: <code>mrt</code></p>
+</div>
+<div class="paragraph">
+<p>or</p>
+</div>
+<div class="paragraph">
+<p>Using the shortcut key <code>F3</code></p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>The browser window must be closed before proceeding with any other command. This is a bug that is found in<br>
+the base <a href="https://github.com/se-edu/addressbook-level4/issues/727">Addressbook-level 4</a>.</p>
+</li>
+<li>
+<p>The command is <strong>case sensitive</strong></p>
+</li>
+<li>
+<p>The command will ignore any other parameters after the command word.</p>
+</li>
+<li>
+<p>It is also not an undoable command, hence the <code>undo</code> command will not work.</p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><mark>End of Extract</mark></p>
+</div>
+<hr>
+</div>
+<div class="sect3">
+<h4 id="justification"><a class="link" href="#justification">Justification</a></h4>
+<div class="paragraph">
+<p>Since the project is targeted to the tourist who are visiting Singapore, it is important for them to
+have easy access to the MRT map of Singapore.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="implementation"><a class="link" href="#implementation">Implementation</a></h4>
+<hr>
+<div class="paragraph">
+<p><mark>Start of Extract [from: Developer Guide]</mark></p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="mrt-map-mechanism"><a class="link" href="#mrt-map-mechanism">MRT Map mechanism</a></h3>
+<div class="paragraph">
+<p>MRT Map mechanism displays the latest Singapore MRT map from LTA website using the browser display.
+It can be access by using <code>Command Line</code> and <code>UI</code>.
+Figure 3.4.1 shows the new structure of the UI component.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/UiComponentwithMrtClassDiagram.png" alt="UiComponentwithMrtClassDiagram" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 3.6.1 : Structure of the UI Component with MRTWindow</em></p>
+</div>
+<div class="paragraph">
+<p>Command <code>mrt</code> is used to open mrt map window from Command Line.
+Following Figure 3.4.2 shows the sequence when <code>mrt</code> is key in by the user.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/MRTSequenceDiagrams.jpg" alt="MRTSequenceDiagrams" width="600">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 3.6.2 : Structure of the UI Component with MRTWindow</em></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>public static final String MRT_FILE_PATH = "/docs/MrtMap.jpg";
+
+private static final Logger logger = LogsCenter.getLogger(MrtWindow.class);
+private static final String ICON = "/images/mrt_logo.jpg";
+private static final String FXML = "MrtMapWindow.fxml";
+private static final String TITLE = "MRT Map";</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The code above shows the setting up of <code>MrtWindow.java</code> for MrtWindow Browser.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/MrtMapButtonUI.png" alt="MrtMapButtonUI" width="600">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 3.6.3 : UI button added to the `MainWindow`</em></p>
+</div>
+<div class="sect3">
+<h4 id="design-considerations"><a class="link" href="#design-considerations">Design Considerations</a></h4>
+<div class="paragraph">
+<p><strong>Aspect:</strong> Different approach on displaying mrt map <br>
+<strong>Alternative 1:</strong> Access from the internet<br>
+<strong>Pros:</strong> Can get the latest information and easier to implement as using the web browser+
+<strong>Cons:</strong> Slow in accessing the web page and its depending on the internet speed<br>
+<strong>Alternative 2 (current choice):</strong> Include MRT map picture<br>
+<strong>Pros:</strong> Load faster in accessing the map<br>
+<strong>Cons:</strong> Might not be the latest one. However, this can overcome with frequent updates.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>(Pull requests <a href="https://github.com/CS2103AUG2017-F09-B2/main/pull/10">#10</a>)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><mark>End of Extract</mark></p>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="enhancement-added-sorrting"><a class="link" href="#enhancement-added-sorrting">Enhancement Added: Sorrting</a></h3>
+<div class="sect3">
+<h4 id="external-behavior-2"><a class="link" href="#external-behavior-2">External behavior</a></h4>
+<hr>
+<div class="paragraph">
+<p><mark>Start of Extract [from: User Guide]</mark></p>
+</div>
+<div class="paragraph">
+<p>Sort command allows you to sort the places in alphabetical order.<br>
+Format: <code>sort</code></p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>The sort command is temporary and does not permanently sort the places by alphabetical order.<br></p>
+</li>
+<li>
+<p>The command is <strong>case sensitive</strong></p>
+</li>
+<li>
+<p>The command will ignore any other parameters after the command word.</p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><mark>End of Extract</mark></p>
+</div>
+<hr>
+</div>
+<div class="sect3">
+<h4 id="justification-2"><a class="link" href="#justification-2">Justification</a></h4>
+<div class="paragraph">
+<p>The list of Places that added to the list will appear at the bottom of the list. By sorting the list, it allows the user to view the
+list in alphabetical order.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="implementation-2"><a class="link" href="#implementation-2">Implementation</a></h4>
+<hr>
+<div class="paragraph">
+<p><mark>Start of Extract [from: Developer Guide]</mark></p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="sort-mechanism"><a class="link" href="#sort-mechanism">Sort Mechanism</a></h3>
+<div class="paragraph">
+<p>Sort mechanism operates by sorting the <code>internalList</code> in <code>UniquePersonList</code>. This command allows the user to sort the list in alphebitacal orders.
+Sort command will inherit from <code>commands</code>.</p>
+</div>
+<div class="paragraph">
+<p>Following is the sequence diagram of <code>sort</code> command.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/SortCommandSequenceDiagram.png" alt="SortCommandSequenceDiagram" width="600">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 3.7.1 : Sequence diagram of <code>sort</code> command</em></p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>@Override
+public int compareTo(Place otherPlace) {
+    int toUpdate = this.name.toString().toUpperCase().compareTo((otherPlace.name.toString().toUpperCase()));
+    return toUpdate;
+}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The code above shows the implementation of <code>compareTo</code> method. This method converts the names of the Places to <code>CAPITAL LETTERS</code>,
+which allows us to compare easily. After the end of the comparison it will return the most updated list of places to display.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>(Pull requests <a href="https://github.com/CS2103AUG2017-F09-B2/main/pull/92">#92</a>)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><mark>End of Extract</mark></p>
+</div>
+<hr>
+</div>
+<div class="sect2">
+<h3 id="enhancement-added-short-commands"><a class="link" href="#enhancement-added-short-commands">Enhancement Added: Short Commands</a></h3>
+<div class="sect3">
+<h4 id="external-behavior-3"><a class="link" href="#external-behavior-3">External behavior</a></h4>
+<hr>
+<div class="paragraph">
+<p><mark>Start of Extract [from: User Guide]</mark></p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="code-logic-code-component"><a class="link" href="#code-logic-code-component"><code>Logic</code> component</a></h3>
+<div class="paragraph">
+<p>Added a shorthand equivalent alias for each of the individual commands. For example, besides typing <code>add</code>, the user can also type <code>a</code> to remove all places in the list.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>(Pull requests <a href="https://github.com/CS2103AUG2017-F09-B2/main/pull/4">#4</a>)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><mark>End of Extract</mark></p>
+</div>
+<hr>
+</div>
+<div class="sect2">
+<h3 id="enhancement-added-displaying-of-psi-value"><a class="link" href="#enhancement-added-displaying-of-psi-value">Enhancement Added: Displaying of PSI value</a></h3>
+<div class="sect3">
+<h4 id="external-behavior-4"><a class="link" href="#external-behavior-4">External behavior</a></h4>
+<hr>
+<div class="paragraph">
+<p><mark>Start of Extract [from: User Guide]</mark></p>
+</div>
+<div class="paragraph">
+<p>Displays the current PSI levels in Singapore.<br>
+Format: <code>psi</code></p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>The command is <strong>case sensitive</strong></p>
+</li>
+<li>
+<p>The command will ignore any other parameters after the command word.</p>
+</li>
+<li>
+<p>It is also not an undoable command, hence the <code>undo</code> command will not work.</p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>(Pull requests <a href="https://github.com/CS2103AUG2017-F09-B2/main/pull/74">#74</a>)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><mark>End of Extract</mark></p>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="enhancement-added-allowing-the-tourist-to-just-input-2-compulsory-fields"><a class="link" href="#enhancement-added-allowing-the-tourist-to-just-input-2-compulsory-fields">Enhancement Added: Allowing the tourist to just input 2 compulsory fields</a></h3>
+<div class="sect3">
+<h4 id="external-behavior-5"><a class="link" href="#external-behavior-5">External behavior</a></h4>
+<hr>
+<div class="paragraph">
+<p><mark>Start of Extract [from: User Guide]</mark></p>
+</div>
+<div class="paragraph">
+<p>Tourist can opt to leave Address, Email and Phone field empty when adding in new attraction.</p>
+</div>
+<div class="paragraph">
+<p>For Example:
+*  Instead of: <code>add n/Marina Bay Sands ph/698837 /https://www.marinabay.com.sg a/10 Bayfront Avenue p/018956</code>
+* User to can key in: <code>add n/Marina Bay Sands p/018956</code></p>
+</div>
+<div class="paragraph">
+<p>If the user left as blank the default values are as follow:<br>
+- Phone: <code>000</code><br>
+- Address: <code>-</code><br>
+- Website <code><a href="http://www.-.com" class="bare">http://www.-.com</a></code></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>(Pull requests <a href="https://github.com/CS2103AUG2017-F09-B2/main/pull/57">#57</a>)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><mark>End of Extract</mark></p>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="other-contributions"><a class="link" href="#other-contributions">Other contributions</a></h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Created new attributes (Pull requests <a href="https://github.com/CS2103AUG2017-F09-B2/main/pull/26">#26</a>)</p>
+</li>
+<li>
+<p>Help to find bugs for other projects during <code>Acceptance testing</code>:<br>
+(Issues Trackers <a href="https://github.com/CS2103AUG2017-W14-B2/main/issues/121">#121</a>, <a href="https://github.com/CS2103AUG2017-W14-B2/main/issues/120">#120</a>,
+<a href="https://github.com/CS2103AUG2017-W14-B2/main/issues/119">#119</a>, <a href="https://github.com/CS2103AUG2017-W14-B2/main/issues/122">#122</a>)</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2017-11-13 12:45:42 +08:00
+</div>
+</div>
+</body>
+</html>

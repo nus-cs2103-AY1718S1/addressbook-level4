@@ -6,39 +6,48 @@ import java.util.Set;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.Phone;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.place.Address;
+import seedu.address.model.place.Name;
+import seedu.address.model.place.Phone;
+import seedu.address.model.place.Place;
+import seedu.address.model.place.PostalCode;
+import seedu.address.model.place.Website;
+import seedu.address.model.place.exceptions.DuplicatePlaceException;
 import seedu.address.model.tag.Tag;
 
 /**
  * Contains utility methods for populating {@code AddressBook} with sample data.
  */
 public class SampleDataUtil {
-    public static Person[] getSamplePersons() {
+    public static Place[] getSamplePlaces() {
         try {
-            return new Person[] {
-                new Person(new Name("Alex Yeoh"), new Phone("87438807"), new Email("alexyeoh@example.com"),
-                    new Address("Blk 30 Geylang Street 29, #06-40"),
-                    getTagSet("friends")),
-                new Person(new Name("Bernice Yu"), new Phone("99272758"), new Email("berniceyu@example.com"),
-                    new Address("Blk 30 Lorong 3 Serangoon Gardens, #07-18"),
-                    getTagSet("colleagues", "friends")),
-                new Person(new Name("Charlotte Oliveiro"), new Phone("93210283"), new Email("charlotte@example.com"),
-                    new Address("Blk 11 Ang Mo Kio Street 74, #11-04"),
-                    getTagSet("neighbours")),
-                new Person(new Name("David Li"), new Phone("91031282"), new Email("lidavid@example.com"),
-                    new Address("Blk 436 Serangoon Gardens Street 26, #16-43"),
-                    getTagSet("family")),
-                new Person(new Name("Irfan Ibrahim"), new Phone("92492021"), new Email("irfan@example.com"),
-                    new Address("Blk 47 Tampines Street 20, #17-35"),
-                    getTagSet("classmates")),
-                new Person(new Name("Roy Balakrishnan"), new Phone("92624417"), new Email("royb@example.com"),
-                    new Address("Blk 45 Aljunied Street 85, #11-31"),
-                    getTagSet("colleagues"))
+            return new Place[] {
+                //@@author huyuanrong
+                new Place(new Name("Marina Bay Sands"), new Phone("66888868"),
+                        new Website("http://www.marinabaysands.com/"),
+                    new Address("10 Bayfront Avenue"), new PostalCode("018956"),
+                    getTagSet("attractions")),
+                new Place(new Name("Singapore Flyer"), new Phone("6333311"),
+                        new Website("http://www.singaporeflyer.com/"),
+                    new Address("30 Raffles Ave"), new PostalCode("039803"),
+                    getTagSet("attractions")),
+                new Place(new Name("Singapore Zoo"), new Phone("62693411"),
+                        new Website("http://www.wrs.com.sg/"),
+                    new Address("80 Mandai Lake Rd"), new PostalCode("729826"),
+                    getTagSet("attractions")),
+                new Place(new Name("Beni Singapore"), new Phone("91593177"),
+                        new Website("http://www.beni-sg.com/"),
+                    new Address("333A Orchard Rd, #02-37"), new PostalCode("238897"),
+                    getTagSet("onestar")),
+                new Place(new Name("Odette"), new Phone("63850498"),
+                        new Website("http://www.odetterestaurant.com/"),
+                    new Address("1 Saint Andrew's Rd, #01-04, National Gallery"), new PostalCode("178957"),
+                    getTagSet("twostars")),
+                new Place(new Name("Joël Robuchon Restaurant"), new Phone("65777888"),
+                        new Website("https://www.rwsentosa.com/en"),
+                    new Address("26 Sentosa Gateway, Hotel Michael, #01-104 and 105"), new PostalCode("098138"),
+                    getTagSet("threestars"))
+                    //@@author
             };
         } catch (IllegalValueException e) {
             throw new AssertionError("sample data cannot be invalid", e);
@@ -48,12 +57,12 @@ public class SampleDataUtil {
     public static ReadOnlyAddressBook getSampleAddressBook() {
         try {
             AddressBook sampleAb = new AddressBook();
-            for (Person samplePerson : getSamplePersons()) {
-                sampleAb.addPerson(samplePerson);
+            for (Place samplePlace : getSamplePlaces()) {
+                sampleAb.addPlace(samplePlace);
             }
             return sampleAb;
-        } catch (DuplicatePersonException e) {
-            throw new AssertionError("sample data cannot contain duplicate persons", e);
+        } catch (DuplicatePlaceException e) {
+            throw new AssertionError("sample data cannot contain duplicate places", e);
         }
     }
 

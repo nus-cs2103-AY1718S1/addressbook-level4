@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= Tourist-Book - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -12,7 +12,7 @@ endif::[]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :repoURL: https://github.com/se-edu/addressbook-level4/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team F09-B2`      Since: `Jun 2016`      Licence: `MIT`
 
 == Setting up
 
@@ -130,7 +130,7 @@ _Figure 2.1.2 : Class Diagram of the Logic Component_
 
 The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
 
-image::SDforDeletePerson.png[width="800"]
+image::SDforDeletePlace.png[width="800"]
 _Figure 2.1.3a : Component interactions for `delete 1` command (part 1)_
 
 [NOTE]
@@ -138,7 +138,7 @@ Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address 
 
 The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
-image::SDforDeletePersonEventHandling.png[width="800"]
+image::SDforDeletePlaceEventHandling.png[width="800"]
 _Figure 2.1.3b : Component interactions for `delete 1` command (part 2)_
 
 [NOTE]
@@ -153,9 +153,11 @@ _Figure 2.2.1 : Structure of the UI Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PlaceListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
+
+For version 1.1 and 1.2, the theme color of the GUI is chosen randomly between Black and White in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`], by choosing link:{repoURL}/src/main/resources/view/MainWindow_Black.fxml[`MainWindow_Black.fxml`] or link:{repoURL}/src/main/resources/view/MainWindow_White.fxml[`MainWindow_White.fxml`]
 
 The `UI` component,
 
@@ -176,17 +178,17 @@ link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 
 .  `Logic` uses the `AddressBookParser` class to parse the user command.
 .  This results in a `Command` object which is executed by the `LogicManager`.
-.  The command execution can affect the `Model` (e.g. adding a person) and/or raise events.
+.  The command execution can affect the `Model` (e.g. adding a place) and/or raise events.
 .  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
 
 Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
 
-image::DeletePersonSdForLogic.png[width="800"]
+image::DeletePlaceSdForLogic.png[width="800"]
 _Figure 2.3.1 : Interactions Inside the Logic Component for the `delete 1` Command_
 
 === Model component
 
-image::ModelClassDiagram.png[width="800"]
+image::ModelComponentClassDiagram.png[width="800"]
 _Figure 2.4.1 : Structure of the Model Component_
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
@@ -195,7 +197,7 @@ The `Model`,
 
 * stores a `UserPref` object that represents the user's preferences.
 * stores the Address Book data.
-* exposes an unmodifiable `ObservableList<ReadOnlyPerson>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* exposes an unmodifiable `ObservableList<ReadOnlyPlace>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
 === Storage component
@@ -262,18 +264,18 @@ public class DeleteCommand extends UndoableCommand {
 
 Suppose that the user has just launched the application. The `UndoRedoStack` will be empty at the beginning.
 
-The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
+The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th place in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
 
 image::UndoRedoStartingStackDiagram.png[width="800"]
 
-As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person.
+As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new place.
 
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
 
 [NOTE]
 If a command fails its execution, it will not be pushed to the `UndoRedoStack` at all.
 
-The user now decides that adding the person was a mistake, and decides to undo that action using `undo`.
+The user now decides that adding the place was a mistake, and decides to undo that action using `undo`.
 
 We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed.
 
@@ -320,7 +322,7 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Pros:** Easy to implement. +
 **Cons:** May have performance issues in terms of memory usage. +
 **Alternative 2:** Individual command knows how to undo/redo by itself. +
-**Pros:** Will use less memory (e.g. for `delete`, just save the person being deleted). +
+**Pros:** Will use less memory (e.g. for `delete`, just save the place being deleted). +
 **Cons:** We must ensure that the implementation of each individual command are correct.
 
 ---
@@ -345,6 +347,86 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+// tag::bookmarkDesign[]
+=== Bookmark & Clear Bookmark mechanism
+
+The underlying implementation of `Bookmark` and `Clear Bookmark` is tag manipulation in the model component.
+Two methods were added to `Model` interface to support this feature (`addTag` and `removeAllTags`).
+
+Both `Bookmark` and `Clear Bookmark` extends from `UndoableCommand` as shown in **Figure 2.3.2** , which allows Undo/Redo by the user.
+Also, `Bookmark` is an index based command like (`delete` or `edit`) +
+
+The following are the sequence diagrams each command +
+
+`bookmark` command
+[NOTE]
+Bookmarking a place which is already bookmarked will throw `DuplicateTagException` since `addTag` can
+be used by other commands or methods.
+
+image::BookmarkSequenceDiagram.PNG[width="800"]
+
+`clear_bookmark` command
+
+image::ClearBookmarkSequenceDiagram.PNG[width="800"]
+
+Both commands are quite similar, only slightly difference is additional index argument for `bookmark`, and calling different
+methods in `ModelManager`.
+
+==== Design Considerations
+**Aspect:** Implementation of `bookmark` / `clear_bookmark`  +
+**Alternative 1 (current choice)** `Tag` manipulation through methods in `ModelManager` +
+**Pros:** Easy to implement over existing `Tag` class. +
+**Cons:** Tags are randomly ordered, bookmark tag position is not consistent in the place list.  +
+**Alternative 2:** Create a new class and have it as a new attribute in `Place` +
+**Pros:** Able to have fixed positioning of bookmark when listing places. +
+**Cons:** Tedious to implement, testing has added complexity. +
+
+---
+
+**Aspect:** User experience for `bookmark` / `clear_bookmark`  +
+**Alternative 1 (current choice)** Have 2 dedicated commands for manipulation on single specific tag +
+**Pros:** Standardization of "bookmark" tag, user cannot vary the tag for the same purpose E.G ("favourite", "saved", "like"). +
+**Cons:** Only 1 bookmark "list" for user to put their favourite places. +
+**Alternative 2:** A more general command for user to change tags of specific place +
+**Pros:** More concise version of `edit`, allows user to have different bookmark "lists" E.G ("Near_West", "Near_East"). +
+**Cons:** A general version of `clear_bookmark` will be `remove_tag`, which would allow the user to delete important pre-allocated tags in the initial list. +
+// end::bookmarkDesign[]
+
+//tag::emergency[]
+=== Emergency/Useful Contacts
+
+The Emergency/Useful Contacts function allows the user to quickly view a pre-defined list of contact numbers. +
+The underlying implementation is by invoking the browser window and changing the information it displays to the user. +
+The Emergency/Useful Contacts function is a CL command that can be invoked by the user. +
+
+The following is the class diagram of Emergency/Useful Contacts.
+
+image::UsefulContactsClassDiagram.PNG[width="800"]
+
+The following is the sequence diagram of the Emergency/Useful contacts command.
+
+`emergency` or `sos` command
+
+image::ContactsSequenceDiagram.PNG[width="800"]
+
+Both commands will invoke the same contacts page.
+
+==== Design Considerations
+**Aspect:** Implementation of `emergency` / `sos`  +
+**Alternative 1 (current choice)** Making use of the browser window to display the contacts information. +
+**Pros:** Easy to implement. +
+**Cons:** HTML file is hard to edit / cannot be edited.  +
+**Alternative 2:** Create a new UI element (e.g. Text panel) and display when called. +
+**Pros:** Able to display contacts within the app itself. +
+**Cons:** Tedious to implement, GUI testing has added complexity. +
+
+---
+
+**Aspect:** User experience for `emergency` / `sos`  +
+**Alternative 1 (current choice)** Have 2 dedicated commands and quick key button (F2). +
+**Pros:** Allows user a more flexible choice of invoking the contacts list. +
+**Cons:** Takes up a quick key combination which can be used to invoke other shortcuts.
+//end::emergency[]
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
@@ -360,9 +442,234 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 * `INFO` : Information showing the noteworthy actions by the App
 * `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
 
+=== Displaying basic tourism components
+
+We are building additional contents about basic tourism components to be displayed, like Weather and PSI values of Singapore for tourists.
+// tag::weather[]
+`weather` can be generated by either clicking on the 'Weather' tab in the `MenuBar`, or type `weather` in the `CommandBox`.
+For command `weather`, link:{repoURL}/src/main/java/seedu/address/logic/commands/WeatherCommand.java[`WeatherCommand`] is called then it calls the function `loadpage` from `browserPanel` on link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow.java`], to open an URL of a weather forecast website on the `BrowserPanel`
+
+Similar to `weather`, PSI values of can be access by typing `psi` in the `CommandBox`.
+
+For clicking the 'Weather' tab in the `MenuBar`, the `handleWeather` function is called, by FXML, on link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow.java`].
+
+----
+@FXML
+public void handleWeather() {
+    logger.info("Open a weather forecast for today on BrowerPanel.");
+    browserPanel.loadPage("https://www.accuweather.com/en/sg/singapore/300597/hourly-weather-forecast/300597");
+}
+----
+// end::weather[]
+
+Where `browserPanel` is the object link:{repoURL}/src/main/java/seedu/address/ui/BrowserPanel.java[`BrowserPanel`] on link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow.java`]
+
 === Configuration
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
+
+// tag::mrtmap[]
+=== MRT Map mechanism
+
+MRT Map mechanism displays the latest Singapore MRT map from LTA website using the browser display.
+It can be access by using `Command Line` and `UI`.
+Figure 3.4.1 shows the new structure of the UI component.
+
+image::UiComponentwithMrtClassDiagram.png[width="800"]
+_Figure 3.6.1 : Structure of the UI Component with MRTWindow_
+
+Command `mrt` is used to open mrt map window from Command Line.
+Following Figure 3.4.2 shows the sequence when `mrt` is key in by the user.
+
+image::MRTSequenceDiagrams.jpg[width="600"]
+_Figure 3.6.2 : Structure of the UI Component with MRTWindow_
+
+----
+public static final String MRT_FILE_PATH = "/docs/MrtMap.jpg";
+
+private static final Logger logger = LogsCenter.getLogger(MrtWindow.class);
+private static final String ICON = "/images/mrt_logo.jpg";
+private static final String FXML = "MrtMapWindow.fxml";
+private static final String TITLE = "MRT Map";
+----
+The code above shows the setting up of `MrtWindow.java` for MrtWindow Browser.
+
+image::MrtMapButtonUI.png[width="600"]
+_Figure 3.6.3 : UI button added to the `MainWindow`_
+
+==== Design Considerations
+
+**Aspect:** Different approach on displaying mrt map  +
+**Alternative 1:** Access from the internet +
+**Pros:** Can get the latest information and easier to implement as using the web browser+
+**Cons:** Slow in accessing the web page and its depending on the internet speed +
+**Alternative 2 (current choice):** Include MRT map picture +
+**Pros:** Load faster in accessing the map +
+**Cons:** Might not be the latest one. However, this can overcome with frequent updates.
+// end::mrtmap[]
+
+//tag::sort[]
+=== Sort Mechanism
+
+Sort mechanism operates by sorting the `internalList` in `UniquePlaceList`. This command allows the user to sort the list in alphebatical orders.
+Sort command will inherit from `commands`.
+
+Following is the sequence diagram of `sort` command.
+
+image::SortCommandSequenceDiagram.png[width="600"]
+
+_Figure 3.7.1 : Sequence diagram of `sort` command_
+
+    @Override
+    public int compareTo(Place otherPlace) {
+        int toUpdate = this.name.toString().toUpperCase().compareTo((otherPlace.name.toString().toUpperCase()));
+        return toUpdate;
+    }
+
+The code above shows the implementation of `compareTo` method. This method converts the names of the Places to `CAPITAL LETTERS`,
+which allows us to compare easily. After the end of the comparison it will return the most updated list of places to display.
+// end::sort[]
+
+=== Location on Google Map
+
+The command `goto` followed by an INDEX (must be positive) shows the location of the place on Google Map in the `BrowserPanel`.
+// tag::goto[]
+The command takes the INDEX from the argument and get the name of the `place` in the list, in link:{repoURL}/src/main/java/seedu/address/logic/commands/BrowserPanel.java[`GotoCommand.java`], and pass it to the method `loadUrl` in `browserPanel' in link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`].
+
+The method `loadUrl` will pass the Google Map url to link:{repoURL}/src/main/java/seedu/address/ui/BrowserPanel.java[`BrowserPanel`] to display the location in `BrowserPanel`.
+
+----
+MainWindow.loadUrl("https://www.google.com.sg/maps/place/"
+                + locationToGo.getName().fullName.replaceAll(" ", "+"));
+----
+image::LocationWebsiteUI.png[width="800"]
+_Figure 3.6.3 : Singapore Botanic Gardens' website_
+// end::goto[]
+
+---
+
+//tag::findCommand[]
+=== Editing the Find Command to search by Name and Tag
+
+The Find command is able to search the Tourist Book by Name of the place or by the Tags of the place.
+
+The user is able to invoke the command with `find` or `fd`, followed by a PREFIX.
+
+*Prefixes*
+* `n/` : prefix for searching by Name.
+* `t/` : prefix for searching by Tag.
+
+==== Design Considerations
+
+**Aspect:** Implementation of `find` +
+**Alternative 1 (current choice)** Enhancing the find command to find by name and tags. +
+**Pros:** User does not need to remember many commands. +
+**Cons:** User has to use prefixes to search for name or tags.  +
+**Alternative 2:** Create a new command to search by other details. +
+**Pros:** Relatively easier to implement. +
+**Cons:** Tedious to test, not very intuitive for the user. +
+
+---
+
+**Aspect:** User experience for `find`  +
+**Alternative 1 (current choice)** Have 1 command and 2 dedicated prefixes. +
+**Pros:** Allows user a more flexible choice of find through the contacts list. +
+**Cons:** Can only search for one type of attribute at any time.
+//end::findCommand[]
+
+//tag::exportCommand[]
+=== Export
+
+The `ExportCommand` extends the `Command` class. It allows users to export the current Address Book data
+into a CSV file.
+
+The class diagram of the command is shown below:
+
+image::ExportCommandClassDiagram.png[width="800"]
+_Figure 3.9A - Class Diagram of ExportCommand_
+
+From _Figure 3.9A_, the ExportCommand depends on `java.io` to carry out the file IO operations to create the CSV file.
+It also depends on the `Model` class and `Place` package in order to extract the required information to export.
+
+The sequence diagram of the command is shown below:
+
+image::ExportCommandSequenceDiagram.png[width="800"]
+_Figure 3.9B - Sequence Diagram of ExportCommand_
+
+Explanation of _Figure 3.9B_:
+
+1. The `execute("export")` command is called on the `LogicManager`.
+2. `LogicManager` calls the `parse` method on `AddressBookParser`.
+3. The `parse` method creates a new `ExportCommand` which returns an `ExportCommand`, `e`,
+all the way back to `LogicManager`.
+4. `LogicManager` calls the `execute()` method on `e`, an `ExportCommand`.
+5. `ExportCommand` obtains the `PlaceList` from the `Model`.
+6. `ExportCommand` checks if an exported file exists. If the file exists, it will delete the file.
+7. `ExportCommand` generates the exported file through a series of self calls and generates a new `CommandResult`, `result`.
+8. The `result` is returned to the `LogicManager` which returns it back to the `UI`.
+
+==== Design Considerations
+
+**Aspect:** Construction of Strings +
+**Alternative 1 (current choice):** Using `StringBuilder` +
+**Pros:** Able to easily construct the `String` due to the mutability of `StringBuilder`. +
+**Cons:** Dependency on the `StringBuilder` class. +
+**Alternative 2:** Using `String` only. +
+**Pros:** Reduced dependency on additional classes. +
+**Cons:** Constant re-assignment of resultant `String` is required as it is not mutable. +
+
+---
+
+**Aspect:** Generating Place Data +
+**Alternative 1 (current choice):** "Hard-code" the data to obtain from a `ReadOnlyPlace`. +
+**Pros:** Code is executed at a faster rate. +
+**Cons:** Coupling is increased with `ReadOnlyPlace`/Code is not adaptable if new fields are added to `ReadOnlyPlace`. +
+**Alternative 2:** Generate place data according to the fields present in `ReadOnlyPlace`. +
+**Pros:** Code is adaptable should new fields be added to `ReadOnlyPlace`. +
+**Cons:** Additional processing overhead / Difficult and time-consuming to implement. +
+
+The implementation of the method is credited to link:https://github.com/AceCentury[Ryan Teo] and +
+link:https://github.com/nus-cs2103-AY1718S1/forum/issues/158[this issue].
+//end::exportCommand[]
+
+// tag::directionDesign[]
+=== Direction Implementation
+
+The underlying principle of direction is to retrieve 2 places from the index given by the user and convert each place's
+name and postal code into a usable URL. The URL is then passed to the Ui component, within `MainWindow` to change the
+URL of the `BrowserPanel`.
+
+`DirectionCommandParser` gets indexes with the help of `parseIndexFromPosition` in `ParserUtil`. It
+extracts the first 2 indexes from a given string using zero-based positions 0 and 1.
+
+[NOTE]
+Direction uses 1 based indexing from the user, index 0 is not used.
+Same index values will be rejected by the parser, and if either index are out
+of bounds, it will throw a `CommandExceptionError` during execute().
+
+The following is the sequence diagram for `dir` command +
+
+image::DirectionSequenceDiagram.png[width="800"]
+
+==== Design Considerations
+**Aspect:** Implementation of `dir`.  +
+**Alternative 1 (current choice)** place's name and postal code transformation to URL. +
+**Pros:** Least amount of maintenance and takes advantage of browser panel to do more work. +
+**Cons:** Command can only work with an internet connection. +
+**Alternative 2:** Cache directions from one place to all other places within a attribute of a place. +
+**Pros:** Same directions given as google maps and works offline. +
+**Cons:** Huge amount of space required (complete graph) and tedious implementation through Google Maps API. +
+
+---
+
+**Aspect:** Amount of places user can "chain" for getting directions.  +
+**Alternative 1 (current choice)** Maximum of 2 places is used, with directions given between them.  +
+**Pros:** No additional data structure needed to support this, less scope means quicker deployment and less prone to bugs. +
+**Cons:** User must use "dir 1 2" then "dir 2 3" to plan their schedule for places 1 2 3. +
+**Alternative 2:** Implement a queue structure. +
+**Pros:** User can type "dir 1 2 3" to store all the data needed. Use another command like "next_dir" to show directions instead of typing the `dir` command again. +
+**Cons:** Data structure implementation requires extensive test coverage, longer to deploy and needs a limit on how many places can it store. +
+// end::directionDesign[]
 
 == Documentation
 
@@ -477,6 +784,7 @@ Suggested path for new programmers:
 
 2. Next, add a feature that touches multiple components to learn how to implement an end-to-end feature across all components. The section link:#creating-a-new-command-code-remark-code[Creating a new command: `remark`] explains how to go about adding such a feature.
 
+[discrete]
 === Improving each component
 
 Each individual exercise in this section is component-based (i.e. you would not need to modify the other components to get it to work).
@@ -487,7 +795,7 @@ Each individual exercise in this section is component-based (i.e. you would not 
 [TIP]
 Do take a look at the link:#logic-component[Design: Logic Component] section before attempting to modify the `Logic` component.
 
-. Add a shorthand equivalent alias for each of the individual commands. For example, besides typing `clear`, the user can also type `c` to remove all persons in the list.
+. Add a shorthand equivalent alias for each of the individual commands. For example, besides typing `clear`, the user can also type `c` to remove all places in the list.
 +
 ****
 * Hints
@@ -509,9 +817,9 @@ Do take a look at the link:#model-component[Design: Model Component] section bef
 ****
 * Hints
 ** The link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model`] API needs to be updated.
-**  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] classes can be used to implement the tag removal logic. link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] allows you to update a person, and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] allows you to update the tags.
+**  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] and link:{repoURL}/src/main/java/seedu/address/model/place/Place.java[`Place`] classes can be used to implement the tag removal logic. link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] allows you to update a place, and link:{repoURL}/src/main/java/seedu/address/model/place/Place.java[`Place`] allows you to update the tags.
 * Solution
-** Add the implementation of `deleteTag(Tag)` method in link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`]. Loop through each person, and remove the `tag` from each person.
+** Add the implementation of `deleteTag(Tag)` method in link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`]. Loop through each place, and remove the `tag` from each place.
 ** See this https://github.com/se-edu/addressbook-level4/pull/591/files[PR] for the full solution.
 ****
 
@@ -521,7 +829,7 @@ Do take a look at the link:#model-component[Design: Model Component] section bef
 [TIP]
 Do take a look at the link:#ui-component[Design: UI Component] section before attempting to modify the `UI` component.
 
-. Use different colors for different tags inside person cards. For example, `friends` tags can be all in grey, and `colleagues` tags can be all in red.
+. Use different colors for different tags inside place cards. For example, `friends` tags can be all in grey, and `colleagues` tags can be all in red.
 +
 **Before**
 +
@@ -533,7 +841,7 @@ image::getting-started-ui-tag-after.png[width="300"]
 +
 ****
 * Hints
-** The tag labels are created inside link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard#initTags(ReadOnlyPerson)`] (`new Label(tag.tagName)`). https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html[JavaFX's `Label` class] allows you to modify the style of each Label, such as changing its color.
+** The tag labels are created inside link:{repoURL}/src/main/java/seedu/address/ui/PlaceCard.java[`PlaceCard#initTags(ReadOnlyPlace)`] (`new Label(tag.tagName)`). https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html[JavaFX's `Label` class] allows you to modify the style of each Label, such as changing its color.
 ** Use the .css attribute `-fx-background-color` to add a color.
 * Solution
 ** See this https://github.com/se-edu/addressbook-level4/pull/592/files[PR] for the full solution.
@@ -574,11 +882,12 @@ image::getting-started-ui-status-after.png[width="500"]
 ** link:{repoURL}/src/main/resources/view/StatusBarFooter.fxml[`StatusBarFooter.fxml`] will need a new `StatusBar`. Be sure to set the `GridPane.columnIndex` properly for each `StatusBar` to avoid misalignment!
 ** link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] needs to initialize the status bar on application start, and to update it accordingly whenever the address book is updated.
 * Solution
-** Modify the constructor of link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to take in the number of persons when the application just started.
-** Use link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter#handleAddressBookChangedEvent(AddressBookChangedEvent)`] to update the number of persons whenever there are new changes to the addressbook.
+** Modify the constructor of link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to take in the number of places when the application just started.
+** Use link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter#handleAddressBookChangedEvent(AddressBookChangedEvent)`] to update the number of places whenever there are new changes to the addressbook.
 ** See this https://github.com/se-edu/addressbook-level4/pull/596/files[PR] for the full solution.
 ****
 
+//tag::backup[]
 [discrete]
 ==== `Storage` component
 
@@ -594,24 +903,24 @@ Do take a look at the link:#storage-component[Design: Storage Component] section
 * Solution
 ** See this https://github.com/se-edu/addressbook-level4/pull/594/files[PR] for the full solution.
 ****
-
+//end::backup[]
 === Creating a new command: `remark`
 
 By creating this command, you will get a chance to learn how to implement a feature end-to-end, touching all major components of the app.
-
+[discrete]
 ==== Description
-Edits the remark for a person specified in the `INDEX`. +
+Edits the remark for a place specified in the `INDEX`. +
 Format: `remark INDEX r/[REMARK]`
 
 Examples:
 
 * `remark 1 r/Likes to drink coffee.` +
-Edits the remark for the first person to `Likes to drink coffee.`
+Edits the remark for the first place to `Likes to drink coffee.`
 * `remark 1 r/` +
-Removes the remark for the first person.
-
+Removes the remark for the first place.
+[discrete]
 ==== Step-by-step Instructions
-
+[discrete]
 ===== [Step 1] Logic: Teach the app to accept 'remark' which does nothing
 Let's start by teaching the application how to parse a `remark` command. We will add the logic of `remark` later.
 
@@ -624,7 +933,7 @@ Let's start by teaching the application how to parse a `remark` command. We will
 
 . Add `RemarkCommandTest` that tests that `executeUndoableCommand()` throws an Exception.
 . Add new test method to link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`], which tests that typing "remark" returns an instance of `RemarkCommand`.
-
+[discrete]
 ===== [Step 2] Logic: Teach the app to accept 'remark' arguments
 Let's teach the application to parse arguments that our `remark` command will accept. E.g. `1 r/Likes to drink coffee.`
 
@@ -640,98 +949,166 @@ Let's teach the application to parse arguments that our `remark` command will ac
 . Add `RemarkCommandParserTest` that tests different boundary values
 for `RemarkCommandParser`.
 . Modify link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`] to test that the correct command is generated according to the user input.
-
-===== [Step 3] Ui: Add a placeholder for remark in `PersonCard`
-Let's add a placeholder on all our link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] s to display a remark for each person later.
+[discrete]
+===== [Step 3] Ui: Add a placeholder for remark in `PlaceCard`
+Let's add a placeholder on all our link:{repoURL}/src/main/java/seedu/address/ui/PlaceCard.java[`PlaceCard`] s to display a remark for each place later.
 
 **Main:**
 
-. Add a `Label` with any random text inside link:{repoURL}/src/main/resources/view/PersonListCard.fxml[`PersonListCard.fxml`].
-. Add FXML annotation in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] to tie the variable to the actual label.
+. Add a `Label` with any random text inside link:{repoURL}/src/main/resources/view/PlaceListCard.fxml[`PlaceListCard.fxml`].
+. Add FXML annotation in link:{repoURL}/src/main/java/seedu/address/ui/PlaceCard.java[`PlaceCard`] to tie the variable to the actual label.
 
 **Tests:**
 
-. Modify link:{repoURL}/src/test/java/guitests/guihandles/PersonCardHandle.java[`PersonCardHandle`] so that future tests can read the contents of the remark label.
-
+. Modify link:{repoURL}/src/test/java/guitests/guihandles/PlaceCardHandle.java[`PlaceCardHandle`] so that future tests can read the contents of the remark label.
+[discrete]
 ===== [Step 4] Model: Add `Remark` class
-We have to properly encapsulate the remark in our link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`] class. Instead of just using a `String`, let's follow the conventional class structure that the codebase already uses by adding a `Remark` class.
+We have to properly encapsulate the remark in our link:{repoURL}/src/main/java/seedu/address/model/place/ReadOnlyPlace.java[`ReadOnlyPlace`] class. Instead of just using a `String`, let's follow the conventional class structure that the codebase already uses by adding a `Remark` class.
 
 **Main:**
 
-. Add `Remark` to model component (you can copy from link:{repoURL}/src/main/java/seedu/address/model/person/Address.java[`Address`], remove the regex and change the names accordingly).
+. Add `Remark` to model component (you can copy from link:{repoURL}/src/main/java/seedu/address/model/place/Address.java[`Address`], remove the regex and change the names accordingly).
 . Modify `RemarkCommand` to now take in a `Remark` instead of a `String`.
 
 **Tests:**
 
 . Add test for `Remark`, to test the `Remark#equals()` method.
-
-===== [Step 5] Model: Modify `ReadOnlyPerson` to support a `Remark` field
-Now we have the `Remark` class, we need to actually use it inside link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`].
+[discrete]
+===== [Step 5] Model: Modify `ReadOnlyPlace` to support a `Remark` field
+Now we have the `Remark` class, we need to actually use it inside link:{repoURL}/src/main/java/seedu/address/model/place/ReadOnlyPlace.java[`ReadOnlyPlace`].
 
 **Main:**
 
-. Add three methods `setRemark(Remark)`, `getRemark()` and `remarkProperty()`. Be sure to implement these newly created methods in link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`Person`], which implements the link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`] interface.
-. You may assume that the user will not be able to use the `add` and `edit` commands to modify the remarks field (i.e. the person will be created without a remark).
+. Add three methods `setRemark(Remark)`, `getRemark()` and `remarkProperty()`. Be sure to implement these newly created methods in link:{repoURL}/src/main/java/seedu/address/model/place/ReadOnlyPlace.java[`Place`], which implements the link:{repoURL}/src/main/java/seedu/address/model/place/ReadOnlyPlace.java[`ReadOnlyPlace`] interface.
+. You may assume that the user will not be able to use the `add` and `edit` commands to modify the remarks field (i.e. the place will be created without a remark).
 . Modify link:{repoURL}/src/main/java/seedu/address/model/util/SampleDataUtil.java/[`SampleDataUtil`] to add remarks for the sample data (delete your `addressBook.xml` so that the application will load the sample data when you launch it.)
-
-===== [Step 6] Storage: Add `Remark` field to `XmlAdaptedPerson` class
-We now have `Remark` s for `Person` s, but they will be gone when we exit the application. Let's modify link:{repoURL}/src/main/java/seedu/address/storage/XmlAdaptedPerson.java[`XmlAdaptedPerson`] to include a `Remark` field so that it will be saved.
+[discrete]
+===== [Step 6] Storage: Add `Remark` field to `XmlAdaptedPlace` class
+We now have `Remark` s for `Place` s, but they will be gone when we exit the application. Let's modify link:{repoURL}/src/main/java/seedu/address/storage/XmlAdaptedPlace.java[`XmlAdaptedPlace`] to include a `Remark` field so that it will be saved.
 
 **Main:**
 
 . Add a new Xml field for `Remark`.
-. Be sure to modify the logic of the constructor and `toModelType()`, which handles the conversion to/from  link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`ReadOnlyPerson`].
+. Be sure to modify the logic of the constructor and `toModelType()`, which handles the conversion to/from  link:{repoURL}/src/main/java/seedu/address/model/place/ReadOnlyPlace.java[`ReadOnlyPlace`].
 
 **Tests:**
 
 . Fix `validAddressBook.xml` such that the XML tests will not fail due to a missing `<remark>` element.
-
-===== [Step 7] Ui: Connect `Remark` field to `PersonCard`
-Our remark label in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] is still a placeholder. Let's bring it to life by binding it with the actual `remark` field.
+[discrete]
+===== [Step 7] Ui: Connect `Remark` field to `PlaceCard`
+Our remark label in link:{repoURL}/src/main/java/seedu/address/ui/PlaceCard.java[`PlaceCard`] is still a placeholder. Let's bring it to life by binding it with the actual `remark` field.
 
 **Main:**
 
-. Modify link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard#bindListeners()`] to add the binding for `remark`.
+. Modify link:{repoURL}/src/main/java/seedu/address/ui/PlaceCard.java[`PlaceCard#bindListeners()`] to add the binding for `remark`.
 
 **Tests:**
 
-. Modify link:{repoURL}/src/test/java/seedu/address/ui/testutil/GuiTestAssert.java[`GuiTestAssert#assertCardDisplaysPerson(...)`] so that it will compare the remark label.
-. In link:{repoURL}/src/test/java/seedu/address/ui/PersonCardTest.java[`PersonCardTest`], call `personWithTags.setRemark(ALICE.getRemark())` to test that changes in the link:{repoURL}/src/main/java/seedu/address/model/person/ReadOnlyPerson.java[`Person`] 's remark correctly updates the corresponding link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`].
-
+. Modify link:{repoURL}/src/test/java/seedu/address/ui/testutil/GuiTestAssert.java[`GuiTestAssert#assertCardDisplaysPlace(...)`] so that it will compare the remark label.
+. In link:{repoURL}/src/test/java/seedu/address/ui/PlaceCardTest.java[`PlaceCardTest`], call `placeWithTags.setRemark(ALICE.getRemark())` to test that changes in the link:{repoURL}/src/main/java/seedu/address/model/place/ReadOnlyPlace.java[`Place`] 's remark correctly updates the corresponding link:{repoURL}/src/main/java/seedu/address/ui/PlaceCard.java[`PlaceCard`].
+[discrete]
 ===== [Step 8] Logic: Implement `RemarkCommand#execute()` logic
 We now have everything set up... but we still can't modify the remarks. Let's finish it up by adding in actual logic for our `remark` command.
 
 **Main:**
 
-. Replace the logic in `RemarkCommand#execute()` (that currently just throws an `Exception`), with the actual logic to modify the remarks of a person.
+. Replace the logic in `RemarkCommand#execute()` (that currently just throws an `Exception`), with the actual logic to modify the remarks of a place.
 
 **Tests:**
 
 . Update `RemarkCommandTest` to test that the `execute()` logic works.
-
+[discrete]
 ==== Full Solution
 
 See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-by-step solution.
 
 [appendix]
 == User Stories
+[discrete]
+=== Target User
+We are targeting tourists who are visiting Singapore and are generally unaware of the attractions here.
+[discrete]
+=== Problem statement
+Due to a large number of attractions and different websites, we want a platform that is intuitive to find attractions.
+The user should not need to view multiple sources to decide where to go. Relevant information to aid their decision making
+should also be provided.
 
-Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
+Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (very unlikely to have) - `*`
 
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *` |new user |view the user guide easily |learn more about the functions of addressbook as and when I need
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |user |see all places at a glance |determine where to go
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |user |use shorter versions of a commandn |use it faster
 
-|`* *` |user |hide link:#private-contact-detail[private contact details] by default |minimize chance of someone else seeing them by accident
+|`* * *` |user |bookmark my favorite places |easily reference them later
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* * *` |user |remove my bookmark |update my latest preferences
+
+|`* * *` |user |find places with a certain tag |narrow down my search result
+
+|`* * *` |user |see all the places  |choose where I want to go
+
+|`* * *` |user |see the history of the command that I entered |keep track of the changes that I made
+
+|`* * *` |user |undo and redo commands |revert back any mistakes that I made
+
+|`* * *` |user |add places to address book |easily view the summary of each place
+
+|`* * *` |user |be able to search all places by name |I am able to find a specific place
+
+|`* * *` |user |edit the existing places |fix any errors or update information
+
+|`* * *` |user |delete a place  |not have it  appear anymore in my search results
+
+|`* * *` |user |exit the program  |stop it from consuming background resources
+
+|`* *` |user |see the basic laws of Singapore  |avoid getting into trouble
+
+|`* *` |user |go to a attraction's homepage  |see the attraction's profile and description
+
+|`* *` |user |search for places from names, phone numbers, emails and tags  |search for it just by knowing 1
+
+|`* *` |user |search the place address via google map  |see the location details
+
+|`* *` |user |view the weather  |plan my day around Singapore
+
+|`* *` |user |not see duplicate entries  |avoid removing redundant entries
+
+|`* *` |user |see the direction from place A to place B  |do navigation
+
+|`* *` |user |open up the public transport map  |plan my journey
+
+|`* *` |user |see Singapore's emergency hotlines  |know who to call during an emergency
+
+|`* *` |user |view the PSI of the day  |plan my day around Singapore
+
+|`*` |user |easily customize the color scheme |make it to my liking
+
+|`*` |user |set notification ringtone to the certain places |I can differentiate what type of place is it from
+
+|`*` |user | add the places founded date to the calendar |I can make keep track of it's anniversary.
+
+|`*` |user |hide certain places |ignore places that I visited
+
+|`*` |user |see the clock |know what the time it is
+
+|`*` |user |the place in charge of the places |contact when necessary
+
+|`*` |user |be notified of promotions ongoing at different places |visit the places during the promotional period
+
+|`*` |user |see the events happening in Singapore |have a rough idea of where I'm going to go
+
+|`*` |user |print my address book |bring it around without logging on to my laptop
+
+|`*` |user |see the exchange rate for Singapore |budget my expenses
+
+|`*` |user |book tickets online for the attractions |avoid needing to queue at the ticketing counter
+
 |=======================================================================
 
 {More to be added}
@@ -739,17 +1116,17 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is the `Tourist-Book` and the *Tourist* is the `user`, unless specified otherwise)
 
 [discrete]
-=== Use case: Delete person
+=== Use case: Example Delete place
 
 *MSS*
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1.  User requests to list places
+2.  AddressBook shows a list of places
+3.  User requests to delete a specific place in the list
+4.  AddressBook deletes the place
 +
 Use case ends.
 
@@ -767,47 +1144,170 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-{More to be added}
+[discrete]
+=== Use case: Bookmark a place
+
+*MSS*
+
+1.  User starts AB
+2.  AB lists all places entries
+3.  User selects which entry to bookmark
+4.  AB adds bookmark tag to place
+5.  User searches for bookmarks and place will be listed
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a1. User searches for place to bookmark
+* 2a2. AB lists results
+* Steps 2a1-2a2 are repeated until user is satisfied with result
+Use case continue from step 3.
+
+[discrete]
+=== Use case: Rate a place
+
+*MSS*
+
+1.  User starts AB
+2.  AB lists all places entries
+3.  User enter number from "1 to 10" to rate the particular location selected.
+4.  AB adds rating to the place
+5.  User searches for the place and rating of the place will be listed
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. AB detected an error in the entered keyword
++
+** 2a1. AB request for new entry
+** 2a2. User enter new keyword
+** Steps 2a1-2a2 are repeated until the keyword entered is correct
+Use case continue from step 3.
+
+* 3a. The rating index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Search by tag
+
+*MSS*
+
+1.  User starts AB
+2.  User type in the command box "find" followed by the tag keyword
+3.  GUI display the attractions having the tag
+4.  User see all attractions with  the particular tag
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. AB detected an error in the entered keyword
++
+** 2a1. AB request for new entry
+** 2a2. User enter new keyword
+** Steps 2a1-2a2 are repeated until the keyword entered is correct
+Use case continue from step 3.
+
+[discrete]
+=== Use case: Remove a place
+
+*MSS*
+
+1.  User starts AB
+2.  User selects which index to remove from the list
+3.  AB removes the selected attraction from the list
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. AB detected an error in the entered keyword
++
+** 2a1. AB request for new entry
+** 2a2. User enter new keyword
+** Steps 2a1-2a2 are repeated until the keyword entered is correct
+Use case continue from step 3.
+
+[discrete]
+=== Use case: Add a new place
+
+*MSS*
+
+1.  User starts AB
+2.  User types the 'add' command in the command line interface, followed by n/NAME p/Phone e/Email a/Address pc/Postal code t/Tag
+3.  GUI displays: "New attraction added" followed by the information of the place that was added
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. AB detected an error in the data
++
+** 2a1. AB request for new entry
+** 2a2. User enter new data
+** Steps 2a1-2a2 are repeated until the data entered is correct
+Use case continue from step 3.
 
 [appendix]
 == Non Functional Requirements
 
-.  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
-.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
+[[quality-requirements]]
+Quality Requirements
+
+....
+.  The application must be usable by a novice who has never use a CLI application before.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-{More to be added}
-
-[appendix]
-== Glossary
-
-[[mainstream-os]]
-Mainstream OS
-
-....
-Windows, Linux, Unix, OS-X
 ....
 
-[[private-contact-detail]]
-Private contact detail
+[[geographical-location]]
+Geographical Location
 
 ....
-A contact detail that is not meant to be shared with others
+.  Program should work for all weather conditions.
+.  Program is optimized for Singapore usage only.
 ....
 
-[appendix]
-== Product Survey
+[[technical-requirements]]
+Technical Requirements
 
-*Product Name*
+....
+.  Should work on any link:#mainstream-os[mainstream OS] as long as it has Java `1.8.0_60` or higher installed.
+.  The application should work on both 32-bit and 64-bit environments.
+.  The application should be backward compatible with data produced by earlier versions of the application.
+....
 
-Author: ...
+[[performance-requirements]]
+Performance Requirements
 
-Pros:
+....
+.  Should be able to hold up to 1000 places without a noticeable sluggishness in performance for typical usage.
+.  Program should provide a response time of <5 seconds when returning search results from the browser.
+.  Program should provide a response time of <2 seconds when executing commands.
+....
 
-* ...
-* ...
+[[process-requirements]]
+Process Requirements
 
-Cons:
+....
+.  The project is expected to adhere to a schedule that delivers a new version every week.
+....
 
-* ...
-* ...
+[[documentation]]
+Documentation
+
+....
+.  The developer guide should be updated with the most updated user stories and use cases with every incremental version.
+.  The user guide should be updated with the most updated functions of the application with every incremental version.
+....
+

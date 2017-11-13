@@ -10,10 +10,11 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Phone;
+import seedu.address.model.place.Address;
+import seedu.address.model.place.Name;
+import seedu.address.model.place.Phone;
+import seedu.address.model.place.PostalCode;
+import seedu.address.model.place.Website;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -28,6 +29,7 @@ import seedu.address.model.tag.Tag;
 public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
+    public static final String MESSAGE_REQUIRED_TWO_INDEX = "Only 2 indexes are allowed.";
     public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
 
     /**
@@ -43,6 +45,41 @@ public class ParserUtil {
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
     }
 
+    //@@author Chng-Zhi-Xuan
+    /**
+     * Parses {@code oneBasedIndex} into an {@code Index} at the given position and returns it.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the specified index is invalid (not non-zero unsigned integer) or
+     * if the position is out of string index bounds.
+     */
+    public static Index parseIndexFromPosition(String oneBasedIndex, int zeroBasedPosition)
+                                                        throws IllegalValueException {
+        String indexAtPosition = "";
+        String[] indexes;
+
+        try {
+            String trimmedIndex = oneBasedIndex.trim();
+            indexes = trimmedIndex.split(" ");
+
+            if (indexes.length != 2) {
+                throw new IllegalValueException(MESSAGE_REQUIRED_TWO_INDEX);
+            }
+
+            indexAtPosition = indexes[zeroBasedPosition];
+
+        } catch (IndexOutOfBoundsException iobe) {
+            throw new IllegalValueException(MESSAGE_INVALID_INDEX);
+        }
+
+        if (!StringUtil.isNonZeroUnsignedInteger(indexAtPosition)) {
+            throw new IllegalValueException(MESSAGE_INVALID_INDEX);
+        }
+        return Index.fromOneBased(Integer.parseInt(indexAtPosition));
+
+    }
+    //@@author
+
     /**
      * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
@@ -57,28 +94,36 @@ public class ParserUtil {
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Phone> parsePhone(Optional<String> phone) throws IllegalValueException {
-        requireNonNull(phone);
         return phone.isPresent() ? Optional.of(new Phone(phone.get())) : Optional.empty();
     }
 
+    //@@author aungmyin23
     /**
-     * Parses a {@code Optional<String> address} into an {@code Optional<Address>} if {@code address} is present.
+     * Parses a {@code Optional<String> postalcode} into an {@code Optional<PostalCode>} if {@code PostalCode}
+     * is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Address> parseAddress(Optional<String> address) throws IllegalValueException {
-        requireNonNull(address);
-        return address.isPresent() ? Optional.of(new Address(address.get())) : Optional.empty();
+    public static Optional<PostalCode> parsePostalCode(Optional<String> postalcode) throws IllegalValueException {
+        requireNonNull(postalcode);
+        return postalcode.isPresent() ? Optional.of(new PostalCode(postalcode.get())) : Optional.empty();
     }
 
     /**
      * Parses a {@code Optional<String> email} into an {@code Optional<Email>} if {@code email} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Email> parseEmail(Optional<String> email) throws IllegalValueException {
-        requireNonNull(email);
-        return email.isPresent() ? Optional.of(new Email(email.get())) : Optional.empty();
+    public static Optional<Website> parseWebsite(Optional<String> website) throws IllegalValueException {
+        return website.isPresent() ? Optional.of(new Website(website.get())) : Optional.empty();
     }
+    //@@author
 
+    /**
+     * Parses a {@code Optional<String> address} into an {@code Optional<Address>} if {@code address} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Address> parseAddress(Optional<String> address) throws IllegalValueException {
+        return address.isPresent() ? Optional.of(new Address(address.get())) : Optional.empty();
+    }
     /**
      * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
      */

@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import static seedu.address.testutil.TypicalPersons.HOON;
+import static seedu.address.testutil.TypicalPlaces.HOON;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
 
@@ -18,7 +18,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import seedu.address.logic.commands.ListCommand;
-import seedu.address.testutil.PersonUtil;
+import seedu.address.testutil.PlaceUtil;
 import seedu.address.ui.StatusBarFooter;
 
 /**
@@ -50,7 +50,7 @@ public class StatusBarFooterTest extends AddressBookGuiTest {
     public void syncStatus_mutatingCommandSucceeds_syncStatusUpdated() {
         String timestamp = new Date(injectedClock.millis()).toString();
         String expected = String.format(SYNC_STATUS_UPDATED, timestamp);
-        assertTrue(runCommand(PersonUtil.getAddCommand(HOON))); // mutating command succeeds
+        assertTrue(runCommand(PlaceUtil.getAddCommand(HOON))); // mutating command succeeds
         assertEquals(expected, getStatusBarFooter().getSyncStatus());
     }
 

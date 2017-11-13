@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.3">
+<title>Hu Yuanrong - Project Portfolio</title>
+<link rel="stylesheet" href="../stylesheets/gh-pages.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="../stylesheets/coderay-asciidoctor.css">
+</head>
+<body class="article">
+<div id="header">
+<h1>Hu Yuanrong - Project Portfolio</h1>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="project-tourist-book"><a class="link" href="#project-tourist-book">Project: Tourist-Book</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Tourist-Book is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX.</p>
+</div>
+<div class="paragraph">
+<p><strong>Code contributed</strong>: [<a href="https://github.com/CS2103AUG2017-F09-B2/main/blob/master/collated/main/huyuanrong.md">Functional code</a>] [<a href="https://github.com/CS2103AUG2017-F09-B2/main/blob/master/collated/test/huyuanrong.md">Test code</a>]</p>
+</div>
+<div class="sect2">
+<h3 id="enhancement-added-displaying-of-useful-contacts"><a class="link" href="#enhancement-added-displaying-of-useful-contacts">Enhancement Added: Displaying of Useful Contacts</a></h3>
+<div class="sect3">
+<h4 id="external-behavior"><a class="link" href="#external-behavior">External behavior</a></h4>
+<hr>
+<div class="paragraph">
+<p><mark>Start of Extract [from: User Guide]</mark></p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="useful-contact-numbers-in-singapore"><a class="link" href="#useful-contact-numbers-in-singapore">Useful contact numbers in Singapore</a></h3>
+<div class="paragraph">
+<p>Display a list of useful contact numbers by clicking on <code>Help &#8594; Useful Contacts</code><br>
+or
+Display a list of useful contact numbers by using the CLI.<br>
+Format: <code>emergency</code> or <code>sos</code><br></p>
+</div>
+<div class="paragraph">
+<p>or</p>
+</div>
+<div class="paragraph">
+<p>Using the shortcut key.
+Format: <code>F2</code></p>
+</div>
+<div class="paragraph">
+<p><mark>End of Extract</mark></p>
+</div>
+<hr>
+<div class="sect3">
+<h4 id="justification"><a class="link" href="#justification">Justification</a></h4>
+<div class="paragraph">
+<p>Since the project is targeted at tourists who are visiting Singapore, it is important for them to
+have easy access to a list of emergency numbers in Singapore for easy reference should the need arises. The list
+of numbers include hospitals and ambulance hotlines.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="implementation"><a class="link" href="#implementation">Implementation</a></h4>
+<hr>
+<div class="paragraph">
+<p><mark>Start of Extract [from: Developer Guide]</mark></p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="emergency-useful-contacts"><a class="link" href="#emergency-useful-contacts">Emergency/Useful Contacts</a></h3>
+<div class="paragraph">
+<p>The Emergency/Useful Contacts function allows the user to quickly view a pre-defined list of contact numbers.<br>
+The underlying implementation is by invoking the browser window and changing the information it displays to the user.<br>
+The Emergency/Useful Contacts function is a CL command that can be invoked by the user.<br></p>
+</div>
+<div class="paragraph">
+<p>The following is the class diagram of Emergency/Useful Contacts.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/UsefulContactsClassDiagram.PNG" alt="UsefulContactsClassDiagram" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>The following is the sequence diagram of the Emergency/Useful contacts command.</p>
+</div>
+<div class="paragraph">
+<p><code>emergency</code> or <code>sos</code> command</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/ContactsSequenceDiagram.PNG" alt="ContactsSequenceDiagram" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>Both commands will invoke the same contacts page.</p>
+</div>
+<div class="sect3">
+<h4 id="design-considerations"><a class="link" href="#design-considerations">Design Considerations</a></h4>
+<div class="paragraph">
+<p><strong>Aspect:</strong> Implementation of <code>emergency</code> / <code>sos</code> <br>
+<strong>Alternative 1 (current choice)</strong> Making use of the browser window to display the contacts information.<br>
+<strong>Pros:</strong> Easy to implement.<br>
+<strong>Cons:</strong> HTML file is hard to edit / cannot be edited. <br>
+<strong>Alternative 2:</strong> Create a new UI element (e.g. Text panel) and display when called.<br>
+<strong>Pros:</strong> Able to display contacts within the app itself.<br>
+<strong>Cons:</strong> Tedious to implement, GUI testing has added complexity.<br></p>
+</div>
+<hr>
+<div class="paragraph">
+<p><strong>Aspect:</strong> User experience for <code>emergency</code> / <code>sos</code> <br>
+<strong>Alternative 1 (current choice)</strong> Have 2 dedicated commands and quick key button (F2).<br>
+<strong>Pros:</strong> Allows user a more flexible choice of invoking the contacts list.<br>
+<strong>Cons:</strong> Takes up a quick key combination which can be used to invoke other shortcuts.</p>
+</div>
+<div class="paragraph">
+<p><mark>End of Extract</mark></p>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="enhancement-added-find-command"><a class="link" href="#enhancement-added-find-command">Enhancement Added: Find Command</a></h3>
+<div class="sect3">
+<h4 id="external-behavior-2"><a class="link" href="#external-behavior-2">External behavior</a></h4>
+<hr>
+<div class="paragraph">
+<p><mark>Start of Extract [from: User Guide]</mark></p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="locating-places-by-name-or-tag-code-find-code-or-code-fd-code"><a class="link" href="#locating-places-by-name-or-tag-code-find-code-or-code-fd-code">Locating places by name or tag: <code>find</code> or  <code>fd</code></a></h3>
+<div class="paragraph">
+<p>Finds places whose names or tags contain any of the given keywords.<br>
+Format: <code>find [PREFIX]KEYWORD [MORE_KEYWORDS]</code> or  <code>fd [PREFIX]KEYWORD [MORE_KEYWORDS]</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>The search is case insensitive. e.g <code>zoo</code> will match <code>Zoo</code></p>
+</li>
+<li>
+<p>The prefix will determine which field you are searching for.<br>
+<code>n/</code> is the prefix for name, while <code>t/</code> is the prefix for tag.</p>
+</li>
+<li>
+<p>The order of the keywords does not matter. e.g. <code>Singapore Zoo</code> will match <code>Zoo Singapore</code></p>
+</li>
+<li>
+<p>Only the name or tag is searched.</p>
+</li>
+<li>
+<p>Only one field can be searched at a time, i.e. you cannot search both tag and name at the same time.</p>
+</li>
+<li>
+<p>Only full words will be matched e.g. <code>Singa</code> will not match <code>Singapore</code></p>
+</li>
+<li>
+<p>Places matching at least one keyword will be returned (i.e. <code>OR</code> search). e.g. <code>Singapore Gardens</code> will return <code>Singapore Zoo</code>, <code>Singapore Botanical Gardens</code></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>find n/Singapore</code><br>
+Returns <code>Singapore Zoo</code> and <code>Singapore Flyer</code></p>
+</li>
+<li>
+<p><code>fd n/Singapore Sands Botanic</code><br>
+Returns any place having names <code>Singapore</code>, <code>Sands</code>, or <code>Botanic</code></p>
+</li>
+<li>
+<p><code>find t/attractions</code><br>
+Returns a list of places tagged as <code>attractions</code></p>
+</li>
+<li>
+<p><code>fd t/onestar</code><br>
+Returns a list of places tagged as <code>onestar</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><mark>End of Extract</mark></p>
+</div>
+<hr>
+<div class="sect3">
+<h4 id="justification-2"><a class="link" href="#justification-2">Justification</a></h4>
+<div class="paragraph">
+<p>Since the project is implemented with Places and using tags to describe a place (e.g. onestar), it is required for
+users to be able to search the list either by name or by the tag that the place is tagged to for easy reference.
+In addition, users may want to search for more than one name or tag at the same time as well.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="implementation-2"><a class="link" href="#implementation-2">Implementation</a></h4>
+<hr>
+<div class="paragraph">
+<p><mark>Start of Extract [from: Developer Guide]</mark></p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="editing-the-find-command-to-search-by-name-and-tag"><a class="link" href="#editing-the-find-command-to-search-by-name-and-tag">Editing the Find Command to search by Name and Tag</a></h3>
+<div class="paragraph">
+<p>The Find command is able to search the Tourist Book by Name of the place of by the Tags of the place.</p>
+</div>
+<div class="paragraph">
+<p>The user is able to invoke the command with <code>find</code> or <code>fd</code>, followed by a PREFIX.</p>
+</div>
+<div class="paragraph">
+<p><strong>Prefixes</strong>
+* <code>n/</code> : prefix for searching by Name.
+* <code>t/</code> : prefix for searching by Tag.</p>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-2"><a class="link" href="#design-considerations-2">Design Considerations</a></h4>
+<div class="paragraph">
+<p><strong>Aspect:</strong> Implementation of <code>find</code><br>
+<strong>Alternative 1 (current choice)</strong> Enhancing the find command to find by name and tags.<br>
+<strong>Pros:</strong> User does not need to remember many commands.<br>
+<strong>Cons:</strong> User has to use prefixes to search for name or tags. <br>
+<strong>Alternative 2:</strong> Create a new command to search by other details.<br>
+<strong>Pros:</strong> Relatively easier to implement.<br>
+<strong>Cons:</strong> Tedious to test, not very intuitive for the user.<br></p>
+</div>
+<hr>
+<div class="paragraph">
+<p><strong>Aspect:</strong> User experience for <code>find</code> <br>
+<strong>Alternative 1 (current choice)</strong> Have 1 command and 2 dedicated prefixes.<br>
+<strong>Pros:</strong> Allows user a more flexible choice of find through the contacts list.<br>
+<strong>Cons:</strong> Can only search for one type of attribute at any time.</p>
+</div>
+<div class="paragraph">
+<p><mark>End of Extract</mark></p>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="enhancement-added-backup-command"><a class="link" href="#enhancement-added-backup-command">Enhancement Added: Backup Command</a></h3>
+<div class="sect3">
+<h4 id="external-behavior-3"><a class="link" href="#external-behavior-3">External behavior</a></h4>
+<hr>
+<div class="paragraph">
+<p><mark>Start of Extract [from: User Guide]</mark></p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="tourist-book-save-files-can-now-be-backed-up"><a class="link" href="#tourist-book-save-files-can-now-be-backed-up">Tourist book save files can now be backed-up</a></h3>
+<div class="paragraph">
+<p>Backup a copy of your data to the same folder of the save file.<br>
+Format: <code>backup</code></p>
+</div>
+<div class="paragraph">
+<p>+</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Running the command again if you already have a previous backup will overwrite the previous<br>
+backup file!
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><mark>End of Extract</mark></p>
+</div>
+<hr>
+<div class="sect3">
+<h4 id="justification-3"><a class="link" href="#justification-3">Justification</a></h4>
+<div class="paragraph">
+<p>This is to allow users to be able to backup their data. In the event their main file is corrupted or lost, there is
+still a backup file.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="implementation-3"><a class="link" href="#implementation-3">Implementation</a></h4>
+<hr>
+<div class="paragraph">
+<p><mark>Start of Extract [from: Developer Guide]</mark></p>
+</div>
+<h4 id="code-storage-code-component" class="discrete"><code>Storage</code> component</h4>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Do take a look at the <a href="#storage-component">Design: Storage Component</a> section before attempting to modify the <code>Storage</code> component.
+</td>
+</tr>
+</table>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Add a new method <code>backupAddressBook(ReadOnlyAddressBook)</code>, so that the address book can be saved in a fixed temporary location.</p>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Hint</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Add the API method in <a href="{repoURL}/src/main/java/seedu/address/storage/AddressBookStorage.java"><code>AddressBookStorage</code></a> interface.</p>
+</li>
+<li>
+<p>Implement the logic in <a href="{repoURL}/src/main/java/seedu/address/storage/StorageManager.java"><code>StorageManager</code></a> class.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Solution</p>
+<div class="ulist">
+<ul>
+<li>
+<p>See this <a href="https://github.com/se-edu/addressbook-level4/pull/594/files">PR</a> for the full solution.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><mark>End of Extract</mark></p>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="enhancement-added-export-command"><a class="link" href="#enhancement-added-export-command">Enhancement Added: Export Command</a></h3>
+<div class="sect3">
+<h4 id="external-behavior-4"><a class="link" href="#external-behavior-4">External behavior</a></h4>
+<hr>
+<div class="paragraph">
+<p><mark>Start of Extract [from: User Guide]</mark></p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="tourist-book-save-files-are-now-exportable-to-csv-format"><a class="link" href="#tourist-book-save-files-are-now-exportable-to-csv-format">Tourist Book save files are now exportable to .csv format</a></h3>
+<div class="paragraph">
+<p>Export your data to .csv file format for printing purposes.<br>
+Format: <code>export</code></p>
+</div>
+<div class="paragraph">
+<p><mark>End of Extract</mark></p>
+</div>
+<hr>
+<div class="sect3">
+<h4 id="justification-4"><a class="link" href="#justification-4">Justification</a></h4>
+<div class="paragraph">
+<p>As described in the User Stories, this is to allow users to be able to save and print out their files easily so that
+they are still able to know the information about a place without being connected to a computer.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="implementation-4"><a class="link" href="#implementation-4">Implementation</a></h4>
+<hr>
+<div class="paragraph">
+<p><mark>Start of Extract [from: Developer Guide]</mark></p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="export"><a class="link" href="#export">Export</a></h3>
+<div class="paragraph">
+<p>The <code>ExportCommand</code> extends the <code>Command</code> class. It allows users to export the current Address Book data
+into a CSV file.</p>
+</div>
+<div class="paragraph">
+<p>The class diagram of the command is shown below:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/ExportCommandClassDiagram.png" alt="ExportCommandClassDiagram" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 3.9A - Class Diagram of ExportCommand</em></p>
+</div>
+<div class="paragraph">
+<p>From <em>Figure 3.9A</em>, the ExportCommand depends on <code>java.io</code> to carry out the file IO operations to create the CSV file.
+It also depends on the <code>Model</code> class and <code>Place</code> package in order to extract the required information to export.</p>
+</div>
+<div class="paragraph">
+<p>The sequence diagram of the command is shown below:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/ExportCommandSequenceDiagram.png" alt="ExportCommandSequenceDiagram" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 3.9B - Sequence Diagram of ExportCommand</em></p>
+</div>
+<div class="paragraph">
+<p>Explanation of <em>Figure 3.9B</em>:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>The <code>execute("export")</code> command is called on the <code>LogicManager</code>.</p>
+</li>
+<li>
+<p><code>LogicManager</code> calls the <code>parse</code> method on <code>AddressBookParser</code>.</p>
+</li>
+<li>
+<p>The <code>parse</code> method creates a new <code>ExportCommand</code> which returns an <code>ExportCommand</code>, <code>e</code>,
+all the way back to <code>LogicManager</code>.</p>
+</li>
+<li>
+<p><code>LogicManager</code> calls the <code>execute()</code> method on <code>e</code>, an <code>ExportCommand</code>.</p>
+</li>
+<li>
+<p><code>ExportCommand</code> obtains the <code>PlaceList</code> from the <code>Model</code>.</p>
+</li>
+<li>
+<p><code>ExportCommand</code> checks if an exported file exists. If the file exists, it will delete the file.</p>
+</li>
+<li>
+<p><code>ExportCommand</code> generates the exported file through a series of self calls and generates a new <code>CommandResult</code>, <code>result</code>.</p>
+</li>
+<li>
+<p>The <code>result</code> is returned to the <code>LogicManager</code> which returns it back to the <code>UI</code>.</p>
+</li>
+</ol>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-3"><a class="link" href="#design-considerations-3">Design Considerations</a></h4>
+<div class="paragraph">
+<p><strong>Aspect:</strong> Construction of Strings<br>
+<strong>Alternative 1 (current choice):</strong> Using <code>StringBuilder</code><br>
+<strong>Pros:</strong> Able to easily construct the <code>String</code> due to the mutability of <code>StringBuilder</code>.<br>
+<strong>Cons:</strong> Dependency on the <code>StringBuilder</code> class.<br>
+<strong>Alternative 2:</strong> Using <code>String</code> only.<br>
+<strong>Pros:</strong> Reduced dependency on additional classes.<br>
+<strong>Cons:</strong> Constant re-assignment of resultant <code>String</code> is required as it is not mutable.<br></p>
+</div>
+<hr>
+<div class="paragraph">
+<p><strong>Aspect:</strong> Generating Place Data<br>
+<strong>Alternative 1 (current choice):</strong> "Hard-code" the data to obtain from a <code>ReadOnlyPlace</code>.<br>
+<strong>Pros:</strong> Code is executed at a faster rate.<br>
+<strong>Cons:</strong> Coupling is increased with <code>ReadOnlyPlace</code>/Code is not adaptable if new fields are added to <code>ReadOnlyPlace</code>.<br>
+<strong>Alternative 2:</strong> Generate place data according to the fields present in <code>ReadOnlyPlace</code>.<br>
+<strong>Pros:</strong> Code is adaptable should new fields be added to <code>ReadOnlyPlace</code>.<br>
+<strong>Cons:</strong> Additional processing overhead / Difficult and time-consuming to implement.<br></p>
+</div>
+<div class="paragraph">
+<p>The implementation of the method is credited to <a href="https://github.com/AceCentury">Ryan Teo</a> and<br>
+<a href="https://github.com/nus-cs2103-AY1718S1/forum/issues/158">this issue</a>.</p>
+</div>
+<div class="paragraph">
+<p><mark>End of Extract</mark></p>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="other-contributions"><a class="link" href="#other-contributions">Other contributions</a></h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Populated all the default places for the Tourist Book application. (Pull requests <a href="https://github.com/CS2103AUG2017-F09-B2/main/pull/64">#64</a>)</p>
+</li>
+<li>
+<p>Created shortcut buttons for MRT Map and Useful Contacts function. (Pull requests <a href="https://github.com/CS2103AUG2017-F09-B2/main/pull/75">#75</a>)</p>
+</li>
+<li>
+<p>Help to find bugs for other projects during <code>Acceptance testing</code>:<br>
+(Issues Trackers <a href="https://github.com/CS2103AUG2017-W10-B4/main/issues/47">#47</a>, <a href="https://github.com/CS2103AUG2017-W10-B4/main/issues/53">#53</a>)</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2017-11-13 13:47:17 +08:00
+</div>
+</div>
+</body>
+</html>

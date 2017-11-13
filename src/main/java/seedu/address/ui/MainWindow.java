@@ -18,7 +18,11 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.ShowContactsEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.commons.events.ui.ShowMrtRequestEvent;
+import seedu.address.commons.events.ui.ShowPsiRequestEvent;
+import seedu.address.commons.events.ui.ShowWeatherRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
@@ -29,8 +33,16 @@ import seedu.address.model.UserPrefs;
  */
 public class MainWindow extends UiPart<Region> {
 
-    private static final String ICON = "/images/address_book_32.png";
+    private static final String ICON = "/images/tourist_book_128.png";
+
     private static final String FXML = "MainWindow.fxml";
+
+    private static BrowserPanel browserPanel = new BrowserPanel();
+    //Randomize the theme color
+    //private static Random random = new Random();
+    //private static String[] themeColors = {"MainWindow_Black.fxml", "MainWindow_White.fxml"};
+    //private static final String FXML = themeColors[random.nextInt(themeColors.length)];
+
     private static final int MIN_HEIGHT = 600;
     private static final int MIN_WIDTH = 450;
 
@@ -40,8 +52,7 @@ public class MainWindow extends UiPart<Region> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private BrowserPanel browserPanel;
-    private PersonListPanel personListPanel;
+    private PlaceListPanel placeListPanel;
     private Config config;
     private UserPrefs prefs;
 
@@ -52,10 +63,22 @@ public class MainWindow extends UiPart<Region> {
     private StackPane commandBoxPlaceholder;
 
     @FXML
-    private MenuItem helpMenuItem;
+    private MenuItem weatherItem;
 
     @FXML
-    private StackPane personListPanelPlaceholder;
+    private MenuItem helpMenuItem;
+    //@@author huyuanrong
+    @FXML
+    private MenuItem contactsMenuItem;
+    //@@author
+    //@@author aungmyin23
+    @FXML
+    private MenuItem mrtMapItem;
+    @FXML
+    private MenuItem psiItem;
+    //@@author
+    @FXML
+    private StackPane placeListPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -90,6 +113,10 @@ public class MainWindow extends UiPart<Region> {
 
     private void setAccelerators() {
         setAccelerator(helpMenuItem, KeyCombination.valueOf("F1"));
+        //@@author huyuanrong
+        setAccelerator(contactsMenuItem, KeyCombination.valueOf("F2"));
+        //@@author
+        setAccelerator(mrtMapItem, KeyCombination.valueOf("F3"));
     }
 
     /**
@@ -126,16 +153,20 @@ public class MainWindow extends UiPart<Region> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
+        //browserPanel = new BrowserPanel();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
-        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
-        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+        //browserPanel.loadPage("http://www.nea.gov.sg/weather-climate/forecasts/24-hour-forecast");
+
+        placeListPanel = new PlaceListPanel(logic.getFilteredPlaceList());
+        placeListPanelPlaceholder.getChildren().add(placeListPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
+        //StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
+        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath(),
+            logic.getFilteredPlaceList().size());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
         CommandBox commandBox = new CommandBox(logic);
@@ -175,6 +206,12 @@ public class MainWindow extends UiPart<Region> {
         primaryStage.setMinWidth(MIN_WIDTH);
     }
 
+    //@@author thanhson16198
+    public static void loadUrl(String url) {
+        browserPanel.loadPage(url);
+    }
+    //@@author
+
     /**
      * Returns the current size and the position of the main Window.
      */
@@ -182,6 +219,16 @@ public class MainWindow extends UiPart<Region> {
         return new GuiSettings(primaryStage.getWidth(), primaryStage.getHeight(),
                 (int) primaryStage.getX(), (int) primaryStage.getY());
     }
+
+    //@@author thanhson16198
+    /**
+     * Opens the Weather on browser.
+     */
+    public void handleWeather() {
+        logger.info("Open a weather forecast for today on BrowerPanel.");
+        browserPanel.loadPage("https://www.accuweather.com/en/sg/singapore/300597/hourly-weather-forecast/300597");
+    }
+    //@@author
 
     /**
      * Opens the help window.
@@ -191,6 +238,35 @@ public class MainWindow extends UiPart<Region> {
         HelpWindow helpWindow = new HelpWindow();
         helpWindow.show();
     }
+
+    //@@author huyuanrong
+    /**
+     * Opens the useful contacts window.
+     */
+    @FXML
+    public void showNumbers() {
+        ContactWindow contactWindow = new ContactWindow();
+        contactWindow.show();
+    }
+    //@@author
+    //@aurhor aungmyin23
+    /**
+     * Opens the mrt map window.
+     */
+    @FXML
+    public void handleMrtMap() {
+        MrtWindow mrtWindow = new MrtWindow();
+        mrtWindow.show();
+    }
+    /**
+     * Opens the have webstite at Browser window.
+     */
+    @FXML
+    public void handlePsi() {
+        logger.info("Open the PSI value around Singapore for today on BrowerPanel.");
+        browserPanel.loadPage("http://www.haze.gov.sg/air-quality-information");
+    }
+    //@@author
 
     void show() {
         primaryStage.show();
@@ -204,8 +280,8 @@ public class MainWindow extends UiPart<Region> {
         raise(new ExitAppRequestEvent());
     }
 
-    public PersonListPanel getPersonListPanel() {
-        return this.personListPanel;
+    public PlaceListPanel getPlaceListPanel() {
+        return this.placeListPanel;
     }
 
     void releaseResources() {
@@ -217,4 +293,34 @@ public class MainWindow extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
     }
+
+    //@@author thanhson16198
+    @Subscribe
+    private void handleShowWeatherEvent(ShowWeatherRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleWeather();
+    }
+    //@@author
+    //@@author huyuanrong
+    @Subscribe
+    private void handleShowContactsEvent(ShowContactsEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        showNumbers();
+    }
+    //@@author
+    //@@author aungmyin23
+    @Subscribe
+    private void handleShowMrtEvent(ShowMrtRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleMrtMap();
+
+    }
+
+    @Subscribe
+    private void handleShowPsiEvent(ShowPsiRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handlePsi();
+
+    }
+    //@@author aungmyin23
 }

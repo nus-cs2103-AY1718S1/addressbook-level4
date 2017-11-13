@@ -5,7 +5,8 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.logic.parser.ParserUtil.MESSAGE_REQUIRED_TWO_INDEX;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PLACE;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -18,23 +19,23 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Phone;
+import seedu.address.model.place.Address;
+import seedu.address.model.place.Name;
+import seedu.address.model.place.Phone;
+import seedu.address.model.place.Website;
 import seedu.address.model.tag.Tag;
 
 public class ParserUtilTest {
     private static final String INVALID_NAME = "R@chel";
     private static final String INVALID_PHONE = "+651234";
     private static final String INVALID_ADDRESS = " ";
-    private static final String INVALID_EMAIL = "example.com";
+    private static final String INVALID_WEBSITE = "example.com";
     private static final String INVALID_TAG = "#friend";
 
     private static final String VALID_NAME = "Rachel Walker";
     private static final String VALID_PHONE = "123456";
     private static final String VALID_ADDRESS = "123 Main Street #0505";
-    private static final String VALID_EMAIL = "rachel@example.com";
+    private static final String VALID_WEBSITE = "http://www.rachel.com";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
 
@@ -47,6 +48,15 @@ public class ParserUtilTest {
         ParserUtil.parseIndex("10 a");
     }
 
+    //@@author Chng-Zhi-Xuan
+    @Test
+    public void parseIndexPosition_invalidInput_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        thrown.expectMessage(MESSAGE_INVALID_INDEX);
+        ParserUtil.parseIndexFromPosition(" a 2 ", 0);
+    }
+    //@@author
+
     @Test
     public void parseIndex_outOfRangeInput_throwsIllegalValueException() throws Exception {
         thrown.expect(IllegalValueException.class);
@@ -54,14 +64,34 @@ public class ParserUtilTest {
         ParserUtil.parseIndex(Long.toString(Integer.MAX_VALUE + 1));
     }
 
+    //@@author Chng-Zhi-Xuan
+    @Test
+    public void parseIndexPosition_outOfRangeInput_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        thrown.expectMessage(MESSAGE_REQUIRED_TWO_INDEX);
+        ParserUtil.parseIndexFromPosition(" 0 1 2 3 4", 5);
+    }
+    //@@author
+
     @Test
     public void parseIndex_validInput_success() throws Exception {
         // No whitespaces
-        assertEquals(INDEX_FIRST_PERSON, ParserUtil.parseIndex("1"));
+        assertEquals(INDEX_FIRST_PLACE, ParserUtil.parseIndex("1"));
 
         // Leading and trailing whitespaces
-        assertEquals(INDEX_FIRST_PERSON, ParserUtil.parseIndex("  1  "));
+        assertEquals(INDEX_FIRST_PLACE, ParserUtil.parseIndex("  1  "));
     }
+
+    //@@author Chng-Zhi-Xuan
+    @Test
+    public void parseIndexPosition_validInput_success() throws Exception {
+
+        assertEquals(INDEX_FIRST_PLACE, ParserUtil.parseIndexFromPosition("1 2", 0));
+
+        assertEquals(INDEX_FIRST_PLACE, ParserUtil.parseIndexFromPosition("   1 2   ",
+                                                                                                0));
+    }
+    //@@author
 
     @Test
     public void parseName_null_throwsNullPointerException() throws Exception {
@@ -101,11 +131,6 @@ public class ParserUtilTest {
     }
 
     @Test
-    public void parsePhone_optionalEmpty_returnsOptionalEmpty() throws Exception {
-        assertFalse(ParserUtil.parsePhone(Optional.empty()).isPresent());
-    }
-
-    @Test
     public void parsePhone_validValue_returnsPhone() throws Exception {
         Phone expectedPhone = new Phone(VALID_PHONE);
         Optional<Phone> actualPhone = ParserUtil.parsePhone(Optional.of(VALID_PHONE));
@@ -126,11 +151,6 @@ public class ParserUtilTest {
     }
 
     @Test
-    public void parseAddress_optionalEmpty_returnsOptionalEmpty() throws Exception {
-        assertFalse(ParserUtil.parseAddress(Optional.empty()).isPresent());
-    }
-
-    @Test
     public void parseAddress_validValue_returnsAddress() throws Exception {
         Address expectedAddress = new Address(VALID_ADDRESS);
         Optional<Address> actualAddress = ParserUtil.parseAddress(Optional.of(VALID_ADDRESS));
@@ -139,29 +159,25 @@ public class ParserUtilTest {
     }
 
     @Test
-    public void parseEmail_null_throwsNullPointerException() throws Exception {
+    public void parseWebsite_null_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
-        ParserUtil.parseEmail(null);
+        ParserUtil.parseWebsite(null);
     }
 
     @Test
-    public void parseEmail_invalidValue_throwsIllegalValueException() throws Exception {
+    public void parseWebsite_invalidValue_throwsIllegalValueException() throws Exception {
         thrown.expect(IllegalValueException.class);
-        ParserUtil.parseEmail(Optional.of(INVALID_EMAIL));
+        ParserUtil.parseWebsite(Optional.of(INVALID_WEBSITE));
     }
-
+    //@@author aungmyin23
     @Test
-    public void parseEmail_optionalEmpty_returnsOptionalEmpty() throws Exception {
-        assertFalse(ParserUtil.parseEmail(Optional.empty()).isPresent());
-    }
+    public void parseWebsite_validValue_returnsWebsite() throws Exception {
+        Website expectedWebsite = new Website(VALID_WEBSITE);
+        Optional<Website> actualWebsite = ParserUtil.parseWebsite(Optional.of(VALID_WEBSITE));
 
-    @Test
-    public void parseEmail_validValue_returnsEmail() throws Exception {
-        Email expectedEmail = new Email(VALID_EMAIL);
-        Optional<Email> actualEmail = ParserUtil.parseEmail(Optional.of(VALID_EMAIL));
-
-        assertEquals(expectedEmail, actualEmail.get());
+        assertEquals(expectedWebsite, actualWebsite.get());
     }
+    //@@author
 
     @Test
     public void parseTags_null_throwsNullPointerException() throws Exception {

@@ -83,7 +83,7 @@ public class JsonUserPrefsStorageTest {
         UserPrefs userPrefs = new UserPrefs();
         userPrefs.setGuiSettings(1000, 500, 300, 100);
         userPrefs.setAddressBookFilePath("addressbook.xml");
-        userPrefs.setAddressBookName("TypicalAddressBookName");
+        userPrefs.setAddressBookName("TypicalTouristBookName");
         return userPrefs;
     }
 

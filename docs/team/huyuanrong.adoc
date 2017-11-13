@@ -1,0 +1,137 @@
+= Hu Yuanrong - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: Tourist-Book
+Tourist-Book is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-F09-B2/main/blob/master/collated/main/huyuanrong.md[Functional code]] [https://github.com/CS2103AUG2017-F09-B2/main/blob/master/collated/test/huyuanrong.md[Test code]]
+
+=== Enhancement Added: Displaying of Useful Contacts
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=usefulContacts]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Since the project is targeted at tourists who are visiting Singapore, it is important for them to
+have easy access to a list of emergency numbers in Singapore for easy reference should the need arises. The list
+of numbers include hospitals and ambulance hotlines.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=emergency]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Find Command
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=find]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Since the project is implemented with Places and using tags to describe a place (e.g. onestar), it is required for
+users to be able to search the list either by name or by the tag that the place is tagged to for easy reference.
+In addition, users may want to search for more than one name or tag at the same time as well.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=findCommand]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Backup Command
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=backup]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+This is to allow users to be able to backup their data. In the event their main file is corrupted or lost, there is
+still a backup file.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=backup]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Export Command
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=export]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+As described in the User Stories, this is to allow users to be able to save and print out their files easily so that
+they are still able to know the information about a place without being connected to a computer.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=exportCommand]
+
+#End of Extract#
+
+---
+
+=== Other contributions
+
+* Populated all the default places for the Tourist Book application. (Pull requests https://github.com/CS2103AUG2017-F09-B2/main/pull/64[#64])
+
+* Created shortcut buttons for MRT Map and Useful Contacts function. (Pull requests https://github.com/CS2103AUG2017-F09-B2/main/pull/75[#75])
+
+* Help to find bugs for other projects during `Acceptance testing`: +
+  (Issues Trackers https://github.com/CS2103AUG2017-W10-B4/main/issues/47[#47], https://github.com/CS2103AUG2017-W10-B4/main/issues/53[#53])
+

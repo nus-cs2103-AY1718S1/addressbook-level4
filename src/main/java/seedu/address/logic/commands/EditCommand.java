@@ -2,11 +2,12 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_POSTAL_CODE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_WEBSITE;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PLACES;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,92 +17,97 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.Phone;
-import seedu.address.model.person.ReadOnlyPerson;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.place.Address;
+import seedu.address.model.place.Name;
+import seedu.address.model.place.Phone;
+import seedu.address.model.place.Place;
+import seedu.address.model.place.PostalCode;
+import seedu.address.model.place.ReadOnlyPlace;
+import seedu.address.model.place.Website;
+import seedu.address.model.place.exceptions.DuplicatePlaceException;
+import seedu.address.model.place.exceptions.PlaceNotFoundException;
 import seedu.address.model.tag.Tag;
 
 /**
- * Edits the details of an existing person in the address book.
+ * Edits the details of an existing place in the address book.
  */
 public class EditCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "edit";
+    public static final String COMMANND_WORD_ALIAS = "ed";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
-            + "by the index number used in the last person listing. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the place identified "
+            + "by the index number used in the last place listing. "
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
             + "[" + PREFIX_NAME + "NAME] "
             + "[" + PREFIX_PHONE + "PHONE] "
-            + "[" + PREFIX_EMAIL + "EMAIL] "
+            + "[" + PREFIX_WEBSITE + "WEBSITE] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
+            + "[" + PREFIX_POSTAL_CODE + "POSTAL CODE] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
-            + PREFIX_EMAIL + "johndoe@example.com";
+            + PREFIX_WEBSITE + "www.marinabaysands.com "
+            + PREFIX_POSTAL_CODE + "639304";
 
-    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
+    public static final String MESSAGE_EDIT_PLACE_SUCCESS = "Edited Place: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
+    public static final String MESSAGE_DUPLICATE_PLACE = "This place already exists in the address book.";
 
     private final Index index;
-    private final EditPersonDescriptor editPersonDescriptor;
+    private final EditPlaceDescriptor editPlaceDescriptor;
 
     /**
-     * @param index of the person in the filtered person list to edit
-     * @param editPersonDescriptor details to edit the person with
+     * @param index of the place in the filtered place list to edit
+     * @param editPlaceDescriptor details to edit the place with
      */
-    public EditCommand(Index index, EditPersonDescriptor editPersonDescriptor) {
+    public EditCommand(Index index, EditPlaceDescriptor editPlaceDescriptor) {
         requireNonNull(index);
-        requireNonNull(editPersonDescriptor);
+        requireNonNull(editPlaceDescriptor);
 
         this.index = index;
-        this.editPersonDescriptor = new EditPersonDescriptor(editPersonDescriptor);
+        this.editPlaceDescriptor = new EditPlaceDescriptor(editPlaceDescriptor);
     }
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
+        List<ReadOnlyPlace> lastShownList = model.getFilteredPlaceList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_PLACE_DISPLAYED_INDEX);
         }
 
-        ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
-        Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
+        ReadOnlyPlace placeToEdit = lastShownList.get(index.getZeroBased());
+        Place editedPlace = createEditedPlace(placeToEdit, editPlaceDescriptor);
 
         try {
-            model.updatePerson(personToEdit, editedPerson);
-        } catch (DuplicatePersonException dpe) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
-        } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("The target person cannot be missing");
+            model.updatePlace(placeToEdit, editedPlace);
+        } catch (DuplicatePlaceException dpe) {
+            throw new CommandException(MESSAGE_DUPLICATE_PLACE);
+        } catch (PlaceNotFoundException pnfe) {
+            throw new AssertionError("The target place cannot be missing");
         }
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedPerson));
+        model.updateFilteredPlaceList(PREDICATE_SHOW_ALL_PLACES);
+        return new CommandResult(String.format(MESSAGE_EDIT_PLACE_SUCCESS, editedPlace));
     }
 
     /**
-     * Creates and returns a {@code Person} with the details of {@code personToEdit}
-     * edited with {@code editPersonDescriptor}.
+     * Creates and returns a {@code Place} with the details of {@code placeToEdit}
+     * edited with {@code editPlaceDescriptor}.
      */
-    private static Person createEditedPerson(ReadOnlyPerson personToEdit,
-                                             EditPersonDescriptor editPersonDescriptor) {
-        assert personToEdit != null;
+    private static Place createEditedPlace(ReadOnlyPlace placeToEdit,
+                                           EditPlaceDescriptor editPlaceDescriptor) {
+        assert placeToEdit != null;
 
-        Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
-        Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
-        Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
-        Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
-        Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        Name updatedName = editPlaceDescriptor.getName().orElse(placeToEdit.getName());
+        Phone updatedPhone = editPlaceDescriptor.getPhone().orElse(placeToEdit.getPhone());
+        Website updatedWebsite = editPlaceDescriptor.getWebsite().orElse(placeToEdit.getWebsite());
+        Address updatedAddress = editPlaceDescriptor.getAddress().orElse(placeToEdit.getAddress());
+        PostalCode updatedPostalCode = editPlaceDescriptor.getPostalCode().orElse(placeToEdit.getPostalCode());
+        Set<Tag> updatedTags = editPlaceDescriptor.getTags().orElse(placeToEdit.getTags());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
+        return new Place(updatedName, updatedPhone, updatedWebsite, updatedAddress, updatedPostalCode, updatedTags);
     }
 
     @Override
@@ -119,27 +125,29 @@ public class EditCommand extends UndoableCommand {
         // state check
         EditCommand e = (EditCommand) other;
         return index.equals(e.index)
-                && editPersonDescriptor.equals(e.editPersonDescriptor);
+                && editPlaceDescriptor.equals(e.editPlaceDescriptor);
     }
 
     /**
-     * Stores the details to edit the person with. Each non-empty field value will replace the
-     * corresponding field value of the person.
+     * Stores the details to edit the place with. Each non-empty field value will replace the
+     * corresponding field value of the place.
      */
-    public static class EditPersonDescriptor {
+    public static class EditPlaceDescriptor {
         private Name name;
         private Phone phone;
-        private Email email;
+        private Website website;
         private Address address;
+        private PostalCode postalCode;
         private Set<Tag> tags;
 
-        public EditPersonDescriptor() {}
+        public EditPlaceDescriptor() {}
 
-        public EditPersonDescriptor(EditPersonDescriptor toCopy) {
+        public EditPlaceDescriptor(EditPlaceDescriptor toCopy) {
             this.name = toCopy.name;
             this.phone = toCopy.phone;
-            this.email = toCopy.email;
+            this.website = toCopy.website;
             this.address = toCopy.address;
+            this.postalCode = toCopy.postalCode;
             this.tags = toCopy.tags;
         }
 
@@ -147,7 +155,13 @@ public class EditCommand extends UndoableCommand {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.tags);
+            return CollectionUtil.isAnyNonNull(
+                    this.name,
+                    this.phone,
+                    this.website,
+                    this.address,
+                    this.postalCode,
+                    this.tags);
         }
 
         public void setName(Name name) {
@@ -166,12 +180,12 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(phone);
         }
 
-        public void setEmail(Email email) {
-            this.email = email;
+        public void setWebsite(Website website) {
+            this.website = website;
         }
 
-        public Optional<Email> getEmail() {
-            return Optional.ofNullable(email);
+        public Optional<Website> getWebsite() {
+            return Optional.ofNullable(website);
         }
 
         public void setAddress(Address address) {
@@ -180,6 +194,14 @@ public class EditCommand extends UndoableCommand {
 
         public Optional<Address> getAddress() {
             return Optional.ofNullable(address);
+        }
+
+        public void setPostalCode(PostalCode postalCode) {
+            this.postalCode = postalCode;
+        }
+
+        public Optional<PostalCode> getPostalCode() {
+            return Optional.ofNullable(postalCode);
         }
 
         public void setTags(Set<Tag> tags) {
@@ -198,17 +220,18 @@ public class EditCommand extends UndoableCommand {
             }
 
             // instanceof handles nulls
-            if (!(other instanceof EditPersonDescriptor)) {
+            if (!(other instanceof EditPlaceDescriptor)) {
                 return false;
             }
 
             // state check
-            EditPersonDescriptor e = (EditPersonDescriptor) other;
+            EditPlaceDescriptor e = (EditPlaceDescriptor) other;
 
             return getName().equals(e.getName())
                     && getPhone().equals(e.getPhone())
-                    && getEmail().equals(e.getEmail())
+                    && getWebsite().equals(e.getWebsite())
                     && getAddress().equals(e.getAddress())
+                    && getPostalCode().equals(e.getPostalCode())
                     && getTags().equals(e.getTags());
         }
     }

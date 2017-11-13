@@ -1,0 +1,123 @@
+= Aung Myin Kyaw - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: Tourist-Book
+*Code contributed*: [https://github.com/CS2103AUG2017-F09-B2/main/blob/master/collated/main/aungmyin23.md[Functional code]] [https://github.com/CS2103AUG2017-F09-B2/main/blob/master/collated/test/aungmyin23.md[Test code]]
+
+=== Enhancement Added: Displaying of Mrt Map
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=mrtmap]
+
+#End of Extract#
+
+---
+==== Justification
+
+Since the project is targeted to the tourist who are visiting Singapore, it is important for them to
+have easy access to the MRT map of Singapore.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=mrtmap]
+
+* (Pull requests https://github.com/CS2103AUG2017-F09-B2/main/pull/10[#10])
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Sorrting
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=sort]
+
+#End of Extract#
+
+---
+==== Justification
+
+The list of Places that added to the list will appear at the bottom of the list. By sorting the list, it allows the user to view the
+list in alphabetical order.
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=sort]
+
+* (Pull requests https://github.com/CS2103AUG2017-F09-B2/main/pull/92[#92])
+
+#End of Extract#
+
+---
+=== Enhancement Added: Short Commands
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=aung1.1]
+
+* (Pull requests https://github.com/CS2103AUG2017-F09-B2/main/pull/4[#4])
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Displaying of PSI value
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=aung1.5]
+
+* (Pull requests https://github.com/CS2103AUG2017-F09-B2/main/pull/74[#74])
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Allowing the tourist to just input 2 compulsory fields
+
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=aung1.4]
+
+* (Pull requests https://github.com/CS2103AUG2017-F09-B2/main/pull/57[#57])
+
+
+#End of Extract#
+
+---
+
+=== Other contributions
+
+* Created new attributes (Pull requests https://github.com/CS2103AUG2017-F09-B2/main/pull/26[#26])
+
+* Help to find bugs for other projects during `Acceptance testing`: +
+(Issues Trackers https://github.com/CS2103AUG2017-W14-B2/main/issues/121[#121], https://github.com/CS2103AUG2017-W14-B2/main/issues/120[#120],
+https://github.com/CS2103AUG2017-W14-B2/main/issues/119[#119], https://github.com/CS2103AUG2017-W14-B2/main/issues/122[#122])
+
+

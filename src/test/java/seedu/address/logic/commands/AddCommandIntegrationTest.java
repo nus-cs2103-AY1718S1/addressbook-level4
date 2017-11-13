@@ -2,7 +2,7 @@ package seedu.address.logic.commands;
 
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalPlaces.getTypicalAddressBook;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -12,8 +12,8 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.Person;
-import seedu.address.testutil.PersonBuilder;
+import seedu.address.model.place.Place;
+import seedu.address.testutil.PlaceBuilder;
 
 /**
  * Contains integration tests (interaction with the Model) for {@code AddCommand}.
@@ -28,27 +28,27 @@ public class AddCommandIntegrationTest {
     }
 
     @Test
-    public void execute_newPerson_success() throws Exception {
-        Person validPerson = new PersonBuilder().build();
+    public void execute_newPlace_success() throws Exception {
+        Place validPlace = new PlaceBuilder().build();
 
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.addPerson(validPerson);
+        expectedModel.addPlace(validPlace);
 
-        assertCommandSuccess(prepareCommand(validPerson, model), model,
-                String.format(AddCommand.MESSAGE_SUCCESS, validPerson), expectedModel);
+        assertCommandSuccess(prepareCommand(validPlace, model), model,
+                String.format(AddCommand.MESSAGE_SUCCESS, validPlace), expectedModel);
     }
 
     @Test
-    public void execute_duplicatePerson_throwsCommandException() {
-        Person personInList = new Person(model.getAddressBook().getPersonList().get(0));
-        assertCommandFailure(prepareCommand(personInList, model), model, AddCommand.MESSAGE_DUPLICATE_PERSON);
+    public void execute_duplicatePlace_throwsCommandException() {
+        Place placeInList = new Place(model.getAddressBook().getPlaceList().get(0));
+        assertCommandFailure(prepareCommand(placeInList, model), model, AddCommand.MESSAGE_DUPLICATE_PLACE);
     }
 
     /**
-     * Generates a new {@code AddCommand} which upon execution, adds {@code person} into the {@code model}.
+     * Generates a new {@code AddCommand} which upon execution, adds {@code place} into the {@code model}.
      */
-    private AddCommand prepareCommand(Person person, Model model) {
-        AddCommand command = new AddCommand(person);
+    private AddCommand prepareCommand(Place place, Model model) {
+        AddCommand command = new AddCommand(place);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }

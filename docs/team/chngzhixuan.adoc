@@ -1,0 +1,107 @@
+= Chng Zhi Xuan - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: Tourist-Book
+
+*Code contributed*: [https://github.com/CS2103AUG2017-F09-B2/main/blob/master/collated/test/Chng-Zhi-Xuan.md[Functional code]]
+ [https://github.com/CS2103AUG2017-F09-B2/main/blob/master/collated/test/Chng-Zhi-Xuan.md[Test code]]
+
+=== Enhancement Added: Bookmarking
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+
+include::../UserGuide.adoc[tag=bookmark]
+
+include::../UserGuide.adoc[tag=showBookmark]
+
+include::../UserGuide.adoc[tag=clearBookmark]
+
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Bookmarking was a key feature part of the user story, as the tourist would like to track favourite places.
+Implementation was done via tag manipulation since the Tag class was well suited to support this feature. However,
+tag  manipulation was cumbersome in the old addressbook, only from the edit command which was very slow.
+
+My solution has seperate commands to speed up the process of adding/removing a specific tag ("Bookmarked") from each place, by passing
+the need to use the slower edit command.
+
+(Pull requests https://github.com/CS2103AUG2017-F09-B2/main/pull/13[#13], https://github.com/CS2103AUG2017-F09-B2/main/pull/93[#93])
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=bookmarkDesign]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Direction from place to place
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=direction]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Highlighted as a "nice to have" feature in the user story. The usage would be the tourist has a schedule to visit
+several places in a day. It is very likely the tourist would seek direction to get from one listed place to another listed
+place.
+
+"dir" command is implemented as a shortcut to manually entering 2 places on Google maps. It uses the name and postal
+code data found in the Tourist-Book to help the tourist search for the direction in the browser panel.
+
+
+(Pull request https://github.com/CS2103AUG2017-F09-B2/main/pull/62[#62])
+
+==== Implementation
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=directionDesign]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Add place attribute : "Description"
+
+Currently, there isn't a short summary on what the various places offer, the tourist would need to select a place and visit
+the its website to find out more. However, the website might load slowly, and would require a few mouse clicks
+to find what is the place about.
+
+To alleviate this issue, we can pre-load the description into a new place attribute<optional> and have it display
+on the place list.
+
+=== Other contributions
+
+* Refactor 1.9K LoC, from "person" to "places"  (Pull request https://github.com/CS2103AUG2017-F09-B2/main/pull/44[#44])
+* Added user stories (Pull request https://github.com/CS2103AUG2017-F09-B2/main/pull/2[#2])
+* Tested for group T09-B1 (Issues raised
+https://github.com/CS2103AUG2017-T09-B1/main/issues/81[#81],
+https://github.com/CS2103AUG2017-T09-B1/main/issues/82[#82],
+https://github.com/CS2103AUG2017-T09-B1/main/issues/83[#83],
+https://github.com/CS2103AUG2017-T09-B1/main/issues/84[#84])
+
+

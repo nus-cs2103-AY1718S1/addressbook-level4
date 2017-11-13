@@ -1,0 +1,108 @@
+= Nguyen Thanh Son - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: Tourist-Book
+Tourist-Book is a desktop tourist attractions application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+*Code contributed*: [https://github.com/CS2103AUG2017-F09-B2/main/blob/master/collated/main/thanhson16198.md[Functional code]] [https://github.com/CS2103AUG2017-F09-B2/main/blob/master/collated/test/thanhson16198.md[Test code]]
+
+=== Enhancement Added: Display real-time Weather of Singapore
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=weather]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Show the current weather of Singapore for tourist's convenience.
+
+==== Implementation
+For clicking the 'Weather' tab in the `MenuBar`, or calling the command `weather`, the `handleWeather` function is called, by FXML, on link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow.java`].
+
+----
+@FXML
+public void handleWeather() {
+    logger.info("Open a weather forecast for today on BrowerPanel.");
+    browserPanel.loadPage("https://www.accuweather.com/en/sg/singapore/300597/hourly-weather-forecast/300597");
+}
+----
+
+=== Enhancement Proposed: Add command `Goto`
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=goto]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Show the location on Google Map.
+
+=== Feature Modified: Update the colors for tags
+
+==== Justification
+
+Add more pallete colors for tags,  and documentate the Hex colors for easy maintenance.
+
+==== Implementation
+Edit the `color` array in link:{repoURL}/src/main/java/seedu/address/ui/PlaceCard.java[`PlaceCard`] to display clearer colors and maintain.
+
+----
+/**
+     * Names of the hex values in `colors` array:
+     * Format: `HEX VALUE` : `NAME`    (`NAME` would be replaced with a description of the color if not exists)
+     *
+     * 800000 : Maroon
+     * FF0000 : Red
+     * 800080 : Purple
+     * 008000 : Green
+     * 808000 : Olive
+     * FFFF00 : Yellow
+     * 000080 : Navy
+     * D300D3 : A shade of magenta
+     * FB6542 : A medium light shade of red-orange
+     * CC3D00 : A mediam dark shade of red-orange
+     * D55448 : A shade of red
+     * 063852 : A dark shade of cyan-blue
+     * 2D4262 : A medium dark shade of cyan-blue
+     * 07575B : A dark shade of cyan
+     */
+    private static String[] colors = {"#800000", "#FF0000", "#800080",
+        "#008000", "#808000", "#FFFF00", "#000080", "#D300D3",
+        "#FB6542", "#CC3D00", "#D55448", "#063852", "#2D4262", "#07575B"};
+----
+
+=== Feature Modified: Open the website of location when selected
+
+==== Justification
+
+Open the website of the location on `BrowserPanel` when a location is selected.
+
+==== Implementation
+
+Open the website of the location by `getWebsite()` if the website is available, else search the location, by name, on Google.
+
+----
+private void loadPlacePage(ReadOnlyPlace place) {
+        if (place.getWebsite().toString().contains("www.-.com"))
+            loadPage(GOOGLE_SEARCH_URL_PREFIX + place.getName().fullName.replaceAll(" ", "+")
+                    + GOOGLE_SEARCH_URL_SUFFIX);
+        else
+            loadPage(place.getWebsite().toString().replaceAll(" ", "+"));
+    }
+----

@@ -36,4 +36,5 @@ public class MainMenuHandle extends NodeHandle<Node> {
     private void clickOnMenuItemsSequentially(String... menuItems) {
         Arrays.stream(menuItems).forEach(guiRobot::clickOn);
     }
+
 }

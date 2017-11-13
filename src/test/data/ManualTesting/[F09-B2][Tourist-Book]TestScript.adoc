@@ -1,0 +1,1112 @@
+= Test Script
+:toc:
+:toc-placement: preamble
+:imagesDir: images
+:stylesDir: stylesheets
+:experimental:
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+endif::[]
+
+This is a test script document to explain the steps to perform manual testing, including how to load the data file.
+
+== Quick Start
+. Download both touristbook.jar and SampleData.xml files
+. Put both files in the same folder/location
+. Create another folder named "data" and put the SampleData.xml file inside
+. Rename the "SampleData.xml" to "addressbook.xml"
+. Run touristbook.jar
+
+====
+*Command Format*
+
+* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/Marina Bay Sands`.
+* Items in square brackets are OPTIONAL e.g `n/NAME [t/TAG]` can be used as `n/Marina Bay Sands t/attractions` or as `n/Marina Bay Sands`.
+* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/attractions`, `t/onestar t/twostars` etc.
+* Parameters can be in any order e.g. if the command specifies `n/NAME a/ADDRESS`, `a/ADDRESS n/NAME` is also acceptable.
+====
+
+== Help Command
+The help command allows the user to view the available functions and commands. +
+Format: `help` or `h` or pressing kbd:[F1]
+
+[NOTE]
+====
+* The command is **case sensitive** +
+* The command will ignore any other subequent parameters after the command word.
+* The command is not an undoable command, thus the `undo` and `redo` command will not work.
+====
+[WARNING]
+====
+Please close the `help` window once check. The application cannot perform other tasks when `help` window is still running.
+This is a bug that is found in the base https://github.com/se-edu/addressbook-level4/issues/727[Addressbook-level 4].
+====
+[discrete]
+=== Positive Test Cases
+. `help`
+** *Expected output* +
+Display help window.
+It will display "Opened help window."
+
+. `h`
+** *Expected output* +
+Display help window.
+It will display "Opened help window."
+
+. pressing kbd:[F1]
+** *Expected output* +
+Display help window.
+It will display "Opened help window."
+
+. `help try`
+** *Expected output* +
+Display help window.
+It will display "Opened help window."
+
+. `h 99`
+** *Expected output* +
+Display help window.
+It will display "Opened help window."
+
+[discrete]
+=== Negative Test Cases
+. `HELP`
+** *Expected output* +
+It will display "Unknown command"
+
+. `H`
+** *Expected output* +
+It will display "Unknown command"
+
+. `HELP help`
+** *Expected output* +
+It will display "Unknown command"
+
+== Add Command
+The add command allows the user to add in any additional attractions or person +
+Format: `add n/NAME [ph/PHONE] [w/WEBSITE] [a/ADDRESS] p/POSTALCODE [t/TAG]...`  +
+or +
+`a n/NAME p/POSTALCODE`
+
+* The command is **case sensitive** +
+* The command require the user to key in only 2 **compulsory** fields `n/NAME` and `p/POSTALCODE`. Thus, inputs `[ph/PHONE]`, `[w/WEBSITE]` , `[a/ADDRESS]` and `[t/TAG]` are optional.
+* The command is an undoable command, thus the `undo` and `redo` command will work.
+* The command will reject if following requirement does not meet -
+** Phone numbers can only contain numbers, and should be at least `3` digits long +
+** Postal codes need to be exactly `6` digits.
+** Websites need to include `http://www` or `https://www` in front.
+
+[NOTE]
+====
+* Default values -
+. Phone `000`
+. Website `http://www.-.com
+. Address `-`
+====
+
+****
+* If there are multiple names, phones, addresses, website or postalcodes the command will store the last input.
+For example : Command +
+`add n/Utown Starbucks ph/69101127 a/8 College Avenue West a/8 College Avenue West #B1-01 p/123456 p/138608` +
+Will store -  +
+** NAME = Utown Starbucks +
+** PHONE = 69101127 +
+** ADDRESS = 8 College Avenue West #B1-01+
+** POSTALCODE = 138608
+
+* `Warning` for duplicate add only display when the application can find the exact same location in the list. +
+* This means that even differences in tag with exactly same addresse, name, phone and name will add the place to the list.
+
+* `IMPORTANT` not to forget key in kbd:[space] between each different inputs prefix.
+****
+[discrete]
+=== Positive Test Cases
+. `add n/Utown Starbucks ph/69101127 a/8 College Avenue West #B1-01 p/138608 w/http://www.starbucks.com.sg/ t/starbucks t/drinks`
+** *Expected output* +
+Utown Starbucks will be added to last slot in the list.
+It will display +
+"**New place added: Utown Starbucks Phone: 69101127 Address: 8 College Avenue West #B1-01 PostalCode: 138608 Website: http://www.starbucks.com.sg/ Tags: [starbucks][drinks]**"
+
+. `add n/Utown Starbucks n/Spore Italino a/1 Create Way, NUS University Town p/138602`
+** *Expected output* +
+Spore Italino will be added to last slot in the list.
+It will display +
+"**New place added: Spore Italino Phone: 000 Address: Create Way, NUS University Town PostalCode: 138602 Website: http://www.-.com Tags: **"
+
+. `add n/Utown Starbucks p/608549`
+** *Expected output* +
+Utown Starbucks will be added to last slot in the list.
+It will display +
+"**New place added: Starbucks Phone: 000 Address: - PostalCode: 608549 Website: http://www.-.com Tags: **"
+
+[discrete]
+=== Negative Test Cases
+. `add n/Utown Starbucks`
+** *Expected output* +
+Warning message will display.
+
+. `add n/Starbucks p/12345`
+** *Expected output* +
+Warning message will display. +
+"**Singapore Postal Code can only contain numbers, and should be just 6 digits long**"
+
+. `add n/Starbucks p/123456 ph/22`
+** *Expected output* +
+Warning message will display. +
+"**Phone numbers can only contain numbers, and should be at least 3 digits long**"
+
+. `add n/Starbucks p/123456 ph/333 w/hello.com`
+** *Expected output* +
+Warning message will display. +
+"**Place website should contain http://www https://www**"
+
+== List Command
+This command allows user to list the places inside the tourist-book. +
+Format: `list` or `l`
+
+[NOTE]
+====
+* The command is **case sensitive** +
+* The command will ignore any other subequent parameters after the command word.
+====
+[discrete]
+=== Positive Test Cases
+. `list`
+** *Expected output* +
+It will display "Listed all places"
+
+. `l`
+** *Expected output* +
+It will display "Listed all places"
+
+. `list h`
+** *Expected output* +
+It will display "Listed all places"
+
+. `l help`
+** *Expected output* +
+It will display "Listed all places"
+
+[discrete]
+=== Negative Test Cases
+. `LIST`
+** *Expected output* +
+It will display "Unknown command"
+
+. `L`
+** *Expected output* +
+It will display "Unknown command"
+
+. `LIST l`
+** *Expected output* +
+It will display "Unknown command"
+
+== Bookmark Command
+Adds a bookmark tag to the specified place from the address book. +
+Format: `bookmark INDEX`
+
+****
+* Bookmarks the place at the specified `INDEX`.
+* The command is **case sensitive**
+* The command is an undoable command, thus the `undo` and `redo` command will work.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ... and less then number of list shown in the most recent listing.
+****
+[discrete]
+=== Positive Test Cases
+. `list` +
+`bookmark 1`
+
+** *Expected output* +
+Successfully bookmarked the first place in the list.
+
+[discrete]
+=== Negative Test Cases
+
+. `list` +
+`bookmark 5` +
+`bookmark 5`
+
+** *Expected output* +
+Error message will be display as `INDEX 5` has already been bookmarked.
+
+. `list` +
+`bookmark 45`
+
+** *Expected output* +
+Error message "**The place index provided is invalid**"
+
+. `list` +
+`bookmark 1 2` +
+-There is kbd:[space] between `1` and `2`
+
+** *Expected output* +
+Error message for **Invalid input** display.
+
+. `list` +
+`bookmark 1 bookmark 2` +
+
+** *Expected output* +
+Error message for **Invalid input** display.
+
+== Show Bookmarks Command
+List the bookmarked places.
+Format: `show_bookmark`
+
+****
+* The command is **case sensitive**
+* The command is an undoable command, thus the `undo` and `redo` command will work.
+****
+
+[discrete]
+=== Positive Test Cases
+. `list` +
+`show_bookmark` +
+
+** *Expected output*
+It will list the two places that bookmarked earlier.
+
+[discrete]
+=== Negative Test Cases
+. `list` +
+`show_BOOKMARK` +
+
+** *Expected output* +
+Error message "**Unknown command**"
+
+. `list` +
+`show_bookmark show_bookmark` +
+
+** *Expected output* +
+Error message for **Invalid input** display.
+
+== Clear Bookmarks Command
+Clears all bookmarks from the address book. +
+Format: `clear_bookmark`
+****
+* The command is **case sensitive**
+* The command is an undoable command, thus the `undo` and `redo` command will work.
+****
+
+[discrete]
+=== Positive Test Cases
+. `list` +
+`show_bookmark` +
+`clear_bookmark` +
+
+** *Expected output* +
+It will clear all the bookmarked places and list all the places. +
+When type `show_bookmark` it will list an empty page.
+
+. `list` +
+`bookmark 1` +
+`bookmark 2` +
+`bookmark 3` +
+`clear_bookmark` +
+
+** *Expected output* +
+It will clear all the bookmarked places and list all the places. +
+When type `show_bookmark` it will list an empty page.
+
+[discrete]
+=== Negative Test Cases
+. `list` +
+`bookmark 1` +
+`show_bookmark` +
+`clear`
+
+** *Expected output* +
+Error message "**Unknown command**"
+
+== Delete Command
+Deletes the specified place from the Tourist-Book. +
+ Format: `delete INDEX` or `del INDEX`
+
+****
+* Deletes the place at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+[discrete]
+=== Positive Test Cases
+. `list`
+`del 3` +
+
+** *Expected output* +
+Successful delete message will display
+
+[discrete]
+=== Negative Test Cases
+. `delete 55` +
+
+** *Expected output* +
+Display "**The place index provided is invalid**"
+As the [INDEX] is out of the range the list.
+
+== Confirm_clear Command
+Clears all entries from the Tourist-Book. +
+Format: `confirm_clear`
+
+****
+* The command is **case sensitive**
+* The command is an undoable command, thus the `undo` and `redo` command will work.
+****
+
+[discrete]
+=== Positive Test Cases
+. `confirm_clear` +
+
+** *Expected output* +
+It will clear all the places in the tourist book +
+Message "**Tourist Book has been cleared!**"
+
+== Undo Command
+Restores the Tourist Book to the state before the previous _undoable_ command was executed. +
+Format: `undo` or `un`
+
+****
+* The command is **case sensitive**
+* The command is an undoable command, thus the `undo` and `redo` command will work.
+****
+
+[discrete]
+=== Positive Test Cases
+. `undo`
+** *Expected output*
+It will revert back the clear command earlier+
+Message "**Tourist Book has been cleared!**"
+
+. `delete 1` +
+`list` +
+`undo`
+** *Expected output*
+Reverses the `delete 1` command and add it back to the top of the list.
+
+. `select 1` +
+`list` +
+`undo`
+** *Expected output*
+The `undo` command fails as there are no undoable commands executed previously.
+
+
+[discrete]
+=== Negative Test Cases
+. `UNDO`
+** *Expected output* +
+Error message "**Unknown command**"
+
+== Redo Command
+Reverses the most recent `undo` command. +
+Format: `redo` or `re`
+
+****
+* The command is **case sensitive**
+****
+
+[discrete]
+=== Positive Test Cases
+. `delete 1` +
+`undo` (reverses the `delete 1` command) +
+`redo`
+** *Expected output*
+It reapplies the `delete 1` command.
+
+. `undo` +
+`delete 1` +
+`redo` +
+** *Expected output*
+The `redo` command fails as there are no `undo` commands executed previously.
+
+[discrete]
+=== Negative Test Cases
+. `REDO`
+** *Expected output* +
+Error message "**Unknown command**"
+
+== Direction Command
+Displays the directions from location A to selected destination. +
+Format: `dir [INDEX_FROM] [INDEX_TO]`
+
+****
+* Displays the location from `INDEX_FROM` to `INDEX_TO`. The index refers to the index number shown in the last place listing.
+* Both fields must be provided.
+* If there are three or more INDEX then the command will take the first two INDEX.
+* The index *must be a positive integer* >= 1 and within the range of the list shown
+****
+
+[discrete]
+=== Positive Test Cases
+. `list` +
+`dir 1 2` +
+** *Expected output*
+ Display the directions from the location at index 1 to index 2 of the places listing in BrowserPanel.
+
+. `list` +
+`dir 4 1` +
+** *Expected output*
+ Display the directions from the location at index 4 to index 1 of the places listing in BrowserPanel.
+
+. `list` +
+`dir 1 2 5` +
+** *Expected output*
+ Display the directions from the location at index 1 to index 2 of the places listing in BrowserPanel.
+
+[discrete]
+=== Negative Test Cases
+. `list` +
+`dir 1 1` +
+** *Expected output* +
+Error message "**The place index provided is invalid**"
+
+. `list` +
+`dir 1 0` +
+** *Expected output* +
+**Invalid Input** message display.
+
+. `list` +
+`dir 0 0` +
+** *Expected output* +
+**Invalid Input** message display.
+
+. `list` +
+`dir 10000 2000` +
+** *Expected output* +
+Error message "**The place index provided is invalid**"
+
+== Edit Command
+The edit command allows the user to edit an existing place at the specified index in the Tourist-Book. +
+Format: `edit INDEX [n/NAME] [a/ADDRESS] [p/POSTALCODE] [t/TAG]...` or +
+Format: `ed INDEX [n/NAME] [a/ADDRESS] [p/POSTALCODE] [t/TAG]...`
+
+[NOTE]
+====
+* The command is **case sensitive**
+* The index must be a positive integer
+* At least one of the optional fields must be provided
+* Existing values will be updated to the input values
+* When editing tags, the existing tags of the place will be removed, i.e. adding of tags is not cumulative
+* You can remove a place's tags by typing `t/` without specifying any tags after it.
+====
+
+[discrete]
+=== Positive Test Cases
+. `edit 1 a/20 Bayfront Avenue p/000001 t/bookmarks`
+** *Expected output* +
+The UI will display a message showing the place and the value of the fields which has been edited.
+
+. `ed 2 n/Singapore Zoo t/`
+** *Expected output* +
+The UI will display a message showing the place and the value of the fields which has been edited. +
+The tags of the place would be cleared as well.
+
+. `edit 2 n/Singapore Flyer a/30 Raffles Ave`
+** *Expected output* =
+The UI will display a message showing the place and the value of the fields which has been edited, +
+even if the values are the same.
+
+[discrete]
+=== Negative Test Cases
+. `edit -1 t/`
+** *Expected output* +
+Invalid command format! +
+edit: Edits the details of the place identified by the index number used in the last place listing. Existing values will be overwritten by the input values. +
+Parameters: INDEX (must be a positive integer) [n/NAME] [ph/PHONE] [w/WEBSITE] [a/ADDRESS] [p/POSTAL CODE] [t/TAG]... +
+Example: edit 1 ph/91234567 w/www.marinabaysands.comp/639304
+
+. `Edit 1 a/20 Bayfront Avenue p/000001 t/bookmarks`
+** *Expected output* +
+The UI will display a `Unknown Command` message.
+
+. `edit 1 a/20 Bayfront Avenue p/1234567`
+** *Expected output* +
+The UI will display a `Singapore Postal Code can only contain numbers, and should be just 6 digits long` message.
+
+. `edit 1 n/123456 a/20 Bayfront Avenue p/123456 t/bookmarks`
+** *Expected output* +
+The UI will display a message telling the user the format of the `name` field is wrong.
+
+. `edit 39 n/Singapore`
+** *Expected output* +
+The UI will display a `The place index provided is invalid` message telling the user the index is invalid.
+
+== Find Command
+The find command allows users to find places or tags whose names contain any of the keywords in the input. +
+Format: `find PREFIX KEYWORD` or `fd PREFIX KEYWORD`
+
+[NOTE]
+====
+* The search is **case in-sensitive**. e.g. `zoo` will match `Zoo`
+* The command word is **case sensitive**
+* The prefix will determine which field you are searching for +
+`n/` is the prefix for name of the place, `t/` is the prefix for the tag
+* Multiple keywords are allowed, but at least one keyword should be correct to match a place or tag.
+* Order of keywords does not matter. e.g. `Zoo Singapore` will match `Singapore Zoo`
+* Only one field can be searched at a time, i.e. you cannot search both tag and name at the same time
+* Only full words will be matched e.g. `Singa` will not match `Singapore`
+* Output is assuming the user is using the default data values with no modifications done.
+====
+
+[discrete]
+=== Positive Test Cases
+. `find n/Singapore`
+** *Expected output* +
+The UI will display `7 places listed!` and will list out the places which has the name `Singapore` in it.
+
+. `find t/nature`
+** *Expected output* +
+The UI will display `6 places listed!` and will list out the places which has the tag `nature`.
+
+. `find t/nature indoors`
+** *Expected output* +
+The UI will display `11 places listed!` and will list out the places which has the tags `nature` and `indoors`.
+
+. find `n/Singapore Gardens`
+** *Expected output* +
+The UI will display `8 places listed!` and will list out the places which has the name `Singapore` and `Gardens` in it.
+
+[discrete]
+=== Negative Test Cases
+. `Find n/Singapore`
+** *Expected output* +
+The UI will display a `Unknown Command` message.
+
+. `finds n/Singapore`
+** *Expected output* +
+The UI will display a `Unknown Command` message.
+
+. `find singapore`
+** *Expected output* +
+Invalid command format! +
+find: Finds all places whose names contain any of the specified keywords (case-sensitive) and displays them as a list with index numbers. +
+Parameters: KEYWORD [MORE_KEYWORDS]... +
+Example: find n/Marina Bay Sands or Example: find t/[bookmark] [attractions]
+
+. `find n/Singapore t/nature`
+** *Expected output* +
+The UI will still display the places with the name `Singapore` in it, but will ignore the tag `nature`
+
+. `find n/Singa`
+** *Expected output* +
+The UI will display a `0 places listed!` message.
+
+. `find n/Singa t/nature`
+** *Expected output* +
+The UI will display a `0 places listed!` message as it ignores the `nature` tag.
+
+== Go to Command
+The goto command displays the place on Google Maps identified by the index number of the place. +
+Format: `goto 1` or `Goto 1`
+
+[NOTE]
+====
+Index used in the command input must be positive.
+====
+
+[discrete]
+=== Positive Test Cases
+. `goto 1`
+** *Expected output* +
+The UI will display a `Go to: 1` message and displays the place on Google Maps through the browser panel.
+
+. `Goto 1`
+** *Expected output* +
+The UI will display a `Go to: 1` message and displays the place on Google Maps through the browser panel.
+
+[discrete]
+=== Negative Test Cases
+. `goto`
+** *Expected output* +
+Invalid command format! +
+goto: Display the place on Google Map identified by the index number used in the last place listing. +
+Parameters: INDEX (must be a positive integer) +
+Example: goto 1
+
+. `goto 0`
+** *Expected output* +
+Invalid command format! +
+goto: Display the place on Google Map identified by the index number used in the last place listing. +
+Parameters: INDEX (must be a positive integer) +
+Example: goto 1
+
+. `goto -1`
+** *Expected output* +
+Invalid command format! +
+goto: Display the place on Google Map identified by the index number used in the last place listing. +
+Parameters: INDEX (must be a positive integer) +
+Example: goto 1
+
+. `GOto 3`
+** *Expected output* +
+Invalid command format! +
+goto: Display the place on Google Map identified by the index number used in the last place listing. +
+Parameters: INDEX (must be a positive integer) +
+Example: goto 1
+
+. `GoTo 2`
+** *Expected output* +
+Invalid command format! +
+goto: Display the place on Google Map identified by the index number used in the last place listing. +
+Parameters: INDEX (must be a positive integer) +
+Example: goto 1
+
+== Select Command
+The command allows the user to select a place identified by the index number of the place. +
+Format: `select INDEX` or `s INDEX`
+
+[NOTE]
+====
+* Index used in the command input must be positive.
+* The command is **case sensitive**
+====
+
+[discrete]
+=== Positive Test Cases
+. `select 2`
+** *Expected output*
+The UI will display a message `Selected Place: 2`, the place will be selected and the webpage will be loaded +
+in the browser.
+
+. `s 2`
+** *Expected output*
+The UI will display a message `Selected Place: 2`, the place will be selected and the webpage will be loaded +
+in the browser.
+
+[discrete]
+=== Negative Test Cases
+. `Select 2`
+** *Expected output* +
+The UI will display an `Unknown command` message.
+
+. `S 2`
+** *Expected output* +
+The UI will display an `Unknown command` message.
+
+. `select`
+** *Expected output* +
+Invalid command format! +
+select: Selects the place identified by the index number used in the last place listing. +
+Parameters: INDEX (must be a positive integer) +
+Example: select 1
+
+
+. `s`
+** *Expected output* +
+Invalid command format! +
+select: Selects the place identified by the index number used in the last place listing. +
+Parameters: INDEX (must be a positive integer) +
+Example: select 1
+
+. `s 0`
+** *Expected output* +
+Invalid command format! +
+select: Selects the place identified by the index number used in the last place listing. +
+Parameters: INDEX (must be a positive integer) +
+Example: select 1
+
+. `select 0`
+** *Expected output* +
+Invalid command format! +
+select: Selects the place identified by the index number used in the last place listing. +
+Parameters: INDEX (must be a positive integer) +
+Example: select 1
+
+. `select -1`
+** *Expected output* +
+Invalid command format! +
+select: Selects the place identified by the index number used in the last place listing. +
+Parameters: INDEX (must be a positive integer) +
+Example: select 1
+
+== History Command
+This command lists all the commands that the user has entered in reverse chronological order. +
+Format: `history`
+
+[NOTE]
+====
+Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
+====
+
+[discrete]
+=== Positive Test Cases
+. `history`
+** *Expected output* +
+The UI will display a message `Entered commands (from most recent to earliest):` followed by +
+all the commands (irregardless valid or invalid) that the user has entered +
+from most recent to the the earliest (top to bottom).
+
+. `history 2`
+** *Expected output* +
+The UI will display a message `Entered commands (from most recent to earliest):` followed by +
+all the commands (irregardless valid or invalid) that the user has entered +
+from most recent to the the earliest (top to bottom).
+
+[discrete]
+=== Negative Test Cases
+. `History`
+** *Expected output* +
+The UI will display an `Unknown command` message.
+
+. `History 2`
+** *Expected output* +
+The UI will display an `Unknown command` message.
+
+. `history`
+** *Expected output* +
+** If `history` is the first command, The UI will display` You have not yet entered any commands.` message.
+** If not, it will attempt to redo or undo the last command ran before the `history` command.
+
+== Weather Command
+The weather command allows users to view current weather in Singapore on the browser panel. +
+Format: `weather`
+
+[NOTE]
+====
+* The command is **case sensitive**
+* The command will ignore any other parameters after the command word.
+* It is also not an undoable command, hence the `undo` command will not work.
+====
+
+[discrete]
+=== Positive Test Cases
+. `weather`
+** *Expected output* +
+The UI will display a `Opened Weather on the Browser.` message and the weather will be loaded on the browser panel.
+
+. `weather 2`
+** *Expected output* +
+The UI will display a `Opened Weather on the Browser.` message and the weather will be loaded on the browser panel.
+
+. `weather [TEXT]`
+** *Expected output* +
+The UI will display a `Opened Weather on the Browser.` message and the weather will be loaded on the browser panel.
+
+[discrete]
+=== Negative Test Cases
+. `WEATHER`
+** *Expected output* +
+The UI will display an `Unknown command` message.
+
+. `Weather`
+** *Expected output* +
+The UI will display an `Unknown command` message.
+
+. `Weather [TEXT]`
+** *Expected output* +
+The UI will display an `Unknown command` message.
+
+. Running `undo` after successful `weather` command
+** *Expected output* +
+** If `weather` command is the only command executed so far, The UI will display an `No more commands to undo!` message.
+** If not, it will attempt to redo or undo the last command ran before the `weather` command.
+
+== MRT Map Command
+The mrt map command allows user to view the transit map of Singapore. +
+The list will pop out in a browser window. +
+Format: `mrt`
+
+[NOTE]
+====
+* The browser window must be closed before proceeding with any other command. This is a bug that is found in +
+the base https://github.com/se-edu/addressbook-level4/issues/727[Addressbook-level 4].
+* The command is **case sensitive**
+* The command will ignore any other parameters after the command word.
+* It is also not an undoable command, hence the `undo` command will not work.
+====
+
+[discrete]
+=== Positive Test Cases
+. `mrt`
+** *Expected output* +
+The browser window will pop up, displaying the transit map.
+
+. `mrt 2`
+** *Expected output* +
+The browser window will pop up, displaying the transit map.
+
+. `mrt [TEXT]`
+** *Expected output* +
+The browser window will pop up, displaying the transit map.
+
+[discrete]
+=== Negative Test Cases
+. `MRT`
+** *Expected output* +
+The UI will display an `Unknown command` message.
+
+. `Mrt`
+** *Expected output* +
+The UI will display an `Unknown command` message.
+
+. `mrts`
+** *Expected output* +
+The UI will display an `Unknown command` message.
+
+. `Mrt [TEXT]`
+** *Expected output* +
+The UI will display an `Unknown command` message.
+
+. Running `undo` and `redo` commands after `mrt` command.
+** *Expected output* +
+** If the browser window is not closed, there will be no response from the application.
+** If the browser widow is closed, it will attempt to redo or undo the last command ran before the `mrt` command.
+
+== PSI Value Command
+The PSI command allows users to view current PSI levels in Singapore on the browser panel. +
+Format: `psi`
+
+[NOTE]
+====
+* The command is **case sensitive**
+* The command will ignore any other parameters after the command word.
+* It is also not an undoable command, hence the `undo` command will not work.
+====
+
+[discrete]
+=== Positive Test Cases
+. `psi`
+** *Expected output* +
+The UI will display a `Latest PSI webpage loaded.` message and the latest PSI will be loaded on the browser panel.
+
+. `psi 2`
+** *Expected output* +
+The UI will display a `Latest PSI webpage loaded.` message and the latest PSI will be loaded on the browser panel.
+
+. `psi [TEXT]`
+** *Expected output* +
+The UI will display a `Latest PSI webpage loaded.` message and the latest PSI will be loaded on the browser panel.
+
+[discrete]
+=== Negative Test Cases
+. `PSI`
+** *Expected output* +
+The UI will display an `Unknown command` message.
+
+. `Psi`
+** *Expected output* +
+The UI will display an `Unknown command` message.
+
+. `Psi [TEXT]`
+** *Expected output* +
+The UI will display an `Unknown command` message.
+
+. Running `undo` after successful `psi` command
+** *Expected output* +
+** If `psi` command is the only command executed so far, The UI will display an `No more commands to undo!` message.
+** If not, it will attempt to redo or undo the last command ran before the `psi` command.
+
+== Export Command
+The export command allows users to export their data file to a .csv file format. +
+Format: `export`
+
+[NOTE]
+====
+* The command is **case sensitive**
+* The command will ignore any other parameters after the command word.
+* It is also not an undoable command, hence the `undo` command will not work.
+====
+
+[WARNING]
+====
+Running this command after the first time will overwrite the previous save file that is already in the folder!
+====
+
+[discrete]
+=== Positive Test Cases
+. `export 1`
+** *Expected output* +
+The UI will display a message `Successfully exported data.` and the save file will be created in the folder that holds +
+the jar file, in .csv format.
+
+. `export`
+** *Expected output* +
+The UI will display a message `Successfully exported data.` and the save file will be created in the folder that holds +
+the jar file, in .csv format.
+
+. `export [DATE]`
+** *Expected output* +
+The UI will display a message `Successfully exported data.` and the save file will be created in the folder that holds +
+the jar file, in .csv format.
+
+image::exportsuccessful.png[title="Export File Successful", width="400"]
+
+[discrete]
+=== Negative Test Cases
+. `EXPORT`
+** *Expected output* +
+The UI will display an `Unknown command` message.
+
+. `exports`
+** *Expected output* +
+The UI will display an `Unknown command` message.
+
+. `EXPORT Singapore`
+** *Expected output* +
+The UI will display an `Unknown command` message.
+
+. `ExPoRt [TEXT]`
+** *Expected output* +
+The UI will display an `Unknown command` message.
+
+. Running `undo` after successful `export` command
+** *Expected output* +
+** If `export` command is the only command executed so far, The UI will display an `No more commands to undo!` message.
+** If not, it will attempt to redo or undo the last command ran before the `export` command.
+
+== Backup Command
+The command allows the user to backup the data to the same folder of the main data file. +
+Format: `backup`
+
+[NOTE]
+====
+* The command is **case sensitive**
+* The command will ignore any other parameters after the command word.
+* It is also not an undoable command, hence the `undo` command will not work.
+====
+
+[WARNING]
+====
+Running this command after the first time will overwrite the previous save file that is already in the folder!
+====
+
+[discrete]
+=== Positive Test Cases
+. `backup`
+** *Expected output* +
+The UI will display a message `A Tourist Book backup has been created!` and the save file will be created in the same +
+folder as the main data file.
+
+. `backup 2`
+** *Expected output* +
+The UI will display a message `A Tourist Book backup has been created!` and the save file will be created in the same +
+folder as the main data file.
+
+. `backup [DATE]`
+** *Expected output* +
+The UI will display a message `A Tourist Book backup has been created!` and the save file will be created in the same +
+folder as the main data file.
+
+image::backupsuccessful.png[title="Backup File Successful", width="400"]
+
+[discrete]
+=== Negative Test Cases
+. `BACKUP`
+** *Expected output* +
+The UI will display an `Unknown command` message.
+
+. `backups`
+** *Expected output* +
+The UI will display an `Unknown command` message.
+
+. `Backup Singapore`
+** *Expected output* +
+The UI will display an `Unknown command` message.
+
+. `BaCkUp [TEXT]`
+** *Expected output* +
+The UI will display an `Unknown command` message.
+
+. Running `undo` after successful `backup` command
+** *Expected output* +
+** If `backup` command is the only command executed so far, The UI will display an `No more commands to undo!` message.
+** If not, it will attempt to redo or undo the last command ran before the `backup` command.
+
+
+== Useful Contacts Command
+The useful contacts command allows user to view a list of helpful contact numbers. +
+The list will pop out in a browser window. +
+Format: `sos` or `emergency`
+
+[NOTE]
+====
+* The browser window must be closed before proceeding with any other command. This is a bug that is found in +
+the base https://github.com/se-edu/addressbook-level4/issues/727[Addressbook-level 4].
+* The command is **case sensitive**
+* The command will ignore any other parameters after the command word.
+* It is also not an undoable command, hence the `undo` command will not work.
+====
+
+[discrete]
+=== Positive Test Cases
+. `sos`
+** *Expected output* +
+The browser window will pop up, displaying a list of useful contact numbers.
+
+. `emergency`
+** *Expected output* +
+The browser window will pop up, displaying a list of useful contact numbers.
+
+. `sos 1`
+** *Expected output* +
+The browser window will pop up, displaying a list of useful contact numbers.
+
+. `emergency 1`
+** *Expected output* +
+The browser window will pop up, displaying a list of useful contact numbers.
+
+[discrete]
+=== Negative Test Cases
+. `EMERGENCY`
+** *Expected output* +
+The UI will display an `Unknown command` message.
+
+. `SOS`
+** *Expected output* +
+The UI will display an `Unknown command` message.
+
+. Running `undo` and `redo` commands after `sos` command.
+** *Expected output* +
+** If the browser window is not closed, there will be no response from the application.
+** If the browser widow is closed, it will attempt to redo or undo the last command ran before the `sos` command.
+
+== Sort Command
+The sort command allows the user to view the place list in an alphabetical order. +
+Format: `sort`
+
+[NOTE]
+====
+* The sort command is temporary and does not permanently sort the places by alphabetical order. +
+* The command is **case sensitive**
+* The command will ignore any other parameters after the command word.
+====
+
+[discrete]
+=== Positive Test Cases
+. `sort`
+** *Expected output* +
+The places list will be sorted by alphabetical order.
+
+. `sort 1`
+** *Expected output* +
+The places list will be sorted by alphabetical order.
+
+. `sort Marina Bay Sands`
+** *Expected output* +
+The places list will be sorted by alphabetical order.
+
+. `sort [TEXT]`
+** *Expected output* +
+The places list will be sorted by alphabetical order.
+
+[discrete]
+=== Negative Test Cases
+. `SORT`
+** *Expected output* +
+The UI will display an `Unknown command` message.
+
+. `sorts`
+** *Expected output* +
+The UI will display an `Unknown command` message.
+
+. `sOrT`
+** *Expected output* +
+The UI will display an `Unknown command` message.
+
+. `SORT Singapore`
+** *Expected output* +
+The UI will display an `Unknown command` message.
+
+. `SORT [TEXT]`
+** *Expected output* +
+The UI will display an `Unknown command` message.

@@ -1,4 +1,12 @@
-= Address Book (Level 4)
+ifdef::env-github[]
+image::docs/images/singapore_day.jpg[width="800"]
+endif::[]
+
+ifndef::env-github[]
+image::images/singapore_day.jpg[width="800"]
+endif::[]
+
+= Tourist Book
 ifdef::env-github,env-browser[:relfileprefix: docs/]
 ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 
@@ -15,19 +23,48 @@ ifndef::env-github[]
 image::images/Ui.png[width="600"]
 endif::[]
 
-* This is a desktop Address Book application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
-* It is a Java sample application intended for students learning Software Engineering while using Java as the main programming language.
-* It is *written in OOP fashion*. It provides a *reasonably well-written* code example that is *significantly bigger* (around 6 KLoC)than what students usually write in beginner-level SE modules.
-* What's different from https://github.com/se-edu/addressbook-level3[level 3]:
-** A more sophisticated GUI that includes a list  panel and an in-built Browser.
-** More test cases, including automated GUI testing.
-** Support for _Build Automation_ using Gradle and for _Continuous Integration_ using Travis CI.
+== Catering to Tourists visiting Singapore
+
+This application strives to be the integrated platform where you can view all of Singapore's attractions and Michelin
+starred restaurants without the need to juggle multiple tabs on your web browser.
+
+[.underline]#What separates Tourist-Book from just using a web browser?#
+
+* Optimized as a command-line interface (CLI)
+**  Take advantage of various shortcut keys and commands so you type less.
+
+* All the important details at your fingertips
+** Emergency and useful contacts are just a key-press away `F2` or typing `sos`.
+** Our data is formatted so the place's location, phone number and website is shown on one neat card.
+** Places are tagged with other useful information like type of cuisine or if it is a place for sight-seeing.
+** All the places can be filtered using `find` or `sort`.
+
+* Plan your schedule for the day
+**  `weather` and `psi` helps you decide if you should stay indoors.
+**  `mrt`, the train map to help you plan your journey.
+**  `goto`, shows you where the places are.
+**  `dir`, for directions between places.
+**  Loved a place? Use `bookmark` to make sure you never forget it.
+
+* Helps you even when you're offline
+**  `export` gives you a printable list to take with you.
+
+*Many more features to come in V2.0, so what are you waiting for? Download Tourist-Book and type `help` to get started!*
+
+
+ifdef::env-github[]
+image::docs/images/singapore_night.jpg[width="800"]
+endif::[]
+
+ifndef::env-github[]
+image::images/singapore_night.jpg[width="800"]
+endif::[]
+
 
 == Site Map
 
 * <<UserGuide#, User Guide>>
 * <<DeveloperGuide#, Developer Guide>>
-* <<LearningOutcomes#, Learning Outcomes>>
 * <<AboutUs#, About Us>>
 * <<ContactUs#, Contact Us>>
 
@@ -35,5 +72,6 @@ endif::[]
 
 * Some parts of this sample application were inspired by the excellent http://code.makery.ch/library/javafx-8-tutorial/[Java FX tutorial] by
 _Marco Jakob_.
+* The AddressBook-Level4 project created by SE-EDU initiative at https://github.com/se-edu/[ED-EDU].
 
 == Licence : link:LICENSE[MIT]
