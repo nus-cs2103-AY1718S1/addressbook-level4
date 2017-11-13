@@ -461,7 +461,6 @@ just its size
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file
 (default: `config.json`).
-
 //tag::browser[]
 
 === Google Maps Search Browser
@@ -481,11 +480,9 @@ to the back of Google Map's search URL prefix to get a URL for the browser to lo
 ** **Pros:** Makes it easier for implementing additional features that utilizes the Maps API which would be required +
  in future versions of the Ark application. +
 ** **Cons:** More difficult to implement and integrate into a command line interface.
-
 //end::browser[]
 
 //tag::tabCommand[]
-
 === Tab change mechanism
 
 The `tab` command is facilitated by the `TabCommand` class within `logic` and is an extension of the abstract class
@@ -505,11 +502,9 @@ and its related files to take in a third argument, and user would have to type a
 * **Alternative 2 (current choice):** Creating a new command called `tab` +
 ** **Pros:** Easier to implement and less words for the user to input +
 ** **Cons:** Just the word "tab" alone is not very descriptive of the commands function.
-
 //end::tabCommand[]
 
 //tag::overduePopup[]
-
 === Overdue parcels popup window
 
 The overdue parcels popup window is facilitated by the `PopupOverdueParcelsWindow` which extends `UiPart<Region>`
@@ -535,96 +530,73 @@ keep their application open constantly +
 ** **Pros:** Users will be immediately notified of overdue parcels whenever parcel list is changed +
 ** **Cons:** May not be necessary since the user themselves would be the ones to `add` or `edit` the parcel
 causing the `OVERDUE` status, hence they would already know of the existence of these overdue parcels.
-
 //end::overduePopup[]
-
-//tag::deleteTag[]
-
-=== Delete Tag mechanism
-
-The delete tag mechanism is facilitated by a `deleteTag` method within the `ModelManager`. It supports the deletion
-of tags from every single parcel in Ark.
-
-We first retrieve the list of parcels in Ark and iterate through each parcel and recreate the parcel object using the
-original parcel. We then check if tag we want to remove is present in the new parcel's list of tags. If the tag is
-present, we remove it, otherwise, we do nothing. We then update the old parcel in Ark with the new parcel with the
-updated list of tags.
-
-==== Design Considerations
-
-**Aspect: Implementation of `deleteTagCommand`** +
-
-* **Alternative 1 (current choice):** Add method to delete tags in `ModelManager` +
-** **Pros:** It is easy to implement a method to remove every instance where the Tag appears, we only have to be able to
-correctly iterate through all the lists of tags. +
-** **Cons:** Might be computationally expensive for large number of parcels as Ark will need to iterate through every
-Tag to delete them. +
-* **Alternative 2:** Maintain a list of tags and where the tags are located +
-** **Pros:** Computationally quicker to just find the tag and remove the tag from every parcel in the list of tags +
-** **Cons:** More difficult to implement as we have to store an additional list of tags which is linked to each parcel
-and has to be updated whenever we edit other parcel details as well.
-
-//end::deleteTag[]
 
 //tag::backup[]
 === Backup Mechanism
 
-The back up mechanism is facilitated by a `backupAddressBook()` method within the `StorageManager`. It supports the
-backing up of AddressBook data in Ark. +
+The back up mechanism is facilitated by a `backup(addressBook:AddressBookStorage)` method within the `StorageManager`
+class. It supports the backup of data in Ark. +
 
 image::BackupSequenceDiagram.png[width="600"]
-_Diagram 4.6.1 : Sequence diagram describing the operation of the `storageManager` when it is initialized_
+_Diagram 4.7.1 : Sequence diagram describing the operation of the `storageManager` when it is initialized_
 
-As seen in the sequence diagram above, the `backupAddressBook()` method is called when `storageManager` is initialised
-in `MainApp#init()`. This method is called when Ark launches. From the diagram above, the backup() method is called.
-This backup method first checks if there is a save file loaded into Ark. If there is a save file loaded into Ark, a
-backup will be called. Otherwise, Ark does not backup the missing save file.
+As seen in the sequence diagram above, the `backup(addressBook:AddressBookStorage)` method is called when
+`storageManager` is initialised in `MainApp#init()`. The `MainApp#init()` is called when Ark launches.
+From the diagram above, the `backup()` method is called when `storageManager` is initialized. This backup method first
+checks if there is a valid save file loaded into Ark. If there is a save file loaded into Ark,
+the `backup(addressBook:AddressBook)` method will be called. Otherwise, Ark does not backup the missing save file.
+
+To save the backup data, Ark first retrieves the backup file path by calling the `getBackupStorageFilePath()` method.
+Then, it will call the `saveAddressBook(addressBook, backupStoragePath)` method to save a backup of Ark at the retrived
+backup file path.
 
 ==== Design Considerations
 
-**Aspect: Implementation of `StorageManager#backupAddressBook`** +
+**Aspect: Implementation of `StorageManager#backup()`** +
 
 * **Alternative 1 (current choice):** use the `saveAddressBook()` method to implement logic. +
-** **Pros:** It becomes easier to implement method rather than writing out a separate logic for `backupAddressBook()`. It
-makes updates easier since enhancements to `saveAddressBook()` will also enhance `backupAddressBook()`. +
-** **Cons:** This implementation increases the coupling of `backupAddressBook()` and
-`saveAddressBook()` where changes in `saveAddressBook()` are likely to cause changes in `backupAddressBook()`. +
-* **Alternative 2:** Separate the implementation of `backupAddressBook()` from `saveAddressBook()` +
-** **Pros:** Reduced coupling of `saveAddressBook()` and `backupAddressBook()` and allows the backup file to be saved at a
+** **Pros:** It becomes easier to implement method rather than writing out a separate logic for `backup()`. It
+makes updates easier since enhancements to saving Ark in `saveAddressBook()` will also enhance `backup()`. +
+** **Cons:** This implementation increases the coupling of `backup()` and `saveAddressBook()` where changes in
+`saveAddressBook()` are likely to cause changes in `backup()`. +
+* **Alternative 2:** Separate the implementation of `backup()` from `saveAddressBook()` +
+** **Pros:** Reduced coupling of `saveAddressBook()` and `backup()` and allows the backup file to be saved at a
 different location from the main save file. This prevents the backup file from being corrupted if the folder of the
 main save file becomes corrupted. +
-** **Cons:** More tedious to implement and maintain `backupAddressBook()` since enhancements to the saving feature has to
-be implemented in both `saveAddressBook()` and `backupAddressBook()` +
+** **Cons:** More tedious to implement and maintain `backup()` since enhancements to the saving feature has to
+be implemented in both `saveAddressBook()` and `backup()` +
 
 ---
 
-**Aspect: Trigger to execute the backup command** +
+**Aspect: Trigger to execute the backup mechanism** +
 
-* **Alternative 1 (current choice):** Automatically backup data on Ark on launch of the software. +
+* **Alternative 1 (current choice):** Automatically backup data on launch. +
 ** **Pros:** This implementation ensures that the if the user corrupts the data of Ark during a session. The user will be
-able to revert to the start of the session, which is ensured to be a workable instance of the Ark software. +
-** **Cons:** This does not give the most recent copy of the data of the Ark if many changes were made in a single session. +
-* **Alternative 2:** Backup data on Ark every few minutes +
+able to revert to the start of the session, which is likely to be a functional copy of his original save file. +
+** **Cons:** This does not give the most recent copy of the data of the Ark if many changes were made in a single
+session. +
+* **Alternative 2:** Backup data every few minutes +
 ** **Pros:** Provides a very recent copy of the data on Ark. +
-** **Cons:** More tedious and difficult to implement. User may also be running another process at that point of time. This
-could cause a bottleneck if there is a lot of data to be saved, and multiple backup calls are queued one after the
-other. +
+** **Cons:** More tedious and difficult to implement. User may also be running another process at that point of time.
+This could cause a bottleneck if there is a lot of data to be saved, and multiple backup calls will be queued one after
+the other if the previous backup process is called even before the current one has finished running. +
 * **Alternative 3:** Backup data after a fixed number of `UndoableCommand`s. +
 ** **Pros:** Provides a very recent copy of the data on Ark. +
 ** **Cons:** More tedious and difficult to implement. Difficult to determine the optimal amount of data to restore. If
-the corruption of the data is caused by a several of commands, it becomes difficult to ensure that the backup file
-provides a workable copy of the data of Ark.
+the corruption of the data is caused by a series of commands, it becomes difficult to provide reasonable assurance
+that the backup file provides a functional copy of the data of Ark.
 
 ---
 
-**Aspect: Choice of backing up if there is no save file.** +
+**Aspect: Case: Backup if safe file is not present** +
 
 * **Alternative 1 (current choice):** Ark does not backup if it cannot read the save file +
 ** **Pros:** Backup data will not be overwritten in the event that Ark is not able to read the designated save file for
 reasons such as the save file being corrupted/missing+
-** **Cons:** Additional overhead to check if Ark is able to read the designated save file. +
-* **Alternative 2:** Ark backs up even if the save file does not exist. +
-** **Pros:** Less overhead needed to check if Ark is able to read the designated save file. +
+** **Cons:** Additional overhead to check if Ark is able to read the save file. +
+* **Alternative 2:**Back up even if the save file does not exist or cannot be read by Ark. +
+** **Pros:** Less overhead needed to check if Ark is able to read the save file. +
 ** **Cons:** Backup data could be overwritten in the event the designated save file is corrupted/missing. +
 //end::backup[]
 
