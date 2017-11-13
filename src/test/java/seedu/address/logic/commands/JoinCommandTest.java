@@ -22,6 +22,7 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.event.Event;
 import seedu.address.model.person.Person;
 
+// @@author HuWanqing
 /**
  * contains integration test for join command
  */
