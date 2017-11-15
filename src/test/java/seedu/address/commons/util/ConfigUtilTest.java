@@ -43,8 +43,8 @@ public class ConfigUtilTest {
         thrown.expect(DataConversionException.class);
         read("NotJsonFormatConfig.json");
 
-        /* IMPORTANT: Any code below an exception-throwing line (like the one above) will be ignored.
-         * That means you should not have more than one exception test in one method
+        /* IMPORTANT: Any code below an exceptions-throwing line (like the one above) will be ignored.
+         * That means you should not have more than one exceptions test in one method
          */
     }
 
@@ -122,8 +122,8 @@ public class ConfigUtilTest {
 
     private String addToTestDataPathIfNotNull(String configFileInTestDataFolder) {
         return configFileInTestDataFolder != null
-                                  ? TEST_DATA_FOLDER + configFileInTestDataFolder
-                                  : null;
+                ? TEST_DATA_FOLDER + configFileInTestDataFolder
+                : null;
     }
 
 

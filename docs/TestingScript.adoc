@@ -1,0 +1,249 @@
+= Sales Navigator - Testing Script
+:sectnums:
+
+== Setup
+
+=== Loading sample data
+. Create a folder anywhere named "test".
+. Copy `salesnavigator.jar` into the test folder.
+. Create a folder within the test folder named "data".
+. Copy sample data into the data folder.
+. Rename sample data to `addressbook.xml`.
+
+== Tests
+
+=== Help command
+Input: `help`
+
+Expected result: User Guide appears.
+
+=== Add command without optional parameters
+Input: `add n/Jack Sparrow p/90923422 e/jacksparrow@pirate.com a/Caribbean Islands`
+
+Expected result: New person added to person list. Company, Position, Status, Note fields set to NIL. Priority set to L. No photo, tags or relationships.
+
+=== Add command with optional parameters
+Input: `add n/Davey Jones p/90921211 e/daveyjones@pirate.com a/Caribbean Islands c/Pirate Co. po/Captain s/Requires immediate follow up pr/H t/friends`
+
+Expected result: New person added to person list. Note field set to NIL. No photo or relationships.
+
+=== Edit command
+Input: `edit 1 n/Johnathan Doel no/Enjoys seafood and western restaurants. pr/M`
+
+Expected result: Note and priority fields of person with index 1 changed.
+
+=== Import photo command
+Input: `edit 3 ph/[path of any jpg or png file]`
+
+Expected result: Display picture of person at index 3 updated.
+
+=== Delete command
+Input: `delete 3`
+
+Expected result: Person with index 3 removed from person list.
+
+=== Find command
+Input: `find Jack`
+
+Expected result: Jack Sparrow only person on person list.
+
+=== List command
+Input: `list`
+
+Expected result: All persons listed in person list.
+
+=== List persons command
+Input: `find Jack`, `listpersons`
+
+Expected result: Jack Sparrow only person on person list, followed by all person listed in person list.
+
+=== Select command
+Input: `Select 3`
+
+Expected result: Person at index 3 selected.
+
+=== Clear command
+Input: `clear`
+
+Expected result: Address book cleared of all persons and events.
+
+=== Undo command
+Input: `undo`
+
+Expected result: Address book repopulated with all persons and events.
+
+=== Redo command
+Input: `redo`, `undo`
+
+Expected result: Address book is cleared again, then repopulated again.
+
+=== Sort command
+Input: `sort name`
+
+Expected result: Person list sorted alphabetically by name.
+
+Input: `sort tag`
+
+Expected result: Person list sorted alphabetically by tag then again by name.
+
+Input: `sort company`
+Input: `sort position`
+
+Expected result: Person list sorted by company/position first and then alphabetically by person name with *NIL*
+company/position at the bottom.
+
+Input: `sort priority`
+
+Expected result: Person list sorted by priority first, in the order of *H, M, L* and then alphabetically by person
+name.
+
+=== Set relationship command
+Input: `set 1 2 ar/friends`
+
+Expected result: Adds the relationship between the two indexes if they do not have one.
+
+Input: `set 1 2 dr/friends`
+
+Expected result: Deletes the relationship between the two indexes if it is present.
+
+Input: `set 1 2 cr/`
+
+Expected clears all relationship between the two persons only.
+
+=== Add event command
+Input: `eventadd n/CS2103 Final Exam t/04/12/2017 1700-1900 d/Doomsday`
+
+Expected result: Event added to event list.
+
+=== Edit event command
+Input: `eventedit 4 t/08/11/2017 1400-1830 d/Bring drinks and buy cake!`
+
+Expected result: Timing and description of event with index 4 changed.
+
+=== Delete event command
+Input: `eventdel 5`
+
+Expected result: Event with index 5 deleted.
+
+=== CheckSchedule command
+
+Input: `checkschedule`
+
+Expected result:
+
+* A Calendar view is shown in the main window
+* The date and time headers are correct to the current week
+* Each event pane corresponds to an existing event
+* Upon clicking "last page" and "next page", it shows the last week and next
+week's event respectively
+
+Input: `eventadd n/test t/17/11/2017 1100-1200 d/This is a test p/7`
+
+Expected result:
+
+* The event, if successfully added, should be scheduled in the calendar
+
+Input: `eventedit 1 t/16/11/2017 1100-1200`
+
+Expected result:
+
+* The new event, if successfully edited, should reflect the change correctly in
+the
+calendar
+
+Input: `eventedit 1 n/test2`
+
+Expected result:
+
+* The new event, if successfully edited, should reflect the change correctly in
+the
+calendar
+
+Input: `eventedit 1 d/new description`
+
+Expected result:
+
+* The new event, if successfully edited, should reflect the change correctly in
+the
+calendar
+
+Input: `eventedit 1 p/3`
+
+Expected result:
+
+* The new event, if successfully edited, should reflect the change correctly in
+the
+calendar
+
+Input: `eventdelete 1`
+
+Expected result:
+
+* The event, if successfully deleted, should be deleted from the calendar as
+well
+
+=== UpdatePhoto command
+
+Input: `updatephoto 1` and then choose an image file from your local
+directory (must be jpg/png/jpeg file)
+
+Expected behavior:
+
+* After selecting an image file, the person identified by the index should
+have his/her photo changed to the selected image.
+
+=== "Import Photo" button
+
+Input: Click on any person in the person list, and on the detail page that
+shows up, click the "import photo" button, and then choose an image file from
+your local directory (must be jpg/png/jpeg file)
+
+Expected behavior:
+
+* After selecting an image file, the person should
+have his/her photo changed to the selected image.
+
+=== "Repeat" command
+
+Input: `repeat 1 10`
+
+Expected behavior:
+
+* The event identified by the index should have its `repeat period` changed
+to 10
+
+=== Recurring event scheduling
+
+Input: `eventadd n/test t/13/11/2017 1100-1200 d/This is a test p/7`
+
+Expected behavior:
+
+* Two events will be added: one on 13/11/2017, another one on 20/11/2017
+
+Input: `eventedit [index of the previously added event] t/12/11/2017
+1100-1200`
+
+Expected behavior:
+
+* Two events will be added: one on 12/11/2017, another one on 19/11/2017
+
+Input: `eventedit [index of the previously edited event] p/6`
+
+Expected behavior:
+
+* A new events will be added: on 18/11/2017
+
+=== Timetable display
+Input: `editevent 1 t/[current date] 1400-1500`
+
+Expected result: Timetable displays event that is happening today.
+
+=== Timetable command
+Input: `timetable`
+
+Expected result: Timetable toggles on/off.
+
+=== Exit command
+Input: `exit`
+
+Expected result: App closes.

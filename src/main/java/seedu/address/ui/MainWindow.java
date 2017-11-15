@@ -1,26 +1,44 @@
 package seedu.address.ui;
 
+import java.io.File;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.SplitPane;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.EventPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.HideCalendarEvent;
+import seedu.address.commons.events.ui.NewResultAvailableEvent;
+import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.ShowCalendarEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.commons.events.ui.ShowPhotoSelectionEvent;
+import seedu.address.commons.events.ui.ToggleTimetableEvent;
+
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.UserPrefs;
 
 /**
@@ -40,8 +58,18 @@ public class MainWindow extends UiPart<Region> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
+    //@@author sebtsh
+    private PersonPanel personPanel;
+    private EventPanel eventPanel;
+    //@@author
     private BrowserPanel browserPanel;
     private PersonListPanel personListPanel;
+    private EventListPanel eventListPanel;
+    //@@author reginleiff
+    private EventPanel timetablePanel;
+    private TimetableListPanel timetableListPanel;
+    //@@author
+    private CalendarView calendarView;
     private Config config;
     private UserPrefs prefs;
 
@@ -57,11 +85,37 @@ public class MainWindow extends UiPart<Region> {
     @FXML
     private StackPane personListPanelPlaceholder;
 
+    //@@author reginleiff
+    @FXML
+    private StackPane eventListPanelPlaceholder;
+
+    @FXML
+    private StackPane timetableListPanelPlaceholder;
+
+    @FXML
+    private SplitPane timetable;
+    //@@author
+
     @FXML
     private StackPane resultDisplayPlaceholder;
 
     @FXML
     private StackPane statusbarPlaceholder;
+
+    @FXML
+    private TabPane tabPane;
+
+    @FXML
+    private Tab eventTab;
+
+    @FXML
+    private Tab contactTab;
+
+    @FXML
+    private AnchorPane notificationButton;
+
+    @FXML
+    private AnchorPane calendarButton;
 
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
@@ -94,6 +148,7 @@ public class MainWindow extends UiPart<Region> {
 
     /**
      * Sets the accelerator of a MenuItem.
+     *
      * @param keyCombination the KeyCombination value of the accelerator
      */
     private void setAccelerator(MenuItem menuItem, KeyCombination keyCombination) {
@@ -126,20 +181,55 @@ public class MainWindow extends UiPart<Region> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+        //@@author sebtsh
+        eventPanel = new EventPanel(logic);
+
+        personPanel = new PersonPanel(logic);
+        //@@author
+
+        timetablePanel = new EventPanel(logic);
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+        timetable.managedProperty().bind(timetable.visibleProperty());
+
+        eventListPanel = new EventListPanel(logic.getFilteredEventList());
+        eventListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
+
+        timetableListPanel = new TimetableListPanel(logic.getTimetable());
+        timetableListPanelPlaceholder.getChildren().add(timetableListPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
+        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs
+                .getAddressBookFilePath(), logic.getFilteredPersonList().size(), logic.getFilteredEventList().size());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+        //@@author sebtsh
+        personPanel.setDimensions(personListPanel.getRoot().getHeight(),
+                primaryStage.getWidth() - personListPanel.getRoot().getWidth());
+        //@@author
+
+        //@@author shuang-yang
+        //When calendar button is clicked, the browserPlaceHolder will switch
+        // to the calendar view
+        calendarView = new CalendarView(logic.getFilteredEventList(), logic);
+        calendarButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (!browserPlaceholder.getChildren().contains(calendarView
+                        .getRoot())) {
+                    browserPlaceholder.getChildren().add(calendarView.getRoot());
+                    raise(new ShowCalendarEvent());
+                } else {
+                    browserPlaceholder.getChildren().remove(calendarView.getRoot());
+                }
+            }
+        });
+        //@@author
     }
 
     void hide() {
@@ -152,6 +242,7 @@ public class MainWindow extends UiPart<Region> {
 
     /**
      * Sets the given image as the icon of the main window.
+     *
      * @param iconSource e.g. {@code "/images/help_icon.png"}
      */
     private void setIcon(String iconSource) {
@@ -192,6 +283,64 @@ public class MainWindow extends UiPart<Region> {
         helpWindow.show();
     }
 
+
+    //@@author shuang-yang
+    /**
+     * Opens the calendar view.
+     */
+    @FXML
+    public void handleShowCalendar() {
+        if (!browserPlaceholder.getChildren().contains(calendarView.getRoot()
+        )) {
+            browserPlaceholder.getChildren().add(calendarView
+                    .getRoot());
+        }
+    }
+
+    /**
+     * Hides the calendar view.
+     */
+    @FXML
+    public void handleHideCalendar() {
+        if (browserPlaceholder.getChildren().contains(calendarView.getRoot())) {
+            browserPlaceholder.getChildren().remove(calendarView
+                    .getRoot());
+        }
+    }
+
+    //@@author sebtsh
+    /**
+     * Called when a person panel is selected. Hides other panels and displays the person panel.
+     */
+    @FXML
+    public void handlePersonPanelSelected() {
+        if (browserPlaceholder.getChildren().contains(eventPanel.getRoot())) {
+            browserPlaceholder.getChildren().remove(eventPanel.getRoot());
+        }
+        if (browserPlaceholder.getChildren().contains(calendarView.getRoot())) {
+            browserPlaceholder.getChildren().remove(calendarView.getRoot());
+        }
+        browserPlaceholder.getChildren().add((personPanel.getRoot()));
+    }
+
+    /**
+     * Called when an event panel is selected. Hides other panels and displays the event panel.
+     */
+    @FXML
+    public void handleEventPanelSelected() {
+        if (browserPlaceholder.getChildren().contains(personPanel.getRoot())) {
+            browserPlaceholder.getChildren().remove(personPanel.getRoot());
+        }
+        if (browserPlaceholder.getChildren().contains(eventPanel.getRoot())) {
+            browserPlaceholder.getChildren().remove(eventPanel.getRoot());
+        }
+        if (browserPlaceholder.getChildren().contains(calendarView.getRoot())) {
+            browserPlaceholder.getChildren().remove(calendarView.getRoot());
+        }
+        browserPlaceholder.getChildren().add((eventPanel.getRoot()));
+    }
+    //@@author
+
     void show() {
         primaryStage.show();
     }
@@ -208,6 +357,10 @@ public class MainWindow extends UiPart<Region> {
         return this.personListPanel;
     }
 
+    public EventListPanel getEventListPanel() {
+        return this.eventListPanel;
+    }
+
     void releaseResources() {
         browserPanel.freeResources();
     }
@@ -217,4 +370,93 @@ public class MainWindow extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
     }
+
+    //@@author shuang-yang
+    @Subscribe
+    private void handleShowCalendarEvent(ShowCalendarEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        if (browserPlaceholder.getChildren().contains(personPanel.getRoot())) {
+            browserPlaceholder.getChildren().remove(personPanel.getRoot());
+        }
+        if (browserPlaceholder.getChildren().contains(eventPanel.getRoot())) {
+            browserPlaceholder.getChildren().remove(eventPanel.getRoot());
+        }
+        handleShowCalendar();
+    }
+
+    @Subscribe
+    private void handleHideCalendarEvent(HideCalendarEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleHideCalendar();
+    }
+
+    /**
+     * On receiving ShowPhotoSelectionEvent, display a file chooser window to choose photo from local file system and
+     * update the photo of specified person.
+     */
+    @Subscribe
+    private void handleShowPhotoSelectionEvent(ShowPhotoSelectionEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        FileChooser fileChooser = new FileChooser();
+
+        //Set extension filter
+        FileChooser.ExtensionFilter extFilterJpg = new FileChooser
+                .ExtensionFilter("JPG files (*.jpg)", "*.JPG");
+        FileChooser.ExtensionFilter extFilterJpeg = new FileChooser
+                .ExtensionFilter("JPEG files (*.jpeg)", "*.JPEG");
+        FileChooser.ExtensionFilter extFilterPng = new FileChooser
+                .ExtensionFilter("PNG files (*.png)", "*.PNG");
+        fileChooser.getExtensionFilters().addAll(extFilterJpg,
+                extFilterJpeg, extFilterPng);
+
+        //Show open file dialog
+        File file = fileChooser.showOpenDialog(primaryStage.getScene().getWindow());
+
+        try {
+            logic.execute("edit " + event.index.getOneBased() + " ph/"
+                    + file.getAbsolutePath());
+        } catch (CommandException | ParseException e) {
+            raise(new NewResultAvailableEvent(e.getMessage(), true));
+        }
+    }
+    //@@author sebtsh
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handlePersonPanelSelected();
+    }
+
+    @Subscribe
+    private void handleEventPanelSelectionChangedEvent(EventPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleEventPanelSelected();
+    }
+    //@@author
+
+    //@@author reginleiff
+    @Subscribe
+    public void handleToggleTimetableEvent(ToggleTimetableEvent event) {
+        boolean timetableIsVisible = timetable.visibleProperty().getValue();
+        if (timetableIsVisible) {
+            hideTimetable();
+        } else {
+            showTimeTable();
+        }
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+    }
+
+    /**
+     * Hides the timetable view.
+     */
+    void hideTimetable() {
+        timetable.setVisible(false);
+    }
+
+    /**
+     * Shows the timetable view.
+     */
+    void showTimeTable() {
+        timetable.setVisible(true);
+    }
+    //@@author
 }

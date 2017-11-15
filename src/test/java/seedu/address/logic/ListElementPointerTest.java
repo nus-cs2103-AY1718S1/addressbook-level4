@@ -132,7 +132,7 @@ public class ListElementPointerTest {
             pointer.next();
             fail("The expected NoSuchElementException was not thrown");
         } catch (NoSuchElementException e) {
-            // expected exception thrown
+            // expected exceptions thrown
         }
     }
 
@@ -146,7 +146,7 @@ public class ListElementPointerTest {
             pointer.previous();
             fail("The expected NoSuchElementException was not thrown");
         } catch (NoSuchElementException e) {
-            // expected exception thrown
+            // expected exceptions thrown
         }
     }
 
@@ -160,7 +160,7 @@ public class ListElementPointerTest {
             pointer.current();
             fail("The expected NoSuchElementException was not thrown");
         } catch (NoSuchElementException e) {
-            // expected exception thrown
+            // expected exceptions thrown
         }
     }
 }

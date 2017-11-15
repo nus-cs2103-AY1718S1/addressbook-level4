@@ -18,14 +18,29 @@ import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.SortCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.UpdatePhotoCommand;
+import seedu.address.logic.commands.event.AddEventCommand;
+import seedu.address.logic.commands.event.CheckScheduleCommand;
+import seedu.address.logic.commands.event.DeleteEventCommand;
+import seedu.address.logic.commands.event.EditEventCommand;
+import seedu.address.logic.commands.event.RepeatCommand;
+import seedu.address.logic.commands.event.ToggleTimetableCommand;
+import seedu.address.logic.commands.relationship.SetRelCommand;
+import seedu.address.logic.parser.event.AddEventCommandParser;
+import seedu.address.logic.parser.event.DeleteEventCommandParser;
+import seedu.address.logic.parser.event.EditEventCommandParser;
+import seedu.address.logic.parser.event.RepeatCommandParser;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.logic.parser.relationship.SetRelCommandParser;
 
 /**
  * Parses user input.
  */
 public class AddressBookParser {
 
+    private static CheckCommandsParser checkCommand = new CheckCommandsParser();
     /**
      * Used for initial separation of command word and args.
      */
@@ -44,10 +59,10 @@ public class AddressBookParser {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
         }
 
-        final String commandWord = matcher.group("commandWord");
+        String commandWord = matcher.group("commandWord");
+        commandWord = checkCommand.matchCommand(commandWord);
         final String arguments = matcher.group("arguments");
         switch (commandWord) {
-
         case AddCommand.COMMAND_WORD:
             return new AddCommandParser().parse(arguments);
 
@@ -66,8 +81,14 @@ public class AddressBookParser {
         case FindCommand.COMMAND_WORD:
             return new FindCommandParser().parse(arguments);
 
-        case ListCommand.COMMAND_WORD:
-            return new ListCommand();
+        case ListCommand.COMMAND_WORD_ALL:
+            return new ListCommand(ListCommand.Option.ALL);
+
+        case ListCommand.COMMAND_WORD_EVENTS:
+            return new ListCommand(ListCommand.Option.EVENTS);
+
+        case ListCommand.COMMAND_WORD_PERSONS:
+            return new ListCommand(ListCommand.Option.PERSONS);
 
         case HistoryCommand.COMMAND_WORD:
             return new HistoryCommand();
@@ -83,6 +104,33 @@ public class AddressBookParser {
 
         case RedoCommand.COMMAND_WORD:
             return new RedoCommand();
+
+        case SortCommand.COMMAND_WORD:
+            return new SortCommandParser().parse(arguments);
+
+        case AddEventCommand.COMMAND_WORD:
+            return new AddEventCommandParser().parse(arguments);
+
+        case DeleteEventCommand.COMMAND_WORD:
+            return new DeleteEventCommandParser().parse(arguments);
+
+        case EditEventCommand.COMMAND_WORD:
+            return new EditEventCommandParser().parse(arguments);
+
+        case CheckScheduleCommand.COMMAND_WORD:
+            return new CheckScheduleCommand();
+
+        case SetRelCommand.COMMAND_WORD:
+            return new SetRelCommandParser().parse(arguments);
+
+        case UpdatePhotoCommand.COMMAND_WORD:
+            return new UpdatePhotoCommandParser().parse(arguments);
+
+        case RepeatCommand.COMMAND_WORD:
+            return new RepeatCommandParser().parse(arguments);
+
+        case ToggleTimetableCommand.COMMAND_WORD:
+            return new ToggleTimetableCommand();
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

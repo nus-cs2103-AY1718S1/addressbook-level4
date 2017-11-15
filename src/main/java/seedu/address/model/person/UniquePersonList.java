@@ -1,7 +1,9 @@
 package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -10,16 +12,18 @@ import org.fxmisc.easybind.EasyBind;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.CollectionUtil;
+import seedu.address.logic.commands.SortCommand;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.InvalidSortTypeException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
  * A list of persons that enforces uniqueness between its elements and does not allow nulls.
- *
+ * <p>
  * Supports a minimal set of list operations.
  *
  * @see Person#equals(Object)
- * @see CollectionUtil#elementsAreUnique(Collection)
+ * @see CollectionUtil #elementsAreUnique(Collection)
  */
 public class UniquePersonList implements Iterable<Person> {
 
@@ -44,6 +48,7 @@ public class UniquePersonList implements Iterable<Person> {
         requireNonNull(toAdd);
         if (contains(toAdd)) {
             throw new DuplicatePersonException();
+
         }
         internalList.add(new Person(toAdd));
     }
@@ -52,7 +57,7 @@ public class UniquePersonList implements Iterable<Person> {
      * Replaces the person {@code target} in the list with {@code editedPerson}.
      *
      * @throws DuplicatePersonException if the replacement is equivalent to another existing person in the list.
-     * @throws PersonNotFoundException if {@code target} could not be found in the list.
+     * @throws PersonNotFoundException  if {@code target} could not be found in the list.
      */
     public void setPerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
             throws DuplicatePersonException, PersonNotFoundException {
@@ -95,6 +100,45 @@ public class UniquePersonList implements Iterable<Person> {
         }
         setPersons(replacement);
     }
+    //@@author huiyiiih
+    /**
+     * Sorts the person list according to the type entered by user
+     * @param type                          Sorting type entered by user
+     * @throws InvalidSortTypeException     Indicates that the sorting type entered by user is not valid
+     */
+    public void sortPerson(String type) throws InvalidSortTypeException {
+        final Comparator<Person> sortByName = (
+            Person a, Person b) -> a.getName().toString().compareToIgnoreCase(b.getName().toString());
+        final Comparator<Person> sortByTags = (Person a, Person b) -> a.getTags().toString().compareToIgnoreCase((b
+                .getTags().toString()));
+        final Comparator<Person> sortByCompany = (Person a, Person b) -> b.getCompany().compareTo(a
+                .getCompany());
+        final Comparator<Person> sortByPosition = (Person a, Person b) -> b.getPosition().compareTo(a
+                .getPosition());
+        final Comparator<Person> sortByPriority = (Person a, Person b) -> a.getPriority()
+                .compareTo(b.getPriority());
+        switch (type) {
+        case "name":
+            internalList.sort(sortByName);
+            break;
+        case "tag":
+            internalList.sort(sortByTags.thenComparing(sortByName));
+            break;
+        case "company":
+            internalList.sort(sortByCompany.thenComparing(sortByName));
+            break;
+        case "priority":
+            internalList.sort(sortByPriority.thenComparing(sortByName));
+            break;
+        case "position":
+            internalList.sort(sortByPosition.thenComparing(sortByName));
+            break;
+        default:
+            throw new InvalidSortTypeException(
+            String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
+        }
+    }
+    //@@author
 
     /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.
@@ -112,7 +156,7 @@ public class UniquePersonList implements Iterable<Person> {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof UniquePersonList // instanceof handles nulls
-                        && this.internalList.equals(((UniquePersonList) other).internalList));
+                && this.internalList.equals(((UniquePersonList) other).internalList));
     }
 
     @Override
