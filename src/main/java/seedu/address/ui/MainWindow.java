@@ -167,7 +167,7 @@ public class MainWindow extends UiPart<Region> {
         }
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
     }
-    //@@author siri99
+    //@@author
 
     void hide() {
         primaryStage.hide();

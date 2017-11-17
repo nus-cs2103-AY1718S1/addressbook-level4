@@ -30,7 +30,7 @@ public interface Logic {
     ObservableList<ReadOnlyPerson> getFilteredFavoritePersonList();
 
     String getCurrentList();
-    //@@author siri99
+    //@@author
 
     /** Returns the list of input entered by the user, encapsulated in a {@code ListElementPointer} object */
     ListElementPointer getHistorySnapshot();

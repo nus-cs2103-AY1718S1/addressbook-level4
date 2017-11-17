@@ -71,7 +71,7 @@ public class AddressBookParser {
         case SortCommand.COMMAND_WORD:
         case SortCommand.COMMAND_WORD_ALIAS:
             return new SortCommandParser().parse(arguments);
-        //@@author siri99
+        //@@author
 
         case DeleteCommand.COMMAND_WORD:
         case DeleteCommand.COMMAND_WORD_ALIAS:
@@ -89,7 +89,7 @@ public class AddressBookParser {
         case UnfavCommand.COMMAND_WORD:
         case UnfavCommand.COMMAND_WORD_ALIAS:
             return new UnfavCommandParser().parse(arguments);
-        //@@author siri99
+        //@@author
 
         case FindCommand.COMMAND_WORD:
         case FindCommand.COMMAND_WORD_ALIAS:
@@ -99,7 +99,7 @@ public class AddressBookParser {
         case FavouriteListCommand.COMMAND_WORD:
         case FavouriteListCommand.COMMAND_WORD_ALIAS:
             return new FavouriteListCommand();
-        //@@author siri99
+        //@@author
 
 
         //@@author Linus
@@ -109,7 +109,7 @@ public class AddressBookParser {
         case AddAvatarCommand.COMMAND_WORD:
             return new AddAvatarCommandParser().parse(arguments);
 
-        //@@author Linus
+        //@@author
 
         case ListCommand.COMMAND_WORD:
         case ListCommand.COMMAND_WORD_ALIAS:

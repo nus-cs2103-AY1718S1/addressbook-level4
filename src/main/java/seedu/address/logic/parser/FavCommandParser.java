@@ -32,5 +32,5 @@ public class FavCommandParser implements Parser<FavCommand> {
         }
     }
 }
-//@@author siri99
+//@@author
 

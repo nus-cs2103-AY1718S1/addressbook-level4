@@ -29,7 +29,7 @@ public interface Model {
     //@@author siri99
     /** Deletes the given person from Favourite List. */
     void removeFavouritePerson(ReadOnlyPerson target) throws PersonNotFoundException;
-    //@@author siri99
+    //@@author
 
     /** Adds the given person */
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
@@ -37,7 +37,7 @@ public interface Model {
     //@@author siri99
     /** Adds the given person into Favourite List */
     void addFavouritePerson(ReadOnlyPerson person) throws DuplicatePersonException;
-    //@@author siri99
+    //@@author
 
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
@@ -53,7 +53,7 @@ public interface Model {
     String getCurrentList();
 
     void setCurrentList(String currentList);
-    //@@author siri99
+    //@@author
 
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<ReadOnlyPerson> getFilteredPersonList();
@@ -67,7 +67,7 @@ public interface Model {
 
     /** Sorts the list in ascending order of birthdays : Jan to Dec */
     void sortFilteredPersonListBirthday();
-    //@@author siri99
+    //@@author
 
     //@@author Henning
     /** Sorts the list by groups score, in descending order*/
@@ -84,5 +84,5 @@ public interface Model {
     void updateFilteredFavouritePersonList(Predicate<ReadOnlyPerson> predicate);
 
     void changeListTo(String listName);
-    //@@author siri99
+    //@@author
 }

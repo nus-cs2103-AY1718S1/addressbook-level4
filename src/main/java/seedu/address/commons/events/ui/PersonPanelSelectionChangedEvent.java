@@ -13,7 +13,7 @@ public class PersonPanelSelectionChangedEvent extends BaseEvent {
 
     //@@author Linus
     private final int backToHomePageValue = 0;
-    //@@author Linus
+    //@@author
 
     public PersonPanelSelectionChangedEvent(PersonCard newSelection) {
         this.newSelection = newSelection;
@@ -32,6 +32,6 @@ public class PersonPanelSelectionChangedEvent extends BaseEvent {
     public int getBackToHomePageValue() {
         return this.backToHomePageValue;
     }
-    //@@author Linus
+    //@@author
 
 }

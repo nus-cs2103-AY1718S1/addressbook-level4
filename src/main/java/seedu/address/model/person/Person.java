@@ -46,7 +46,7 @@ public class Person implements ReadOnlyPerson {
         this.phone = new SimpleObjectProperty<>(phone);
         //@@author siri99
         this.birthday = new SimpleObjectProperty<>(birthday);
-        //@@author siri99
+        //@@author
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
         this.score = new SimpleObjectProperty<>(score);
@@ -106,7 +106,7 @@ public class Person implements ReadOnlyPerson {
     public Birthday getBirthday() {
         return birthday.get();
     }
-    //@@author siri99
+    //@@author
 
     public void setEmail(Email email) {
         this.email.set(requireNonNull(email));

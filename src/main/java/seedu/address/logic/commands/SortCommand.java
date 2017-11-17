@@ -50,7 +50,7 @@ public class SortCommand extends Command {
         case "s":
             model.sortFilteredPersonListScore();
             return new CommandResult(MESSAGE_SUCCESS_SCORE);
-            //author Henning
+            //author
         }
 
     }
@@ -71,4 +71,4 @@ public class SortCommand extends Command {
         return sortFilter.equals(s.sortFilter);
     }
 }
-//@@author siri99
+//@@author

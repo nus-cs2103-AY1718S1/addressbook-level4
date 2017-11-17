@@ -176,7 +176,7 @@ public class UniquePersonList implements Iterable<Person> {
         FXCollections.sort(internalList, personComparator);
     }
 
-    //@@author siri99
+    //@@author
 
     public void setPersons(UniquePersonList replacement) {
         this.internalList.setAll(replacement.internalList);

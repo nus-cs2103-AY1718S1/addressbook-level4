@@ -55,4 +55,4 @@ public class FavCommand extends UndoableCommand {
                 && this.targetIndex.equals(((FavCommand) other).targetIndex)); // state check
     }
 }
-//@@author siri99
+//@@author

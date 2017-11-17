@@ -34,7 +34,7 @@ public class CommandTestUtil {
     //@@author siri99
     public static final String VALID_BIRTHDAY_AMY = "21/04/1973";
     public static final String VALID_BIRTHDAY_BOB = "16/08/1968";
-    //@@author siri99
+    //@@author
     public static final String VALID_EMAIL_AMY = "amy@example.com";
     public static final String VALID_EMAIL_BOB = "bob@example.com";
     public static final String VALID_ADDRESS_AMY = "Block 312, Amy Street 1";
@@ -61,7 +61,7 @@ public class CommandTestUtil {
     //@@author siri99
     public static final String BIRTHDAY_DESC_AMY = " " + PREFIX_BIRTHDAY + VALID_BIRTHDAY_AMY;
     public static final String BIRTHDAY_DESC_BOB = " " + PREFIX_BIRTHDAY + VALID_BIRTHDAY_BOB;
-    //@@author siri99
+    //@@author
     public static final String EMAIL_DESC_AMY = " " + PREFIX_EMAIL + VALID_EMAIL_AMY;
     public static final String EMAIL_DESC_BOB = " " + PREFIX_EMAIL + VALID_EMAIL_BOB;
     public static final String ADDRESS_DESC_AMY = " " + PREFIX_ADDRESS + VALID_ADDRESS_AMY;
@@ -76,7 +76,7 @@ public class CommandTestUtil {
     //@@author siri99
     // words not allowed for birthday
     public static final String INVALID_BIRTHDAY_DESC = " " + PREFIX_BIRTHDAY + "5/March/1997";
-    //@@author siri99
+    //@@author
     public static final String INVALID_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
     public static final String INVALID_SCORE_DESC = " " + PREFIX_SCORE + "A"; // letters not allowed for score
@@ -94,7 +94,7 @@ public class CommandTestUtil {
                 .withPhone(VALID_PHONE_BOB).withBirthday(VALID_BIRTHDAY_AMY).withEmail(VALID_EMAIL_BOB)
                 .withAddress(VALID_ADDRESS_BOB).withScore(VALID_SCORE_BOB).withTags(VALID_TAG_HUSBAND,
                         VALID_TAG_FRIEND).build();
-        //@@author siri99
+        //@@author
     }
 
     /**

@@ -56,7 +56,7 @@ public class PersonCard extends UiPart<Region> {
     //@@author siri99
     @FXML
     private Label birthday;
-    //@@author siri99
+    //@@author
     @FXML
     private Label address;
     @FXML
@@ -103,7 +103,7 @@ public class PersonCard extends UiPart<Region> {
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
         //@@author siri99
         birthday.textProperty().bind(Bindings.convert(person.birthdayProperty()));
-        //@@author siri99
+        //@@author
         address.textProperty().bind(Bindings.convert(person.addressProperty()));
         email.textProperty().bind(Bindings.convert(person.emailProperty()));
         score.textProperty().bind(Bindings.convert(person.scoreProperty()));
@@ -167,7 +167,7 @@ public class PersonCard extends UiPart<Region> {
             } else {
                 commandResult = logic.execute(delCommand);
             }
-            //@@author siri99
+            //@@author
             //@@author Jacob Vosburgh
             logger.info("Result: " + commandResult.feedbackToUser);
             raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
@@ -189,7 +189,7 @@ public class PersonCard extends UiPart<Region> {
         CommandResult commandResult = new CommandResult("");
         if (logic.getCurrentList().contains("favlist")) {
             commandResult = new CommandResult("Edit command does not work in favourite list");;
-        } else { //@@author siri99
+        } else { //@@author
             //@@author Jacob Vosburgh
             EditWindow editWindow = new EditWindow(logic, cardNum);
             editWindow.show();

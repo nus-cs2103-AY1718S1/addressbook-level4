@@ -73,7 +73,7 @@ public class StringUtil {
         }
         return false;
     }
-    //@@author siri99
+    //@@author
 
     /**
      * Returns a detailed message of the t, including the stack trace.

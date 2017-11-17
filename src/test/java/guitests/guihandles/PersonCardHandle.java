@@ -17,7 +17,7 @@ public class PersonCardHandle extends NodeHandle<Node> {
     private static final String PHONE_FIELD_ID = "#phone";
     //@@author siri99
     private static final String BIRTHDAY_FIELD_ID = "#birthday";
-    //@@author siri99
+    //@@author
     private static final String EMAIL_FIELD_ID = "#email";
     private static final String TAGS_FIELD_ID = "#tags";
 
@@ -38,7 +38,7 @@ public class PersonCardHandle extends NodeHandle<Node> {
         this.phoneLabel = getChildNode(PHONE_FIELD_ID);
         //@@author siri99
         this.birthdayLabel = getChildNode(BIRTHDAY_FIELD_ID);
-        //@@author siri99
+        //@@author
         this.emailLabel = getChildNode(EMAIL_FIELD_ID);
 
         Region tagsContainer = getChildNode(TAGS_FIELD_ID);
@@ -69,7 +69,7 @@ public class PersonCardHandle extends NodeHandle<Node> {
     public String getBirthday()  {
         return birthdayLabel.getText();
     }
-    //@@author siri99
+    //@@author
 
     public String getEmail() {
         return emailLabel.getText();

@@ -75,7 +75,7 @@ public class ParserUtil {
         return birthday.isPresent() ? Optional.of(new Birthday(birthday.get())) : Optional.of
                 (new Birthday("No Birthday Listed"));
     }
-    //@@author siri99
+    //@@author
 
     /**
      * Parses a {@code Optional<String> address} into an {@code Optional<Address>} if {@code address} is present.

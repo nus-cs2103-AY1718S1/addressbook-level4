@@ -46,7 +46,7 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
         //@@author siri99
         favouritePersons.addAll(src.getFavouritePersonList().stream().map(XmlAdaptedPerson::new)
                 .collect(Collectors.toList()));
-        //@@author siri99
+        //@@author
         tags.addAll(src.getTagList().stream().map(XmlAdaptedTag::new).collect(Collectors.toList()));
     }
 
@@ -78,7 +78,7 @@ public class XmlSerializableAddressBook implements ReadOnlyAddressBook {
         }).collect(Collectors.toCollection(FXCollections::observableArrayList));
         return FXCollections.unmodifiableObservableList(favouritePersons);
     }
-    //@@author siri99
+    //@@author
 
     @Override
     public ObservableList<Tag> getTagList() {

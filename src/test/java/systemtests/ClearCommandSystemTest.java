@@ -98,7 +98,7 @@ public class ClearCommandSystemTest extends AddressBookSystemTest {
         assertCommandBoxShowsErrorStyle();
         //@@author Linus
         assertStatusBarUnchangedExceptSyncStatus();
-        //@@author Linus
+        //@@author
 
     }
 }

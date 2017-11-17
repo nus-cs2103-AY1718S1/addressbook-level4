@@ -58,4 +58,4 @@ public class UnfavCommand extends UndoableCommand {
     }
 
 }
-//@@author siri99
+//@@author

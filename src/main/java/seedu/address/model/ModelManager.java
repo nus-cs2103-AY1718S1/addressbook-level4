@@ -30,7 +30,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final FilteredList<ReadOnlyPerson> filteredFavouritePersons;
 
     private String currentList;
-    //@@author siri99
+    //@@author
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -45,7 +45,7 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         //@@author siri99
         filteredFavouritePersons = new FilteredList<>(this.addressBook.getFavouritePersonList());
-        //@@author siri99
+        //@@author
         this.currentList = "list";
     }
 
@@ -82,7 +82,7 @@ public class ModelManager extends ComponentManager implements Model {
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
     }
-    //@@author siri99
+    //@@author
 
     @Override
     public synchronized void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
@@ -98,7 +98,7 @@ public class ModelManager extends ComponentManager implements Model {
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         indicateAddressBookChanged();
     }
-    //@@author siri99
+    //@@author
 
     @Override
     public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
@@ -124,7 +124,7 @@ public class ModelManager extends ComponentManager implements Model {
     public void setCurrentList(String currentList) {
         this.currentList =  currentList;
     }
-    //@@author siri99
+    //@@author
 
     //=========== Filtered Person List Accessors =============================================================
 
@@ -144,7 +144,7 @@ public class ModelManager extends ComponentManager implements Model {
         setCurrentList("favlist");
         return FXCollections.unmodifiableObservableList(filteredFavouritePersons);
     }
-    //@@author siri99
+    //@@author
 
     @Override
     public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
@@ -170,7 +170,7 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.sortPersonsByBirthday();
         indicateAddressBookChanged();
     }
-    //@@author siri99
+    //@@author
 
     //@@author Henning
     @Override

@@ -181,7 +181,7 @@ public class CommandBox extends UiPart<Region> {
         CommandResult commandResult = new CommandResult("");
         if (logic.getCurrentList().contains("favlist")) {
             commandResult = new CommandResult("Add command does not work in favourite list");;
-        } else { //@@author siri99
+        } else { //@@author
             //@@author Jacob Vosburgh
             AddWindow addWindow = new AddWindow(logic);
             addWindow.show();
@@ -244,5 +244,5 @@ public class CommandBox extends UiPart<Region> {
             raise(new NewResultAvailableEvent(e.getMessage()));
         }
     }
-    //@@author siri99
+    //@@author
 }

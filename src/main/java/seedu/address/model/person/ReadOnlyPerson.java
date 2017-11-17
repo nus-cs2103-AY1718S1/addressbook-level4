@@ -19,7 +19,7 @@ public interface ReadOnlyPerson {
     //@@author siri99
     ObjectProperty<Birthday> birthdayProperty();
     Birthday getBirthday();
-    //@@author siri99
+    //@@author
     ObjectProperty<Email> emailProperty();
     Email getEmail();
     ObjectProperty<Address> addressProperty();
@@ -55,7 +55,7 @@ public interface ReadOnlyPerson {
                 //@@author siri99
                 .append(" Birthday: ")
                 .append(getBirthday())
-                //@@author siri99
+                //@@author
                 .append(" Email: ")
                 .append(getEmail())
                 .append(" Address: ")

@@ -238,7 +238,7 @@ public abstract class AddressBookSystemTest {
         String expectedSyncStatus = String.format(SYNC_STATUS_UPDATED, timestamp);
         //@@author Linus
         assertEquals(expectedSyncStatus, handle.getSyncStatus().split(", ")[1]);
-        //@@author Linus
+        //@@author
         assertFalse(handle.isSaveLocationChanged());
     }
 

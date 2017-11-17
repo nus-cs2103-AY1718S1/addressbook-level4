@@ -30,7 +30,7 @@
         case "s":
             model.sortFilteredPersonListScore();
             return new CommandResult(MESSAGE_SUCCESS_SCORE);
-            //author Henning
+            //author
         }
 
     }

@@ -118,7 +118,7 @@ public class SampleDataUtil {
         return birthdays[n];
     }
 
-    //@@author Linus
+    //@@author
 
     public static ReadOnlyAddressBook getSampleAddressBook() {
         try {

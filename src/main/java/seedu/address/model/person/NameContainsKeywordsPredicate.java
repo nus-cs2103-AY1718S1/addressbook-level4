@@ -33,7 +33,7 @@ public class NameContainsKeywordsPredicate implements Predicate<ReadOnlyPerson> 
                 .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword)))
                 || (!Collections.disjoint(s2, s1))) || (keywords.stream().anyMatch(keyword ->
                 StringUtil.containsSubstringOfWord(person.getName().fullName, keyword)));
-        //@@author siri99
+        //@@author
     }
 
     @Override

@@ -61,7 +61,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void setFavouritePersons(List<? extends ReadOnlyPerson> persons) throws DuplicatePersonException {
         this.favouritePersons.setPersons(persons);
     }
-    //@@author siri99
+    //@@author
 
     public void setTags(Set<Tag> tags) {
         this.tags.setTags(tags);
@@ -84,7 +84,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         } catch (DuplicatePersonException e) {
             assert false : "AddressBooks should not have duplicate persons";
         }
-        //@@author siri99
+        //@@author
 
         setTags(new HashSet<>(newData.getTagList()));
         syncMasterTagListWith(persons);
@@ -117,7 +117,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         syncMasterTagListWith(newPerson);
         favouritePersons.add(newPerson);
     }
-    //@@author siri99
+    //@@author
 
     /**
      * Replaces the given person {@code target} in the list with {@code editedReadOnlyPerson}.
@@ -157,11 +157,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void sortPersonsByName() {
         persons.sortPersonsByName();
     }
-    //@@author siri99
 
     public void sortPersonsByBirthday() {
         persons.sortPersonsByBirthday();
     }
+    //@@author
 
     public void sortPersonsByScore() {
         persons.sortPersonsByScore();
@@ -230,7 +230,7 @@ public class AddressBook implements ReadOnlyAddressBook {
             throw new PersonNotFoundException();
         }
     }
-    //@@author siri99
+    //@@author
 
     //// tag-level operations
 
@@ -257,7 +257,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     public ObservableList<ReadOnlyPerson> getFavouritePersonList() {
         return favouritePersons.asObservableList();
     }
-    //@@author siri99
+    //@@author
 
     @Override
     public ObservableList<Tag> getTagList() {

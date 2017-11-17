@@ -9,42 +9,6 @@
 ###### \java\seedu\address\logic\commands\AddCommandTest.java
 ``` java
 
-        @Override
-        public void addFavouritePerson(ReadOnlyPerson target) {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void removeFavouritePerson(ReadOnlyPerson target) {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void changeListTo(String listName) {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void setCurrentList(String currentList)  {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public String getCurrentList() {
-            fail("This method should not be called.");
-            return null;
-        }
-
-        @Override
-        public void updateFilteredFavouritePersonList(Predicate<ReadOnlyPerson> predicate) {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public ObservableList<ReadOnlyPerson> getFilteredFavouritePersonList() {
-            fail("This method should not be called.");
-            return null;
-        }
 ```
 ###### \java\seedu\address\logic\parser\AddCommandParserTest.java
 ``` java
@@ -52,28 +16,6 @@
         assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + BIRTHDAY_DESC_BOB
               + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + SCORE_DESC_AMY + SCORE_DESC_BOB + TAG_DESC_FRIEND,
               new AddCommand(expectedPerson));
-
-```
-###### \java\seedu\address\logic\parser\AddCommandParserTest.java
-``` java
-        // multiple tags - all accepted
-        Person expectedPersonMultipleTags = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
-                .withBirthday(VALID_BIRTHDAY_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
-                .withScore(VALID_SCORE_BOB).withTags(VALID_TAG_FRIEND, VALID_TAG_HUSBAND).build();
-        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + BIRTHDAY_DESC_BOB
-                        + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + SCORE_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
-                new AddCommand(expectedPersonMultipleTags));
-    }
-
-    @Test
-    public void parse_optionalFieldsMissing_success() {
-        // zero tags
-        Person expectedPerson = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
-                .withBirthday(VALID_BIRTHDAY_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
-                .withScore(VALID_SCORE_AMY).withTags().build();
-        assertParseSuccess(parser, AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
-                + BIRTHDAY_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + SCORE_DESC_AMY,
-                new AddCommand(expectedPerson));
 
 ```
 ###### \java\seedu\address\logic\parser\AddCommandParserTest.java

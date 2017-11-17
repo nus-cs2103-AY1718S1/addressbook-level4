@@ -22,7 +22,7 @@
       </ImageView>
     </graphic>
   </Button>
-  <!-- @@author siri99 -->
+  <!-- @@author -->
   <!-- @@author Jacob Vosburgh -->
   <Button onAction='#handleAddButtonAction' id="add" prefWidth="120.0" minWidth="90.0" text="Add"/>
   <Button onAction='#handleUndoButtonAction' id="undo" prefWidth="120.0" minWidth="90.0" text="Undo"/>

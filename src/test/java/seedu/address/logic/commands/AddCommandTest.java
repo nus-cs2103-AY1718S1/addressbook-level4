@@ -130,6 +130,7 @@ public class AddCommandTest {
         }
         //@@author Henning
 
+        //@@author siri99
         @Override
         public void addFavouritePerson(ReadOnlyPerson target) {
             fail("This method should not be called.");
@@ -166,7 +167,7 @@ public class AddCommandTest {
             fail("This method should not be called.");
             return null;
         }
-        //@@author siri99
+        //@@author
 
         @Override
         public void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {

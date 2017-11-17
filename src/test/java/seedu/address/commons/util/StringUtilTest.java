@@ -174,7 +174,7 @@ public class StringUtilTest {
         assertFalse(StringUtil.containsSubstringOfWord("Alicia John carLo", "Johnny"));
 
     }
-    //@@author siri99
+    //@@author
 
     //---------------- Tests for getDetails --------------------------------------
 

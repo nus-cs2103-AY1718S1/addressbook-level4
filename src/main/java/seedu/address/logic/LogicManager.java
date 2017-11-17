@@ -62,7 +62,7 @@ public class LogicManager extends ComponentManager implements Logic {
     public String getCurrentList() {
         return model.getCurrentList();
     }
-    //@@author siri99
+    //@@author
 
     @Override
     public ListElementPointer getHistorySnapshot() {

@@ -21,4 +21,4 @@ public class FavouriteListCommand extends UndoableCommand {
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }
-//@@author siri99
+//@@author

@@ -32,7 +32,7 @@ public class XmlAdaptedPerson {
     //@@author siri99
     private String birthday;
     @XmlElement(required = true)
-    //@@author siri99
+    //@@author
     private String email;
     @XmlElement(required = true)
     private String address;
@@ -42,7 +42,7 @@ public class XmlAdaptedPerson {
     //@@author Linus
     @XmlElement
     private String avatar;
-    //@@author Linus
+    //@@author
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -64,7 +64,7 @@ public class XmlAdaptedPerson {
         phone = source.getPhone().value;
         //@@author siri99
         birthday = source.getBirthday().value;
-        //@@author siri99
+        //@@author
         email = source.getEmail().value;
         address = source.getAddress().value;
         score = source.getScore().value;
@@ -101,6 +101,6 @@ public class XmlAdaptedPerson {
             tempAvatar = new Avatar();
         }
         return new Person(name, phone, birthday, email, address, score, tags, tempAvatar);
-        //@@author Linus
+        //@@author
     }
 }
