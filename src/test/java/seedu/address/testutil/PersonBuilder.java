@@ -142,8 +142,7 @@ public class PersonBuilder {
         }
         return this;
     }
-
-    //@@author Henning
+    //@@author
     public Person build() {
         return this.person;
     }

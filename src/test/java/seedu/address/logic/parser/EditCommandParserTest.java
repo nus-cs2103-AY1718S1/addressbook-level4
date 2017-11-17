@@ -99,7 +99,7 @@ public class EditCommandParserTest {
                 Address.MESSAGE_ADDRESS_CONSTRAINTS); // invalid address
         //@@author Henning
         assertParseFailure(parser, "1" + INVALID_SCORE_DESC, Score.MESSAGE_SCORE_CONSTRAINTS); //invalid score
-        //@@author Henning
+        //@@author
         assertParseFailure(parser, "1" + INVALID_TAG_DESC, Tag.MESSAGE_TAG_CONSTRAINTS); // invalid tag
 
         // invalid phone followed by valid email
@@ -190,7 +190,7 @@ public class EditCommandParserTest {
         descriptor = new EditPersonDescriptorBuilder().withScore(VALID_SCORE_AMY).build();
         expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
-        //@@author Henning
+        //@@author
 
         // tags
         userInput = targetIndex.getOneBased() + TAG_DESC_FRIEND;

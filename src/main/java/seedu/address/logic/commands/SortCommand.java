@@ -24,7 +24,7 @@ public class SortCommand extends Command {
 
     //@@author Henning
     public static final String MESSAGE_SUCCESS_SCORE = "Sorted successfully by Group Scores, listing all persons below";
-    //@@author Henning
+    //@@author
     private String sortFilter;
 
     public SortCommand (String sortFilter) {

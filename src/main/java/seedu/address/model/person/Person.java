@@ -149,6 +149,7 @@ public class Person implements ReadOnlyPerson {
     public Score getScore() {
         return score.get();
     }
+    //@@author
 
     @Override
     public Avatar getAvatarPic() {
@@ -160,7 +161,7 @@ public class Person implements ReadOnlyPerson {
     }
 
 
-    //@@author
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.

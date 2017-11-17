@@ -178,7 +178,7 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.sortPersonsByScore();
         indicateAddressBookChanged();
     }
-    //@@author Henning
+    //@@author
     @Override
     public boolean equals(Object obj) {
         // short circuit if same object

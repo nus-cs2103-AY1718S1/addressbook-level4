@@ -72,7 +72,7 @@ public interface Model {
     //@@author Henning
     /** Sorts the list by groups score, in descending order*/
     void sortFilteredPersonListScore();
-    //@@author Henning
+    //@@author
 
     /**
      * Updates the filter of the filtered person list to filter by the given {@code predicate}.

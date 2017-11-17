@@ -104,7 +104,7 @@ public class ParserUtil {
         requireNonNull(score);
         return score.isPresent() ? Optional.of(new Score(score.get())) : Optional.of(new Score(""));
     }
-    //@@author Henning
+    //@@author
 
     //@@author Linus
     /**
