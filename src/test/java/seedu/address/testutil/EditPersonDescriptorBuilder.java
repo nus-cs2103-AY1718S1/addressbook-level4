@@ -73,7 +73,7 @@ public class EditPersonDescriptorBuilder {
         }
         return this;
     }
-    //@@author siri99
+    //@@author
 
     /**
      * Sets the {@code Email} of the {@code EditPersonDescriptor} that we are building.

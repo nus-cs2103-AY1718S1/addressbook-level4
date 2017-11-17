@@ -23,7 +23,7 @@ public class PersonBuilder {
     public static final String DEFAULT_PHONE = "85355255";
     //@@author siri99
     public static final String DEFAULT_BIRTHDAY = "11/01/1999";
-    //@@author siri99
+    //@@author
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_SCORE = "7";
@@ -37,7 +37,7 @@ public class PersonBuilder {
             Phone defaultPhone = new Phone(DEFAULT_PHONE);
             //@@author siri99
             Birthday defaultBirthday = new Birthday(DEFAULT_BIRTHDAY);
-            //@@author siri99
+            //@@author
             Email defaultEmail = new Email(DEFAULT_EMAIL);
             Address defaultAddress = new Address(DEFAULT_ADDRESS);
             Score defaultScore = new Score(DEFAULT_SCORE);
@@ -116,7 +116,7 @@ public class PersonBuilder {
         }
         return this;
     }
-    //@@author siri99
+    //@@author
 
     /**
      * Sets the {@code Email} of the {@code Person} that we are building.

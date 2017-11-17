@@ -562,22 +562,6 @@ public class UnfavCommandTest {
         expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 ```
-###### \java\seedu\address\logic\parser\EditCommandParserTest.java
-``` java
-
-        // email
-        userInput = targetIndex.getOneBased() + EMAIL_DESC_AMY;
-        descriptor = new EditPersonDescriptorBuilder().withEmail(VALID_EMAIL_AMY).build();
-        expectedCommand = new EditCommand(targetIndex, descriptor);
-        assertParseSuccess(parser, userInput, expectedCommand);
-
-        // address
-        userInput = targetIndex.getOneBased() + ADDRESS_DESC_AMY;
-        descriptor = new EditPersonDescriptorBuilder().withAddress(VALID_ADDRESS_AMY).build();
-        expectedCommand = new EditCommand(targetIndex, descriptor);
-        assertParseSuccess(parser, userInput, expectedCommand);
-
-```
 ###### \java\seedu\address\logic\parser\FavCommandParserTest.java
 ``` java
 package seedu.address.logic.parser;
@@ -632,99 +616,7 @@ public class FavCommandParserTest {
 ```
 ###### \java\seedu\address\logic\parser\ParserUtilTest.java
 ``` java
-    private static final String INVALID_ADDRESS = " ";
-    private static final String INVALID_EMAIL = "example.com";
-    private static final String INVALID_TAG = "#friend";
-
-    private static final String VALID_NAME = "Rachel Walker";
-    private static final String VALID_PHONE = "123456";
-```
-###### \java\seedu\address\logic\parser\ParserUtilTest.java
-``` java
     private static final String VALID_BIRTHDAY = "17/07/2006";
-```
-###### \java\seedu\address\logic\parser\ParserUtilTest.java
-``` java
-    private static final String VALID_ADDRESS = "123 Main Street #0505";
-    private static final String VALID_EMAIL = "rachel@example.com";
-    private static final String VALID_TAG_1 = "friend";
-    private static final String VALID_TAG_2 = "neighbour";
-
-    @Rule
-    public final ExpectedException thrown = ExpectedException.none();
-
-    @Test
-    public void parseIndex_invalidInput_throwsIllegalValueException() throws Exception {
-        thrown.expect(IllegalValueException.class);
-        ParserUtil.parseIndex("10 a");
-    }
-
-    @Test
-    public void parseIndex_outOfRangeInput_throwsIllegalValueException() throws Exception {
-        thrown.expect(IllegalValueException.class);
-        thrown.expectMessage(MESSAGE_INVALID_INDEX);
-        ParserUtil.parseIndex(Long.toString(Integer.MAX_VALUE + 1));
-    }
-
-    @Test
-    public void parseIndex_validInput_success() throws Exception {
-        // No whitespaces
-        assertEquals(INDEX_FIRST_PERSON, ParserUtil.parseIndex("1"));
-
-        // Leading and trailing whitespaces
-        assertEquals(INDEX_FIRST_PERSON, ParserUtil.parseIndex("  1  "));
-    }
-
-    @Test
-    public void parseName_null_throwsNullPointerException() throws Exception {
-        thrown.expect(NullPointerException.class);
-        ParserUtil.parseName(null);
-    }
-
-    @Test
-    public void parseName_invalidValue_throwsIllegalValueException() throws Exception {
-        thrown.expect(IllegalValueException.class);
-        ParserUtil.parseName(Optional.of(INVALID_NAME));
-    }
-
-    @Test
-    public void parseName_optionalEmpty_returnsOptionalEmpty() throws Exception {
-        assertFalse(ParserUtil.parseName(Optional.empty()).isPresent());
-    }
-
-    @Test
-    public void parseName_validValue_returnsName() throws Exception {
-        Name expectedName = new Name(VALID_NAME);
-        Optional<Name> actualName = ParserUtil.parseName(Optional.of(VALID_NAME));
-
-        assertEquals(expectedName, actualName.get());
-    }
-
-    @Test
-    public void parsePhone_null_throwsNullPointerException() throws Exception {
-        thrown.expect(NullPointerException.class);
-        ParserUtil.parsePhone(null);
-    }
-
-    @Test
-    public void parsePhone_invalidValue_throwsIllegalValueException() throws Exception {
-        thrown.expect(IllegalValueException.class);
-        ParserUtil.parsePhone(Optional.of(INVALID_PHONE));
-    }
-
-    @Test
-    public void parsePhone_optionalEmpty_returnsOptionalEmpty() throws Exception {
-        assertFalse(ParserUtil.parsePhone(Optional.empty()).isPresent());
-    }
-
-    @Test
-    public void parsePhone_validValue_returnsPhone() throws Exception {
-        Phone expectedPhone = new Phone(VALID_PHONE);
-        Optional<Phone> actualPhone = ParserUtil.parsePhone(Optional.of(VALID_PHONE));
-
-        assertEquals(expectedPhone, actualPhone.get());
-    }
-
 ```
 ###### \java\seedu\address\logic\parser\ParserUtilTest.java
 ``` java
@@ -751,85 +643,6 @@ public class FavCommandParserTest {
         Optional<Birthday> actualBirthday = ParserUtil.parseBirthday(Optional.of(VALID_BIRTHDAY));
         assertEquals(expectedBirthday, actualBirthday.get());
     }
-```
-###### \java\seedu\address\logic\parser\ParserUtilTest.java
-``` java
-
-    @Test
-    public void parseAddress_null_throwsNullPointerException() throws Exception {
-        thrown.expect(NullPointerException.class);
-        ParserUtil.parseAddress(null);
-    }
-
-    @Test
-    public void parseAddress_invalidValue_throwsIllegalValueException() throws Exception {
-        thrown.expect(IllegalValueException.class);
-        ParserUtil.parseAddress(Optional.of(INVALID_ADDRESS));
-    }
-
-    @Test
-    public void parseAddress_optionalEmpty_returnsOptionalEmpty() throws Exception {
-        assertFalse(ParserUtil.parseAddress(Optional.empty()).isPresent());
-    }
-
-    @Test
-    public void parseAddress_validValue_returnsAddress() throws Exception {
-        Address expectedAddress = new Address(VALID_ADDRESS);
-        Optional<Address> actualAddress = ParserUtil.parseAddress(Optional.of(VALID_ADDRESS));
-
-        assertEquals(expectedAddress, actualAddress.get());
-    }
-
-    @Test
-    public void parseEmail_null_throwsNullPointerException() throws Exception {
-        thrown.expect(NullPointerException.class);
-        ParserUtil.parseEmail(null);
-    }
-
-    @Test
-    public void parseEmail_invalidValue_throwsIllegalValueException() throws Exception {
-        thrown.expect(IllegalValueException.class);
-        ParserUtil.parseEmail(Optional.of(INVALID_EMAIL));
-    }
-
-    @Test
-    public void parseEmail_optionalEmpty_returnsOptionalEmpty() throws Exception {
-        assertFalse(ParserUtil.parseEmail(Optional.empty()).isPresent());
-    }
-
-    @Test
-    public void parseEmail_validValue_returnsEmail() throws Exception {
-        Email expectedEmail = new Email(VALID_EMAIL);
-        Optional<Email> actualEmail = ParserUtil.parseEmail(Optional.of(VALID_EMAIL));
-
-        assertEquals(expectedEmail, actualEmail.get());
-    }
-
-    @Test
-    public void parseTags_null_throwsNullPointerException() throws Exception {
-        thrown.expect(NullPointerException.class);
-        ParserUtil.parseTags(null);
-    }
-
-    @Test
-    public void parseTags_collectionWithInvalidTags_throwsIllegalValueException() throws Exception {
-        thrown.expect(IllegalValueException.class);
-        ParserUtil.parseTags(Arrays.asList(VALID_TAG_1, INVALID_TAG));
-    }
-
-    @Test
-    public void parseTags_emptyCollection_returnsEmptySet() throws Exception {
-        assertTrue(ParserUtil.parseTags(Collections.emptyList()).isEmpty());
-    }
-
-    @Test
-    public void parseTags_collectionWithValidTags_returnsTagSet() throws Exception {
-        Set<Tag> actualTagSet = ParserUtil.parseTags(Arrays.asList(VALID_TAG_1, VALID_TAG_2));
-        Set<Tag> expectedTagSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_1), new Tag(VALID_TAG_2)));
-
-        assertEquals(expectedTagSet, actualTagSet);
-    }
-}
 ```
 ###### \java\seedu\address\logic\parser\SortCommandParserTest.java
 ``` java
@@ -1001,153 +814,13 @@ public class BirthdayTest {
         return this;
     }
 ```
-###### \java\seedu\address\testutil\EditPersonDescriptorBuilder.java
-``` java
-
-    /**
-     * Sets the {@code Email} of the {@code EditPersonDescriptor} that we are building.
-     */
-    public EditPersonDescriptorBuilder withEmail(String email) {
-        try {
-            ParserUtil.parseEmail(Optional.of(email)).ifPresent(descriptor::setEmail);
-        } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("email is expected to be unique.");
-        }
-        return this;
-    }
-
-    /**
-     * Sets the {@code Address} of the {@code EditPersonDescriptor} that we are building.
-     */
-    public EditPersonDescriptorBuilder withAddress(String address) {
-        try {
-            ParserUtil.parseAddress(Optional.of(address)).ifPresent(descriptor::setAddress);
-        } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("address is expected to be unique.");
-        }
-        return this;
-    }
-
-    /**
-     * Sets the {@code Score} of the {@code EditPersonDescriptor} that we are building.
-     */
-    public EditPersonDescriptorBuilder withScore(String score) {
-        try {
-            ParserUtil.parseScore(Optional.of(score)).ifPresent(descriptor::setScore);
-        } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("score is expected to be unique");
-        }
-        return this;
-    }
-
-    /**
-     * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code EditPersonDescriptor}
-     * that we are building.
-     */
-    public EditPersonDescriptorBuilder withTags(String... tags) {
-        try {
-            descriptor.setTags(ParserUtil.parseTags(Arrays.asList(tags)));
-        } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("tags are expected to be unique.");
-        }
-        return this;
-    }
-
-    public EditPersonDescriptor build() {
-        return descriptor;
-    }
-}
-```
 ###### \java\seedu\address\testutil\PersonBuilder.java
 ``` java
     public static final String DEFAULT_BIRTHDAY = "11/01/1999";
 ```
 ###### \java\seedu\address\testutil\PersonBuilder.java
 ``` java
-    public static final String DEFAULT_EMAIL = "alice@gmail.com";
-    public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
-    public static final String DEFAULT_SCORE = "7";
-    public static final String DEFAULT_TAGS = "friends";
-
-    private Person person;
-
-    public PersonBuilder() {
-        try {
-            Name defaultName = new Name(DEFAULT_NAME);
-            Phone defaultPhone = new Phone(DEFAULT_PHONE);
-```
-###### \java\seedu\address\testutil\PersonBuilder.java
-``` java
             Birthday defaultBirthday = new Birthday(DEFAULT_BIRTHDAY);
-```
-###### \java\seedu\address\testutil\PersonBuilder.java
-``` java
-            Email defaultEmail = new Email(DEFAULT_EMAIL);
-            Address defaultAddress = new Address(DEFAULT_ADDRESS);
-            Score defaultScore = new Score(DEFAULT_SCORE);
-            Set<Tag> defaultTags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
-            this.person = new Person(defaultName, defaultPhone, defaultBirthday, defaultEmail, defaultAddress,
-                    defaultScore, defaultTags);
-        } catch (IllegalValueException ive) {
-            throw new AssertionError("Default person's values are invalid.");
-        }
-    }
-
-    /**
-     * Initializes the PersonBuilder with the data of {@code personToCopy}.
-     */
-    public PersonBuilder(ReadOnlyPerson personToCopy) {
-        this.person = new Person(personToCopy);
-    }
-
-    /**
-     * Sets the {@code Name} of the {@code Person} that we are building.
-     */
-    public PersonBuilder withName(String name) {
-        try {
-            this.person.setName(new Name(name));
-        } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("name is expected to be unique.");
-        }
-        return this;
-    }
-
-    /**
-     * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code Person} that we are building.
-     */
-    public PersonBuilder withTags(String ... tags) {
-        try {
-            this.person.setTags(SampleDataUtil.getTagSet(tags));
-        } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("tags are expected to be unique.");
-        }
-        return this;
-    }
-
-    /**
-     * Sets the {@code Address} of the {@code Person} that we are building.
-     */
-    public PersonBuilder withAddress(String address) {
-        try {
-            this.person.setAddress(new Address(address));
-        } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("address is expected to be unique.");
-        }
-        return this;
-    }
-
-    /**
-     * Sets the {@code Phone} of the {@code Person} that we are building.
-     */
-    public PersonBuilder withPhone(String phone) {
-        try {
-            this.person.setPhone(new Phone(phone));
-        } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("phone is expected to be unique.");
-        }
-        return this;
-    }
-
 ```
 ###### \java\seedu\address\testutil\PersonBuilder.java
 ``` java
@@ -1162,25 +835,6 @@ public class BirthdayTest {
         }
         return this;
     }
-```
-###### \java\seedu\address\testutil\PersonBuilder.java
-``` java
-
-    /**
-     * Sets the {@code Email} of the {@code Person} that we are building.
-     */
-    public PersonBuilder withEmail(String email) {
-        try {
-            this.person.setEmail(new Email(email));
-        } catch (IllegalValueException ive) {
-            throw new IllegalArgumentException("email is expected to be unique.");
-        }
-        return this;
-    }
-
-    /**
-     *Sets the {@code Score} of the {@code Person} that we are building.
-     */
 ```
 ###### \java\seedu\address\ui\testutil\GuiTestAssert.java
 ``` java

@@ -30,7 +30,7 @@ public class ParserUtilTest {
     private static final String INVALID_PHONE = "+651234";
     //@@author siri99
     private static final String INVALID_BIRTHDAY = "1997/05/07 ";
-    //@@author siri99
+    //@@author
     private static final String INVALID_ADDRESS = " ";
     private static final String INVALID_EMAIL = "example.com";
     private static final String INVALID_TAG = "#friend";
@@ -39,7 +39,7 @@ public class ParserUtilTest {
     private static final String VALID_PHONE = "123456";
     //@@author siri99
     private static final String VALID_BIRTHDAY = "17/07/2006";
-    //@@author siri99
+    //@@author
     private static final String VALID_ADDRESS = "123 Main Street #0505";
     private static final String VALID_EMAIL = "rachel@example.com";
     private static final String VALID_TAG_1 = "friend";
@@ -144,7 +144,7 @@ public class ParserUtilTest {
         Optional<Birthday> actualBirthday = ParserUtil.parseBirthday(Optional.of(VALID_BIRTHDAY));
         assertEquals(expectedBirthday, actualBirthday.get());
     }
-    //@@author siri99
+    //@@author
 
     @Test
     public void parseAddress_null_throwsNullPointerException() throws Exception {

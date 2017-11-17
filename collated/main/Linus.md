@@ -35,31 +35,9 @@ public class BrowserJumpToHomePage extends BaseEvent {
 ```
 ###### \java\seedu\address\commons\events\ui\PersonPanelSelectionChangedEvent.java
 ``` java
-
-    public PersonPanelSelectionChangedEvent(PersonCard newSelection) {
-        this.newSelection = newSelection;
-    }
-
-    @Override
-    public String toString() {
-        return this.getClass().getSimpleName();
-    }
-
-    public PersonCard getNewSelection() {
-        return newSelection;
-    }
-
-```
-###### \java\seedu\address\commons\events\ui\PersonPanelSelectionChangedEvent.java
-``` java
     public int getBackToHomePageValue() {
         return this.backToHomePageValue;
     }
-```
-###### \java\seedu\address\commons\events\ui\PersonPanelSelectionChangedEvent.java
-``` java
-
-}
 ```
 ###### \java\seedu\address\logic\commands\AddAvatarCommand.java
 ``` java
@@ -353,39 +331,6 @@ public class AddAvatarCommandParser implements Parser<AddAvatarCommand> {
             return new AddAvatarCommandParser().parse(arguments);
 
 ```
-###### \java\seedu\address\logic\parser\AddressBookParser.java
-``` java
-
-        case ListCommand.COMMAND_WORD:
-        case ListCommand.COMMAND_WORD_ALIAS:
-            return new ListCommand();
-
-        case HistoryCommand.COMMAND_WORD:
-        case HistoryCommand.COMMAND_WORD_ALIAS:
-            return new HistoryCommand();
-
-        case ExitCommand.COMMAND_WORD:
-            return new ExitCommand();
-
-        case HelpCommand.COMMAND_WORD:
-            return new HelpCommand();
-
-        case UndoCommand.COMMAND_WORD:
-        case UndoCommand.COMMAND_WORD_ALIAS:
-            return new UndoCommand();
-
-        case RedoCommand.COMMAND_WORD:
-        case RedoCommand.COMMAND_WORD_ALIAS:
-            return new RedoCommand();
-
-        default:
-            throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
-        }
-    }
-
-}
-
-```
 ###### \java\seedu\address\logic\parser\ParserUtil.java
 ``` java
     /**
@@ -613,61 +558,10 @@ public class Avatar {
     }
 
 ```
-###### \java\seedu\address\model\util\SampleDataUtil.java
-``` java
-
-    public static ReadOnlyAddressBook getSampleAddressBook() {
-        try {
-            AddressBook sampleAb = new AddressBook();
-            for (Person samplePerson : getSamplePersons()) {
-                sampleAb.addPerson(samplePerson);
-            }
-            return sampleAb;
-        } catch (DuplicatePersonException e) {
-            throw new AssertionError("sample data cannot contain duplicate persons", e);
-        }
-    }
-
-    /**
-     * Returns a tag set containing the list of strings given.
-     */
-    public static Set<Tag> getTagSet(String... strings) throws IllegalValueException {
-        HashSet<Tag> tags = new HashSet<>();
-        for (String s : strings) {
-            tags.add(new Tag(s));
-        }
-
-        return tags;
-    }
-
-}
-```
 ###### \java\seedu\address\storage\XmlAdaptedPerson.java
 ``` java
     @XmlElement
     private String avatar;
-```
-###### \java\seedu\address\storage\XmlAdaptedPerson.java
-``` java
-
-    @XmlElement
-    private List<XmlAdaptedTag> tagged = new ArrayList<>();
-
-    /**
-     * Constructs an XmlAdaptedPerson.
-     * This is the no-arg constructor that is required by JAXB.
-     */
-    public XmlAdaptedPerson() {}
-
-
-    /**
-     * Converts a given Person into this class for JAXB use.
-     *
-     * @param source future changes to this will not affect the created XmlAdaptedPerson
-     */
-    public XmlAdaptedPerson(ReadOnlyPerson source) {
-        name = source.getName().fullName;
-        phone = source.getPhone().value;
 ```
 ###### \java\seedu\address\storage\XmlAdaptedPerson.java
 ``` java
@@ -678,11 +572,6 @@ public class Avatar {
             tempAvatar = new Avatar();
         }
         return new Person(name, phone, birthday, email, address, score, tags, tempAvatar);
-```
-###### \java\seedu\address\storage\XmlAdaptedPerson.java
-``` java
-    }
-}
 ```
 ###### \java\seedu\address\ui\BrowserPanel.java
 ``` java

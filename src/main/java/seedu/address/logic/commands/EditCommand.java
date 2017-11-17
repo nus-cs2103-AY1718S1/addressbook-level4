@@ -105,7 +105,7 @@ public class EditCommand extends UndoableCommand {
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         //@@author siri99
         Birthday updatedBirthday = editPersonDescriptor.getBirthday().orElse(personToEdit.getBirthday());
-        //@@author siri99
+        //@@author
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
@@ -192,7 +192,7 @@ public class EditCommand extends UndoableCommand {
         public Optional<Birthday> getBirthday() {
             return Optional.ofNullable(birthday);
         }
-        //@@author siri99
+        //@@author
 
         public void setEmail(Email email) {
             this.email = email;

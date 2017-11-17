@@ -170,7 +170,7 @@ public class EditCommandParserTest {
         descriptor = new EditPersonDescriptorBuilder().withBirthday(VALID_BIRTHDAY_AMY).build();
         expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
-        //@@author siri99
+        //@@author
 
         // email
         userInput = targetIndex.getOneBased() + EMAIL_DESC_AMY;
