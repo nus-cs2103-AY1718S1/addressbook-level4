@@ -11,6 +11,10 @@ public class PersonPanelSelectionChangedEvent extends BaseEvent {
 
     private final PersonCard newSelection;
 
+    //@@author LinusMelb
+    private final int backToHomePageValue = 0;
+    //@@author
+
     public PersonPanelSelectionChangedEvent(PersonCard newSelection) {
         this.newSelection = newSelection;
     }
@@ -23,4 +27,11 @@ public class PersonPanelSelectionChangedEvent extends BaseEvent {
     public PersonCard getNewSelection() {
         return newSelection;
     }
+
+    //@@author LinusMelb
+    public int getBackToHomePageValue() {
+        return this.backToHomePageValue;
+    }
+    //@@author
+
 }

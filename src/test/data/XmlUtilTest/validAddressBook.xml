@@ -1,57 +1,681 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addressbook>
     <persons>
-        <name>Hans Muster</name>
-        <phone isPrivate="false">9482424</phone>
-        <email isPrivate="false">hans@example.com</email>
-        <address isPrivate="false">4th street</address>
+        <name>Roy Herason</name>
+        <phone>26714866</phone>
+        <birthday>01/09/1980</birthday>
+        <email>Roy@gmail.com</email>
+        <address>Blk 45 Aljunied Street 85, #177</address>
+        <score>Group score: 8</score>
+        <avatar>file:///Users/linus/Desktop/fixing1.5/main/avatars/1510499844177.jpg</avatar>
     </persons>
     <persons>
-        <name>Ruth Mueller</name>
-        <phone isPrivate="false">87249245</phone>
-        <email isPrivate="false">ruth@example.com</email>
-        <address isPrivate="false">81th street</address>
+        <name>Roy Trump</name>
+        <phone>40259739</phone>
+        <birthday>03/08/1971</birthday>
+        <email>Roy@yahoo</email>
+        <address>Blk 45 Aljunied Street 85, #114</address>
+        <score>Group score: 0</score>
+        <avatar>http://139.59.227.237/public/default.jpg</avatar>
+        <tagged>colleagues</tagged>
     </persons>
     <persons>
-        <name>Heinz Kurz</name>
-        <phone isPrivate="false">95352563</phone>
-        <email isPrivate="false">heinz@example.com</email>
-        <address isPrivate="false">wall street</address>
+        <name>Roy Thompson</name>
+        <phone>46111817</phone>
+        <birthday>02/02/1982</birthday>
+        <email>Roy@outlook</email>
+        <address>Blk 45 Aljunied Street 85, #13</address>
+        <score>Group score: 0</score>
+        <avatar>http://139.59.227.237/public/default.jpg</avatar>
+        <tagged>colleagues</tagged>
+        <tagged>friends</tagged>
     </persons>
     <persons>
-        <name>Cornelia Meier</name>
-        <phone isPrivate="false">87652533</phone>
-        <email isPrivate="false">cornelia@example.com</email>
-        <address isPrivate="false">10th street</address>
+        <name>Roy Curry</name>
+        <phone>81702684</phone>
+        <birthday>No Birthday Listed</birthday>
+        <email>Roy@hotmail</email>
+        <address>Blk 45 Aljunied Street 85, #774</address>
+        <score>Group score: 3</score>
+        <avatar>http://139.59.227.237/public/default.jpg</avatar>
+        <tagged>colleagues</tagged>
+        <tagged>friends</tagged>
+        <tagged>president</tagged>
     </persons>
     <persons>
-        <name>Werner Meyer</name>
-        <phone isPrivate="false">9482224</phone>
-        <email isPrivate="false">werner@example.com</email>
-        <address isPrivate="false">michegan ave</address>
+        <name>Roy Westbrook</name>
+        <phone>79054476</phone>
+        <birthday>No Birthday Listed</birthday>
+        <email>Roy@qq.com</email>
+        <address>Blk 45 Aljunied Street 85, #206</address>
+        <score>Group score: 0</score>
+        <avatar>http://139.59.227.237/public/default.jpg</avatar>
+        <tagged>colleagues</tagged>
+        <tagged>students</tagged>
+        <tagged>friends</tagged>
+        <tagged>president</tagged>
     </persons>
     <persons>
-        <name>Lydia Kunz</name>
-        <phone isPrivate="false">9482427</phone>
-        <email isPrivate="false">lydia@example.com</email>
-        <address isPrivate="false">little tokyo</address>
+        <name>Roy Harden</name>
+        <phone>78541653</phone>
+        <birthday>No Birthday Listed</birthday>
+        <email>Roy@sina.com</email>
+        <address>Blk 45 Aljunied Street 85, #692</address>
+        <score>Group score: 2</score>
+        <avatar>http://139.59.227.237/public/default.jpg</avatar>
+        <tagged>colleagues</tagged>
+        <tagged>students</tagged>
+        <tagged>customers</tagged>
+        <tagged>friends</tagged>
+        <tagged>president</tagged>
     </persons>
     <persons>
-        <name>Anna Best</name>
-        <phone isPrivate="false">9482442</phone>
-        <email isPrivate="false">anna@example.com</email>
-        <address isPrivate="false">4th street</address>
+        <name>Roy Herason</name>
+        <phone>33009018</phone>
+        <birthday>01/09/1980</birthday>
+        <email>Roy@gmail.com</email>
+        <address>Blk 45 Aljunied Street 85, #284</address>
+        <score>Group score: 7</score>
+        <avatar>http://139.59.227.237/public/default.jpg</avatar>
+        <tagged>lawyers</tagged>
+        <tagged>colleagues</tagged>
+        <tagged>students</tagged>
+        <tagged>customers</tagged>
+        <tagged>friends</tagged>
+        <tagged>president</tagged>
     </persons>
     <persons>
-        <name>Stefan Meier</name>
-        <phone isPrivate="false">8482424</phone>
-        <email isPrivate="false">stefan@example.com</email>
-        <address isPrivate="false">little india</address>
+        <name>David Herason</name>
+        <phone>30731976</phone>
+        <birthday>01/09/1980</birthday>
+        <email>David@gmail.com</email>
+        <address>Blk 45 Aljunied Street 85, #677</address>
+        <score>Group score: 5</score>
+        <avatar>http://139.59.227.237/public/default.jpg</avatar>
     </persons>
     <persons>
-        <name>Martin Mueller</name>
-        <phone isPrivate="false">8482131</phone>
-        <email isPrivate="false">hans@example.com</email>
-        <address isPrivate="false">chicago ave</address>
+        <name>David Trump</name>
+        <phone>60349047</phone>
+        <birthday>03/08/1971</birthday>
+        <email>David@yahoo</email>
+        <address>Blk 45 Aljunied Street 85, #644</address>
+        <score>Group score: 6</score>
+        <avatar>http://139.59.227.237/public/default.jpg</avatar>
+        <tagged>colleagues</tagged>
     </persons>
+    <persons>
+        <name>David Thompson</name>
+        <phone>11178055</phone>
+        <birthday>02/02/1982</birthday>
+        <email>David@outlook</email>
+        <address>Blk 45 Aljunied Street 85, #13</address>
+        <score>Group score: 8</score>
+        <avatar>http://139.59.227.237/public/default.jpg</avatar>
+        <tagged>colleagues</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>David Curry</name>
+        <phone>88966980</phone>
+        <birthday>No Birthday Listed</birthday>
+        <email>David@hotmail</email>
+        <address>Blk 45 Aljunied Street 85, #768</address>
+        <score>Group score: 1</score>
+        <avatar>http://139.59.227.237/public/default.jpg</avatar>
+        <tagged>colleagues</tagged>
+        <tagged>friends</tagged>
+        <tagged>president</tagged>
+    </persons>
+    <persons>
+        <name>David Westbrook</name>
+        <phone>36610565</phone>
+        <birthday>No Birthday Listed</birthday>
+        <email>David@qq.com</email>
+        <address>Blk 45 Aljunied Street 85, #163</address>
+        <score>Group score: 6</score>
+        <avatar>http://139.59.227.237/public/default.jpg</avatar>
+        <tagged>colleagues</tagged>
+        <tagged>students</tagged>
+        <tagged>friends</tagged>
+        <tagged>president</tagged>
+    </persons>
+    <persons>
+        <name>David Harden</name>
+        <phone>29898467</phone>
+        <birthday>No Birthday Listed</birthday>
+        <email>David@sina.com</email>
+        <address>Blk 45 Aljunied Street 85, #270</address>
+        <score>Group score: 2</score>
+        <avatar>http://139.59.227.237/public/default.jpg</avatar>
+        <tagged>colleagues</tagged>
+        <tagged>students</tagged>
+        <tagged>customers</tagged>
+        <tagged>friends</tagged>
+        <tagged>president</tagged>
+    </persons>
+    <persons>
+        <name>David Herason</name>
+        <phone>87071900</phone>
+        <birthday>01/09/1980</birthday>
+        <email>David@gmail.com</email>
+        <address>Blk 45 Aljunied Street 85, #40</address>
+        <score>Group score: 1</score>
+        <avatar>http://139.59.227.237/public/default.jpg</avatar>
+        <tagged>lawyers</tagged>
+        <tagged>colleagues</tagged>
+        <tagged>students</tagged>
+        <tagged>customers</tagged>
+        <tagged>friends</tagged>
+        <tagged>president</tagged>
+    </persons>
+    <persons>
+        <name>Alex Herason</name>
+        <phone>23108558</phone>
+        <birthday>01/09/1980</birthday>
+        <email>Alex@gmail.com</email>
+        <address>Blk 45 Aljunied Street 85, #255</address>
+        <score>Group score: 2</score>
+        <avatar>http://139.59.227.237/public/default.jpg</avatar>
+    </persons>
+    <persons>
+        <name>Alex Trump</name>
+        <phone>17199579</phone>
+        <birthday>03/08/1971</birthday>
+        <email>Alex@yahoo</email>
+        <address>Blk 45 Aljunied Street 85, #564</address>
+        <score>Group score: 7</score>
+        <avatar>http://139.59.227.237/public/default.jpg</avatar>
+        <tagged>colleagues</tagged>
+    </persons>
+    <persons>
+        <name>Alex Thompson</name>
+        <phone>72827812</phone>
+        <birthday>02/02/1982</birthday>
+        <email>Alex@outlook</email>
+        <address>Blk 45 Aljunied Street 85, #405</address>
+        <score>Group score: 1</score>
+        <avatar>http://139.59.227.237/public/default.jpg</avatar>
+        <tagged>colleagues</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Alex Curry</name>
+        <phone>54315964</phone>
+        <birthday>No Birthday Listed</birthday>
+        <email>Alex@hotmail</email>
+        <address>Blk 45 Aljunied Street 85, #171</address>
+        <score>Group score: 4</score>
+        <avatar>http://139.59.227.237/public/default.jpg</avatar>
+        <tagged>colleagues</tagged>
+        <tagged>friends</tagged>
+        <tagged>president</tagged>
+    </persons>
+    <persons>
+        <name>Alex Westbrook</name>
+        <phone>69556927</phone>
+        <birthday>No Birthday Listed</birthday>
+        <email>Alex@qq.com</email>
+        <address>Blk 45 Aljunied Street 85, #752</address>
+        <score>Group score: 0</score>
+        <avatar>http://139.59.227.237/public/default.jpg</avatar>
+        <tagged>colleagues</tagged>
+        <tagged>students</tagged>
+        <tagged>friends</tagged>
+        <tagged>president</tagged>
+    </persons>
+    <persons>
+        <name>Alex Harden</name>
+        <phone>41524760</phone>
+        <birthday>No Birthday Listed</birthday>
+        <email>Alex@sina.com</email>
+        <address>Blk 45 Aljunied Street 85, #439</address>
+        <score>Group score: 1</score>
+        <avatar>http://139.59.227.237/public/default.jpg</avatar>
+        <tagged>colleagues</tagged>
+        <tagged>students</tagged>
+        <tagged>customers</tagged>
+        <tagged>friends</tagged>
+        <tagged>president</tagged>
+    </persons>
+    <persons>
+        <name>Alex Herason</name>
+        <phone>58519720</phone>
+        <birthday>01/09/1980</birthday>
+        <email>Alex@gmail.com</email>
+        <address>Blk 45 Aljunied Street 85, #437</address>
+        <score>Group score: 2</score>
+        <avatar>http://139.59.227.237/public/default.jpg</avatar>
+        <tagged>lawyers</tagged>
+        <tagged>colleagues</tagged>
+        <tagged>students</tagged>
+        <tagged>customers</tagged>
+        <tagged>friends</tagged>
+        <tagged>president</tagged>
+    </persons>
+    <persons>
+        <name>Linus Herason</name>
+        <phone>34793178</phone>
+        <birthday>01/09/1980</birthday>
+        <email>Linus@gmail.com</email>
+        <address>Blk 45 Aljunied Street 85, #879</address>
+        <score>Group score: 7</score>
+        <avatar>http://139.59.227.237/public/default.jpg</avatar>
+    </persons>
+    <persons>
+        <name>Linus Trump</name>
+        <phone>56080816</phone>
+        <birthday>03/08/1971</birthday>
+        <email>Linus@yahoo</email>
+        <address>Blk 45 Aljunied Street 85, #381</address>
+        <score>Group score: 7</score>
+        <avatar>http://139.59.227.237/public/default.jpg</avatar>
+        <tagged>colleagues</tagged>
+    </persons>
+    <persons>
+        <name>Linus Thompson</name>
+        <phone>31141671</phone>
+        <birthday>02/02/1982</birthday>
+        <email>Linus@outlook</email>
+        <address>Blk 45 Aljunied Street 85, #832</address>
+        <score>Group score: 4</score>
+        <avatar>http://139.59.227.237/public/default.jpg</avatar>
+        <tagged>colleagues</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Linus Curry</name>
+        <phone>44694272</phone>
+        <birthday>No Birthday Listed</birthday>
+        <email>Linus@hotmail</email>
+        <address>Blk 45 Aljunied Street 85, #232</address>
+        <score>Group score: 4</score>
+        <avatar>http://139.59.227.237/public/default.jpg</avatar>
+        <tagged>colleagues</tagged>
+        <tagged>friends</tagged>
+        <tagged>president</tagged>
+    </persons>
+    <persons>
+        <name>Linus Westbrook</name>
+        <phone>79504907</phone>
+        <birthday>No Birthday Listed</birthday>
+        <email>Linus@qq.com</email>
+        <address>Blk 45 Aljunied Street 85, #589</address>
+        <score>Group score: 2</score>
+        <avatar>http://139.59.227.237/public/default.jpg</avatar>
+        <tagged>colleagues</tagged>
+        <tagged>students</tagged>
+        <tagged>friends</tagged>
+        <tagged>president</tagged>
+    </persons>
+    <persons>
+        <name>Linus Harden</name>
+        <phone>46479690</phone>
+        <birthday>No Birthday Listed</birthday>
+        <email>Linus@sina.com</email>
+        <address>Blk 45 Aljunied Street 85, #332</address>
+        <score>Group score: 8</score>
+        <avatar>http://139.59.227.237/public/default.jpg</avatar>
+        <tagged>colleagues</tagged>
+        <tagged>students</tagged>
+        <tagged>customers</tagged>
+        <tagged>friends</tagged>
+        <tagged>president</tagged>
+    </persons>
+    <persons>
+        <name>Linus Herason</name>
+        <phone>74656038</phone>
+        <birthday>01/09/1980</birthday>
+        <email>Linus@gmail.com</email>
+        <address>Blk 45 Aljunied Street 85, #620</address>
+        <score>Group score: 2</score>
+        <avatar>http://139.59.227.237/public/default.jpg</avatar>
+        <tagged>lawyers</tagged>
+        <tagged>colleagues</tagged>
+        <tagged>students</tagged>
+        <tagged>customers</tagged>
+        <tagged>friends</tagged>
+        <tagged>president</tagged>
+    </persons>
+    <persons>
+        <name>Siri Herason</name>
+        <phone>9746370</phone>
+        <birthday>01/09/1980</birthday>
+        <email>Siri@gmail.com</email>
+        <address>Blk 45 Aljunied Street 85, #484</address>
+        <score>Group score: 7</score>
+        <avatar>http://139.59.227.237/public/default.jpg</avatar>
+    </persons>
+    <persons>
+        <name>Siri Trump</name>
+        <phone>59879742</phone>
+        <birthday>03/08/1971</birthday>
+        <email>Siri@yahoo</email>
+        <address>Blk 45 Aljunied Street 85, #60</address>
+        <score>Group score: 7</score>
+        <avatar>http://139.59.227.237/public/default.jpg</avatar>
+        <tagged>colleagues</tagged>
+    </persons>
+    <persons>
+        <name>Siri Thompson</name>
+        <phone>9552087</phone>
+        <birthday>02/02/1982</birthday>
+        <email>Siri@outlook</email>
+        <address>Blk 45 Aljunied Street 85, #349</address>
+        <score>Group score: 0</score>
+        <avatar>http://139.59.227.237/public/default.jpg</avatar>
+        <tagged>colleagues</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Siri Curry</name>
+        <phone>1010023</phone>
+        <birthday>No Birthday Listed</birthday>
+        <email>Siri@hotmail</email>
+        <address>Blk 45 Aljunied Street 85, #710</address>
+        <score>Group score: 8</score>
+        <avatar>http://139.59.227.237/public/default.jpg</avatar>
+        <tagged>colleagues</tagged>
+        <tagged>friends</tagged>
+        <tagged>president</tagged>
+    </persons>
+    <persons>
+        <name>Siri Westbrook</name>
+        <phone>76928498</phone>
+        <birthday>No Birthday Listed</birthday>
+        <email>Siri@qq.com</email>
+        <address>Blk 45 Aljunied Street 85, #678</address>
+        <score>Group score: 8</score>
+        <avatar>http://139.59.227.237/public/default.jpg</avatar>
+        <tagged>colleagues</tagged>
+        <tagged>students</tagged>
+        <tagged>friends</tagged>
+        <tagged>president</tagged>
+    </persons>
+    <persons>
+        <name>Siri Harden</name>
+        <phone>60515162</phone>
+        <birthday>No Birthday Listed</birthday>
+        <email>Siri@sina.com</email>
+        <address>Blk 45 Aljunied Street 85, #503</address>
+        <score>Group score: 1</score>
+        <avatar>http://139.59.227.237/public/default.jpg</avatar>
+        <tagged>colleagues</tagged>
+        <tagged>students</tagged>
+        <tagged>customers</tagged>
+        <tagged>friends</tagged>
+        <tagged>president</tagged>
+    </persons>
+    <persons>
+        <name>Siri Herason</name>
+        <phone>28135216</phone>
+        <birthday>01/09/1980</birthday>
+        <email>Siri@gmail.com</email>
+        <address>Blk 45 Aljunied Street 85, #202</address>
+        <score>Group score: 2</score>
+        <avatar>http://139.59.227.237/public/default.jpg</avatar>
+        <tagged>lawyers</tagged>
+        <tagged>colleagues</tagged>
+        <tagged>students</tagged>
+        <tagged>customers</tagged>
+        <tagged>friends</tagged>
+        <tagged>president</tagged>
+    </persons>
+    <persons>
+        <name>Hector Herason</name>
+        <phone>26566423</phone>
+        <birthday>01/09/1980</birthday>
+        <email>Hector@gmail.com</email>
+        <address>Blk 45 Aljunied Street 85, #288</address>
+        <score>Group score: 0</score>
+        <avatar>http://139.59.227.237/public/default.jpg</avatar>
+    </persons>
+    <persons>
+        <name>Hector Trump</name>
+        <phone>72018265</phone>
+        <birthday>03/08/1971</birthday>
+        <email>Hector@yahoo</email>
+        <address>Blk 45 Aljunied Street 85, #876</address>
+        <score>Group score: 1</score>
+        <avatar>http://139.59.227.237/public/default.jpg</avatar>
+        <tagged>colleagues</tagged>
+    </persons>
+    <persons>
+        <name>Hector Thompson</name>
+        <phone>84347910</phone>
+        <birthday>02/02/1982</birthday>
+        <email>Hector@outlook</email>
+        <address>Blk 45 Aljunied Street 85, #749</address>
+        <score>Group score: 4</score>
+        <avatar>http://139.59.227.237/public/default.jpg</avatar>
+        <tagged>colleagues</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Hector Curry</name>
+        <phone>39823244</phone>
+        <birthday>No Birthday Listed</birthday>
+        <email>Hector@hotmail</email>
+        <address>Blk 45 Aljunied Street 85, #686</address>
+        <score>Group score: 5</score>
+        <avatar>http://139.59.227.237/public/default.jpg</avatar>
+        <tagged>colleagues</tagged>
+        <tagged>friends</tagged>
+        <tagged>president</tagged>
+    </persons>
+    <persons>
+        <name>Hector Westbrook</name>
+        <phone>37088000</phone>
+        <birthday>No Birthday Listed</birthday>
+        <email>Hector@qq.com</email>
+        <address>Blk 45 Aljunied Street 85, #210</address>
+        <score>Group score: 5</score>
+        <avatar>http://139.59.227.237/public/default.jpg</avatar>
+        <tagged>colleagues</tagged>
+        <tagged>students</tagged>
+        <tagged>friends</tagged>
+        <tagged>president</tagged>
+    </persons>
+    <persons>
+        <name>Hector Harden</name>
+        <phone>6962209</phone>
+        <birthday>No Birthday Listed</birthday>
+        <email>Hector@sina.com</email>
+        <address>Blk 45 Aljunied Street 85, #114</address>
+        <score>Group score: 4</score>
+        <avatar>http://139.59.227.237/public/default.jpg</avatar>
+        <tagged>colleagues</tagged>
+        <tagged>students</tagged>
+        <tagged>customers</tagged>
+        <tagged>friends</tagged>
+        <tagged>president</tagged>
+    </persons>
+    <persons>
+        <name>Hector Herason</name>
+        <phone>51158186</phone>
+        <birthday>01/09/1980</birthday>
+        <email>Hector@gmail.com</email>
+        <address>Blk 45 Aljunied Street 85, #517</address>
+        <score>Group score: 8</score>
+        <avatar>http://139.59.227.237/public/default.jpg</avatar>
+        <tagged>lawyers</tagged>
+        <tagged>colleagues</tagged>
+        <tagged>students</tagged>
+        <tagged>customers</tagged>
+        <tagged>friends</tagged>
+        <tagged>president</tagged>
+    </persons>
+    <persons>
+        <name>Achilles Herason</name>
+        <phone>65757425</phone>
+        <birthday>01/09/1980</birthday>
+        <email>Achilles@gmail.com</email>
+        <address>Blk 45 Aljunied Street 85, #659</address>
+        <score>Group score: 1</score>
+        <avatar>http://139.59.227.237/public/default.jpg</avatar>
+    </persons>
+    <persons>
+        <name>Achilles Trump</name>
+        <phone>17011153</phone>
+        <birthday>03/08/1971</birthday>
+        <email>Achilles@yahoo</email>
+        <address>Blk 45 Aljunied Street 85, #765</address>
+        <score>Group score: 2</score>
+        <avatar>http://139.59.227.237/public/default.jpg</avatar>
+        <tagged>colleagues</tagged>
+    </persons>
+    <persons>
+        <name>Achilles Thompson</name>
+        <phone>81250389</phone>
+        <birthday>02/02/1982</birthday>
+        <email>Achilles@outlook</email>
+        <address>Blk 45 Aljunied Street 85, #688</address>
+        <score>Group score: 4</score>
+        <avatar>http://139.59.227.237/public/default.jpg</avatar>
+        <tagged>colleagues</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Achilles Curry</name>
+        <phone>65698426</phone>
+        <birthday>No Birthday Listed</birthday>
+        <email>Achilles@hotmail</email>
+        <address>Blk 45 Aljunied Street 85, #599</address>
+        <score>Group score: 1</score>
+        <avatar>http://139.59.227.237/public/default.jpg</avatar>
+        <tagged>colleagues</tagged>
+        <tagged>friends</tagged>
+        <tagged>president</tagged>
+    </persons>
+    <persons>
+        <name>Achilles Westbrook</name>
+        <phone>78493887</phone>
+        <birthday>No Birthday Listed</birthday>
+        <email>Achilles@qq.com</email>
+        <address>Blk 45 Aljunied Street 85, #741</address>
+        <score>Group score: 6</score>
+        <avatar>http://139.59.227.237/public/default.jpg</avatar>
+        <tagged>colleagues</tagged>
+        <tagged>students</tagged>
+        <tagged>friends</tagged>
+        <tagged>president</tagged>
+    </persons>
+    <persons>
+        <name>Achilles Harden</name>
+        <phone>2447614</phone>
+        <birthday>No Birthday Listed</birthday>
+        <email>Achilles@sina.com</email>
+        <address>Blk 45 Aljunied Street 85, #352</address>
+        <score>Group score: 3</score>
+        <avatar>http://139.59.227.237/public/default.jpg</avatar>
+        <tagged>colleagues</tagged>
+        <tagged>students</tagged>
+        <tagged>customers</tagged>
+        <tagged>friends</tagged>
+        <tagged>president</tagged>
+    </persons>
+    <persons>
+        <name>Achilles Herason</name>
+        <phone>30334336</phone>
+        <birthday>01/09/1980</birthday>
+        <email>Achilles@gmail.com</email>
+        <address>Blk 45 Aljunied Street 85, #237</address>
+        <score>Group score: 1</score>
+        <avatar>http://139.59.227.237/public/default.jpg</avatar>
+        <tagged>lawyers</tagged>
+        <tagged>colleagues</tagged>
+        <tagged>students</tagged>
+        <tagged>customers</tagged>
+        <tagged>friends</tagged>
+        <tagged>president</tagged>
+    </persons>
+    <persons>
+        <name>Odysseus Herason</name>
+        <phone>59229364</phone>
+        <birthday>01/09/1980</birthday>
+        <email>Odysseus@gmail.com</email>
+        <address>Blk 45 Aljunied Street 85, #628</address>
+        <score>Group score: 8</score>
+        <avatar>http://139.59.227.237/public/default.jpg</avatar>
+    </persons>
+    <persons>
+        <name>Odysseus Trump</name>
+        <phone>16129506</phone>
+        <birthday>03/08/1971</birthday>
+        <email>Odysseus@yahoo</email>
+        <address>Blk 45 Aljunied Street 85, #835</address>
+        <score>Group score: 0</score>
+        <avatar>http://139.59.227.237/public/default.jpg</avatar>
+        <tagged>colleagues</tagged>
+    </persons>
+    <persons>
+        <name>Odysseus Thompson</name>
+        <phone>21099081</phone>
+        <birthday>02/02/1982</birthday>
+        <email>Odysseus@outlook</email>
+        <address>Blk 45 Aljunied Street 85, #610</address>
+        <score>Group score: 6</score>
+        <avatar>http://139.59.227.237/public/default.jpg</avatar>
+        <tagged>colleagues</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Odysseus Curry</name>
+        <phone>58302312</phone>
+        <birthday>No Birthday Listed</birthday>
+        <email>Odysseus@hotmail</email>
+        <address>Blk 45 Aljunied Street 85, #338</address>
+        <score>Group score: 2</score>
+        <avatar>http://139.59.227.237/public/default.jpg</avatar>
+        <tagged>colleagues</tagged>
+        <tagged>friends</tagged>
+        <tagged>president</tagged>
+    </persons>
+    <persons>
+        <name>Odysseus Westbrook</name>
+        <phone>74135923</phone>
+        <birthday>No Birthday Listed</birthday>
+        <email>Odysseus@qq.com</email>
+        <address>Blk 45 Aljunied Street 85, #490</address>
+        <score>Group score: 8</score>
+        <avatar>http://139.59.227.237/public/default.jpg</avatar>
+        <tagged>colleagues</tagged>
+        <tagged>students</tagged>
+        <tagged>friends</tagged>
+        <tagged>president</tagged>
+    </persons>
+    <persons>
+        <name>Odysseus Harden</name>
+        <phone>70100635</phone>
+        <birthday>No Birthday Listed</birthday>
+        <email>Odysseus@sina.com</email>
+        <address>Blk 45 Aljunied Street 85, #879</address>
+        <score>Group score: 1</score>
+        <avatar>http://139.59.227.237/public/default.jpg</avatar>
+        <tagged>colleagues</tagged>
+        <tagged>students</tagged>
+        <tagged>customers</tagged>
+        <tagged>friends</tagged>
+        <tagged>president</tagged>
+    </persons>
+    <persons>
+        <name>Odysseus Herason</name>
+        <phone>17835883</phone>
+        <birthday>01/09/1980</birthday>
+        <email>Odysseus@gmail.com</email>
+        <address>Blk 45 Aljunied Street 85, #789</address>
+        <score>Group score: 6</score>
+        <avatar>http://139.59.227.237/public/default.jpg</avatar>
+        <tagged>lawyers</tagged>
+        <tagged>colleagues</tagged>
+        <tagged>students</tagged>
+        <tagged>customers</tagged>
+        <tagged>friends</tagged>
+        <tagged>president</tagged>
+    </persons>
+    <tags>lawyers</tags>
+    <tags>colleagues</tags>
+    <tags>students</tags>
+    <tags>customers</tags>
+    <tags>friends</tags>
+    <tags>president</tags>
 </addressbook>

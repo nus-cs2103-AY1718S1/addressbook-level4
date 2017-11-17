@@ -16,12 +16,22 @@ public interface ReadOnlyPerson {
     Name getName();
     ObjectProperty<Phone> phoneProperty();
     Phone getPhone();
+    //@@author siri99
+    ObjectProperty<Birthday> birthdayProperty();
+    Birthday getBirthday();
+    //@@author
     ObjectProperty<Email> emailProperty();
     Email getEmail();
     ObjectProperty<Address> addressProperty();
     Address getAddress();
+    //@@author coolpotato1
+    ObjectProperty<Score> scoreProperty();
+    Score getScore();
+    //@@author
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
+
+    Avatar getAvatarPic();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
@@ -31,6 +41,7 @@ public interface ReadOnlyPerson {
                 || (other != null // this is first to avoid NPE below
                 && other.getName().equals(this.getName()) // state checks here onwards
                 && other.getPhone().equals(this.getPhone())
+                && other.getBirthday().equals(this.getBirthday())
                 && other.getEmail().equals(this.getEmail())
                 && other.getAddress().equals(this.getAddress()));
     }
@@ -43,13 +54,28 @@ public interface ReadOnlyPerson {
         builder.append(getName())
                 .append(" Phone: ")
                 .append(getPhone())
+                //@@author siri99
+                .append(" Birthday: ")
+                .append(getBirthday())
+                //@@author
                 .append(" Email: ")
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
+                //@@author coolpotato1
+                .append(" ")
+                .append(getScore())
+                //@@author
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();
     }
 
+    default String getOnlyTags() {
+        final StringBuilder builder = new StringBuilder();
+        for (Tag tag : getTags()) {
+            builder.append(" " + (tag.tagName).toLowerCase());
+        }
+        return builder.toString();
+    }
 }

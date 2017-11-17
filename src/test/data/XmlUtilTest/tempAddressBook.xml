@@ -8,6 +8,7 @@
         <street></street>
         <postalCode></postalCode>
         <city></city>
+        <birthday></birthday>
     </persons>
     <tags>
         <name>Friends</name>

@@ -12,7 +12,6 @@
 <VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
   <stylesheets>
     <URL value="@DarkTheme.css" />
-    <URL value="@Extensions.css" />
   </stylesheets>
 
   <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">
@@ -22,6 +21,12 @@
     <Menu mnemonicParsing="false" text="Help">
       <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
     </Menu>
+    <!-- @author Linus -->
+    <Menu mnemonicParsing="false" text="Theme">
+      <MenuItem mnemonicParsing="false" onAction="#handleDarkTheme" text="Dark" />
+      <MenuItem mnemonicParsing="false" onAction="#handleLightTheme" text="Light" />
+    </Menu>
+    <!-- @author Linus -->
   </MenuBar>
 
   <StackPane VBox.vgrow="NEVER" fx:id="commandBoxPlaceholder" styleClass="pane-with-border">

@@ -38,6 +38,18 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * *`exit`* : exits the app
 
 .  Refer to the link:#features[Features] section below for details of each command.
+// tag::theme[]
+
+=== Themes
+
+Two themes are provided for the user:
+
+* Light
+* Dark
++
+image::themes.png[width="800"]
++
+// end::theme[]
 
 == Features
 
@@ -54,28 +66,58 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 Format: `help`
 
-=== Adding a person: `add`
+=== Adding a person: `add` or `a`
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Format: `add n/NAME p/PHONE_NUMBER [b/BIRTHDAY] e/EMAIL a/ADDRESS [s/SCORE] [t/TAG]...`
+        `a n/NAME p/PHONE_NUMBER [b/BIRTHDAY] e/EMAIL a/ADDRESS [s/SCORE] [t/TAG]...`
 
 [TIP]
 A person can have any number of tags (including 0)
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
+* `add n/John Doe p/98765432 b/19/07/1995 e/johnd@example.com a/John street, block 123, #01-01, s/5`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+// tag::addButton[]
 
-=== Listing all persons : `list`
+=== Adding a person via 'add' button
+
+Adds a new person to the address book.
+Opens a prompt with text boxes for all possible fields for a new person.
+Window is dismissed on successful addition of a new person.
+
+****
+* Contains text boxes for option fields with text indicating them as optional.
+* Can add multiple tags if separated by a space in the text box.
+****
+// end::addButton[]
+
+=== Listing all persons : `list` or `l`
 
 Shows a list of all persons in the address book. +
-Format: `list`
+Format: `list` or `l`
 
-=== Editing a person : `edit`
+// tag::sort[]
+=== Sorting the person list : `sort` or `so`
+
+Sorts the list persons in the address book in either alphabetical order of names, ascending order of birthdays, +
+or descending group score depending on the parameter. +
+Format: `sort` or `so` or `sort name` or `sort birthday` or `sort b` or `sort s` or `sort score`
+
+****
+* Only one parameter can be passed to the command. Either 'name', 'birthday', 'b', 's' or 'score'.
+* If no parameter is passed, eg. 'sort', it will default sort by name.
+* Parameter 'name' will sort by name.
+* Parameter 'birthday' and 'b' will sort by birthday.
+* Parameter 'score' or 's' will sort by Group score.
+****
+// end::sort[]
+=== Editing a person : `edit` or `e`
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/PHONE] [b/BIRTHDAY] [e/EMAIL] [a/ADDRESS] [s/SCORE] [t/TAG]...`
+        `e INDEX [n/NAME] [p/PHONE] [b/BIRTHDAY] [e/EMAIL] [a/ADDRESS] [s/SCORE] [t/TAG]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -91,31 +133,56 @@ Examples:
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+// tag::editButton[]
 
-=== Locating persons by name: `find`
+=== Editing a person via 'Edit' button
 
-Finds persons whose names contain any of the given keywords. +
+Edits an existing person in the address book. +
+Fill in all fields you wish to modify for the selected person. +
+Window is dismissed upon a successful edit, remains open on failure to allow minor corrections.
+
+****
+* Edits the person whose 'Edit' button was presesd.
+* At least one of the fields must be modified.
+* Existing values will be updated to the input values.
+* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
+* Can add multiple tags if separated by a space.
+****
+// end::editButton[]
+// tag::find[]
+
+=== Locating persons by name or tags: `find` or `f`
+
+Finds persons whose names or tags contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
-
+        `f KEYWORD [MORE_KEYWORDS]`
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
+* The name and tags are searched.
+* Partial words will be matched e.g. `Han` will match `Hans`
+* Partial words must be atleast 2 characters long
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ****
+image::FindBySubString.png[width="800"]
+_Figure 1.1: Find by Substring of name_
 
 Examples:
-
 * `find John` +
-Returns `john` and `John Doe`
+Returns `john` and `John Doe` and any user whose name contains the substring `john` or `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
+* `find Bet` +
+Returns any person having names which contain the word `Bet`, eg.`Betsy`
+* `find friends family` +
+Returns any person having tag `friends` or `family`
+// end::find[]
 
-=== Deleting a person : `delete`
+=== Deleting a person : `delete` or `d`
 
 Deletes the specified person from the address book. +
 Format: `delete INDEX`
+        `d INDEX`
 
 ****
 * Deletes the person at the specified `INDEX`.
@@ -131,11 +198,78 @@ Deletes the 2nd person in the address book.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
+// tag::deleteButton[]
 
-=== Selecting a person : `select`
+=== Deleting a person : via 'Delete' button
+
+Deletes the associated person from the address book.
+Can be undone using `undo` normally.
+
+****
+* Deletes the person
+****
+// end::deleteButton[]
+// tag::homeCommand[]
+=== Going back to home panel : `home`
+
+Goes back to home panel. +
+
+The command is to help user go back to home browser panel simply just raise new event. +
+
+Format: `home`
+
+* After running command *
+
+image::homePanel.png[width="800"]
+
+// end::homeCommand[]
+
+// tag::avatar[]
+=== Adding avatar image for person: `avatar`
+
+Adds an avatar image for person by specifying image URL. +
+
+Format: `avatar INDEX [u/Image URL]`
+
+*Before running command*
+
+image::addAvatar1.png[width="800"]
+
+*After running command*
+
+image::addAvatar2.png[width="800"]
+
+****
+* The index refers to the index number of person
+* The Image URL must be valid url link and end with image file extension such as .jpg .png .gif
+* The default Image URL is: http://139.59.227.237/public/default.jpg
+****
+
+Example:
+
+* `avatar 1 u/http://139.59.227.237/public/default.jpg`
+
+Adds avatar image[http://139.59.227.237/public/default.jpg] for
+1st person in shown list. +
+
+// end::avatar[]
+// tag::browsePanel[]
+=== Changing browser panel
+
+*Home Panel*
+
+image::BrowserPanel1.png[width="800"]
+
+*Person's Profile*
+
+image::BrowserPanel2.png[width="800"]
+// end::browsePanel[]
+
+=== Selecting a person : `select` or `s`
 
 Selects the person identified by the index number used in the last person listing. +
 Format: `select INDEX`
+        `s INDEX`
 
 ****
 * Selects the person and loads the Google search page the person at the specified `INDEX`.
@@ -152,10 +286,60 @@ Selects the 2nd person in the address book.
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
-=== Listing entered commands : `history`
+// tag::favouritelist[]
+=== Listing Favourite persons : `favlist` or `fl`
+
+Shows a list of all the persons in the Favourite List. +
+Format: `favlist` or `fl`
+
+image::FavouriteList.png[width="800"]
+_Figure 1.12.1: Find by Substring of name_
+
+
+=== Listing Favourite persons via star button
+
+On being clicked, Star shaped button calls the `favlist` command and shows a list of all the persons in the Favourite List. +
+
+=== Adding a person to Favourite List : `fav` or `fv`
+
+Adds the person identified by the index number used in main list
+to the favourite list. +
+Format: `fav INDEX`
+        `fv INDEX`
+
+****
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
+Examples:
+
+* `fav 2` +
+Adds the 2nd person in the address book to the Favourite List.
+
+=== Removing a person from Favourite List : `unfav` or `unfv`
+
+Removes the person identified by the index number used in the favourite list
+from the favourite list. +
+Format: `unfav INDEX`
+        `unfv INDEX`
+
+****
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
+Examples:
+
+* `unfav 3` +
+Removes the 3rd person listed in the Favourite list from the Favourite List.
+// end::favouritelist[]
+
+=== Listing entered commands : `history` or `h`
 
 Lists all the commands that you have entered in reverse chronological order. +
 Format: `history`
+        `h`
 
 [NOTE]
 ====
@@ -163,10 +347,11 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 ====
 
 // tag::undoredo[]
-=== Undoing previous command : `undo`
+=== Undoing previous command : `undo` or `u`
 
 Restores the address book to the state before the previous _undoable_ command was executed. +
 Format: `undo`
+        `u`
 
 [NOTE]
 ====
@@ -176,23 +361,41 @@ Undoable commands: those commands that modify the address book's content (`add`,
 Examples:
 
 * `delete 1` +
-`list` +
+`l` +
 `undo` (reverses the `delete 1` command) +
 
 * `select 1` +
 `list` +
-`undo` +
+`u` +
 The `undo` command fails as there are no undoable commands executed previously.
 
 * `delete 1` +
 `clear` +
 `undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
+`undo` (reverses the `delete 1` command)
+// end::undoredo[]
 
-=== Redoing the previously undone command : `redo`
+// tag::undoRedoButton[]
+=== Undoing previous command via 'Undo' button
+
+Restores the address book to the state before the previous _undoable_ command was executed.
+
+[NOTE]
+====
+Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+====
+
+=== Redoing the previously undone command via 'Redo' button
+
+Reverses the most recent `undo` command or button press.
+Fails if no `undo` commands have executed or 'Undo' has not been pressed.
+// end::undoRedoButton[]
+
+=== Redoing the previously undone command : `redo` or `r`
 
 Reverses the most recent `undo` command. +
 Format: `redo`
+        `r`
 
 Examples:
 
@@ -207,15 +410,16 @@ The `redo` command fails as there are no `undo` commands executed previously.
 * `delete 1` +
 `clear` +
 `undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
+`u` (reverses the `delete 1` command) +
 `redo` (reapplies the `delete 1` command) +
-`redo` (reapplies the `clear` command) +
+`r` (reapplies the `clear` command) +
 // end::undoredo[]
 
-=== Clearing all entries : `clear`
+=== Clearing all entries : `clear` or `c`
 
 Clears all entries from the address book. +
 Format: `clear`
+        `c`
 
 === Exiting the program : `exit`
 
@@ -227,6 +431,24 @@ Format: `exit`
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
+=== Printing the addressbook `print` or `p` (coming in v2.0)
+
+Exports the entire addressbook to a textfile for easy printing. +
+Format: `print` or `p`
+// tag::import[]
+
+=== Importing contacts `import` or `imp` (coming in v2.0)
+
+Imports contacts from external text file to the addressbook. +
+Format: `import fileAddress` or `imp fileAddress`
+// end::import[]
+
+=== Adding Events `event` (coming in v2.0)
+
+Currently, the events window is static for all users. It is to be
+implemented in v2.0.
+Format: `event INDEX [t/Title of event] [e/Description of event] [d/Date of event DD/MM/YYYY]`
+
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
@@ -234,19 +456,48 @@ There is no need to save manually.
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX` +
-e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *List* : `list`
+* *Add* `add n/NAME p/PHONE_NUMBER [b/BIRTHDAY] e/EMAIL a/ADDRESS [s/SCORE] [t/TAG]...` or `a n/NAME p/PHONE_NUMBER [b/BIRTHDAY] e/EMAIL a/ADDRESS [s/SCORE] [t/TAG]...` +
+e.g. `add n/James Ho p/22224444 b/14/07/1995 e/jamesho@example.com a/123, Clementi Rd, 1234665 s/8 t/friend t/colleague`
+* *Clear* : `clear` or `c`
+* *Delete* : `delete INDEX` or `d INDEX` +
+e.g. `delete 3` or `d 3`
+* *Edit* : `edit INDEX [n/NAME] [b/BIRTHDAY] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [s/SCORE] [t/TAG]...` or `e INDEX [n/NAME] [p/PHONE_NUMBER] [b/BIRTHDAY] [e/EMAIL] [a/ADDRESS] [s/SCORE] [t/TAG]...` +
+e.g. `edit 2 n/James Lee e/jameslee@example.com` or `e 2 n/James Lee e/jameslee@example.com`
+* *Favourite list* : `favlist` or `fl`
+* *Favourite* : `fav INDEX` or `fv INDEX` +
+e.g.`fav 2` or `fv 2`
+* *Unfavourite* : `unfav INDEX` or `ufv INDEX` +
+e.g.`ufav 3` or `unfv 3`
+* *Find* : `find KEYWORD [MORE_KEYWORDS]` or `f KEYWORD [MORE_KEYWORDS]` +
+e.g. `find James Jake` or `f James Jake` or `find alice friends`
+* *List* : `list` or `l`
 * *Help* : `help`
-* *Select* : `select INDEX` +
-e.g.`select 2`
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
+* *Home* : `home`
+* *Avatar* : `avatar INDEX [u/IMAGE URL]`
+* *Select* : `select INDEX` or `s INDEX` +
+e.g.`select 2` or `s 2`
+* *Sort* : `sort` or `sort FILTER` or `so FILTER` +
+Filters: `name`, `birthday`, `b`, `score` +
+e.g. `sort name` or `so birthday` or `sort score` or `sort b` or `sort`
+* *History* : `history` or `h`
+* *Undo* : `undo` or `u`
+* *Redo* : `redo` or `r`
+
+
+== Reported Bugs
+The wrong person gets deleted from the list when we delete a person after using the find command, and use undo and redo commands immediately after.
+
+If list originally contains: +
+1. Alex +
+2. Robert +
+3. Roy +
+
+Sequence of commands: +
+find Roy (Roy is found) +
+delete 1 (Roy is deleted) +
+undo (Roy is back in the list) +
+redo (Alex is deleted instead of Roy) +
+
+AddressBook deletes the person at the top of the list instead of deleting the same person we previously deleted when using redo.
+This is a bug that has existed in the original AdderessBook itself, has not been fixed yet (difficult to fix currently due to presence of multiple
+lists in the current implementation of AddressBook).

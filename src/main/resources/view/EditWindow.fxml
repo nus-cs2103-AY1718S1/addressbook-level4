@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- @@author Jacob Vosburgh -->
+
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<StackPane fx:id="helpWindowRoot" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+  <VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <TextField fx:id="nameField" prefWidth="200.0" promptText="Name"/>
+    <TextField fx:id="tagsField" prefWidth="200.0" promptText="Tag(s)"/>
+    <TextField fx:id="phoneField" prefWidth="200.0" promptText="Phone"/>
+    <TextField fx:id="birthdayField" prefWidth="200.0" promptText="Birthday"/>
+    <TextField fx:id="addressField" prefWidth="200.0" promptText="Address"/>
+    <TextField fx:id="emailField" prefWidth="200.0" promptText="Email"/>
+    <TextField fx:id="scoreField" prefWidth="200.0" promptText="Group Score"/>
+    <Button onAction='#handleEditSubmitAction' id="edit" prefWidth="120.0" minWidth="90.0" text="Edit"/>
+  </VBox>
+</StackPane>
+<!-- @@author -->
