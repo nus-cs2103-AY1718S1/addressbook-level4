@@ -1,5 +1,5 @@
 # Jacob
-###### \java\seedu\address\ui\AddWindow.java
+###### \seedu\address\ui\AddWindow.java
 ``` java
 package seedu.address.ui;
 
@@ -130,7 +130,7 @@ public class AddWindow extends UiPart<Region> {
     }
 }
 ```
-###### \java\seedu\address\ui\CommandBox.java
+###### \seedu\address\ui\CommandBox.java
 ``` java
     /**
      * handles button events given to it by the fxml doc that it is set as controller for by the constructor in UiPart
@@ -139,7 +139,7 @@ public class AddWindow extends UiPart<Region> {
     @FXML
     private void handleAddButtonAction(ActionEvent buttonEvent) {
 ```
-###### \java\seedu\address\ui\CommandBox.java
+###### \seedu\address\ui\CommandBox.java
 ``` java
             AddWindow addWindow = new AddWindow(logic);
             addWindow.show();
@@ -183,7 +183,7 @@ public class AddWindow extends UiPart<Region> {
 
     }
 ```
-###### \java\seedu\address\ui\EditWindow.java
+###### \seedu\address\ui\EditWindow.java
 ``` java
 package seedu.address.ui;
 
@@ -313,14 +313,14 @@ public class EditWindow extends UiPart<Region> {
     }
 }
 ```
-###### \java\seedu\address\ui\PersonCard.java
+###### \seedu\address\ui\PersonCard.java
 ``` java
     public PersonCard(ReadOnlyPerson person, int displayedIndex, Logic inlogic) {
         super(FXML);
         this.person = person;
         logic = inlogic;
 ```
-###### \java\seedu\address\ui\PersonCard.java
+###### \seedu\address\ui\PersonCard.java
 ``` java
         cardNum = displayedIndex;
         id.setText(cardNum + ". ");
@@ -328,7 +328,7 @@ public class EditWindow extends UiPart<Region> {
         bindListeners(person);
     }
 ```
-###### \java\seedu\address\ui\PersonCard.java
+###### \seedu\address\ui\PersonCard.java
 ``` java
     /**
      * Provides a consistent color based on the first letter of a tag
@@ -345,7 +345,7 @@ public class EditWindow extends UiPart<Region> {
         return colorMapping.get(tagValue);
     }
 ```
-###### \java\seedu\address\ui\PersonCard.java
+###### \seedu\address\ui\PersonCard.java
 ``` java
     /**
      * Binds the individual UI elements to observe their respective {@code Person} properties
@@ -356,7 +356,7 @@ public class EditWindow extends UiPart<Region> {
         name.textProperty().bind(Bindings.convert(person.nameProperty()));
         phone.textProperty().bind(Bindings.convert(person.phoneProperty()));
 ```
-###### \java\seedu\address\ui\PersonCard.java
+###### \seedu\address\ui\PersonCard.java
 ``` java
 
     /**
@@ -370,7 +370,7 @@ public class EditWindow extends UiPart<Region> {
             String justIndex = id.getText().substring(0, id.getText().length() - 2);
             String delCommand = "delete " + justIndex;
 ```
-###### \java\seedu\address\ui\PersonCard.java
+###### \seedu\address\ui\PersonCard.java
 ``` java
             logger.info("Result: " + commandResult.feedbackToUser);
             raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
@@ -388,11 +388,11 @@ public class EditWindow extends UiPart<Region> {
     @FXML
     private void handleEditButtonAction(ActionEvent buttonEvent) {
 ```
-###### \java\seedu\address\ui\PersonCard.java
+###### \seedu\address\ui\PersonCard.java
 ``` java
 
 ```
-###### \java\seedu\address\ui\PersonCard.java
+###### \seedu\address\ui\PersonCard.java
 ``` java
             EditWindow editWindow = new EditWindow(logic, cardNum);
             editWindow.show();
@@ -400,92 +400,8 @@ public class EditWindow extends UiPart<Region> {
         logger.info("Result: " + commandResult.feedbackToUser);
         raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
 ```
-###### \java\seedu\address\ui\PersonCard.java
+###### \seedu\address\ui\PersonCard.java
 ``` java
     }
 }
-```
-###### \resources\view\AddWindow.fxml
-``` fxml
-
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
-
-<StackPane fx:id="helpWindowRoot" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-  <VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-    <TextField fx:id="nameField" prefWidth="200.0" promptText="Name"/>
-    <TextField fx:id="tagsField" prefWidth="200.0" promptText="Optional Tags"/>
-    <TextField fx:id="phoneField" prefWidth="200.0" promptText="Phone"/>
-    <TextField fx:id="birthdayField" prefWidth="200.0" promptText="Optional Birthday"/>
-    <TextField fx:id="addressField" prefWidth="200.0" promptText="Address"/>
-    <TextField fx:id="emailField" prefWidth="200.0" promptText="Email"/>
-    <TextField fx:id="scoreField" prefWidth="200.0" promptText="Optional Group Score"/>
-    <Button onAction='#handleAddSubmitAction' id="add" prefWidth="120.0" minWidth="90.0" text="Add"/>
-  </VBox>
-</StackPane>
-```
-###### \resources\view\CommandBox.fxml
-``` fxml
-  <Button onAction='#handleAddButtonAction' id="add" prefWidth="120.0" minWidth="90.0" text="Add"/>
-  <Button onAction='#handleUndoButtonAction' id="undo" prefWidth="120.0" minWidth="90.0" text="Undo"/>
-  <Button onAction='#handleRedoButtonAction' id="redo" prefWidth="120.0" minWidth="90.0" text="Redo"/>
-```
-###### \resources\view\EditWindow.fxml
-``` fxml
-
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
-
-<StackPane fx:id="helpWindowRoot" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-  <VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-    <TextField fx:id="nameField" prefWidth="200.0" promptText="Name"/>
-    <TextField fx:id="tagsField" prefWidth="200.0" promptText="Tag(s)"/>
-    <TextField fx:id="phoneField" prefWidth="200.0" promptText="Phone"/>
-    <TextField fx:id="birthdayField" prefWidth="200.0" promptText="Birthday"/>
-    <TextField fx:id="addressField" prefWidth="200.0" promptText="Address"/>
-    <TextField fx:id="emailField" prefWidth="200.0" promptText="Email"/>
-    <TextField fx:id="scoreField" prefWidth="200.0" promptText="Group Score"/>
-    <Button onAction='#handleEditSubmitAction' id="edit" prefWidth="120.0" minWidth="90.0" text="Edit"/>
-  </VBox>
-</StackPane>
-```
-###### \resources\view\PersonListCard.fxml
-``` fxml
-
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.FlowPane?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Region?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.Button?>
-
-<HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-  <GridPane HBox.hgrow="ALWAYS">
-    <columnConstraints>
-      <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
-    </columnConstraints>
-    <VBox alignment="CENTER_LEFT" minHeight="105" GridPane.columnIndex="0">
-      <padding>
-        <Insets top="5" right="5" bottom="5" left="15" />
-      </padding>
-      <HBox spacing="5" alignment="CENTER_LEFT">
-        <Label fx:id="id" styleClass="cell_big_label">
-          <minWidth>
-            <!-- Ensures that the label text is never truncated -->
-            <Region fx:constant="USE_PREF_SIZE" />
-          </minWidth>
-        </Label>
-        <Label fx:id="name" text="\$first" styleClass="cell_big_label" />
-        <Region prefHeight="10.0" prefWidth="1.0" HBox.hgrow="ALWAYS" />
-        <Button onAction='#handleDeleteButtonAction' fx:id="delete" text="X"/>
-      </HBox>
-      <FlowPane fx:id="tags" />
-      <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" />
 ```
