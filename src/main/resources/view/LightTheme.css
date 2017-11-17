@@ -1,4 +1,3 @@
-/* @@author Linus */
 .root {
     -fx-accent: derive(#f7f5f4, -10%);
     -fx-focus-color: derive(#f7f5f4, -10%);

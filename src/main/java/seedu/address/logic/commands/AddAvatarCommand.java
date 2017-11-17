@@ -1,6 +1,6 @@
 package seedu.address.logic.commands;
 
-//@@author Linus
+//@@author LinusMelb
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_IMAGE_URL;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
@@ -54,8 +54,6 @@ public class AddAvatarCommand extends Command {
     private final Index index;
     private final Avatar avatar;
 
-    private boolean isOldFileDeleted = true;
-
     /**
      *
      * @param index of the person in the filtered person list to update avatar picture
@@ -87,15 +85,6 @@ public class AddAvatarCommand extends Command {
 
         if (avatar.toString().compareTo(Avatar.DEFAULT_URL) == 0 && avatar.toString() != "") {
 
-            String oldFile = personToUpdateAvatarPic.getAvatarPic().toString();
-            if (oldFile.compareTo(Avatar.DEFAULT_URL) != 0) {
-                oldFile = urlToPath(oldFile);
-                try {
-                    Files.delete(Paths.get(oldFile));
-                } catch (IOException ioe) {
-                    isOldFileDeleted = false;
-                }
-            }
             newAvatar = avatar;
 
         } else {
@@ -173,11 +162,8 @@ public class AddAvatarCommand extends Command {
 
         String resultMessage = String.format(MESSAGE_UPDATE_AVATAR_PIC_SUCCESS, personToUpdateAvatarPic.getName());
 
-        if (isOldFileDeleted) {
-            return new CommandResult(resultMessage);
-        } else {
-            return new CommandResult(String.join("\n", resultMessage, "File already exists"));
-        }
+        return new CommandResult(resultMessage);
+
     }
 
     @Override
@@ -188,7 +174,4 @@ public class AddAvatarCommand extends Command {
                 && this.avatar.equals(((AddAvatarCommand) other).avatar)); // state check
     }
 
-    private String urlToPath(String url) {
-        return url.substring(url.indexOf("avatars"));
-    }
 }

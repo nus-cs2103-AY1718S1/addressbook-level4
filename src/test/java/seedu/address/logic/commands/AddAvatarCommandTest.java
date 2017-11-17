@@ -1,6 +1,6 @@
 package seedu.address.logic.commands;
 
-//@@author Linus
+//@@author LinusMelb
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -48,31 +48,21 @@ public class AddAvatarCommandTest {
 
     @Test
     public void equals() throws Exception {
-        final AddAvatarCommand standardCommand = new AddAvatarCommand(INDEX_FIRST_PERSON,
+        final AddAvatarCommand avatarCommand = new AddAvatarCommand(INDEX_FIRST_PERSON,
                 new Avatar(VALID_WEB_IMAGE_URL_A));
 
-        // same values -> returns true
-        AddAvatarCommand commandWithSameValues = new AddAvatarCommand(INDEX_FIRST_PERSON,
+        AddAvatarCommand sameValueCommand = new AddAvatarCommand(INDEX_FIRST_PERSON,
                 new Avatar(VALID_WEB_IMAGE_URL_A));
 
-        // returns true
-        assertTrue(standardCommand.equals(new AddAvatarCommand(INDEX_FIRST_PERSON,
+        assertFalse(avatarCommand.equals(null));
+        assertFalse(avatarCommand.equals(new ClearCommand()));
+        assertFalse(avatarCommand.equals(new AddAvatarCommand(INDEX_SECOND_PERSON,
                 new Avatar(VALID_WEB_IMAGE_URL_A))));
-
-        assertTrue(standardCommand.equals(commandWithSameValues));
-
-        // same object -> returns true
-        assertTrue(standardCommand.equals(standardCommand));
-
-        // null -> returns false
-        assertFalse(standardCommand.equals(null));
-
-        // different types -> returns false
-        assertFalse(standardCommand.equals(new ClearCommand()));
-
-        // different index -> returns false
-        assertFalse(standardCommand.equals(new AddAvatarCommand(INDEX_SECOND_PERSON,
+        assertTrue(avatarCommand.equals(new AddAvatarCommand(INDEX_FIRST_PERSON,
                 new Avatar(VALID_WEB_IMAGE_URL_A))));
+        assertTrue(avatarCommand.equals(sameValueCommand));
+        assertTrue(avatarCommand.equals(avatarCommand));
+
 
     }
 
@@ -85,8 +75,5 @@ public class AddAvatarCommandTest {
         return updateAvatarPicCommand;
     }
 
-    private String urlToPath(String url) {
-        return url.substring(url.indexOf("AvatarPics"));
-    }
 }
 

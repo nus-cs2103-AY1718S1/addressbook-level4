@@ -102,7 +102,7 @@ public class AddressBookParser {
         //@@author
 
 
-        //@@author Linus
+        //@@author LinusMelb
         case HomeCommand.COMMAND_WORD:
             return new HomeCommand();
 

@@ -1,4 +1,4 @@
-//@@author Linus
+//@@author LinusMelb
 package seedu.address.logic.commands;
 
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
@@ -40,6 +40,4 @@ public class HomeCommandTest {
         assertCommandSuccess(homeCommand, model, HomeCommand.MESSAGE_SUCCESS, expectedModel);
     }
 }
-
-//@@author Linus
 

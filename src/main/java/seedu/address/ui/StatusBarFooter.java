@@ -23,10 +23,10 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class StatusBarFooter extends UiPart<Region> {
 
     public static final String SYNC_STATUS_INITIAL = "Not updated yet in this session";
-    //@@author Linus
+    //@@author LinusMelb
     public static final String SYNC_PERSONLIST_UPADTED_SIZE = "Total size: %d, ";
     public static final String SYNC_STATUS_UPDATED = "Last Updated: %s";
-    //@@author Linus
+    //@@author
 
     /**
      * Used to generate time stamps.
@@ -42,9 +42,9 @@ public class StatusBarFooter extends UiPart<Region> {
 
     private static final String FXML = "StatusBarFooter.fxml";
 
-    //@@author Linus
+    //@@author LinusMelb
     private ObservableList<ReadOnlyPerson> filteredPersonList;
-    //@@author Linus
+    //@@author
 
     @FXML
     private StatusBar syncStatus;
@@ -58,7 +58,7 @@ public class StatusBarFooter extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
-    //@@author Linus
+    //@@author LinusMelb
     public StatusBarFooter(String saveLocation, ObservableList<ReadOnlyPerson> filteredPersonList) {
         super(FXML);
         this.filteredPersonList = filteredPersonList;
@@ -66,7 +66,7 @@ public class StatusBarFooter extends UiPart<Region> {
         setSaveLocation("./" + saveLocation);
         registerAsAnEventHandler(this);
     }
-    //@@author Linus
+    //@@author
 
     /**
      * Sets the clock used to determine the current time.
