@@ -106,7 +106,7 @@ public class ParserUtil {
     }
     //@@author Henning
 
-    //@@author Linus
+    //@@author LinusMelb
     /**
      * Parses a {@code Optional<String> imageURL} into an {@code Optional<Avatar>} if {@code imageURL} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
@@ -115,7 +115,7 @@ public class ParserUtil {
         requireNonNull(imageUrl);
         return imageUrl.isPresent() ? Optional.of(new Avatar(imageUrl.get())) : Optional.empty();
     }
-    //@@author Linus
+    //@@author
 
 
     /**

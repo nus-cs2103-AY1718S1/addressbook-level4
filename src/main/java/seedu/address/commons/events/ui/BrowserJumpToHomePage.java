@@ -1,4 +1,4 @@
-//@@author Linus
+//@@author LinusMelb
 package seedu.address.commons.events.ui;
 
 import java.net.URL;

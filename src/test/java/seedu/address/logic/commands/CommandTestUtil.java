@@ -43,7 +43,7 @@ public class CommandTestUtil {
     public static final String VALID_SCORE_BOB = "2";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
-    //@@author Linus
+    //@@author LinusMelb
     public static final String INVALID_WEB_IMAGE_URL_A =
             "INVALID_IMAGE_URL";
     public static final String INVALID_WEB_IMAGE_URL_B =
@@ -52,7 +52,7 @@ public class CommandTestUtil {
             "http://188.166.212.235/storage/avatars/default-M.png";
     public static final String VALID_WEB_IMAGE_URL_B =
             "http://188.166.212.235/storage/avatars/default-F.png";
-    //@@author Linus
+    //@@author
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;

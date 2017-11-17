@@ -1,6 +1,6 @@
 package seedu.address.model.person;
 
-//@@author Linus
+//@@author LinusMelb
 import static java.util.Objects.requireNonNull;
 
 import java.awt.Image;

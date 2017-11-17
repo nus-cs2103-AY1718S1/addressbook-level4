@@ -236,7 +236,7 @@ public abstract class AddressBookSystemTest {
         StatusBarFooterHandle handle = getStatusBarFooter();
         String timestamp = new Date(clockRule.getInjectedClock().millis()).toString();
         String expectedSyncStatus = String.format(SYNC_STATUS_UPDATED, timestamp);
-        //@@author Linus
+        //@@author LinusMelb
         assertEquals(expectedSyncStatus, handle.getSyncStatus().split(", ")[1]);
         //@@author
         assertFalse(handle.isSaveLocationChanged());
