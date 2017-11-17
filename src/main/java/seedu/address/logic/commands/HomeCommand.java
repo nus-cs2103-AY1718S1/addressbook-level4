@@ -1,4 +1,4 @@
-//@@author Linus
+//@@author LinusMelb
 package seedu.address.logic.commands;
 
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
@@ -32,4 +32,3 @@ public class HomeCommand extends Command {
     }
 
 }
-//@@author Linus

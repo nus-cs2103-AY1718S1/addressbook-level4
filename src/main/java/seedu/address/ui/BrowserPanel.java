@@ -25,9 +25,9 @@ import seedu.address.model.person.ReadOnlyPerson;
 public class BrowserPanel extends UiPart<Region> {
 
     public static final String DEFAULT_PAGE = "default.html";
-    //@@author Linus
+    //@@author LinusMelb
     public static final String BROWSER_PAGE = "BrowserPanel.html";
-    //@@author Linus
+    //@@author
     public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/search?safe=off&q=";
     public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
 
@@ -35,9 +35,9 @@ public class BrowserPanel extends UiPart<Region> {
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
-    //@@author Linus
+    //@@author LinusMelb
     private int backToHomePage = 0;
-    //@@author Linus
+    //@@author
 
     @FXML
     private WebView browser;
@@ -61,9 +61,9 @@ public class BrowserPanel extends UiPart<Region> {
      * Loads the located address page of the user's address.
      */
     private void loadBrowserPage(ReadOnlyPerson person) throws IOException {
-        //@@author Linus
+        //@@author LinusMelb
         URL addressPage = MainApp.class.getResource(FXML_FILE_FOLDER + BROWSER_PAGE);
-        //@@author Linus
+        //@@author
         loadPage(addressPage.toExternalForm());
     }
 
@@ -86,7 +86,7 @@ public class BrowserPanel extends UiPart<Region> {
         browser = null;
     }
 
-    //@@author Linus
+    //@@author LinusMelb
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) throws IOException {
 
@@ -126,7 +126,7 @@ public class BrowserPanel extends UiPart<Region> {
         backToHomePage = 1;
 
     }
-    //@@author Linus
+    //@@author
 
 
 }

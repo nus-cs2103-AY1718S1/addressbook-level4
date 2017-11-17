@@ -23,7 +23,7 @@ import seedu.address.model.tag.Tag;
  */
 public class SampleDataUtil {
 
-    //@@author Linus
+    //@@author LinusMelb
     private static String[] firstNames = {"Roy", "David", "Alex", "Linus", "Siri", "Hector", "Achilles", "Odysseus",
         "Jack", "Donald"};
     private static String[] lastNames = {"Herason", "Trump", "Thompson", "Curry", "Westbrook", "Harden", "O'niel",

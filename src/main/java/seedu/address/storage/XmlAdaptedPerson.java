@@ -39,7 +39,7 @@ public class XmlAdaptedPerson {
 
     @XmlElement
     private String score;
-    //@@author Linus
+    //@@author LinusMelb
     @XmlElement
     private String avatar;
     //@@author
@@ -93,7 +93,7 @@ public class XmlAdaptedPerson {
         final Score score = new Score(this.score);
         final Set<Tag> tags = new HashSet<>(personTags);
 
-        //@@author Linus
+        //@@author LinusMelb
         Avatar tempAvatar;
         try {
             tempAvatar = new Avatar(this.avatar);

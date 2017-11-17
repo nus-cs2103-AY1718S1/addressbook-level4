@@ -1,6 +1,6 @@
 package seedu.address.model.person;
 
-//@@author Linus
+//@@author LinusMelb
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -20,12 +20,11 @@ public class AvatarTest {
 
         // invalid URL
         assertFalse(Avatar.isValidUrl("") == 0); // empty string
-        assertFalse(Avatar.isValidUrl("images/fail.png") == 0);
+        assertFalse(Avatar.isValidUrl("images/nonExist.png") == 0);
         assertFalse(Avatar.isValidUrl(INVALID_WEB_IMAGE_URL_A) == 0);
         assertFalse(Avatar.isValidUrl(INVALID_WEB_IMAGE_URL_B) == 0);
 
         // valid URL
-        System.out.println(Avatar.isValidUrl(VALID_WEB_IMAGE_URL_A));
         assertTrue(Avatar.isValidUrl(VALID_WEB_IMAGE_URL_A) == 0);
         assertTrue(Avatar.isValidUrl(VALID_WEB_IMAGE_URL_B) == 0);
     }

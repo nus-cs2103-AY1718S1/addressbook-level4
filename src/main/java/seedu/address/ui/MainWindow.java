@@ -140,9 +140,9 @@ public class MainWindow extends UiPart<Region> {
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-        //@@author Linus
+        //@@author LinusMelb
         StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath(), filteredPersonList);
-        //@@author Linus
+        //@@author
 
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
@@ -231,7 +231,7 @@ public class MainWindow extends UiPart<Region> {
         raise(new ExitAppRequestEvent());
     }
 
-    //@@author Linus
+    //@@author LinusMelb
     /**
      * Changes the theme color to dark of the program
      */
@@ -264,7 +264,7 @@ public class MainWindow extends UiPart<Region> {
         scene.getRoot().getStylesheets().add("view/LightTheme.css");
 
     }
-    //@@author Linus
+    //@@author
 
     public PersonListPanel getPersonListPanel() {
         return this.personListPanel;

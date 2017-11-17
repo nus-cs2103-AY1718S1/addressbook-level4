@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- @@author Linus -->
+<!-- @@author LinusMelb -->
         <?import org.controlsfx.control.StatusBar?>
         <?import javafx.scene.layout.ColumnConstraints?>
         <?import javafx.scene.layout.GridPane?>
@@ -12,4 +12,4 @@
 <StatusBar styleClass="anchor-pane" fx:id="syncStatus" />
 <StatusBar styleClass="anchor-pane" fx:id="saveLocationStatus" GridPane.columnIndex="1" nodeOrientation="RIGHT_TO_LEFT" />
 </GridPane>
-<!-- @@author Linus -->
+<!-- @@author -->
