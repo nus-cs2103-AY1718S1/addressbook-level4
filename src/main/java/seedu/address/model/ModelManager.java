@@ -172,7 +172,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
     //@@author
 
-    //@@author Henning
+    //@@author coolpotato1
     @Override
     public void sortFilteredPersonListScore() {
         addressBook.sortPersonsByScore();

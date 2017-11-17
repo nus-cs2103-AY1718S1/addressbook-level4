@@ -135,7 +135,7 @@ public class Person implements ReadOnlyPerson {
     public Address getAddress() {
         return address.get();
     }
-    //@@author Henning
+    //@@author coolpotato1
     public void setScore(Score score) {
         this.score.set(requireNonNull(score));
     }

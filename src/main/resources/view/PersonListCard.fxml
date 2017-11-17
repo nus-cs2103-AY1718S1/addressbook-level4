@@ -39,7 +39,7 @@
       <!-- @@author siri99 -->
       <Label fx:id="address" styleClass="cell_small_label" text="\$address" />
       <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
-      <!--@@author Henning-->
+      <!--@@author coolpotato1-->
       <Label fx:id="score" styleClass="cell_small_label"  text="\$score" />
       <!--@@author-->
       <Button onAction='#handleEditButtonAction' fx:id="edit" text="Edit"/>

@@ -1,5 +1,5 @@
 package seedu.address.model.person;
-//@@author Henning
+//@@author coolpotato1
 import static java.util.Objects.requireNonNull;
 
 import seedu.address.commons.exceptions.IllegalValueException;

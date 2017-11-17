@@ -24,8 +24,10 @@ public interface ReadOnlyPerson {
     Email getEmail();
     ObjectProperty<Address> addressProperty();
     Address getAddress();
+    //@@author coolpotato1
     ObjectProperty<Score> scoreProperty();
     Score getScore();
+    //@@author
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
 
@@ -60,7 +62,7 @@ public interface ReadOnlyPerson {
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
-                //@@author Henning
+                //@@author coolpotato1
                 .append(" ")
                 .append(getScore())
                 //@@author

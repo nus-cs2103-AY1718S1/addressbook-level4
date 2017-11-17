@@ -69,7 +69,7 @@ public interface Model {
     void sortFilteredPersonListBirthday();
     //@@author
 
-    //@@author Henning
+    //@@author coolpotato1
     /** Sorts the list by groups score, in descending order*/
     void sortFilteredPersonListScore();
     //@@author

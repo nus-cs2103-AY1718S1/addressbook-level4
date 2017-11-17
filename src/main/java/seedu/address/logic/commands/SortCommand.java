@@ -22,7 +22,7 @@ public class SortCommand extends Command {
 
     public static final String MESSAGE_SUCCESS_BIRTHDAY = "Sorted successfully by Birthdays, listing all persons below";
 
-    //@@author Henning
+    //@@author coolpotato1
     public static final String MESSAGE_SUCCESS_SCORE = "Sorted successfully by Group Scores, listing all persons below";
     //@@author
     private String sortFilter;
@@ -45,7 +45,7 @@ public class SortCommand extends Command {
             model.sortFilteredPersonListBirthday();
             return new CommandResult(MESSAGE_SUCCESS_BIRTHDAY);
 
-        //author Henning
+        //author coolpotato1
         case "score":
         case "s":
             model.sortFilteredPersonListScore();
