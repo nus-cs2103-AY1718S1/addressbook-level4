@@ -8,7 +8,7 @@ AddressBook - Level 4 is an address book application, that allows the user
 to store all their contacts in a simple manner. It mainly interacts with the user
 through a command line interface, but it also implements a simple GUI. It is written in Java.
 
-*Code contributed*: [https://github.com/CS2103AUG2017-T13-B2/main/blob/master/collated/main/Henning.md [Functional code]] [https://github.com/CS2103AUG2017-T13-B2/main/blob/master/collated/test/Henning.md [Test code]] 
+*Code contributed*: [https://github.com/CS2103AUG2017-T13-B2/main/blob/master/collated/main/coolpotato1.md [Functional code]] [https://github.com/CS2103AUG2017-T13-B2/main/blob/master/collated/test/coolpotato1.md [Test code]] 
 
 === Enhancement Added: Group score parameter and expanded sort command
 
