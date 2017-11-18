@@ -17,14 +17,14 @@ By: `Team T16-B1`      Since: `Sept 2017`      Licence: `MIT`
 == Introduction
 Unable to keep track of all your deliveries?
 Unsure which parcel is a more urgent delivery?
-Did you ever wish there was a way you could easily plan your delivery route?
-Now with Ark, you no longer need to worry about late deliveries and route planning.
+Did you ever wish there was a way you could easily find your delivery destination?
+Now with Ark, you no longer need to worry about late deliveries and getting lost.
 Leave the heavy thinking to us and just deliver away! +
 
 Ark is a delivery parcel manager with the ability to keep track of your delivery details.
 These details include recipient's names, delivery due dates, locations, and tags.
 Ark is also able to help you plan out your delivery route by using google maps
-to help you get from one destination to another. +
+to help you get to your destination. +
 
 == About
 This user guide gives you an overall view of the features of Ark and how to get started using Ark.
@@ -32,7 +32,7 @@ The user guide includes all of Arks functions and how to use them,
 as well as providing you examples for easy reference. +
 
 Ark assumes that you already have the postal codes of the delivery locations
-of every parcel and bases its route planning base on postal codes only.
+of every parcel and searches for addresses by postal codes only.
 
 == Quick Start
 
@@ -46,7 +46,7 @@ This app will not work with earlier versions of Java 8.
 .  Copy the file to the folder you want to use as the home folder for your Ark application.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
-image::Ui.png[width="790"]
+image::Ark_Main_Window.png[width="790"]
 _Figure 3.1.1 : Ark's Startup Window_
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
@@ -63,7 +63,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 == Layout
 These are the main components of the Ark user interface that will help you to interact with Ark. +
 
-image::Ark_Main_Window_Sections.png[width="890"]
+image::Ark_Main_Window_Numbered.png[width="890"]
 _Figure 4 : This is the main window of Ark with each section color coded_
 
 1. *Menu Bar* - Click on the options here to access the main or help menu.
@@ -73,37 +73,69 @@ _Figure 4 : This is the main window of Ark with each section color coded_
 the particular parcel in the *Parcel List Panel* (Refer to No. 6 below).
 5. *Tab Panel* - Click on the `All Parcels` tab to display the list of undelivered parcels. To view the list of
 delivered parcels, click on the `Completed Parcels` tab.
-6. *Parcel List Panel* - The list of parcels in your inventory is showed here.
+6. *Parcel Card* - The details of a parcel is showed here.
+7. *Parcel List Panel* - The list of parcels in your inventory is showed here.
 7. *Status Bar Footer* - You can view a summary of the parcels in your inventory here.
 
-=== More About Browser Panel
+//tag::browser[]
+=== Google Maps Browser
 
-image::Browser_Display_After_Selection.png[width="890"]
+Ark has an in-built Google Maps browser section in the main window and can be used to show you the locations
+of the delivery addresses of each parcel. This feature will be automatically used whenever you type `select`
+into the command box, and will display a Google Maps search of the postal code of the parcel's address in the
+browser section of the main window.
+//end::browser[]
+
+==== More About Browser Panel
+
+image::Ark_Browser.png[width="890"]
 _Figure 4.1.1 : Selecting a parcel_
 
 Selecting a parcel activates the Browser Panel. In the diagram above, when the 4th parcel belonging to Cornelia
-Meier is selected, the Browser Panel is activated and displays the destination address of the parcel. Tn this case,
-Cornelia wants his parcel to be delivered to 10th Street Singapore 123114. +
+Meier, at index 4, is selected, the Browser Panel is activated and displays the destination address of the parcel.
+In this case, Cornelia wants her parcel to be delivered to 10th Street Singapore 123114.
 
-=== More About Parcel List Panel
+=== More About Parcel List Card
 
-image::ParcelCard.png[width="890"]
+image::Ark_Parcel_Card_Numbered.png[width="890"]
 _Figure 4.2.1 : Labelled Parcel Card_
 
 1. *Parcel Index* - This is the index number of the parcel in the displayed list.
-2. *Name* - This is the name of the recipient of the parcel.
-3. *Phone* - This is the phone number of the recipient of the parcel.
-4. *Address* - This is the address to deliver the parcel to. The address must end with the postal code of the address.
- You can read more about postal codes in Ark in the #postal-code[Postal Code section] below.
-5. *Email* - This is the email address of the recipient of the parcel.
-6. *Tracking Number* - This is the tracking number of the parcel. You can read more about it Ark's parcel tracking
-numbers in the #tracking-number[Tracking Numbers section] below.
+2. *Name* - This is the name of the recipient of the parcel. You can read more in the link:#name[Name] section.
+3. *Tracking Number* - This is the tracking number of the parcel. You can read more about it Ark's parcel tracking
+   numbers in the link:#tracking-number[Tracking Numbers] section below.
+4. *Phone* - This is the phone number of the recipient of the parcel.
+You can read more in the link:#phone[Phone] section.
+5. *Address* - This is the address to deliver the parcel to. The address must end with the postal code of the address.
+ You can read more about postal codes in Ark in the #postal-code[Postal Code] section below.
+6. *Email* - This is the email address of the recipient of the parcel.
+You can read more in the link:#email[Email] section.
 7. *Delivery Date* - This is the delivery date of the parcel. The parcel should be delivered on dates prior to or on
-this date.
+this date. You can read more in the link:#delivery-date[Due Date] section.
 8. *Status* - This is the status of the parcel in the delivery workflow. Read more about parcel delivery status
- in the link:#status[Status section] below.
+ in the link:#status[Status] section.
 9. *Tags* - These are the tags of the parcel. They are used to provide more information about a parcel's contents.
-Read more about parcel tags in the link:#tag[Tags section] below.
+Read more about parcel tags in the link:#tag[Tags] section.
+
+//tag::tooltip[]
+
+[#tool-tip]
+==== Parcel Tooltip
+
+Ark comes with a tooltip feature that allows you to view parcel details that are too long. Suppose you have entered
+a parcel with really long details into Ark. As seen below, John's parcel has a delivery address that is too long,
+and a part of it has been replaced by ellipsis i.e. `...`.
+
+image::ParcelWithLongInput.PNG[width="1000"]
+_Figure 5.22.1 : Parcel with a long address_
+
+To view the full delivery address, we simply mouseover his address and the full details of his
+address will appear as a tooltip. This can be seen in the diagram below.
+
+image::mouse-over-address.png[width="1000"]
+_Figure 5.22.2 : Tooltip to show more of John's address_
+
+//end::tooltip[]
 
 == Parcel Fields
 
@@ -209,10 +241,43 @@ Invalid Email entries include the following: e.g. `John_Doe@example.com`; `JaneD
 [#delivery-date]
 === Due Date Field: Due Date for Parcel Delivery
 
-Ark can store the scheduled delivery date of parcels. It only accepts valid dates,
-including valid leap years and days. +
-The dates should be in one of the following formats: DD-MM-YYYY
-The list of Parcels is kept in sorted order according to the delivery dates, with the earliest dates in front.
+`Delivery Date` is used to indicate the delivery date that the parcel must be delivered by.
+The dates are only accepted if they are in the valid format DD-MM-YYYY or understandable by Ark.
+
+Ark is able to recognise various forms of dates as shown in the table below but the dates in the Ark are formatted
+as DD-MM-YYYY. However, invalid inputs such as a phone number or symbols still will be rejected.
+
+Current date as of writing is 12 November 2017.
+
+[width="100%",cols="60%,<40%",options="header",]
+|=======================================================================
+|User input |Date parsed by Ark
+|01-01-2017 | 01-01-2017
+|01/01/2017 | 01-01-2017
+|01.01.2017 | 01-01-2017
+|01-01-17   | 01-01-2017
+|First day of 2017 | 01-01-2017
+|The day before yesterday | 10-11-2017
+|Yesterday | 11-11-2017
+|Today | 12-11-2017
+|Tomorrow | 13-11-2017
+|The day after tomorrow | 14-11-2017
+|Three days from now| 15-11-2017
+|Four days later| 16-11-2017
+|Seventeenth of November| 17-11-2017
+|This Friday| 17-11-2017
+|Next Friday| 24-11-2017
+|Christmas Eve| 24-12-2017
+|A week before Christmas Eve| 17-12-2017
+|A year from now| 12-11-2018
+|Friday of the second week of January| Query too complicated, date defaults to today
+|123456789| Invalid date error shown
+|!@#$%^&*()| Invalid date error shown
+|=======================================================================
+
+The parcel list is maintained in sorted order by comparing
+their delivery dates, with the earliest on top.
+
 //end::deliveryDate[]
 
 //tag::status[]
@@ -222,11 +287,15 @@ The list of Parcels is kept in sorted order according to the delivery dates, wit
 `Status` is used to indicate the current delivery status of a parcel. A parcel can have 4 possible delivery status and
 listed below is a description of these `Status` values.
 
-* `PENDING` - This means that the parcel has not been delivered and has not passed the date it is supposed to be
-delivered by. +
-* `DELIVERING` - This means that the parcel is currently working being delivered to its destination address.
-* `COMPLETED` - This indicates that the parcel has been successfully delivered to its destination.
-* `OVERDUE` - This state indicates that the parcel has not been delivered and has passed its due date.
+[width="100%",cols="20%,<80%",options="header",]
+|=======================================================================
+|Status | Description
+|PENDING | This means that the parcel has not been delivered and has not passed the date it is supposed to be
+delivered by.
+|DELIVERING | This means that the parcel is currently working being delivered to its destination address.
+|COMPLETED | This indicates that the parcel has been successfully delivered to its destination.
+|OVERDUE | This state indicates that the parcel has not been delivered and has passed its due date.
+|=======================================================================
 
 To input a `Status`, you can type case-insensitive formats of the above Status. e.g. `pending` or `Pending` are valid
 inputs to add a `PENDING` `Status`.
@@ -241,11 +310,15 @@ Values other than the above values will be rejected. e.g. `PROCESSING`, `PROCESS
 
 `Tag`s are used to indicate how the parcel should be handled. Tags can contain one or more of the following `Tag`s:
 
-* `FROZEN` - This means the parcel should be refrigerated as its contents are temperature sensitive.
-* `FLAMMABLE` - This means that the parcels' contents are highly flammable and should be kept away from heat.
-* `HEAVY` - This indicates that the parcel is heavy and may require additional manpower to deliver.
-* `FRAGILE` - This state indicates that the parcels' contents can be broken easily and
-requires additional care when handling.
+[width="100%",cols="20%,<80%",options="header",]
+|=======================================================================
+|Tag | Description
+|FROZEN | This means the parcel should be refrigerated as its contents are temperature sensitive.
+|FLAMMABLE | This means that the parcels' contents are highly flammable and should be kept away from heat.
+|HEAVY | This indicates that the parcel is heavy and may require additional manpower to deliver.
+|FRAGILE | This state indicates that the parcels' contents can be broken easily and requires additional care
+when handling.
+|=======================================================================
 
 To input a `Tag`, you can type insensitive formats of any of the above `Tags`. e.g. `frozen` or `Frozen` are valid inputs
 to add a `FROZEN` `Tag`.
@@ -303,24 +376,28 @@ If not included in the add command, the default value of both the phone and emai
 value for the status field is `PENDING`.
 
 //tag::import[]
-
 [#import]
-=== Import multiple parcels stored in an xml storage file: `import`
+=== Import Multiple Parcels into Ark `import`
 
-Imports the parcels in an Ark `.xml` storage file stored in `/data/import/` folder of Ark's home directory to Ark +
-Format: `import FILE_NAME`
+You can import parcels into Ark using the `import` feature. This feature works with valid save files of Ark. To use
+this feature, you must first copy/move the save file that you want to import into the `/data/import/` folder of
+Ark's home directory. Then you can type the following command into the `CommandBox`, `import `, followed by the name
+of your file.
+
+[NOTE]
+Ark will only import files that are stored in the `.xml` format.
+
+[WARNING]
+Your file name is should only contain alphanumeric or underscore characters. e.g. `ark_save`, `ark_save1`; +
+Files name that contain characters other than alphanumeric or underscore characters will be rejected. e.g. `ark#1`; +
+Do not include the file type in your file name. The following inputs for the file name will be rejected. `ark_save.xml`; +
 
 Examples:
 
 * `import ark` - This will import parcels stored in `data/import/ark.xml` into the current instance of Ark
 * `import ark_save` - This will import parcels stored in `data/import/ark_save.xml` into the current instance of Ark.
 
-[NOTE]
-====
-File names should only contain alphanumeric or underscore characters i.e. `ark1`, `ark_save1`
-Non alphanumeric file names will not be accepted. i.e. `$addressbook#!@,`
-====
-
+Format: `import FILE_NAME`
 //end::import[]
 
 === Listing all parcels : `list`
@@ -553,55 +630,94 @@ Format: `clear`
 Exits the program. +
 Format: `exit`
 
-//tag::browser[]
-=== Google Maps Browser
-
-Ark has an in-built Google Maps browser section in the main window and can be used to show you the locations
-of the delivery addresses of each parcel. This feature will be automatically used whenever you type `select`
-into the command box, and will display a Google Maps search of the postal code of the parcel's address in the
-browser section of the main window.
-//end::browser[]
-
 //tag::autocomplete[]
 === Autocomplete
+Trying to type in long commands can be quite a hassle. That is why Ark comes with tab autocompletion which is able to
+help fill in commands as well as the prefixes for you without requiring you to fully type out the command
+with the needed fields. Ark autocompletion is smart and knows exactly what field you need, all you have to do is press
+kbd:[Tab] and let Ark handle the rest!
 
-Ark comes with tab autocompletion which is able to complete a command for you
-without requiring you to type out the command fully. +
-To make use of this feature, simply key in the first few characters of the command you with to enter and press the
-kbd:[Tab] key.
-Ark will then fill in the rest of the command for you in the command box.
-Then press kbd:[Enter] key to enter the command.
+*Autocomplete for commands:* +
+To make use of the autocomplete feature for commands, simply type in the first few letters of the command you want
+to use:
 
-There is more than one possibility for the autocompletion, Ark will display the possible options to you as shown in the
+image::autocompleteWithStartOfAddCommand.PNG[width="400"]
+_Figure 5.21.1 : Fill in the first few letters of the command you want to use. In this case, we want to use the `Add`
+ command, so we enter `a` into the text field_
+
+now press the kbd:[Tab] key: +
+
+image::autocompleteWithFullAddCommand.PNG[width="400"]
+_Figure 5.21.2 : After kbd:[Tab] is pressed Ark will fill in the command for you_
+
+Ark will then fill in the rest for you if there is a match.
+
+If there is more than one possibility for the autocompletion, Ark will display the possible options to you as shown in the
 below.
 
-image::TabAutocompleteMultipleExample.PNG[width="400"]
-_Figure 5.21.1 : If there are multiple autocomplete options, the options will be displayed in the result window_
+image::autocompleteWithEditCommandCycle.PNG[width="400"]
+_Figure 5.21.3 : If there are multiple autocomplete options, the options will be displayed in the result window_
 
-Examples:
+In this case, you can press tab to cycle through the different options available.
+
+image::autocompleteWithExitCommandCycle.PNG[width="400"]
+_Figure 5.21.4 : Pressing kbd:[Tab] again will cycle to the next matching command_
+
+*Autocomplete for prefixes:* +
+For commands that require prefixes, you can press kbd:[Tab] after filling in the command word. Ark will bring you to the
+next missing prefix for you to fill in. After this, you can then press tab to cycle through the list of prefixes.
+
+image::autocompleteWithFullAddCommandAndOnePrefix.PNG[width="400"]
+_Figure 5.21.5 : After filling in the command into the text field, pressing kbd:[Tab] will bring you
+ to the first missing prefix_
+
+image::autocompleteWithFullAddCommandAndOnePrefixCycle.PNG[width="400"]
+_Figure 5.21.6 : Pressing kbd:[Tab] will cycle to the next missing prefix_
+
+Alternatively, you can also enter the first letter of the prefix you want before you press kbd:[Tab] and Ark will fill
+in the `/` character for you.
+
+image::autocompleteWithFullAddCommandAndPartOfPrefix.PNG[width="400]
+_Figure 5.21.7 : Fill in the command you want along with the first letter of the prefix you want_
+
+image::autocompleteWithFullAddCommandAndOnePrefix.PNG[width="400"]
+_Figure 5.21.8 : Pressing kbd:[Tab] append the `/` character for you_
+
+After you have chosen the prefix you want, simply enter in the details as needed.
+
+image::autocompleteWithFullAddCommandAndOnePrefixFilled.PNG[width="400"]
+_Figure 5.21.9 : Fill in the needed details as per normal_
+
+After you are done entering the needed details of the prefix, press kbd:[Tab] to move on to the next prefix. Note
+that if your input ends with the first character of a prefix preceded by a space (e.g " n"),
+you will need to press kbd:[Space] before you press kbd:[Tab] to get the outcome you want.
+
+image::autocompleteWithFullAddCommandAndOnePrefixFilledNext.PNG[width="400"]
+_Figure 5.21.10 : Pressing kbd:[Tab] will fill in the next missing prefix_
+
+*Autocomplete for indexes:* +
+For commands that require indexes, you can press kbd:[Tab] after filling in the command word. Ark will then
+allow you to cycle through the indexes available by pressing kbd:[Tab]
+
+image::autocompleteWithStartOfSelectCommand.PNG[width="400"]
+_Figure 5.21.11 : After filling in the command into the text field, pressing kbd:[Tab] will bring you
+ to the first available index_
+
+image::autocompleteWithStartOfSelectCommandCycle.PNG[width="400"]
+_Figure 5.21.12 : Pressing kbd:[Tab] will cycle to the next available index_
+
+*Examples:*
 
 * `a` + kbd:[Tab] (auto-completes with `add` in the command line input)
+* `e` + kbd:[Tab] + kbd:[Tab] (cycles to `exit` command)
+* `edit` + kbd:[Tab] + kbd:[Tab] (auto-completes with `edit 1` on the first tab and then cycles
+ to `edit 2` on the second tab)
+* `add` + kbd:[Tab] + kbd:[Tab] (auto-completes with `edit #/` on the first tab and then cycles
+  to `edit n/` on the second tab)
+
 //end::autocomplete[]
 
-//tag::tooltip[]
 
-[#tool-tip]
-=== Parcel Tooltip
-
-Ark comes with a tooltip feature that allows you to view parcel details that are too long. Suppose you have entered
-a parcel with really long details into Ark. As seen below, John's parcel has a delivery address that is too long,
-and a part of it has been replaced by ellipsis i.e. `...`.
-
-image::ParcelWithLongInput.PNG[width="1000"]
-_Figure 5.22.1 : Parcel with a long address_
-
-To view the full delivery address, we simply mouseover his address and the full details of his
-address will appear as a tooltip. This can be seen in the diagram below.
-
-image::mouse-over-address.png[width="1000"]
-_Figure 5.22.2 : Tooltip to show more of John's address_
-
-//end::tooltip[]
 
 //tag::gui-tab[]
 
