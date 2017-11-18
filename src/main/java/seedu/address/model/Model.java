@@ -3,8 +3,6 @@ package seedu.address.model;
 import java.util.List;
 import java.util.function.Predicate;
 
-import com.google.common.eventbus.Subscribe;
-
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.JumpToTabRequestEvent;
@@ -37,7 +35,6 @@ public interface Model {
      *              new active list. Otherwise, the completed parcel list is set as the active list
      *              {@link ModelManager#activeParcels}
      */
-    @Subscribe
     void setActiveList(JumpToTabRequestEvent event);
     //@@author
 
